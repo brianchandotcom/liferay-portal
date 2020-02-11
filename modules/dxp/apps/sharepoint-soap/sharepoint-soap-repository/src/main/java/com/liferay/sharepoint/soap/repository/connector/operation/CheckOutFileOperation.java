@@ -18,6 +18,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.sharepoint.soap.repository.connector.SharepointException;
 import com.liferay.sharepoint.soap.repository.connector.internal.util.RemoteExceptionSharepointExceptionMapper;
 
+import com.microsoft.schemas.sharepoint.soap.CheckOutFileDocument;
+import com.microsoft.schemas.sharepoint.soap.CheckOutFileResponseDocument;
+
 import java.rmi.RemoteException;
 
 /**
@@ -26,14 +29,40 @@ import java.rmi.RemoteException;
 public final class CheckOutFileOperation extends BaseOperation {
 
 	public boolean execute(String filePath) throws SharepointException {
+		CheckOutFileResponseDocument checkOutFileResponseDocument = null;
+
 		try {
-			return listsSoap.checkOutFile(
-				String.valueOf(toURL(filePath)), Boolean.FALSE.toString(),
-				StringPool.BLANK);
+			checkOutFileResponseDocument = listsSoap12Stub.checkOutFile(
+				getCheckOutFileDocument(filePath));
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
+
+		return getResponse(checkOutFileResponseDocument);
+	}
+
+	protected CheckOutFileDocument getCheckOutFileDocument(String filePath) {
+		CheckOutFileDocument checkOutFileDocument =
+			CheckOutFileDocument.Factory.newInstance();
+
+		CheckOutFileDocument.CheckOutFile checkOutFile =
+			checkOutFileDocument.addNewCheckOutFile();
+
+		checkOutFile.setCheckoutToLocal(Boolean.FALSE.toString());
+		checkOutFile.setLastmodified(StringPool.BLANK);
+		checkOutFile.setPageUrl(String.valueOf(toURL(filePath)));
+
+		return checkOutFileDocument;
+	}
+
+	protected boolean getResponse(
+		CheckOutFileResponseDocument checkOutFileResponseDocument) {
+
+		CheckOutFileResponseDocument.CheckOutFileResponse checkOutFileResponse =
+			checkOutFileResponseDocument.getCheckOutFileResponse();
+
+		return checkOutFileResponse.getCheckOutFileResult();
 	}
 
 }

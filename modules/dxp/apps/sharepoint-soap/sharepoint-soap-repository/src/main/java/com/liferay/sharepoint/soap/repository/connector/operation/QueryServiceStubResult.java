@@ -33,9 +33,9 @@ import org.xml.sax.helpers.XMLReaderFactory;
 /**
  * @author Iván Zaera
  */
-public class QueryServiceSoapResult {
+public class QueryServiceStubResult {
 
-	public QueryServiceSoapResult(String queryServiceSoapResultString)
+	public QueryServiceStubResult(String queryServiceSoapResultString)
 		throws SharepointException {
 
 		try {

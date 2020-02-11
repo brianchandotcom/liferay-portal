@@ -18,6 +18,9 @@ import com.liferay.sharepoint.soap.repository.connector.SharepointConnection;
 import com.liferay.sharepoint.soap.repository.connector.SharepointException;
 import com.liferay.sharepoint.soap.repository.connector.internal.util.RemoteExceptionSharepointExceptionMapper;
 
+import com.microsoft.schemas.sharepoint.soap.CheckInFileDocument;
+import com.microsoft.schemas.sharepoint.soap.CheckInFileResponseDocument;
+
 import java.rmi.RemoteException;
 
 /**
@@ -30,14 +33,44 @@ public final class CheckInFileOperation extends BaseOperation {
 			SharepointConnection.CheckInType checkInType)
 		throws SharepointException {
 
+		CheckInFileResponseDocument checkInFileResponseDocument = null;
+
 		try {
-			return listsSoap.checkInFile(
-				String.valueOf(toURL(filePath)), comment,
-				String.valueOf(checkInType.getProtocolValue()));
+			checkInFileResponseDocument = listsSoap12Stub.checkInFile(
+				getCheckInFileDocument(filePath, comment, checkInType));
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
+
+		return getResponse(checkInFileResponseDocument);
+	}
+
+	protected CheckInFileDocument getCheckInFileDocument(
+		String filePath, String comment,
+		SharepointConnection.CheckInType checkInType) {
+
+		CheckInFileDocument checkInFileDocument =
+			CheckInFileDocument.Factory.newInstance();
+
+		CheckInFileDocument.CheckInFile checkInFile =
+			checkInFileDocument.addNewCheckInFile();
+
+		checkInFile.setCheckinType(
+			String.valueOf(checkInType.getProtocolValue()));
+		checkInFile.setComment(comment);
+		checkInFile.setPageUrl(String.valueOf(toURL(filePath)));
+
+		return checkInFileDocument;
+	}
+
+	protected boolean getResponse(
+		CheckInFileResponseDocument checkInFileResponseDocument) {
+
+		CheckInFileResponseDocument.CheckInFileResponse checkInFileResponse =
+			checkInFileResponseDocument.getCheckInFileResponse();
+
+		return checkInFileResponse.getCheckInFileResult();
 	}
 
 }

@@ -16,9 +16,9 @@ package com.liferay.sharepoint.soap.repository.connector.operation;
 
 import com.liferay.sharepoint.soap.repository.connector.SharepointConnectionInfo;
 
-import com.microsoft.schemas.sharepoint.soap.CopySoap;
-import com.microsoft.schemas.sharepoint.soap.ListsSoap;
-import com.microsoft.schemas.sharepoint.soap.VersionsSoap;
+import com.microsoft.schemas.sharepoint.soap.CopySoap12Stub;
+import com.microsoft.schemas.sharepoint.soap.ListsSoap12Stub;
+import com.microsoft.schemas.sharepoint.soap.VersionsSoap12Stub;
 
 import java.util.Map;
 
@@ -29,15 +29,15 @@ public interface Operation {
 
 	public void afterPropertiesSet();
 
-	public void setCopySoap(CopySoap copySoap);
+	public void setCopySoap12Stub(CopySoap12Stub copySoap12Stub);
 
-	public void setListsSoap(ListsSoap listsSoap);
+	public void setListsSoap12Stub(ListsSoap12Stub listsSoap12Stub);
 
 	public void setOperations(Map<Class<?>, Operation> operations);
 
 	public void setSharepointConnectionInfo(
 		SharepointConnectionInfo sharepointConnectionInfo);
 
-	public void setVersionsSoap(VersionsSoap versionsSoap);
+	public void setVersionsSoap12Stub(VersionsSoap12Stub versionsSoap12Stub);
 
 }

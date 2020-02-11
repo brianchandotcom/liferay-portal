@@ -21,18 +21,18 @@ import com.liferay.sharepoint.soap.repository.connector.SharepointResultExceptio
 import com.liferay.sharepoint.soap.repository.connector.internal.util.RemoteExceptionSharepointExceptionMapper;
 
 import com.microsoft.schemas.sharepoint.soap.CopyErrorCode;
+import com.microsoft.schemas.sharepoint.soap.CopyIntoItemsDocument;
+import com.microsoft.schemas.sharepoint.soap.CopyIntoItemsResponseDocument;
 import com.microsoft.schemas.sharepoint.soap.CopyResult;
+import com.microsoft.schemas.sharepoint.soap.CopyResultCollection;
+import com.microsoft.schemas.sharepoint.soap.DestinationUrlCollection;
 import com.microsoft.schemas.sharepoint.soap.FieldInformation;
-import com.microsoft.schemas.sharepoint.soap.holders.CopyResultCollectionHolder;
+import com.microsoft.schemas.sharepoint.soap.FieldInformationCollection;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URL;
-
 import java.rmi.RemoteException;
-
-import org.apache.axis.holders.UnsignedIntHolder;
 
 /**
  * @author Iván Zaera
@@ -48,35 +48,63 @@ public final class AddOrUpdateFileOperation extends BaseOperation {
 			String filePath, String changeLog, InputStream inputStream)
 		throws SharepointException {
 
-		URL filePathURL = toURL(filePath);
-
-		CopyResultCollectionHolder copyResultCollectionHolder =
-			new CopyResultCollectionHolder();
+		CopyIntoItemsResponseDocument copyIntoItemsResponseDocument = null;
 
 		try {
-			copySoap.copyIntoItems(
-				SharepointConstants.URL_SOURCE_NONE,
-				new String[] {filePathURL.toString()},
-				_EMPTY_FIELD_INFORMATIONS, _getBytes(inputStream),
-				new UnsignedIntHolder(), copyResultCollectionHolder);
+			copyIntoItemsResponseDocument = copySoap12Stub.copyIntoItems(
+				getCopyIntoItemsDocument(filePath, inputStream));
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
 
-		CopyResult copyResult = copyResultCollectionHolder.value[0];
-
-		CopyErrorCode copyErrorCode = copyResult.getErrorCode();
-
-		if (copyErrorCode != CopyErrorCode.Success) {
-			throw new SharepointResultException(
-				copyErrorCode.toString(), copyResult.getErrorMessage());
-		}
+		processCopyIntoItemsResponseDocument(copyIntoItemsResponseDocument);
 
 		if (changeLog != null) {
 			_checkInFileOperation.execute(
 				filePath, changeLog, SharepointConnection.CheckInType.MAJOR);
 		}
+	}
+
+	protected CopyIntoItemsDocument getCopyIntoItemsDocument(
+			String filePath, InputStream inputStream)
+		throws SharepointException {
+
+		CopyIntoItemsDocument copyIntoItemsDocument =
+			CopyIntoItemsDocument.Factory.newInstance();
+
+		CopyIntoItemsDocument.CopyIntoItems copyIntoItems =
+			copyIntoItemsDocument.addNewCopyIntoItems();
+
+		copyIntoItems.setDestinationUrls(
+			_getDestinationUrlCollection(filePath));
+		copyIntoItems.setFields(_getFieldInformationCollection());
+		copyIntoItems.setSourceUrl(SharepointConstants.URL_SOURCE_NONE);
+		copyIntoItems.setStream(_getBytes(inputStream));
+
+		return copyIntoItemsDocument;
+	}
+
+	protected Void processCopyIntoItemsResponseDocument(
+			CopyIntoItemsResponseDocument copyIntoItemsResponseDocument)
+		throws SharepointException {
+
+		CopyIntoItemsResponseDocument.CopyIntoItemsResponse
+			copyIntoItemsResponse =
+				copyIntoItemsResponseDocument.getCopyIntoItemsResponse();
+
+		CopyResultCollection copyResultCollection =
+			copyIntoItemsResponse.getResults();
+
+		CopyResult copyResult = copyResultCollection.getCopyResultArray(0);
+
+		if (copyResult.getErrorCode() != CopyErrorCode.SUCCESS) {
+			throw new SharepointResultException(
+				String.valueOf(copyResult.getErrorCode()),
+				copyResult.getErrorMessage());
+		}
+
+		return null;
 	}
 
 	private byte[] _getBytes(InputStream inputStream)
@@ -89,6 +117,27 @@ public final class AddOrUpdateFileOperation extends BaseOperation {
 			throw new SharepointException(
 				"Unable to read input stream", ioException);
 		}
+	}
+
+	private DestinationUrlCollection _getDestinationUrlCollection(
+		String filePath) {
+
+		DestinationUrlCollection destinationUrlCollection =
+			DestinationUrlCollection.Factory.newInstance();
+
+		destinationUrlCollection.addString(String.valueOf(toURL(filePath)));
+
+		return destinationUrlCollection;
+	}
+
+	private FieldInformationCollection _getFieldInformationCollection() {
+		FieldInformationCollection fieldInformationCollection =
+			FieldInformationCollection.Factory.newInstance();
+
+		fieldInformationCollection.setFieldInformationArray(
+			_EMPTY_FIELD_INFORMATIONS);
+
+		return fieldInformationCollection;
 	}
 
 	private static final FieldInformation[] _EMPTY_FIELD_INFORMATIONS =

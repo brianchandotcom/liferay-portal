@@ -21,14 +21,14 @@ import com.liferay.sharepoint.soap.repository.connector.internal.util.RemoteExce
 import com.liferay.sharepoint.soap.repository.connector.schema.XMLUtil;
 import com.liferay.sharepoint.soap.repository.connector.schema.batch.Batch;
 
-import com.microsoft.schemas.sharepoint.soap.UpdateListItemsResponseUpdateListItemsResult;
-import com.microsoft.schemas.sharepoint.soap.UpdateListItemsUpdates;
+import com.microsoft.schemas.sharepoint.soap.UpdateListItemsDocument;
+import com.microsoft.schemas.sharepoint.soap.UpdateListItemsResponseDocument;
 
 import java.rmi.RemoteException;
 
-import org.apache.axis.message.MessageElement;
+import java.util.Objects;
 
-import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * @author Iván Zaera
@@ -36,59 +36,76 @@ import org.w3c.dom.Element;
 public final class BatchOperation extends BaseOperation {
 
 	public void execute(Batch batch) throws SharepointException {
-		UpdateListItemsUpdates updateListItemsUpdates =
-			new UpdateListItemsUpdates();
-
-		Element element = XMLUtil.toElement(batch);
-
-		MessageElement messageElement = new MessageElement(element);
-
-		updateListItemsUpdates.set_any(new MessageElement[] {messageElement});
-
-		UpdateListItemsResponseUpdateListItemsResult
-			updateListItemsResponseUpdateListItemsResult = null;
+		UpdateListItemsResponseDocument updateListItemsResponseDocument = null;
 
 		try {
-			updateListItemsResponseUpdateListItemsResult =
-				listsSoap.updateListItems(
-					sharepointConnectionInfo.getLibraryName(),
-					updateListItemsUpdates);
+			updateListItemsResponseDocument = listsSoap12Stub.updateListItems(
+				getUpdateListItemsDocument(batch));
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
 
-		_parseUpdateListItemsResponseUpdateListItemsResult(
-			updateListItemsResponseUpdateListItemsResult);
+		processUpdateListItemsResponseDocument(updateListItemsResponseDocument);
 	}
 
-	private void _parseUpdateListItemsResponseUpdateListItemsResult(
-			UpdateListItemsResponseUpdateListItemsResult
-				updateListItemsResponseUpdateListItemsResult)
+	protected UpdateListItemsDocument getUpdateListItemsDocument(Batch batch) {
+		UpdateListItemsDocument updateListItemsDocument =
+			UpdateListItemsDocument.Factory.newInstance();
+
+		UpdateListItemsDocument.UpdateListItems updateListItems =
+			updateListItemsDocument.addNewUpdateListItems();
+
+		updateListItems.setListName(sharepointConnectionInfo.getLibraryName());
+
+		UpdateListItemsDocument.UpdateListItems.Updates updates =
+			updateListItems.addNewUpdates();
+
+		Node node = updates.getDomNode();
+
+		for (Node childNode : XMLUtil.toNodes(node.getOwnerDocument(), batch)) {
+			node.appendChild(childNode);
+		}
+
+		return updateListItemsDocument;
+	}
+
+	protected Void processUpdateListItemsResponseDocument(
+			UpdateListItemsResponseDocument updateListItemsResponseDocument)
 		throws SharepointException {
 
-		Element updateListItemsResponseUpdateListItemsResultElement =
-			XMLUtil.getElement(updateListItemsResponseUpdateListItemsResult);
+		UpdateListItemsResponseDocument.UpdateListItemsResponse
+			updateListItemsResponse =
+				updateListItemsResponseDocument.getUpdateListItemsResponse();
 
-		Element resultElement = XMLUtil.getElement(
-			"Result", updateListItemsResponseUpdateListItemsResultElement);
+		UpdateListItemsResponseDocument.UpdateListItemsResponse.
+			UpdateListItemsResult updateListItemsResult =
+				updateListItemsResponse.getUpdateListItemsResult();
 
-		Element errorCodeElement = XMLUtil.getElement(
-			"ErrorCode", resultElement);
+		Node node = updateListItemsResult.getDomNode();
 
-		String errorCode = errorCodeElement.getTextContent();
+		Node resultsNode = node.getFirstChild();
 
-		if (!errorCode.equals(SharepointConstants.NUMERIC_STATUS_SUCCESS)) {
-			Element errorTextElement = XMLUtil.getElement(
-				"ErrorText", resultElement);
+		Node resultNode = resultsNode.getFirstChild();
 
-			String errorText = errorTextElement.getTextContent();
+		Node errorCodeNode = XMLUtil.getNode("ErrorCode", resultNode);
+
+		String errorCode = XMLUtil.toString(errorCodeNode.getFirstChild());
+
+		if (!Objects.equals(
+				errorCode, SharepointConstants.NUMERIC_STATUS_SUCCESS)) {
+
+			Node errorTextNode = XMLUtil.getNode("ErrorText", resultNode);
+
+			String errorText = XMLUtil.toString(errorTextNode.getFirstChild());
 
 			errorText = errorText.replaceAll(
 				StringPool.NEW_LINE, StringPool.PIPE);
 
 			throw new SharepointResultException(errorCode, errorText);
 		}
+
+		return null;
 	}
 
 }

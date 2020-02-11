@@ -19,9 +19,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.sharepoint.soap.repository.connector.SharepointConnectionInfo;
 import com.liferay.sharepoint.soap.repository.connector.SharepointObject;
 
-import com.microsoft.schemas.sharepoint.soap.CopySoap;
-import com.microsoft.schemas.sharepoint.soap.ListsSoap;
-import com.microsoft.schemas.sharepoint.soap.VersionsSoap;
+import com.microsoft.schemas.sharepoint.soap.CopySoap12Stub;
+import com.microsoft.schemas.sharepoint.soap.ListsSoap12Stub;
+import com.microsoft.schemas.sharepoint.soap.VersionsSoap12Stub;
 
 import java.net.URL;
 
@@ -38,13 +38,13 @@ public abstract class BaseOperation implements Operation {
 	}
 
 	@Override
-	public void setCopySoap(CopySoap copySoap) {
-		this.copySoap = copySoap;
+	public void setCopySoap12Stub(CopySoap12Stub copySoap12Stub) {
+		this.copySoap12Stub = copySoap12Stub;
 	}
 
 	@Override
-	public void setListsSoap(ListsSoap listsSoap) {
-		this.listsSoap = listsSoap;
+	public void setListsSoap12Stub(ListsSoap12Stub listsSoap12Stub) {
+		this.listsSoap12Stub = listsSoap12Stub;
 	}
 
 	@Override
@@ -60,8 +60,8 @@ public abstract class BaseOperation implements Operation {
 	}
 
 	@Override
-	public void setVersionsSoap(VersionsSoap versionsSoap) {
-		this.versionsSoap = versionsSoap;
+	public void setVersionsSoap12Stub(VersionsSoap12Stub versionsSoap12Stub) {
+		this.versionsSoap12Stub = versionsSoap12Stub;
 	}
 
 	public URL toURL(String path) {
@@ -104,10 +104,10 @@ public abstract class BaseOperation implements Operation {
 		return sb.toString();
 	}
 
-	protected CopySoap copySoap;
-	protected ListsSoap listsSoap;
+	protected CopySoap12Stub copySoap12Stub;
+	protected ListsSoap12Stub listsSoap12Stub;
 	protected SharepointConnectionInfo sharepointConnectionInfo;
-	protected VersionsSoap versionsSoap;
+	protected VersionsSoap12Stub versionsSoap12Stub;
 
 	private Map<Class<?>, Operation> _operations;
 

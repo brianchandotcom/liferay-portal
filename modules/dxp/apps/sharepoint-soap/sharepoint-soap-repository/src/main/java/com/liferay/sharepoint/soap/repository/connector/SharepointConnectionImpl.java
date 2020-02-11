@@ -39,18 +39,15 @@ import com.liferay.sharepoint.soap.repository.connector.operation.URLUtil;
 import com.liferay.sharepoint.soap.repository.connector.schema.query.Query;
 import com.liferay.sharepoint.soap.repository.connector.schema.query.QueryOptionsList;
 
-import com.microsoft.schemas.sharepoint.soap.CopyLocator;
-import com.microsoft.schemas.sharepoint.soap.CopySoap;
-import com.microsoft.schemas.sharepoint.soap.ListsLocator;
-import com.microsoft.schemas.sharepoint.soap.ListsSoap;
-import com.microsoft.schemas.sharepoint.soap.VersionsLocator;
-import com.microsoft.schemas.sharepoint.soap.VersionsSoap;
+import com.microsoft.schemas.sharepoint.soap.CopySoap12Stub;
+import com.microsoft.schemas.sharepoint.soap.ListsSoap12Stub;
+import com.microsoft.schemas.sharepoint.soap.VersionsSoap12Stub;
 
 import java.io.InputStream;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -59,10 +56,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.rpc.ServiceException;
-
-import org.apache.axis.client.Call;
-import org.apache.axis.client.Stub;
+import org.apache.axis2.client.Options;
+import org.apache.axis2.client.ServiceClient;
+import org.apache.axis2.client.Stub;
+import org.apache.axis2.transport.http.HTTPConstants;
+import org.apache.axis2.transport.http.impl.httpclient3.HttpTransportPropertiesImpl;
+import org.apache.commons.httpclient.auth.AuthPolicy;
 
 /**
  * @author Iván Zaera
@@ -82,10 +81,10 @@ public class SharepointConnectionImpl implements SharepointConnection {
 			serverVersion, serverProtocol, serverAddress, serverPort, sitePath,
 			libraryName, libraryPath, username, password);
 
-		initCopySoap();
-		initListsSoap();
+		initCopyStub();
+		initListsStub();
 		initSharepointRootFolder();
-		initVersionsSoap();
+		initVersionsStub();
 
 		buildOperations();
 	}
@@ -285,11 +284,11 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		try {
 			O operation = clazz.newInstance();
 
-			operation.setCopySoap(_copySoap);
-			operation.setListsSoap(_listsSoap);
+			operation.setCopySoap12Stub(_copySoap12Stub);
+			operation.setListsSoap12Stub(_listsSoap12Stub);
 			operation.setOperations(_operations);
 			operation.setSharepointConnectionInfo(_sharepointConnectionInfo);
-			operation.setVersionsSoap(_versionsSoap);
+			operation.setVersionsSoap12Stub(_versionsSoap12Stub);
 
 			_operations.put(clazz, operation);
 
@@ -344,13 +343,23 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		}
 	}
 
-	protected void configureStub(Stub stub, URL serviceURL) {
-		stub._setProperty(
-			Stub.ENDPOINT_ADDRESS_PROPERTY, serviceURL.toString());
-		stub._setProperty(
-			Call.PASSWORD_PROPERTY, _sharepointConnectionInfo.getPassword());
-		stub._setProperty(
-			Call.USERNAME_PROPERTY, _sharepointConnectionInfo.getUsername());
+	protected void configureStub(Stub stub, URL url) throws Exception {
+		ServiceClient serviceClient = stub._getServiceClient();
+
+		Options options = serviceClient.getOptions();
+
+		HttpTransportPropertiesImpl.Authenticator authenticator =
+			new HttpTransportPropertiesImpl.Authenticator();
+
+		authenticator.setUsername(_sharepointConnectionInfo.getUsername());
+		authenticator.setPassword(_sharepointConnectionInfo.getPassword());
+		authenticator.setPort(url.getPort());
+		authenticator.setHost(url.getHost());
+		authenticator.setAuthSchemes(
+			Collections.singletonList(AuthPolicy.NTLM));
+		authenticator.setPreemptiveAuthentication(true);
+
+		options.setProperty(HTTPConstants.AUTHENTICATE, authenticator);
 	}
 
 	protected URL getServiceURL(String serviceName) {
@@ -360,76 +369,47 @@ public class SharepointConnectionImpl implements SharepointConnection {
 			StringBundler.concat(url, "_vti_bin/", serviceName, ".asmx"));
 	}
 
-	protected URL getWSDLURL(String serviceName) {
-		String name = "/wsdl/" + serviceName + ".wsdl";
-
-		try {
-			Class<?> clazz = getClass();
-
-			URL url = clazz.getResource(name);
-
-			return new URL(url.toExternalForm());
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new SharepointRuntimeException(
-				"Unable to load WSDL " + name, malformedURLException);
-		}
-	}
-
-	protected void initCopySoap() {
-		URL wsdlURL = getWSDLURL("copy");
-
+	protected void initCopyStub() {
 		URL serviceURL = getServiceURL("copy");
 
 		try {
-			CopyLocator copyLocator = new CopyLocator();
+			_copySoap12Stub = new CopySoap12Stub(null, serviceURL.toString());
 
-			_copySoap = copyLocator.getCopySoap(wsdlURL);
-
-			configureStub((Stub)_copySoap, serviceURL);
+			configureStub(_copySoap12Stub, serviceURL);
 		}
-		catch (ServiceException serviceException) {
+		catch (Exception exception) {
 			throw new SharepointRuntimeException(
-				"Unable to configure SOAP endpoint " + wsdlURL,
-				serviceException);
+				"Unable to configure SOAP endpoint " + serviceURL, exception);
 		}
 	}
 
-	protected void initListsSoap() {
-		URL wsdlURL = getWSDLURL("lists");
-
+	protected void initListsStub() {
 		URL serviceURL = getServiceURL("lists");
 
 		try {
-			ListsLocator listsLocator = new ListsLocator();
+			_listsSoap12Stub = new ListsSoap12Stub(
+				null, serviceURL.toExternalForm());
 
-			_listsSoap = listsLocator.getListsSoap(wsdlURL);
-
-			configureStub((Stub)_listsSoap, serviceURL);
+			configureStub(_listsSoap12Stub, serviceURL);
 		}
-		catch (ServiceException serviceException) {
+		catch (Exception exception) {
 			throw new SharepointRuntimeException(
-				"Unable to configure SOAP endpoint " + wsdlURL,
-				serviceException);
+				"Unable to configure SOAP endpoint " + serviceURL, exception);
 		}
 	}
 
-	protected void initVersionsSoap() {
-		URL wsdlURL = getWSDLURL("versions");
-
+	protected void initVersionsStub() {
 		URL serviceURL = getServiceURL("versions");
 
 		try {
-			VersionsLocator versionsLocator = new VersionsLocator();
+			_versionsSoap12Stub = new VersionsSoap12Stub(
+				null, serviceURL.toExternalForm());
 
-			_versionsSoap = versionsLocator.getVersionsSoap(wsdlURL);
-
-			configureStub((Stub)_versionsSoap, serviceURL);
+			configureStub(_versionsSoap12Stub, serviceURL);
 		}
-		catch (ServiceException serviceException) {
+		catch (Exception exception) {
 			throw new SharepointRuntimeException(
-				"Unable to configure SOAP endpoint " + wsdlURL,
-				serviceException);
+				"Unable to configure SOAP endpoint " + serviceURL, exception);
 		}
 	}
 
@@ -440,7 +420,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	private CheckInFileOperation _checkInFileOperation;
 	private CheckOutFileOperation _checkOutFileOperation;
 	private CopySharepointObjectOperation _copySharepointObjectOperation;
-	private CopySoap _copySoap;
+	private CopySoap12Stub _copySoap12Stub;
 	private DeleteSharepointObjectOperation _deleteSharepointObjectOperation;
 	private GetInputStreamOperation _getInputStreamOperation;
 	private GetSharepointObjectByIdOperation _getSharepointObjectByIdOperation;
@@ -453,11 +433,11 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	private GetSharepointObjectsByQueryOperation
 		_getSharepointObjectsByQueryOperation;
 	private GetSharepointVersionsOperation _getSharepointVersionsOperation;
-	private ListsSoap _listsSoap;
+	private ListsSoap12Stub _listsSoap12Stub;
 	private MoveSharepointObjectOperation _moveSharepointObjectOperation;
 	private final Map<Class<?>, Operation> _operations = new HashMap<>();
 	private final SharepointConnectionInfo _sharepointConnectionInfo;
 	private SharepointObject _sharepointRootFolder;
-	private VersionsSoap _versionsSoap;
+	private VersionsSoap12Stub _versionsSoap12Stub;
 
 }

@@ -17,6 +17,9 @@ package com.liferay.sharepoint.soap.repository.connector.operation;
 import com.liferay.sharepoint.soap.repository.connector.SharepointException;
 import com.liferay.sharepoint.soap.repository.connector.internal.util.RemoteExceptionSharepointExceptionMapper;
 
+import com.microsoft.schemas.sharepoint.soap.UndoCheckOutDocument;
+import com.microsoft.schemas.sharepoint.soap.UndoCheckOutResponseDocument;
+
 import java.rmi.RemoteException;
 
 /**
@@ -25,12 +28,38 @@ import java.rmi.RemoteException;
 public final class CancelCheckOutFileOperation extends BaseOperation {
 
 	public boolean execute(String filePath) throws SharepointException {
+		UndoCheckOutResponseDocument undoCheckOutResponseDocument = null;
+
 		try {
-			return listsSoap.undoCheckOut(String.valueOf(toURL(filePath)));
+			undoCheckOutResponseDocument = listsSoap12Stub.undoCheckOut(
+				getUndoCheckOutDocument(filePath));
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
+
+		return getResponse(undoCheckOutResponseDocument);
+	}
+
+	protected boolean getResponse(
+		UndoCheckOutResponseDocument undoCheckOutResponseDocument) {
+
+		UndoCheckOutResponseDocument.UndoCheckOutResponse undoCheckOutResponse =
+			undoCheckOutResponseDocument.getUndoCheckOutResponse();
+
+		return undoCheckOutResponse.getUndoCheckOutResult();
+	}
+
+	protected UndoCheckOutDocument getUndoCheckOutDocument(String filePath) {
+		UndoCheckOutDocument undoCheckOutDocument =
+			UndoCheckOutDocument.Factory.newInstance();
+
+		UndoCheckOutDocument.UndoCheckOut undoCheckOut =
+			undoCheckOutDocument.addNewUndoCheckOut();
+
+		undoCheckOut.setPageUrl(String.valueOf(toURL(filePath)));
+
+		return undoCheckOutDocument;
 	}
 
 }

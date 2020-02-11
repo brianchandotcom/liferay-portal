@@ -50,9 +50,7 @@ public final class DeleteSharepointObjectOperation extends BaseOperation {
 					new BatchField(
 						"ID", sharepointObject.getSharepointObjectId()),
 					new BatchField(
-						"FileRef",
-						String.valueOf(
-							toFullPath(sharepointObject.getPath()))))));
+						"FileRef", toFullPath(sharepointObject.getPath())))));
 	}
 
 	private BatchOperation _batchOperation;

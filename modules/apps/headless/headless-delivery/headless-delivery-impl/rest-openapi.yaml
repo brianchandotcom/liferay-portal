@@ -938,8 +938,6 @@ components:
             type: object
         FragmentField:
             properties:
-                fragmentLink:
-                    $ref: "#/components/schemas/FragmentLink"
                 id:
                     type: string
                 value:
@@ -965,9 +963,13 @@ components:
             properties:
                 fragmentImage:
                     $ref: "#/components/schemas/FragmentImage"
+                fragmentLink:
+                    $ref: "#/components/schemas/FragmentLink"
             type: object
         FragmentFieldText:
             properties:
+                fragmentLink:
+                    $ref: "#/components/schemas/FragmentLink"
                 text:
                     oneOf:
                         - $ref: "#/components/schemas/InlineValue"

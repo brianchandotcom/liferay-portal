@@ -366,41 +366,6 @@ public class FragmentInstanceDefinitionConverterUtil {
 			{
 				id = textId;
 
-				setFragmentLink(
-					() -> {
-						JSONObject configJSONObject =
-							textJSONObject.getJSONObject("config");
-
-						if (configJSONObject.isNull("href")) {
-							return null;
-						}
-
-						return new FragmentLink() {
-							{
-								value = new InlineLink() {
-									{
-										href = configJSONObject.getString(
-											"href");
-									}
-								};
-
-								setTarget(
-									() -> {
-										String target =
-											configJSONObject.getString(
-												"target");
-
-										if (Validator.isNull(target)) {
-											return null;
-										}
-
-										return Target.create(
-											StringUtil.upperCaseFirstLetter(
-												target.substring(1)));
-									});
-							}
-						};
-					});
 				setValue(
 					() -> {
 						String type = editableTypes.getOrDefault(
@@ -431,6 +396,7 @@ public class FragmentInstanceDefinitionConverterUtil {
 						).build();
 					}
 				};
+				fragmentLink = _toFragmentLink(jsonObject);
 			}
 		};
 	}
@@ -440,11 +406,43 @@ public class FragmentInstanceDefinitionConverterUtil {
 
 		return new FragmentFieldText() {
 			{
+				fragmentLink = _toFragmentLink(jsonObject);
 				text = new InlineValue() {
 					{
 						value_i18n = _toLocaleMap(jsonObject);
 					}
 				};
+			}
+		};
+	}
+
+	private static FragmentLink _toFragmentLink(JSONObject jsonObject) {
+		JSONObject configJSONObject = jsonObject.getJSONObject("config");
+
+		if (configJSONObject.isNull("href")) {
+			return null;
+		}
+
+		return new FragmentLink() {
+			{
+				value = new InlineLink() {
+					{
+						href = configJSONObject.getString("href");
+					}
+				};
+
+				setTarget(
+					() -> {
+						String target = configJSONObject.getString("target");
+
+						if (Validator.isNull(target)) {
+							return null;
+						}
+
+						return Target.create(
+							StringUtil.upperCaseFirstLetter(
+								target.substring(1)));
+					});
 			}
 		};
 	}

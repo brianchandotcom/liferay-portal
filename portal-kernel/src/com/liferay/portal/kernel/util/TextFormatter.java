@@ -189,6 +189,7 @@ public class TextFormatter {
 		return s;
 	}
 
+	@Deprecated
 	public static String formatStorageSize(double size, Locale locale) {
 		String suffix = _STORAGE_SIZE_SUFFIX_B;
 

@@ -15,12 +15,12 @@
 package com.liferay.depot.internal.instance.lifecycle;
 
 import com.liferay.depot.internal.constants.DepotRolesConstants;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -30,13 +30,16 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
-import java.util.Collections;
+import java.util.AbstractMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,19 +56,52 @@ public class DepotRolesPortalInstanceLifecycleListener
 		throws PortalException {
 
 		for (String name : _DEPOT_ROLE_NAMES) {
-			_checkSystemRole(
-				company.getCompanyId(), name,
-				Collections.singletonMap(
-					LocaleUtil.getDefault(),
-					StringBundler.concat(
-						"system.depot.role.",
-						StringUtil.replace(
-							name, CharPool.SPACE, CharPool.PERIOD),
-						".description")));
+			_getOrCreateRole(
+				company.getCompanyId(), name, _getDescriptionMap(name));
 		}
 	}
 
-	private void _checkSystemRole(
+	private String _getDescription(Locale locale, String name) {
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		if (Objects.equals(DepotRolesConstants.DEPOT_ADMINISTRATOR, name)) {
+			return _language.get(
+				resourceBundle,
+				"repository-administrators-are-super-users-of-their-" +
+					"repository-but-cannot-make-other-users-into-repository-" +
+						"administrators");
+		}
+		else if (Objects.equals(DepotRolesConstants.DEPOT_MEMBER, name)) {
+			return _language.get(
+				resourceBundle,
+				"all-users-who-belong-to-a-repository-have-this-role-within-" +
+					"that-repository");
+		}
+		else if (Objects.equals(DepotRolesConstants.DEPOT_OWNER, name)) {
+			return _language.get(
+				resourceBundle,
+				"repository-owners-are-super-users-of-their-repository-and-" +
+					"can-assign-reposiitory-roles-to-users");
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private Map<Locale, String> _getDescriptionMap(String name) {
+		Set<Locale> availableLocales = _language.getAvailableLocales();
+
+		Stream<Locale> stream = availableLocales.stream();
+
+		return stream.map(
+			locale -> new AbstractMap.SimpleEntry<>(
+				locale, _getDescription(locale, name))
+		).collect(
+			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+		);
+	}
+
+	private Role _getOrCreateRole(
 			long companyId, String name, Map<Locale, String> descriptionMap)
 		throws PortalException {
 
@@ -75,8 +111,10 @@ public class DepotRolesPortalInstanceLifecycleListener
 			if (!Objects.equals(descriptionMap, role.getDescriptionMap())) {
 				role.setDescriptionMap(descriptionMap);
 
-				_roleLocalService.updateRole(role);
+				return _roleLocalService.updateRole(role);
 			}
+
+			return role;
 		}
 		catch (NoSuchRoleException noSuchRoleException) {
 			if (_log.isDebugEnabled()) {
@@ -90,7 +128,7 @@ public class DepotRolesPortalInstanceLifecycleListener
 
 				User user = _userLocalService.getDefaultUser(companyId);
 
-				_roleLocalService.addRole(
+				return _roleLocalService.addRole(
 					user.getUserId(), null, 0, name, null, descriptionMap,
 					RoleConstants.TYPE_DEPOT, null, null);
 			}
@@ -107,6 +145,12 @@ public class DepotRolesPortalInstanceLifecycleListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DepotRolesPortalInstanceLifecycleListener.class);
+
+	@Reference
+	private Language _language;
+
+	@Reference(target = "(bundle.symbolic.name=com.liferay.depot.service)")
+	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

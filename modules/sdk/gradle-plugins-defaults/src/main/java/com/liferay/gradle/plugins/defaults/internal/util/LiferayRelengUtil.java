@@ -146,6 +146,14 @@ public class LiferayRelengUtil {
 
 			String[] tokens = artifactUrl.split("/");
 
+			String compatVersion = GradleUtil.getProperty(
+				project, "build.compat.version." + tokens[tokens.length - 3],
+				(String)null);
+
+			if (Validator.isNotNull(compatVersion)) {
+				continue;
+			}
+
 			VersionNumber artifactVersionNumber = VersionNumber.parse(
 				tokens[tokens.length - 2]);
 

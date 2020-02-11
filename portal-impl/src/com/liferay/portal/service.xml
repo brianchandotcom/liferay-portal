@@ -1386,7 +1386,7 @@
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="false" name="OrgGroupRole" remote-service="false">
+	<entity deprecated="true" local-service="false" name="OrgGroupRole" remote-service="false">
 
 		<!-- PK fields -->
 

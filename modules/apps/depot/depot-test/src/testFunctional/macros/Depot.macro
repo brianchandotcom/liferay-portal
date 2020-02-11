@@ -106,6 +106,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro disableRecycleBinViaDepotSettings {
+		Navigator.gotoNavTab(navTab = "General");
+
+		Panel.expandPanel(panel = "Recycle Bin");
+
+		Uncheck.uncheckToggleSwitchNoErrorNoAssert(locator1 = "Checkbox#ENABLE_RECYCLE_BIN");
+
+		AssertConfirm(value1 = "Disabling the Recycle Bin prevents the restoring of content that has been moved to the Recycle Bin.");
+
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#ENABLE_RECYCLE_BIN");
+
+		PortletEntry.save();
+	}
+
 	macro disconnectSite {
 		for (var siteName : list "${siteList}") {
 			LexiconTable.clickEllipsisItem(

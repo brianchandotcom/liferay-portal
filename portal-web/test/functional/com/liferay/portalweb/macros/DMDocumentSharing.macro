@@ -29,9 +29,14 @@ definition {
 	}
 
 	macro changePermission {
-		DMDocument.viewPG(
-			dmDocumentDescription = "${dmDocumentDescription}",
-			dmDocumentTitle = "${dmDocumentTitle}");
+		if (isSet(depotName)) {
+			DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+		}
+		else {
+			DMDocument.viewPG(
+				dmDocumentDescription = "${dmDocumentDescription}",
+				dmDocumentTitle = "${dmDocumentTitle}");
+		}
 
 		DMDocumentSharing._manageCollaborators();
 

@@ -23,12 +23,15 @@ import React, {
 } from 'react';
 import {createPortal} from 'react-dom';
 
+import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {ConfigContext} from '../../config/index';
 import selectEditableValue from '../../selectors/selectEditableValue';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useSelector} from '../../store/index';
 import {
 	useHoverItem,
+	useHoveredItemId,
+	useHoveredItemType,
 	useIsActive,
 	useIsHovered,
 	useSelectItem
@@ -55,6 +58,8 @@ export default function EditableDecoration({
 
 	const isActive = useIsActive();
 	const isHovered = useIsHovered();
+	const hoveredItemId = useHoveredItemId();
+	const hoveredItemType = useHoveredItemType();
 	const hoverItem = useHoverItem();
 	const selectItem = useSelectItem();
 
@@ -263,12 +268,31 @@ export default function EditableDecoration({
 		};
 	}, [hideDecoration, showDecoration, sidebarOpen]);
 
+	const editableValue = useSelector(state => {
+		return selectEditableValue(state, fragmentEntryLinkId, editableId);
+	});
+
+	const isMappedContentHovered = () => {
+		if (hoveredItemId && hoveredItemType === ITEM_TYPES.mappedContent) {
+			const [classNameId, classPK] = hoveredItemId.split('-');
+
+			return (
+				classNameId === editableValue.classNameId &&
+				classPK === editableValue.classPK
+			);
+		}
+
+		return false;
+	};
+
 	return createPortal(
 		<div
 			className={classNames('page-editor__editable-decoration', {
 				[ACTIVE_CLASS]: isActive(itemId),
 				[HIGHLIGHTED_CLASS]: isHighlighted,
-				[HOVERED_CLASS]: !isActive(itemId) && isHovered(itemId),
+				[HOVERED_CLASS]:
+					(!isActive(itemId) && isHovered(itemId)) ||
+					isMappedContentHovered(),
 				[MAPPED_CLASS]: isMapped,
 				[TRANSLATED_CLASS]: isTranslated
 			})}

@@ -423,9 +423,9 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			selectedGroupNames = selectedGroupNamesField.split('@@');
 		}
 
-		if (selectedGroupIds.indexOf(event.entityid) == -1) {
-			selectedGroupIds.push(event.entityid);
-			selectedGroupNames.push(event.entityname);
+		if (selectedGroupIds.indexOf(event.groupid) == -1) {
+			selectedGroupIds.push(event.groupid);
+			selectedGroupNames.push(event.groupdescriptivename);
 		}
 
 		<portlet:namespace />updateGroups(

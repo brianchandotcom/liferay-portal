@@ -28,6 +28,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_privateLayout = privateLayout;
 	}
 
+	public String getTarget() {
+		return _target;
+	}
+
 	public boolean isPrivateLayout() {
 		return _privateLayout;
 	}
@@ -36,6 +40,11 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_privateLayout = privateLayout;
 	}
 
+	public void setTarget(String target) {
+		_target = target;
+	}
+
 	private boolean _privateLayout;
+	private String _target;
 
 }

@@ -21,7 +21,10 @@ SitesItemSelectorViewDisplayContext siteItemSelectorViewDisplayContext = (SitesI
 GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteWebKeys.GROUP_URL_PROVIDER);
 
 String displayStyle = siteItemSelectorViewDisplayContext.getDisplayStyle();
-String target = ParamUtil.getString(request, "target");
+
+GroupItemSelectorCriterion groupItemSelectorCriterion = siteItemSelectorViewDisplayContext.getGroupItemSelectorCriterion();
+
+String target = ParamUtil.getString(request, "target", groupItemSelectorCriterion.getTarget());
 
 GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 %>

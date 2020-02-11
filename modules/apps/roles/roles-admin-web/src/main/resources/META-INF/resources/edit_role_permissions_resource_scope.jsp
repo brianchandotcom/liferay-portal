@@ -106,18 +106,17 @@ List groupNames = (List)objArray[8];
 						title: '<liferay-ui:message arguments="site" key="select-x" />',
 
 						<%
-						PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
+						ItemSelector itemSelector = (ItemSelector)request.getAttribute(RolesAdminWebKeys.ITEM_SELECTOR);
 
-						groupSelectorURL.setParameter("includeCompany", Boolean.TRUE.toString());
-						groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
-						groupSelectorURL.setParameter("includeFormsSite", Boolean.TRUE.toString());
-						groupSelectorURL.setParameter("includeUserPersonalSite", Boolean.TRUE.toString());
-						groupSelectorURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectGroup");
-						groupSelectorURL.setParameter("target", target);
-						groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
+						GroupItemSelectorCriterion groupItemSelectorCriterion = new GroupItemSelectorCriterion();
+
+						groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new URLItemSelectorReturnType());
+						groupItemSelectorCriterion.setTarget(target);
+
+						PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), liferayPortletResponse.getNamespace() + "selectGroup", groupItemSelectorCriterion);
 						%>
 
-						uri: '<%= groupSelectorURL.toString() %>'
+						uri: '<%= itemSelectorURL.toString() %>'
 					});
 				});
 			}

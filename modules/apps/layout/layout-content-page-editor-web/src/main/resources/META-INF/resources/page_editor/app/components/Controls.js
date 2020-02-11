@@ -14,6 +14,8 @@
 
 import React, {useCallback, useContext, useReducer} from 'react';
 
+import {ITEM_TYPES} from '../config/constants/itemTypes';
+
 const INITIAL_STATE = {
 	activeItemId: null,
 	editingItemId: null,
@@ -29,11 +31,15 @@ const ControlsContext = React.createContext([INITIAL_STATE, () => {}]);
 const ControlsConsumer = ControlsContext.Consumer;
 
 const reducer = (state, action) => {
-	const {itemId, multiSelect, type} = action;
+	const {itemId, itemType, multiSelect, type} = action;
 	let nextState = state;
 
 	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
-		nextState = {...nextState, hoveredItemId: itemId};
+		nextState = {
+			...nextState,
+			hoveredItemId: itemId,
+			hoveredItemType: itemType
+		};
 	}
 	else if (
 		type === SELECT_EDITING_ITEM &&
@@ -48,6 +54,7 @@ const reducer = (state, action) => {
 			nextState = {
 				...nextState,
 				activeItemId: wasSelected ? null : itemId,
+				activeItemType: itemType,
 				selectedItemsIds: wasSelected
 					? state.selectedItemsIds.filter(id => id !== itemId)
 					: state.selectedItemsIds.concat([itemId])
@@ -57,6 +64,7 @@ const reducer = (state, action) => {
 			nextState = {
 				...nextState,
 				activeItemId: itemId,
+				activeItemType: itemType,
 				selectedItemsIds: [itemId]
 			};
 		}
@@ -67,6 +75,7 @@ const reducer = (state, action) => {
 			nextState = {
 				...nextState,
 				activeItemId: null,
+				activeItemType: null,
 				selectedItemsIds: []
 			};
 		}
@@ -107,9 +116,15 @@ const useHoverItem = () => {
 	const [, dispatch] = useContext(ControlsContext);
 
 	return useCallback(
-		itemId =>
+		(
+			itemId,
+			{itemType = ITEM_TYPES.layoutDataItem} = {
+				itemType: ITEM_TYPES.layoutDataItem
+			}
+		) =>
 			dispatch({
 				itemId,
+				itemType,
 				type: HOVER_ITEM
 			}),
 		[dispatch]
@@ -157,9 +172,16 @@ const useSelectItem = () => {
 	const [, dispatch] = useContext(ControlsContext);
 
 	return useCallback(
-		(itemId, {multiSelect = false} = {multiSelect: false}) =>
+		(
+			itemId,
+			{multiSelect = false, itemType = ITEM_TYPES.layoutDataItem} = {
+				itemType: ITEM_TYPES.layoutDataItem,
+				multiSelect: false
+			}
+		) =>
 			dispatch({
 				itemId,
+				itemType,
 				multiSelect,
 				type: SELECT_ITEM
 			}),

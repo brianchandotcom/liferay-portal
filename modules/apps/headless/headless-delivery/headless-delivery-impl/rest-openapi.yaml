@@ -973,7 +973,18 @@ components:
                         - $ref: "#/components/schemas/InlineValue"
                         - $ref: "#/components/schemas/MappedValue"
             type: object
-        FragmentDefinition:
+        FragmentImage:
+            properties:
+                title:
+                    oneOf:
+                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/MappedValue"
+                url:
+                    oneOf:
+                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/MappedValue"
+            type: object
+        FragmentInstanceDefinition:
             properties:
                 fragmentCollectionName:
                     type: string
@@ -987,17 +998,6 @@ components:
                     type: array
                 fragmentName:
                     type: string
-            type: object
-        FragmentImage:
-            properties:
-                title:
-                    oneOf:
-                        - $ref: "#/components/schemas/InlineValue"
-                        - $ref: "#/components/schemas/MappedValue"
-                url:
-                    oneOf:
-                        - $ref: "#/components/schemas/InlineValue"
-                        - $ref: "#/components/schemas/MappedValue"
             type: object
         FragmentLink:
             properties:
@@ -1771,7 +1771,7 @@ components:
                 definition:
                     oneOf:
                         - $ref: "#/components/schemas/ColumnDefinition"
-                        - $ref: "#/components/schemas/FragmentDefinition"
+                        - $ref: "#/components/schemas/FragmentInstanceDefinition"
                         - $ref: "#/components/schemas/RootDefinition"
                         - $ref: "#/components/schemas/RowDefinition"
                         - $ref: "#/components/schemas/SectionDefinition"

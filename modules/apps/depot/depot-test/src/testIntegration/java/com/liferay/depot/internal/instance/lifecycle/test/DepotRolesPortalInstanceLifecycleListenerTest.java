@@ -15,8 +15,14 @@
 package com.liferay.depot.internal.instance.lifecycle.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -47,15 +53,9 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 		try {
 			company = CompanyTestUtil.addCompany();
 
-			Assert.assertNotNull(
-				_roleLocalService.getRole(
-					company.getCompanyId(), "Depot Administrator"));
-			Assert.assertNotNull(
-				_roleLocalService.getRole(
-					company.getCompanyId(), "Depot Member"));
-			Assert.assertNotNull(
-				_roleLocalService.getRole(
-					company.getCompanyId(), "Depot Owner"));
+			_assertRole(company.getCompanyId(), "Depot Administrator");
+			_assertRole(company.getCompanyId(), "Depot Member");
+			_assertRole(company.getCompanyId(), "Depot Owner");
 		}
 		finally {
 			if (company != null) {
@@ -64,8 +64,36 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 		}
 	}
 
+	private void _assertRole(long companyId, String name)
+		throws PortalException {
+
+		try {
+			Role role = _roleLocalService.getRole(companyId, name);
+
+			int resourcePermissionsCount =
+				_resourcePermissionLocalService.getResourcePermissionsCount(
+					companyId, Role.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(role.getRoleId()));
+
+			Assert.assertEquals(1, resourcePermissionsCount);
+		}
+		catch (NoSuchRoleException noSuchRoleException) {
+			throw new AssertionError(noSuchRoleException.getMessage());
+		}
+		catch (NoSuchResourcePermissionException
+					noSuchResourcePermissionException) {
+
+			throw new AssertionError(
+				noSuchResourcePermissionException.getMessage());
+		}
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

@@ -150,7 +150,7 @@ definition {
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
-		Depot.depotShare(depotShare = "No");
+		Depot.configureSharing(sharing = "Disabled");
 
 		DepotNavigator.openDepotAdmin();
 

@@ -311,6 +311,27 @@ public interface FragmentEntryModel
 	public void setJs(String js);
 
 	/**
+	 * Returns the cacheable of this fragment entry.
+	 *
+	 * @return the cacheable of this fragment entry
+	 */
+	public boolean getCacheable();
+
+	/**
+	 * Returns <code>true</code> if this fragment entry is cacheable.
+	 *
+	 * @return <code>true</code> if this fragment entry is cacheable; <code>false</code> otherwise
+	 */
+	public boolean isCacheable();
+
+	/**
+	 * Sets whether this fragment entry is cacheable.
+	 *
+	 * @param cacheable the cacheable of this fragment entry
+	 */
+	public void setCacheable(boolean cacheable);
+
+	/**
 	 * Returns the configuration of this fragment entry.
 	 *
 	 * @return the configuration of this fragment entry
@@ -373,27 +394,6 @@ public interface FragmentEntryModel
 	 * @param type the type of this fragment entry
 	 */
 	public void setType(int type);
-
-	/**
-	 * Returns the cacheable of this fragment entry.
-	 *
-	 * @return the cacheable of this fragment entry
-	 */
-	public boolean getCacheable();
-
-	/**
-	 * Returns <code>true</code> if this fragment entry is cacheable.
-	 *
-	 * @return <code>true</code> if this fragment entry is cacheable; <code>false</code> otherwise
-	 */
-	public boolean isCacheable();
-
-	/**
-	 * Sets whether this fragment entry is cacheable.
-	 *
-	 * @param cacheable the cacheable of this fragment entry
-	 */
-	public void setCacheable(boolean cacheable);
 
 	/**
 	 * Returns the last publish date of this fragment entry.

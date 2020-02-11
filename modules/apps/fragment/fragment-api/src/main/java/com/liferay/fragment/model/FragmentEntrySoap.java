@@ -46,11 +46,11 @@ public class FragmentEntrySoap implements Serializable {
 		soapModel.setCss(model.getCss());
 		soapModel.setHtml(model.getHtml());
 		soapModel.setJs(model.getJs());
+		soapModel.setCacheable(model.isCacheable());
 		soapModel.setConfiguration(model.getConfiguration());
 		soapModel.setPreviewFileEntryId(model.getPreviewFileEntryId());
 		soapModel.setReadOnly(model.isReadOnly());
 		soapModel.setType(model.getType());
-		soapModel.setCacheable(model.isCacheable());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
@@ -229,6 +229,18 @@ public class FragmentEntrySoap implements Serializable {
 		_js = js;
 	}
 
+	public boolean getCacheable() {
+		return _cacheable;
+	}
+
+	public boolean isCacheable() {
+		return _cacheable;
+	}
+
+	public void setCacheable(boolean cacheable) {
+		_cacheable = cacheable;
+	}
+
 	public String getConfiguration() {
 		return _configuration;
 	}
@@ -263,18 +275,6 @@ public class FragmentEntrySoap implements Serializable {
 
 	public void setType(int type) {
 		_type = type;
-	}
-
-	public boolean getCacheable() {
-		return _cacheable;
-	}
-
-	public boolean isCacheable() {
-		return _cacheable;
-	}
-
-	public void setCacheable(boolean cacheable) {
-		_cacheable = cacheable;
 	}
 
 	public Date getLastPublishDate() {
@@ -332,11 +332,11 @@ public class FragmentEntrySoap implements Serializable {
 	private String _css;
 	private String _html;
 	private String _js;
+	private boolean _cacheable;
 	private String _configuration;
 	private long _previewFileEntryId;
 	private boolean _readOnly;
 	private int _type;
-	private boolean _cacheable;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;

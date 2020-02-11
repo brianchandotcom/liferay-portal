@@ -65,14 +65,14 @@ public class FragmentEntryLocalServiceUtil {
 	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
 			String fragmentEntryKey, String name, String css, String html,
-			String js, String configuration, long previewFileEntryId, int type,
-			boolean cacheable, int status,
+			String js, boolean cacheable, String configuration,
+			long previewFileEntryId, int type, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addFragmentEntry(
 			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
-			html, js, configuration, previewFileEntryId, type, cacheable,
+			html, js, cacheable, configuration, previewFileEntryId, type,
 			status, serviceContext);
 	}
 

@@ -98,8 +98,8 @@ public class FragmentEntryServiceHttp {
 	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 			HttpPrincipal httpPrincipal, long groupId,
 			long fragmentCollectionId, String fragmentEntryKey, String name,
-			String css, String html, String js, String configuration,
-			long previewFileEntryId, int type, boolean cacheable, int status,
+			String css, String html, String js, boolean cacheable,
+			String configuration, long previewFileEntryId, int type, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -110,8 +110,8 @@ public class FragmentEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, fragmentCollectionId, fragmentEntryKey,
-				name, css, html, js, configuration, previewFileEntryId, type,
-				cacheable, status, serviceContext);
+				name, css, html, js, cacheable, configuration,
+				previewFileEntryId, type, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -1263,8 +1263,8 @@ public class FragmentEntryServiceHttp {
 	private static final Class<?>[] _addFragmentEntryParameterTypes1 =
 		new Class[] {
 			long.class, long.class, String.class, String.class, String.class,
-			String.class, String.class, String.class, long.class, int.class,
-			boolean.class, int.class,
+			String.class, String.class, boolean.class, String.class, long.class,
+			int.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addFragmentEntryParameterTypes2 =

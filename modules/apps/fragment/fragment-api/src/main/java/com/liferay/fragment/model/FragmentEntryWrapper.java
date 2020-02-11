@@ -58,11 +58,11 @@ public class FragmentEntryWrapper
 		attributes.put("css", getCss());
 		attributes.put("html", getHtml());
 		attributes.put("js", getJs());
+		attributes.put("cacheable", isCacheable());
 		attributes.put("configuration", getConfiguration());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("readOnly", isReadOnly());
 		attributes.put("type", getType());
-		attributes.put("cacheable", isCacheable());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -165,6 +165,12 @@ public class FragmentEntryWrapper
 			setJs(js);
 		}
 
+		Boolean cacheable = (Boolean)attributes.get("cacheable");
+
+		if (cacheable != null) {
+			setCacheable(cacheable);
+		}
+
 		String configuration = (String)attributes.get("configuration");
 
 		if (configuration != null) {
@@ -187,12 +193,6 @@ public class FragmentEntryWrapper
 
 		if (type != null) {
 			setType(type);
-		}
-
-		Boolean cacheable = (Boolean)attributes.get("cacheable");
-
-		if (cacheable != null) {
-			setCacheable(cacheable);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");

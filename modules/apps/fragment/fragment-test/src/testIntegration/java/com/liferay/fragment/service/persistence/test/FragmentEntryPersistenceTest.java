@@ -152,6 +152,8 @@ public class FragmentEntryPersistenceTest {
 
 		newFragmentEntry.setJs(RandomTestUtil.randomString());
 
+		newFragmentEntry.setCacheable(RandomTestUtil.randomBoolean());
+
 		newFragmentEntry.setConfiguration(RandomTestUtil.randomString());
 
 		newFragmentEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
@@ -159,8 +161,6 @@ public class FragmentEntryPersistenceTest {
 		newFragmentEntry.setReadOnly(RandomTestUtil.randomBoolean());
 
 		newFragmentEntry.setType(RandomTestUtil.nextInt());
-
-		newFragmentEntry.setCacheable(RandomTestUtil.randomBoolean());
 
 		newFragmentEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -216,6 +216,9 @@ public class FragmentEntryPersistenceTest {
 		Assert.assertEquals(
 			existingFragmentEntry.getJs(), newFragmentEntry.getJs());
 		Assert.assertEquals(
+			existingFragmentEntry.isCacheable(),
+			newFragmentEntry.isCacheable());
+		Assert.assertEquals(
 			existingFragmentEntry.getConfiguration(),
 			newFragmentEntry.getConfiguration());
 		Assert.assertEquals(
@@ -225,9 +228,6 @@ public class FragmentEntryPersistenceTest {
 			existingFragmentEntry.isReadOnly(), newFragmentEntry.isReadOnly());
 		Assert.assertEquals(
 			existingFragmentEntry.getType(), newFragmentEntry.getType());
-		Assert.assertEquals(
-			existingFragmentEntry.isCacheable(),
-			newFragmentEntry.isCacheable());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingFragmentEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newFragmentEntry.getLastPublishDate()));
@@ -379,8 +379,8 @@ public class FragmentEntryPersistenceTest {
 			"fragmentEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "fragmentCollectionId", true,
-			"fragmentEntryKey", true, "name", true, "previewFileEntryId", true,
-			"readOnly", true, "type", true, "cacheable", true,
+			"fragmentEntryKey", true, "name", true, "cacheable", true,
+			"previewFileEntryId", true, "readOnly", true, "type", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
 	}
@@ -663,6 +663,8 @@ public class FragmentEntryPersistenceTest {
 
 		fragmentEntry.setJs(RandomTestUtil.randomString());
 
+		fragmentEntry.setCacheable(RandomTestUtil.randomBoolean());
+
 		fragmentEntry.setConfiguration(RandomTestUtil.randomString());
 
 		fragmentEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
@@ -670,8 +672,6 @@ public class FragmentEntryPersistenceTest {
 		fragmentEntry.setReadOnly(RandomTestUtil.randomBoolean());
 
 		fragmentEntry.setType(RandomTestUtil.nextInt());
-
-		fragmentEntry.setCacheable(RandomTestUtil.randomBoolean());
 
 		fragmentEntry.setLastPublishDate(RandomTestUtil.nextDate());
 

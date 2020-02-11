@@ -75,7 +75,9 @@ public class PageDefinitionConverterUtil {
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
 					layout.getGroupId(),
-					PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+					PortalUtil.getClassNameId(
+						com.liferay.portal.kernel.model.Layout.class),
+					layout.getPlid());
 
 		String layoutData = LayoutDataConverter.convert(
 			layoutPageTemplateStructure.getData(0L));

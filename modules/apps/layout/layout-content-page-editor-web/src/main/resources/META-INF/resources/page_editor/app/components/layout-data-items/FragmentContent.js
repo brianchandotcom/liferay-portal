@@ -269,7 +269,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		);
 
 		if (!editingItemId) {
-			if (editableType !== EDITABLE_TYPES.image) {
+			if (isAlloyEditorBasedEditableType(editableType)) {
 				selectEditingItemId(getEditableUniqueId(editableId));
 			}
 
@@ -399,6 +399,11 @@ const editableIsMappedToInfoItem = editableValue =>
 	editableValue.classNameId &&
 	editableValue.classPK &&
 	editableValue.fieldId;
+
+const isAlloyEditorBasedEditableType = editableType =>
+	editableType === EDITABLE_TYPES.link ||
+	editableType === EDITABLE_TYPES['rich-text'] ||
+	editableType === EDITABLE_TYPES.text;
 
 const editableIsMapped = editableValue =>
 	editableIsMappedToInfoItem(editableValue) || editableValue.mappedField;

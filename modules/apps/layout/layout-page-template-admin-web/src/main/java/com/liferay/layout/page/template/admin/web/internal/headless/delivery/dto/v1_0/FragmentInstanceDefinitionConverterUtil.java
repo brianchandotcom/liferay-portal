@@ -27,9 +27,9 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
-import com.liferay.headless.delivery.dto.v1_0.FragmentContentField;
-import com.liferay.headless.delivery.dto.v1_0.FragmentContentFieldImage;
-import com.liferay.headless.delivery.dto.v1_0.FragmentContentFieldText;
+import com.liferay.headless.delivery.dto.v1_0.FragmentField;
+import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
+import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
@@ -97,16 +97,16 @@ public class FragmentInstanceDefinitionConverterUtil {
 				};
 				fragmentConfig = _getFragmentConfig(
 					fragmentEntryConfigurationParser, fragmentEntryLink);
-				fragmentContentFields = _getFragmentContentFields(
+				fragmentFields = _getFragmentFields(
 					fragmentEntryLink);
 			}
 		};
 	}
 
-	private static List<FragmentContentField>
-		_getBackgroundImageFragmentContentFields(JSONObject jsonObject) {
+	private static List<FragmentField>
+		_getBackgroundImageFragmentFields(JSONObject jsonObject) {
 
-		List<FragmentContentField> fragmentContentFields = new ArrayList<>();
+		List<FragmentField> fragmentFields = new ArrayList<>();
 
 		Set<String> backgroundImageIds = jsonObject.keySet();
 
@@ -114,11 +114,11 @@ public class FragmentInstanceDefinitionConverterUtil {
 			JSONObject imageJSONObject = jsonObject.getJSONObject(
 				backgroundImageId);
 
-			fragmentContentFields.add(
-				new FragmentContentField() {
+			fragmentFields.add(
+				new FragmentField() {
 					{
 						id = backgroundImageId;
-						value = new FragmentContentFieldImage() {
+						value = new FragmentFieldImage() {
 							{
 								fragmentImage = new FragmentImage() {
 									{
@@ -142,7 +142,7 @@ public class FragmentInstanceDefinitionConverterUtil {
 				});
 		}
 
-		return fragmentContentFields;
+		return fragmentFields;
 	}
 
 	private static Map<String, String> _getEditableTypes(String html) {
@@ -253,7 +253,7 @@ public class FragmentInstanceDefinitionConverterUtil {
 		}
 	}
 
-	private static FragmentContentField[] _getFragmentContentFields(
+	private static FragmentField[] _getFragmentFields(
 		FragmentEntryLink fragmentEntryLink) {
 
 		JSONObject editableValuesJSONObject = null;
@@ -266,10 +266,10 @@ public class FragmentInstanceDefinitionConverterUtil {
 			return null;
 		}
 
-		List<FragmentContentField> fragmentContentFields = new ArrayList<>();
+		List<FragmentField> fragmentFields = new ArrayList<>();
 
-		fragmentContentFields.addAll(
-			_getBackgroundImageFragmentContentFields(
+		fragmentFields.addAll(
+			_getBackgroundImageFragmentFields(
 				editableValuesJSONObject.getJSONObject(
 					"com.liferay.fragment.entry.processor.background.image." +
 						"BackgroundImageFragmentEntryProcessor")));
@@ -277,14 +277,14 @@ public class FragmentInstanceDefinitionConverterUtil {
 		Map<String, String> editableTypes = _getEditableTypes(
 			fragmentEntryLink.getHtml());
 
-		fragmentContentFields.addAll(
-			_getTextFragmentContentFields(
+		fragmentFields.addAll(
+			_getTextFragmentFields(
 				editableTypes,
 				editableValuesJSONObject.getJSONObject(
 					"com.liferay.fragment.entry.processor.editable." +
 						"EditableFragmentEntryProcessor")));
 
-		return fragmentContentFields.toArray(new FragmentContentField[0]);
+		return fragmentFields.toArray(new FragmentField[0]);
 	}
 
 	private static FragmentEntry _getFragmentEntry(
@@ -341,28 +341,28 @@ public class FragmentInstanceDefinitionConverterUtil {
 		return fragmentRenderer.getLabel(LocaleUtil.getSiteDefault());
 	}
 
-	private static List<FragmentContentField> _getTextFragmentContentFields(
+	private static List<FragmentField> _getTextFragmentFields(
 		Map<String, String> editableTypes, JSONObject jsonObject) {
 
-		List<FragmentContentField> fragmentContentFields = new ArrayList<>();
+		List<FragmentField> fragmentFields = new ArrayList<>();
 
 		Set<String> textIds = jsonObject.keySet();
 
 		for (String textId : textIds) {
-			fragmentContentFields.add(
-				_toFragmentContentField(editableTypes, jsonObject, textId));
+			fragmentFields.add(
+				_toFragmentField(editableTypes, jsonObject, textId));
 		}
 
-		return fragmentContentFields;
+		return fragmentFields;
 	}
 
-	private static FragmentContentField _toFragmentContentField(
+	private static FragmentField _toFragmentField(
 		Map<String, String> editableTypes, JSONObject jsonObject,
 		String textId) {
 
 		JSONObject textJSONObject = jsonObject.getJSONObject(textId);
 
-		return new FragmentContentField() {
+		return new FragmentField() {
 			{
 				id = textId;
 
@@ -407,19 +407,19 @@ public class FragmentInstanceDefinitionConverterUtil {
 							textId, "text");
 
 						if (Objects.equals(type, "image")) {
-							return _toFragmentContentFieldImage(textJSONObject);
+							return _toFragmentFieldImage(textJSONObject);
 						}
 
-						return _toFragmentContentFieldText(textJSONObject);
+						return _toFragmentFieldText(textJSONObject);
 					});
 			}
 		};
 	}
 
-	private static FragmentContentFieldImage _toFragmentContentFieldImage(
+	private static FragmentFieldImage _toFragmentFieldImage(
 		JSONObject jsonObject) {
 
-		return new FragmentContentFieldImage() {
+		return new FragmentFieldImage() {
 			{
 				fragmentImage = new FragmentImage() {
 					{
@@ -435,10 +435,10 @@ public class FragmentInstanceDefinitionConverterUtil {
 		};
 	}
 
-	private static FragmentContentFieldText _toFragmentContentFieldText(
+	private static FragmentFieldText _toFragmentFieldText(
 		JSONObject jsonObject) {
 
-		return new FragmentContentFieldText() {
+		return new FragmentFieldText() {
 			{
 				text = new InlineValue() {
 					{

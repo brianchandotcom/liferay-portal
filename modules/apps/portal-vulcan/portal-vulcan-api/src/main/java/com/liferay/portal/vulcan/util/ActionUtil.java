@@ -100,13 +100,13 @@ public class ActionUtil {
 			return null;
 		}
 
-		if (object != null) {
+		if ((object != null) &&
+			OAuth2ProviderScopeLiferayAccessControlContext.
+				isOAuth2AuthVerified()) {
+
 			ScopeChecker scopeChecker = (ScopeChecker)object;
 
-			if (OAuth2ProviderScopeLiferayAccessControlContext.
-					isOAuth2AuthVerified() &&
-				!scopeChecker.checkScope(methodName)) {
-
+			if (!scopeChecker.checkScope(methodName)) {
 				return null;
 			}
 		}

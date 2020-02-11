@@ -37,6 +37,10 @@ class LayoutPageTemplateEntryManagementToolbarDefaultEventHandler extends Defaul
 			submitForm(this.one('#fm'));
 		}
 	}
+
+	exportLayoutPageTemplateEntries(itemData) {
+		submitForm(this.one('#fm'), itemData.convertLayoutPageTemplateEntryURL);
+	}
 }
 
 LayoutPageTemplateEntryManagementToolbarDefaultEventHandler.STATE = {

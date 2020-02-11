@@ -109,7 +109,9 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 						_getConfigureLayoutPageTemplateEntryActionUnsafeConsumer());
 				}
 
-				if (ExportImportLayoutPageTemplateConfigurationUtil.enabled()) {
+				if (ExportImportLayoutPageTemplateConfigurationUtil.enabled() &&
+					(_layoutPageTemplateEntry.getLayoutPrototypeId() == 0)) {
+
 					add(
 						_getExportLayoutPageTemplateEntryActionUnsafeConsumer());
 				}

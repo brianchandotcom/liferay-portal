@@ -110,7 +110,9 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 			availableActions.add("deleteLayoutPageTemplateEntries");
 		}
 
-		if (ExportImportLayoutPageTemplateConfigurationUtil.enabled()) {
+		if (ExportImportLayoutPageTemplateConfigurationUtil.enabled() &&
+			(layoutPageTemplateEntry.getLayoutPrototypeId() == 0)) {
+
 			availableActions.add("exportLayoutPageTemplateEntries");
 		}
 

@@ -126,9 +126,7 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
-		Layout layout = _layoutLocalService.getLayout(classPK);
+		Layout layout = _layoutLocalService.getLayout(themeDisplay.getPlid());
 
 		String portletId = PortletIdCodec.decodePortletName(
 			ParamUtil.getString(actionRequest, "portletId"));
@@ -141,8 +139,6 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		try {
-			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-
 			String instanceId = _getPortletInstanceId(
 				layout, portletId,
 				ParamUtil.getLong(actionRequest, "segmentsExperienceId"));
@@ -161,8 +157,9 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			FragmentEntryLink fragmentEntryLink =
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
 					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), 0, 0, classNameId,
-					classPK, StringPool.BLANK, StringPool.BLANK,
+					serviceContext.getScopeGroupId(), 0, 0,
+					_portal.getClassNameId(Layout.class),
+					themeDisplay.getPlid(), StringPool.BLANK, StringPool.BLANK,
 					StringPool.BLANK, StringPool.BLANK,
 					editableValueJSONObject.toString(), StringPool.BLANK, 0,
 					null, serviceContext);

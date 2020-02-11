@@ -54,6 +54,7 @@ class Sidebar extends Component {
 			fieldTypes,
 			focusedField
 		} = this.props;
+		const {activeTab} = this.state;
 		const {dispatch} = this.context;
 		const newFieldType = fieldTypes.find(({name}) => name === type);
 		const newSettingsContext = {
@@ -66,7 +67,6 @@ class Sidebar extends Component {
 			)
 		};
 		const sidebarTabIndex = newSettingsContext.pages.length - 1;
-		const {activeTab} = this.state;
 		let {settingsContext} = focusedField;
 
 		if (type !== focusedField.type) {
@@ -793,6 +793,7 @@ class Sidebar extends Component {
 						}
 					}
 				}
+
 				return newField;
 			})
 		};

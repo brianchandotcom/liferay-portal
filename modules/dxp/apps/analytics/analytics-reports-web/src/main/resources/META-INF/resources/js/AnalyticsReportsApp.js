@@ -11,11 +11,11 @@
 
 import React from 'react';
 
-import BasicInformation from './components/BasicInformation.es';
-import Chart from './components/Chart.es';
-import TotalCount from './components/TotalCount.es';
-import APIService from './utils/APIService.es';
-import {numberFormat} from './utils/numberFormat.es';
+import BasicInformation from './components/BasicInformation';
+import Chart from './components/Chart';
+import TotalCount from './components/TotalCount';
+import APIService from './utils/APIService';
+import {numberFormat} from './utils/numberFormat';
 
 export default function({context, props}) {
 	const {endpoints, languageTag, namespace, page} = context;

@@ -13,7 +13,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render, wait} from '@testing-library/react';
 import React from 'react';
 
-import Chart from '../../../src/main/resources/META-INF/resources/js/components/Chart.es';
+import Chart from '../../../src/main/resources/META-INF/resources/js/components/Chart';
 
 describe('Chart', () => {
 	afterEach(cleanup);

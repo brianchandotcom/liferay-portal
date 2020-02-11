@@ -14,7 +14,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Popover from './Popover.es';
+import Popover from './Popover';
 
 function TotalCount({
 	className,

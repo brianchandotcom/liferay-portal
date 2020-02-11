@@ -13,7 +13,7 @@ import {cleanup, render, wait, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import TotalCount from '../../../src/main/resources/META-INF/resources/js/components/TotalCount.es';
+import TotalCount from '../../../src/main/resources/META-INF/resources/js/components/TotalCount';
 
 import '@testing-library/jest-dom/extend-expect';
 

@@ -13,7 +13,7 @@ import {cleanup} from '@testing-library/react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {numberFormat} from '../../../src/main/resources/META-INF/resources/js/utils/numberFormat.es';
+import {numberFormat} from '../../../src/main/resources/META-INF/resources/js/utils/numberFormat';
 
 describe('numberFormat', () => {
 	afterEach(cleanup);

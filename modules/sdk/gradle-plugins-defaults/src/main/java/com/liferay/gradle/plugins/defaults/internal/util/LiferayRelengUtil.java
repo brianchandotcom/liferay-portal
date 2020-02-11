@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.defaults.internal.util;
 
+import aQute.bnd.osgi.Constants;
+
 import com.liferay.gradle.plugins.cache.WriteDigestTask;
 import com.liferay.gradle.plugins.defaults.LiferayThemeDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTask;
@@ -34,7 +36,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
-import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
@@ -47,9 +48,8 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
 import org.gradle.api.tasks.Upload;
-import org.gradle.process.ExecResult;
-import org.gradle.process.ExecSpec;
 import org.gradle.util.GUtil;
+import org.gradle.util.VersionNumber;
 
 /**
  * @author Andrea Di Giorgi
@@ -107,15 +107,15 @@ public class LiferayRelengUtil {
 		Project project, String artifactGitId) {
 
 		List<File> artifactPropertiesFiles = _getArtifactPropertiesFiles(
-			project);
+			project, true);
 
 		for (File artifactPropertiesFile : artifactPropertiesFiles) {
 			Properties artifactProperties = GUtil.loadProperties(
 				artifactPropertiesFile);
 
-			String gitId = artifactProperties.getProperty("artifact.git.id");
+			String artifactUrl = artifactProperties.getProperty("artifact.url");
 
-			if (Validator.isNull(gitId)) {
+			if (Validator.isNull(artifactUrl)) {
 				File artifactProjectDir = _getArtifactProjectDir(
 					artifactPropertiesFile);
 
@@ -124,35 +124,21 @@ public class LiferayRelengUtil {
 						"' has never been published");
 			}
 
-			final String[] args = {
-				"merge-base", "--is-ancestor", gitId, artifactGitId
-			};
+			String[] tokens = artifactUrl.split("/");
 
-			ExecResult execResult = project.exec(
-				new Action<ExecSpec>() {
+			VersionNumber artifactVersionNumber = VersionNumber.parse(
+				tokens[tokens.length - 2]);
 
-					@Override
-					public void execute(ExecSpec execSpec) {
-						execSpec.args((Object[])args);
-						execSpec.setExecutable("git");
-						execSpec.setIgnoreExitValue(true);
-					}
+			File artifactProjectDir = _getArtifactProjectDir(
+				artifactPropertiesFile);
 
-				});
+			Properties properties = GUtil.loadProperties(
+				new File(artifactProjectDir, "bnd.bnd"));
 
-			Logger logger = project.getLogger();
+			VersionNumber versionNumber = VersionNumber.parse(
+				properties.getProperty(Constants.BUNDLE_VERSION));
 
-			if (logger.isInfoEnabled()) {
-				File artifactProjectDir = _getArtifactProjectDir(
-					artifactPropertiesFile);
-
-				logger.info(
-					"Git command 'git {}' for '{}' has exit value {}.",
-					String.join(" ", args), artifactProjectDir.getName(),
-					execResult.getExitValue());
-			}
-
-			if (execResult.getExitValue() != 0) {
+			if (versionNumber.getMinor() != artifactVersionNumber.getMinor()) {
 				return true;
 			}
 		}
@@ -263,7 +249,7 @@ public class LiferayRelengUtil {
 
 	public static boolean hasUnpublishedDependencies(Project project) {
 		List<File> artifactPropertiesFiles = _getArtifactPropertiesFiles(
-			project);
+			project, false);
 
 		for (File artifactPropertiesFile : artifactPropertiesFiles) {
 			File artifactProjectDir = _getArtifactProjectDir(

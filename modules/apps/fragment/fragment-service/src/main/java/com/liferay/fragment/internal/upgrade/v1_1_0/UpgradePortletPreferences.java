@@ -15,15 +15,21 @@
 package com.liferay.fragment.internal.upgrade.v1_1_0;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,8 +37,12 @@ import java.util.Map;
  */
 public class UpgradePortletPreferences extends UpgradeProcess {
 
-	public UpgradePortletPreferences(LayoutLocalService layoutLocalService) {
+	public UpgradePortletPreferences(
+		LayoutLocalService layoutLocalService,
+		PortletPreferencesLocalService portletPreferencesLocalService) {
+
 		_layoutLocalService = layoutLocalService;
+		_portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
 	@Override
@@ -41,6 +51,35 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 		if (_groupControlPanelPlids.isEmpty()) {
 			return;
+		}
+
+		upgradePortletPreferences();
+	}
+
+	protected void upgradePortletPreferences() throws Exception {
+		try (PreparedStatement ps = connection.prepareStatement(
+			"select classPK, companyId, groupId, namespace from " +
+			"FragmentEntryLink;");
+			 ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long classPK = rs.getLong("classPK");
+				long companyId = rs.getLong("companyId");
+				long groupId = rs.getLong("groupId");
+				String namespace = rs.getString("namespace");
+
+				try {
+					List<PortletPreferences> portletPreferencesList =
+						_getPortletPreferencesList(
+							companyId, groupId, namespace);
+
+					_processPortletPreferencesList(
+						companyId, groupId, classPK, portletPreferencesList);
+				}
+				catch (Exception exception) {
+					_log.error(exception, exception);
+				}
+			}
 		}
 	}
 
@@ -73,11 +112,105 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		}
 	}
 
+	private void _deleteIfNotNull(PortletPreferences portletPreferences) {
+		if (portletPreferences != null) {
+			_portletPreferencesLocalService.deletePortletPreferences(
+				portletPreferences);
+		}
+	}
+
+	private List<PortletPreferences> _getPortletPreferencesList(
+		long companyId, long groupId, String namespace)
+		throws Exception {
+
+		List<PortletPreferences> portletPreferencesList = new ArrayList<>();
+
+		long companyControlPanelPlid = _companyControlPanelPlids.get(companyId);
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append("select PortletPreferences.portletPreferencesId from ");
+		sb.append("PortletPreferences inner join Layout on ");
+		sb.append("PortletPreferences.plid = Layout.plid where ");
+		sb.append("PortletPreferences.portletId like CONCAT('%_INSTANCE_', '");
+		sb.append(namespace);
+		sb.append("') and (Layout.groupId = ");
+		sb.append(groupId);
+		sb.append(" or PortletPreferences.plid = ");
+		sb.append(companyControlPanelPlid);
+		sb.append(");");
+
+		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+			 ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long portletPreferencesId = rs.getLong("portletPreferencesId");
+
+				portletPreferencesList.add(
+					_portletPreferencesLocalService.getPortletPreferences(
+						portletPreferencesId));
+			}
+		}
+
+		return portletPreferencesList;
+	}
+
+	private void _processPortletPreferencesList(
+		long companyId, long groupId, long classPK,
+		List<PortletPreferences> portletPreferencesList) {
+
+		if (portletPreferencesList.isEmpty()) {
+			return;
+		}
+
+		PortletPreferences companyPortletPreferences = null;
+		PortletPreferences groupPortletPreferences = null;
+		PortletPreferences layoutPortletPreferences = null;
+
+		long companyControlPanelPlid = _companyControlPanelPlids.get(companyId);
+		long groupControlPanelPlid = _groupControlPanelPlids.get(groupId);
+		long layoutPlid = classPK;
+
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			if (portletPreferences.getPlid() == companyControlPanelPlid) {
+				companyPortletPreferences = portletPreferences;
+			}
+			else if (portletPreferences.getPlid() == groupControlPanelPlid) {
+				groupPortletPreferences = portletPreferences;
+			}
+			else if (portletPreferences.getPlid() == layoutPlid) {
+				layoutPortletPreferences = portletPreferences;
+			}
+		}
+
+		if (groupPortletPreferences != null) {
+			_deleteIfNotNull(companyPortletPreferences);
+			_deleteIfNotNull(layoutPortletPreferences);
+			_updatePlid(groupPortletPreferences, classPK);
+		}
+		else if (companyPortletPreferences != null) {
+			_deleteIfNotNull(layoutPortletPreferences);
+			_updatePlid(companyPortletPreferences, classPK);
+		}
+	}
+
+	private void _updatePlid(PortletPreferences portletPreferences, long plid) {
+		portletPreferences.setPlid(plid);
+
+		_portletPreferencesLocalService.updatePortletPreferences(
+			portletPreferences);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradePortletPreferences.class);
+
 	private static final Map<Long, Long> _companyControlPanelPlids =
 		new HashMap<>();
 	private static final Map<Long, Long> _groupControlPanelPlids =
 		new HashMap<>();
 
 	private final LayoutLocalService _layoutLocalService;
+	private final PortletPreferencesLocalService
+		_portletPreferencesLocalService;
 
 }

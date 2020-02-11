@@ -28,7 +28,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 		<ul class="navbar-nav">
 			<c:if test="<%= Validator.isNotNull(contentPageEditorDisplayContext.getDiscardDraftURL()) %>">
 				<li class="nav-item">
-					<button class="btn btn-secondary nav-btn" disabled type="submit">
+					<button class="btn btn-sm btn-secondary mr-3" disabled type="submit">
 						<c:choose>
 							<c:when test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
 								<liferay-ui:message key="discard-variant" />
@@ -43,7 +43,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 
 			<c:if test="<%= Validator.isNotNull(contentPageEditorDisplayContext.getPublishURL()) %>">
 				<li class="nav-item">
-					<button class="btn btn-primary nav-btn" disabled type="submit">
+					<button class="btn btn-sm btn-primary" disabled type="submit">
 						<c:choose>
 							<c:when test="<%= contentPageEditorDisplayContext.isMasterLayout() %>">
 								<liferay-ui:message key="publish-master" />

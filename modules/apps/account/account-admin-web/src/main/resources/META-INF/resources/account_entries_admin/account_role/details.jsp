@@ -35,9 +35,15 @@ if (accountRole != null) {
 <liferay-frontend:edit-form
 	action="<%= editAccountRoleURL %>"
 >
+	<portlet:renderURL var="redirect">
+		<portlet:param name="mvcPath" value="/account_entries_admin/edit_account_role.jsp" />
+		<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryId) %>" />
+		<portlet:param name="accountRoleId" value="<%= String.valueOf(accountRoleId) %>" />
+	</portlet:renderURL>
+
 	<liferay-frontend:edit-form-body>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (role == null) ? Constants.ADD : Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="accountEntryId" type="hidden" value="<%= String.valueOf(accountEntryId) %>" />
 		<aui:input name="accountRoleId" type="hidden" value="<%= accountRoleId %>" />
 
@@ -65,7 +71,7 @@ if (accountRole != null) {
 		<c:choose>
 			<c:when test="<%= (role != null) && AccountRoleConstants.isRequiredRole(role) %>">
 				<aui:input disabled="<%= true %>" helpMessage="key-field-help" label="key" name="viewNameField" type="text" value="<%= role.getName() %>" />
-				<aui:input name="name" type="hidden" value="<%= role.getName() %>" />
+				<aui:input name="name" type="hidden" />
 			</c:when>
 			<c:otherwise>
 				<aui:input helpMessage="key-field-help" label="key" name="name" />

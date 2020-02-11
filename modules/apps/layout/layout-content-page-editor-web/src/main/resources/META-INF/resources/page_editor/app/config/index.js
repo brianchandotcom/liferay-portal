@@ -53,9 +53,7 @@ export function getConfig(config) {
  * plugin names.
  */
 const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
-	elements: 'fragments',
-
-	lookAndFeel: 'look-and-feel'
+	elements: 'fragments'
 };
 
 function augmentPanelData(pluginsRootPath, sidebarPanels) {
@@ -73,8 +71,6 @@ function augmentPanelData(pluginsRootPath, sidebarPanels) {
 
 			// https://github.com/liferay/liferay-js-toolkit/issues/324
 			pluginEntryPoint: `${pluginsRootPath}/${sidebarPanelId}/index`,
-
-			rendersSidebarContent: rendersSidebarContent(sidebarPanelId),
 
 			sidebarPanelId
 		};
@@ -141,8 +137,4 @@ function partitionPanels(panels) {
 
 		return map;
 	}, {});
-}
-
-function rendersSidebarContent(sidebarPanelId) {
-	return sidebarPanelId !== 'look-and-feel';
 }

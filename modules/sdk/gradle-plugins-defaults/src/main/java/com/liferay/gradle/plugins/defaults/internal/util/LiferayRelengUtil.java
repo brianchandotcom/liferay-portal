@@ -336,7 +336,9 @@ public class LiferayRelengUtil {
 		return new File(portalRootDir, fileName.substring(0, pos));
 	}
 
-	private static List<File> _getArtifactPropertiesFiles(Project project) {
+	private static List<File> _getArtifactPropertiesFiles(
+		Project project, boolean portalOnly) {
+
 		List<File> artifactPropertiesFiles = new ArrayList<>();
 
 		for (Configuration configuration : project.getConfigurations()) {
@@ -351,6 +353,10 @@ public class LiferayRelengUtil {
 
 			for (Dependency dependency : configuration.getDependencies()) {
 				if (dependency instanceof ProjectDependency) {
+					if (portalOnly) {
+						continue;
+					}
+
 					ProjectDependency projectDependency =
 						(ProjectDependency)dependency;
 

@@ -33,7 +33,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SpiraRelease {
+public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 	public static SpiraRelease createSpiraRelease(
 			SpiraProject spiraProject, String releaseName)
@@ -149,34 +149,24 @@ public class SpiraRelease {
 		}
 	}
 
+	@Override
 	public int getID() {
-		return _jsonObject.getInt("ReleaseId");
+		return jsonObject.getInt("ReleaseId");
 	}
 
-	public String getName() {
-		return _jsonObject.getString("Name");
-	}
+	public SpiraRelease getParentSpiraRelease() {
+		PathSpiraArtifact parentSpiraArtifact = getParentSpiraArtifact();
 
-	public String getPath() {
-		String name = getName();
-
-		name = name.replace("/", "\\/");
-
-		if (_parentSpiraRelease == null) {
-			return "/" + name;
+		if (parentSpiraArtifact == null) {
+			return null;
 		}
 
-		return JenkinsResultsParserUtil.combine(
-			_parentSpiraRelease.getPath(), "/", name.replace("/", "\\/"));
-	}
+		if (!(parentSpiraArtifact instanceof SpiraRelease)) {
+			throw new RuntimeException(
+				"Invalid parent object " + parentSpiraArtifact);
+		}
 
-	public JSONObject toJSONObject() {
-		return _jsonObject;
-	}
-
-	@Override
-	public String toString() {
-		return _jsonObject.toString();
+		return (SpiraRelease)parentSpiraArtifact;
 	}
 
 	protected static List<SpiraRelease> getSpiraReleases(
@@ -233,39 +223,18 @@ public class SpiraRelease {
 		return spiraReleases;
 	}
 
-	protected SpiraRelease(JSONObject jsonObject) {
-		_jsonObject = jsonObject;
-		_spiraProject = SpiraProject.getSpiraProjectByID(
-			jsonObject.getInt("ProjectId"));
+	@Override
+	protected PathSpiraArtifact getSpiraArtifactByIndentLevel(
+		String indentLevel) {
 
-		SpiraRelease parentSpiraRelease = null;
+		SpiraProject spiraProject = getSpiraProject();
 
-		String indentLevel = getIndentLevel();
-
-		if (indentLevel.length() > 3) {
-			String parentIndentLevel = indentLevel.substring(
-				0, indentLevel.length() - 3);
-
-			try {
-				parentSpiraRelease = _spiraProject.getSpiraReleaseByIndentLevel(
-					parentIndentLevel);
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
+		try {
+			return spiraProject.getSpiraReleaseByIndentLevel(indentLevel);
 		}
-
-		_parentSpiraRelease = parentSpiraRelease;
-
-		_jsonObject.put("Path", getPath());
-	}
-
-	protected String getIndentLevel() {
-		return _jsonObject.getString("IndentLevel");
-	}
-
-	protected boolean matches(SearchParameter... searchParameters) {
-		return SearchParameter.matches(toJSONObject(), searchParameters);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	protected static final int STATUS_CANCELED = 5;
@@ -295,11 +264,13 @@ public class SpiraRelease {
 			"/Date(", String.valueOf(calendar.getTimeInMillis()), ")/");
 	}
 
+	private SpiraRelease(JSONObject jsonObject) {
+		super(jsonObject);
+
+		this.jsonObject.put("Path", getPath());
+	}
+
 	private static final Map<String, SpiraRelease> _spiraReleases =
 		new HashMap<>();
-
-	private final JSONObject _jsonObject;
-	private final SpiraRelease _parentSpiraRelease;
-	private final SpiraProject _spiraProject;
 
 }

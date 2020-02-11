@@ -1,0 +1,275 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Depot";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that the expired entries can be removed automatically in the recycle bin."
+	@priority = "5"
+	test CheckExpiredEntries {
+		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		Check(
+			key_webContentTitle = "WC WebContent Title",
+			locator1 = "WC#ENTRY_LIST_CHECKBOX");
+
+		Depot.deleteContentViaBulkEditing(webContent = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Recycle Bin",
+			depotName = "Test Depot Name",
+			portlet = "Recycle Bin");
+
+		RecycleBin.viewCP(
+			assetName = "DM Document Title",
+			assetType = "Document",
+			customMaxAge = "1 minute",
+			deleteUser = "Test Test");
+
+		RecycleBin.viewCP(
+			assetName = "WC WebContent Title",
+			assetType = "Web Content Article",
+			customMaxAge = "1 minute",
+			deleteUser = "Test Test");
+
+		Pause(locator1 = "120000");
+
+		Refresh();
+
+		RecycleBin.viewDefaultCP();
+	}
+
+	@description = "This ensures that the document can be deleted after the recycle bin is disabled."
+	@priority = "5"
+	test DeleteDocumentAfterDisabling {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		Depot.disableRecycleBinViaDepotSettings();
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		var key_dmDocumentTitle = "DM Document Title";
+
+		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		Depot.deleteContentViaBulkEditing(recycleBinDisabled = "true");
+	}
+
+	@description = "This ensures that the web content can be deleted after the recycle bin is disabled."
+	@priority = "5"
+	test DeleteWCAfterDisabling {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		AssertVisible(
+			key_category = "Recycle Bin",
+			locator1 = "ProductMenu#CATEGORY_COLLAPSED");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.disableRecycleBinViaDepotSettings();
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		AssertElementNotPresent(
+			key_category = "Recycle Bin",
+			locator1 = "ProductMenu#CATEGORY_COLLAPSED");
+
+		WebContent.deleteWithDisabledRB(entryTitle = "WC WebContent Title");
+	}
+
+	@description = "This ensures that the documents can be restored from recycle bin."
+	@priority = "5"
+	test RestoreDocuments {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		for (var key_dmDocumentTitle : list "Document_1.doc,Document_2.jpg") {
+			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+		}
+
+		Depot.deleteContentViaBulkEditing();
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Recycle Bin",
+			depotName = "Test Depot Name",
+			portlet = "Recycle Bin");
+
+		RecycleBin.restoreCP(
+			assetName = "Document_1.doc",
+			assetRestoreLocation = "Home",
+			assetType = "Document",
+			multipleAssets = "true");
+
+		Refresh();
+
+		RecycleBin.restoreCP(
+			assetName = "Document_2.jpg",
+			assetRestoreLocation = "Home",
+			assetType = "Document");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		for (var dmDocumentTitle : list "Document_1.doc,Document_2.jpg") {
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+			DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(
+				depotName = "Test Depot Name",
+				portlet = "Documents and Media");
+		}
+	}
+
+	@description = "This ensures that the web content can be restored from recycle bin."
+	@priority = "5"
+	test RestoreWebContent {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContent.moveToRecycleBinCP(
+			assetType = "Web Content Article",
+			webContentTitle = "WC WebContent Title");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Recycle Bin",
+			depotName = "Test Depot Name",
+			portlet = "Recycle Bin");
+
+		RecycleBin.restoreCP(
+			assetName = "WC WebContent Title",
+			assetRestoreLocation = "Home",
+			assetType = "Web Content Article");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+	}
+
+}

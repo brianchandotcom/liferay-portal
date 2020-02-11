@@ -23,6 +23,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.osgi.framework.Version;
+
 /**
  * @author Carlos Sierra Andrés
  */
@@ -50,6 +52,11 @@ public class UpgradeStepRegistryTest {
 					"1.0.0-step-2", "1.0.0-step-1", 0, testUpgradeStep),
 				new UpgradeInfo("1.0.0-step-1", "1.0.0", 0, testUpgradeStep)),
 			upgradeInfos);
+
+		for (UpgradeInfo upgradeInfo : upgradeInfos) {
+			new Version(upgradeInfo.getFromSchemaVersionString());
+			new Version(upgradeInfo.getToSchemaVersionString());
+		}
 	}
 
 	@Test

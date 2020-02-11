@@ -82,6 +82,10 @@ const ItemSelectorPreview = ({
 		ReactDOM.unmountComponentAtNode(container);
 	}, [container]);
 
+	const handleClickBack = () => {
+		close();
+	};
+
 	const handleClickDone = () => {
 		handleSelectedItem(currentItem);
 		close();
@@ -228,7 +232,7 @@ const ItemSelectorPreview = ({
 			<Header
 				disabledAddButton={!currentItem.url}
 				handleClickAdd={handleClickDone}
-				handleClickClose={close}
+				handleClickBack={handleClickBack}
 				handleClickEdit={handleClickEdit}
 				headerTitle={headerTitle}
 				infoButtonRef={infoButtonRef}

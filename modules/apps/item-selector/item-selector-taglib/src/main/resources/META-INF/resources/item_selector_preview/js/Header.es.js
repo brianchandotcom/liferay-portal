@@ -20,7 +20,7 @@ import React from 'react';
 const Header = ({
 	disabledAddButton = false,
 	handleClickAdd,
-	handleClickClose,
+	handleClickBack,
 	handleClickEdit,
 	headerTitle,
 	infoButtonRef,
@@ -37,7 +37,7 @@ const Header = ({
 								borderless
 								displayType="secondary"
 								monospaced
-								onClick={handleClickClose}
+								onClick={handleClickBack}
 							>
 								<ClayIcon symbol="angle-left" />
 							</ClayButton>

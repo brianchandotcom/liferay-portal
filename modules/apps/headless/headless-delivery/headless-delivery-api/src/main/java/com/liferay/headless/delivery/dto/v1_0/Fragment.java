@@ -32,8 +32,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -41,27 +39,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageDefinition")
+@GraphQLName("Fragment")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageDefinition")
-public class PageDefinition {
+@XmlRootElement(name = "Fragment")
+public class Fragment {
 
 	@Schema
-	@Valid
-	public PageElement getPageElement() {
-		return pageElement;
+	public String getFragmentCollectionName() {
+		return fragmentCollectionName;
 	}
 
-	public void setPageElement(PageElement pageElement) {
-		this.pageElement = pageElement;
+	public void setFragmentCollectionName(String fragmentCollectionName) {
+		this.fragmentCollectionName = fragmentCollectionName;
 	}
 
 	@JsonIgnore
-	public void setPageElement(
-		UnsafeSupplier<PageElement, Exception> pageElementUnsafeSupplier) {
+	public void setFragmentCollectionName(
+		UnsafeSupplier<String, Exception>
+			fragmentCollectionNameUnsafeSupplier) {
 
 		try {
-			pageElement = pageElementUnsafeSupplier.get();
+			fragmentCollectionName = fragmentCollectionNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,24 +71,23 @@ public class PageDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PageElement pageElement;
+	protected String fragmentCollectionName;
 
 	@Schema
-	@Valid
-	public Settings getSettings() {
-		return settings;
+	public String getFragmentName() {
+		return fragmentName;
 	}
 
-	public void setSettings(Settings settings) {
-		this.settings = settings;
+	public void setFragmentName(String fragmentName) {
+		this.fragmentName = fragmentName;
 	}
 
 	@JsonIgnore
-	public void setSettings(
-		UnsafeSupplier<Settings, Exception> settingsUnsafeSupplier) {
+	public void setFragmentName(
+		UnsafeSupplier<String, Exception> fragmentNameUnsafeSupplier) {
 
 		try {
-			settings = settingsUnsafeSupplier.get();
+			fragmentName = fragmentNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -102,7 +99,7 @@ public class PageDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Settings settings;
+	protected String fragmentName;
 
 	@Override
 	public boolean equals(Object object) {
@@ -110,13 +107,13 @@ public class PageDefinition {
 			return true;
 		}
 
-		if (!(object instanceof PageDefinition)) {
+		if (!(object instanceof Fragment)) {
 			return false;
 		}
 
-		PageDefinition pageDefinition = (PageDefinition)object;
+		Fragment fragment = (Fragment)object;
 
-		return Objects.equals(toString(), pageDefinition.toString());
+		return Objects.equals(toString(), fragment.toString());
 	}
 
 	@Override
@@ -131,24 +128,32 @@ public class PageDefinition {
 
 		sb.append("{");
 
-		if (pageElement != null) {
+		if (fragmentCollectionName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"pageElement\": ");
+			sb.append("\"fragmentCollectionName\": ");
 
-			sb.append(String.valueOf(pageElement));
+			sb.append("\"");
+
+			sb.append(_escape(fragmentCollectionName));
+
+			sb.append("\"");
 		}
 
-		if (settings != null) {
+		if (fragmentName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"settings\": ");
+			sb.append("\"fragmentName\": ");
 
-			sb.append(String.valueOf(settings));
+			sb.append("\"");
+
+			sb.append(_escape(fragmentName));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -157,7 +162,7 @@ public class PageDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Fragment",
 		name = "x-class-name"
 	)
 	public String xClassName;

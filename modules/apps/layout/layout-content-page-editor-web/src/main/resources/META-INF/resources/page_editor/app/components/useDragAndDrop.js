@@ -397,6 +397,7 @@ function isMiddle(hoverClientY, hoverMiddleY) {
 }
 
 const DISTANCE = 0.2;
+const MAX_DIFFERENCE = 50;
 
 /**
  * The closer you get to the edge of the element, the elevate will trigger,
@@ -404,9 +405,10 @@ const DISTANCE = 0.2;
  * DISTANCE percentage from the edges to create the elevation area.
  */
 function isElevate(clientOffsetY, height, top, bottom) {
+	const difference = Math.min(height * DISTANCE, MAX_DIFFERENCE);
+
 	return (
-		clientOffsetY < height * DISTANCE + top ||
-		clientOffsetY > bottom - height * DISTANCE
+		clientOffsetY < difference + top || clientOffsetY > bottom - difference
 	);
 }
 

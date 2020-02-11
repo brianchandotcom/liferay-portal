@@ -72,6 +72,10 @@ definition {
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
 
+		// Refresh step is a workaround for LPS-108417
+
+		Refresh();
+
 		AssertTextEquals(
 			locator1 = "Fragment#CONFIGURABLE_FIELD",
 			value1 = "The selected content will be shown here.");
@@ -120,6 +124,10 @@ definition {
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
 
+		// Refresh step is a workaround for LPS-108417
+
+		Refresh();
+
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",
 			locator1 = "Fragment#FRAGMENT_HEADER");
@@ -136,6 +144,10 @@ definition {
 			locator1 = "PageEditor#SECTION_BUILDER_LAYOUTS_${columnCount}_COLUMN",
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
+
+		// Refresh step is a workaround for LPS-108417
+
+		Refresh();
 
 		AssertVisible(
 			key_position = "1",
@@ -167,6 +179,10 @@ definition {
 			value1 = "${portletName}");
 
 		Pause(locator1 = "5000");
+
+		// Refresh step is a workaround for LPS-108417
+
+		Refresh();
 
 		AssertElementPresent(
 			key_fragmentName = "${portletName}",
@@ -708,9 +724,9 @@ definition {
 	macro gotoTab {
 		if (IsElementNotPresent(key_tabName = "${tabName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON_ACTIVE")) {
 
-		Pause(locator1 = "3000");
+			Pause(locator1 = "3000");
 
-		Click.clickNoMouseOver(
+			Click.clickNoMouseOver(
 				key_tabName = "${tabName}",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
 		}

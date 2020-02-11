@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -76,9 +75,11 @@ public class PublishLayoutMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long plid = ParamUtil.getLong(actionRequest, "classPK");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		Layout draftLayout = _layoutLocalService.getLayout(plid);
+		Layout draftLayout = _layoutLocalService.getLayout(
+			themeDisplay.getPlid());
 
 		if ((draftLayout.getClassPK() == 0) ||
 			(_portal.getClassNameId(Layout.class) !=
@@ -90,9 +91,6 @@ public class PublishLayoutMVCActionCommand
 		}
 
 		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		try {
 			LayoutPermissionUtil.check(
@@ -135,7 +133,7 @@ public class PublishLayoutMVCActionCommand
 
 			_layoutLocalService.updateLayout(layout);
 
-			draftLayout = _layoutLocalService.getLayout(plid);
+			draftLayout = _layoutLocalService.getLayout(themeDisplay.getPlid());
 
 			UnicodeProperties typeSettingsProperties =
 				draftLayout.getTypeSettingsProperties();

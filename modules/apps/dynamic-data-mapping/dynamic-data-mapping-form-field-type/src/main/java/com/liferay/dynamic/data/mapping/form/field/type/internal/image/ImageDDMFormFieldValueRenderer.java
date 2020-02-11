@@ -43,20 +43,19 @@ public class ImageDDMFormFieldValueRenderer
 
 		String valueString = value.getString(locale);
 
-		if (Validator.isNotNull(valueString)) {
-			JSONObject jsonObject = null;
+		if (Validator.isNull(valueString)) {
+			return StringPool.BLANK;
+		}
 
-			try {
-				jsonObject = JSONFactoryUtil.createJSONObject(valueString);
-			}
-			catch (JSONException jsonException) {
-				return StringPool.BLANK;
-			}
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
 
 			return jsonObject.getString("url", StringPool.BLANK);
 		}
-
-		return StringPool.BLANK;
+		catch (JSONException jsonException) {
+			return StringPool.BLANK;
+		}
 	}
 
 }

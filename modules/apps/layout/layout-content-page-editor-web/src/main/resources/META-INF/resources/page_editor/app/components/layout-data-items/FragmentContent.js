@@ -234,7 +234,9 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		);
 
 		if (!editingItemId) {
-			selectEditingItemId(getEditableUniqueId(editableId));
+			if (editableType !== EDITABLE_TYPES.image) {
+				selectEditingItemId(getEditableUniqueId(editableId));
+			}
 
 			processor.createEditor(
 				editableElement,

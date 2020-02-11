@@ -267,6 +267,14 @@ function checkRules(rules, args) {
 	return passed;
 }
 
+const DISTANCE = 0.2;
+const MAX_DIFFERENCE = 50;
+
+/**
+ * The closer you get to the edge of the element, the elevate will trigger,
+ * which will move the interaction to the parent element. The calculation subtracts the
+ * DISTANCE percentage from the edges to create the elevation area.
+ */
 function checkElevate({
 	clientOffset,
 	hoverBoundingRect,
@@ -275,16 +283,28 @@ function checkElevate({
 }) {
 	const parent = items[siblingOrParent.parentId];
 
-	return (
-		isElevate(
-			clientOffset.y,
-			hoverBoundingRect.height,
-			hoverBoundingRect.top,
-			hoverBoundingRect.bottom
-		) &&
-		parent &&
-		parent.type !== LAYOUT_DATA_ITEM_TYPES.root
-	);
+	const parentIsNotRoot =
+		parent && parent.type !== LAYOUT_DATA_ITEM_TYPES.root;
+
+	let isElevate = false;
+
+	if (parent) {
+		const childIndex = parent.children.indexOf(siblingOrParent.itemId);
+
+		const difference = Math.min(
+			hoverBoundingRect.height * DISTANCE,
+			MAX_DIFFERENCE
+		);
+
+		if (childIndex === 0) {
+			isElevate = clientOffset.y < difference + hoverBoundingRect.top;
+		}
+		else if (childIndex === parent.children.length - 1) {
+			isElevate = clientOffset.y > hoverBoundingRect.bottom - difference;
+		}
+	}
+
+	return parentIsNotRoot && isElevate;
 }
 
 function isValidMoveToMiddle({dropNestedAndSibling, item, siblingOrParent}) {
@@ -340,22 +360,6 @@ function isMiddle(hoverClientY, hoverMiddleY) {
 	}
 
 	return false;
-}
-
-const DISTANCE = 0.2;
-const MAX_DIFFERENCE = 50;
-
-/**
- * The closer you get to the edge of the element, the elevate will trigger,
- * which will move the interaction to the parent element. The calculation subtracts the
- * DISTANCE percentage from the edges to create the elevation area.
- */
-function isElevate(clientOffsetY, height, top, bottom) {
-	const difference = Math.min(height * DISTANCE, MAX_DIFFERENCE);
-
-	return (
-		clientOffsetY < difference + top || clientOffsetY > bottom - difference
-	);
 }
 
 /**

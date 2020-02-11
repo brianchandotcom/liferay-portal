@@ -14,6 +14,14 @@ definition {
 		App.toggleDeploy(deployOption = "${deployOption}");
 
 		Button.click(button = "Deploy");
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+	}
+
+	macro clickNewAppButton {
+		AssertClick(
+			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
+			value1 = "New App");
 	}
 
 	macro openProductMenuPlaceItDropdown {

@@ -1268,7 +1268,6 @@ definition {
 	@description = "Delete an existing Table View with no active publishing through the kebab/action menu"
 	@priority = "5"
 	test DeleteTableViewThroughActionMenu {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1737,6 +1736,105 @@ definition {
 		FormViewBuilder.validateFieldLabel(fieldLabel = "${myTextFieldName_1}");
 	}
 
+	@description = "Publish apps in standalone mode and reuse its views"
+	@priority = "4"
+	test PublishAppsInStandaloneAndReuseItsViews {
+
+		var myFormViewName_1 = "My Form View 1";
+		var myFormViewName_2 = "My Form View 2";
+
+		var myTextFieldName_1 = "Text1";
+		var myTextFieldName_2 = "Text2";
+
+		var myTableViewName_1 = "My Table View 1";
+		var myTableViewName_2 = "My Table View 2";
+
+		var myAppName_1 = "Standalone App 1";
+		var myAppName_2 = "Standalone App 2";
+		var myAppName_3 = "Standalone App 3";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.setFieldLabel(fieldLabel = "${myTextFieldName_1}");
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.setName(formViewName = "${myFormViewName_1}");
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.add();
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.setFieldLabel(fieldLabel = "${myTextFieldName_2}");
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.setName(formViewName = "${myFormViewName_2}");
+		FormViewBuilder.save();
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "${myTextFieldName_1}",
+			tableViewName = "${myTableViewName_1}");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "${myTextFieldName_2}",
+			tableViewName = "${myTableViewName_2}");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+		App.clickNewAppButton();
+		AppBuilderAdmin.setName(title = "${myAppName_1}");
+		App.selectFormView(formViewName = "${myFormViewName_1}");
+		App.selectTableView(tableViewName = "${myTableViewName_1}");
+		App.toggleDeploy(deployOption = "Widget");
+		App.toggleDeploy(deployOption = "Standalone");
+		App.toggleDeploy(deployOption = "Product Menu");
+		Button.click(button = "Deploy");
+		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+		App.add(
+			appTitle = "${myAppName_2}",
+			deployOption = "Standalone",
+			formViewName = "${myFormViewName_2}",
+			tableViewName = "${myTableViewName_2}");
+
+		App.add(
+			appTitle = "${myAppName_3}",
+			deployOption = "Standalone",
+			formViewName = "${myFormViewName_1}",
+			tableViewName = "${myTableViewName_2}");
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "${myAppName_1}");
+		SelectWindow.selectPopUp(locator1 = "null");
+		AppBuilderAdmin.add();
+		FormViewBuilder.editText(
+			fieldName = "${myTextFieldName_1}",
+			fieldValue = "Content from Form 1");
+		AppBuilderAdmin.save();
+		Alert.viewSuccessMessage();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 1");
+
+		Navigator.closeWindow();
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "${myAppName_2}");
+		SelectWindow.selectPopUp(locator1 = "null");
+		AppBuilderAdmin.add();
+		FormViewBuilder.editText(
+			fieldName = "${myTextFieldName_2}",
+			fieldValue = "Content from Form 2");
+		AppBuilderAdmin.save();
+		Alert.viewSuccessMessage();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
+
+		Navigator.closeWindow();
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "${myAppName_3}");
+		SelectWindow.selectPopUp(locator1 = "null");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
+		AppBuilderAdmin.add();
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${myTextFieldName_1}");
+
+		Navigator.closeWindow();
+	}
+
 	@description = "Search for a deployment in the deployment lists"
 	@priority = "5"
 	test SearchForDeployedItem {
@@ -1837,7 +1935,6 @@ definition {
 	@description = "Search for an object in the object list"
 	@priority = "5"
 	test SearchForObject {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object 1",

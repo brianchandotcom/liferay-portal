@@ -15,29 +15,46 @@ function copy_configs {
 }
 
 function copy_and_remove_scripts {
-	echo "[LIFERAY] Copying /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts files:"
-	echo ""
 
-	if [ -d "/home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts)" ] && [ "$(ls -A /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts)" ]; then
-
-	tree --noreport /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts
-
+	scripts_dir_exists=false
+	
+	scripts_dir_has_files=false
+	
+	DIR="/home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts"
+	
+	if [ -d "$DIR" ]; then
+		echo "Scripts folder exists"
+		scripts_dir_exists=true
+		
+		if [ "$(ls -A $DIR)" ]; then
+			scripts_dir_has_files=true
+			
+			echo "[LIFERAY] Copying $DIR files:"
+			echo ""
+			
+			tree --noreport "$DIR"
+		else
+			echo "Scripts folder does not have files"
+		fi
+	else
+		echo "Scripts folder does not exist"
 	fi
-
-	echo ""
-	echo "[LIFERAY] ... into ${LIFERAY_MOUNT_DIR}/scripts"
 
 	mkdir -p ${LIFERAY_MOUNT_DIR}/scripts
 
-	if [ -d "/home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts)" ] && [ "$(ls -A /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts)" ]; then
+	if [ "$scripts_dir_exists" == true ] && [ "$scripts_dir_has_files" == true ]; then
 
-	cp -r /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts/* ${LIFERAY_MOUNT_DIR}/scripts
+
+		echo ""
+		echo "[LIFERAY] ... into ${LIFERAY_MOUNT_DIR}/scripts"
+	
+		cp -r "$DIR"/* ${LIFERAY_MOUNT_DIR}/scripts
 
 	fi
 
-	if [ -d "/home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts)" ]; then
+	if [ "$scripts_dir_exists" == true ]; then
 
-	rm -rf /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts
+		rm -rf "$DIR"
 
 	fi
 

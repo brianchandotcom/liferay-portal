@@ -14,19 +14,31 @@
 
 package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -57,7 +69,45 @@ public class LookAndFeelContentPageEditorSidebarPanel
 	}
 
 	@Override
+	public String getURL(HttpServletRequest httpServletRequest) {
+		PortletURL lookAndFeelURL = _portal.getControlPanelPortletURL(
+			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
+
+		lookAndFeelURL.setParameter(
+			"mvcRenderCommandName", "/layout/edit_layout");
+
+		lookAndFeelURL.setParameter(
+			"redirect",
+			ParamUtil.getString(
+				_portal.getOriginalServletRequest(httpServletRequest),
+				"p_l_back_url"));
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		lookAndFeelURL.setParameter("backURL", themeDisplay.getURLCurrent());
+
+		Layout layout = themeDisplay.getLayout();
+
+		lookAndFeelURL.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		lookAndFeelURL.setParameter(
+			"selPlid", String.valueOf(layout.getPlid()));
+		lookAndFeelURL.setParameter(
+			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+
+		return lookAndFeelURL.toString();
+	}
+
+	@Override
 	public boolean includeSeparator() {
+		return true;
+	}
+
+	@Override
+	public boolean isLink() {
 		return true;
 	}
 
@@ -84,5 +134,8 @@ public class LookAndFeelContentPageEditorSidebarPanel
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LookAndFeelContentPageEditorSidebarPanel.class);
+
+	@Reference
+	private Portal _portal;
 
 }

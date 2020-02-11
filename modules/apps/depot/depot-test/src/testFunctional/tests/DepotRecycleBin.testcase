@@ -83,7 +83,7 @@ definition {
 			customMaxAge = "1 minute",
 			deleteUser = "Test Test");
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = "90000");
 
 		Refresh();
 

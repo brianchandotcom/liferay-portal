@@ -41,10 +41,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentContentFieldBackgroundImage")
+@GraphQLName("FragmentFieldBackgroundImage")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentContentFieldBackgroundImage")
-public class FragmentContentFieldBackgroundImage {
+@XmlRootElement(name = "FragmentFieldBackgroundImage")
+public class FragmentFieldBackgroundImage {
 
 	@Schema
 	@Valid
@@ -82,16 +82,15 @@ public class FragmentContentFieldBackgroundImage {
 			return true;
 		}
 
-		if (!(object instanceof FragmentContentFieldBackgroundImage)) {
+		if (!(object instanceof FragmentFieldBackgroundImage)) {
 			return false;
 		}
 
-		FragmentContentFieldBackgroundImage
-			fragmentContentFieldBackgroundImage =
-				(FragmentContentFieldBackgroundImage)object;
+		FragmentFieldBackgroundImage fragmentFieldBackgroundImage =
+			(FragmentFieldBackgroundImage)object;
 
 		return Objects.equals(
-			toString(), fragmentContentFieldBackgroundImage.toString());
+			toString(), fragmentFieldBackgroundImage.toString());
 	}
 
 	@Override
@@ -122,7 +121,7 @@ public class FragmentContentFieldBackgroundImage {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentContentFieldBackgroundImage",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage",
 		name = "x-class-name"
 	)
 	public String xClassName;

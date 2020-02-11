@@ -41,58 +41,25 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SectionDefinition")
+@GraphQLName("FragmentFieldHTML")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SectionDefinition")
-public class SectionDefinition {
-
-	@Schema
-	public String getBackgroundColorCssClass() {
-		return backgroundColorCssClass;
-	}
-
-	public void setBackgroundColorCssClass(String backgroundColorCssClass) {
-		this.backgroundColorCssClass = backgroundColorCssClass;
-	}
-
-	@JsonIgnore
-	public void setBackgroundColorCssClass(
-		UnsafeSupplier<String, Exception>
-			backgroundColorCssClassUnsafeSupplier) {
-
-		try {
-			backgroundColorCssClass =
-				backgroundColorCssClassUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String backgroundColorCssClass;
+@XmlRootElement(name = "FragmentFieldHTML")
+public class FragmentFieldHTML {
 
 	@Schema
 	@Valid
-	public FragmentImage getBackgroundImage() {
-		return backgroundImage;
+	public Object getHtml() {
+		return html;
 	}
 
-	public void setBackgroundImage(FragmentImage backgroundImage) {
-		this.backgroundImage = backgroundImage;
+	public void setHtml(Object html) {
+		this.html = html;
 	}
 
 	@JsonIgnore
-	public void setBackgroundImage(
-		UnsafeSupplier<FragmentImage, Exception>
-			backgroundImageUnsafeSupplier) {
-
+	public void setHtml(UnsafeSupplier<Object, Exception> htmlUnsafeSupplier) {
 		try {
-			backgroundImage = backgroundImageUnsafeSupplier.get();
+			html = htmlUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -104,36 +71,7 @@ public class SectionDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentImage backgroundImage;
-
-	@Schema
-	@Valid
-	public Layout getLayout() {
-		return layout;
-	}
-
-	public void setLayout(Layout layout) {
-		this.layout = layout;
-	}
-
-	@JsonIgnore
-	public void setLayout(
-		UnsafeSupplier<Layout, Exception> layoutUnsafeSupplier) {
-
-		try {
-			layout = layoutUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Layout layout;
+	protected Object html;
 
 	@Override
 	public boolean equals(Object object) {
@@ -141,13 +79,13 @@ public class SectionDefinition {
 			return true;
 		}
 
-		if (!(object instanceof SectionDefinition)) {
+		if (!(object instanceof FragmentFieldHTML)) {
 			return false;
 		}
 
-		SectionDefinition sectionDefinition = (SectionDefinition)object;
+		FragmentFieldHTML fragmentFieldHTML = (FragmentFieldHTML)object;
 
-		return Objects.equals(toString(), sectionDefinition.toString());
+		return Objects.equals(toString(), fragmentFieldHTML.toString());
 	}
 
 	@Override
@@ -162,38 +100,18 @@ public class SectionDefinition {
 
 		sb.append("{");
 
-		if (backgroundColorCssClass != null) {
+		if (html != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundColorCssClass\": ");
+			sb.append("\"html\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(backgroundColorCssClass));
+			sb.append(_escape(html));
 
 			sb.append("\"");
-		}
-
-		if (backgroundImage != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"backgroundImage\": ");
-
-			sb.append(String.valueOf(backgroundImage));
-		}
-
-		if (layout != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"layout\": ");
-
-			sb.append(String.valueOf(layout));
 		}
 
 		sb.append("}");
@@ -202,7 +120,7 @@ public class SectionDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.SectionDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentFieldHTML",
 		name = "x-class-name"
 	)
 	public String xClassName;

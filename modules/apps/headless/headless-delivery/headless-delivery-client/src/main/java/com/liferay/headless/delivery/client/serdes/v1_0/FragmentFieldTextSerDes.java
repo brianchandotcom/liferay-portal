@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.SectionDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SectionDefinitionSerDes {
+public class FragmentFieldTextSerDes {
 
-	public static SectionDefinition toDTO(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+	public static FragmentFieldText toDTO(String json) {
+		FragmentFieldTextJSONParser fragmentFieldTextJSONParser =
+			new FragmentFieldTextJSONParser();
 
-		return sectionDefinitionJSONParser.parseToDTO(json);
+		return fragmentFieldTextJSONParser.parseToDTO(json);
 	}
 
-	public static SectionDefinition[] toDTOs(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+	public static FragmentFieldText[] toDTOs(String json) {
+		FragmentFieldTextJSONParser fragmentFieldTextJSONParser =
+			new FragmentFieldTextJSONParser();
 
-		return sectionDefinitionJSONParser.parseToDTOs(json);
+		return fragmentFieldTextJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(SectionDefinition sectionDefinition) {
-		if (sectionDefinition == null) {
+	public static String toJSON(FragmentFieldText fragmentFieldText) {
+		if (fragmentFieldText == null) {
 			return "null";
 		}
 
@@ -55,38 +55,28 @@ public class SectionDefinitionSerDes {
 
 		sb.append("{");
 
-		if (sectionDefinition.getBackgroundColorCssClass() != null) {
+		if (fragmentFieldText.getFragmentLink() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundColorCssClass\": ");
+			sb.append("\"fragmentLink\": ");
+
+			sb.append(String.valueOf(fragmentFieldText.getFragmentLink()));
+		}
+
+		if (fragmentFieldText.getText() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"text\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(sectionDefinition.getBackgroundColorCssClass()));
+			sb.append(_escape(fragmentFieldText.getText()));
 
 			sb.append("\"");
-		}
-
-		if (sectionDefinition.getBackgroundImage() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"backgroundImage\": ");
-
-			sb.append(String.valueOf(sectionDefinition.getBackgroundImage()));
-		}
-
-		if (sectionDefinition.getLayout() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"layout\": ");
-
-			sb.append(String.valueOf(sectionDefinition.getLayout()));
 		}
 
 		sb.append("}");
@@ -95,86 +85,67 @@ public class SectionDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+		FragmentFieldTextJSONParser fragmentFieldTextJSONParser =
+			new FragmentFieldTextJSONParser();
 
-		return sectionDefinitionJSONParser.parseToMap(json);
+		return fragmentFieldTextJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		SectionDefinition sectionDefinition) {
+		FragmentFieldText fragmentFieldText) {
 
-		if (sectionDefinition == null) {
+		if (fragmentFieldText == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sectionDefinition.getBackgroundColorCssClass() == null) {
-			map.put("backgroundColorCssClass", null);
+		if (fragmentFieldText.getFragmentLink() == null) {
+			map.put("fragmentLink", null);
 		}
 		else {
 			map.put(
-				"backgroundColorCssClass",
-				String.valueOf(sectionDefinition.getBackgroundColorCssClass()));
+				"fragmentLink",
+				String.valueOf(fragmentFieldText.getFragmentLink()));
 		}
 
-		if (sectionDefinition.getBackgroundImage() == null) {
-			map.put("backgroundImage", null);
+		if (fragmentFieldText.getText() == null) {
+			map.put("text", null);
 		}
 		else {
-			map.put(
-				"backgroundImage",
-				String.valueOf(sectionDefinition.getBackgroundImage()));
-		}
-
-		if (sectionDefinition.getLayout() == null) {
-			map.put("layout", null);
-		}
-		else {
-			map.put("layout", String.valueOf(sectionDefinition.getLayout()));
+			map.put("text", String.valueOf(fragmentFieldText.getText()));
 		}
 
 		return map;
 	}
 
-	public static class SectionDefinitionJSONParser
-		extends BaseJSONParser<SectionDefinition> {
+	public static class FragmentFieldTextJSONParser
+		extends BaseJSONParser<FragmentFieldText> {
 
 		@Override
-		protected SectionDefinition createDTO() {
-			return new SectionDefinition();
+		protected FragmentFieldText createDTO() {
+			return new FragmentFieldText();
 		}
 
 		@Override
-		protected SectionDefinition[] createDTOArray(int size) {
-			return new SectionDefinition[size];
+		protected FragmentFieldText[] createDTOArray(int size) {
+			return new FragmentFieldText[size];
 		}
 
 		@Override
 		protected void setField(
-			SectionDefinition sectionDefinition, String jsonParserFieldName,
+			FragmentFieldText fragmentFieldText, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundColorCssClass")) {
-
+			if (Objects.equals(jsonParserFieldName, "fragmentLink")) {
 				if (jsonParserFieldValue != null) {
-					sectionDefinition.setBackgroundColorCssClass(
-						(String)jsonParserFieldValue);
+					fragmentFieldText.setFragmentLink(
+						FragmentLinkSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "backgroundImage")) {
+			else if (Objects.equals(jsonParserFieldName, "text")) {
 				if (jsonParserFieldValue != null) {
-					sectionDefinition.setBackgroundImage(
-						FragmentImageSerDes.toDTO(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "layout")) {
-				if (jsonParserFieldValue != null) {
-					sectionDefinition.setLayout(
-						LayoutSerDes.toDTO((String)jsonParserFieldValue));
+					fragmentFieldText.setText((Object)jsonParserFieldValue);
 				}
 			}
 			else {

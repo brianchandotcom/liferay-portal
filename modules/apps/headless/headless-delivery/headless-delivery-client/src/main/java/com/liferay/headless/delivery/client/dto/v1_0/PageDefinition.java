@@ -28,66 +28,26 @@ import javax.annotation.Generated;
 @Generated("")
 public class PageDefinition {
 
-	public String getFriendlyURLPath() {
-		return friendlyURLPath;
+	public PageElement getPageElement() {
+		return pageElement;
 	}
 
-	public void setFriendlyURLPath(String friendlyURLPath) {
-		this.friendlyURLPath = friendlyURLPath;
+	public void setPageElement(PageElement pageElement) {
+		this.pageElement = pageElement;
 	}
 
-	public void setFriendlyURLPath(
-		UnsafeSupplier<String, Exception> friendlyURLPathUnsafeSupplier) {
+	public void setPageElement(
+		UnsafeSupplier<PageElement, Exception> pageElementUnsafeSupplier) {
 
 		try {
-			friendlyURLPath = friendlyURLPathUnsafeSupplier.get();
+			pageElement = pageElementUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String friendlyURLPath;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long id;
-
-	public PageElement[] getPageElements() {
-		return pageElements;
-	}
-
-	public void setPageElements(PageElement[] pageElements) {
-		this.pageElements = pageElements;
-	}
-
-	public void setPageElements(
-		UnsafeSupplier<PageElement[], Exception> pageElementsUnsafeSupplier) {
-
-		try {
-			pageElements = pageElementsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected PageElement[] pageElements;
+	protected PageElement pageElement;
 
 	public Settings getSettings() {
 		return settings;

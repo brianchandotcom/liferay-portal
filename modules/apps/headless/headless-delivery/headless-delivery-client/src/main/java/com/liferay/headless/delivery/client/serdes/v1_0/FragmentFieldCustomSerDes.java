@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.FragmentContentFieldText;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentFieldCustom;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,26 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentContentFieldTextSerDes {
+public class FragmentFieldCustomSerDes {
 
-	public static FragmentContentFieldText toDTO(String json) {
-		FragmentContentFieldTextJSONParser fragmentContentFieldTextJSONParser =
-			new FragmentContentFieldTextJSONParser();
+	public static FragmentFieldCustom toDTO(String json) {
+		FragmentFieldCustomJSONParser fragmentFieldCustomJSONParser =
+			new FragmentFieldCustomJSONParser();
 
-		return fragmentContentFieldTextJSONParser.parseToDTO(json);
+		return fragmentFieldCustomJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentContentFieldText[] toDTOs(String json) {
-		FragmentContentFieldTextJSONParser fragmentContentFieldTextJSONParser =
-			new FragmentContentFieldTextJSONParser();
+	public static FragmentFieldCustom[] toDTOs(String json) {
+		FragmentFieldCustomJSONParser fragmentFieldCustomJSONParser =
+			new FragmentFieldCustomJSONParser();
 
-		return fragmentContentFieldTextJSONParser.parseToDTOs(json);
+		return fragmentFieldCustomJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(
-		FragmentContentFieldText fragmentContentFieldText) {
-
-		if (fragmentContentFieldText == null) {
+	public static String toJSON(FragmentFieldCustom fragmentFieldCustom) {
+		if (fragmentFieldCustom == null) {
 			return "null";
 		}
 
@@ -57,18 +55,28 @@ public class FragmentContentFieldTextSerDes {
 
 		sb.append("{");
 
-		if (fragmentContentFieldText.getText() != null) {
+		if (fragmentFieldCustom.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"text\": ");
+			sb.append("\"type\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(fragmentContentFieldText.getText()));
+			sb.append(_escape(fragmentFieldCustom.getType()));
 
 			sb.append("\"");
+		}
+
+		if (fragmentFieldCustom.getValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value\": ");
+
+			sb.append(String.valueOf(fragmentFieldCustom.getValue()));
 		}
 
 		sb.append("}");
@@ -77,53 +85,65 @@ public class FragmentContentFieldTextSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentContentFieldTextJSONParser fragmentContentFieldTextJSONParser =
-			new FragmentContentFieldTextJSONParser();
+		FragmentFieldCustomJSONParser fragmentFieldCustomJSONParser =
+			new FragmentFieldCustomJSONParser();
 
-		return fragmentContentFieldTextJSONParser.parseToMap(json);
+		return fragmentFieldCustomJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		FragmentContentFieldText fragmentContentFieldText) {
+		FragmentFieldCustom fragmentFieldCustom) {
 
-		if (fragmentContentFieldText == null) {
+		if (fragmentFieldCustom == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentContentFieldText.getText() == null) {
-			map.put("text", null);
+		if (fragmentFieldCustom.getType() == null) {
+			map.put("type", null);
 		}
 		else {
-			map.put("text", String.valueOf(fragmentContentFieldText.getText()));
+			map.put("type", String.valueOf(fragmentFieldCustom.getType()));
+		}
+
+		if (fragmentFieldCustom.getValue() == null) {
+			map.put("value", null);
+		}
+		else {
+			map.put("value", String.valueOf(fragmentFieldCustom.getValue()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentContentFieldTextJSONParser
-		extends BaseJSONParser<FragmentContentFieldText> {
+	public static class FragmentFieldCustomJSONParser
+		extends BaseJSONParser<FragmentFieldCustom> {
 
 		@Override
-		protected FragmentContentFieldText createDTO() {
-			return new FragmentContentFieldText();
+		protected FragmentFieldCustom createDTO() {
+			return new FragmentFieldCustom();
 		}
 
 		@Override
-		protected FragmentContentFieldText[] createDTOArray(int size) {
-			return new FragmentContentFieldText[size];
+		protected FragmentFieldCustom[] createDTOArray(int size) {
+			return new FragmentFieldCustom[size];
 		}
 
 		@Override
 		protected void setField(
-			FragmentContentFieldText fragmentContentFieldText,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			FragmentFieldCustom fragmentFieldCustom, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "text")) {
+			if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					fragmentContentFieldText.setText(
-						(Object)jsonParserFieldValue);
+					fragmentFieldCustom.setType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "value")) {
+				if (jsonParserFieldValue != null) {
+					fragmentFieldCustom.setValue(
+						ValueSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

@@ -28,37 +28,6 @@ import javax.annotation.Generated;
 @Generated("")
 public class SectionDefinition {
 
-	public static enum ContainerType {
-
-		FIXED("Fixed"), FLUID("Fluid");
-
-		public static ContainerType create(String value) {
-			for (ContainerType containerType : values()) {
-				if (Objects.equals(containerType.getValue(), value)) {
-					return containerType;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private ContainerType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
 	public String getBackgroundColorCssClass() {
 		return backgroundColorCssClass;
 	}
@@ -104,97 +73,26 @@ public class SectionDefinition {
 
 	protected FragmentImage backgroundImage;
 
-	public ContainerType getContainerType() {
-		return containerType;
+	public Layout getLayout() {
+		return layout;
 	}
 
-	public String getContainerTypeAsString() {
-		if (containerType == null) {
-			return null;
-		}
-
-		return containerType.toString();
+	public void setLayout(Layout layout) {
+		this.layout = layout;
 	}
 
-	public void setContainerType(ContainerType containerType) {
-		this.containerType = containerType;
-	}
-
-	public void setContainerType(
-		UnsafeSupplier<ContainerType, Exception> containerTypeUnsafeSupplier) {
+	public void setLayout(
+		UnsafeSupplier<Layout, Exception> layoutUnsafeSupplier) {
 
 		try {
-			containerType = containerTypeUnsafeSupplier.get();
+			layout = layoutUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ContainerType containerType;
-
-	public Integer getPaddingBottom() {
-		return paddingBottom;
-	}
-
-	public void setPaddingBottom(Integer paddingBottom) {
-		this.paddingBottom = paddingBottom;
-	}
-
-	public void setPaddingBottom(
-		UnsafeSupplier<Integer, Exception> paddingBottomUnsafeSupplier) {
-
-		try {
-			paddingBottom = paddingBottomUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Integer paddingBottom;
-
-	public Integer getPaddingHorizontal() {
-		return paddingHorizontal;
-	}
-
-	public void setPaddingHorizontal(Integer paddingHorizontal) {
-		this.paddingHorizontal = paddingHorizontal;
-	}
-
-	public void setPaddingHorizontal(
-		UnsafeSupplier<Integer, Exception> paddingHorizontalUnsafeSupplier) {
-
-		try {
-			paddingHorizontal = paddingHorizontalUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Integer paddingHorizontal;
-
-	public Integer getPaddingTop() {
-		return paddingTop;
-	}
-
-	public void setPaddingTop(Integer paddingTop) {
-		this.paddingTop = paddingTop;
-	}
-
-	public void setPaddingTop(
-		UnsafeSupplier<Integer, Exception> paddingTopUnsafeSupplier) {
-
-		try {
-			paddingTop = paddingTopUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Integer paddingTop;
+	protected Layout layout;
 
 	@Override
 	public boolean equals(Object object) {

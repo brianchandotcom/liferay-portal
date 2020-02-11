@@ -41,10 +41,39 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentContentField")
+@GraphQLName("FragmentFieldImage")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentContentField")
-public class FragmentContentField {
+@XmlRootElement(name = "FragmentFieldImage")
+public class FragmentFieldImage {
+
+	@Schema
+	@Valid
+	public FragmentImage getFragmentImage() {
+		return fragmentImage;
+	}
+
+	public void setFragmentImage(FragmentImage fragmentImage) {
+		this.fragmentImage = fragmentImage;
+	}
+
+	@JsonIgnore
+	public void setFragmentImage(
+		UnsafeSupplier<FragmentImage, Exception> fragmentImageUnsafeSupplier) {
+
+		try {
+			fragmentImage = fragmentImageUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FragmentImage fragmentImage;
 
 	@Schema
 	@Valid
@@ -75,75 +104,19 @@ public class FragmentContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentLink fragmentLink;
 
-	@Schema
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String id;
-
-	@Schema
-	@Valid
-	public Object getValue() {
-		return value;
-	}
-
-	public void setValue(Object value) {
-		this.value = value;
-	}
-
-	@JsonIgnore
-	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object value;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
 		}
 
-		if (!(object instanceof FragmentContentField)) {
+		if (!(object instanceof FragmentFieldImage)) {
 			return false;
 		}
 
-		FragmentContentField fragmentContentField =
-			(FragmentContentField)object;
+		FragmentFieldImage fragmentFieldImage = (FragmentFieldImage)object;
 
-		return Objects.equals(toString(), fragmentContentField.toString());
+		return Objects.equals(toString(), fragmentFieldImage.toString());
 	}
 
 	@Override
@@ -158,6 +131,16 @@ public class FragmentContentField {
 
 		sb.append("{");
 
+		if (fragmentImage != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentImage\": ");
+
+			sb.append(String.valueOf(fragmentImage));
+		}
+
 		if (fragmentLink != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -168,41 +151,13 @@ public class FragmentContentField {
 			sb.append(String.valueOf(fragmentLink));
 		}
 
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(id));
-
-			sb.append("\"");
-		}
-
-		if (value != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"value\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(value));
-
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentContentField",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -15,7 +15,6 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.PageDefinition;
-import com.liferay.headless.delivery.client.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -58,48 +57,14 @@ public class PageDefinitionSerDes {
 
 		sb.append("{");
 
-		if (pageDefinition.getFriendlyURLPath() != null) {
+		if (pageDefinition.getPageElement() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"friendlyURLPath\": ");
+			sb.append("\"pageElement\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(pageDefinition.getFriendlyURLPath()));
-
-			sb.append("\"");
-		}
-
-		if (pageDefinition.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(pageDefinition.getId());
-		}
-
-		if (pageDefinition.getPageElements() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"pageElements\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < pageDefinition.getPageElements().length; i++) {
-				sb.append(String.valueOf(pageDefinition.getPageElements()[i]));
-
-				if ((i + 1) < pageDefinition.getPageElements().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(pageDefinition.getPageElement()));
 		}
 
 		if (pageDefinition.getSettings() != null) {
@@ -190,29 +155,12 @@ public class PageDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageDefinition.getFriendlyURLPath() == null) {
-			map.put("friendlyURLPath", null);
+		if (pageDefinition.getPageElement() == null) {
+			map.put("pageElement", null);
 		}
 		else {
 			map.put(
-				"friendlyURLPath",
-				String.valueOf(pageDefinition.getFriendlyURLPath()));
-		}
-
-		if (pageDefinition.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(pageDefinition.getId()));
-		}
-
-		if (pageDefinition.getPageElements() == null) {
-			map.put("pageElements", null);
-		}
-		else {
-			map.put(
-				"pageElements",
-				String.valueOf(pageDefinition.getPageElements()));
+				"pageElement", String.valueOf(pageDefinition.getPageElement()));
 		}
 
 		if (pageDefinition.getSettings() == null) {
@@ -268,28 +216,10 @@ public class PageDefinitionSerDes {
 			PageDefinition pageDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "friendlyURLPath")) {
+			if (Objects.equals(jsonParserFieldName, "pageElement")) {
 				if (jsonParserFieldValue != null) {
-					pageDefinition.setFriendlyURLPath(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					pageDefinition.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "pageElements")) {
-				if (jsonParserFieldValue != null) {
-					pageDefinition.setPageElements(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PageElementSerDes.toDTO((String)object)
-						).toArray(
-							size -> new PageElement[size]
-						));
+					pageDefinition.setPageElement(
+						PageElementSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "settings")) {

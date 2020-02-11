@@ -47,75 +47,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PageDefinition {
 
 	@Schema
-	public String getFriendlyURLPath() {
-		return friendlyURLPath;
-	}
-
-	public void setFriendlyURLPath(String friendlyURLPath) {
-		this.friendlyURLPath = friendlyURLPath;
-	}
-
-	@JsonIgnore
-	public void setFriendlyURLPath(
-		UnsafeSupplier<String, Exception> friendlyURLPathUnsafeSupplier) {
-
-		try {
-			friendlyURLPath = friendlyURLPathUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String friendlyURLPath;
-
-	@Schema
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
-
-	@Schema
 	@Valid
-	public PageElement[] getPageElements() {
-		return pageElements;
+	public PageElement getPageElement() {
+		return pageElement;
 	}
 
-	public void setPageElements(PageElement[] pageElements) {
-		this.pageElements = pageElements;
+	public void setPageElement(PageElement pageElement) {
+		this.pageElement = pageElement;
 	}
 
 	@JsonIgnore
-	public void setPageElements(
-		UnsafeSupplier<PageElement[], Exception> pageElementsUnsafeSupplier) {
+	public void setPageElement(
+		UnsafeSupplier<PageElement, Exception> pageElementUnsafeSupplier) {
 
 		try {
-			pageElements = pageElementsUnsafeSupplier.get();
+			pageElement = pageElementUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -127,7 +73,7 @@ public class PageDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PageElement[] pageElements;
+	protected PageElement pageElement;
 
 	@Schema
 	@Valid
@@ -273,48 +219,14 @@ public class PageDefinition {
 
 		sb.append("{");
 
-		if (friendlyURLPath != null) {
+		if (pageElement != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"friendlyURLPath\": ");
+			sb.append("\"pageElement\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(friendlyURLPath));
-
-			sb.append("\"");
-		}
-
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
-		if (pageElements != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"pageElements\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < pageElements.length; i++) {
-				sb.append(String.valueOf(pageElements[i]));
-
-				if ((i + 1) < pageElements.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(pageElement));
 		}
 
 		if (settings != null) {

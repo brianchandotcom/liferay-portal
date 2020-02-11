@@ -41,27 +41,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentContentFieldImage")
+@GraphQLName("FragmentField")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentContentFieldImage")
-public class FragmentContentFieldImage {
+@XmlRootElement(name = "FragmentField")
+public class FragmentField {
 
 	@Schema
-	@Valid
-	public FragmentImage getFragmentImage() {
-		return fragmentImage;
+	public String getId() {
+		return id;
 	}
 
-	public void setFragmentImage(FragmentImage fragmentImage) {
-		this.fragmentImage = fragmentImage;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setFragmentImage(
-		UnsafeSupplier<FragmentImage, Exception> fragmentImageUnsafeSupplier) {
-
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
-			fragmentImage = fragmentImageUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,7 +70,36 @@ public class FragmentContentFieldImage {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentImage fragmentImage;
+	protected String id;
+
+	@Schema
+	@Valid
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
+	}
+
+	@JsonIgnore
+	public void setValue(
+		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
+
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Object value;
 
 	@Override
 	public boolean equals(Object object) {
@@ -81,14 +107,13 @@ public class FragmentContentFieldImage {
 			return true;
 		}
 
-		if (!(object instanceof FragmentContentFieldImage)) {
+		if (!(object instanceof FragmentField)) {
 			return false;
 		}
 
-		FragmentContentFieldImage fragmentContentFieldImage =
-			(FragmentContentFieldImage)object;
+		FragmentField fragmentField = (FragmentField)object;
 
-		return Objects.equals(toString(), fragmentContentFieldImage.toString());
+		return Objects.equals(toString(), fragmentField.toString());
 	}
 
 	@Override
@@ -103,14 +128,32 @@ public class FragmentContentFieldImage {
 
 		sb.append("{");
 
-		if (fragmentImage != null) {
+		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentImage\": ");
+			sb.append("\"id\": ");
 
-			sb.append(String.valueOf(fragmentImage));
+			sb.append("\"");
+
+			sb.append(_escape(id));
+
+			sb.append("\"");
+		}
+
+		if (value != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(value));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -119,7 +162,7 @@ public class FragmentContentFieldImage {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentContentFieldImage",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentField",
 		name = "x-class-name"
 	)
 	public String xClassName;

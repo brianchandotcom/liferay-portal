@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.FragmentContentFieldHTML;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentFieldHTML;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,26 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentContentFieldHTMLSerDes {
+public class FragmentFieldHTMLSerDes {
 
-	public static FragmentContentFieldHTML toDTO(String json) {
-		FragmentContentFieldHTMLJSONParser fragmentContentFieldHTMLJSONParser =
-			new FragmentContentFieldHTMLJSONParser();
+	public static FragmentFieldHTML toDTO(String json) {
+		FragmentFieldHTMLJSONParser fragmentFieldHTMLJSONParser =
+			new FragmentFieldHTMLJSONParser();
 
-		return fragmentContentFieldHTMLJSONParser.parseToDTO(json);
+		return fragmentFieldHTMLJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentContentFieldHTML[] toDTOs(String json) {
-		FragmentContentFieldHTMLJSONParser fragmentContentFieldHTMLJSONParser =
-			new FragmentContentFieldHTMLJSONParser();
+	public static FragmentFieldHTML[] toDTOs(String json) {
+		FragmentFieldHTMLJSONParser fragmentFieldHTMLJSONParser =
+			new FragmentFieldHTMLJSONParser();
 
-		return fragmentContentFieldHTMLJSONParser.parseToDTOs(json);
+		return fragmentFieldHTMLJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(
-		FragmentContentFieldHTML fragmentContentFieldHTML) {
-
-		if (fragmentContentFieldHTML == null) {
+	public static String toJSON(FragmentFieldHTML fragmentFieldHTML) {
+		if (fragmentFieldHTML == null) {
 			return "null";
 		}
 
@@ -57,7 +55,7 @@ public class FragmentContentFieldHTMLSerDes {
 
 		sb.append("{");
 
-		if (fragmentContentFieldHTML.getHtml() != null) {
+		if (fragmentFieldHTML.getHtml() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -66,7 +64,7 @@ public class FragmentContentFieldHTMLSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(fragmentContentFieldHTML.getHtml()));
+			sb.append(_escape(fragmentFieldHTML.getHtml()));
 
 			sb.append("\"");
 		}
@@ -77,53 +75,52 @@ public class FragmentContentFieldHTMLSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentContentFieldHTMLJSONParser fragmentContentFieldHTMLJSONParser =
-			new FragmentContentFieldHTMLJSONParser();
+		FragmentFieldHTMLJSONParser fragmentFieldHTMLJSONParser =
+			new FragmentFieldHTMLJSONParser();
 
-		return fragmentContentFieldHTMLJSONParser.parseToMap(json);
+		return fragmentFieldHTMLJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		FragmentContentFieldHTML fragmentContentFieldHTML) {
+		FragmentFieldHTML fragmentFieldHTML) {
 
-		if (fragmentContentFieldHTML == null) {
+		if (fragmentFieldHTML == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentContentFieldHTML.getHtml() == null) {
+		if (fragmentFieldHTML.getHtml() == null) {
 			map.put("html", null);
 		}
 		else {
-			map.put("html", String.valueOf(fragmentContentFieldHTML.getHtml()));
+			map.put("html", String.valueOf(fragmentFieldHTML.getHtml()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentContentFieldHTMLJSONParser
-		extends BaseJSONParser<FragmentContentFieldHTML> {
+	public static class FragmentFieldHTMLJSONParser
+		extends BaseJSONParser<FragmentFieldHTML> {
 
 		@Override
-		protected FragmentContentFieldHTML createDTO() {
-			return new FragmentContentFieldHTML();
+		protected FragmentFieldHTML createDTO() {
+			return new FragmentFieldHTML();
 		}
 
 		@Override
-		protected FragmentContentFieldHTML[] createDTOArray(int size) {
-			return new FragmentContentFieldHTML[size];
+		protected FragmentFieldHTML[] createDTOArray(int size) {
+			return new FragmentFieldHTML[size];
 		}
 
 		@Override
 		protected void setField(
-			FragmentContentFieldHTML fragmentContentFieldHTML,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			FragmentFieldHTML fragmentFieldHTML, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "html")) {
 				if (jsonParserFieldValue != null) {
-					fragmentContentFieldHTML.setHtml(
-						(Object)jsonParserFieldValue);
+					fragmentFieldHTML.setHtml((Object)jsonParserFieldValue);
 				}
 			}
 			else {

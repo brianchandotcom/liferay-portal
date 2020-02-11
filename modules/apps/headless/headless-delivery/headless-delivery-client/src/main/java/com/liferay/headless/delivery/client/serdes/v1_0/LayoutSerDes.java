@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.SectionDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.Layout;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SectionDefinitionSerDes {
+public class LayoutSerDes {
 
-	public static SectionDefinition toDTO(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+	public static Layout toDTO(String json) {
+		LayoutJSONParser layoutJSONParser = new LayoutJSONParser();
 
-		return sectionDefinitionJSONParser.parseToDTO(json);
+		return layoutJSONParser.parseToDTO(json);
 	}
 
-	public static SectionDefinition[] toDTOs(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+	public static Layout[] toDTOs(String json) {
+		LayoutJSONParser layoutJSONParser = new LayoutJSONParser();
 
-		return sectionDefinitionJSONParser.parseToDTOs(json);
+		return layoutJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(SectionDefinition sectionDefinition) {
-		if (sectionDefinition == null) {
+	public static String toJSON(Layout layout) {
+		if (layout == null) {
 			return "null";
 		}
 
@@ -55,38 +53,48 @@ public class SectionDefinitionSerDes {
 
 		sb.append("{");
 
-		if (sectionDefinition.getBackgroundColorCssClass() != null) {
+		if (layout.getContainerType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundColorCssClass\": ");
+			sb.append("\"containerType\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(sectionDefinition.getBackgroundColorCssClass()));
+			sb.append(layout.getContainerType());
 
 			sb.append("\"");
 		}
 
-		if (sectionDefinition.getBackgroundImage() != null) {
+		if (layout.getPaddingBottom() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundImage\": ");
+			sb.append("\"paddingBottom\": ");
 
-			sb.append(String.valueOf(sectionDefinition.getBackgroundImage()));
+			sb.append(layout.getPaddingBottom());
 		}
 
-		if (sectionDefinition.getLayout() != null) {
+		if (layout.getPaddingHorizontal() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"layout\": ");
+			sb.append("\"paddingHorizontal\": ");
 
-			sb.append(String.valueOf(sectionDefinition.getLayout()));
+			sb.append(layout.getPaddingHorizontal());
+		}
+
+		if (layout.getPaddingTop() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paddingTop\": ");
+
+			sb.append(layout.getPaddingTop());
 		}
 
 		sb.append("}");
@@ -95,86 +103,91 @@ public class SectionDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+		LayoutJSONParser layoutJSONParser = new LayoutJSONParser();
 
-		return sectionDefinitionJSONParser.parseToMap(json);
+		return layoutJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		SectionDefinition sectionDefinition) {
-
-		if (sectionDefinition == null) {
+	public static Map<String, String> toMap(Layout layout) {
+		if (layout == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sectionDefinition.getBackgroundColorCssClass() == null) {
-			map.put("backgroundColorCssClass", null);
+		if (layout.getContainerType() == null) {
+			map.put("containerType", null);
+		}
+		else {
+			map.put("containerType", String.valueOf(layout.getContainerType()));
+		}
+
+		if (layout.getPaddingBottom() == null) {
+			map.put("paddingBottom", null);
+		}
+		else {
+			map.put("paddingBottom", String.valueOf(layout.getPaddingBottom()));
+		}
+
+		if (layout.getPaddingHorizontal() == null) {
+			map.put("paddingHorizontal", null);
 		}
 		else {
 			map.put(
-				"backgroundColorCssClass",
-				String.valueOf(sectionDefinition.getBackgroundColorCssClass()));
+				"paddingHorizontal",
+				String.valueOf(layout.getPaddingHorizontal()));
 		}
 
-		if (sectionDefinition.getBackgroundImage() == null) {
-			map.put("backgroundImage", null);
+		if (layout.getPaddingTop() == null) {
+			map.put("paddingTop", null);
 		}
 		else {
-			map.put(
-				"backgroundImage",
-				String.valueOf(sectionDefinition.getBackgroundImage()));
-		}
-
-		if (sectionDefinition.getLayout() == null) {
-			map.put("layout", null);
-		}
-		else {
-			map.put("layout", String.valueOf(sectionDefinition.getLayout()));
+			map.put("paddingTop", String.valueOf(layout.getPaddingTop()));
 		}
 
 		return map;
 	}
 
-	public static class SectionDefinitionJSONParser
-		extends BaseJSONParser<SectionDefinition> {
+	public static class LayoutJSONParser extends BaseJSONParser<Layout> {
 
 		@Override
-		protected SectionDefinition createDTO() {
-			return new SectionDefinition();
+		protected Layout createDTO() {
+			return new Layout();
 		}
 
 		@Override
-		protected SectionDefinition[] createDTOArray(int size) {
-			return new SectionDefinition[size];
+		protected Layout[] createDTOArray(int size) {
+			return new Layout[size];
 		}
 
 		@Override
 		protected void setField(
-			SectionDefinition sectionDefinition, String jsonParserFieldName,
+			Layout layout, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundColorCssClass")) {
-
+			if (Objects.equals(jsonParserFieldName, "containerType")) {
 				if (jsonParserFieldValue != null) {
-					sectionDefinition.setBackgroundColorCssClass(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "backgroundImage")) {
-				if (jsonParserFieldValue != null) {
-					sectionDefinition.setBackgroundImage(
-						FragmentImageSerDes.toDTO(
+					layout.setContainerType(
+						Layout.ContainerType.create(
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "layout")) {
+			else if (Objects.equals(jsonParserFieldName, "paddingBottom")) {
 				if (jsonParserFieldValue != null) {
-					sectionDefinition.setLayout(
-						LayoutSerDes.toDTO((String)jsonParserFieldValue));
+					layout.setPaddingBottom(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "paddingHorizontal")) {
+				if (jsonParserFieldValue != null) {
+					layout.setPaddingHorizontal(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "paddingTop")) {
+				if (jsonParserFieldValue != null) {
+					layout.setPaddingTop(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

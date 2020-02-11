@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.FragmentContentFieldSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.FragmentSerDes;
 
 import java.util.Objects;
 
@@ -26,68 +26,50 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentContentField {
+public class Fragment {
 
-	public FragmentLink getFragmentLink() {
-		return fragmentLink;
+	public String getFragmentCollectionName() {
+		return fragmentCollectionName;
 	}
 
-	public void setFragmentLink(FragmentLink fragmentLink) {
-		this.fragmentLink = fragmentLink;
+	public void setFragmentCollectionName(String fragmentCollectionName) {
+		this.fragmentCollectionName = fragmentCollectionName;
 	}
 
-	public void setFragmentLink(
-		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
+	public void setFragmentCollectionName(
+		UnsafeSupplier<String, Exception>
+			fragmentCollectionNameUnsafeSupplier) {
 
 		try {
-			fragmentLink = fragmentLinkUnsafeSupplier.get();
+			fragmentCollectionName = fragmentCollectionNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FragmentLink fragmentLink;
+	protected String fragmentCollectionName;
 
-	public String getId() {
-		return id;
+	public String getFragmentName() {
+		return fragmentName;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setFragmentName(String fragmentName) {
+		this.fragmentName = fragmentName;
 	}
 
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+	public void setFragmentName(
+		UnsafeSupplier<String, Exception> fragmentNameUnsafeSupplier) {
+
 		try {
-			id = idUnsafeSupplier.get();
+			fragmentName = fragmentNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String id;
-
-	public Object getValue() {
-		return value;
-	}
-
-	public void setValue(Object value) {
-		this.value = value;
-	}
-
-	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object value;
+	protected String fragmentName;
 
 	@Override
 	public boolean equals(Object object) {
@@ -95,14 +77,13 @@ public class FragmentContentField {
 			return true;
 		}
 
-		if (!(object instanceof FragmentContentField)) {
+		if (!(object instanceof Fragment)) {
 			return false;
 		}
 
-		FragmentContentField fragmentContentField =
-			(FragmentContentField)object;
+		Fragment fragment = (Fragment)object;
 
-		return Objects.equals(toString(), fragmentContentField.toString());
+		return Objects.equals(toString(), fragment.toString());
 	}
 
 	@Override
@@ -113,7 +94,7 @@ public class FragmentContentField {
 	}
 
 	public String toString() {
-		return FragmentContentFieldSerDes.toJSON(this);
+		return FragmentSerDes.toJSON(this);
 	}
 
 }

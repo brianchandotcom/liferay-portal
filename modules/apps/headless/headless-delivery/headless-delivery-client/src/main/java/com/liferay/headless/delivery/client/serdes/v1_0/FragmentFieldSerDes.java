@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.FragmentContentFieldImage;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,28 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentContentFieldImageSerDes {
+public class FragmentFieldSerDes {
 
-	public static FragmentContentFieldImage toDTO(String json) {
-		FragmentContentFieldImageJSONParser
-			fragmentContentFieldImageJSONParser =
-				new FragmentContentFieldImageJSONParser();
+	public static FragmentField toDTO(String json) {
+		FragmentFieldJSONParser fragmentFieldJSONParser =
+			new FragmentFieldJSONParser();
 
-		return fragmentContentFieldImageJSONParser.parseToDTO(json);
+		return fragmentFieldJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentContentFieldImage[] toDTOs(String json) {
-		FragmentContentFieldImageJSONParser
-			fragmentContentFieldImageJSONParser =
-				new FragmentContentFieldImageJSONParser();
+	public static FragmentField[] toDTOs(String json) {
+		FragmentFieldJSONParser fragmentFieldJSONParser =
+			new FragmentFieldJSONParser();
 
-		return fragmentContentFieldImageJSONParser.parseToDTOs(json);
+		return fragmentFieldJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(
-		FragmentContentFieldImage fragmentContentFieldImage) {
-
-		if (fragmentContentFieldImage == null) {
+	public static String toJSON(FragmentField fragmentField) {
+		if (fragmentField == null) {
 			return "null";
 		}
 
@@ -59,15 +55,32 @@ public class FragmentContentFieldImageSerDes {
 
 		sb.append("{");
 
-		if (fragmentContentFieldImage.getFragmentImage() != null) {
+		if (fragmentField.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentImage\": ");
+			sb.append("\"id\": ");
 
-			sb.append(
-				String.valueOf(fragmentContentFieldImage.getFragmentImage()));
+			sb.append("\"");
+
+			sb.append(_escape(fragmentField.getId()));
+
+			sb.append("\"");
+		}
+
+		if (fragmentField.getValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fragmentField.getValue()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -76,57 +89,62 @@ public class FragmentContentFieldImageSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentContentFieldImageJSONParser
-			fragmentContentFieldImageJSONParser =
-				new FragmentContentFieldImageJSONParser();
+		FragmentFieldJSONParser fragmentFieldJSONParser =
+			new FragmentFieldJSONParser();
 
-		return fragmentContentFieldImageJSONParser.parseToMap(json);
+		return fragmentFieldJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		FragmentContentFieldImage fragmentContentFieldImage) {
-
-		if (fragmentContentFieldImage == null) {
+	public static Map<String, String> toMap(FragmentField fragmentField) {
+		if (fragmentField == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentContentFieldImage.getFragmentImage() == null) {
-			map.put("fragmentImage", null);
+		if (fragmentField.getId() == null) {
+			map.put("id", null);
 		}
 		else {
-			map.put(
-				"fragmentImage",
-				String.valueOf(fragmentContentFieldImage.getFragmentImage()));
+			map.put("id", String.valueOf(fragmentField.getId()));
+		}
+
+		if (fragmentField.getValue() == null) {
+			map.put("value", null);
+		}
+		else {
+			map.put("value", String.valueOf(fragmentField.getValue()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentContentFieldImageJSONParser
-		extends BaseJSONParser<FragmentContentFieldImage> {
+	public static class FragmentFieldJSONParser
+		extends BaseJSONParser<FragmentField> {
 
 		@Override
-		protected FragmentContentFieldImage createDTO() {
-			return new FragmentContentFieldImage();
+		protected FragmentField createDTO() {
+			return new FragmentField();
 		}
 
 		@Override
-		protected FragmentContentFieldImage[] createDTOArray(int size) {
-			return new FragmentContentFieldImage[size];
+		protected FragmentField[] createDTOArray(int size) {
+			return new FragmentField[size];
 		}
 
 		@Override
 		protected void setField(
-			FragmentContentFieldImage fragmentContentFieldImage,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			FragmentField fragmentField, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fragmentImage")) {
+			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					fragmentContentFieldImage.setFragmentImage(
-						FragmentImageSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					fragmentField.setId((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "value")) {
+				if (jsonParserFieldValue != null) {
+					fragmentField.setValue((Object)jsonParserFieldValue);
 				}
 			}
 			else {

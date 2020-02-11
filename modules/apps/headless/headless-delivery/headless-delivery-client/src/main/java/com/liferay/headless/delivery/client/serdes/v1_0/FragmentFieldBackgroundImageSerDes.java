@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.SectionDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentFieldBackgroundImage;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SectionDefinitionSerDes {
+public class FragmentFieldBackgroundImageSerDes {
 
-	public static SectionDefinition toDTO(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+	public static FragmentFieldBackgroundImage toDTO(String json) {
+		FragmentFieldBackgroundImageJSONParser
+			fragmentFieldBackgroundImageJSONParser =
+				new FragmentFieldBackgroundImageJSONParser();
 
-		return sectionDefinitionJSONParser.parseToDTO(json);
+		return fragmentFieldBackgroundImageJSONParser.parseToDTO(json);
 	}
 
-	public static SectionDefinition[] toDTOs(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+	public static FragmentFieldBackgroundImage[] toDTOs(String json) {
+		FragmentFieldBackgroundImageJSONParser
+			fragmentFieldBackgroundImageJSONParser =
+				new FragmentFieldBackgroundImageJSONParser();
 
-		return sectionDefinitionJSONParser.parseToDTOs(json);
+		return fragmentFieldBackgroundImageJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(SectionDefinition sectionDefinition) {
-		if (sectionDefinition == null) {
+	public static String toJSON(
+		FragmentFieldBackgroundImage fragmentFieldBackgroundImage) {
+
+		if (fragmentFieldBackgroundImage == null) {
 			return "null";
 		}
 
@@ -55,38 +59,16 @@ public class SectionDefinitionSerDes {
 
 		sb.append("{");
 
-		if (sectionDefinition.getBackgroundColorCssClass() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"backgroundColorCssClass\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(sectionDefinition.getBackgroundColorCssClass()));
-
-			sb.append("\"");
-		}
-
-		if (sectionDefinition.getBackgroundImage() != null) {
+		if (fragmentFieldBackgroundImage.getBackgroundImage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"backgroundImage\": ");
 
-			sb.append(String.valueOf(sectionDefinition.getBackgroundImage()));
-		}
-
-		if (sectionDefinition.getLayout() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"layout\": ");
-
-			sb.append(String.valueOf(sectionDefinition.getLayout()));
+			sb.append(
+				String.valueOf(
+					fragmentFieldBackgroundImage.getBackgroundImage()));
 		}
 
 		sb.append("}");
@@ -95,86 +77,58 @@ public class SectionDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+		FragmentFieldBackgroundImageJSONParser
+			fragmentFieldBackgroundImageJSONParser =
+				new FragmentFieldBackgroundImageJSONParser();
 
-		return sectionDefinitionJSONParser.parseToMap(json);
+		return fragmentFieldBackgroundImageJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		SectionDefinition sectionDefinition) {
+		FragmentFieldBackgroundImage fragmentFieldBackgroundImage) {
 
-		if (sectionDefinition == null) {
+		if (fragmentFieldBackgroundImage == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sectionDefinition.getBackgroundColorCssClass() == null) {
-			map.put("backgroundColorCssClass", null);
-		}
-		else {
-			map.put(
-				"backgroundColorCssClass",
-				String.valueOf(sectionDefinition.getBackgroundColorCssClass()));
-		}
-
-		if (sectionDefinition.getBackgroundImage() == null) {
+		if (fragmentFieldBackgroundImage.getBackgroundImage() == null) {
 			map.put("backgroundImage", null);
 		}
 		else {
 			map.put(
 				"backgroundImage",
-				String.valueOf(sectionDefinition.getBackgroundImage()));
-		}
-
-		if (sectionDefinition.getLayout() == null) {
-			map.put("layout", null);
-		}
-		else {
-			map.put("layout", String.valueOf(sectionDefinition.getLayout()));
+				String.valueOf(
+					fragmentFieldBackgroundImage.getBackgroundImage()));
 		}
 
 		return map;
 	}
 
-	public static class SectionDefinitionJSONParser
-		extends BaseJSONParser<SectionDefinition> {
+	public static class FragmentFieldBackgroundImageJSONParser
+		extends BaseJSONParser<FragmentFieldBackgroundImage> {
 
 		@Override
-		protected SectionDefinition createDTO() {
-			return new SectionDefinition();
+		protected FragmentFieldBackgroundImage createDTO() {
+			return new FragmentFieldBackgroundImage();
 		}
 
 		@Override
-		protected SectionDefinition[] createDTOArray(int size) {
-			return new SectionDefinition[size];
+		protected FragmentFieldBackgroundImage[] createDTOArray(int size) {
+			return new FragmentFieldBackgroundImage[size];
 		}
 
 		@Override
 		protected void setField(
-			SectionDefinition sectionDefinition, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			FragmentFieldBackgroundImage fragmentFieldBackgroundImage,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundColorCssClass")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundImage")) {
 				if (jsonParserFieldValue != null) {
-					sectionDefinition.setBackgroundColorCssClass(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "backgroundImage")) {
-				if (jsonParserFieldValue != null) {
-					sectionDefinition.setBackgroundImage(
+					fragmentFieldBackgroundImage.setBackgroundImage(
 						FragmentImageSerDes.toDTO(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "layout")) {
-				if (jsonParserFieldValue != null) {
-					sectionDefinition.setLayout(
-						LayoutSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

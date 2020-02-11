@@ -39,7 +39,7 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	}
 
 	public DefaultDTOConverterContext(
-		boolean acceptAllLanguages, Map<String, Map> actions,
+		boolean acceptAllLanguages, Map<String, Map<String, String>> actions,
 		DTOConverterRegistry dtoConverterRegistry, Object id, Locale locale,
 		UriInfo uriInfo, User user) {
 
@@ -76,7 +76,7 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	}
 
 	@Override
-	public Map<String, Map> getActions() {
+	public Map<String, Map<String, String>> getActions() {
 		return _actions;
 	}
 
@@ -120,7 +120,7 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	}
 
 	private final boolean _acceptAllLanguages;
-	private final Map<String, Map> _actions;
+	private final Map<String, Map<String, String>> _actions;
 	private final DTOConverterRegistry _dtoConverterRegistry;
 	private final Object _id;
 	private final Locale _locale;

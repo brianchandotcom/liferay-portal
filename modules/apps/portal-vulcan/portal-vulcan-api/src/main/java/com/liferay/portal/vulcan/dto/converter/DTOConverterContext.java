@@ -31,7 +31,7 @@ import javax.ws.rs.core.UriInfo;
  */
 public interface DTOConverterContext {
 
-	public default Map<String, Map> getActions() {
+	public default Map<String, Map<String, String>> getActions() {
 		return new HashMap<>();
 	}
 

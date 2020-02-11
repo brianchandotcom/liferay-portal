@@ -121,8 +121,7 @@ public class SearchUtil {
 		}
 
 		return Page.of(
-			(Map)actions, items, pagination,
-			indexer.searchCount(searchContext));
+			actions, items, pagination, indexer.searchCount(searchContext));
 	}
 
 	/**

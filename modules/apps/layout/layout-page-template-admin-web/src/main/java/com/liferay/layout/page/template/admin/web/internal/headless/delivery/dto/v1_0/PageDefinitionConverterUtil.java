@@ -246,11 +246,12 @@ public class PageDefinitionConverterUtil {
 			return new PageElement() {
 				{
 					definition =
-						FragmentInstanceDefinitionConverterUtil.toFragmentInstanceDefinition(
-							fragmentCollectionContributorTracker,
-							fragmentEntryConfigurationParser,
-							fragmentLayoutStructureItem,
-							fragmentRendererTracker);
+						FragmentInstanceDefinitionConverterUtil.
+							toFragmentInstanceDefinition(
+								fragmentCollectionContributorTracker,
+								fragmentEntryConfigurationParser,
+								fragmentLayoutStructureItem,
+								fragmentRendererTracker);
 					type = PageElement.Type.FRAGMENT;
 				}
 			};

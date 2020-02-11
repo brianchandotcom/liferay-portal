@@ -248,17 +248,6 @@ public class DTOOpenAPIParser {
 		String javaDataType = OpenAPIParserUtil.getJavaDataType(
 			javaDataTypeMap, propertySchema);
 
-		if (StringUtil.equals(javaDataType, "java.util.Map")) {
-			String name = OpenAPIParserUtil.getJavaDataType(
-				javaDataTypeMap, propertySchema.getAdditionalPropertySchema());
-
-			if (name.lastIndexOf('.') != -1) {
-				name = name.substring(name.lastIndexOf(".") + 1);
-			}
-
-			return "Map<String, " + name + ">";
-		}
-
 		if (javaDataType.startsWith("[")) {
 			String name = OpenAPIParserUtil.getElementClassName(javaDataType);
 
@@ -267,6 +256,11 @@ public class DTOOpenAPIParser {
 			}
 
 			return name + "[]";
+		}
+
+		if (javaDataType.startsWith("Map")) {
+			return javaDataType.substring(0, javaDataType.lastIndexOf(" ")) +
+				javaDataType.substring(javaDataType.lastIndexOf(".") + 1);
 		}
 
 		String propertyType = javaDataType;

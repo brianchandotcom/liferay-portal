@@ -97,6 +97,11 @@ public class OAuth2AuthorizationLocalServiceImpl
 	}
 
 	@Override
+	public void deleteExpiredAccessTokens() {
+
+	}
+
+	@Override
 	public OAuth2Authorization deleteOAuth2Authorization(
 			long oAuth2AuthorizationId)
 		throws PortalException {

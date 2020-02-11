@@ -936,7 +936,7 @@ components:
             required:
                 - name
             type: object
-        FragmentContentField:
+        FragmentField:
             properties:
                 fragmentLink:
                     $ref: "#/components/schemas/FragmentLink"
@@ -944,29 +944,29 @@ components:
                     type: string
                 value:
                     oneOf:
-                        - $ref: "#/components/schemas/FragmentContentFieldBackgroundImage"
-                        - $ref: "#/components/schemas/FragmentContentFieldHTML"
-                        - $ref: "#/components/schemas/FragmentContentFieldImage"
-                        - $ref: "#/components/schemas/FragmentContentFieldText"
+                        - $ref: "#/components/schemas/FragmentFieldBackgroundImage"
+                        - $ref: "#/components/schemas/FragmentFieldHTML"
+                        - $ref: "#/components/schemas/FragmentFieldImage"
+                        - $ref: "#/components/schemas/FragmentFieldText"
             type: object
-        FragmentContentFieldBackgroundImage:
+        FragmentFieldBackgroundImage:
             properties:
                 backgroundImage:
                     $ref: "#/components/schemas/FragmentImage"
             type: object
-        FragmentContentFieldHTML:
+        FragmentFieldHTML:
             properties:
                 html:
                     oneOf:
                         - $ref: "#/components/schemas/InlineValue"
                         - $ref: "#/components/schemas/MappedValue"
             type: object
-        FragmentContentFieldImage:
+        FragmentFieldImage:
             properties:
                 fragmentImage:
                     $ref: "#/components/schemas/FragmentImage"
             type: object
-        FragmentContentFieldText:
+        FragmentFieldText:
             properties:
                 text:
                     oneOf:
@@ -997,9 +997,9 @@ components:
                     additionalProperties:
                         type: object
                     type: object
-                fragmentContentFields:
+                fragmentFields:
                     items:
-                        $ref: "#/components/schemas/FragmentContentField"
+                        $ref: "#/components/schemas/FragmentField"
                     type: array
             type: object
         FragmentLink:

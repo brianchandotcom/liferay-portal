@@ -374,7 +374,7 @@
 <!--SECTION_BUILDER-->
 <tr>
 	<td>SECTION_BUILDER_FRAGMENTS</td>
-	<td>//div[contains(@title,'${fragmentName}')]/../../../..</td>
+	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'fragment-card') and contains(.,'${fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -409,8 +409,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WIDGETS_ADD_PORTLET_DRAG_LINK</td>
-	<td>//button[contains(@data-drag-source-label,'${key_portletName}') and contains(@class,'drag-source')]</td>
+	<td>WIDGETS_ADD_PORTLET_DRAG_BUTTON</td>
+	<td>//button[contains(.,'${key_portletName}') and contains(@draggable,'true')]</td>
 	<td></td>
 </tr>
 <tr>

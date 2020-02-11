@@ -605,6 +605,22 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			DigesterUtil.digestHex(Digester.SHA_256, folderName), fileName);
 	}
 
+	@Override
+	public Layout fetchLayout(
+			long groupId, boolean privateLayout, long layoutId)
+		throws PortalException {
+
+		Layout layout = layoutPersistence.fetchByG_P_L(
+			groupId, privateLayout, layoutId);
+
+		if (layout != null) {
+			LayoutPermissionUtil.check(
+				getPermissionChecker(), layout, ActionKeys.VIEW);
+		}
+
+		return layout;
+	}
+
 	/**
 	 * Returns all the ancestor layouts of the layout.
 	 *

@@ -905,7 +905,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				String artifactGitId = properties.getProperty(
 					"artifact.git.id");
 
-				if (LiferayRelengUtil.hasStaleDependencies(
+				if (LiferayRelengUtil.hasStalePortalDependencies(
 						project, artifactGitId)) {
 
 					return true;

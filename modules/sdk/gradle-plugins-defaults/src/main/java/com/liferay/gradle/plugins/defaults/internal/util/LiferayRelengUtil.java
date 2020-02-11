@@ -103,7 +103,7 @@ public class LiferayRelengUtil {
 		return getRelengDir(project.getProjectDir());
 	}
 
-	public static boolean hasStaleDependencies(
+	public static boolean hasStalePortalDependencies(
 		Project project, String artifactGitId) {
 
 		List<File> artifactPropertiesFiles = _getArtifactPropertiesFiles(

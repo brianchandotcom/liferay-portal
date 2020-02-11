@@ -292,7 +292,7 @@ definition {
 
 		Click(
 			key_breadcrumbName = "Sites",
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK")
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
 
 		Click(
 			key_card = "${otherSiteName}",

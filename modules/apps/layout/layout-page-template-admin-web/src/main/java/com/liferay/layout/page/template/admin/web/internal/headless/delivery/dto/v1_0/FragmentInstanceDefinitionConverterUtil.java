@@ -26,6 +26,7 @@ import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentContentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentContentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentContentFieldText;
@@ -84,16 +85,20 @@ public class FragmentInstanceDefinitionConverterUtil {
 
 		return new FragmentInstanceDefinition() {
 			{
-				fragmentCollectionName = _getFragmentCollectionName(
-					fragmentCollectionContributorTracker, fragmentEntry,
-					fragmentRendererTracker, rendererKey);
+				fragment = new Fragment() {
+					{
+						fragmentCollectionName = _getFragmentCollectionName(
+							fragmentCollectionContributorTracker, fragmentEntry,
+							fragmentRendererTracker, rendererKey);
+						fragmentName = _getFragmentName(
+							fragmentEntry, fragmentEntryLink,
+							fragmentRendererTracker, rendererKey);
+					}
+				};
 				fragmentConfig = _getFragmentConfig(
 					fragmentEntryConfigurationParser, fragmentEntryLink);
 				fragmentContentFields = _getFragmentContentFields(
 					fragmentEntryLink);
-				fragmentName = _getFragmentName(
-					fragmentEntry, fragmentEntryLink, fragmentRendererTracker,
-					rendererKey);
 			}
 		};
 	}

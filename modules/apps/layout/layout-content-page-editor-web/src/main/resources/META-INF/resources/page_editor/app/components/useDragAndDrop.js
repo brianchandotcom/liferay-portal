@@ -152,6 +152,7 @@ export default function useDragAndDrop({
 		hover(_item, _monitor) {
 			if (_item.itemId === item.itemId) {
 				dispatch(initialDragDrop);
+
 				return;
 			}
 
@@ -278,6 +279,7 @@ function checkElevate({
 	siblingOrParent
 }) {
 	const parent = items[siblingOrParent.parentId];
+
 	return (
 		isElevate(
 			clientOffset.y,
@@ -415,7 +417,8 @@ function isElevate(clientOffsetY, height, top, bottom) {
 function getTargetPosition(hoverClientY, hoverMiddleY) {
 	if (hoverClientY < hoverMiddleY) {
 		return TARGET_POSITION.TOP;
-	} else if (hoverClientY > hoverMiddleY) {
+	}
+	else if (hoverClientY > hoverMiddleY) {
 		return TARGET_POSITION.BOTTOM;
 	}
 }
@@ -463,7 +466,8 @@ function getParentItemIdAndPositon({
 			parentId: siblingOrParentId,
 			position: siblingOrParent.children.length
 		};
-	} else {
+	}
+	else {
 		const parent = items[siblingOrParent.parentId];
 
 		const siblingIndex = parent.children.indexOf(siblingOrParentId);

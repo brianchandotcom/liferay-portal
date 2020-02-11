@@ -13,7 +13,7 @@
  */
 
 import classNames from 'classnames';
-import React, {useRef, useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 
 import useDragAndDrop, {
 	DragDropManagerImpl,

@@ -157,7 +157,7 @@ public class WikiPageResourceImpl
 			ActionKeys.VIEW);
 
 		return Page.of(
-			(Map)_getWikiPageListActions(wikiPage),
+			_getWikiPageListActions(wikiPage),
 			transform(
 				_wikiPageService.getChildren(
 					wikiPage.getGroupId(), wikiPage.getNodeId(), true,
@@ -362,7 +362,7 @@ public class WikiPageResourceImpl
 
 		return new WikiPage() {
 			{
-				actions = (Map)_getActions(wikiPage);
+				actions = _getActions(wikiPage);
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						com.liferay.wiki.model.WikiPage.class.getName(),

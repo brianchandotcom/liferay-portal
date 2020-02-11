@@ -488,7 +488,7 @@ public class MessageBoardThreadResourceImpl
 
 		return new MessageBoardThread() {
 			{
-				actions = (Map)_getActions(mbMessage);
+				actions = _getActions(mbMessage);
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						MBMessage.class.getName(), mbMessage.getMessageId()));

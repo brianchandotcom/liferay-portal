@@ -493,7 +493,7 @@ public class DocumentResourceImpl
 		return _documentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				(Map)_getActions(fileEntry), _dtoConverterRegistry,
+				_getActions(fileEntry), _dtoConverterRegistry,
 				fileEntry.getFileEntryId(), null, contextUriInfo, contextUser));
 	}
 

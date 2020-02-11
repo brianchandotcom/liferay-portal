@@ -495,7 +495,7 @@ public class KnowledgeBaseArticleResourceImpl
 		return _knowledgeBaseArticleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				(Map)_getActions(kbArticle), _dtoConverterRegistry,
+				_getActions(kbArticle), _dtoConverterRegistry,
 				kbArticle.getResourcePrimKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

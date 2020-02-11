@@ -323,7 +323,7 @@ public class DocumentFolderResourceImpl
 		return _documentFolderDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				(Map)_getActions(folder), _dtoConverterRegistry,
+				_getActions(folder), _dtoConverterRegistry,
 				folder.getFolderId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

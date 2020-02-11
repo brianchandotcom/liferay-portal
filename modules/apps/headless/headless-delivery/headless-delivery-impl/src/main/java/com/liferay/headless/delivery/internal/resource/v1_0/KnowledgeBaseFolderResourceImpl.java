@@ -73,7 +73,7 @@ public class KnowledgeBaseFolderResourceImpl
 			parentKnowledgeBaseFolderId);
 
 		return Page.of(
-			(Map)_getKnowledgeBaseFolderListActions(kbFolder.getGroupId()),
+			_getKnowledgeBaseFolderListActions(kbFolder.getGroupId()),
 			transform(
 				_kbFolderService.getKBFolders(
 					kbFolder.getGroupId(), parentKnowledgeBaseFolderId,
@@ -90,7 +90,7 @@ public class KnowledgeBaseFolderResourceImpl
 		throws Exception {
 
 		return Page.of(
-			(Map)_getSiteListActions(siteId),
+			_getSiteListActions(siteId),
 			transform(
 				_kbFolderService.getKBFolders(
 					siteId, 0, pagination.getStartPosition(),
@@ -229,7 +229,7 @@ public class KnowledgeBaseFolderResourceImpl
 
 		return new KnowledgeBaseFolder() {
 			{
-				actions = (Map)_getActions(kbFolder);
+				actions = _getActions(kbFolder);
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(

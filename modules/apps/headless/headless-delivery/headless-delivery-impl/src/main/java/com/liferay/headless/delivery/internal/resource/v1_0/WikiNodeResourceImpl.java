@@ -164,7 +164,7 @@ public class WikiNodeResourceImpl
 
 		return new WikiNode() {
 			{
-				actions = (Map)_getActions(wikiNode);
+				actions = _getActions(wikiNode);
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(wikiNode.getUserId()));

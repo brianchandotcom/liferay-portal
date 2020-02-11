@@ -323,7 +323,7 @@ public class BlogPostingResourceImpl
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
 		return _blogPostingDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				false, (Map)_getActions(blogsEntry), _dtoConverterRegistry,
+				false, _getActions(blogsEntry), _dtoConverterRegistry,
 				blogsEntry.getEntryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

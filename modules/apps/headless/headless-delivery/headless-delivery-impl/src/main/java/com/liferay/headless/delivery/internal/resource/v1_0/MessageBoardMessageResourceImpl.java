@@ -449,7 +449,7 @@ public class MessageBoardMessageResourceImpl
 
 		return _messageBoardMessageDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				false, (Map)_getActions(mbMessage), _dtoConverterRegistry,
+				false, _getActions(mbMessage), _dtoConverterRegistry,
 				mbMessage.getPrimaryKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

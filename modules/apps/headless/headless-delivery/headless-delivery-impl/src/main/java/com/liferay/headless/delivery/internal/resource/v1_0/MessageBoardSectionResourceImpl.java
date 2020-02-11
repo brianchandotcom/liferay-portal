@@ -308,7 +308,7 @@ public class MessageBoardSectionResourceImpl
 
 		return new MessageBoardSection() {
 			{
-				actions = (Map)_getActions(mbCategory);
+				actions = _getActions(mbCategory);
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(mbCategory.getUserId()));

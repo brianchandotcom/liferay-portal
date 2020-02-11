@@ -27,5 +27,3 @@ create index IX_28248B2D on FragmentComposition (groupId, fragmentCollectionId, 
 create unique index IX_86F7A143 on FragmentComposition (groupId, fragmentCompositionKey[$COLUMN_LENGTH:75$]);
 create index IX_4077D454 on FragmentComposition (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_68D15FD6 on FragmentComposition (uuid_[$COLUMN_LENGTH:75$], groupId);
-
-alter table FragmentEntry add cacheable BOOLEAN;

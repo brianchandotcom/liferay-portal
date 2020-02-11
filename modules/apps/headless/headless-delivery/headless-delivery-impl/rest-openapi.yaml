@@ -943,6 +943,7 @@ components:
                 value:
                     oneOf:
                         - $ref: "#/components/schemas/FragmentFieldBackgroundImage"
+                        - $ref: "#/components/schemas/FragmentFieldCustom"
                         - $ref: "#/components/schemas/FragmentFieldHTML"
                         - $ref: "#/components/schemas/FragmentFieldImage"
                         - $ref: "#/components/schemas/FragmentFieldText"
@@ -951,6 +952,13 @@ components:
             properties:
                 backgroundImage:
                     $ref: "#/components/schemas/FragmentImage"
+            type: object
+        FragmentFieldCustom:
+            properties:
+                type:
+                    type: string
+                value:
+                    type: object
             type: object
         FragmentFieldHTML:
             properties:

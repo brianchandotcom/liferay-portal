@@ -417,9 +417,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Generating document for journal article " +
-					journalArticle.getId());
+			_log.debug("Indexing article " + journalArticle);
 		}
 
 		Document document = getBaseModelDocument(CLASS_NAME, journalArticle);
@@ -500,9 +498,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		addDDMStructureAttributes(document, journalArticle);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Document for journal article " + journalArticle.getId() +
-					" generated succesfully");
+			_log.debug("Document " + journalArticle + " indexed successfully");
 		}
 
 		return document;

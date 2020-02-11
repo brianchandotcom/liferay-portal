@@ -96,7 +96,7 @@ const Header = ({
 Header.propTypes = {
 	disabledAddButton: PropTypes.bool,
 	handleClickAdd: PropTypes.func.isRequired,
-	handleClickClose: PropTypes.func.isRequired,
+	handleClickBack: PropTypes.func.isRequired,
 	handleClickEdit: PropTypes.func,
 	headerTitle: PropTypes.string.isRequired,
 	showEditIcon: PropTypes.bool,

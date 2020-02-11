@@ -21,7 +21,7 @@ const headerTitle = 'Images';
 
 const headerProps = {
 	handleClickAdd: jest.fn(),
-	handleClickClose: jest.fn(),
+	handleClickBack: jest.fn(),
 	headerTitle,
 	showInfoIcon: true
 };
@@ -65,14 +65,14 @@ describe('Header', () => {
 		expect(getByText(headerTitle));
 	});
 
-	it('calls to handleClickClose when click on back button', () => {
+	it('calls to handleClickBack when click on back button', () => {
 		const {container} = render(<Header {...headerProps} />);
 
 		const iconBack = container.querySelector('.lexicon-icon-angle-left');
 
 		fireEvent.click(iconBack.parentElement);
 
-		expect(headerProps.handleClickClose).toHaveBeenCalled();
+		expect(headerProps.handleClickBack).toHaveBeenCalled();
 	});
 
 	it('renders the "Add" button on the second nav item with class "btn-primary"', () => {
@@ -90,7 +90,7 @@ describe('Header', () => {
 
 		getByText('add').click();
 
-		expect(headerProps.handleClickClose).toHaveBeenCalled();
+		expect(headerProps.handleClickAdd).toHaveBeenCalled();
 	});
 
 	it('renders the "info-panel-open" icon when "showInfoIcon" prop is set to true', () => {

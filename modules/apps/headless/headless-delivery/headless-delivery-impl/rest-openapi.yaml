@@ -1727,8 +1727,6 @@ components:
             description:
                 ""
             properties:
-                friendlyURLPath:
-                    type: string
                 id:
                     format: int64
                     readOnly: true

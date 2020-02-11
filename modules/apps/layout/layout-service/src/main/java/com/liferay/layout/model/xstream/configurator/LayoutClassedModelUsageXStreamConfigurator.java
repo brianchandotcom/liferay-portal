@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.xstream.configurator;
+package com.liferay.layout.model.xstream.configurator;
 
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;

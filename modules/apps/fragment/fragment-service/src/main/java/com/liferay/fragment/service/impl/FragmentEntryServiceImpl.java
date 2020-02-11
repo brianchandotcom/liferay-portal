@@ -63,9 +63,9 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
-			String name, String css, String html, String js,
-			String configuration, long previewFileEntryId, int type,
-			boolean cacheable, int status, ServiceContext serviceContext)
+			String name, String css, String html, String js, boolean cacheable,
+			String configuration, long previewFileEntryId, int type, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -74,7 +74,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryLocalService.addFragmentEntry(
 			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
-			css, html, js, configuration, previewFileEntryId, type, cacheable,
+			css, html, js, cacheable, configuration, previewFileEntryId, type,
 			status, serviceContext);
 	}
 

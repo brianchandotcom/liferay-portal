@@ -94,8 +94,9 @@ public class FragmentEntryLocalServiceImpl
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
 			String fragmentEntryKey, String name, String css, String html,
-			String js, String configuration, long previewFileEntryId, int type,
-			boolean cacheable, int status, ServiceContext serviceContext)
+			String js, boolean cacheable, String configuration,
+			long previewFileEntryId, int type, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment entry
@@ -145,10 +146,10 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
+		fragmentEntry.setCacheable(cacheable);
 		fragmentEntry.setConfiguration(configuration);
 		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
 		fragmentEntry.setType(type);
-		fragmentEntry.setCacheable(cacheable);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
 		fragmentEntry.setStatusByUserName(user.getFullName());
@@ -167,7 +168,7 @@ public class FragmentEntryLocalServiceImpl
 
 		return addFragmentEntry(
 			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
-			html, js, configuration, previewFileEntryId, type, false, status,
+			html, js, false, configuration, previewFileEntryId, type, status,
 			serviceContext);
 	}
 
@@ -193,10 +194,10 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry copyFragmentEntry = addFragmentEntry(
 			userId, groupId, fragmentCollectionId, null, sb.toString(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
+			fragmentEntry.getConfiguration(),
 			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getType(),
-			fragmentEntry.isCacheable(), fragmentEntry.getStatus(),
-			serviceContext);
+			fragmentEntry.getStatus(), serviceContext);
 
 		_copyFragmentEntryResources(
 			fragmentEntry, originalFragmentCollectionId, fragmentCollectionId);
@@ -419,9 +420,9 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
+		fragmentEntry.setCacheable(cacheable);
 		fragmentEntry.setConfiguration(configuration);
 		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
-		fragmentEntry.setCacheable(cacheable);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
 		fragmentEntry.setStatusByUserName(user.getFullName());

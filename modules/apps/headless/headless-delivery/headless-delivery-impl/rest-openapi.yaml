@@ -1727,10 +1727,6 @@ components:
             description:
                 ""
             properties:
-                id:
-                    format: int64
-                    readOnly: true
-                    type: integer
                 pageElements:
                     items:
                         $ref: "#/components/schemas/PageElement"

@@ -15,6 +15,7 @@
 package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
@@ -25,6 +26,8 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 	public ContainerLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
+
+		_backgroundImageJSONObject = JSONFactoryUtil.createJSONObject();
 	}
 
 	public String getBackgroundColorCssClass() {

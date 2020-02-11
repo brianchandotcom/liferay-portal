@@ -15,6 +15,7 @@
 package com.liferay.fragment.internal.upgrade.v1_1_0;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -45,6 +46,14 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		_portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
+	protected void deleteGroupControlPanelLayouts() throws PortalException {
+		for (Long groupControlPanelLayoutPlid :
+			_groupControlPanelPlids.values()) {
+
+			_layoutLocalService.deleteLayout(groupControlPanelLayoutPlid);
+		}
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		_computeControlPanelPlids();
@@ -54,6 +63,8 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		}
 
 		upgradePortletPreferences();
+
+		deleteGroupControlPanelLayouts();
 	}
 
 	protected void upgradePortletPreferences() throws Exception {

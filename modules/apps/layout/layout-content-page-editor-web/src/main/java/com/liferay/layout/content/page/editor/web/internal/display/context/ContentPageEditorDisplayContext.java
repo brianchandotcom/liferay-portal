@@ -1225,7 +1225,7 @@ public class ContentPageEditorDisplayContext {
 
 				soyContext.put(
 					"configuration", configurationJSONObject
-				).putHTML(
+				).put(
 					"content", content
 				).put(
 					"defaultConfigurationValues",

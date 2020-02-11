@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -30,36 +29,26 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SpiraTestCaseFolder {
-
-	public int getID() {
-		return _jsonObject.getInt("TestCaseFolderId");
-	}
-
-	public String getName() {
-		return _jsonObject.getString("Name");
-	}
-
-	public String getPath() {
-		String name = getName();
-
-		name = name.replace("/", "\\/");
-
-		if (_parentSpiraTestCaseFolder == null) {
-			return "/" + name;
-		}
-
-		return JenkinsResultsParserUtil.combine(
-			_parentSpiraTestCaseFolder.getPath(), "/", name);
-	}
-
-	public JSONObject toJSONObject() {
-		return _jsonObject;
-	}
+public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 
 	@Override
-	public String toString() {
-		return _jsonObject.toString();
+	public int getID() {
+		return jsonObject.getInt("TestCaseFolderId");
+	}
+
+	public SpiraTestCaseFolder getParentTestCaseFolder() {
+		PathSpiraArtifact parentSpiraArtifact = getParentSpiraArtifact();
+
+		if (parentSpiraArtifact == null) {
+			return null;
+		}
+
+		if (!(parentSpiraArtifact instanceof SpiraTestCaseFolder)) {
+			throw new RuntimeException(
+				"Invalid parent object " + parentSpiraArtifact);
+		}
+
+		return (SpiraTestCaseFolder)parentSpiraArtifact;
 	}
 
 	protected static List<SpiraTestCaseFolder> getSpiraTestCaseFolders(
@@ -110,40 +99,19 @@ public class SpiraTestCaseFolder {
 		return spiraTestCaseFolders;
 	}
 
-	protected SpiraTestCaseFolder(JSONObject jsonObject) {
-		_jsonObject = jsonObject;
-		_spiraProject = SpiraProject.getSpiraProjectByID(
-			jsonObject.getInt("ProjectId"));
+	@Override
+	protected PathSpiraArtifact getSpiraArtifactByIndentLevel(
+		String indentLevel) {
 
-		SpiraTestCaseFolder parentSpiraTestCaseFolder = null;
+		SpiraProject spiraProject = getSpiraProject();
 
-		String indentLevel = getIndentLevel();
-
-		if (indentLevel.length() > 3) {
-			String parentIndentLevel = indentLevel.substring(
-				0, indentLevel.length() - 3);
-
-			try {
-				parentSpiraTestCaseFolder =
-					_spiraProject.getSpiraTestCaseFolderByIndentLevel(
-						parentIndentLevel);
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
+		try {
+			return spiraProject.getSpiraTestCaseFolderByIndentLevel(
+				indentLevel);
 		}
-
-		_parentSpiraTestCaseFolder = parentSpiraTestCaseFolder;
-
-		_jsonObject.put("Path", getPath());
-	}
-
-	protected String getIndentLevel() {
-		return _jsonObject.getString("IndentLevel");
-	}
-
-	protected boolean matches(SearchParameter... searchParameters) {
-		return SearchParameter.matches(toJSONObject(), searchParameters);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private static String _createSpiraTestCaseFolderKey(
@@ -152,11 +120,11 @@ public class SpiraTestCaseFolder {
 		return projectID + "-" + testCaseFolderID;
 	}
 
+	private SpiraTestCaseFolder(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
 	private static final Map<String, SpiraTestCaseFolder>
 		_spiraTestCaseFolders = new HashMap<>();
-
-	private final JSONObject _jsonObject;
-	private final SpiraTestCaseFolder _parentSpiraTestCaseFolder;
-	private final SpiraProject _spiraProject;
 
 }

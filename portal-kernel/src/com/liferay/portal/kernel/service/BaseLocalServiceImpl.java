@@ -14,12 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-
-import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
@@ -28,12 +24,6 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  */
 public abstract class BaseLocalServiceImpl implements BaseLocalService {
-
-	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
-		throws PortalException {
-
-		return null;
-	}
 
 	protected ClassLoader getClassLoader() {
 		Class<?> clazz = getClass();

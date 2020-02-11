@@ -19,16 +19,17 @@ import com.liferay.portal.kernel.model.PersistedModel;
 
 import java.io.Serializable;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public interface PersistedModelLocalService {
 
-	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public default PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;

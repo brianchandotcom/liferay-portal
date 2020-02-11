@@ -246,7 +246,7 @@ public class PageDefinitionConverterUtil {
 			return new PageElement() {
 				{
 					definition =
-						FragmentInstanceDefinitionConverterUtil.toFragmentDefinition(
+						FragmentInstanceDefinitionConverterUtil.toFragmentInstanceDefinition(
 							fragmentCollectionContributorTracker,
 							fragmentEntryConfigurationParser,
 							fragmentLayoutStructureItem,

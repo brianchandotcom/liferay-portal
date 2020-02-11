@@ -903,18 +903,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 						return false;
 					}
 
-					Properties properties = GUtil.loadProperties(
-						recordArtifactTask.getOutputFile());
-
-					String artifactGitId = properties.getProperty(
-						"artifact.git.id");
-
-					if (LiferayRelengUtil.hasStalePortalDependencies(
-							project, artifactGitId)) {
-
-						return true;
-					}
-
 					return true;
 				}
 

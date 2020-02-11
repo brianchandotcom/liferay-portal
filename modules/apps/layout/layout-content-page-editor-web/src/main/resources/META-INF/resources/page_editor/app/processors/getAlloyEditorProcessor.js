@@ -188,10 +188,12 @@ function _selectRange(event, nativeEditor) {
 			event.clientY
 		);
 
-		const textNode = range.offsetNode;
+		const node = range.offsetNode;
 
-		ckRange.setStart(CKEDITOR.dom.node(textNode), range.offset);
-		ckRange.setEnd(CKEDITOR.dom.node(textNode), range.offset);
+		if (isTextNode(node)) {
+			ckRange.setStart(CKEDITOR.dom.node(node), range.offset);
+			ckRange.setEnd(CKEDITOR.dom.node(node), range.offset);
+		}
 	}
 	else if (document.caretRangeFromPoint) {
 		const range = document.caretRangeFromPoint(
@@ -201,9 +203,18 @@ function _selectRange(event, nativeEditor) {
 
 		const offset = range.startOffset || 0;
 
-		ckRange.setStart(CKEDITOR.dom.node(range.startContainer), offset);
-		ckRange.setEnd(CKEDITOR.dom.node(range.endContainer), offset);
+		if (
+			isTextNode(range.startContainer) &&
+			isTextNode(range.endContainer)
+		) {
+			ckRange.setStart(CKEDITOR.dom.node(range.startContainer), offset);
+			ckRange.setEnd(CKEDITOR.dom.node(range.endContainer), offset);
+		}
 	}
 
 	nativeEditor.getSelection().selectRanges([ckRange]);
+}
+
+function isTextNode(node) {
+	return node.nodeType === Node.TEXT_NODE;
 }

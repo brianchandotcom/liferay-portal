@@ -1,12 +1,12 @@
 {
+	"dependencies": {
+		"recharts": "1.8.5"
+	},
 	"name": "frontend-js-recharts",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "1.0.0",
-	"dependencies": {
-		"recharts": "1.8.5"
-	}
+	"version": "1.0.0"
 }

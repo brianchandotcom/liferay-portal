@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -199,19 +198,17 @@ public class AddPortletReactMVCActionCommand
 				StringPool.BLANK, editableValueJSONObject.toString(),
 				StringPool.BLANK, 0, null, serviceContext);
 
-		return JSONUtil.put(
+		JSONObject jsonObject = addFragmentEntryLinkToLayoutData(
+			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());
+
+		return jsonObject.put(
 			"fragmentEntryLink",
 			FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
 				actionRequest, actionResponse,
 				_fragmentEntryConfigurationParser, fragmentEntryLink,
 				_fragmentCollectionContributorTracker,
 				_fragmentRendererController, _fragmentRendererTracker,
-				portletId)
-		).put(
-			"layoutData",
-			addFragmentEntryLinkToLayoutData(
-				actionRequest, fragmentEntryLink.getFragmentEntryLinkId())
-		);
+				portletId));
 	}
 
 	private String _getPortletInstanceId(

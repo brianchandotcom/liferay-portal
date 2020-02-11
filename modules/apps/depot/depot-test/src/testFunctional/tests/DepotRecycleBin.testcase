@@ -108,7 +108,9 @@ definition {
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
-		Depot.disableRecycleBinViaDepotSettings();
+		Navigator.gotoNavTab(navTab = "General");
+
+		Depot.configureRecycleBin(recycleBin = "Disabled");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -153,7 +155,9 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Settings");
 
-		Depot.disableRecycleBinViaDepotSettings();
+		Navigator.gotoNavTab(navTab = "General");
+
+		Depot.configureRecycleBin(recycleBin = "Disabled");
 
 		DepotNavigator.openDepotAdmin();
 

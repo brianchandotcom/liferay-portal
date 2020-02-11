@@ -33,6 +33,25 @@ definition {
 		}
 	}
 
+	macro configureRecycleBin {
+		Panel.expandPanel(panel = "Recycle Bin");
+
+		if ("${recycleBin}" == "Enabled") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Enable Recycle Bin",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${recycleBin}" == "Disabled") {
+			Uncheck.uncheckToggleSwitchNoErrorNoAssert(locator1 = "Checkbox#ENABLE_RECYCLE_BIN");
+
+			AssertConfirm(value1 = "Disabling the Recycle Bin prevents the restoring of content that has been moved to the Recycle Bin.");
+
+			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#ENABLE_RECYCLE_BIN");
+		}
+
+		PortletEntry.save();
+	}
+
 	macro configureSearch {
 		for (var siteName : list "${siteList}") {
 			DepotNavigator.gotoEdit(depotName = "${depotName}");
@@ -119,20 +138,6 @@ definition {
 		AssertConfirm(value1 = "Removing a repository can affect sites that use the contents stored in it. Are you sure you want to continue removing this repository?");
 
 		Alert.viewSuccessMessage();
-	}
-
-	macro disableRecycleBinViaDepotSettings {
-		Navigator.gotoNavTab(navTab = "General");
-
-		Panel.expandPanel(panel = "Recycle Bin");
-
-		Uncheck.uncheckToggleSwitchNoErrorNoAssert(locator1 = "Checkbox#ENABLE_RECYCLE_BIN");
-
-		AssertConfirm(value1 = "Disabling the Recycle Bin prevents the restoring of content that has been moved to the Recycle Bin.");
-
-		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#ENABLE_RECYCLE_BIN");
-
-		PortletEntry.save();
 	}
 
 	macro disconnectSite {

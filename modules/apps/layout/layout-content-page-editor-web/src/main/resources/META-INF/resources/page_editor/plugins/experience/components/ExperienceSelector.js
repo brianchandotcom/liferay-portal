@@ -87,9 +87,12 @@ const ExperienceSelector = ({
 		defaultSegmentsExperienceId,
 		editSegmentsEntryURL,
 		hasEditSegmentsEntryPermission,
-		hasUpdatePermissions,
 		selectedSegmentsEntryId
 	} = config;
+
+	const hasUpdatePermissions = useSelector(
+		({permissions}) => permissions.UPDATE
+	);
 
 	const isMounted = useIsMounted();
 	const [open, setOpen] = useState(false);

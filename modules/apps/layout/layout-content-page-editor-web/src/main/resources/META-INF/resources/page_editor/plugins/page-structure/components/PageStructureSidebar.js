@@ -59,12 +59,14 @@ export default function PageStructureSidebar() {
 				fragmentEntryLinks[item.config.fragmentEntryLinkId]
 					.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
 
-			Object.keys(fragmentChildren).forEach(childId => {
+			Object.keys(fragmentChildren).forEach(editableId => {
+				const childId = `${item.config.fragmentEntryLinkId}-${editableId}`;
+
 				children.push({
 					children: [],
 					expanded: childId === activeItemId,
 					id: childId,
-					name: childId,
+					name: editableId,
 					removable: false
 				});
 			});

@@ -132,7 +132,6 @@ public class LayoutsAdminDisplayContext {
 
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(
 			_httpServletRequest);
-
 		_layoutCopyHelper =
 			(LayoutCopyHelper)_liferayPortletRequest.getAttribute(
 				LayoutAdminWebKeys.LAYOUT_COPY_HELPER);

@@ -57,7 +57,11 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const state = useSelector(state => state);
 
 	const defaultContent = fragmentEntryLink.content.value.content;
+	const {defaultLanguageId} = config;
 	const {fragmentEntryLinkId} = fragmentEntryLink;
+	const prefixedSegmentsExperienceId = selectPrefixedSegmentsExperienceId(
+		state
+	);
 
 	const [content, setContent] = useState(defaultContent);
 	const [editablesIds, setEditablesIds] = useState([]);
@@ -106,14 +110,24 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 			canUpdateLayoutContent
 				? [itemId, ...editablesIds.map(getEditableUniqueId)].some(
 						isActive
-				  ) || editableIsMapped(editableValue)
+				  ) ||
+				  editableIsMapped(editableValue) ||
+				  editableIsTranslated(
+						defaultLanguageId,
+						editableValue,
+						state.languageId,
+						prefixedSegmentsExperienceId
+				  )
 				: true,
 		[
 			canUpdateLayoutContent,
+			itemId,
 			editablesIds,
 			getEditableUniqueId,
-			itemId,
-			isActive
+			isActive,
+			defaultLanguageId,
+			state.languageId,
+			prefixedSegmentsExperienceId
 		]
 	);
 
@@ -269,9 +283,6 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 						editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
 							editableId
 						];
-					const prefixedSegmentsExperienceId = selectPrefixedSegmentsExperienceId(
-						state
-					);
 
 					if (state.segmentsExperienceId) {
 						editableValue[prefixedSegmentsExperienceId] = {
@@ -391,6 +402,18 @@ const editableIsMappedToInfoItem = editableValue =>
 
 const editableIsMapped = editableValue =>
 	editableIsMappedToInfoItem(editableValue) || editableValue.mappedField;
+
+const editableIsTranslated = (
+	defaultLanguageId,
+	editableValue,
+	languageId,
+	segmentsExperienceId
+) =>
+	editableValue &&
+	defaultLanguageId !== languageId &&
+	(editableValue[languageId] ||
+		(segmentsExperienceId in editableValue &&
+			editableValue[segmentsExperienceId][languageId]));
 
 const getFloatingToolbarButtons = (editableType, editableValue) => {
 	const showLinkButton =

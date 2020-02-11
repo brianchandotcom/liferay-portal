@@ -20,6 +20,7 @@ export default function addItem({
 	itemType,
 	parentItemId,
 	position,
+	selectItem = () => {},
 	store
 }) {
 	return dispatch => {
@@ -32,8 +33,12 @@ export default function addItem({
 			parentItemId,
 			position,
 			segmentsExperienceId
-		}).then(layoutData => {
+		}).then(({addedItemId, layoutData}) => {
 			dispatch(updateLayoutData({layoutData}));
+
+			if (addedItemId) {
+				selectItem(addedItemId);
+			}
 		});
 	};
 }

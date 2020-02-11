@@ -50,8 +50,7 @@ public class SpiraTestCaseFolder {
 		}
 
 		return JenkinsResultsParserUtil.combine(
-			_parentSpiraTestCaseFolder.getPath(), "/",
-			name.replace("/", "\\/"));
+			_parentSpiraTestCaseFolder.getPath(), "/", name);
 	}
 
 	public JSONObject toJSONObject() {

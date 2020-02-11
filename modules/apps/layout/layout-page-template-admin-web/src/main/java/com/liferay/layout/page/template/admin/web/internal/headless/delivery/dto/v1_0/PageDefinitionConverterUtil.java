@@ -68,6 +68,50 @@ public class PageDefinitionConverterUtil {
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererTracker fragmentRendererTracker,
+		com.liferay.portal.kernel.model.Layout layout) {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(),
+					PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(0L));
+
+		LayoutStructureItem mainLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructure.getMainItemId());
+
+		List<PageElement> mainPageElements = new ArrayList<>();
+
+		for (String childItemId :
+				mainLayoutStructureItem.getChildrenItemIds()) {
+
+			mainPageElements.add(
+				_toPageElement(
+					fragmentCollectionContributorTracker,
+					fragmentEntryConfigurationParser, fragmentRendererTracker,
+					layoutStructure,
+					layoutStructure.getLayoutStructureItem(childItemId)));
+		}
+
+		PageElement pageElement = _toPageElement(
+			fragmentCollectionContributorTracker,
+			fragmentEntryConfigurationParser, fragmentRendererTracker,
+			mainLayoutStructureItem);
+
+		pageElement.setPageElements(
+			mainPageElements.toArray(new PageElement[0]));
+
+		return pageElement;
+	}
+
+	private static PageElement _toPageElement(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentRendererTracker fragmentRendererTracker,
 		LayoutStructure layoutStructure,
 		LayoutStructureItem layoutStructureItem) {
 
@@ -239,50 +283,6 @@ public class PageDefinitionConverterUtil {
 		}
 
 		return null;
-	}
-
-	private static PageElement _toPageElement(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererTracker fragmentRendererTracker,
-		com.liferay.portal.kernel.model.Layout layout) {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(),
-					PortalUtil.getClassNameId(Layout.class), layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(0L));
-
-		LayoutStructureItem mainLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				layoutStructure.getMainItemId());
-
-		List<PageElement> mainPageElements = new ArrayList<>();
-
-		for (String childItemId :
-				mainLayoutStructureItem.getChildrenItemIds()) {
-
-			mainPageElements.add(
-				_toPageElement(
-					fragmentCollectionContributorTracker,
-					fragmentEntryConfigurationParser, fragmentRendererTracker,
-					layoutStructure,
-					layoutStructure.getLayoutStructureItem(childItemId)));
-		}
-
-		PageElement pageElement = _toPageElement(
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			mainLayoutStructureItem);
-
-		pageElement.setPageElements(
-			mainPageElements.toArray(new PageElement[0]));
-
-		return pageElement;
 	}
 
 }

@@ -781,6 +781,10 @@ public class ContentPageEditorDisplayContext {
 	private JSONObject _getDropZoneConfigJSONObject(
 		JSONObject masterLayoutDataJSONObject) {
 
+		if (masterLayoutDataJSONObject.length() <= 0) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
 		LayoutStructure masterLayoutStructure = LayoutStructure.of(
 			masterLayoutDataJSONObject.toString());
 
@@ -1809,7 +1813,13 @@ public class ContentPageEditorDisplayContext {
 			return _allowNewFragmentEntries;
 		}
 
+		_allowNewFragmentEntries = true;
+
 		String masterLayoutData = _getMasterLayoutData();
+
+		if (Validator.isNull(masterLayoutData)) {
+			return _allowNewFragmentEntries;
+		}
 
 		try {
 			JSONObject masterLayoutDataJSONObject =

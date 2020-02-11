@@ -71,6 +71,25 @@ definition {
 		}
 	}
 
+	macro deleteContentViaBulkEditing {
+		if (isSet(recycleBinDisabled)) {
+			ClickNoError(locator1 = "Icon#DELETE");
+
+			AssertConfirm(value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately.");
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			ClickNoError(locator1 = "Icon#DELETE");
+
+			if (isSet(webContent)) {
+				AssertConfirm(value1 = "Are you sure you want to move the selected entries to the Recycle Bin?");
+			}
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro deleteCP {
 		if (isSet(deletions)) {
 			ClickNoError(locator1 = "Icon#DELETE");

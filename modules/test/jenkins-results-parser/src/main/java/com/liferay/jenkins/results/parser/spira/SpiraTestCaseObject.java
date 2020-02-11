@@ -29,23 +29,26 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SpiraTestCaseObject {
-
-	public int getID() {
-		return _jsonObject.getInt("TestCaseId");
-	}
-
-	public String getName() {
-		return _jsonObject.getString("Name");
-	}
-
-	public JSONObject toJSONObject() {
-		return _jsonObject;
-	}
+public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 	@Override
-	public String toString() {
-		return _jsonObject.toString();
+	public int getID() {
+		return jsonObject.getInt("TestCaseId");
+	}
+
+	public SpiraTestCaseFolder getParentSpiraTestCaseFolder() {
+		PathSpiraArtifact parentSpiraArtifact = getParentSpiraArtifact();
+
+		if (parentSpiraArtifact == null) {
+			return null;
+		}
+
+		if (!(parentSpiraArtifact instanceof SpiraTestCaseFolder)) {
+			throw new RuntimeException(
+				"Invalid parent object " + parentSpiraArtifact);
+		}
+
+		return (SpiraTestCaseFolder)parentSpiraArtifact;
 	}
 
 	protected static List<SpiraTestCaseObject> getSpiraTestCases(
@@ -102,12 +105,23 @@ public class SpiraTestCaseObject {
 		return spiraTestCases;
 	}
 
-	protected SpiraTestCaseObject(JSONObject jsonObject) {
-		_jsonObject = jsonObject;
-	}
+	@Override
+	protected PathSpiraArtifact getParentSpiraArtifact() {
+		if (_parentSpiraArtifact != null) {
+			return _parentSpiraArtifact;
+		}
 
-	protected boolean matches(SearchParameter... searchParameters) {
-		return SearchParameter.matches(toJSONObject(), searchParameters);
+		SpiraProject spiraProject = getSpiraProject();
+
+		try {
+			_parentSpiraArtifact = spiraProject.getSpiraTestCaseFolderByID(
+				jsonObject.getInt("TestCaseFolderId"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return _parentSpiraArtifact;
 	}
 
 	private static String _createSpiraTestCaseKey(
@@ -116,9 +130,13 @@ public class SpiraTestCaseObject {
 		return projectID + "-" + testCaseID;
 	}
 
+	private SpiraTestCaseObject(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
 	private static final Map<String, SpiraTestCaseObject> _spiraTestCases =
 		new HashMap<>();
 
-	private final JSONObject _jsonObject;
+	private PathSpiraArtifact _parentSpiraArtifact;
 
 }

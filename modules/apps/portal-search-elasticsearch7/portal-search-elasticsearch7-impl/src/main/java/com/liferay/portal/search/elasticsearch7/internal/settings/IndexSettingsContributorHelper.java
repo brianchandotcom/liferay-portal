@@ -16,7 +16,6 @@ package com.liferay.portal.search.elasticsearch7.internal.settings;
 
 import com.liferay.portal.search.elasticsearch7.internal.index.LiferayDocumentTypeFactory;
 import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsContributor;
-import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsHelper;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -36,32 +35,18 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class IndexSettingsContributorHelper {
 
 	public void loadIndexSettingsContributors(Settings.Builder builder) {
-		IndexSettingsHelper indexSettingsHelper = new IndexSettingsHelper() {
-
-			@Override
-			public void put(String setting, String value) {
-				builder.put(setting, value);
-			}
-
-		};
-
-		for (IndexSettingsContributor indexSettingsContributor :
-				_indexSettingsContributors) {
-
-			indexSettingsContributor.populate(indexSettingsHelper);
-		}
+		_indexSettingsContributors.forEach(
+			indexSettingsContributor -> indexSettingsContributor.populate(
+				(setting, value) -> builder.put(setting, value)));
 	}
 
 	public void loadTypeMappingsContributors(
 		String indexName,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
 
-		for (IndexSettingsContributor indexSettingsContributor :
-				_indexSettingsContributors) {
-
-			indexSettingsContributor.contribute(
-				indexName, liferayDocumentTypeFactory);
-		}
+		_indexSettingsContributors.forEach(
+			indexSettingsContributor -> indexSettingsContributor.contribute(
+				indexName, liferayDocumentTypeFactory));
 	}
 
 	@Reference(

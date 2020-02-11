@@ -22,6 +22,7 @@ import React, {useEffect, useState} from 'react';
 
 import {useHoverItem, useHoveredItemId} from '../../../app/components/Controls';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
+import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {useSelector} from '../../../app/store/index';
 
 export default function PageContent(props) {
@@ -76,19 +77,8 @@ export default function PageContent(props) {
 	const handleMouseOver = () => {
 		setIsHovered(true);
 
-		Object.values(fragmentEntryLinks).forEach(fragmentEntryLink => {
-			const editableFragmentEntryProcessor =
-				fragmentEntryLink.editableValues[
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-				];
-
-			Object.keys(editableFragmentEntryProcessor).forEach(
-				editableValue => {
-					hoverItem(
-						`${fragmentEntryLink.fragmentEntryLinkId}-${editableValue}`
-					);
-				}
-			);
+		hoverItem(`${props.classNameId}-${props.classPK}`, {
+			itemType: ITEM_TYPES.mappedContent
 		});
 	};
 

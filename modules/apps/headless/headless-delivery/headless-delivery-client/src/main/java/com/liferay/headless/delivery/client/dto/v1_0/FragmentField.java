@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.PageDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.FragmentFieldSerDes;
 
 import java.util.Objects;
 
@@ -26,49 +26,47 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageDefinition {
+public class FragmentField {
 
-	public PageElement getPageElement() {
-		return pageElement;
+	public String getId() {
+		return id;
 	}
 
-	public void setPageElement(PageElement pageElement) {
-		this.pageElement = pageElement;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public void setPageElement(
-		UnsafeSupplier<PageElement, Exception> pageElementUnsafeSupplier) {
-
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
-			pageElement = pageElementUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected PageElement pageElement;
+	protected String id;
 
-	public Settings getSettings() {
-		return settings;
+	public Object getValue() {
+		return value;
 	}
 
-	public void setSettings(Settings settings) {
-		this.settings = settings;
+	public void setValue(Object value) {
+		this.value = value;
 	}
 
-	public void setSettings(
-		UnsafeSupplier<Settings, Exception> settingsUnsafeSupplier) {
+	public void setValue(
+		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
 
 		try {
-			settings = settingsUnsafeSupplier.get();
+			value = valueUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Settings settings;
+	protected Object value;
 
 	@Override
 	public boolean equals(Object object) {
@@ -76,13 +74,13 @@ public class PageDefinition {
 			return true;
 		}
 
-		if (!(object instanceof PageDefinition)) {
+		if (!(object instanceof FragmentField)) {
 			return false;
 		}
 
-		PageDefinition pageDefinition = (PageDefinition)object;
+		FragmentField fragmentField = (FragmentField)object;
 
-		return Objects.equals(toString(), pageDefinition.toString());
+		return Objects.equals(toString(), fragmentField.toString());
 	}
 
 	@Override
@@ -93,7 +91,7 @@ public class PageDefinition {
 	}
 
 	public String toString() {
-		return PageDefinitionSerDes.toJSON(this);
+		return FragmentFieldSerDes.toJSON(this);
 	}
 
 }

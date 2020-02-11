@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentFieldBackgroundImage;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageDefinitionSerDes {
+public class FragmentFieldBackgroundImageSerDes {
 
-	public static PageDefinition toDTO(String json) {
-		PageDefinitionJSONParser pageDefinitionJSONParser =
-			new PageDefinitionJSONParser();
+	public static FragmentFieldBackgroundImage toDTO(String json) {
+		FragmentFieldBackgroundImageJSONParser
+			fragmentFieldBackgroundImageJSONParser =
+				new FragmentFieldBackgroundImageJSONParser();
 
-		return pageDefinitionJSONParser.parseToDTO(json);
+		return fragmentFieldBackgroundImageJSONParser.parseToDTO(json);
 	}
 
-	public static PageDefinition[] toDTOs(String json) {
-		PageDefinitionJSONParser pageDefinitionJSONParser =
-			new PageDefinitionJSONParser();
+	public static FragmentFieldBackgroundImage[] toDTOs(String json) {
+		FragmentFieldBackgroundImageJSONParser
+			fragmentFieldBackgroundImageJSONParser =
+				new FragmentFieldBackgroundImageJSONParser();
 
-		return pageDefinitionJSONParser.parseToDTOs(json);
+		return fragmentFieldBackgroundImageJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(PageDefinition pageDefinition) {
-		if (pageDefinition == null) {
+	public static String toJSON(
+		FragmentFieldBackgroundImage fragmentFieldBackgroundImage) {
+
+		if (fragmentFieldBackgroundImage == null) {
 			return "null";
 		}
 
@@ -55,24 +59,16 @@ public class PageDefinitionSerDes {
 
 		sb.append("{");
 
-		if (pageDefinition.getPageElement() != null) {
+		if (fragmentFieldBackgroundImage.getBackgroundImage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"pageElement\": ");
+			sb.append("\"backgroundImage\": ");
 
-			sb.append(String.valueOf(pageDefinition.getPageElement()));
-		}
-
-		if (pageDefinition.getSettings() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"settings\": ");
-
-			sb.append(String.valueOf(pageDefinition.getSettings()));
+			sb.append(
+				String.valueOf(
+					fragmentFieldBackgroundImage.getBackgroundImage()));
 		}
 
 		sb.append("}");
@@ -81,65 +77,58 @@ public class PageDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		PageDefinitionJSONParser pageDefinitionJSONParser =
-			new PageDefinitionJSONParser();
+		FragmentFieldBackgroundImageJSONParser
+			fragmentFieldBackgroundImageJSONParser =
+				new FragmentFieldBackgroundImageJSONParser();
 
-		return pageDefinitionJSONParser.parseToMap(json);
+		return fragmentFieldBackgroundImageJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(PageDefinition pageDefinition) {
-		if (pageDefinition == null) {
+	public static Map<String, String> toMap(
+		FragmentFieldBackgroundImage fragmentFieldBackgroundImage) {
+
+		if (fragmentFieldBackgroundImage == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageDefinition.getPageElement() == null) {
-			map.put("pageElement", null);
+		if (fragmentFieldBackgroundImage.getBackgroundImage() == null) {
+			map.put("backgroundImage", null);
 		}
 		else {
 			map.put(
-				"pageElement", String.valueOf(pageDefinition.getPageElement()));
-		}
-
-		if (pageDefinition.getSettings() == null) {
-			map.put("settings", null);
-		}
-		else {
-			map.put("settings", String.valueOf(pageDefinition.getSettings()));
+				"backgroundImage",
+				String.valueOf(
+					fragmentFieldBackgroundImage.getBackgroundImage()));
 		}
 
 		return map;
 	}
 
-	public static class PageDefinitionJSONParser
-		extends BaseJSONParser<PageDefinition> {
+	public static class FragmentFieldBackgroundImageJSONParser
+		extends BaseJSONParser<FragmentFieldBackgroundImage> {
 
 		@Override
-		protected PageDefinition createDTO() {
-			return new PageDefinition();
+		protected FragmentFieldBackgroundImage createDTO() {
+			return new FragmentFieldBackgroundImage();
 		}
 
 		@Override
-		protected PageDefinition[] createDTOArray(int size) {
-			return new PageDefinition[size];
+		protected FragmentFieldBackgroundImage[] createDTOArray(int size) {
+			return new FragmentFieldBackgroundImage[size];
 		}
 
 		@Override
 		protected void setField(
-			PageDefinition pageDefinition, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			FragmentFieldBackgroundImage fragmentFieldBackgroundImage,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "pageElement")) {
+			if (Objects.equals(jsonParserFieldName, "backgroundImage")) {
 				if (jsonParserFieldValue != null) {
-					pageDefinition.setPageElement(
-						PageElementSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "settings")) {
-				if (jsonParserFieldValue != null) {
-					pageDefinition.setSettings(
-						SettingsSerDes.toDTO((String)jsonParserFieldValue));
+					fragmentFieldBackgroundImage.setBackgroundImage(
+						FragmentImageSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.FragmentContentFieldBackgroundImageSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.FragmentFieldImageSerDes;
 
 import java.util.Objects;
 
@@ -26,29 +26,49 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentContentFieldBackgroundImage {
+public class FragmentFieldImage {
 
-	public FragmentImage getBackgroundImage() {
-		return backgroundImage;
+	public FragmentImage getFragmentImage() {
+		return fragmentImage;
 	}
 
-	public void setBackgroundImage(FragmentImage backgroundImage) {
-		this.backgroundImage = backgroundImage;
+	public void setFragmentImage(FragmentImage fragmentImage) {
+		this.fragmentImage = fragmentImage;
 	}
 
-	public void setBackgroundImage(
-		UnsafeSupplier<FragmentImage, Exception>
-			backgroundImageUnsafeSupplier) {
+	public void setFragmentImage(
+		UnsafeSupplier<FragmentImage, Exception> fragmentImageUnsafeSupplier) {
 
 		try {
-			backgroundImage = backgroundImageUnsafeSupplier.get();
+			fragmentImage = fragmentImageUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FragmentImage backgroundImage;
+	protected FragmentImage fragmentImage;
+
+	public FragmentLink getFragmentLink() {
+		return fragmentLink;
+	}
+
+	public void setFragmentLink(FragmentLink fragmentLink) {
+		this.fragmentLink = fragmentLink;
+	}
+
+	public void setFragmentLink(
+		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
+
+		try {
+			fragmentLink = fragmentLinkUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentLink fragmentLink;
 
 	@Override
 	public boolean equals(Object object) {
@@ -56,16 +76,13 @@ public class FragmentContentFieldBackgroundImage {
 			return true;
 		}
 
-		if (!(object instanceof FragmentContentFieldBackgroundImage)) {
+		if (!(object instanceof FragmentFieldImage)) {
 			return false;
 		}
 
-		FragmentContentFieldBackgroundImage
-			fragmentContentFieldBackgroundImage =
-				(FragmentContentFieldBackgroundImage)object;
+		FragmentFieldImage fragmentFieldImage = (FragmentFieldImage)object;
 
-		return Objects.equals(
-			toString(), fragmentContentFieldBackgroundImage.toString());
+		return Objects.equals(toString(), fragmentFieldImage.toString());
 	}
 
 	@Override
@@ -76,7 +93,7 @@ public class FragmentContentFieldBackgroundImage {
 	}
 
 	public String toString() {
-		return FragmentContentFieldBackgroundImageSerDes.toJSON(this);
+		return FragmentFieldImageSerDes.toJSON(this);
 	}
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.FragmentContentFieldHTMLSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.FragmentFieldBackgroundImageSerDes;
 
 import java.util.Objects;
 
@@ -26,26 +26,29 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentContentFieldHTML {
+public class FragmentFieldBackgroundImage {
 
-	public Object getHtml() {
-		return html;
+	public FragmentImage getBackgroundImage() {
+		return backgroundImage;
 	}
 
-	public void setHtml(Object html) {
-		this.html = html;
+	public void setBackgroundImage(FragmentImage backgroundImage) {
+		this.backgroundImage = backgroundImage;
 	}
 
-	public void setHtml(UnsafeSupplier<Object, Exception> htmlUnsafeSupplier) {
+	public void setBackgroundImage(
+		UnsafeSupplier<FragmentImage, Exception>
+			backgroundImageUnsafeSupplier) {
+
 		try {
-			html = htmlUnsafeSupplier.get();
+			backgroundImage = backgroundImageUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object html;
+	protected FragmentImage backgroundImage;
 
 	@Override
 	public boolean equals(Object object) {
@@ -53,14 +56,15 @@ public class FragmentContentFieldHTML {
 			return true;
 		}
 
-		if (!(object instanceof FragmentContentFieldHTML)) {
+		if (!(object instanceof FragmentFieldBackgroundImage)) {
 			return false;
 		}
 
-		FragmentContentFieldHTML fragmentContentFieldHTML =
-			(FragmentContentFieldHTML)object;
+		FragmentFieldBackgroundImage fragmentFieldBackgroundImage =
+			(FragmentFieldBackgroundImage)object;
 
-		return Objects.equals(toString(), fragmentContentFieldHTML.toString());
+		return Objects.equals(
+			toString(), fragmentFieldBackgroundImage.toString());
 	}
 
 	@Override
@@ -71,7 +75,7 @@ public class FragmentContentFieldHTML {
 	}
 
 	public String toString() {
-		return FragmentContentFieldHTMLSerDes.toJSON(this);
+		return FragmentFieldBackgroundImageSerDes.toJSON(this);
 	}
 
 }

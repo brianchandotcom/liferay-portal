@@ -14,9 +14,11 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -41,89 +43,70 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentDefinition")
+@GraphQLName("Layout")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentDefinition")
-public class FragmentDefinition {
+@XmlRootElement(name = "Layout")
+public class Layout {
 
-	@Schema
-	public String getFragmentCollectionName() {
-		return fragmentCollectionName;
-	}
+	@GraphQLName("ContainerType")
+	public static enum ContainerType {
 
-	public void setFragmentCollectionName(String fragmentCollectionName) {
-		this.fragmentCollectionName = fragmentCollectionName;
-	}
+		FIXED("Fixed"), FLUID("Fluid");
 
-	@JsonIgnore
-	public void setFragmentCollectionName(
-		UnsafeSupplier<String, Exception>
-			fragmentCollectionNameUnsafeSupplier) {
+		@JsonCreator
+		public static ContainerType create(String value) {
+			for (ContainerType containerType : values()) {
+				if (Objects.equals(containerType.getValue(), value)) {
+					return containerType;
+				}
+			}
 
-		try {
-			fragmentCollectionName = fragmentCollectionNameUnsafeSupplier.get();
+			return null;
 		}
-		catch (RuntimeException re) {
-			throw re;
+
+		@JsonValue
+		public String getValue() {
+			return _value;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+
+		@Override
+		public String toString() {
+			return _value;
 		}
+
+		private ContainerType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String fragmentCollectionName;
-
-	@Schema
-	@Valid
-	public Map<String, Object> getFragmentConfig() {
-		return fragmentConfig;
-	}
-
-	public void setFragmentConfig(Map<String, Object> fragmentConfig) {
-		this.fragmentConfig = fragmentConfig;
-	}
-
-	@JsonIgnore
-	public void setFragmentConfig(
-		UnsafeSupplier<Map<String, Object>, Exception>
-			fragmentConfigUnsafeSupplier) {
-
-		try {
-			fragmentConfig = fragmentConfigUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> fragmentConfig;
 
 	@Schema
 	@Valid
-	public FragmentContentField[] getFragmentContentFields() {
-		return fragmentContentFields;
-	}
-
-	public void setFragmentContentFields(
-		FragmentContentField[] fragmentContentFields) {
-
-		this.fragmentContentFields = fragmentContentFields;
+	public ContainerType getContainerType() {
+		return containerType;
 	}
 
 	@JsonIgnore
-	public void setFragmentContentFields(
-		UnsafeSupplier<FragmentContentField[], Exception>
-			fragmentContentFieldsUnsafeSupplier) {
+	public String getContainerTypeAsString() {
+		if (containerType == null) {
+			return null;
+		}
+
+		return containerType.toString();
+	}
+
+	public void setContainerType(ContainerType containerType) {
+		this.containerType = containerType;
+	}
+
+	@JsonIgnore
+	public void setContainerType(
+		UnsafeSupplier<ContainerType, Exception> containerTypeUnsafeSupplier) {
 
 		try {
-			fragmentContentFields = fragmentContentFieldsUnsafeSupplier.get();
+			containerType = containerTypeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -135,23 +118,23 @@ public class FragmentDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentContentField[] fragmentContentFields;
+	protected ContainerType containerType;
 
 	@Schema
-	public String getFragmentName() {
-		return fragmentName;
+	public Integer getPaddingBottom() {
+		return paddingBottom;
 	}
 
-	public void setFragmentName(String fragmentName) {
-		this.fragmentName = fragmentName;
+	public void setPaddingBottom(Integer paddingBottom) {
+		this.paddingBottom = paddingBottom;
 	}
 
 	@JsonIgnore
-	public void setFragmentName(
-		UnsafeSupplier<String, Exception> fragmentNameUnsafeSupplier) {
+	public void setPaddingBottom(
+		UnsafeSupplier<Integer, Exception> paddingBottomUnsafeSupplier) {
 
 		try {
-			fragmentName = fragmentNameUnsafeSupplier.get();
+			paddingBottom = paddingBottomUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -163,7 +146,63 @@ public class FragmentDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String fragmentName;
+	protected Integer paddingBottom;
+
+	@Schema
+	public Integer getPaddingHorizontal() {
+		return paddingHorizontal;
+	}
+
+	public void setPaddingHorizontal(Integer paddingHorizontal) {
+		this.paddingHorizontal = paddingHorizontal;
+	}
+
+	@JsonIgnore
+	public void setPaddingHorizontal(
+		UnsafeSupplier<Integer, Exception> paddingHorizontalUnsafeSupplier) {
+
+		try {
+			paddingHorizontal = paddingHorizontalUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer paddingHorizontal;
+
+	@Schema
+	public Integer getPaddingTop() {
+		return paddingTop;
+	}
+
+	public void setPaddingTop(Integer paddingTop) {
+		this.paddingTop = paddingTop;
+	}
+
+	@JsonIgnore
+	public void setPaddingTop(
+		UnsafeSupplier<Integer, Exception> paddingTopUnsafeSupplier) {
+
+		try {
+			paddingTop = paddingTopUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer paddingTop;
 
 	@Override
 	public boolean equals(Object object) {
@@ -171,13 +210,13 @@ public class FragmentDefinition {
 			return true;
 		}
 
-		if (!(object instanceof FragmentDefinition)) {
+		if (!(object instanceof Layout)) {
 			return false;
 		}
 
-		FragmentDefinition fragmentDefinition = (FragmentDefinition)object;
+		Layout layout = (Layout)object;
 
-		return Objects.equals(toString(), fragmentDefinition.toString());
+		return Objects.equals(toString(), layout.toString());
 	}
 
 	@Override
@@ -192,62 +231,48 @@ public class FragmentDefinition {
 
 		sb.append("{");
 
-		if (fragmentCollectionName != null) {
+		if (containerType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentCollectionName\": ");
+			sb.append("\"containerType\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(fragmentCollectionName));
+			sb.append(containerType);
 
 			sb.append("\"");
 		}
 
-		if (fragmentConfig != null) {
+		if (paddingBottom != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentConfig\": ");
+			sb.append("\"paddingBottom\": ");
 
-			sb.append(_toJSON(fragmentConfig));
+			sb.append(paddingBottom);
 		}
 
-		if (fragmentContentFields != null) {
+		if (paddingHorizontal != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentContentFields\": ");
+			sb.append("\"paddingHorizontal\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < fragmentContentFields.length; i++) {
-				sb.append(String.valueOf(fragmentContentFields[i]));
-
-				if ((i + 1) < fragmentContentFields.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(paddingHorizontal);
 		}
 
-		if (fragmentName != null) {
+		if (paddingTop != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentName\": ");
+			sb.append("\"paddingTop\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(fragmentName));
-
-			sb.append("\"");
+			sb.append(paddingTop);
 		}
 
 		sb.append("}");
@@ -256,7 +281,7 @@ public class FragmentDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Layout",
 		name = "x-class-name"
 	)
 	public String xClassName;

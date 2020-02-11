@@ -53,14 +53,46 @@ public class SettingsSerDes {
 
 		sb.append("{");
 
-		if (settings.getLookAndFeel() != null) {
+		if (settings.getColorSchemeName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"lookAndFeel\": ");
+			sb.append("\"colorSchemeName\": ");
 
-			sb.append(String.valueOf(settings.getLookAndFeel()));
+			sb.append("\"");
+
+			sb.append(_escape(settings.getColorSchemeName()));
+
+			sb.append("\"");
+		}
+
+		if (settings.getCss() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"css\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(settings.getCss()));
+
+			sb.append("\"");
+		}
+
+		if (settings.getJavascript() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"javascript\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(settings.getJavascript()));
+
+			sb.append("\"");
 		}
 
 		if (settings.getMasterPage() != null) {
@@ -71,6 +103,34 @@ public class SettingsSerDes {
 			sb.append("\"masterPage\": ");
 
 			sb.append(String.valueOf(settings.getMasterPage()));
+		}
+
+		if (settings.getThemeName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"themeName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(settings.getThemeName()));
+
+			sb.append("\"");
+		}
+
+		if (settings.getThemeSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"themeSettings\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(settings.getThemeSettings()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -91,11 +151,27 @@ public class SettingsSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (settings.getLookAndFeel() == null) {
-			map.put("lookAndFeel", null);
+		if (settings.getColorSchemeName() == null) {
+			map.put("colorSchemeName", null);
 		}
 		else {
-			map.put("lookAndFeel", String.valueOf(settings.getLookAndFeel()));
+			map.put(
+				"colorSchemeName",
+				String.valueOf(settings.getColorSchemeName()));
+		}
+
+		if (settings.getCss() == null) {
+			map.put("css", null);
+		}
+		else {
+			map.put("css", String.valueOf(settings.getCss()));
+		}
+
+		if (settings.getJavascript() == null) {
+			map.put("javascript", null);
+		}
+		else {
+			map.put("javascript", String.valueOf(settings.getJavascript()));
 		}
 
 		if (settings.getMasterPage() == null) {
@@ -103,6 +179,21 @@ public class SettingsSerDes {
 		}
 		else {
 			map.put("masterPage", String.valueOf(settings.getMasterPage()));
+		}
+
+		if (settings.getThemeName() == null) {
+			map.put("themeName", null);
+		}
+		else {
+			map.put("themeName", String.valueOf(settings.getThemeName()));
+		}
+
+		if (settings.getThemeSettings() == null) {
+			map.put("themeSettings", null);
+		}
+		else {
+			map.put(
+				"themeSettings", String.valueOf(settings.getThemeSettings()));
 		}
 
 		return map;
@@ -125,16 +216,35 @@ public class SettingsSerDes {
 			Settings settings, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "lookAndFeel")) {
+			if (Objects.equals(jsonParserFieldName, "colorSchemeName")) {
 				if (jsonParserFieldValue != null) {
-					settings.setLookAndFeel(
-						LookAndFeelSerDes.toDTO((String)jsonParserFieldValue));
+					settings.setColorSchemeName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "css")) {
+				if (jsonParserFieldValue != null) {
+					settings.setCss((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "javascript")) {
+				if (jsonParserFieldValue != null) {
+					settings.setJavascript((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "masterPage")) {
 				if (jsonParserFieldValue != null) {
 					settings.setMasterPage(
 						MasterPageSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "themeName")) {
+				if (jsonParserFieldValue != null) {
+					settings.setThemeName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "themeSettings")) {
+				if (jsonParserFieldValue != null) {
+					settings.setThemeSettings((Object)jsonParserFieldValue);
 				}
 			}
 			else {

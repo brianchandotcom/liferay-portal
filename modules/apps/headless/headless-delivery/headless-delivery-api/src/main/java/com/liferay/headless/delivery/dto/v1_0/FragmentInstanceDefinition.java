@@ -41,137 +41,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("LookAndFeel")
+@GraphQLName("FragmentInstanceDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "LookAndFeel")
-public class LookAndFeel {
-
-	@Schema
-	public String getColorSchemeName() {
-		return colorSchemeName;
-	}
-
-	public void setColorSchemeName(String colorSchemeName) {
-		this.colorSchemeName = colorSchemeName;
-	}
-
-	@JsonIgnore
-	public void setColorSchemeName(
-		UnsafeSupplier<String, Exception> colorSchemeNameUnsafeSupplier) {
-
-		try {
-			colorSchemeName = colorSchemeNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String colorSchemeName;
-
-	@Schema
-	public String getCss() {
-		return css;
-	}
-
-	public void setCss(String css) {
-		this.css = css;
-	}
-
-	@JsonIgnore
-	public void setCss(UnsafeSupplier<String, Exception> cssUnsafeSupplier) {
-		try {
-			css = cssUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String css;
-
-	@Schema
-	public String getJavascript() {
-		return javascript;
-	}
-
-	public void setJavascript(String javascript) {
-		this.javascript = javascript;
-	}
-
-	@JsonIgnore
-	public void setJavascript(
-		UnsafeSupplier<String, Exception> javascriptUnsafeSupplier) {
-
-		try {
-			javascript = javascriptUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String javascript;
-
-	@Schema
-	public String getThemeName() {
-		return themeName;
-	}
-
-	public void setThemeName(String themeName) {
-		this.themeName = themeName;
-	}
-
-	@JsonIgnore
-	public void setThemeName(
-		UnsafeSupplier<String, Exception> themeNameUnsafeSupplier) {
-
-		try {
-			themeName = themeNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String themeName;
+@XmlRootElement(name = "FragmentInstanceDefinition")
+public class FragmentInstanceDefinition {
 
 	@Schema
 	@Valid
-	public Object getThemeSettings() {
-		return themeSettings;
+	public Fragment getFragment() {
+		return fragment;
 	}
 
-	public void setThemeSettings(Object themeSettings) {
-		this.themeSettings = themeSettings;
+	public void setFragment(Fragment fragment) {
+		this.fragment = fragment;
 	}
 
 	@JsonIgnore
-	public void setThemeSettings(
-		UnsafeSupplier<Object, Exception> themeSettingsUnsafeSupplier) {
+	public void setFragment(
+		UnsafeSupplier<Fragment, Exception> fragmentUnsafeSupplier) {
 
 		try {
-			themeSettings = themeSettingsUnsafeSupplier.get();
+			fragment = fragmentUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -183,7 +73,67 @@ public class LookAndFeel {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object themeSettings;
+	protected Fragment fragment;
+
+	@Schema
+	@Valid
+	public Map<String, Object> getFragmentConfig() {
+		return fragmentConfig;
+	}
+
+	public void setFragmentConfig(Map<String, Object> fragmentConfig) {
+		this.fragmentConfig = fragmentConfig;
+	}
+
+	@JsonIgnore
+	public void setFragmentConfig(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			fragmentConfigUnsafeSupplier) {
+
+		try {
+			fragmentConfig = fragmentConfigUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, Object> fragmentConfig;
+
+	@Schema
+	@Valid
+	public FragmentField[] getFragmentFields() {
+		return fragmentFields;
+	}
+
+	public void setFragmentFields(FragmentField[] fragmentFields) {
+		this.fragmentFields = fragmentFields;
+	}
+
+	@JsonIgnore
+	public void setFragmentFields(
+		UnsafeSupplier<FragmentField[], Exception>
+			fragmentFieldsUnsafeSupplier) {
+
+		try {
+			fragmentFields = fragmentFieldsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FragmentField[] fragmentFields;
 
 	@Override
 	public boolean equals(Object object) {
@@ -191,13 +141,15 @@ public class LookAndFeel {
 			return true;
 		}
 
-		if (!(object instanceof LookAndFeel)) {
+		if (!(object instanceof FragmentInstanceDefinition)) {
 			return false;
 		}
 
-		LookAndFeel lookAndFeel = (LookAndFeel)object;
+		FragmentInstanceDefinition fragmentInstanceDefinition =
+			(FragmentInstanceDefinition)object;
 
-		return Objects.equals(toString(), lookAndFeel.toString());
+		return Objects.equals(
+			toString(), fragmentInstanceDefinition.toString());
 	}
 
 	@Override
@@ -212,74 +164,44 @@ public class LookAndFeel {
 
 		sb.append("{");
 
-		if (colorSchemeName != null) {
+		if (fragment != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"colorSchemeName\": ");
+			sb.append("\"fragment\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(colorSchemeName));
-
-			sb.append("\"");
+			sb.append(String.valueOf(fragment));
 		}
 
-		if (css != null) {
+		if (fragmentConfig != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"css\": ");
+			sb.append("\"fragmentConfig\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(css));
-
-			sb.append("\"");
+			sb.append(_toJSON(fragmentConfig));
 		}
 
-		if (javascript != null) {
+		if (fragmentFields != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"javascript\": ");
+			sb.append("\"fragmentFields\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(javascript));
+			for (int i = 0; i < fragmentFields.length; i++) {
+				sb.append(String.valueOf(fragmentFields[i]));
 
-			sb.append("\"");
-		}
-
-		if (themeName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+				if ((i + 1) < fragmentFields.length) {
+					sb.append(", ");
+				}
 			}
 
-			sb.append("\"themeName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(themeName));
-
-			sb.append("\"");
-		}
-
-		if (themeSettings != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"themeSettings\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(themeSettings));
-
-			sb.append("\"");
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -288,7 +210,7 @@ public class LookAndFeel {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.LookAndFeel",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

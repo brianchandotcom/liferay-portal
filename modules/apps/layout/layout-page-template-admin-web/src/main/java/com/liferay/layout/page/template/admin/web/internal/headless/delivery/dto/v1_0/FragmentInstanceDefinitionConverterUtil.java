@@ -30,8 +30,8 @@ import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
-import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
+import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.InlineLink;
 import com.liferay.headless.delivery.dto.v1_0.InlineValue;
@@ -97,14 +97,13 @@ public class FragmentInstanceDefinitionConverterUtil {
 				};
 				fragmentConfig = _getFragmentConfig(
 					fragmentEntryConfigurationParser, fragmentEntryLink);
-				fragmentFields = _getFragmentFields(
-					fragmentEntryLink);
+				fragmentFields = _getFragmentFields(fragmentEntryLink);
 			}
 		};
 	}
 
-	private static List<FragmentField>
-		_getBackgroundImageFragmentFields(JSONObject jsonObject) {
+	private static List<FragmentField> _getBackgroundImageFragmentFields(
+		JSONObject jsonObject) {
 
 		List<FragmentField> fragmentFields = new ArrayList<>();
 
@@ -253,6 +252,24 @@ public class FragmentInstanceDefinitionConverterUtil {
 		}
 	}
 
+	private static FragmentEntry _getFragmentEntry(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		long fragmentEntryId, String rendererKey) {
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		Map<String, FragmentEntry> fragmentEntries =
+			fragmentCollectionContributorTracker.getFragmentEntries();
+
+		return fragmentEntries.get(rendererKey);
+	}
+
 	private static FragmentField[] _getFragmentFields(
 		FragmentEntryLink fragmentEntryLink) {
 
@@ -285,24 +302,6 @@ public class FragmentInstanceDefinitionConverterUtil {
 						"EditableFragmentEntryProcessor")));
 
 		return fragmentFields.toArray(new FragmentField[0]);
-	}
-
-	private static FragmentEntry _getFragmentEntry(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		long fragmentEntryId, String rendererKey) {
-
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		Map<String, FragmentEntry> fragmentEntries =
-			fragmentCollectionContributorTracker.getFragmentEntries();
-
-		return fragmentEntries.get(rendererKey);
 	}
 
 	private static String _getFragmentName(

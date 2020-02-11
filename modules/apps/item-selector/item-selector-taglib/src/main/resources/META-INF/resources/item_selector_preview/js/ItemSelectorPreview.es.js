@@ -14,7 +14,7 @@
 
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import Carousel from './Carousel.es';
@@ -39,6 +39,8 @@ const ItemSelectorPreview = ({
 }) => {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
 	const [itemList, setItemList] = useState(items);
+	const firstUpdate = useRef(true);
+	const [reloadOnHide, setReloadOnHide] = useState(false);
 
 	const infoButtonRef = React.createRef();
 
@@ -78,11 +80,28 @@ const ItemSelectorPreview = ({
 		}
 	}, [infoButtonRef]);
 
+	useEffect(() => {
+		if (firstUpdate.current) {
+			firstUpdate.current = false;
+		}
+		else {
+			setReloadOnHide(true);
+		}
+	}, [itemList]);
+
 	const close = useCallback(() => {
 		ReactDOM.unmountComponentAtNode(container);
 	}, [container]);
 
 	const handleClickBack = () => {
+		if (reloadOnHide) {
+			const frame = window.frameElement;
+
+			if (frame) {
+				frame.contentWindow.location.reload();
+			}
+		}
+
 		close();
 	};
 

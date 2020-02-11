@@ -1018,7 +1018,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 							post${schemaName}.getId()
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 							random${schemaName}
 						<#else>
 							null

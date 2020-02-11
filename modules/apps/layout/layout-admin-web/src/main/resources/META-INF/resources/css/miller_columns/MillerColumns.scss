@@ -1,0 +1,66 @@
+@import 'atlas-variables';
+
+.miller-columns-row {
+	box-shadow: 0 0 0 1px $gray-400;
+	display: flex;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.miller-columns-col {
+	margin: 0;
+	padding: 0;
+
+	& + & {
+		border-left: 1px solid $gray-400;
+	}
+
+	@include media-breakpoint-up(md) {
+		height: calc(100vh - 384px);
+		min-height: 10rem;
+		overflow-y: scroll;
+	}
+}
+
+.miller-columns-item {
+	border-bottom: 1px solid $gray-300;
+	cursor: pointer;
+	height: 4.25rem;
+	padding: 1rem 0.5rem;
+	position: relative;
+
+	&.active {
+		background-color: $light-l1;
+	}
+
+	.custom-checkbox .custom-control-label {
+		z-index: 2;
+
+		&:after,
+		&:before {
+			top: -1px;
+		}
+	}
+
+	.miller-columns-item-drag-handler {
+		color: $gray-400;
+		cursor: move;
+		z-index: 2;
+	}
+}
+
+.miller-columns-item-mask {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	transition: box-shadow 150ms ease-in-out;
+	width: 100%;
+	will-change: box-shadow;
+	z-index: 1;
+
+	&:focus {
+		box-shadow: inset 0 0 0 0.125rem $white, inset 0 0 0 0.25rem $primary-l1;
+		outline: 0;
+	}
+}

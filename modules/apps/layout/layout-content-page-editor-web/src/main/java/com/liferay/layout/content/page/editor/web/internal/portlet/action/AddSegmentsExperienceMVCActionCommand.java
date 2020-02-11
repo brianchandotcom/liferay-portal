@@ -90,27 +90,26 @@ public class AddSegmentsExperienceMVCActionCommand
 	protected JSONObject addSegmentsExperience(ActionRequest actionRequest)
 		throws PortalException {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment(
 			actionRequest);
 
 		SegmentsExperience segmentsExperience = _addSegmentsExperience(
-			actionRequest, classNameId, classPK, segmentsExperiment);
+			actionRequest, _portal.getClassNameId(Layout.class),
+			themeDisplay.getPlid(), segmentsExperiment);
 
 		_populateSegmentsExperienceJSONObject(jsonObject, segmentsExperience);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
 			segmentsExperiment);
 
 		String layoutData = SegmentsExperienceUtil.copyLayoutData(
-			classNameId, classPK, themeDisplay.getScopeGroupId(),
+			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
+			themeDisplay.getScopeGroupId(),
 			_layoutPageTemplateStructureLocalService, baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId());
 
@@ -118,8 +117,9 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		Map<Long, String> fragmentEntryLinksEditableValuesMap =
 			SegmentsExperienceUtil.copyFragmentEntryLinksEditableValues(
-				classNameId, classPK, _fragmentEntryLinkLocalService,
-				themeDisplay.getScopeGroupId(), baseSegmentsExperienceId,
+				_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
+				_fragmentEntryLinkLocalService, themeDisplay.getScopeGroupId(),
+				baseSegmentsExperienceId,
 				segmentsExperience.getSegmentsExperienceId());
 
 		_populateFragmentEntryLinksJSONObject(
@@ -134,13 +134,13 @@ public class AddSegmentsExperienceMVCActionCommand
 				jsonObject, segmentsExperimentRel, themeDisplay.getLocale());
 
 			_initializeDraftLayout(
-				themeDisplay.getScopeGroupId(), classPK, segmentsExperience,
-				baseSegmentsExperienceId);
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				segmentsExperience, baseSegmentsExperienceId);
 		}
 
 		SegmentsExperienceUtil.copyPortletPreferences(
-			classPK, _portletLocalService, _portletPreferencesLocalService,
-			baseSegmentsExperienceId,
+			themeDisplay.getPlid(), _portletLocalService,
+			_portletPreferencesLocalService, baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId());
 
 		return jsonObject;

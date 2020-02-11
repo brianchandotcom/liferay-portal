@@ -435,10 +435,6 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"availableLanguages", _getAvailableLanguagesSoyContext()
 		).put(
-			"classNameId", PortalUtil.getClassNameId(Layout.class.getName())
-		).put(
-			"classPK", themeDisplay.getPlid()
-		).put(
 			"contentCreationEnabled",
 			ContentCreationContentPageEditorConfigurationUtil.
 				isContentCreationEnabled(themeDisplay.getCompanyId())

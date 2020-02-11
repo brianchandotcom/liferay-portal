@@ -101,8 +101,7 @@ public class SpiraProject {
 			this, new SearchParameter("Path", releasePath));
 	}
 
-	public SpiraTestCaseFolder getSpiraTestCaseFolderByID(
-			int testCaseFolderID)
+	public SpiraTestCaseFolder getSpiraTestCaseFolderByID(int testCaseFolderID)
 		throws IOException {
 
 		List<SpiraTestCaseFolder> spiraTestCaseFolders =

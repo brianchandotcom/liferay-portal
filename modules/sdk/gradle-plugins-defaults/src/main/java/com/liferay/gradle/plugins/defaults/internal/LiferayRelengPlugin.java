@@ -889,24 +889,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					return false;
 				}
 
-				if (LiferayRelengUtil.hasUnpublishedDependencies(project)) {
-					return false;
-				}
-
 				if (liferayThemeProject &&
 					LiferayRelengUtil.hasStaleParentTheme(project)) {
-
-					return true;
-				}
-
-				Properties properties = GUtil.loadProperties(
-					recordArtifactTask.getOutputFile());
-
-				String artifactGitId = properties.getProperty(
-					"artifact.git.id");
-
-				if (LiferayRelengUtil.hasStalePortalDependencies(
-						project, artifactGitId)) {
 
 					return true;
 				}
@@ -914,6 +898,22 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				if (LiferayRelengUtil.hasUnpublishedCommits(
 						project, project.getProjectDir(),
 						recordArtifactTask.getOutputFile())) {
+
+					if (LiferayRelengUtil.hasUnpublishedDependencies(project)) {
+						return false;
+					}
+
+					Properties properties = GUtil.loadProperties(
+						recordArtifactTask.getOutputFile());
+
+					String artifactGitId = properties.getProperty(
+						"artifact.git.id");
+
+					if (LiferayRelengUtil.hasStalePortalDependencies(
+							project, artifactGitId)) {
+
+						return true;
+					}
 
 					return true;
 				}

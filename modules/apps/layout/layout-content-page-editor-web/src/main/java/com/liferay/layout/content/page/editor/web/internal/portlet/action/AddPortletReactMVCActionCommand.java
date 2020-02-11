@@ -24,6 +24,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -103,11 +104,22 @@ public class AddPortletReactMVCActionCommand
 			actionRequest, "parentItemId");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
-		return LayoutStructureUtil.updateLayoutPageTemplateData(
-			themeDisplay.getScopeGroupId(), segmentsExperienceId,
-			themeDisplay.getPlid(),
-			layoutStructure -> layoutStructure.addFragmentLayoutStructureItem(
-				fragmentEntryLinkId, parentItemId, position));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONObject layoutDataJSONObject =
+			LayoutStructureUtil.updateLayoutPageTemplateData(
+				themeDisplay.getScopeGroupId(), segmentsExperienceId,
+				themeDisplay.getPlid(),
+				layoutStructure -> {
+					LayoutStructureItem layoutStructureItem =
+						layoutStructure.addFragmentLayoutStructureItem(
+							fragmentEntryLinkId, parentItemId, position);
+
+					jsonObject.put(
+						"addedItemId", layoutStructureItem.getItemId());
+				});
+
+		return jsonObject.put("layoutData", layoutDataJSONObject);
 	}
 
 	@Override

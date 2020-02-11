@@ -211,9 +211,7 @@ export default function Chart({languageTag, dataProviders = []}) {
 				<CartesianGrid strokeDasharray="0 0" vertical={false} />
 
 				<XAxis
-					axisLine={false}
 					dataKey="label"
-					stroke={AXIS_COLOR}
 					tickFormatter={dateFormatters.formatNumericDay}
 					tickLine={false}
 				/>
@@ -221,10 +219,9 @@ export default function Chart({languageTag, dataProviders = []}) {
 				<YAxis
 					allowDecimals={false}
 					minTickGap={3}
-					stroke={AXIS_COLOR}
 					tickFormatter={thousandsToKilosFormater}
 					tickLine={false}
-					width={25}
+					width={40}
 				/>
 
 				<Tooltip
@@ -234,6 +231,7 @@ export default function Chart({languageTag, dataProviders = []}) {
 							payload.langLabel
 						];
 					}}
+					itemStyle={{color: AXIS_COLOR}}
 					labelFormatter={dateFormatters.formatLongDate}
 					separator={': '}
 				/>

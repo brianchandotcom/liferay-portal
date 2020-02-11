@@ -240,9 +240,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		if (fragmentEntry == null) {
 			fragmentEntry = _fragmentEntryService.addFragmentEntry(
 				fragmentCollection.getGroupId(), fragmentCollectionId,
-				fragmentEntryKey, name, css, html, js, configuration, 0, type,
-				cacheable, status,
-				ServiceContextThreadLocal.getServiceContext());
+				fragmentEntryKey, name, css, html, js, cacheable, configuration,
+				0, type, status, ServiceContextThreadLocal.getServiceContext());
 		}
 		else {
 			fragmentEntry = _fragmentEntryService.updateFragmentEntry(

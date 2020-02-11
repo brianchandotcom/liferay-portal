@@ -30,16 +30,17 @@ import javax.annotation.Generated;
 @Generated("")
 public class Rating {
 
-	public Map<String, Map> getActions() {
+	public Map<String, Map<String, String>> getActions() {
 		return actions;
 	}
 
-	public void setActions(Map<String, Map> actions) {
+	public void setActions(Map<String, Map<String, String>> actions) {
 		this.actions = actions;
 	}
 
 	public void setActions(
-		UnsafeSupplier<Map<String, Map>, Exception> actionsUnsafeSupplier) {
+		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
+			actionsUnsafeSupplier) {
 
 		try {
 			actions = actionsUnsafeSupplier.get();
@@ -49,7 +50,7 @@ public class Rating {
 		}
 	}
 
-	protected Map<String, Map> actions;
+	protected Map<String, Map<String, String>> actions;
 
 	public Double getBestRating() {
 		return bestRating;

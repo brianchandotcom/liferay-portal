@@ -88,17 +88,18 @@ public class Document {
 
 	@Schema
 	@Valid
-	public Map<String, Map> getActions() {
+	public Map<String, Map<String, String>> getActions() {
 		return actions;
 	}
 
-	public void setActions(Map<String, Map> actions) {
+	public void setActions(Map<String, Map<String, String>> actions) {
 		this.actions = actions;
 	}
 
 	@JsonIgnore
 	public void setActions(
-		UnsafeSupplier<Map<String, Map>, Exception> actionsUnsafeSupplier) {
+		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
+			actionsUnsafeSupplier) {
 
 		try {
 			actions = actionsUnsafeSupplier.get();
@@ -113,7 +114,7 @@ public class Document {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Map<String, Map> actions;
+	protected Map<String, Map<String, String>> actions;
 
 	@Schema(
 		description = "An array of images in several resolutions and sizes, created by the Adaptive Media framework."

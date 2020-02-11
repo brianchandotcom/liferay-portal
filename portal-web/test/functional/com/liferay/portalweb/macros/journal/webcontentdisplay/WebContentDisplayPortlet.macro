@@ -386,7 +386,7 @@ definition {
 
 			AssertClick(
 				key_listEntry = "${webContentTitle}",
-				locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
+				locator1 = "LexiconList#LIST_ENTRY_TITLE",
 				value1 = "${webContentTitle}");
 
 			SelectFrame(locator1 = "IFrame#DIALOG");

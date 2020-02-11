@@ -191,11 +191,11 @@ public class OpenAPIParserUtil {
 						additionalPropertySchema.getFormat());
 
 				if (_openAPIDataTypeMap.containsKey(key)) {
+					String additionalJavaDataType = getJavaDataType(
+						javaDataTypeMap, schema.getAdditionalPropertySchema());
+
 					javaDataType =
-						"Map<String, " +
-							getJavaDataType(
-								javaDataTypeMap,
-								schema.getAdditionalPropertySchema()) + ">";
+						"Map<String, " + additionalJavaDataType + ">";
 				}
 			}
 

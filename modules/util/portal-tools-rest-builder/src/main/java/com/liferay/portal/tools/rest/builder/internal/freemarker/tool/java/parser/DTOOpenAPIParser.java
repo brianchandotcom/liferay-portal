@@ -259,8 +259,16 @@ public class DTOOpenAPIParser {
 		}
 
 		if (javaDataType.startsWith("Map")) {
-			return javaDataType.substring(0, javaDataType.lastIndexOf(" ")) +
-				javaDataType.substring(javaDataType.lastIndexOf(".") + 1);
+			int index = javaDataType.lastIndexOf(".");
+
+			if (index != -1) {
+				String mapType = javaDataType.substring(
+					0, javaDataType.lastIndexOf(" "));
+
+				return mapType + javaDataType.substring(index + 1);
+			}
+
+			return "Map<String, ?>";
 		}
 
 		String propertyType = javaDataType;

@@ -1904,15 +1904,18 @@ components:
                     type: string
                 backgroundImage:
                     $ref: "#/components/schemas/FragmentImage"
-                containerType:
-                    enum: [Fixed, Fluid]
-                    type: string
-                paddingBottom:
-                    type: integer
-                paddingHorizontal:
-                    type: integer
-                paddingTop:
-                    type: integer
+                layout:
+                    properties:
+                        containerType:
+                            enum: [Fixed, Fluid]
+                            type: string
+                        paddingBottom:
+                            type: integer
+                        paddingHorizontal:
+                            type: integer
+                        paddingTop:
+                            type: integer
+                    type: object
             type: object
         StructuredContent:
             description:

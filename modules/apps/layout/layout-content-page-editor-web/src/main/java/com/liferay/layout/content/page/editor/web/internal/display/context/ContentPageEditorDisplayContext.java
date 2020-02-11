@@ -1416,7 +1416,9 @@ public class ContentPageEditorDisplayContext {
 	private Map<String, String> _getLanguageDirection() {
 		Map<String, String> languageDirection = new HashMap<>();
 
-		for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
+		for (Locale curLocale :
+				LanguageUtil.getAvailableLocales(getGroupId())) {
+
 			languageDirection.put(
 				LocaleUtil.toLanguageId(curLocale),
 				LanguageUtil.get(curLocale, "lang.dir"));

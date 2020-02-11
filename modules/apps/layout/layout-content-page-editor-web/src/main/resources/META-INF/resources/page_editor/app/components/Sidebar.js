@@ -13,6 +13,7 @@
  */
 
 import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
@@ -192,7 +193,24 @@ export default function Sidebar() {
 
 							const active =
 								sidebarOpen && sidebarPanelId === panelId;
-							const {icon, label, pluginEntryPoint} = panel;
+							const {
+								icon,
+								isLink,
+								label,
+								pluginEntryPoint,
+								url
+							} = panel;
+
+							if (isLink) {
+								return (
+									<a
+										className={classNames({active})}
+										href={url}
+									>
+										<ClayIcon symbol={icon} />
+									</a>
+								);
+							}
 
 							const prefetch = () =>
 								load(
@@ -201,19 +219,31 @@ export default function Sidebar() {
 								).then(...swallow);
 
 							return (
-								<ClayButtonWithIcon
-									aria-pressed={active}
-									className={classNames({active})}
-									data-tooltip-align="left"
-									displayType="unstyled"
-									id={panel.sidebarPanelId}
-									key={panel.sidebarPanelId}
-									onClick={() => handleClick(panel)}
-									onFocus={prefetch}
-									onMouseEnter={prefetch}
-									symbol={icon}
-									title={label}
-								/>
+								<>
+									{isLink ? (
+										<a
+											className={classNames({active})}
+											href={url}
+										>
+											<ClayIcon symbol={icon} />
+										</a>
+									) : (
+										<ClayButtonWithIcon
+											aria-pressed={active}
+											className={classNames({active})}
+											data-tooltip-align="left"
+											displayType="unstyled"
+											id={panel.sidebarPanelId}
+											key={panel.sidebarPanelId}
+											onClick={() => handleClick(panel)}
+											onFocus={prefetch}
+											onMouseEnter={prefetch}
+											symbol={icon}
+											title={label}
+										/>
+									)}
+									);
+								</>
 							);
 						});
 

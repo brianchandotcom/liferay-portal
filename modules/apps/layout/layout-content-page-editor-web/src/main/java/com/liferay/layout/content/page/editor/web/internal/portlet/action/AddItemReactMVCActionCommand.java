@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -67,19 +68,40 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "parentItemId");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONObject layoutDataJSONObject = null;
+
 		if (Objects.equals(itemType, LayoutDataItemTypeConstants.TYPE_ROW)) {
-			return LayoutStructureUtil.updateLayoutPageTemplateData(
-				themeDisplay.getScopeGroupId(), segmentsExperienceId,
-				themeDisplay.getPlid(),
-				layoutStructure -> layoutStructure.addRowLayoutStructureItem(
-					parentItemId, position));
+			layoutDataJSONObject =
+				LayoutStructureUtil.updateLayoutPageTemplateData(
+					themeDisplay.getScopeGroupId(), segmentsExperienceId,
+					themeDisplay.getPlid(),
+					layoutStructure -> {
+						LayoutStructureItem layoutStructureItem =
+							layoutStructure.addRowLayoutStructureItem(
+								parentItemId, position);
+
+						jsonObject.put(
+							"addedItemId", layoutStructureItem.getItemId());
+					});
+		}
+		else {
+			layoutDataJSONObject =
+				LayoutStructureUtil.updateLayoutPageTemplateData(
+					themeDisplay.getScopeGroupId(), segmentsExperienceId,
+					themeDisplay.getPlid(),
+					layoutStructure -> {
+						LayoutStructureItem layoutStructureItem =
+							layoutStructure.addLayoutStructureItem(
+								itemType, parentItemId, position);
+
+						jsonObject.put(
+							"addedItemId", layoutStructureItem.getItemId());
+					});
 		}
 
-		return LayoutStructureUtil.updateLayoutPageTemplateData(
-			themeDisplay.getScopeGroupId(), segmentsExperienceId,
-			themeDisplay.getPlid(),
-			layoutStructure -> layoutStructure.addLayoutStructureItem(
-				itemType, parentItemId, position));
+		return jsonObject.put("layoutData", layoutDataJSONObject);
 	}
 
 	@Override

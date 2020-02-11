@@ -1991,6 +1991,8 @@ public class LanguageImpl implements Language, Serializable {
 	private static final String _GROUP_LOCALES_PORTAL_CACHE_NAME =
 		LanguageImpl.class.getName() + "._groupLocalesPortalCache";
 
+	private static final double _STORAGE_SIZE_DENOMINATOR = 1024.0;
+
 	private static final Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
 
 	private static final Map<Long, CompanyLocalesBag> _companyLocalesBags =
@@ -2125,8 +2127,6 @@ public class LanguageImpl implements Language, Serializable {
 			_supportedLocalesSet = Collections.unmodifiableSet(
 				supportedLocalesSet);
 		}
-
-		private final double _STORAGE_SIZE_DENOMINATOR = 1024.0;
 
 		private final Set<Locale> _availableLocales;
 		private final Set<String> _duplicateLanguageCodes;

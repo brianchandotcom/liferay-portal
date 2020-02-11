@@ -58,7 +58,7 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 			UpgradeStep upgradeStep = upgradeSteps[i];
 
 			String upgradeInfoToSchemaVersionString =
-				toSchemaVersionString + "-step" + (i - upgradeSteps.length + 1);
+				toSchemaVersionString + ".step" + (i - upgradeSteps.length + 1);
 
 			UpgradeInfo upgradeInfo = new UpgradeInfo(
 				upgradeInfoFromSchemaVersionString,

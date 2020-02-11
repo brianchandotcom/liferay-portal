@@ -47,7 +47,7 @@
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-100"
 			name="size"
-			value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
+			value="<%= LanguageUtil.formatStorageSize(fileEntry.getSize(), locale) %>"
 		/>
 
 		<c:if test="<%= showPageAttachmentAction %>">

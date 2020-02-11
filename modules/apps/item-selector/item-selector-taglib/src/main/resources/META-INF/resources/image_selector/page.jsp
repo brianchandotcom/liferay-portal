@@ -78,7 +78,7 @@ if (fileEntryId != 0) {
 			</c:if>
 
 			<c:if test="<%= maxFileSize != 0 %>">
-				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" key="maximum-size-x" />
+				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(maxFileSize, locale) %>" key="maximum-size-x" />
 			</c:if>
 		</div>
 	</div>

@@ -89,7 +89,7 @@ String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(local
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="size"
-				value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
+				value="<%= LanguageUtil.formatStorageSize(fileEntry.getSize(), locale) %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp

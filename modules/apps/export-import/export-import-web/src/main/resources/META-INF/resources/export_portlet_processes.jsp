@@ -105,7 +105,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 
 					sb.append(fileEntry.getTitle());
 					sb.append(StringPool.OPEN_PARENTHESIS);
-					sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+					sb.append(LanguageUtil.formatStorageSize(fileEntry.getSize(), locale));
 					sb.append(StringPool.CLOSE_PARENTHESIS);
 				%>
 

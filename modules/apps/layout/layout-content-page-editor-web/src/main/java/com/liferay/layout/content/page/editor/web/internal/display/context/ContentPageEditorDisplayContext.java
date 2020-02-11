@@ -781,6 +781,10 @@ public class ContentPageEditorDisplayContext {
 	private JSONObject _getDropZoneConfigJSONObject(
 		JSONObject masterLayoutDataJSONObject) {
 
+		if (masterLayoutDataJSONObject.length() <= 0) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
 		LayoutStructure masterLayoutStructure = LayoutStructure.of(
 			masterLayoutDataJSONObject.toString());
 
@@ -1031,8 +1035,6 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		try {
-			List<String> fragmentEntryKeys = new ArrayList<>();
-
 			JSONObject masterLayoutDataJSONObject =
 				JSONFactoryUtil.createJSONObject(masterLayoutData);
 
@@ -1041,6 +1043,16 @@ public class ContentPageEditorDisplayContext {
 
 			JSONArray fragmentEntryKeysJSONArray =
 				dropZoneJSONObject.getJSONArray("fragmentEntryKeys");
+
+			if ((fragmentEntryKeysJSONArray == null) ||
+				(fragmentEntryKeysJSONArray.length() <= 0)) {
+
+				_fragmentEntryKeys = Collections.emptyList();
+
+				return _fragmentEntryKeys;
+			}
+
+			List<String> fragmentEntryKeys = new ArrayList<>();
 
 			Iterator<String> iteratorFragmentEntryKeys =
 				fragmentEntryKeysJSONArray.iterator();
@@ -1809,7 +1821,13 @@ public class ContentPageEditorDisplayContext {
 			return _allowNewFragmentEntries;
 		}
 
+		_allowNewFragmentEntries = true;
+
 		String masterLayoutData = _getMasterLayoutData();
+
+		if (Validator.isNull(masterLayoutData)) {
+			return _allowNewFragmentEntries;
+		}
 
 		try {
 			JSONObject masterLayoutDataJSONObject =

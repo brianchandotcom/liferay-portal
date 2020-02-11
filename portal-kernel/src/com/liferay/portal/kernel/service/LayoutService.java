@@ -466,6 +466,11 @@ public interface LayoutService extends BaseService {
 			long groupId, String folderName, String fileName)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Layout fetchLayout(
+			long groupId, boolean privateLayout, long layoutId)
+		throws PortalException;
+
 	/**
 	 * Returns all the ancestor layouts of the layout.
 	 *

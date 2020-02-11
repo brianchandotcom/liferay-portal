@@ -525,6 +525,14 @@ public class LayoutServiceWrapper
 		_layoutService.deleteTempFileEntry(groupId, folderName, fileName);
 	}
 
+	@Override
+	public Layout fetchLayout(
+			long groupId, boolean privateLayout, long layoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.fetchLayout(groupId, privateLayout, layoutId);
+	}
+
 	/**
 	 * Returns all the ancestor layouts of the layout.
 	 *

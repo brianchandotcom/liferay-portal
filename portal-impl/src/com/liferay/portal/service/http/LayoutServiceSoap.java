@@ -750,6 +750,24 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.LayoutSoap fetchLayout(
+			long groupId, boolean privateLayout, long layoutId)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.Layout returnValue =
+				LayoutServiceUtil.fetchLayout(groupId, privateLayout, layoutId);
+
+			return com.liferay.portal.kernel.model.LayoutSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	/**
 	 * Returns all the ancestor layouts of the layout.
 	 *

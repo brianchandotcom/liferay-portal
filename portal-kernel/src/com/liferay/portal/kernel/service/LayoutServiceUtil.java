@@ -520,6 +520,13 @@ public class LayoutServiceUtil {
 		getService().deleteTempFileEntry(groupId, folderName, fileName);
 	}
 
+	public static com.liferay.portal.kernel.model.Layout fetchLayout(
+			long groupId, boolean privateLayout, long layoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchLayout(groupId, privateLayout, layoutId);
+	}
+
 	/**
 	 * Returns all the ancestor layouts of the layout.
 	 *

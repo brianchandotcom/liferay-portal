@@ -43,7 +43,7 @@ public class PATCHEndpointTypeKeysResolver implements TypeKeysResolver {
 			metadataContext, OASConstants.OPERATION_PATCH);
 	}
 
-	private static final MetadataKeysBuilder _metadataKeysBuilder =
+	private final MetadataKeysBuilder _metadataKeysBuilder =
 		new MetadataKeysBuilder();
 
 }

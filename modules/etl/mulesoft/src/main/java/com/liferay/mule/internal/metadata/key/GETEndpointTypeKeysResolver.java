@@ -43,7 +43,7 @@ public class GETEndpointTypeKeysResolver implements TypeKeysResolver {
 			metadataContext, OASConstants.OPERATION_GET);
 	}
 
-	private static final MetadataKeysBuilder _metadataKeysBuilder =
+	private final MetadataKeysBuilder _metadataKeysBuilder =
 		new MetadataKeysBuilder();
 
 }

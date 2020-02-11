@@ -45,7 +45,7 @@ public class PATCHEndpointInputTypeResolver
 				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
 	}
 
-	private static final MetadataTypeBuilder _metadataTypeBuilder =
+	private final MetadataTypeBuilder _metadataTypeBuilder =
 		new MetadataTypeBuilder();
 
 }

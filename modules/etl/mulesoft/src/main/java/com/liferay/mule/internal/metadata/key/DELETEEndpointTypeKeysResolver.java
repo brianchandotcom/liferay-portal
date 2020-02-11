@@ -43,7 +43,7 @@ public class DELETEEndpointTypeKeysResolver implements TypeKeysResolver {
 			metadataContext, OASConstants.OPERATION_DELETE);
 	}
 
-	private static final MetadataKeysBuilder _metadataKeysBuilder =
+	private final MetadataKeysBuilder _metadataKeysBuilder =
 		new MetadataKeysBuilder();
 
 }

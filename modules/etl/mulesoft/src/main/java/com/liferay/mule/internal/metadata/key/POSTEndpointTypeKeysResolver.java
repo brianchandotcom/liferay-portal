@@ -43,7 +43,7 @@ public class POSTEndpointTypeKeysResolver implements TypeKeysResolver {
 			metadataContext, OASConstants.OPERATION_POST);
 	}
 
-	private static final MetadataKeysBuilder _metadataKeysBuilder =
+	private final MetadataKeysBuilder _metadataKeysBuilder =
 		new MetadataKeysBuilder();
 
 }

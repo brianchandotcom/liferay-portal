@@ -30,6 +30,7 @@ public enum LiferayError implements ErrorTypeDefinition<LiferayError> {
 	NOT_FOUND(MuleErrors.CONNECTIVITY, 404),
 	NOT_IMPLEMENTED(MuleErrors.CONNECTIVITY, 501),
 	SERVER_ERROR(MuleErrors.CONNECTIVITY, 500),
+	UNAUTHORIZED(MuleErrors.CONNECTIVITY, 401),
 	UNSUPPORTED_MEDIA_TYPE(MuleErrors.CONNECTIVITY, 415);
 
 	public static LiferayError fromStatus(int status) {

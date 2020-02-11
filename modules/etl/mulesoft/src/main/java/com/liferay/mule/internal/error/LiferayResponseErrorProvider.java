@@ -14,6 +14,8 @@
 
 package com.liferay.mule.internal.error;
 
+import com.liferay.mule.internal.error.LiferayError;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,6 +37,7 @@ public class LiferayResponseErrorProvider implements ErrorTypeProvider {
 		errors.add(LiferayError.NOT_FOUND);
 		errors.add(LiferayError.NOT_IMPLEMENTED);
 		errors.add(LiferayError.SERVER_ERROR);
+		errors.add(LiferayError.UNAUTHORIZED);
 		errors.add(LiferayError.UNSUPPORTED_MEDIA_TYPE);
 
 		return errors;

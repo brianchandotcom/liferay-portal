@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.exception.SitemapIncludeException;
 import com.liferay.portal.kernel.exception.SitemapPagePriorityException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -152,9 +151,8 @@ public class GroupPagesPortlet extends MVCPortlet {
 			LayoutEditorTypeConfiguration.class.getName(),
 			_layoutEditorTypeConfiguration);
 
-		Group group = _groupProvider.getGroup(httpServletRequest);
-
-		renderRequest.setAttribute(WebKeys.GROUP, group);
+		renderRequest.setAttribute(
+			WebKeys.GROUP, _groupProvider.getGroup(httpServletRequest));
 
 		if (SessionErrors.contains(
 				renderRequest, NoSuchGroupException.class.getName()) ||

@@ -308,30 +308,6 @@
 
 	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties" />
 
-	<target if="${get.artifact.version.from.releng}" name="get-artifact-version-from-releng">
-		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
-			<filterchain>
-				<linecontains>
-					<contains value="artifact.url=" />
-				</linecontains>
-			</filterchain>
-		</loadproperties>
-
-		<loadfile
-			property="artifact.version"
-		>
-			<filterchain>
-				<tokenfilter>
-					<replaceregex pattern="^.+-(\d.+)\.[jw]ar$" replace="\1" />
-				</tokenfilter>
-			</filterchain>
-
-			<propertyresource name="artifact.url" />
-		</loadfile>
-
-		<property name="Bundle-Version" value="${artifact.version}" />
-	</target>
-
 	<target depends="get-artifact-version-from-releng" if="artifact.bnd" name="get-artifact-properties-bnd">
 		<property file="bnd.bnd" />
 
@@ -453,6 +429,30 @@
 
 		<property name="artifact.location.dest" value="${output.dir}/${lpkg.title.prefix}${liferay.releng.app.title} - Impl/${artifact.name}-${artifact.version}.war" />
 		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}-${artifact.version}.war" />
+	</target>
+
+	<target if="${get.artifact.version.from.releng}" name="get-artifact-version-from-releng">
+		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="artifact.url=" />
+				</linecontains>
+			</filterchain>
+		</loadproperties>
+
+		<loadfile
+			property="artifact.version"
+		>
+			<filterchain>
+				<tokenfilter>
+					<replaceregex pattern="^.+-(\d.+)\.[jw]ar$" replace="\1" />
+				</tokenfilter>
+			</filterchain>
+
+			<propertyresource name="artifact.url" />
+		</loadfile>
+
+		<property name="Bundle-Version" value="${artifact.version}" />
 	</target>
 
 	<target description="Get the version of the current module that was present in the previous release of this app." name="get-artifact-version-previous-release" unless="${app.first.version}">

@@ -19,6 +19,7 @@ import React, {useContext, useEffect} from 'react';
 import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
+import {useSelectItem} from '../../../app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/store/index';
@@ -49,6 +50,7 @@ export default function FragmentCard({
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
+	const selectItem = useSelectItem();
 
 	const [, drag, preview] = useDrag({
 		end(_item, monitor) {
@@ -67,6 +69,7 @@ export default function FragmentCard({
 					groupId,
 					parentItemId: parentId,
 					position,
+					selectItem,
 					store
 				})
 			);

@@ -169,14 +169,14 @@ export default function EditableDecoration({
 
 		const parent = parentRef.current;
 
-		if (parent && isActive(parentItemId)) {
+		if (parent && (isActive(parentItemId) || isActive(itemId))) {
 			parent.addEventListener('click', onClick);
 			parent.addEventListener('mouseover', onMouseOver);
 			parent.addEventListener('mouseout', onMouseOut);
 		}
 
 		return () => {
-			if (parent && isActive(parentItemId)) {
+			if (parent && (isActive(parentItemId) || isActive(itemId))) {
 				parent.removeEventListener('click', onClick);
 				parent.removeEventListener('mouseover', onMouseOver);
 				parent.removeEventListener('mouseout', onMouseOut);

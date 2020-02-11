@@ -32,5 +32,5 @@ import org.mule.runtime.extension.api.annotation.license.RequiresEnterpriseLicen
 @Extension(category = Category.CERTIFIED, name = "Liferay", vendor = "Liferay")
 @RequiresEnterpriseLicense(allowEvaluationLicense = true)
 @Xml(prefix = "liferay")
-public class LiferayExtension {
+public class LiferayConnector {
 }

@@ -17,8 +17,8 @@ package com.liferay.mule.internal.operation;
 import static org.mule.runtime.http.api.HttpConstants.Method;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
-import com.liferay.mule.internal.error.LiferayResponseErrorProvider;
 import com.liferay.mule.internal.error.LiferayResponseValidator;
+import com.liferay.mule.internal.error.provider.LiferayResponseErrorProvider;
 import com.liferay.mule.internal.metadata.input.PATCHEndpointInputTypeResolver;
 import com.liferay.mule.internal.metadata.input.POSTEndpointInputTypeResolver;
 import com.liferay.mule.internal.metadata.key.DELETEEndpointTypeKeysResolver;

@@ -15,8 +15,8 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import {debounce, cancelDebounce, ItemSelectorDialog} from 'frontend-js-web';
-import React, {useState, useEffect, useRef} from 'react';
+import {ItemSelectorDialog, cancelDebounce, debounce} from 'frontend-js-web';
+import React, {useEffect, useRef, useState} from 'react';
 
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import templates from './ImagePickerAdapter.soy';

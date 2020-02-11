@@ -15,16 +15,3 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-
-<%
-portletDisplay.setShowStagingIcon(false);
-%>
-
-<c:choose>
-	<c:when test='<%= Objects.equals(layoutsAdminDisplayContext.getLayoutEditorType(), "react") %>'>
-		<liferay-util:include page="/view_layouts_react.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/view_layouts_soy.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>

@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
+import com.liferay.layout.admin.web.internal.configuration.LayoutEditorTypeConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -124,6 +125,10 @@ public class LayoutsAdminDisplayContext {
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
+
+		layoutEditorTypeConfiguration =
+			(LayoutEditorTypeConfiguration)_httpServletRequest.getAttribute(
+				LayoutEditorTypeConfiguration.class.getName());
 
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(
 			_httpServletRequest);
@@ -589,6 +594,10 @@ public class LayoutsAdminDisplayContext {
 			_themeDisplay.getLocale());
 
 		return _layoutDescriptions;
+	}
+
+	public String getLayoutEditorType() {
+		return layoutEditorTypeConfiguration.type();
 	}
 
 	public Long getLayoutId() {
@@ -1536,6 +1545,8 @@ public class LayoutsAdminDisplayContext {
 
 		return true;
 	}
+
+	protected final LayoutEditorTypeConfiguration layoutEditorTypeConfiguration;
 
 	private JSONObject _getActionURLsJSONObject(Layout layout)
 		throws Exception {

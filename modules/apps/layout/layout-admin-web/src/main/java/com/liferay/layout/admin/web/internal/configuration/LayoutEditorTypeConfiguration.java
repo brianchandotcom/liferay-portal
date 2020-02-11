@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,19 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.layout.admin.web.internal.configuration;
 
-<%
-portletDisplay.setShowStagingIcon(false);
-%>
+import aQute.bnd.annotation.metatype.Meta;
 
-<c:choose>
-	<c:when test='<%= Objects.equals(layoutsAdminDisplayContext.getLayoutEditorType(), "react") %>'>
-		<liferay-util:include page="/view_layouts_react.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/view_layouts_soy.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
+/**
+ * @author Carlos Lancha
+ */
+@ExtendedObjectClassDefinition(generateUI = false)
+@Meta.OCD(
+	id = "com.liferay.layout.admin.web.internal.configuration.LayoutEditorTypeConfiguration"
+)
+public interface LayoutEditorTypeConfiguration {
+
+	@Meta.AD(deflt = "soy", required = false)
+	public String type();
+
+}

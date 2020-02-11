@@ -23,7 +23,8 @@ import com.liferay.petra.sql.dsl.query.sort.OrderByInfo;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultAlias;
 import com.liferay.petra.sql.dsl.spi.query.sort.DefaultOrderByExpression;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Preston Crary
@@ -47,41 +48,33 @@ public interface DefaultOrderByStep extends DefaultLimitStep, OrderByStep {
 
 		String[] orderByFields = orderByInfo.getOrderByFields();
 
-		OrderByExpression[] orderByExpressions =
-			new OrderByExpression[orderByFields.length];
+		List<OrderByExpression> orderByExpressions = new ArrayList<>(
+			orderByFields.length);
 
-		int count = 0;
-
-		for (int i = 0; i < orderByFields.length; i++) {
-			String field = orderByFields[i];
-
+		for (String field : orderByFields) {
 			Column<?, ?> column = table.getColumn(field);
 
 			if (column != null) {
 				if (field.equals(column.getName())) {
-					orderByExpressions[i] = new DefaultOrderByExpression(
-						column, orderByInfo.isAscending(field));
+					orderByExpressions.add(
+						new DefaultOrderByExpression(
+							column, orderByInfo.isAscending(field)));
 				}
 				else {
-					orderByExpressions[i] = new DefaultOrderByExpression(
-						new DefaultAlias<>(column, field),
-						orderByInfo.isAscending(field));
+					orderByExpressions.add(
+						new DefaultOrderByExpression(
+							new DefaultAlias<>(column, field),
+							orderByInfo.isAscending(field)));
 				}
-
-				count++;
 			}
 		}
 
-		if (count == 0) {
+		if (orderByExpressions.isEmpty()) {
 			return this;
 		}
 
-		if (count < orderByFields.length) {
-			return new OrderBy(
-				this, Arrays.copyOfRange(orderByExpressions, 0, count));
-		}
-
-		return new OrderBy(this, orderByExpressions);
+		return new OrderBy(
+			this, orderByExpressions.toArray(new OrderByExpression[0]));
 	}
 
 }

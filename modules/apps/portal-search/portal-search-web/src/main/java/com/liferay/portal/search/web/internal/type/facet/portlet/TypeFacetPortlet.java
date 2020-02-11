@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.type.facet.portlet;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -111,7 +112,7 @@ public class TypeFacetPortlet extends MVCPortlet {
 
 		AssetEntriesSearchFacetDisplayBuilder
 			assetEntriesSearchFacetDisplayBuilder =
-				new AssetEntriesSearchFacetDisplayBuilder();
+				createAssetEntriesSearchFacetDisplayBuilder(renderRequest);
 
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			renderRequest);
@@ -137,6 +138,18 @@ public class TypeFacetPortlet extends MVCPortlet {
 			assetEntriesSearchFacetDisplayBuilder::setParameterValues);
 
 		return assetEntriesSearchFacetDisplayBuilder.build();
+	}
+
+	protected AssetEntriesSearchFacetDisplayBuilder
+		createAssetEntriesSearchFacetDisplayBuilder(
+			RenderRequest renderRequest) {
+
+		try {
+			return new AssetEntriesSearchFacetDisplayBuilder(renderRequest);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
 	}
 
 	protected String getAggregationName(RenderRequest renderRequest) {

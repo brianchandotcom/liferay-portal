@@ -17,12 +17,17 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetTermDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.type.facet.configuration.TypeFacetPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
 
@@ -33,6 +38,10 @@ page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUt
 <portlet:defineObjects />
 
 <%
+AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = (AssetEntriesSearchFacetDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
+
+TypeFacetPortletInstanceConfiguration typeFacetPortletInstanceConfiguration = assetEntriesSearchFacetDisplayContext.getTypeFacetPortletInstanceConfiguration();
+
 TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferencesImpl(java.util.Optional.of(portletPreferences));
 %>
 
@@ -50,22 +59,42 @@ TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<aui:input label="type-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= typeFacetPortletPreferences.getParameterName() %>" />
+			<liferay-frontend:fieldset
+				collapsible="<%= true %>"
+				label="display-settings"
+			>
+				<div class="display-template">
+					<liferay-ddm:template-selector
+						className="<%= AssetEntriesSearchFacetTermDisplayContext.class.getName() %>"
+						displayStyle="<%= typeFacetPortletInstanceConfiguration.displayStyle() %>"
+						displayStyleGroupId="<%= assetEntriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
+						refreshURL="<%= configurationRenderURL %>"
+						showEmptyOption="<%= true %>"
+					/>
+				</div>
+			</liferay-frontend:fieldset>
 
-			<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= typeFacetPortletPreferences.getFrequencyThreshold() %>" />
+			<liferay-frontend:fieldset
+				collapsible="<%= true %>"
+				label="advanced-configuration"
+			>
+				<aui:input label="type-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= typeFacetPortletPreferences.getParameterName() %>" />
 
-			<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= typeFacetPortletPreferences.isFrequenciesVisible() %>" />
+				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= typeFacetPortletPreferences.getFrequencyThreshold() %>" />
 
-			<aui:input name="<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES) %>" type="hidden" value="<%= typeFacetPortletPreferences.getAssetTypesString() %>" />
+				<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= typeFacetPortletPreferences.isFrequenciesVisible() %>" />
 
-			<liferay-ui:input-move-boxes
-				leftBoxName="currentAssetTypes"
-				leftList="<%= typeFacetPortletPreferences.getCurrentAssetTypes(themeDisplay.getCompanyId(), themeDisplay.getLocale()) %>"
-				leftTitle="current"
-				rightBoxName="availableAssetTypes"
-				rightList="<%= typeFacetPortletPreferences.getAvailableAssetTypes(themeDisplay.getCompanyId(), themeDisplay.getLocale()) %>"
-				rightTitle="available"
-			/>
+				<aui:input name="<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES) %>" type="hidden" value="<%= typeFacetPortletPreferences.getAssetTypesString() %>" />
+
+				<liferay-ui:input-move-boxes
+					leftBoxName="currentAssetTypes"
+					leftList="<%= typeFacetPortletPreferences.getCurrentAssetTypes(themeDisplay.getCompanyId(), themeDisplay.getLocale()) %>"
+					leftTitle="current"
+					rightBoxName="availableAssetTypes"
+					rightList="<%= typeFacetPortletPreferences.getAvailableAssetTypes(themeDisplay.getCompanyId(), themeDisplay.getLocale()) %>"
+					rightTitle="available"
+				/>
+			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

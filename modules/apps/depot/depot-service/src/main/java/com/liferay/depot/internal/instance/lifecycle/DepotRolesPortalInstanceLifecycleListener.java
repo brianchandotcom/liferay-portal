@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -56,8 +57,12 @@ public class DepotRolesPortalInstanceLifecycleListener
 		throws PortalException {
 
 		for (String name : _DEPOT_ROLE_NAMES) {
-			_getOrCreateRole(
+			Role role = _getOrCreateRole(
 				company.getCompanyId(), name, _getDescriptionMap(name));
+
+			_resourceLocalService.addResources(
+				company.getCompanyId(), 0, 0, Role.class.getName(),
+				role.getRoleId(), false, false, false);
 		}
 	}
 
@@ -151,6 +156,9 @@ public class DepotRolesPortalInstanceLifecycleListener
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.depot.service)")
 	private ResourceBundleLoader _resourceBundleLoader;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

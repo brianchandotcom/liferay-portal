@@ -12,7 +12,7 @@
  * details.
  */
 
-import {setIn} from '../../utils/utils.es';
+import {setIn} from '../../../utils/utils.es';
 import {DROP_TARGET_ITEM_TYPES} from './LayoutDragDrop.es';
 import {
 	getColumnActiveItem,

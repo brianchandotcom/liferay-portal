@@ -20,7 +20,7 @@ import {Config} from 'metal-state';
 import './LayoutBreadcrumbs.es';
 
 import './LayoutColumn.es';
-import {setIn} from '../utils/utils.es';
+import {setIn} from '../../utils/utils.es';
 import templates from './Layout.soy';
 import {
 	DROP_TARGET_BORDERS,

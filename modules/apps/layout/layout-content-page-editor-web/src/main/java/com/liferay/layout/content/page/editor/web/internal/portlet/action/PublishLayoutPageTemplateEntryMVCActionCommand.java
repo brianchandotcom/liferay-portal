@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -73,14 +72,13 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long draftPlid = ParamUtil.getLong(actionRequest, "classPK");
-
-		Layout draftLayout = _layoutLocalService.getLayout(draftPlid);
-
-		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Layout draftLayout = _layoutLocalService.getLayout(
+			themeDisplay.getPlid());
+
+		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
 
 		LayoutPermissionUtil.check(
 			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);

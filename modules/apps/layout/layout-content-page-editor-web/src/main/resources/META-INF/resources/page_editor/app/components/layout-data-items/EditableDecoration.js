@@ -169,14 +169,14 @@ export default function EditableDecoration({
 
 		const parent = parentRef.current;
 
-		if (parent) {
+		if (parent && isActive(parentItemId)) {
 			parent.addEventListener('click', onClick);
 			parent.addEventListener('mouseover', onMouseOver);
 			parent.addEventListener('mouseout', onMouseOut);
 		}
 
 		return () => {
-			if (parent) {
+			if (parent && isActive(parentItemId)) {
 				parent.removeEventListener('click', onClick);
 				parent.removeEventListener('mouseover', onMouseOver);
 				parent.removeEventListener('mouseout', onMouseOut);
@@ -190,7 +190,8 @@ export default function EditableDecoration({
 		isActive,
 		onEditableDoubleClick,
 		parentRef,
-		selectItem
+		selectItem,
+		parentItemId
 	]);
 
 	useLayoutEffect(() => {

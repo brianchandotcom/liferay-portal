@@ -60,7 +60,7 @@ const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
 
 function augmentPanelData(pluginsRootPath, sidebarPanels) {
 	return sidebarPanels.map(panel => {
-		if (isSeparator(panel)) {
+		if (isSeparator(panel) || panel.isLink) {
 			return panel;
 		}
 

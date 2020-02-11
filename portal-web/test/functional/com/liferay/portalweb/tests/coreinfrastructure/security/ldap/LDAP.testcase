@@ -128,13 +128,19 @@ definition {
 			userGender = "Female",
 			userName = "ldapusergivenname ldapusersn");
 
+		Navigator.gotoBack();
+
 		User.editUserJobTitleCP(
 			userJobTitle = "QA",
 			userName = "ldapusergivenname ldapusersn");
 
+		Navigator.gotoBack();
+
 		User.editUserSuffixCP(
 			userName = "ldapusergivenname ldapusersn",
 			userSuffix = "Phd");
+
+		Navigator.gotoBack();
 
 		User.editPasswordCP(
 			userEmailAddress = "ldapuseremail@liferay.com",

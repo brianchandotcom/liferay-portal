@@ -20,7 +20,6 @@ import React, {
 	useContext,
 	useEffect,
 	useLayoutEffect,
-	useMemo,
 	useState
 } from 'react';
 
@@ -102,12 +101,12 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		return values;
 	});
 
-	const showEditableDecoration = useMemo(
-		() =>
+	const showEditableDecoration = useCallback(
+		editableValue =>
 			canUpdateLayoutContent
 				? [itemId, ...editablesIds.map(getEditableUniqueId)].some(
 						isActive
-				  )
+				  ) || editableIsMapped(editableValue)
 				: true,
 		[
 			canUpdateLayoutContent,
@@ -361,21 +360,23 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 					);
 				})}
 
-			{showEditableDecoration &&
-				editablesIds.map(editableId => (
-					<EditableDecoration
-						editableId={editableId}
-						fragmentEntryLinkId={fragmentEntryLinkId}
-						itemId={getEditableUniqueId(editableId)}
-						key={editableId}
-						onEditableDoubleClick={initProcessor}
-						parentItemId={itemId}
-						parentRef={ref}
-						siblingsItemIds={editablesIds.map(siblingId =>
-							getEditableUniqueId(siblingId)
-						)}
-					/>
-				))}
+			{editablesIds.map(
+				editableId =>
+					showEditableDecoration(editableValues[editableId]) && (
+						<EditableDecoration
+							editableId={editableId}
+							fragmentEntryLinkId={fragmentEntryLinkId}
+							itemId={getEditableUniqueId(editableId)}
+							key={editableId}
+							onEditableDoubleClick={initProcessor}
+							parentItemId={itemId}
+							parentRef={ref}
+							siblingsItemIds={editablesIds.map(siblingId =>
+								getEditableUniqueId(siblingId)
+							)}
+						/>
+					)
+			)}
 		</>
 	);
 }
@@ -387,6 +388,9 @@ const editableIsMappedToInfoItem = editableValue =>
 	editableValue.classNameId &&
 	editableValue.classPK &&
 	editableValue.fieldId;
+
+const editableIsMapped = editableValue =>
+	editableIsMappedToInfoItem(editableValue) || editableValue.mappedField;
 
 const getFloatingToolbarButtons = (editableType, editableValue) => {
 	const showLinkButton =

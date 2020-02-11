@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +49,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 	protected void deleteGroupControlPanelLayouts() throws PortalException {
 		for (Long groupControlPanelLayoutPlid :
-			_groupControlPanelPlids.values()) {
+				_groupControlPanelPlids.values()) {
 
 			_layoutLocalService.deleteLayout(groupControlPanelLayoutPlid);
 		}
@@ -69,9 +70,9 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 	protected void upgradePortletPreferences() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-			"select classPK, companyId, groupId, namespace from " +
-			"FragmentEntryLink;");
-			 ResultSet rs = ps.executeQuery()) {
+				"select classPK, companyId, groupId, namespace from " +
+					"FragmentEntryLink;");
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long classPK = rs.getLong("classPK");
@@ -104,7 +105,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		sb.append("';");
 
 		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			 ResultSet rs = ps.executeQuery()) {
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String groupKey = rs.getString("groupKey");
@@ -131,7 +132,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 	}
 
 	private List<PortletPreferences> _getPortletPreferencesList(
-		long companyId, long groupId, String namespace)
+			long companyId, long groupId, String namespace)
 		throws Exception {
 
 		List<PortletPreferences> portletPreferencesList = new ArrayList<>();
@@ -152,7 +153,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		sb.append(");");
 
 		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			 ResultSet rs = ps.executeQuery()) {
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long portletPreferencesId = rs.getLong("portletPreferencesId");

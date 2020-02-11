@@ -122,15 +122,13 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 				editableConfig,
 				editingItemElement.getAttribute('type')
 			);
-
-			selectEditingItemId(null);
 		}
 	}, [
 		activeItemId,
+		destroyProcessor,
 		editingItemId,
 		fragmentEntryLinkId,
 		ref,
-		selectEditingItemId,
 		state
 	]);
 
@@ -278,11 +276,16 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		}
 	};
 
-	const destroyProcessor = (element, editableConfig, editableType) => {
-		const processor = Processors[editableType] || Processors.fallback;
+	const destroyProcessor = useCallback(
+		(element, editableConfig, editableType) => {
+			const processor = Processors[editableType] || Processors.fallback;
 
-		processor.destroyEditor(element, editableConfig);
-	};
+			processor.destroyEditor(element, editableConfig);
+
+			selectEditingItemId(null);
+		},
+		[selectEditingItemId]
+	);
 
 	const onFloatingToolbarButtonClick = (buttonId, itemRef) => {
 		if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {

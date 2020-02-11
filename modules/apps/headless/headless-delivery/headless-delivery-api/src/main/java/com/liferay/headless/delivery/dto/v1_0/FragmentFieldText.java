@@ -41,10 +41,39 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentContentFieldText")
+@GraphQLName("FragmentFieldText")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentContentFieldText")
-public class FragmentContentFieldText {
+@XmlRootElement(name = "FragmentFieldText")
+public class FragmentFieldText {
+
+	@Schema
+	@Valid
+	public FragmentLink getFragmentLink() {
+		return fragmentLink;
+	}
+
+	public void setFragmentLink(FragmentLink fragmentLink) {
+		this.fragmentLink = fragmentLink;
+	}
+
+	@JsonIgnore
+	public void setFragmentLink(
+		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
+
+		try {
+			fragmentLink = fragmentLinkUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FragmentLink fragmentLink;
 
 	@Schema
 	@Valid
@@ -79,14 +108,13 @@ public class FragmentContentFieldText {
 			return true;
 		}
 
-		if (!(object instanceof FragmentContentFieldText)) {
+		if (!(object instanceof FragmentFieldText)) {
 			return false;
 		}
 
-		FragmentContentFieldText fragmentContentFieldText =
-			(FragmentContentFieldText)object;
+		FragmentFieldText fragmentFieldText = (FragmentFieldText)object;
 
-		return Objects.equals(toString(), fragmentContentFieldText.toString());
+		return Objects.equals(toString(), fragmentFieldText.toString());
 	}
 
 	@Override
@@ -100,6 +128,16 @@ public class FragmentContentFieldText {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (fragmentLink != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentLink\": ");
+
+			sb.append(String.valueOf(fragmentLink));
+		}
 
 		if (text != null) {
 			if (sb.length() > 1) {
@@ -121,7 +159,7 @@ public class FragmentContentFieldText {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentContentFieldText",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentFieldText",
 		name = "x-class-name"
 	)
 	public String xClassName;

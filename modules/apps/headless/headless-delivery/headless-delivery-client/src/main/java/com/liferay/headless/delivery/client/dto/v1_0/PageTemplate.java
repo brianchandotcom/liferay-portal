@@ -194,6 +194,68 @@ public class PageTemplate {
 
 	protected PageDefinition pageDefinition;
 
+	public TaxonomyCategory[] getTaxonomyCategories() {
+		return taxonomyCategories;
+	}
+
+	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
+		this.taxonomyCategories = taxonomyCategories;
+	}
+
+	public void setTaxonomyCategories(
+		UnsafeSupplier<TaxonomyCategory[], Exception>
+			taxonomyCategoriesUnsafeSupplier) {
+
+		try {
+			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected TaxonomyCategory[] taxonomyCategories;
+
+	public Long[] getTaxonomyCategoryIds() {
+		return taxonomyCategoryIds;
+	}
+
+	public void setTaxonomyCategoryIds(Long[] taxonomyCategoryIds) {
+		this.taxonomyCategoryIds = taxonomyCategoryIds;
+	}
+
+	public void setTaxonomyCategoryIds(
+		UnsafeSupplier<Long[], Exception> taxonomyCategoryIdsUnsafeSupplier) {
+
+		try {
+			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long[] taxonomyCategoryIds;
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public void setUuid(UnsafeSupplier<String, Exception> uuidUnsafeSupplier) {
+		try {
+			uuid = uuidUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String uuid;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

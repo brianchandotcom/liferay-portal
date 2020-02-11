@@ -41,27 +41,25 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageDefinition")
+@GraphQLName("FragmentFieldHTML")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageDefinition")
-public class PageDefinition {
+@XmlRootElement(name = "FragmentFieldHTML")
+public class FragmentFieldHTML {
 
 	@Schema
 	@Valid
-	public PageElement getPageElement() {
-		return pageElement;
+	public Object getHtml() {
+		return html;
 	}
 
-	public void setPageElement(PageElement pageElement) {
-		this.pageElement = pageElement;
+	public void setHtml(Object html) {
+		this.html = html;
 	}
 
 	@JsonIgnore
-	public void setPageElement(
-		UnsafeSupplier<PageElement, Exception> pageElementUnsafeSupplier) {
-
+	public void setHtml(UnsafeSupplier<Object, Exception> htmlUnsafeSupplier) {
 		try {
-			pageElement = pageElementUnsafeSupplier.get();
+			html = htmlUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,36 +71,7 @@ public class PageDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PageElement pageElement;
-
-	@Schema
-	@Valid
-	public Settings getSettings() {
-		return settings;
-	}
-
-	public void setSettings(Settings settings) {
-		this.settings = settings;
-	}
-
-	@JsonIgnore
-	public void setSettings(
-		UnsafeSupplier<Settings, Exception> settingsUnsafeSupplier) {
-
-		try {
-			settings = settingsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Settings settings;
+	protected Object html;
 
 	@Override
 	public boolean equals(Object object) {
@@ -110,13 +79,13 @@ public class PageDefinition {
 			return true;
 		}
 
-		if (!(object instanceof PageDefinition)) {
+		if (!(object instanceof FragmentFieldHTML)) {
 			return false;
 		}
 
-		PageDefinition pageDefinition = (PageDefinition)object;
+		FragmentFieldHTML fragmentFieldHTML = (FragmentFieldHTML)object;
 
-		return Objects.equals(toString(), pageDefinition.toString());
+		return Objects.equals(toString(), fragmentFieldHTML.toString());
 	}
 
 	@Override
@@ -131,24 +100,18 @@ public class PageDefinition {
 
 		sb.append("{");
 
-		if (pageElement != null) {
+		if (html != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"pageElement\": ");
+			sb.append("\"html\": ");
 
-			sb.append(String.valueOf(pageElement));
-		}
+			sb.append("\"");
 
-		if (settings != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
+			sb.append(_escape(html));
 
-			sb.append("\"settings\": ");
-
-			sb.append(String.valueOf(settings));
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -157,7 +120,7 @@ public class PageDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentFieldHTML",
 		name = "x-class-name"
 	)
 	public String xClassName;

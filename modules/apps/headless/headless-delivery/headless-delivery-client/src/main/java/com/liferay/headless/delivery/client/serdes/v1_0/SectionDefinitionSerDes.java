@@ -79,48 +79,14 @@ public class SectionDefinitionSerDes {
 			sb.append(String.valueOf(sectionDefinition.getBackgroundImage()));
 		}
 
-		if (sectionDefinition.getContainerType() != null) {
+		if (sectionDefinition.getLayout() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"containerType\": ");
+			sb.append("\"layout\": ");
 
-			sb.append("\"");
-
-			sb.append(sectionDefinition.getContainerType());
-
-			sb.append("\"");
-		}
-
-		if (sectionDefinition.getPaddingBottom() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"paddingBottom\": ");
-
-			sb.append(sectionDefinition.getPaddingBottom());
-		}
-
-		if (sectionDefinition.getPaddingHorizontal() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"paddingHorizontal\": ");
-
-			sb.append(sectionDefinition.getPaddingHorizontal());
-		}
-
-		if (sectionDefinition.getPaddingTop() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"paddingTop\": ");
-
-			sb.append(sectionDefinition.getPaddingTop());
+			sb.append(String.valueOf(sectionDefinition.getLayout()));
 		}
 
 		sb.append("}");
@@ -162,40 +128,11 @@ public class SectionDefinitionSerDes {
 				String.valueOf(sectionDefinition.getBackgroundImage()));
 		}
 
-		if (sectionDefinition.getContainerType() == null) {
-			map.put("containerType", null);
+		if (sectionDefinition.getLayout() == null) {
+			map.put("layout", null);
 		}
 		else {
-			map.put(
-				"containerType",
-				String.valueOf(sectionDefinition.getContainerType()));
-		}
-
-		if (sectionDefinition.getPaddingBottom() == null) {
-			map.put("paddingBottom", null);
-		}
-		else {
-			map.put(
-				"paddingBottom",
-				String.valueOf(sectionDefinition.getPaddingBottom()));
-		}
-
-		if (sectionDefinition.getPaddingHorizontal() == null) {
-			map.put("paddingHorizontal", null);
-		}
-		else {
-			map.put(
-				"paddingHorizontal",
-				String.valueOf(sectionDefinition.getPaddingHorizontal()));
-		}
-
-		if (sectionDefinition.getPaddingTop() == null) {
-			map.put("paddingTop", null);
-		}
-		else {
-			map.put(
-				"paddingTop",
-				String.valueOf(sectionDefinition.getPaddingTop()));
+			map.put("layout", String.valueOf(sectionDefinition.getLayout()));
 		}
 
 		return map;
@@ -234,29 +171,10 @@ public class SectionDefinitionSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "containerType")) {
+			else if (Objects.equals(jsonParserFieldName, "layout")) {
 				if (jsonParserFieldValue != null) {
-					sectionDefinition.setContainerType(
-						SectionDefinition.ContainerType.create(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "paddingBottom")) {
-				if (jsonParserFieldValue != null) {
-					sectionDefinition.setPaddingBottom(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "paddingHorizontal")) {
-				if (jsonParserFieldValue != null) {
-					sectionDefinition.setPaddingHorizontal(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "paddingTop")) {
-				if (jsonParserFieldValue != null) {
-					sectionDefinition.setPaddingTop(
-						Integer.valueOf((String)jsonParserFieldValue));
+					sectionDefinition.setLayout(
+						LayoutSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

@@ -47,21 +47,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Settings {
 
 	@Schema
-	@Valid
-	public LookAndFeel getLookAndFeel() {
-		return lookAndFeel;
+	public String getColorSchemeName() {
+		return colorSchemeName;
 	}
 
-	public void setLookAndFeel(LookAndFeel lookAndFeel) {
-		this.lookAndFeel = lookAndFeel;
+	public void setColorSchemeName(String colorSchemeName) {
+		this.colorSchemeName = colorSchemeName;
 	}
 
 	@JsonIgnore
-	public void setLookAndFeel(
-		UnsafeSupplier<LookAndFeel, Exception> lookAndFeelUnsafeSupplier) {
+	public void setColorSchemeName(
+		UnsafeSupplier<String, Exception> colorSchemeNameUnsafeSupplier) {
 
 		try {
-			lookAndFeel = lookAndFeelUnsafeSupplier.get();
+			colorSchemeName = colorSchemeNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,7 +72,61 @@ public class Settings {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LookAndFeel lookAndFeel;
+	protected String colorSchemeName;
+
+	@Schema
+	public String getCss() {
+		return css;
+	}
+
+	public void setCss(String css) {
+		this.css = css;
+	}
+
+	@JsonIgnore
+	public void setCss(UnsafeSupplier<String, Exception> cssUnsafeSupplier) {
+		try {
+			css = cssUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String css;
+
+	@Schema
+	public String getJavascript() {
+		return javascript;
+	}
+
+	public void setJavascript(String javascript) {
+		this.javascript = javascript;
+	}
+
+	@JsonIgnore
+	public void setJavascript(
+		UnsafeSupplier<String, Exception> javascriptUnsafeSupplier) {
+
+		try {
+			javascript = javascriptUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String javascript;
 
 	@Schema
 	@Valid
@@ -104,6 +157,63 @@ public class Settings {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MasterPage masterPage;
 
+	@Schema
+	public String getThemeName() {
+		return themeName;
+	}
+
+	public void setThemeName(String themeName) {
+		this.themeName = themeName;
+	}
+
+	@JsonIgnore
+	public void setThemeName(
+		UnsafeSupplier<String, Exception> themeNameUnsafeSupplier) {
+
+		try {
+			themeName = themeNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String themeName;
+
+	@Schema
+	@Valid
+	public Object getThemeSettings() {
+		return themeSettings;
+	}
+
+	public void setThemeSettings(Object themeSettings) {
+		this.themeSettings = themeSettings;
+	}
+
+	@JsonIgnore
+	public void setThemeSettings(
+		UnsafeSupplier<Object, Exception> themeSettingsUnsafeSupplier) {
+
+		try {
+			themeSettings = themeSettingsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Object themeSettings;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -131,14 +241,46 @@ public class Settings {
 
 		sb.append("{");
 
-		if (lookAndFeel != null) {
+		if (colorSchemeName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"lookAndFeel\": ");
+			sb.append("\"colorSchemeName\": ");
 
-			sb.append(String.valueOf(lookAndFeel));
+			sb.append("\"");
+
+			sb.append(_escape(colorSchemeName));
+
+			sb.append("\"");
+		}
+
+		if (css != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"css\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(css));
+
+			sb.append("\"");
+		}
+
+		if (javascript != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"javascript\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(javascript));
+
+			sb.append("\"");
 		}
 
 		if (masterPage != null) {
@@ -149,6 +291,34 @@ public class Settings {
 			sb.append("\"masterPage\": ");
 
 			sb.append(String.valueOf(masterPage));
+		}
+
+		if (themeName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"themeName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(themeName));
+
+			sb.append("\"");
+		}
+
+		if (themeSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"themeSettings\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(themeSettings));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

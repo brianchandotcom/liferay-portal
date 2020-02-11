@@ -14,8 +14,8 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.FragmentContentField;
-import com.liferay.headless.delivery.client.dto.v1_0.FragmentDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentField;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentInstanceDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -32,24 +32,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentDefinitionSerDes {
+public class FragmentInstanceDefinitionSerDes {
 
-	public static FragmentDefinition toDTO(String json) {
-		FragmentDefinitionJSONParser fragmentDefinitionJSONParser =
-			new FragmentDefinitionJSONParser();
+	public static FragmentInstanceDefinition toDTO(String json) {
+		FragmentInstanceDefinitionJSONParser
+			fragmentInstanceDefinitionJSONParser =
+				new FragmentInstanceDefinitionJSONParser();
 
-		return fragmentDefinitionJSONParser.parseToDTO(json);
+		return fragmentInstanceDefinitionJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentDefinition[] toDTOs(String json) {
-		FragmentDefinitionJSONParser fragmentDefinitionJSONParser =
-			new FragmentDefinitionJSONParser();
+	public static FragmentInstanceDefinition[] toDTOs(String json) {
+		FragmentInstanceDefinitionJSONParser
+			fragmentInstanceDefinitionJSONParser =
+				new FragmentInstanceDefinitionJSONParser();
 
-		return fragmentDefinitionJSONParser.parseToDTOs(json);
+		return fragmentInstanceDefinitionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FragmentDefinition fragmentDefinition) {
-		if (fragmentDefinition == null) {
+	public static String toJSON(
+		FragmentInstanceDefinition fragmentInstanceDefinition) {
+
+		if (fragmentInstanceDefinition == null) {
 			return "null";
 		}
 
@@ -57,49 +61,45 @@ public class FragmentDefinitionSerDes {
 
 		sb.append("{");
 
-		if (fragmentDefinition.getFragmentCollectionName() != null) {
+		if (fragmentInstanceDefinition.getFragment() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentCollectionName\": ");
+			sb.append("\"fragment\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(fragmentDefinition.getFragmentCollectionName()));
-
-			sb.append("\"");
+			sb.append(String.valueOf(fragmentInstanceDefinition.getFragment()));
 		}
 
-		if (fragmentDefinition.getFragmentConfig() != null) {
+		if (fragmentInstanceDefinition.getFragmentConfig() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"fragmentConfig\": ");
 
-			sb.append(_toJSON(fragmentDefinition.getFragmentConfig()));
+			sb.append(_toJSON(fragmentInstanceDefinition.getFragmentConfig()));
 		}
 
-		if (fragmentDefinition.getFragmentContentFields() != null) {
+		if (fragmentInstanceDefinition.getFragmentFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentContentFields\": ");
+			sb.append("\"fragmentFields\": ");
 
 			sb.append("[");
 
 			for (int i = 0;
-				 i < fragmentDefinition.getFragmentContentFields().length;
+				 i < fragmentInstanceDefinition.getFragmentFields().length;
 				 i++) {
 
 				sb.append(
 					String.valueOf(
-						fragmentDefinition.getFragmentContentFields()[i]));
+						fragmentInstanceDefinition.getFragmentFields()[i]));
 
 				if ((i + 1) <
-						fragmentDefinition.getFragmentContentFields().length) {
+						fragmentInstanceDefinition.getFragmentFields().length) {
 
 					sb.append(", ");
 				}
@@ -108,130 +108,99 @@ public class FragmentDefinitionSerDes {
 			sb.append("]");
 		}
 
-		if (fragmentDefinition.getFragmentName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fragmentName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fragmentDefinition.getFragmentName()));
-
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentDefinitionJSONParser fragmentDefinitionJSONParser =
-			new FragmentDefinitionJSONParser();
+		FragmentInstanceDefinitionJSONParser
+			fragmentInstanceDefinitionJSONParser =
+				new FragmentInstanceDefinitionJSONParser();
 
-		return fragmentDefinitionJSONParser.parseToMap(json);
+		return fragmentInstanceDefinitionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		FragmentDefinition fragmentDefinition) {
+		FragmentInstanceDefinition fragmentInstanceDefinition) {
 
-		if (fragmentDefinition == null) {
+		if (fragmentInstanceDefinition == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentDefinition.getFragmentCollectionName() == null) {
-			map.put("fragmentCollectionName", null);
+		if (fragmentInstanceDefinition.getFragment() == null) {
+			map.put("fragment", null);
 		}
 		else {
 			map.put(
-				"fragmentCollectionName",
-				String.valueOf(fragmentDefinition.getFragmentCollectionName()));
+				"fragment",
+				String.valueOf(fragmentInstanceDefinition.getFragment()));
 		}
 
-		if (fragmentDefinition.getFragmentConfig() == null) {
+		if (fragmentInstanceDefinition.getFragmentConfig() == null) {
 			map.put("fragmentConfig", null);
 		}
 		else {
 			map.put(
 				"fragmentConfig",
-				String.valueOf(fragmentDefinition.getFragmentConfig()));
+				String.valueOf(fragmentInstanceDefinition.getFragmentConfig()));
 		}
 
-		if (fragmentDefinition.getFragmentContentFields() == null) {
-			map.put("fragmentContentFields", null);
+		if (fragmentInstanceDefinition.getFragmentFields() == null) {
+			map.put("fragmentFields", null);
 		}
 		else {
 			map.put(
-				"fragmentContentFields",
-				String.valueOf(fragmentDefinition.getFragmentContentFields()));
-		}
-
-		if (fragmentDefinition.getFragmentName() == null) {
-			map.put("fragmentName", null);
-		}
-		else {
-			map.put(
-				"fragmentName",
-				String.valueOf(fragmentDefinition.getFragmentName()));
+				"fragmentFields",
+				String.valueOf(fragmentInstanceDefinition.getFragmentFields()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentDefinitionJSONParser
-		extends BaseJSONParser<FragmentDefinition> {
+	public static class FragmentInstanceDefinitionJSONParser
+		extends BaseJSONParser<FragmentInstanceDefinition> {
 
 		@Override
-		protected FragmentDefinition createDTO() {
-			return new FragmentDefinition();
+		protected FragmentInstanceDefinition createDTO() {
+			return new FragmentInstanceDefinition();
 		}
 
 		@Override
-		protected FragmentDefinition[] createDTOArray(int size) {
-			return new FragmentDefinition[size];
+		protected FragmentInstanceDefinition[] createDTOArray(int size) {
+			return new FragmentInstanceDefinition[size];
 		}
 
 		@Override
 		protected void setField(
-			FragmentDefinition fragmentDefinition, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			FragmentInstanceDefinition fragmentInstanceDefinition,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fragmentCollectionName")) {
+			if (Objects.equals(jsonParserFieldName, "fragment")) {
 				if (jsonParserFieldValue != null) {
-					fragmentDefinition.setFragmentCollectionName(
-						(String)jsonParserFieldValue);
+					fragmentInstanceDefinition.setFragment(
+						FragmentSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentConfig")) {
 				if (jsonParserFieldValue != null) {
-					fragmentDefinition.setFragmentConfig(
-						(Map)FragmentDefinitionSerDes.toMap(
+					fragmentInstanceDefinition.setFragmentConfig(
+						(Map)FragmentInstanceDefinitionSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "fragmentContentFields")) {
-
+			else if (Objects.equals(jsonParserFieldName, "fragmentFields")) {
 				if (jsonParserFieldValue != null) {
-					fragmentDefinition.setFragmentContentFields(
+					fragmentInstanceDefinition.setFragmentFields(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> FragmentContentFieldSerDes.toDTO(
-								(String)object)
+							object -> FragmentFieldSerDes.toDTO((String)object)
 						).toArray(
-							size -> new FragmentContentField[size]
+							size -> new FragmentField[size]
 						));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fragmentName")) {
-				if (jsonParserFieldValue != null) {
-					fragmentDefinition.setFragmentName(
-						(String)jsonParserFieldValue);
 				}
 			}
 			else {

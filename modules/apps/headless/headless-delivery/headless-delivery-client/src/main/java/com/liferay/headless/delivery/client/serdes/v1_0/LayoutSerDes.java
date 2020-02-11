@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.Layout;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageDefinitionSerDes {
+public class LayoutSerDes {
 
-	public static PageDefinition toDTO(String json) {
-		PageDefinitionJSONParser pageDefinitionJSONParser =
-			new PageDefinitionJSONParser();
+	public static Layout toDTO(String json) {
+		LayoutJSONParser layoutJSONParser = new LayoutJSONParser();
 
-		return pageDefinitionJSONParser.parseToDTO(json);
+		return layoutJSONParser.parseToDTO(json);
 	}
 
-	public static PageDefinition[] toDTOs(String json) {
-		PageDefinitionJSONParser pageDefinitionJSONParser =
-			new PageDefinitionJSONParser();
+	public static Layout[] toDTOs(String json) {
+		LayoutJSONParser layoutJSONParser = new LayoutJSONParser();
 
-		return pageDefinitionJSONParser.parseToDTOs(json);
+		return layoutJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(PageDefinition pageDefinition) {
-		if (pageDefinition == null) {
+	public static String toJSON(Layout layout) {
+		if (layout == null) {
 			return "null";
 		}
 
@@ -55,24 +53,48 @@ public class PageDefinitionSerDes {
 
 		sb.append("{");
 
-		if (pageDefinition.getPageElement() != null) {
+		if (layout.getContainerType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"pageElement\": ");
+			sb.append("\"containerType\": ");
 
-			sb.append(String.valueOf(pageDefinition.getPageElement()));
+			sb.append("\"");
+
+			sb.append(layout.getContainerType());
+
+			sb.append("\"");
 		}
 
-		if (pageDefinition.getSettings() != null) {
+		if (layout.getPaddingBottom() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"settings\": ");
+			sb.append("\"paddingBottom\": ");
 
-			sb.append(String.valueOf(pageDefinition.getSettings()));
+			sb.append(layout.getPaddingBottom());
+		}
+
+		if (layout.getPaddingHorizontal() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paddingHorizontal\": ");
+
+			sb.append(layout.getPaddingHorizontal());
+		}
+
+		if (layout.getPaddingTop() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paddingTop\": ");
+
+			sb.append(layout.getPaddingTop());
 		}
 
 		sb.append("}");
@@ -81,65 +103,91 @@ public class PageDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		PageDefinitionJSONParser pageDefinitionJSONParser =
-			new PageDefinitionJSONParser();
+		LayoutJSONParser layoutJSONParser = new LayoutJSONParser();
 
-		return pageDefinitionJSONParser.parseToMap(json);
+		return layoutJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(PageDefinition pageDefinition) {
-		if (pageDefinition == null) {
+	public static Map<String, String> toMap(Layout layout) {
+		if (layout == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageDefinition.getPageElement() == null) {
-			map.put("pageElement", null);
+		if (layout.getContainerType() == null) {
+			map.put("containerType", null);
+		}
+		else {
+			map.put("containerType", String.valueOf(layout.getContainerType()));
+		}
+
+		if (layout.getPaddingBottom() == null) {
+			map.put("paddingBottom", null);
+		}
+		else {
+			map.put("paddingBottom", String.valueOf(layout.getPaddingBottom()));
+		}
+
+		if (layout.getPaddingHorizontal() == null) {
+			map.put("paddingHorizontal", null);
 		}
 		else {
 			map.put(
-				"pageElement", String.valueOf(pageDefinition.getPageElement()));
+				"paddingHorizontal",
+				String.valueOf(layout.getPaddingHorizontal()));
 		}
 
-		if (pageDefinition.getSettings() == null) {
-			map.put("settings", null);
+		if (layout.getPaddingTop() == null) {
+			map.put("paddingTop", null);
 		}
 		else {
-			map.put("settings", String.valueOf(pageDefinition.getSettings()));
+			map.put("paddingTop", String.valueOf(layout.getPaddingTop()));
 		}
 
 		return map;
 	}
 
-	public static class PageDefinitionJSONParser
-		extends BaseJSONParser<PageDefinition> {
+	public static class LayoutJSONParser extends BaseJSONParser<Layout> {
 
 		@Override
-		protected PageDefinition createDTO() {
-			return new PageDefinition();
+		protected Layout createDTO() {
+			return new Layout();
 		}
 
 		@Override
-		protected PageDefinition[] createDTOArray(int size) {
-			return new PageDefinition[size];
+		protected Layout[] createDTOArray(int size) {
+			return new Layout[size];
 		}
 
 		@Override
 		protected void setField(
-			PageDefinition pageDefinition, String jsonParserFieldName,
+			Layout layout, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "pageElement")) {
+			if (Objects.equals(jsonParserFieldName, "containerType")) {
 				if (jsonParserFieldValue != null) {
-					pageDefinition.setPageElement(
-						PageElementSerDes.toDTO((String)jsonParserFieldValue));
+					layout.setContainerType(
+						Layout.ContainerType.create(
+							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "settings")) {
+			else if (Objects.equals(jsonParserFieldName, "paddingBottom")) {
 				if (jsonParserFieldValue != null) {
-					pageDefinition.setSettings(
-						SettingsSerDes.toDTO((String)jsonParserFieldValue));
+					layout.setPaddingBottom(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "paddingHorizontal")) {
+				if (jsonParserFieldValue != null) {
+					layout.setPaddingHorizontal(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "paddingTop")) {
+				if (jsonParserFieldValue != null) {
+					layout.setPaddingTop(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

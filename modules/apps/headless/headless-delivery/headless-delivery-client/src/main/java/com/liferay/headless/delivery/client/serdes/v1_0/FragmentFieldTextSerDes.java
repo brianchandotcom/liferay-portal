@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageDefinitionSerDes {
+public class FragmentFieldTextSerDes {
 
-	public static PageDefinition toDTO(String json) {
-		PageDefinitionJSONParser pageDefinitionJSONParser =
-			new PageDefinitionJSONParser();
+	public static FragmentFieldText toDTO(String json) {
+		FragmentFieldTextJSONParser fragmentFieldTextJSONParser =
+			new FragmentFieldTextJSONParser();
 
-		return pageDefinitionJSONParser.parseToDTO(json);
+		return fragmentFieldTextJSONParser.parseToDTO(json);
 	}
 
-	public static PageDefinition[] toDTOs(String json) {
-		PageDefinitionJSONParser pageDefinitionJSONParser =
-			new PageDefinitionJSONParser();
+	public static FragmentFieldText[] toDTOs(String json) {
+		FragmentFieldTextJSONParser fragmentFieldTextJSONParser =
+			new FragmentFieldTextJSONParser();
 
-		return pageDefinitionJSONParser.parseToDTOs(json);
+		return fragmentFieldTextJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(PageDefinition pageDefinition) {
-		if (pageDefinition == null) {
+	public static String toJSON(FragmentFieldText fragmentFieldText) {
+		if (fragmentFieldText == null) {
 			return "null";
 		}
 
@@ -55,24 +55,28 @@ public class PageDefinitionSerDes {
 
 		sb.append("{");
 
-		if (pageDefinition.getPageElement() != null) {
+		if (fragmentFieldText.getFragmentLink() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"pageElement\": ");
+			sb.append("\"fragmentLink\": ");
 
-			sb.append(String.valueOf(pageDefinition.getPageElement()));
+			sb.append(String.valueOf(fragmentFieldText.getFragmentLink()));
 		}
 
-		if (pageDefinition.getSettings() != null) {
+		if (fragmentFieldText.getText() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"settings\": ");
+			sb.append("\"text\": ");
 
-			sb.append(String.valueOf(pageDefinition.getSettings()));
+			sb.append("\"");
+
+			sb.append(_escape(fragmentFieldText.getText()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -81,65 +85,67 @@ public class PageDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		PageDefinitionJSONParser pageDefinitionJSONParser =
-			new PageDefinitionJSONParser();
+		FragmentFieldTextJSONParser fragmentFieldTextJSONParser =
+			new FragmentFieldTextJSONParser();
 
-		return pageDefinitionJSONParser.parseToMap(json);
+		return fragmentFieldTextJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(PageDefinition pageDefinition) {
-		if (pageDefinition == null) {
+	public static Map<String, String> toMap(
+		FragmentFieldText fragmentFieldText) {
+
+		if (fragmentFieldText == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageDefinition.getPageElement() == null) {
-			map.put("pageElement", null);
+		if (fragmentFieldText.getFragmentLink() == null) {
+			map.put("fragmentLink", null);
 		}
 		else {
 			map.put(
-				"pageElement", String.valueOf(pageDefinition.getPageElement()));
+				"fragmentLink",
+				String.valueOf(fragmentFieldText.getFragmentLink()));
 		}
 
-		if (pageDefinition.getSettings() == null) {
-			map.put("settings", null);
+		if (fragmentFieldText.getText() == null) {
+			map.put("text", null);
 		}
 		else {
-			map.put("settings", String.valueOf(pageDefinition.getSettings()));
+			map.put("text", String.valueOf(fragmentFieldText.getText()));
 		}
 
 		return map;
 	}
 
-	public static class PageDefinitionJSONParser
-		extends BaseJSONParser<PageDefinition> {
+	public static class FragmentFieldTextJSONParser
+		extends BaseJSONParser<FragmentFieldText> {
 
 		@Override
-		protected PageDefinition createDTO() {
-			return new PageDefinition();
+		protected FragmentFieldText createDTO() {
+			return new FragmentFieldText();
 		}
 
 		@Override
-		protected PageDefinition[] createDTOArray(int size) {
-			return new PageDefinition[size];
+		protected FragmentFieldText[] createDTOArray(int size) {
+			return new FragmentFieldText[size];
 		}
 
 		@Override
 		protected void setField(
-			PageDefinition pageDefinition, String jsonParserFieldName,
+			FragmentFieldText fragmentFieldText, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "pageElement")) {
+			if (Objects.equals(jsonParserFieldName, "fragmentLink")) {
 				if (jsonParserFieldValue != null) {
-					pageDefinition.setPageElement(
-						PageElementSerDes.toDTO((String)jsonParserFieldValue));
+					fragmentFieldText.setFragmentLink(
+						FragmentLinkSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "settings")) {
+			else if (Objects.equals(jsonParserFieldName, "text")) {
 				if (jsonParserFieldValue != null) {
-					pageDefinition.setSettings(
-						SettingsSerDes.toDTO((String)jsonParserFieldValue));
+					fragmentFieldText.setText((Object)jsonParserFieldValue);
 				}
 			}
 			else {

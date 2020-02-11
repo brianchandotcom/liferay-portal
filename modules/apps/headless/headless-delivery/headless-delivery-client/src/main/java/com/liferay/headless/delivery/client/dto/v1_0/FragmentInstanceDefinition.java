@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.FragmentDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.FragmentInstanceDefinitionSerDes;
 
 import java.util.Map;
 import java.util.Objects;
@@ -27,29 +27,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentDefinition {
+public class FragmentInstanceDefinition {
 
-	public String getFragmentCollectionName() {
-		return fragmentCollectionName;
+	public Fragment getFragment() {
+		return fragment;
 	}
 
-	public void setFragmentCollectionName(String fragmentCollectionName) {
-		this.fragmentCollectionName = fragmentCollectionName;
+	public void setFragment(Fragment fragment) {
+		this.fragment = fragment;
 	}
 
-	public void setFragmentCollectionName(
-		UnsafeSupplier<String, Exception>
-			fragmentCollectionNameUnsafeSupplier) {
+	public void setFragment(
+		UnsafeSupplier<Fragment, Exception> fragmentUnsafeSupplier) {
 
 		try {
-			fragmentCollectionName = fragmentCollectionNameUnsafeSupplier.get();
+			fragment = fragmentUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String fragmentCollectionName;
+	protected Fragment fragment;
 
 	public Map<String, Object> getFragmentConfig() {
 		return fragmentConfig;
@@ -73,50 +72,27 @@ public class FragmentDefinition {
 
 	protected Map<String, Object> fragmentConfig;
 
-	public FragmentContentField[] getFragmentContentFields() {
-		return fragmentContentFields;
+	public FragmentField[] getFragmentFields() {
+		return fragmentFields;
 	}
 
-	public void setFragmentContentFields(
-		FragmentContentField[] fragmentContentFields) {
-
-		this.fragmentContentFields = fragmentContentFields;
+	public void setFragmentFields(FragmentField[] fragmentFields) {
+		this.fragmentFields = fragmentFields;
 	}
 
-	public void setFragmentContentFields(
-		UnsafeSupplier<FragmentContentField[], Exception>
-			fragmentContentFieldsUnsafeSupplier) {
+	public void setFragmentFields(
+		UnsafeSupplier<FragmentField[], Exception>
+			fragmentFieldsUnsafeSupplier) {
 
 		try {
-			fragmentContentFields = fragmentContentFieldsUnsafeSupplier.get();
+			fragmentFields = fragmentFieldsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FragmentContentField[] fragmentContentFields;
-
-	public String getFragmentName() {
-		return fragmentName;
-	}
-
-	public void setFragmentName(String fragmentName) {
-		this.fragmentName = fragmentName;
-	}
-
-	public void setFragmentName(
-		UnsafeSupplier<String, Exception> fragmentNameUnsafeSupplier) {
-
-		try {
-			fragmentName = fragmentNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String fragmentName;
+	protected FragmentField[] fragmentFields;
 
 	@Override
 	public boolean equals(Object object) {
@@ -124,13 +100,15 @@ public class FragmentDefinition {
 			return true;
 		}
 
-		if (!(object instanceof FragmentDefinition)) {
+		if (!(object instanceof FragmentInstanceDefinition)) {
 			return false;
 		}
 
-		FragmentDefinition fragmentDefinition = (FragmentDefinition)object;
+		FragmentInstanceDefinition fragmentInstanceDefinition =
+			(FragmentInstanceDefinition)object;
 
-		return Objects.equals(toString(), fragmentDefinition.toString());
+		return Objects.equals(
+			toString(), fragmentInstanceDefinition.toString());
 	}
 
 	@Override
@@ -141,7 +119,7 @@ public class FragmentDefinition {
 	}
 
 	public String toString() {
-		return FragmentDefinitionSerDes.toJSON(this);
+		return FragmentInstanceDefinitionSerDes.toJSON(this);
 	}
 
 }

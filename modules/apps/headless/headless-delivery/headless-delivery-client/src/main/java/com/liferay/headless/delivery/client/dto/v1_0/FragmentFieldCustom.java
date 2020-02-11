@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.FragmentContentFieldImageSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.FragmentFieldCustomSerDes;
 
 import java.util.Objects;
 
@@ -26,28 +26,45 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentContentFieldImage {
+public class FragmentFieldCustom {
 
-	public FragmentImage getFragmentImage() {
-		return fragmentImage;
+	public String getType() {
+		return type;
 	}
 
-	public void setFragmentImage(FragmentImage fragmentImage) {
-		this.fragmentImage = fragmentImage;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public void setFragmentImage(
-		UnsafeSupplier<FragmentImage, Exception> fragmentImageUnsafeSupplier) {
-
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		try {
-			fragmentImage = fragmentImageUnsafeSupplier.get();
+			type = typeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FragmentImage fragmentImage;
+	protected String type;
+
+	public Value getValue() {
+		return value;
+	}
+
+	public void setValue(Value value) {
+		this.value = value;
+	}
+
+	public void setValue(UnsafeSupplier<Value, Exception> valueUnsafeSupplier) {
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Value value;
 
 	@Override
 	public boolean equals(Object object) {
@@ -55,14 +72,13 @@ public class FragmentContentFieldImage {
 			return true;
 		}
 
-		if (!(object instanceof FragmentContentFieldImage)) {
+		if (!(object instanceof FragmentFieldCustom)) {
 			return false;
 		}
 
-		FragmentContentFieldImage fragmentContentFieldImage =
-			(FragmentContentFieldImage)object;
+		FragmentFieldCustom fragmentFieldCustom = (FragmentFieldCustom)object;
 
-		return Objects.equals(toString(), fragmentContentFieldImage.toString());
+		return Objects.equals(toString(), fragmentFieldCustom.toString());
 	}
 
 	@Override
@@ -73,7 +89,7 @@ public class FragmentContentFieldImage {
 	}
 
 	public String toString() {
-		return FragmentContentFieldImageSerDes.toJSON(this);
+		return FragmentFieldCustomSerDes.toJSON(this);
 	}
 
 }

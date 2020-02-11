@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.FragmentContentFieldTextSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.FragmentFieldHTMLSerDes;
 
 import java.util.Objects;
 
@@ -26,26 +26,26 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentContentFieldText {
+public class FragmentFieldHTML {
 
-	public Object getText() {
-		return text;
+	public Object getHtml() {
+		return html;
 	}
 
-	public void setText(Object text) {
-		this.text = text;
+	public void setHtml(Object html) {
+		this.html = html;
 	}
 
-	public void setText(UnsafeSupplier<Object, Exception> textUnsafeSupplier) {
+	public void setHtml(UnsafeSupplier<Object, Exception> htmlUnsafeSupplier) {
 		try {
-			text = textUnsafeSupplier.get();
+			html = htmlUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object text;
+	protected Object html;
 
 	@Override
 	public boolean equals(Object object) {
@@ -53,14 +53,13 @@ public class FragmentContentFieldText {
 			return true;
 		}
 
-		if (!(object instanceof FragmentContentFieldText)) {
+		if (!(object instanceof FragmentFieldHTML)) {
 			return false;
 		}
 
-		FragmentContentFieldText fragmentContentFieldText =
-			(FragmentContentFieldText)object;
+		FragmentFieldHTML fragmentFieldHTML = (FragmentFieldHTML)object;
 
-		return Objects.equals(toString(), fragmentContentFieldText.toString());
+		return Objects.equals(toString(), fragmentFieldHTML.toString());
 	}
 
 	@Override
@@ -71,7 +70,7 @@ public class FragmentContentFieldText {
 	}
 
 	public String toString() {
-		return FragmentContentFieldTextSerDes.toJSON(this);
+		return FragmentFieldHTMLSerDes.toJSON(this);
 	}
 
 }

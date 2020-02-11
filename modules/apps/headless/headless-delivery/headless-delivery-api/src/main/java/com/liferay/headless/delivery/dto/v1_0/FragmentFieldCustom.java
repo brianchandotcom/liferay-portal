@@ -41,25 +41,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentContentFieldHTML")
+@GraphQLName("FragmentFieldCustom")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentContentFieldHTML")
-public class FragmentContentFieldHTML {
+@XmlRootElement(name = "FragmentFieldCustom")
+public class FragmentFieldCustom {
 
 	@Schema
-	@Valid
-	public Object getHtml() {
-		return html;
+	public String getType() {
+		return type;
 	}
 
-	public void setHtml(Object html) {
-		this.html = html;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@JsonIgnore
-	public void setHtml(UnsafeSupplier<Object, Exception> htmlUnsafeSupplier) {
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		try {
-			html = htmlUnsafeSupplier.get();
+			type = typeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -71,7 +70,34 @@ public class FragmentContentFieldHTML {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object html;
+	protected String type;
+
+	@Schema
+	@Valid
+	public Value getValue() {
+		return value;
+	}
+
+	public void setValue(Value value) {
+		this.value = value;
+	}
+
+	@JsonIgnore
+	public void setValue(UnsafeSupplier<Value, Exception> valueUnsafeSupplier) {
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Value value;
 
 	@Override
 	public boolean equals(Object object) {
@@ -79,14 +105,13 @@ public class FragmentContentFieldHTML {
 			return true;
 		}
 
-		if (!(object instanceof FragmentContentFieldHTML)) {
+		if (!(object instanceof FragmentFieldCustom)) {
 			return false;
 		}
 
-		FragmentContentFieldHTML fragmentContentFieldHTML =
-			(FragmentContentFieldHTML)object;
+		FragmentFieldCustom fragmentFieldCustom = (FragmentFieldCustom)object;
 
-		return Objects.equals(toString(), fragmentContentFieldHTML.toString());
+		return Objects.equals(toString(), fragmentFieldCustom.toString());
 	}
 
 	@Override
@@ -101,18 +126,28 @@ public class FragmentContentFieldHTML {
 
 		sb.append("{");
 
-		if (html != null) {
+		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"html\": ");
+			sb.append("\"type\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(html));
+			sb.append(_escape(type));
 
 			sb.append("\"");
+		}
+
+		if (value != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value\": ");
+
+			sb.append(String.valueOf(value));
 		}
 
 		sb.append("}");
@@ -121,7 +156,7 @@ public class FragmentContentFieldHTML {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentContentFieldHTML",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentFieldCustom",
 		name = "x-class-name"
 	)
 	public String xClassName;

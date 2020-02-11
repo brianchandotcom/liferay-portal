@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.PageDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.FragmentFieldTextSerDes;
 
 import java.util.Objects;
 
@@ -26,49 +26,47 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageDefinition {
+public class FragmentFieldText {
 
-	public PageElement getPageElement() {
-		return pageElement;
+	public FragmentLink getFragmentLink() {
+		return fragmentLink;
 	}
 
-	public void setPageElement(PageElement pageElement) {
-		this.pageElement = pageElement;
+	public void setFragmentLink(FragmentLink fragmentLink) {
+		this.fragmentLink = fragmentLink;
 	}
 
-	public void setPageElement(
-		UnsafeSupplier<PageElement, Exception> pageElementUnsafeSupplier) {
+	public void setFragmentLink(
+		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
 
 		try {
-			pageElement = pageElementUnsafeSupplier.get();
+			fragmentLink = fragmentLinkUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected PageElement pageElement;
+	protected FragmentLink fragmentLink;
 
-	public Settings getSettings() {
-		return settings;
+	public Object getText() {
+		return text;
 	}
 
-	public void setSettings(Settings settings) {
-		this.settings = settings;
+	public void setText(Object text) {
+		this.text = text;
 	}
 
-	public void setSettings(
-		UnsafeSupplier<Settings, Exception> settingsUnsafeSupplier) {
-
+	public void setText(UnsafeSupplier<Object, Exception> textUnsafeSupplier) {
 		try {
-			settings = settingsUnsafeSupplier.get();
+			text = textUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Settings settings;
+	protected Object text;
 
 	@Override
 	public boolean equals(Object object) {
@@ -76,13 +74,13 @@ public class PageDefinition {
 			return true;
 		}
 
-		if (!(object instanceof PageDefinition)) {
+		if (!(object instanceof FragmentFieldText)) {
 			return false;
 		}
 
-		PageDefinition pageDefinition = (PageDefinition)object;
+		FragmentFieldText fragmentFieldText = (FragmentFieldText)object;
 
-		return Objects.equals(toString(), pageDefinition.toString());
+		return Objects.equals(toString(), fragmentFieldText.toString());
 	}
 
 	@Override
@@ -93,7 +91,7 @@ public class PageDefinition {
 	}
 
 	public String toString() {
-		return PageDefinitionSerDes.toJSON(this);
+		return FragmentFieldTextSerDes.toJSON(this);
 	}
 
 }

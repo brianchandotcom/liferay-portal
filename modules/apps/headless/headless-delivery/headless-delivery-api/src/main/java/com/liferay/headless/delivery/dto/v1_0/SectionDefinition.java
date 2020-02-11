@@ -14,11 +14,9 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -47,40 +45,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SectionDefinition")
 public class SectionDefinition {
-
-	@GraphQLName("ContainerType")
-	public static enum ContainerType {
-
-		FIXED("Fixed"), FLUID("Fluid");
-
-		@JsonCreator
-		public static ContainerType create(String value) {
-			for (ContainerType containerType : values()) {
-				if (Objects.equals(containerType.getValue(), value)) {
-					return containerType;
-				}
-			}
-
-			return null;
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private ContainerType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	@Schema
 	public String getBackgroundColorCssClass() {
@@ -144,29 +108,20 @@ public class SectionDefinition {
 
 	@Schema
 	@Valid
-	public ContainerType getContainerType() {
-		return containerType;
+	public Layout getLayout() {
+		return layout;
+	}
+
+	public void setLayout(Layout layout) {
+		this.layout = layout;
 	}
 
 	@JsonIgnore
-	public String getContainerTypeAsString() {
-		if (containerType == null) {
-			return null;
-		}
-
-		return containerType.toString();
-	}
-
-	public void setContainerType(ContainerType containerType) {
-		this.containerType = containerType;
-	}
-
-	@JsonIgnore
-	public void setContainerType(
-		UnsafeSupplier<ContainerType, Exception> containerTypeUnsafeSupplier) {
+	public void setLayout(
+		UnsafeSupplier<Layout, Exception> layoutUnsafeSupplier) {
 
 		try {
-			containerType = containerTypeUnsafeSupplier.get();
+			layout = layoutUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -178,91 +133,7 @@ public class SectionDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ContainerType containerType;
-
-	@Schema
-	public Integer getPaddingBottom() {
-		return paddingBottom;
-	}
-
-	public void setPaddingBottom(Integer paddingBottom) {
-		this.paddingBottom = paddingBottom;
-	}
-
-	@JsonIgnore
-	public void setPaddingBottom(
-		UnsafeSupplier<Integer, Exception> paddingBottomUnsafeSupplier) {
-
-		try {
-			paddingBottom = paddingBottomUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer paddingBottom;
-
-	@Schema
-	public Integer getPaddingHorizontal() {
-		return paddingHorizontal;
-	}
-
-	public void setPaddingHorizontal(Integer paddingHorizontal) {
-		this.paddingHorizontal = paddingHorizontal;
-	}
-
-	@JsonIgnore
-	public void setPaddingHorizontal(
-		UnsafeSupplier<Integer, Exception> paddingHorizontalUnsafeSupplier) {
-
-		try {
-			paddingHorizontal = paddingHorizontalUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer paddingHorizontal;
-
-	@Schema
-	public Integer getPaddingTop() {
-		return paddingTop;
-	}
-
-	public void setPaddingTop(Integer paddingTop) {
-		this.paddingTop = paddingTop;
-	}
-
-	@JsonIgnore
-	public void setPaddingTop(
-		UnsafeSupplier<Integer, Exception> paddingTopUnsafeSupplier) {
-
-		try {
-			paddingTop = paddingTopUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer paddingTop;
+	protected Layout layout;
 
 	@Override
 	public boolean equals(Object object) {
@@ -315,48 +186,14 @@ public class SectionDefinition {
 			sb.append(String.valueOf(backgroundImage));
 		}
 
-		if (containerType != null) {
+		if (layout != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"containerType\": ");
+			sb.append("\"layout\": ");
 
-			sb.append("\"");
-
-			sb.append(containerType);
-
-			sb.append("\"");
-		}
-
-		if (paddingBottom != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"paddingBottom\": ");
-
-			sb.append(paddingBottom);
-		}
-
-		if (paddingHorizontal != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"paddingHorizontal\": ");
-
-			sb.append(paddingHorizontal);
-		}
-
-		if (paddingTop != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"paddingTop\": ");
-
-			sb.append(paddingTop);
+			sb.append(String.valueOf(layout));
 		}
 
 		sb.append("}");

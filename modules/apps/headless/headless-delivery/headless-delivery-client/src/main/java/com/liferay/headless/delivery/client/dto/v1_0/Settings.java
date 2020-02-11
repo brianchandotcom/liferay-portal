@@ -28,26 +28,66 @@ import javax.annotation.Generated;
 @Generated("")
 public class Settings {
 
-	public LookAndFeel getLookAndFeel() {
-		return lookAndFeel;
+	public String getColorSchemeName() {
+		return colorSchemeName;
 	}
 
-	public void setLookAndFeel(LookAndFeel lookAndFeel) {
-		this.lookAndFeel = lookAndFeel;
+	public void setColorSchemeName(String colorSchemeName) {
+		this.colorSchemeName = colorSchemeName;
 	}
 
-	public void setLookAndFeel(
-		UnsafeSupplier<LookAndFeel, Exception> lookAndFeelUnsafeSupplier) {
+	public void setColorSchemeName(
+		UnsafeSupplier<String, Exception> colorSchemeNameUnsafeSupplier) {
 
 		try {
-			lookAndFeel = lookAndFeelUnsafeSupplier.get();
+			colorSchemeName = colorSchemeNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected LookAndFeel lookAndFeel;
+	protected String colorSchemeName;
+
+	public String getCss() {
+		return css;
+	}
+
+	public void setCss(String css) {
+		this.css = css;
+	}
+
+	public void setCss(UnsafeSupplier<String, Exception> cssUnsafeSupplier) {
+		try {
+			css = cssUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String css;
+
+	public String getJavascript() {
+		return javascript;
+	}
+
+	public void setJavascript(String javascript) {
+		this.javascript = javascript;
+	}
+
+	public void setJavascript(
+		UnsafeSupplier<String, Exception> javascriptUnsafeSupplier) {
+
+		try {
+			javascript = javascriptUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String javascript;
 
 	public MasterPage getMasterPage() {
 		return masterPage;
@@ -69,6 +109,48 @@ public class Settings {
 	}
 
 	protected MasterPage masterPage;
+
+	public String getThemeName() {
+		return themeName;
+	}
+
+	public void setThemeName(String themeName) {
+		this.themeName = themeName;
+	}
+
+	public void setThemeName(
+		UnsafeSupplier<String, Exception> themeNameUnsafeSupplier) {
+
+		try {
+			themeName = themeNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String themeName;
+
+	public Object getThemeSettings() {
+		return themeSettings;
+	}
+
+	public void setThemeSettings(Object themeSettings) {
+		this.themeSettings = themeSettings;
+	}
+
+	public void setThemeSettings(
+		UnsafeSupplier<Object, Exception> themeSettingsUnsafeSupplier) {
+
+		try {
+			themeSettings = themeSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object themeSettings;
 
 	@Override
 	public boolean equals(Object object) {

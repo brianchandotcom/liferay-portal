@@ -34,6 +34,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -108,9 +109,13 @@ public class ExportUtil {
 		PageTemplate pageTemplate = PageTemplateConverterUtil.toPageTemplate(
 			layoutPageTemplateEntry);
 
-		String path =
-			pageTemplate.getCollectionName() + StringPool.SLASH +
-				pageTemplate.getName();
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_ROOT_FOLDER + StringPool.SLASH);
+		sb.append(pageTemplate.getCollectionName() + StringPool.SLASH);
+		sb.append(pageTemplate.getName());
+
+		String path = sb.toString();
 
 		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
 
@@ -147,6 +152,8 @@ public class ExportUtil {
 				previewFileEntry.getContentStream());
 		}
 	}
+
+	private static final String _ROOT_FOLDER = "page-templates";
 
 	private static final Log _log = LogFactoryUtil.getLog(ExportUtil.class);
 

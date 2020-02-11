@@ -65,7 +65,7 @@ function getConnectedReactComponentAdapter(ReactComponent, templates) {
 		}
 
 		render() {
-			const {events, ref, store} = this.props;
+			const {ref, ...otherProps} = this.props;
 
 			/* eslint-disable no-undef */
 			IncrementalDOM.elementOpen(
@@ -82,7 +82,7 @@ function getConnectedReactComponentAdapter(ReactComponent, templates) {
 
 			// eslint-disable-next-line liferay-portal/no-react-dom-render
 			ReactDOM.render(
-				<ReactComponent instance={this} {...events} {...store} />,
+				<ReactComponent {...otherProps} instance={this} />,
 				element
 			);
 

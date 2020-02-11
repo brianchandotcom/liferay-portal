@@ -48,8 +48,10 @@ import java.util.function.Function;
  *
  * @author Brian Wing Shun Chan
  * @see OrgGroupRoleImpl
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class OrgGroupRoleModelImpl
 	extends BaseModelImpl<OrgGroupRole> implements OrgGroupRoleModel {
 

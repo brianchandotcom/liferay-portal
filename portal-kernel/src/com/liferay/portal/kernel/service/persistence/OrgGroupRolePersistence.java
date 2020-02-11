@@ -30,8 +30,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see OrgGroupRoleUtil
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 

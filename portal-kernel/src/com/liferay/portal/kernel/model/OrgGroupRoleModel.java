@@ -27,8 +27,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see OrgGroupRole
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface OrgGroupRoleModel
 	extends BaseModel<OrgGroupRole>, MVCCModel, ShardedModel {

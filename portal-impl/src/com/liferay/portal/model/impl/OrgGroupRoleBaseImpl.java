@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.model.OrgGroupRole;
  * @author Brian Wing Shun Chan
  * @see OrgGroupRoleImpl
  * @see OrgGroupRole
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public abstract class OrgGroupRoleBaseImpl
 	extends OrgGroupRoleModelImpl implements OrgGroupRole {
 

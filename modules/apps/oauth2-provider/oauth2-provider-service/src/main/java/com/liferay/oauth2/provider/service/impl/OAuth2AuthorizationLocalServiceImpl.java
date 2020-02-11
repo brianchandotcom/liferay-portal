@@ -98,7 +98,8 @@ public class OAuth2AuthorizationLocalServiceImpl
 
 	@Override
 	public void deleteExpiredAccessTokens() {
-
+		oAuth2AuthorizationPersistence.removeByAccessTokenExpirationDate(
+			new Date());
 	}
 
 	@Override

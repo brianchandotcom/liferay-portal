@@ -41,7 +41,7 @@ const MillerColumnsColumnItem = ({
 	description,
 	draggable,
 	hasChild,
-	id,
+	itemId,
 	selectable,
 	state,
 	title,
@@ -75,7 +75,7 @@ const MillerColumnsColumnItem = ({
 					<ClayCheckbox
 						checked={checked}
 						name={`${namespace}rowIds`}
-						value={id}
+						value={itemId}
 					/>
 				</div>
 			)}

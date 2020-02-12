@@ -15,7 +15,7 @@
 // For details about this file see: LPS-2155
 
 (function(A, Liferay) {
-	var Util = Liferay.namespace('Util');
+	var Util = Liferay.Util;
 
 	var Lang = A.Lang;
 

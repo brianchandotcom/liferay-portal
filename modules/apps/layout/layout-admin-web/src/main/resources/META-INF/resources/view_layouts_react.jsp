@@ -61,6 +61,7 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 
 					layoutProps.put("breadcrumbEntries", layoutsAdminDisplayContext.getBreadcrumbEntriesJSONArray());
 					layoutProps.put("layoutColumns", layoutsAdminDisplayContext.getLayoutColumnsJSONArray());
+					layoutProps.put("searchContainerId", "pages");
 
 					layoutData.put("props", layoutProps);
 					%>

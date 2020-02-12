@@ -62,8 +62,8 @@ export default function TopperEmpty({acceptDrop, children, item, layoutData}) {
 				drop(node);
 
 				// Call the original ref, if any.
-				if (typeof child.props.ref === 'function') {
-					child.props.ref(node);
+				if (typeof child.ref === 'function') {
+					child.ref(node);
 				}
 			}
 		});

@@ -11,7 +11,7 @@
 		animation: FloatingToolbarPanelFadeIn ease 0.3s;
 		animation-fill-mode: forwards;
 		opacity: 0;
-		padding: 0 $fragmentsEditorSpacing;
+		padding: 0 $pageEditorSpacing;
 		z-index: $floatingToolbarPanelZIndex;
 
 		& > .popover {
@@ -27,7 +27,7 @@
 		.btn-group,
 		.form-group,
 		.form-group-autofit {
-			margin-bottom: $fragmentsEditorSpacing * 2;
+			margin-bottom: $pageEditorSpacing * 2;
 
 			&:last-child {
 				margin: 0;

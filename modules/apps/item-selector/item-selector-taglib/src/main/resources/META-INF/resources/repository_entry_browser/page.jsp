@@ -118,6 +118,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 
 	<c:if test="<%= (existingFileEntryReturnType != null) || (itemSelectorReturnTypeResolver != null) %>">
 		<liferay-ui:search-container
+			cssClass='<%= displayStyle.equals("list") ? "main-content-body" : StringPool.BLANK %>'
 			searchContainer="<%= searchContainer %>"
 			total="<%= repositoryEntriesCount %>"
 			var="listSearchContainer"

@@ -69,8 +69,6 @@
 }
 
 .portlet-title-default {
-	-moz-flex: 1 1 auto;
-	-ms-flex: 1 1 auto;
 	flex: 1 1 auto;
 	line-height: 2;
 	overflow: hidden;
@@ -79,8 +77,6 @@
 }
 
 .portlet-title-menu {
-	-moz-flex: 0 1 auto;
-	-ms-flex: 0 1 auto;
 	flex: 0 1 auto;
 
 	> span > a {
@@ -96,11 +92,7 @@
 	border-style: solid;
 	border-width: $portlet-topper-border-width;
 	color: $portlet-topper-color;
-	display: -webkit-box;
-	display: -moz-box;
 	display: box;
-	display: -moz-flex;
-	display: -ms-flexbox;
 	display: flex;
 	padding: 3px 12px 3px 24px;
 	position: relative;
@@ -159,11 +151,7 @@
 
 	.portlet-topper {
 		@include media-breakpoint-down(sm) {
-			display: -webkit-box;
-			display: -moz-box;
 			display: box;
-			display: -moz-flex;
-			display: -ms-flexbox;
 			display: flex;
 		}
 	}

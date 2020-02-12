@@ -165,7 +165,7 @@ public class PortletLayoutDisplayContext {
 
 		LayoutStructureItem rowLayoutStructureItem =
 			layoutStructure.addRowLayoutStructureItem(
-				containerLayoutStructureItem.getItemId(), 0);
+				containerLayoutStructureItem.getItemId(), 0, 0);
 
 		LayoutStructureItem columnLayoutStructureItem =
 			layoutStructure.addColumnLayoutStructureItem(

@@ -80,7 +80,7 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 					layoutStructure -> {
 						LayoutStructureItem layoutStructureItem =
 							layoutStructure.addRowLayoutStructureItem(
-								parentItemId, position);
+								parentItemId, position, _DEFAULT_ROW_COLUMNS);
 
 						jsonObject.put(
 							"addedItemId", layoutStructureItem.getItemId());
@@ -133,6 +133,8 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
+
+	private static final int _DEFAULT_ROW_COLUMNS = 3;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddItemReactMVCActionCommand.class);

@@ -153,7 +153,7 @@ public class LayoutStructure {
 	}
 
 	public LayoutStructureItem addRowLayoutStructureItem(
-		String parentItemId, int position) {
+		String parentItemId, int position, int numberOfColumns) {
 
 		LayoutStructureItem parentLayoutStructureItem =
 			_layoutStructureItems.get(parentItemId);
@@ -176,12 +176,12 @@ public class LayoutStructure {
 
 		_updateLayoutStructure(rowLayoutStructureItem, newPosition);
 
-		for (int i = 0; i < _DEFAULT_ROW_COLUMNS; i++) {
+		for (int i = 0; i < numberOfColumns; i++) {
 			_addColumnLayoutStructureItem(
 				rowLayoutStructureItem.getItemId(), i, 4);
 		}
 
-		rowLayoutStructureItem.setNumberOfColumns(_DEFAULT_ROW_COLUMNS);
+		rowLayoutStructureItem.setNumberOfColumns(numberOfColumns);
 
 		return rowLayoutStructureItem;
 	}
@@ -486,8 +486,6 @@ public class LayoutStructure {
 		{1, 1, 1, 1, 4, 1, 1, 1, 1}, {1, 1, 1, 1, 2, 2, 1, 1, 1, 1},
 		{1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
-
-	private static final int _DEFAULT_ROW_COLUMNS = 3;
 
 	private static final int _MAX_COLUMNS = 12;
 

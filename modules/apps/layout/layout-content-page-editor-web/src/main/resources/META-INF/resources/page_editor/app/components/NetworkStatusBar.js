@@ -14,7 +14,7 @@
 
 import {useEventListener} from 'frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 
@@ -32,22 +32,25 @@ const getStatus = (isOnline, status, lastSaveDate) => {
 	return null;
 };
 
+const parseDate = date => {
+	if (!date) {
+		return null;
+	}
+
+	const lastSaveDateText = Liferay.Language.get('draft-saved-at-x');
+
+	return lastSaveDateText.replace(
+		'{0}',
+		date.toLocaleTimeString(Liferay.ThemeDisplay.getBCP47LanguageId())
+	);
+};
+
 const NetworkStatusBar = ({error, lastFetch, status}) => {
 	const [isOnline, setIsOnline] = useState(true);
+	const [lastSaveDate, setLastSaveDate] = useState(parseDate(lastFetch));
 
-	const lastSaveDate = useMemo(() => {
-		if (!lastFetch) {
-			return null;
-		}
-
-		const lastSaveDateText = Liferay.Language.get('draft-saved-at-x');
-
-		return lastSaveDateText.replace(
-			'{0}',
-			lastFetch.toLocaleTimeString(
-				Liferay.ThemeDisplay.getBCP47LanguageId()
-			)
-		);
+	useEffect(() => {
+		setLastSaveDate(parseDate(lastFetch));
 	}, [lastFetch]);
 
 	useEffect(() => {

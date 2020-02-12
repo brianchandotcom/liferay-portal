@@ -46,9 +46,8 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-83660."
-	@priority = "4"
+	@priority = "3"
 	test GogoShellCommandDisconnectNotSupported {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "GogoShell#GogoShellCommandDisconnectNotSupported";
 
 		ProductMenu.gotoPortlet(

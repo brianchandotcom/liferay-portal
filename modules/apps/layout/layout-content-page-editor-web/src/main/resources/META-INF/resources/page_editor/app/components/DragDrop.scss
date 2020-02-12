@@ -75,16 +75,16 @@
 }
 
 .page-editor__drop-target {
-	&.page-editor-border-bottom {
+	&.page-editor__border-bottom {
 		border-bottom: none;
 	}
 
-	&.page-editor-border-top {
+	&.page-editor__border-top {
 		border-top: none;
 	}
 
-	&.page-editor-border-bottom,
-	&.page-editor-border-top {
+	&.page-editor__border-bottom,
+	&.page-editor__border-top {
 		&:after {
 			content: '';
 			display: block;
@@ -101,11 +101,11 @@
 		}
 	}
 
-	&.page-editor-border-bottom:after {
+	&.page-editor__border-bottom:after {
 		@include lfr-drag-indicator('bottom');
 	}
 
-	&.page-editor-border-top:after {
+	&.page-editor__border-top:after {
 		@include lfr-drag-indicator('top');
 	}
 }

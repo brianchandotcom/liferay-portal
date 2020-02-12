@@ -331,57 +331,6 @@ definition {
 			locationFieldName = "true");
 	}
 
-	@description = "This ensures that a document in a depot can be auto tagged and have its tag replaced manually."
-	@priority = "4"
-	test ReplaceAutoTagInDocument {
-		property test.name.skip.portal.instance = "DepotDocuments#ReplaceAutoTagInDocument";
-
-		AutoTagging.enableOpenNLP(
-			assetType = "Document",
-			confidenceThreshold = "0.001");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
-			dmDocumentTitle = "DM Document Title");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-
-		AutoTagging.assertAutoTagPresent(tagName = "adventures");
-		AutoTagging.assertAutoTagPresent(tagName = "alice");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
-
-		DMDocument.removeTag(removeTag = "alice");
-
-		AssetCategorization.addTag(tagName = "newtag");
-
-		PortletEntry.publish();
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-
-		AutoTagging.assertAutoTagPresent(tagName = "adventures");
-		AutoTagging.assertAutoTagPresent(tagName = "newtag");
-	}
-
 	@description = "This ensures that document can be restored to a depot."
 	@priority = "5"
 	test RestoreDocument {

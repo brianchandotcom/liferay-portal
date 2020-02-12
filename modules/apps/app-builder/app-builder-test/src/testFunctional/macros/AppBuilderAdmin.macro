@@ -37,6 +37,51 @@ definition {
 		AppBuilderAdmin.continueNewCustomObject();
 	}
 
+	macro addOrRemovePermissionFromRoles {
+		for (var roleTitle : list "${roleList}") {
+			var key_roleTitle = "${roleTitle}";
+
+			if ("${permission}" == "ADD") {
+
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+				}
+			}
+			else if ("${permission}" == "DELETE") {
+
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+				}
+			}
+			else if ("${permission}" == "UPDATE") {
+
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+				}
+			}
+			else if ("${permission}" == "VIEW") {
+
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
+				}
+			}
+		}
+
+		Button.clickSave();
+	}
+
 	macro assertNewButtonIsVisible {
 		AssertTextEquals(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",

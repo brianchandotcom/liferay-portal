@@ -105,50 +105,27 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 			url="javascript:;"
 		/>
 
-		<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="updateWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="updateDueDateURL">
-			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
+		<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="updateDueDateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcPath" value="/workflow_task_due_date.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-		</liferay-portlet:actionURL>
+		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			cssClass='<%= "workflow-task-" + randomId + " task-due-date-link" %>'
-			data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
-			id='<%= randomId + "taskDueDateLink" %>'
 			message="update-due-date"
-			method="get"
-			url="<%= updateDueDateURL %>"
+			onClick='<%= "javascript:" + renderResponse.getNamespace() + "taskUpdate('" + updateDueDateURL + "');" %>'
+			url="javascript:;"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>
 
 <aui:form name='<%= randomId + "form" %>'>
-	<div class="hide" id="<%= randomId %>updateDueDate">
-		<aui:input bean="<%= workflowTask %>" ignoreRequestValue="<%= true %>" model="<%= WorkflowTask.class %>" name="dueDate" required="<%= true %>" />
-	</div>
-
 	<div class="hide" id="<%= randomId %>updateComments">
 		<aui:input cols="55" cssClass="task-content-comment" name="comment" placeholder="comment" rows="1" type="textarea" />
 	</div>
 </aui:form>
 
 <aui:script use="liferay-workflow-tasks">
-	var maxLength = Liferay.AUI.getDateFormat().replace(/%[mdY]/gm, '').length + 8;
-
-	A.all('#<portlet:namespace />dueDate').set('maxLength', maxLength);
-
-	var onDueDateClickFn = A.rbind(
-		'onDueDateClick',
-		Liferay.WorkflowTasks,
-		'<%= randomId %>',
-		'<portlet:namespace />'
-	);
-
-	Liferay.delegateClick(
-		'<portlet:namespace /><%= randomId %>taskDueDateLink',
-		onDueDateClickFn
-	);
-
 	var onTaskClickFn = A.rbind(
 		'onTaskClick',
 		Liferay.WorkflowTasks,
@@ -181,12 +158,12 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				height: 470,
+				height: 430,
 				resizable: false,
 				width: 896
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer task-dialog'
+				bodyCssClass: 'task-dialog'
 			},
 			id: '<portlet:namespace />assignToDialog',
 			title: '<liferay-ui:message key="assign-to-..." />',
@@ -198,15 +175,32 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				height: 380,
+				height: 340,
 				resizable: false,
 				width: 896
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer task-dialog'
+				bodyCssClass: 'task-dialog'
 			},
 			id: '<portlet:namespace />assignToDialog',
 			title: '<liferay-ui:message key="assign-to-me" />',
+			uri: uri
+		});
+	}
+
+	function <portlet:namespace />taskUpdate(uri) {
+		Liferay.Util.openWindow({
+			dialog: {
+				destroyOnHide: true,
+				height: 430,
+				resizable: false,
+				width: 896
+			},
+			dialogIframe: {
+				bodyCssClass: 'task-dialog'
+			},
+			id: '<portlet:namespace />updateDialog',
+			title: '<liferay-ui:message key="update-due-date" />',
 			uri: uri
 		});
 	}

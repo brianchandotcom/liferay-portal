@@ -14,7 +14,8 @@
 
 package com.liferay.portal.workflow.task.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -27,8 +28,8 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,31 +43,31 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASK,
 		"mvc.command.name=updateWorkflowTask"
 	},
-	service = MVCActionCommand.class
+	service = MVCResourceCommand.class
 )
-public class UpdateTaskMVCActionCommand
-	extends WorkflowTaskBaseMVCActionCommand {
+public class UpdateTaskMVCActionCommand extends BaseMVCResourceCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long workflowTaskId = ParamUtil.getLong(
-			actionRequest, "workflowTaskId");
+			resourceRequest, "workflowTaskId");
 
-		String comment = ParamUtil.getString(actionRequest, "comment");
+		String comment = ParamUtil.getString(resourceRequest, "comment");
 
-		int dueDateMonth = ParamUtil.getInteger(actionRequest, "dueDateMonth");
-		int dueDateDay = ParamUtil.getInteger(actionRequest, "dueDateDay");
-		int dueDateYear = ParamUtil.getInteger(actionRequest, "dueDateYear");
-		int dueDateHour = ParamUtil.getInteger(actionRequest, "dueDateHour");
+		int dueDateMonth = ParamUtil.getInteger(
+			resourceRequest, "dueDateMonth");
+		int dueDateDay = ParamUtil.getInteger(resourceRequest, "dueDateDay");
+		int dueDateYear = ParamUtil.getInteger(resourceRequest, "dueDateYear");
+		int dueDateHour = ParamUtil.getInteger(resourceRequest, "dueDateHour");
 		int dueDateMinute = ParamUtil.getInteger(
-			actionRequest, "dueDateMinute");
-		int dueDateAmPm = ParamUtil.getInteger(actionRequest, "dueDateAmPm");
+			resourceRequest, "dueDateMinute");
+		int dueDateAmPm = ParamUtil.getInteger(resourceRequest, "dueDateAmPm");
 
 		if (dueDateAmPm == Calendar.PM) {
 			dueDateHour += 12;

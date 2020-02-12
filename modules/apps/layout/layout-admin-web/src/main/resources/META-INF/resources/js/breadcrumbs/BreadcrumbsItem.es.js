@@ -15,22 +15,20 @@
 import classNames from 'classnames';
 import React from 'react';
 
-const BreadcrumbsItem = ({active, title, url}) => {
-	return (
-		<li
-			className={classNames('breadcrumb-item', {
-				active
-			})}
-		>
-			{active ? (
+const BreadcrumbsItem = ({active, title, url}) => (
+	<li
+		className={classNames('breadcrumb-item', {
+			active
+		})}
+	>
+		{active ? (
+			<span className="breadcrumb-text-truncate">{title}</span>
+		) : (
+			<a className="breadcrumb-link" href={url}>
 				<span className="breadcrumb-text-truncate">{title}</span>
-			) : (
-				<a className="breadcrumb-link" href={url}>
-					<span className="breadcrumb-text-truncate">{title}</span>
-				</a>
-			)}
-		</li>
-	);
-};
+			</a>
+		)}
+	</li>
+);
 
 export default BreadcrumbsItem;

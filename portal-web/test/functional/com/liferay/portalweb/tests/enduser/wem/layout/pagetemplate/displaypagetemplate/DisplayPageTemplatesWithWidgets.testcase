@@ -1,0 +1,79 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Display Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a display page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is for LPS-106813. Can set permissions for widgets in display page template."
+	@priority = "5"
+	test ConfigurePermissionsOfAP {
+		task ("Add an asset publisher widget to the display page template") {
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("Assert can configure permissions of AP") {
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			AssertVisible(
+				key_menuItem = "Permissions",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Uncheck(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			AssertNotChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+}

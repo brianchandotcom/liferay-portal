@@ -29,6 +29,31 @@ components:
                 status:
                     type: integer
             type: object
+        AccountUser:
+            # @review
+            description:
+                A user that is a member of an account.
+            properties:
+                emailAddress:
+                    format: email
+                    type: string
+                firstName:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                lastName:
+                    type: string
+                middleName:
+                    type: string
+                prefix:
+                    type: string
+                screenName:
+                    type: string
+                suffix:
+                    type: string
+            type: object
 info:
     description:
         ""

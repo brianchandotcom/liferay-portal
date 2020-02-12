@@ -243,3 +243,82 @@ paths:
                     description:
                         "Account successfully replaced"
             tags: ["Account"]
+    "/accounts/{accountId}/users":
+        get:
+            # @review
+            description:
+                Gets the users assigned to an account
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountUser"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountUser"
+                                type: array
+                    description:
+                        ""
+            tags: ["AccountUser"]
+        post:
+            # @review
+            description:
+                Creates a user and assigns them to the account
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AccountUser"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AccountUser"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountUser"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountUser"
+                    description:
+                        ""
+            tags: ["AccountUser"]

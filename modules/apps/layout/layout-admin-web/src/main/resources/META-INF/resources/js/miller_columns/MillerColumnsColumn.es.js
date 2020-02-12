@@ -20,6 +20,7 @@ const MillerColumnsColumn = ({index, items}) => (
 	<ul className="col-11 col-lg-4 col-md-6 miller-columns-col show-quick-actions-on-hover">
 		{items.map(item => (
 			<MillerColumnsColumnItem
+				actions={item.actions}
 				active={item.active}
 				checked={item.checked}
 				description={item.description}

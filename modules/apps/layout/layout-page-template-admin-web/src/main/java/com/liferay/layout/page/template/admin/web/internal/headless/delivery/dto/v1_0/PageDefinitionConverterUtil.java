@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -318,6 +319,15 @@ public class PageDefinitionConverterUtil {
 						}
 
 						return colorScheme.getName();
+					});
+
+				setCss(
+					() -> {
+						if (Validator.isNull(layout.getCss())) {
+							return null;
+						}
+
+						return layout.getCss();
 					});
 			}
 		};

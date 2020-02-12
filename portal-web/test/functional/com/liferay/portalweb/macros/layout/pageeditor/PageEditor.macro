@@ -186,12 +186,6 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		// Refresh and pause step is a workaround for LPS-108417
-
-		Refresh();
-
-		Pause(locator1 = "3000");
-
 		AssertElementPresent(
 			key_fragmentName = "${portletName}",
 			locator1 = "Fragment#FRAGMENT_HEADER");

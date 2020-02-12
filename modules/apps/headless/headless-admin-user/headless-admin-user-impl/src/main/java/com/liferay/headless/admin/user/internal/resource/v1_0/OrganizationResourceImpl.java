@@ -368,12 +368,12 @@ public class OrganizationResourceImpl
 	}
 
 	private Page<Organization> _getOrganizationsPage(
-			Map<String, Map<String, String>> actions, String organizationId,
-			Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Map<String, Map<String, String>> actions,
+			String parentOrganizationId, Boolean flatten, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		long id = _getOrganizationId(organizationId);
+		long id = _getOrganizationId(parentOrganizationId);
 
 		return SearchUtil.search(
 			actions,
@@ -386,11 +386,12 @@ public class OrganizationResourceImpl
 						booleanFilter.add(
 							new QueryFilter(
 								new WildcardQueryImpl(
-									"treePath", "*" + organizationId + "*")));
+									"treePath",
+									"*" + parentOrganizationId + "*")));
 						booleanFilter.add(
 							new TermFilter(
 								"organizationId",
-								String.valueOf(organizationId)),
+								String.valueOf(parentOrganizationId)),
 							BooleanClauseOccur.MUST_NOT);
 					}
 				}

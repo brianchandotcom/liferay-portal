@@ -2259,7 +2259,7 @@ definition {
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 
-		AssertVisible(locator1 = "Icon#DELETE");
+		AssertVisible(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 	}
 
 	macro viewTag {

@@ -693,6 +693,8 @@ public class LayoutsAdminDisplayContext {
 			LayoutType layoutType = layout.getLayoutType();
 
 			layoutJSONObject.put(
+				"id", layout.getPlid()
+			).put(
 				"parentable", layoutType.isParentable()
 			).put(
 				"pending",
@@ -1741,6 +1743,8 @@ public class LayoutsAdminDisplayContext {
 		).put(
 			"hasChild", true
 		).put(
+			"id", LayoutConstants.DEFAULT_PLID
+		).put(
 			"plid", LayoutConstants.DEFAULT_PLID
 		).put(
 			"title", getTitle(privatePages)
@@ -1876,6 +1880,8 @@ public class LayoutsAdminDisplayContext {
 					_getActiveLayoutSetBranchId()
 			).put(
 				"hasChild", true
+			).put(
+				"id", LayoutConstants.DEFAULT_PLID
 			).put(
 				"plid", LayoutConstants.DEFAULT_PLID
 			).put(

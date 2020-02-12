@@ -9,7 +9,7 @@ runGradleTest {
 	dependsOn initBundle
 
 	doLast {
-		configurations.compileOnlyModules.dependencies.each {
+		configurations.providedModules.dependencies.each {
 			File expectedFile = new File(initBundle.destinationDir, "osgi/modules/${it.name}-${it.version}.jar")
 
 			assert expectedFile.exists()

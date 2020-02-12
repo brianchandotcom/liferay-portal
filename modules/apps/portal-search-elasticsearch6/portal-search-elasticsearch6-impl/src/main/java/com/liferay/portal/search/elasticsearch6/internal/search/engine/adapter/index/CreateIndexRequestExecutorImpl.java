@@ -15,13 +15,11 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch6.internal.settings.IndexSettingsContributorHelper;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexResponse;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexAction;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
 
 import org.osgi.service.component.annotations.Component;
@@ -57,18 +55,6 @@ public class CreateIndexRequestExecutorImpl
 		createIndexRequestBuilder.setSource(
 			createIndexRequest.getSource(), XContentType.JSON);
 
-		org.elasticsearch.action.admin.indices.create.CreateIndexRequest
-			elasticsearchCreateIndexRequest =
-				createIndexRequestBuilder.request();
-
-		Settings.Builder builder = Settings.builder();
-
-		builder.put(elasticsearchCreateIndexRequest.settings());
-
-		_indexSettingsContributorHelper.loadIndexSettingsContributors(builder);
-
-		elasticsearchCreateIndexRequest.settings(builder);
-
 		return createIndexRequestBuilder;
 	}
 
@@ -80,8 +66,5 @@ public class CreateIndexRequestExecutorImpl
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference
-	private IndexSettingsContributorHelper _indexSettingsContributorHelper;
 
 }

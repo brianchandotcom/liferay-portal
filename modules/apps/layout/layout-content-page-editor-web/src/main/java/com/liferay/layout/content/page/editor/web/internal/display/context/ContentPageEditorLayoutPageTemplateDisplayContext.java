@@ -27,7 +27,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
@@ -102,16 +101,9 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		Layout draftLayout = themeDisplay.getLayout();
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			draftLayout.getClassPK());
-
-		if (layout == null) {
-			return null;
-		}
-
 		_layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
-				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+				fetchLayoutPageTemplateEntryByPlid(draftLayout.getClassPK());
 
 		return _layoutPageTemplateEntry;
 	}

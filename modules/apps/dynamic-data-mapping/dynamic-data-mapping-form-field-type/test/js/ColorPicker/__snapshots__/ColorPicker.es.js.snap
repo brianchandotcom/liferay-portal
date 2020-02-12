@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Field Color Picker renders field disabled 1`] = `
-<div class="form-group" data-field-name="colorPicker">
-  <div class="react-component-adapter">
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="nodejs">
     <div class="clay-color-picker"><input name="colorPicker" style="display: none;" type="text" value="000000">
       <div class="input-group clay-color">
         <div class="input-group-item input-group-item-shrink input-group-prepend">
@@ -16,8 +16,8 @@ exports[`Field Color Picker renders field disabled 1`] = `
 `;
 
 exports[`Field Color Picker renders field with helptext 1`] = `
-<div class="form-group" data-field-name="colorPicker">
-  <div class="react-component-adapter">
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="nodejs">
     <div class="clay-color-picker"><input name="colorPicker" style="display: none;" type="text" value="000000">
       <div class="input-group clay-color">
         <div class="input-group-item input-group-item-shrink input-group-prepend">
@@ -25,15 +25,14 @@ exports[`Field Color Picker renders field with helptext 1`] = `
         </div>
         <div class="input-group-item input-group-append"><input aria-label="Color selection is 000000" type="text" class="form-control input-group-inset input-group-inset-before" value="000000"><label class="input-group-inset-item input-group-inset-item-before">#</label></div>
       </div>
-    </div>
-  </div><span class="form-text">Helptext</span>
+    </div><span class="form-text">Helptext</span>
+  </div>
 </div>
 `;
 
 exports[`Field Color Picker renders field with label 1`] = `
-<div class="form-group" data-field-name="colorPicker">
-  <p class="ddm-label">Label </p>
-  <div class="react-component-adapter">
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="nodejs"><label class="">Label </label>
     <div class="clay-color-picker"><input name="colorPicker" style="display: none;" type="text" value="000000">
       <div class="input-group clay-color">
         <div class="input-group-item input-group-item-shrink input-group-prepend">

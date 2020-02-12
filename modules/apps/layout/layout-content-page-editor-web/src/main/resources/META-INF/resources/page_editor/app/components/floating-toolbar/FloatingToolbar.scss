@@ -6,7 +6,7 @@
 	}
 }
 
-.fragments-editor__floating-toolbar {
+.page-editor__floating-toolbar {
 	display: block;
 	height: 0;
 	left: -1px;
@@ -113,13 +113,13 @@
 		}
 	}
 
-	.fragments-editor__floating-toolbar-buttons {
-		& .fragments-editor__floating-toolbar--disabled {
+	.page-editor__floating-toolbar-buttons {
+		& .page-editor__floating-toolbar--disabled {
 			cursor: not-allowed;
 			pointer-events: none;
 		}
 
-		& .fragments-editor__floating-toolbar--linked-field {
+		& .page-editor__floating-toolbar--linked-field {
 			&.active,
 			&:hover {
 				background-color: fade_out(#0b5fff, 0.94);
@@ -130,7 +130,7 @@
 			}
 		}
 
-		& .fragments-editor__floating-toolbar--mapped-field {
+		& .page-editor__floating-toolbar--mapped-field {
 			&.active,
 			&:hover {
 				background-color: fade_out(#af78ff, 0.9);

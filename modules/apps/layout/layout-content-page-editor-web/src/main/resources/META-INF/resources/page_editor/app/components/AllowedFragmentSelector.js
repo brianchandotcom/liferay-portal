@@ -136,7 +136,7 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 					type="text"
 				/>
 
-				<div className="fragments-editor__allowed-fragment__tree">
+				<div className="page-editor__allowed-fragment__tree">
 					<Treeview
 						filterQuery={filter}
 						inheritSelection
@@ -148,7 +148,7 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 				</div>
 			</div>
 
-			<div className="fragments-editor__allowed-fragment__new-fragments-checkbox">
+			<div className="page-editor__allowed-fragment__new-fragments-checkbox">
 				<ClayCheckbox
 					aria-label={Liferay.Language.get(
 						'select-new-fragments-automatically'

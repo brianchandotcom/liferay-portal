@@ -24,7 +24,7 @@ const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
 
 	const content = (
-		<div className="fragments-editor__drop-zone" ref={ref}>
+		<div className="page-editor__drop-zone" ref={ref}>
 			<p>{Liferay.Language.get('drop-zone')}</p>
 
 			<p>

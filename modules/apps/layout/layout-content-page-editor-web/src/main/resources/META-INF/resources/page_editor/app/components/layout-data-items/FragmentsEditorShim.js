@@ -18,7 +18,7 @@ import {createPortal} from 'react-dom';
 export function FragmentsEditorShim() {
 	return createPortal(
 		<div
-			className="fixed-top fragments-editor-shim h-100 w-100"
+			className="fixed-top h-100 page-editor-shim w-100"
 			role="presentation"
 		/>,
 		document.body

@@ -167,7 +167,7 @@ export default function FloatingToolbar({
 				{PanelComponent &&
 					createPortal(
 						<div
-							className="fragments-editor__floating-toolbar-panel p-2 position-fixed"
+							className="p-2 page-editor__floating-toolbar-panel position-fixed"
 							ref={panelRef}
 						>
 							<div className="p-3 popover popover-scrollable position-static">

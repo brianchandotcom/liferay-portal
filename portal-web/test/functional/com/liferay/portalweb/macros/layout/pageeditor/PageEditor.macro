@@ -259,7 +259,7 @@ definition {
 	macro closeSidebar {
 		var key_tabName = "${tabName}";
 
-		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		Click.clickNoMouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
 
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_COLLAPSED");
 	}

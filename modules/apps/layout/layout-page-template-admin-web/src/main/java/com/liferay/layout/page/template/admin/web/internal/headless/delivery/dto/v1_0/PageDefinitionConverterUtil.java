@@ -24,6 +24,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
 import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
+import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
@@ -59,6 +60,7 @@ public class PageDefinitionConverterUtil {
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
 					layout);
+				settings = _toSettings(layout);
 			}
 		};
 	}
@@ -287,5 +289,17 @@ public class PageDefinitionConverterUtil {
 
 		return null;
 	}
+
+	private static Settings _toSettings(
+		com.liferay.portal.kernel.model.Layout layout) {
+
+		return new Settings() {
+			{
+			}
+		};
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PageDefinitionConverterUtil.class);
 
 }

@@ -87,8 +87,8 @@ property.
 - [LPS-71591]: Update readme (73d12f455b)
 - [LPS-71591]: Use XML Resolver by default (6c0bea0e67)
 - [LPS-71591]: Allow to specify a custom XML Parser (6ac496e0c1)
-- []: Revert "LPS-71591 Temporarily disable Gradle test's TLD schema validation"
-(82848390e8)
+- [LPS-71591]: Revert "LPS-71591 Temporarily disable Gradle test's TLD schema
+validation" (82848390e8)
 - [LPS-71591]: Temporarily disable Gradle test's TLD schema validation
 (5aafb9144e)
 - [LPS-66709]: We say "directory that contains" everywhere else (fbdaeffe5b)

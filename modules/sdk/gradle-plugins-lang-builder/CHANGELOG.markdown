@@ -214,7 +214,7 @@ https://github.com/liferay/liferay-portal/commit/4bf57ddfe3f6 (6d48debbe9)
 
 ### Commits
 - [LPS-76221]: release new jars as part of revert (73dc6a86e0)
-- []: Revert "LPS-76221 Fix Gradle test" (226226efe1)
+- [LPS-76221]: Revert "LPS-76221 Fix Gradle test" (226226efe1)
 
 ### Dependencies
 - [LPS-76221]: Update the com.liferay.lang.builder dependency to version 1.0.21.
@@ -371,3 +371,21 @@ care of that now (looks like nobody was using that anyway) (188e2a041f)
 
 ### Commits
 - [LPS-95819]: Fix for theme projects (abba685d82)
+
+## 3.0.13 - 2020-01-15
+
+### Commits
+- [LPS-100515]: Update README.markdown (694b3791de)
+- [LPS-100515]: Update plugins Gradle version (448efac158)
+- [LPS-102700]: Fix bnd error (include literal dot) (d65985bae3)
+- [LPS-84119]: Do not declare var (85dc5fdf91)
+
+### Dependencies
+- [LPS-106614]: Update the com.liferay.lang.builder dependency to version
+1.0.32.
+
+## 3.0.14 - 2020-01-16
+
+### Dependencies
+- [LPS-106614]: Update the com.liferay.lang.builder dependency to version
+1.0.33.

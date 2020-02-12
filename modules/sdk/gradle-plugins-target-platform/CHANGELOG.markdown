@@ -250,7 +250,7 @@ maven-publish plugin (f367d6b48e)
 - [LPS-103466]: Sort (5b5ff8dcca)
 - [LPS-103809]: preop next (3768e9a4b7)
 - [LPS-103466]: revert (e4f42e7a25)
-- []: Revert "LPS-103466 Sort" (fffa7e7259)
+- [LPS-103466]: Revert "LPS-103466 Sort" (fffa7e7259)
 - [LPS-103466]: Sort (1cd1d09425)
 
 ## 2.0.6 - 2019-11-27

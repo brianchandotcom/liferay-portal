@@ -26,8 +26,8 @@
 ## 1.0.4 - 2015-07-27
 
 ### Commits
-- []: Revert "LPS-51081 Add project libs and classes in the Service Builder
-classpath" (031aa856f0)
+- [LPS-51081]: Revert "LPS-51081 Add project libs and classes in the Service
+Builder classpath" (031aa856f0)
 - [LPS-51081]: Ran "ant setup-eclipse" (267ce0c0b6)
 - [LPS-57037]: Show sample for a OSGi module (5a768e0ca1)
 - [LPS-51081]: Update to Gradle 2.5 (3aa4c1f053)
@@ -1511,3 +1511,18 @@ version 1.0.325.
 ### Dependencies
 - [LPS-100525]: Update the com.liferay.portal.tools.service.builder dependency to
 version 1.0.326.
+
+## 3.0.15 - 2020-02-10
+
+### Dependencies
+- [LPS-108386]: Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.327.
+
+## 3.0.16 - 2020-02-10
+
+### Commits
+- [LPS-108328]: Allow hotfix patterns (9c332ad565)
+
+### Dependencies
+- [LPS-108386]: Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.328.

@@ -949,7 +949,7 @@ https://github.com/liferay/liferay-portal/commit/fd8763c#diff-082f1d3a132d6a95e4
 - [LPS-96376]: Update to liferay-npm-scripts v2.1.0 (prettier) (7930ab3625)
 - [LPS-0]: SF. Space character correction for build scripts & READMEs
 (9dd5d12c9a)
-- []: Revert "LPS-88909 Disable cache (see
+- [LPS-88909]: Revert "LPS-88909 Disable cache (see
 https://github.com/liferay/liferay-portal/commit/fd8763c#diff-082f1d3a132d6a95e4d04c1b3ee8ccedR155)"
 (c0cc8d0404)
 
@@ -1054,7 +1054,6 @@ liferay-npm-scripts version is greater than 10 (2f12ed7710)
 ## 6.0.2 - 2019-10-23
 
 ### Commits
-- [LPS-103580]: Semver (fed965fad1)
 - [LPS-103580]: Update method name (190ba2834f)
 - [LPS-103580]: Enable incremental cache for only Yarn projects (42bf3330ff)
 - [LPS-103580]: Update input to check the Yarn project's node_modules directory

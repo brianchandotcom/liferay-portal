@@ -7,10 +7,10 @@
 (1f7fb718c6)
 - [LPS-62833]: Update build-buildscript.gradle (56106ab47b)
 - [LPS-62942]: Explicitly list exported packages for correctness (f095a51e25)
-- []: Revert "LPS-62765 SF not related to this pull" (336ee64ab8)
+- [LPS-62765]: Revert "LPS-62765 SF not related to this pull" (336ee64ab8)
 - [LPS-62765]: SF not related to this pull (bcb423ce84)
-- []: Revert "LPS-61088 Remove classes and resources dir from Include-Resource"
-(94f30d28e7)
+- [LPS-61088]: Revert "LPS-61088 Remove classes and resources dir from
+Include-Resource" (94f30d28e7)
 - [LPS-61088]: Remove classes and resources dir from Include-Resource
 (900459894c)
 
@@ -50,7 +50,8 @@ Translation Sync Tool v.4.0.9] (ddb77ec725)
 (60d3a950d6)
 - [LPS-77425]: Increment all major versions (d25f48516a)
 - [LPS-77699]: Update translations (ab4b82afa6)
-- []: Revert "LPS-76522 Sync with Liferay Translation (Pootle)" (5fc668ae0c)
+- [LPS-76522]: Revert "LPS-76522 Sync with Liferay Translation (Pootle)"
+(5fc668ae0c)
 - [LPS-76522]: Sync with Liferay Translation (Pootle) (09ee546940)
 - [LPS-71375]: Fix Gradle test (129a723061)
 - [LPS-70677]: No need to look into the local Maven repository during testing

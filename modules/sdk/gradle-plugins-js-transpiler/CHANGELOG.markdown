@@ -680,7 +680,7 @@ required.
 ### Commits
 - [LPS-71117]: Test plugins with Gradle up to 3.5.1 (c3e12d1cf3)
 - [LPS-71117]: Update supported Gradle versions in READMEs (fdcc16c0d4)
-- []: Revert "LPS-82828 Deprecated as of 7.1.0" (470150b661)
+- [LPS-82828]: Revert "LPS-82828 Deprecated as of 7.1.0" (470150b661)
 - [LPS-82828]: Deprecated as of 7.1.0 (69573bff7e)
 
 ### Dependencies

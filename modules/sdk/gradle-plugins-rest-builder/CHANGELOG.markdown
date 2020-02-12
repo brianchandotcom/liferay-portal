@@ -222,7 +222,7 @@ version 1.0.30.
 ## 1.0.29 - 2019-10-28
 
 ### Commits
-- []: Revert "LPS-101995 document right version of the rest builder"
+- [LPS-101995]: Revert "LPS-101995 document right version of the rest builder"
 (5841370d87)
 - [LPS-101995]: document right version of the rest builder (30efa95255)
 
@@ -357,3 +357,102 @@ version 1.0.49.
 ### Dependencies
 - [LPS-98387]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.50.
+
+## 1.0.51 - 2020-01-19
+
+### Commits
+- [LPS-105380]: Rename exception variables (b3173da81b)
+
+### Dependencies
+- [LPS-105235]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.51.
+
+## 1.0.52 - 2020-01-19
+
+### Dependencies
+- [LPS-107224]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.52.
+
+## 1.0.53 - 2020-01-20
+
+### Dependencies
+- [LPS-107377 LPS-105235]: Update the com.liferay.portal.tools.rest.builder
+dependency to version 1.0.53.
+
+## 1.0.54 - 2020-01-20
+
+### Dependencies
+- [LPS-105235]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.54.
+
+## 1.0.55 - 2020-01-20
+
+### Dependencies
+- [LPS-105228]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.55.
+
+## 1.0.56 - 2020-01-21
+
+### Dependencies
+- [LPS-105235]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.56.
+
+## 1.0.57 - 2020-01-22
+
+### Dependencies
+- [LPS-98387]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.57.
+
+## 1.0.58 - 2020-01-22
+
+### Dependencies
+- [LPS-105235]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.58.
+
+## 1.0.59 - 2020-01-23
+
+### Dependencies
+- [LPS-105235]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.59.
+
+## 1.0.60 - 2020-01-23
+
+### Dependencies
+- [LPS-105235]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.60.
+
+## 1.0.61 - 2020-01-26
+
+### Dependencies
+- [LPS-106646]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.61.
+
+## 1.0.62 - 2020-01-28
+
+### Dependencies
+- [LPS-107646]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.62.
+
+## 1.0.63 - 2020-01-29
+
+### Dependencies
+- [LPS-107825]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.63.
+
+## 1.0.64 - 2020-01-29
+
+### Dependencies
+- [LPS-107646]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.64.
+
+## 1.0.65 - 2020-02-03
+
+### Dependencies
+- [LPS-107984]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.65.
+
+## 1.0.66 - 2020-02-11
+
+### Dependencies
+- [LPS-107971]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.66.

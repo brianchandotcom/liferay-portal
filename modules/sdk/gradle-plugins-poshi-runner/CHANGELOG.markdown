@@ -327,3 +327,8 @@ setTestClassesDir (474da1e76d)
 ### Commits
 - [LRCI-902]: Update default poshi runner version to 1.0.246 (40cd41289f)
 - [LPS-100515]: Update plugins Gradle version (448efac158)
+
+## 2.2.19 - 2020-02-03
+
+### Commits
+- [LRCI-1003]: Update poshi runner version to 1.0.249 (75a965a44e)

@@ -4539,3 +4539,42 @@ version 1.0.948.
 ### Dependencies
 - [LPS-106315 LPS-94003]: Update the com.liferay.source.formatter dependency to
 version 1.0.953.
+
+## 2.3.482 - 2020-01-11
+
+### Dependencies
+- [LPS-104435]: Update the com.liferay.source.formatter dependency to version
+1.0.954.
+
+## 2.3.483 - 2020-01-15
+
+### Dependencies
+- [LPS-104435]: Update the com.liferay.source.formatter dependency to version
+1.0.955.
+
+## 2.3.484 - 2020-01-17
+
+### Commits
+- [LPS-105380]: Rename exception variables (b3173da81b)
+
+### Dependencies
+- [LPS-105380]: Update the com.liferay.source.formatter dependency to version
+1.0.956.
+
+## 2.3.485 - 2020-01-20
+
+### Dependencies
+- [LPS-107321]: Update the com.liferay.source.formatter dependency to version
+1.0.957.
+
+## 2.3.486 - 2020-01-28
+
+### Dependencies
+- [LPS-104679]: Update the com.liferay.source.formatter dependency to version
+1.0.958.
+
+## 2.3.487 - 2020-02-06
+
+### Dependencies
+- [LPS-107918]: Update the com.liferay.source.formatter dependency to version
+1.0.959.

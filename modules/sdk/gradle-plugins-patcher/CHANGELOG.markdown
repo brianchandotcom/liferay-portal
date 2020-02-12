@@ -174,3 +174,15 @@ configuration.
 
 ### Dependencies
 - [LPS-87466]: Update the com.liferay.gradle.util dependency to version 1.0.33.
+
+## 1.0.17 - 2020-01-17
+
+### Commits
+- [LPS-107313]: Update base url to use https (44b834a08a)
+- [LPS-100515]: Update plugins Gradle version (448efac158)
+- [LPS-84119]: Create new var for better readability (753a5f0426)
+- [LPS-85609]: Simplify gradleTest (a8b0feff31)
+- [LPS-85609]: Use Gradle 4.10.2 (9aa90f8961)
+
+### Dependencies
+- [LPS-96247]: Update the com.liferay.gradle.util dependency to version 1.0.34.

@@ -317,8 +317,8 @@ available, but they are deprecated.
 
 ### Commits
 - [LPS-83755]: Update File Versions (c80a286058)
-- []: Revert "LPS-82828 Deprecated as of 7.1.0" (470150b661)
-- []: Revert "LPS-82828 ant format-javadoc" (eb3e7c0a6a)
+- [LPS-82828]: Revert "LPS-82828 Deprecated as of 7.1.0" (470150b661)
+- [LPS-82828]: Revert "LPS-82828 ant format-javadoc" (eb3e7c0a6a)
 - [LPS-82828]: ant format-javadoc (b36ea4354d)
 - [LPS-82828]: Deprecated as of 7.1.0 (69573bff7e)
 - [LPS-80332]: Manual fixes (df0a491e2e)

@@ -56,6 +56,10 @@ function render(element, value, config = {}) {
 	}
 
 	if (image) {
+		if (value.alt) {
+			image.alt = value.alt;
+		}
+
 		if (config.href) {
 			if (image.parentElement instanceof HTMLAnchorElement) {
 				image.parentElement.href = config.href;
@@ -72,7 +76,7 @@ function render(element, value, config = {}) {
 			}
 		}
 
-		image.src = value;
+		image.src = value.url || value;
 	}
 }
 

@@ -142,7 +142,7 @@ export default function FloatingToolbar({
 								{buttons.map(button => (
 									<ClayButtonWithIcon
 										borderless
-										className={classNames({
+										className={classNames('mx-1', {
 											active: button.panelId === panelId,
 											'lfr-portal-tooltip': button.title
 										})}

@@ -1,0 +1,54 @@
+import com.bmuschko.gradle.docker.tasks.container.DockerLogsContainer
+
+import java.net.InetAddress;
+
+buildscript {
+	dependencies {
+		classpath fileTree(dir: pluginClasspathDir, excludes: ["biz.aQute.bnd-3.5.0.jar", "com.liferay.gradle.util-1.0.33.jar"], include: "*.jar")
+	}
+}
+
+apply plugin: "com.liferay.workspace"
+
+gradle.liferayWorkspace {
+	dockerImageId = InetAddress.getLocalHost().getCanonicalHostName().toLowerCase()
+	dockerContainerId = InetAddress.getLocalHost().getCanonicalHostName().toLowerCase()
+}
+
+gradle.projectsEvaluated {
+	gradle.rootProject.tasks.register("assertScript", DockerLogsContainer) {
+		dependsOn gradle.rootProject.tasks.startDockerContainer
+		finalizedBy gradle.rootProject.tasks.cleanDockerImage
+		tailAll = true
+		follow = false
+		targetContainerId {
+			gradle.liferayWorkspace.dockerContainerId
+		}
+
+		boolean scriptFired = false
+
+		sink new PrintWriter(new StringWriter()) {
+			public void write(String line) {
+				if (line.contains("org.apache.catalina.startup.Catalina")) {
+					scriptFired = true
+				}
+				gradle.rootProject.print line
+			}
+		}
+
+		doLast {
+			gradle.rootProject.println "DoLast!"
+			int retries = 0
+
+			while (!scriptFired && retries < 50) {
+				Thread.sleep(100)
+				retries++
+				start()
+			}
+
+			if (!scriptFired) {
+				throw new GradleException("Script did not fire.")
+			}
+		}
+	}
+}

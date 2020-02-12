@@ -19,16 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_ELLIPSIS_ICON</td>
-	<td>//div[contains(*,'${key_fragmentName}')]//*[*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-v')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_FLOATING_MENU_ITEM</td>
-	<td>//div[contains(@class,'lfr-icon-menu-open')]//*[normalize-space(text())='${key_menuItem}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_IMAGE</td>
 	<td>//div[contains(@class,'layout-content')]//section[${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>

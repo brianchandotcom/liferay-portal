@@ -95,6 +95,16 @@ public interface AssetHelper {
 			int start, int end)
 		throws Exception;
 
+	public long searchCount(
+		HttpServletRequest httpServletRequest,
+		AssetEntryQuery assetEntryQuery, int start, int end)
+		throws Exception;
+
+	public long searchCount(
+		SearchContext searchContext, AssetEntryQuery assetEntryQuery,
+		int start, int end)
+		throws Exception;
+
 	public BaseModelSearchResult<AssetEntry> searchAssetEntries(
 			AssetEntryQuery assetEntryQuery, long[] assetCategoryIds,
 			String[] assetTagNames, Map<String, Serializable> attributes,

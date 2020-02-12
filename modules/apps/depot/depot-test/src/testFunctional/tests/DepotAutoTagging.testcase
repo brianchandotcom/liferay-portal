@@ -1,0 +1,254 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Depot";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			WebContent.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This test asserts that an image is auto-tagged in a depot."
+	@priority = "5"
+	test AddImage {
+		property test.name.skip.portal.instance = "DepotAutoTagging#AddImage";
+
+		AutoTagging.enableTensorFlow();
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		Panel.expandPanel(panel = "Asset Auto Tagging");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_4.jpg",
+			dmDocumentTitle = "DM Document JPG");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
+
+		AutoTagging.assertAutoTagPresent(tagName = "carton");
+	}
+
+	@description = "This test asserts that a text document is auto-tagged in a depot."
+	@priority = "5"
+	test AddTextDocument {
+		property test.name.skip.portal.instance = "DepotAutoTagging#AddTextDocument";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.05");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			dmDocumentTitle = "DM Document PDF");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document PDF");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document PDF");
+
+		AutoTagging.assertAutoTagPresent(tagName = "alice");
+	}
+
+	@description = "This test asserts that a web content article is auto-tagged in a depot."
+	@priority = "5"
+	test AddWebContent {
+		property test.name.skip.portal.instance = "DepotAutoTagging#AddWebContent";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Web Content Article",
+			confidenceThreshold = "0.001");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. In a Forrester presentation, analyst Liz Herbert notes that real digital transformation spans both the experience layer and the operations core. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. This responsiveness to customer needs can be achieved in a number of ways, from basic personalization of experience, to more advanced configurable workflows, to full modularization of business services that can be quickly re-assembled in new ways. However, not all companies are prepared for that level of change, and may in the meantime want to start segmenting audiences in order to target personalized offers. Some vendors, particularly those that have had content management systems, can do this well. Ideally, your platform will have both operational and marketing capabilities, so that even if you start with digital marketing, you won’t have to go through a second vendor selection process when you are ready for operational transformation. Also, there isn’t just one way to achieve these goals. Using any category heritage of DXP in combination with an overall architecture for integration and modular services can get you there.",
+			webContentTitle = "Digital Transformation or Digital Experience?");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+
+		Panel.expandPanel(panel = "Metadata");
+
+		AssertTextEquals(
+			key_tagName = "dxp",
+			locator1 = "AssetCategorization#TAG",
+			value1 = "dxp");
+	}
+
+	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a depot that has auto-tagging disabled."
+	@priority = "5"
+	test DisableForImage {
+		property test.name.skip.portal.instance = "DepotAutoTagging#DisableForImage";
+
+		AutoTagging.enableTensorFlow();
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		Depot.configureAutoTagging(autoTagging = "Disabled");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_4.jpg",
+			dmDocumentTitle = "DM Document JPG");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
+
+		AutoTagging.assertNoAutoTag(tagName = "carton");
+	}
+
+	@description = "This test asserts that no auto-tag is generated when a text document is uploaded to a depot that has auto-tagging disabled."
+	@priority = "5"
+	test DisableForTextDocument {
+		property test.name.skip.portal.instance = "DepotAutoTagging#DisableForTextDocument";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.05");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		Depot.configureAutoTagging(autoTagging = "Disabled");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			dmDocumentTitle = "DM Document PDF");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document PDF");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document PDF");
+
+		AutoTagging.assertNoAutoTag(tagName = "alice");
+	}
+
+	@description = "This test asserts that no auto-tag is generated when a web content article is uploaded to a depot that has auto-tagging disabled."
+	@priority = "5"
+	test DisableForWebContent {
+		property test.name.skip.portal.instance = "DepotAutoTagging#DisableForWebContent";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Web Content Article",
+			confidenceThreshold = "0.001");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		Depot.configureAutoTagging(autoTagging = "Disabled");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. In a Forrester presentation, analyst Liz Herbert notes that real digital transformation spans both the experience layer and the operations core. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. This responsiveness to customer needs can be achieved in a number of ways, from basic personalization of experience, to more advanced configurable workflows, to full modularization of business services that can be quickly re-assembled in new ways. However, not all companies are prepared for that level of change, and may in the meantime want to start segmenting audiences in order to target personalized offers. Some vendors, particularly those that have had content management systems, can do this well. Ideally, your platform will have both operational and marketing capabilities, so that even if you start with digital marketing, you won’t have to go through a second vendor selection process when you are ready for operational transformation. Also, there isn’t just one way to achieve these goals. Using any category heritage of DXP in combination with an overall architecture for integration and modular services can get you there.",
+			webContentTitle = "Digital Transformation or Digital Experience?");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+
+		Panel.expandPanel(panel = "Metadata");
+
+		AutoTagging.assertNoAutoTag(tagName = "dxp");
+	}
+
+}

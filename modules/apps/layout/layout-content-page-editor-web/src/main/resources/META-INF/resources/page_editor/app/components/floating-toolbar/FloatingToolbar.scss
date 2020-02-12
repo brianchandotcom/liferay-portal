@@ -7,7 +7,7 @@
 }
 
 .page-editor__floating-toolbar {
-	&-panel {
+	&__panel {
 		animation: FloatingToolbarPanelFadeIn ease 0.3s;
 		animation-fill-mode: forwards;
 		opacity: 0;

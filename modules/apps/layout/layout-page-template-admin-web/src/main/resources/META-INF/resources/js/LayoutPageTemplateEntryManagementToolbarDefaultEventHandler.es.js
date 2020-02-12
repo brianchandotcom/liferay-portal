@@ -39,7 +39,7 @@ class LayoutPageTemplateEntryManagementToolbarDefaultEventHandler extends Defaul
 	}
 
 	exportLayoutPageTemplateEntries(itemData) {
-		submitForm(this.one('#fm'), itemData.convertLayoutPageTemplateEntryURL);
+		submitForm(this.one('#fm'), itemData.exportLayoutPageTemplateEntryURL);
 	}
 }
 

@@ -85,8 +85,8 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 							dropdownItem.putData(
 								"action", "exportLayoutPageTemplateEntries");
 							dropdownItem.putData(
-								"convertLayoutPageTemplateEntryURL",
-								_getConvertLayoutPageTemplateEntryURL());
+								"exportLayoutPageTemplateEntryURL",
+								_getExportLayoutPageTemplateEntryURL());
 							dropdownItem.setIcon("download");
 							dropdownItem.setLabel(
 								LanguageUtil.get(request, "export"));
@@ -213,7 +213,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 		return actionURL.toString();
 	}
 
-	private String _getConvertLayoutPageTemplateEntryURL() {
+	private String _getExportLayoutPageTemplateEntryURL() {
 		ResourceURL exportLayoutPageTemplateURL =
 			liferayPortletResponse.createResourceURL();
 

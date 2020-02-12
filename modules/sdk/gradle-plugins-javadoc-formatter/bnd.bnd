@@ -3,4 +3,4 @@ Bundle-Name: Liferay Gradle Plugins Javadoc Formatter
 Bundle-SymbolicName: com.liferay.gradle.plugins.javadoc.formatter
 Bundle-Version: 1.0.31
 Export-Package: com.liferay.gradle.plugins.javadoc.formatter
--includeresource: @com.liferay.javadoc.formatter-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/javadoc/formatter/JavadocFormatterArgs.class
+-includeresource: @com.liferay.javadoc.formatter-[0-9.]*.jar!/com/liferay/javadoc/formatter/JavadocFormatterArgs.class

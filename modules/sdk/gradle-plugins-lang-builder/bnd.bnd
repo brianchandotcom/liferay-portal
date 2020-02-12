@@ -3,4 +3,4 @@ Bundle-Name: Liferay Gradle Plugins Lang Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.lang.builder
 Bundle-Version: 3.0.15
 Export-Package: com.liferay.gradle.plugins.lang.builder
--includeresource: @com.liferay.lang.builder-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/lang/builder/LangBuilderArgs.class
+-includeresource: @com.liferay.lang.builder-[0-9.]*.jar!/com/liferay/lang/builder/LangBuilderArgs.class

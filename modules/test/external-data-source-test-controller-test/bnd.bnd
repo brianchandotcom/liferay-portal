@@ -2,7 +2,7 @@ Bundle-Name: Liferay External Data Source Test Controller Test
 Bundle-SymbolicName: com.liferay.external.data.source.test.controller.test
 Bundle-Version: 1.0.0
 -includeresource:\
-	com.liferay.external.data.source.test.api.jar=com.liferay.external.data.source.test.api-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar,\
-	com.liferay.external.data.source.test.jar=com.liferay.external.data.source.test-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar,\
-	com.liferay.external.data.source.test.service.jar=com.liferay.external.data.source.test.service-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar,\
+	com.liferay.external.data.source.test.api.jar=com.liferay.external.data.source.test.api-[0-9.]*.jar,\
+	com.liferay.external.data.source.test.jar=com.liferay.external.data.source.test-[0-9.]*.jar,\
+	com.liferay.external.data.source.test.service.jar=com.liferay.external.data.source.test.service-[0-9.]*.jar,\
 	@hsqldb-[0-9.]*.jar

@@ -17,65 +17,69 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
-
-boolean connected = false;
-
-if (!Validator.isBlank(analyticsConfiguration.token())) {
-	connected = true;
-}
-
-GroupDisplayContext groupDisplayContext = new GroupDisplayContext(renderRequest, renderResponse);
+ChannelDisplayContext channelDisplayContext = new ChannelDisplayContext(renderRequest, renderResponse);
 %>
 
 <portlet:actionURL name="/analytics/edit_synced_sites" var="editSyncedSitesURL" />
 
-<div class="sheet sheet-lg">
-	<h2 class="autofit-row">
-		<span class="autofit-col autofit-col-expand">
-			<liferay-ui:message key="choose-sites-to-sync" />
-		</span>
+<div class="pb-2 portlet-analytics-settings sheet sheet-lg">
+	<h2>
+		<liferay-ui:message key="sync-sites-to-property" />
 	</h2>
 
-	<clay:management-toolbar
-		displayContext="<%= new GroupManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, groupDisplayContext) %>"
-	/>
+	<p class="mt-3 text-secondary">
+		<liferay-ui:message key="select-or-create-a-property-to-manage-synced-sites" />
+	</p>
 
-	<aui:form action="<%= editSyncedSitesURL %>" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-		<liferay-ui:search-container
-			id="selectGroups"
-			searchContainer="<%= groupDisplayContext.getGroupSearch() %>"
-			var="groupSearchContainer"
-		>
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.model.Group"
-				escapedModel="<%= true %>"
-				keyProperty="groupId"
-				modelVar="group"
-			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="site-name"
-					value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="site-friendly-url"
-					value="<%= HtmlUtil.escape(group.getFriendlyURL()) %>"
-				/>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-				searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+	<c:choose>
+		<c:when test="<%= channelDisplayContext.getChannelSearch() != null %>">
+			<clay:management-toolbar
+				displayContext="<%= new ChannelManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, channelDisplayContext) %>"
+				elementClasses="custom-management-toolbar"
 			/>
-		</liferay-ui:search-container>
 
-		<aui:button-row>
-			<aui:button disabled="<%= !connected %>" type="submit" value="save-and-sync" />
-		</aui:button-row>
-	</aui:form>
+			<liferay-ui:search-container
+				id="selectChannels"
+				searchContainer="<%= channelDisplayContext.getChannelSearch() %>"
+				var="groupSearchContainer"
+			>
+				<liferay-ui:search-container-row
+					className="com.liferay.analytics.settings.web.internal.model.Channel"
+					escapedModel="<%= true %>"
+					keyProperty="id"
+					modelVar="channel"
+				>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
+						name="available-properties"
+						value="<%= HtmlUtil.escape(channel.getName()) %>"
+					/>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator
+					markupView="lexicon"
+					searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+				/>
+			</liferay-ui:search-container>
+		</c:when>
+		<c:otherwise>
+			<div class="mb-5 mt-5">
+				<div class="empty-state-icon mb-4 mt-4"></div>
+
+				<div class="text-center">
+					<h2>
+						<liferay-ui:message key="no-properties-found" />
+					</h2>
+
+					<p class="text-secondary">
+						<liferay-ui:message key="create-a-new-property-to-get-started" />
+					</p>
+
+					<button class="btn btn-primary">
+						<liferay-ui:message key="new-property" />
+					</button>
+				</div>
+			</div>
+		</c:otherwise>
+	</c:choose>
 </div>

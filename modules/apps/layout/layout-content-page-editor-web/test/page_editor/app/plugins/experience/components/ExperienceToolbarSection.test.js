@@ -97,6 +97,9 @@ const mockState = {
 			segmentsExperimentURL: 'https//:experience-2.com'
 		}
 	},
+	permissions: {
+		UPDATE: true
+	},
 	segmentsExperienceId: '0',
 	widgets: []
 };
@@ -117,7 +120,6 @@ const mockConfig = {
 	defaultSegmentsExperienceId: '0',
 	deleteSegmentsExperienceURL: MOCK_DELETE_URL,
 	hasEditSegmentsEntryPermission: true,
-	hasUpdatePermissions: true,
 	updateSegmentsExperiencePriorityURL: MOCK_UPDATE_PRIORITY_URL,
 	updateSegmentsExperienceURL: MOCK_UPDATE_URL
 };

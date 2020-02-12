@@ -20,8 +20,12 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.IOException;
 
@@ -36,6 +40,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,7 +86,39 @@ public class AssetEntryItemSelectorView
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher("/view.jsp");
 
-		requestDispatcher.include(servletRequest, servletResponse);
+		requestDispatcher.include(
+			new DynamicServletRequest(
+				(HttpServletRequest)servletRequest,
+				HashMapBuilder.put(
+					"groupId",
+					_toStringArray(itemSelectorCriterion.getGroupId())
+				).put(
+					"multipleSelection", _toStringArray(true)
+				).put(
+					"selectedGroupIds",
+					_toStringArray(
+						StringUtil.merge(
+							itemSelectorCriterion.getSelectedGroupIds(),
+							StringPool.COMMA))
+				).put(
+					"showNonindexable",
+					_toStringArray(itemSelectorCriterion.isShowNonindexable())
+				).put(
+					"showScheduled",
+					_toStringArray(itemSelectorCriterion.isShowScheduled())
+				).put(
+					"subtypeSelectionId",
+					_toStringArray(
+						itemSelectorCriterion.getSubtypeSelectionId())
+				).put(
+					"typeSelection",
+					_toStringArray(itemSelectorCriterion.getTypeSelection())
+				).build()),
+			servletResponse);
+	}
+
+	private <T> String[] _toStringArray(T value) {
+		return new String[] {String.valueOf(value)};
 	}
 
 	private static final List<ItemSelectorReturnType>

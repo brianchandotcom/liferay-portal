@@ -58,7 +58,7 @@ export default function ExperienceToolbarSection({selectId}) {
 		availableSegmentsExperiences[segmentsExperienceId];
 
 	return (
-		<div className="mr-2 page-editor-toolbar-experience">
+		<div className="mr-2 page-editor__toolbar-experience">
 			<label className="mr-2" htmlFor={selectId}>
 				{Liferay.Language.get('experience')}
 			</label>

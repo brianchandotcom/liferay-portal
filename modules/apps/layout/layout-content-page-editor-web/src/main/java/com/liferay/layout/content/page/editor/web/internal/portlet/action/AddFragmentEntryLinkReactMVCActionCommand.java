@@ -37,7 +37,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -229,19 +228,17 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			_portal.getLiferayPortletResponse(actionResponse),
 			configurationJSONObject);
 
-		return JSONUtil.put(
+		JSONObject jsonObject = _addFragmentEntryLinkToLayoutDataJSONObject(
+			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());
+
+		return jsonObject.put(
 			"fragmentEntryLink",
 			FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
 				actionRequest, actionResponse,
 				_fragmentEntryConfigurationParser, fragmentEntryLink,
 				_fragmentCollectionContributorTracker,
 				_fragmentRendererController, _fragmentRendererTracker,
-				StringPool.BLANK)
-		).put(
-			"layoutData",
-			_addFragmentEntryLinkToLayoutDataJSONObject(
-				actionRequest, fragmentEntryLink.getFragmentEntryLinkId())
-		);
+				StringPool.BLANK));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -22,7 +22,7 @@
 			left: 12px;
 			width: calc(100% - 24px);
 		}
-		&-resizer {
+		&__resizer {
 			border-radius: 50%;
 			height: 16px;
 			left: 100%;
@@ -36,7 +36,7 @@
 				transform: translate(50%, -50%);
 			}
 		}
-		&-resizer:not(:disabled):not(.disabled) {
+		&__resizer:not(:disabled):not(.disabled) {
 			cursor: col-resize;
 		}
 	}

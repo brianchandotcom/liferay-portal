@@ -80,7 +80,7 @@ function ColumnWithControls({children, item, layoutData}, ref) {
 				<div>
 					{children}
 					<ClayButton
-						className="page-editor__col-resizer"
+						className="page-editor__col__resizer"
 						onMouseDown={onResizeButtonMouseDown}
 					/>
 				</div>

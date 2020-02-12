@@ -95,8 +95,8 @@ public class StructuredContentFolderResourceImpl
 		}
 
 		return _getFoldersPage(
-			_getSiteListActions(siteId), siteId,
-			parentStructuredContentFolderId, search, filter, pagination, sorts);
+			_getSiteListActions(siteId), parentStructuredContentFolderId,
+			siteId, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class StructuredContentFolderResourceImpl
 
 		return _getFoldersPage(
 			_getStructuredContentFolderListActions(journalFolder),
-			journalFolder.getGroupId(), parentStructuredContentFolderId, search,
+			parentStructuredContentFolderId, journalFolder.getGroupId(), search,
 			filter, pagination, sorts);
 	}
 
@@ -248,9 +248,9 @@ public class StructuredContentFolderResourceImpl
 	}
 
 	private Page<StructuredContentFolder> _getFoldersPage(
-			Map<String, Map<String, String>> actions, Long siteId,
-			Long parentStructuredContentFolderId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Map<String, Map<String, String>> actions,
+			Long parentStructuredContentFolderId, Long siteId, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

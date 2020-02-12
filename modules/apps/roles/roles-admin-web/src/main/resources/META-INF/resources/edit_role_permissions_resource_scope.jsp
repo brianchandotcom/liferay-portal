@@ -110,6 +110,7 @@ List groupNames = (List)objArray[8];
 
 						GroupItemSelectorCriterion groupItemSelectorCriterion = new GroupItemSelectorCriterion();
 
+						groupItemSelectorCriterion.setAllowNavigation(false);
 						groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new URLItemSelectorReturnType());
 						groupItemSelectorCriterion.setTarget(target);
 

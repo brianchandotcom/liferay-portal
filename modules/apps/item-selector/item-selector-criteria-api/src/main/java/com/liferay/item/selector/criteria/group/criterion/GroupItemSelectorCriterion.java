@@ -32,8 +32,16 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _target;
 	}
 
+	public boolean isAllowNavigation() {
+		return _allowNavigation;
+	}
+
 	public boolean isPrivateLayout() {
 		return _privateLayout;
+	}
+
+	public void setAllowNavigation(boolean allowNavigation) {
+		_allowNavigation = allowNavigation;
 	}
 
 	public void setPrivateLayout(boolean privateLayout) {
@@ -44,6 +52,7 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_target = target;
 	}
 
+	private boolean _allowNavigation = true;
 	private boolean _privateLayout;
 	private String _target;
 

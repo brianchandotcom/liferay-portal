@@ -67,7 +67,6 @@ definition {
 		}
 
 		Button.clickSave();
-
 	}
 
 	macro assertNewButtonIsVisible {

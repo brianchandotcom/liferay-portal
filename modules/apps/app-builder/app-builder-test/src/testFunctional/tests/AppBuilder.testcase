@@ -1855,9 +1855,9 @@ definition {
 		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "!@#");
 	}
 
-	@description = "SetPermission"
+	@description = "Set permissions for User and Portal Content Reviewer and perform CRUD operations in a deployed widget App"
 	@priority = "5"
-	test SetPermission {
+	test SetPermissionsFor2RolesAndPerformCRUD {
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

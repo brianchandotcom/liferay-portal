@@ -14,7 +14,7 @@
 
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import Carousel from './Carousel.es';
@@ -39,7 +39,6 @@ const ItemSelectorPreview = ({
 }) => {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
 	const [itemList, setItemList] = useState(items);
-	const firstUpdate = useRef(true);
 	const [reloadOnHide, setReloadOnHide] = useState(false);
 
 	const infoButtonRef = React.createRef();
@@ -79,15 +78,6 @@ const ItemSelectorPreview = ({
 			});
 		}
 	}, [infoButtonRef]);
-
-	useEffect(() => {
-		if (firstUpdate.current) {
-			firstUpdate.current = false;
-		}
-		else {
-			setReloadOnHide(true);
-		}
-	}, [itemList]);
 
 	const close = useCallback(() => {
 		ReactDOM.unmountComponentAtNode(container);
@@ -197,6 +187,11 @@ const ItemSelectorPreview = ({
 		[close, handleClickNext, handleClickPrevious, isMounted]
 	);
 
+	const updateItemList = newItemList => {
+		setItemList(newItemList);
+		setReloadOnHide(true);
+	};
+
 	const handleSaveEdit = e => {
 		const itemData = e.data.file;
 
@@ -227,7 +222,7 @@ const ItemSelectorPreview = ({
 		};
 
 		const updatedItemList = [...itemList, editedItem];
-		setItemList(updatedItemList);
+		updateItemList(updatedItemList);
 		setCurrentItemIndex(updatedItemList.length - 1);
 	};
 
@@ -238,7 +233,7 @@ const ItemSelectorPreview = ({
 
 				newItemList[currentItemIndex] = {...currentItem, url, value};
 
-				setItemList(newItemList);
+				updateItemList(newItemList);
 			}
 		},
 		[currentItem, currentItemIndex, isMounted, itemList]

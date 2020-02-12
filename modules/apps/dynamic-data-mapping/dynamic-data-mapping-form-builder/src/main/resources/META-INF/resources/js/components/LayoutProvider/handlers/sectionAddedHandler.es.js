@@ -17,7 +17,7 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.
 import dom from 'metal-dom';
 
 import {createField} from '../../../util/fieldSupport.es';
-import {updateFocusedField} from '../util/focusedField.es';
+import {updateFocusedField} from '../util/settingsContext.es';
 
 const addNestedField = ({field, indexes, nestedField, props}) => {
 	let nestedFields = [...(field.nestedFields || []), nestedField];

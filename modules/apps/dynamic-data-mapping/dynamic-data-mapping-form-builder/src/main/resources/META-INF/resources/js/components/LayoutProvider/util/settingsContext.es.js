@@ -12,10 +12,42 @@
  * details.
  */
 
-import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
+import {
+	normalizeFieldName,
+	PagesVisitor
+} from 'dynamic-data-mapping-form-renderer';
 
 import {updateFieldValidationProperty} from './fields.es';
-import {updateSettingsContextProperty} from './settings.es';
+
+export const updateSettingsContextProperty = (
+	editingLanguageId,
+	settingsContext,
+	propertyName,
+	propertyValue
+) => {
+	const visitor = new PagesVisitor(settingsContext.pages);
+
+	return {
+		...settingsContext,
+		pages: visitor.mapFields(field => {
+			if (propertyName === field.fieldName) {
+				field = {
+					...field,
+					value: propertyValue
+				};
+
+				if (field.localizable) {
+					field.localizedValue = {
+						...field.localizedValue,
+						[editingLanguageId]: propertyValue
+					};
+				}
+			}
+
+			return field;
+		})
+	};
+};
 
 export const updateFocusedFieldName = (
 	editingLanguageId,

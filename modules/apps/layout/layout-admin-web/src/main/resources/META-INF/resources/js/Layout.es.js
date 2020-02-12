@@ -12,22 +12,70 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import Breadcrumbs from './breadcrumbs/Breadcrumbs.es';
 import MillerColumns from './miller_columns/MillerColumns.es';
 import MillerColumnsContext from './miller_columns/MillerColumnsContext.es';
 
 const Layout = ({
-	context: {namespace},
-	props: {breadcrumbEntries, layoutColumns}
+	breadcrumbEntries,
+	layoutColumns,
+	namespace,
+	searchContainerId
 }) => {
+	const layoutRef = useRef();
+	const searchContainer = useRef();
+
+	useEffect(() => {
+		const A = new AUI();
+
+		A.use(
+			'liferay-search-container',
+			'liferay-search-container-select',
+			A => {
+				const plugins = [
+					{
+						cfg: {
+							rowSelector: '.miller-columns-item'
+						},
+						fn: A.Plugin.SearchContainerSelect
+					}
+				];
+
+				if (searchContainer.current) {
+					searchContainer.current.destroy();
+				}
+
+				searchContainer.current = new Liferay.SearchContainer({
+					contentBox: layoutRef.current,
+					id: `${namespace}${searchContainerId}`,
+					plugins
+				});
+			}
+		);
+	}, [namespace, searchContainerId]);
+
 	return (
-		<MillerColumnsContext.Provider value={{namespace}}>
-			<Breadcrumbs entries={breadcrumbEntries} />
-			<MillerColumns columns={layoutColumns} />
-		</MillerColumnsContext.Provider>
+		<div ref={layoutRef}>
+			<MillerColumnsContext.Provider value={{namespace}}>
+				<Breadcrumbs entries={breadcrumbEntries} />
+				<MillerColumns columns={layoutColumns} />
+			</MillerColumnsContext.Provider>
+		</div>
 	);
 };
 
-export default Layout;
+export default function({
+	context: {namespace},
+	props: {breadcrumbEntries, layoutColumns, searchContainerId}
+}) {
+	return (
+		<Layout
+			breadcrumbEntries={breadcrumbEntries}
+			layoutColumns={layoutColumns}
+			namespace={namespace}
+			searchContainerId={searchContainerId}
+		/>
+	);
+}

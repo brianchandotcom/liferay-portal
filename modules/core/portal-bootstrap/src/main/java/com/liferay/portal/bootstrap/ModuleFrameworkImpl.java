@@ -1599,6 +1599,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			try (InputStream inputStream = Files.newInputStream(jarPath)) {
 				File file = jarPath.toFile();
 
+				file = file.getCanonicalFile();
+
 				URI uri = file.toURI();
 
 				String uriString = uri.toString();
@@ -1623,6 +1625,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				StaticLPKGResolver.getStaticLPKGFileNames()) {
 
 			File file = new File(deployDir + StringPool.SLASH + staticFileName);
+
+			file = file.getCanonicalFile();
 
 			if (file.exists()) {
 				bundles.addAll(

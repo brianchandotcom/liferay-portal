@@ -87,7 +87,7 @@ function FieldBase({
 						})}
 						htmlFor={id}
 					>
-						{label && showLabel && label}
+						{label && showLabel && `${label} `}
 
 						{required && spritemap && (
 							<span className="reference-mark">

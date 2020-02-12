@@ -50,6 +50,11 @@ if (Boolean.getBoolean("gradle.build.scan.enabled")) {
 		if (System.getProperty("gradle.build.scan.tag")) {
 			tag System.getProperty("gradle.build.scan.tag")
 		}
+
+		if (!System.getProperty("gradle.build.scan.server.url")) {
+			termsOfServiceAgree = "yes"
+			termsOfServiceUrl = "https://gradle.com/terms-of-service"
+		}
 	}
 }
 

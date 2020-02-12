@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -203,7 +204,7 @@ public class AssetListPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT,
 			new EditAssetListDisplayContext(
-				renderRequest, renderResponse,
+				_itemSelector, renderRequest, renderResponse,
 				_getUnicodeProperties(assetListDisplayContext)));
 
 		renderRequest.setAttribute(
@@ -245,5 +246,8 @@ public class AssetListPortlet extends MVCPortlet {
 
 	@Reference
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

@@ -20,7 +20,7 @@ export default function SidebarPanelHeader({padded = true, ...props}) {
 		<h1
 			{...props}
 			className={classNames(
-				'page-editor__sidebar-panel-header',
+				'page-editor__sidebar__panel-header',
 				'align-items-center',
 				'd-flex',
 				{

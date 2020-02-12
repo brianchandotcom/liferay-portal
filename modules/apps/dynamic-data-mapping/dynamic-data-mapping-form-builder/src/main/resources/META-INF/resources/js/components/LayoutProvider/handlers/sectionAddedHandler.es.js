@@ -19,67 +19,125 @@ import dom from 'metal-dom';
 import {createField} from '../../../util/fieldSupport.es';
 import {updateFocusedField} from '../util/settingsContext.es';
 
-const addNestedField = ({field, indexes, nestedField, props}) => {
-	let nestedFields = [...(field.nestedFields || []), nestedField];
+const removeNestedField = ({field, nestedField, props}) => {
 	let layout = [{rows: field.rows}];
+	const visitor = new PagesVisitor(layout);
 
-	const existingFieldName =
-		layout[indexes.pageIndex].rows[indexes.rowIndex].columns[
-			indexes.columnIndex
-		].fields[0];
+	let indexesToRemove = {};
 
-	if (existingFieldName) {
-		nestedFields = nestedFields.filter(
-			({fieldName}) => fieldName !== existingFieldName
-		);
+	visitor.mapFields((field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+		if (field.fieldName === nestedField.fieldName) {
+			indexesToRemove = {columnIndex, pageIndex, rowIndex};
+		}
+	});
 
-		layout = FormSupport.removeFields(
-			layout,
-			indexes.pageIndex,
-			indexes.rowIndex,
-			indexes.columnIndex
-		);
-	}
+	layout = FormSupport.removeFields(
+		layout,
+		indexesToRemove.pageIndex,
+		indexesToRemove.rowIndex,
+		indexesToRemove.columnIndex
+	);
 
-	let parentField = updateFocusedField(
+	const nestedFields = field.nestedFields.filter(
+		({fieldName}) => fieldName !== nestedField.fieldName
+	);
+
+	let focusedField = updateFocusedField(
 		props,
 		{focusedField: field},
 		'nestedFields',
 		nestedFields
 	);
+	const {rows} = layout[0];
 
-	layout = FormSupport.addFieldToColumn(
-		layout,
-		indexes.pageIndex,
-		indexes.rowIndex,
-		indexes.columnIndex,
-		nestedField.fieldName
-	);
-
-	const {rows} = layout[indexes.pageIndex];
-
-	parentField = updateFocusedField(
-		props,
-		{focusedField: parentField},
-		'rows',
-		rows
-	);
+	focusedField = updateFocusedField(props, {focusedField}, 'rows', rows);
 
 	return {
-		...parentField,
+		...focusedField,
 		nestedFields,
 		rows
 	};
 };
 
-const createSection = (props, event, nestedField) => {
+const addNestedField = ({field, indexes, nestedField, props}) => {
+	const layout = FormSupport.addFieldToColumn(
+		[{rows: field.rows}],
+		indexes.pageIndex,
+		indexes.rowIndex,
+		indexes.columnIndex,
+		nestedField.fieldName
+	);
+	const nestedFields = [...field.nestedFields, nestedField];
+
+	let focusedField = updateFocusedField(
+		props,
+		{focusedField: field},
+		'nestedFields',
+		nestedFields
+	);
+	const {rows} = layout[indexes.pageIndex];
+
+	focusedField = updateFocusedField(props, {focusedField}, 'rows', rows);
+
+	return {
+		...focusedField,
+		nestedFields,
+		rows
+	};
+};
+
+const addNestedFields = ({field, indexes, nestedFields, props}) => {
+	let layout = [{rows: field.rows}];
+	const visitor = new PagesVisitor(layout);
+
+	visitor.mapFields((field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+		if (
+			!nestedFields.some(
+				nestedField => nestedField.fieldName === field.fieldName
+			)
+		) {
+			layout = FormSupport.removeFields(
+				layout,
+				pageIndex,
+				rowIndex,
+				columnIndex
+			);
+		}
+	});
+
+	[...nestedFields].reverse().forEach(nestedField => {
+		layout = FormSupport.addFieldToColumn(
+			layout,
+			indexes.pageIndex,
+			indexes.rowIndex,
+			indexes.columnIndex,
+			nestedField.fieldName
+		);
+	});
+
+	const focusedField = updateFocusedField(
+		props,
+		{focusedField: field},
+		'nestedFields',
+		nestedFields
+	);
+	const {rows} = layout[indexes.pageIndex];
+
+	return {
+		...updateFocusedField(props, {focusedField}, 'rows', rows),
+		nestedFields,
+		rows
+	};
+};
+
+const createSection = (props, event, nestedFields) => {
 	const {fieldTypes} = props;
 	const fieldType = fieldTypes.find(fieldType => {
 		return fieldType.name === 'section';
 	});
 	const sectionField = createField(props, {...event, fieldType});
 
-	return addNestedField({
+	return addNestedFields({
 		field: {
 			...sectionField,
 			rows: [{columns: [{fields: [], size: 12}]}]
@@ -89,46 +147,54 @@ const createSection = (props, event, nestedField) => {
 			pageIndex: 0,
 			rowIndex: 0
 		},
-		nestedField,
+		nestedFields,
 		props
 	});
 };
 
 export default (props, state, event) => {
 	const {data, indexes} = event;
-	const {pages} = state;
-
-	const visitor = new PagesVisitor(pages);
-
 	const {target} = data;
 
 	const {fieldName} = target.dataset;
+	const {pages} = state;
 
 	const newField = event.newField || createField(props, event);
-
-	const sectionField = createSection(props, event, newField);
+	const existingField = FormSupport.findFieldByName(pages, fieldName);
+	const sectionField = createSection(props, event, [existingField, newField]);
 
 	const parentFieldNode = dom.closest(target.parentElement, '.ddm-field');
-
 	let parentFieldName;
 
 	if (parentFieldNode) {
 		parentFieldName = parentFieldNode.dataset.fieldName;
 	}
 
-	return {
+	const visitor = new PagesVisitor(pages);
+
+	let modified = false;
+
+	const newState = {
 		focusedField: {
-			...sectionField,
+			...newField,
 			...indexes
 		},
 		pages: visitor.mapFields(
 			field => {
-				if (field.fieldName === fieldName) {
+				if (field.fieldName === fieldName && !modified) {
+					modified = true;
+
 					return sectionField;
 				}
 				else if (field.fieldName === parentFieldName) {
-					return addNestedField({
+					const newParentField = removeNestedField({
 						field,
+						nestedField: existingField,
+						props
+					});
+
+					return addNestedField({
+						field: newParentField,
 						indexes,
 						nestedField: sectionField,
 						props
@@ -142,4 +208,6 @@ export default (props, state, event) => {
 		),
 		previousFocusedField: sectionField
 	};
+
+	return newState;
 };

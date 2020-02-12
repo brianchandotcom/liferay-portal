@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.upgrade.v_4_0_0;
+package com.liferay.batch.engine.internal.upgrade.v4_0_0;
 
-import com.liferay.batch.engine.internal.upgrade.v_4_0_0.util.BatchEngineExportTaskTable;
-import com.liferay.batch.engine.internal.upgrade.v_4_0_0.util.BatchEngineImportTaskTable;
+import com.liferay.batch.engine.internal.upgrade.v4_0_0.util.BatchEngineExportTaskTable;
+import com.liferay.batch.engine.internal.upgrade.v4_0_0.util.BatchEngineImportTaskTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**

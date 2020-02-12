@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -109,17 +110,32 @@ public class DLFileEntryTypeLocalServiceImpl
 			fileEntryTypeKey = StringUtil.toUpperCase(fileEntryTypeKey.trim());
 		}
 
-		String fileEntryTypeUuid = serviceContext.getUuid();
+		String fileEntryTypeUuid = GetterUtil.getString(
+			serviceContext.getAttribute("fileEntryTypeUuid"));
 
 		if (Validator.isNull(fileEntryTypeUuid)) {
-			fileEntryTypeUuid = PortalUUIDUtil.generate();
+			fileEntryTypeUuid = serviceContext.getUuid();
+
+			if (Validator.isNull(fileEntryTypeUuid)) {
+				fileEntryTypeUuid = PortalUUIDUtil.generate();
+			}
 		}
 
 		long fileEntryTypeId = counterLocalService.increment();
 
-		ddmStructureIds = _updateDDMStructure(
-			userId, fileEntryTypeUuid, fileEntryTypeId, groupId, nameMap,
-			descriptionMap, ddmStructureIds, serviceContext);
+		Boolean useDataEngineEditor = GetterUtil.getBoolean(
+			serviceContext.getAttribute("useDataEngineEditor"));
+		long ddmStructureId = GetterUtil.getLong(
+			serviceContext.getAttribute("ddmStructureId"));
+
+		if (!useDataEngineEditor || (ddmStructureId == 0)) {
+			ddmStructureIds = _updateDDMStructure(
+				userId, fileEntryTypeUuid, fileEntryTypeId, groupId, nameMap,
+				descriptionMap, ddmStructureIds, serviceContext);
+		}
+		else {
+			ddmStructureIds = ArrayUtil.append(ddmStructureIds, ddmStructureId);
+		}
 
 		validate(fileEntryTypeId, groupId, fileEntryTypeKey, ddmStructureIds);
 
@@ -505,10 +521,20 @@ public class DLFileEntryTypeLocalServiceImpl
 		DLFileEntryType dlFileEntryType =
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 
-		ddmStructureIds = _updateDDMStructure(
-			userId, dlFileEntryType.getUuid(), fileEntryTypeId,
-			dlFileEntryType.getGroupId(), nameMap, descriptionMap,
-			ddmStructureIds, serviceContext);
+		Boolean useDataEngineEditor = GetterUtil.getBoolean(
+			serviceContext.getAttribute("useDataEngineEditor"));
+		long ddmStructureId = GetterUtil.getLong(
+			serviceContext.getAttribute("ddmStructureId"));
+
+		if (!useDataEngineEditor || (ddmStructureId == 0)) {
+			ddmStructureIds = _updateDDMStructure(
+				userId, dlFileEntryType.getUuid(), fileEntryTypeId,
+				dlFileEntryType.getGroupId(), nameMap, descriptionMap,
+				ddmStructureIds, serviceContext);
+		}
+		else {
+			ddmStructureIds = ArrayUtil.append(ddmStructureIds, ddmStructureId);
+		}
 
 		validate(
 			fileEntryTypeId, dlFileEntryType.getGroupId(),

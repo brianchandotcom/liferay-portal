@@ -33,6 +33,21 @@ definition {
 		}
 	}
 
+	macro configureAutoTagging {
+		if ("${autoTagging}" == "Enabled") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Enable Auto Tagging of Assets on This Repository",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${autoTagging}" == "Disabled") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Enable Auto Tagging of Assets on This Repository",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		PortletEntry.save();
+	}
+
 	macro configureRecycleBin {
 		Panel.expandPanel(panel = "Recycle Bin");
 

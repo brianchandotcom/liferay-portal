@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.exception.RequiredFileEntryTypeExcept
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
+import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfiguration;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.kernel.RequiredStructureException;
@@ -30,6 +31,7 @@ import com.liferay.dynamic.data.mapping.kernel.StructureDuplicateElementExceptio
 import com.liferay.dynamic.data.mapping.kernel.StructureNameException;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -59,7 +61,9 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -67,6 +71,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
+	configurationPid = "com.liferay.document.library.configuration.FFDocumentLibraryDDMEditorConfiguration",
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
@@ -76,6 +81,14 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ffDocumentLibraryDDMEditorConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFDocumentLibraryDDMEditorConfiguration.class, properties);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -203,6 +216,10 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
 		serviceContext.setAttribute("ddmForm", ddmForm);
 
+		serviceContext.setAttribute(
+			"useDataEngineEditor",
+			_ffDocumentLibraryDDMEditorConfiguration.useDataEngineEditor());
+
 		if (fileEntryTypeId <= 0) {
 
 			// Add file entry type
@@ -243,6 +260,9 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLFileEntryTypeService _dlFileEntryTypeService;
+
+	private volatile FFDocumentLibraryDDMEditorConfiguration
+		_ffDocumentLibraryDDMEditorConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

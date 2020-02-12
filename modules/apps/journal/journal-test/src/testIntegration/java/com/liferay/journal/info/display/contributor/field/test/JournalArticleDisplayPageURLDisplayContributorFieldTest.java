@@ -44,8 +44,10 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -99,8 +101,7 @@ public class JournalArticleDisplayPageURLDisplayContributorFieldTest {
 			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				JournalArticle.class.getName());
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), 0);
+		JournalArticle journalArticle = _getJournalArticle();
 
 		Map<String, Object> fieldsValues =
 			infoDisplayContributor.getInfoDisplayFieldsValues(
@@ -115,8 +116,7 @@ public class JournalArticleDisplayPageURLDisplayContributorFieldTest {
 			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				JournalArticle.class.getName());
 
-		JournalArticle article = JournalTestUtil.addArticle(
-			_group.getGroupId(), 0);
+		JournalArticle article = _getJournalArticle();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry(article, true);
@@ -147,8 +147,7 @@ public class JournalArticleDisplayPageURLDisplayContributorFieldTest {
 			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				JournalArticle.class.getName());
 
-		JournalArticle article = JournalTestUtil.addArticle(
-			_group.getGroupId(), 0);
+		JournalArticle article = _getJournalArticle();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry(article, false);
@@ -188,6 +187,26 @@ public class JournalArticleDisplayPageURLDisplayContributorFieldTest {
 		sb.append(friendlyURLMap.get(LocaleUtil.getDefault()));
 
 		return sb.toString();
+	}
+
+	private JournalArticle _getJournalArticle() throws Exception {
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.getDefault(), "title"
+		).build();
+
+		Map<Locale, String> contentMap = HashMapBuilder.put(
+			LocaleUtil.getDefault(), "content"
+		).build();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		return JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class), titleMap, null,
+			contentMap, LocaleUtil.getSiteDefault(), false, true,
+			serviceContext);
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry(

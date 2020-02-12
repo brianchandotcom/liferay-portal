@@ -21,6 +21,9 @@ public class AccountScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_CONTACT = "contact";
 
+	public static final String CATEGORY_KEY_DEFINE_PERMISSIONS =
+		"define-permissions";
+
 	public static final String CATEGORY_KEY_DETAILS = "details";
 
 	public static final String CATEGORY_KEY_GENERAL = "general";
@@ -40,6 +43,9 @@ public class AccountScreenNavigationEntryConstants {
 
 	public static final String ENTRY_KEY_CONTACT_INFORMATION =
 		"contact-information";
+
+	public static final String ENTRY_KEY_DEFINE_PERMISSIONS =
+		"define-permissions";
 
 	public static final String ENTRY_KEY_DETAILS = "details";
 

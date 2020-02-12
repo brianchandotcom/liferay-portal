@@ -79,11 +79,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PROFILE_DETAILS</td>
-	<td>//iframe[@title='Details']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_ASSIGNEES</td>
 	<td>//iframe[contains(@id,'selectAssignees')]</td>
 	<td></td>

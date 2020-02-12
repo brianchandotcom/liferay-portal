@@ -1299,40 +1299,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editDetailsViaProfile {
-		Click(locator1 = "Profile#JOB_TITLE_FIELD");
-
-		SelectFrame(locator1 = "IFrame#PROFILE_DETAILS");
-
-		AssertElementPresent.assertElementPresent(locator1 = "TextInput#FIRST_NAME");
-
-		if (isSet(userFirstNameEdit)) {
-			Type(
-				locator1 = "TextInput#FIRST_NAME",
-				value1 = "${userFirstNameEdit}");
-		}
-
-		if (isSet(userLastNameEdit)) {
-			Type(
-				locator1 = "TextInput#LAST_NAME",
-				value1 = "${userLastNameEdit}");
-		}
-
-		if (isSet(userMiddleNameEdit)) {
-			Type(
-				locator1 = "TextInput#MIDDLE_NAME",
-				value1 = "${userMiddleNameEdit}");
-		}
-
-		if (isSet(userScreenNameEdit)) {
-			Type(
-				locator1 = "TextInput#SCREEN_NAME",
-				value1 = "${userScreenNameEdit}");
-		}
-
-		Button.clickSave();
-	}
-
 	macro editDisplaySettingsCP {
 		User.searchCP(searchTerm = "${userScreenName}");
 

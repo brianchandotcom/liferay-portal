@@ -185,22 +185,6 @@ definition {
 		Portlet.viewNoSpecificPG(portletName = "Notifications");
 	}
 
-	@description = "This is a use case for LPS-101973."
-	@priority = "4"
-	test UpdateUserInUserPersonalSite {
-		Navigator.gotoPersonalSite();
-
-		AssertElementPresent(
-			key_portletName = "Profile",
-			locator1 = "Home#PORTLET");
-
-		User.editDetailsViaProfile(userFirstNameEdit = "userfnEdit");
-
-		SearchPortlets.viewUserResultDetails(
-			pageName = "My Profile",
-			userName = "userfnEdit Test");
-	}
-
 	@description = "This is a use case for LPS-105387."
 	@priority = "5"
 	test UpdateUserPortrait {

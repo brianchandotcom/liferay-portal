@@ -12,18 +12,25 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React from 'react';
 
-import MillerColumnsColumn from './MillerColumnsColumn.es';
-
-const MillerColumns = ({columns}) => {
+const BreadcrumbsItem = ({active, title, url}) => {
 	return (
-		<div className="bg-white miller-columns-row">
-			{columns.map((items, index) => (
-				<MillerColumnsColumn index={index} items={items} key={index} />
-			))}
-		</div>
+		<li
+			className={classNames('breadcrumb-item', {
+				active
+			})}
+		>
+			{active ? (
+				<span className="breadcrumb-text-truncate">{title}</span>
+			) : (
+				<a className="breadcrumb-link" href={url}>
+					<span className="breadcrumb-text-truncate">{title}</span>
+				</a>
+			)}
+		</li>
 	);
 };
 
-export default MillerColumns;
+export default BreadcrumbsItem;

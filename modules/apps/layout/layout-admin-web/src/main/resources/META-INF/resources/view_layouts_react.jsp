@@ -68,7 +68,7 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 					<div>
 						<react:component
 							data="<%= layoutData %>"
-							module="js/miller_columns/Layout.es"
+							module="js/Layout.es"
 						/>
 					</div>
 				</c:otherwise>

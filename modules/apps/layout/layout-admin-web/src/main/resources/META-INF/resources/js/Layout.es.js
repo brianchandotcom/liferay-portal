@@ -14,8 +14,9 @@
 
 import React, {useContext} from 'react';
 
-import Breadcrumbs from './Breadcrumbs.es';
-import MillerColumns, {MillerColumnsContext} from './MillerColumns.es';
+import Breadcrumbs from './breadcrumbs/Breadcrumbs.es';
+import MillerColumns from './miller_columns/MillerColumns.es';
+import MillerColumnsContext from './miller_columns/MillerColumnsContext.es';
 
 const LayoutContext = React.createContext('');
 

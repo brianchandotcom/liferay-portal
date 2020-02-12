@@ -12,18 +12,17 @@
  * details.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 
-import MillerColumnsColumn from './MillerColumnsColumn.es';
+const MillerColumnsContext = React.createContext({
+	namespace: ''
+});
 
-const MillerColumns = ({columns}) => {
-	return (
-		<div className="bg-white miller-columns-row">
-			{columns.map((items, index) => (
-				<MillerColumnsColumn index={index} items={items} key={index} />
-			))}
-		</div>
-	);
+MillerColumnsContext.Provider.propTypes = {
+	value: PropTypes.shape({
+		namespace: PropTypes.string
+	})
 };
 
-export default MillerColumns;
+export default MillerColumnsContext;

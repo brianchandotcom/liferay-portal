@@ -12,32 +12,15 @@
  * details.
  */
 
-import classNames from 'classnames';
 import React from 'react';
 
-const Breadcrumb = ({active, title, url}) => {
-	return (
-		<li
-			className={classNames('breadcrumb-item', {
-				active
-			})}
-		>
-			{active ? (
-				<span className="breadcrumb-text-truncate">{title}</span>
-			) : (
-				<a className="breadcrumb-link" href={url}>
-					<span className="breadcrumb-text-truncate">{title}</span>
-				</a>
-			)}
-		</li>
-	);
-};
+import BreadcrumbsItem from './BreadcrumbsItem.es';
 
 const Breadcrumbs = ({entries}) => {
 	return (
 		<ol className="breadcrumb">
 			{entries.map((entry, index) => (
-				<Breadcrumb
+				<BreadcrumbsItem
 					active={index === entries.length - 1}
 					key={entry.url}
 					title={entry.title}
@@ -49,4 +32,3 @@ const Breadcrumbs = ({entries}) => {
 };
 
 export default Breadcrumbs;
-export {Breadcrumb, Breadcrumbs};

@@ -14,16 +14,27 @@
 
 import React from 'react';
 
-import MillerColumnsColumn from './MillerColumnsColumn.es';
+import MillerColumnsColumnItem from './MillerColumnsColumnItem.es';
 
-const MillerColumns = ({columns}) => {
+const MillerColumnsColumn = ({index, items}) => {
 	return (
-		<div className="bg-white miller-columns-row">
-			{columns.map((items, index) => (
-				<MillerColumnsColumn index={index} items={items} key={index} />
+		<ul className="col-11 col-lg-4 col-md-6 miller-columns-col show-quick-actions-on-hover">
+			{items.map(item => (
+				<MillerColumnsColumnItem
+					active={item.active}
+					checked={item.checked}
+					description={item.description}
+					draggable={index !== 0}
+					hasChild={item.hasChild}
+					key={item.url}
+					selectable={index !== 0}
+					state={item.state}
+					title={item.title}
+					url={item.url}
+				/>
 			))}
-		</div>
+		</ul>
 	);
 };
 
-export default MillerColumns;
+export default MillerColumnsColumn;

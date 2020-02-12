@@ -12,17 +12,16 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React from 'react';
 
 import Breadcrumbs from './breadcrumbs/Breadcrumbs.es';
 import MillerColumns from './miller_columns/MillerColumns.es';
 import MillerColumnsContext from './miller_columns/MillerColumnsContext.es';
 
-const LayoutContext = React.createContext('');
-
-const Layout = ({breadcrumbEntries, layoutColumns}) => {
-	const {namespace} = useContext(LayoutContext);
-
+const Layout = ({
+	context: {namespace},
+	props: {breadcrumbEntries, layoutColumns}
+}) => {
 	return (
 		<>
 			<Breadcrumbs entries={breadcrumbEntries} />
@@ -34,13 +33,4 @@ const Layout = ({breadcrumbEntries, layoutColumns}) => {
 	);
 };
 
-export default function({context, props}) {
-	return (
-		<LayoutContext.Provider value={context}>
-			<Layout
-				breadcrumbEntries={props.breadcrumbEntries}
-				layoutColumns={props.layoutColumns}
-			/>
-		</LayoutContext.Provider>
-	);
-}
+export default Layout;

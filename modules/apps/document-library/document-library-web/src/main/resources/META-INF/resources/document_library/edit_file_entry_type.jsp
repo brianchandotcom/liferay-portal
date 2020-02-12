@@ -35,9 +35,7 @@ if (fileEntryType != null) {
 	ddmStructures = fileEntryType.getDDMStructures();
 
 	if (ddmStructure != null) {
-		ddmStructures = new ArrayList<>(ddmStructures);
-
-		ddmStructures.remove(ddmStructure);
+		ddmStructures = ListUtil.filter(fileEntryType.getDDMStructures(), currentDDMStructure -> currentDDMStructure.getStructureId() != ddmStructure.getStructureId());
 	}
 }
 

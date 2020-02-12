@@ -9,7 +9,7 @@ $sidebarButtonHeight: $sidebarButtonWidth;
 $zIndexButtons: 1;
 $zIndexContent: 0;
 
-.page-editor-sidebar {
+.page-editor__sidebar {
 	display: flex;
 	height: calc(100vh - #{$toolbarHeight});
 	position: fixed;
@@ -17,7 +17,7 @@ $zIndexContent: 0;
 	top: $toolbarHeight;
 	z-index: $zIndexSidebar;
 
-	&-buttons {
+	&__buttons {
 		background-color: $sidebarButtonBackgroundColor;
 		flex-direction: column;
 		padding-top: 16px;
@@ -41,7 +41,7 @@ $zIndexContent: 0;
 		}
 	}
 
-	&-content {
+	&__content {
 		background-color: $sidebarContentBackgroundColor;
 		border-left: 1px solid $sidebarBorderColor;
 		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
@@ -52,10 +52,10 @@ $zIndexContent: 0;
 		transition: transform ease $defaultTransitionDuration;
 		width: $sidebarContentWidth;
 		z-index: $zIndexContent;
-	}
 
-	&-content-open {
-		transform: translateX(0);
+		&--open {
+			transform: translateX(0);
+		}
 	}
 
 	body.has-control-menu & {
@@ -69,10 +69,10 @@ $zIndexContent: 0;
 	}
 }
 
-#wrapper.page-editor-sidebar-padding {
+#wrapper.page-editor__sidebar-padding {
 	padding-right: $sidebarButtonWidth;
 }
 
-#wrapper.page-editor-sidebar-padding-open {
+#wrapper.page-editor__sidebar-padding-open {
 	padding-right: $sidebarButtonWidth + $sidebarContentWidth;
 }

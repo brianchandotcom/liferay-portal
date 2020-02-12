@@ -177,9 +177,9 @@ export default function Sidebar() {
 
 	return (
 		<ClayTooltipProvider>
-			<div className="page-editor-sidebar">
+			<div className="page-editor__sidebar">
 				<div
-					className="page-editor-sidebar-buttons"
+					className="page-editor__sidebar__buttons"
 					onClick={deselectItem}
 				>
 					{panels.reduce((elements, group, groupIndex) => {
@@ -227,8 +227,8 @@ export default function Sidebar() {
 				</div>
 				<div
 					className={classNames({
-						'page-editor-sidebar-content': true,
-						'page-editor-sidebar-content-open': sidebarOpen
+						'page-editor__sidebar__content': true,
+						'page-editor__sidebar__content--open': sidebarOpen
 					})}
 					onClick={deselectItem}
 				>
@@ -306,12 +306,12 @@ function adjustWrapperPadding({sidebarOpen}) {
 		const classList = wrapper.classList;
 
 		if (sidebarOpen) {
-			classList.add('page-editor-sidebar-padding-open');
-			classList.remove('page-editor-sidebar-padding');
+			classList.add('page-editor__sidebar-padding-open');
+			classList.remove('page-editor__sidebar-padding');
 		}
 		else {
-			classList.add('page-editor-sidebar-padding');
-			classList.remove('page-editor-sidebar-padding-open');
+			classList.add('page-editor__sidebar-padding');
+			classList.remove('page-editor__sidebar-padding-open');
 		}
 	}
 }

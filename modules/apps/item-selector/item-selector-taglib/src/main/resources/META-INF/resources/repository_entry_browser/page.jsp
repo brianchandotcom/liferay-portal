@@ -391,6 +391,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										folderImage = "folder_full_document";
 									}
 								%>
+
 									<liferay-ui:search-container-column-icon
 										icon="folder"
 									/>

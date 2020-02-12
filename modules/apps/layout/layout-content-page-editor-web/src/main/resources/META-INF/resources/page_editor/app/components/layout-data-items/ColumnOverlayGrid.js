@@ -25,7 +25,7 @@ export default function ColumnOverlayGrid({
 }) {
 	return createPortal(
 		<div
-			className="column-overlay-grid position-fixed"
+			className="page-editor__column-overlay-grid position-fixed"
 			style={{
 				height: `${rowRect.height}px`,
 				left: `${rowRect.left}px`,

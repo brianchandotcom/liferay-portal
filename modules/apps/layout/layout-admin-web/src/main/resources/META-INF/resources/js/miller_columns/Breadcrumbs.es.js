@@ -22,14 +22,12 @@ const Breadcrumb = ({active, title, url}) => {
 				active
 			})}
 		>
-			{!active && (
+			{active ? (
+				<span className="breadcrumb-text-truncate">{title}</span>
+			) : (
 				<a className="breadcrumb-link" href={url}>
 					<span className="breadcrumb-text-truncate">{title}</span>
 				</a>
-			)}
-
-			{active && (
-				<span className="breadcrumb-text-truncate">{title}</span>
 			)}
 		</li>
 	);

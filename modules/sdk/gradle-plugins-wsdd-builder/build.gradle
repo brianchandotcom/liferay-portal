@@ -19,7 +19,6 @@ dependencies {
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "1.0.11"
-	compileOnly project(":core:petra:petra-string")
 }
 
 gradleTest {

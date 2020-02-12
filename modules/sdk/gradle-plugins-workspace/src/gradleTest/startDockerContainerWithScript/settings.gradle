@@ -1,6 +1,6 @@
 import com.bmuschko.gradle.docker.tasks.container.DockerLogsContainer
 
-import java.net.InetAddress;
+import java.net.InetAddress
 
 buildscript {
 	dependencies {
@@ -10,15 +10,15 @@ buildscript {
 
 apply plugin: "com.liferay.workspace"
 
-def expectedLine = "Hello World"
+String expectedLine = "Hello World"
 
 gradle.liferayWorkspace {
-	dockerImageId = InetAddress.getLocalHost().getCanonicalHostName().toLowerCase() + 'startdockercontainerwithscript'
-	dockerContainerId = InetAddress.getLocalHost().getCanonicalHostName().toLowerCase() + 'startdockercontainerwithscript'
+	dockerImageId = InetAddress.localHost.canonicalHostName.toLowerCase() + 'startdockercontainerwithscript'
+	dockerContainerId = InetAddress.localHost.canonicalHostName.toLowerCase() + 'startdockercontainerwithscript'
 }
 
 gradle.projectsEvaluated {
-	def root = gradle.rootProject
+	Project root = gradle.rootProject
 	root.tasks.register("assertLog", DockerLogsContainer) {
 		dependsOn root.tasks.startDockerContainer
 		finalizedBy root.tasks.cleanDockerImage

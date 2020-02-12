@@ -400,7 +400,7 @@ public class ContentPageEditorDisplayContext {
 				"permissions",
 				HashMapBuilder.<String, Object>put(
 					ContentPageEditorActionKeys.LOCKED_SEGMENTS_EXPERIMENT,
-					editorSoyContext.get("hasLockedSegmentsExperiment")
+					editorSoyContext.get("lockedSegmentsExperience")
 				).put(
 					ContentPageEditorActionKeys.UPDATE,
 					editorSoyContext.get("hasUpdatePermissions")

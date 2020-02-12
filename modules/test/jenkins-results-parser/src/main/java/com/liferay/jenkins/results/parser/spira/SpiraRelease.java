@@ -266,8 +266,6 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 	private SpiraRelease(JSONObject jsonObject) {
 		super(jsonObject);
-
-		this.jsonObject.put("Path", getPath());
 	}
 
 	private static final Map<String, SpiraRelease> _spiraReleases =

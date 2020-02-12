@@ -22,6 +22,8 @@ import {
 	YAxis
 } from 'recharts';
 
+import {numberFormat} from '../utils/numberFormat';
+
 const {useEffect, useMemo, useState} = React;
 
 const AXIS_COLOR = '#6B6C7E';
@@ -136,13 +138,13 @@ const generateDateFormatters = key => {
 	};
 };
 
-function legendFormatterGenerator(totals) {
+function legendFormatterGenerator(totals, languageTag) {
 	return value => (
 		<span>
 			<span className="text-secondary">
 				{keyToTranslatedLabelValue(value)}
 			</span>
-			<b>{' ' + totals[value]}</b>
+			<b>{' ' + numberFormat(languageTag, totals[value])}</b>
 		</span>
 	);
 }
@@ -187,7 +189,8 @@ export default function Chart({languageTag, dataProviders = []}) {
 		}
 	}, [dataSet, dateFormatters]);
 
-	const legendFormatter = dataSet && legendFormatterGenerator(dataSet.totals);
+	const legendFormatter =
+		dataSet && legendFormatterGenerator(dataSet.totals, languageTag);
 
 	return dataSet ? (
 		<>
@@ -208,9 +211,7 @@ export default function Chart({languageTag, dataProviders = []}) {
 				<CartesianGrid strokeDasharray="0 0" vertical={false} />
 
 				<XAxis
-					axisLine={false}
 					dataKey="label"
-					stroke={AXIS_COLOR}
 					tickFormatter={dateFormatters.formatNumericDay}
 					tickLine={false}
 				/>
@@ -218,16 +219,19 @@ export default function Chart({languageTag, dataProviders = []}) {
 				<YAxis
 					allowDecimals={false}
 					minTickGap={3}
-					stroke={AXIS_COLOR}
 					tickFormatter={thousandsToKilosFormater}
 					tickLine={false}
-					width={25}
+					width={40}
 				/>
 
 				<Tooltip
 					formatter={(value, name, {payload}) => {
-						return [value, payload.langLabel];
+						return [
+							numberFormat(languageTag, value),
+							payload.langLabel
+						];
 					}}
+					itemStyle={{color: AXIS_COLOR}}
 					labelFormatter={dateFormatters.formatLongDate}
 					separator={': '}
 				/>

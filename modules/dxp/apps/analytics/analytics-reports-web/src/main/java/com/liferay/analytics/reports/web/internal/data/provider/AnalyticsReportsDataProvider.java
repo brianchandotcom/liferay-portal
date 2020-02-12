@@ -55,11 +55,11 @@ public class AnalyticsReportsDataProvider {
 	}
 
 	public Long getTotalReads(long plid) {
-		return 9999L;
+		return 107152L;
 	}
 
 	public Long getTotalViews(long plid) {
-		return 9999L;
+		return 187427L;
 	}
 
 	private String _read(String fileName) throws IOException {

@@ -29,7 +29,7 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 
 			<react:component
 				data="<%= analyticsReportsDisplayContext.getData() %>"
-				module="js/AnalyticsReportsApp.es"
+				module="js/AnalyticsReportsApp"
 			/>
 		</div>
 	</c:when>

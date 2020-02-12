@@ -12,7 +12,7 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import BasicInformation from '../../../src/main/resources/META-INF/resources/js/components/BasicInformation.es';
+import BasicInformation from '../../../src/main/resources/META-INF/resources/js/components/BasicInformation';
 
 import '@testing-library/jest-dom/extend-expect';
 

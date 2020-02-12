@@ -11,10 +11,11 @@
 
 import React from 'react';
 
-import BasicInformation from './components/BasicInformation.es';
-import Chart from './components/Chart.es';
-import TotalCount from './components/TotalCount.es';
-import APIService from './util/APIService.es';
+import BasicInformation from './components/BasicInformation';
+import Chart from './components/Chart';
+import TotalCount from './components/TotalCount';
+import APIService from './utils/APIService';
+import {numberFormat} from './utils/numberFormat';
 
 export default function({context, props}) {
 	const {endpoints, languageTag, namespace, page} = context;
@@ -38,12 +39,18 @@ export default function({context, props}) {
 
 	function _handleTotalReads() {
 		return api.getTotalReads().then(response => {
-			return response.analyticsReportsTotalReads;
+			return numberFormat(
+				languageTag,
+				response.analyticsReportsTotalReads
+			);
 		});
 	}
 	function _handleTotalViews() {
 		return api.getTotalViews().then(response => {
-			return response.analyticsReportsTotalViews;
+			return numberFormat(
+				languageTag,
+				response.analyticsReportsTotalViews
+			);
 		});
 	}
 

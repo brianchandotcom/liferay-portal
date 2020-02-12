@@ -119,7 +119,7 @@ public class MessageBoardMessageResourceImpl
 
 		return _getMessageBoardMessagesPage(
 			_getMessageBoardListActions(mbMessage), parentMessageBoardMessageId,
-			search, filter, pagination, sorts, flatten, null);
+			null, flatten, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -143,8 +143,8 @@ public class MessageBoardMessageResourceImpl
 
 		return _getMessageBoardMessagesPage(
 			_getMessageBoardThreadListActions(mbThread),
-			mbThread.getRootMessageId(), search, filter, pagination, sorts,
-			false, null);
+			mbThread.getRootMessageId(), null, false, search, filter,
+			pagination, sorts);
 	}
 
 	@Override
@@ -164,8 +164,8 @@ public class MessageBoardMessageResourceImpl
 		throws Exception {
 
 		return _getMessageBoardMessagesPage(
-			_getSiteListActions(siteId), null, search, filter, pagination,
-			sorts, flatten, siteId);
+			_getSiteListActions(siteId), null, siteId, flatten, search, filter,
+			pagination, sorts);
 	}
 
 	@Override
@@ -360,8 +360,8 @@ public class MessageBoardMessageResourceImpl
 
 	private Page<MessageBoardMessage> _getMessageBoardMessagesPage(
 			Map<String, Map<String, String>> actions,
-			Long messageBoardMessageId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts, Boolean flatten, Long siteId)
+			Long messageBoardMessageId, Long siteId, Boolean flatten,
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (messageBoardMessageId != null) {

@@ -200,6 +200,8 @@ definition {
 	}
 
 	macro assertFragmentSidebarLoaded {
+		Pause(locator1 = "3000");
+
 		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_LOADED");
 	}
 

@@ -29,16 +29,21 @@ com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = dlEditDDMStru
 
 long groupId = BeanParamUtil.getLong(ddmStructure, request, "groupId", scopeGroupId);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false) : LanguageUtil.get(request, "new-structure"));
+boolean localizeTitle = true;
+String title = LanguageUtil.format(request, "new-x", LanguageUtil.get(resourceBundle, "metadata-set"), false);
 
 DDMForm ddmForm = null;
 
 if (ddmStructure != null) {
 	ddmForm = ddmStructure.getDDMForm();
+	localizeTitle = false;
+	title = LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false);
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(title);
 %>
 
 <portlet:actionURL name="/document_library/ddm/add_ddm_structure" var="addDDMStructureURL" />
@@ -112,24 +117,6 @@ if (ddmStructure != null) {
 		<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />
 		<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
 		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
-
-		<%
-		boolean localizeTitle = true;
-		String title = "new-structure";
-
-		if (ddmStructure != null) {
-			localizeTitle = false;
-			title = LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false);
-		}
-		else {
-			title = LanguageUtil.format(request, "new-x", LanguageUtil.get(resourceBundle, "metadata-set"), false);
-		}
-
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(redirect);
-
-		renderResponse.setTitle(title);
-		%>
 
 		<aui:model-context bean="<%= ddmStructure %>" model="<%= com.liferay.dynamic.data.mapping.model.DDMStructure.class %>" />
 

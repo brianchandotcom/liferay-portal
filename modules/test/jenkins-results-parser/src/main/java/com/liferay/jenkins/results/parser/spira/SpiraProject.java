@@ -27,7 +27,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SpiraProject extends SpiraArtifact {
+public class SpiraProject extends BaseSpiraArtifact {
 
 	public static SpiraProject getSpiraProjectByID(int projectID) {
 		if (_spiraProjects.containsKey(projectID)) {

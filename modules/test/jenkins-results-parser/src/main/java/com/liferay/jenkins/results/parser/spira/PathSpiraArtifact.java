@@ -21,7 +21,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class PathSpiraArtifact extends SpiraArtifact {
+public abstract class PathSpiraArtifact extends BaseSpiraArtifact {
 
 	public String getPath() {
 		String name = getName();

@@ -23,13 +23,10 @@ const Layout = ({
 	props: {breadcrumbEntries, layoutColumns}
 }) => {
 	return (
-		<>
+		<MillerColumnsContext.Provider value={{namespace}}>
 			<Breadcrumbs entries={breadcrumbEntries} />
-
-			<MillerColumnsContext.Provider value={{namespace}}>
-				<MillerColumns columns={layoutColumns} />
-			</MillerColumnsContext.Provider>
-		</>
+			<MillerColumns columns={layoutColumns} />
+		</MillerColumnsContext.Provider>
 	);
 };
 

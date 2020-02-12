@@ -23,7 +23,7 @@
 
 	var PATH_EDITOR_CKEDITOR = LiferayAUI.getEditorCKEditorPath();
 
-	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
+	var PATH_JAVASCRIPT = '/o/frontend-js-aui-web';
 
 	var SUPPORTS_INPUT_SELECTION =
 		typeof INPUT_EL.selectionStart === 'number' &&
@@ -628,7 +628,7 @@
 			portal: {
 				base:
 					Liferay.ThemeDisplay.getCDNBaseURL() +
-					PATH_JAVASCRIPT +
+					LiferayAUI.getJavaScriptRootPath() +
 					'/liferay/',
 				combine: false,
 				modules: {

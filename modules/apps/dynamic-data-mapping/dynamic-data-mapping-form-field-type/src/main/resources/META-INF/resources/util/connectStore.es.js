@@ -29,7 +29,12 @@ export const connectStore = Component => {
 
 		const emit = (name, event, value) =>
 			instance.emit(name, {
-				fieldInstance: instance,
+				// A hacky to imitate an instance of a Metal+soy component
+				fieldInstance: {
+					...instance,
+					...instance.props,
+					isDisposed: instance.isDisposed
+				},
 				originalEvent: event,
 				value
 			});

@@ -1071,32 +1071,21 @@ public class EditAssetListDisplayContext {
 
 		assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new AssetEntryItemSelectorReturnType());
+		assetEntryItemSelectorCriterion.setGroupId(
+			_themeDisplay.getScopeGroupId());
+		assetEntryItemSelectorCriterion.setSelectedGroupIds(
+			new long[] {_themeDisplay.getScopeGroupId()});
+		assetEntryItemSelectorCriterion.setShowNonindexable(true);
+		assetEntryItemSelectorCriterion.setShowScheduled(true);
+		assetEntryItemSelectorCriterion.setSubtypeSelectionId(
+			subtypeSelectionId);
+		assetEntryItemSelectorCriterion.setTypeSelection(
+			rendererFactory.getClassName());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+		return _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
 			_portletResponse.getNamespace() + "selectAsset",
 			assetEntryItemSelectorCriterion);
-
-		itemSelectorURL.setParameter(
-			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-		itemSelectorURL.setParameter(
-			"multipleSelection", String.valueOf(Boolean.TRUE));
-		itemSelectorURL.setParameter(
-			"selectedGroupIds",
-			String.valueOf(_themeDisplay.getScopeGroupId()));
-		itemSelectorURL.setParameter(
-			"typeSelection", rendererFactory.getClassName());
-		itemSelectorURL.setParameter(
-			"showNonindexable", String.valueOf(Boolean.TRUE));
-		itemSelectorURL.setParameter(
-			"showScheduled", String.valueOf(Boolean.TRUE));
-
-		if (subtypeSelectionId != 0) {
-			itemSelectorURL.setParameter(
-				"subtypeSelectionId", String.valueOf(subtypeSelectionId));
-		}
-
-		return itemSelectorURL;
 	}
 
 	private Long[] _getClassTypeIds(

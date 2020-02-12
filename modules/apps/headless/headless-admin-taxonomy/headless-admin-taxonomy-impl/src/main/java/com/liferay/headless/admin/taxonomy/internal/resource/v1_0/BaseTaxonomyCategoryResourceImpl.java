@@ -204,6 +204,10 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		TaxonomyCategory existingTaxonomyCategory = getTaxonomyCategory(
 			taxonomyCategoryId);
 
+		if (taxonomyCategory.getActions() != null) {
+			existingTaxonomyCategory.setActions(taxonomyCategory.getActions());
+		}
+
 		if (taxonomyCategory.getAvailableLanguages() != null) {
 			existingTaxonomyCategory.setAvailableLanguages(
 				taxonomyCategory.getAvailableLanguages());

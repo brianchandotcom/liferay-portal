@@ -200,6 +200,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		TaxonomyVocabulary existingTaxonomyVocabulary = getTaxonomyVocabulary(
 			taxonomyVocabularyId);
 
+		if (taxonomyVocabulary.getActions() != null) {
+			existingTaxonomyVocabulary.setActions(
+				taxonomyVocabulary.getActions());
+		}
+
 		if (taxonomyVocabulary.getAvailableLanguages() != null) {
 			existingTaxonomyVocabulary.setAvailableLanguages(
 				taxonomyVocabulary.getAvailableLanguages());

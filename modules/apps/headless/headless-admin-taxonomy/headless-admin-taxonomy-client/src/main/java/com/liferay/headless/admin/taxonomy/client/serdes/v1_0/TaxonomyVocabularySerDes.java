@@ -63,6 +63,16 @@ public class TaxonomyVocabularySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (taxonomyVocabulary.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(taxonomyVocabulary.getActions()));
+		}
+
 		if (taxonomyVocabulary.getAssetTypes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -273,6 +283,13 @@ public class TaxonomyVocabularySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (taxonomyVocabulary.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(taxonomyVocabulary.getActions()));
+		}
+
 		if (taxonomyVocabulary.getAssetTypes() == null) {
 			map.put("assetTypes", null);
 		}
@@ -395,7 +412,14 @@ public class TaxonomyVocabularySerDes {
 			TaxonomyVocabulary taxonomyVocabulary, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "assetTypes")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					taxonomyVocabulary.setActions(
+						(Map)TaxonomyVocabularySerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetTypes")) {
 				if (jsonParserFieldValue != null) {
 					taxonomyVocabulary.setAssetTypes(
 						Stream.of(

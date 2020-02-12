@@ -89,10 +89,10 @@ buildChangelogs {
 						ticketNumber = gitLogMatcher.group(2)
 					}
 
-					if (ticketNumber.startsWith("Revert")) {
+					if (ticketNumber.startsWith("Revert \"")) {
 						commitMessage = ticketNumber + commitMessage
 
-						ticketNumber = ""
+						ticketNumber = ticketNumber.substring(8)
 					}
 
 					return ["SHA" : sha, "TICKET-NUMBER" : ticketNumber.replaceAll(".*?([A-Z]+-\\d+.*)", "\$1"), "COMMIT-MESSAGE" : commitMessage]

@@ -110,7 +110,7 @@ public class SpiraRestAPIUtil {
 
 		List<String> urlParameterStrings = new ArrayList<>();
 
-		for (Map.Entry urlParameter : urlParameters.entrySet()) {
+		for (Map.Entry<String, String> urlParameter : urlParameters.entrySet()) {
 			urlParameterStrings.add(
 				urlParameter.getKey() + "=" + urlParameter.getValue());
 		}

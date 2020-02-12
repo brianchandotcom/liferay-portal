@@ -14,7 +14,7 @@
 
 import React, {useContext, useEffect, useMemo} from 'react';
 
-import togglePermssions from '../../../app/actions/togglePermission';
+import togglePermissions from '../../../app/actions/togglePermission';
 import {ConfigContext} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import ExperienceSelector from './ExperienceSelector';
@@ -61,7 +61,7 @@ export default function ExperienceToolbarSection({selectId}) {
 
 	useEffect(() => {
 		dispatch(
-			togglePermssions(
+			togglePermissions(
 				'LOCKED_SEGMENTS_EXPERIMENT',
 				selectedExperience.hasLockedSegmentsExperiment
 			)

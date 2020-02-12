@@ -68,11 +68,3 @@ $zIndexContent: 0;
 		}
 	}
 }
-
-#wrapper.page-editor__sidebar-padding {
-	padding-right: $sidebarButtonWidth;
-}
-
-#wrapper.page-editor__sidebar-padding-open {
-	padding-right: $sidebarButtonWidth + $sidebarContentWidth;
-}

@@ -95,7 +95,8 @@ export default {
 					segmentsExperienceId
 				}
 			},
-			onNetworkStatus
+			onNetworkStatus,
+			{requestGenerateDraft: true}
 		);
 	},
 
@@ -138,7 +139,8 @@ export default {
 					segmentsExperienceId
 				}
 			},
-			onNetworkStatus
+			onNetworkStatus,
+			{requestGenerateDraft: true}
 		);
 	},
 
@@ -221,7 +223,8 @@ export default {
 					updateClassedModel: true
 				}
 			},
-			onNetworkStatus
+			onNetworkStatus,
+			{requestGenerateDraft: true}
 		);
 	}
 };

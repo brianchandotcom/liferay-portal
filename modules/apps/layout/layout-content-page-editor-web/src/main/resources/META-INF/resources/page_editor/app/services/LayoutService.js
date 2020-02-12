@@ -35,7 +35,7 @@ export default {
 	}) {
 		const {addItemURL} = config;
 
-		return serviceFetch(
+		return layoutServiceFetch(
 			config,
 			addItemURL,
 			{
@@ -61,7 +61,7 @@ export default {
 	deleteItem({config, itemId, onNetworkStatus, segmentsExperienceId}) {
 		const {deleteItemURL} = config;
 
-		return serviceFetch(
+		return layoutServiceFetch(
 			config,
 			deleteItemURL,
 			{
@@ -94,7 +94,7 @@ export default {
 	}) {
 		const {moveItemURL} = config;
 
-		return serviceFetch(
+		return layoutServiceFetch(
 			config,
 			moveItemURL,
 			{
@@ -127,7 +127,7 @@ export default {
 	}) {
 		const {updateItemConfigURL} = config;
 
-		return serviceFetch(
+		return layoutServiceFetch(
 			config,
 			updateItemConfigURL,
 			{
@@ -157,7 +157,7 @@ export default {
 	}) {
 		const {updateLayoutPageTemplateDataURL} = config;
 
-		return serviceFetch(
+		return layoutServiceFetch(
 			config,
 			updateLayoutPageTemplateDataURL,
 			{
@@ -188,7 +188,7 @@ export default {
 	}) {
 		const {updateRowColumnsURL} = config;
 
-		return serviceFetch(
+		return layoutServiceFetch(
 			config,
 			updateRowColumnsURL,
 			{
@@ -201,4 +201,10 @@ export default {
 			onNetworkStatus
 		);
 	}
+};
+
+const layoutServiceFetch = (config, url, options, onNetworkStatus) => {
+	return serviceFetch(config, url, options, onNetworkStatus, {
+		requestGenerateDraft: true
+	});
 };

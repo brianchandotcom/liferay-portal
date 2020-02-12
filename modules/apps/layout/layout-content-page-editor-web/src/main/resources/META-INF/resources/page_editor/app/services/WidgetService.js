@@ -47,7 +47,8 @@ export default {
 					segmentsExperienceId
 				}
 			},
-			onNetworkStatus
+			onNetworkStatus,
+			{requestGenerateDraft: true}
 		);
 	}
 };

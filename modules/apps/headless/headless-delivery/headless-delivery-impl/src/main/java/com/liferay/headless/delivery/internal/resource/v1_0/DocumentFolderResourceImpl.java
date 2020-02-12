@@ -87,8 +87,10 @@ public class DocumentFolderResourceImpl
 
 		return _getDocumentFoldersPage(
 			_getDocumentFolderListActions(parentDocumentFolder.getSiteId()),
-			parentDocumentFolder.getSiteId(), flatten, search, filter,
-			parentDocumentFolder.getId(), pagination, sorts);
+			parentDocumentFolder.getId(), parentDocumentFolder.getSiteId(),
+			flatten,
+			search, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -113,8 +115,8 @@ public class DocumentFolderResourceImpl
 		}
 
 		return _getDocumentFoldersPage(
-			_getSiteListActions(siteId), siteId, flatten, search, filter,
-			documentFolderId, pagination, sorts);
+			_getSiteListActions(siteId), documentFolderId, siteId, flatten,
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -264,9 +266,9 @@ public class DocumentFolderResourceImpl
 	}
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(
-			Map<String, Map<String, String>> actions, Long siteId,
-			Boolean flatten, String search, Filter filter,
-			Long parentDocumentFolderId, Pagination pagination, Sort[] sorts)
+		Map<String, Map<String, String>> actions, Long parentDocumentFolderId,
+		Long siteId, Boolean flatten, String search, Filter filter,
+		Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -287,8 +289,8 @@ public class DocumentFolderResourceImpl
 					}
 
 					booleanFilter.add(
-						new TermFilter(
-							field, String.valueOf(parentDocumentFolderId)),
+						new TermFilter(field, String.valueOf(
+							parentDocumentFolderId)),
 						BooleanClauseOccur.MUST);
 				}
 			},

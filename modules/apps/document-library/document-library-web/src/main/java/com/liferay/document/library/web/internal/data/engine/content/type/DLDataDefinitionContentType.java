@@ -15,8 +15,9 @@
 package com.liferay.document.library.web.internal.data.engine.content.type;
 
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
-import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +33,17 @@ public class DLDataDefinitionContentType implements DataDefinitionContentType {
 
 	@Override
 	public long getClassNameId() {
-		return _portal.getClassNameId(DLFileEntryType.class);
+		return _portal.getClassNameId(DLFileEntryMetadata.class);
+	}
+
+	@Override
+	public String getContentType() {
+		return "document-library";
+	}
+
+	@Override
+	public String getPortletResourceName() {
+		return DLConstants.RESOURCE_NAME;
 	}
 
 	@Reference

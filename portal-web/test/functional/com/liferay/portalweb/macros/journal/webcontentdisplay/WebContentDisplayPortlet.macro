@@ -323,24 +323,9 @@ definition {
 	}
 
 	macro selectWebContent {
-		if ("${contentPage}" == "true") {
-			MouseOver(
-				key_infoMessage = "Select Web Content to make it visible",
-				locator1 = "Message#INFO_SPECIFIC");
-
-			Click(
-				key_fragmentName = "Web Content Display",
-				locator1 = "Fragment#FRAGMENT_ELLIPSIS_ICON");
-
-			Click(
-				key_menuItem = "Configuration",
-				locator1 = "Fragment#FRAGMENT_FLOATING_MENU_ITEM");
-		}
-		else {
-			Portlet.gotoPortletOptions(
-				portletName = "Web Content Display",
-				portletOption = "Configuration");
-		}
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 

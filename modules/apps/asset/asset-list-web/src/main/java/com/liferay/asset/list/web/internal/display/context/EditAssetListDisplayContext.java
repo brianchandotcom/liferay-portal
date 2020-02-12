@@ -38,7 +38,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
+import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -103,9 +105,10 @@ import javax.servlet.http.HttpServletRequest;
 public class EditAssetListDisplayContext {
 
 	public EditAssetListDisplayContext(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		UnicodeProperties properties) {
+		ItemSelector itemSelector, PortletRequest portletRequest,
+		PortletResponse portletResponse, UnicodeProperties properties) {
 
+		_itemSelector = itemSelector;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_properties = properties;
@@ -579,17 +582,13 @@ public class EditAssetListDisplayContext {
 	}
 
 	public String getGroupItemSelectorURL() {
-		ItemSelector itemSelector =
-			(ItemSelector)_httpServletRequest.getAttribute(
-				AssetListWebKeys.ITEM_SELECTOR);
-
 		ItemSelectorCriterion itemSelectorCriterion =
 			new GroupItemSelectorCriterion();
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new GroupItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 			getSelectGroupEventName(), itemSelectorCriterion);
 
@@ -617,31 +616,34 @@ public class EditAssetListDisplayContext {
 				continue;
 			}
 
-			PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
-				_httpServletRequest, curRendererFactory.getClassName(),
-				PortletProvider.Action.BROWSE);
+			AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
+				new AssetEntryItemSelectorCriterion();
 
-			if (assetBrowserURL == null) {
+			assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				new AssetEntryItemSelectorReturnType());
+
+			PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+				_portletResponse.getNamespace() + "selectAsset",
+				assetEntryItemSelectorCriterion);
+
+			if (itemSelectorURL == null) {
 				continue;
 			}
 
-			assetBrowserURL.setParameter(
+			itemSelectorURL.setParameter(
 				"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-			assetBrowserURL.setParameter(
+			itemSelectorURL.setParameter(
 				"multipleSelection", String.valueOf(Boolean.TRUE));
-			assetBrowserURL.setParameter(
+			itemSelectorURL.setParameter(
 				"selectedGroupIds",
 				String.valueOf(_themeDisplay.getScopeGroupId()));
-			assetBrowserURL.setParameter(
+			itemSelectorURL.setParameter(
 				"typeSelection", curRendererFactory.getClassName());
-			assetBrowserURL.setParameter(
+			itemSelectorURL.setParameter(
 				"showNonindexable", String.valueOf(Boolean.TRUE));
-			assetBrowserURL.setParameter(
+			itemSelectorURL.setParameter(
 				"showScheduled", String.valueOf(Boolean.TRUE));
-			assetBrowserURL.setParameter(
-				"eventName", _portletResponse.getNamespace() + "selectAsset");
-			assetBrowserURL.setPortletMode(PortletMode.VIEW);
-			assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 			if (!curRendererFactory.isSupportsClassTypes()) {
 				String type = curRendererFactory.getTypeName(
@@ -652,7 +654,7 @@ public class EditAssetListDisplayContext {
 				).put(
 					"groupid", String.valueOf(_themeDisplay.getScopeGroupId())
 				).put(
-					"href", assetBrowserURL.toString()
+					"href", itemSelectorURL.toString()
 				).put(
 					"title",
 					HtmlUtil.escape(
@@ -677,7 +679,7 @@ public class EditAssetListDisplayContext {
 					_themeDisplay.getLocale());
 
 			for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
-				assetBrowserURL.setParameter(
+				itemSelectorURL.setParameter(
 					"subtypeSelectionId",
 					String.valueOf(assetAvailableClassType.getClassTypeId()));
 
@@ -688,7 +690,7 @@ public class EditAssetListDisplayContext {
 				).put(
 					"groupid", String.valueOf(_themeDisplay.getScopeGroupId())
 				).put(
-					"href", assetBrowserURL.toString()
+					"href", itemSelectorURL.toString()
 				).put(
 					"title",
 					LanguageUtil.format(
@@ -1163,6 +1165,7 @@ public class EditAssetListDisplayContext {
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private String _orderByColumn1;
 	private String _orderByColumn2;
 	private String _orderByType1;

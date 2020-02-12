@@ -175,8 +175,13 @@ public class AssetBrowserDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_httpServletRequest, "eventName",
-			_renderResponse.getNamespace() + "selectAsset");
+			_httpServletRequest, "itemSelectedEventName");
+
+		if (Validator.isNull(_eventName)) {
+			_eventName = ParamUtil.getString(
+				_httpServletRequest, "eventName",
+				_renderResponse.getNamespace() + "selectAsset");
+		}
 
 		return _eventName;
 	}

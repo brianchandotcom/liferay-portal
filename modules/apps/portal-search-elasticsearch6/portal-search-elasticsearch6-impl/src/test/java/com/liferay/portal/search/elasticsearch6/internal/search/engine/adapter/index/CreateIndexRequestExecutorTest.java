@@ -15,15 +15,10 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.settings.BaseIndexSettingsContributor;
-import com.liferay.portal.search.elasticsearch6.internal.settings.IndexSettingsContributorHelper;
-import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsHelper;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.elasticsearch.common.settings.Settings;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -75,10 +70,6 @@ public class CreateIndexRequestExecutorTest {
 				}
 			};
 
-		ReflectionTestUtil.setFieldValue(
-			createIndexRequestExecutorImpl, "_indexSettingsContributorHelper",
-			new IndexSettingsContributorHelper());
-
 		CreateIndexRequestBuilder createIndexRequestBuilder =
 			createIndexRequestExecutorImpl.createCreateIndexRequestBuilder(
 				createIndexRequest);
@@ -89,58 +80,6 @@ public class CreateIndexRequestExecutorTest {
 
 		Assert.assertEquals(
 			_INDEX_NAME, elasticsearchCreateIndexRequest.index());
-	}
-
-	@Test
-	public void testIndexSettingsContributor() {
-		String key = "test.key";
-		String value = "test.value";
-
-		IndexSettingsContributorHelper indexSettingsContributorHelper =
-			new IndexSettingsContributorHelper() {
-				{
-					addIndexSettingsContributor(
-						new BaseIndexSettingsContributor(Integer.MAX_VALUE) {
-
-							@Override
-							public void populate(
-								IndexSettingsHelper indexSettingsHelper) {
-
-								indexSettingsHelper.put(key, value);
-							}
-
-						});
-				}
-			};
-
-		CreateIndexRequestExecutorImpl createIndexRequestExecutorImpl =
-			new CreateIndexRequestExecutorImpl() {
-				{
-					setElasticsearchClientResolver(_elasticsearchFixture);
-				}
-			};
-
-		ReflectionTestUtil.setFieldValue(
-			createIndexRequestExecutorImpl, "_indexSettingsContributorHelper",
-			indexSettingsContributorHelper);
-
-		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
-			_INDEX_NAME);
-
-		createIndexRequest.setSource("{}");
-
-		CreateIndexRequestBuilder createIndexRequestBuilder =
-			createIndexRequestExecutorImpl.createCreateIndexRequestBuilder(
-				createIndexRequest);
-
-		org.elasticsearch.action.admin.indices.create.CreateIndexRequest
-			elasticsearchCreateIndexRequest =
-				createIndexRequestBuilder.request();
-
-		Settings settings = elasticsearchCreateIndexRequest.settings();
-
-		Assert.assertEquals(settings.get(key), value, settings.get(key));
-		Assert.assertEquals(settings.toString(), 1, settings.size());
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";

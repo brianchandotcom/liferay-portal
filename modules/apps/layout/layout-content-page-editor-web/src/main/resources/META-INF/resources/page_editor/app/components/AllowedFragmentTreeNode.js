@@ -29,6 +29,7 @@ export default function AllowedFragmentTreeNode({node}) {
 				checked={node.selected}
 				indeterminate={!node.selected && hasSomeChildrenSelected(node)}
 				label={node.name}
+				onChange={() => {}}
 				onDoubleClick={event => {
 					event.stopPropagation();
 				}}

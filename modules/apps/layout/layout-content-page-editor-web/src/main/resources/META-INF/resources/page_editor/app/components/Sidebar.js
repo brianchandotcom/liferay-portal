@@ -66,7 +66,11 @@ export default function Sidebar() {
 		store
 	};
 
-	const registerPanel = register(sidebarPanelId, promise, {app, panel});
+	let registerPanel;
+
+	if (sidebarPanelId) {
+		registerPanel = register(sidebarPanelId, promise, {app, panel});
+	}
 
 	useEffect(
 		() => {
@@ -159,20 +163,20 @@ export default function Sidebar() {
 			setHasError(false);
 		}
 
-		getInstance(sidebarPanelId);
-
-		registerPanel.then(plugin => {
-			if (
-				plugin &&
-				typeof plugin.activate === 'function' &&
-				isMounted()
-			) {
-				plugin.activate();
-			}
-			else if (!plugin) {
-				setHasError(true);
-			}
-		});
+		if (registerPanel) {
+			registerPanel.then(plugin => {
+				if (
+					plugin &&
+					typeof plugin.activate === 'function' &&
+					isMounted()
+				) {
+					plugin.activate();
+				}
+				else if (!plugin) {
+					setHasError(true);
+				}
+			});
+		}
 	};
 
 	return (

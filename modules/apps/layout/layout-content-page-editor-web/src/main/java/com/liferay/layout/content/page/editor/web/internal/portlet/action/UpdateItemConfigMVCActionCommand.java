@@ -41,12 +41,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/update_item_config_react"
+		"mvc.command.name=/content_layout/update_item_config"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateItemConfigReactMVCActionCommand
-	extends BaseMVCActionCommand {
+public class UpdateItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -87,6 +86,6 @@ public class UpdateItemConfigReactMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateItemConfigReactMVCActionCommand.class);
+		UpdateItemConfigMVCActionCommand.class);
 
 }

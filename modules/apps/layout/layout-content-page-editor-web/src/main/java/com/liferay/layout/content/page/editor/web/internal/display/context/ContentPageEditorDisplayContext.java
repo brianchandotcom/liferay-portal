@@ -199,13 +199,13 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"addFragmentEntryLinkURL",
 				getFragmentEntryActionURL(
-					"/content_layout/add_fragment_entry_link_react")
+					"/content_layout/add_fragment_entry_link")
 			).put(
 				"addItemURL",
-				getFragmentEntryActionURL("/content_layout/add_item_react")
+				getFragmentEntryActionURL("/content_layout/add_item")
 			).put(
 				"addPortletURL",
-				getFragmentEntryActionURL("/content_layout/add_portlet_react")
+				getFragmentEntryActionURL("/content_layout/add_portlet")
 			).put(
 				"addSegmentsExperienceURL",
 				editorSoyContext.get("addSegmentsExperienceURL")
@@ -232,7 +232,7 @@ public class ContentPageEditorDisplayContext {
 					"/content_layout/delete_fragment_entry_link_comment")
 			).put(
 				"deleteItemURL",
-				getFragmentEntryActionURL("/content_layout/delete_item_react")
+				getFragmentEntryActionURL("/content_layout/delete_item")
 			).put(
 				"deleteSegmentsExperienceURL",
 				getFragmentEntryActionURL(
@@ -244,8 +244,7 @@ public class ContentPageEditorDisplayContext {
 				"discardDraftURL", editorSoyContext.get("discardDraftURL")
 			).put(
 				"duplicateItemURL",
-				getFragmentEntryActionURL(
-					"/content_layout/duplicate_item_react")
+				getFragmentEntryActionURL("/content_layout/duplicate_item")
 			).put(
 				"editFragmentEntryLinkCommentURL",
 				getFragmentEntryActionURL(
@@ -289,7 +288,7 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"moveItemURL",
 				getFragmentEntryActionURL(
-					"/content_layout/move_fragment_entry_link_react")
+					"/content_layout/move_fragment_entry_link")
 			).put(
 				"pageType", editorSoyContext.get("pageType")
 			).put(
@@ -318,15 +317,13 @@ public class ContentPageEditorDisplayContext {
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
 				"updateItemConfigURL",
-				getFragmentEntryActionURL(
-					"/content_layout/update_item_config_react")
+				getFragmentEntryActionURL("/content_layout/update_item_config")
 			).put(
 				"updateLayoutPageTemplateDataURL",
 				editorSoyContext.get("updateLayoutPageTemplateDataURL")
 			).put(
 				"updateRowColumnsURL",
-				getFragmentEntryActionURL(
-					"/content_layout/update_row_columns_react")
+				getFragmentEntryActionURL("/content_layout/update_row_columns")
 			).put(
 				"updateSegmentsExperiencePriorityURL",
 				getFragmentEntryActionURL(

@@ -16,7 +16,9 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.portal.aop.AopService;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,44 +28,34 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
+import java.util.Objects;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Víctor Galán
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/move_fragment_entry_link_react"
+		"mvc.command.name=/content_layout/add_item"
 	},
-	service = {AopService.class, MVCActionCommand.class}
+	service = MVCActionCommand.class
 )
-public class MoveFragmentEntryLinkReactMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	protected JSONObject addItemToLayoutData(ActionRequest actionRequest)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -71,27 +63,69 @@ public class MoveFragmentEntryLinkReactMVCActionCommand
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
-		String itemId = ParamUtil.getString(actionRequest, "itemId");
+		String itemType = ParamUtil.getString(actionRequest, "itemType");
 		String parentItemId = ParamUtil.getString(
 			actionRequest, "parentItemId");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		JSONObject layoutDataJSONObject = null;
+
+		if (Objects.equals(itemType, LayoutDataItemTypeConstants.TYPE_ROW)) {
+			layoutDataJSONObject =
+				LayoutStructureUtil.updateLayoutPageTemplateData(
+					themeDisplay.getScopeGroupId(), segmentsExperienceId,
+					themeDisplay.getPlid(),
+					layoutStructure -> {
+						LayoutStructureItem layoutStructureItem =
+							layoutStructure.addRowLayoutStructureItem(
+								parentItemId, position, _DEFAULT_ROW_COLUMNS);
+
+						jsonObject.put(
+							"addedItemId", layoutStructureItem.getItemId());
+					});
+		}
+		else {
+			layoutDataJSONObject =
+				LayoutStructureUtil.updateLayoutPageTemplateData(
+					themeDisplay.getScopeGroupId(), segmentsExperienceId,
+					themeDisplay.getPlid(),
+					layoutStructure -> {
+						LayoutStructureItem layoutStructureItem =
+							layoutStructure.addLayoutStructureItem(
+								itemType, parentItemId, position);
+
+						jsonObject.put(
+							"addedItemId", layoutStructureItem.getItemId());
+					});
+		}
+
+		return jsonObject.put("layoutData", layoutDataJSONObject);
+	}
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 		try {
-			jsonObject = LayoutStructureUtil.updateLayoutPageTemplateData(
-				themeDisplay.getScopeGroupId(), segmentsExperienceId,
-				themeDisplay.getPlid(),
-				layoutStructure -> layoutStructure.moveLayoutStructureItem(
-					itemId, parentItemId, position));
+			jsonObject = addItemToLayoutData(actionRequest);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			String errorMessage = "an-unexpected-error-occurred";
 
 			jsonObject.put(
 				"error",
 				LanguageUtil.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
+					_portal.getHttpServletRequest(actionRequest),
+					errorMessage));
 		}
 
 		hideDefaultSuccessMessage(actionRequest);
@@ -100,7 +134,12 @@ public class MoveFragmentEntryLinkReactMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
+	private static final int _DEFAULT_ROW_COLUMNS = 3;
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		MoveFragmentEntryLinkReactMVCActionCommand.class);
+		AddItemMVCActionCommand.class);
+
+	@Reference
+	private Portal _portal;
 
 }

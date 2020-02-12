@@ -68,11 +68,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/add_fragment_entry_link_react"
+		"mvc.command.name=/content_layout/add_fragment_entry_link"
 	},
 	service = {AopService.class, MVCActionCommand.class}
 )
-public class AddFragmentEntryLinkReactMVCActionCommand
+public class AddFragmentEntryLinkMVCActionCommand
 	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
 
 	@Override
@@ -242,7 +242,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddFragmentEntryLinkReactMVCActionCommand.class);
+		AddFragmentEntryLinkMVCActionCommand.class);
 
 	@Reference
 	private FragmentCollectionContributorTracker

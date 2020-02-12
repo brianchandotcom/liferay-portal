@@ -49,12 +49,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/update_row_columns_react"
+		"mvc.command.name=/content_layout/update_row_columns"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateRowColumnsReactMVCActionCommand
-	extends BaseMVCActionCommand {
+public class UpdateRowColumnsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -122,7 +121,7 @@ public class UpdateRowColumnsReactMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateRowColumnsReactMVCActionCommand.class);
+		UpdateRowColumnsMVCActionCommand.class);
 
 	@Reference
 	private PortletRegistry _portletRegistry;

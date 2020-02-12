@@ -12,10 +12,11 @@
  * details.
  */
 
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useEffect, useMemo} from 'react';
 
+import togglePermssions from '../../../app/actions/togglePermission';
 import {ConfigContext} from '../../../app/config/index';
-import {useSelector} from '../../../app/store/index';
+import {useDispatch, useSelector} from '../../../app/store/index';
 import ExperienceSelector from './ExperienceSelector';
 
 // TODO: show how to colocate CSS with plugins (may use loaders)
@@ -23,6 +24,7 @@ export default function ExperienceToolbarSection({selectId}) {
 	const availableSegmentsExperiences = useSelector(
 		state => state.availableSegmentsExperiences
 	);
+	const dispatch = useDispatch();
 
 	const segmentsExperienceId = useSelector(
 		state => state.segmentsExperienceId
@@ -56,6 +58,15 @@ export default function ExperienceToolbarSection({selectId}) {
 
 	const selectedExperience =
 		availableSegmentsExperiences[segmentsExperienceId];
+
+	useEffect(() => {
+		dispatch(
+			togglePermssions(
+				'LOCKED_SEGMENTS_EXPERIMENT',
+				selectedExperience.hasLockedSegmentsExperiment
+			)
+		);
+	}, [dispatch, selectedExperience.hasLockedSegmentsExperiment]);
 
 	return (
 		<div className="mr-2 page-editor-toolbar-experience">

@@ -225,7 +225,7 @@
 </tr>
 <tr>
 	<td>TIMES</td>
-	<td>//*[*[name()='svg'][contains(@class,'icon-times')]]</td>
+	<td>//button[*[name()='svg'][contains(@class,'icon-times')]]</td>
 	<td></td>
 </tr>
 <tr>

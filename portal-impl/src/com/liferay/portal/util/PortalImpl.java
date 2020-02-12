@@ -939,14 +939,14 @@ public class PortalImpl implements Portal {
 
 		String path = HttpUtil.getPath(url);
 
-		if (domain.isEmpty()) {
-			if (path.isEmpty()) {
+		if (Validator.isBlank(domain)) {
+			if (Validator.isBlank(path)) {
 				return null;
 			}
 
 			// Specs allows URL of protocol followed by path, but we do not.
 
-			if (!protocol.isEmpty()) {
+			if (!Validator.isBlank(protocol)) {
 				return null;
 			}
 
@@ -957,7 +957,7 @@ public class PortalImpl implements Portal {
 
 		// Specs regards URL staring with double slashes valid, but we do not.
 
-		if (protocol.isEmpty()) {
+		if (Validator.isBlank(protocol)) {
 			return null;
 		}
 

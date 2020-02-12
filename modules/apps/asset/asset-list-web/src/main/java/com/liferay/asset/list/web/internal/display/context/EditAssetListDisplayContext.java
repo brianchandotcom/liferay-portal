@@ -616,35 +616,6 @@ public class EditAssetListDisplayContext {
 				continue;
 			}
 
-			AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
-				new AssetEntryItemSelectorCriterion();
-
-			assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				new AssetEntryItemSelectorReturnType());
-
-			PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
-				_portletResponse.getNamespace() + "selectAsset",
-				assetEntryItemSelectorCriterion);
-
-			if (itemSelectorURL == null) {
-				continue;
-			}
-
-			itemSelectorURL.setParameter(
-				"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-			itemSelectorURL.setParameter(
-				"multipleSelection", String.valueOf(Boolean.TRUE));
-			itemSelectorURL.setParameter(
-				"selectedGroupIds",
-				String.valueOf(_themeDisplay.getScopeGroupId()));
-			itemSelectorURL.setParameter(
-				"typeSelection", curRendererFactory.getClassName());
-			itemSelectorURL.setParameter(
-				"showNonindexable", String.valueOf(Boolean.TRUE));
-			itemSelectorURL.setParameter(
-				"showScheduled", String.valueOf(Boolean.TRUE));
-
 			if (!curRendererFactory.isSupportsClassTypes()) {
 				String type = curRendererFactory.getTypeName(
 					_themeDisplay.getLocale());
@@ -654,7 +625,10 @@ public class EditAssetListDisplayContext {
 				).put(
 					"groupid", String.valueOf(_themeDisplay.getScopeGroupId())
 				).put(
-					"href", itemSelectorURL.toString()
+					"href",
+					String.valueOf(
+						_getAssetEntryItemSelectorPortletURL(
+							curRendererFactory, 0))
 				).put(
 					"title",
 					HtmlUtil.escape(
@@ -679,10 +653,6 @@ public class EditAssetListDisplayContext {
 					_themeDisplay.getLocale());
 
 			for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
-				itemSelectorURL.setParameter(
-					"subtypeSelectionId",
-					String.valueOf(assetAvailableClassType.getClassTypeId()));
-
 				String type = assetAvailableClassType.getName();
 
 				Map<String, Object> data = HashMapBuilder.<String, Object>put(
@@ -690,11 +660,16 @@ public class EditAssetListDisplayContext {
 				).put(
 					"groupid", String.valueOf(_themeDisplay.getScopeGroupId())
 				).put(
-					"href", itemSelectorURL.toString()
+					"href",
+					String.valueOf(
+						_getAssetEntryItemSelectorPortletURL(
+							curRendererFactory,
+							assetAvailableClassType.getClassTypeId()))
 				).put(
 					"title",
-					LanguageUtil.format(
-						_httpServletRequest, "select-x", type, false)
+					HtmlUtil.escape(
+						LanguageUtil.format(
+							_httpServletRequest, "select-x", type, false))
 				).put(
 					"type", type
 				).build();
@@ -1118,6 +1093,42 @@ public class EditAssetListDisplayContext {
 		}
 
 		return StringUtil.merge(filteredAssetTagNames);
+	}
+
+	private PortletURL _getAssetEntryItemSelectorPortletURL(
+		AssetRendererFactory<?> rendererFactory, long subtypeSelectionId) {
+
+		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
+			new AssetEntryItemSelectorCriterion();
+
+		assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new AssetEntryItemSelectorReturnType());
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+			_portletResponse.getNamespace() + "selectAsset",
+			assetEntryItemSelectorCriterion);
+
+		itemSelectorURL.setParameter(
+			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
+		itemSelectorURL.setParameter(
+			"multipleSelection", String.valueOf(Boolean.TRUE));
+		itemSelectorURL.setParameter(
+			"selectedGroupIds",
+			String.valueOf(_themeDisplay.getScopeGroupId()));
+		itemSelectorURL.setParameter(
+			"typeSelection", rendererFactory.getClassName());
+		itemSelectorURL.setParameter(
+			"showNonindexable", String.valueOf(Boolean.TRUE));
+		itemSelectorURL.setParameter(
+			"showScheduled", String.valueOf(Boolean.TRUE));
+
+		if (subtypeSelectionId != 0) {
+			itemSelectorURL.setParameter(
+				"subtypeSelectionId", String.valueOf(subtypeSelectionId));
+		}
+
+		return itemSelectorURL;
 	}
 
 	private Long[] _getClassTypeIds(

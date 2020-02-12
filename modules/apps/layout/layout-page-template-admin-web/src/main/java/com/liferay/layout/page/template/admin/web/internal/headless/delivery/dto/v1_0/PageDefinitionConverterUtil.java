@@ -20,12 +20,15 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
+import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
 import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
@@ -347,6 +350,24 @@ public class PageDefinitionConverterUtil {
 						}
 
 						return null;
+					});
+
+				setMasterPage(
+					() -> {
+						LayoutPageTemplateEntry layoutPageTemplateEntry =
+							LayoutPageTemplateEntryLocalServiceUtil.
+								fetchLayoutPageTemplateEntryByPlid(
+									layout.getMasterLayoutPlid());
+
+						if (layoutPageTemplateEntry == null) {
+							return null;
+						}
+
+						return new MasterPage() {
+							{
+								name = layoutPageTemplateEntry.getName();
+							}
+						};
 					});
 			}
 		};

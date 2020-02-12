@@ -45,6 +45,24 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-83660."
+	@priority = "4"
+	test GogoShellCommandDisconnectNotSupported {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "GogoShell#GogoShellCommandDisconnectNotSupported";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		GogoShell.executeCommand(commandName = "disconnect");
+
+		Alert.viewErrorMessage(errorMessage = "Error: The command &quot;Disconnect&quot; is not supported.");
+
+		AssertConsoleTextNotPresent(value1 = "is not serializable and will prevent this session from being replicated");
+	}
+
 	@priority = "4"
 	test GogoShellPortletOnlyOnMainInstance {
 		property test.name.skip.portal.instance = "GogoShell#GogoShellPortletOnlyOnMainInstance";

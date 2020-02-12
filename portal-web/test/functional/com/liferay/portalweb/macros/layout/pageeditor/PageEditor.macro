@@ -126,6 +126,8 @@ definition {
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
 
+		PageEditor.waitForAutoSave();
+
 		// Refresh and pause step is a workaround for LPS-108417
 
 		Refresh();
@@ -135,8 +137,6 @@ definition {
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",
 			locator1 = "Fragment#FRAGMENT_HEADER");
-
-		PageEditor.waitForAutoSave();
 	}
 
 	macro addLayoutSection {

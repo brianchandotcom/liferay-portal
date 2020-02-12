@@ -381,6 +381,29 @@ public class PageDefinitionConverterUtil {
 
 						return theme.getName();
 					});
+
+				setThemeSettings(
+					() -> {
+						UnicodeProperties themeSettingsUnicodeProperties =
+							new UnicodeProperties();
+
+						for (Map.Entry<String, String> entry :
+								unicodeProperties.entrySet()) {
+
+							String key = entry.getKey();
+
+							if (key.startsWith("lfr-theme:")) {
+								themeSettingsUnicodeProperties.setProperty(
+									key, entry.getValue());
+							}
+						}
+
+						if (themeSettingsUnicodeProperties.isEmpty()) {
+							return null;
+						}
+
+						return themeSettingsUnicodeProperties;
+					});
 			}
 		};
 	}

@@ -11,6 +11,8 @@
 @import 'portlet/portlet_decorators';
 @import 'portlet/portlet_hello_world';
 
+@import 'custom_properties';
+
 body {
 	header {
 		.field-wrapper {

@@ -185,6 +185,29 @@ definition {
 		Portlet.viewNoSpecificPG(portletName = "Notifications");
 	}
 
+	@description = "This is a use case for LPS-106534."
+	@priority = "4"
+	test UpdateAddressFromUserProfile {
+		UserBar.viewUserDefaultIcon();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		UserNavigator.gotoContact();
+
+		User.addAddressViaMyAccount(
+			userAddressCity = "Diamond Bar",
+			userAddressCountry = "United States",
+			userAddressPostalCode = "91765",
+			userAddressRegion = "California",
+			userAddressStreet1 = "1400 Montefino Ave");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+		User.editDetailsViaProfile(
+			addressType = "Personal",
+			userContact = "edit");
+	}
+
 	@description = "This is a use case for LPS-105387."
 	@priority = "5"
 	test UpdateUserPortrait {

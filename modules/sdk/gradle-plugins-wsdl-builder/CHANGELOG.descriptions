@@ -1,0 +1,9 @@
+2.0.0:description
+
+- [LPS-67573]: Make most methods private in order to reduce API surface.
+- [LPS-70060]: Fix compatibility issue with Gradle 3.3.
+
+2.0.1:description
+
+- [LPS-75273]: Avoid deleting the destination directory of the `buildWSDL` task
+if the property `buildLibs` is `false`.

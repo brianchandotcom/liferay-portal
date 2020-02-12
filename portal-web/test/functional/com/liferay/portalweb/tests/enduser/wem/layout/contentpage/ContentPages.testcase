@@ -204,9 +204,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectWebContent(
-			contentPage = "true",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
 		Refresh();
 
@@ -635,8 +633,7 @@ definition {
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "WC WebContent Title",
-			assetType = "Basic Web Content",
-			contentPage = "true");
+			assetType = "Basic Web Content");
 
 		Refresh();
 
@@ -678,9 +675,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectWebContent(
-			contentPage = "true",
-			webContentTitle = "WC WebContent Title");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
 		Refresh();
 

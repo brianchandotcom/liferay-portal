@@ -84,9 +84,7 @@ definition {
 		}
 
 		task ("Select the web content article in the web content display widget") {
-			WebContentDisplayPortlet.selectWebContent(
-				contentPage = "true",
-				webContentTitle = "WC WebContent Title");
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 		}
 
 		task ("Publish the content page") {

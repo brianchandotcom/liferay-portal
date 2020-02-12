@@ -1036,6 +1036,13 @@ public class ModulesStructureTest {
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
 		Path settingsGradlePath = dirPath.resolve("settings.gradle");
 
+		if (!Files.exists(buildGradlePath) &&
+			!Files.exists(gradlePropertiesPath) &&
+			!Files.exists(settingsGradlePath)) {
+
+			return;
+		}
+
 		if (!dxpRepo && !privateRepo && !readOnlyRepo) {
 			String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
 

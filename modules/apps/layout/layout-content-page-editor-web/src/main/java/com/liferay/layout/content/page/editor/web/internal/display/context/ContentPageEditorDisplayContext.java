@@ -761,9 +761,11 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private String _getDiscardDraftURL() throws PortalException {
-		Layout layout = _getPublishedLayout();
+		Layout publishedLayout = _getPublishedLayout();
 
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+		if (!Objects.equals(
+				publishedLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
+
 			return getFragmentEntryActionURL(
 				"/content_layout/discard_draft_layout");
 		}
@@ -779,7 +781,8 @@ public class ContentPageEditorDisplayContext {
 			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
 
-		redirectURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+		redirectURL.setParameter(
+			"selPlid", String.valueOf(publishedLayout.getPlid()));
 
 		deleteLayoutURL.setParameter("redirect", redirectURL.toString());
 
@@ -1810,10 +1813,10 @@ public class ContentPageEditorDisplayContext {
 			return false;
 		}
 
-		Layout layout = _getPublishedLayout();
+		Layout publishedLayout = _getPublishedLayout();
 
 		int masterUsagesCount = LayoutLocalServiceUtil.getLayoutsCount(
-			themeDisplay.getScopeGroupId(), layout.getPlid());
+			themeDisplay.getScopeGroupId(), publishedLayout.getPlid());
 
 		if (masterUsagesCount > 0) {
 			return true;

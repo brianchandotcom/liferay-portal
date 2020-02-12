@@ -1760,24 +1760,6 @@ components:
                         themeSettings:
                             type: object
                     type: object
-                taxonomyCategories:
-                    description:
-                        The categories associated with this article.
-                    items:
-                        $ref: "#/components/schemas/TaxonomyCategory"
-                    readOnly: true
-                    type: array
-                taxonomyCategoryIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
-                uuid:
-                    description:
-                        A valid external identifier to reference this structured content.
-                    readOnly: true
-                    type: string
             type: object
         PageElement:
             properties:
@@ -1826,6 +1808,24 @@ components:
                     type: string
                 pageDefinition:
                     $ref: "#/components/schemas/PageDefinition"
+                taxonomyCategories:
+                    description:
+                        The categories associated with this page template.
+                    items:
+                        $ref: "#/components/schemas/TaxonomyCategory"
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                uuid:
+                    description:
+                        A valid external identifier to reference this page template.
+                    readOnly: true
+                    type: string
             type: object
         Rating:
             description:

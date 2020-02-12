@@ -188,6 +188,10 @@ public abstract class BaseOrganizationResourceImpl
 
 		Organization existingOrganization = getOrganization(organizationId);
 
+		if (organization.getActions() != null) {
+			existingOrganization.setActions(organization.getActions());
+		}
+
 		if (organization.getComment() != null) {
 			existingOrganization.setComment(organization.getComment());
 		}

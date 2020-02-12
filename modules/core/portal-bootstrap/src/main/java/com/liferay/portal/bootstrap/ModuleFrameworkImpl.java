@@ -1168,6 +1168,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		File dir = new File(dirPath);
 
+		dir = dir.getCanonicalFile();
+
 		for (File file :
 				dir.listFiles((folder, name) -> name.endsWith(".jar"))) {
 
@@ -1252,6 +1254,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			null);
 
 		File dir = new File(PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
+
+		dir = dir.getCanonicalFile();
 
 		for (File file : dir.listFiles()) {
 			method.invoke(configInstaller, file);

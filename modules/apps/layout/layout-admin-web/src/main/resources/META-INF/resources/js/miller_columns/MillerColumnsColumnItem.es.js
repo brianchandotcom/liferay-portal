@@ -19,7 +19,13 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState
+} from 'react';
 
 import MillerColumnsContext from './MillerColumnsContext.es';
 
@@ -28,6 +34,8 @@ const ITEM_STATES_COLORS = {
 	draft: 'secondary',
 	pending: 'info'
 };
+
+const noop = () => {};
 
 const MillerColumnsColumnItem = ({
 	actions = [],
@@ -42,17 +50,49 @@ const MillerColumnsColumnItem = ({
 	title,
 	url
 }) => {
-	const {namespace = ''} = useContext(MillerColumnsContext);
+	const {actionHandlers = {}, namespace = ''} = useContext(
+		MillerColumnsContext
+	);
 
 	const [dropdownActionsActive, setDropdownActionsActive] = useState();
 
-	const getDropdownActions = actions => {
-		return actions.filter(action => !action.quickAction && action.url);
-	};
+	const getDropdownActions = useCallback(
+		actions => {
+			const dropdownActions = [];
 
-	const getQuickActions = actions => {
-		return actions.filter(action => action.quickAction && action.url);
-	};
+			actions.map(action => {
+				if (!action.quickAction && action.url) {
+					dropdownActions.push({
+						...action,
+						handler:
+							action.handler || actionHandlers[action.id] || noop
+					});
+				}
+			});
+
+			return dropdownActions;
+		},
+		[actionHandlers]
+	);
+
+	const getQuickActions = useCallback(
+		actions => {
+			const quickActions = [];
+
+			actions.map(action => {
+				if (action.quickAction && action.url) {
+					quickActions.push({
+						...action,
+						handler:
+							action.handler || actionHandlers[action.id] || noop
+					});
+				}
+			});
+
+			return quickActions;
+		},
+		[actionHandlers]
+	);
 
 	const dropdownActions = useRef(getDropdownActions(actions));
 	const quickActions = useRef(getQuickActions(actions));
@@ -60,7 +100,7 @@ const MillerColumnsColumnItem = ({
 	useEffect(() => {
 		dropdownActions.current = getDropdownActions(actions);
 		quickActions.current = getQuickActions(actions);
-	}, [actions]);
+	}, [actions, getDropdownActions, getQuickActions]);
 
 	return (
 		<li
@@ -152,6 +192,7 @@ const MillerColumnsColumnItem = ({
 									href={action.url}
 									id={action.id}
 									key={action.id}
+									onClick={action.handler}
 								>
 									{action.label}
 								</ClayDropDown.Item>

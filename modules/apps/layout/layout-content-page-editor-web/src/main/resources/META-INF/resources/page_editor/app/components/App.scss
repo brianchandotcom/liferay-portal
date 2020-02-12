@@ -5,7 +5,6 @@
 @import './DragDrop';
 @import './DragPreview';
 @import './DropZone';
-@import './floating-toolbar/FloatingToolbar';
 @import './MasterLayout';
 @import './layout-data-items/ColumnOverlayGrid';
 @import './layout-data-items/FragmentsEditorShim';
@@ -14,6 +13,9 @@
 @import './Toolbar';
 @import './Topper';
 @import './Translation';
+
+@import './floating-toolbar/FloatingToolbar';
+@import './floating-toolbar/SaveFragmentCompositionModal';
 
 @import './layout-data-items/EditableDecoration';
 

@@ -47,9 +47,9 @@ export default function DragPreview() {
 	}
 
 	return (
-		<div className="page-editor-drag__preview-layer">
+		<div className="page-editor__drag-preview">
 			<div
-				className="page-editor-drag__preview"
+				className="page-editor__drag-preview__content"
 				ref={ref}
 				style={getItemStyles(currentOffset, ref)}
 			>

@@ -14,8 +14,8 @@
 
 package com.liferay.batch.engine.internal.upgrade;
 
-import com.liferay.batch.engine.internal.upgrade.v_4_0_0.UpgradeVersion;
-import com.liferay.batch.engine.internal.upgrade.v_4_0_1.UpgradeClassName;
+import com.liferay.batch.engine.internal.upgrade.v4_0_0.UpgradeVersion;
+import com.liferay.batch.engine.internal.upgrade.v4_0_1.UpgradeClassName;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 

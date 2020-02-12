@@ -12,11 +12,13 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import MillerColumnsContext from './MillerColumnsContext.es';
 
@@ -27,6 +29,7 @@ const ITEM_STATES_COLORS = {
 };
 
 const MillerColumnsColumnItem = ({
+	actions = [],
 	active,
 	checked,
 	description,
@@ -39,6 +42,8 @@ const MillerColumnsColumnItem = ({
 	url
 }) => {
 	const {namespace = ''} = useContext(MillerColumnsContext);
+
+	const [dropdownActionsActive, setDropdownActionsActive] = useState();
 
 	return (
 		<li
@@ -93,9 +98,44 @@ const MillerColumnsColumnItem = ({
 				)}
 			</div>
 
-			<div className="autofit-col autofit-padded-no-gutters text-muted">
-				{hasChild && <ClayIcon symbol="caret-right" />}
-			</div>
+			{actions.length && (
+				<div className="autofit-col miller-columns-item-actions">
+					<ClayDropDown
+						active={dropdownActionsActive}
+						onActiveChange={setDropdownActionsActive}
+						trigger={
+							<ClayButtonWithIcon
+								borderless
+								displayType="secondary"
+								small
+								symbol="ellipsis-v"
+							/>
+						}
+					>
+						<ClayDropDown.ItemList>
+							{actions
+								.filter(
+									action => !action.quickAction && action.url
+								)
+								.map(action => (
+									<ClayDropDown.Item
+										href={action.url}
+										id={action.id}
+										key={action.id}
+									>
+										{action.label}
+									</ClayDropDown.Item>
+								))}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				</div>
+			)}
+
+			{hasChild && (
+				<div className="autofit-col autofit-padded-no-gutters miller-columns-item-child-indicator text-muted">
+					<ClayIcon symbol="caret-right" />
+				</div>
+			)}
 		</li>
 	);
 };

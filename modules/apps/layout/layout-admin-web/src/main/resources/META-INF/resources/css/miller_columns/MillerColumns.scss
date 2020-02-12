@@ -43,6 +43,15 @@
 		}
 	}
 
+	.miller-columns-item-actions,
+	.miller-columns-item-quick-action {
+		z-index: 2;
+
+		&:last-child {
+			margin-right: 16px;
+		}
+	}
+
 	.miller-columns-item-drag-handler {
 		color: $gray-400;
 		cursor: move;

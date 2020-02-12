@@ -16,11 +16,9 @@ package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch7.internal.settings.IndexSettingsContributorHelper;
 
 import java.util.Collections;
 
@@ -123,10 +121,6 @@ public class CompanyIdIndexNameBuilderTest {
 				jsonFactory = new JSONFactoryImpl();
 			}
 		};
-
-		ReflectionTestUtil.setFieldValue(
-			companyIndexFactory, "_indexSettingsContributorHelper",
-			new IndexSettingsContributorHelper());
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchFixture.getRestHighLevelClient();

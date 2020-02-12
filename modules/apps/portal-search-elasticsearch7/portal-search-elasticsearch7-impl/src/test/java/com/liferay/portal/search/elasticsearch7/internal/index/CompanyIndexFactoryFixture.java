@@ -15,11 +15,9 @@
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
-import com.liferay.portal.search.elasticsearch7.internal.settings.IndexSettingsContributorHelper;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
 import org.elasticsearch.client.RestHighLevelClient;
@@ -57,18 +55,12 @@ public class CompanyIndexFactoryFixture {
 	}
 
 	public CompanyIndexFactory getCompanyIndexFactory() {
-		CompanyIndexFactory companyIndexFactory = new CompanyIndexFactory() {
+		return new CompanyIndexFactory() {
 			{
 				indexNameBuilder = new TestIndexNameBuilder();
 				jsonFactory = new JSONFactoryImpl();
 			}
 		};
-
-		ReflectionTestUtil.setFieldValue(
-			companyIndexFactory, "_indexSettingsContributorHelper",
-			new IndexSettingsContributorHelper());
-
-		return companyIndexFactory;
 	}
 
 	public String getIndexName() {

@@ -15,7 +15,6 @@
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -24,9 +23,7 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch7.internal.document.SingleFieldFixture;
 import com.liferay.portal.search.elasticsearch7.internal.query.QueryBuilderFactories;
 import com.liferay.portal.search.elasticsearch7.internal.settings.BaseIndexSettingsContributor;
-import com.liferay.portal.search.elasticsearch7.internal.settings.IndexSettingsContributorHelper;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
-import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsContributor;
 import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsHelper;
 import com.liferay.portal.search.elasticsearch7.settings.TypeMappingsHelper;
 import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
@@ -37,7 +34,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
 import org.elasticsearch.client.IndicesClient;
@@ -81,11 +77,6 @@ public class CompanyIndexFactoryTest {
 
 		_companyIndexFactory =
 			_companyIndexFactoryFixture.getCompanyIndexFactory();
-
-		_indexSettingsContributors = ReflectionTestUtil.getFieldValue(
-			(IndexSettingsContributorHelper)ReflectionTestUtil.getFieldValue(
-				_companyIndexFactory, "_indexSettingsContributorHelper"),
-			"_indexSettingsContributors");
 
 		_singleFieldFixture = new SingleFieldFixture(
 			_elasticsearchFixture.getRestHighLevelClient(),
@@ -247,7 +238,7 @@ public class CompanyIndexFactoryTest {
 
 	@Test
 	public void testIndexSettingsContributor() throws Exception {
-		_indexSettingsContributors.add(
+		_companyIndexFactory.addIndexSettingsContributor(
 			new BaseIndexSettingsContributor(1) {
 
 				@Override
@@ -354,7 +345,7 @@ public class CompanyIndexFactoryTest {
 	}
 
 	protected void addIndexSettingsContributor(String mappings) {
-		_indexSettingsContributors.add(
+		_companyIndexFactory.addIndexSettingsContributor(
 			new BaseIndexSettingsContributor(1) {
 
 				@Override
@@ -545,7 +536,6 @@ public class CompanyIndexFactoryTest {
 
 	private CompanyIndexFactory _companyIndexFactory;
 	private CompanyIndexFactoryFixture _companyIndexFactoryFixture;
-	private Set<IndexSettingsContributor> _indexSettingsContributors;
 	private SingleFieldFixture _singleFieldFixture;
 
 }

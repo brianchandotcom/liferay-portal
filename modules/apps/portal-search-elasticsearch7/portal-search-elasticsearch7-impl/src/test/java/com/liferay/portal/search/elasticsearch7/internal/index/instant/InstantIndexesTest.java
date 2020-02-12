@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.index.instant;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexDefinitionsHolderImpl;
@@ -23,7 +22,6 @@ import com.liferay.portal.search.elasticsearch7.internal.index.IndexSynchronizer
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexSynchronizerImpl;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.CreateIndexRequestExecutor;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.CreateIndexRequestExecutorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.settings.IndexSettingsContributorHelper;
 import com.liferay.portal.search.elasticsearch7.internal.test.util.microcontainer.Microcontainer;
 import com.liferay.portal.search.elasticsearch7.internal.test.util.microcontainer.MicrocontainerImpl;
 import com.liferay.portal.search.elasticsearch7.spi.index.IndexRegistrar;
@@ -162,18 +160,11 @@ public class InstantIndexesTest {
 		createCreateIndexRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		CreateIndexRequestExecutor createIndexRequestExecutor =
-			new CreateIndexRequestExecutorImpl() {
-				{
-					setElasticsearchClientResolver(elasticsearchClientResolver);
-				}
-			};
-
-		ReflectionTestUtil.setFieldValue(
-			createIndexRequestExecutor, "_indexSettingsContributorHelper",
-			new IndexSettingsContributorHelper());
-
-		return createIndexRequestExecutor;
+		return new CreateIndexRequestExecutorImpl() {
+			{
+				setElasticsearchClientResolver(elasticsearchClientResolver);
+			}
+		};
 	}
 
 	protected static IndexSynchronizationPortalInitializedListener

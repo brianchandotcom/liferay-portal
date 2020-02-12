@@ -373,24 +373,7 @@ definition {
 	}
 
 	macro configureManualAssetSelectionPG {
-		if ("${contentPage}" == "true") {
-			MouseOver(
-				key_portletName = "Asset Publisher",
-				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT");
-
-			Click(
-				key_portletName = "Asset Publisher",
-				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
-
-			Click(
-				key_menuItem = "Configuration",
-				locator1 = "Fragment#FRAGMENT_FLOATING_MENU_ITEM");
-
-			SelectFrame(locator1 = "IFrame#DIALOG");
-		}
-		else {
-			AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
-		}
+		AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
 

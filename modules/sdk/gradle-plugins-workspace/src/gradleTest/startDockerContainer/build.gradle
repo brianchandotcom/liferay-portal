@@ -1,12 +1,5 @@
 task runGradleTest
 
 runGradleTest {
-	//dependsOn 'removeDockerContainer'
-	dependsOn 'startDockerContainer'
-
-	doLast {
-
-	}
-
-	finalizedBy removeDockerContainer
+	dependsOn "assertScript"
 }

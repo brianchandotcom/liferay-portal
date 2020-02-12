@@ -10,9 +10,11 @@ buildscript {
 
 apply plugin: "com.liferay.workspace"
 
+def expectedLine = "Hello World"
+
 gradle.liferayWorkspace {
-	dockerImageId = InetAddress.getLocalHost().getCanonicalHostName().toLowerCase()
-	dockerContainerId = InetAddress.getLocalHost().getCanonicalHostName().toLowerCase()
+	dockerImageId = InetAddress.getLocalHost().getCanonicalHostName().toLowerCase() + 'startdockercontainerwithscript'
+	dockerContainerId = InetAddress.getLocalHost().getCanonicalHostName().toLowerCase() + 'startdockercontainerwithscript'
 }
 
 gradle.projectsEvaluated {
@@ -25,29 +27,28 @@ gradle.projectsEvaluated {
 			gradle.liferayWorkspace.dockerContainerId
 		}
 
-		boolean scriptFired = false
+		boolean expectedLineDetected = false
 
 		sink new PrintWriter(new StringWriter()) {
 			public void write(String line) {
-				if (line.contains("Hello World")) {
-					scriptFired = true
+				if (line.contains(expectedLine)) {
+					expectedLineDetected = true
 				}
 				gradle.rootProject.print line
 			}
 		}
 
 		doLast {
-			gradle.rootProject.println "DoLast!"
 			int retries = 0
 
-			while (!scriptFired && retries < 50) {
+			while (!expectedLineDetected && retries < 50) {
 				Thread.sleep(100)
 				retries++
 				start()
 			}
 
-			if (!scriptFired) {
-				throw new GradleException("Script did not fire.")
+			if (!expectedLineDetected) {
+				throw new GradleException("The expected line " + expectedLine + " was not found in the log.")
 			}
 		}
 	}

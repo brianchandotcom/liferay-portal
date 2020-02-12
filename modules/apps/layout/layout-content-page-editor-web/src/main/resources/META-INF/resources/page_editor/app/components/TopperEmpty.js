@@ -47,7 +47,7 @@ export default function TopperEmpty({acceptDrop, children, item, layoutData}) {
 				'drag-over-top':
 					targetPosition === TARGET_POSITION.TOP && isOver,
 				dragged: isDragging,
-				'page-editor-topper': true
+				'page-editor__topper': true
 			}),
 			ref: node => {
 				containerRef.current = node;

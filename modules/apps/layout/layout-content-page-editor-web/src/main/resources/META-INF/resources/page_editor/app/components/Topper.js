@@ -40,7 +40,7 @@ const TopperListItem = React.forwardRef(
 		<li
 			{...props}
 			className={classNames(
-				'page-editor-topper__item',
+				'page-editor__topper__item',
 				'tbar-item',
 				{'tbar-item-expand': expand},
 				className
@@ -163,7 +163,7 @@ export default function Topper({
 					targetPosition === TARGET_POSITION.TOP && isOver,
 				dragged: isDragging,
 				hovered: isHovered(item.itemId) || fragmentShouldBeHovered(),
-				'page-editor-topper': true
+				'page-editor__topper': true
 			})}
 			onClick={event => {
 				event.stopPropagation();
@@ -198,19 +198,19 @@ export default function Topper({
 			}}
 			ref={containerRef}
 		>
-			<div className="page-editor-topper__bar tbar">
+			<div className="page-editor__topper__bar tbar">
 				<ul className="tbar-nav">
 					<TopperListItem
-						className="page-editor-topper__drag-handler"
+						className="page-editor__topper__drag-handler"
 						ref={drag}
 					>
 						<ClayIcon
-							className="page-editor-topper__drag-icon page-editor-topper__icon"
+							className="page-editor__topper__drag-icon page-editor__topper__icon"
 							symbol="drag"
 						/>
 					</TopperListItem>
 					<TopperListItem
-						className="page-editor-topper__title"
+						className="page-editor__topper__title"
 						expand
 					>
 						{getName(item, fragmentEntryLinks) ||
@@ -224,7 +224,7 @@ export default function Topper({
 								title={Liferay.Language.get('comments')}
 							>
 								<ClayIcon
-									className="page-editor-topper__icon"
+									className="page-editor__topper__icon"
 									onClick={() => {
 										dispatch(
 											switchSidebarPanel({
@@ -257,7 +257,7 @@ export default function Topper({
 								title={Liferay.Language.get('remove')}
 							>
 								<ClayIcon
-									className="page-editor-topper__icon"
+									className="page-editor__topper__icon"
 									symbol="times-circle"
 								/>
 							</ClayButton>
@@ -266,7 +266,7 @@ export default function Topper({
 				</ul>
 			</div>
 
-			<div className="page-editor-topper__content" ref={drop}>
+			<div className="page-editor__topper__content" ref={drop}>
 				{childrenElement}
 			</div>
 		</div>

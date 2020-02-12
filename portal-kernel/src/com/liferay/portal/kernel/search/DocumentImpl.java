@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -1055,6 +1055,22 @@ public class DocumentImpl implements Document {
 
 	protected void setSortableTextFields(Set<String> sortableTextFields) {
 		_sortableTextFields = sortableTextFields;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *			 #toString(StringBundler, Collection)}
+	 */
+	@Deprecated
+	protected void toString(
+		com.liferay.portal.kernel.util.StringBundler sb,
+		Collection<Field> fields) {
+
+		StringBundler petraSB = new StringBundler();
+
+		toString(petraSB, fields);
+
+		sb.append(petraSB.getStrings());
 	}
 
 	protected void toString(StringBundler sb, Collection<Field> fields) {

@@ -270,7 +270,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "Once there are active processes, metrics will appear here.");
+			value1 = "No results were found.");
 
 		Navigator.gotoBack();
 
@@ -817,8 +817,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.waitForSLAtoBecomeOverdue(
+		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
+			key_status = "OVERDUE",
 			timesToRun = "12");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
@@ -837,7 +838,10 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
-		WorkflowMetrics.waitForCompletedSLAtoBecomeOverdue(timesToRun = "12");
+		WorkflowMetrics.waitForCompletedSLA(
+			key_expectedValue = "0",
+			key_status = "OVERDUE",
+			timesToRun = "12");
 
 		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
 			rowName = "Review",
@@ -911,6 +915,11 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
+		WorkflowMetrics.waitForSLA(
+			key_expectedValue = "0",
+			key_status = "ONTIME",
+			timesToRun = "12");
+
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = "1",
 			key_overdue = "0",
@@ -924,8 +933,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.waitForSLAtoBecomeOverdue(
+		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
+			key_status = "OVERDUE",
 			timesToRun = "12");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
@@ -1020,6 +1030,8 @@ definition {
 			workflowFilterOption = "PENDING",
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
+
+		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
 		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -1140,8 +1152,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.waitForSLAtoBecomeOverdue(
+		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
+			key_status = "OVERDUE",
 			timesToRun = "12");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
@@ -1167,7 +1180,10 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
-		WorkflowMetrics.waitForCompletedSLAtoBecomeOverdue(timesToRun = "12");
+		WorkflowMetrics.waitForCompletedSLA(
+			key_expectedValue = "0",
+			key_status = "OVERDUE",
+			timesToRun = "12");
 
 		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
 			rowName = "Review",

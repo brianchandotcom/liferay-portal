@@ -391,9 +391,8 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										folderImage = "folder_full_document";
 									}
 								%>
-
-									<liferay-ui:search-container-column-image
-										src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
+									<liferay-ui:search-container-column-icon
+										icon="folder"
 									/>
 
 									<liferay-ui:search-container-column-text

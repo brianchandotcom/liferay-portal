@@ -12,17 +12,30 @@
  * details.
  */
 
-import './FieldBaseAdapter.soy';
+import '../components/Tooltip/Tooltip.es';
 
-import './ReactFieldBaseAdapter.es';
-
+import 'clay-icon';
+import {compose, getRepeatedIndex} from 'dynamic-data-mapping-form-renderer';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
+import withDispatch from '../util/withDispatch.es';
 import templates from './FieldBase.soy';
+import withLocale from './withLocale.es';
+import withRepetitionControls from './withRepetitionControls.es';
 
-class FieldBase extends Component {}
+class FieldBase extends Component {
+	prepareStateForRender(state) {
+		const repeatedIndex = getRepeatedIndex(this.name);
+
+		return {
+			...state,
+			showRepeatableAddButton: this.repeatable,
+			showRepeatableRemoveButton: this.repeatable && repeatedIndex > 0
+		};
+	}
+}
 
 FieldBase.STATE = {
 	/**
@@ -114,6 +127,12 @@ FieldBase.STATE = {
 	tooltip: Config.string(),
 };
 
-Soy.register(FieldBase, templates);
+const composed = compose(
+	withDispatch,
+	withRepetitionControls,
+	withLocale
+)(FieldBase);
 
-export default FieldBase;
+Soy.register(composed, templates);
+
+export default composed;

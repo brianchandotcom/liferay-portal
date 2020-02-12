@@ -17,7 +17,7 @@ import './ColorPickerRegister.soy';
 import ClayColorPicker from '@clayui/color-picker';
 import React, {useEffect, useState} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBaseAdapter.es';
+import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import templates from './ColorPickerAdapter.soy';

@@ -12,16 +12,12 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {getRepeatedIndex} from 'dynamic-data-mapping-form-renderer';
 import React, {useMemo} from 'react';
-
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
-import template from './FieldBaseAdapter.soy';
 
 function FieldBase({
 	children,
@@ -55,26 +51,29 @@ function FieldBase({
 				{repeatable && (
 					<div className="lfr-ddm-form-field-repeatable-toolbar">
 						{repeatable && repeatedIndex > 0 && (
-							<ClayButtonWithIcon
+							<ClayButton
 								className="ddm-form-field-repeatable-delete-button p-0"
 								disabled={readOnly}
 								onClick={onRemoveButton}
 								small
-								spritemap={spritemap}
-								symbol="trash"
 								type="button"
-							/>
+							>
+								<ClayIcon
+									spritemap={spritemap}
+									symbol="trash"
+								/>
+							</ClayButton>
 						)}
 
-						<ClayButtonWithIcon
+						<ClayButton
 							className="ddm-form-field-repeatable-add-button p-0"
 							disabled={readOnly}
 							onClick={onRepeatButton}
 							small
-							spritemap={spritemap}
-							symbol="plus"
 							type="button"
-						/>
+						>
+							<ClayIcon spritemap={spritemap} symbol="plus" />
+						</ClayButton>
 					</div>
 				)}
 
@@ -139,15 +138,4 @@ const FieldBaseProxy = ({dispatch, name, ...otherProps}) => (
 	/>
 );
 
-/**
- * This Adapter must be removed when all fields are written in React, this brings
- * compatibility so that it can continue working with the fields in Metal+Soy and
- * that it works with the fields in React.
- */
-const ReactFieldBaseAdapter = getConnectedReactComponentAdapter(
-	connectStore(FieldBaseProxy),
-	template
-);
-
 export {FieldBase, FieldBaseProxy};
-export default ReactFieldBaseAdapter;

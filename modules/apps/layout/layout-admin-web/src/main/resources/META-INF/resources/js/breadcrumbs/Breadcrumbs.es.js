@@ -16,19 +16,17 @@ import React from 'react';
 
 import BreadcrumbsItem from './BreadcrumbsItem.es';
 
-const Breadcrumbs = ({entries}) => {
-	return (
-		<ol className="breadcrumb">
-			{entries.map((entry, index) => (
-				<BreadcrumbsItem
-					active={index === entries.length - 1}
-					key={entry.url}
-					title={entry.title}
-					url={entry.url}
-				/>
-			))}
-		</ol>
-	);
-};
+const Breadcrumbs = ({entries}) => (
+	<ol className="breadcrumb">
+		{entries.map((entry, index) => (
+			<BreadcrumbsItem
+				active={index === entries.length - 1}
+				key={entry.url}
+				title={entry.title}
+				url={entry.url}
+			/>
+		))}
+	</ol>
+);
 
 export default Breadcrumbs;

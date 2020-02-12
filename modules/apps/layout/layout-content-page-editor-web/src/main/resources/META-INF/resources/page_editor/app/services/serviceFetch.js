@@ -78,7 +78,7 @@ export default function serviceFetch(
 					onNetworkStatus(
 						updateNetwork({
 							error: body.exception,
-							status: SERVICE_NETWORK_STATUS_TYPES.Error
+							status: SERVICE_NETWORK_STATUS_TYPES.error
 						})
 					);
 
@@ -90,7 +90,7 @@ export default function serviceFetch(
 					onNetworkStatus(
 						updateNetwork({
 							error: body.error,
-							status: SERVICE_NETWORK_STATUS_TYPES.Error
+							status: SERVICE_NETWORK_STATUS_TYPES.error
 						})
 					);
 

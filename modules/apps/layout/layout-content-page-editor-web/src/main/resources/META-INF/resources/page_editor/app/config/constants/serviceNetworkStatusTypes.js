@@ -13,13 +13,13 @@
  */
 
 /**
- * - Idle (0) When no request is happening the status will be `Idle`.
- * - Fetching (1) When a request is pending the status will be `Fetching`.
- * - Error (2) When any timeout or request `error` occurs, the status will be set
+ * - draftSaved (0) When a request that generates a draft has finished the status will be draftSaved.
+ * - error (1) When any timeout or request `error` occurs, the status will be set
+ * - savingDraft (2) When a request that generates a draft is pending the status will be `savingDraft`.
  * 	 to error.
  */
 export const SERVICE_NETWORK_STATUS_TYPES = {
-	Error: 2,
-	Fetching: 1,
-	Idle: 0
+	draftSaved: 0,
+	error: 1,
+	savingDraft: 2
 };

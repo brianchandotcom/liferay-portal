@@ -22,7 +22,7 @@ const getStatus = (isOnline, status, lastSaveDate) => {
 	if (!isOnline) {
 		return `${Liferay.Language.get('trying-to-reconnect')}...`;
 	}
-	else if (status === SERVICE_NETWORK_STATUS_TYPES.Fetching) {
+	else if (status === SERVICE_NETWORK_STATUS_TYPES.savingDraft) {
 		return Liferay.Language.get('saving-changes');
 	}
 	else if (lastSaveDate) {
@@ -51,7 +51,7 @@ const NetworkStatusBar = ({error, lastFetch, status}) => {
 	}, [lastFetch]);
 
 	useEffect(() => {
-		if (status === SERVICE_NETWORK_STATUS_TYPES.Error) {
+		if (status === SERVICE_NETWORK_STATUS_TYPES.error) {
 			openToast({
 				message: error,
 				title: Liferay.Language.get('error'),

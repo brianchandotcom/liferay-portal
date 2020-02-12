@@ -12,234 +12,153 @@
  * details.
  */
 
-import '../FieldBase/FieldBase.es';
-
 import './CheckboxMultipleRegister.soy';
 
-import 'clay-checkbox';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import {ClayCheckbox} from '@clayui/form';
+import classNames from 'classnames';
+import React, {useState} from 'react';
 
+import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
+import {connectStore} from '../util/connectStore.es';
 import {setJSONArrayValue} from '../util/setters.es';
-import templates from './CheckboxMultiple.soy';
+import templates from './CheckboxMultipleAdapter.soy';
 
-/**
- * CheckboxMultiple.
- * @extends Component
- */
+const Switcher = ({
+	checked,
+	disabled,
+	inline,
+	label,
+	name,
+	onBlur,
+	onChange,
+	onFocus,
+	value
+}) => (
+	<div
+		className={classNames('lfr-ddm-form-field-checkbox-switch', {
+			'lfr-ddm-form-field-checkbox-switch-inline': inline
+		})}
+	>
+		<label className="simple-toggle-switch toggle-switch">
+			<input
+				checked={checked}
+				className="toggle-switch-check"
+				disabled={disabled}
+				name={name}
+				onBlur={onBlur}
+				onChange={onChange}
+				onFocus={onFocus}
+				type="checkbox"
+				value={value}
+			/>
+			<span aria-hidden="true" className="toggle-switch-bar">
+				<span className="toggle-switch-handle"></span>
+			</span>
+			<span className="toggle-switch-label">{label}</span>
+		</label>
+	</div>
+);
 
-class CheckboxMultiple extends Component {
-	_handleFieldBlurred(event) {
-		this.emit('fieldBlurred', {
-			fieldInstance: this,
-			originalEvent: event,
-			value: event.target.value,
-		});
-	}
+const CheckboxMultiple = ({
+	disabled,
+	inline,
+	isSwitcher,
+	name,
+	onBlur,
+	onChange,
+	onFocus,
+	options,
+	predefinedValue,
+	value: initialValue
+}) => {
+	const [value, setValue] = useState(initialValue);
 
-	_handleFieldChanged(event) {
+	const displayValues = value && value.length > 0 ? value : predefinedValue;
+	const Toggle = isSwitcher ? Switcher : ClayCheckbox;
+
+	const handleChange = event => {
 		const {target} = event;
-		const value = this.value.filter(
+		const newValue = value.filter(
 			currentValue => currentValue !== target.value
 		);
 
 		if (target.checked) {
-			value.push(target.value);
+			newValue.push(target.value);
 		}
 
-		this.setState(
-			{
-				value,
-			},
-			() => {
-				this.emit('fieldEdited', {
-					fieldInstance: this,
-					originalEvent: event,
-					value,
-				});
-			}
-		);
-	}
+		setValue(newValue);
+		onChange(event, newValue);
+	};
 
-	_handleFieldFocused(event) {
-		this.emit('fieldFocused', {
-			fieldInstance: this,
-			originalEvent: event,
-		});
-	}
-}
-
-Soy.register(CheckboxMultiple, templates);
-
-CheckboxMultiple.STATE = {
-	/**
-	 * @default 'string'
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	dataType: Config.string().value('boolean'),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FieldBase
-	 * @type {?bool}
-	 */
-
-	evaluable: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FieldBase
-	 * @type {?(string|undefined)}
-	 */
-
-	fieldName: Config.string(),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof Checkbox
-	 * @type {?bool}
-	 */
-
-	inline: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Checkbox
-	 * @type {?(string|undefined)}
-	 */
-
-	label: Config.string(),
-
-	/**
-	 * @default {}
-	 * @instance
-	 * @memberof CheckboxMultiple
-	 * @type {?(object|undefined)}
-	 */
-
-	localizedValue: Config.object().value({}),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Checkbox
-	 * @type {?(string|undefined)}
-	 */
-
-	options: Config.arrayOf(
-		Config.shapeOf({
-			label: Config.string(),
-			name: Config.string(),
-			value: Config.string(),
-		})
-	).value([
-		{
-			label: 'Option 1',
-		},
-		{
-			label: 'Option 2',
-		},
-	]),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Select
-	 * @type {?string}
-	 */
-
-	predefinedValue: Config.setter(setJSONArrayValue).value([]),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof Checkbox
-	 * @type {?bool}
-	 */
-
-	readOnly: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FieldBase
-	 * @type {?(bool|undefined)}
-	 */
-
-	repeatable: Config.bool(),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof Checkbox
-	 * @type {?bool}
-	 */
-
-	required: Config.bool().value(false),
-
-	/**
-	 * @default true
-	 * @instance
-	 * @memberof Checkbox
-	 * @type {?bool}
-	 */
-
-	showAsSwitcher: Config.bool().value(true),
-
-	/**
-	 * @default true
-	 * @instance
-	 * @memberof Checkbox
-	 * @type {?bool}
-	 */
-
-	showLabel: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Checkbox
-	 * @type {?(string|undefined)}
-	 */
-
-	spritemap: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FieldBase
-	 * @type {?(string|undefined)}
-	 */
-
-	tip: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	type: Config.string().value('checkbox'),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Checkbox
-	 * @type {?(bool)}
-	 */
-
-	value: Config.oneOfType([Config.array(), Config.object()]).setter(
-		setJSONArrayValue
-	),
+	return (
+		<div className="lfr-ddm-checkbox-multiple">
+			{options.map(option => (
+				<Toggle
+					checked={displayValues.includes(option.value)}
+					disabled={disabled}
+					inline={inline}
+					key={option.label}
+					label={option.label}
+					name={name}
+					onBlur={onBlur}
+					onChange={handleChange}
+					onFocus={onFocus}
+					value={option.value}
+				/>
+			))}
+		</div>
+	);
 };
 
-export default CheckboxMultiple;
+const CheckboxMultipleProxy = connectStore(
+	({
+		dispatch,
+		emit,
+		inline,
+		name,
+		options = [
+			{
+				label: 'Option 1'
+			},
+			{
+				label: 'Option 2'
+			}
+		],
+		predefinedValue,
+		readOnly,
+		showAsSwitcher = true,
+		value,
+		...otherProps
+	}) => (
+		<FieldBaseProxy
+			dispatch={dispatch}
+			name={name}
+			readOnly={readOnly}
+			{...otherProps}
+		>
+			<CheckboxMultiple
+				disabled={readOnly}
+				inline={inline}
+				isSwitcher={showAsSwitcher}
+				name={name}
+				onBlur={event =>
+					emit('fieldBlurred', event, event.target.value)
+				}
+				onChange={(event, value) => emit('fieldEdited', event, value)}
+				onFocus={event => emit('fieldFocused', event)}
+				options={options}
+				predefinedValue={setJSONArrayValue(predefinedValue)}
+				value={setJSONArrayValue(value)}
+			/>
+		</FieldBaseProxy>
+	)
+);
+
+const ReactCheckboxMultipleAdapter = getConnectedReactComponentAdapter(
+	CheckboxMultipleProxy,
+	templates
+);
+
+export {ReactCheckboxMultipleAdapter};
+export default ReactCheckboxMultipleAdapter;

@@ -35,9 +35,14 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -295,6 +300,25 @@ public class PageDefinitionConverterUtil {
 
 		return new Settings() {
 			{
+				setColorSchemeName(
+					() -> {
+						ColorScheme colorScheme = null;
+
+						try {
+							colorScheme = layout.getColorScheme();
+						}
+						catch (PortalException portalException) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(portalException, portalException);
+							}
+						}
+
+						if (colorScheme == null) {
+							return null;
+						}
+
+						return colorScheme.getName();
+					});
 			}
 		};
 	}

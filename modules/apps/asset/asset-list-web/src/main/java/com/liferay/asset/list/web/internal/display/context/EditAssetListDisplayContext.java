@@ -91,7 +91,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -955,6 +954,10 @@ public class EditAssetListDisplayContext {
 		}
 
 		return null;
+	}
+
+	public UnicodeProperties getUnicodeProperties() {
+		return _properties;
 	}
 
 	public List<Long> getVocabularyIds() throws PortalException {

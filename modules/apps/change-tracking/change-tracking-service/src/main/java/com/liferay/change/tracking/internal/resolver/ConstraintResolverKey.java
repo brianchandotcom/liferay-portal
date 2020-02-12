@@ -27,8 +27,7 @@ public class ConstraintResolverKey {
 	public ConstraintResolverKey(
 		Class<?> modelClass, String[] uniqueIndexNames) {
 
-		_modelClassName = modelClass.getName();
-		_uniqueIndexNames = uniqueIndexNames;
+		this(modelClass.getName(), uniqueIndexNames);
 	}
 
 	public ConstraintResolverKey(

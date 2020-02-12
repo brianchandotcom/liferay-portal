@@ -7,40 +7,6 @@
 }
 
 .page-editor__floating-toolbar {
-	display: block;
-	height: 0;
-	left: -1px;
-	position: absolute;
-	top: -1px;
-	width: 0;
-
-	&-buttons,
-	&-panel {
-		position: absolute;
-		z-index: $floatingToolbarZIndex;
-	}
-
-	&-buttons {
-		display: inline-block;
-		padding: $fragmentsEditorSpacing;
-
-		& .btn {
-			margin: 0 ($fragmentsEditorSpacing / 2) 0
-				($fragmentsEditorSpacing / 2);
-
-			&.active {
-				background-color: rgba(0, 0, 0, 0.1);
-				opacity: 1;
-			}
-		}
-
-		& > .popover {
-			padding: $fragmentsEditorSpacing;
-			position: static;
-			white-space: nowrap;
-		}
-	}
-
 	&-panel {
 		animation: FloatingToolbarPanelFadeIn ease 0.3s;
 		animation-fill-mode: forwards;
@@ -66,14 +32,6 @@
 			&:last-child {
 				margin: 0;
 			}
-		}
-
-		.floating-toolbar-mapping-panel__asset-select {
-			.d-flex {
-				height: 32px;
-			}
-
-			margin-bottom: 16px;
 		}
 
 		.palette-container {
@@ -111,45 +69,6 @@
 			display: flex;
 			flex-wrap: wrap;
 		}
-	}
-
-	.page-editor__floating-toolbar-buttons {
-		& .page-editor__floating-toolbar--disabled {
-			cursor: not-allowed;
-			pointer-events: none;
-		}
-
-		& .page-editor__floating-toolbar--linked-field {
-			&.active,
-			&:hover {
-				background-color: fade_out(#0b5fff, 0.94);
-			}
-
-			.lexicon-icon {
-				fill: #0b5fff;
-			}
-		}
-
-		& .page-editor__floating-toolbar--mapped-field {
-			&.active,
-			&:hover {
-				background-color: fade_out(#af78ff, 0.9);
-			}
-
-			.lexicon-icon {
-				fill: #af78ff;
-			}
-		}
-	}
-}
-
-.item-selector-dropdown-menu {
-	max-height: 230px;
-}
-
-.floating-toolbar-fragment-configuration-panel {
-	.item-selector-dropdown-menu {
-		max-height: 130px;
 	}
 }
 

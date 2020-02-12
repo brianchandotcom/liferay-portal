@@ -99,7 +99,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 	};
 
 	return (
-		<div className="floating-toolbar-configuration-panel">
+		<>
 			{configuration.fieldSets.map((fieldSet, index) => {
 				return (
 					<FieldSet
@@ -112,7 +112,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 				);
 			})}
 			<RestoreButton onRestoreButtonClick={onRestoreButtonClick} />
-		</div>
+		</>
 	);
 };
 

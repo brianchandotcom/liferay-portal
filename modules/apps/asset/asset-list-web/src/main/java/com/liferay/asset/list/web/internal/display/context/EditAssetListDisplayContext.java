@@ -617,28 +617,13 @@ public class EditAssetListDisplayContext {
 			}
 
 			if (!curRendererFactory.isSupportsClassTypes()) {
-				String type = curRendererFactory.getTypeName(
-					_themeDisplay.getLocale());
-
-				Map<String, Object> data = HashMapBuilder.<String, Object>put(
-					"destroyOnHide", true
-				).put(
-					"groupid", String.valueOf(_themeDisplay.getScopeGroupId())
-				).put(
-					"href",
-					String.valueOf(
-						_getAssetEntryItemSelectorPortletURL(
-							curRendererFactory, 0))
-				).put(
-					"title",
-					HtmlUtil.escape(
-						LanguageUtil.format(
-							_httpServletRequest, "select-x", type, false))
-				).put(
-					"type", type
-				).build();
-
-				manualAddIconDataMap.put(type, data);
+				manualAddIconDataMap.put(
+					curRendererFactory.getTypeName(_themeDisplay.getLocale()),
+					_getDataMap(
+						curRendererFactory,
+						curRendererFactory.getTypeName(
+							_themeDisplay.getLocale()),
+						_DEFAULT_SUBTYPE_SELECTION_ID));
 
 				continue;
 			}
@@ -653,28 +638,11 @@ public class EditAssetListDisplayContext {
 					_themeDisplay.getLocale());
 
 			for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
-				String type = assetAvailableClassType.getName();
-
-				Map<String, Object> data = HashMapBuilder.<String, Object>put(
-					"destroyOnHide", true
-				).put(
-					"groupid", String.valueOf(_themeDisplay.getScopeGroupId())
-				).put(
-					"href",
-					String.valueOf(
-						_getAssetEntryItemSelectorPortletURL(
-							curRendererFactory,
-							assetAvailableClassType.getClassTypeId()))
-				).put(
-					"title",
-					HtmlUtil.escape(
-						LanguageUtil.format(
-							_httpServletRequest, "select-x", type, false))
-				).put(
-					"type", type
-				).build();
-
-				manualAddIconDataMap.put(type, data);
+				manualAddIconDataMap.put(
+					assetAvailableClassType.getName(),
+					_getDataMap(
+						curRendererFactory, assetAvailableClassType.getName(),
+						assetAvailableClassType.getClassTypeId()));
 			}
 		}
 
@@ -1160,6 +1128,31 @@ public class EditAssetListDisplayContext {
 
 		return availableClassTypeIds;
 	}
+
+	private Map<String, Object> _getDataMap(
+		AssetRendererFactory<?> rendererFactory, String type,
+		long subtypeSelectionId) {
+
+		return HashMapBuilder.<String, Object>put(
+			"destroyOnHide", true
+		).put(
+			"groupid", String.valueOf(_themeDisplay.getScopeGroupId())
+		).put(
+			"href",
+			String.valueOf(
+				_getAssetEntryItemSelectorPortletURL(
+					rendererFactory, subtypeSelectionId))
+		).put(
+			"title",
+			HtmlUtil.escape(
+				LanguageUtil.format(
+					_httpServletRequest, "select-x", type, false))
+		).put(
+			"type", type
+		).build();
+	}
+
+	private static final long _DEFAULT_SUBTYPE_SELECTION_ID = 0;
 
 	private Boolean _anyAssetType;
 	private AssetListEntry _assetListEntry;

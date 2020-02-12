@@ -18,9 +18,10 @@ gradle.liferayWorkspace {
 }
 
 gradle.projectsEvaluated {
-	gradle.rootProject.tasks.register("assertScript", DockerLogsContainer) {
-		dependsOn gradle.rootProject.tasks.startDockerContainer
-		finalizedBy gradle.rootProject.tasks.cleanDockerImage
+	def root = gradle.rootProject
+	root.tasks.register("assertLog", DockerLogsContainer) {
+		dependsOn root.tasks.startDockerContainer
+		finalizedBy root.tasks.cleanDockerImage
 		tailAll = true
 		follow = false
 		targetContainerId {
@@ -34,7 +35,7 @@ gradle.projectsEvaluated {
 				if (line.contains(expectedLine)) {
 					expectedLineDetected = true
 				}
-				gradle.rootProject.print line
+				root.print line
 			}
 		}
 

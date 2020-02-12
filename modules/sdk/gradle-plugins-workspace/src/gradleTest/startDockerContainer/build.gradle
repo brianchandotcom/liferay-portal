@@ -1,5 +1,5 @@
 task runGradleTest
 
 runGradleTest {
-	dependsOn "assertScript"
+	dependsOn "assertLog"
 }

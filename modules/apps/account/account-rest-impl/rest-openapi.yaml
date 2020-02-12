@@ -248,6 +248,7 @@ paths:
             # @review
             description:
                 Gets the users assigned to an account
+            operationId: getAccountUsersPage
             parameters:
                 - in: path
                   name: accountId
@@ -295,6 +296,7 @@ paths:
             # @review
             description:
                 Creates a user and assigns them to the account
+            operationId: postAccountUser
             parameters:
                 - in: path
                   name: accountId

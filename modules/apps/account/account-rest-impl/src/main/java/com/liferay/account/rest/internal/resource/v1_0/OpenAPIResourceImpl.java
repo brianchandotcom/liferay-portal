@@ -66,6 +66,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(AccountResourceImpl.class);
 
+			add(AccountUserResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

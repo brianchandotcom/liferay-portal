@@ -85,10 +85,13 @@ const ExperienceSelector = ({
 	const {
 		defaultSegmentsExperienceId,
 		editSegmentsEntryURL,
-		hasEditSegmentsEntryPermission,
 		plid,
 		selectedSegmentsEntryId
 	} = config;
+
+	const hasEditSegmentsEntryPermission = useSelector(
+		({permissions}) => permissions.EDIT_SEGMENTS_ENTRY
+	);
 
 	const hasUpdatePermissions = useSelector(
 		({permissions}) => permissions.UPDATE

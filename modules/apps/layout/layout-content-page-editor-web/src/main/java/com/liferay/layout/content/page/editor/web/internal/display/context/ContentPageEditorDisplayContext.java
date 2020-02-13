@@ -272,9 +272,6 @@ public class ContentPageEditorDisplayContext {
 				"getExperienceUsedPortletsURL",
 				editorSoyContext.get("getExperienceUsedPortletsURL")
 			).put(
-				"hasEditSegmentsEntryPermission",
-				editorSoyContext.get("hasEditSegmentsEntryPermission")
-			).put(
 				"imageSelectorURL", editorSoyContext.get("imageSelectorURL")
 			).put(
 				"infoItemSelectorURL",
@@ -362,6 +359,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"permissions",
 				HashMapBuilder.<String, Object>put(
+					ContentPageEditorActionKeys.EDIT_SEGMENTS_ENTRY,
+					editorSoyContext.get("hasEditSegmentsEntryPermission")
+				).put(
 					ContentPageEditorActionKeys.LOCKED_SEGMENTS_EXPERIMENT,
 					editorSoyContext.get("lockedSegmentsExperience")
 				).put(

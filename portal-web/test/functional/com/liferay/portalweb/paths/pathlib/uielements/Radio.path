@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>DEPOT_LANGUAGES_OPTION</td>
-	<td>//div[@class='radio']/label[contains(.,'${key_languagesOption}')]/input[@type='radio']</td>
+	<td>//div[contains(@class,'custom-radio') and contains(.,'${key_languagesOption}')]//input</td>
 	<td></td>
 </tr>
 <tr>

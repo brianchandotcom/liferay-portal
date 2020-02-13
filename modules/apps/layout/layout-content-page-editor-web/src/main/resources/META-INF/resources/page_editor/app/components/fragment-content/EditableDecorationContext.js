@@ -75,17 +75,17 @@ EditableDecorationProvider.propTypes = {
 	children: PropTypes.node
 };
 
-export function useEditableDecoration(editableId) {
+export function useEditableDecoration() {
 	const {registerElement, unregisterElement, updateClassName} = useContext(
 		EditableDecorationContext
 	);
 
 	return useMemo(
 		() => ({
-			registerElement: node => registerElement(editableId, node),
-			unregisterElement: () => unregisterElement(editableId),
-			updateClassName: className => updateClassName(editableId, className)
+			registerElement,
+			unregisterElement,
+			updateClassName
 		}),
-		[editableId, registerElement, unregisterElement, updateClassName]
+		[registerElement, unregisterElement, updateClassName]
 	);
 }

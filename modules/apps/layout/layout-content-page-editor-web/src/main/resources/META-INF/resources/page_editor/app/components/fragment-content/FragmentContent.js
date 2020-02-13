@@ -15,13 +15,7 @@
 import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import {closest} from 'metal-dom';
-import React, {
-	useCallback,
-	useContext,
-	useEffect,
-	useLayoutEffect,
-	useState
-} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
@@ -31,102 +25,27 @@ import Processors from '../../processors/index';
 import selectEditableValue from '../../selectors/selectEditableValue';
 import selectEditableValueConfig from '../../selectors/selectEditableValueConfig';
 import selectEditableValueContent from '../../selectors/selectEditableValueContent';
-import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import InfoItemService from '../../services/InfoItemService';
 import {useSelector} from '../../store/index';
-import {useActiveItemId, useIsActive} from '../Controls';
+import {useActiveItemId} from '../Controls';
 import UnsafeHTML from '../UnsafeHTML';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
 import FragmentContentDecoration from './FragmentContentDecoration';
 import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
 import FragmentContentProcessor from './FragmentContentProcessor';
-import getEditableUniqueId from './getEditableUniqueId';
 
 function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const config = useContext(ConfigContext);
 	const element = ref.current;
 	const activeItemId = useActiveItemId();
-	const isActive = useIsActive();
 	const isMounted = useIsMounted();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const state = useSelector(state => state);
 
 	const defaultContent = fragmentEntryLink.content;
-	const {defaultLanguageId} = config;
 	const {fragmentEntryLinkId} = fragmentEntryLink;
-	const prefixedSegmentsExperienceId = selectPrefixedSegmentsExperienceId(
-		state
-	);
 
 	const [content, setContent] = useState(defaultContent);
-	const [editablesIds, setEditablesIds] = useState([]);
-
-	const canUpdateLayoutContent = useSelector(
-		({permissions}) =>
-			!permissions.LOCKED_SEGMENTS_EXPERIMENT &&
-			permissions.UPDATE_LAYOUT_CONTENT
-	);
-
-	const editableValues = useSelector(state => {
-		const values = {};
-
-		if (fragmentEntryLink) {
-			Object.keys(
-				fragmentEntryLink.editableValues[
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-				]
-			).forEach(editableId => {
-				const editableValue = selectEditableValue(
-					state,
-					fragmentEntryLinkId,
-					editableId
-				);
-
-				values[editableId] = editableValue;
-			});
-		}
-
-		return values;
-	});
-
-	const showFragmentContentDecoration = useCallback(
-		editableValue =>
-			canUpdateLayoutContent
-				? [
-						itemId,
-						...editablesIds.map(editableId =>
-							getEditableUniqueId(fragmentEntryLinkId, editableId)
-						)
-				  ].some(isActive) ||
-				  editableIsMapped(editableValue) ||
-				  editableIsTranslated(
-						defaultLanguageId,
-						editableValue,
-						state.languageId,
-						prefixedSegmentsExperienceId
-				  )
-				: true,
-		[
-			canUpdateLayoutContent,
-			defaultLanguageId,
-			isActive,
-			itemId,
-			prefixedSegmentsExperienceId,
-			state.languageId,
-			editablesIds,
-			fragmentEntryLinkId
-		]
-	);
-
-	useLayoutEffect(() => {
-		setEditablesIds(
-			element
-				? Array.from(element.querySelectorAll('lfr-editable')).map(
-						element => element.id
-				  )
-				: []
-		);
-	}, [content, element]);
 
 	useEffect(() => {
 		if (!element) {
@@ -239,38 +158,18 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 				fragmentEntryLinkId={fragmentEntryLinkId}
 			/>
 
-			{editablesIds.map(
-				editableId =>
-					showFragmentContentDecoration(
-						editableValues[editableId]
-					) && (
-						<FragmentContentDecoration
-							editableId={editableId}
-							fragmentEntryLinkId={fragmentEntryLinkId}
-							itemId={getEditableUniqueId(
-								fragmentEntryLinkId,
-								editableId
-							)}
-							key={editableId}
-							onEditableDoubleClick={() =>
-								setEditableProcessorUniqueId(
-									getEditableUniqueId(
-										fragmentEntryLinkId,
-										editableId
-									)
-								)
-							}
-							parentItemId={itemId}
-							parentRef={ref}
-							siblingsItemIds={editablesIds.map(siblingId =>
-								getEditableUniqueId(
-									fragmentEntryLinkId,
-									siblingId
-								)
-							)}
-						/>
-					)
-			)}
+			{element &&
+				Array.from(
+					element.querySelectorAll('lfr-editable')
+				).map(editableElement => (
+					<FragmentContentDecoration
+						editableElement={editableElement}
+						element={element}
+						fragmentEntryLinkId={fragmentEntryLinkId}
+						itemId={itemId}
+						key={editableElement.id}
+					/>
+				))}
 		</>
 	);
 }
@@ -282,21 +181,6 @@ const editableIsMappedToInfoItem = editableValue =>
 	editableValue.classNameId &&
 	editableValue.classPK &&
 	editableValue.fieldId;
-
-const editableIsMapped = editableValue =>
-	editableIsMappedToInfoItem(editableValue) || editableValue.mappedField;
-
-const editableIsTranslated = (
-	defaultLanguageId,
-	editableValue,
-	languageId,
-	segmentsExperienceId
-) =>
-	editableValue &&
-	defaultLanguageId !== languageId &&
-	(editableValue[languageId] ||
-		(segmentsExperienceId in editableValue &&
-			editableValue[segmentsExperienceId][languageId]));
 
 const getMappingValue = ({classNameId, classPK, config, fieldId}) =>
 	InfoItemService.getAssetFieldValue({

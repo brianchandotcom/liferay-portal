@@ -58,8 +58,8 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		Map<String, String> urlParameters = new HashMap<>();
 
 		urlParameters.put("number_of_rows", String.valueOf(15000));
+		urlParameters.put("sort_by", "BuildId DESC");
 		urlParameters.put("starting_row", String.valueOf(1));
-		urlParameters.put("sort_by", "");
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
 

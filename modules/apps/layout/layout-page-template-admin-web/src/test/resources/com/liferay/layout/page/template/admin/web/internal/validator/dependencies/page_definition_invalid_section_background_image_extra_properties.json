@@ -1,0 +1,15 @@
+{
+	"pageElement" : {
+		"pageElements" : [
+			{
+				"definition" : {
+					"backgroundImage" : {
+						"extra" : "value"
+					}
+				},
+				"type" : "Section"
+			}
+		],
+		"type" : "Root"
+	}
+}

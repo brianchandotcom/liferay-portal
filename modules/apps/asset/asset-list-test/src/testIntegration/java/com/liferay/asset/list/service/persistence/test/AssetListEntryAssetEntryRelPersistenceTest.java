@@ -269,6 +269,21 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByA_SEI() throws Exception {
+		_persistence.countByA_SEI(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByA_SEI(0L, 0L);
+	}
+
+	@Test
+	public void testCountByA_SEIArrayable() throws Exception {
+		_persistence.countByA_SEI(
+			RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByA_S_P() throws Exception {
 		_persistence.countByA_S_P(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

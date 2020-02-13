@@ -161,6 +161,12 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		_rebuild();
 	}
 
+	protected void updatedTopHeadResources(
+		ServiceReference<TopHeadResources> topHeadResourcesServiceReference) {
+
+		_rebuild();
+	}
+
 	private void _addPortalBundles(List<String> urls, String propsKey) {
 		String[] fileNames = JavaScriptBundleUtil.getFileNames(propsKey);
 

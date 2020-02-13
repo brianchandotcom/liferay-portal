@@ -25,6 +25,7 @@ function FieldBase({
 	errorMessage,
 	id,
 	label,
+	name,
 	onRemoveButton,
 	onRepeatButton,
 	readOnly,
@@ -37,7 +38,7 @@ function FieldBase({
 	valid,
 	visible
 }) {
-	const repeatedIndex = useMemo(() => getRepeatedIndex(name), []);
+	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
 
 	return (
 		<ClayTooltipProvider>

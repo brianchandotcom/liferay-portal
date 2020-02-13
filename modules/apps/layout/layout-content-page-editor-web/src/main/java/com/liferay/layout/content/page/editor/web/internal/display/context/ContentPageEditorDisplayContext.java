@@ -760,7 +760,7 @@ public class ContentPageEditorDisplayContext {
 		return _defaultConfigurations;
 	}
 
-	private String _getDiscardDraftURL() throws PortalException {
+	private String _getDiscardDraftURL() {
 		Layout publishedLayout = _getPublishedLayout();
 
 		if (!Objects.equals(

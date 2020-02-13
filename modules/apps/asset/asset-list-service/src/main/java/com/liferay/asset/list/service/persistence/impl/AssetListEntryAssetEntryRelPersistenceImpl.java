@@ -38,10 +38,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -2686,6 +2688,865 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	private static final String _FINDER_COLUMN_A_S_SEGMENTSENTRYID_2 =
 		"assetListEntryAssetEntryRel.segmentsEntryId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByA_SEI;
+	private FinderPath _finderPathWithoutPaginationFindByA_SEI;
+	private FinderPath _finderPathCountByA_SEI;
+	private FinderPath _finderPathWithPaginationCountByA_SEI;
+
+	/**
+	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @return the matching asset list entry asset entry rels
+	 */
+	@Override
+	public List<AssetListEntryAssetEntryRel> findByA_SEI(
+		long assetListEntryId, long segmentsEntryId) {
+
+		return findByA_SEI(
+			assetListEntryId, segmentsEntryId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @return the range of matching asset list entry asset entry rels
+	 */
+	@Override
+	public List<AssetListEntryAssetEntryRel> findByA_SEI(
+		long assetListEntryId, long segmentsEntryId, int start, int end) {
+
+		return findByA_SEI(assetListEntryId, segmentsEntryId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset list entry asset entry rels
+	 */
+	@Override
+	public List<AssetListEntryAssetEntryRel> findByA_SEI(
+		long assetListEntryId, long segmentsEntryId, int start, int end,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
+
+		return findByA_SEI(
+			assetListEntryId, segmentsEntryId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset list entry asset entry rels
+	 */
+	@Override
+	public List<AssetListEntryAssetEntryRel> findByA_SEI(
+		long assetListEntryId, long segmentsEntryId, int start, int end,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByA_SEI;
+				finderArgs = new Object[] {assetListEntryId, segmentsEntryId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByA_SEI;
+			finderArgs = new Object[] {
+				assetListEntryId, segmentsEntryId, start, end, orderByComparator
+			};
+		}
+
+		List<AssetListEntryAssetEntryRel> list = null;
+
+		if (useFinderCache) {
+			list = (List<AssetListEntryAssetEntryRel>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
+						list) {
+
+					if ((assetListEntryId !=
+							assetListEntryAssetEntryRel.
+								getAssetListEntryId()) ||
+						(segmentsEntryId !=
+							assetListEntryAssetEntryRel.getSegmentsEntryId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE);
+
+			query.append(_FINDER_COLUMN_A_SEI_ASSETLISTENTRYID_2);
+
+			query.append(_FINDER_COLUMN_A_SEI_SEGMENTSENTRYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				query.append(
+					AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetListEntryId);
+
+				qPos.add(segmentsEntryId);
+
+				list = (List<AssetListEntryAssetEntryRel>)QueryUtil.list(
+					q, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset list entry asset entry rel
+	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
+	 */
+	@Override
+	public AssetListEntryAssetEntryRel findByA_SEI_First(
+			long assetListEntryId, long segmentsEntryId,
+			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+		throws NoSuchEntryAssetEntryRelException {
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			fetchByA_SEI_First(
+				assetListEntryId, segmentsEntryId, orderByComparator);
+
+		if (assetListEntryAssetEntryRel != null) {
+			return assetListEntryAssetEntryRel;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("assetListEntryId=");
+		msg.append(assetListEntryId);
+
+		msg.append(", segmentsEntryId=");
+		msg.append(segmentsEntryId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryAssetEntryRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
+	 */
+	@Override
+	public AssetListEntryAssetEntryRel fetchByA_SEI_First(
+		long assetListEntryId, long segmentsEntryId,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
+
+		List<AssetListEntryAssetEntryRel> list = findByA_SEI(
+			assetListEntryId, segmentsEntryId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset list entry asset entry rel
+	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
+	 */
+	@Override
+	public AssetListEntryAssetEntryRel findByA_SEI_Last(
+			long assetListEntryId, long segmentsEntryId,
+			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+		throws NoSuchEntryAssetEntryRelException {
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			fetchByA_SEI_Last(
+				assetListEntryId, segmentsEntryId, orderByComparator);
+
+		if (assetListEntryAssetEntryRel != null) {
+			return assetListEntryAssetEntryRel;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("assetListEntryId=");
+		msg.append(assetListEntryId);
+
+		msg.append(", segmentsEntryId=");
+		msg.append(segmentsEntryId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryAssetEntryRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
+	 */
+	@Override
+	public AssetListEntryAssetEntryRel fetchByA_SEI_Last(
+		long assetListEntryId, long segmentsEntryId,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
+
+		int count = countByA_SEI(assetListEntryId, segmentsEntryId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AssetListEntryAssetEntryRel> list = findByA_SEI(
+			assetListEntryId, segmentsEntryId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryAssetEntryRelId the primary key of the current asset list entry asset entry rel
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset list entry asset entry rel
+	 * @throws NoSuchEntryAssetEntryRelException if a asset list entry asset entry rel with the primary key could not be found
+	 */
+	@Override
+	public AssetListEntryAssetEntryRel[] findByA_SEI_PrevAndNext(
+			long assetListEntryAssetEntryRelId, long assetListEntryId,
+			long segmentsEntryId,
+			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+		throws NoSuchEntryAssetEntryRelException {
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			findByPrimaryKey(assetListEntryAssetEntryRelId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetListEntryAssetEntryRel[] array =
+				new AssetListEntryAssetEntryRelImpl[3];
+
+			array[0] = getByA_SEI_PrevAndNext(
+				session, assetListEntryAssetEntryRel, assetListEntryId,
+				segmentsEntryId, orderByComparator, true);
+
+			array[1] = assetListEntryAssetEntryRel;
+
+			array[2] = getByA_SEI_PrevAndNext(
+				session, assetListEntryAssetEntryRel, assetListEntryId,
+				segmentsEntryId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetListEntryAssetEntryRel getByA_SEI_PrevAndNext(
+		Session session,
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel,
+		long assetListEntryId, long segmentsEntryId,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE);
+
+		query.append(_FINDER_COLUMN_A_SEI_ASSETLISTENTRYID_2);
+
+		query.append(_FINDER_COLUMN_A_SEI_SEGMENTSENTRYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(assetListEntryId);
+
+		qPos.add(segmentsEntryId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						assetListEntryAssetEntryRel)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<AssetListEntryAssetEntryRel> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @return the matching asset list entry asset entry rels
+	 */
+	@Override
+	public List<AssetListEntryAssetEntryRel> findByA_SEI(
+		long assetListEntryId, long[] segmentsEntryIds) {
+
+		return findByA_SEI(
+			assetListEntryId, segmentsEntryIds, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @return the range of matching asset list entry asset entry rels
+	 */
+	@Override
+	public List<AssetListEntryAssetEntryRel> findByA_SEI(
+		long assetListEntryId, long[] segmentsEntryIds, int start, int end) {
+
+		return findByA_SEI(
+			assetListEntryId, segmentsEntryIds, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset list entry asset entry rels
+	 */
+	@Override
+	public List<AssetListEntryAssetEntryRel> findByA_SEI(
+		long assetListEntryId, long[] segmentsEntryIds, int start, int end,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
+
+		return findByA_SEI(
+			assetListEntryId, segmentsEntryIds, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset list entry asset entry rels
+	 */
+	@Override
+	public List<AssetListEntryAssetEntryRel> findByA_SEI(
+		long assetListEntryId, long[] segmentsEntryIds, int start, int end,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean useFinderCache) {
+
+		if (segmentsEntryIds == null) {
+			segmentsEntryIds = new long[0];
+		}
+		else if (segmentsEntryIds.length > 1) {
+			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
+		}
+
+		if (segmentsEntryIds.length == 1) {
+			return findByA_SEI(
+				assetListEntryId, segmentsEntryIds[0], start, end,
+				orderByComparator);
+		}
+
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					assetListEntryId, StringUtil.merge(segmentsEntryIds)
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				assetListEntryId, StringUtil.merge(segmentsEntryIds), start,
+				end, orderByComparator
+			};
+		}
+
+		List<AssetListEntryAssetEntryRel> list = null;
+
+		if (useFinderCache) {
+			list = (List<AssetListEntryAssetEntryRel>)finderCache.getResult(
+				_finderPathWithPaginationFindByA_SEI, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
+						list) {
+
+					if ((assetListEntryId !=
+							assetListEntryAssetEntryRel.
+								getAssetListEntryId()) ||
+						!ArrayUtil.contains(
+							segmentsEntryIds,
+							assetListEntryAssetEntryRel.getSegmentsEntryId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE);
+
+			query.append(_FINDER_COLUMN_A_SEI_ASSETLISTENTRYID_2);
+
+			if (segmentsEntryIds.length > 0) {
+				query.append("(");
+
+				query.append(_FINDER_COLUMN_A_SEI_SEGMENTSENTRYID_7);
+
+				query.append(StringUtil.merge(segmentsEntryIds));
+
+				query.append(")");
+
+				query.append(")");
+			}
+
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				query.append(
+					AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetListEntryId);
+
+				list = (List<AssetListEntryAssetEntryRel>)QueryUtil.list(
+					q, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByA_SEI, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByA_SEI, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Removes all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; from the database.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 */
+	@Override
+	public void removeByA_SEI(long assetListEntryId, long segmentsEntryId) {
+		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
+				findByA_SEI(
+					assetListEntryId, segmentsEntryId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(assetListEntryAssetEntryRel);
+		}
+	}
+
+	/**
+	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @return the number of matching asset list entry asset entry rels
+	 */
+	@Override
+	public int countByA_SEI(long assetListEntryId, long segmentsEntryId) {
+		FinderPath finderPath = _finderPathCountByA_SEI;
+
+		Object[] finderArgs = new Object[] {assetListEntryId, segmentsEntryId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE);
+
+			query.append(_FINDER_COLUMN_A_SEI_ASSETLISTENTRYID_2);
+
+			query.append(_FINDER_COLUMN_A_SEI_SEGMENTSENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetListEntryId);
+
+				qPos.add(segmentsEntryId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @return the number of matching asset list entry asset entry rels
+	 */
+	@Override
+	public int countByA_SEI(long assetListEntryId, long[] segmentsEntryIds) {
+		if (segmentsEntryIds == null) {
+			segmentsEntryIds = new long[0];
+		}
+		else if (segmentsEntryIds.length > 1) {
+			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
+		}
+
+		Object[] finderArgs = new Object[] {
+			assetListEntryId, StringUtil.merge(segmentsEntryIds)
+		};
+
+		Long count = (Long)finderCache.getResult(
+			_finderPathWithPaginationCountByA_SEI, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE);
+
+			query.append(_FINDER_COLUMN_A_SEI_ASSETLISTENTRYID_2);
+
+			if (segmentsEntryIds.length > 0) {
+				query.append("(");
+
+				query.append(_FINDER_COLUMN_A_SEI_SEGMENTSENTRYID_7);
+
+				query.append(StringUtil.merge(segmentsEntryIds));
+
+				query.append(")");
+
+				query.append(")");
+			}
+
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetListEntryId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(
+					_finderPathWithPaginationCountByA_SEI, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(
+					_finderPathWithPaginationCountByA_SEI, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_A_SEI_ASSETLISTENTRYID_2 =
+		"assetListEntryAssetEntryRel.assetListEntryId = ? AND ";
+
+	private static final String _FINDER_COLUMN_A_SEI_SEGMENTSENTRYID_2 =
+		"assetListEntryAssetEntryRel.segmentsEntryId = ?";
+
+	private static final String _FINDER_COLUMN_A_SEI_SEGMENTSENTRYID_7 =
+		"assetListEntryAssetEntryRel.segmentsEntryId IN (";
+
 	private FinderPath _finderPathFetchByA_S_P;
 	private FinderPath _finderPathCountByA_S_P;
 
@@ -4085,6 +4946,15 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByA_S, args);
 
+			args = new Object[] {
+				assetListEntryAssetEntryRelModelImpl.getAssetListEntryId(),
+				assetListEntryAssetEntryRelModelImpl.getSegmentsEntryId()
+			};
+
+			finderCache.removeResult(_finderPathCountByA_SEI, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByA_SEI, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
@@ -4181,6 +5051,31 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				finderCache.removeResult(_finderPathCountByA_S, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByA_S, args);
+			}
+
+			if ((assetListEntryAssetEntryRelModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByA_SEI.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					assetListEntryAssetEntryRelModelImpl.
+						getOriginalAssetListEntryId(),
+					assetListEntryAssetEntryRelModelImpl.
+						getOriginalSegmentsEntryId()
+				};
+
+				finderCache.removeResult(_finderPathCountByA_SEI, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByA_SEI, args);
+
+				args = new Object[] {
+					assetListEntryAssetEntryRelModelImpl.getAssetListEntryId(),
+					assetListEntryAssetEntryRelModelImpl.getSegmentsEntryId()
+				};
+
+				finderCache.removeResult(_finderPathCountByA_SEI, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByA_SEI, args);
 			}
 		}
 
@@ -4801,6 +5696,37 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		_finderPathCountByA_S = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_S",
+			new String[] {Long.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByA_SEI = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			AssetListEntryAssetEntryRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_SEI",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByA_SEI = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			AssetListEntryAssetEntryRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_SEI",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			AssetListEntryAssetEntryRelModelImpl.
+				ASSETLISTENTRYID_COLUMN_BITMASK |
+			AssetListEntryAssetEntryRelModelImpl.
+				SEGMENTSENTRYID_COLUMN_BITMASK |
+			AssetListEntryAssetEntryRelModelImpl.POSITION_COLUMN_BITMASK);
+
+		_finderPathCountByA_SEI = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_SEI",
+			new String[] {Long.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationCountByA_SEI = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_SEI",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByA_S_P = new FinderPath(

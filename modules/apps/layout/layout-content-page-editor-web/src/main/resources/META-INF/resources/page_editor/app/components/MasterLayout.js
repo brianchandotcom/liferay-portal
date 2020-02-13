@@ -195,7 +195,7 @@ const FragmentContent = React.memo(function FragmentContent({
 		};
 	}, [defaultContent, content, isMounted, editableValues, languageId]);
 
-	return <UnsafeHTML markup={content} ref={ref} />;
+	return <UnsafeHTML contentRef={ref} markup={content} />;
 });
 
 function Fragment({fragmentEntryLinks, item}) {

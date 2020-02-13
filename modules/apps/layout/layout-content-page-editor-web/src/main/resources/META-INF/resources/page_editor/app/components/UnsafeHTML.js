@@ -13,23 +13,68 @@
  */
 
 import {globalEval} from 'metal-dom';
-import React, {forwardRef, useEffect} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-export default forwardRef(
-	({TagName = 'div', className = '', markup, ...otherProps}, ref) => {
-		useEffect(() => {
-			if (ref && ref.current) {
-				globalEval.runScriptsInElement(ref.current);
-			}
-		}, [markup, ref]);
+export default class UnsafeHTML extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			contentRef: null
+		};
+	}
+
+	componentDidUpdate() {
+		if (this.state.contentRef) {
+			globalEval.runScriptsInElement(this.state.contentRef);
+		}
+	}
+
+	shouldComponentUpdate(nextProps) {
+		return (
+			this.props.TagName !== nextProps.TagName ||
+			this.props.markup !== nextProps.markup
+		);
+	}
+
+	_handleRef = element => {
+		this.setState({contentRef: element});
+
+		if (typeof this.props.contentRef === 'function') {
+			this.props.contentRef(element);
+		}
+		else if (this.props.contentRef) {
+			this.props.contentRef.current = element;
+		}
+	};
+
+	render() {
+		const {
+			TagName = 'div',
+			// We just want to remove this item from the
+			// otherProps object.
+			// eslint-disable-next-line no-unused-vars
+			contentRef,
+			markup,
+			...otherProps
+		} = this.props;
 
 		return (
 			<TagName
 				{...otherProps}
-				className={className}
 				dangerouslySetInnerHTML={{__html: markup}}
-				ref={ref}
+				ref={this._handleRef}
 			/>
 		);
 	}
-);
+}
+
+UnsafeHTML.propTypes = {
+	TagName: PropTypes.string,
+	contentRef: PropTypes.oneOfType([
+		PropTypes.func,
+		PropTypes.shape({current: PropTypes.instanceOf(Element)})
+	]),
+	markup: PropTypes.string
+};

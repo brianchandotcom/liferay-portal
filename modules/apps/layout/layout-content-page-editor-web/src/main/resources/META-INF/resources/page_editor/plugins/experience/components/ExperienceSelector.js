@@ -83,10 +83,10 @@ const ExperienceSelector = ({
 	const layoutDataList = useSelector(state => state.layoutDataList);
 
 	const {
-		classPK,
 		defaultSegmentsExperienceId,
 		editSegmentsEntryURL,
 		hasEditSegmentsEntryPermission,
+		plid,
 		selectedSegmentsEntryId
 	} = config;
 
@@ -122,9 +122,9 @@ const ExperienceSelector = ({
 		segmentId
 	}) => {
 		storeModalExperienceState({
-			classPK,
 			experienceId,
 			experienceName,
+			plid,
 			segmentId
 		});
 
@@ -132,13 +132,10 @@ const ExperienceSelector = ({
 	};
 
 	useEffect(() => {
-		if (classPK) {
+		if (plid) {
 			const modalExperienceState = recoverModalExperienceState();
 
-			if (
-				modalExperienceState &&
-				classPK === modalExperienceState.classPK
-			) {
+			if (modalExperienceState && plid === modalExperienceState.plid) {
 				setOpenModal(true);
 				setEditingExperience({
 					name: modalExperienceState.experienceName,
@@ -149,7 +146,7 @@ const ExperienceSelector = ({
 				});
 			}
 		}
-	}, [classPK, selectedSegmentsEntryId]);
+	}, [plid, selectedSegmentsEntryId]);
 
 	const handleExperienceCreation = ({
 		name,

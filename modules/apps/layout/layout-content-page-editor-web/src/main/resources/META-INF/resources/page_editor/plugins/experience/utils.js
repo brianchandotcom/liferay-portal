@@ -25,7 +25,7 @@ const MODAL_EXPERIENCE_STATE_KEY = 'modalExperienceState';
 
 /**
  * @typedef {Object} ModalExperienceState
- * @param {string} ModalExperienceState.classPK
+ * @param {string} ModalExperienceState.plid
  * @param {string?} ModalExperienceState.experienceId
  * @param {string} ModalExperienceState.experienceName
  * @param {string} ModalExperienceState.segmentId

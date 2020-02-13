@@ -7,6 +7,39 @@
 }
 
 .page-editor__floating-toolbar {
+	&__button {
+		&--disabled {
+			cursor: not-allowed;
+			pointer-events: none;
+
+			.lexicon-icon {
+				fill: #af78ff;
+			}
+		}
+
+		&--linked {
+			&.btn.active,
+			&:hover {
+				background-color: fade_out(#0b5fff, 0.94);
+			}
+
+			.lexicon-icon {
+				fill: #0b5fff;
+			}
+		}
+
+		&--mapped {
+			&.btn.active,
+			&:hover {
+				background-color: fade_out(#af78ff, 0.9);
+			}
+
+			.lexicon-icon {
+				fill: #af78ff;
+			}
+		}
+	}
+
 	&__panel {
 		animation: FloatingToolbarPanelFadeIn ease 0.3s;
 		animation-fill-mode: forwards;

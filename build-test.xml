@@ -12159,9 +12159,17 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 
 						<get-ip-address />
 
+						<propertyregex
+							input="${env.HOSTNAME}"
+							override="true"
+							property="short.hostname"
+							regexp="([^\.]+)(\..*)?"
+							select="\1"
+						/>
+
 						<echo file="${analytics.cloud.faro.dir}/osb-faro-functional-test/src/testIntegration/resources/ngrok.properties">
 ip=${ip.address}
-url=${env.HOSTNAME}:8080</echo>
+url=${short.hostname}:8080</echo>
 
 						<prepare-chrome-driver />
 
@@ -12176,7 +12184,7 @@ url=${env.HOSTNAME}:8080</echo>
 								-Dchrome.driver.version=${selenium.chrome.driver.version} \
 								-Dcucumber.options='${analytics.cloud.cucumber.options}' \
 								-Dliferay.ci=true \
-								-Dportal.url=http://${env.HOSTNAME}:8080 \
+								-Dportal.url=http://${short.hostname}:8080 \
 								-Dselenium.chrome.driver.executable=${selenium.chrome.driver.executable} \
 								-Dselenium.executable.dir.name=${selenium.executable.dir.path}/ \
 								-Dwebdriver.chrome.driver=${selenium.executable.dir.path}/${selenium.chrome.driver.executable} \

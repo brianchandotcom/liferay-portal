@@ -15,9 +15,7 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-
-<%@ taglib uri="http://liferay.com/tld/data-engine" prefix="liferay-data-engine" %><%@
-taglib uri="http://liferay.com/tld/react" prefix="react" %>
+<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
 <%@ page import="com.liferay.bulk.selection.BulkSelectionRunner" %><%@
 page import="com.liferay.document.library.configuration.DLConfiguration" %><%@

@@ -25,6 +25,7 @@ import React, {
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
+import {EDITABLE_FLOATING_TOOLBAR_CLASSNAMES} from '../../config/constants/editableFloatingToolbarClassNames';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {ConfigContext} from '../../config/index';
@@ -421,6 +422,7 @@ const editableIsTranslated = (
 			editableValue[segmentsExperienceId][languageId]));
 
 const getFloatingToolbarButtons = (editableType, editableValue) => {
+	const {classNameId, classPK, config, fieldId, mappedField} = editableValue;
 	const showLinkButton =
 		editableType == EDITABLE_TYPES.text ||
 		editableType == EDITABLE_TYPES.image ||
@@ -429,6 +431,12 @@ const getFloatingToolbarButtons = (editableType, editableValue) => {
 	const buttons = [];
 
 	if (showLinkButton) {
+		EDITABLE_FLOATING_TOOLBAR_BUTTONS.link.className =
+			config.href ||
+			(config.classNameId && config.classPK && config.fieldId) ||
+				config.mappedField
+				? EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.linkedField
+				: '';
 		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.link);
 	}
 
@@ -440,9 +448,17 @@ const getFloatingToolbarButtons = (editableType, editableValue) => {
 		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.imageProperties);
 	}
 	else {
+		EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.className =
+			(classNameId && classPK && fieldId) || mappedField
+				? EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.disabled
+				: '';
 		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit);
 	}
 
+	EDITABLE_FLOATING_TOOLBAR_BUTTONS.map.className =
+		(classNameId && classPK && fieldId) || mappedField
+			? EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.mappedField
+			: '';
 	buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.map);
 
 	return buttons;

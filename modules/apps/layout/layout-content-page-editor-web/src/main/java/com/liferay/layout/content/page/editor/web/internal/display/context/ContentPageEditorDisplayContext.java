@@ -46,7 +46,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
-import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
@@ -394,20 +393,7 @@ public class ContentPageEditorDisplayContext {
 			getFragmentEntryActionURL(
 				"/content_layout/add_fragment_entry_link_comment")
 		).put(
-			"addFragmentEntryLinkURL",
-			getFragmentEntryActionURL("/content_layout/add_fragment_entry_link")
-		).put(
-			"addPortletURL",
-			getFragmentEntryActionURL("/content_layout/add_portlet")
-		).put(
-			"addStructuredContentURL",
-			getFragmentEntryActionURL("/content_layout/add_structured_content")
-		).put(
 			"availableLanguages", _getAvailableLanguagesSoyContext()
-		).put(
-			"contentCreationEnabled",
-			ContentCreationContentPageEditorConfigurationUtil.
-				isContentCreationEnabled(themeDisplay.getCompanyId())
 		).put(
 			"defaultEditorConfigurations", _getDefaultConfigurations()
 		).put(
@@ -418,17 +404,9 @@ public class ContentPageEditorDisplayContext {
 			getFragmentEntryActionURL(
 				"/content_layout/delete_fragment_entry_link_comment")
 		).put(
-			"deleteFragmentEntryLinkURL",
-			getFragmentEntryActionURL(
-				"/content_layout/delete_fragment_entry_link")
-		).put(
 			"discardDraftRedirectURL", themeDisplay.getURLCurrent()
 		).put(
 			"discardDraftURL", _getDiscardDraftURL()
-		).put(
-			"duplicateFragmentEntryLinkURL",
-			getFragmentEntryActionURL(
-				"/content_layout/duplicate_fragment_entry_link")
 		).put(
 			"editFragmentEntryLinkCommentURL",
 			getFragmentEntryActionURL(
@@ -451,13 +429,6 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"getAvailableTemplatesURL",
 			_getResourceURL("/content_layout/get_available_templates")
-		).put(
-			"getContentStructureMappingFieldsURL",
-			_getResourceURL(
-				"/content_layout/get_content_structure_mapping_fields")
-		).put(
-			"getContentStructuresURL",
-			_getResourceURL("/content_layout/get_content_structures")
 		).put(
 			"getExperienceUsedPortletsURL",
 			_getResourceURL("/content_layout/get_experience_used_portlets")
@@ -524,9 +495,6 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"renderFragmentEntryURL",
 			getFragmentEntryActionURL("/content_layout/render_fragment_entry")
-		).put(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
 			"themeColorsCssClasses", _getThemeColorsCssClasses()
 		).put(

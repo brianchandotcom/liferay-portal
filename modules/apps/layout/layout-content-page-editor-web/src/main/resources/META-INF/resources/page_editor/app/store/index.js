@@ -40,7 +40,8 @@ const INITIAL_STATE = {
 		status: SERVICE_NETWORK_STATUS_TYPES.draftSaved
 	},
 	reducers: {},
-	sidebarOpen: true
+	sidebarOpen: true,
+	singleSegmentsExperienceMode: false
 };
 
 /**

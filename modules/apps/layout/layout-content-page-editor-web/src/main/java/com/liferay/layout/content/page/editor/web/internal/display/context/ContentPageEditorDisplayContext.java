@@ -504,7 +504,17 @@ public class ContentPageEditorDisplayContext {
 			"pageType", String.valueOf(_getPageType())
 		).put(
 			"pending",
-			_publishedLayout.getStatus() == WorkflowConstants.STATUS_PENDING
+			() -> {
+				Layout publishedLayout = _getPublishedLayout();
+
+				if (publishedLayout.getStatus() ==
+						WorkflowConstants.STATUS_PENDING) {
+
+					return true;
+				}
+
+				return false;
+			}
 		).put(
 			"portletNamespace", getPortletNamespace()
 		).put(
@@ -557,8 +567,10 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	public boolean isWorkflowEnabled() {
+		Layout publishedLayout = _getPublishedLayout();
+
 		return WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
-			_publishedLayout.getCompanyId(), _publishedLayout.getGroupId(),
+			publishedLayout.getCompanyId(), publishedLayout.getGroupId(),
 			Layout.class.getName());
 	}
 
@@ -1376,7 +1388,7 @@ public class ContentPageEditorDisplayContext {
 
 		Set<InfoDisplayObjectProvider> infoDisplayObjectProviders =
 			ContentUtil.getMappedInfoDisplayObjectProviders(
-				_groupId, themeDisplay.getPlid());
+				getGroupId(), themeDisplay.getPlid());
 
 		for (InfoDisplayObjectProvider infoDisplayObjectProvider :
 				infoDisplayObjectProviders) {

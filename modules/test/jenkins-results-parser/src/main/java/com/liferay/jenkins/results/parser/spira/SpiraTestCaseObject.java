@@ -167,6 +167,10 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		return (SpiraTestCaseFolder)parentSpiraArtifact;
 	}
 
+	public List<SpiraTestCaseRun> getSpiraTestCaseRuns() throws IOException {
+		return SpiraTestCaseRun.getSpiraTestCaseRuns(getSpiraProject(), this);
+	}
+
 	protected static List<SpiraTestCaseObject> getSpiraTestCases(
 			SpiraProject spiraProject, SearchParameter... searchParameters)
 		throws IOException {

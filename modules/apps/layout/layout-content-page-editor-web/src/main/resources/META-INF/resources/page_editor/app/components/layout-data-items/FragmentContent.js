@@ -434,8 +434,8 @@ const getFloatingToolbarButtons = (editableType, editableValue) => {
 		EDITABLE_FLOATING_TOOLBAR_BUTTONS.link.className =
 			config.href ||
 			(config.classNameId && config.classPK && config.fieldId) ||
-				config.mappedField
-				? EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.linkedField
+			config.mappedField
+				? EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.linked
 				: '';
 		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.link);
 	}
@@ -457,7 +457,7 @@ const getFloatingToolbarButtons = (editableType, editableValue) => {
 
 	EDITABLE_FLOATING_TOOLBAR_BUTTONS.map.className =
 		(classNameId && classPK && fieldId) || mappedField
-			? EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.mappedField
+			? EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.mapped
 			: '';
 	buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.map);
 

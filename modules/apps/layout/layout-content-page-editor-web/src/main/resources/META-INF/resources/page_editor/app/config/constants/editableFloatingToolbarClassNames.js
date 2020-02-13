@@ -16,11 +16,11 @@
  * FloatingToolbar classes
  */
 
-const floatingToolbarClass = 'page-editor__floating-toolbar';
+const FLOATING_TOOLBAR_CLASS = 'page-editor__floating-toolbar';
 
 export const EDITABLE_FLOATING_TOOLBAR_CLASSNAMES = {
-	disabled: `${floatingToolbarClass}__button--disabled disabled`,
-	linkedField: `${floatingToolbarClass}__button--linked`,
-	mappedField: `${floatingToolbarClass}__button--mapped`,
-	panel: `${floatingToolbarClass}__panel`
+	disabled: `${FLOATING_TOOLBAR_CLASS}__button--disabled disabled`,
+	linked: `${FLOATING_TOOLBAR_CLASS}__button--linked`,
+	mapped: `${FLOATING_TOOLBAR_CLASS}__button--mapped`,
+	panel: `${FLOATING_TOOLBAR_CLASS}__panel`
 };

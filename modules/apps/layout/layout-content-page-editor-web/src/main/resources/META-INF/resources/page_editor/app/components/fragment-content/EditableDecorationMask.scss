@@ -1,0 +1,62 @@
+@keyframes PageEditorEditableDecorationMaskFadeIn {
+	to {
+		opacity: 1;
+	}
+}
+
+.page-editor__editable-decoration-mask {
+	animation: PageEditorEditableDecorationMaskFadeIn ease 0.3s;
+	animation-fill-mode: forwards;
+	opacity: 0;
+
+	&-rect {
+		fill: transparent;
+		stroke: transparent;
+		stroke-width: 1;
+
+		&--active,
+		&--hovered {
+			fill: rgba(11, 95, 255, 0.04);
+		}
+
+		&--hovered {
+			stroke: rgba(11, 95, 255, 0.4);
+		}
+
+		&--active {
+			stroke: rgba(11, 95, 255, 0.6);
+		}
+
+		&--highlighted {
+			stroke: rgba(11, 95, 255, 0.2);
+		}
+
+		&--mapped {
+			stroke: rgba(175, 120, 255, 0.2);
+
+			&.page-editor__editable-decoration-mask-rect--active {
+				fill: rgba(175, 120, 255, 0.1);
+				stroke: rgba(175, 120, 255, 0.6);
+			}
+
+			&.page-editor__editable-decoration-mask-rect--hovered {
+				fill: rgba(175, 120, 255, 0.1);
+				stroke: rgba(175, 120, 255, 0.4);
+			}
+		}
+
+		&--translated {
+			stroke: rgba(40, 125, 60, 0.2);
+
+			&.page-editor__editable-decoration-mask-rect--active {
+				fill: rgba(40, 125, 60, 0.04);
+				stroke: rgba(40, 125, 60, 0.6);
+			}
+
+			&.page-editor__editable-decoration-mask-rect--hovered {
+				fill: rgba(40, 125, 60, 0.04);
+				stroke: rgba(40, 125, 60, 0.4);
+			}
+		}
+	}
+}

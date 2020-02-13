@@ -12,17 +12,25 @@
  * details.
  */
 
-package com.liferay.layout.page.template.importer;
+package com.liferay.layout.page.template.internal.importer;
+
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 
 import java.io.File;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jürgen Kappler
  */
-public interface LayoutPageTemplatesImporter {
+@Component(immediate = true, service = LayoutPageTemplatesImporter.class)
+public class LayoutPageTemplatesImporterImpl
+	implements LayoutPageTemplatesImporter {
 
+	@Override
 	public void importFile(
 			long userId, long groupId, File file, boolean overwrite)
-		throws Exception;
+		throws Exception {
+	}
 
 }

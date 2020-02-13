@@ -14,8 +14,8 @@
 
 package com.liferay.roles.admin.web.internal.role.type.contributor.util;
 
+import com.liferay.roles.admin.constants.RolesAdminWebKeys;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
-import com.liferay.roles.admin.web.internal.constants.RolesAdminWebKeys;
 
 import java.util.List;
 

@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
+import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
@@ -55,6 +56,7 @@ import com.liferay.staging.StagingGroupHelper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.portlet.PortletRequest;
@@ -82,6 +84,70 @@ public class ContentPageLayoutEditorDisplayContext
 			portletRequest);
 
 		_stagingGroupHelper = stagingGroupHelper;
+	}
+
+	@Override
+	public Map<String, Object> getEditorReactContext(
+			String npmResolvedPackageName)
+		throws Exception {
+
+		Map<String, Object> editorReactContext = super.getEditorReactContext(
+			npmResolvedPackageName);
+
+		if (!_isShowSegmentsExperiences()) {
+			return editorReactContext;
+		}
+
+		Map<String, Object> configContext =
+			(Map<String, Object>)editorReactContext.get("config");
+
+		configContext.put(
+			"addSegmentsExperienceURL",
+			getFragmentEntryActionURL(
+				"/content_layout/add_segments_experience"));
+		configContext.put(
+			"availableSegmentsEntries",
+			_getAvailableSegmentsEntriesSoyContext());
+		configContext.put(
+			"defaultSegmentsEntryId", SegmentsEntryConstants.ID_DEFAULT);
+		configContext.put(
+			"defaultSegmentsExperienceId",
+			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT));
+		configContext.put(
+			"deleteSegmentsExperienceURL",
+			getFragmentEntryActionURL(
+				"/content_layout/delete_segments_experience"));
+		configContext.put("editSegmentsEntryURL", _getEditSegmentsEntryURL());
+		configContext.put("plid", themeDisplay.getPlid());
+		configContext.put(
+			"selectedSegmentsEntryId", String.valueOf(_getSegmentsEntryId()));
+		configContext.put(
+			"singleSegmentsExperienceMode", _isSingleSegmentsExperienceMode());
+
+		Map<String, Object> stateContext =
+			(Map<String, Object>)editorReactContext.get("state");
+
+		stateContext.put(
+			"availableSegmentsExperiences",
+			_getAvailableSegmentsExperiencesSoyContext());
+		stateContext.put("layoutDataList", _getLayoutDataListSoyContext());
+		stateContext.put(
+			"segmentsExperienceId", String.valueOf(getSegmentsExperienceId()));
+		stateContext.put(
+			"segmentsExperimentStatus",
+			_getSegmentsExperimentStatusSoyContext(getSegmentsExperienceId()));
+
+		Map<String, Object> permissionsContext =
+			(Map<String, Object>)stateContext.get("permissions");
+
+		permissionsContext.put(
+			ContentPageEditorActionKeys.EDIT_SEGMENTS_ENTRY,
+			_hasEditSegmentsEntryPermission());
+		permissionsContext.put(
+			ContentPageEditorActionKeys.LOCKED_SEGMENTS_EXPERIMENT,
+			_isLockedSegmentsExperience(getSegmentsExperienceId()));
+
+		return editorReactContext;
 	}
 
 	@Override

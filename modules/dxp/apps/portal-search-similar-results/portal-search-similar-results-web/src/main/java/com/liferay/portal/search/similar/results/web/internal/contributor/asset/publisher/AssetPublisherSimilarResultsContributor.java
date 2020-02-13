@@ -153,44 +153,24 @@ public class AssetPublisherSimilarResultsContributor
 
 	private ClassedModel _getClassedModel(AssetEntry assetEntry) {
 		if (Objects.equals(
-				JournalArticle.class.getName(), assetEntry.getClassName())) {
+				BlogsEntry.class.getName(), assetEntry.getClassName())) {
+
+			return _blogsEntryLocalService.fetchBlogsEntryByUuidAndGroupId(
+				assetEntry.getClassUuid(), assetEntry.getGroupId());
+		}
+		else if (Objects.equals(
+					JournalArticle.class.getName(),
+					assetEntry.getClassName())) {
 
 			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
-			JournalArticle journalArticle =
-				(JournalArticle)assetRenderer.getAssetObject();
-
-			if (journalArticle == null) {
-				return null;
-			}
-
-			return journalArticle;
+			return (JournalArticle)assetRenderer.getAssetObject();
 		}
 		else if (Objects.equals(
 					WikiPage.class.getName(), assetEntry.getClassName())) {
 
-			WikiPage wikiPage =
-				_wikiPageLocalService.fetchWikiPageByUuidAndGroupId(
-					assetEntry.getClassUuid(), assetEntry.getGroupId());
-
-			if (wikiPage == null) {
-				return null;
-			}
-
-			return wikiPage;
-		}
-		else if (Objects.equals(
-					BlogsEntry.class.getName(), assetEntry.getClassName())) {
-
-			BlogsEntry blogsEntry =
-				_blogsEntryLocalService.fetchBlogsEntryByUuidAndGroupId(
-					assetEntry.getClassUuid(), assetEntry.getGroupId());
-
-			if (blogsEntry == null) {
-				return null;
-			}
-
-			return blogsEntry;
+			return _wikiPageLocalService.fetchWikiPageByUuidAndGroupId(
+				assetEntry.getClassUuid(), assetEntry.getGroupId());
 		}
 
 		return null;

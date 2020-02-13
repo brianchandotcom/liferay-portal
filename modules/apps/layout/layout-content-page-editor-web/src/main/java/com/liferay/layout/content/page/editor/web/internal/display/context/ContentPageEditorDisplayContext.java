@@ -188,8 +188,6 @@ public class ContentPageEditorDisplayContext {
 			String npmResolvedPackageName)
 		throws Exception {
 
-		SoyContext editorSoyContext = getEditorSoyContext();
-
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			HashMapBuilder.<String, Object>put(
@@ -207,13 +205,14 @@ public class ContentPageEditorDisplayContext {
 				"addPortletURL",
 				getFragmentEntryActionURL("/content_layout/add_portlet")
 			).put(
-				"availableLanguages", editorSoyContext.get("availableLanguages")
+				"availableLanguages", _getAvailableLanguagesSoyContext()
 			).put(
 				"collections", _getFragmentCollectionsSoyContexts(true, false)
 			).put(
 				"defaultEditorConfigurations", _getDefaultConfigurations()
 			).put(
-				"defaultLanguageId", editorSoyContext.get("defaultLanguageId")
+				"defaultLanguageId",
+				LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
 			).put(
 				"deleteFragmentEntryLinkCommentURL",
 				getFragmentEntryActionURL(
@@ -222,10 +221,9 @@ public class ContentPageEditorDisplayContext {
 				"deleteItemURL",
 				getFragmentEntryActionURL("/content_layout/delete_item")
 			).put(
-				"discardDraftRedirectURL",
-				editorSoyContext.get("discardDraftRedirectURL")
+				"discardDraftRedirectURL", themeDisplay.getURLCurrent()
 			).put(
-				"discardDraftURL", editorSoyContext.get("discardDraftURL")
+				"discardDraftURL", _getDiscardDraftURL()
 			).put(
 				"duplicateItemURL",
 				getFragmentEntryActionURL("/content_layout/duplicate_item")
@@ -239,51 +237,66 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/content_layout/edit_fragment_entry_link")
 			).put(
-				"fragments", editorSoyContext.get("elements")
+				"fragments", _getFragmentCollectionsSoyContexts(false, true)
 			).put(
 				"getAssetFieldValueURL",
-				editorSoyContext.get("getAssetFieldValueURL")
+				_getResourceURL("/content_layout/get_asset_field_value")
 			).put(
 				"getAssetMappingFieldsURL",
-				editorSoyContext.get("getAssetMappingFieldsURL")
+				_getResourceURL("/content_layout/get_asset_mapping_fields")
 			).put(
 				"getAvailableTemplatesURL",
-				editorSoyContext.get("getAvailableTemplatesURL")
+				_getResourceURL("/content_layout/get_available_templates")
 			).put(
 				"getExperienceUsedPortletsURL",
-				editorSoyContext.get("getExperienceUsedPortletsURL")
+				_getResourceURL("/content_layout/get_experience_used_portlets")
 			).put(
-				"imageSelectorURL", editorSoyContext.get("imageSelectorURL")
+				"getPageContentsURL",
+				_getResourceURL("/content_layout/get_page_contents")
 			).put(
-				"infoItemSelectorURL",
-				editorSoyContext.get("infoItemSelectorURL")
+				"imageSelectorURL", _getItemSelectorURL()
+			).put(
+				"infoItemSelectorURL", _getInfoItemSelectorURL()
 			).put(
 				"languageDirection", _getLanguageDirection()
 			).put(
 				"layoutConversionWarningMessages",
-				editorSoyContext.get("layoutConversionWarningMessages")
+				MultiSessionMessages.get(
+					_portletRequest, "layoutConversionWarningMessages")
 			).put(
-				"masterUsed", editorSoyContext.get("masterUsed")
+				"masterUsed", _isMasterUsed()
 			).put(
 				"moveItemURL",
 				getFragmentEntryActionURL(
 					"/content_layout/move_fragment_entry_link")
 			).put(
-				"pageType", editorSoyContext.get("pageType")
+				"pageType", String.valueOf(_getPageType())
 			).put(
-				"pending", editorSoyContext.get("pending")
+				"pending",
+				() -> {
+					Layout publishedLayout = _getPublishedLayout();
+
+					if (publishedLayout.getStatus() ==
+							WorkflowConstants.STATUS_PENDING) {
+
+						return true;
+					}
+
+					return false;
+				}
 			).put(
 				"pluginsRootPath",
 				npmResolvedPackageName + "/page_editor/plugins"
 			).put(
-				"portletNamespace", editorSoyContext.get("portletNamespace")
+				"portletNamespace", getPortletNamespace()
 			).put(
-				"publishURL", editorSoyContext.get("publishURL")
+				"publishURL", getPublishURL()
 			).put(
-				"redirectURL", editorSoyContext.get("redirectURL")
+				"redirectURL", _getRedirect()
 			).put(
 				"renderFragmentEntryURL",
-				editorSoyContext.get("renderFragmentEntryURL")
+				getFragmentEntryActionURL(
+					"/content_layout/render_fragment_entry")
 			).put(
 				"sidebarPanels", getSidebarPanelSoyContexts()
 			).put(
@@ -293,7 +306,8 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL("/content_layout/update_item_config")
 			).put(
 				"updateLayoutPageTemplateDataURL",
-				editorSoyContext.get("updateLayoutPageTemplateDataURL")
+				getFragmentEntryActionURL(
+					"/content_layout/update_layout_page_template_data")
 			).put(
 				"updateRowColumnsURL",
 				getFragmentEntryActionURL("/content_layout/update_row_columns")
@@ -306,166 +320,46 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/content_layout/update_segments_experience")
 			).put(
-				"workflowEnabled", editorSoyContext.get("workflowEnabled")
+				"workflowEnabled", isWorkflowEnabled()
 			).build()
 		).put(
 			"state",
 			HashMapBuilder.<String, Object>put(
-				"fragmentEntryLinks", editorSoyContext.get("fragmentEntryLinks")
+				"fragmentEntryLinks", _getFragmentEntryLinksSoyContext()
 			).put(
-				"languageId", editorSoyContext.get("languageId")
+				"languageId", themeDisplay.getLanguageId()
 			).put(
-				"layoutData", editorSoyContext.get("layoutData")
+				"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData())
 			).put(
-				"mappedInfoItems", editorSoyContext.get("mappedInfoItems")
+				"mappedInfoItems", _getMappedInfoItemsSoyContexts()
 			).put(
-				"masterLayoutData", editorSoyContext.get("masterLayoutData")
+				"masterLayoutData",
+				() -> {
+					LayoutStructure masterLayoutStructure =
+						_getMasterLayoutStructure();
+
+					if (masterLayoutStructure == null) {
+						return StringPool.BLANK;
+					}
+
+					return masterLayoutStructure.toJSONObject();
+				}
 			).put(
-				"pageContents", editorSoyContext.get("pageContents")
+				"pageContents",
+				ContentUtil.getPageContentsJSONArray(
+					themeDisplay.getPlid(), httpServletRequest)
 			).put(
 				"permissions",
 				HashMapBuilder.<String, Object>put(
-					ContentPageEditorActionKeys.UPDATE,
-					editorSoyContext.get("hasUpdatePermissions")
+					ContentPageEditorActionKeys.UPDATE, _hasUpdatePermissions()
 				).put(
 					ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT,
-					editorSoyContext.get("hasUpdateContentPermissions")
+					_hasUpdateContentPermissions()
 				).build()
 			).put(
-				"widgets", editorSoyContext.get("widgets")
+				"widgets", _getWidgetsSoyContexts()
 			).build()
 		).build();
-	}
-
-	public SoyContext getEditorSoyContext() throws Exception {
-		if (_editorSoyContext != null) {
-			return _editorSoyContext;
-		}
-
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-		soyContext.put(
-			"addFragmentEntryLinkCommentURL",
-			getFragmentEntryActionURL(
-				"/content_layout/add_fragment_entry_link_comment")
-		).put(
-			"availableLanguages", _getAvailableLanguagesSoyContext()
-		).put(
-			"defaultEditorConfigurations", _getDefaultConfigurations()
-		).put(
-			"defaultLanguageId",
-			LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
-		).put(
-			"deleteFragmentEntryLinkCommentURL",
-			getFragmentEntryActionURL(
-				"/content_layout/delete_fragment_entry_link_comment")
-		).put(
-			"discardDraftRedirectURL", themeDisplay.getURLCurrent()
-		).put(
-			"discardDraftURL", _getDiscardDraftURL()
-		).put(
-			"editFragmentEntryLinkCommentURL",
-			getFragmentEntryActionURL(
-				"/content_layout/edit_fragment_entry_link_comment",
-				Constants.UPDATE)
-		).put(
-			"editFragmentEntryLinkURL",
-			getFragmentEntryActionURL(
-				"/content_layout/edit_fragment_entry_link")
-		).put(
-			"elements", _getFragmentCollectionsSoyContexts(false, true)
-		).put(
-			"fragmentEntryLinks", _getFragmentEntryLinksSoyContext()
-		).put(
-			"getAssetFieldValueURL",
-			_getResourceURL("/content_layout/get_asset_field_value")
-		).put(
-			"getAssetMappingFieldsURL",
-			_getResourceURL("/content_layout/get_asset_mapping_fields")
-		).put(
-			"getAvailableTemplatesURL",
-			_getResourceURL("/content_layout/get_available_templates")
-		).put(
-			"getExperienceUsedPortletsURL",
-			_getResourceURL("/content_layout/get_experience_used_portlets")
-		).put(
-			"getPageContentsURL",
-			_getResourceURL("/content_layout/get_page_contents")
-		).put(
-			"hasUpdateContentPermissions", _hasUpdateContentPermissions()
-		).put(
-			"hasUpdatePermissions", _hasUpdatePermissions()
-		).put(
-			"imageSelectorURL", _getItemSelectorURL()
-		).put(
-			"infoItemSelectorURL", _getInfoItemSelectorURL()
-		).put(
-			"languageId", themeDisplay.getLanguageId()
-		).put(
-			"layoutConversionWarningMessages",
-			MultiSessionMessages.get(
-				_portletRequest, "layoutConversionWarningMessages")
-		).put(
-			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData())
-		).put(
-			"mappedInfoItems", _getMappedInfoItemsSoyContexts()
-		).put(
-			"masterLayoutData",
-			() -> {
-				LayoutStructure masterLayoutStructure =
-					_getMasterLayoutStructure();
-
-				if (masterLayoutStructure == null) {
-					return StringPool.BLANK;
-				}
-
-				return masterLayoutStructure.toJSONObject();
-			}
-		).put(
-			"masterUsed", _isMasterUsed()
-		).put(
-			"pageContents",
-			ContentUtil.getPageContentsJSONArray(
-				themeDisplay.getPlid(), httpServletRequest)
-		).put(
-			"pageType", String.valueOf(_getPageType())
-		).put(
-			"pending",
-			() -> {
-				Layout publishedLayout = _getPublishedLayout();
-
-				if (publishedLayout.getStatus() ==
-						WorkflowConstants.STATUS_PENDING) {
-
-					return true;
-				}
-
-				return false;
-			}
-		).put(
-			"portletNamespace", getPortletNamespace()
-		).put(
-			"publishURL", getPublishURL()
-		).put(
-			"redirectURL", _getRedirect()
-		).put(
-			"renderFragmentEntryURL",
-			getFragmentEntryActionURL("/content_layout/render_fragment_entry")
-		).put(
-			"themeColorsCssClasses", _getThemeColorsCssClasses()
-		).put(
-			"updateLayoutPageTemplateDataURL",
-			getFragmentEntryActionURL(
-				"/content_layout/update_layout_page_template_data")
-		).put(
-			"widgets", _getWidgetsSoyContexts()
-		).put(
-			"workflowEnabled", isWorkflowEnabled()
-		);
-
-		_editorSoyContext = soyContext;
-
-		return _editorSoyContext;
 	}
 
 	public String getPortletNamespace() {
@@ -1803,7 +1697,6 @@ public class ContentPageEditorDisplayContext {
 	private final List<ContentPageEditorSidebarPanel>
 		_contentPageEditorSidebarPanels;
 	private Map<String, Object> _defaultConfigurations;
-	private SoyContext _editorSoyContext;
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
 	private final FragmentEntryConfigurationParser

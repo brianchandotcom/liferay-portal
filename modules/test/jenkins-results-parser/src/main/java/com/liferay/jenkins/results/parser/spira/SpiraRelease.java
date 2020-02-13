@@ -64,8 +64,8 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 		requestJSONObject.put(
 			"Name", StringEscapeUtils.unescapeJava(releaseName));
-		requestJSONObject.put("ReleaseStatusId", SpiraRelease.STATUS_PLANNED);
-		requestJSONObject.put("ReleaseTypeId", SpiraRelease.TYPE_MAJOR_RELEASE);
+		requestJSONObject.put("ReleaseStatusId", STATUS_PLANNED);
+		requestJSONObject.put("ReleaseTypeId", TYPE_MAJOR_RELEASE);
 
 		Calendar calendar = Calendar.getInstance();
 

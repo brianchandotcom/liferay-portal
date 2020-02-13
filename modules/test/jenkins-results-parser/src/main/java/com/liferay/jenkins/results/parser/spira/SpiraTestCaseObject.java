@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -30,6 +32,120 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class SpiraTestCaseObject extends PathSpiraArtifact {
+
+	public static SpiraTestCaseObject createSpiraTestCase(
+			SpiraProject spiraProject, String testCaseName)
+		throws IOException {
+
+		return createSpiraTestCase(spiraProject, testCaseName, null);
+	}
+
+	public static SpiraTestCaseObject createSpiraTestCase(
+			SpiraProject spiraProject, String testCaseName,
+			Integer parentTestCaseFolderID)
+		throws IOException {
+
+		String testCasePath = "/" + testCaseName;
+
+		if (parentTestCaseFolderID != null) {
+			SpiraTestCaseFolder parentSpiraTestCaseFolder =
+				spiraProject.getSpiraTestCaseFolderByID(parentTestCaseFolderID);
+
+			testCasePath =
+				parentSpiraTestCaseFolder.getPath() + "/" + testCaseName;
+		}
+
+		List<SpiraTestCaseObject> spiraTestCases =
+			spiraProject.getSpiraTestCasesByPath(testCasePath);
+
+		if (!spiraTestCases.isEmpty()) {
+			return spiraTestCases.get(0);
+		}
+
+		String urlPath = "projects/{project_id}/test-cases";
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put(
+			"Name", StringEscapeUtils.unescapeJava(testCaseName));
+		requestJSONObject.put("TestCaseFolderId", parentTestCaseFolderID);
+		requestJSONObject.put("TestCaseStatusId", STATUS_DRAFT);
+
+		JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
+			urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
+			requestJSONObject.toString());
+
+		SpiraTestCaseObject spiraTestCase = spiraProject.getSpiraTestCaseByID(
+			responseJSONObject.getInt("TestCaseId"));
+
+		_spiraTestCases.put(
+			_createSpiraTestCaseKey(
+				spiraProject.getID(), spiraTestCase.getID()),
+			spiraTestCase);
+
+		return spiraTestCase;
+	}
+
+	public static SpiraTestCaseObject createSpiraTestCaseByPath(
+			SpiraProject spiraProject, String testCasePath)
+		throws IOException {
+
+		List<SpiraTestCaseObject> spiraTestCases =
+			spiraProject.getSpiraTestCasesByPath(testCasePath);
+
+		if (!spiraTestCases.isEmpty()) {
+			return spiraTestCases.get(0);
+		}
+
+		String testCaseName = getPathName(testCasePath);
+		String parentTestCaseFolderPath = getParentPath(testCasePath);
+
+		if (parentTestCaseFolderPath.isEmpty()) {
+			return createSpiraTestCase(spiraProject, testCaseName);
+		}
+
+		SpiraTestCaseFolder parentSpiraTestCaseFolder =
+			SpiraTestCaseFolder.createSpiraTestCaseFolderByPath(
+				spiraProject, parentTestCaseFolderPath);
+
+		return createSpiraTestCase(
+			spiraProject, testCaseName, parentSpiraTestCaseFolder.getID());
+	}
+
+	public static void deleteSpiraTestCaseByID(
+			SpiraProject spiraProject, int testCaseID)
+		throws IOException {
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+		urlPathReplacements.put("test_case_id", String.valueOf(testCaseID));
+
+		SpiraRestAPIUtil.request(
+			"projects/{project_id}/test-cases/{test_case_id}", null,
+			urlPathReplacements, HttpRequestMethod.DELETE, null);
+
+		_spiraTestCases.remove(
+			_createSpiraTestCaseKey(spiraProject.getID(), testCaseID));
+	}
+
+	public static void deleteSpiraTestCasesByPath(
+			SpiraProject spiraProject, String testCasePath)
+		throws IOException {
+
+		List<SpiraTestCaseObject> spiraTestCases =
+			spiraProject.getSpiraTestCasesByPath(testCasePath);
+
+		for (SpiraTestCaseObject spiraTestCase : spiraTestCases) {
+			deleteSpiraTestCaseByID(spiraProject, spiraTestCase.getID());
+		}
+	}
 
 	@Override
 	public int getID() {
@@ -133,6 +249,22 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		return _parentSpiraArtifact;
 	}
+
+	protected static final int STATUS_APPROVED = 4;
+
+	protected static final int STATUS_DRAFT = 1;
+
+	protected static final int STATUS_OBSOLETE = 9;
+
+	protected static final int STATUS_READY_FOR_REVIEW = 2;
+
+	protected static final int STATUS_READY_FOR_TEST = 5;
+
+	protected static final int STATUS_REJECTED = 3;
+
+	protected static final int STATUS_TESTED = 7;
+
+	protected static final int STATUS_VERIFIED = 8;
 
 	private static String _createSpiraTestCaseKey(
 		Integer projectID, Integer testCaseID) {

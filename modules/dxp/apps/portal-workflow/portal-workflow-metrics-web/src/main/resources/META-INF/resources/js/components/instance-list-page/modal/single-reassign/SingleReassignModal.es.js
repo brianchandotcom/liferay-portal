@@ -82,8 +82,8 @@ const SingleReassignModal = () => {
 
 	const reassignButtonHandler = useCallback(() => {
 		if (assigneeId && taskId) {
-			setSendingPost(() => true);
 			setErrorToast(() => false);
+			setSendingPost(() => true);
 			postData()
 				.then(() => {
 					onClose();

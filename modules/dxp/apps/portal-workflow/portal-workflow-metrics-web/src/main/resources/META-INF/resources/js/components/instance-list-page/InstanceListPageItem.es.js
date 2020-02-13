@@ -16,6 +16,7 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import Icon from '../../shared/components/Icon.es';
 import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickActionKebab.es';
 import moment from '../../shared/util/moment.es';
+import {capitalize} from '../../shared/util/util.es';
 import {ModalContext} from './modal/ModalContext.es';
 import {InstanceListContext} from './store/InstanceListPageStore.es';
 
@@ -199,7 +200,7 @@ const QuickActionMenu = ({disabled, taskItem, transitions = []}) => {
 		[taskItem]
 	);
 
-	const transitionLabel = Liferay.Language.get('transition').toUpperCase();
+	const transitionLabel = capitalize(Liferay.Language.get('transition'));
 
 	const kebabItems = [
 		{

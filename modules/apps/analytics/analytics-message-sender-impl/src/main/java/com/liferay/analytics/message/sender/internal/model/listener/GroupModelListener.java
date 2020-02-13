@@ -16,6 +16,8 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.EntityModelListener;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -67,7 +69,17 @@ public class GroupModelListener extends BaseEntityModelListener<Group> {
 
 	@Override
 	protected ActionableDynamicQuery getActionableDynamicQuery() {
-		return _groupLocalService.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			_groupLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property property = PropertyFactoryUtil.forName("site");
+
+				dynamicQuery.add(property.eq(true));
+			});
+
+		return actionableDynamicQuery;
 	}
 
 	@Override

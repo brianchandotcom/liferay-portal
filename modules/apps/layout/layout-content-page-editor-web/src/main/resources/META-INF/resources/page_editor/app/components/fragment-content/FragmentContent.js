@@ -25,7 +25,6 @@ import React, {
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
-import {EDITABLE_FLOATING_TOOLBAR_CLASSNAMES} from '../../config/constants/editableFloatingToolbarClassNames';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {ConfigContext} from '../../config/index';
@@ -44,12 +43,14 @@ import {
 	useSelectEditingItem
 } from '../Controls';
 import UnsafeHTML from '../UnsafeHTML';
-import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import FragmentContentDecoration from './FragmentContentDecoration';
+import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
+import getEditableUniqueId from './getEditableUniqueId';
 
 function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
+	const element = ref.current;
 	const activeItemId = useActiveItemId();
 	const editingItemId = useEditingItemId();
 	const isActive = useIsActive();
@@ -72,11 +73,6 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 
 		return editableId.join('-');
 	};
-
-	const getEditableUniqueId = useCallback(
-		editableId => `${fragmentEntryLinkId}-${editableId}`,
-		[fragmentEntryLinkId]
-	);
 
 	const canUpdateLayoutContent = useSelector(
 		({permissions}) =>
@@ -109,9 +105,12 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const showFragmentContentDecoration = useCallback(
 		editableValue =>
 			canUpdateLayoutContent
-				? [itemId, ...editablesIds.map(getEditableUniqueId)].some(
-						isActive
-				  ) ||
+				? [
+						itemId,
+						...editablesIds.map(editableId =>
+							getEditableUniqueId(fragmentEntryLinkId, editableId)
+						)
+				  ].some(isActive) ||
 				  editableIsMapped(editableValue) ||
 				  editableIsTranslated(
 						defaultLanguageId,
@@ -122,13 +121,13 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 				: true,
 		[
 			canUpdateLayoutContent,
-			itemId,
-			editablesIds,
-			getEditableUniqueId,
-			isActive,
 			defaultLanguageId,
+			isActive,
+			itemId,
+			prefixedSegmentsExperienceId,
 			state.languageId,
-			prefixedSegmentsExperienceId
+			editablesIds,
+			fragmentEntryLinkId
 		]
 	);
 
@@ -271,7 +270,9 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 
 		if (!editingItemId) {
 			if (isAlloyEditorBasedEditableType(editableType)) {
-				selectEditingItemId(getEditableUniqueId(editableId));
+				selectEditingItemId(
+					getEditableUniqueId(fragmentEntryLinkId, editableId)
+				);
 			}
 
 			processor.createEditor(
@@ -336,41 +337,11 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 				ref={ref}
 			/>
 
-			{editablesIds
-				.filter(editableId => isActive(getEditableUniqueId(editableId)))
-				.map(editableId => {
-					const editableElement = ref.current.querySelector(
-						`[id="${editableId}"]`
-					);
-					const editableRef = React.createRef();
-					const editableType = editableElement.getAttribute('type');
-					const editableValue = selectEditableValue(
-						state,
-						fragmentEntryLinkId,
-						editableId,
-						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-					);
-
-					editableRef.current = editableElement;
-
-					return (
-						<FloatingToolbar
-							buttons={getFloatingToolbarButtons(
-								editableType,
-								editableValue
-							)}
-							item={{
-								editableId,
-								editableType,
-								fragmentEntryLinkId,
-								itemId: getEditableUniqueId(editableId)
-							}}
-							itemRef={editableRef}
-							key={getEditableUniqueId(editableId)}
-							onButtonClick={onFloatingToolbarButtonClick}
-						/>
-					);
-				})}
+			<FragmentContentFloatingToolbar
+				element={element}
+				fragmentEntryLinkId={fragmentEntryLinkId}
+				onButtonClick={onFloatingToolbarButtonClick}
+			/>
 
 			{editablesIds.map(
 				editableId =>
@@ -380,13 +351,19 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 						<FragmentContentDecoration
 							editableId={editableId}
 							fragmentEntryLinkId={fragmentEntryLinkId}
-							itemId={getEditableUniqueId(editableId)}
+							itemId={getEditableUniqueId(
+								fragmentEntryLinkId,
+								editableId
+							)}
 							key={editableId}
 							onEditableDoubleClick={initProcessor}
 							parentItemId={itemId}
 							parentRef={ref}
 							siblingsItemIds={editablesIds.map(siblingId =>
-								getEditableUniqueId(siblingId)
+								getEditableUniqueId(
+									fragmentEntryLinkId,
+									siblingId
+								)
 							)}
 						/>
 					)
@@ -422,49 +399,6 @@ const editableIsTranslated = (
 	(editableValue[languageId] ||
 		(segmentsExperienceId in editableValue &&
 			editableValue[segmentsExperienceId][languageId]));
-
-const getFloatingToolbarButtons = (editableType, editableValue) => {
-	const {classNameId, classPK, config, fieldId, mappedField} = editableValue;
-	const showLinkButton =
-		editableType == EDITABLE_TYPES.text ||
-		editableType == EDITABLE_TYPES.image ||
-		editableType == EDITABLE_TYPES.link;
-
-	const buttons = [];
-
-	if (showLinkButton) {
-		EDITABLE_FLOATING_TOOLBAR_BUTTONS.link.className =
-			config.href ||
-			(config.classNameId && config.classPK && config.fieldId) ||
-			config.mappedField
-				? EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.linked
-				: '';
-		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.link);
-	}
-
-	if (
-		editableType === EDITABLE_TYPES.image &&
-		!editableValue.mappedField &&
-		!editableValue.fieldId
-	) {
-		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.imageProperties);
-	}
-	else {
-		EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.className =
-			(classNameId && classPK && fieldId) || mappedField
-				? EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.disabled
-				: '';
-		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit);
-	}
-
-	EDITABLE_FLOATING_TOOLBAR_BUTTONS.map.className =
-		(classNameId && classPK && fieldId) || mappedField
-			? EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.mapped
-			: '';
-	buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.map);
-
-	return buttons;
-};
 
 const getMappingValue = ({classNameId, classPK, config, fieldId}) =>
 	InfoItemService.getAssetFieldValue({

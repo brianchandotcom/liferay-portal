@@ -14,7 +14,8 @@
 
 import './CaptchaRegister.soy';
 
-import React, {useEffect, useMemo} from 'react';
+import {globalEval} from 'metal-dom';
+import React, {useEffect, useMemo, useRef} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
@@ -24,6 +25,7 @@ import templates from './CaptchaAdapter.soy';
 const Captcha = ({html, name}) => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const contentMemoized = useMemo(() => html, []);
+	const elRef = useRef(null);
 
 	useEffect(() => {
 		if (window.grecaptcha) {
@@ -38,9 +40,18 @@ const Captcha = ({html, name}) => {
 		}
 	}, []);
 
+	useEffect(() => {
+		if (elRef.current) {
+			globalEval.runScriptsInElement(elRef.current);
+		}
+	}, [elRef]);
+
 	return (
 		<>
-			<div dangerouslySetInnerHTML={{__html: contentMemoized}} />
+			<div
+				dangerouslySetInnerHTML={{__html: contentMemoized}}
+				ref={elRef}
+			/>
 			<input id={name} type="hidden" />
 		</>
 	);

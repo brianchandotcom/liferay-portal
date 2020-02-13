@@ -23,12 +23,12 @@ import org.json.JSONObject;
  */
 public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
-	public abstract int getID();
-
+	@Override
 	public String getName() {
 		return jsonObject.getString("Name");
 	}
 
+	@Override
 	public SpiraProject getSpiraProject() {
 		if (this instanceof SpiraProject) {
 			return (SpiraProject)this;

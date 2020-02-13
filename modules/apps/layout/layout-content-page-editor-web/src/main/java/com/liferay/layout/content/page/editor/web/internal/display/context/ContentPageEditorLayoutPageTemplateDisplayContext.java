@@ -83,26 +83,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	}
 
 	@Override
-	public SoyContext getEditorSoyContext() throws Exception {
-		if (_editorSoyContext != null) {
-			return _editorSoyContext;
-		}
-
-		SoyContext soyContext = super.getEditorSoyContext();
-
-		if (_pageIsDisplayPage) {
-			soyContext.put(
-				"mappingFieldsURL",
-				getFragmentEntryActionURL("/content_layout/get_mapping_fields")
-			).put(
-				"selectedMappingTypes", _getSelectedMappingTypes()
-			);
-		}
-
-		return _editorSoyContext;
-	}
-
-	@Override
 	public String getPublishURL() {
 		return getFragmentEntryActionURL(
 			"/content_layout/publish_layout_page_template_entry");
@@ -210,7 +190,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		return soyContext;
 	}
 
-	private SoyContext _editorSoyContext;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final boolean _pageIsDisplayPage;
 

@@ -151,62 +151,6 @@ public class ContentPageLayoutEditorDisplayContext
 	}
 
 	@Override
-	public SoyContext getEditorSoyContext() throws Exception {
-		if (_editorSoyContext != null) {
-			return _editorSoyContext;
-		}
-
-		SoyContext soyContext = super.getEditorSoyContext();
-
-		if (!_isShowSegmentsExperiences()) {
-			_editorSoyContext = soyContext;
-
-			return _editorSoyContext;
-		}
-
-		_editorSoyContext = soyContext.put(
-			"addSegmentsExperienceURL",
-			getFragmentEntryActionURL("/content_layout/add_segments_experience")
-		).put(
-			"availableSegmentsEntries", _getAvailableSegmentsEntriesSoyContext()
-		).put(
-			"availableSegmentsExperiences",
-			_getAvailableSegmentsExperiencesSoyContext()
-		).put(
-			"defaultSegmentsEntryId", SegmentsEntryConstants.ID_DEFAULT
-		).put(
-			"defaultSegmentsExperienceId",
-			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
-		).put(
-			"deleteSegmentsExperienceURL",
-			getFragmentEntryActionURL(
-				"/content_layout/delete_segments_experience")
-		).put(
-			"editSegmentsEntryURL", _getEditSegmentsEntryURL()
-		).put(
-			"hasEditSegmentsEntryPermission", _hasEditSegmentsEntryPermission()
-		).put(
-			"layoutDataList", _getLayoutDataListSoyContext()
-		).put(
-			"lockedSegmentsExperience",
-			_isLockedSegmentsExperience(getSegmentsExperienceId())
-		).put(
-			"plid", themeDisplay.getPlid()
-		).put(
-			"segmentsExperienceId", String.valueOf(getSegmentsExperienceId())
-		).put(
-			"segmentsExperimentStatus",
-			_getSegmentsExperimentStatusSoyContext(getSegmentsExperienceId())
-		).put(
-			"selectedSegmentsEntryId", String.valueOf(_getSegmentsEntryId())
-		).put(
-			"singleSegmentsExperienceMode", _isSingleSegmentsExperienceMode()
-		);
-
-		return _editorSoyContext;
-	}
-
-	@Override
 	protected long getSegmentsExperienceId() {
 		if (_segmentsExperienceId != null) {
 			return _segmentsExperienceId;
@@ -593,7 +537,6 @@ public class ContentPageLayoutEditorDisplayContext
 		return true;
 	}
 
-	private SoyContext _editorSoyContext;
 	private String _editSegmentsEntryURL;
 	private Boolean _lockedSegmentsExperience;
 	private Long _segmentsEntryId;

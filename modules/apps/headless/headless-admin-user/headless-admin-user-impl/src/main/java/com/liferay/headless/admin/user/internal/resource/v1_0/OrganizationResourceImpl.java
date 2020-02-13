@@ -356,21 +356,19 @@ public class OrganizationResourceImpl
 	private Map<String, Map<String, String>> _getOrganizationListActions(
 		String parentOrganizationId) {
 
-		long groupId = _getOrganizationId(parentOrganizationId);
-
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"get",
 			addAction(
 				"VIEW", "getOrganizationOrganizationsPage",
 				com.liferay.portal.kernel.model.Organization.class.getName(),
-				groupId)
+				_getOrganizationId(parentOrganizationId))
 		).build();
 	}
 
 	private Page<Organization> _getOrganizationsPage(
-			Map<String, Map<String, String>> actions, String parentOrganizationId,
-			Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Map<String, Map<String, String>> actions,
+			String parentOrganizationId, Boolean flatten, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		long id = _getOrganizationId(parentOrganizationId);
@@ -386,7 +384,8 @@ public class OrganizationResourceImpl
 						booleanFilter.add(
 							new QueryFilter(
 								new WildcardQueryImpl(
-									"treePath", "*" + parentOrganizationId + "*")));
+									"treePath",
+									"*" + parentOrganizationId + "*")));
 						booleanFilter.add(
 							new TermFilter(
 								"organizationId",

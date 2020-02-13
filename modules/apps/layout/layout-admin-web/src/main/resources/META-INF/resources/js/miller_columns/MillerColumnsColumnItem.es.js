@@ -40,6 +40,7 @@ const noop = () => {};
 const MillerColumnsColumnItem = ({
 	actions = [],
 	active,
+	bulkActions = '',
 	checked,
 	description,
 	draggable,
@@ -110,6 +111,7 @@ const MillerColumnsColumnItem = ({
 					active
 				}
 			)}
+			data-actions={bulkActions}
 		>
 			<a className="miller-columns-item-mask" href={url}>
 				<span className="sr-only">{`${Liferay.Language.get(

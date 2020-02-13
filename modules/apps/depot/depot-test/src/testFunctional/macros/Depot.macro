@@ -85,6 +85,7 @@ definition {
 			key_language = "${defaultDepotLanguage}",
 			locator1 = "LanguageConfiguration#DEPOT_DEFAULT_LANGUAGE",
 			value1 = "${defaultDepotLanguage}");
+	}
 
 	macro configureDirectoryIndexing {
 		if ("${directoryIndexing}" == "Enabled") {

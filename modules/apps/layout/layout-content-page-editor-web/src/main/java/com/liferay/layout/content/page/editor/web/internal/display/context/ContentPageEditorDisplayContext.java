@@ -314,7 +314,7 @@ public class ContentPageEditorDisplayContext {
 				"selectedSegmentsEntryId",
 				editorSoyContext.get("selectedSegmentsEntryId")
 			).put(
-				"sidebarPanels", editorSoyContext.get("sidebarPanels")
+				"sidebarPanels", getSidebarPanelSoyContexts()
 			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
@@ -520,6 +520,10 @@ public class ContentPageEditorDisplayContext {
 
 	public String getPublishURL() {
 		return getFragmentEntryActionURL("/content_layout/publish_layout");
+	}
+
+	public List<SoyContext> getSidebarPanelSoyContexts() {
+		return getSidebarPanelSoyContexts(false);
 	}
 
 	public boolean isConversionDraft() {

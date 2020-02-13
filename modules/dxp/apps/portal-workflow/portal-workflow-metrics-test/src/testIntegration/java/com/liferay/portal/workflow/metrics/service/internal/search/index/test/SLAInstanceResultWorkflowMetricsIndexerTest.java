@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -124,7 +125,9 @@ public class SLAInstanceResultWorkflowMetricsIndexerTest
 			KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
 
 			assertSLAReindex(
-				2, new String[] {"workflow-metrics-sla-instance-results"},
+				LinkedHashMapBuilder.put(
+					"workflow-metrics-sla-instance-results", 2
+				).build(),
 				new String[] {"WorkflowMetricsSLAInstanceResultType"},
 				"companyId", kaleoDefinition.getCompanyId(), "instanceId",
 				kaleoInstance.getKaleoInstanceId(), "processId",

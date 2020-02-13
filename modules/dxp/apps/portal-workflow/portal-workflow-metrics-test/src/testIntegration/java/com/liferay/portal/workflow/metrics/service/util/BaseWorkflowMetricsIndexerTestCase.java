@@ -222,8 +222,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 		throws Exception {
 
 		_assertReindex(
-			null, _workflowMetricsIndexer, indexNamesMap, indexTypes,
-			parameters);
+			_workflowMetricsIndexer, indexNamesMap, indexTypes, parameters);
 	}
 
 	protected void assertReindex(
@@ -241,8 +240,16 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	protected void assertSLAReindex(
-			Integer expectedCount, String[] indexNames, String[] indexTypes,
+			Map<String, Integer> indexNamesMap, String[] indexTypes,
 			Object... parameters)
+		throws Exception {
+
+		_assertReindex(
+			_slaWorkflowMetricsIndexer, indexNamesMap, indexTypes, parameters);
+	}
+
+	protected void assertSLAReindex(
+			String[] indexNames, String[] indexTypes, Object... parameters)
 		throws Exception {
 
 		Map<String, Integer> indexNamesMap = Stream.of(
@@ -252,16 +259,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 			Map::putAll
 		);
 
-		_assertReindex(
-			expectedCount, _slaWorkflowMetricsIndexer, indexNamesMap,
-			indexTypes, parameters);
-	}
-
-	protected void assertSLAReindex(
-			String[] indexNames, String[] indexTypes, Object... parameters)
-		throws Exception {
-
-		assertSLAReindex(null, indexNames, indexTypes, parameters);
+		assertSLAReindex(indexNamesMap, indexTypes, parameters);
 	}
 
 	protected KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
@@ -407,27 +405,22 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	protected KaleoNodeLocalService kaleoNodeLocalService;
 
 	private void _assertReindex(
-			Integer expectedCount, Indexer<Object> indexer,
-			Map<String, Integer> indexNamesMap, String[] indexTypes,
-			Object... parameters)
+			Indexer<Object> indexer, Map<String, Integer> indexNamesMap,
+			String[] indexTypes, Object... parameters)
 		throws Exception {
 
 		if (searchEngineAdapter == null) {
 			return;
 		}
 
-		String[] indexNames = ArrayUtil.toStringArray(indexNamesMap.keySet());
-
 		indexer.reindex(
 			new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 
-		for (int i = 0; i < indexNames.length; i++) {
-			if (expectedCount == null) {
-				expectedCount = indexNamesMap.get(indexNames[i]);
-			}
+		String[] indexNames = ArrayUtil.toStringArray(indexNamesMap.keySet());
 
+		for (int i = 0; i < indexNames.length; i++) {
 			retryAssertCount(
-				expectedCount, indexNames[i], indexTypes[i],
+				indexNamesMap.get(indexNames[i]), indexNames[i], indexTypes[i],
 				ArrayUtil.append(new Object[] {"deleted", false}, parameters));
 		}
 	}

@@ -39,17 +39,13 @@ export default {
 	 * @param {string} options.body.segmentsEntryId Id of the segment for the Experience
 	 * @param {object} options.config
 	 * @param {string} options.config.addSegmentsExperienceURL Url of the backend service
-	 * @param {number} options.config.classNameId
-	 * @param {number} options.config.classPK
 	 */
 	createExperience({body, config, dispatch}) {
 		const {name, segmentsEntryId} = body;
-		const {addSegmentsExperienceURL, classNameId, classPK} = config;
+		const {addSegmentsExperienceURL} = config;
 
 		const payload = {
 			active: true,
-			classNameId,
-			classPK,
 			name,
 			segmentsEntryId
 		};

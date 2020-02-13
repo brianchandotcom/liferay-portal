@@ -47,7 +47,6 @@ function ToolbarBody() {
 	const {draft} = store;
 
 	const {
-		classPK,
 		discardDraftRedirectURL,
 		discardDraftURL,
 		pageType,
@@ -208,12 +207,6 @@ function ToolbarBody() {
 				<li className="nav-item">
 					<form action={discardDraftURL} method="POST">
 						<input
-							name={`${portletNamespace}classPK`}
-							type="hidden"
-							value={classPK ? classPK : ''}
-						/>
-
-						<input
 							name={`${portletNamespace}redirect`}
 							type="hidden"
 							value={discardDraftRedirectURL}
@@ -235,12 +228,6 @@ function ToolbarBody() {
 				</li>
 				<li className="nav-item">
 					<form action={publishURL} method="POST">
-						<input
-							name={`${portletNamespace}classPK`}
-							type="hidden"
-							value={classPK}
-						/>
-
 						<input
 							name={`${portletNamespace}redirect`}
 							type="hidden"

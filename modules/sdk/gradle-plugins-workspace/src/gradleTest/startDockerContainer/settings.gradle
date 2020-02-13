@@ -33,14 +33,20 @@ gradle.projectsEvaluated {
 			gradle.liferayWorkspace.dockerContainerId
 		}
 
-		String expectedLine = "org.apache.catalina.startup.Catalina"
+		def expectedLines = ["local_file", "org.apache.catalina.startup.Catalina"]
+		def unexpectedLines = ["prod_file", "No such file or directory"]
 
-		boolean expectedLineDetected = false
+		int expectedLinesDetected = 0
+		int unexpectedLinesDetected = 0
 
 		sink new PrintWriter(new StringWriter()) {
 			public void write(String line) {
-				if (line.contains(expectedLine)) {
-					expectedLineDetected = true
+				if (expectedLines.findAll{line.contains(it)}.size() > 0) {
+					expectedLinesDetected++
+				}
+
+				if (unexpectedLines.findAll{line.contains(it)}.size() > 0) {
+					unexpectedLinesDetected++
 				}
 
 				rootProject.print line
@@ -50,16 +56,23 @@ gradle.projectsEvaluated {
 		doLast {
 			int retries = 0
 
-			while (!expectedLineDetected && retries < 50) {
+			while (expectedLinesDetected < 2 && retries < 30) {
 				Thread.sleep(100)
 
 				retries++
 
+				expectedLinesDetected = 0
+				unexpectedLinesDetected = 0
+
 				start()
 			}
 
-			if (!expectedLineDetected) {
-				throw new GradleException("The expected line " + expectedLine + " was not found in the log.")
+			if (expectedLinesDetected != 2) {
+				throw new GradleException("The expected lines " + expectedLines + " were not found in the log.")
+			}
+
+			if (unexpectedLinesDetected > 0) {
+				throw new GradleException("One of the unexpected lines " + unexpectedLines + " were found in the log.")
 			}
 		}
 	}

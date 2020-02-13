@@ -18,12 +18,12 @@ gradle.liferayWorkspace {
 }
 
 gradle.projectsEvaluated {
-	Project root = gradle.rootProject
+	Project rootProject = gradle.rootProject
 
-	root.tasks.register("assertLog", DockerLogsContainer) {
-		dependsOn root.tasks.startDockerContainer
+	rootProject.tasks.register("assertLog", DockerLogsContainer) {
+		dependsOn rootProject.tasks.startDockerContainer
 
-		finalizedBy root.tasks.cleanDockerImage
+		finalizedBy rootProject.tasks.cleanDockerImage
 
 		tailAll = true
 
@@ -42,7 +42,8 @@ gradle.projectsEvaluated {
 				if (line.contains(expectedLine)) {
 					expectedLineDetected = true
 				}
-				root.print line
+
+				rootProject.print line
 			}
 		}
 

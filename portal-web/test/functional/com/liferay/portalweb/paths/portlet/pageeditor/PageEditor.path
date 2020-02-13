@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_LOADED</td>
-	<td>//div[@class='page-editor-sidebar-buttons']/button</td>
+	<td>//div[contains(@class,'sidebar')]/div[contains(@class,'buttons')]/button</td>
 	<td></td>
 </tr>
 <tr>

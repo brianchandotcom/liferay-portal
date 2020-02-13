@@ -127,6 +127,8 @@ public class ContentPageLayoutEditorDisplayContext
 			"lockedSegmentsExperience",
 			_isLockedSegmentsExperience(getSegmentsExperienceId())
 		).put(
+			"plid", themeDisplay.getPlid()
+		).put(
 			"segmentsExperienceId", String.valueOf(getSegmentsExperienceId())
 		).put(
 			"segmentsExperimentStatus",

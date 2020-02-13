@@ -89,6 +89,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEPOT_LANGUAGE_CHECKBOX</td>
+	<td>//div[contains(@class,'custom-control') and contains(.,'${key_language}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEPOT_LANGUAGE_CHECKBOX_CHECKED</td>
+	<td>//div[contains(@class,'custom-control') and contains(.,'${key_language}')]//input[@type='checkbox' and @checked]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEPOT_DEFAULT_LANGUAGE_CHECKBOX_DISABLED</td>
+	<td>//div[contains(@class,'custom-control') and contains(.,'${key_language}')]//input[@disabled and @checked]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_ADDITIONAL_ACTIVITY_COUNTERS</td>
 	<td>//label[contains(.,'Display Additional Activity Counters')]/input[@type='checkbox']</td>
 	<td></td>

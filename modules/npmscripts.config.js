@@ -14,7 +14,7 @@
 
 const CHECK_AND_FIX_GLOBS = [
 	'/{,dxp/}*.js',
-	'/{,dxp/}apps/*/*/*.js',
+	'/{,dxp/}apps/*/*/*.{js,json}',
 	'/{,dxp/}apps/*/*/{src,test}/**/*.{js,scss}',
 	'/{,dxp/}apps/*/*/{src}/**/*.{jsp,jspf}'
 ];

@@ -18,18 +18,22 @@ import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeTracker;
+import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataLayoutUtil;
 import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataLayoutEntityModel;
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataDefinitionModelResourcePermission;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.data.engine.spi.resource.SPIDataLayoutResource;
+import com.liferay.dynamic.data.mapping.form.builder.rule.DDMFormRuleDeserializer;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -149,7 +153,14 @@ public class DataLayoutResourceImpl
 
 		return spiDataLayoutResource.addDataLayout(
 			dataDefinitionId,
-			DataLayoutUtil.serialize(dataLayout, _ddmFormLayoutSerializer),
+			DataLayoutUtil.serialize(
+				dataLayout,
+				DataDefinitionUtil.toDDMForm(
+					DataDefinitionUtil.toDataDefinition(
+						_ddmFormFieldTypeServicesTracker, ddmStructure,
+						_spiDDMFormRuleConverter),
+					_ddmFormFieldTypeServicesTracker),
+				_ddmFormLayoutSerializer, _ddmFormRuleDeserializer),
 			dataLayout.getDataLayoutKey(), dataLayout.getDescription(),
 			dataLayout.getName());
 	}
@@ -170,7 +181,16 @@ public class DataLayoutResourceImpl
 
 		return spiDataLayoutResource.updateDataLayout(
 			dataLayoutId,
-			DataLayoutUtil.serialize(dataLayout, _ddmFormLayoutSerializer),
+			DataLayoutUtil.serialize(
+				dataLayout,
+				DataDefinitionUtil.toDDMForm(
+					DataDefinitionUtil.toDataDefinition(
+						_ddmFormFieldTypeServicesTracker,
+						_ddmStructureLocalService.getStructure(
+							ddmStructureLayout.getDDMStructureId()),
+						_spiDDMFormRuleConverter),
+					_ddmFormFieldTypeServicesTracker),
+				_ddmFormLayoutSerializer, _ddmFormRuleDeserializer),
 			dataLayout.getDescription(), dataLayout.getName());
 	}
 
@@ -179,7 +199,8 @@ public class DataLayoutResourceImpl
 			_ddmStructureLayoutLocalService, _ddmStructureLocalService,
 			_ddmStructureVersionLocalService,
 			_deDataDefinitionFieldLinkLocalService,
-			DataLayoutUtil::toDataLayout);
+			ddmStructureLayout -> DataLayoutUtil.toDataLayout(
+				ddmStructureLayout, _spiDDMFormRuleConverter));
 	}
 
 	private static final EntityModel _entityModel = new DataLayoutEntityModel();
@@ -191,8 +212,14 @@ public class DataLayoutResourceImpl
 	private DataDefinitionModelResourcePermission
 		_dataDefinitionModelResourcePermission;
 
+	@Reference
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
 	@Reference(target = "(ddm.form.layout.serializer.type=json)")
 	private DDMFormLayoutSerializer _ddmFormLayoutSerializer;
+
+	@Reference
+	private DDMFormRuleDeserializer _ddmFormRuleDeserializer;
 
 	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
@@ -206,5 +233,8 @@ public class DataLayoutResourceImpl
 	@Reference
 	private DEDataDefinitionFieldLinkLocalService
 		_deDataDefinitionFieldLinkLocalService;
+
+	@Reference
+	private SPIDDMFormRuleConverter _spiDDMFormRuleConverter;
 
 }

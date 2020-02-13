@@ -172,10 +172,14 @@ definition {
 				locator1 = "FormFields#TEXT_FIELD",
 				value1 = "");
 
-			Type.sendKeys(
+			KeyPress(
 				key_fieldName = "${fieldName}",
 				locator1 = "FormFields#TEXT_FIELD",
 				value1 = "${fieldValue}");
+
+			Pause(locator1 = "5000");
+
+			takeScreenshot();
 		}
 		else {
 			Type(

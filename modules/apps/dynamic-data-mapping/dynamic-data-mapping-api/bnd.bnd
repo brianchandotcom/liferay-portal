@@ -27,6 +27,7 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.security.permission,\
 	com.liferay.dynamic.data.mapping.service,\
 	com.liferay.dynamic.data.mapping.service.persistence,\
+	com.liferay.dynamic.data.mapping.staging,\
 	com.liferay.dynamic.data.mapping.storage,\
 	com.liferay.dynamic.data.mapping.template,\
 	com.liferay.dynamic.data.mapping.util,\

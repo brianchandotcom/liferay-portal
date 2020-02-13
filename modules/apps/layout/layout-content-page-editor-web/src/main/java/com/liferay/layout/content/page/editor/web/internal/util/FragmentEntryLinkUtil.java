@@ -145,10 +145,9 @@ public class FragmentEntryLinkUtil {
 		String configuration = fragmentRendererController.getConfiguration(
 			defaultFragmentRendererContext);
 
-		FragmentEntry fragmentEntry = getFragmentEntry(
-			fragmentEntryLink.getGroupId(),
-			fragmentCollectionContributorTracker,
-			fragmentEntryLink.getRendererKey(), themeDisplay.getLocale());
+		FragmentEntry fragmentEntry = _getFragmentEntry(
+			fragmentEntryLink, fragmentCollectionContributorTracker,
+			themeDisplay.getLocale());
 
 		String fragmentEntryKey = null;
 		String name = null;
@@ -203,6 +202,23 @@ public class FragmentEntryLinkUtil {
 		).put(
 			"name", name
 		);
+	}
+
+	private static FragmentEntry _getFragmentEntry(
+		FragmentEntryLink fragmentEntryLink,
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		Locale locale) {
+
+		if (fragmentEntryLink.getFragmentEntryId() <= 0) {
+			return getFragmentEntry(
+				fragmentEntryLink.getGroupId(),
+				fragmentCollectionContributorTracker,
+				fragmentEntryLink.getRendererKey(), locale);
+		}
+
+		return FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+			fragmentEntryLink.getFragmentEntryId());
 	}
 
 }

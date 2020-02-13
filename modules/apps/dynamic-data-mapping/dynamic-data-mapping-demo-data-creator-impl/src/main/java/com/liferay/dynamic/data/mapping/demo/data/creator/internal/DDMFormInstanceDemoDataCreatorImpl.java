@@ -45,7 +45,7 @@ public class DDMFormInstanceDemoDataCreatorImpl
 		throws PortalException {
 
 		DDMStructure ddmStructure = _ddmStructureDemoDataCreator.create(
-			userId, groupId);
+			groupId, userId);
 
 		DDMFormValues ddmFormValues = new DDMFormValues(
 			new DDMForm() {

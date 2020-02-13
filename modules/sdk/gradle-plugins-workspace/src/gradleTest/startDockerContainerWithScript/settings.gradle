@@ -10,8 +10,6 @@ buildscript {
 
 apply plugin: "com.liferay.workspace"
 
-String expectedLine = "Hello World"
-
 gradle.liferayWorkspace {
 	dockerImageId = InetAddress.localHost.canonicalHostName.toLowerCase() + 'startdockercontainerwithscript'
 	dockerContainerId = InetAddress.localHost.canonicalHostName.toLowerCase() + 'startdockercontainerwithscript'
@@ -27,6 +25,8 @@ gradle.projectsEvaluated {
 		targetContainerId {
 			gradle.liferayWorkspace.dockerContainerId
 		}
+
+		String expectedLine = "Hello World"
 
 		boolean expectedLineDetected = false
 

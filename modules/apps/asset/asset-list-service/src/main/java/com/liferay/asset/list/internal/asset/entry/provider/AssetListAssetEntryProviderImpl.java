@@ -533,13 +533,67 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId,
 		int start, int end) {
 
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			assetListEntry, segmentsEntryIds, userId);
+		List<AssetEntry> dynamicAssetEntries = new ArrayList<>();
 
-		assetEntryQuery.setEnd(end);
-		assetEntryQuery.setStart(start);
+		if (_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
+				for (long segmentsEntryId : segmentsEntryIds) {
+					AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+						assetListEntry, segmentsEntryId, userId);
 
-		return _search(assetListEntry.getCompanyId(), assetEntryQuery);
+					List<AssetEntry> assetEntries = _search(
+						assetListEntry.getCompanyId(), assetEntryQuery);
+
+					dynamicAssetEntries.addAll(assetEntries);
+				}
+			}
+			else {
+				int count = 0;
+				int remaining = Math.max(0, end - start);
+				int subtotal = 0;
+
+				for (long segmentsEntryId : segmentsEntryIds) {
+					AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+						assetListEntry, segmentsEntryId, userId);
+
+					List<AssetEntry> assetEntries = _search(
+						assetListEntry.getCompanyId(), assetEntryQuery);
+
+					count = assetEntries.size();
+
+					if ((subtotal + count) < start) {
+						subtotal = +count;
+
+						continue;
+					}
+
+					List<AssetEntry> assetEntriesSublist = assetEntries.subList(
+						Math.max(start - subtotal, 0),
+						Math.min(remaining, count));
+
+					dynamicAssetEntries.addAll(assetEntriesSublist);
+
+					subtotal += count;
+					remaining -= assetEntriesSublist.size();
+
+					if (remaining <= 0) {
+						break;
+					}
+				}
+			}
+		}
+		else {
+			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+				assetListEntry, segmentsEntryIds, userId);
+
+			assetEntryQuery.setEnd(end);
+			assetEntryQuery.setStart(start);
+
+			dynamicAssetEntries = _search(
+				assetListEntry.getCompanyId(), assetEntryQuery);
+		}
+
+		return dynamicAssetEntries;
 	}
 
 	private long _getFirstSegmentsEntryId(

@@ -312,6 +312,10 @@ public abstract class BaseDB implements DB {
 			for (String sql : sqls) {
 				sql = buildSQL(sql);
 
+				if (Validator.isNull(sql)) {
+					continue;
+				}
+
 				sql = SQLTransformer.transform(sql.trim());
 
 				if (sql.endsWith(";")) {
@@ -772,7 +776,7 @@ public abstract class BaseDB implements DB {
 	protected abstract String[] getTemplate();
 
 	protected String replaceTemplate(String template) {
-		if (template == null) {
+		if (Validator.isNull(template)) {
 			return null;
 		}
 

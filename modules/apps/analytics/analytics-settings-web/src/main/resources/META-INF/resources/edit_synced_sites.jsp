@@ -18,6 +18,8 @@
 
 <%
 ChannelDisplayContext channelDisplayContext = new ChannelDisplayContext(renderRequest, renderResponse);
+
+ChannelSearch channelSearch = channelDisplayContext.getChannelSearch();
 %>
 
 <portlet:actionURL name="/analytics/edit_synced_sites" var="editSyncedSitesURL" />
@@ -32,7 +34,29 @@ ChannelDisplayContext channelDisplayContext = new ChannelDisplayContext(renderRe
 	</p>
 
 	<c:choose>
-		<c:when test="<%= channelDisplayContext.getChannelSearch() != null %>">
+		<c:when test="<%= channelSearch == null %>">
+			<liferay-ui:message key="failed-to-fetch-properties" />
+		</c:when>
+		<c:when test="<%= (channelSearch != null) && (channelSearch.getTotal() == 0) %>">
+			<div class="mb-5 mt-5">
+				<div class="empty-state-icon mb-4 mt-4"></div>
+
+				<div class="text-center">
+					<h2>
+						<liferay-ui:message key="no-properties-found" />
+					</h2>
+
+					<p class="text-secondary">
+						<liferay-ui:message key="create-a-new-property-to-get-started" />
+					</p>
+
+					<button class="btn btn-primary">
+						<liferay-ui:message key="new-property" />
+					</button>
+				</div>
+			</div>
+		</c:when>
+		<c:otherwise>
 			<clay:management-toolbar
 				displayContext="<%= new ChannelManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, channelDisplayContext) %>"
 				elementClasses="custom-management-toolbar"
@@ -40,7 +64,7 @@ ChannelDisplayContext channelDisplayContext = new ChannelDisplayContext(renderRe
 
 			<liferay-ui:search-container
 				id="selectChannels"
-				searchContainer="<%= channelDisplayContext.getChannelSearch() %>"
+				searchContainer="<%= channelSearch %>"
 				var="groupSearchContainer"
 			>
 				<liferay-ui:search-container-row
@@ -61,25 +85,6 @@ ChannelDisplayContext channelDisplayContext = new ChannelDisplayContext(renderRe
 					searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 				/>
 			</liferay-ui:search-container>
-		</c:when>
-		<c:otherwise>
-			<div class="mb-5 mt-5">
-				<div class="empty-state-icon mb-4 mt-4"></div>
-
-				<div class="text-center">
-					<h2>
-						<liferay-ui:message key="no-properties-found" />
-					</h2>
-
-					<p class="text-secondary">
-						<liferay-ui:message key="create-a-new-property-to-get-started" />
-					</p>
-
-					<button class="btn btn-primary">
-						<liferay-ui:message key="new-property" />
-					</button>
-				</div>
-			</div>
 		</c:otherwise>
 	</c:choose>
 </div>

@@ -27,8 +27,10 @@ import java.util.Objects;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -38,6 +40,21 @@ import org.apache.http.impl.client.HttpClientBuilder;
  * @author André Miranda
  */
 public class AnalyticsSettingsUtil {
+
+	public static HttpResponse doGet(long companyId, String path)
+		throws PortalException {
+
+		try {
+			return _request(
+				null, companyId,
+				new HttpGet(
+					String.format(
+						"%s/%s", getAsahFaroBackendURL(companyId), path)));
+		}
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
+		}
+	}
 
 	public static HttpResponse doPost(
 			JSONObject bodyJSONObject, long companyId, String path)
@@ -114,7 +131,7 @@ public class AnalyticsSettingsUtil {
 
 	private static HttpResponse _request(
 			JSONObject bodyJSONObject, long companyId,
-			HttpEntityEnclosingRequestBase httpEntityEnclosingRequestBase)
+			HttpRequestBase httpRequestBase)
 		throws IOException {
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
@@ -124,19 +141,23 @@ public class AnalyticsSettingsUtil {
 		try (CloseableHttpClient closeableHttpClient =
 				httpClientBuilder.build()) {
 
-			if (bodyJSONObject != null) {
+			if ((bodyJSONObject != null) &&
+				(httpRequestBase instanceof HttpEntityEnclosingRequestBase)) {
+
+				HttpEntityEnclosingRequestBase httpEntityEnclosingRequestBase =
+					(HttpEntityEnclosingRequestBase)httpRequestBase;
+
 				httpEntityEnclosingRequestBase.setEntity(
 					new StringEntity(bodyJSONObject.toString()));
 			}
 
-			httpEntityEnclosingRequestBase.setHeader(
-				"Content-type", "application/json");
-			httpEntityEnclosingRequestBase.setHeader(
+			httpRequestBase.setHeader("Content-type", "application/json");
+			httpRequestBase.setHeader(
 				"OSB-Asah-Faro-Backend-Security-Signature",
 				getAsahFaroBackendSecuritySignature(companyId));
 
 			HttpResponse httpResponse = closeableHttpClient.execute(
-				httpEntityEnclosingRequestBase);
+				httpRequestBase);
 
 			HttpEntity httpEntity = httpResponse.getEntity();
 

@@ -22,6 +22,7 @@ const MillerColumnsColumn = ({index, items}) => (
 			<MillerColumnsColumnItem
 				actions={item.actions}
 				active={item.active}
+				bulkActions={item.bulkActions}
 				checked={item.checked}
 				description={item.description}
 				draggable={index !== 0}

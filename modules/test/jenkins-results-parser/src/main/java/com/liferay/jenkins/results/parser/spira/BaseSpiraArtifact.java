@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+import java.util.Calendar;
 import java.util.Objects;
 
 import org.json.JSONObject;
@@ -40,6 +43,11 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	@Override
 	public String toString() {
 		return jsonObject.toString();
+	}
+
+	protected static String toDateString(Calendar calendar) {
+		return JenkinsResultsParserUtil.combine(
+			"/Date(", String.valueOf(calendar.getTimeInMillis()), ")/");
 	}
 
 	protected BaseSpiraArtifact(JSONObject jsonObject) {

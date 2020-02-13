@@ -138,25 +138,6 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 		}
 	}
 
-	public SpiraReleaseBuild getSpiraReleaseBuildByID(int buildID)
-		throws IOException {
-
-		List<SpiraReleaseBuild> spiraReleaseBuilds =
-			SpiraReleaseBuild.getSpiraReleaseBuilds(
-				getSpiraProject(), this,
-				new SearchParameter("BuildId", buildID));
-
-		if (spiraReleaseBuilds.size() > 1) {
-			throw new RuntimeException("Duplicate build id " + buildID);
-		}
-
-		if (spiraReleaseBuilds.isEmpty()) {
-			throw new RuntimeException("Missing build id " + buildID);
-		}
-
-		return spiraReleaseBuilds.get(0);
-	}
-
 	@Override
 	public int getID() {
 		return jsonObject.getInt("ReleaseId");
@@ -175,6 +156,27 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 		}
 
 		return (SpiraRelease)parentSpiraArtifact;
+	}
+
+	public SpiraReleaseBuild getSpiraReleaseBuildByID(int releaseBuildID)
+		throws IOException {
+
+		List<SpiraReleaseBuild> spiraReleaseBuilds =
+			SpiraReleaseBuild.getSpiraReleaseBuilds(
+				getSpiraProject(), this,
+				new SearchParameter("BuildId", releaseBuildID));
+
+		if (spiraReleaseBuilds.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate release build id " + releaseBuildID);
+		}
+
+		if (spiraReleaseBuilds.isEmpty()) {
+			throw new RuntimeException(
+				"Missing release build id " + releaseBuildID);
+		}
+
+		return spiraReleaseBuilds.get(0);
 	}
 
 	protected static List<SpiraRelease> getSpiraReleases(

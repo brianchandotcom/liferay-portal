@@ -31,6 +31,43 @@ import org.json.JSONObject;
  */
 public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
+	public static SpiraReleaseBuild createSpiraReleaseBuild(
+			SpiraProject spiraProject, SpiraRelease spiraRelease,
+			String releaseBuildName)
+		throws IOException {
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+		urlPathReplacements.put(
+			"release_id", String.valueOf(spiraRelease.getID()));
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("BuildStatusId", STATUS_SUCCEEDED);
+		requestJSONObject.put("Name", releaseBuildName);
+		requestJSONObject.put("ProjectId", spiraProject.getID());
+		requestJSONObject.put("ReleaseId", spiraRelease.getID());
+
+		JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
+			"projects/{project_id}/releases/{release_id}/builds", null,
+			urlPathReplacements, HttpRequestMethod.POST,
+			requestJSONObject.toString());
+
+		SpiraReleaseBuild spiraReleaseBuild =
+			spiraRelease.getSpiraReleaseBuildByID(
+				responseJSONObject.getInt("BuildId"));
+
+		_spiraReleaseBuilds.put(
+			_createSpiraReleaseBuildKey(
+				spiraProject.getID(), spiraRelease.getID(),
+				spiraReleaseBuild.getID()),
+			spiraReleaseBuild);
+
+		return spiraReleaseBuild;
+	}
+
 	@Override
 	public int getID() {
 		return jsonObject.getInt("BuildId");
@@ -97,10 +134,18 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		return spiraReleaseBuilds;
 	}
 
-	private static String _createSpiraReleaseBuildKey(
-		int projectID, int releaseID, int buildID) {
+	protected static final int STATUS_ABORTED = 4;
 
-		return projectID + "-" + releaseID + "-" + buildID;
+	protected static final int STATUS_FAILED = 1;
+
+	protected static final int STATUS_SUCCEEDED = 2;
+
+	protected static final int STATUS_UNSTABLED = 3;
+
+	private static String _createSpiraReleaseBuildKey(
+		int projectID, int releaseID, int releaseBuildID) {
+
+		return projectID + "-" + releaseID + "-" + releaseBuildID;
 	}
 
 	private SpiraReleaseBuild(JSONObject jsonObject) {

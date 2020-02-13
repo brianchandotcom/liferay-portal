@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.web.internal.util.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -73,6 +74,14 @@ public class UpdateDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
+
+		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
+			DDMStructure ddmStructure = _ddmStructureService.getStructure(
+				ddmStructureId);
+
+			ddmForm = ddmStructure.getDDMForm();
+			ddmFormLayout = ddmStructure.getDDMFormLayout();
+		}
 
 		_ddmStructureService.updateStructure(
 			ddmStructureId, parentDDMStructureId, nameMap, descriptionMap,

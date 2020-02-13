@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.web.internal.util.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -63,6 +64,9 @@ public class AddDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 		long parentDDMStructureId = ParamUtil.getLong(
 			actionRequest, "parentDDMStructureId",
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
+
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
 		String structureKey = ParamUtil.getString(
 			actionRequest, "structureKey");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
@@ -70,23 +74,38 @@ public class AddDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		DDMForm ddmForm = _ddm.getDDMForm(actionRequest);
-
-		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
-
-		String storageType = ParamUtil.getString(actionRequest, "storageType");
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		_ddmStructureService.addStructure(
-			groupId, parentDDMStructureId,
-			_portal.getClassNameId(DLFileEntryMetadata.class.getName()),
-			structureKey, nameMap, descriptionMap, ddmForm, ddmFormLayout,
-			storageType, DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+		if ((ddmStructureId != 0) &&
+			FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
+
+			DDMStructure ddmStructure = _ddmStructureService.getStructure(
+				ddmStructureId);
+
+			_ddmStructureService.updateStructure(
+				ddmStructureId, parentDDMStructureId, nameMap, descriptionMap,
+				ddmStructure.getDDMForm(), ddmStructure.getDDMFormLayout(),
+				serviceContext);
+		}
+		else {
+			DDMForm ddmForm = _ddm.getDDMForm(actionRequest);
+
+			DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
+
+			String storageType = ParamUtil.getString(
+				actionRequest, "storageType");
+
+			_ddmStructureService.addStructure(
+				groupId, parentDDMStructureId,
+				_portal.getClassNameId(DLFileEntryMetadata.class.getName()),
+				structureKey, nameMap, descriptionMap, ddmForm, ddmFormLayout,
+				storageType, DDMStructureConstants.TYPE_DEFAULT,
+				serviceContext);
+		}
 	}
 
 	@Reference

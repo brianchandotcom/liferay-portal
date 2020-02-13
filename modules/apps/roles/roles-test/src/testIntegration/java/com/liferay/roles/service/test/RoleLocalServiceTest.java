@@ -253,6 +253,8 @@ public class RoleLocalServiceTest {
 		expectedRoles = expectedRolesStream.filter(
 			role -> !excludedRoleNames.contains(role.getName())
 		).filter(
+			role -> role.getType() != RoleConstants.TYPE_DEPOT
+		).filter(
 			role -> role.getType() != RoleConstants.TYPE_SITE
 		).filter(
 			role -> {

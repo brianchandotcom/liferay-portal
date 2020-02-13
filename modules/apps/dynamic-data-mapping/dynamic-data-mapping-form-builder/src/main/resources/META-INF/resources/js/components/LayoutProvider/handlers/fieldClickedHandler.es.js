@@ -14,7 +14,9 @@
 
 import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
-const handleFieldClicked = (state, event) => {
+import {localizeField} from '../../../util/fieldSupport.es';
+
+const handleFieldClicked = (props, state, event) => {
 	const {columnIndex, pageIndex, rowIndex} = event;
 	const {pages} = state;
 
@@ -36,6 +38,7 @@ const handleFieldClicked = (state, event) => {
 			...settingsContext,
 			pages: visitor.mapFields(field => {
 				const {fieldName} = field;
+				const {defaultLanguageId, editingLanguageId} = props;
 
 				if (fieldName === 'name') {
 					field.visible = true;
@@ -53,7 +56,11 @@ const handleFieldClicked = (state, event) => {
 					};
 				}
 
-				return field;
+				return localizeField(
+					field,
+					defaultLanguageId,
+					editingLanguageId
+				);
 			})
 		}
 	};

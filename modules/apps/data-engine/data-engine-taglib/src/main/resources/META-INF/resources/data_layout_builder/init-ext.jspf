@@ -27,8 +27,7 @@ page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
-<%@ page import="java.util.Locale" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 
@@ -37,7 +36,6 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <%
-Locale[] availableLocales = (Locale[])request.getAttribute("liferay-data-engine:data-layout-builder:availableLocales");
 String[] availableLanguageIds = (String[])request.getAttribute("liferay-data-engine:data-layout-builder:availableLanguageIds");
 JSONObject dataLayoutJSONObject = (JSONObject)request.getAttribute("liferay-data-engine:data-layout-builder:dataLayout");
 JSONArray fieldTypesJSONArray = (JSONArray)request.getAttribute("liferay-data-engine:data-layout-builder:fieldTypes");

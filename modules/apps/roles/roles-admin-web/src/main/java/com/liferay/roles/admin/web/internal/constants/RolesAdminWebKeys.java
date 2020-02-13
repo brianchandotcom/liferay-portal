@@ -27,4 +27,6 @@ public class RolesAdminWebKeys {
 
 	public static final String ROLE_TYPES = "ROLE_TYPES";
 
+	public static final String SHOW_NAV_TABS = "SHOW_NAV_TABS";
+
 }

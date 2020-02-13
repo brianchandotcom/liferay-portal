@@ -573,12 +573,20 @@ public class JournalArticleAssetRenderer
 		String viewMode = ParamUtil.getString(
 			httpServletRequest, "viewMode", Constants.VIEW);
 		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
-		int articlePage = ParamUtil.getInteger(httpServletRequest, "page", 1);
-		PortletRequestModel portletRequestModel = getPortletRequestModel(
-			httpServletRequest, httpServletResponse);
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		if ((themeDisplay != null) &&
+			Validator.isNotNull(themeDisplay.getLanguageId())) {
+
+			languageId = themeDisplay.getLanguageId();
+		}
+
+		int articlePage = ParamUtil.getInteger(httpServletRequest, "page", 1);
+		PortletRequestModel portletRequestModel = getPortletRequestModel(
+			httpServletRequest, httpServletResponse);
 
 		if (!workflowAssetPreview && _article.isApproved()) {
 			return _journalContent.getDisplay(

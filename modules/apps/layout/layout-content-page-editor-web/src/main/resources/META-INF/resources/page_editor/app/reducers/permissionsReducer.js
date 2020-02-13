@@ -18,6 +18,7 @@ import {TOGGLE_PERMISSION} from '../actions/types';
  * @type {import('../../types/ActionKeys').ActionKeysMap}
  */
 export const INITIAL_STATE = {
+	EDIT_SEGMENTS_ENTRY: false,
 	LOCKED_SEGMENTS_EXPERIMENT: false,
 	UPDATE: true,
 	UPDATE_LAYOUT_CONTENT: true

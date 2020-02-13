@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -70,11 +69,11 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 		Calendar calendar = Calendar.getInstance();
 
-		requestJSONObject.put("StartDate", _toDateString(calendar));
+		requestJSONObject.put("StartDate", toDateString(calendar));
 
 		calendar.add(Calendar.MONTH, 1);
 
-		requestJSONObject.put("EndDate", _toDateString(calendar));
+		requestJSONObject.put("EndDate", toDateString(calendar));
 
 		JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
 			urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
@@ -95,18 +94,8 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 			return spiraReleases.get(0);
 		}
 
-		String[] releasePathNames = releasePath.split("(?<!\\\\)\\/");
-
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < (releasePathNames.length - 2); i++) {
-			sb.append("/");
-			sb.append(releasePathNames[i]);
-		}
-
-		String releaseName = releasePathNames[releasePathNames.length - 1];
-
-		String parentReleasePath = sb.toString();
+		String releaseName = getPathName(releasePath);
+		String parentReleasePath = getParentPath(releasePath);
 
 		if (parentReleasePath.isEmpty()) {
 			return createSpiraRelease(spiraProject, releaseName);
@@ -257,11 +246,6 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 	private static String _createSpiraReleaseKey(int projectID, int releaseID) {
 		return projectID + "-" + releaseID;
-	}
-
-	private static String _toDateString(Calendar calendar) {
-		return JenkinsResultsParserUtil.combine(
-			"/Date(", String.valueOf(calendar.getTimeInMillis()), ")/");
 	}
 
 	private SpiraRelease(JSONObject jsonObject) {

@@ -1898,6 +1898,20 @@ public class JenkinsResultsParserUtil {
 		executeJenkinsScript(masterHostname, sb.toString());
 	}
 
+	public static int lastIndexOfRegex(String string, String regex) {
+		Pattern pattern = Pattern.compile(regex);
+
+		Matcher matcher = pattern.matcher(string);
+
+		int lastIndex = -1;
+
+		while (matcher.find()) {
+			lastIndex = matcher.start();
+		}
+
+		return lastIndex;
+	}
+
 	public static void move(File sourceFile, File targetFile)
 		throws IOException {
 

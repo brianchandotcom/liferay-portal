@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser.spira;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.util.Calendar;
+
 import org.json.JSONObject;
 
 /**
@@ -38,6 +40,26 @@ public abstract class PathSpiraArtifact extends BaseSpiraArtifact {
 			parentSpiraArtifact.getPath(), "/", name);
 	}
 
+	protected static String getParentPath(String path) {
+		_validatePath(path);
+
+		return path.substring(
+			0, JenkinsResultsParserUtil.lastIndexOfRegex(path, "(?<!\\\\)\\/"));
+	}
+
+	protected static String getPathName(String path) {
+		_validatePath(path);
+
+		return path.substring(
+			JenkinsResultsParserUtil.lastIndexOfRegex(path, "(?<!\\\\)\\/") +
+				1);
+	}
+
+	protected static String toDateString(Calendar calendar) {
+		return JenkinsResultsParserUtil.combine(
+			"/Date(", String.valueOf(calendar.getTimeInMillis()), ")/");
+	}
+
 	protected PathSpiraArtifact(JSONObject jsonObject) {
 		super(jsonObject);
 
@@ -45,5 +67,11 @@ public abstract class PathSpiraArtifact extends BaseSpiraArtifact {
 	}
 
 	protected abstract PathSpiraArtifact getParentSpiraArtifact();
+
+	private static void _validatePath(String path) {
+		if (path.endsWith("/") || !path.startsWith("/")) {
+			throw new RuntimeException("Invalid path " + path);
+		}
+	}
 
 }

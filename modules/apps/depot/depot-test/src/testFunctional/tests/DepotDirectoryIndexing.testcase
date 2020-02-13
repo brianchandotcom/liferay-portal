@@ -30,7 +30,7 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that Not Found error returns when visiting FTP mode if disable indexing."
+	@description = "This test asserts that Not Found error returns when visiting FTP mode if indexing is disabled."
 	@priority = "5"
 	test DisableIndexing {
 		DepotNavigator.openDepotAdmin();
@@ -189,7 +189,7 @@ definition {
 			dmDocumentTitle = "DM Document TXT Edit");
 	}
 
-	@description = "This test asserts that a document in folder stored in a depot can be accessed from FTP mode."
+	@description = "This test asserts that a document in a folder stored in a depot can be accessed from FTP mode."
 	@priority = "5"
 	test ViewDocumentInFolder {
 		DepotNavigator.openDepotAdmin();
@@ -296,7 +296,7 @@ definition {
 			dmFolderName = "DM Folder Name");
 	}
 
-	@description = "This test asserts that a document without guest ermissions in a depot can not be accessed from FTP mode."
+	@description = "This test asserts that a document without guest permissions in a depot can not be accessed from FTP mode."
 	@priority = "4"
 	test ViewDocumentWithoutPermissions {
 		DepotNavigator.openDepotAdmin();

@@ -116,8 +116,10 @@ public class PageDefinitionConverterUtil {
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			mainLayoutStructureItem);
 
-		pageElement.setPageElements(
-			mainPageElements.toArray(new PageElement[0]));
+		if (!mainPageElements.isEmpty()) {
+			pageElement.setPageElements(
+				mainPageElements.toArray(new PageElement[0]));
+		}
 
 		return pageElement;
 	}
@@ -163,7 +165,10 @@ public class PageDefinitionConverterUtil {
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			layoutStructureItem);
 
-		pageElement.setPageElements(pageElements.toArray(new PageElement[0]));
+		if (!pageElements.isEmpty()) {
+			pageElement.setPageElements(
+				pageElements.toArray(new PageElement[0]));
+		}
 
 		return pageElement;
 	}

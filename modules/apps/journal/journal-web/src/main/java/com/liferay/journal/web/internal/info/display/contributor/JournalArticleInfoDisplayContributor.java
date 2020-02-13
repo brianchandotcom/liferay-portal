@@ -338,11 +338,14 @@ public class JournalArticleInfoDisplayContributor
 
 		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
 
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
 		ddmTemplates.forEach(
 			ddmTemplate -> ddmTemplateInfoDisplayFieldsValues.put(
 				_getTemplateKey(ddmTemplate),
 				new DDMTemplateContentAccessor(
-					article, ddmTemplate, LocaleUtil.toLanguageId(locale))));
+					article, ddmTemplate, LocaleUtil.toLanguageId(locale),
+					themeDisplay)));
 
 		return ddmTemplateInfoDisplayFieldsValues;
 	}
@@ -354,39 +357,50 @@ public class JournalArticleInfoDisplayContributor
 			templateKey.replaceAll("\\W", "_");
 	}
 
+	private ThemeDisplay _getThemeDisplay() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return null;
+		}
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return null;
+		}
+
+		return (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleInfoDisplayContributor.class);
 
 	private class DDMTemplateContentAccessor implements ContentAccessor {
 
 		public DDMTemplateContentAccessor(
-			JournalArticle article, DDMTemplate ddmTemplate,
-			String languageId) {
+			JournalArticle article, DDMTemplate ddmTemplate, String languageId,
+			ThemeDisplay themeDisplay) {
 
 			_article = article;
 			_ddmTemplate = ddmTemplate;
 			_languageId = languageId;
+			_themeDisplay = themeDisplay;
 		}
 
 		public String getContent() {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			return journalContent.getContent(
 				_article.getGroupId(), _article.getArticleId(),
 				_ddmTemplate.getTemplateKey(), Constants.VIEW, _languageId,
-				themeDisplay);
+				_themeDisplay);
 		}
 
 		private final JournalArticle _article;
 		private final DDMTemplate _ddmTemplate;
 		private final String _languageId;
+		private final ThemeDisplay _themeDisplay;
 
 	}
 

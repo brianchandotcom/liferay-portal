@@ -27,6 +27,7 @@ import React, {
 import {createPortal} from 'react-dom';
 
 import debounceRAF from '../../../core/debounceRAF';
+import {EDITABLE_FLOATING_TOOLBAR_CLASSNAMES} from '../../config/constants/editableFloatingToolbarClassNames';
 import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../../config/constants/floatingToolbarConfigurations';
 import {useIsActive} from '../Controls';
 
@@ -142,10 +143,16 @@ export default function FloatingToolbar({
 								{buttons.map(button => (
 									<ClayButtonWithIcon
 										borderless
-										className={classNames('mx-1', {
-											active: button.panelId === panelId,
-											'lfr-portal-tooltip': button.title
-										})}
+										className={classNames(
+											'mx-1',
+											button.className,
+											{
+												active:
+													button.panelId === panelId,
+												'lfr-portal-tooltip':
+													button.title
+											}
+										)}
 										displayType="secondary"
 										key={button.id}
 										onClick={() =>
@@ -167,7 +174,10 @@ export default function FloatingToolbar({
 				{PanelComponent &&
 					createPortal(
 						<div
-							className="p-2 page-editor__floating-toolbar__panel position-fixed"
+							className={classNames(
+								EDITABLE_FLOATING_TOOLBAR_CLASSNAMES.panel,
+								'p-2 position-fixed'
+							)}
 							ref={panelRef}
 						>
 							<div className="p-3 popover popover-scrollable position-static">

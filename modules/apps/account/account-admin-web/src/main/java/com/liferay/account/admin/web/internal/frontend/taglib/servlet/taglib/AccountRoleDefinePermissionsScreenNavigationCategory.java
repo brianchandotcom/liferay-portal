@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.roles.admin.constants.RolesAdminWebKeys;
 
 import java.io.IOException;
 
@@ -96,6 +97,9 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException {
+
+		httpServletRequest.setAttribute(
+			RolesAdminWebKeys.SHOW_NAV_TABS, Boolean.FALSE);
 
 		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(
 			httpServletRequest);

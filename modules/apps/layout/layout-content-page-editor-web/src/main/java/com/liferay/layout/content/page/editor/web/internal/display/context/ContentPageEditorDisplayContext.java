@@ -184,8 +184,7 @@ public class ContentPageEditorDisplayContext {
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
 	}
 
-	public Map<String, Object> getEditorReactContext(
-			String npmResolvedPackageName)
+	public Map<String, Object> getEditorContext(String npmResolvedPackageName)
 		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(

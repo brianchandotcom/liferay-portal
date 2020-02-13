@@ -33,6 +33,6 @@ public interface EntityModelListener<T extends BaseModel<T>> {
 
 	public String getModelClassName();
 
-	public void syncAll() throws Exception;
+	public void syncAll(long companyId) throws Exception;
 
 }

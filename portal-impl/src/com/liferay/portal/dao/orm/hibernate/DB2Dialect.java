@@ -14,8 +14,8 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -88,7 +88,24 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	protected void addOptimizeForLimitedRows(StringBundler sb, int limit) {
+	protected void addOptimizeForLimitedRows(
+		com.liferay.portal.kernel.util.StringBundler sb, int limit) {
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *			 #addQueryForLimitedRows(StringBundler, String, int)}
+	 */
+	@Deprecated
+	protected void addQueryForLimitedRows(
+		com.liferay.portal.kernel.util.StringBundler sb, String sql,
+		int limit) {
+
+		StringBundler petraSB = new StringBundler();
+
+		addQueryForLimitedRows(petraSB, sql, limit);
+
+		sb.append(petraSB.getStrings());
 	}
 
 	protected void addQueryForLimitedRows(

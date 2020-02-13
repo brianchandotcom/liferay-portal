@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -63,7 +64,11 @@ public class ChannelDisplayContext {
 				_renderRequest, getPortletURL());
 
 			HttpResponse httpResponse = AnalyticsSettingsUtil.doGet(
-				_getCompanyId(), "api/1.0/site-collections");
+				_getCompanyId(),
+				String.format(
+					"api/1.0/site-collections?filter=%s&page=%d&size=%d",
+					_getKeywords(), channelSearch.getCur() - 1,
+					channelSearch.getDelta()));
 
 			HttpEntity httpEntity = httpResponse.getEntity();
 
@@ -129,10 +134,21 @@ public class ChannelDisplayContext {
 		return themeDisplay.getCompanyId();
 	}
 
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_renderRequest, "keywords");
+
+		return _keywords;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ChannelDisplayContext.class);
 
 	private final AnalyticsConfiguration _analyticsConfiguration;
+	private String _keywords;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 

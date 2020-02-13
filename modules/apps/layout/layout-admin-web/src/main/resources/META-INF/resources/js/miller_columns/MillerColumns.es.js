@@ -28,7 +28,7 @@ const MillerColumns = ({columns}) => {
 	return (
 		<div className="bg-white miller-columns-row" ref={rowRef}>
 			{columns.map((items, index) => (
-				<MillerColumnsColumn index={index} items={items} key={index} />
+				<MillerColumnsColumn items={items} key={index} />
 			))}
 		</div>
 	);

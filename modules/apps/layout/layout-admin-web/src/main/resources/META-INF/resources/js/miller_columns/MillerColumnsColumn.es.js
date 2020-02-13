@@ -16,7 +16,7 @@ import React from 'react';
 
 import MillerColumnsColumnItem from './MillerColumnsColumnItem.es';
 
-const MillerColumnsColumn = ({index, items}) => (
+const MillerColumnsColumn = ({items}) => (
 	<ul className="col-11 col-lg-4 col-md-6 miller-columns-col show-quick-actions-on-hover">
 		{items.map(item => (
 			<MillerColumnsColumnItem
@@ -25,11 +25,11 @@ const MillerColumnsColumn = ({index, items}) => (
 				bulkActions={item.bulkActions}
 				checked={item.checked}
 				description={item.description}
-				draggable={index !== 0}
+				draggable={item.draggable}
 				hasChild={item.hasChild}
 				itemId={item.id}
 				key={item.url}
-				selectable={index !== 0}
+				selectable={item.selectable}
 				states={item.states}
 				title={item.title}
 				url={item.url}

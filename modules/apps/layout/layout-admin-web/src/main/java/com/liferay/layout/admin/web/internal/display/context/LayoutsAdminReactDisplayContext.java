@@ -148,7 +148,10 @@ public class LayoutsAdminReactDisplayContext
 				"description",
 				LanguageUtil.get(
 					httpServletRequest, layoutTypeResourceBundle,
-					"layout.types." + layout.getType()));
+					"layout.types." + layout.getType())
+			).put(
+				"draggable", true
+			);
 
 			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 				getSelGroup(), layout.isPrivateLayout(), layout.getLayoutId());
@@ -163,6 +166,8 @@ public class LayoutsAdminReactDisplayContext
 
 			layoutJSONObject.put(
 				"parentable", layoutType.isParentable()
+			).put(
+				"selectable", true
 			).put(
 				"states", _getLayoutStatesJSONArray(layout)
 			).put(

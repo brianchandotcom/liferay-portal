@@ -11,17 +11,24 @@ buildscript {
 apply plugin: "com.liferay.workspace"
 
 gradle.liferayWorkspace {
-	dockerImageId = InetAddress.localHost.canonicalHostName.toLowerCase() + 'startdockercontainerwithscript'
-	dockerContainerId = InetAddress.localHost.canonicalHostName.toLowerCase() + 'startdockercontainerwithscript'
+	String hostName = InetAddress.localHost.canonicalHostName.toLowerCase()
+
+	dockerContainerId = hostName + "startdockercontainerwithscript"
+	dockerImageId = hostName + "startdockercontainerwithscript"
 }
 
 gradle.projectsEvaluated {
 	Project root = gradle.rootProject
+
 	root.tasks.register("assertLog", DockerLogsContainer) {
 		dependsOn root.tasks.startDockerContainer
+
 		finalizedBy root.tasks.cleanDockerImage
+
 		tailAll = true
+
 		follow = false
+
 		targetContainerId {
 			gradle.liferayWorkspace.dockerContainerId
 		}
@@ -44,7 +51,9 @@ gradle.projectsEvaluated {
 
 			while (!expectedLineDetected && retries < 50) {
 				Thread.sleep(100)
+
 				retries++
+
 				start()
 			}
 

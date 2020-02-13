@@ -1,4 +1,15 @@
 Bundle-Name: Liferay Portal Workflow Kaleo Demo Data Creator Implementation
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.demo.data.creator.impl
 Bundle-Version: 1.0.0
+Provide-Capability:\
+	liferay.resource.bundle;\
+		bundle.symbolic.name=com.liferay.portal.workflow.lang;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.demo.data.creator.impl),(bundle.symbolic.name=com.liferay.portal.workflow.lang)";\
+		resource.bundle.base.name="content.Language";\
+		service.ranking="1",\
+	liferay.resource.bundle;\
+		bundle.symbolic.name=com.liferay.portal.workflow.metrics.lang;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.demo.data.creator.impl),(bundle.symbolic.name=com.liferay.portal.workflow.metrics.lang)";\
+		resource.bundle.base.name="content.Language";\
+		service.ranking="1"
 -dsannotations-options: inherit

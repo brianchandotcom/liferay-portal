@@ -65,7 +65,7 @@ definition {
 
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#ENABLE_DIRECTORY_INDEXING");
 
-		Depot.configureEnableDirectoryIndexing(EnableDirectoryIndexing = "Enabled");
+		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#ENABLE_DIRECTORY_INDEXING");
 
@@ -106,7 +106,7 @@ definition {
 
 		Panel.expandPanel(panel = "Documents and Media");
 
-		Depot.configureEnableDirectoryIndexing(EnableDirectoryIndexing = "Enabled");
+		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -147,7 +147,7 @@ definition {
 
 		Panel.expandPanel(panel = "Documents and Media");
 
-		Depot.configureEnableDirectoryIndexing(EnableDirectoryIndexing = "Enabled");
+		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -200,7 +200,7 @@ definition {
 
 		Panel.expandPanel(panel = "Documents and Media");
 
-		Depot.configureEnableDirectoryIndexing(EnableDirectoryIndexing = "Enabled");
+		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -248,7 +248,7 @@ definition {
 
 		Panel.expandPanel(panel = "Documents and Media");
 
-		Depot.configureEnableDirectoryIndexing(EnableDirectoryIndexing = "Enabled");
+		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -307,7 +307,7 @@ definition {
 
 		Panel.expandPanel(panel = "Documents and Media");
 
-		Depot.configureEnableDirectoryIndexing(EnableDirectoryIndexing = "Enabled");
+		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
 		DepotNavigator.openDepotAdmin();
 

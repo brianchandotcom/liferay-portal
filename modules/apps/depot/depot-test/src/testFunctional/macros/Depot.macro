@@ -86,13 +86,13 @@ definition {
 			locator1 = "LanguageConfiguration#DEPOT_DEFAULT_LANGUAGE",
 			value1 = "${defaultDepotLanguage}");
 
-	macro configureEnableDirectoryIndexing {
-		if ("${EnableDirectoryIndexing}" == "Enabled") {
+	macro configureDirectoryIndexing {
+		if ("${directoryIndexing}" == "Enabled") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Enable Directory Indexing",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
-		else if ("${EnableDirectoryIndexing}" == "Disabled") {
+		else if ("${directoryIndexing}" == "Disabled") {
 			Uncheck.uncheckToggleSwitch(
 				key_toggleSwitchLabel = "Enable Directory Indexing",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");

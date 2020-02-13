@@ -30,6 +30,11 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		content = content.replaceAll("(\n\n)( *#+)( [^#\\s])", "$1$2\n$2$3");
+
+		content = content.replaceAll(
+			"(\n)( *#+)( [^#\\s].*\n)(?!\\2([ \n]|\\Z))", "$1$2$3$2\n");
+
 		content = content.replaceAll(
 			"(\\A|\n)( *[\\w.-]+)(( +=)|(= +))(.*)(\\Z|\n)", "$1$2=$6$7");
 

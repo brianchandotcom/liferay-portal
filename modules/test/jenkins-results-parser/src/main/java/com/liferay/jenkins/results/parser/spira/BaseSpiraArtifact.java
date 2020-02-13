@@ -21,12 +21,20 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseSpiraArtifact implements SpiraArtifact{
+public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 	public abstract int getID();
 
 	public String getName() {
 		return jsonObject.getString("Name");
+	}
+
+	public SpiraProject getSpiraProject() {
+		if (this instanceof SpiraProject) {
+			return (SpiraProject)this;
+		}
+
+		return SpiraProject.getSpiraProjectByID(jsonObject.getInt("ProjectId"));
 	}
 
 	@Override
@@ -36,14 +44,6 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact{
 
 	protected BaseSpiraArtifact(JSONObject jsonObject) {
 		this.jsonObject = jsonObject;
-	}
-
-	public SpiraProject getSpiraProject() {
-		if (this instanceof SpiraProject) {
-			return (SpiraProject)this;
-		}
-
-		return SpiraProject.getSpiraProjectByID(jsonObject.getInt("ProjectId"));
 	}
 
 	protected boolean matches(SearchParameter... searchParameters) {

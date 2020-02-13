@@ -24,4 +24,5 @@ public interface SpiraArtifact {
 	public String getName();
 
 	public SpiraProject getSpiraProject();
+
 }

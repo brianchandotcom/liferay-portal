@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -30,6 +32,120 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
+
+	public static SpiraTestCaseFolder createSpiraTestCaseFolder(
+			SpiraProject spiraProject, String testCaseFolderName)
+		throws IOException {
+
+		return createSpiraTestCaseFolder(
+			spiraProject, testCaseFolderName, null);
+	}
+
+	public static SpiraTestCaseFolder createSpiraTestCaseFolder(
+			SpiraProject spiraProject, String testCaseFolderName,
+			Integer parentTestCaseFolderID)
+		throws IOException {
+
+		String testCaseFolderPath = "/" + testCaseFolderName;
+
+		if (parentTestCaseFolderID != null) {
+			SpiraTestCaseFolder parentSpiraTestCaseFolder =
+				spiraProject.getSpiraTestCaseFolderByID(parentTestCaseFolderID);
+
+			if (parentSpiraTestCaseFolder != null) {
+				testCaseFolderPath =
+					parentSpiraTestCaseFolder.getPath() + "/" +
+						testCaseFolderName;
+			}
+		}
+
+		List<SpiraTestCaseFolder> spiraTestCaseFolders =
+			spiraProject.getSpiraTestCaseFoldersByPath(testCaseFolderPath);
+
+		if (!spiraTestCaseFolders.isEmpty()) {
+			return spiraTestCaseFolders.get(0);
+		}
+
+		String urlPath = "projects/{project_id}/test-folders";
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put(
+			"Name", StringEscapeUtils.unescapeJava(testCaseFolderName));
+		requestJSONObject.put("ParentTestCaseFolderId", parentTestCaseFolderID);
+
+		JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
+			urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
+			requestJSONObject.toString());
+
+		return spiraProject.getSpiraTestCaseFolderByID(
+			responseJSONObject.getInt("TestCaseFolderId"));
+	}
+
+	public static SpiraTestCaseFolder createSpiraTestCaseFolderByPath(
+			SpiraProject spiraProject, String testCaseFolderPath)
+		throws IOException {
+
+		List<SpiraTestCaseFolder> spiraTestCaseFolders =
+			spiraProject.getSpiraTestCaseFoldersByPath(testCaseFolderPath);
+
+		if (!spiraTestCaseFolders.isEmpty()) {
+			return spiraTestCaseFolders.get(0);
+		}
+
+		String testCaseFolderName = getPathName(testCaseFolderPath);
+		String parentTestCaseFolderPath = getParentPath(testCaseFolderPath);
+
+		if (parentTestCaseFolderPath.isEmpty()) {
+			return createSpiraTestCaseFolder(spiraProject, testCaseFolderName);
+		}
+
+		SpiraTestCaseFolder parentSpiraTestCaseFolder =
+			createSpiraTestCaseFolderByPath(
+				spiraProject, parentTestCaseFolderPath);
+
+		return createSpiraTestCaseFolder(
+			spiraProject, testCaseFolderName,
+			parentSpiraTestCaseFolder.getID());
+	}
+
+	public static void deleteSpiraTestCaseFolderByID(
+			SpiraProject spiraProject, int testCaseFolderID)
+		throws IOException {
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+		urlPathReplacements.put(
+			"test_case_folder_id", String.valueOf(testCaseFolderID));
+
+		SpiraRestAPIUtil.request(
+			"projects/{project_id}/test-folders/{test_case_folder_id}", null,
+			urlPathReplacements, HttpRequestMethod.DELETE, null);
+
+		_spiraTestCaseFolders.remove(
+			_createSpiraTestCaseFolderKey(
+				spiraProject.getID(), testCaseFolderID));
+	}
+
+	public static void deleteSpiraTestCaseFoldersByPath(
+			SpiraProject spiraProject, String testCaseFolderPath)
+		throws IOException {
+
+		List<SpiraTestCaseFolder> spiraTestCaseFolders =
+			spiraProject.getSpiraTestCaseFoldersByPath(testCaseFolderPath);
+
+		for (SpiraTestCaseFolder spiraTestCaseFolder : spiraTestCaseFolders) {
+			deleteSpiraTestCaseFolderByID(
+				spiraProject, spiraTestCaseFolder.getID());
+		}
+	}
 
 	@Override
 	public int getID() {

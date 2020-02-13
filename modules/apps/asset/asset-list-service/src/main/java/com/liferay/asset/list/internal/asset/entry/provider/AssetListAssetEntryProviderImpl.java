@@ -529,6 +529,18 @@ public class AssetListAssetEntryProviderImpl
 		return availableClassTypeIds;
 	}
 
+	private long[] _getCombinedSegmentsEntryIds(long[] segmentEntryIds) {
+		boolean hasIdDefault = ArrayUtil.contains(
+			segmentEntryIds, SegmentsEntryConstants.ID_DEFAULT);
+
+		if ((segmentEntryIds.length > 1) && hasIdDefault) {
+			return ArrayUtil.remove(
+				segmentEntryIds, SegmentsEntryConstants.ID_DEFAULT);
+		}
+
+		return segmentEntryIds;
+	}
+
 	private List<AssetEntry> _getDynamicAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId,
 		int start, int end) {
@@ -537,7 +549,9 @@ public class AssetListAssetEntryProviderImpl
 
 		if (_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
 			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-				for (long segmentsEntryId : segmentsEntryIds) {
+				for (long segmentsEntryId :
+						_getCombinedSegmentsEntryIds(segmentsEntryIds)) {
+
 					AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 						assetListEntry, segmentsEntryId, userId);
 
@@ -552,7 +566,9 @@ public class AssetListAssetEntryProviderImpl
 				int remaining = Math.max(0, end - start);
 				int subtotal = 0;
 
-				for (long segmentsEntryId : segmentsEntryIds) {
+				for (long segmentsEntryId :
+						_getCombinedSegmentsEntryIds(segmentsEntryIds)) {
+
 					AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 						assetListEntry, segmentsEntryId, userId);
 
@@ -631,8 +647,9 @@ public class AssetListAssetEntryProviderImpl
 			assetListEntryAssetEntryRels =
 				_assetListEntryAssetEntryRelLocalService.
 					getAssetListEntryAssetEntryRels(
-						assetListEntry.getAssetListEntryId(), segmentsEntryId,
-						start, end);
+						assetListEntry.getAssetListEntryId(),
+						_getCombinedSegmentsEntryIds(segmentsEntryId), start,
+						end);
 		}
 		else {
 			assetListEntryAssetEntryRels =

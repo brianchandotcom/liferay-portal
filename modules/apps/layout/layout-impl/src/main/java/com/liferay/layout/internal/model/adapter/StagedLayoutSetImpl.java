@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
 import java.time.Instant;
 
 import java.util.Date;
@@ -107,6 +109,11 @@ public class StagedLayoutSetImpl
 	}
 
 	@Override
+	public long getGroupId() {
+		return _layoutSet.getGroupId();
+	}
+
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -119,6 +126,21 @@ public class StagedLayoutSetImpl
 	@Override
 	public Optional<String> getLayoutSetPrototypeName() {
 		return Optional.ofNullable(_layoutSetPrototypeName);
+	}
+
+	@Override
+	public Class<?> getModelClass() {
+		return StagedLayoutSet.class;
+	}
+
+	@Override
+	public String getModelClassName() {
+		return StagedLayoutSet.class.getName();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _layoutSet.getPrimaryKeyObj();
 	}
 
 	@Override

@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @author Cristina Gonzálaez
+ * @author Cristina González
  */
 public class DepotPermissionChecker implements PermissionChecker {
 

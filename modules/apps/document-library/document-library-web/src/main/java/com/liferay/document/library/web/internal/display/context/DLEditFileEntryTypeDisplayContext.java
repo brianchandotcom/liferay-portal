@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
-import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfiguration;
+import com.liferay.document.library.web.internal.util.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -47,16 +47,12 @@ public class DLEditFileEntryTypeDisplayContext {
 
 	public DLEditFileEntryTypeDisplayContext(
 		DDM ddm, DDMStorageLinkLocalService ddmStorageLinkLocalService,
-		DDMStructureLocalService ddmStructureLocalService,
-		FFDocumentLibraryDDMEditorConfiguration
-			ffDocumentLibraryDDMEditorConfiguration,
-		Language language, LiferayPortletRequest liferayPortletRequest) {
+		DDMStructureLocalService ddmStructureLocalService, Language language,
+		LiferayPortletRequest liferayPortletRequest) {
 
 		_ddm = ddm;
 		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
-		_ffDocumentLibraryDDMEditorConfiguration =
-			ffDocumentLibraryDDMEditorConfiguration;
 		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
 	}
@@ -182,7 +178,8 @@ public class DLEditFileEntryTypeDisplayContext {
 	}
 
 	public boolean useDataEngineEditor() {
-		return _ffDocumentLibraryDDMEditorConfiguration.useDataEngineEditor();
+		return FFDocumentLibraryDDMEditorConfigurationUtil.
+			useDataEngineEditor();
 	}
 
 	private DDMForm _getDDMForm() throws PortalException {
@@ -210,8 +207,6 @@ public class DLEditFileEntryTypeDisplayContext {
 	private DDMForm _ddmForm;
 	private final DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
-	private final FFDocumentLibraryDDMEditorConfiguration
-		_ffDocumentLibraryDDMEditorConfiguration;
 	private String _fieldsJSONArrayString;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;

@@ -393,7 +393,7 @@ renderResponse.setTitle(headerTitle);
 										%>
 
 										<c:choose>
-											<c:when test="<%= ffDocumentLibraryDDMEditorConfiguration.useDataEngineEditor() %>">
+											<c:when test="<%= FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor() %>">
 
 												<%
 												DDMFormValuesToMapConverter ddmFormValuesToMapConverter = (DDMFormValuesToMapConverter)request.getAttribute(DDMFormValuesToMapConverter.class.getName());

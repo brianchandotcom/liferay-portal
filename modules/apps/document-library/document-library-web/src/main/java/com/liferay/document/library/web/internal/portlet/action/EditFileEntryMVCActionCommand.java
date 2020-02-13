@@ -158,6 +158,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected void activate(Map<String, Object> properties) {
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
+
 		_ffDocumentLibraryDDMEditorConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FFDocumentLibraryDDMEditorConfiguration.class, properties);
@@ -936,7 +937,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private void _setUpDDMFormValues(ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!_ffDocumentLibraryDDMEditorConfiguration.useDataEngineEditor()) {
+		if (!FFDocumentLibraryDDMEditorConfigurationUtil.
+				useDataEngineEditor()) {
+
 			return;
 		}
 
@@ -1133,9 +1136,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLValidator _dlValidator;
-
-	private FFDocumentLibraryDDMEditorConfiguration
-		_ffDocumentLibraryDDMEditorConfiguration;
 
 	@Reference
 	private Http _http;

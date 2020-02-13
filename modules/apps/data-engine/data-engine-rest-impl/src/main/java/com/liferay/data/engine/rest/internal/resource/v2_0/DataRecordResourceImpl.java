@@ -37,6 +37,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -154,7 +155,8 @@ public class DataRecordResourceImpl
 			dataRecordCollectionId, DataActionKeys.EXPORT_DATA_RECORDS);
 
 		DataRecordExporter dataRecordExporter = new DataRecordExporter(
-			_ddlRecordSetLocalService, _ddmFormFieldTypeServicesTracker);
+			_ddlRecordSetLocalService, _ddmFormFieldTypeServicesTracker,
+			_spiDDMFormRuleConverter);
 
 		return dataRecordExporter.export(
 			transform(
@@ -273,7 +275,8 @@ public class DataRecordResourceImpl
 
 		_validate(
 			DataDefinitionUtil.toDataDefinition(
-				_ddmFormFieldTypeServicesTracker, ddmStructure),
+				_ddmFormFieldTypeServicesTracker, ddmStructure,
+				_spiDDMFormRuleConverter),
 			dataRecord);
 
 		DataStorage dataStorage = _getDataStorage(
@@ -320,7 +323,8 @@ public class DataRecordResourceImpl
 
 		_validate(
 			DataDefinitionUtil.toDataDefinition(
-				_ddmFormFieldTypeServicesTracker, ddmStructure),
+				_ddmFormFieldTypeServicesTracker, ddmStructure,
+				_spiDDMFormRuleConverter),
 			dataRecord);
 
 		DataStorage dataStorage = _getDataStorage(
@@ -520,5 +524,8 @@ public class DataRecordResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SPIDDMFormRuleConverter _spiDDMFormRuleConverter;
 
 }

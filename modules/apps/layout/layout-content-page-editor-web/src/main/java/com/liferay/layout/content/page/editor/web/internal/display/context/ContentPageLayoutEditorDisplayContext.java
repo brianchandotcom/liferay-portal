@@ -136,23 +136,10 @@ public class ContentPageLayoutEditorDisplayContext
 		).put(
 			"selectedSegmentsEntryId", String.valueOf(_getSegmentsEntryId())
 		).put(
-			"singleSegmentsExperienceMode", isSingleSegmentsExperienceMode()
+			"singleSegmentsExperienceMode", _isSingleSegmentsExperienceMode()
 		);
 
 		return _editorSoyContext;
-	}
-
-	@Override
-	public boolean isSingleSegmentsExperienceMode() {
-		long segmentsExperienceId = ParamUtil.getLong(
-			PortalUtil.getOriginalServletRequest(httpServletRequest),
-			"segmentsExperienceId", -1);
-
-		if (segmentsExperienceId == -1) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Override
@@ -528,6 +515,18 @@ public class ContentPageLayoutEditorDisplayContext
 		}
 
 		return _showSegmentsExperiences;
+	}
+
+	private boolean _isSingleSegmentsExperienceMode() {
+		long segmentsExperienceId = ParamUtil.getLong(
+			PortalUtil.getOriginalServletRequest(httpServletRequest),
+			"segmentsExperienceId", -1);
+
+		if (segmentsExperienceId == -1) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private SoyContext _editorSoyContext;

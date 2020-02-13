@@ -230,16 +230,3 @@ Liferay = window.Liferay || {};
 			'<div class="portlet"><div class="portlet-topper"><div class="portlet-title"></div></div><div class="portlet-content"></div><div class="forbidden-action"></div></div>'
 	};
 })(AUI.$, Liferay);
-
-(function(A, Liferay) {
-	A.mix(
-		A.namespace('config.io'),
-		{
-			method: 'POST',
-			uriFormatter(value) {
-				return Liferay.Util.getURLWithSessionId(value);
-			}
-		},
-		true
-	);
-})(AUI(), Liferay);

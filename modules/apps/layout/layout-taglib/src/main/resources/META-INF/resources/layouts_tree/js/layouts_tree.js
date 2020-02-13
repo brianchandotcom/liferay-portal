@@ -406,7 +406,7 @@ AUI.add(
 								treeId: instance._treeId
 							};
 						},
-						method: A.config.io.method,
+						method: 'POST',
 						on: {
 							success(event, id, xhr) {
 								var response;

@@ -19,13 +19,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
-import React, {
-	useCallback,
-	useContext,
-	useEffect,
-	useRef,
-	useState
-} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
 import MillerColumnsContext from './MillerColumnsContext.es';
 
@@ -57,51 +51,35 @@ const MillerColumnsColumnItem = ({
 
 	const [dropdownActionsActive, setDropdownActionsActive] = useState();
 
-	const getDropdownActions = useCallback(
-		actions => {
-			const dropdownActions = [];
+	const dropdownActions = useMemo(() => {
+		const dropdownActions = [];
 
-			actions.map(action => {
-				if (!action.quickAction && action.url) {
-					dropdownActions.push({
-						...action,
-						handler:
-							action.handler || actionHandlers[action.id] || noop
-					});
-				}
-			});
+		actions.forEach(action => {
+			if (!action.quickAction && action.url) {
+				dropdownActions.push({
+					...action,
+					handler: action.handler || actionHandlers[action.id] || noop
+				});
+			}
+		});
 
-			return dropdownActions;
-		},
-		[actionHandlers]
-	);
+		return dropdownActions;
+	}, [actions, actionHandlers]);
 
-	const getQuickActions = useCallback(
-		actions => {
-			const quickActions = [];
+	const quickActions = useMemo(() => {
+		const quickActions = [];
 
-			actions.map(action => {
-				if (action.quickAction && action.url) {
-					quickActions.push({
-						...action,
-						handler:
-							action.handler || actionHandlers[action.id] || noop
-					});
-				}
-			});
+		actions.forEach(action => {
+			if (action.quickAction && action.url) {
+				quickActions.push({
+					...action,
+					handler: action.handler || actionHandlers[action.id] || noop
+				});
+			}
+		});
 
-			return quickActions;
-		},
-		[actionHandlers]
-	);
-
-	const dropdownActions = useRef(getDropdownActions(actions));
-	const quickActions = useRef(getQuickActions(actions));
-
-	useEffect(() => {
-		dropdownActions.current = getDropdownActions(actions);
-		quickActions.current = getQuickActions(actions);
-	}, [actions, getDropdownActions, getQuickActions]);
+		return quickActions;
+	}, [actions, actionHandlers]);
 
 	return (
 		<li
@@ -157,7 +135,7 @@ const MillerColumnsColumnItem = ({
 				)}
 			</div>
 
-			{quickActions.current.map(action => (
+			{quickActions.map(action => (
 				<div
 					className="autofit-col miller-columns-item-quick-action"
 					key={action.id}
@@ -174,7 +152,7 @@ const MillerColumnsColumnItem = ({
 				</div>
 			))}
 
-			{dropdownActions.current.length > 0 && (
+			{dropdownActions.length > 0 && (
 				<div className="autofit-col miller-columns-item-actions">
 					<ClayDropDown
 						active={dropdownActionsActive}
@@ -189,7 +167,7 @@ const MillerColumnsColumnItem = ({
 						}
 					>
 						<ClayDropDown.ItemList>
-							{dropdownActions.current.map(action => (
+							{dropdownActions.map(action => (
 								<ClayDropDown.Item
 									href={action.url}
 									id={action.id}

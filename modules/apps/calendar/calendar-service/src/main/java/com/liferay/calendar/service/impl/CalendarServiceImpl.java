@@ -21,9 +21,6 @@ import com.liferay.calendar.service.base.CalendarServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -151,23 +148,14 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 
 		if (!_calendarModelResourcePermission.contains(
 				getPermissionChecker(), calendarId,
-				CalendarActionKeys.MANAGE_BOOKINGS)) {
+				CalendarActionKeys.MANAGE_BOOKINGS) ||
+			!_calendarModelResourcePermission.contains(
+				getPermissionChecker(), calendarId, ActionKeys.VIEW)) {
 
 			return false;
 		}
 
-		Calendar calendar = null;
-
-		try {
-			calendar = getCalendar(calendarId);
-		}
-		catch (PrincipalException principalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(principalException, principalException);
-			}
-
-			return false;
-		}
+		Calendar calendar = calendarLocalService.getCalendar(calendarId);
 
 		if (calendarLocalService.hasStagingCalendar(calendar)) {
 			return false;
@@ -350,9 +338,6 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 
 		return calendars;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CalendarServiceImpl.class.getName());
 
 	@Reference(
 		target = "(model.class.name=com.liferay.calendar.model.Calendar)"

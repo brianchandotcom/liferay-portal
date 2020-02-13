@@ -49,13 +49,13 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		).put(
 			"backgroundImage", _backgroundImageJSONObject
 		).put(
-			"containerType", _containerType
-		).put(
 			"paddingBottom", _paddingBottom
 		).put(
 			"paddingHorizontal", _paddingHorizontal
 		).put(
 			"paddingTop", _paddingTop
+		).put(
+			"type", _containerType
 		);
 	}
 
@@ -114,10 +114,6 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 				itemConfigJSONObject.getJSONObject("backgroundImage"));
 		}
 
-		if (itemConfigJSONObject.has("containerType")) {
-			setContainerType(itemConfigJSONObject.getString("containerType"));
-		}
-
 		if (itemConfigJSONObject.has("paddingBottom")) {
 			setPaddingBottom(itemConfigJSONObject.getInt("paddingBottom"));
 		}
@@ -129,6 +125,10 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 		if (itemConfigJSONObject.has("paddingTop")) {
 			setPaddingTop(itemConfigJSONObject.getInt("paddingTop"));
+		}
+
+		if (itemConfigJSONObject.has("type")) {
+			setContainerType(itemConfigJSONObject.getString("type"));
 		}
 	}
 

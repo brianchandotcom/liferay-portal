@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -54,7 +53,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -1013,13 +1011,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

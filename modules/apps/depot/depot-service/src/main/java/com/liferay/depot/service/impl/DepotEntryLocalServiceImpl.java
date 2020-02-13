@@ -15,6 +15,7 @@
 package com.liferay.depot.service.impl;
 
 import com.liferay.depot.exception.DepotEntryNameException;
+import com.liferay.depot.internal.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
@@ -27,8 +28,12 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -81,6 +86,20 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 		_userLocalService.addGroupUsers(
 			group.getGroupId(), new long[] {serviceContext.getUserId()});
+
+		User user = _userLocalService.getUser(serviceContext.getUserId());
+
+		if (!user.isDefaultUser()) {
+			Role role = _roleLocalService.getRole(
+				group.getCompanyId(), DepotRolesConstants.DEPOT_OWNER);
+
+			_userGroupRoleLocalService.addUserGroupRoles(
+				user.getUserId(), group.getGroupId(),
+				new long[] {role.getRoleId()});
+
+			_userLocalService.addGroupUsers(
+				group.getGroupId(), new long[] {user.getUserId()});
+		}
 
 		depotEntry.setGroupId(group.getGroupId());
 
@@ -266,6 +285,12 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

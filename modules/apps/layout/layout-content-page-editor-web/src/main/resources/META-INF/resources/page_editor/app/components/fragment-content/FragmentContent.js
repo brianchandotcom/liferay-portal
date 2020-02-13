@@ -45,7 +45,7 @@ import {
 } from '../Controls';
 import UnsafeHTML from '../UnsafeHTML';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
-import EditableDecoration from './EditableDecoration';
+import FragmentContentDecoration from './FragmentContentDecoration';
 
 function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const config = useContext(ConfigContext);
@@ -106,7 +106,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		return values;
 	});
 
-	const showEditableDecoration = useCallback(
+	const showFragmentContentDecoration = useCallback(
 		editableValue =>
 			canUpdateLayoutContent
 				? [itemId, ...editablesIds.map(getEditableUniqueId)].some(
@@ -374,8 +374,10 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 
 			{editablesIds.map(
 				editableId =>
-					showEditableDecoration(editableValues[editableId]) && (
-						<EditableDecoration
+					showFragmentContentDecoration(
+						editableValues[editableId]
+					) && (
+						<FragmentContentDecoration
 							editableId={editableId}
 							fragmentEntryLinkId={fragmentEntryLinkId}
 							itemId={getEditableUniqueId(editableId)}

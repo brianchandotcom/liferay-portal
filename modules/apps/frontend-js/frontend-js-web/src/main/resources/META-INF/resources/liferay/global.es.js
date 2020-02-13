@@ -49,6 +49,8 @@ import createResourceURL from './util/portlet_url/create_resource_url.es';
 import {getSessionValue, setSessionValue} from './util/session.es';
 import toCharCode from './util/to_char_code.es';
 
+Liferay = Liferay || {};
+
 Liferay.component = component;
 Liferay.componentReady = componentReady;
 Liferay.destroyComponent = destroyComponent;
@@ -63,6 +65,8 @@ Liferay.Address = {
 };
 
 Liferay.SideNavigation = SideNavigation;
+
+Liferay.Util = Liferay.Util || {};
 
 Liferay.Util.escape = escape;
 Liferay.Util.fetch = fetch;

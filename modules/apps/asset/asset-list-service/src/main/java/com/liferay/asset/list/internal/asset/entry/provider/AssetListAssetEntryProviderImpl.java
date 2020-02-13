@@ -572,16 +572,19 @@ public class AssetListAssetEntryProviderImpl
 					AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 						assetListEntry, segmentsEntryId, userId);
 
-					List<AssetEntry> assetEntries = _search(
+					count = (int)_searchCount(
 						assetListEntry.getCompanyId(), assetEntryQuery);
-
-					count = assetEntries.size();
 
 					if ((subtotal + count) < start) {
 						subtotal = +count;
 
 						continue;
 					}
+
+					List<AssetEntry> assetEntries = _search(
+						assetListEntry.getCompanyId(), assetEntryQuery);
+
+					count = assetEntries.size();
 
 					List<AssetEntry> assetEntriesSublist = assetEntries.subList(
 						Math.max(start - subtotal, 0),
@@ -722,6 +725,41 @@ public class AssetListAssetEntryProviderImpl
 		}
 
 		return Collections.emptyList();
+	}
+
+	private long _searchCount(long companyId, AssetEntryQuery assetEntryQuery) {
+		SearchContext searchContext = new SearchContext();
+
+		String ddmStructureFieldName = GetterUtil.getString(
+			assetEntryQuery.getAttribute("ddmStructureFieldName"));
+		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
+			"ddmStructureFieldValue");
+
+		if (Validator.isNotNull(ddmStructureFieldName) &&
+			Validator.isNotNull(ddmStructureFieldValue)) {
+
+			searchContext.setAttribute(
+				"ddmStructureFieldName", ddmStructureFieldName);
+			searchContext.setAttribute(
+				"ddmStructureFieldValue", ddmStructureFieldValue);
+		}
+
+		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(assetEntryQuery.getEnd());
+		searchContext.setKeywords(assetEntryQuery.getKeywords());
+		searchContext.setStart(assetEntryQuery.getStart());
+
+		try {
+			return _assetHelper.searchCount(
+				searchContext, assetEntryQuery, assetEntryQuery.getStart(),
+				assetEntryQuery.getEnd());
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get asset entries", exception);
+		}
+
+		return 0;
 	}
 
 	private void _setCategoriesAndTagsAndKeywords(

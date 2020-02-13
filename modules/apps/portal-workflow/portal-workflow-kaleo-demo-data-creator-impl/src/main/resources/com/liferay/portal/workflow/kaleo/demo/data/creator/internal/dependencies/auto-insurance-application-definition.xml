@@ -8,7 +8,7 @@
 	<name>Auto Insurance Application</name>
 	<version>1</version>
 	<condition>
-		<name>proceed-to-full-aplication</name>
+		<name>proceed-to-full-application</name>
 		<metadata>
 			<![CDATA[{"xy":[95,37]}]]>
 		</metadata>
@@ -38,7 +38,7 @@
 		<transitions>
 			<transition>
 				<name>Proceed</name>
-				<target>proceed-to-full-aplication</target>
+				<target>proceed-to-full-application</target>
 				<default>true</default>
 			</transition>
 		</transitions>

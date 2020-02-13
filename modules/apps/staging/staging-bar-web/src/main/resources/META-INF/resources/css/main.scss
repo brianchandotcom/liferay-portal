@@ -3,12 +3,23 @@
 .staging {
 	background-color: $white;
 	border-bottom: 1px solid $secondary-l3;
+}
 
-	&:not(.staging-show) {
-		.staging-bar {
-			@include media-breakpoint-down(xs) {
-				display: none;
-			}
+.staging-bar {
+	padding-bottom: 0.5rem;
+
+	.row {
+		align-items: center;
+		.col {
+			margin-top: 0.5rem;
+		}
+	}
+
+	@include media-breakpoint-down(xs) {
+		display: none;
+
+		.staging-show & {
+			display: block;
 		}
 	}
 }
@@ -17,17 +28,21 @@
 	background-color: transparent;
 	border: none;
 	margin-bottom: 0;
+	padding-bottom: 0;
+	padding-top: 0;
 }
 
 .staging-button-container {
-	align-items: center;
 	display: flex;
 	justify-content: center;
-	margin-bottom: 1rem;
+
+	@include media-breakpoint-down(xs) {
+		margin-bottom: 1rem;
+		margin-top: 1rem;
+	}
 
 	@include media-breakpoint-up(sm) {
 		justify-content: flex-end;
-		margin-bottom: 0;
 	}
 }
 
@@ -146,6 +161,23 @@
 
 	> li.control-menu-nav-item {
 		padding: 0 8px;
+	}
+
+	.btn-group {
+		@include media-breakpoint-down(xs) {
+			margin-top: 0.5rem;
+		}
+
+		@include media-breakpoint-up(sm) {
+			.btn:first-child {
+				border-bottom-right-radius: $btn-border-radius;
+				border-top-right-radius: $btn-border-radius;
+			}
+		}
+	}
+
+	@include media-breakpoint-down(xs) {
+		flex-direction: column;
 	}
 }
 

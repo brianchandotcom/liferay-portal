@@ -58,7 +58,7 @@ if (liveLayout != null) {
 
 					<c:choose>
 						<c:when test="<%= group.isStagedRemotely() %>">
-							<li class="nav-iteme">
+							<li class="nav-item">
 								<c:choose>
 									<c:when test="<%= !remoteSiteURL.isEmpty() %>">
 										<a class="nav-link href="<%= HtmlUtil.escape(remoteSiteURL) %>" value="go-to-remote-live">
@@ -162,7 +162,7 @@ if (liveLayout != null) {
 												</c:if>
 											</div>
 
-											<div class="col" id="<portlet:namespace />layoutRevisionStatus">
+											<div class="col staging-alert-container" id="<portlet:namespace />layoutRevisionStatus">
 												<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
 												<liferay-util:include page="/view_layout_revision_status.jsp" servletContext="<%= application %>" />

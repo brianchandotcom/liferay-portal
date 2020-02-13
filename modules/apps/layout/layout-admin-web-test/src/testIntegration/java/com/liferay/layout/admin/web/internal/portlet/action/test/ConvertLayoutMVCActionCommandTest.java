@@ -18,10 +18,15 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
+import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RootLayoutStructureItem;
+import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -42,7 +47,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -51,6 +55,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -188,11 +194,6 @@ public class ConvertLayoutMVCActionCommandTest {
 		return themeDisplay;
 	}
 
-	private String _read(String fileName) throws Exception {
-		return new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
-	}
-
 	private void _validateLayoutConversion(Layout originalLayout)
 		throws Exception {
 
@@ -211,18 +212,71 @@ public class ConvertLayoutMVCActionCommandTest {
 
 		Assert.assertNotNull(layoutPageTemplateStructure);
 
-		JSONObject expectedLayoutDataJSONObject =
-			JSONFactoryUtil.createJSONObject(
-				_read("expected_layout_data.json"));
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(
+				SegmentsExperienceConstants.ID_DEFAULT));
 
-		JSONObject actualLayoutDataJSONObject =
-			JSONFactoryUtil.createJSONObject(
-				layoutPageTemplateStructure.getData(
-					SegmentsExperienceConstants.ID_DEFAULT));
+		Assert.assertNotNull(layoutStructure.getMainItemId());
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.getMainLayoutStructureItem();
+
+		Assert.assertNotNull(rootLayoutStructureItem);
+		Assert.assertTrue(
+			rootLayoutStructureItem instanceof RootLayoutStructureItem);
+		Assert.assertEquals(
+			rootLayoutStructureItem.getItemType(),
+			LayoutDataItemTypeConstants.TYPE_ROOT);
+
+		List<String> rootItemIds = rootLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(rootItemIds.toString(), 1, rootItemIds.size());
+
+		LayoutStructureItem containerLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(rootItemIds.get(0));
+
+		Assert.assertNotNull(containerLayoutStructureItem);
+		Assert.assertTrue(
+			containerLayoutStructureItem instanceof
+				ContainerLayoutStructureItem);
+		Assert.assertEquals(
+			containerLayoutStructureItem.getItemType(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER);
+
+		List<String> containerItemIds =
+			containerLayoutStructureItem.getChildrenItemIds();
 
 		Assert.assertEquals(
-			expectedLayoutDataJSONObject.toString(),
-			actualLayoutDataJSONObject.toString());
+			containerItemIds.toString(), 1, containerItemIds.size());
+
+		LayoutStructureItem rowLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(containerItemIds.get(0));
+
+		Assert.assertNotNull(rowLayoutStructureItem);
+		Assert.assertTrue(
+			rowLayoutStructureItem instanceof RowLayoutStructureItem);
+		Assert.assertEquals(
+			rowLayoutStructureItem.getItemType(),
+			LayoutDataItemTypeConstants.TYPE_ROW);
+
+		List<String> rowItemIds = rowLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(rowItemIds.toString(), 1, rowItemIds.size());
+
+		LayoutStructureItem columnLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(rowItemIds.get(0));
+
+		Assert.assertNotNull(columnLayoutStructureItem);
+		Assert.assertTrue(
+			columnLayoutStructureItem instanceof ColumnLayoutStructureItem);
+		Assert.assertEquals(
+			columnLayoutStructureItem.getItemType(),
+			LayoutDataItemTypeConstants.TYPE_COLUMN);
+
+		List<String> columnItemIds =
+			columnLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(columnItemIds.toString(), 0, columnItemIds.size());
 
 		Layout persistedPublishedLayout = _layoutLocalService.getLayout(
 			originalLayout.getPlid());

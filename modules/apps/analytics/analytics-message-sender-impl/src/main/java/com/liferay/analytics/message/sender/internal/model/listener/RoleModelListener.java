@@ -63,7 +63,7 @@ public class RoleModelListener extends BaseEntityModelListener<Role> {
 				Property nameProperty = PropertyFactoryUtil.forName("name");
 
 				dynamicQuery.add(
-					nameProperty.eq(RoleConstants.ANALYTICS_ADMINISTRATOR));
+					nameProperty.ne(RoleConstants.ANALYTICS_ADMINISTRATOR));
 
 				Property typeProperty = PropertyFactoryUtil.forName("type");
 

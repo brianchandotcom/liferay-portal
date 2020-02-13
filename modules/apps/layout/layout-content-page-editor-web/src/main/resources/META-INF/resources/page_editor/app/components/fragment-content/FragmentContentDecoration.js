@@ -43,7 +43,7 @@ const HOVERED_CLASS = 'page-editor__editable-decoration--hovered';
 const MAPPED_CLASS = 'page-editor__editable-decoration--mapped';
 const TRANSLATED_CLASS = 'page-editor__editable-decoration--translated';
 
-export default function EditableDecoration({
+export default function FragmentContentDecoration({
 	editableId,
 	fragmentEntryLinkId,
 	itemId,

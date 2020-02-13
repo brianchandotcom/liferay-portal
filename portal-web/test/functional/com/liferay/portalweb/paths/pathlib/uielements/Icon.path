@@ -265,6 +265,12 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEPOT_LANGUAGES_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_language}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>FRAGMENT_VERTICAL_ELLIPSIS</td>
 	<td>//*[contains(@class, 'fragments-editor-sidebar')]//*[contains(@class, 'lexicon-icon-ellipsis-v')]</td>
 	<td></td>

@@ -239,6 +239,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEPOT_LANGUAGES_MANAGEMENT_PANEL_SAVE</td>
+	<td>//div[contains(@class,'modal-content')]//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DONE</td>
 	<td>//button[contains(.,'Done')]</td>
 	<td></td>
@@ -371,6 +376,11 @@
 <tr>
 	<td>LOCALIZATION_OPEN_GRAPH</td>
 	<td>//div[contains(@id,'${key_fieldName}')]//button[contains(@class,'localized')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAKE_DEFAULT</td>
+	<td>//button[contains(.,'Make Default') and contains(@data-value,'${key_language}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -176,7 +176,7 @@ if (Validator.isNotNull(portletResource)) {
 
 							groupParams.put("rolePermissions", rolePermissions);
 
-							groups = GroupLocalServiceUtil.search(company.getCompanyId(), new long[] {PortalUtil.getClassNameId(Company.class), PortalUtil.getClassNameId(Group.class), PortalUtil.getClassNameId(Organization.class), PortalUtil.getClassNameId(UserPersonalSite.class)}, null, null, groupParams, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+							groups = GroupLocalServiceUtil.search(company.getCompanyId(), GroupTypeContributorUtil.getClassNameIds(), null, null, groupParams, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 							groupIdsArray = new long[groups.size()];
 

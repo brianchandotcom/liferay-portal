@@ -92,8 +92,6 @@ public class ContentPageLayoutEditorDisplayContext
 
 		SoyContext soyContext = super.getEditorSoyContext();
 
-		soyContext.put("sidebarPanels", getSidebarPanelSoyContexts(false));
-
 		if (!_isShowSegmentsExperiences()) {
 			_editorSoyContext = soyContext;
 

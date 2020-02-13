@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Settings Authentication Token Web
 Bundle-SymbolicName: com.liferay.portal.settings.authentication.token.web
-Bundle-Version: 1.0.2
+Bundle-Version: 4.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.security.sso.token.api),(bundle.symbolic.name=com.liferay.portal.security.sso.token.impl)";\

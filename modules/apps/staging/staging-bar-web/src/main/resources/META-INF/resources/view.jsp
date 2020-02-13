@@ -61,7 +61,7 @@ if (liveLayout != null) {
 							<li class="nav-iteme">
 								<c:choose>
 									<c:when test="<%= !remoteSiteURL.isEmpty() %>">
-										<a class="nav-link href="<%= HtmlUtil.escape(remoteSiteURL) %>" value="go-to-remote-live">
+										<a class="nav-link" href="<%= HtmlUtil.escape(remoteSiteURL) %>" value="go-to-remote-live">
 											<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
 										</a>
 									</c:when>

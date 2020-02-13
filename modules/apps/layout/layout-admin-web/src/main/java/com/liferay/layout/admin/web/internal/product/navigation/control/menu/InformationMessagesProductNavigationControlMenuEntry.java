@@ -61,7 +61,7 @@ public class InformationMessagesProductNavigationControlMenuEntry
 
 	@Override
 	public String getIconJspPath() {
-		return "/control/menu/information_messages.jsp";
+		return "/dynamic_include/information_messages.jsp";
 	}
 
 	public boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)

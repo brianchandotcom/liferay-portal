@@ -96,6 +96,43 @@ public class SpiraProject extends BaseSpiraArtifact {
 			this, new SearchParameter("Path", releasePath));
 	}
 
+	public SpiraTestCaseObject getSpiraTestCaseByID(int testCaseID)
+		throws IOException {
+
+		List<SpiraTestCaseObject> spiraTestCases =
+			SpiraTestCaseObject.getSpiraTestCases(
+				this, new SearchParameter("TestCaseId", testCaseID));
+
+		if (spiraTestCases.size() > 1) {
+			throw new RuntimeException("Duplicate test case ID " + testCaseID);
+		}
+
+		if (spiraTestCases.isEmpty()) {
+			throw new RuntimeException("Missing test case ID " + testCaseID);
+		}
+
+		return spiraTestCases.get(0);
+	}
+
+	public SpiraTestCaseObject getSpiraTestCaseByPath(String testCasePath)
+		throws IOException {
+
+		List<SpiraTestCaseObject> spiraTestCases = getSpiraTestCasesByPath(
+			testCasePath);
+
+		if (spiraTestCases.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test case path " + testCasePath);
+		}
+
+		if (spiraTestCases.isEmpty()) {
+			throw new RuntimeException(
+				"Missing test case path " + testCasePath);
+		}
+
+		return spiraTestCases.get(0);
+	}
+
 	public SpiraTestCaseFolder getSpiraTestCaseFolderByID(int testCaseFolderID)
 		throws IOException {
 
@@ -143,6 +180,14 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 		return SpiraTestCaseFolder.getSpiraTestCaseFolders(
 			this, new SearchParameter("Path", testCaseFolderPath));
+	}
+
+	public List<SpiraTestCaseObject> getSpiraTestCasesByPath(
+			String testCasePath)
+		throws IOException {
+
+		return SpiraTestCaseObject.getSpiraTestCases(
+			this, new SearchParameter("Path", testCasePath));
 	}
 
 	protected SpiraRelease getSpiraReleaseByIndentLevel(String indentLevel)

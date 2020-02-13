@@ -111,11 +111,21 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			return _parentSpiraArtifact;
 		}
 
+		Object testCaseFolderID = jsonObject.get("TestCaseFolderId");
+
+		if (testCaseFolderID == JSONObject.NULL) {
+			return null;
+		}
+
+		if (!(testCaseFolderID instanceof Integer)) {
+			return null;
+		}
+
 		SpiraProject spiraProject = getSpiraProject();
 
 		try {
 			_parentSpiraArtifact = spiraProject.getSpiraTestCaseFolderByID(
-				jsonObject.getInt("TestCaseFolderId"));
+				(Integer)testCaseFolderID);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

@@ -25,6 +25,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-item-selector-api")
 	compileOnly project(":apps:portal-search:portal-search-web-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-api")
+	compileOnly project(":apps:roles:roles-admin-api")
 	compileOnly project(":apps:sharing:sharing-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:site:site-item-selector-api")

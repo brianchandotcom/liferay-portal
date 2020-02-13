@@ -39,7 +39,21 @@ definition {
 	}
 
 	macro addManualSelection {
-		LexiconEntry.gotoAddMenuItem(menuItem = "Manual Selection");
+		if (isSet(depotName)) {
+			Click(locator1 = "Message#EMPTY_INFO_TAGLIB");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
+
+			Click(
+				key_menuItem = "Manual Selection",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		else {
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Manual Selection");
+
+		}
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
@@ -131,15 +145,21 @@ definition {
 			key_title = "${assetListTitle}",
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
-		AssetListsAdmin.gotoPersonalizationMenuItem();
+		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
+
+		Click(
+			key_menuItem = "View Content",
+			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertTextEquals(
+			key_assetTitle = "${assetTitle}",
 			locator1 = "AssetLists#ASSET_TITLE_ROW",
 			value1 = "${assetTitle}");
 
 		AssertTextEquals(
+			key_assetTitle = "${assetTitle}",
 			locator1 = "AssetLists#ASSET_TYPE_ROW",
 			value1 = "${assetType}");
 

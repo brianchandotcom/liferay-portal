@@ -85,6 +85,20 @@ definition {
 			key_language = "${defaultDepotLanguage}",
 			locator1 = "LanguageConfiguration#DEPOT_DEFAULT_LANGUAGE",
 			value1 = "${defaultDepotLanguage}");
+
+	macro configureEnableDirectoryIndexing {
+		if ("${EnableDirectoryIndexing}" == "Enabled") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Enable Directory Indexing",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${EnableDirectoryIndexing}" == "Disabled") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Enable Directory Indexing",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		PortletEntry.save();
 	}
 
 	macro configureRecycleBin {
@@ -342,6 +356,23 @@ definition {
 		AssertElementPresent(locator1 = "Button#SAVE");
 	}
 
+	macro viewDocumentInFTP {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${depotName}");
+
+		if (isSet(dmFolderName)) {
+			Click(
+				key_dmDocumentName = "${dmFolderName}",
+				locator1 = "Link#DOCUMENT_IN_FTP");
+		}
+
+		AssertTextEquals(
+			key_dmDocumentName = "${dmDocumentTitle}",
+			locator1 = "Link#DOCUMENT_IN_FTP",
+			value1 = "${dmDocumentTitle}");
+	}
+
 	macro viewGeneralLanguageOptions {
 		Page.viewFriendlyURLLanguageOptionsPG(
 			currentLanguageList = "${currentLanguageList}",
@@ -394,6 +425,22 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_DEPOT",
 			value1 = "No sites are connected yet.");
+	}
+
+	macro viewNoDocumentInFTP {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${depotName}");
+
+		if (isSet(dmFolderName)) {
+			Click(
+				key_dmDocumentName = "${dmFolderName}",
+				locator1 = "Link#DOCUMENT_IN_FTP");
+		}
+
+		AssertElementNotPresent(
+			key_dmDocumentName = "${dmDocumentTitle}",
+			locator1 = "Link#DOCUMENT_IN_FTP");
 	}
 
 	macro viewSearchResult {

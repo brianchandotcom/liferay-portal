@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
@@ -731,8 +734,28 @@ public class LayoutReferencesExportImportContentProcessor
 		return content;
 	}
 
+	@Reference(unbind = "-")
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
+
+		_configurationProvider = configurationProvider;
+	}
+
 	protected void validateLayoutReferences(long groupId, String content)
 		throws PortalException {
+
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			_exportImportServiceConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					ExportImportServiceConfiguration.class, companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(configurationException.getMessage());
+			}
+		}
 
 		if (!_exportImportServiceConfiguration.validateLayoutReferences()) {
 			return;
@@ -1088,6 +1111,7 @@ public class LayoutReferencesExportImportContentProcessor
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	private ConfigurationProvider _configurationProvider;
 	private ExportImportServiceConfiguration _exportImportServiceConfiguration;
 
 	@Reference

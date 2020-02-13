@@ -27,6 +27,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.asset.entry.query.processor.AssetListAssetEntryQueryProcessor;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.internal.configuration.AssetListConfiguration;
 import com.liferay.asset.list.internal.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
@@ -35,10 +36,12 @@ import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -56,13 +59,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -71,7 +77,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Sarai Díaz
  */
-@Component(immediate = true, service = AssetListAssetEntryProvider.class)
+@Component(
+	configurationPid = "com.liferay.asset.list.internal.configuration.AssetListConfiguration",
+	immediate = true, service = AssetListAssetEntryProvider.class
+)
 public class AssetListAssetEntryProviderImpl
 	implements AssetListAssetEntryProvider {
 
@@ -194,6 +203,15 @@ public class AssetListAssetEntryProviderImpl
 		return getAssetEntryQuery(
 			assetListEntry,
 			_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds), userId);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties)
+		throws ConfigurationException {
+
+		_assetListConfiguration = ConfigurableUtil.createConfigurable(
+			AssetListConfiguration.class, properties);
 	}
 
 	protected AssetEntryQuery getAssetEntryQuery(
@@ -776,6 +794,7 @@ public class AssetListAssetEntryProviderImpl
 
 	private final List<AssetListAssetEntryQueryProcessor>
 		_assetListAssetEntryQueryProcessors = new CopyOnWriteArrayList<>();
+	private AssetListConfiguration _assetListConfiguration;
 
 	@Reference
 	private AssetListEntryAssetEntryRelLocalService

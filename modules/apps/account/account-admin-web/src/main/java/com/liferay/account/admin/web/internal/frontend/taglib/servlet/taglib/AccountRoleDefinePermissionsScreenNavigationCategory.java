@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.roles.admin.constants.RolesAdminWebKeys;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
 import java.io.IOException;
 
@@ -99,6 +100,8 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 		throws IOException {
 
 		httpServletRequest.setAttribute(
+			RolesAdminWebKeys.CURRENT_ROLE_TYPE, _accountRoleTypeContributor);
+		httpServletRequest.setAttribute(
 			RolesAdminWebKeys.SHOW_NAV_TABS, Boolean.FALSE);
 
 		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(
@@ -145,6 +148,9 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference(target = "(component.name=*.AccountRoleTypeContributor)")
+	private RoleTypeContributor _accountRoleTypeContributor;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -54,6 +54,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_INFO_TAGLIB_TITLE</td>
+	<td>//div/h1[contains(@class,'taglib-empty-result-message-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMPTY_INFO_TAGLIB_DESCRIPTION</td>
+	<td>//div/p[contains(@class,'taglib-empty-result-message-description')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR</td>
 	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>

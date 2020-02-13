@@ -1050,22 +1050,31 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			FileEntry fileEntry = null;
 
-			if (cmd.equals(Constants.ADD) ||
-				cmd.equals(Constants.ADD_DYNAMIC)) {
+			if (cmd.equals(Constants.ADD)) {
 
 				// Add file entry
 
 				fileEntry = _dlAppService.addFileEntry(
 					repositoryId, folderId, sourceFileName, contentType, title,
 					description, changeLog, inputStream, size, serviceContext);
+			}
+			else if (cmd.equals(Constants.ADD_DYNAMIC)) {
 
-				if (cmd.equals(Constants.ADD_DYNAMIC)) {
-					JSONObject jsonObject = JSONUtil.put(
-						"fileEntryId", fileEntry.getFileEntryId());
+				// Add file entry
 
-					JSONPortletResponseUtil.writeJSON(
-						actionRequest, actionResponse, jsonObject);
-				}
+				String uniqueFileName = DLUtil.getUniqueFileName(
+					themeDisplay.getScopeGroupId(), folderId, title);
+
+				fileEntry = _dlAppService.addFileEntry(
+					repositoryId, folderId, uniqueFileName, contentType,
+					uniqueFileName, description, changeLog, inputStream, size,
+					serviceContext);
+
+				JSONObject jsonObject = JSONUtil.put(
+					"fileEntryId", fileEntry.getFileEntryId());
+
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse, jsonObject);
 			}
 			else if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
 

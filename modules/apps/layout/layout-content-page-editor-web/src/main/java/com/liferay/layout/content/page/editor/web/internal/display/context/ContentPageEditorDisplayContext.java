@@ -294,6 +294,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"pending", editorSoyContext.get("pending")
 			).put(
+				"plid", editorSoyContext.get("plid")
+			).put(
 				"pluginsRootPath",
 				npmResolvedPackageName + "/page_editor/plugins"
 			).put(
@@ -308,6 +310,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"selectedMappingTypes",
 				editorSoyContext.get("selectedMappingTypes")
+			).put(
+				"selectedSegmentsEntryId",
+				editorSoyContext.get("selectedSegmentsEntryId")
 			).put(
 				"sidebarPanels", editorSoyContext.get("sidebarPanels")
 			).put(

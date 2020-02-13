@@ -29,6 +29,7 @@ import {useDispatch, useSelector} from '../store/index';
 import moveItem from '../thunks/moveItem';
 import {useActiveItemId, useIsActive, useSelectItem} from './Controls';
 import DragPreview from './DragPreview';
+import {EditableDecorationProvider} from './fragment-content/EditableDecorationContext';
 import {
 	ColumnWithControls,
 	ContainerWithControls,
@@ -161,13 +162,15 @@ export default function PageEditor({withinMasterPage = false}) {
 			>
 				<DragPreview />
 
-				<DragDropManager>
-					<LayoutDataItem
-						fragmentEntryLinks={fragmentEntryLinks}
-						item={mainItem}
-						layoutData={layoutData}
-					/>
-				</DragDropManager>
+				<EditableDecorationProvider>
+					<DragDropManager>
+						<LayoutDataItem
+							fragmentEntryLinks={fragmentEntryLinks}
+							item={mainItem}
+							layoutData={layoutData}
+						/>
+					</DragDropManager>
+				</EditableDecorationProvider>
 			</div>
 		</>
 	);

@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import classNames from 'classnames';
 import {useEventListener, useIsMounted} from 'frontend-js-react-web';
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
@@ -22,6 +23,7 @@ import {
 } from '../config/constants/keycodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {MOVE_ITEM_DIRECTIONS} from '../config/constants/moveItemDirections';
+import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {ConfigContext} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
 import moveItem from '../thunks/moveItem';
@@ -57,6 +59,8 @@ export default function PageEditor({withinMasterPage = false}) {
 		state => state.sidebarPanelId && state.sidebarOpen
 	);
 	const store = useSelector(state => state);
+
+	const {layoutConversionWarningMessages, pageType} = config;
 
 	const mainItem = layoutData.items[layoutData.rootItems.main];
 
@@ -136,26 +140,36 @@ export default function PageEditor({withinMasterPage = false}) {
 	useEventListener('keyup', onKeyUp, false, document.body);
 
 	return (
-		<div
-			className={classNames('page-editor', {
-				'page-editor--with-sidebar': !withinMasterPage,
-				'page-editor--with-sidebar-open':
-					sidebarOpen && !withinMasterPage,
-				'pt-4': !withinMasterPage
-			})}
-			id="page-editor"
-			onClick={onClick}
-		>
-			<DragPreview />
+		<>
+			{layoutConversionWarningMessages &&
+				layoutConversionWarningMessages.length &&
+				pageType === PAGE_TYPES.conversion && (
+					<ClayAlert
+						displayType="warning"
+						title={layoutConversionWarningMessages.join('<br>')}
+					/>
+				)}
+			<div
+				className={classNames('page-editor', {
+					'page-editor--with-sidebar': !withinMasterPage,
+					'page-editor--with-sidebar-open':
+						sidebarOpen && !withinMasterPage,
+					'pt-4': !withinMasterPage
+				})}
+				id="page-editor"
+				onClick={onClick}
+			>
+				<DragPreview />
 
-			<DragDropManager>
-				<LayoutDataItem
-					fragmentEntryLinks={fragmentEntryLinks}
-					item={mainItem}
-					layoutData={layoutData}
-				/>
-			</DragDropManager>
-		</div>
+				<DragDropManager>
+					<LayoutDataItem
+						fragmentEntryLinks={fragmentEntryLinks}
+						item={mainItem}
+						layoutData={layoutData}
+					/>
+				</DragDropManager>
+			</div>
+		</>
 	);
 }
 

@@ -282,6 +282,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"languageDirection", _getLanguageDirection()
 			).put(
+				"layoutConversionWarningMessages",
+				editorSoyContext.get("layoutConversionWarningMessages")
+			).put(
 				"mappingFieldsURL", editorSoyContext.get("mappingFieldsURL")
 			).put(
 				"masterUsed", editorSoyContext.get("masterUsed")

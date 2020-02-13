@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.RenderRequest;
@@ -103,13 +104,15 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _eventName;
 	}
 
-	public String getSelectedCategories() {
+	public List<String> getSelectedCategories() {
 		if (_selectedCategories != null) {
 			return _selectedCategories;
 		}
 
-		_selectedCategories = ParamUtil.getString(
-			_httpServletRequest, "selectedCategories");
+		_selectedCategories = Arrays.asList(
+			StringUtil.split(
+				ParamUtil.getString(
+					_httpServletRequest, "selectedCategories")));
 
 		return _selectedCategories;
 	}
@@ -256,7 +259,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private String _selectedCategories;
+	private List<String> _selectedCategories;
 	private Boolean _singleSelect;
 	private long[] _vocabularyIds;
 

@@ -279,7 +279,7 @@ definition {
 
 		var key_fieldType = "${fieldType}";
 
-		DragAndDrop(
+		DragAndDrop.dragAndDropPortletToObject(
 			locator1 = "Form#ADD_FIELD_TYPE",
 			locator2 = "Form#ADD_FIELD_POSITION",
 			value1 = "${fieldType}");

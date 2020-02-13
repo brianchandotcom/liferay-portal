@@ -30,6 +30,7 @@ import moveItem from '../thunks/moveItem';
 import {useActiveItemId, useIsActive, useSelectItem} from './Controls';
 import DragPreview from './DragPreview';
 import {EditableDecorationProvider} from './fragment-content/EditableDecorationContext';
+import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
 import {
 	ColumnWithControls,
 	ContainerWithControls,
@@ -162,15 +163,17 @@ export default function PageEditor({withinMasterPage = false}) {
 			>
 				<DragPreview />
 
-				<EditableDecorationProvider>
-					<DragDropManager>
-						<LayoutDataItem
-							fragmentEntryLinks={fragmentEntryLinks}
-							item={mainItem}
-							layoutData={layoutData}
-						/>
-					</DragDropManager>
-				</EditableDecorationProvider>
+				<EditableProcessorContextProvider>
+					<EditableDecorationProvider>
+						<DragDropManager>
+							<LayoutDataItem
+								fragmentEntryLinks={fragmentEntryLinks}
+								item={mainItem}
+								layoutData={layoutData}
+							/>
+						</DragDropManager>
+					</EditableDecorationProvider>
+				</EditableProcessorContextProvider>
 			</div>
 		</>
 	);

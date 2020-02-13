@@ -18,13 +18,11 @@ import {ITEM_TYPES} from '../config/constants/itemTypes';
 
 const INITIAL_STATE = {
 	activeItemId: null,
-	editingItemId: null,
 	hoveredItemId: null,
 	selectedItemsIds: []
 };
 
 const HOVER_ITEM = 'HOVER_ITEM';
-const SELECT_EDITING_ITEM = 'SELECT_EDITING_ITEM';
 const SELECT_ITEM = 'SELECT_ITEM';
 
 const ControlsContext = React.createContext([INITIAL_STATE, () => {}]);
@@ -40,12 +38,6 @@ const reducer = (state, action) => {
 			hoveredItemId: itemId,
 			hoveredItemType: itemType
 		};
-	}
-	else if (
-		type === SELECT_EDITING_ITEM &&
-		itemId !== nextState.editingItemId
-	) {
-		nextState = {...nextState, editingItemId: itemId};
 	}
 	else if (type === SELECT_ITEM) {
 		if (multiSelect && itemId) {
@@ -98,12 +90,6 @@ const useActiveItemId = () => {
 	const [state] = useContext(ControlsContext);
 
 	return state.activeItemId;
-};
-
-const useEditingItemId = () => {
-	const [state] = useContext(ControlsContext);
-
-	return state.editingItemId;
 };
 
 const useHoveredItemId = () => {
@@ -161,19 +147,6 @@ const useIsSelected = () => {
 	]);
 };
 
-const useSelectEditingItem = () => {
-	const [, dispatch] = useContext(ControlsContext);
-
-	return useCallback(
-		itemId =>
-			dispatch({
-				itemId,
-				type: SELECT_EDITING_ITEM
-			}),
-		[dispatch]
-	);
-};
-
 const useSelectItem = () => {
 	const [, dispatch] = useContext(ControlsContext);
 
@@ -199,13 +172,11 @@ export {
 	ControlsConsumer,
 	ControlsProvider,
 	useActiveItemId,
-	useEditingItemId,
 	useHoveredItemId,
 	useHoveredItemType,
 	useHoverItem,
 	useIsActive,
 	useIsHovered,
 	useIsSelected,
-	useSelectEditingItem,
 	useSelectItem
 };

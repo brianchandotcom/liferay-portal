@@ -69,26 +69,29 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		if (_pageIsDisplayPage) {
 			soyContext.put(
 				"mappingFieldsURL",
-				getFragmentEntryActionURL(
-					"/content_layout/get_mapping_fields"));
+				getFragmentEntryActionURL("/content_layout/get_mapping_fields")
+			).put(
+				"selectedMappingTypes", _getSelectedMappingTypes()
+			);
 		}
-
-		soyContext.put(
-			"publishURL",
-			getFragmentEntryActionURL(
-				"/content_layout/publish_layout_page_template_entry"));
-
-		if (_pageIsDisplayPage) {
-			soyContext.put("selectedMappingTypes", _getSelectedMappingTypes());
-		}
-
-		_editorSoyContext = soyContext.put(
-			"sidebarPanels", getSidebarPanelSoyContexts(_pageIsDisplayPage)
-		).put(
-			"workflowEnabled", false
-		);
 
 		return _editorSoyContext;
+	}
+
+	@Override
+	public String getPublishURL() {
+		return getFragmentEntryActionURL(
+			"/content_layout/publish_layout_page_template_entry");
+	}
+
+	@Override
+	public List<SoyContext> getSidebarPanelSoyContexts() {
+		return getSidebarPanelSoyContexts(_pageIsDisplayPage);
+	}
+
+	@Override
+	public boolean isWorkflowEnabled() {
+		return false;
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry() {

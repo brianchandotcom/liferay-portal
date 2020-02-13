@@ -13,7 +13,13 @@
  */
 
 import {SEGMENTS_EXPERIENCE_ID_PREFIX} from '../config/constants/segmentsExperienceIdPrefix';
+import {config} from '../config/index';
 
 export default function selectPrefixedSegmentsExperienceId(state) {
-	return `${SEGMENTS_EXPERIENCE_ID_PREFIX}${state.segmentsExperienceId}`;
+	const segmentsExperienceId =
+		state.segmentsExperienceId || config.defaultLanguageId;
+
+	return segmentsExperienceId
+		? `${SEGMENTS_EXPERIENCE_ID_PREFIX}${segmentsExperienceId}`
+		: '';
 }

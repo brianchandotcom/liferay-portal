@@ -123,12 +123,12 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		long fileEntryTypeId = counterLocalService.increment();
 
-		Boolean useDataEngineEditor = GetterUtil.getBoolean(
-			serviceContext.getAttribute("useDataEngineEditor"));
 		long ddmStructureId = GetterUtil.getLong(
 			serviceContext.getAttribute("ddmStructureId"));
+		boolean useDataEngineEditor = GetterUtil.getBoolean(
+			serviceContext.getAttribute("useDataEngineEditor"));
 
-		if (!useDataEngineEditor || (ddmStructureId == 0)) {
+		if ((ddmStructureId == 0) || !useDataEngineEditor) {
 			ddmStructureIds = _updateDDMStructure(
 				userId, fileEntryTypeUuid, fileEntryTypeId, groupId, nameMap,
 				descriptionMap, ddmStructureIds, serviceContext);
@@ -521,12 +521,12 @@ public class DLFileEntryTypeLocalServiceImpl
 		DLFileEntryType dlFileEntryType =
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 
-		Boolean useDataEngineEditor = GetterUtil.getBoolean(
-			serviceContext.getAttribute("useDataEngineEditor"));
 		long ddmStructureId = GetterUtil.getLong(
 			serviceContext.getAttribute("ddmStructureId"));
+		boolean useDataEngineEditor = GetterUtil.getBoolean(
+			serviceContext.getAttribute("useDataEngineEditor"));
 
-		if (!useDataEngineEditor || (ddmStructureId == 0)) {
+		if ((ddmStructureId == 0) || !useDataEngineEditor) {
 			ddmStructureIds = _updateDDMStructure(
 				userId, dlFileEntryType.getUuid(), fileEntryTypeId,
 				dlFileEntryType.getGroupId(), nameMap, descriptionMap,

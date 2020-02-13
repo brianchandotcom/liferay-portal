@@ -39,8 +39,8 @@ if (fileEntryType != null) {
 	}
 }
 
-String fileEntryTypeUuid = StringPool.BLANK;
 String ddmStructureKey = StringPool.BLANK;
+String fileEntryTypeUuid = StringPool.BLANK;
 
 if ((ddmStructure == null) && dlEditFileEntryTypeDisplayContext.useDataEngineEditor()) {
 	fileEntryTypeUuid = (fileEntryType != null) ? fileEntryType.getUuid() : PortalUUIDUtil.generate();

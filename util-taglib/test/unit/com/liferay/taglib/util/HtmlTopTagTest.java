@@ -16,9 +16,9 @@ package com.liferay.taglib.util;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -135,7 +135,7 @@ public class HtmlTopTagTest {
 						return new OutputData() {
 
 							@Override
-							public void addData(
+							public void addDataSB(
 								String outputKey, String webKey,
 								StringBundler sb) {
 

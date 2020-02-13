@@ -361,6 +361,18 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 				assetListEntryId, segmentsEntryId, start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
+			getAssetListEntryAssetEntryRels(
+				long assetListEntryId, long[] segmentsEntryIds, int start,
+				int end) {
+
+		return _assetListEntryAssetEntryRelLocalService.
+			getAssetListEntryAssetEntryRels(
+				assetListEntryId, segmentsEntryIds, start, end);
+	}
+
 	/**
 	 * Returns all the asset list entry asset entry rels matching the UUID and company.
 	 *
@@ -423,6 +435,15 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 		return _assetListEntryAssetEntryRelLocalService.
 			getAssetListEntryAssetEntryRelsCount(
 				assetListEntryId, segmentsEntryId);
+	}
+
+	@Override
+	public int getAssetListEntryAssetEntryRelsCount(
+		long assetListEntryId, long[] segmentsEntryIds) {
+
+		return _assetListEntryAssetEntryRelLocalService.
+			getAssetListEntryAssetEntryRelsCount(
+				assetListEntryId, segmentsEntryIds);
 	}
 
 	@Override

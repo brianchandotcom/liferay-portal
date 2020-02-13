@@ -338,6 +338,16 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 			assetListEntryId, segmentsEntryId, start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
+			getAssetListEntryAssetEntryRels(
+				long assetListEntryId, long[] segmentsEntryIds, int start,
+				int end) {
+
+		return getService().getAssetListEntryAssetEntryRels(
+			assetListEntryId, segmentsEntryIds, start, end);
+	}
+
 	/**
 	 * Returns all the asset list entry asset entry rels matching the UUID and company.
 	 *
@@ -397,6 +407,13 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 
 		return getService().getAssetListEntryAssetEntryRelsCount(
 			assetListEntryId, segmentsEntryId);
+	}
+
+	public static int getAssetListEntryAssetEntryRelsCount(
+		long assetListEntryId, long[] segmentsEntryIds) {
+
+		return getService().getAssetListEntryAssetEntryRelsCount(
+			assetListEntryId, segmentsEntryIds);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

@@ -1,0 +1,133 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Depot";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that multiple web content can be selected through Content Sets in a depot."
+	@priority = "5"
+	test SelectMultipleWebContentManually {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		for (var i : list "1,2,3") {
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title ${i}");
+
+			PortletEntry.publish();
+		}
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.addManualSelection(
+			assetListTitle = "Depot Manual Asset List",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.viewAssetList(
+			assetListTitle = "Depot Manual Asset List",
+			type = "Manual");
+
+		for (var i : list "1,2,3") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(
+				depotName = "Test Depot Name",
+				portlet = "Content Sets");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Depot Manual Asset List",
+				assetName = "WC WebContent Title ${i}",
+				assetType = "Basic Web Content");
+		}
+
+		for (var i : list "1,2,3") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(
+				depotName = "Test Depot Name",
+				portlet = "Content Sets");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Depot Manual Asset List",
+				assetTitle = "WC WebContent Title ${i}",
+				assetType = "Web Content Article");
+		}
+	}
+
+	@description = "This ensures that the Content Sets can be set in a depot."
+	@priority = "5"
+	test Smoke {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
+			value1 = "No Content Sets yet.");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO_TAGLIB_DESCRIPTION",
+			value1 = "Fortunately, it is very easy to add new ones.");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.viewPresent(menuItem = "Manual Selection");
+
+		MenuItem.viewPresent(menuItem = "Dynamic Selection");
+
+		Refresh();
+
+		Click(locator1 = "Message#EMPTY_INFO_TAGLIB");
+
+		Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
+
+		AssertElementPresent(
+			key_menuItem = "Manual Selection",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		AssertElementPresent(
+			key_menuItem = "Dynamic Selection",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+	}
+
+}

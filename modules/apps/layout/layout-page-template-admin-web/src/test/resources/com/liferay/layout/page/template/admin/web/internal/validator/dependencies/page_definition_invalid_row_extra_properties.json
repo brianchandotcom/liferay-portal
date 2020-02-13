@@ -1,0 +1,18 @@
+{
+	"pageElement" : {
+		"pageElements" : [
+			{
+				"pageElements" : [
+					{
+						"definition" : {
+							"extra" : "value"
+						},
+						"type" : "Row"
+					}
+				],
+				"type" : "Section"
+			}
+		],
+		"type" : "Root"
+	}
+}

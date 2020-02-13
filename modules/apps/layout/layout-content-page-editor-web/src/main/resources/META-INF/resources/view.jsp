@@ -34,7 +34,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 	</div>
 
 	<react:component
-		data="<%= contentPageEditorDisplayContext.getEditorReactContext(npmResolvedPackageName) %>"
+		data="<%= contentPageEditorDisplayContext.getEditorContext(npmResolvedPackageName) %>"
 		module="page_editor/app/index"
 	/>
 </div>

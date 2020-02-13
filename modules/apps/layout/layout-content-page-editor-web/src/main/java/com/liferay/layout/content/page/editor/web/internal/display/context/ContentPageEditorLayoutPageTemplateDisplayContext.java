@@ -60,26 +60,25 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	}
 
 	@Override
-	public Map<String, Object> getEditorReactContext(
-			String npmResolvedPackageName)
+	public Map<String, Object> getEditorContext(String npmResolvedPackageName)
 		throws Exception {
 
-		Map<String, Object> editorReactContext = super.getEditorReactContext(
+		Map<String, Object> editorContext = super.getEditorContext(
 			npmResolvedPackageName);
 
 		if (!_pageIsDisplayPage) {
-			return editorReactContext;
+			return editorContext;
 		}
 
 		Map<String, Object> configContext =
-			(Map<String, Object>)editorReactContext.get("config");
+			(Map<String, Object>)editorContext.get("config");
 
 		configContext.put(
 			"mappingFieldsURL",
 			getFragmentEntryActionURL("/content_layout/get_mapping_fields"));
 		configContext.put("selectedMappingTypes", _getSelectedMappingTypes());
 
-		return editorReactContext;
+		return editorContext;
 	}
 
 	@Override

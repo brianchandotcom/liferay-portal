@@ -87,19 +87,18 @@ public class ContentPageLayoutEditorDisplayContext
 	}
 
 	@Override
-	public Map<String, Object> getEditorReactContext(
-			String npmResolvedPackageName)
+	public Map<String, Object> getEditorContext(String npmResolvedPackageName)
 		throws Exception {
 
-		Map<String, Object> editorReactContext = super.getEditorReactContext(
+		Map<String, Object> editorContext = super.getEditorContext(
 			npmResolvedPackageName);
 
 		if (!_isShowSegmentsExperiences()) {
-			return editorReactContext;
+			return editorContext;
 		}
 
 		Map<String, Object> configContext =
-			(Map<String, Object>)editorReactContext.get("config");
+			(Map<String, Object>)editorContext.get("config");
 
 		configContext.put(
 			"addSegmentsExperienceURL",
@@ -125,7 +124,7 @@ public class ContentPageLayoutEditorDisplayContext
 			"singleSegmentsExperienceMode", _isSingleSegmentsExperienceMode());
 
 		Map<String, Object> stateContext =
-			(Map<String, Object>)editorReactContext.get("state");
+			(Map<String, Object>)editorContext.get("state");
 
 		stateContext.put(
 			"availableSegmentsExperiences",
@@ -147,7 +146,7 @@ public class ContentPageLayoutEditorDisplayContext
 			ContentPageEditorActionKeys.LOCKED_SEGMENTS_EXPERIMENT,
 			_isLockedSegmentsExperience(getSegmentsExperienceId()));
 
-		return editorReactContext;
+		return editorContext;
 	}
 
 	@Override

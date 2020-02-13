@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.roles.admin.api
 Bundle-Version: 5.1.0
 Export-Package:\
 	com.liferay.roles.admin.constants,\
+	com.liferay.roles.admin.group.type.contributor,\
 	com.liferay.roles.admin.role.type.contributor

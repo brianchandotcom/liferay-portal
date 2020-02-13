@@ -17,6 +17,8 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+FFDocumentLibraryDDMEditorConfiguration ffDocumentLibraryDDMEditorConfiguration = (FFDocumentLibraryDDMEditorConfiguration)request.getAttribute(FFDocumentLibraryDDMEditorConfiguration.class.getName());
+
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EDIT);
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -388,15 +390,32 @@ renderResponse.setTitle(headerTitle);
 											<div class="hide">
 										</c:if>
 
-										<liferay-ddm:html
-											classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
-											classPK="<%= ddmStructure.getPrimaryKey() %>"
-											ddmFormValues="<%= ddmFormValues %>"
-											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
-											groupId="<%= (fileEntry != null) ? fileEntry.getGroupId() : 0 %>"
-											localizable="<%= localizable %>"
-											requestedLocale="<%= locale %>"
-										/>
+										<c:choose>
+											<c:when test="<%= ffDocumentLibraryDDMEditorConfiguration.useDataEngineEditor() %>">
+
+												<%
+												DDMFormValuesToMapConverter ddmFormValuesToMapConverter = (DDMFormValuesToMapConverter)request.getAttribute(DDMFormValuesToMapConverter.class.getName());
+												%>
+
+												<liferay-data-engine:data-layout-renderer
+													containerId="reportId"
+													dataDefinitionId="<%= ddmStructure.getStructureId() %>"
+													dataRecordValues="<%= ddmFormValuesToMapConverter.convert(ddmFormValues, DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId())) %>"
+													namespace="<%= renderResponse.getNamespace() %>"
+												/>
+											</c:when>
+											<c:otherwise>
+												<liferay-ddm:html
+													classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
+													classPK="<%= ddmStructure.getPrimaryKey() %>"
+													ddmFormValues="<%= ddmFormValues %>"
+													fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+													groupId="<%= (fileEntry != null) ? fileEntry.getGroupId() : 0 %>"
+													localizable="<%= localizable %>"
+													requestedLocale="<%= locale %>"
+												/>
+											</c:otherwise>
+										</c:choose>
 
 										<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">
 											</div>

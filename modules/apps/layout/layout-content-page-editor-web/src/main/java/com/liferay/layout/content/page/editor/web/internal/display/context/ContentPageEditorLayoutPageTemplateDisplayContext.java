@@ -31,6 +31,7 @@ import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderResponse;
@@ -56,6 +57,29 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			portletRequest);
 
 		_pageIsDisplayPage = pageIsDisplayPage;
+	}
+
+	@Override
+	public Map<String, Object> getEditorReactContext(
+			String npmResolvedPackageName)
+		throws Exception {
+
+		Map<String, Object> editorReactContext = super.getEditorReactContext(
+			npmResolvedPackageName);
+
+		if (!_pageIsDisplayPage) {
+			return editorReactContext;
+		}
+
+		Map<String, Object> configContext =
+			(Map<String, Object>)editorReactContext.get("config");
+
+		configContext.put(
+			"mappingFieldsURL",
+			getFragmentEntryActionURL("/content_layout/get_mapping_fields"));
+		configContext.put("selectedMappingTypes", _getSelectedMappingTypes());
+
+		return editorReactContext;
 	}
 
 	@Override

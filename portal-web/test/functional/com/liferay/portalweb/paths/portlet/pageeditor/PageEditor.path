@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_DROP_TARGET</td>
-	<td>//div[contains(@class,'page-editor__root page-editor-topper')]</td>
+	<td>//div[contains(@class,'page-editor__root page-editor__topper')]</td>
 	<td></td>
 </tr>
 <tr>

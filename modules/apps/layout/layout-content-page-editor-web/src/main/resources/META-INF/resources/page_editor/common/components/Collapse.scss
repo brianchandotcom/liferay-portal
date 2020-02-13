@@ -4,12 +4,11 @@ $collapseLineColor: #dfdfe9;
 $collapseMarginBottom: $pageEditorSpacing * 2;
 
 .page-editor__collapse {
-	border-color: $collapseLineColor;
-	border-radius: 0;
-	font-size: 12px;
-	margin-bottom: $collapseMarginBottom;
+	cursor: pointer;
 
-	&:focus {
-		border-radius: 1px;
+	.collapse-icon {
+		border-color: $collapseLineColor;
+		font-size: 0.75rem;
+		margin-bottom: $collapseMarginBottom;
 	}
 }

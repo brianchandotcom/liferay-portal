@@ -19,7 +19,8 @@ import React, {useEffect, useState} from 'react';
 
 export default function Collapse(props) {
 	const [open, setOpen] = useState(props.open);
-	const icon = open ? 'angle-down' : 'angle-right';
+	const collapseIcon = open ? 'angle-down' : 'angle-right';
+	const collapseIconClassName = open ? 'open' : 'closed';
 
 	useEffect(() => {
 		setOpen(props.open);
@@ -30,27 +31,18 @@ export default function Collapse(props) {
 	};
 
 	return (
-		<div className="mb-2">
-			<button
-				aria-expanded={open}
-				className={classNames(
-					'page-editor__collapse',
-					'align-items-end',
-					'btn',
-					'btn-unstyled',
-					'collapse-icon',
-					'd-flex',
-					'justify-content-between',
-					'sheet-subtitle',
-					'w-100'
-				)}
+		<div className="page-editor__collapse panel-group panel-group-flush">
+			<a
+				className={classNames('collapse-icon', 'sheet-subtitle', {
+					collapsed: !open
+				})}
 				onClick={handleClick}
-				type="button"
 			>
-				{props.label}
-				<ClayIcon key={icon} symbol={icon} />
-			</button>
-
+				<span>{props.label}</span>
+				<span className={`collapse-icon-${collapseIconClassName}`}>
+					<ClayIcon key={collapseIcon} symbol={collapseIcon} />
+				</span>
+			</a>
 			{open && props.children}
 		</div>
 	);

@@ -34,13 +34,19 @@ gradle.projectsEvaluated {
 		}
 
 		String expectedLine = "Hello World"
+		String unexpectedLine = "No such file or directory"
 
 		boolean expectedLineDetected = false
+		boolean unexpectedLineDetected = false
 
 		sink new PrintWriter(new StringWriter()) {
 			public void write(String line) {
 				if (line.contains(expectedLine)) {
 					expectedLineDetected = true
+				}
+
+				if (line.contains(unexpectedLine)) {
+					unexpectedLineDetected = true
 				}
 
 				rootProject.print line
@@ -60,6 +66,10 @@ gradle.projectsEvaluated {
 
 			if (!expectedLineDetected) {
 				throw new GradleException("The expected line " + expectedLine + " was not found in the log.")
+			}
+
+			if (unexpectedLineDetected) {
+				throw new GradleException("The unexpected line " + unexpectedLine + " was found in the log.")
 			}
 		}
 	}

@@ -12,66 +12,55 @@
  * details.
  */
 
-import '../FieldBase/FieldBase.es';
-
 import './CaptchaRegister.soy';
 
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import React, {useEffect, useMemo} from 'react';
 
-import templates from './Captcha.soy';
+import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
+import {connectStore} from '../util/connectStore.es';
+import templates from './CaptchaAdapter.soy';
 
-/**
- * Captcha.
- * @extends Component
- */
+const Captcha = ({html, name}) => {
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const contentMemoized = useMemo(() => html, []);
 
-class Captcha extends Component {
-	rendered() {
+	useEffect(() => {
 		if (window.grecaptcha) {
 			window.grecaptcha.ready(() => {
 				try {
 					window.grecaptcha.reset();
 				}
-				catch (e) {
-					console.warn('Could not reset reCAPTCHA.');
+				catch (error) {
+					console.warn('Could not reset reCAPTCHA');
 				}
 			});
 		}
-	}
+	}, []);
 
-	shouldUpdate() {
-		return false;
-	}
-}
-
-Soy.register(Captcha, templates);
-
-Captcha.STATE = {
-	/**
-	 * @default false
-	 * @memberof FieldBase
-	 * @type {?bool}
-	 */
-
-	evaluable: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @memberof Captcha
-	 * @type {?(string|undefined)}
-	 */
-
-	spritemap: Config.string(),
-
-	/**
-	 * @default 'captcha'
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	type: Config.string().value('captcha'),
+	return (
+		<>
+			<div dangerouslySetInnerHTML={{__html: contentMemoized}} />
+			<input id={name} type="hidden" />
+		</>
+	);
 };
 
-export default Captcha;
+const CaptchaProxy = connectStore(({dispatch, html, name, ...otherProps}) => (
+	<FieldBaseProxy
+		{...otherProps}
+		dispatch={dispatch}
+		name={name}
+		visible={true}
+	>
+		<Captcha html={html.content} name={name} />
+	</FieldBaseProxy>
+));
+
+const ReactCaptchaAdapter = getConnectedReactComponentAdapter(
+	CaptchaProxy,
+	templates
+);
+
+export {ReactCaptchaAdapter};
+export default ReactCaptchaAdapter;

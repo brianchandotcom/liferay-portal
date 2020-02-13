@@ -282,8 +282,6 @@ public class ContentPageEditorDisplayContext {
 				"layoutConversionWarningMessages",
 				editorSoyContext.get("layoutConversionWarningMessages")
 			).put(
-				"mappingFieldsURL", editorSoyContext.get("mappingFieldsURL")
-			).put(
 				"masterUsed", editorSoyContext.get("masterUsed")
 			).put(
 				"moveItemURL",
@@ -307,9 +305,6 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"renderFragmentEntryURL",
 				editorSoyContext.get("renderFragmentEntryURL")
-			).put(
-				"selectedMappingTypes",
-				editorSoyContext.get("selectedMappingTypes")
 			).put(
 				"selectedSegmentsEntryId",
 				editorSoyContext.get("selectedSegmentsEntryId")

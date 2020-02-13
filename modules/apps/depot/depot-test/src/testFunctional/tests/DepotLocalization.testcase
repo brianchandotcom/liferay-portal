@@ -41,7 +41,7 @@ definition {
 
 		Depot.viewDefaultLanguagesConfiguration();
 
-		Click(
+		Click.clickNoMouseOverNoWaitForVisible(
 			key_languagesOption = "Define a custom default language and additional available languages for this repository.",
 			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
 
@@ -63,15 +63,19 @@ definition {
 
 		DepotNavigator.gotoLanguages(depotName = "Test Depot Name");
 
-		Click(
+		Click.clickNoMouseOverNoWaitForVisible(
 			key_languagesOption = "Define a custom default language and additional available languages for this repository.",
 			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
 
 		Depot.viewDefaultLanguage(defaultDepotLanguage = "English (United States)");
 
-		LanguagePortlet.moveAllLanguagesToAvailable();
+		Button.click(button = "Manage");
 
-		LanguagePortlet.moveLanguagesToCurrent(currentLanguages = "English (United States),Japanese (Japan),Spanish (Spain)");
+		Depot.configureCurrentLanguages(
+			currentLanguages = "English (United States),Spanish (Spain),Japanese (Japan)",
+			defaultDepotLanguage = "English (United States)");
+
+		Button.click(button = "Save");
 
 		DepotNavigator.openDepotAdmin();
 

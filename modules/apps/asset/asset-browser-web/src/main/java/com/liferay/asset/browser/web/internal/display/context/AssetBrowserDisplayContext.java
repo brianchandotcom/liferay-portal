@@ -56,12 +56,12 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetBrowserDisplayContext {
 
 	public AssetBrowserDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
 		_assetHelper = (AssetHelper)renderRequest.getAttribute(
 			AssetWebKeys.ASSET_HELPER);

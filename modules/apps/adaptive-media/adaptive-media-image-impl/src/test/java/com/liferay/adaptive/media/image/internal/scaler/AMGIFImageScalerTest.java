@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.image.internal.scaler;
 
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.internal.configuration.AMImageConfigurationEntryImpl;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
@@ -44,7 +45,7 @@ public class AMGIFImageScalerTest {
 
 		Assert.assertEquals(
 			"100x_",
-			amGIFImageScaler.getResizeFitValues(amImageConfigurationEntry));
+			_getResizeFitValues(amGIFImageScaler, amImageConfigurationEntry));
 	}
 
 	@Test
@@ -63,7 +64,7 @@ public class AMGIFImageScalerTest {
 
 		Assert.assertEquals(
 			"_x100",
-			amGIFImageScaler.getResizeFitValues(amImageConfigurationEntry));
+			_getResizeFitValues(amGIFImageScaler, amImageConfigurationEntry));
 	}
 
 	@Test
@@ -82,7 +83,7 @@ public class AMGIFImageScalerTest {
 
 		Assert.assertEquals(
 			"200x100",
-			amGIFImageScaler.getResizeFitValues(amImageConfigurationEntry));
+			_getResizeFitValues(amGIFImageScaler, amImageConfigurationEntry));
 	}
 
 	@Test
@@ -99,7 +100,7 @@ public class AMGIFImageScalerTest {
 
 		Assert.assertEquals(
 			"_x100",
-			amGIFImageScaler.getResizeFitValues(amImageConfigurationEntry));
+			_getResizeFitValues(amGIFImageScaler, amImageConfigurationEntry));
 	}
 
 	@Test
@@ -118,7 +119,7 @@ public class AMGIFImageScalerTest {
 
 		Assert.assertEquals(
 			"100x_",
-			amGIFImageScaler.getResizeFitValues(amImageConfigurationEntry));
+			_getResizeFitValues(amGIFImageScaler, amImageConfigurationEntry));
 	}
 
 	@Test
@@ -137,7 +138,17 @@ public class AMGIFImageScalerTest {
 
 		Assert.assertEquals(
 			"_x100",
-			amGIFImageScaler.getResizeFitValues(amImageConfigurationEntry));
+			_getResizeFitValues(amGIFImageScaler, amImageConfigurationEntry));
+	}
+
+	private String _getResizeFitValues(
+		AMGIFImageScaler amGIFImageScaler,
+		AMImageConfigurationEntry amImageConfigurationEntry) {
+
+		return ReflectionTestUtil.invoke(
+			amGIFImageScaler, "_getResizeFitValues",
+			new Class<?>[] {AMImageConfigurationEntry.class},
+			amImageConfigurationEntry);
 	}
 
 }

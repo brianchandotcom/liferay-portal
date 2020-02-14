@@ -471,8 +471,6 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		url = url.trim();
-
 		try {
 			URI uri = _getURI(url);
 
@@ -554,8 +552,6 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		url = url.trim();
-
 		try {
 			URI uri = _getURI(url);
 
@@ -602,8 +598,6 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		url = url.trim();
-
 		try {
 			URI uri = _getURI(url);
 
@@ -625,8 +619,6 @@ public class HttpImpl implements Http {
 		if (Validator.isNull(url)) {
 			return url;
 		}
-
-		url = url.trim();
 
 		try {
 			URI uri = _getURI(url);
@@ -1062,16 +1054,16 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String removeProtocol(String url) {
-		url = url.trim();
-
 		String protocol = getProtocol(url);
 
 		if (Validator.isNotNull(protocol)) {
-			String delimiter = url.substring(
+			url = url.trim();
+
+			String protocolDelimiter = url.substring(
 				protocol.length(),
 				protocol.length() + PROTOCOL_DELIMITER.length());
 
-			if (delimiter.equals(PROTOCOL_DELIMITER)) {
+			if (protocolDelimiter.equals(PROTOCOL_DELIMITER)) {
 				return url.substring(
 					protocol.length() + PROTOCOL_DELIMITER.length());
 			}
@@ -1903,6 +1895,7 @@ public class HttpImpl implements Http {
 
 	private URI _getURI(String url) throws URISyntaxException {
 		Map<String, URI> uriMap = _uriMap.get();
+		url = url.trim();
 
 		URI uri = uriMap.get(url);
 

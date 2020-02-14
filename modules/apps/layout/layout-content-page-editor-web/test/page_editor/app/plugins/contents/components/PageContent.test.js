@@ -17,24 +17,27 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
+import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 import PageContent from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/contents/components/PageContent';
 
 const renderPageContent = props =>
 	render(
-		<PageContent
-			actions={{
-				editURL: 'editURL',
-				permissionsURL: 'permissionsURL',
-				viewUsagesURL: 'viewUsagesURL'
-			}}
-			name="Web Content Article"
-			status={{
-				hasApprovedVersion: true
-			}}
-			title="Test Web Content"
-			usagesCount={1}
-			{...props}
-		></PageContent>
+		<StoreContextProvider initialState={[{}, {}]}>
+			<PageContent
+				actions={{
+					editURL: 'editURL',
+					permissionsURL: 'permissionsURL',
+					viewUsagesURL: 'viewUsagesURL'
+				}}
+				name="Web Content Article"
+				status={{
+					hasApprovedVersion: true
+				}}
+				title="Test Web Content"
+				usagesCount={1}
+				{...props}
+			></PageContent>
+		</StoreContextProvider>
 	);
 
 describe('PageContent', () => {

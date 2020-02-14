@@ -426,13 +426,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Accounts");
 
-		LexiconEntry.gotoEntry(rowEntry = "Remove Account User");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no users associated with this account.");
+		Accounts.viewNoAssignee(
+			accountName = "Remove Account User",
+			assigneeType = "Users");
 	}
 
 	@priority = "5"

@@ -256,4 +256,16 @@ definition {
 			rowStatus = "INACTIVE");
 	}
 
+	macro viewNoAssignee {
+		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "${assigneeType}");
+
+		var assigneeType = StringUtil.lowerCase("${assigneeType}");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no ${assigneeType} associated with this account.")
+	}
+
 }

@@ -71,6 +71,8 @@ public interface DDMFormInstanceService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public int countFormInstances(String uuid) throws PortalException;
+
 	public void deleteFormInstance(long ddmFormInstanceId)
 		throws PortalException;
 

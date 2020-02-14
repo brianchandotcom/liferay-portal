@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.1.0",
-		"@clayui/form": "3.3.0",
-		"@clayui/management-toolbar": "3.0.5",
+		"@clayui/button": "3.2.0",
+		"@clayui/form": "3.5.0",
+		"@clayui/management-toolbar": "3.0.6",
 		"frontend-js-components-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"

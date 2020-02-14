@@ -90,6 +90,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		</div>
 
 		<%
+		UnicodeProperties properties = editAssetListDisplayContext.getUnicodeProperties();
+
 		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
 
 		for (AssetRendererFactory<?> assetRendererFactory : assetRendererFactories) {

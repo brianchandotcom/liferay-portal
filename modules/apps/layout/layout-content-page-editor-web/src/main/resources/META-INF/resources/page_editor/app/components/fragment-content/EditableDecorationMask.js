@@ -20,6 +20,7 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import {useSelector} from '../../store/index';
+import {useEditableProcessorUniqueId} from './EditableProcessorContext';
 
 export const EDITABLE_DECORATION_CLASS_NAMES = {
 	active: 'page-editor__editable-decoration-mask-rect--active',
@@ -30,6 +31,7 @@ export const EDITABLE_DECORATION_CLASS_NAMES = {
 };
 
 function EditableDecorationMask({classNames: elementsClassNames, elements}) {
+	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const layoutData = useSelector(state => state.layoutData);
 
@@ -100,22 +102,9 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 	}, [requestComputeRects]);
 
 	// - Editing item
-	// useEffect(() => {
-	// 	let id = null;
-
-	// 	const tick = () => {
-	// 		computeRects();
-	// 		id = setTimeout(tick, 50);
-	// 	};
-
-	// 	if (editingItemId) {
-	// 		tick();
-	// 	}
-
-	// 	return () => {
-	// 		clearTimeout(id);
-	// 	};
-	// }, [computeRects, editingItemId]);
+	useEffect(() => {
+		setShowMask(!editableProcessorUniqueId);
+	}, [editableProcessorUniqueId, setShowMask]);
 
 	// - Page Editor sidebar
 	useEffect(() => {

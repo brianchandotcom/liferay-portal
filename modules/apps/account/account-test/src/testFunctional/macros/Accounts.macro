@@ -121,6 +121,10 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro gotoAssigneeTab {
+		Navigator.gotoNavItem(navItem = "${assigneeTab}");
+	}
+
 	macro inactiveAccount {
 		Search.searchCP(searchTerm = "${accountName}");
 

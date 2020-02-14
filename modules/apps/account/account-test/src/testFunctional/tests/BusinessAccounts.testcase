@@ -381,7 +381,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Remove Account User");
 
-		Navigator.gotoNavItem(navItem = "Users");
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
 		Accounts.removeUser(userFirstName = "userfn");
 
@@ -392,7 +392,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Remove Account User");
 
-		Navigator.gotoNavItem(navItem = "Users");
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

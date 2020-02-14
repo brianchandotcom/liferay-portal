@@ -21,60 +21,6 @@ import {ConfigContext} from '../config/index';
 import {useSelector} from '../store/index';
 import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
 
-const getSelectedNodeIds = (
-	allowNewFragmentEntries,
-	fragmentEntryKeys = [],
-	fragmentEntryKeysArray
-) => {
-	return allowNewFragmentEntries
-		? fragmentEntryKeysArray.filter(
-				fragmentEntryKey =>
-					!fragmentEntryKeys.includes(fragmentEntryKey)
-		  )
-		: fragmentEntryKeys;
-};
-
-const toNodes = collections => {
-	return [
-		{
-			children: collections.map(collection => {
-				const children = collection.fragmentEntries.map(
-					fragmentEntry => ({
-						id: fragmentEntry.fragmentEntryKey,
-						name: fragmentEntry.name
-					})
-				);
-
-				return {
-					children,
-					expanded: false,
-					id: collection.fragmentCollectionId,
-					name: collection.name
-				};
-			}),
-			expanded: true,
-			id: 'lfr-all-fragments-id',
-			name: Liferay.Language.get('all-fragments')
-		}
-	];
-};
-
-const toFragmentEntryKeysArray = collections => {
-	const fragmentEntryKeysArray = [];
-
-	collections.forEach(collection => {
-		collection.fragmentEntries.forEach(fragmentEntry =>
-			fragmentEntryKeysArray.push(fragmentEntry.fragmentEntryKey)
-		);
-
-		fragmentEntryKeysArray.push(collection.fragmentCollectionId);
-	});
-
-	fragmentEntryKeysArray.push('lfr-all-fragments-id');
-
-	return fragmentEntryKeysArray;
-};
-
 const AllowedFragmentSelector = ({onSelectedFragment}) => {
 	const {fragments} = useContext(ConfigContext);
 	const layoutData = useSelector(state => state.layoutData);
@@ -172,3 +118,57 @@ AllowedFragmentSelector.propTypes = {
 
 export {AllowedFragmentSelector};
 export default AllowedFragmentSelector;
+
+const getSelectedNodeIds = (
+	allowNewFragmentEntries,
+	fragmentEntryKeys = [],
+	fragmentEntryKeysArray
+) => {
+	return allowNewFragmentEntries
+		? fragmentEntryKeysArray.filter(
+				fragmentEntryKey =>
+					!fragmentEntryKeys.includes(fragmentEntryKey)
+		  )
+		: fragmentEntryKeys;
+};
+
+const toNodes = collections => {
+	return [
+		{
+			children: collections.map(collection => {
+				const children = collection.fragmentEntries.map(
+					fragmentEntry => ({
+						id: fragmentEntry.fragmentEntryKey,
+						name: fragmentEntry.name
+					})
+				);
+
+				return {
+					children,
+					expanded: false,
+					id: collection.fragmentCollectionId,
+					name: collection.name
+				};
+			}),
+			expanded: true,
+			id: 'lfr-all-fragments-id',
+			name: Liferay.Language.get('all-fragments')
+		}
+	];
+};
+
+const toFragmentEntryKeysArray = collections => {
+	const fragmentEntryKeysArray = [];
+
+	collections.forEach(collection => {
+		collection.fragmentEntries.forEach(fragmentEntry =>
+			fragmentEntryKeysArray.push(fragmentEntry.fragmentEntryKey)
+		);
+
+		fragmentEntryKeysArray.push(collection.fragmentCollectionId);
+	});
+
+	fragmentEntryKeysArray.push('lfr-all-fragments-id');
+
+	return fragmentEntryKeysArray;
+};

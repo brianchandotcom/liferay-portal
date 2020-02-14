@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge González
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class BlogsEditStatusBarControlMenuJSPDynamicInclude
+public class BlogsEditEntryStatusBarControlMenuJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
@@ -87,6 +87,6 @@ public class BlogsEditStatusBarControlMenuJSPDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsEditStatusBarControlMenuJSPDynamicInclude.class);
+		BlogsEditEntryStatusBarControlMenuJSPDynamicInclude.class);
 
 }

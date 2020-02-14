@@ -47,6 +47,38 @@ definition {
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="&amp; property" content="&amp; content"''');
 	}
 
+	@description = "This ensures that the custom meta tag can be cleared."
+	@priority = "5"
+	test ClearCustomTag {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+
+		CustomMetaTags.addTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property");
+
+		CustomMetaTags.editTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property",
+			newCustomContent = "",
+			newCustomProperty = "");
+
+		Alert.viewSuccessMessage();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property" content="custom meta content",property="" content=""''');
+	}
+
 	@description = "This ensures that the custom meta tag can be edited."
 	@priority = "5"
 	test EditTag {
@@ -173,6 +205,64 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property edit edit" content="custom meta content edit edit"''');
+	}
+
+	@description = "This ensures that the custom meta tag can not be generated without property or content."
+	@priority = "5"
+	test ViewTagWithoutPropertyOrContent {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+
+		CustomMetaTags.addTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property");
+
+		CustomMetaTags.editTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property",
+			newCustomContent = "custom meta content edit",
+			newCustomProperty = "");
+
+		Alert.viewSuccessMessage();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property" content="custom meta content",property="" content="custom meta content edit"''');
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+
+		CustomMetaTags.editTag(
+			customContent = "custom meta content edit",
+			customProperty = "",
+			newCustomContent = "",
+			newCustomProperty = "custom meta property edit");
+
+		Alert.viewSuccessMessage();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property edit" content=""''');
 	}
 
 	@description = "This ensures that the translated tag inherits the default property and content."

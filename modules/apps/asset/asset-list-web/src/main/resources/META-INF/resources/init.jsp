@@ -104,6 +104,4 @@ page import="java.util.Set" %>
 <%
 EditAssetListDisplayContext editAssetListDisplayContext = (EditAssetListDisplayContext)request.getAttribute(AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT);
 AssetListDisplayContext assetListDisplayContext = (AssetListDisplayContext)request.getAttribute(AssetListWebKeys.ASSET_LIST_DISPLAY_CONTEXT);
-
-UnicodeProperties properties = editAssetListDisplayContext.getUnicodeProperties();
 %>

@@ -55,6 +55,8 @@ public class LayoutPageTemplateStructureHelperUtil {
 		if (fragmentEntryLinks.isEmpty()) {
 			LayoutStructure layoutStructure = new LayoutStructure();
 
+			layoutStructure.addRootLayoutStructureItem();
+
 			return layoutStructure.toJSONObject();
 		}
 

@@ -67,7 +67,7 @@ definition {
 		PageEditor.expandFragmentCollection(collectionName = "Content Display");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
-			fragmentName = "${fragmentName}",
+			key_fragmentName = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
@@ -121,7 +121,7 @@ definition {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
-			fragmentName = "${fragmentName}",
+			key_fragmentName = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
@@ -869,7 +869,7 @@ definition {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 		DragAndDrop(
-			fragmentName = "${fragmentName}",
+			key_fragmentName = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
 			locator2 = "PageEditor#OUTSIDE_OF_DROP_ZONE",
 			value1 = "");

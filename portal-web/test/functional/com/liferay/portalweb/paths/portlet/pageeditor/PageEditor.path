@@ -374,7 +374,7 @@
 <!--SECTION_BUILDER-->
 <tr>
 	<td>SECTION_BUILDER_FRAGMENTS</td>
-	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'fragment-card') and contains(.,'${fragmentName}')]</td>
+	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'fragment-card') and contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

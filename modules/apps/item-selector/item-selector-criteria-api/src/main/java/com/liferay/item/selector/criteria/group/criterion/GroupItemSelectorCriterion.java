@@ -36,12 +36,20 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _allowNavigation;
 	}
 
+	public boolean isIncludeUserPersonalSite() {
+		return _includeUserPersonalSite;
+	}
+
 	public boolean isPrivateLayout() {
 		return _privateLayout;
 	}
 
 	public void setAllowNavigation(boolean allowNavigation) {
 		_allowNavigation = allowNavigation;
+	}
+
+	public void setIncludeUserPersonalSite(boolean includeUserPersonalSite) {
+		_includeUserPersonalSite = includeUserPersonalSite;
 	}
 
 	public void setPrivateLayout(boolean privateLayout) {
@@ -53,6 +61,7 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	private boolean _allowNavigation = true;
+	private boolean _includeUserPersonalSite;
 	private boolean _privateLayout;
 	private String _target;
 

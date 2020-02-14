@@ -109,6 +109,10 @@ public class FinderPath {
 		return _resultClass;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isEntityCacheEnabled() {
 		return _entityCacheEnabled;
 	}

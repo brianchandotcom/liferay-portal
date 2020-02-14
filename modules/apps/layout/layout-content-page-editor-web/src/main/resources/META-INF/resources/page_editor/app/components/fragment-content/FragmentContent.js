@@ -115,7 +115,11 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 				markup={content}
 			/>
 
-			<FragmentContentClickFilter element={element} />
+			<FragmentContentClickFilter
+				element={element}
+				fragmentEntryLinkId={fragmentEntryLinkId}
+				itemId={itemId}
+			/>
 
 			<FragmentContentFloatingToolbar
 				element={element}

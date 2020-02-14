@@ -18,13 +18,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
-
-import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -46,12 +43,8 @@ public class BlogsEditEntryStatusBarControlMenuJSPDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		PortletRequest portletRequest =
-			(PortletRequest)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-
 		String mvcRenderCommandName = ParamUtil.getString(
-			portletRequest, "mvcRenderCommandName");
+			httpServletRequest, "mvcRenderCommandName");
 
 		if (Validator.isNotNull(mvcRenderCommandName) &&
 			!mvcRenderCommandName.equals("/blogs/edit_entry")) {

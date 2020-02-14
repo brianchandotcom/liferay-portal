@@ -19,7 +19,6 @@ import com.liferay.change.tracking.internal.CTRowUtil;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,13 +31,10 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -140,115 +136,10 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		}
 
 		if (_modificationCTEntries != null) {
-			int rowCount = _updateCTCollectionId(
+			_updateCTCollectionId(
 				connection, tableName, primaryKeyName,
 				_modificationCTEntries.values(), _targetCTCollectionId,
-				_sourceCTCollectionId, true, false);
-
-			if (rowCount != _modificationCTEntries.size()) {
-				StringBundler sb = new StringBundler();
-
-				sb.append("select t1.");
-				sb.append(primaryKeyName);
-				sb.append(" from ");
-				sb.append(tableName);
-				sb.append(" t1 inner join ");
-				sb.append(tableName);
-				sb.append(" t2 on t1.");
-				sb.append(primaryKeyName);
-				sb.append(" = t2.");
-				sb.append(primaryKeyName);
-				sb.append(" and t1.ctCollectionId = ");
-				sb.append(tempCTCollectionId);
-				sb.append(" and t2.ctCollectionId = ");
-				sb.append(_targetCTCollectionId);
-
-				Map<String, Integer> strictColumnsMap = new HashMap<>(
-					ctPersistence.getTableColumnsMap());
-
-				Set<String> strictColumnNames = strictColumnsMap.keySet();
-
-				strictColumnNames.retainAll(
-					ctPersistence.getCTColumnNames(
-						CTColumnResolutionType.STRICT));
-
-				Collection<Integer> strictColumnTypes =
-					strictColumnsMap.values();
-
-				if (!strictColumnTypes.contains(Types.BLOB)) {
-					sb.append(" and (");
-
-					for (Map.Entry<String, Integer> entry :
-							strictColumnsMap.entrySet()) {
-
-						String conflictColumnName = entry.getKey();
-
-						if (entry.getValue() == Types.CLOB) {
-							sb.append("CAST_CLOB_TEXT(t1.");
-							sb.append(conflictColumnName);
-							sb.append(") != CAST_CLOB_TEXT(t2.");
-							sb.append(conflictColumnName);
-							sb.append(")");
-						}
-						else {
-							sb.append("t1.");
-							sb.append(conflictColumnName);
-							sb.append(" != t2.");
-							sb.append(conflictColumnName);
-						}
-
-						sb.append(" or ");
-					}
-
-					sb.setStringAt(")", sb.index() - 1);
-				}
-
-				sb.append(" inner join CTEntry ctEntry on ");
-				sb.append("ctEntry.ctCollectionId = ");
-				sb.append(_sourceCTCollectionId);
-				sb.append(" and ctEntry.modelClassNameId = ");
-				sb.append(_modelClassNameId);
-				sb.append(" and ctEntry.modelClassPK = t2.");
-				sb.append(primaryKeyName);
-				sb.append(" and ctEntry.changeType = ");
-				sb.append(CTConstants.CT_CHANGE_TYPE_MODIFICATION);
-				sb.append(" and ctEntry.modelMvccVersion != t2.mvccVersion");
-
-				List<Long> conflictPrimaryKeys = new ArrayList<>();
-
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							SQLTransformer.transform(sb.toString()));
-					ResultSet resultSet = preparedStatement.executeQuery()) {
-
-					while (resultSet.next()) {
-						conflictPrimaryKeys.add(resultSet.getLong(1));
-					}
-				}
-
-				if (!conflictPrimaryKeys.isEmpty()) {
-					conflictPrimaryKeys.sort(null);
-
-					throw new SystemException(
-						StringBundler.concat(
-							"Unable to auto resolve publication conflict for ",
-							_ctService.getModelClass(), " with primary keys ",
-							conflictPrimaryKeys));
-				}
-
-				rowCount += _updateCTCollectionId(
-					connection, tableName, primaryKeyName,
-					_modificationCTEntries.values(), _targetCTCollectionId,
-					_sourceCTCollectionId, false, false);
-
-				if (rowCount != _modificationCTEntries.size()) {
-					throw new SystemException(
-						StringBundler.concat(
-							"Size mismatch expected ",
-							_modificationCTEntries.size(), " but was ",
-							rowCount));
-				}
-			}
+				_sourceCTCollectionId, true, true);
 		}
 
 		if (_additionCTEntries != null) {
@@ -270,9 +161,6 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 			sb.append("select ");
 
-			Set<String> ignoredColumnNames = ctPersistence.getCTColumnNames(
-				CTColumnResolutionType.IGNORE);
-
 			for (String name : tableColumnsMap.keySet()) {
 				if (name.equals("ctCollectionId")) {
 					sb.append(_targetCTCollectionId);
@@ -280,9 +168,6 @@ public class CTServicePublisher<T extends CTModel<T>> {
 				}
 				else if (name.equals("mvccVersion")) {
 					sb.append("(t1.mvccVersion + 1) ");
-				}
-				else if (ignoredColumnNames.contains(name)) {
-					sb.append("t2.");
 				}
 				else {
 					sb.append("t1.");

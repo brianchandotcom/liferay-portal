@@ -23,6 +23,7 @@ import com.liferay.change.tracking.internal.CTServiceRegistry;
 import com.liferay.change.tracking.internal.CTTableMapperHelper;
 import com.liferay.change.tracking.internal.conflict.CTConflictChecker;
 import com.liferay.change.tracking.internal.conflict.ConstraintResolverConflictInfo;
+import com.liferay.change.tracking.internal.conflict.ResolvedModificationConflictInfo;
 import com.liferay.change.tracking.internal.resolver.ConstraintResolverKey;
 import com.liferay.change.tracking.model.CTAutoResolutionInfo;
 import com.liferay.change.tracking.model.CTCollection;
@@ -65,6 +66,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -136,7 +138,7 @@ public class CTCollectionLocalServiceImpl
 						}
 
 						return new CTConflictChecker<>(
-							ctService, _serviceTrackerMap,
+							ctService, modelClassNameId, _serviceTrackerMap,
 							ctCollection.getCtCollectionId(),
 							CTConstants.CT_COLLECTION_ID_PRODUCTION);
 					});
@@ -206,6 +208,19 @@ public class CTCollectionLocalServiceImpl
 					constraintResolverConflictInfo.setCtAutoResolutionInfoId(
 						ctAutoResolutionInfo.getCtAutoResolutionInfoId());
 				}
+				else if (conflictInfo instanceof
+							ResolvedModificationConflictInfo) {
+
+					ResolvedModificationConflictInfo
+						resolvedModificationConflictInfo =
+							(ResolvedModificationConflictInfo)conflictInfo;
+
+					resolvedModificationConflictInfo.setCtAutoResolutionInfoId(
+						ctAutoResolutionInfo.getCtAutoResolutionInfoId());
+
+					ctAutoResolutionInfo.setConflictIdentifier(
+						ResolvedModificationConflictInfo.class.getName());
+				}
 
 				_ctAutoResolutionInfoPersistence.update(ctAutoResolutionInfo);
 			}
@@ -221,26 +236,46 @@ public class CTCollectionLocalServiceImpl
 			ClassName className = _classNameLocalService.getClassName(
 				ctAutoResolutionInfo.getModelClassNameId());
 
-			List<String> uniqueIndexes = StringUtil.split(
-				ctAutoResolutionInfo.getConflictIdentifier(), CharPool.COMMA);
+			if (Objects.equals(
+					ctAutoResolutionInfo.getConflictIdentifier(),
+					ResolvedModificationConflictInfo.class.getName())) {
 
-			ConstraintResolver<?> constraintResolver =
-				_serviceTrackerMap.getService(
-					new ConstraintResolverKey(
-						className.getValue(),
-						uniqueIndexes.toArray(new String[0])));
+				ResolvedModificationConflictInfo
+					resolvedModificationConflictInfo =
+						new ResolvedModificationConflictInfo(
+							ctAutoResolutionInfo.getSourceModelClassPK(),
+							ctAutoResolutionInfo.getTargetModelClassPK());
 
-			if (constraintResolver != null) {
-				ConstraintResolverConflictInfo constraintResolverConflictInfo =
-					new ConstraintResolverConflictInfo(
-						constraintResolver,
-						ctAutoResolutionInfo.getSourceModelClassPK(),
-						ctAutoResolutionInfo.getTargetModelClassPK(), true);
-
-				constraintResolverConflictInfo.setCtAutoResolutionInfoId(
+				resolvedModificationConflictInfo.setCtAutoResolutionInfoId(
 					ctAutoResolutionInfo.getCtAutoResolutionInfoId());
 
-				conflictInfos.add(constraintResolverConflictInfo);
+				conflictInfos.add(resolvedModificationConflictInfo);
+			}
+			else {
+				List<String> uniqueIndexes = StringUtil.split(
+					ctAutoResolutionInfo.getConflictIdentifier(),
+					CharPool.COMMA);
+
+				ConstraintResolver<?> constraintResolver =
+					_serviceTrackerMap.getService(
+						new ConstraintResolverKey(
+							className.getValue(),
+							uniqueIndexes.toArray(new String[0])));
+
+				if (constraintResolver != null) {
+					ConstraintResolverConflictInfo
+						constraintResolverConflictInfo =
+							new ConstraintResolverConflictInfo(
+								constraintResolver,
+								ctAutoResolutionInfo.getSourceModelClassPK(),
+								ctAutoResolutionInfo.getTargetModelClassPK(),
+								true);
+
+					constraintResolverConflictInfo.setCtAutoResolutionInfoId(
+						ctAutoResolutionInfo.getCtAutoResolutionInfoId());
+
+					conflictInfos.add(constraintResolverConflictInfo);
+				}
 			}
 		}
 

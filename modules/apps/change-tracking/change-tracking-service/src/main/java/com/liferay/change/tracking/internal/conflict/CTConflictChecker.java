@@ -21,8 +21,10 @@ import com.liferay.change.tracking.internal.resolver.ConstraintResolverHelperImp
 import com.liferay.change.tracking.internal.resolver.ConstraintResolverKey;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.resolver.ConstraintResolver;
+import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,14 +33,19 @@ import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
+import java.io.Serializable;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -51,12 +58,13 @@ import java.util.Set;
 public class CTConflictChecker<T extends CTModel<T>> {
 
 	public CTConflictChecker(
-		CTService<T> ctService,
+		CTService<T> ctService, long modelClassNameId,
 		ServiceTrackerMap<ConstraintResolverKey, ConstraintResolver>
 			serviceTrackerMap,
 		long sourceCTCollectionId, long targetCTCollectionId) {
 
 		_ctService = ctService;
+		_modelClassNameId = modelClassNameId;
 		_serviceTrackerMap = serviceTrackerMap;
 		_sourceCTCollectionId = sourceCTCollectionId;
 		_targetCTCollectionId = targetCTCollectionId;
@@ -65,6 +73,16 @@ public class CTConflictChecker<T extends CTModel<T>> {
 	public void addCTEntry(CTEntry ctEntry) {
 		if (ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_ADDITION) {
 			_ignorablePrimaryKeys.add(ctEntry.getModelClassPK());
+		}
+
+		if (ctEntry.getChangeType() ==
+				CTConstants.CT_CHANGE_TYPE_MODIFICATION) {
+
+			if (_modificationCTEntries == null) {
+				_modificationCTEntries = new HashMap<>();
+			}
+
+			_modificationCTEntries.put(ctEntry.getModelClassPK(), ctEntry);
 		}
 	}
 
@@ -77,26 +95,6 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		Connection connection = CurrentConnectionUtil.getConnection(
 			ctPersistence.getDataSource());
-
-		List<String[]> uniqueIndexColumnNames =
-			ctPersistence.getUniqueIndexColumnNames();
-
-		List<ConflictInfo> conflictInfos = new ArrayList<>();
-
-		if (!uniqueIndexColumnNames.isEmpty()) {
-			for (String[] columnNames : uniqueIndexColumnNames) {
-				_checkConstraint(
-					connection, ctPersistence, conflictInfos, columnNames);
-			}
-		}
-
-		return conflictInfos;
-	}
-
-	private void _checkConstraint(
-			Connection connection, CTPersistence<T> ctPersistence,
-			List<ConflictInfo> conflictInfos, String[] columnNames)
-		throws PortalException {
 
 		Set<String> primaryKeyNames = ctPersistence.getCTColumnNames(
 			CTColumnResolutionType.PK);
@@ -111,6 +109,33 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Iterator<String> iterator = primaryKeyNames.iterator();
 
 		String primaryKeyName = iterator.next();
+
+		List<ConflictInfo> conflictInfos = new ArrayList<>();
+
+		if (_modificationCTEntries != null) {
+			_checkModifications(
+				connection, ctPersistence, conflictInfos, primaryKeyName);
+		}
+
+		List<String[]> uniqueIndexColumnNames =
+			ctPersistence.getUniqueIndexColumnNames();
+
+		if (!uniqueIndexColumnNames.isEmpty()) {
+			for (String[] columnNames : uniqueIndexColumnNames) {
+				_checkConstraint(
+					connection, ctPersistence, conflictInfos, columnNames,
+					primaryKeyName);
+			}
+		}
+
+		return conflictInfos;
+	}
+
+	private void _checkConstraint(
+			Connection connection, CTPersistence<T> ctPersistence,
+			List<ConflictInfo> conflictInfos, String[] columnNames,
+			String primaryKeyName)
+		throws PortalException {
 
 		String constraintConflictsSQL = CTRowUtil.getConstraintConflictsSQL(
 			ctPersistence.getTableName(), primaryKeyName, columnNames,
@@ -200,6 +225,181 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		}
 	}
 
+	private void _checkModifications(
+		Connection connection, CTPersistence<T> ctPersistence,
+		List<ConflictInfo> conflictInfos, String primaryKeyName) {
+
+		StringBundler sb = new StringBundler();
+
+		String tableName = ctPersistence.getTableName();
+
+		sb.append("select t1.");
+		sb.append(primaryKeyName);
+		sb.append(" as sourcePrimarykey, t2.");
+		sb.append(primaryKeyName);
+		sb.append(" as targetPrimarykey from ");
+		sb.append(tableName);
+		sb.append(" t1 inner join ");
+		sb.append(tableName);
+		sb.append(" t2 on t1.");
+		sb.append(primaryKeyName);
+		sb.append(" = t2.");
+		sb.append(primaryKeyName);
+		sb.append(" and t1.ctCollectionId = ");
+		sb.append(_sourceCTCollectionId);
+		sb.append(" and t2.ctCollectionId = ");
+		sb.append(_targetCTCollectionId);
+
+		Map<String, Integer> strictColumnsMap = new HashMap<>(
+			ctPersistence.getTableColumnsMap());
+
+		Set<String> strictColumnNames = strictColumnsMap.keySet();
+
+		strictColumnNames.retainAll(
+			ctPersistence.getCTColumnNames(CTColumnResolutionType.STRICT));
+
+		Collection<Integer> strictColumnTypes = strictColumnsMap.values();
+
+		if (!strictColumnTypes.contains(Types.BLOB)) {
+			sb.append(" and (");
+
+			for (Map.Entry<String, Integer> entry :
+					strictColumnsMap.entrySet()) {
+
+				String conflictColumnName = entry.getKey();
+
+				if (entry.getValue() == Types.CLOB) {
+					sb.append("CAST_CLOB_TEXT(t1.");
+					sb.append(conflictColumnName);
+					sb.append(") != CAST_CLOB_TEXT(t2.");
+					sb.append(conflictColumnName);
+					sb.append(")");
+				}
+				else {
+					sb.append("t1.");
+					sb.append(conflictColumnName);
+					sb.append(" != t2.");
+					sb.append(conflictColumnName);
+				}
+
+				sb.append(" or ");
+			}
+
+			sb.setStringAt(")", sb.index() - 1);
+		}
+
+		sb.append(" inner join CTEntry ctEntry on ");
+		sb.append("ctEntry.ctCollectionId = ");
+		sb.append(_sourceCTCollectionId);
+		sb.append(" and ctEntry.modelClassNameId = ");
+		sb.append(_modelClassNameId);
+		sb.append(" and ctEntry.modelClassPK = t2.");
+		sb.append(primaryKeyName);
+		sb.append(" and ctEntry.changeType = ");
+		sb.append(CTConstants.CT_CHANGE_TYPE_MODIFICATION);
+		sb.append(" and ctEntry.modelMvccVersion != t2.mvccVersion");
+
+		List<ConflictInfo> modificationConflictInfos = new ArrayList<>();
+
+		Map<Serializable, CTEntry> updateMvccCTEntries = new HashMap<>();
+
+		updateMvccCTEntries.putAll(_modificationCTEntries);
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				SQLTransformer.transform(sb.toString()));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				long sourcePK = resultSet.getLong(1);
+				long targetPK = resultSet.getLong(2);
+
+				modificationConflictInfos.add(
+					new StrictModificationConflictInfo(sourcePK, targetPK));
+
+				updateMvccCTEntries.remove(sourcePK);
+			}
+		}
+		catch (SQLException sqlException) {
+			throw new SystemException(sqlException);
+		}
+
+		conflictInfos.addAll(modificationConflictInfos);
+
+		Map<String, Integer> tableColumnsMap =
+			ctPersistence.getTableColumnsMap();
+
+		sb.setIndex(0);
+
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" t1 inner join ");
+		sb.append(tableName);
+		sb.append(" t2 inner join CTEntry ctEntry on ");
+		sb.append("ctEntry.ctCollectionId = ");
+		sb.append(_sourceCTCollectionId);
+		sb.append(" and ctEntry.modelClassNameId = ");
+		sb.append(_modelClassNameId);
+		sb.append(" and ctEntry.modelClassPK = t1.");
+		sb.append(primaryKeyName);
+		sb.append(" and ctEntry.changeType = ");
+		sb.append(CTConstants.CT_CHANGE_TYPE_MODIFICATION);
+		sb.append(" set ");
+
+		Set<String> ignoredColumnNames = ctPersistence.getCTColumnNames(
+			CTColumnResolutionType.IGNORE);
+
+		for (String name : tableColumnsMap.keySet()) {
+			sb.append("t1.");
+			sb.append(name);
+			sb.append(" = ");
+
+			if (name.equals("mvccVersion")) {
+				sb.append("(t1.mvccVersion + 1)");
+			}
+			else if (ignoredColumnNames.contains(name)) {
+				sb.append("t2.");
+				sb.append(name);
+			}
+			else {
+				sb.append("t1.");
+				sb.append(name);
+			}
+
+			sb.append(", ");
+		}
+
+		sb.setStringAt(" where t1.", sb.index() - 1);
+
+		sb.append(primaryKeyName);
+		sb.append(" = t2.");
+		sb.append(primaryKeyName);
+		sb.append(" and t1.ctCollectionId = ");
+		sb.append(_sourceCTCollectionId);
+		sb.append(" and t2.ctCollectionId = ");
+		sb.append(_targetCTCollectionId);
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sb.toString())) {
+
+			preparedStatement.executeUpdate();
+		}
+		catch (SQLException sqlException) {
+			throw new SystemException(sqlException);
+		}
+
+		if (!updateMvccCTEntries.isEmpty()) {
+			List<CTEntry> updatedCTEntries = _updateModelMvccVersion(
+				connection, tableName, primaryKeyName, updateMvccCTEntries,
+				_targetCTCollectionId);
+
+			for (CTEntry ctEntry : updatedCTEntries) {
+				conflictInfos.add(
+					new ResolvedModificationConflictInfo(
+						ctEntry.getModelClassPK(), ctEntry.getModelClassPK()));
+			}
+		}
+	}
+
 	private List<Map.Entry<Long, Long>> _getConflictingPrimaryKeys(
 		Connection connection, String constraintConflictsSQL) {
 
@@ -238,8 +438,66 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		}
 	}
 
+	private List<CTEntry> _updateModelMvccVersion(
+		Connection connection, String tableName, String primaryKeyName,
+		Map<Serializable, CTEntry> ctEntries, long ctCollectionId) {
+
+		StringBundler sb = new StringBundler(2 * ctEntries.size() + 9);
+
+		sb.append("select t1.");
+		sb.append(primaryKeyName);
+		sb.append(", t1.mvccVersion from ");
+		sb.append(tableName);
+		sb.append(" t1 inner join CTEntry t2 on t2.modelClassNameId = ");
+		sb.append(_modelClassNameId);
+		sb.append(" and t1.");
+		sb.append(primaryKeyName);
+		sb.append(" = t2.modelClassPK and t1.mvccVersion != t2.mvccVersion");
+		sb.append(" where t1.ctCollectionId = ");
+		sb.append(ctCollectionId);
+		sb.append(" and ");
+		sb.append(primaryKeyName);
+		sb.append(" in (");
+
+		for (Serializable serializable : ctEntries.keySet()) {
+			sb.append(serializable);
+			sb.append(", ");
+		}
+
+		sb.setStringAt(")", sb.index() - 1);
+
+		List<CTEntry> updatedCTEntries = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sb.toString());
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				long pk = resultSet.getLong(1);
+				long mvccVersion = resultSet.getLong(2);
+
+				CTEntry ctEntry = ctEntries.get(pk);
+
+				ctEntry.setModifiedDate(ctEntry.getModifiedDate());
+
+				ctEntry.setModelMvccVersion(mvccVersion);
+
+				CTEntryLocalServiceUtil.updateCTEntry(ctEntry);
+
+				updatedCTEntries.add(ctEntry);
+			}
+		}
+		catch (SQLException sqlException) {
+			throw new SystemException(sqlException);
+		}
+
+		return updatedCTEntries;
+	}
+
 	private final CTService<T> _ctService;
 	private final Set<Long> _ignorablePrimaryKeys = new HashSet<>();
+	private final long _modelClassNameId;
+	private Map<Serializable, CTEntry> _modificationCTEntries;
 	private final ServiceTrackerMap<ConstraintResolverKey, ConstraintResolver>
 		_serviceTrackerMap;
 	private final long _sourceCTCollectionId;

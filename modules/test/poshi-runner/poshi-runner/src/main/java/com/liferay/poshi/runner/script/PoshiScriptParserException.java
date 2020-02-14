@@ -57,10 +57,6 @@ public class PoshiScriptParserException extends Exception {
 
 		super(msg);
 
-		URL url = parentPoshiNode.getURL();
-
-		setFilePath(url.getPath());
-
 		setPoshiNode(parentPoshiNode);
 
 		String parentPoshiScript = parentPoshiNode.getPoshiScript();
@@ -81,6 +77,10 @@ public class PoshiScriptParserException extends Exception {
 		setErrorLineNumber(
 			startingLineNumber +
 				StringUtil.count(parentPoshiScript, "\n", index));
+
+		URL url = parentPoshiNode.getURL();
+
+		setFilePath(url.getPath());
 	}
 
 	public int getErrorLineNumber() {

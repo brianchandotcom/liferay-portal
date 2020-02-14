@@ -2959,6 +2959,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Pre add a default user without persisting it into the database.
+	 *
+	 * @param defaultUser the default user
+	 */
+	@Override
+	public void preAddDefaultUser(User defaultUser) {
+		_defaultUsers.put(defaultUser.getCompanyId(), defaultUser);
+	}
+
+	/**
 	 * Returns an ordered range of all the users who match the keywords and
 	 * status, without using the indexer. It is preferable to use the indexed
 	 * version {@link #search(long, String, int, LinkedHashMap, int, int, Sort)}

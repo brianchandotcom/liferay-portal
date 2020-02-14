@@ -1,5 +1,33 @@
 definition {
 
+	macro addAssignee {
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(
+			key_accountName = "${accountName}",
+			key_assigneeType = "${assigneeType}",
+			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
+
+		Search.searchCP(searchTerm = "${assigneeName}");
+
+		Check(
+			key_tableEntry = "${assigneeName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.clickAssign();
+
+		Alert.viewSuccessMessage();
+
+		AssertTextEquals.assertPartialText(
+			key_tableEntry = "${assigneeName}",
+			locator1 = "LexiconTable#TABLE_ENTRY",
+			value1 = "${assigneeName}");
+	}
+
 	macro addCP {
 		LexiconEntry.gotoAdd();
 

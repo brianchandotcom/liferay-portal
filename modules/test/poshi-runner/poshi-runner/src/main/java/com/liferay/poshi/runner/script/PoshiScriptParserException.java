@@ -21,6 +21,7 @@ import com.liferay.poshi.runner.util.Validator;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,8 +33,29 @@ public class PoshiScriptParserException extends Exception {
 	public static final String TRANSLATION_LOSS_MESSAGE =
 		"Poshi Script syntax is not preserved in translation";
 
+	public static Set<PoshiScriptParserException> exceptions =
+		Collections.synchronizedSet(new HashSet<>());
+
 	public static Set<String> getUniqueErrorPaths() {
 		return _uniqueErrorPaths;
+	}
+
+	public static void throwExceptions() throws Exception {
+		if (!exceptions.isEmpty()) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(exceptions.size());
+			sb.append(" errors in Poshi Script syntax\n\n\n");
+
+			for (Exception exception : exceptions) {
+				sb.append(exception.getMessage());
+				sb.append("\n\n");
+			}
+
+			System.out.println(sb.toString());
+
+			throw new Exception();
+		}
 	}
 
 	public PoshiScriptParserException(String msg) {

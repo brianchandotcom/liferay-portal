@@ -272,7 +272,8 @@ public abstract class PoshiElement
 			}
 		}
 		catch (PoshiScriptParserException poshiScriptParserException) {
-			System.out.println(poshiScriptParserException.getMessage());
+			PoshiScriptParserException.exceptions.add(
+				poshiScriptParserException);
 		}
 
 		detach();

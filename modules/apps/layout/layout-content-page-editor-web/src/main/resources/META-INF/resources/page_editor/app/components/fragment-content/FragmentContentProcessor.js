@@ -20,12 +20,12 @@ import Processors from '../../processors/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
+import {useActiveItemId} from '../Controls';
 import {
 	useEditableProcessorUniqueId,
 	useSetEditableProcessorUniqueId
 } from './EditableProcessorContext';
 import getEditableUniqueId from './getEditableUniqueId';
-import {useActiveItemId} from '../Controls';
 
 export default function FragmentContentProcessor({
 	element,

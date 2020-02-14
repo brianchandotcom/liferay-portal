@@ -455,6 +455,51 @@ definition {
 	}
 
 	@priority = "4"
+	test UnassignOrganizationFromAccount {
+		JSONOrganization.addOrganization(
+			organizationName = "Organization for Account",
+			organizationSite = "true");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is a test for unassign organization from account.",
+			accountName = "Unassign Organization from Account");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
+		Accounts.addAssignee(
+			accountName = "Unassign Organization from Account",
+			assigneeName = "Organization for Account",
+			assigneeType = "Organizations");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Unassign Organization from Account");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
+		Accounts.unassignAssignee(
+			assigneeName = "Organization for Account",
+			assigneeType = "Organizations");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.viewNoAssignee(
+			accountName = "Unassign Organization from Account",
+			assigneeType = "Organizations");
+	}
+
+	@priority = "4"
 	test UpdateAccount {
 		ProductMenu.gotoPortlet(
 			category = "Accounts",

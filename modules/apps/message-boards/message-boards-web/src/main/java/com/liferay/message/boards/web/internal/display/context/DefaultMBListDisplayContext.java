@@ -62,7 +62,6 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 		String mvcRenderCommandName) {
 
 		_httpServletRequest = httpServletRequest;
-
 		_categoryId = categoryId;
 
 		boolean showMyPosts = false;

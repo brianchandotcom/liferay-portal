@@ -1090,8 +1090,8 @@ public class WikiPageDependentsTrashHandlerTest {
 
 			_parentPage = parentPage;
 			_page = page;
-			_grandchildPage = grandchildPage;
 			_childPage = childPage;
+			_grandchildPage = grandchildPage;
 			_redirectorPage = redirectorPage;
 			_childRedirectorPage = childRedirectorPage;
 		}

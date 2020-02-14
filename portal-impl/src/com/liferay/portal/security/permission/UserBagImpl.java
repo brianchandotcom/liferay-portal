@@ -70,23 +70,23 @@ public class UserBagImpl implements UserBag {
 
 		_userId = userId;
 
-		_userRoleIds = userRoleIds;
-
-		Arrays.sort(_userRoleIds);
-
 		_userGroupIds = userGroupsIds;
 
 		Arrays.sort(userGroupsIds);
+
+		_userUserGroupGroupsIds = userUserGroupGroups;
+
+		Arrays.sort(_userUserGroupGroupsIds);
+
+		_userRoleIds = userRoleIds;
+
+		Arrays.sort(_userRoleIds);
 
 		_userOrgGroupIds = ArrayUtil.toLongArray(userOrgGroups);
 
 		Arrays.sort(_userOrgGroupIds);
 
 		_userOrgIds = _toSortedLongArray(userOrgs);
-
-		_userUserGroupGroupsIds = userUserGroupGroups;
-
-		Arrays.sort(_userUserGroupGroupsIds);
 
 		_userUserGroupIds = _toSortedLongArray(userUserGroups);
 	}

@@ -57,7 +57,6 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		String asahFaroBackendSecuritySignature, String asahFaroBackendURL) {
 
 		_jsonWebServiceClient = jsonWebServiceClient;
-
 		_dataSourceId = asahFaroBackendDataSourceId;
 
 		_headers.put(

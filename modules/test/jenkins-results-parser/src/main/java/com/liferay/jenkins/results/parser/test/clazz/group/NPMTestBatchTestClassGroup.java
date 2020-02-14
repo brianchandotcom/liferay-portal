@@ -176,7 +176,6 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			addTestClassMethod(batchName);
 
 			_gitWorkingDirectory = gitWorkingDirectory;
-
 			_moduleFile = testClassFile;
 
 			initJSTestClassMethods();

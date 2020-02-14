@@ -50,15 +50,13 @@ public class OAuth2AdminPortletDisplayContext
 		PortletRequest portletRequest, ThemeDisplay themeDisplay,
 		DLURLHelper dlURLHelper) {
 
-		_oAuth2ProviderConfiguration = oAuth2ProviderConfiguration;
-
 		super.oAuth2ApplicationService = oAuth2ApplicationService;
+		this.oAuth2ApplicationScopeAliasesLocalService =
+			oAuth2ApplicationScopeAliasesLocalService;
+		_oAuth2ProviderConfiguration = oAuth2ProviderConfiguration;
 		super.portletRequest = portletRequest;
 		super.themeDisplay = themeDisplay;
 		super.dlURLHelper = dlURLHelper;
-
-		this.oAuth2ApplicationScopeAliasesLocalService =
-			oAuth2ApplicationScopeAliasesLocalService;
 	}
 
 	public List<GrantType> getGrantTypes(

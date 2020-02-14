@@ -522,6 +522,14 @@ public class ContentPageEditorDisplayContext {
 		return getFragmentEntryActionURL("/content_layout/publish_layout");
 	}
 
+	public boolean isConversionDraft() {
+		if (_getPageType() == LayoutConverterTypeConstants.TYPE_CONVERSION) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isMasterLayout() {
 		if (_getPageType() ==
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {

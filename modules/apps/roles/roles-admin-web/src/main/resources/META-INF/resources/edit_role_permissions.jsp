@@ -32,15 +32,19 @@ Role role = RoleServiceUtil.fetchRole(roleId);
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-PortletURL portletURL = renderResponse.createRenderURL();
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
-portletURL.setParameter(Constants.CMD, Constants.VIEW);
-portletURL.setParameter("tabs1", "define-permissions");
-portletURL.setParameter("tabs2", tabs2);
-portletURL.setParameter("tabs3", tabs3);
-portletURL.setParameter("backURL", backURL);
-portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+	portletURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
+	portletURL.setParameter(Constants.CMD, Constants.VIEW);
+	portletURL.setParameter("tabs1", "define-permissions");
+	portletURL.setParameter("tabs2", tabs2);
+	portletURL.setParameter("tabs3", tabs3);
+	portletURL.setParameter("backURL", backURL);
+	portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+
+	redirect = portletURL.toString();
+}
 
 request.setAttribute("edit_role_permissions.jsp-role", role);
 
@@ -366,7 +370,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 		Liferay.Util.postForm(form, {
 			data: {
-				redirect: '<%= HtmlUtil.escapeJS(portletURL.toString()) %>',
+				redirect: '<%= HtmlUtil.escapeJS(redirect) %>',
 				selectedTargets: Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'

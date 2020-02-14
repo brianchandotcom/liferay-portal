@@ -277,7 +277,8 @@ public class RoleDisplayContext {
 
 		assignMembersURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 		assignMembersURL.setParameter("tabs1", "assignees");
-		assignMembersURL.setParameter("redirect", backURL);
+		assignMembersURL.setParameter("redirect", redirect);
+		assignMembersURL.setParameter("backURL", backURL);
 		assignMembersURL.setParameter(
 			"roleId", String.valueOf(role.getRoleId()));
 
@@ -286,7 +287,8 @@ public class RoleDisplayContext {
 		definePermissionsURL.setParameter(
 			"mvcPath", "/edit_role_permissions.jsp");
 		definePermissionsURL.setParameter("tabs1", "define-permissions");
-		definePermissionsURL.setParameter("redirect", backURL);
+		definePermissionsURL.setParameter("redirect", redirect);
+		definePermissionsURL.setParameter("backURL", backURL);
 		definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 		definePermissionsURL.setParameter(
 			"roleId", String.valueOf(role.getRoleId()));
@@ -295,7 +297,8 @@ public class RoleDisplayContext {
 
 		editRoleURL.setParameter("mvcPath", "/edit_role.jsp");
 		editRoleURL.setParameter("tabs1", "details");
-		editRoleURL.setParameter("redirect", backURL);
+		editRoleURL.setParameter("redirect", redirect);
+		editRoleURL.setParameter("backURL", backURL);
 		editRoleURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 		return HashMapBuilder.put(

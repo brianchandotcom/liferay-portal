@@ -84,7 +84,7 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 
 				rowURL.setParameter("mvcPath", "/edit_role.jsp");
 				rowURL.setParameter("tabs1", "details");
-				rowURL.setParameter("redirect", roleSearchContainer.getIteratorURL().toString());
+				rowURL.setParameter("backURL", roleSearchContainer.getIteratorURL().toString());
 				rowURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			}
 			%>

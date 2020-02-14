@@ -417,7 +417,9 @@ definition {
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
-		Accounts.removeUser(userFirstName = "userfn");
+		Accounts.unassignAssignee(
+			assigneeName = "userfn",
+			assigneeType = "Users");
 
 		ProductMenu.gotoPortlet(
 			category = "Accounts",

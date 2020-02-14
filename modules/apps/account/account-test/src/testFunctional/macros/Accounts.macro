@@ -218,6 +218,27 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro unassignAssignee {
+		var key_assigneeName = "${assigneeName}";
+
+		Search.searchCP(searchTerm = "${assigneeName}");
+
+		ClickNoError(
+			locator1 = "Icon#REMOVE_ASSIGNEE",
+			value1 = "${assigneeName}");
+
+		if ("${assigneeType}" == "Users") {
+			var assigneeType = "user";
+		}
+		else if ("${assigneeType}" == "Organizations") {
+			var assigneeType = "organization";
+		}
+
+		AssertConfirm(value1 = "Are you sure you want to remove this ${assigneeType}?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro viewAssignee {
 		AssertTextEquals.assertPartialText(
 			key_tableEntry = "${assigneeName}",

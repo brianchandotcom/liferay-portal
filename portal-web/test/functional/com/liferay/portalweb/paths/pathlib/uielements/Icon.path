@@ -204,8 +204,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REMOVE_USER</td>
-	<td>//td[contains(.,'${key_userFirstName}')]//..//span[contains(@class,'remove')]</td>
+	<td>REMOVE_ASSIGNEE</td>
+	<td>//td[contains(.,'${key_assigneeName}')]//..//span[contains(@class,'remove')]</td>
 	<td></td>
 </tr>
 <tr>

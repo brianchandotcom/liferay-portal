@@ -176,7 +176,7 @@ definition {
 		selenium.selectFrame("relative=top");
 
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/o/frontend-js-web/liferay/menu_toggle.js')]"
+			"//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]"
 		);
 
 		if (selenium.isElementPresent("//iframe")) {

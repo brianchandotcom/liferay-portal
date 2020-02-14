@@ -37,11 +37,10 @@ public class ByteArrayFileInputStream extends InputStream {
 		}
 
 		_file = file;
-
-		_fileSize = file.length();
-
 		_threshold = threshold;
 		_deleteOnClose = deleteOnClose;
+
+		_fileSize = file.length();
 	}
 
 	@Override

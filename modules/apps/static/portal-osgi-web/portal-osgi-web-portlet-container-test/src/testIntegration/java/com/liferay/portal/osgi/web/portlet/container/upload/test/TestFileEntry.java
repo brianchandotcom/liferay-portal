@@ -46,11 +46,12 @@ public class TestFileEntry implements FileEntry {
 	public TestFileEntry(
 		String fileName, long folderId, long groupId, InputStream inputStream) {
 
-		_date = new Date();
 		_fileName = fileName;
 		_folderId = folderId;
 		_groupId = groupId;
 		_inputStream = inputStream;
+
+		_date = new Date();
 	}
 
 	@Override

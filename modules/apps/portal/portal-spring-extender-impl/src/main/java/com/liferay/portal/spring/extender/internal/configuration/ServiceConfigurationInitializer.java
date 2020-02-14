@@ -52,10 +52,10 @@ public class ServiceConfigurationInitializer {
 		_classLoader = classLoader;
 		_portletConfiguration = portletConfiguration;
 		_serviceConfiguration = serviceConfiguration;
-
-		_serviceComponentConfiguration = new ModuleResourceLoader(bundle);
 		_resourceActions = resourceActions;
 		_serviceComponentLocalService = serviceComponentLocalService;
+
+		_serviceComponentConfiguration = new ModuleResourceLoader(bundle);
 	}
 
 	public void stop() {

@@ -25,8 +25,9 @@ public class ScriptRecipient extends Recipient {
 		super(RecipientType.SCRIPT);
 
 		_script = script;
-		_scriptLanguage = ScriptLanguage.parse(scriptLanguage);
 		_scriptRequiredContexts = scriptRequiredContexts;
+
+		_scriptLanguage = ScriptLanguage.parse(scriptLanguage);
 	}
 
 	public String getScript() {

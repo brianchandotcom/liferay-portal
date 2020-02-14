@@ -36,10 +36,10 @@ public class WikiURLHelper {
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
 		_wikiRequestHelper = wikiRequestHelper;
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 
 		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
 			portletResponse);
-		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
 	public WikiURLHelper(
@@ -47,10 +47,10 @@ public class WikiURLHelper {
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
 		_wikiRequestHelper = wikiRequestHelper;
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 
 		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
 			renderResponse);
-		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
 	public PortletURL getBackToNodeURL(WikiNode wikiNode) {

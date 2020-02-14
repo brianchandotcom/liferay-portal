@@ -35,10 +35,11 @@ public class NotificationRecipient {
 		String emailAddress,
 		NotificationReceptionType notificationReceptionType) {
 
-		_companyId = 0;
 		_emailAddress = emailAddress;
-		_fullName = null;
 		_notificationReceptionType = notificationReceptionType;
+
+		_companyId = 0;
+		_fullName = null;
 		_screenName = null;
 		_userId = 0;
 	}
@@ -46,10 +47,11 @@ public class NotificationRecipient {
 	public NotificationRecipient(
 		User user, NotificationReceptionType notificationReceptionType) {
 
+		_notificationReceptionType = notificationReceptionType;
+
 		_companyId = user.getCompanyId();
 		_emailAddress = user.getEmailAddress();
 		_fullName = user.getFullName();
-		_notificationReceptionType = notificationReceptionType;
 		_screenName = user.getScreenName();
 		_userId = user.getUserId();
 	}

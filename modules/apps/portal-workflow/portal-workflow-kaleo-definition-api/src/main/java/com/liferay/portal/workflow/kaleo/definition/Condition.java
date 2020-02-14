@@ -27,8 +27,9 @@ public class Condition extends Node {
 
 		_description = description;
 		_script = script;
-		_scriptLanguage = ScriptLanguage.parse(scriptLanguage);
 		_scriptRequiredContexts = scriptRequiredContexts;
+
+		_scriptLanguage = ScriptLanguage.parse(scriptLanguage);
 	}
 
 	@Override

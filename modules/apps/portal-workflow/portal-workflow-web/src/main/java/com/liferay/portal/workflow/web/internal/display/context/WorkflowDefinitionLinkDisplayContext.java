@@ -89,6 +89,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
+		_resourceBundleLoader = resourceBundleLoader;
 
 		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
 			renderRequest);
@@ -100,8 +101,6 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);
-
-		_resourceBundleLoader = resourceBundleLoader;
 	}
 
 	public WorkflowDefinition fetchDefaultWorkflowDefinition(String className)

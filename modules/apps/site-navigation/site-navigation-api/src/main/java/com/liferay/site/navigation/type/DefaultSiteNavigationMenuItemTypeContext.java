@@ -31,8 +31,9 @@ public class DefaultSiteNavigationMenuItemTypeContext
 	}
 
 	public DefaultSiteNavigationMenuItemTypeContext(Group group) {
-		_company = CompanyLocalServiceUtil.fetchCompany(group.getCompanyId());
 		_group = group;
+
+		_company = CompanyLocalServiceUtil.fetchCompany(group.getCompanyId());
 	}
 
 	public Company getCompany() {

@@ -40,10 +40,10 @@ public class WorkflowNavigationDisplayContext {
 		RenderRequest renderRequest,
 		ResourceBundleLoader resourceBundleLoader) {
 
+		_resourceBundleLoader = resourceBundleLoader;
+
 		_workflowNavigationRequestHelper = new WorkflowNavigationRequestHelper(
 			renderRequest);
-
-		_resourceBundleLoader = resourceBundleLoader;
 	}
 
 	public List<NavigationItem> getNavigationItems(

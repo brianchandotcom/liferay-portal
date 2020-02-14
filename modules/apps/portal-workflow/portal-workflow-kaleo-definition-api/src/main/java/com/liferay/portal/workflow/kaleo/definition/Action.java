@@ -29,6 +29,9 @@ public class Action {
 
 		_name = name;
 		_description = description;
+		_script = script;
+		_scriptRequiredContexts = scriptRequiredContexts;
+		_priority = priority;
 
 		if (Validator.isNotNull(executionType)) {
 			_executionType = ExecutionType.parse(executionType);
@@ -37,10 +40,7 @@ public class Action {
 			_executionType = ExecutionType.ON_TIMER;
 		}
 
-		_script = script;
 		_scriptLanguage = ScriptLanguage.parse(scriptLanguage);
-		_scriptRequiredContexts = scriptRequiredContexts;
-		_priority = priority;
 	}
 
 	@Override

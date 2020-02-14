@@ -151,6 +151,12 @@ export default function PageEditor({withinMasterPage = false}) {
 						title={layoutConversionWarningMessages.join('<br>')}
 					/>
 				)}
+			{pageType === PAGE_TYPES.conversion && (
+				<ClayAlert
+					displayType="info"
+					title={Liferay.Language.get('page-conversion-description')}
+				/>
+			)}
 			<div
 				className={classNames('page-editor', {
 					'page-editor--with-sidebar': !withinMasterPage,

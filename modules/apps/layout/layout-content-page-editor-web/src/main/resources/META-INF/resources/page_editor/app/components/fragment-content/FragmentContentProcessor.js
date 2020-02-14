@@ -20,15 +20,21 @@ import Processors from '../../processors/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
-import {useEditableProcessorUniqueId} from './EditableProcessorContext';
+import {
+	useEditableProcessorUniqueId,
+	useSetEditableProcessorUniqueId
+} from './EditableProcessorContext';
 import getEditableUniqueId from './getEditableUniqueId';
+import {useActiveItemId} from '../Controls';
 
 export default function FragmentContentProcessor({
 	element,
 	fragmentEntryLinkId
 }) {
+	const activeItemId = useActiveItemId();
 	const dispatch = useDispatch();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
+	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const languageId = useSelector(
 		state => state.languageId || config.defaultLanguageId
 	);
@@ -55,6 +61,10 @@ export default function FragmentContentProcessor({
 			state.fragmentEntryLinks[fragmentEntryLinkId] &&
 			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues
 	);
+
+	useEffect(() => {
+		setEditableProcessorUniqueId(null);
+	}, [activeItemId, setEditableProcessorUniqueId]);
 
 	useEffect(() => {
 		if (!editableElement || !editableValues) {

@@ -18,14 +18,29 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.rest.dto.v1_0.AccountUser;
 import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Collections;
 import java.util.Optional;
+
+import javax.validation.constraints.NotNull;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,6 +54,25 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = AccountUserResource.class
 )
 public class AccountUserResourceImpl extends BaseAccountUserResourceImpl {
+
+	@Override
+	public Page<AccountUser> getAccountUsersPage(
+			@NotNull Long accountId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getUserAccountsPage(
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"accountEntryIds", String.valueOf(accountId)),
+					BooleanClauseOccur.MUST);
+			},
+			search, filter, pagination, sorts);
+	}
 
 	@Override
 	public AccountUser postAccountUser(Long accountId, AccountUser accountUser)
@@ -81,6 +115,24 @@ public class AccountUserResourceImpl extends BaseAccountUserResourceImpl {
 		).orElse(
 			0L
 		);
+	}
+
+	private Page<AccountUser> _getUserAccountsPage(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			Collections.emptyMap(), booleanQueryUnsafeConsumer, filter,
+			User.class, search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
+			sorts,
+			document -> _toAccountUser(
+				_userLocalService.getUserById(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private AccountUser _toAccountUser(User user) throws Exception {

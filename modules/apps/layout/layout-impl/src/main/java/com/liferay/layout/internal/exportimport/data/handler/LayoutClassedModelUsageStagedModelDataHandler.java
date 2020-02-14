@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
@@ -103,10 +104,14 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
 				layoutClassedModelUsage.getClassPK());
 
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layoutClassedModelUsage,
-				(StagedModel)assetRenderer.getAssetObject(),
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			if (assetRenderer.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, layoutClassedModelUsage,
+					(StagedModel)assetRenderer.getAssetObject(),
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			}
 		}
 
 		portletDataContext.addClassedModel(

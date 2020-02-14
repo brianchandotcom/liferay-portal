@@ -100,9 +100,10 @@ public class SearchBarPortletPreferencesImpl
 	}
 
 	@Override
-	public boolean isShowStaged() {
+	public boolean isShowStagedResults() {
 		return _portletPreferencesHelper.getBoolean(
-			SearchBarPortletPreferences.PREFERENCE_KEY_SHOW_STAGED, false);
+			SearchBarPortletPreferences.PREFERENCE_KEY_SHOW_STAGED_RESULTS,
+			false);
 	}
 
 	@Override

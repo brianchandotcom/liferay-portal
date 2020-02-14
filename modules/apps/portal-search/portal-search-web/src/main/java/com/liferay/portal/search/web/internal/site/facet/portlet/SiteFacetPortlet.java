@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.internal.site.facet.portlet;
 
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -40,6 +42,8 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -125,6 +129,7 @@ public class SiteFacetPortlet extends MVCPortlet {
 		scopeSearchFacetDisplayBuilder.setFrequenciesVisible(
 			siteFacetPortletPreferences.isFrequenciesVisible());
 		scopeSearchFacetDisplayBuilder.setGroupLocalService(groupLocalService);
+		scopeSearchFacetDisplayBuilder.setLanguage(language);
 		scopeSearchFacetDisplayBuilder.setLocale(
 			getLocale(portletSharedSearchResponse, renderRequest));
 		scopeSearchFacetDisplayBuilder.setMaxTerms(
@@ -138,6 +143,9 @@ public class SiteFacetPortlet extends MVCPortlet {
 			() -> getParameterValuesOptional(
 				parameterName, portletSharedSearchResponse, renderRequest),
 			scopeSearchFacetDisplayBuilder::setParameterValues);
+
+		scopeSearchFacetDisplayBuilder.setRequest(
+			getHttpServletRequest(renderRequest));
 
 		return scopeSearchFacetDisplayBuilder.build();
 	}
@@ -155,6 +163,15 @@ public class SiteFacetPortlet extends MVCPortlet {
 		SearchContext searchContext = searchSettings.getSearchContext();
 
 		return Optional.ofNullable(searchContext.getGroupIds());
+	}
+
+	protected HttpServletRequest getHttpServletRequest(
+		RenderRequest renderRequest) {
+
+		LiferayPortletRequest liferayPortletRequest =
+			portal.getLiferayPortletRequest(renderRequest);
+
+		return liferayPortletRequest.getHttpServletRequest();
 	}
 
 	protected Locale getLocale(
@@ -181,6 +198,9 @@ public class SiteFacetPortlet extends MVCPortlet {
 
 	@Reference
 	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected Language language;
 
 	@Reference
 	protected Portal portal;

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListene
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -350,22 +351,18 @@ public class AudioProcessorImpl
 
 		try {
 			if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
-				String originalLogLevel = Log4JUtil.getOriginalLevel(
-					PropsUtil.class.getName());
-
-				Log4JUtil.setLevel(PropsUtil.class.getName(), "WARN", true);
-
 				ProcessCallable<String> processCallable =
 					new LiferayAudioProcessCallable(
 						ServerDetector.getServerId(),
 						PropsUtil.get(PropsKeys.LIFERAY_HOME),
-						Log4JUtil.getCustomLogSettings(), srcFile, destFile,
-						containerType,
+						HashMapBuilder.putAll(
+							Log4JUtil.getCustomLogSettings()
+						).put(
+							PropsUtil.class.getName(), "WARN"
+						).build(),
+						srcFile, destFile, containerType,
 						PropsUtil.getProperties(
 							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
-
-				Log4JUtil.setLevel(
-					PropsUtil.class.getName(), originalLogLevel, true);
 
 				ProcessChannel<String> processChannel =
 					_processExecutor.execute(

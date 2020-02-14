@@ -40,7 +40,7 @@ String siteRoleSyncEntitiesEventName = liferayPortletResponse.getNamespace() + "
 String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespace() + "syncOrganizationRoles";
 %>
 
-<liferay-util:dynamic-include key="com.liferay.users.admin.web#/users/roles.jsp#pre" />
+<liferay-util:dynamic-include key="com.liferay.users.admin.web#/user/roles.jsp#pre" />
 
 <liferay-ui:error-marker
 	key="<%= WebKeys.ERROR_SECTION %>"
@@ -945,4 +945,4 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 	</c:if>
 </div>
 
-<liferay-util:dynamic-include key="com.liferay.users.admin.web#/users/roles.jsp#post" />
+<liferay-util:dynamic-include key="com.liferay.users.admin.web#/user/roles.jsp#post" />

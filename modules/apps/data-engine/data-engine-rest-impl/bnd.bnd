@@ -11,7 +11,7 @@ Import-Package:\
 	*
 Provide-Capability:\
 	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.data.engine.lang),(bundle.symbolic.name=com.liferay.data.engine.rest.impl)";\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.data.engine.lang),(bundle.symbolic.name=com.liferay.data.engine.rest.impl),(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\
 		resource.bundle.base.name="content.Language";\
 		service.ranking:Long="1"
 Web-ContextPath: /data-engine-rest-impl

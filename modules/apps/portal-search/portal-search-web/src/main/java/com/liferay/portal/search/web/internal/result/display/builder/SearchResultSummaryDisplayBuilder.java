@@ -24,7 +24,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -295,7 +294,7 @@ public class SearchResultSummaryDisplayBuilder {
 				sb.append(title);
 				sb.append(StringPool.SPACE);
 				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(LanguageUtil.get(_locale, "staged"));
+				sb.append(_language.get(_httpServletRequest, "staged"));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 
 				title = sb.toString();
@@ -838,14 +837,12 @@ public class SearchResultSummaryDisplayBuilder {
 					_legacyDocument, snippet, _renderRequest, _renderResponse);
 
 			if (summary != null) {
-				String title = appendStagingLabel(
-					summary.getTitle(), assetRenderer);
-
 				summaryBuilder.setContent(summary.getContent());
 				summaryBuilder.setLocale(summary.getLocale());
 				summaryBuilder.setMaxContentLength(
 					summary.getMaxContentLength());
-				summaryBuilder.setTitle(title);
+				summaryBuilder.setTitle(
+					appendStagingLabel(summary.getTitle(), assetRenderer));
 
 				return summaryBuilder.build();
 			}
@@ -853,7 +850,9 @@ public class SearchResultSummaryDisplayBuilder {
 		else if (assetRenderer != null) {
 			summaryBuilder.setContent(assetRenderer.getSearchSummary(_locale));
 			summaryBuilder.setLocale(_locale);
-			summaryBuilder.setTitle(assetRenderer.getTitle(_locale));
+			summaryBuilder.setTitle(
+				appendStagingLabel(
+					assetRenderer.getTitle(_locale), assetRenderer));
 
 			return summaryBuilder.build();
 		}

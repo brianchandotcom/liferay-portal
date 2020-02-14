@@ -186,12 +186,16 @@ const BulkReassignModal = () => {
 					onClose();
 
 					toaster.success(
-						sub(
-							Liferay.Language.get(
-								'x-tasks-have-been-reassigned'
-							),
-							[reassignedTasks.length]
-						)
+						reassignedTasks.length > 1
+							? sub(
+									Liferay.Language.get(
+										'x-tasks-have-been-reassigned'
+									),
+									[reassignedTasks.length]
+							  )
+							: Liferay.Language.get(
+									'this-task-has-been-reassigned'
+							  )
 					);
 
 					setSelectedItems([]);

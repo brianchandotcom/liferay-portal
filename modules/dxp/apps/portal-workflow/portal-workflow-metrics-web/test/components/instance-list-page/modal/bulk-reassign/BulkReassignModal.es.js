@@ -109,7 +109,6 @@ const clientMock = {
 		.mockResolvedValueOnce({data: {items: [items[0]], totalCount: 1}})
 		.mockRejectedValueOnce(new Error('request-failure'))
 		.mockResolvedValueOnce({data: {workflowTaskAssignableUsers}})
-		.mockResolvedValueOnce({data: {items, totalCount: items.length}})
 		.mockResolvedValueOnce({data: {items: [items[0]], totalCount: 1}})
 		.mockResolvedValue({data: {workflowTaskAssignableUsers}}),
 	patch: jest

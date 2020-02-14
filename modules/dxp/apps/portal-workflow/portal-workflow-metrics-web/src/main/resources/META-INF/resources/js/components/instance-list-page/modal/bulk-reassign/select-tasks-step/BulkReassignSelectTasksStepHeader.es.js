@@ -10,6 +10,7 @@
  */
 
 import ClayManagementToolbar from '@clayui/management-toolbar';
+import {usePrevious} from 'frontend-js-react-web';
 import React, {useCallback, useContext, useEffect, useMemo} from 'react';
 
 import ResultsBar from '../../../../../shared/components/results-bar/ResultsBar.es';
@@ -23,8 +24,9 @@ const Header = ({
 	items = [],
 	prefixKey,
 	selectedFilters,
-	totalCount = 0
+	totalCount
 }) => {
+	const previousCount = usePrevious(totalCount);
 	const {bulkModal, setBulkModal} = useContext(ModalContext);
 
 	const {processId, selectAll, selectedTasks} = bulkModal;
@@ -54,7 +56,11 @@ const Header = ({
 	]);
 
 	useEffect(() => {
-		if (selectAll && remainingItems.length > 0) {
+		if (
+			selectAll &&
+			remainingItems.length > 0 &&
+			previousCount === totalCount
+		) {
 			setBulkModal({
 				...bulkModal,
 				selectedTasks: items
@@ -62,6 +68,14 @@ const Header = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [items]);
+
+	useEffect(() => {
+		setBulkModal({
+			...bulkModal,
+			selectAll: totalCount > 0 && totalCount === selectedTasks.length
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [totalCount]);
 
 	const handleClear = () => {
 		setBulkModal({...bulkModal, selectAll: false, selectedTasks: []});

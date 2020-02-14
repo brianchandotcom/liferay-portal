@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:info:info-api")
+	testIntegrationCompile project(":apps:layout:layout-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-service")
 	testIntegrationCompile project(":apps:segments:segments-api")

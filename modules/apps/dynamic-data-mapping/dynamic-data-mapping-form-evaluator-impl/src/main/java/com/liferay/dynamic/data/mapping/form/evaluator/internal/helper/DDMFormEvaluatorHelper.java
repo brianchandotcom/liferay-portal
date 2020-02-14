@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.internal.expression.DDMFo
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.expression.DDMFormEvaluatorExpressionParameterAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueLocalizer;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -127,6 +128,8 @@ public class DDMFormEvaluatorHelper {
 		verifyFieldsMarkedAsRequired();
 
 		validateFields();
+
+		_localizeNumericDDMFormFieldValues();
 
 		return buildDDMFormEvaluatorEvaluateResponse();
 	}
@@ -575,15 +578,8 @@ public class DDMFormEvaluatorHelper {
 			ddmFormFieldValidations = ddmFormFieldStream.filter(
 				this::fieldsWithValidations
 			).flatMap(
-				formField -> {
-					Set<DDMFormEvaluatorFieldContextKey>
-						ddmFormFieldContextKeySet =
-							_ddmFormEvaluatorFormValuesHelper.
-								getDDMFormFieldContextKeySet(
-									formField.getName());
-
-					return ddmFormFieldContextKeySet.stream();
-				}
+				ddmFormField -> _getDDMFormEvaluatorFieldContextKey(
+					ddmFormField.getName())
 			).collect(
 				Collectors.toMap(
 					Function.identity(), this::getDDMFormFieldValidation)
@@ -599,13 +595,7 @@ public class DDMFormEvaluatorHelper {
 		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
 
 		stream.flatMap(
-			entry -> {
-				Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeySet =
-					_ddmFormEvaluatorFormValuesHelper.
-						getDDMFormFieldContextKeySet(entry.getKey());
-
-				return ddmFormFieldContextKeySet.stream();
-			}
+			entry -> _getDDMFormEvaluatorFieldContextKey(entry.getKey())
 		).filter(
 			this::filterVisibleFieldsMarkedAsRequired
 		).filter(
@@ -626,6 +616,65 @@ public class DDMFormEvaluatorHelper {
 	protected final DDMFormFieldValueAccessor<String>
 		defaultDDMFormFieldValueAccessor =
 			new DefaultDDMFormFieldValueAccessor();
+
+	private Stream<DDMFormEvaluatorFieldContextKey>
+		_getDDMFormEvaluatorFieldContextKey(String name) {
+
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeySet =
+			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeySet(
+				name);
+
+		return ddmFormFieldContextKeySet.stream();
+	}
+
+	private boolean _isNumericField(DDMFormField ddmFormField) {
+		String type = ddmFormField.getType();
+
+		return type.equals("numeric");
+	}
+
+	private void _localizeDDMFormFieldValue(
+		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey) {
+
+		DDMFormFieldValue ddmFormFieldValue =
+			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldValue(
+				ddmFormFieldContextKey);
+
+		Value value = ddmFormFieldValue.getValue();
+
+		forEachEntry(
+			value.getValues(),
+			entry -> {
+				if (Validator.isNotNull(entry.getValue())) {
+					DDMFormFieldValueLocalizer ddmFormFieldValueLocalizer =
+						_ddmFormFieldTypeServicesTracker.
+							getDDMFormFieldValueLocalizer(
+								ddmFormFieldValue.getType());
+
+					if (ddmFormFieldValueLocalizer != null) {
+						value.addString(
+							entry.getKey(),
+							ddmFormFieldValueLocalizer.localize(
+								entry.getValue(), entry.getKey()));
+					}
+				}
+			});
+	}
+
+	private void _localizeNumericDDMFormFieldValues() {
+		Collection<DDMFormField> ddmFormFields = _ddmFormFieldsMap.values();
+
+		Stream<DDMFormField> stream = ddmFormFields.stream();
+
+		stream.filter(
+			this::_isNumericField
+		).flatMap(
+			ddmFormField -> _getDDMFormEvaluatorFieldContextKey(
+				ddmFormField.getName())
+		).forEach(
+			this::_localizeDDMFormFieldValue
+		);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormEvaluatorHelper.class);

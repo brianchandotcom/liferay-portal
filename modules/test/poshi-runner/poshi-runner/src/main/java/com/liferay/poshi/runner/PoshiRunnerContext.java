@@ -329,7 +329,14 @@ public class PoshiRunnerContext {
 	}
 
 	public static void readFiles() throws Exception {
+		System.out.print("Reading Poshi files...");
+
+		long start = System.currentTimeMillis();
+
 		readFiles(PoshiRunnerContext.POSHI_TEST_FILE_INCLUDES);
+
+		System.out.println(
+			" Completed in " + (System.currentTimeMillis() - start) + "ms.");
 	}
 
 	public static void readFiles(String[] testFileIncludes) throws Exception {

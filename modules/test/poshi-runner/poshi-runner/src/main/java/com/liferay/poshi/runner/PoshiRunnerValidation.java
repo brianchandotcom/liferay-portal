@@ -60,6 +60,10 @@ public class PoshiRunnerValidation {
 	}
 
 	public static void validate() throws Exception {
+		System.out.print("Running Poshi validation...");
+
+		long start = System.currentTimeMillis();
+
 		for (String filePath : PoshiRunnerContext.getFilePaths()) {
 			if (OSDetector.isWindows()) {
 				filePath = StringUtil.replace(filePath, "/", "\\");
@@ -101,6 +105,9 @@ public class PoshiRunnerValidation {
 		if (!_exceptions.isEmpty()) {
 			_throwExceptions();
 		}
+
+		System.out.println(
+			" Completed in " + (System.currentTimeMillis() - start) + "ms.");
 	}
 
 	public static void validate(String testName) throws Exception {

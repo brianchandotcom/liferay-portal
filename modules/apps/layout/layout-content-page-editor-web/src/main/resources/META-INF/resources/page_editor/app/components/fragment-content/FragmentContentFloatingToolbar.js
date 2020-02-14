@@ -60,7 +60,7 @@ export default function FragmentContentFloatingToolbar({
 		const {
 			classNameId,
 			classPK,
-			config,
+			config = {},
 			fieldId,
 			mappedField
 		} = editableValue;

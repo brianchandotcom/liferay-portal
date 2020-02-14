@@ -111,6 +111,10 @@ const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 };
 
 AllowedFragmentSelector.propTypes = {
+	dropZoneConfig: PropTypes.shape({
+		allowNewFragmentEntries: PropTypes.bool,
+		fragmentEntryKeys: PropTypes.array
+	}).isRequired,
 	onSelectedFragment: PropTypes.func.isRequired
 };
 

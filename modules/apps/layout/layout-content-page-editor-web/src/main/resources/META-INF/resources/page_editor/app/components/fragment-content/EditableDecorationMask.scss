@@ -8,6 +8,7 @@
 	animation: PageEditorEditableDecorationMaskFadeIn ease 0.3s;
 	animation-fill-mode: forwards;
 	opacity: 0;
+	z-index: 1;
 
 	&-rect {
 		fill: transparent;

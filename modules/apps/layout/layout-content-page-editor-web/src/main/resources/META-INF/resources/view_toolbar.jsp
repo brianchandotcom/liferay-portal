@@ -32,6 +32,9 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 						<c:when test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
 							<liferay-ui:message key="discard-variant" />
 						</c:when>
+						<c:when test="<%= contentPageEditorDisplayContext.isConversionDraft() %>">
+							<liferay-ui:message key="discard-conversion-draft" />
+						</c:when>
 						<c:otherwise>
 							<liferay-ui:message key="discard-draft" />
 						</c:otherwise>

@@ -44,8 +44,8 @@ public abstract class BaseOAuth2ManagementToolbarDisplayContext {
 		PortletURL currentURLObj) {
 
 		this.httpServletRequest = httpServletRequest;
-		this.liferayPortletResponse = liferayPortletResponse;
 		this.liferayPortletRequest = liferayPortletRequest;
+		this.liferayPortletResponse = liferayPortletResponse;
 		this.currentURLObj = currentURLObj;
 	}
 

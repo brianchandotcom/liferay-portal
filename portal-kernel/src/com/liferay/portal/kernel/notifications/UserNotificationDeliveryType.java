@@ -22,9 +22,9 @@ public class UserNotificationDeliveryType {
 	public UserNotificationDeliveryType(
 		String name, int type, boolean defaultValue, boolean modifiable) {
 
-		_default = defaultValue;
 		_name = name;
 		_type = type;
+		_default = defaultValue;
 		_modifiable = modifiable;
 	}
 

@@ -83,8 +83,8 @@ public class GitRemote {
 		String remoteURL) {
 
 		_gitWorkingDirectory = gitWorkingDirectory;
-		_fetchRemoteURL = remoteURL;
 		_name = name;
+		_fetchRemoteURL = remoteURL;
 		_pushRemoteURL = remoteURL;
 
 		parseRemoteURL();

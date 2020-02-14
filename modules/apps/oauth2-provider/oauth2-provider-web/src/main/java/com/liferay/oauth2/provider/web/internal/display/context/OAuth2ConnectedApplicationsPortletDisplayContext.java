@@ -37,11 +37,9 @@ public class OAuth2ConnectedApplicationsPortletDisplayContext
 		this(portletRequest, dlURLHelper);
 
 		_assignableScopes = assignableScopes;
-
 		super.oAuth2ApplicationService = oAuth2ApplicationService;
-		super.dlURLHelper = dlURLHelper;
-
 		_oAuth2Authorization = oAuth2Authorization;
+		super.dlURLHelper = dlURLHelper;
 	}
 
 	public OAuth2ConnectedApplicationsPortletDisplayContext(

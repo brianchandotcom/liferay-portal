@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -180,6 +181,9 @@ public abstract class PoshiNodeFactory {
 			throw poshiScriptParserException;
 		}
 	}
+
+	protected static final Set<URL> validationInitialized =
+		Collections.synchronizedSet(new HashSet<>());
 
 	private static DefinitionPoshiElement _getDefinitionPoshiElement() {
 		for (PoshiElement poshiElement : _poshiElements) {

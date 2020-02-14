@@ -134,7 +134,7 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 	private String _backgroundColorCssClass;
 	private JSONObject _backgroundImageJSONObject;
-	private String _containerType = "fluid";
+	private String _containerType = "fixed";
 	private int _paddingBottom = 3;
 	private int _paddingHorizontal = 3;
 	private int _paddingTop = 3;

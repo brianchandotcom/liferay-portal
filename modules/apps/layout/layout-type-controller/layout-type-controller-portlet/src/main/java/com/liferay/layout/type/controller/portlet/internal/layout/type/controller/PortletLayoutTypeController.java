@@ -107,10 +107,12 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		if (Validator.isNotNull(portletId)) {
 			Portlet portlet = _portletLocalService.getPortletById(portletId);
 
-			originalHttpServletRequest =
-				DynamicServletRequestUtil.createDynamicServletRequest(
-					originalHttpServletRequest, portlet,
-					httpServletRequest.getParameterMap(), true);
+			if (portlet != null) {
+				originalHttpServletRequest =
+					DynamicServletRequestUtil.createDynamicServletRequest(
+						originalHttpServletRequest, portlet,
+						httpServletRequest.getParameterMap(), true);
+			}
 		}
 
 		httpServletRequest.setAttribute(

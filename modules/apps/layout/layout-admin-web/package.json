@@ -6,6 +6,7 @@
 		"@clayui/form": "3.3.0",
 		"@clayui/icon": "3.0.2",
 		"@clayui/label": "3.0.2",
+		"@clayui/link": "3.0.2",
 		"@clayui/modal": "3.1.4",
 		"classnames": "2.2.6",
 		"clay-badge": "2.20.2",

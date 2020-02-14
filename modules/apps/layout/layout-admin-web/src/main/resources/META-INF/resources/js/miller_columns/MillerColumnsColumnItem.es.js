@@ -17,8 +17,9 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLink from '@clayui/link';
 import classNames from 'classnames';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import MillerColumnsContext from './MillerColumnsContext.es';
 
@@ -44,6 +45,22 @@ const MillerColumnsColumnItem = ({
 	const {namespace = ''} = useContext(MillerColumnsContext);
 
 	const [dropdownActionsActive, setDropdownActionsActive] = useState();
+
+	const getDropdownActions = actions => {
+		return actions.filter(action => !action.quickAction && action.url);
+	};
+
+	const getQuickActions = actions => {
+		return actions.filter(action => action.quickAction && action.url);
+	};
+
+	const dropdownActions = useRef(getDropdownActions(actions));
+	const quickActions = useRef(getQuickActions(actions));
+
+	useEffect(() => {
+		dropdownActions.current = getDropdownActions(actions);
+		quickActions.current = getQuickActions(actions);
+	}, [actions]);
 
 	return (
 		<li
@@ -98,7 +115,24 @@ const MillerColumnsColumnItem = ({
 				)}
 			</div>
 
-			{actions.length && (
+			{quickActions.current.map(action => (
+				<div
+					className="autofit-col miller-columns-item-quick-action"
+					key={action.id}
+				>
+					<ClayLink
+						borderless
+						displayType="secondary"
+						href={action.url}
+						monospaced
+						outline
+					>
+						<ClayIcon symbol={action.icon} />
+					</ClayLink>
+				</div>
+			))}
+
+			{dropdownActions.current.length > 0 && (
 				<div className="autofit-col miller-columns-item-actions">
 					<ClayDropDown
 						active={dropdownActionsActive}
@@ -113,19 +147,15 @@ const MillerColumnsColumnItem = ({
 						}
 					>
 						<ClayDropDown.ItemList>
-							{actions
-								.filter(
-									action => !action.quickAction && action.url
-								)
-								.map(action => (
-									<ClayDropDown.Item
-										href={action.url}
-										id={action.id}
-										key={action.id}
-									>
-										{action.label}
-									</ClayDropDown.Item>
-								))}
+							{dropdownActions.current.map(action => (
+								<ClayDropDown.Item
+									href={action.url}
+									id={action.id}
+									key={action.id}
+								>
+									{action.label}
+								</ClayDropDown.Item>
+							))}
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
 				</div>

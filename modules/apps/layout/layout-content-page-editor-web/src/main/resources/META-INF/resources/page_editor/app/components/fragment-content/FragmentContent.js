@@ -51,12 +51,16 @@ function FragmentContent({fragmentEntryLinkId, itemId}, ref) {
 		selectPrefixedSegmentsExperienceId
 	);
 
-	const defaultContent = useSelector(
-		state => state.fragmentEntryLinks[fragmentEntryLinkId].content
+	const defaultContent = useSelector(state =>
+		state.fragmentEntryLinks[fragmentEntryLinkId]
+			? state.fragmentEntryLinks[fragmentEntryLinkId].content
+			: ''
 	);
 
-	const editableValues = useSelector(
-		state => state.fragmentEntryLinks[fragmentEntryLinkId].editableValues
+	const editableValues = useSelector(state =>
+		state.fragmentEntryLinks[fragmentEntryLinkId]
+			? state.fragmentEntryLinks[fragmentEntryLinkId].editableValues
+			: {}
 	);
 
 	const [content, setContent] = useState(defaultContent);

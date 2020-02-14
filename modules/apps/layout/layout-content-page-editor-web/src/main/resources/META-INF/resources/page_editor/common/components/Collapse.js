@@ -32,18 +32,18 @@ export default function Collapse(props) {
 
 	return (
 		<div className="page-editor__collapse panel-group panel-group-flush">
-			<a
+			<button
 				aria-expanded={open}
 				className={classNames('collapse-icon', 'sheet-subtitle', {
 					collapsed: !open
 				})}
 				onClick={handleClick}
 			>
-				<span>{props.label}</span>
+				{props.label}
 				<span className={`collapse-icon-${collapseIconClassName}`}>
 					<ClayIcon key={collapseIcon} symbol={collapseIcon} />
 				</span>
-			</a>
+			</button>
 			{open && props.children}
 		</div>
 	);

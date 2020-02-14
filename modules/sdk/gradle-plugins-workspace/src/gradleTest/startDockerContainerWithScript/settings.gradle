@@ -22,12 +22,10 @@ gradle.projectsEvaluated {
 
 	rootProject.tasks.register("assertLog", DockerLogsContainer) {
 		dependsOn rootProject.tasks.startDockerContainer
-
 		finalizedBy rootProject.tasks.cleanDockerImage
 
-		tailAll = true
-
 		follow = false
+		tailAll = true
 
 		targetContainerId {
 			gradle.liferayWorkspace.dockerContainerId

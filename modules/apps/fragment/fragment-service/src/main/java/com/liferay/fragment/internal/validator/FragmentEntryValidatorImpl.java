@@ -16,25 +16,18 @@ package com.liferay.fragment.internal.validator;
 
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.validator.FragmentEntryValidator;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
+import com.liferay.petra.json.validator.JSONValidator;
+import com.liferay.petra.json.validator.JSONValidatorException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import org.everit.json.schema.Schema;
-import org.everit.json.schema.ValidationException;
-import org.everit.json.schema.loader.SchemaLoader;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -57,14 +50,11 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 				"dependencies/configuration-json-schema.json");
 
 		try {
-			JSONObject jsonObject = new JSONObject(
-				new JSONTokener(configurationJSONSchemaInputStream));
+			JSONValidator.validate(
+				configuration, configurationJSONSchemaInputStream);
 
-			Schema schema = SchemaLoader.load(jsonObject);
-
-			JSONObject configurationJSONObject = new JSONObject(configuration);
-
-			schema.validate(configurationJSONObject);
+			JSONObject configurationJSONObject =
+				JSONFactoryUtil.createJSONObject(configuration);
 
 			JSONArray fieldSetsJSONArray = configurationJSONObject.getJSONArray(
 				"fieldSets");
@@ -97,45 +87,13 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 				}
 			}
 		}
-		catch (Exception exception) {
-			if (exception instanceof JSONException) {
-				JSONException jsonException = (JSONException)exception;
-
-				throw new FragmentEntryConfigurationException(
-					jsonException.getMessage(), jsonException);
-			}
-			else if (exception instanceof ValidationException) {
-				ValidationException validationException =
-					(ValidationException)exception;
-
-				String errorMessage = validationException.getErrorMessage();
-
-				List<String> messages = validationException.getAllMessages();
-
-				if (!messages.isEmpty()) {
-					List<String> formattedMessages = new ArrayList<>();
-
-					messages.forEach(
-						message -> {
-							if (message.startsWith("#: ")) {
-								message = message.substring(3);
-							}
-							else if (message.startsWith("#")) {
-								message = message.substring(1);
-							}
-
-							formattedMessages.add(message);
-						});
-
-					errorMessage = StringUtil.merge(
-						formattedMessages, StringPool.NEW_LINE);
-				}
-
-				throw new FragmentEntryConfigurationException(
-					errorMessage, exception);
-			}
-
-			throw new FragmentEntryConfigurationException(exception);
+		catch (JSONException jsonException) {
+			throw new FragmentEntryConfigurationException(
+				jsonException.getMessage(), jsonException);
+		}
+		catch (JSONValidatorException jsonValidatorException) {
+			throw new FragmentEntryConfigurationException(
+				jsonValidatorException.getMessage(), jsonValidatorException);
 		}
 	}
 

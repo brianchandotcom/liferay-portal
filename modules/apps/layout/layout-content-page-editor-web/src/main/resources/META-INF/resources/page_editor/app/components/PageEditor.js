@@ -141,22 +141,37 @@ export default function PageEditor({withinMasterPage = false}) {
 
 	useEventListener('keyup', onKeyUp, false, document.body);
 
+	const isPageConversion = pageType === PAGE_TYPES.conversion;
+	const hasWarningMessages =
+		isPageConversion &&
+		layoutConversionWarningMessages &&
+		layoutConversionWarningMessages.length > 0;
+
 	return (
 		<>
-			{layoutConversionWarningMessages &&
-				layoutConversionWarningMessages.length > 0 &&
-				pageType === PAGE_TYPES.conversion && (
+			{isPageConversion && (
+				<div>
 					<ClayAlert
-						displayType="warning"
-						title={layoutConversionWarningMessages.join('<br>')}
+						displayType="info"
+						title={Liferay.Language.get(
+							'page-conversion-description'
+						)}
+						variant="stripe"
 					/>
-				)}
-			{pageType === PAGE_TYPES.conversion && (
-				<ClayAlert
-					displayType="info"
-					title={Liferay.Language.get('page-conversion-description')}
-				/>
+
+					{hasWarningMessages && (
+						<ClayAlert displayType="warning" variant="stripe">
+							{layoutConversionWarningMessages.map(message => (
+								<>
+									{message}
+									<br />
+								</>
+							))}
+						</ClayAlert>
+					)}
+				</div>
 			)}
+
 			<div
 				className={classNames('page-editor', {
 					'page-editor--with-sidebar': !withinMasterPage,

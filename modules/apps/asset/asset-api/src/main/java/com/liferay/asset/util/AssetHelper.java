@@ -114,11 +114,6 @@ public interface AssetHelper {
 		throws Exception;
 
 	public long searchCount(
-			HttpServletRequest httpServletRequest,
-			AssetEntryQuery assetEntryQuery, int start, int end)
-		throws Exception;
-
-	public long searchCount(
 			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
 			int start, int end)
 		throws Exception;

@@ -14,6 +14,7 @@
 
 package com.liferay.asset.display.page.portlet;
 
+import com.liferay.asset.display.page.configuration.AssetDisplayPageConfiguration;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
@@ -21,6 +22,7 @@ import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -150,6 +153,9 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		assetDisplayPageEntryLocalService;
 
 	@Reference
+	protected AssetEntryService assetEntryLocalService;
+
+	@Reference
 	protected AssetHelper assetHelper;
 
 	@Reference
@@ -184,7 +190,19 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		long classPK = infoDisplayObjectProvider.getClassPK();
 
 		try {
-			return assetRendererFactory.getAssetEntry(classNameId, classPK);
+			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+				classNameId, classPK);
+			AssetDisplayPageConfiguration assetDisplayPageConfiguration =
+				ConfigurationProviderUtil.getSystemConfiguration(
+					AssetDisplayPageConfiguration.class);
+
+			if ((assetEntry != null) &&
+				assetDisplayPageConfiguration.enableIncrementViewCounter()) {
+
+				assetEntryLocalService.incrementViewCounter(assetEntry);
+			}
+
+			return assetEntry;
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

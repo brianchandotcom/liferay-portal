@@ -197,7 +197,7 @@
 			<message key="variable.invalidName" value="''{0}'' should be followed by a lowercase character for variable ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ChainingCheck">
-			<property name="allowedClassNames" value="ActionSemantics,.*[Bb]uilder(s)?,Assertions,Awaitility,.*Consumer,CreationMenuUtil,EasyMock,Either,Filter,FormNavigatorEntryConfigurationRetriever,GenericUtil,JSONUtil,List,MemberMatcher,Option,Optional,Response,RestAssured,(Double|Int|Long)?Stream,Try,Validation" />
+			<property name="allowedClassNames" value="ActionSemantics,.*[Bb]uilder(s)?,Assertions,Awaitility,.*Consumer,CreationMenuBuilder,EasyMock,Either,Filter,FormNavigatorEntryConfigurationRetriever,GenericUtil,JSONUtil,List,MemberMatcher,Option,Optional,Response,RestAssured,(Double|Int|Long)?Stream,Try,Validation" />
 			<property name="allowedMethodNames" value="bind,builder,newBuilder" />
 			<property name="allowedMockitoMethodNames" value="doAnswer,doCallRealMethod,doNothing,doReturn,doThrow,field,replace,stub,verify,verifyPrivate,when" />
 			<property name="allowedVariableTypeNames" value="^(?!String).+Builder(Impl)?,Column,CompletableFuture,.*Consumer,ContactsEngineClient,Dataset,Description,ExecuteActionRequest,(FormsEventDataset)?Filter,.*Function[0-9]*,HttpSecurity,InOrder,JSONArray,JSONObject,JsonPath,.*Mapper,NestedRepresentor.*,Optional,Predicate,RequestSpecification,Response,SoyContext,(Double|Int|Long)?Stream,Try,UpdateFieldPropertyRequest,ValidatableResponse,WebTarget" />

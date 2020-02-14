@@ -28,6 +28,4 @@ public class SearchContextAttributes {
 	public static final String ATTRIBUTE_KEY_LUCENE_SYNTAX =
 		"search.lucene.syntax";
 
-	public static final String ATTRIBUTE_KEY_SHOW_STAGED = "search.show.staged";
-
 }

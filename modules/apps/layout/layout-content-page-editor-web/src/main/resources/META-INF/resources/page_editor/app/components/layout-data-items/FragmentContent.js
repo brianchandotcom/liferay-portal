@@ -464,12 +464,13 @@ const getFloatingToolbarButtons = (editableType, editableValue) => {
 	return buttons;
 };
 
-const getMappingValue = ({classNameId, classPK, config, fieldId}) =>
+const getMappingValue = ({classNameId, classPK, config, fieldId, languageId}) =>
 	InfoItemService.getAssetFieldValue({
 		classNameId,
 		classPK,
 		config,
 		fieldId,
+		languageId,
 		onNetworkStatus: () => {}
 	}).then(response => {
 		const {fieldValue = ''} = response;
@@ -498,7 +499,8 @@ const resolveEditableValue = (
 			classNameId: editableValue.classNameId,
 			classPK: editableValue.classPK,
 			config,
-			fieldId: editableValue.fieldId
+			fieldId: editableValue.fieldId,
+			languageId: state.languageId
 		});
 	}
 	else {

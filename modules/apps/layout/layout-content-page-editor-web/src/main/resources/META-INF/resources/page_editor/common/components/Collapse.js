@@ -33,6 +33,7 @@ export default function Collapse(props) {
 	return (
 		<div className="page-editor__collapse panel-group panel-group-flush">
 			<a
+				aria-expanded={open}
 				className={classNames('collapse-icon', 'sheet-subtitle', {
 					collapsed: !open
 				})}

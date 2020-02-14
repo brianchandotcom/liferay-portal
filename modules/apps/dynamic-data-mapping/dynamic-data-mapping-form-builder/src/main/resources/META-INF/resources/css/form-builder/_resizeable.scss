@@ -24,22 +24,22 @@ $c: '.ddm-form-builder';
 			opacity: 0;
 		}
 
-		&:hover,
-		&:active {
-			.ddm-resize-handle-left,
-			.ddm-resize-handle-right {
+		&:active,
+		&.hovered {
+			> .ddm-resize-handle-left,
+			> .ddm-resize-handle-right {
 				opacity: 0.5;
 			}
 		}
 	}
 
 	.resizeable .ddm-field-container {
-		&:hover,
 		&.dragging,
 		&.expanded,
+		&.hovered,
 		&.selected {
-			.ddm-resize-handle-left,
-			.ddm-resize-handle-right {
+			> .ddm-resize-handle-left,
+			> .ddm-resize-handle-right {
 				background-color: #1c67fb;
 				cursor: col-resize;
 				opacity: 1;

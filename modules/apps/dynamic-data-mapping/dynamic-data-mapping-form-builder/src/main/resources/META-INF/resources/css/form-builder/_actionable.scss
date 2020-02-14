@@ -27,9 +27,9 @@
 }
 
 .ddm-field-container {
-	&:hover,
 	&.dragging,
 	&.expanded,
+	&.hovered,
 	&.selected {
 		.ddm-field-actions-container {
 			background-color: $active-blue;
@@ -40,7 +40,7 @@
 		}
 	}
 
-	&:hover .ddm-field-actions-container {
+	&.hovered .ddm-field-actions-container {
 		border-width: 1px;
 		left: -1px;
 		top: -29px;

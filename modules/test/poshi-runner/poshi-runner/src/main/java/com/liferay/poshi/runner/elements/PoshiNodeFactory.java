@@ -45,10 +45,6 @@ import org.dom4j.Node;
  */
 public abstract class PoshiNodeFactory {
 
-	public static boolean getValidatePoshiScript() {
-		return _validatePoshiScript;
-	}
-
 	public static PoshiNode<?, ?> newPoshiNode(Node node) {
 		PoshiNode<?, ?> newPoshiNode = null;
 
@@ -143,10 +139,6 @@ public abstract class PoshiNodeFactory {
 		}
 	}
 
-	public static void setValidatePoshiScript(boolean validate) {
-		_validatePoshiScript = validate;
-	}
-
 	protected static boolean hasPoshiScriptParserException(URL url) {
 		Set<String> failingFilePaths =
 			PoshiScriptParserException.getUniqueErrorPaths();
@@ -157,10 +149,6 @@ public abstract class PoshiNodeFactory {
 	protected static void validatePoshiScriptContent(
 			PoshiElement poshiElement, URL url)
 		throws DocumentException, IOException, PoshiScriptParserException {
-
-		if (!_validatePoshiScript) {
-			return;
-		}
 
 		String poshiXMLString = Dom4JUtil.format(poshiElement);
 
@@ -252,7 +240,6 @@ public abstract class PoshiNodeFactory {
 	private static final DefinitionPoshiElement _definitionPoshiElement;
 	private static final List<PoshiComment> _poshiComments = new ArrayList<>();
 	private static final List<PoshiElement> _poshiElements = new ArrayList<>();
-	private static boolean _validatePoshiScript = true;
 
 	static {
 		try {

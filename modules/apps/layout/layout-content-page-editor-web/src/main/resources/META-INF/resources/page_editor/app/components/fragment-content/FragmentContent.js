@@ -26,17 +26,16 @@ import selectEditableValueConfig from '../../selectors/selectEditableValueConfig
 import selectEditableValueContent from '../../selectors/selectEditableValueContent';
 import InfoItemService from '../../services/InfoItemService';
 import {useSelector} from '../../store/index';
-import {useActiveItemId} from '../Controls';
 import UnsafeHTML from '../UnsafeHTML';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
 import FragmentContentClickFilter from './FragmentContentClickFilter';
 import FragmentContentDecoration from './FragmentContentDecoration';
 import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
 import FragmentContentProcessor from './FragmentContentProcessor';
+import getEditableUniqueId from './getEditableUniqueId';
 
 function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const element = ref.current;
-	const activeItemId = useActiveItemId();
 	const isMounted = useIsMounted();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const state = useSelector(state => state);
@@ -101,9 +100,11 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		};
 	}, [state, defaultContent, fragmentEntryLinkId, isMounted]);
 
-	const onFloatingToolbarButtonClick = buttonId => {
+	const onFloatingToolbarButtonClick = (buttonId, editableId) => {
 		if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {
-			setEditableProcessorUniqueId(activeItemId);
+			setEditableProcessorUniqueId(
+				getEditableUniqueId(fragmentEntryLinkId, editableId)
+			);
 		}
 	};
 

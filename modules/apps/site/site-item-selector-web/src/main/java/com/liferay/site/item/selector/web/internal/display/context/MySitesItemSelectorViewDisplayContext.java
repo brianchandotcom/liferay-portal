@@ -69,31 +69,21 @@ public class MySitesItemSelectorViewDisplayContext
 		GroupItemSelectorCriterion groupItemSelectorCriterion =
 			getGroupItemSelectorCriterion();
 
-		if (groupItemSelectorCriterion.isIncludeFormsSite() &&
-			(groupSearch.getStart() == 0)) {
+		if (groupSearch.getStart() == 0) {
+			if (groupItemSelectorCriterion.isIncludeUserPersonalSite()) {
+				_prependGroup(
+					groupSearch,
+					GroupLocalServiceUtil.getGroup(
+						_themeDisplay.getCompanyId(),
+						GroupConstants.USER_PERSONAL_SITE));
+			}
 
-			Group formsSite = GroupLocalServiceUtil.getGroup(
-				_themeDisplay.getCompanyId(), GroupConstants.FORMS);
-
-			groupSearch.setResults(
-				ListUtil.concat(
-					Arrays.asList(formsSite), groupSearch.getResults()));
-
-			groupSearch.setTotal(groupSearch.getTotal() + 1);
-		}
-
-		if (groupItemSelectorCriterion.isIncludeUserPersonalSite() &&
-			(groupSearch.getStart() == 0)) {
-
-			Group userPersonalSite = GroupLocalServiceUtil.getGroup(
-				_themeDisplay.getCompanyId(),
-				GroupConstants.USER_PERSONAL_SITE);
-
-			groupSearch.setResults(
-				ListUtil.concat(
-					Arrays.asList(userPersonalSite), groupSearch.getResults()));
-
-			groupSearch.setTotal(groupSearch.getTotal() + 1);
+			if (groupItemSelectorCriterion.isIncludeFormsSite()) {
+				_prependGroup(
+					groupSearch,
+					GroupLocalServiceUtil.getGroup(
+						_themeDisplay.getCompanyId(), GroupConstants.FORMS));
+			}
 		}
 
 		return groupSearch;
@@ -143,6 +133,14 @@ public class MySitesItemSelectorViewDisplayContext
 		}
 
 		return null;
+	}
+
+	private void _prependGroup(GroupSearch groupSearch, Group formsSite) {
+		groupSearch.setResults(
+			ListUtil.concat(
+				Arrays.asList(formsSite), groupSearch.getResults()));
+
+		groupSearch.setTotal(groupSearch.getTotal() + 1);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

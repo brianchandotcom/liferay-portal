@@ -489,18 +489,6 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Override
 	public long searchCount(
-			HttpServletRequest httpServletRequest,
-			AssetEntryQuery assetEntryQuery, int start, int end)
-		throws Exception {
-
-		SearchContext searchContext = SearchContextFactory.getInstance(
-			httpServletRequest);
-
-		return searchCount(searchContext, assetEntryQuery, start, end);
-	}
-
-	@Override
-	public long searchCount(
 			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
 			int start, int end)
 		throws Exception {

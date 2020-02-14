@@ -321,6 +321,10 @@ public interface AssetListEntryAssetEntryRelLocalService
 		long assetListEntryId, long segmentsEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetListEntryVisibleAssetEntryRelsCount(
+		long assetLIstEntryId, long segmentsEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 

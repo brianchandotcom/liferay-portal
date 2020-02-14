@@ -45,6 +45,9 @@ public interface DDMFormFieldTypeServicesTracker {
 	public <T> DDMFormFieldValueAccessor<T> getDDMFormFieldValueAccessor(
 		String name);
 
+	public DDMFormFieldValueLocalizer getDDMFormFieldValueLocalizer(
+		String name);
+
 	public DDMFormFieldValueRenderer getDDMFormFieldValueRenderer(String name);
 
 }

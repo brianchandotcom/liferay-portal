@@ -499,6 +499,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENTS_SEARCH</td>
+	<td>//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SKYPE</td>
 	<td>//div[label[contains(.,'Skype')]]/input</td>
 	<td></td>

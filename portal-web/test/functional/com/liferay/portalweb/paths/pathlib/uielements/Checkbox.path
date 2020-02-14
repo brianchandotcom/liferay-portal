@@ -334,6 +334,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALL_FRAGMENTS</td>
+	<td>//label[contains(.,'All Fragments')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALLowed_FRAGMENT</td>
+	<td>//label[contains(.,'${key_fragmentName}')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RANK_BY_PARTICIPATION</td>
 	<td>//label[contains(.,'Rank by Participation')]/input[@type='checkbox']</td>
 	<td></td>

@@ -70,9 +70,10 @@ public class DDMFormInstanceFactory {
 		public DDMFormInstanceInvocationHandler(
 			Class<T> clazz, DDMFormValues ddmFormValues, Locale locale) {
 
-			_ddmFormFactoryHelper = new DDMFormFactoryHelper(clazz);
 			_ddmFormValues = ddmFormValues;
 			_locale = locale;
+
+			_ddmFormFactoryHelper = new DDMFormFactoryHelper(clazz);
 
 			_ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
 		}

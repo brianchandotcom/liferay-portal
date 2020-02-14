@@ -39,8 +39,9 @@ public class StagedExpandoTableImpl implements StagedExpandoTable {
 	}
 
 	public StagedExpandoTableImpl(ExpandoTable expandoTable) {
-		_className = expandoTable.getClassName();
 		_expandoTable = expandoTable;
+
+		_className = expandoTable.getClassName();
 	}
 
 	@Override

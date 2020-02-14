@@ -445,8 +445,9 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		}
 
 		private TranslationHelper(String key, String name) {
-			_key = GetterUtil.getString(key);
 			_name = name;
+
+			_key = GetterUtil.getString(key);
 		}
 
 		private final String _key;

@@ -56,7 +56,7 @@ gradle.projectsEvaluated {
 		doLast {
 			int retries = 0
 
-			while (expectedLinesDetected < 2 && retries < 30) {
+			while (expectedLinesDetected < 2 && (retries < 30)) {
 				Thread.sleep(100)
 
 				retries++

@@ -20,6 +20,8 @@
 ChannelDisplayContext channelDisplayContext = new ChannelDisplayContext(renderRequest, renderResponse);
 
 ChannelSearch channelSearch = channelDisplayContext.getChannelSearch();
+
+String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <portlet:actionURL name="/analytics/edit_synced_sites" var="editSyncedSitesURL" />
@@ -37,7 +39,7 @@ ChannelSearch channelSearch = channelDisplayContext.getChannelSearch();
 		<c:when test="<%= channelSearch == null %>">
 			<liferay-ui:message key="failed-to-fetch-properties" />
 		</c:when>
-		<c:when test="<%= (channelSearch != null) && (channelSearch.getTotal() == 0) %>">
+		<c:when test="<%= (channelSearch != null) && (channelSearch.getTotal() == 0) && Validator.isBlank(keywords) %>">
 			<div class="mb-5 mt-5">
 				<div class="empty-state-icon mb-4 mt-4"></div>
 

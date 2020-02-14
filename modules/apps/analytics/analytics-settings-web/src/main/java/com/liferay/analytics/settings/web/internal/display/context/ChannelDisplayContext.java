@@ -66,7 +66,7 @@ public class ChannelDisplayContext {
 			HttpResponse httpResponse = AnalyticsSettingsUtil.doGet(
 				_getCompanyId(),
 				String.format(
-					"api/1.0/site-collections?filter=%s&page=%d&size=%d",
+					"api/1.0/channels?filter=%s&page=%d&size=%d",
 					_getKeywords(), channelSearch.getCur() - 1,
 					channelSearch.getDelta()));
 
@@ -86,14 +86,14 @@ public class ChannelDisplayContext {
 			JSONObject embeddedJSONObject = responseJSONObject.getJSONObject(
 				"_embedded");
 
-			JSONArray siteCollectionsJSONArray =
-				embeddedJSONObject.getJSONArray("site-collections");
+			JSONArray channelsJSONArray = embeddedJSONObject.getJSONArray(
+				"channels");
 
 			List<Channel> channels = new ArrayList<>();
 
-			for (int i = 0; i < siteCollectionsJSONArray.length(); i++) {
-				JSONObject channelJSONObject =
-					siteCollectionsJSONArray.getJSONObject(i);
+			for (int i = 0; i < channelsJSONArray.length(); i++) {
+				JSONObject channelJSONObject = channelsJSONArray.getJSONObject(
+					i);
 
 				channels.add(
 					new Channel(
@@ -111,7 +111,7 @@ public class ChannelDisplayContext {
 			return channelSearch;
 		}
 		catch (Exception exception) {
-			_log.error("Failed to fetch site collections", exception);
+			_log.error("Failed to fetch channels", exception);
 
 			return null;
 		}

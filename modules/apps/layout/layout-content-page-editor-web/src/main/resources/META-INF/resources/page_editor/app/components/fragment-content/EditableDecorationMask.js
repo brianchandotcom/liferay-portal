@@ -199,19 +199,21 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 				xmlns="http://www.w3.org/2000/svg"
 				xmlnsXlink="http://www.w3.org/1999/xlink"
 			>
-				{Object.entries(rects).map(([editableId, rect]) => (
-					<rect
-						className={classNames(
-							'page-editor__editable-decoration-mask-rect',
-							elementsClassNames[editableId] || ''
-						)}
-						height={rect.height}
-						key={editableId}
-						width={rect.width}
-						x={rect.x}
-						y={rect.y}
-					/>
-				))}
+				{Object.entries(rects)
+					.filter(([editableId]) => elementsClassNames[editableId])
+					.map(([editableId, rect]) => (
+						<rect
+							className={classNames(
+								'page-editor__editable-decoration-mask-rect',
+								elementsClassNames[editableId] || ''
+							)}
+							height={rect.height}
+							key={editableId}
+							width={rect.width}
+							x={rect.x}
+							y={rect.y}
+						/>
+					))}
 			</svg>,
 			document.body
 		)

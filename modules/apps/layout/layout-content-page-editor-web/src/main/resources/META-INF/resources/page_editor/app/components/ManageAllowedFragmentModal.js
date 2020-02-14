@@ -110,6 +110,10 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 };
 
 ManageAllowedFragmentModal.propTypes = {
+	item: PropTypes.shape({
+		config: PropTypes.object.isRequired,
+		itemId: PropTypes.string.isRequired
+	}).isRequired,
 	observer: PropTypes.object.isRequired,
 	onClose: PropTypes.func.isRequired
 };

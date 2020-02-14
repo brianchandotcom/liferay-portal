@@ -14,13 +14,12 @@
 
 import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
-import {closest} from 'metal-dom';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
-import {ConfigContext} from '../../config/index';
+import {config} from '../../config/index';
 import Processors from '../../processors/index';
 import selectEditableValue from '../../selectors/selectEditableValue';
 import selectEditableValueConfig from '../../selectors/selectEditableValueConfig';
@@ -30,12 +29,12 @@ import {useSelector} from '../../store/index';
 import {useActiveItemId} from '../Controls';
 import UnsafeHTML from '../UnsafeHTML';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
+import FragmentContentClickFilter from './FragmentContentClickFilter';
 import FragmentContentDecoration from './FragmentContentDecoration';
 import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
 import FragmentContentProcessor from './FragmentContentProcessor';
 
 function FragmentContent({fragmentEntryLink, itemId}, ref) {
-	const config = useContext(ConfigContext);
 	const element = ref.current;
 	const activeItemId = useActiveItemId();
 	const isMounted = useIsMounted();
@@ -46,37 +45,6 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const {fragmentEntryLinkId} = fragmentEntryLink;
 
 	const [content, setContent] = useState(defaultContent);
-
-	useEffect(() => {
-		if (!element) {
-			return;
-		}
-
-		const handleFragmentEntryLinkContentClick = event => {
-			const closestElement = closest(event.target, '[href]');
-
-			if (
-				closestElement &&
-				!('data-lfr-page-editor-href-enabled' in element.dataset)
-			) {
-				event.preventDefault();
-			}
-		};
-
-		element.addEventListener(
-			'click',
-			handleFragmentEntryLinkContentClick,
-			true
-		);
-
-		return () => {
-			element.removeEventListener(
-				'click',
-				handleFragmentEntryLinkContentClick,
-				true
-			);
-		};
-	});
 
 	useEffect(() => {
 		let element = document.createElement('div');
@@ -131,7 +99,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		return () => {
 			element = null;
 		};
-	}, [state, config, defaultContent, fragmentEntryLinkId, isMounted]);
+	}, [state, defaultContent, fragmentEntryLinkId, isMounted]);
 
 	const onFloatingToolbarButtonClick = buttonId => {
 		if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {
@@ -146,6 +114,8 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 				contentRef={ref}
 				markup={content}
 			/>
+
+			<FragmentContentClickFilter element={element} />
 
 			<FragmentContentFloatingToolbar
 				element={element}

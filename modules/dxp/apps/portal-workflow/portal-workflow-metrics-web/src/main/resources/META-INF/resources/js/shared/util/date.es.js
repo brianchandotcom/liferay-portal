@@ -9,8 +9,14 @@
  * distribution rights of the Software.
  */
 
-import moment from 'moment/min/moment-with-locales';
+import moment from './moment.es';
 
-moment.locale(Liferay.ThemeDisplay.getBCP47LanguageId());
+const formatDate = (date, format = 'L', fromFormat = null) => {
+	return moment(date, fromFormat).format(format);
+};
 
-export default moment;
+const isValidDate = (date, format = 'L') => {
+	return moment(date, format, true).isValid();
+};
+
+export {formatDate, isValidDate};

@@ -145,68 +145,6 @@ definition {
 		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom Tag 1 property" content="contenido de metaetiqueta personalizado"''');
 	}
 
-	@description = "This test covers LPS-107056. It ensures that fields require inputs when adding a custom meta tag."
-	@priority = "5"
-	test ViewRequiredFields {
-		var portalURL = PropsUtil.get("portal.url");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
-
-		CustomMetaTags.addTag(
-			customContent = "custom meta content",
-			customProperty = "custom meta property");
-
-		CustomMetaTags.editTag(
-			customContent = "custom meta content",
-			customProperty = "custom meta property",
-			newCustomContent = "custom meta content edit",
-			newCustomProperty = "");
-
-		Alert.viewRequiredField();
-
-		CustomMetaTags.changeLocale(locale = "ca-ES");
-
-		Button.click(button = "Save");
-
-		Alert.viewErrorMessage(errorMessage = "Error: No value is defined for field property.");
-
-		CustomMetaTags.editTag(
-			customContent = "custom meta content edit",
-			customProperty = "",
-			newCustomContent = "",
-			newCustomProperty = "custom meta property edit");
-
-		Alert.viewRequiredField();
-
-		CustomMetaTags.changeLocale(locale = "ca-ES");
-
-		Type(
-			locator1 = "TextInput#CUSTOM_META_TAGS_CONTENT",
-			value1 = "custom meta content edit");
-
-		Button.click(button = "Save");
-
-		Alert.viewErrorMessage(errorMessage = "Error: No value is defined for field content.");
-
-		CustomMetaTags.editTag(
-			customContent = "custom meta content edit",
-			customProperty = "custom meta property edit",
-			newCustomContent = "custom meta content edit edit",
-			newCustomProperty = "custom meta property edit edit");
-
-		User.logoutPG();
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
-
-		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property edit edit" content="custom meta content edit edit"''');
-	}
-
 	@description = "This ensures that the custom meta tag can not be generated without property or content."
 	@priority = "5"
 	test ViewTagWithoutPropertyOrContent {

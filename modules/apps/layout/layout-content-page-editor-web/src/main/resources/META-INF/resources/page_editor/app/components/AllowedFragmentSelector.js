@@ -18,12 +18,10 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import {ConfigContext} from '../config/index';
-import {useSelector} from '../store/index';
 import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
 
-const AllowedFragmentSelector = ({onSelectedFragment}) => {
+const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 	const {fragments} = useContext(ConfigContext);
-	const layoutData = useSelector(state => state.layoutData);
 
 	const fragmentEntryKeysArray = useMemo(
 		() => toFragmentEntryKeysArray(fragments),
@@ -31,11 +29,11 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 	);
 
 	const initialAllowNewFragmentEntries =
-		layoutData.allowNewFragmentEntries == undefined
+		dropZoneConfig.allowNewFragmentEntries == undefined
 			? true
-			: layoutData.allowNewFragmentEntries;
+			: dropZoneConfig.allowNewFragmentEntries;
 
-	const initialFragmentEntryKeys = layoutData.fragmentEntryKeys || [];
+	const initialFragmentEntryKeys = dropZoneConfig.fragmentEntryKeys || [];
 
 	const [filter, setFilter] = useState('');
 

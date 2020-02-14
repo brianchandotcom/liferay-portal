@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,64 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class SpiraTestCaseRun extends BaseSpiraArtifact {
+
+	public static List<SpiraTestCaseRun> recordSpiraTestCaseRuns(
+			SpiraProject spiraProject, JSONObject... requestJSONObjects)
+		throws IOException {
+
+		String urlPath = "projects/{project_id}/test-runs/record-multiple";
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		JSONArray requestJSONArray = new JSONArray();
+
+		for (JSONObject requestJSONObject : requestJSONObjects) {
+			requestJSONArray.put(requestJSONObject);
+		}
+
+		JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+			urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
+			requestJSONArray.toString());
+
+		List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
+
+		for (int i = 0; i < responseJSONArray.length(); i++) {
+			JSONObject responseJSONObject = responseJSONArray.getJSONObject(i);
+
+			responseJSONObject.put("ProjectId", spiraProject.getID());
+
+			spiraTestCaseRuns.add(new SpiraTestCaseRun(responseJSONObject));
+		}
+
+		return spiraTestCaseRuns;
+	}
+
+	public static SpiraTestCaseRun recordTestSpiraTestCaseRun(
+			SpiraProject spiraProject, SpiraTestCaseObject spiraTestCase)
+		throws IOException {
+
+		Calendar calendar = Calendar.getInstance();
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("ExecutionStatusId", STATUS_PASSED);
+		requestJSONObject.put("RunnerMessage", spiraTestCase.getPath());
+		requestJSONObject.put("RunnerName", "Liferay CI");
+		requestJSONObject.put("RunnerStackTrace", "");
+		requestJSONObject.put("RunnerTestName", spiraTestCase.getName());
+		requestJSONObject.put(
+			"StartDate", PathSpiraArtifact.toDateString(calendar));
+		requestJSONObject.put("TestCaseId", spiraTestCase.getID());
+		requestJSONObject.put("TestRunFormatId", RUNNER_FORMAT_PLAIN);
+
+		List<SpiraTestCaseRun> spiraTestCaseRuns = recordSpiraTestCaseRuns(
+			spiraProject, requestJSONObject);
+
+		return spiraTestCaseRuns.get(0);
+	}
 
 	@Override
 	public int getID() {
@@ -99,6 +158,22 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		return spiraTestCaseRuns;
 	}
+
+	protected static final int RUNNER_FORMAT_HTML = 2;
+
+	protected static final int RUNNER_FORMAT_PLAIN = 1;
+
+	protected static final int STATUS_BLOCKED = 5;
+
+	protected static final int STATUS_CAUTION = 6;
+
+	protected static final int STATUS_FAILED = 1;
+
+	protected static final int STATUS_NOT_APPLICABLE = 4;
+
+	protected static final int STATUS_NOT_RUN = 3;
+
+	protected static final int STATUS_PASSED = 2;
 
 	private static String _createSpiraTestCaseRunKey(
 		int projectID, int testCaseID, int testCaseRunID) {

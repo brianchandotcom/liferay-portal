@@ -150,7 +150,11 @@ export default function PageEditor({withinMasterPage = false}) {
 	return (
 		<>
 			{isPageConversion && (
-				<div>
+				<div
+					className={classNames('page-editor__conversion-messages', {
+						'page-editor__conversion-messages--with-sidebar-open': sidebarOpen
+					})}
+				>
 					<ClayAlert
 						displayType="info"
 						title={Liferay.Language.get(

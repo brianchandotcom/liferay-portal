@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -101,8 +102,11 @@ public class GetAssetFieldValueMVCResourceCommand
 			"fieldId", fieldId
 		);
 
+		String languageId = ParamUtil.getString(
+			resourceRequest, "languageId", themeDisplay.getLanguageId());
+
 		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
-			object, fieldId, themeDisplay.getLocale());
+			object, fieldId, LocaleUtil.fromLanguageId(languageId));
 
 		if (fieldValue instanceof ContentAccessor) {
 			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;

@@ -2774,18 +2774,21 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetListEntryAssetEntryRel.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByA_SEI;
 				finderArgs = new Object[] {assetListEntryId, segmentsEntryId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByA_SEI;
 			finderArgs = new Object[] {
 				assetListEntryId, segmentsEntryId, start, end, orderByComparator
@@ -2794,7 +2797,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 
 		List<AssetListEntryAssetEntryRel> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetListEntryAssetEntryRel>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2862,12 +2865,12 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -3273,18 +3276,21 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				orderByComparator);
 		}
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetListEntryAssetEntryRel.class);
+
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
 					assetListEntryId, StringUtil.merge(segmentsEntryIds)
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				assetListEntryId, StringUtil.merge(segmentsEntryIds), start,
 				end, orderByComparator
@@ -3293,7 +3299,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 
 		List<AssetListEntryAssetEntryRel> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetListEntryAssetEntryRel>)finderCache.getResult(
 				_finderPathWithPaginationFindByA_SEI, finderArgs, this);
 
@@ -3366,13 +3372,13 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationFindByA_SEI, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(
 						_finderPathWithPaginationFindByA_SEI, finderArgs);
 				}
@@ -3413,11 +3419,21 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByA_SEI(long assetListEntryId, long segmentsEntryId) {
-		FinderPath finderPath = _finderPathCountByA_SEI;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetListEntryAssetEntryRel.class);
 
-		Object[] finderArgs = new Object[] {assetListEntryId, segmentsEntryId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByA_SEI;
+
+			finderArgs = new Object[] {assetListEntryId, segmentsEntryId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3445,10 +3461,14 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -3476,12 +3496,21 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
 		}
 
-		Object[] finderArgs = new Object[] {
-			assetListEntryId, StringUtil.merge(segmentsEntryIds)
-		};
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetListEntryAssetEntryRel.class);
 
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByA_SEI, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {
+				assetListEntryId, StringUtil.merge(segmentsEntryIds)
+			};
+
+			count = (Long)finderCache.getResult(
+				_finderPathWithPaginationCountByA_SEI, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -3521,12 +3550,17 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathWithPaginationCountByA_SEI, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathWithPaginationCountByA_SEI, finderArgs,
+						count);
+				}
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByA_SEI, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(
+						_finderPathWithPaginationCountByA_SEI, finderArgs);
+				}
 
 				throw processException(exception);
 			}

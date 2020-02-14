@@ -362,11 +362,10 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
-			getAssetListEntryAssetEntryRels(
-				long assetListEntryId, long[] segmentsEntryIds, int start,
-				int end) {
+	public java.util.List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRels(
+			long assetListEntryId, long[] segmentsEntryIds, int start,
+			int end) {
 
 		return _assetListEntryAssetEntryRelLocalService.
 			getAssetListEntryAssetEntryRels(

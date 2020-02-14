@@ -62,7 +62,6 @@ public class DefaultMBAdminListDisplayContext
 		HttpServletResponse httpServletResponse, long categoryId) {
 
 		_httpServletRequest = httpServletRequest;
-
 		_categoryId = categoryId;
 	}
 

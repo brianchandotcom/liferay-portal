@@ -185,8 +185,6 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 				}}
 				viewBox={`0 0 ${window.innerWidth} ${window.innerHeight}`}
 				width={window.innerWidth}
-				xmlns="http://www.w3.org/2000/svg"
-				xmlnsXlink="http://www.w3.org/1999/xlink"
 			>
 				{Object.entries(rects)
 					.filter(([editableId]) => elementsClassNames[editableId])

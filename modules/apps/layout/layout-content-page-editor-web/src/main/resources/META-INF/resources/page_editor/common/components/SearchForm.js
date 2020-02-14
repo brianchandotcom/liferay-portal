@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -21,26 +22,21 @@ export default function SearchForm({onChange, value}) {
 	const id = `pageEditorSearchFormInput${nextInputId++}`;
 
 	return (
-		<form className="mb-3" role="search">
-			<div className="input-group">
-				<div className="input-group-item">
-					<label className="sr-only" htmlFor={id}>
-						{Liferay.Language.get('search-form')}
-					</label>
-
-					<input
-						className="form-control form-control-sm input-group-inset"
-						id={id}
-						onChange={event => {
-							onChange(event.target.value);
-						}}
-						placeholder={`${Liferay.Language.get('search')}...`}
-						type="text"
-						value={value}
-					/>
-				</div>
-			</div>
-		</form>
+		<ClayForm.Group className="mb-3" role="search">
+			<label className="sr-only" htmlFor={id}>
+				{Liferay.Language.get('search-form')}
+			</label>
+			<ClayInput
+				id={id}
+				onChange={event => {
+					onChange(event.target.value);
+				}}
+				placeholder={`${Liferay.Language.get('search')}...`}
+				sizing="sm"
+				type="text"
+				value={value}
+			/>
+		</ClayForm.Group>
 	);
 }
 

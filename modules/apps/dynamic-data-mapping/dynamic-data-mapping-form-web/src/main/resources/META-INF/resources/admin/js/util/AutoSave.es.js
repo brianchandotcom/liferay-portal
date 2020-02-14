@@ -25,7 +25,7 @@ class AutoSave extends Component {
 		const currentState = this.getCurrentState();
 		const currentStateHash = this.getStateHash(currentState);
 
-		this._lastKownHash = currentStateHash;
+		this._lastKnownHash = currentStateHash;
 
 		this.start();
 	}
@@ -53,7 +53,7 @@ class AutoSave extends Component {
 		const currentState = this.getCurrentState();
 		const currentStateHash = this.getStateHash(currentState);
 
-		return this._lastKownHash !== currentStateHash;
+		return this._lastKnownHash !== currentStateHash;
 	}
 
 	save(saveAsDraft = this.props.saveAsDraft) {
@@ -108,7 +108,7 @@ class AutoSave extends Component {
 	}
 
 	saveStateHash(state) {
-		this._lastKownHash = this.getStateHash(state);
+		this._lastKnownHash = this.getStateHash(state);
 	}
 
 	start() {

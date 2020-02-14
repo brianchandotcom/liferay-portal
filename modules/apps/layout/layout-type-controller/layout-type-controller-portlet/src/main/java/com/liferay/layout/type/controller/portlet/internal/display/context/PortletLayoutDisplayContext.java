@@ -127,7 +127,7 @@ public class PortletLayoutDisplayContext {
 					layout.getMasterLayoutPlid());
 
 		if (masterLayoutPageTemplateEntry == null) {
-			_layoutStructure = _getDefaultLayoutStructure();
+			_layoutStructure = _getDefaultMasterLayoutStructure();
 
 			return _layoutStructure;
 		}
@@ -143,7 +143,7 @@ public class PortletLayoutDisplayContext {
 			SegmentsExperienceConstants.ID_DEFAULT);
 
 		if (Validator.isNull(data)) {
-			_layoutStructure = _getDefaultLayoutStructure();
+			_layoutStructure = _getDefaultMasterLayoutStructure();
 
 			return _layoutStructure;
 		}
@@ -153,26 +153,14 @@ public class PortletLayoutDisplayContext {
 		return _layoutStructure;
 	}
 
-	private LayoutStructure _getDefaultLayoutStructure() {
+	private LayoutStructure _getDefaultMasterLayoutStructure() {
 		LayoutStructure layoutStructure = new LayoutStructure();
 
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
-		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
-				rootLayoutStructureItem.getItemId(), 0);
-
-		LayoutStructureItem rowLayoutStructureItem =
-			layoutStructure.addRowLayoutStructureItem(
-				containerLayoutStructureItem.getItemId(), 0, 0);
-
-		LayoutStructureItem columnLayoutStructureItem =
-			layoutStructure.addColumnLayoutStructureItem(
-				rowLayoutStructureItem.getItemId(), 0);
-
 		layoutStructure.addDropZoneLayoutStructureItem(
-			columnLayoutStructureItem.getItemId(), 0);
+			rootLayoutStructureItem.getItemId(), 0);
 
 		return layoutStructure;
 	}

@@ -19,12 +19,8 @@ import React, {useEffect, useState} from 'react';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
-import {config} from '../../config/index';
 import Processors from '../../processors/index';
-import selectEditableValue from '../../selectors/selectEditableValue';
-import selectEditableValueConfig from '../../selectors/selectEditableValueConfig';
-import selectEditableValueContent from '../../selectors/selectEditableValueContent';
-import InfoItemService from '../../services/InfoItemService';
+import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useSelector} from '../../store/index';
 import UnsafeHTML from '../UnsafeHTML';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
@@ -33,15 +29,26 @@ import FragmentContentDecoration from './FragmentContentDecoration';
 import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
 import FragmentContentProcessor from './FragmentContentProcessor';
 import getEditableUniqueId from './getEditableUniqueId';
+import resolveEditableValue from './resolveEditableValue';
 
-function FragmentContent({fragmentEntryLink, itemId}, ref) {
+function FragmentContent({fragmentEntryLinkId, itemId}, ref) {
 	const element = ref.current;
 	const isMounted = useIsMounted();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
-	const state = useSelector(state => state);
 
-	const defaultContent = fragmentEntryLink.content;
-	const {fragmentEntryLinkId} = fragmentEntryLink;
+	const languageId = useSelector(state => state.languageId);
+
+	const segmentsExperienceId = useSelector(
+		selectPrefixedSegmentsExperienceId
+	);
+
+	const defaultContent = useSelector(
+		state => state.fragmentEntryLinks[fragmentEntryLinkId].content
+	);
+
+	const editableValues = useSelector(
+		state => state.fragmentEntryLinks[fragmentEntryLinkId].editableValues
+	);
 
 	const [content, setContent] = useState(defaultContent);
 
@@ -59,15 +66,16 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 			element.querySelectorAll('[data-lfr-background-image-id]')
 		).map(editable => {
 			resolveEditableValue(
-				state,
-				config,
-				fragmentEntryLinkId,
+				editableValues,
 				editable.dataset.lfrBackgroundImageId,
-				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				languageId,
+				segmentsExperienceId
 			).then(([value, _editableConfig]) => {
 				const processor = Processors['background-image'];
 
 				processor.render(editable, value);
+				updateContent();
 			});
 		});
 
@@ -76,29 +84,32 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 				editable.classList.add('page-editor__editable');
 
 				resolveEditableValue(
-					state,
-					config,
-					fragmentEntryLinkId,
+					editableValues,
 					editable.getAttribute('id'),
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					languageId,
+					segmentsExperienceId
 				).then(([value, editableConfig]) => {
-					if (element) {
-						const processor =
-							Processors[editable.getAttribute('type')] ||
-							Processors.fallback;
+					const processor =
+						Processors[editable.getAttribute('type')] ||
+						Processors.fallback;
 
-						processor.render(editable, value, editableConfig);
-					}
+					processor.render(editable, value, editableConfig);
+					updateContent();
 				});
 			}
 		);
 
-		updateContent();
-
 		return () => {
 			element = null;
 		};
-	}, [state, defaultContent, fragmentEntryLinkId, isMounted]);
+	}, [
+		defaultContent,
+		editableValues,
+		isMounted,
+		languageId,
+		segmentsExperienceId
+	]);
 
 	const onFloatingToolbarButtonClick = (buttonId, editableId) => {
 		if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {
@@ -150,84 +161,3 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 }
 
 export default React.forwardRef(FragmentContent);
-
-const editableIsMappedToInfoItem = editableValue =>
-	editableValue &&
-	editableValue.classNameId &&
-	editableValue.classPK &&
-	editableValue.fieldId;
-
-const getMappingValue = ({classNameId, classPK, config, fieldId}) =>
-	InfoItemService.getAssetFieldValue({
-		classNameId,
-		classPK,
-		config,
-		fieldId,
-		onNetworkStatus: () => {}
-	}).then(response => {
-		const {fieldValue = ''} = response;
-
-		return fieldValue;
-	});
-
-const resolveEditableValue = (
-	state,
-	config,
-	fragmentEntryLinkId,
-	editableId,
-	processorType
-) => {
-	const editableValue = selectEditableValue(
-		state,
-		fragmentEntryLinkId,
-		editableId,
-		processorType
-	);
-
-	let valuePromise;
-
-	if (editableIsMappedToInfoItem(editableValue)) {
-		valuePromise = getMappingValue({
-			classNameId: editableValue.classNameId,
-			classPK: editableValue.classPK,
-			config,
-			fieldId: editableValue.fieldId
-		});
-	}
-	else {
-		valuePromise = Promise.resolve(
-			selectEditableValueContent(
-				state,
-				config,
-				fragmentEntryLinkId,
-				editableId,
-				processorType
-			)
-		);
-	}
-
-	let configPromise;
-
-	if (editableIsMappedToInfoItem(editableValue.config)) {
-		configPromise = getMappingValue({
-			classNameId: editableValue.config.classNameId,
-			classPK: editableValue.config.classPK,
-			config,
-			fieldId: editableValue.config.fieldId
-		}).then(href => {
-			return {...editableValue.config, href};
-		});
-	}
-	else {
-		configPromise = Promise.resolve(
-			selectEditableValueConfig(
-				state,
-				fragmentEntryLinkId,
-				editableId,
-				processorType
-			)
-		);
-	}
-
-	return Promise.all([valuePromise, configPromise]);
-};

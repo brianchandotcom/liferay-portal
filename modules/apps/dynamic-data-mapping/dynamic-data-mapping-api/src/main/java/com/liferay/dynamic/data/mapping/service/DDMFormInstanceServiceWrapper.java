@@ -104,6 +104,13 @@ public class DDMFormInstanceServiceWrapper
 			companyId, groupId);
 	}
 
+	@Override
+	public int getFormInstancesCount(String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmFormInstanceService.getFormInstancesCount(uuid);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

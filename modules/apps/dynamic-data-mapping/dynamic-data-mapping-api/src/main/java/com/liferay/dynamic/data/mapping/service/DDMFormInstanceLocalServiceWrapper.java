@@ -484,6 +484,13 @@ public class DDMFormInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public int getFormInstancesCount(String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmFormInstanceLocalService.getFormInstancesCount(uuid);
+	}
+
+	@Override
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
 			getFormInstanceSettingsFormValues(
 				com.liferay.dynamic.data.mapping.model.DDMFormInstance

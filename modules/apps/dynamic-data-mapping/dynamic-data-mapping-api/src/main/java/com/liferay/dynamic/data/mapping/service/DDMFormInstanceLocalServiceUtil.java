@@ -443,6 +443,12 @@ public class DDMFormInstanceLocalServiceUtil {
 		return getService().getFormInstancesCount(groupId);
 	}
 
+	public static int getFormInstancesCount(String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getFormInstancesCount(uuid);
+	}
+
 	public static com.liferay.dynamic.data.mapping.storage.DDMFormValues
 			getFormInstanceSettingsFormValues(
 				com.liferay.dynamic.data.mapping.model.DDMFormInstance

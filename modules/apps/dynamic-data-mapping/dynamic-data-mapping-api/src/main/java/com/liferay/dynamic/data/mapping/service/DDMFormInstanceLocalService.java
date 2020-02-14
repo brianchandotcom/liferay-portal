@@ -343,6 +343,9 @@ public interface DDMFormInstanceLocalService
 	public int getFormInstancesCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFormInstancesCount(String uuid) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormValues getFormInstanceSettingsFormValues(
 			DDMFormInstance formInstance)
 		throws PortalException;

@@ -217,6 +217,22 @@ public class DDMFormInstanceServiceSoap {
 		}
 	}
 
+	public static int getFormInstancesCount(String uuid)
+		throws RemoteException {
+
+		try {
+			int returnValue = DDMFormInstanceServiceUtil.getFormInstancesCount(
+				uuid);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap[]
 			search(
 				long companyId, long groupId, String keywords, int start,

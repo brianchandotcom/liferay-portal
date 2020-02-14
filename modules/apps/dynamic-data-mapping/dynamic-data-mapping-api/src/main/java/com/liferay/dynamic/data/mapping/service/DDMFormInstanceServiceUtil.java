@@ -100,6 +100,12 @@ public class DDMFormInstanceServiceUtil {
 		return getService().getFormInstancesCount(companyId, groupId);
 	}
 
+	public static int getFormInstancesCount(String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getFormInstancesCount(uuid);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -16,6 +16,7 @@ package com.liferay.asset.list.service.base;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelFinder;
 import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPersistence;
 import com.liferay.asset.list.service.persistence.AssetListEntryPersistence;
 import com.liferay.asset.list.service.persistence.AssetListEntrySegmentsEntryRelPersistence;
@@ -572,6 +573,10 @@ public abstract class AssetListEntryLocalServiceBaseImpl
 	@Reference
 	protected AssetListEntryAssetEntryRelPersistence
 		assetListEntryAssetEntryRelPersistence;
+
+	@Reference
+	protected AssetListEntryAssetEntryRelFinder
+		assetListEntryAssetEntryRelFinder;
 
 	@Reference
 	protected AssetListEntrySegmentsEntryRelPersistence

@@ -399,6 +399,13 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 			assetListEntryId, segmentsEntryId);
 	}
 
+	public static int getAssetListEntryVisibleAssetEntryRelsCount(
+		long assetLIstEntryId, long segmentsEntryId) {
+
+		return getService().getAssetListEntryVisibleAssetEntryRelsCount(
+			assetLIstEntryId, segmentsEntryId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

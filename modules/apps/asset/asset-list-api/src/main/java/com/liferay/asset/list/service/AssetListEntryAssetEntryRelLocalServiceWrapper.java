@@ -426,6 +426,15 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 	}
 
 	@Override
+	public int getAssetListEntryVisibleAssetEntryRelsCount(
+		long assetLIstEntryId, long segmentsEntryId) {
+
+		return _assetListEntryAssetEntryRelLocalService.
+			getAssetListEntryVisibleAssetEntryRelsCount(
+				assetLIstEntryId, segmentsEntryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

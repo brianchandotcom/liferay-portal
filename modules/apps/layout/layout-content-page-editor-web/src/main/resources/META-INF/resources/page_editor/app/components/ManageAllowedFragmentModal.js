@@ -76,6 +76,7 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 					)}
 				</p>
 				<AllowedFragmentSelector
+					dropZoneConfig={item.config}
 					onSelectedFragment={onSelectedFragment}
 				/>
 			</ClayModal.Body>

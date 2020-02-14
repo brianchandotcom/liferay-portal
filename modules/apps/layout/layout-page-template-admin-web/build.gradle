@@ -28,6 +28,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-page-template-admin-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
+	compileOnly project(":apps:petra:petra-json-validator")
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

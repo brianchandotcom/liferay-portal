@@ -29,11 +29,16 @@ public class DepotGroupTypeContributor implements GroupTypeContributor {
 
 	@Override
 	public String getClassName() {
-		if (!_depotSupportChecker.isEnabled()) {
-			return null;
+		return DepotEntry.class.getName();
+	}
+
+	@Override
+	public boolean isEnabled() {
+		if (_depotSupportChecker.isEnabled()) {
+			return true;
 		}
 
-		return DepotEntry.class.getName();
+		return false;
 	}
 
 	@Reference

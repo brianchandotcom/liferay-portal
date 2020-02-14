@@ -191,16 +191,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.AttributeOrderCheck">
 			<message key="attribute.incorrect.order" value="Attribute ''{0}'' should come after attribute ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MapBuilderCheck">
-			<property name="checkInline" value="true" />
-			<property name="enabled" value="false" />
-			<property name="typeNames" value="ConcurrentHashMap,HashMap,LinkedHashMap,TreeMap" />
-			<message key="builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3})" />
-			<message key="builder.inline" value="Inline variable definition ''{0}'' ({1}) inside ''{2}'' ({3})" />
-			<message key="builder.use" value="Use ''{0}'' ({1}, {2})" />
-			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''" />
-			<message key="null.value.incorrect" value="Null values are not allowed in ''{0}''" />
-		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.CamelCaseNameCheck">
 			<message key="method.invalidName" value="''{0}'' should be followed by a lowercase character for method ''{1}''" />
 			<message key="parameter.invalidName" value="''{0}'' should be followed by a lowercase character for parameter ''{1}''" />
@@ -318,6 +308,16 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.LPS42924Check">
 			<message key="lps42924" value="Use ''classNameLocalService.getClassNameId'' instead of ''PortalUtil.getClassName''" />
+		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.MapBuilderCheck">
+			<property name="checkInline" value="true" />
+			<property name="enabled" value="false" />
+			<property name="typeNames" value="ConcurrentHashMap,HashMap,LinkedHashMap,TreeMap" />
+			<message key="builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3})" />
+			<message key="builder.inline" value="Inline variable definition ''{0}'' ({1}) inside ''{2}'' ({3})" />
+			<message key="builder.use" value="Use ''{0}'' ({1}, {2})" />
+			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''" />
+			<message key="null.value.incorrect" value="Null values are not allowed in ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MapIterationCheck">
 			<message key="entry.set.use" value="Use Map.entrySet() to retrieve values" />

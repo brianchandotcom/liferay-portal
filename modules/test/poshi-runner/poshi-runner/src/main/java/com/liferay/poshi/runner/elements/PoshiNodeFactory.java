@@ -95,7 +95,9 @@ public abstract class PoshiNodeFactory {
 			"Invalid Poshi Script syntax", poshiScript, parentPoshiNode);
 	}
 
-	public static PoshiNode<?, ?> newPoshiNode(String content, URL url) {
+	public static PoshiNode<?, ?> newPoshiNode(String content, URL url)
+		throws PoshiScriptParserException {
+
 		try {
 			content = content.trim();
 
@@ -126,7 +128,9 @@ public abstract class PoshiNodeFactory {
 		return null;
 	}
 
-	public static PoshiNode<?, ?> newPoshiNodeFromFile(URL url) {
+	public static PoshiNode<?, ?> newPoshiNodeFromFile(URL url)
+		throws PoshiScriptParserException {
+
 		try {
 			String content = FileUtil.read(url);
 

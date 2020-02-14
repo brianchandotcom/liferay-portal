@@ -83,7 +83,7 @@ public class DefinitionPoshiElement extends PoshiElement {
 	}
 
 	@Override
-	public boolean isValidPoshiXML() {
+	public boolean isValidPoshiXML() throws PoshiScriptParserException {
 		if (_validPoshiXML == null) {
 			_validPoshiXML = false;
 

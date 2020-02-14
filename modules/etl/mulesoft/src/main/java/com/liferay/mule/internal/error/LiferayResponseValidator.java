@@ -32,12 +32,12 @@ public class LiferayResponseValidator {
 		}
 		else if (httpResponse.getStatusCode() >= 400) {
 			throw new ModuleException(
-				_getMessage(httpResponse),
+				getMessage(httpResponse),
 				LiferayError.fromStatus(httpResponse.getStatusCode()));
 		}
 	}
 
-	private String _getMessage(HttpResponse httpResponse) throws IOException {
+	private String getMessage(HttpResponse httpResponse) throws IOException {
 		HttpEntity httpEntity = httpResponse.getEntity();
 
 		return String.format(

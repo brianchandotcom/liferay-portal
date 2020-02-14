@@ -43,7 +43,7 @@ public class OAuth2Authentication implements HttpAuthentication {
 		throws MalformedURLException {
 
 		_httpClient = httpClient;
-		_oAuth2AccessTokenURI = _getOAuth2AccessTokenURI(openAPISpecPath);
+		_oAuth2AccessTokenURI = getOAuth2AccessTokenURI(openAPISpecPath);
 
 		_queryParams.put("client_id", consumerKey);
 		_queryParams.put("client_secret", consumerSecret);
@@ -54,7 +54,7 @@ public class OAuth2Authentication implements HttpAuthentication {
 	public String getAuthorizationHeader()
 		throws IOException, TimeoutException {
 
-		JsonNode authorizationJsonNode = _getAuthorizationJsonNode();
+		JsonNode authorizationJsonNode = getAuthorizationJsonNode();
 
 		JsonNode tokenTypeJsonNode = authorizationJsonNode.get("token_type");
 		JsonNode accessTokenJsonNode = authorizationJsonNode.get(
@@ -65,7 +65,7 @@ public class OAuth2Authentication implements HttpAuthentication {
 			accessTokenJsonNode.textValue());
 	}
 
-	private JsonNode _getAuthorizationJsonNode()
+	private JsonNode getAuthorizationJsonNode()
 		throws IOException, TimeoutException {
 
 		HttpRequestBuilder httpRequestBuilder = HttpRequest.builder();
@@ -100,7 +100,7 @@ public class OAuth2Authentication implements HttpAuthentication {
 		return jsonNodeReader.fromHttpResponse(httpResponse);
 	}
 
-	private String _getOAuth2AccessTokenURI(String openAPISpecPath)
+	private String getOAuth2AccessTokenURI(String openAPISpecPath)
 		throws MalformedURLException {
 
 		OASURLParser oasURLParser = new OASURLParser(openAPISpecPath);

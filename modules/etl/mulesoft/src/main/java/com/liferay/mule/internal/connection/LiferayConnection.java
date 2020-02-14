@@ -72,9 +72,9 @@ public final class LiferayConnection {
 		throws IOException, TimeoutException {
 
 		return _httpClient.send(
-			_getHttpRequest(
+			getHttpRequest(
 				HttpConstants.Method.DELETE,
-				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
+				_serverBaseURL + resolvePathParams(endpoint, pathParams),
 				queryParams, null),
 			(int)connectionTimeout, true, null);
 	}
@@ -86,16 +86,16 @@ public final class LiferayConnection {
 		throws IOException, TimeoutException {
 
 		return _httpClient.send(
-			_getHttpRequest(
+			getHttpRequest(
 				HttpConstants.Method.GET,
-				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
+				_serverBaseURL + resolvePathParams(endpoint, pathParams),
 				queryParams, null),
 			(int)connectionTimeout, true, null);
 	}
 
 	public HttpResponse getOpenAPISpec() throws IOException, TimeoutException {
 		return _httpClient.send(
-			_getHttpRequest(
+			getHttpRequest(
 				HttpConstants.Method.GET, _openAPISpecPath, new MultiMap<>(),
 				null),
 			10000, true, null);
@@ -112,9 +112,9 @@ public final class LiferayConnection {
 		throws IOException, TimeoutException {
 
 		return _httpClient.send(
-			_getHttpRequest(
+			getHttpRequest(
 				HttpConstants.Method.PATCH,
-				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
+				_serverBaseURL + resolvePathParams(endpoint, pathParams),
 				queryParams, inputStream),
 			(int)connectionTimeout, true, null);
 	}
@@ -126,34 +126,34 @@ public final class LiferayConnection {
 		throws IOException, TimeoutException {
 
 		return _httpClient.send(
-			_getHttpRequest(
+			getHttpRequest(
 				HttpConstants.Method.POST,
-				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
+				_serverBaseURL + resolvePathParams(endpoint, pathParams),
 				queryParams, inputStream),
 			(int)connectionTimeout, true, null);
 	}
 
 	private LiferayConnection(
-			HttpService httpService, String openAPISpecPath,
-			BasicAuthentication httpAuthentication, ProxyConfig proxyConfig)
+			HttpService httpService, String openApiSpecPath,
+			BasicAuthentication basicAuthentication, ProxyConfig proxyConfig)
 		throws ConnectionException {
 
-		_openAPISpecPath = openAPISpecPath;
-		_serverBaseURL = _getServerBaseURL(openAPISpecPath);
-		_httpAuthentication = httpAuthentication;
+		_openAPISpecPath = openApiSpecPath;
+		_serverBaseURL = getServerBaseURL(openApiSpecPath);
+		_httpAuthentication = basicAuthentication;
 
-		_initHttpClient(httpService, proxyConfig);
+		initHttpClient(httpService, proxyConfig);
 	}
 
 	private LiferayConnection(
-			HttpService httpService, String openAPISpecPath, String consumerKey,
+			HttpService httpService, String openApiSpecPath, String consumerKey,
 			String consumerSecret, ProxyConfig proxyConfig)
 		throws ConnectionException {
 
-		_openAPISpecPath = openAPISpecPath;
-		_serverBaseURL = _getServerBaseURL(openAPISpecPath);
+		_openAPISpecPath = openApiSpecPath;
+		_serverBaseURL = getServerBaseURL(openApiSpecPath);
 
-		_initHttpClient(httpService, proxyConfig);
+		initHttpClient(httpService, proxyConfig);
 
 		try {
 			_httpAuthentication = new OAuth2Authentication(
@@ -164,7 +164,7 @@ public final class LiferayConnection {
 		}
 	}
 
-	private HttpRequest _getHttpRequest(
+	private HttpRequest getHttpRequest(
 			HttpConstants.Method method, String uri,
 			MultiMap<String, String> queryParams, InputStream inputStream)
 		throws IOException, TimeoutException {
@@ -190,7 +190,7 @@ public final class LiferayConnection {
 		return httpRequestBuilder.build();
 	}
 
-	private String _getServerBaseURL(String openApiSpecPath)
+	private String getServerBaseURL(String openApiSpecPath)
 		throws ConnectionException {
 
 		try {
@@ -203,7 +203,7 @@ public final class LiferayConnection {
 		}
 	}
 
-	private void _initHttpClient(
+	private void initHttpClient(
 		HttpService httpService, ProxyConfig proxyConfig) {
 
 		HttpClientConfiguration.Builder builder =
@@ -222,7 +222,7 @@ public final class LiferayConnection {
 		_httpClient.start();
 	}
 
-	private String _resolvePathParams(
+	private String resolvePathParams(
 		String endpoint, Map<String, String> pathParams) {
 
 		for (Map.Entry<String, String> pathParam : pathParams.entrySet()) {

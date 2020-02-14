@@ -79,7 +79,7 @@ public class LiferayOperations {
 				MultiMap<String, String> queryParams)
 		throws IOException, TimeoutException {
 
-		_logEndpointParams(Method.DELETE, endpoint, pathParams, queryParams);
+		logEndpointParams(Method.DELETE, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.delete(
 			pathParams, queryParams, endpoint,
@@ -109,7 +109,7 @@ public class LiferayOperations {
 				MultiMap<String, String> queryParams)
 		throws Exception {
 
-		_logEndpointParams(Method.GET, endpoint, pathParams, queryParams);
+		logEndpointParams(Method.GET, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.get(
 			pathParams, queryParams, endpoint,
@@ -142,7 +142,7 @@ public class LiferayOperations {
 				MultiMap<String, String> queryParams)
 		throws IOException, TimeoutException {
 
-		_logEndpointParams(Method.PATCH, endpoint, pathParams, queryParams);
+		logEndpointParams(Method.PATCH, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.patch(
 			inputStream, pathParams, queryParams, endpoint,
@@ -173,7 +173,7 @@ public class LiferayOperations {
 				MultiMap<String, String> queryParams)
 		throws IOException, TimeoutException {
 
-		_logEndpointParams(Method.POST, endpoint, pathParams, queryParams);
+		logEndpointParams(Method.POST, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.post(
 			inputStream, pathParams, queryParams, endpoint,
@@ -189,7 +189,7 @@ public class LiferayOperations {
 		).build();
 	}
 
-	private void _logEndpointParams(
+	private void logEndpointParams(
 		Method method, String endpoint, Map<String, String> pathParams,
 		Map<String, String> queryParams) {
 

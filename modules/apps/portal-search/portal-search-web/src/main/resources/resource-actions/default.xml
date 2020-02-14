@@ -103,7 +103,7 @@
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
-		<portlet-name>com_liferay_portal_search_web_user_facet_portlet_UserFacetPortlet</portlet-name>
+		<portlet-name>com_liferay_portal_search_web_tag_facet_portlet_TagFacetPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
@@ -123,7 +123,7 @@
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
-		<portlet-name>com_liferay_portal_search_web_tag_facet_portlet_TagFacetPortlet</portlet-name>
+		<portlet-name>com_liferay_portal_search_web_user_facet_portlet_UserFacetPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>

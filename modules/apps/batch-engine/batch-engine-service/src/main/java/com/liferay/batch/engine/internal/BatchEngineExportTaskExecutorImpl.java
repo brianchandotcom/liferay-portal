@@ -23,6 +23,7 @@ import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecuto
 import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriter;
 import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriterFactory;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
+import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.vulcan.pagination.Page;
 
 import java.io.IOException;
 

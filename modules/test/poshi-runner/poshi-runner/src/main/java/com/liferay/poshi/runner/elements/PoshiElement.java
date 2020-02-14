@@ -264,15 +264,15 @@ public abstract class PoshiElement
 			parsePoshiScript(poshiScript.trim());
 
 			if (PropsValues.TEST_POSHI_SCRIPT_VALIDATION &&
-				PoshiNodeFactory.getValidatePoshiScript()) {
+				!PoshiNodeFactory.validationInitialized.contains(getURL())) {
+
+				PoshiNodeFactory.validationInitialized.add(getURL());
 
 				validatePoshiScript();
 			}
 		}
 		catch (PoshiScriptParserException poshiScriptParserException) {
-			if (PoshiNodeFactory.getValidatePoshiScript()) {
-				System.out.println(poshiScriptParserException.getMessage());
-			}
+			System.out.println(poshiScriptParserException.getMessage());
 		}
 
 		detach();

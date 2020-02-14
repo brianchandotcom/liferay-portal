@@ -87,8 +87,6 @@ public class DefinitionPoshiElement extends PoshiElement {
 		if (_validPoshiXML == null) {
 			_validPoshiXML = false;
 
-			PoshiNodeFactory.setValidatePoshiScript(false);
-
 			URL url = getURL();
 
 			PoshiNode poshiNode = PoshiNodeFactory.newPoshiNodeFromFile(url);
@@ -101,8 +99,6 @@ public class DefinitionPoshiElement extends PoshiElement {
 			if (Dom4JUtil.elementsEqual(poshiNode, generatedPoshiNode)) {
 				_validPoshiXML = true;
 			}
-
-			PoshiNodeFactory.setValidatePoshiScript(true);
 		}
 
 		return _validPoshiXML;

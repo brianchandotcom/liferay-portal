@@ -213,7 +213,7 @@
 			{foreach $field in $column.fields}
 				{let $fieldType: $field.type /}
 
-				<div class="ddm-field ddm-target" data-field-name="{$field.fieldName}">
+				<div class="ddm-field" data-field-name="{$field.fieldName}">
 					{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
 						{param _handleFieldBlurred: $_handleFieldBlurred /}
 						{param _handleFieldClicked: $_handleFieldClicked /}
@@ -247,10 +247,13 @@
 		{/let}
 
 		<div {$attributes}>
-			{if $editable}
+			{if $editable and length($column.fields) > 0}
 				{let $selected: $column.fields[0].selected /}
 
-				<div class="ddm-field-container h-100 ddm-target {if $selected}selected{/if}">
+				<div
+					class="ddm-field-container ddm-target h-100 {if $selected}selected{/if}"
+					data-field-name="{$column.fields[0].fieldName}"
+				>
 					<div class="ddm-resize-handle ddm-resize-handle-left" {$indexes}></div>
 
 					{let $attributesDrag kind="attributes"}

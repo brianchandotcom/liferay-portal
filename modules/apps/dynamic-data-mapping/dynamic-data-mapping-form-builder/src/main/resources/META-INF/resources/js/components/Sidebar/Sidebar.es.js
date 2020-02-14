@@ -118,6 +118,8 @@ class Sidebar extends Component {
 		);
 		this._handleDragEnded = this._handleDragEnded.bind(this);
 		this._handleDragStarted = this._handleDragStarted.bind(this);
+		this._handleDragTargetEnter = this._handleDragTargetEnter.bind(this);
+		this._handleDragTargetLeave = this._handleDragTargetLeave.bind(this);
 		this._handleEvaluatorChanged = this._handleEvaluatorChanged.bind(this);
 		this._handleFieldSettingsClicked = this._handleFieldSettingsClicked.bind(
 			this
@@ -364,8 +366,16 @@ class Sidebar extends Component {
 		});
 
 		this._eventHandler.add(
+			this._dragAndDrop.on(Drag.Events.START, this._handleDragStarted),
 			this._dragAndDrop.on(DragDrop.Events.END, this._handleDragEnded),
-			this._dragAndDrop.on(Drag.Events.START, this._handleDragStarted)
+			this._dragAndDrop.on(
+				DragDrop.Events.TARGET_ENTER,
+				this._handleDragTargetEnter
+			),
+			this._dragAndDrop.on(
+				DragDrop.Events.TARGET_LEAVE,
+				this._handleDragTargetLeave
+			)
 		);
 	}
 
@@ -550,6 +560,8 @@ class Sidebar extends Component {
 			return;
 		}
 
+		this._handleDragTargetLeave(data);
+
 		const {fieldTypes} = this.props;
 		const {fieldSetId} = data.source.dataset;
 		const columnNode = dom.closest(data.target, '.col-ddm');
@@ -603,6 +615,28 @@ class Sidebar extends Component {
 		this.refreshDragAndDrop();
 
 		this.close();
+	}
+
+	_handleDragTargetEnter({target}) {
+		const parentFieldNode = dom.closest(
+			target.parentElement,
+			`.ddm-field-container`
+		);
+
+		if (parentFieldNode) {
+			parentFieldNode.classList.add('active-drop-child');
+		}
+	}
+
+	_handleDragTargetLeave({target}) {
+		const parentFieldNode = dom.closest(
+			target.parentElement,
+			`.ddm-field-container`
+		);
+
+		if (parentFieldNode) {
+			parentFieldNode.classList.remove('active-drop-child');
+		}
 	}
 
 	_handleEvaluatorChanged(pages) {

@@ -53,8 +53,3 @@ window.AUI = () => ({
 		});
 	}
 });
-
-window.Liferay.ThemeDisplay.getLanguageId = () => 'end_US';
-window.Liferay.Util.isEqual = (a, b) => a === b;
-
-window.themeDisplay = window.Liferay.ThemeDisplay;

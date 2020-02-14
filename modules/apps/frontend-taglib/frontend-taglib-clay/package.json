@@ -72,11 +72,6 @@
 		"metal-soy": "2.16.8",
 		"metal-state": "2.16.8"
 	},
-	"jest": {
-		"transformIgnorePatterns": [
-			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
-		]
-	},
 	"name": "frontend-taglib-clay",
 	"private": true,
 	"scripts": {

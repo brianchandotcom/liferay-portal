@@ -30,7 +30,6 @@
 			"<rootDir>/test/liferay/portlet/mock/setup.es.js"
 		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/liferay/portlet/mock/portlet_data.es.js",
 			"<rootDir>/test/liferay/portlet/mock/setup.es.js"
 		]
 	},

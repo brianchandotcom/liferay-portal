@@ -34,7 +34,7 @@ describe('PortletHub', () => {
 		let listenerA;
 
 		beforeEach(() => {
-			global.fetchMock([portletA]);
+			global.fetch.mockResponse(JSON.stringify([portletA]));
 
 			return Promise.all([register(portletA), register(portletB)]).then(
 				values => {
@@ -256,7 +256,7 @@ describe('PortletHub', () => {
 		});
 
 		it('throws an AccessDeniedException if called before previous action completes', () => {
-			global.fetchMock([portletA]);
+			global.fetch.mockResponse(JSON.stringify([portletA]));
 
 			const element = document.createElement('form');
 			const parameters = {};
@@ -272,7 +272,7 @@ describe('PortletHub', () => {
 		});
 
 		it('allows actions that update the state of 2 portlets. other portlets are not updated', () => {
-			global.fetchMock([portletB, portletC]);
+			global.fetch.mockResponse(JSON.stringify([portletB, portletC]));
 
 			const element = document.createElement('form');
 			const parameters = {};

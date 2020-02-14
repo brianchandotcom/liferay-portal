@@ -17,7 +17,3 @@ Liferay.DDM = {
 		spritemap: '/lexicon/icons.svg'
 	}
 };
-
-Liferay.Session = {
-	get: () => 'active'
-};

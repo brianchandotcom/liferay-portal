@@ -27,12 +27,6 @@ describe('Liferay', () => {
 		destroyComponents();
 	});
 
-	beforeEach(() => {
-		Liferay = {
-			fire: () => 0
-		};
-	});
-
 	describe('Liferay.component', () => {
 		it('stores function inputs and invoke them lazily on component retrieval', () => {
 			const myButton = {myButton: 'myButton'};

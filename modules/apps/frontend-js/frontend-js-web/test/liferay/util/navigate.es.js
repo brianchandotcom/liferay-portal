@@ -20,14 +20,8 @@ describe('Liferay.Util.navigate', () => {
 	const externalUrl = 'http://externalurl.com';
 	const internalUrl = 'http://internalurl.com';
 
-	beforeEach(() => {
-		Liferay = {};
-	});
-
 	describe('when SPA is enabled', () => {
 		beforeEach(() => {
-			Liferay.once = jest.fn();
-
 			Liferay.SPA = {
 				app: {
 					canNavigate: jest.fn(url => url.includes('internal')),
@@ -84,6 +78,10 @@ describe('Liferay.Util.navigate', () => {
 	});
 
 	describe('when SPA is disabled', () => {
+		beforeEach(() => {
+			Liferay.SPA = undefined;
+		});
+
 		it('navigates to the given url using window.location.assign', () => {
 			const spy = jest
 				.spyOn(console, 'error')

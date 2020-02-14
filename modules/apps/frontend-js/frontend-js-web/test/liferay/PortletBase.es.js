@@ -35,12 +35,6 @@ describe('PortletBase', () => {
 	});
 
 	beforeEach(() => {
-		Liferay = {
-			Util: {
-				ns: jest.fn()
-			}
-		};
-
 		portletBase = new PortletBase({
 			namespace
 		});

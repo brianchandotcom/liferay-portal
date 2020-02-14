@@ -214,7 +214,9 @@ describe('PortletHub', () => {
 		});
 
 		it('returns true when action has been called but the updates have not been dispatched', () => {
-			global.fetchMock([portletA, portletB, portletC, portletD]);
+			global.fetch.mockResponse(
+				JSON.stringify([portletA, portletB, portletC, portletD])
+			);
 
 			const element = document.createElement('form');
 			const parameters = {};
@@ -226,7 +228,9 @@ describe('PortletHub', () => {
 		});
 
 		it('returns true through a different hub when action has been called but the updates have not been dispatched', () => {
-			global.fetchMock([portletA, portletB, portletC, portletD]);
+			global.fetch.mockResponse(
+				JSON.stringify([portletA, portletB, portletC, portletD])
+			);
 
 			const element = document.createElement('form');
 			const parameters = {};
@@ -242,7 +246,9 @@ describe('PortletHub', () => {
 		});
 
 		it('returns false after action updates have been dispatched', () => {
-			global.fetchMock([portletA, portletB, portletC, portletD]);
+			global.fetch.mockResponse(
+				JSON.stringify([portletA, portletB, portletC, portletD])
+			);
 
 			const element = document.createElement('form');
 			const parameters = {};

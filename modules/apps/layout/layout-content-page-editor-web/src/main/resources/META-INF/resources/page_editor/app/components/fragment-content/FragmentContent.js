@@ -25,9 +25,9 @@ import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSe
 import {useSelector} from '../../store/index';
 import UnsafeHTML from '../UnsafeHTML';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
-import FragmentContentClickFilter from './FragmentContentClickFilter';
 import FragmentContentDecoration from './FragmentContentDecoration';
 import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
+import FragmentContentInteractionsFilter from './FragmentContentInteractionsFilter';
 import FragmentContentProcessor from './FragmentContentProcessor';
 import getEditableUniqueId from './getEditableUniqueId';
 import resolveEditableValue from './resolveEditableValue';
@@ -141,7 +141,7 @@ function FragmentContent({fragmentEntryLinkId, itemId}, ref) {
 				onRender={updateEditableElements}
 			/>
 
-			<FragmentContentClickFilter
+			<FragmentContentInteractionsFilter
 				element={element}
 				fragmentEntryLinkId={fragmentEntryLinkId}
 				itemId={itemId}

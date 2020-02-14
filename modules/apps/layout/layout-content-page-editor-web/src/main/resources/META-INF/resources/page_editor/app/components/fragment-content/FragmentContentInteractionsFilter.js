@@ -21,7 +21,7 @@ import {useHoverItem, useIsActive, useSelectItem} from '../Controls';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
 import getEditableUniqueId from './getEditableUniqueId';
 
-export default function FragmentContentClickFilter({
+export default function FragmentContentInteractionsFilter({
 	element,
 	fragmentEntryLinkId,
 	itemId
@@ -118,7 +118,7 @@ export default function FragmentContentClickFilter({
 	return null;
 }
 
-FragmentContentClickFilter.propTypes = {
+FragmentContentInteractionsFilter.propTypes = {
 	element: PropTypes.instanceOf(HTMLElement),
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	itemId: PropTypes.string.isRequired

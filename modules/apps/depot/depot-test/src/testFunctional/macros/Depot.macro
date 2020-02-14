@@ -33,6 +33,25 @@ definition {
 		}
 	}
 
+	macro configureApplication {
+		if ("${application}" == "Enabled") {
+			for (var applicationList : list "${applicationList}") {
+				Check(
+					checkboxName = "${applicationList}",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+		else if ("${application}" == "Disabled") {
+			for (var applicationList : list "${applicationList}") {
+				Uncheck(
+					checkboxName = "${applicationList}",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+
+		PortletEntry.save();
+	}
+
 	macro configureAutoTagging {
 		if ("${autoTagging}" == "Enabled") {
 			Check.checkToggleSwitch(
@@ -217,6 +236,29 @@ definition {
 		}
 		else {
 			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro viewApplication {
+		if (isSet(noApplication)) {
+			for (var applicationList : list "${applicationList}") {
+				AssertElementNotPresent(
+					key_portlet = "${applicationList}",
+					locator1 = "ProductMenu#PORTLET");
+			}
+		}
+		else {
+			for (var applicationList : list "${applicationList}") {
+				if (IsElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED")) {
+					Click.clickNoSPARefresh(locator1 = "ProductMenu#TOGGLE");
+				}
+
+				ProductMenuHelper.expandCategory(category = "Content &amp; Data");
+
+				AssertVisible(
+					key_portlet = "${applicationList}",
+					locator1 = "ProductMenu#PORTLET");
+			}
 		}
 	}
 

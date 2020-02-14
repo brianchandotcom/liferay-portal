@@ -161,7 +161,10 @@ buildChangelogs {
 				String descriptions = ""
 
 				if (changelogDescriptionsFile.exists()) {
-					matcher = changelogDescriptionsFile.text =~ /(?s)${version}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/
+
+					String escapedDotVersion = version.replace(".", "\\.")
+
+					matcher = changelogDescriptionsFile.text =~ /(?s)${escapedDotVersion}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/
 
 					if (matcher.find()) {
 						descriptions = "\n" + matcher.group(1).trim()

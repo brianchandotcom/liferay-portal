@@ -438,9 +438,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		File dockerDir = workspaceExtension.getDockerDir();
 
-		File workDir = new File(dockerDir, "work");
-
 		File deployDir = new File(dockerDir, "deploy");
+		File workDir = new File(dockerDir, "work");
 
 		String dockerPath = dockerDir.getAbsolutePath();
 

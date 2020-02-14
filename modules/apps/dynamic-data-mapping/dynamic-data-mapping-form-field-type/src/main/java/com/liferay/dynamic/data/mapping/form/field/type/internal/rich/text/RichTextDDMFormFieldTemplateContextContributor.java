@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marko Cikos
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=rich-text",
+	immediate = true, property = "ddm.form.field.type.name=rich_text",
 	service = {
 		DDMFormFieldTemplateContextContributor.class,
 		RichTextDDMFormFieldTemplateContextContributor.class

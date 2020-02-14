@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.rich.text;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 
@@ -41,9 +42,11 @@ public class RichTextDDMFormFieldValueRenderer
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		Value value = ddmFormFieldValue.getValue();
 
-		String valueString = value.getString(locale);
+		if (value == null) {
+			return StringPool.BLANK;
+		}
 
-		return GetterUtil.getString(_html.extractText(valueString));
+		return GetterUtil.getString(_html.extractText(value.getString(locale)));
 	}
 
 	@Reference

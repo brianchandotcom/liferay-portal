@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"ddm.form.field.type.data.domain=rich-text",
+		"ddm.form.field.type.data.domain=text",
 		"ddm.form.field.type.description=rich-text-field-type-description",
 		"ddm.form.field.type.display.order:Integer=8",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=textbox",

@@ -144,7 +144,7 @@ export default function PageEditor({withinMasterPage = false}) {
 	return (
 		<>
 			{layoutConversionWarningMessages &&
-				layoutConversionWarningMessages.length &&
+				layoutConversionWarningMessages.length > 0 &&
 				pageType === PAGE_TYPES.conversion && (
 					<ClayAlert
 						displayType="warning"

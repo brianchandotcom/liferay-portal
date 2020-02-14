@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.settings.web.internal.display.context;
 
+import com.liferay.analytics.settings.web.internal.search.ChannelSearch;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.string.StringPool;
@@ -40,11 +41,12 @@ public class ChannelManagementToolbarDisplayContext
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		ChannelDisplayContext channelDisplayContext) {
+		ChannelDisplayContext channelDisplayContext,
+		ChannelSearch channelSearch) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			channelDisplayContext.getChannelSearch());
+			channelSearch);
 
 		_channelDisplayContext = channelDisplayContext;
 

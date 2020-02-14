@@ -32,62 +32,52 @@ import org.json.JSONObject;
  */
 public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
-	public static List<SpiraTestCaseRun> recordSpiraTestCaseRuns(
-			SpiraProject spiraProject, JSONObject... requestJSONObjects)
+	public static SpiraTestCaseRun recordTestSpiraTestCaseRun(
+			SpiraProject spiraProject, SpiraTestCaseObject spiraTestCaseObject)
 		throws IOException {
 
-		String urlPath = "projects/{project_id}/test-runs/record-multiple";
+		List<SpiraTestCaseRun> spiraTestCaseRuns = recordTestSpiraTestCaseRuns(
+			spiraProject, spiraTestCaseObject);
 
-		Map<String, String> urlPathReplacements = new HashMap<>();
-
-		urlPathReplacements.put(
-			"project_id", String.valueOf(spiraProject.getID()));
-
-		JSONArray requestJSONArray = new JSONArray();
-
-		for (JSONObject requestJSONObject : requestJSONObjects) {
-			requestJSONArray.put(requestJSONObject);
+		if (spiraTestCaseRuns.isEmpty()) {
+			return null;
 		}
 
-		JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-			urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
-			requestJSONArray.toString());
-
-		List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
-
-		for (int i = 0; i < responseJSONArray.length(); i++) {
-			JSONObject responseJSONObject = responseJSONArray.getJSONObject(i);
-
-			responseJSONObject.put("ProjectId", spiraProject.getID());
-
-			spiraTestCaseRuns.add(new SpiraTestCaseRun(responseJSONObject));
+		if (spiraTestCaseRuns.size() > 1) {
+			throw new RuntimeException("Duplicate records found");
 		}
 
-		return spiraTestCaseRuns;
+		return spiraTestCaseRuns.get(0);
 	}
 
-	public static SpiraTestCaseRun recordTestSpiraTestCaseRun(
-			SpiraProject spiraProject, SpiraTestCaseObject spiraTestCase)
+	public static List<SpiraTestCaseRun> recordTestSpiraTestCaseRuns(
+			SpiraProject spiraProject,
+			SpiraTestCaseObject... spiraTestCaseObjects)
 		throws IOException {
 
 		Calendar calendar = Calendar.getInstance();
 
-		JSONObject requestJSONObject = new JSONObject();
+		List<JSONObject> requestJSONObjects = new ArrayList<>(
+			spiraTestCaseObjects.length);
 
-		requestJSONObject.put("ExecutionStatusId", STATUS_PASSED);
-		requestJSONObject.put("RunnerMessage", spiraTestCase.getPath());
-		requestJSONObject.put("RunnerName", "Liferay CI");
-		requestJSONObject.put("RunnerStackTrace", "");
-		requestJSONObject.put("RunnerTestName", spiraTestCase.getName());
-		requestJSONObject.put(
-			"StartDate", PathSpiraArtifact.toDateString(calendar));
-		requestJSONObject.put("TestCaseId", spiraTestCase.getID());
-		requestJSONObject.put("TestRunFormatId", RUNNER_FORMAT_PLAIN);
+		for (SpiraTestCaseObject spiraTestCase : spiraTestCaseObjects) {
+			JSONObject requestJSONObject = new JSONObject();
 
-		List<SpiraTestCaseRun> spiraTestCaseRuns = recordSpiraTestCaseRuns(
-			spiraProject, requestJSONObject);
+			requestJSONObject.put("ExecutionStatusId", STATUS_PASSED);
+			requestJSONObject.put("RunnerMessage", spiraTestCase.getPath());
+			requestJSONObject.put("RunnerName", "Liferay CI");
+			requestJSONObject.put("RunnerStackTrace", "");
+			requestJSONObject.put("RunnerTestName", spiraTestCase.getName());
+			requestJSONObject.put(
+				"StartDate", PathSpiraArtifact.toDateString(calendar));
+			requestJSONObject.put("TestCaseId", spiraTestCase.getID());
+			requestJSONObject.put("TestRunFormatId", RUNNER_FORMAT_PLAIN);
 
-		return spiraTestCaseRuns.get(0);
+			requestJSONObjects.add(requestJSONObject);
+		}
+
+		return recordSpiraTestCaseRuns(
+			spiraProject, requestJSONObjects.toArray(new JSONObject[0]));
 	}
 
 	@Override
@@ -154,6 +144,40 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			if (spiraTestCaseRun.matches(searchParameters)) {
 				spiraTestCaseRuns.add(spiraTestCaseRun);
 			}
+		}
+
+		return spiraTestCaseRuns;
+	}
+
+	protected static List<SpiraTestCaseRun> recordSpiraTestCaseRuns(
+			SpiraProject spiraProject, JSONObject... requestJSONObjects)
+		throws IOException {
+
+		String urlPath = "projects/{project_id}/test-runs/record-multiple";
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		JSONArray requestJSONArray = new JSONArray();
+
+		for (JSONObject requestJSONObject : requestJSONObjects) {
+			requestJSONArray.put(requestJSONObject);
+		}
+
+		JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+			urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
+			requestJSONArray.toString());
+
+		List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
+
+		for (int i = 0; i < responseJSONArray.length(); i++) {
+			JSONObject responseJSONObject = responseJSONArray.getJSONObject(i);
+
+			responseJSONObject.put("ProjectId", spiraProject.getID());
+
+			spiraTestCaseRuns.add(new SpiraTestCaseRun(responseJSONObject));
 		}
 
 		return spiraTestCaseRuns;

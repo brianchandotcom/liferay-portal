@@ -28,10 +28,11 @@ public class NetlogonIdentityInfo extends NdrObject {
 		String logonDomainName, int parameterControl, int reservedLow,
 		int reservedHigh, String userName, String workstation) {
 
-		_logonDomainName = new UnicodeString(logonDomainName, false);
 		_parameterControl = parameterControl;
 		_reservedLow = reservedLow;
 		_reservedHigh = reservedHigh;
+
+		_logonDomainName = new UnicodeString(logonDomainName, false);
 		_userName = new UnicodeString(userName, false);
 		_workstation = new UnicodeString(workstation, false);
 	}

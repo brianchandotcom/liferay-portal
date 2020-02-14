@@ -72,9 +72,10 @@ public class PortalCacheClusterEvent implements Serializable {
 
 		_portalCacheManagerName = portalCacheManagerName;
 		_portalCacheName = portalCacheName;
-		_elementKey = new SerializableObjectWrapper(elementKey);
 		_timeToLive = timeToLive;
 		_portalCacheClusterEventType = portalCacheClusterEventType;
+
+		_elementKey = new SerializableObjectWrapper(elementKey);
 
 		setElementValue(elementValue);
 	}

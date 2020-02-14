@@ -45,10 +45,11 @@ public class VelocityTemplate extends BaseTemplate {
 
 		super(templateResource, context, templateContextHelper, restricted);
 
-		_velocityContext = new VelocityContext(super.context);
 		_velocityEngine = velocityEngine;
 		_templateResourceCache = templateResourceCache;
 		_restricted = restricted;
+
+		_velocityContext = new VelocityContext(super.context);
 
 		if (templateResourceCache.isEnabled()) {
 			cacheTemplateResource(templateResourceCache, templateResource);

@@ -111,9 +111,10 @@ public class KBArchiveFactory {
 	private static final class FileImpl implements KBArchive.File {
 
 		public FileImpl(String name, ZipReader zipReader) {
+			_zipReader = zipReader;
+
 			_name = StringUtil.replace(
 				name, File.separatorChar, CharPool.SLASH);
-			_zipReader = zipReader;
 		}
 
 		@Override
@@ -137,11 +138,12 @@ public class KBArchiveFactory {
 			String name, KBArchive.Folder parentFolder,
 			KBArchive.File introFile, Collection<KBArchive.File> files) {
 
-			_name = StringUtil.replace(
-				name, File.separatorChar, CharPool.SLASH);
 			_parentFolder = parentFolder;
 			_introFile = introFile;
 			_files = files;
+
+			_name = StringUtil.replace(
+				name, File.separatorChar, CharPool.SLASH);
 		}
 
 		@Override

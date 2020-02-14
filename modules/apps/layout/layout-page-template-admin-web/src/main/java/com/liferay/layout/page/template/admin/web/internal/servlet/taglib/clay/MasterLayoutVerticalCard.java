@@ -58,11 +58,11 @@ public class MasterLayoutVerticalCard
 
 		super(baseModel, rowChecker);
 
-		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

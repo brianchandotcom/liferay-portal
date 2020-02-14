@@ -203,9 +203,10 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 		public CheckPattern(
 			Pattern methodPattern, Pattern urlPattern, String[] scopes) {
 
+			_scopes = scopes;
+
 			_methodPatternPredicate = methodPattern.asPredicate();
 			_urlPatternPredicate = urlPattern.asPredicate();
-			_scopes = scopes;
 		}
 
 		public Predicate<String> getMethodPatternPredicate() {

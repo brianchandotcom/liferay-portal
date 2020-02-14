@@ -33,8 +33,9 @@ import org.elasticsearch.client.RestHighLevelClient;
 public class LiferayIndexFixture {
 
 	public LiferayIndexFixture(String subdirName, IndexName indexName) {
-		_elasticsearchFixture = new ElasticsearchFixture(subdirName);
 		_indexName = indexName;
+
+		_elasticsearchFixture = new ElasticsearchFixture(subdirName);
 	}
 
 	public void assertAnalyzer(String field, String analyzer) throws Exception {

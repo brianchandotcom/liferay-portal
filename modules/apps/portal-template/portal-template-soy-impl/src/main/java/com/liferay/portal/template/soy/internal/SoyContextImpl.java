@@ -63,8 +63,9 @@ public class SoyContextImpl implements SoyContext {
 	public SoyContextImpl(
 		Map<String, Object> context, Set<String> restrictedVariables) {
 
-		_map = new HashMap<>(context);
 		_restrictedVariables = restrictedVariables;
+
+		_map = new HashMap<>(context);
 	}
 
 	@Override

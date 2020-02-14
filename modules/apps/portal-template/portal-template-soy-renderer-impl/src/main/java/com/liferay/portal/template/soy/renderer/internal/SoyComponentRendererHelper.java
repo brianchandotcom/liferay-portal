@@ -49,9 +49,10 @@ public class SoyComponentRendererHelper {
 
 		_httpServletRequest = httpServletRequest;
 		_componentDescriptor = componentDescriptor;
-		_context = new HashMap<>(context);
 		_portal = portal;
 		_soyRenderer = soyRenderer;
+
+		_context = new HashMap<>(context);
 
 		_moduleName = _getModuleName(_componentDescriptor.getModule());
 

@@ -28,11 +28,12 @@ public class BBCodeToken {
 	public BBCodeToken(
 		String startTag, String attribute, String endTag, int start, int end) {
 
-		_startTag = StringUtil.lowerCase(startTag);
 		_attribute = attribute;
-		_endTag = StringUtil.lowerCase(endTag);
 		_start = start;
 		_end = end;
+
+		_endTag = StringUtil.lowerCase(endTag);
+		_startTag = StringUtil.lowerCase(startTag);
 	}
 
 	public String getAttribute() {

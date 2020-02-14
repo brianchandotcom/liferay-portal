@@ -99,8 +99,9 @@ public class FunctionScoreQueryImpl
 		}
 
 		public FilterQueryScoreFunctionHolderImpl(ScoreFunction scoreFunction) {
-			_filterQuery = null;
 			_scoreFunction = scoreFunction;
+
+			_filterQuery = null;
 		}
 
 		@Override

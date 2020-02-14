@@ -6,5 +6,6 @@ Export-Package:\
 	com.liferay.batch.engine.configuration,\
 	com.liferay.batch.engine.exception,\
 	com.liferay.batch.engine.model,\
+	com.liferay.batch.engine.pagination,\
 	com.liferay.batch.engine.service,\
 	com.liferay.batch.engine.service.persistence

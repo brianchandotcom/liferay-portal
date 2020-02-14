@@ -57,7 +57,7 @@ List<UserSearchFacetTermDisplayContext> userSearchFacetTermDisplayContexts = use
 		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>" type="hidden" value="<%= userSearchFacetDisplayContext.getParamValue() %>" />
 	</c:when>
 	<c:otherwise>
-		<aui:form method="post" name="userFacetForm">
+		<aui:form method="post" name="userFacetFm">
 			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>" type="hidden" value="<%= userSearchFacetDisplayContext.getParamValue() %>" />
 			<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= userSearchFacetDisplayContext.getParamName() %>" />
 
@@ -139,6 +139,6 @@ List<UserSearchFacetTermDisplayContext> userSearchFacetTermDisplayContexts = use
 
 <aui:script use="liferay-search-facet-util">
 	Liferay.Search.FacetUtil.enableInputs(
-		document.querySelectorAll('#<portlet:namespace />userFacetForm .facet-term')
+		document.querySelectorAll('#<portlet:namespace />userFacetFm .facet-term')
 	);
 </aui:script>

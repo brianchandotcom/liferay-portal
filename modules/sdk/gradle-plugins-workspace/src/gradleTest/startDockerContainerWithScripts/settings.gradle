@@ -13,8 +13,8 @@ apply plugin: "com.liferay.workspace"
 gradle.liferayWorkspace {
 	String hostName = InetAddress.localHost.canonicalHostName.toLowerCase()
 
-	dockerContainerId = hostName + "startdockercontainerwithscript"
-	dockerImageId = hostName + "startdockercontainerwithscript"
+	dockerContainerId = hostName + "startdockercontainerwithscripts"
+	dockerImageId = hostName + "startdockercontainerwithscripts"
 }
 
 gradle.projectsEvaluated {
@@ -34,7 +34,7 @@ gradle.projectsEvaluated {
 		}
 
 		def expectedLines = ["Common script", "Other script"]
-		def unexpectedLines = ["Local script", "No such file or directory"]
+		def unexpectedLines = ["Local script", "No such file or directory", "Permission denied"]
 
 		int expectedLinesDetected = 0
 		int unexpectedLinesDetected = 0

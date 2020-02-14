@@ -34,7 +34,7 @@ gradle.projectsEvaluated {
 		}
 
 		def expectedLines = ["local_file", "org.apache.catalina.startup.Catalina"]
-		def unexpectedLines = ["prod_file", "No such file or directory"]
+		def unexpectedLines = ["prod_file", "No such file or directory", "Permission denied"]
 
 		int expectedLinesDetected = 0
 		int unexpectedLinesDetected = 0

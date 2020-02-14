@@ -71,7 +71,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 	protected void upgradePortletPreferences() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select classPK, companyId, groupId, namespace from " +
-					"FragmentEntryLink;");
+					"FragmentEntryLink");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
@@ -102,7 +102,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		sb.append("join Group_ on Layout.groupId = Group_.groupId where ");
 		sb.append("Layout.type_ = '");
 		sb.append(LayoutConstants.TYPE_CONTROL_PANEL);
-		sb.append("';");
+		sb.append("'");
 
 		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
 			ResultSet rs = ps.executeQuery()) {
@@ -150,7 +150,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		sb.append(groupId);
 		sb.append(" or PortletPreferences.plid = ");
 		sb.append(companyControlPanelPlid);
-		sb.append(");");
+		sb.append(")");
 
 		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
 			ResultSet rs = ps.executeQuery()) {

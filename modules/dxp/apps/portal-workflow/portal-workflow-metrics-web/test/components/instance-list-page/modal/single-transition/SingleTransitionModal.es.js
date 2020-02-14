@@ -13,8 +13,9 @@ import {fireEvent, render} from '@testing-library/react';
 import React, {useState} from 'react';
 
 import {ModalContext} from '../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/ModalContext.es';
-import SingleTransitionModal from '../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/single-transition/SingleTransitionModal.es';
+import {SingleTransitionModal} from '../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/single-transition/SingleTransitionModal.es';
 import {InstanceListContext} from '../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/store/InstanceListPageStore.es';
+import ToasterProvider from '../../../../../src/main/resources/META-INF/resources/js/shared/components/toaster/ToasterProvider.es';
 import {MockRouter} from '../../../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -39,7 +40,7 @@ const ContainerMock = ({children}) => {
 			<ModalContext.Provider
 				value={{setSingleTransition, singleTransition}}
 			>
-				{children}
+				<ToasterProvider>{children}</ToasterProvider>
 			</ModalContext.Provider>
 		</InstanceListContext.Provider>
 	);
@@ -113,9 +114,9 @@ describe('The SingleTransitionModal component should', () => {
 	});
 
 	test('Show success alert message after post request success', () => {
-		const alertSuccess = getByTestId('alertSuccess');
+		const alertToast = getByTestId('alertToast');
 
-		expect(alertSuccess).toHaveTextContent(
+		expect(alertToast).toHaveTextContent(
 			'the-selected-step-has-transitioned-successfully'
 		);
 	});

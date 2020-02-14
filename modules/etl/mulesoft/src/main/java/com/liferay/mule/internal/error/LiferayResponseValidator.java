@@ -16,6 +16,7 @@ package com.liferay.mule.internal.error;
 
 import java.io.IOException;
 
+import org.mule.runtime.core.api.util.IOUtils;
 import org.mule.runtime.extension.api.exception.ModuleException;
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
@@ -37,12 +38,13 @@ public class LiferayResponseValidator {
 		}
 	}
 
-	private String getMessage(HttpResponse httpResponse) throws IOException {
+	private String getMessage(HttpResponse httpResponse) {
 		HttpEntity httpEntity = httpResponse.getEntity();
 
 		return String.format(
 			"Request failed with status: %d, and message: %s",
-			httpResponse.getStatusCode(), new String(httpEntity.getBytes()));
+			httpResponse.getStatusCode(),
+			IOUtils.toString(httpEntity.getContent()));
 	}
 
 }

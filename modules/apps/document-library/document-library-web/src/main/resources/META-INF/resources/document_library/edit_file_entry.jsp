@@ -388,10 +388,6 @@ renderResponse.setTitle(headerTitle);
 											<div class="hide">
 										</c:if>
 
-										<%
-										FFDocumentLibraryDDMEditorConfiguration ffDocumentLibraryDDMEditorConfiguration = (FFDocumentLibraryDDMEditorConfiguration)request.getAttribute(FFDocumentLibraryDDMEditorConfiguration.class.getName());
-										%>
-
 										<c:choose>
 											<c:when test="<%= FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor() %>">
 

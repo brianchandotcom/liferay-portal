@@ -18,7 +18,6 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.web.internal.util.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
@@ -101,9 +100,8 @@ public class AddDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 				groupId, parentDDMStructureId,
 				_portal.getClassNameId(DLFileEntryMetadata.class.getName()),
 				structureKey, nameMap, descriptionMap, ddmForm,
-				_ddm.getDefaultDDMFormLayout(ddmForm),
-				storageType, DDMStructureConstants.TYPE_DEFAULT,
-				serviceContext);
+				_ddm.getDefaultDDMFormLayout(ddmForm), storageType,
+				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 		}
 	}
 

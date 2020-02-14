@@ -682,25 +682,21 @@ public class PDFProcessorImpl
 		stopWatch.start();
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
-			String originalLogLevel = Log4JUtil.getOriginalLevel(
-				PropsUtil.class.getName());
-
-			Log4JUtil.setLevel(PropsUtil.class.getName(), "WARN", true);
-
 			ProcessCallable<String> processCallable =
 				new LiferayPDFBoxProcessCallable(
 					ServerDetector.getServerId(),
 					PropsUtil.get(PropsKeys.LIFERAY_HOME),
-					Log4JUtil.getCustomLogSettings(), decryptedFile,
-					thumbnailFile, previewFiles, getThumbnailType(fileVersion),
-					getPreviewType(fileVersion),
+					HashMapBuilder.putAll(
+						Log4JUtil.getCustomLogSettings()
+					).put(
+						PropsUtil.class.getName(), "WARN"
+					).build(),
+					decryptedFile, thumbnailFile, previewFiles,
+					getThumbnailType(fileVersion), getPreviewType(fileVersion),
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
 					generatePreview, generateThumbnail);
-
-			Log4JUtil.setLevel(
-				PropsUtil.class.getName(), originalLogLevel, true);
 
 			ProcessChannel<String> processChannel = _processExecutor.execute(
 				PortalClassPathUtil.getPortalProcessConfig(), processCallable);

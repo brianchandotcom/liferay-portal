@@ -49,14 +49,14 @@ public class UserGroupManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			userGroupDisplayContext.getUserGroupSearch());
 
+		_userGroupDisplayContext = userGroupDisplayContext;
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		_resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
-
-		_userGroupDisplayContext = userGroupDisplayContext;
 	}
 
 	@Override

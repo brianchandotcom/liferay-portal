@@ -38,8 +38,9 @@ public class BlogsInfoDisplayObjectProvider
 	public BlogsInfoDisplayObjectProvider(BlogsEntry blogsEntry)
 		throws PortalException {
 
-		_assetEntry = _getAssetEntry(blogsEntry);
 		_blogsEntry = blogsEntry;
+
+		_assetEntry = _getAssetEntry(blogsEntry);
 	}
 
 	@Override

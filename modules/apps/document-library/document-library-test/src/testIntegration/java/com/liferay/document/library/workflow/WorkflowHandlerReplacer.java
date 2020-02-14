@@ -25,11 +25,13 @@ public class WorkflowHandlerReplacer<T> implements AutoCloseable {
 	public WorkflowHandlerReplacer(
 		String className, WorkflowHandler<T> replacementWorkflowHandler) {
 
-		_originalWorkflowHandler =
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
 		_replacementWorkflowHandler = replacementWorkflowHandler;
 
+		_originalWorkflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
+
 		WorkflowHandlerRegistryUtil.unregister(_originalWorkflowHandler);
+
 		WorkflowHandlerRegistryUtil.register(_replacementWorkflowHandler);
 	}
 

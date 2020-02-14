@@ -38,36 +38,45 @@ public class LayoutPageTemplateStructureHelperUtil {
 	public static JSONObject generateContentLayoutStructure(
 		List<FragmentEntryLink> fragmentEntryLinks, int type) {
 
-		LayoutStructure layoutStructure = new LayoutStructure();
-
 		if (fragmentEntryLinks.isEmpty() &&
 			(type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+
+			LayoutStructure layoutStructure = new LayoutStructure();
 
 			LayoutStructureItem rootLayoutStructureItem =
 				layoutStructure.addRootLayoutStructureItem();
 
 			layoutStructure.addDropZoneLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
+
+			return layoutStructure.toJSONObject();
 		}
-		else {
-			LayoutStructureItem rootLayoutStructureItem =
-				layoutStructure.addRootLayoutStructureItem();
 
-			LayoutStructureItem containerLayoutStructureItem =
-				layoutStructure.addContainerLayoutStructureItem(
-					rootLayoutStructureItem.getItemId(), 0);
+		if (fragmentEntryLinks.isEmpty()) {
+			LayoutStructure layoutStructure = new LayoutStructure();
 
-			LayoutStructureItem rowLayoutStructureItem =
-				layoutStructure.addRowLayoutStructureItem(
-					containerLayoutStructureItem.getItemId(), 0, 0);
+			return layoutStructure.toJSONObject();
+		}
 
-			for (int i = 0; i < fragmentEntryLinks.size(); i++) {
-				FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
+		LayoutStructure layoutStructure = new LayoutStructure();
 
-				layoutStructure.addFragmentLayoutStructureItem(
-					fragmentEntryLink.getFragmentEntryLinkId(),
-					rowLayoutStructureItem.getItemId(), i);
-			}
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerLayoutStructureItem =
+			layoutStructure.addContainerLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		LayoutStructureItem rowLayoutStructureItem =
+			layoutStructure.addRowLayoutStructureItem(
+				containerLayoutStructureItem.getItemId(), 0, 0);
+
+		for (int i = 0; i < fragmentEntryLinks.size(); i++) {
+			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
+
+			layoutStructure.addFragmentLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				rowLayoutStructureItem.getItemId(), i);
 		}
 
 		return layoutStructure.toJSONObject();

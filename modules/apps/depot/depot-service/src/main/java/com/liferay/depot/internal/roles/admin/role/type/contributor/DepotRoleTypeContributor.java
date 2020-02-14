@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.internal.role.type.contributor;
+package com.liferay.depot.internal.roles.admin.role.type.contributor;
 
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.portal.kernel.language.Language;

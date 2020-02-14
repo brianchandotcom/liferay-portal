@@ -80,6 +80,40 @@ definition {
 	}
 
 	@priority = "4"
+	test AssignOrganizationToAccount {
+		JSONOrganization.addOrganization(
+			organizationName = "Organization for Account",
+			organizationSite = "true");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is a test for adding organization to account.",
+			accountName = "Account with Organization");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
+		Accounts.addAssignee(
+			accountName = "Account with Organization",
+			assigneeName = "Organization for Account",
+			assigneeType = "Organizations");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Organization");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
+		Accounts.viewAssignee(assigneeName = "Organization for Account");
+	}
+
+	@priority = "4"
 	test CancelAccountCreation {
 		ProductMenu.gotoPortlet(
 			category = "Accounts",

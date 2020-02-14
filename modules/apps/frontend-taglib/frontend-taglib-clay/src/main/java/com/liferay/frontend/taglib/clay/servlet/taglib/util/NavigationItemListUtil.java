@@ -16,28 +16,17 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import com.liferay.petra.function.UnsafeConsumer;
 
-import java.util.ArrayList;
-
 /**
- * @author Carlos Lancha
+ * @author Hugo Huijser
  */
-public class LabelItemList extends ArrayList<LabelItem> {
+public class NavigationItemListUtil {
 
-	public LabelItemList add(
-		UnsafeConsumer<LabelItem, Exception> unsafeConsumer) {
+	public static NavigationItemList add(
+		UnsafeConsumer<NavigationItem, Exception> unsafeConsumer) {
 
-		LabelItem labelItem = new LabelItem();
+		NavigationItemList navigationItemList = new NavigationItemList();
 
-		try {
-			unsafeConsumer.accept(labelItem);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-
-		add(labelItem);
-
-		return this;
+		return navigationItemList.add(unsafeConsumer);
 	}
 
 }

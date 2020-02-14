@@ -59,7 +59,9 @@ public class NavigationItemList extends ArrayList<NavigationItem> {
 		return navigationItemList;
 	}
 
-	public void add(UnsafeConsumer<NavigationItem, Exception> unsafeConsumer) {
+	public NavigationItemList add(
+		UnsafeConsumer<NavigationItem, Exception> unsafeConsumer) {
+
 		NavigationItem navigationItem = new NavigationItem();
 
 		try {
@@ -70,6 +72,8 @@ public class NavigationItemList extends ArrayList<NavigationItem> {
 		}
 
 		add(navigationItem);
+
+		return this;
 	}
 
 }

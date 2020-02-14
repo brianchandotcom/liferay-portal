@@ -117,7 +117,7 @@ export default function FragmentContentFloatingToolbar({
 					itemId: getEditableUniqueId(fragmentEntryLinkId, editableId)
 				}}
 				itemRef={{current: editableElement}}
-				onButtonClick={onButtonClick}
+				onButtonClick={buttonId => onButtonClick(buttonId, editableId)}
 			/>
 		)
 	);

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelFinder.countByA_S_Visible">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				AssetListEntryAssetEntryRel
+			INNER JOIN
+				AssetEntry ON
+					AssetListEntryAssetEntryRel.assetEntryId = AssetEntry.entryId
+			WHERE
+				(AssetListEntryAssetEntryRel.assetListEntryId = ?) AND
+				(AssetListEntryAssetEntryRel.segmentsEntryId = ?) AND
+				(AssetEntry.visible = 1)
+		]]>
+	</sql>
+</custom-sql>

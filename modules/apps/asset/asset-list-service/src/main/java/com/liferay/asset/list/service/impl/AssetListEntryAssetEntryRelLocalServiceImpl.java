@@ -183,6 +183,11 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 			assetListEntryId, segmentsEntryId);
 	}
 
+	public int getAssetListEntryVisibleAssetEntryRelsCount(
+		long assetLIstEntryId, long segmentsEntryId) {
+		return 0;
+	}
+
 	@Override
 	public AssetListEntryAssetEntryRel moveAssetListEntryAssetEntryRel(
 			long assetListEntryId, long segmentsEntryId, int position,

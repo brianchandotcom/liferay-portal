@@ -17,7 +17,6 @@ package com.liferay.batch.engine;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.io.Serializable;
 
@@ -67,11 +66,6 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	}
 
 	@Override
-	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
-		this.contextAcceptLanguage = contextAcceptLanguage;
-	}
-
-	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
@@ -79,6 +73,11 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	@Override
 	public void setContextUser(User contextUser) {
 		this.contextUser = contextUser;
+	}
+
+	@Override
+	public void setLanguageId(String languageId) {
+		this.languageId = languageId;
 	}
 
 	@Override
@@ -95,8 +94,8 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 		throws Exception {
 	}
 
-	protected AcceptLanguage contextAcceptLanguage;
 	protected Company contextCompany;
 	protected User contextUser;
+	protected String languageId;
 
 }

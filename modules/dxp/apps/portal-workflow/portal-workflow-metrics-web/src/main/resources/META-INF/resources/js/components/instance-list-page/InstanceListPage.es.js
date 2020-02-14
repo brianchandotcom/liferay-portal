@@ -28,26 +28,31 @@ import {ModalContext} from './modal/ModalContext.es';
 import {BulkReassignModal} from './modal/bulk-reassign/BulkReassignModal.es';
 import {InstanceDetailsModal} from './modal/instance-details/InstanceDetailsModal.es';
 import {SingleReassignModal} from './modal/single-reassign/SingleReassignModal.es';
-import SingleTransitionModal from './modal/single-transition/SingleTransitionModal.es';
+import {SingleTransitionModal} from './modal/single-transition/SingleTransitionModal.es';
+import {SingleUpdateDueDateModal} from './modal/update-due-date/SingleUpdateDueDateModal.es';
 import {InstanceListProvider} from './store/InstanceListPageStore.es';
 
 const InstanceListPage = ({routeParams}) => {
 	useTimeRangeFetch();
 
 	const {page, pageSize, processId} = routeParams;
-	const [singleModal, setSingleModal] = useState({
-		selectedItem: undefined,
-		visible: false
-	});
 
 	const [bulkModal, setBulkModal] = useState({
 		processId,
 		reassignedTasks: [],
 		reassigning: false,
 		selectAll: false,
-		selectedAssignee: null,
 		selectedTasks: [],
 		useSameAssignee: false,
+		visible: false
+	});
+
+	const [instanceDetailsModal, setInstanceDetailsModal] = useState({
+		processId,
+		visible: false
+	});
+
+	const [singleModal, setSingleModal] = useState({
 		visible: false
 	});
 
@@ -58,8 +63,7 @@ const InstanceListPage = ({routeParams}) => {
 		visible: false
 	});
 
-	const [instanceDetailsModal, setInstanceDetailsModal] = useState({
-		processId,
+	const [updateDueDate, setUpdateDueDate] = useState({
 		visible: false
 	});
 
@@ -70,8 +74,10 @@ const InstanceListPage = ({routeParams}) => {
 		setInstanceDetailsModal,
 		setSingleModal,
 		setSingleTransition,
+		setUpdateDueDate,
 		singleModal,
-		singleTransition
+		singleTransition,
+		updateDueDate
 	};
 
 	useProcessTitle(processId, Liferay.Language.get('all-items'));
@@ -126,9 +132,10 @@ const InstanceListPage = ({routeParams}) => {
 	const promises = useMemo(() => {
 		if (
 			!bulkModal.visible &&
+			completedAndDate &&
 			!singleModal.visible &&
 			!singleTransition.visible &&
-			completedAndDate
+			!updateDueDate.visible
 		) {
 			return [fetchData()];
 		}
@@ -140,7 +147,8 @@ const InstanceListPage = ({routeParams}) => {
 		completedAndDate,
 		fetchData,
 		singleModal.visible,
-		singleTransition.visible
+		singleTransition.visible,
+		updateDueDate.visible
 	]);
 
 	return (
@@ -223,13 +231,15 @@ const Body = ({data, filtered, routeParams}) => {
 				</PromisesResolver.Rejected>
 			</div>
 
-			<InstanceListPage.SingleReassignModal />
-
-			<InstanceListProvider.SingleTransitionModal />
-
 			<InstanceListPage.BulkReassignModal />
 
 			<InstanceListPage.InstanceDetailsModal />
+
+			<InstanceListPage.SingleReassignModal />
+
+			<InstanceListPage.SingleTransitionModal />
+
+			<InstanceListPage.SingleUpdateDueDateModal />
 		</>
 	);
 };
@@ -240,6 +250,7 @@ InstanceListPage.BulkReassignModal = BulkReassignModal;
 InstanceListPage.Header = Header;
 InstanceListPage.InstanceDetailsModal = InstanceDetailsModal;
 InstanceListPage.SingleReassignModal = SingleReassignModal;
-InstanceListProvider.SingleTransitionModal = SingleTransitionModal;
+InstanceListPage.SingleTransitionModal = SingleTransitionModal;
+InstanceListPage.SingleUpdateDueDateModal = SingleUpdateDueDateModal;
 
 export default InstanceListPage;

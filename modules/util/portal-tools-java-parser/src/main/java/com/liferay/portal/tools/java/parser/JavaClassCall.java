@@ -27,9 +27,10 @@ public class JavaClassCall extends JavaExpression {
 		String className, List<JavaType> genericJavaTypes,
 		List<JavaExpression> parameterValueJavaExpressions) {
 
-		_className = new JavaSimpleValue(className);
 		_genericJavaTypes = genericJavaTypes;
 		_parameterValueJavaExpressions = parameterValueJavaExpressions;
+
+		_className = new JavaSimpleValue(className);
 	}
 
 	public boolean hasBody() {

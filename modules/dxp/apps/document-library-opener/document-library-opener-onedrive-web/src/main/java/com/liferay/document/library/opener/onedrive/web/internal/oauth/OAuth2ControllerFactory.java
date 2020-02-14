@@ -150,20 +150,23 @@ public class OAuth2ControllerFactory {
 	private static class OAuth2Result {
 
 		public OAuth2Result(JSONObject response) {
-			_portalException = null;
 			_response = response;
+
+			_portalException = null;
 			_redirectURL = null;
 		}
 
 		public OAuth2Result(PortalException portalException) {
 			_portalException = portalException;
+
 			_response = null;
 			_redirectURL = null;
 		}
 
 		public OAuth2Result(String redirectURL) {
-			_portalException = null;
 			_redirectURL = redirectURL;
+
+			_portalException = null;
 			_response = null;
 		}
 

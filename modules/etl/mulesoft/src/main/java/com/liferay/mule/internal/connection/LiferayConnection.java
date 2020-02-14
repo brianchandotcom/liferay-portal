@@ -139,8 +139,9 @@ public final class LiferayConnection {
 		throws ConnectionException {
 
 		_openAPISpecPath = openApiSpecPath;
-		_serverBaseURL = _getServerBaseURL(openApiSpecPath);
 		_httpAuthentication = basicAuthentication;
+
+		_serverBaseURL = _getServerBaseURL(openApiSpecPath);
 
 		_initHttpClient(httpService, proxyConfig);
 	}

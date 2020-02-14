@@ -27,8 +27,9 @@ public class JavaEnumConstantDefinition extends BaseJavaTerm {
 	public JavaEnumConstantDefinition(
 		String name, List<JavaAnnotation> javaAnnotations) {
 
-		_name = new JavaSimpleValue(name);
 		_javaAnnotations = javaAnnotations;
+
+		_name = new JavaSimpleValue(name);
 	}
 
 	public void setHasBody(boolean hasBody) {

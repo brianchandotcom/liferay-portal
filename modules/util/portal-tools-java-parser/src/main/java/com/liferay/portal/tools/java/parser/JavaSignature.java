@@ -29,12 +29,13 @@ public class JavaSignature extends BaseJavaTerm {
 		JavaType returnJavaType, List<JavaType> genericJavaTypes,
 		List<JavaParameter> javaParameters, List<JavaType> exceptionJavaTypes) {
 
-		_objectName = new JavaSimpleValue(objectName);
 		_modifiers = modifiers;
 		_returnJavaType = returnJavaType;
 		_genericJavaTypes = genericJavaTypes;
 		_javaParameters = javaParameters;
 		_exceptionJavaTypes = exceptionJavaTypes;
+
+		_objectName = new JavaSimpleValue(objectName);
 	}
 
 	public String getIndent() {

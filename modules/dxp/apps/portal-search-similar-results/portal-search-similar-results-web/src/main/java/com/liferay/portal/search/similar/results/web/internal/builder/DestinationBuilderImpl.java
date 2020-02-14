@@ -27,9 +27,10 @@ import com.liferay.portal.search.similar.results.web.spi.contributor.helper.Dest
 public class DestinationBuilderImpl implements DestinationBuilder {
 
 	public DestinationBuilderImpl(String urlString, Http http) {
+		_http = http;
+
 		_urlString = StringUtil.replace(
 			URLCodec.decodeURL(urlString), CharPool.PLUS, CharPool.SPACE);
-		_http = http;
 	}
 
 	public String build() {

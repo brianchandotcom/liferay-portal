@@ -59,11 +59,11 @@ public class MethodLogger implements InvocationHandler {
 	}
 
 	protected MethodLogger(Object object) {
+		_object = object;
+
 		Class<?> clazz = getClass();
 
 		_logger = Logger.getLogger(clazz.getName());
-
-		_object = object;
 	}
 
 	private String _getClassMethodName(Method method) {

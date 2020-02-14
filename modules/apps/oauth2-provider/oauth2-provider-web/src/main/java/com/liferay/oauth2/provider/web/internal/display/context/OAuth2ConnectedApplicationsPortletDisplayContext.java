@@ -48,11 +48,10 @@ public class OAuth2ConnectedApplicationsPortletDisplayContext
 		PortletRequest portletRequest, DLURLHelper dlURLHelper) {
 
 		super.portletRequest = portletRequest;
+		this.dlURLHelper = dlURLHelper;
 
 		super.themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		this.dlURLHelper = dlURLHelper;
 	}
 
 	public AssignableScopes getAssignableScopes() {

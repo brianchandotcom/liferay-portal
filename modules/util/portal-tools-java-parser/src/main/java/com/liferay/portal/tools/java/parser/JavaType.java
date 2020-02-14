@@ -25,8 +25,9 @@ import java.util.List;
 public class JavaType extends BaseJavaTerm implements Comparable<JavaType> {
 
 	public JavaType(String name, int arrayDimension) {
-		_name = new JavaSimpleValue(name);
 		_arrayDimension = arrayDimension;
+
+		_name = new JavaSimpleValue(name);
 	}
 
 	@Override

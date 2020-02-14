@@ -30,8 +30,9 @@ public class JavaCatchStatement extends BaseJavaTerm {
 		List<JavaType> parameterJavaTypes) {
 
 		_modifiers = modifiers;
-		_parameterName = new JavaSimpleValue(parameterName);
 		_parameterJavaTypes = parameterJavaTypes;
+
+		_parameterName = new JavaSimpleValue(parameterName);
 	}
 
 	@Override

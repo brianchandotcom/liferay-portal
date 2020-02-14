@@ -59,15 +59,17 @@ public class RankingJSONBuilder {
 		FastDateFormatFactory fastDateFormatFactory,
 		ResourceActions resourceActions, ResourceRequest resourceRequest) {
 
+		_dlAppLocalService = dlAppLocalService;
+		_fastDateFormatFactory = fastDateFormatFactory;
+		_resourceActions = resourceActions;
+
+		_dlConfiguration = ConfigurableUtil.createConfigurable(
+			DLConfiguration.class, new HashMap<String, Object>());
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_dlAppLocalService = dlAppLocalService;
-		_dlConfiguration = ConfigurableUtil.createConfigurable(
-			DLConfiguration.class, new HashMap<String, Object>());
-		_fastDateFormatFactory = fastDateFormatFactory;
 		_locale = themeDisplay.getLocale();
-		_resourceActions = resourceActions;
 		_themeDisplay = themeDisplay;
 	}
 

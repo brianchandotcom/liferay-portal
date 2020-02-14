@@ -21,6 +21,7 @@ import React, {
 	useState
 } from 'react';
 
+import {useToaster} from '../../../../shared/components/toaster/hooks/useToaster.es';
 import {useFetch} from '../../../../shared/hooks/useFetch.es';
 import {usePost} from '../../../../shared/hooks/usePost.es';
 import {ModalContext} from '../ModalContext.es';
@@ -29,8 +30,9 @@ const SingleTransitionModal = () => {
 	const [comment, setComment] = useState('');
 	const {setSingleTransition, singleTransition} = useContext(ModalContext);
 	const {selectedItemId, title, transitionName, visible} = singleTransition;
-	const [successToast, setSuccessToast] = useState(() => []);
 	const [errorToast, setErrorToast] = useState(false);
+
+	const toaster = useToaster();
 
 	const {data, fetchData} = useFetch({
 		admin: true,
@@ -71,12 +73,11 @@ const SingleTransitionModal = () => {
 		postData()
 			.then(() => {
 				onClose();
-				setSuccessToast([
-					...successToast,
+				toaster.success(
 					Liferay.Language.get(
 						'the-selected-step-has-transitioned-successfully'
 					)
-				]);
+				);
 			})
 			.catch(() => {
 				setErrorToast(
@@ -90,30 +91,11 @@ const SingleTransitionModal = () => {
 
 	return (
 		<>
-			<ClayAlert.ToastContainer data-testid="alertContainer">
-				{successToast.map(value => (
-					<ClayAlert
-						autoClose={5000}
-						data-testid="alertSuccess"
-						displayType={'success'}
-						key={value}
-						onClose={() => {
-							setSuccessToast(prevItems =>
-								prevItems.filter(item => item !== value)
-							);
-						}}
-						title={Liferay.Language.get('success')}
-					>
-						{value}
-					</ClayAlert>
-				))}
-			</ClayAlert.ToastContainer>
-
 			{visible && (
 				<ClayModal
 					data-testid="transitionModal"
 					observer={observer}
-					size="lg"
+					size="md"
 				>
 					<ClayModal.Header>{title}</ClayModal.Header>
 
@@ -168,4 +150,4 @@ const SingleTransitionModal = () => {
 	);
 };
 
-export default SingleTransitionModal;
+export {SingleTransitionModal};

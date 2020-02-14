@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.group.type.contributor;
+package com.liferay.depot.web.internal.roles.admin.group.type.contributor;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.web.internal.util.DepotSupportChecker;

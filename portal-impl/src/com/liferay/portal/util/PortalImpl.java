@@ -931,16 +931,11 @@ public class PortalImpl implements Portal {
 			return url;
 		}
 
-		url = url.trim();
-
+		String domain = HttpUtil.getDomain(url);
 		String protocol = HttpUtil.getProtocol(url);
 
-		String domain = HttpUtil.getDomain(url);
-
-		String path = HttpUtil.getPath(url);
-
 		if (Validator.isBlank(domain)) {
-			if (Validator.isBlank(path)) {
+			if (Validator.isBlank(HttpUtil.getPath(url))) {
 				return null;
 			}
 

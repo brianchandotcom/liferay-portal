@@ -39,6 +39,7 @@ page import="com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConst
 page import="com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutsAdminManagementToolbarDisplayContext" %><%@
+page import="com.liferay.layout.admin.web.internal.display.context.LayoutsAdminReactDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.OrphanPortletsDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.OrphanPortletsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.SelectLayoutPageTemplateEntryDisplayContext" %><%@

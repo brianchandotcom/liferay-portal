@@ -20,19 +20,10 @@ import React, {useContext} from 'react';
 
 import MillerColumnsContext from './MillerColumnsContext.es';
 
-const ITEM_STATES = {
-	'conversion-draft': {
-		color: 'info',
-		text: 'conversion-draft'
-	},
-	draft: {
-		color: 'secondary',
-		text: 'draft'
-	},
-	pending: {
-		color: 'info',
-		text: 'pending'
-	}
+const ITEM_STATES_COLORS = {
+	'conversion-draft': 'info',
+	draft: 'secondary',
+	pending: 'info'
 };
 
 const MillerColumnsColumnItem = ({
@@ -43,7 +34,7 @@ const MillerColumnsColumnItem = ({
 	hasChild,
 	itemId,
 	selectable,
-	state,
+	states = [],
 	title,
 	url
 }) => {
@@ -89,14 +80,15 @@ const MillerColumnsColumnItem = ({
 					<h5 className="list-group-subtitle small text-truncate">
 						{description}
 
-						{state && ITEM_STATES[state] && (
+						{states.map(state => (
 							<ClayLabel
 								className="inline-item-after"
-								displayType="secondary"
+								displayType={ITEM_STATES_COLORS[state.id]}
+								key={state.id}
 							>
-								{Liferay.Language.get(ITEM_STATES[state].text)}
+								{state.label}
 							</ClayLabel>
-						)}
+						))}
 					</h5>
 				)}
 			</div>

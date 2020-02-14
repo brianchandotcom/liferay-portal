@@ -17,7 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayContext = new LayoutsAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutsAdminDisplayContext);
+LayoutsAdminReactDisplayContext layoutsAdminReactDisplayContext = (LayoutsAdminReactDisplayContext)request.getAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_REACT_DISPLAY_CONTEXT);
+
+LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayContext = new LayoutsAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutsAdminReactDisplayContext);
 %>
 
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutUpdated" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-updated-succesfully") %>' />
@@ -45,9 +47,9 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<c:choose>
-		<c:when test="<%= layoutsAdminDisplayContext.hasLayouts() %>">
+		<c:when test="<%= layoutsAdminReactDisplayContext.hasLayouts() %>">
 			<c:choose>
-				<c:when test="<%= layoutsAdminDisplayContext.isSearch() %>">
+				<c:when test="<%= layoutsAdminReactDisplayContext.isSearch() %>">
 					<liferay-util:include page="/flattened_view.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>
@@ -59,8 +61,8 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 
 					Map<String, Object> layoutProps = new HashMap<>();
 
-					layoutProps.put("breadcrumbEntries", layoutsAdminDisplayContext.getBreadcrumbEntriesJSONArray());
-					layoutProps.put("layoutColumns", layoutsAdminDisplayContext.getLayoutColumnsJSONArray());
+					layoutProps.put("breadcrumbEntries", layoutsAdminReactDisplayContext.getBreadcrumbEntriesJSONArray());
+					layoutProps.put("layoutColumns", layoutsAdminReactDisplayContext.getLayoutColumnsJSONArray());
 					layoutProps.put("searchContainerId", "pages");
 
 					layoutData.put("props", layoutProps);
@@ -77,7 +79,7 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 		</c:when>
 		<c:otherwise>
 			<liferay-frontend:empty-result-message
-				actionDropdownItems="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() ? layoutsAdminDisplayContext.getAddLayoutDropdownItems() : null %>"
+				actionDropdownItems="<%= layoutsAdminReactDisplayContext.isShowAddRootLayoutButton() ? layoutsAdminReactDisplayContext.getAddLayoutDropdownItems() : null %>"
 				description='<%= LanguageUtil.get(request, "fortunately-it-is-very-easy-to-add-new-ones") %>'
 				elementType='<%= LanguageUtil.get(request, "pages") %>'
 			/>

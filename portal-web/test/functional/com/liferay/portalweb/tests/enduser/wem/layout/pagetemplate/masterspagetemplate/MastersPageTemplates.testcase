@@ -514,6 +514,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-102194. Only can add allowed fragments to drop zone in fragment pages when set them in master."
+	@priority = "5"
+	test ConfigureAllowedFragmentsInDropZone {
+		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+			item = "Edit",
+			masterLayoutName = "Custom Masters Page Template");
+
+		AssertClick(
+			locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS",
+			value1 = "Configure Allowed Fragments");
+
+		MastersPageTemplates.selectAllowedFragments(fragmentNameList = "Heading");
+
+		Button.clickNoError(button = "Publish Master");
+
+		task ("Add a page based on custom masters") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the only Heading fragment exist in page editor sidebar") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+
+			ContentPages.clickPencil();
+
+			PageEditor.searchFragmentViaSidebar(fragmentName = "Heading");
+
+			AssertVisible(
+				key_fragmentName = "Heading",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS");
+
+			PageEditor.searchFragmentViaSidebar(fragmentName = "Button");
+
+			AssertElementNotPresent(
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS");
+		}
+	}
+
 	@description = "This is for LPS-102200. Assert the content in Drop Zone is not changed when change master of page."
 	@priority = "3"
 	test ContentInDropZoneIsNotChangedWhenChangeMasterofPage {

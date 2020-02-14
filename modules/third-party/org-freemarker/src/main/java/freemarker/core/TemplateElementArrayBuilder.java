@@ -18,8 +18,6 @@
  */
 package freemarker.core;
 
-import freemarker.template.utility.CollectionUtils;
-
 /**
  * Holds an buffer (array) of {@link TemplateElement}-s with the count of the utilized items in it. The un-utilized tail
  * of the array must only contain {@code null}-s.
@@ -72,7 +70,7 @@ class TemplateElements {
      */
     TemplateElement asSingleElement() {
         if (count == 0) {
-            return new TextBlock(CollectionUtils.EMPTY_CHAR_ARRAY, false); 
+            return new TextBlock("", false);
         } else {
             TemplateElement first = buffer[0];
             if (count == 1) {
@@ -100,3 +98,5 @@ class TemplateElements {
     }
 
 }
+
+/* @generated */

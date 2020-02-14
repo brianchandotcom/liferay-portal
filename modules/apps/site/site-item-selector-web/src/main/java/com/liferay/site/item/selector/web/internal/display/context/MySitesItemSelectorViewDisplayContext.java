@@ -69,6 +69,19 @@ public class MySitesItemSelectorViewDisplayContext
 		GroupItemSelectorCriterion groupItemSelectorCriterion =
 			getGroupItemSelectorCriterion();
 
+		if (groupItemSelectorCriterion.isIncludeFormsSite() &&
+			(groupSearch.getStart() == 0)) {
+
+			Group formsSite = GroupLocalServiceUtil.getGroup(
+				_themeDisplay.getCompanyId(), GroupConstants.FORMS);
+
+			groupSearch.setResults(
+				ListUtil.concat(
+					Arrays.asList(formsSite), groupSearch.getResults()));
+
+			groupSearch.setTotal(groupSearch.getTotal() + 1);
+		}
+
 		if (groupItemSelectorCriterion.isIncludeUserPersonalSite() &&
 			(groupSearch.getStart() == 0)) {
 

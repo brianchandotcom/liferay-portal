@@ -139,37 +139,6 @@ public abstract class PoshiNodeFactory {
 		}
 	}
 
-	protected static boolean hasPoshiScriptParserException(URL url) {
-		Set<String> failingFilePaths =
-			PoshiScriptParserException.getUniqueErrorPaths();
-
-		return failingFilePaths.contains(url.getFile());
-	}
-
-	protected static void validatePoshiScriptContent(
-			PoshiElement poshiElement, URL url)
-		throws DocumentException, IOException, PoshiScriptParserException {
-
-		String poshiXMLString = Dom4JUtil.format(poshiElement);
-
-		PoshiNode newPoshiElement = newPoshiNode(poshiXMLString, url);
-
-		String newPoshiScript = newPoshiElement.toPoshiScript();
-
-		String poshiScript = FileUtil.read(url);
-
-		poshiScript = poshiScript.replaceAll("\\s+", "");
-
-		if (!poshiScript.equals(newPoshiScript.replaceAll("\\s+", ""))) {
-			PoshiScriptParserException poshiScriptParserException =
-				new PoshiScriptParserException(
-					"Data loss has occurred while parsing Poshi Script",
-					newPoshiElement);
-
-			throw poshiScriptParserException;
-		}
-	}
-
 	protected static final Set<URL> validationInitialized =
 		Collections.synchronizedSet(new HashSet<>());
 

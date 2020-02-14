@@ -21,4 +21,8 @@ public interface GroupTypeContributor {
 
 	public String getClassName();
 
+	public default boolean isEnabled() {
+		return true;
+	}
+
 }

@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:dynamic-include key="com.liferay.users.admin.web#/users/memberships.jsp#pre" />
+<liferay-util:dynamic-include key="com.liferay.users.admin.web#/user/memberships.jsp#pre" />
 
 <div class="sheet-section">
 	<liferay-util:include page="/user/sites.jsp" servletContext="<%= application %>" />
@@ -26,4 +26,4 @@
 	<liferay-util:include page="/user/user_groups.jsp" servletContext="<%= application %>" />
 </div>
 
-<liferay-util:dynamic-include key="com.liferay.users.admin.web#/users/memberships.jsp#post" />
+<liferay-util:dynamic-include key="com.liferay.users.admin.web#/user/memberships.jsp#post" />

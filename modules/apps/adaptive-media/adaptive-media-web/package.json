@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/progress-bar": "3.0.2",
+		"@clayui/progress-bar": "3.0.3",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"metal": "2.16.8",

@@ -1,5 +1,4 @@
 @component-name = "portal-document-management"
-@ignore = "true"
 definition {
 
 	property portal.release = "false";

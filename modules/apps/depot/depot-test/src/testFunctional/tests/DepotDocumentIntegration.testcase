@@ -200,7 +200,6 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be used through web content on a connected site."
-	@ignore = "true"
 	@priority = "5"
 	test AddImageViaWebContent {
 		DepotNavigator.openDepotAdmin();

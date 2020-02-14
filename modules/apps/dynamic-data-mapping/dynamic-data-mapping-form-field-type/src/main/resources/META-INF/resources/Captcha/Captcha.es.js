@@ -47,25 +47,9 @@ const Captcha = ({html, name}) => {
 	}, [elRef]);
 
 	useEffect(() => {
-		function setNewCaptcha() {
-			const captcha = elRef.current.querySelector('img');
-			const url = new URL(captcha.src);
-
-			url.searchParams.set('t', Date.now());
-
-			captcha.setAttribute('src', url.href);
-		}
-
 		if (elRef.current) {
-			const refreshCaptcha = elRef.current.querySelector('a');
-
-			if (refreshCaptcha) {
-				refreshCaptcha.addEventListener('click', setNewCaptcha);
-
-				return () => {
-					refreshCaptcha.removeEventListener('click', setNewCaptcha);
-				};
-			}
+			const fieldIndex = name.indexOf('_ddm');
+			Liferay.fire(`${name.substring(0, fieldIndex)}_simplecaptcha_attachEvent`);
 		}
 	}, [elRef]);
 

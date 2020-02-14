@@ -9,7 +9,7 @@ targetCompatibility = "1.6"
 
 dependencies {
 	compile group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
-	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.23"
+	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.29"
 }
 
 liferay {

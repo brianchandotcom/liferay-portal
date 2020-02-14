@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(service = DynamicInclude.class)
-public class UsersMembershipsPostJSPDynamicInclude
+public class UserMembershipsPostJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
@@ -36,13 +36,13 @@ public class UsersMembershipsPostJSPDynamicInclude
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 
 		dynamicIncludeRegistry.register(
-			"com.liferay.users.admin.web#/users/memberships.jsp#post");
+			"com.liferay.users.admin.web#/user/memberships.jsp#post");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/dynamic_include/com.liferay.users.admin.web/users" +
-			"/memberships/depot_groups.jsp";
+		return "/dynamic_include/com.liferay.users.admin.web/user/memberships" +
+			"/depot_groups.jsp";
 	}
 
 	@Override
@@ -59,6 +59,6 @@ public class UsersMembershipsPostJSPDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UsersMembershipsPostJSPDynamicInclude.class);
+		UserMembershipsPostJSPDynamicInclude.class);
 
 }

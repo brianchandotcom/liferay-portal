@@ -39,8 +39,6 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -295,7 +293,6 @@ public class FinderCacheImpl
 
 	@Reference(unbind = "-")
 	protected void setEntityCache(EntityCache entityCache) {
-		_entityCache = entityCache;
 	}
 
 	@Reference(unbind = "-")
@@ -379,15 +376,7 @@ public class FinderCacheImpl
 		}
 
 		if (BaseModel.class.isAssignableFrom(finderPath.getResultClass())) {
-			Serializable result = _entityCache.loadResult(
-				finderPath.isEntityCacheEnabled(), finderPath.getResultClass(),
-				primaryKey, basePersistenceImpl);
-
-			if (result == _NULL_MODEL) {
-				return null;
-			}
-
-			return result;
+			return basePersistenceImpl.fetchByPrimaryKey(primaryKey);
 		}
 
 		return primaryKey;
@@ -432,23 +421,6 @@ public class FinderCacheImpl
 	private static final String _GROUP_KEY_PREFIX =
 		FinderCache.class.getName() + StringPool.PERIOD;
 
-	private static final Object _NULL_MODEL;
-
-	static {
-		try {
-			Field field = BasePersistenceImpl.class.getDeclaredField(
-				"nullModel");
-
-			field.setAccessible(true);
-
-			_NULL_MODEL = field.get(null);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new ExceptionInInitializerError(reflectiveOperationException);
-		}
-	}
-
-	private EntityCache _entityCache;
 	private ThreadLocal<LRUMap> _localCache;
 	private MultiVMPool _multiVMPool;
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>

@@ -69,6 +69,12 @@ public class DDMFormInstanceServiceUtil {
 			settingsDDMFormValues, serviceContext);
 	}
 
+	public static int countFormInstances(String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().countFormInstances(uuid);
+	}
+
 	public static void deleteFormInstance(long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -120,6 +120,12 @@ public class DDMFormInstanceLocalServiceUtil {
 			ddmFormInstance, modelPermissions);
 	}
 
+	public static int countFormInstances(String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().countFormInstances(uuid);
+	}
+
 	/**
 	 * Creates a new ddm form instance with the primary key. Does not add the ddm form instance to the database.
 	 *

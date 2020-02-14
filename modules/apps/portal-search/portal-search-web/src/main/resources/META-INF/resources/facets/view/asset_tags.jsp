@@ -17,14 +17,7 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
-AssetTagsSearchFacetDisplayBuilder assetTagsSearchFacetDisplayBuilder = null;
-
-try {
-	assetTagsSearchFacetDisplayBuilder = new AssetTagsSearchFacetDisplayBuilder(renderRequest);
-}
-catch (ConfigurationException configurationException) {
-	throw new RuntimeException(configurationException);
-}
+AssetTagsSearchFacetDisplayBuilder assetTagsSearchFacetDisplayBuilder = new AssetTagsSearchFacetDisplayBuilder(renderRequest);
 
 assetTagsSearchFacetDisplayBuilder.setDisplayStyle(dataJSONObject.getString("displayStyle", "cloud"));
 assetTagsSearchFacetDisplayBuilder.setFacet(facet);

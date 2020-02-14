@@ -642,10 +642,7 @@ public class LayoutCTTest {
 
 			String message = throwable.getMessage();
 
-			Assert.assertTrue(
-				message,
-				message.startsWith(
-					"Unable to auto resolve publication conflict "));
+			Assert.assertTrue(message, message.startsWith("Unable to publish"));
 		}
 
 		layout = _layoutLocalService.fetchLayout(layout.getPlid());

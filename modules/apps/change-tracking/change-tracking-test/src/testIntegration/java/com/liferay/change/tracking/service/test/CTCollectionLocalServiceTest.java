@@ -192,9 +192,6 @@ public class CTCollectionLocalServiceTest {
 		List<ConflictInfo> conflictInfos = conflictInfoMap.remove(
 			_journalArticleClassNameId);
 
-		Assert.assertTrue(
-			conflictInfoMap.toString(), conflictInfoMap.isEmpty());
-
 		Assert.assertEquals(conflictInfos.toString(), 2, conflictInfos.size());
 
 		conflictInfos.sort(
@@ -219,6 +216,16 @@ public class CTCollectionLocalServiceTest {
 		Assert.assertEquals(
 			ctJournalArticle2.getPrimaryKey(),
 			conflictInfo.getSourcePrimaryKey());
+
+		conflictInfos = conflictInfoMap.remove(
+			_classNameLocalService.getClassNameId(AssetEntry.class));
+
+		Assert.assertTrue(
+			conflictInfoMap.toString(), conflictInfoMap.isEmpty());
+
+		conflictInfo = conflictInfos.get(0);
+
+		Assert.assertTrue(conflictInfo.isResolved());
 	}
 
 	@Test

@@ -184,6 +184,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIGURE_ALLOWED_FRAGMENTS</td>
+	<td>//button[contains(.,'Configure Allowed Fragments')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRM</td>
 	<td>//a[contains(@class,'btn') and contains(.,'Confirm')] | //button[contains(.,'Confirm')]</td>
 	<td></td>

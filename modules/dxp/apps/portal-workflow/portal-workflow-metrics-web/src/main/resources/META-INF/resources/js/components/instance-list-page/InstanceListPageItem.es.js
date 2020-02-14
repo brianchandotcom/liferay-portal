@@ -42,7 +42,7 @@ const getSLAStatusIcon = slaStatus => {
 	return items[slaStatus] || items.Untracked;
 };
 
-const Item = ({totalCount, ...taskItem}) => {
+const Item = ({totalCount, ...instance}) => {
 	const {
 		selectedItems = [],
 		setInstanceId,
@@ -65,7 +65,7 @@ const Item = ({totalCount, ...taskItem}) => {
 		status,
 		slaStatus,
 		taskNames
-	} = taskItem;
+	} = instance;
 
 	useEffect(() => {
 		setChecked(!!selectedItems.find(item => item.id === id));
@@ -93,7 +93,7 @@ const Item = ({totalCount, ...taskItem}) => {
 		setChecked(target.checked);
 
 		const updatedItems = target.checked
-			? [...selectedItems, taskItem]
+			? [...selectedItems, instance]
 			: selectedItems.filter(item => item.id !== id);
 
 		setSelectAll(totalCount > 0 && totalCount === updatedItems.length);
@@ -168,40 +168,52 @@ const Item = ({totalCount, ...taskItem}) => {
 			</ClayTable.Cell>
 
 			<ClayTable.Cell style={{paddingRight: '0rem'}}>
-				<QuickActionMenu
-					disabled={completed}
-					taskItem={taskItem}
-					transitions={taskItem.transitions}
-				/>
+				<QuickActionMenu disabled={completed} instance={instance} />
 			</ClayTable.Cell>
 		</ClayTable.Row>
 	);
 };
 
-const QuickActionMenu = ({disabled, taskItem, transitions = []}) => {
+const QuickActionMenu = ({disabled, instance}) => {
 	const {
 		bulkModal,
 		setBulkModal,
 		setSingleModal,
-		setSingleTransition
+		setSingleTransition,
+		setUpdateDueDate
 	} = useContext(ModalContext);
+
+	const {id, transitions = [], taskNames} = instance;
 
 	const handleClickReassignTask = useCallback(
 		() => {
-			if (taskItem.taskNames.length > 1) {
+			if (taskNames.length > 1) {
 				setBulkModal({...bulkModal, visible: true});
 
-				setSingleModal({selectedItem: taskItem});
+				setSingleModal({selectedItem: instance});
 			}
 			else {
 				setSingleModal({
-					selectedItem: taskItem,
+					selectedItem: instance,
 					visible: true
 				});
 			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[taskItem]
+		[instance]
+	);
+
+	const handleClickUpdateDueDate = useCallback(
+		() => {
+			if (taskNames.length > 1) {
+				setBulkModal({...bulkModal, visible: true});
+			}
+			else {
+				setUpdateDueDate({selectedItem: instance, visible: true});
+			}
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[instance]
 	);
 
 	const transitionLabel = capitalize(Liferay.Language.get('transition'));
@@ -211,6 +223,11 @@ const QuickActionMenu = ({disabled, taskItem, transitions = []}) => {
 			icon: 'change',
 			label: Liferay.Language.get('reassign-task'),
 			onClick: handleClickReassignTask
+		},
+		{
+			icon: 'date',
+			label: Liferay.Language.get('update-due-date'),
+			onClick: handleClickUpdateDueDate
 		}
 	];
 
@@ -225,7 +242,7 @@ const QuickActionMenu = ({disabled, taskItem, transitions = []}) => {
 					name,
 					onClick: () => {
 						setSingleTransition({
-							selectedItemId: taskItem.id,
+							selectedItemId: id,
 							title: label,
 							transitionName: name,
 							visible: true

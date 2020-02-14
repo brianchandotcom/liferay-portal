@@ -16,7 +16,6 @@ package com.liferay.roles.admin.web.internal.group.type.contributor.util;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.roles.admin.group.type.contributor.GroupTypeContributor;
 
 import java.util.ArrayList;
@@ -40,10 +39,10 @@ public class GroupTypeContributorUtil {
 		Stream<GroupTypeContributor> stream = _groupTypeContributors.stream();
 
 		return ListUtil.toLongArray(
-			stream.map(
+			stream.filter(
+				GroupTypeContributor::isEnabled
+			).map(
 				GroupTypeContributor::getClassName
-			).filter(
-				Validator::isNotNull
 			).map(
 				PortalUtil::getClassNameId
 			).collect(

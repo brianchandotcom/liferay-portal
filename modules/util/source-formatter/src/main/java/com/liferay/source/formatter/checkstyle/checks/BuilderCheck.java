@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -27,7 +26,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class BuilderCheck extends ChainedMethodCheck {
+public abstract class BuilderCheck extends ChainedMethodCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -35,6 +34,8 @@ public class BuilderCheck extends ChainedMethodCheck {
 			TokenTypes.ASSIGN, TokenTypes.INSTANCE_INIT, TokenTypes.METHOD_CALL
 		};
 	}
+
+	protected abstract boolean allowNullValues();
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
@@ -78,6 +79,36 @@ public class BuilderCheck extends ChainedMethodCheck {
 
 		_checkNewInstance(
 			detailAST, variableName, parentDetailAST, nextSiblingDetailAST);
+	}
+
+	protected abstract List<BuilderInformation> getBuilderInformationList();
+
+	protected static class BuilderInformation {
+
+		public BuilderInformation(
+			String className, String builderClassName, String... methodNames) {
+
+			_className = className;
+			_builderClassName = builderClassName;
+			_methodNames = methodNames;
+		}
+
+		public String getBuilderClassName() {
+			return _builderClassName;
+		}
+
+		public String getClassName() {
+			return _className;
+		}
+
+		public String[] getMethodNames() {
+			return _methodNames;
+		}
+
+		private final String _builderClassName;
+		private final String _className;
+		private final String[] _methodNames;
+
 	}
 
 	private void _checkAnonymousClass(DetailAST detailAST) {
@@ -153,21 +184,23 @@ public class BuilderCheck extends ChainedMethodCheck {
 				return;
 			}
 
-			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
-				TokenTypes.ELIST);
+			if (!allowNullValues()) {
+				DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+					TokenTypes.ELIST);
 
-			DetailAST childDetailAST = elistDetailAST.getFirstChild();
+				DetailAST childDetailAST = elistDetailAST.getFirstChild();
 
-			while (true) {
-				if (childDetailAST == null) {
-					break;
+				while (true) {
+					if (childDetailAST == null) {
+						break;
+					}
+
+					if (_isNullValueExpression(childDetailAST)) {
+						return;
+					}
+
+					childDetailAST = childDetailAST.getNextSibling();
 				}
-
-				if (_isNullValueExpression(childDetailAST)) {
-					return;
-				}
-
-				childDetailAST = childDetailAST.getNextSibling();
 			}
 
 			parentDetailAST = getParentWithTokenType(
@@ -219,7 +252,9 @@ public class BuilderCheck extends ChainedMethodCheck {
 		List<DetailAST> methodVariableDetailASTList =
 			_getMethodVariableDetailASTList(methodCallDetailAST);
 
-		_checkNullValues(methodVariableDetailASTList, builderClassName);
+		if (!allowNullValues()) {
+			_checkNullValues(methodVariableDetailASTList, builderClassName);
+		}
 
 		DetailAST parentDetailAST = methodCallDetailAST.getParent();
 
@@ -458,7 +493,9 @@ public class BuilderCheck extends ChainedMethodCheck {
 						return;
 					}
 
-					if (_isNullValueExpression(childDetailAST)) {
+					if (!allowNullValues() &&
+						_isNullValueExpression(childDetailAST)) {
+
 						return;
 					}
 
@@ -487,7 +524,9 @@ public class BuilderCheck extends ChainedMethodCheck {
 	private BuilderInformation _findBuilderInformationByBuilderClassName(
 		String builderClassName) {
 
-		for (BuilderInformation builderInformation : _builderInformationList) {
+		for (BuilderInformation builderInformation :
+				getBuilderInformationList()) {
+
 			if (builderClassName.equals(
 					builderInformation.getBuilderClassName())) {
 
@@ -501,7 +540,9 @@ public class BuilderCheck extends ChainedMethodCheck {
 	private BuilderInformation _findBuilderInformationByClassName(
 		String className) {
 
-		for (BuilderInformation builderInformation : _builderInformationList) {
+		for (BuilderInformation builderInformation :
+				getBuilderInformationList()) {
+
 			if (className.equals(builderInformation.getClassName())) {
 				return builderInformation;
 			}
@@ -737,42 +778,5 @@ public class BuilderCheck extends ChainedMethodCheck {
 		"run.outside.portal.excludes";
 
 	private static final String _TYPE_NAMES_KEY = "typeNames";
-
-	private static final List<BuilderInformation> _builderInformationList =
-		ListUtil.fromArray(
-			new BuilderInformation(
-				"ConcurrentHashMap", "ConcurrentHashMapBuilder", "put"),
-			new BuilderInformation("HashMap", "HashMapBuilder", "put"),
-			new BuilderInformation(
-				"LinkedHashMap", "LinkedHashMapBuilder", "put"),
-			new BuilderInformation("TreeMap", "TreeMapBuilder", "put"));
-
-	private static class BuilderInformation {
-
-		public BuilderInformation(
-			String className, String builderClassName, String... methodNames) {
-
-			_className = className;
-			_builderClassName = builderClassName;
-			_methodNames = methodNames;
-		}
-
-		public String getBuilderClassName() {
-			return _builderClassName;
-		}
-
-		public String getClassName() {
-			return _className;
-		}
-
-		public String[] getMethodNames() {
-			return _methodNames;
-		}
-
-		private final String _builderClassName;
-		private final String _className;
-		private final String[] _methodNames;
-
-	}
 
 }

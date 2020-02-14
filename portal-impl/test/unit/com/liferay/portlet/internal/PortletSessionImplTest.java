@@ -466,16 +466,27 @@ public class PortletSessionImplTest {
 
 		Assert.assertSame(httpSessionWrapper, portletSessionImpl.session);
 
-		// Set/get attribute when value class is not loaded by PortalClassLoader
+		// Set/get attribute when value class is loaded by Bootstrap classloader
 
 		String key = "key";
 		String value = "value";
 
-		PortalClassLoaderUtilAdvice.setPortalClassLoader(false);
-
 		portletSessionImpl.setAttribute(key, value);
 
 		Assert.assertSame(value, portletSessionImpl.getAttribute(key));
+		Assert.assertSame(
+			value, _mockHttpSession.getAttribute(scopePrefix.concat(key)));
+
+		// Set/get attribute when value class is not loaded by PortalClassLoader
+
+		TestSerializable testSerializable = new TestSerializable("name");
+
+		PortalClassLoaderUtilAdvice.setPortalClassLoader(false);
+
+		portletSessionImpl.setAttribute(key, testSerializable);
+
+		Assert.assertSame(
+			testSerializable, portletSessionImpl.getAttribute(key));
 		Assert.assertTrue(
 			_lazySerializableObjectWrapperClass.isInstance(
 				_mockHttpSession.getAttribute(scopePrefix.concat(key))));
@@ -496,11 +507,13 @@ public class PortletSessionImplTest {
 
 		PortalClassLoaderUtilAdvice.setPortalClassLoader(true);
 
-		portletSessionImpl.setAttribute(key, value);
+		portletSessionImpl.setAttribute(key, testSerializable);
 
-		Assert.assertSame(value, portletSessionImpl.getAttribute(key));
 		Assert.assertSame(
-			value, _mockHttpSession.getAttribute(scopePrefix.concat(key)));
+			testSerializable, portletSessionImpl.getAttribute(key));
+		Assert.assertSame(
+			testSerializable,
+			_mockHttpSession.getAttribute(scopePrefix.concat(key)));
 	}
 
 	@Test

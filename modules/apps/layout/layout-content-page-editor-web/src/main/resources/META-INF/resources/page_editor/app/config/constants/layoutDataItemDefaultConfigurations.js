@@ -25,7 +25,7 @@ export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 		paddingBottom: 3,
 		paddingHorizontal: 3,
 		paddingTop: 3,
-		type: 'fluid'
+		type: 'fixed'
 	},
 
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: {

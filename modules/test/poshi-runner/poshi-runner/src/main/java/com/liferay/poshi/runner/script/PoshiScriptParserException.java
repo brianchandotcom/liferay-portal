@@ -36,14 +36,11 @@ public class PoshiScriptParserException extends Exception {
 	public static Set<PoshiScriptParserException> exceptions =
 		Collections.synchronizedSet(new HashSet<>());
 
-	public static Set<String> getUniqueErrorPaths() {
-		return _uniqueErrorPaths;
-	}
-
 	public static void throwExceptions() throws Exception {
 		if (!exceptions.isEmpty()) {
 			StringBuilder sb = new StringBuilder();
 
+			sb.append("\n");
 			sb.append(exceptions.size());
 			sb.append(" errors in Poshi Script syntax\n\n\n");
 
@@ -203,8 +200,6 @@ public class PoshiScriptParserException extends Exception {
 
 	public void setFilePath(String filePath) {
 		_filePath = filePath;
-
-		_uniqueErrorPaths.add(filePath + ":" + getErrorLineNumber());
 	}
 
 	public void setPoshiNode(PoshiNode poshiNode) {
@@ -214,8 +209,6 @@ public class PoshiScriptParserException extends Exception {
 	private static final int _ERROR_SNIPPET_POSTFIX_SIZE = 10;
 
 	private static final int _ERROR_SNIPPET_PREFIX_SIZE = 10;
-
-	private static Set<String> _uniqueErrorPaths = new HashSet<>();
 
 	private int _errorLineNumber;
 	private String _filePath = "Unknown file";

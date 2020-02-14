@@ -51,47 +51,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) : LanguageUtil.get(request, "new-blog-entry"));
 
 BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId);
-
-BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortletInstanceConfigurationUtil.getBlogsPortletInstanceConfiguration(themeDisplay);
 %>
-
-<liferay-util:buffer
-	var="saveStatus"
->
-	<c:choose>
-		<c:when test="<%= entry != null %>">
-			<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
-				<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
-
-				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-			</small>
-		</c:when>
-		<c:otherwise>
-			<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus"></small>
-		</c:otherwise>
-	</c:choose>
-</liferay-util:buffer>
-
-<liferay-util:buffer
-	var="readingTime"
->
-	<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
-		<small class="reading-time-wrapper text-muted">
-			<liferay-reading-time:reading-time
-				displayStyle="descriptive"
-				id="readingTime"
-				model="<%= entry %>"
-			/>
-		</small>
-	</c:if>
-</liferay-util:buffer>
-
-<liferay-frontend:info-bar
-	fixed="<%= true %>"
->
-	<%= saveStatus %>
-	<%= readingTime %>
-</liferay-frontend:info-bar>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 

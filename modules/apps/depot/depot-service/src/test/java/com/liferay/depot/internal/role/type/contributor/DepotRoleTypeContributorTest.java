@@ -14,7 +14,7 @@
 
 package com.liferay.depot.internal.role.type.contributor;
 
-import com.liferay.depot.internal.constants.DepotRolesConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.portal.kernel.model.Role;
 
 import org.junit.Assert;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.internal.constants;
+package com.liferay.depot.constants;
 
 /**
  * @author Cristina González

@@ -28,6 +28,10 @@ export default class UnsafeHTML extends React.Component {
 	componentDidUpdate() {
 		if (this.state.contentRef) {
 			globalEval.runScriptsInElement(this.state.contentRef);
+
+			if (this.props.onRender) {
+				this.props.onRender(this.state.contentRef);
+			}
 		}
 	}
 
@@ -76,5 +80,6 @@ UnsafeHTML.propTypes = {
 		PropTypes.func,
 		PropTypes.shape({current: PropTypes.instanceOf(Element)})
 	]),
-	markup: PropTypes.string
+	markup: PropTypes.string,
+	onRender: PropTypes.func
 };

@@ -14,6 +14,7 @@
 
 import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
+import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
@@ -35,6 +36,14 @@ function FragmentContent({fragmentEntryLinkId, itemId}, ref) {
 	const element = ref.current;
 	const isMounted = useIsMounted();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
+
+	const [editableElements, setEditableElements] = useState([]);
+
+	const updateEditableElements = (parent = element) => {
+		setEditableElements(
+			parent ? Array.from(parent.querySelectorAll('lfr-editable')) : []
+		);
+	};
 
 	const languageId = useSelector(state => state.languageId);
 
@@ -125,6 +134,7 @@ function FragmentContent({fragmentEntryLinkId, itemId}, ref) {
 				className="page-editor__fragment"
 				contentRef={ref}
 				markup={content}
+				onRender={updateEditableElements}
 			/>
 
 			<FragmentContentClickFilter
@@ -144,20 +154,22 @@ function FragmentContent({fragmentEntryLinkId, itemId}, ref) {
 				fragmentEntryLinkId={fragmentEntryLinkId}
 			/>
 
-			{element &&
-				Array.from(
-					element.querySelectorAll('lfr-editable')
-				).map(editableElement => (
-					<FragmentContentDecoration
-						editableElement={editableElement}
-						element={element}
-						fragmentEntryLinkId={fragmentEntryLinkId}
-						itemId={itemId}
-						key={editableElement.id}
-					/>
-				))}
+			{editableElements.map(editableElement => (
+				<FragmentContentDecoration
+					editableElement={editableElement}
+					element={element}
+					fragmentEntryLinkId={fragmentEntryLinkId}
+					itemId={itemId}
+					key={editableElement.id}
+				/>
+			))}
 		</>
 	);
 }
+
+FragmentContent.propTypes = {
+	fragmentEntryLinkId: PropTypes.string.isRequired,
+	itemId: PropTypes.string.isRequired
+};
 
 export default React.forwardRef(FragmentContent);

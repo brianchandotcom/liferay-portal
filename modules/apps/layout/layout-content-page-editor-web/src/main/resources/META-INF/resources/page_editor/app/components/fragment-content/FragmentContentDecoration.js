@@ -14,7 +14,7 @@
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import {useEffect} from 'react';
+import {useEffect, useLayoutEffect} from 'react';
 
 import {config} from '../../config/index';
 import createSelectEditableValue from '../../selectors/selectEditableValue';
@@ -84,17 +84,17 @@ export default function FragmentContentDecoration({
 					editableValue[segmentsExperienceId][languageId]))
 	});
 
-	useEffect(() => {
-		updateClassName(editableUniqueId, className);
-	}, [className, editableUniqueId, updateClassName]);
-
-	useEffect(() => {
+	useLayoutEffect(() => {
 		registerElement(editableUniqueId, editableElement);
 
 		return () => {
 			unregisterElement(editableUniqueId);
 		};
 	}, [editableElement, editableUniqueId, registerElement, unregisterElement]);
+
+	useEffect(() => {
+		updateClassName(editableUniqueId, className);
+	}, [className, editableElement, editableUniqueId, updateClassName]);
 
 	return null;
 }

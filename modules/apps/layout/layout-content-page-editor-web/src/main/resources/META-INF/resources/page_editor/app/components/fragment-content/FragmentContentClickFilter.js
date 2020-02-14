@@ -44,6 +44,8 @@ export default function FragmentContentClickFilter({
 			const editableElement = closest(event.target, 'lfr-editable');
 
 			if (editableElement) {
+				event.stopPropagation();
+
 				hoverItem(
 					getEditableUniqueId(
 						fragmentEntryLinkId,

@@ -1023,6 +1023,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
+		JSONGroup.assignUserToGroup(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
+
 		JSONRole.assignRoleToUser(
 			roleTitle = "Web Content Comment Reviewer",
 			userEmailAddress = "userea@liferay.com");

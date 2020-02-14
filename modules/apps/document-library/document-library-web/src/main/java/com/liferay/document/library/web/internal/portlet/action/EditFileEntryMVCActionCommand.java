@@ -45,6 +45,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfiguration;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.document.library.web.internal.util.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.StorageFieldRequiredException;
@@ -158,10 +159,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected void activate(Map<String, Object> properties) {
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
-
-		_ffDocumentLibraryDDMEditorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFDocumentLibraryDDMEditorConfiguration.class, properties);
 	}
 
 	@Override

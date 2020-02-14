@@ -94,15 +94,14 @@ public class AddDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 		else {
 			DDMForm ddmForm = _ddm.getDDMForm(actionRequest);
 
-			DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
-
 			String storageType = ParamUtil.getString(
 				actionRequest, "storageType");
 
 			_ddmStructureService.addStructure(
 				groupId, parentDDMStructureId,
 				_portal.getClassNameId(DLFileEntryMetadata.class.getName()),
-				structureKey, nameMap, descriptionMap, ddmForm, ddmFormLayout,
+				structureKey, nameMap, descriptionMap, ddmForm,
+				_ddm.getDefaultDDMFormLayout(ddmForm),
 				storageType, DDMStructureConstants.TYPE_DEFAULT,
 				serviceContext);
 		}

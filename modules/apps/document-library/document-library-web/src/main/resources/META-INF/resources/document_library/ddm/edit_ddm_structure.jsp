@@ -29,10 +29,10 @@ com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = dlEditDDMStru
 
 long groupId = BeanParamUtil.getLong(ddmStructure, request, "groupId", scopeGroupId);
 
+long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
+
 boolean localizeTitle = true;
 String title = LanguageUtil.format(request, "new-x", LanguageUtil.get(resourceBundle, "metadata-set"), false);
-
-long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
 
 if (ddmStructure != null) {
 	localizeTitle = false;

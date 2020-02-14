@@ -810,6 +810,18 @@ definition {
 		AssertTextNotPresent(value1 = "${fragmentComment}");
 	}
 
+	macro searchFragmentViaSidebar {
+		Pause(locator1 = "10000");
+
+		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE", key_sidebarButton = "Fragments")) {
+			PageEditor.gotoTab(tabName = "Fragments");
+		}
+
+		Type(
+			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+			value1 = "${fragmentName}");
+	}
+
 	macro selectLayoutSectionImage {
 		Click(
 			key_position = "1",

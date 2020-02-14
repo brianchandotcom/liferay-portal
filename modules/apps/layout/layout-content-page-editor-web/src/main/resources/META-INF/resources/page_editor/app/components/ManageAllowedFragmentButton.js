@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import ManageAllowedFragmentModal from './ManageAllowedFragmentModal';
@@ -55,6 +56,11 @@ const ManageAllowedFragmentButton = ({item}) => {
 			</ClayButton>
 		</>
 	);
+};
+
+ManageAllowedFragmentButton.propTypes = {
+	item: PropTypes.object,
+	onSelectedFragment: PropTypes.func.isRequired
 };
 
 export {ManageAllowedFragmentButton};

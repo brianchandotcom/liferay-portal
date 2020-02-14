@@ -1,0 +1,79 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Depot";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that the Applications can be set in a depot."
+	@priority = "5"
+	test Smoke {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		for (var application : list "Content Sets,Documents and Media,Web Content") {
+			AssertChecked(
+				checkboxName = "${application}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Depot.configureApplication(
+			application = "Disabled",
+			applicationList = "Content Sets,Documents and Media,Web Content");
+
+		DepotNavigator.openDepotAdmin();
+
+		Click(
+			key_card = "Test Depot Name",
+			locator1 = "LexiconCard#CARD_TITLE");
+
+		Depot.viewApplication(
+			applicationList = "Content Sets,Documents and Media,Web Content",
+			noApplication = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			application = "Enabled",
+			applicationList = "Content Sets,Documents and Media,Web Content");
+
+		DepotNavigator.openDepotAdmin();
+
+		Click(
+			key_card = "Test Depot Name",
+			locator1 = "LexiconCard#CARD_TITLE");
+
+		Depot.viewApplication(applicationList = "Content Sets,Documents and Media,Web Content");
+	}
+
+}

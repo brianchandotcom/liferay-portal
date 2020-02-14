@@ -31,7 +31,8 @@ export default function(
 			classNameId: editableValue.classNameId,
 			classPK: editableValue.classPK,
 			config,
-			fieldId: editableValue.fieldId
+			fieldId: editableValue.fieldId,
+			languageId
 		});
 	}
 	else {
@@ -100,12 +101,13 @@ function editableIsMappedToInfoItem(editableValue) {
 	);
 }
 
-function getMappingValue({classNameId, classPK, config, fieldId}) {
+function getMappingValue({classNameId, classPK, config, fieldId, languageId}) {
 	return InfoItemService.getAssetFieldValue({
 		classNameId,
 		classPK,
 		config,
 		fieldId,
+		languageId,
 		onNetworkStatus: () => {}
 	}).then(response => {
 		const {fieldValue = ''} = response;

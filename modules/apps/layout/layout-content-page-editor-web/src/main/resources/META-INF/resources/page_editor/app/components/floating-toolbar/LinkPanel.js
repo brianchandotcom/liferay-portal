@@ -65,6 +65,7 @@ export default function LinkPanel({item}) {
 	const {editableId, fragmentEntryLinkId} = item;
 
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const languageId = useSelector(state => state.languageId);
 	const segmentsExperienceId = useSelector(
 		state => state.segmentsExperienceId
 	);
@@ -91,13 +92,15 @@ export default function LinkPanel({item}) {
 			classNameId: editableConfig.classNameId,
 			classPK: editableConfig.classPK,
 			config,
-			fieldId: editableConfig.fieldId
+			fieldId: editableConfig.fieldId,
+			languageId
 		});
 	}, [
 		config,
 		editableConfig.classNameId,
 		editableConfig.classPK,
-		editableConfig.fieldId
+		editableConfig.fieldId,
+		languageId
 	]);
 
 	const updateRowConfig = useCallback(
@@ -142,7 +145,13 @@ export default function LinkPanel({item}) {
 
 	const [debounceUpdateRowConfig] = useDebounceCallback(updateRowConfig, 500);
 
-	const updateMappedHrefValue = ({classNameId, classPK, config, fieldId}) => {
+	const updateMappedHrefValue = ({
+		classNameId,
+		classPK,
+		config,
+		fieldId,
+		languageId
+	}) => {
 		if (!classNameId || !classPK || !fieldId) {
 			return;
 		}
@@ -152,6 +161,7 @@ export default function LinkPanel({item}) {
 			classPK,
 			config,
 			fieldId,
+			languageId,
 			onNetworkStatus: () => {}
 		}).then(response => {
 			const {fieldValue = ''} = response;
@@ -194,7 +204,8 @@ export default function LinkPanel({item}) {
 							classNameId: mappedItem.classNameId,
 							classPK: mappedItem.classPK,
 							config,
-							fieldId: mappedItem.fieldId
+							fieldId: mappedItem.fieldId,
+							languageId
 						});
 					}}
 				/>

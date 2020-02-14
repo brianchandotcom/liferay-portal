@@ -2,7 +2,7 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="BuilderCheck" files="modules/apps/portal-search/portal-search-admin-web/src/main/java/com/liferay/portal/search/admin/web/internal/display/context/FieldMappingsDisplayBuilder\.java" />
 		<suppress checks="CamelCaseNameCheck" files="modules/apps/portal-search/portal-search/src/main/java/com/liferay/portal/search/internal/SearchEngineInitializer\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/portal-search/portal-search-admin-web/src/main/java/com/liferay/portal/search/admin/web/internal/display/context/FieldMappingsDisplayBuilder\.java" />
 	</checkstyle>
 </suppressions>

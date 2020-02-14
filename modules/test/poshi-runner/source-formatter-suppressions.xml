@@ -2,7 +2,7 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="BuilderCheck" files=".*" />
+		<suppress checks="MapBuilderCheck" files=".*" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaModuleTestCheck" files="poshi-runner/src/main/java/com/liferay/poshi/runner/PoshiRunner\.java" />

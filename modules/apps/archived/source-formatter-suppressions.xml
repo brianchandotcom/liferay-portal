@@ -2,8 +2,8 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="BuilderCheck" files="modules/apps/archived/powwow-portlet/docroot/WEB-INF/src/com/liferay/powwow/provider/PowwowServiceProviderFactory\.java" />
 		<suppress checks="LineBreakAfterCommaCheck" files="modules/apps/archived/unit-converter-web/src/main/java/com/liferay/unit/converter/web/internal/util/UnitConverterUtil\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/archived/powwow-portlet/docroot/WEB-INF/src/com/liferay/powwow/provider/PowwowServiceProviderFactory\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDDirectoryNameCheck" files="modules/apps/archived/.*" />

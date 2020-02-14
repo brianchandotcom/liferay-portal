@@ -34,14 +34,14 @@ definition {
 	}
 
 	macro configureApplication {
-		if ("${application}" == "Enabled") {
+		if ("${status}" == "Enabled") {
 			for (var applicationList : list "${applicationList}") {
 				Check(
 					checkboxName = "${applicationList}",
 					locator1 = "Checkbox#ANY_CHECKBOX");
 			}
 		}
-		else if ("${application}" == "Disabled") {
+		else if ("${status}" == "Disabled") {
 			for (var applicationList : list "${applicationList}") {
 				Uncheck(
 					checkboxName = "${applicationList}",

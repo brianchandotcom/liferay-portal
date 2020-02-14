@@ -43,8 +43,8 @@ definition {
 		}
 
 		Depot.configureApplication(
-			application = "Disabled",
-			applicationList = "Content Sets,Documents and Media,Web Content");
+			applicationList = "Content Sets,Documents and Media,Web Content",
+			status = "Disabled");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -64,8 +64,8 @@ definition {
 			portlet = "Settings");
 
 		Depot.configureApplication(
-			application = "Enabled",
-			applicationList = "Content Sets,Documents and Media,Web Content");
+			applicationList = "Content Sets,Documents and Media,Web Content",
+			status = "Enabled");
 
 		DepotNavigator.openDepotAdmin();
 

@@ -456,3 +456,9 @@ version 1.0.65.
 ### Dependencies
 - [LPS-107971]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.66.
+
+## 1.0.67 - 2020-02-11
+
+### Dependencies
+- [LPS-102573]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.67.

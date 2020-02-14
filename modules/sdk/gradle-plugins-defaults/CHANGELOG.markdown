@@ -1714,10 +1714,6 @@ OSGi project.
 - [LPS-66853]: Update the com.liferay.gradle.plugins dependency to version
 3.2.9.
 
-### Description
-- [LPS-80332]: Update the `-include` instruction for projects that have a
-`suite.bnd` file.
-
 ## 3.1.3 - 2017-02-27
 
 ### Commits
@@ -2686,18 +2682,11 @@ a theme project.
 - [LPS-72347]: Update the com.liferay.gradle.plugins dependency to version
 3.4.14.
 
-### Description
-- [LPS-84027]: Fix error when using the [Gradle Dependency Management] plugin in
-OSGi modules.
-
 ## 4.1.3 - 2017-07-26
 
 ### Dependencies
 - [LPS-73818]: Update the com.liferay.gradle.plugins dependency to version
 3.4.15.
-
-### Description
-- [LPS-84027]: Add support for the `SPRING_BOOT_JAVA_OPTS` environment variable.
 
 ## 4.1.4 - 2017-07-26
 
@@ -3184,10 +3173,6 @@ with a commercial copyright.
 - [LPS-74867]: Update the com.liferay.gradle.plugins dependency to version
 3.4.72.
 
-### Description
-- [LPS-88306]: Update the `writeParentThemesDigest` task to generate the
-`.digest` file for theme projects in subrepositories.
-
 ## 5.1.2 - 2017-09-28
 
 ### Commits
@@ -3208,8 +3193,10 @@ with a commercial copyright.
 3.4.73.
 
 ### Description
-- [LPS-88859]: Remove the logic that sets the `baseline.onlyIf` property to
-`false` when there is no previous published version for the project.
+- [LPS-74933]: Automatically disable the `PublishNodeModuleTask` instances for
+private projects.
+- [LPS-74933]: Publish *alpha* versions of packages on the NPM registry when
+running the `uploadArchives` task with `-Psnapshot`.
 
 ## 5.1.3 - 2017-10-02
 
@@ -3238,18 +3225,18 @@ version 1.1.7.
 version 1.1.8.
 
 ### Description
-- [LPS-89135]: Add the plugin `com.liferay.go.defaults` to configure Go projects
-according to Liferay defaults.
-- [LPS-89135]: Set the [Liferay Gradle Plugins Go] dependency to version 1.0.0.
+- [LPS-75039]: Make the `updateFileVersions` task exclude build and temporary
+directories.
+- [LPS-75039]: Make the `updateFileVersions` task update only the Gradle files
+in the `modules` directory.
+- [LPS-63943]: Always print the status message after executing the
+`mergeArtifactsPublishCommands` task.
 
 ## 5.1.5 - 2017-10-04
 
 ### Dependencies
 - [LPS-74314]: Update the com.liferay.gradle.plugins dependency to version
 3.5.0.
-
-### Description
-- [LPS-89415]: Configure REST projects according to Liferay defaults.
 
 ## 5.1.6 - 2017-10-05
 
@@ -3269,20 +3256,11 @@ according to Liferay defaults.
 - [LPS-74426]: Update the com.liferay.gradle.plugins dependency to version
 3.5.3.
 
-### Description
-- [LPS-87006]: Update the `jarSources` and `jarSourcesCommercial` tasks to
-include `compileInclude` configuration dependency sources in the respective JAR
-files.
-
 ## 5.1.9 - 2017-10-06
 
 ### Dependencies
 - [LPS-74143]: Update the com.liferay.gradle.plugins dependency to version
 3.5.4.
-
-### Description
-- [LPS-88319]: Automatically include projects in the `modules` directory if a
-`settings.gradle` file is located at the portal root directory.
 
 ## 5.1.10 - 2017-10-08
 

@@ -4578,3 +4578,12 @@ version 1.0.953.
 ### Dependencies
 - [LPS-107918]: Update the com.liferay.source.formatter dependency to version
 1.0.959.
+
+## 2.3.488 - 2020-02-11
+
+### Commits
+- [LPS-108328]: Allow hotfix patterns (9c332ad565)
+
+### Dependencies
+- [LPS-108328]: Update the com.liferay.source.formatter dependency to version
+1.0.960.

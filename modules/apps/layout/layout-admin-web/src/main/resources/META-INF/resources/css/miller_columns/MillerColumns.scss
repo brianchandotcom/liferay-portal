@@ -74,3 +74,15 @@
 		outline: 0;
 	}
 }
+
+.show-quick-actions-on-hover .miller-columns-item:not(.active) {
+	&:hover {
+		.miller-columns-item-quick-action {
+			display: flex;
+		}
+	}
+
+	.miller-columns-item-quick-action {
+		display: none;
+	}
+}

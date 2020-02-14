@@ -147,6 +147,11 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 	}
 
 	@Override
+	public int getFormInstancesCount(String uuid) throws PortalException {
+		return ddmFormInstanceLocalService.getFormInstancesCount(uuid);
+	}
+
+	@Override
 	public List<DDMFormInstance> search(
 		long companyId, long groupId, String keywords, int start, int end,
 		OrderByComparator<DDMFormInstance> orderByComparator) {

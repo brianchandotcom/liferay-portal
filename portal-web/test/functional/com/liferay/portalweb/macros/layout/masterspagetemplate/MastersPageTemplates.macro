@@ -6,6 +6,32 @@ definition {
 		AssertConfirm(value1 = "Changes made to this master are going to be propagated to all page templates, display page templates, and pages using it. Are you sure you want to proceed?");
 	}
 
+	macro searchAllowedFragments {
+		Type(
+			locator1 = "TextInput#FRAGMENTS_SEARCH",
+			value1 = "${searchValue}");
+	}
+
+	macro selectAllowedFragments {
+		SelectFrame(value1 = "relative=top");
+
+		Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ALL_FRAGMENTS");
+
+		for (var fragmentName : list "${fragmentNameList}") {
+			MastersPageTemplates.searchAllowedFragments(searchValue = "${fragmentName}");
+
+			Check.checkToggleSwitch(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Checkbox#ALLowed_FRAGMENT");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Checkbox#ALLowed_FRAGMENT");
+		}
+
+		Button.clickSave();
+	}
+
 	macro selectMaster {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 

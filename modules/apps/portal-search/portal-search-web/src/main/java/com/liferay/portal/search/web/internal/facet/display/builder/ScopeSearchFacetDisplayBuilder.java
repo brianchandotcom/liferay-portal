@@ -16,7 +16,7 @@ package com.liferay.portal.search.web.internal.facet.display.builder;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -34,6 +34,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author André de Oliveira
@@ -77,6 +79,10 @@ public class ScopeSearchFacetDisplayBuilder {
 		_groupLocalService = groupLocalService;
 	}
 
+	public void setLanguage(Language language) {
+		_language = language;
+	}
+
 	public void setLocale(Locale locale) {
 		_locale = locale;
 	}
@@ -105,6 +111,10 @@ public class ScopeSearchFacetDisplayBuilder {
 		groupIdsStream = groupIdsStream.filter(groupId -> groupId > 0);
 
 		_selectedGroupIds = groupIdsStream.collect(Collectors.toList());
+	}
+
+	public void setRequest(HttpServletRequest httpServletRequest) {
+		_httpServletRequest = httpServletRequest;
 	}
 
 	protected ScopeSearchFacetTermDisplayContext buildTermDisplayContext(
@@ -184,13 +194,13 @@ public class ScopeSearchFacetDisplayBuilder {
 		try {
 			String name = group.getDescriptiveName(_locale);
 
-			if (group.isStagingGroup() || group.isStagedRemotely()) {
+			if (group.isStagingGroup()) {
 				StringBundler sb = new StringBundler(5);
 
 				sb.append(name);
 				sb.append(StringPool.SPACE);
 				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(LanguageUtil.get(_locale, "staged"));
+				sb.append(_language.get(_httpServletRequest, "staged"));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 
 				name = sb.toString();
@@ -289,6 +299,8 @@ public class ScopeSearchFacetDisplayBuilder {
 	private Facet _facet;
 	private long[] _filteredGroupIds = {};
 	private GroupLocalService _groupLocalService;
+	private HttpServletRequest _httpServletRequest;
+	private Language _language;
 	private Locale _locale;
 	private int _maxTerms;
 	private String _parameterName;

@@ -64,7 +64,7 @@ const Item = ({totalCount, ...taskItem}) => {
 		id,
 		status,
 		slaStatus,
-		taskNames = []
+		taskNames
 	} = taskItem;
 
 	useEffect(() => {
@@ -82,6 +82,12 @@ const Item = ({totalCount, ...taskItem}) => {
 	const formattedAssignees = !completed
 		? assigneeUserNames || Liferay.Language.get('unassigned')
 		: Liferay.Language.get('not-available');
+
+	const formattedTaskNames = !completed
+		? taskNames
+			? taskNames.join(', ')
+			: Liferay.Language.get('not-available')
+		: Liferay.Language.get('completed');
 
 	const handleCheck = ({target}) => {
 		setChecked(target.checked);
@@ -144,9 +150,7 @@ const Item = ({totalCount, ...taskItem}) => {
 			</ClayTable.Cell>
 
 			<ClayTable.Cell data-testid="taskNamesCell">
-				{!completed
-					? taskNames.join(', ')
-					: Liferay.Language.get('completed')}
+				{formattedTaskNames}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell data-testid="assigneesCell">

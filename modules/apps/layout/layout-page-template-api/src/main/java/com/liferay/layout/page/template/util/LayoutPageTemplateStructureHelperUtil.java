@@ -40,24 +40,27 @@ public class LayoutPageTemplateStructureHelperUtil {
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 
-		LayoutStructureItem rootLayoutStructureItem =
-			layoutStructure.addRootLayoutStructureItem();
-
-		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
-				rootLayoutStructureItem.getItemId(), 0);
-
-		LayoutStructureItem rowLayoutStructureItem =
-			layoutStructure.addRowLayoutStructureItem(
-				containerLayoutStructureItem.getItemId(), 0, 0);
-
 		if (fragmentEntryLinks.isEmpty() &&
 			(type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
 
+			LayoutStructureItem rootLayoutStructureItem =
+				layoutStructure.addRootLayoutStructureItem();
+
 			layoutStructure.addDropZoneLayoutStructureItem(
-				rowLayoutStructureItem.getItemId(), 0);
+				rootLayoutStructureItem.getItemId(), 0);
 		}
 		else {
+			LayoutStructureItem rootLayoutStructureItem =
+				layoutStructure.addRootLayoutStructureItem();
+
+			LayoutStructureItem containerLayoutStructureItem =
+				layoutStructure.addContainerLayoutStructureItem(
+					rootLayoutStructureItem.getItemId(), 0);
+
+			LayoutStructureItem rowLayoutStructureItem =
+				layoutStructure.addRowLayoutStructureItem(
+					containerLayoutStructureItem.getItemId(), 0, 0);
+
 			for (int i = 0; i < fragmentEntryLinks.size(); i++) {
 				FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
 

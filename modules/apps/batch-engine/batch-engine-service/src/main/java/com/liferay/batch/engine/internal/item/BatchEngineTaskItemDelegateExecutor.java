@@ -16,6 +16,8 @@ package com.liferay.batch.engine.internal.item;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.batch.engine.pagination.Page;
+import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
@@ -29,9 +31,6 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.Closeable;
 import java.io.Serializable;
@@ -40,7 +39,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.framework.ServiceObjects;
@@ -178,25 +176,7 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 	private void _setContextFields(
 		BatchEngineTaskItemDelegate<Object> batchEngineTaskItemDelegate) {
 
-		batchEngineTaskItemDelegate.setContextAcceptLanguage(
-			new AcceptLanguage() {
-
-				@Override
-				public List<Locale> getLocales() {
-					return null;
-				}
-
-				@Override
-				public String getPreferredLanguageId() {
-					return _user.getLanguageId();
-				}
-
-				@Override
-				public Locale getPreferredLocale() {
-					return LocaleUtil.fromLanguageId(_user.getLanguageId());
-				}
-
-			});
+		batchEngineTaskItemDelegate.setLanguageId(_user.getLanguageId());
 		batchEngineTaskItemDelegate.setContextCompany(_company);
 		batchEngineTaskItemDelegate.setContextUser(_user);
 	}

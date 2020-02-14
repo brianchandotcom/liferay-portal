@@ -333,7 +333,7 @@ const ExperienceSelector = ({
 				id={selectId}
 				onBlur={handleDropdownButtonBlur}
 				onClick={handleDropdownButtonClick}
-				small={true}
+				small
 				type="button"
 			>
 				<span className="text-truncate">{selectedExperience.name}</span>

@@ -23,7 +23,7 @@ export const ContainerBackgroundColorConfiguration = ({
 	backgroundColor,
 	onValueChange
 }) => (
-	<ClayForm.Group small>
+	<ClayForm.Group>
 		<ColorPalette
 			onClear={() =>
 				onValueChange({

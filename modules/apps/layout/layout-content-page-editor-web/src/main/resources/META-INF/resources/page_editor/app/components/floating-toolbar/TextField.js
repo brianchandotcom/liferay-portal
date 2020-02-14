@@ -16,7 +16,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import React from 'react';
 
 export const TextField = ({field, onValueSelect}) => (
-	<ClayForm.Group small>
+	<ClayForm.Group>
 		<label htmlFor={field.name}>{field.label}</label>
 
 		<ClayInput

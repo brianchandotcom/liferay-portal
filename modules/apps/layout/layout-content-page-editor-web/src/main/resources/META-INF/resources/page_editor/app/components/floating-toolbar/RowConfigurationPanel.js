@@ -119,7 +119,7 @@ export const RowConfigurationPanel = ({item}) => {
 				/>
 			</ClayForm.Group>
 			{rowConfig.numberOfColumns > 1 && (
-				<ClayForm.Group small>
+				<ClayForm.Group>
 					<ClayCheckboxWithState
 						aria-label={Liferay.Language.get('columns-gutter')}
 						checked={rowConfig.gutters}

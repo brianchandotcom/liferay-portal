@@ -18,7 +18,7 @@ import React from 'react';
 import ColorPalette from '../../../common/components/ColorPalette';
 
 export const ColorPaletteField = ({field, onValueSelect, value}) => (
-	<ClayForm.Group small>
+	<ClayForm.Group>
 		<ColorPalette
 			label={field.label}
 			onColorSelect={(color, event) => {

@@ -29,7 +29,7 @@ export function ImageSelector({
 
 	return (
 		<>
-			<ClayForm.Group small>
+			<ClayForm.Group>
 				<label htmlFor="imageTitle">{label}</label>
 				<ClayInput
 					id="imageTitle"

@@ -108,7 +108,6 @@ const ExperienceItem = ({
 											setShowtoolTip(false)
 										}
 										ref={iconRef}
-										small="true"
 										symbol="lock"
 									/>
 
@@ -165,7 +164,7 @@ const ExperienceItem = ({
 						displayType="unstyled"
 						monospaced
 						onClick={handlePriorityIncrease}
-						small="true"
+						small
 						symbol="angle-up"
 						title={Liferay.Language.get('prioritize-experience')}
 						type="button"
@@ -177,7 +176,7 @@ const ExperienceItem = ({
 						displayType="unstyled"
 						monospaced
 						onClick={handlePriorityDecrease}
-						small="true"
+						small
 						symbol="angle-down"
 						title={Liferay.Language.get('deprioritize-experience')}
 						type="button"
@@ -188,7 +187,7 @@ const ExperienceItem = ({
 						displayType="unstyled"
 						monospaced
 						onClick={handleExperienceEdit}
-						small="true"
+						small
 						symbol="pencil"
 						title={Liferay.Language.get('edit-experience')}
 						type="button"
@@ -199,7 +198,7 @@ const ExperienceItem = ({
 						displayType="unstyled"
 						monospaced
 						onClick={handleExperienceDelete}
-						small="true"
+						small
 						symbol="times-circle"
 						title={Liferay.Language.get('delete-experience')}
 						type="button"

@@ -16,7 +16,7 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React from 'react';
 
 export const CheckboxField = ({field, onValueSelect, value}) => (
-	<ClayForm.Group small>
+	<ClayForm.Group>
 		<ClayCheckbox
 			aria-label={field.label}
 			checked={value}

@@ -198,7 +198,7 @@ export default function LinkPanel({item}) {
 				/>
 			)}
 			{(sourceType === SOURCE_TYPES.manual || href) && (
-				<ClayForm.Group small>
+				<ClayForm.Group>
 					<label htmlFor="floatingToolbarLinkHrefOption">
 						{Liferay.Language.get('url')}
 					</label>
@@ -210,6 +210,7 @@ export default function LinkPanel({item}) {
 							debounceUpdateRowConfig({href: event.target.value});
 						}}
 						readOnly={sourceType !== SOURCE_TYPES.manual}
+						sizing="sm"
 						type="text"
 						value={href || ''}
 					/>

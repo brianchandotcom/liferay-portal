@@ -14,7 +14,7 @@
 
 package com.liferay.depot.internal.security.permission.contributor;
 
-import com.liferay.depot.internal.constants.DepotRolesConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

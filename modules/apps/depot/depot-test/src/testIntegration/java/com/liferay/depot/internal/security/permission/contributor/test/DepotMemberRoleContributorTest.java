@@ -15,6 +15,7 @@
 package com.liferay.depot.internal.security.permission.contributor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.model.Role;
@@ -79,7 +80,8 @@ public class DepotMemberRoleContributorTest {
 				user.getUserId(), depotEntry.getGroupId());
 
 			Role role = _roleLocalService.getRole(
-				TestPropsValues.getCompanyId(), "Depot Member");
+				TestPropsValues.getCompanyId(),
+				DepotRolesConstants.DEPOT_MEMBER);
 
 			Assert.assertTrue(ArrayUtil.contains(roleIds, role.getRoleId()));
 		}

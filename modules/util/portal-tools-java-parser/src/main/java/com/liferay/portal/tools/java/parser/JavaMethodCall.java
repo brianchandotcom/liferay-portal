@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaMethodCall extends JavaExpression {
+public class JavaMethodCall extends BaseJavaExpression {
 
 	public JavaMethodCall(String methodName) {
 		_methodName = new JavaSimpleValue(methodName);

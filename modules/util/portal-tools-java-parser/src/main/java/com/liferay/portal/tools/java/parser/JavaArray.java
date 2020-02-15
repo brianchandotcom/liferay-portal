@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaArray extends JavaExpression {
+public class JavaArray extends BaseJavaExpression {
 
 	public void addValueJavaExpression(JavaExpression valueJavaExpression) {
 		_valueJavaExpressions.add(valueJavaExpression);

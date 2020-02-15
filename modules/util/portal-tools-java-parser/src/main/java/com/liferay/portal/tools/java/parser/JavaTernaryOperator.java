@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringBundler;
 /**
  * @author Hugo Huijser
  */
-public class JavaTernaryOperator extends JavaExpression {
+public class JavaTernaryOperator extends BaseJavaExpression {
 
 	public JavaTernaryOperator(
 		JavaExpression conditionJavaExpression,
@@ -29,6 +29,15 @@ public class JavaTernaryOperator extends JavaExpression {
 		_conditionJavaExpression = conditionJavaExpression;
 		_trueValueJavaExpression = trueValueJavaExpression;
 		_falseValueJavaExpression = falseValueJavaExpression;
+	}
+
+	@Override
+	public boolean hasSurroundingParentheses() {
+		if (getChainedJavaExpression() != null) {
+			return true;
+		}
+
+		return super.hasSurroundingParentheses();
 	}
 
 	@Override
@@ -47,15 +56,6 @@ public class JavaTernaryOperator extends JavaExpression {
 			sb, _falseValueJavaExpression, indent, "", suffix, maxLineLength);
 
 		return sb.toString();
-	}
-
-	@Override
-	protected boolean hasSurroundingParentheses() {
-		if (getChainedJavaExpression() != null) {
-			return true;
-		}
-
-		return super.hasSurroundingParentheses();
 	}
 
 	private final JavaExpression _conditionJavaExpression;

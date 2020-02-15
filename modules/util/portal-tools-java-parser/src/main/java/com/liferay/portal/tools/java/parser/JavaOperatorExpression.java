@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * @author Hugo Huijser
  */
-public class JavaOperatorExpression extends JavaExpression {
+public class JavaOperatorExpression extends BaseJavaExpression {
 
 	public JavaOperatorExpression(JavaOperator javaOperator) {
 		_javaOperator = javaOperator;
@@ -37,6 +37,15 @@ public class JavaOperatorExpression extends JavaExpression {
 
 	public JavaExpression getRightHandJavaExpression() {
 		return _rightHandJavaExpression;
+	}
+
+	@Override
+	public boolean hasSurroundingParentheses() {
+		if (getChainedJavaExpression() != null) {
+			return true;
+		}
+
+		return super.hasSurroundingParentheses();
 	}
 
 	public void setLeftHandJavaExpression(
@@ -173,15 +182,6 @@ public class JavaOperatorExpression extends JavaExpression {
 		}
 
 		return sb.toString();
-	}
-
-	@Override
-	protected boolean hasSurroundingParentheses() {
-		if (getChainedJavaExpression() != null) {
-			return true;
-		}
-
-		return super.hasSurroundingParentheses();
 	}
 
 	private boolean _equalsValueJavaExpression(

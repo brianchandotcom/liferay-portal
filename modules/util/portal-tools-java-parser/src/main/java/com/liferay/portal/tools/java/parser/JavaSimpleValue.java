@@ -21,7 +21,7 @@ import com.liferay.portal.tools.ToolsUtil;
 /**
  * @author Hugo Huijser
  */
-public class JavaSimpleValue extends JavaExpression {
+public class JavaSimpleValue extends BaseJavaExpression {
 
 	public JavaSimpleValue(String name) {
 		_name = name;

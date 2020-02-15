@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaMethodReference extends JavaExpression {
+public class JavaMethodReference extends BaseJavaExpression {
 
 	public JavaMethodReference(
 		String methodName, JavaExpression referenceJavaExpression,

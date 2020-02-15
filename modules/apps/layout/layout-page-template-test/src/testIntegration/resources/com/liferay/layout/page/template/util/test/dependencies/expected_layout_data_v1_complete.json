@@ -195,8 +195,7 @@
 				"ROW0-COLUMN1-UUID"
 			],
 			"config": {
-				"gutters": false,
-				"verticalAlign": "top"
+				"gutters": false
 			},
 			"itemId": "ROW0-UUID",
 			"parentId": "CONTAINER0-UUID",
@@ -232,8 +231,7 @@
 				"ROW1-COLUMN1-UUID"
 			],
 			"config": {
-				"gutters": true,
-				"verticalAlign": "top"
+				"gutters": true
 			},
 			"itemId": "ROW1-UUID",
 			"parentId": "CONTAINER1-UUID",
@@ -254,8 +252,7 @@
 				"ROW2-COLUMN0-UUID"
 			],
 			"config": {
-				"gutters": true,
-				"verticalAlign": "top"
+				"gutters": true
 			},
 			"itemId": "ROW2-UUID",
 			"parentId": "CONTAINER2-UUID",
@@ -276,8 +273,7 @@
 				"ROW3-COLUMN0-UUID"
 			],
 			"config": {
-				"gutters": true,
-				"verticalAlign": "top"
+				"gutters": true
 			},
 			"itemId": "ROW3-UUID",
 			"parentId": "CONTAINER3-UUID",

@@ -2223,11 +2223,11 @@ definition {
 
 		Navigator.closeWindow();
 
-		AppBuilderAdmin.clickApp(appName = "Test App A");
+		AppBuilderAdmin.openItem(itemName = "Test App A");
 
 		AppBuilderAdmin.editAppName(appTitle = "Changed Name");
 
-		AppBuilderAdmin.clickApp(appName = "Changed Name");
+		AppBuilderAdmin.openItem(itemName = "Changed Name");
 
 		App.toggleUndeploy(deployOption = "Widget");
 
@@ -2245,7 +2245,7 @@ definition {
 
 		Navigator.closeWindow();
 
-		AppBuilderAdmin.clickApp(appName = "Changed Name");
+		AppBuilderAdmin.openItem(itemName = "Changed Name");
 
 		App.toggleUndeploy(deployOption = "Standalone");
 
@@ -2272,7 +2272,7 @@ definition {
 
 		AppBuilderAdmin.switchTab(tabName = "Apps");
 
-		AppBuilderAdmin.clickApp(appName = "Changed Name");
+		AppBuilderAdmin.openItem(itemName = "Changed Name");
 
 		App.toggleUndeploy(deployOption = "Product Menu");
 
@@ -2305,7 +2305,7 @@ definition {
 
 		Navigator.closeWindow();
 
-		AppBuilderAdmin.clickApp(appName = "Test App B");
+		AppBuilderAdmin.openItem(itemName = "Test App B");
 
 		App.selectFormView(formViewName = "Form View Title Two");
 
@@ -2313,7 +2313,7 @@ definition {
 
 		App.saveApp();
 
-		AppBuilderAdmin.clickApp(appName = "Test App C");
+		AppBuilderAdmin.openItem(itemName = "Test App C");
 
 		App.selectFormView(formViewName = "Form View Title");
 
@@ -2321,7 +2321,7 @@ definition {
 
 		App.saveApp();
 
-		AppBuilderAdmin.clickApp(appName = "Test App C");
+		AppBuilderAdmin.openItem(itemName = "Test App C");
 
 		App.selectFormView(formViewName = "Form View Title Two");
 

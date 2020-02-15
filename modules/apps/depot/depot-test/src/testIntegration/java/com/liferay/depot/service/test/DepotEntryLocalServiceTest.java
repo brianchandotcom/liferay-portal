@@ -15,6 +15,7 @@
 package com.liferay.depot.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -83,8 +84,8 @@ public class DepotEntryLocalServiceTest {
 		Assert.assertFalse(group.isSite());
 		Assert.assertTrue(
 			_userGroupRoleLocalService.hasUserGroupRole(
-				depotEntry.getUserId(), group.getGroupId(), "Depot Owner",
-				true));
+				depotEntry.getUserId(), group.getGroupId(),
+				DepotRolesConstants.DEPOT_OWNER, true));
 	}
 
 	@Test(expected = DuplicateGroupException.class)

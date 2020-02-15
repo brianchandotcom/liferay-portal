@@ -15,6 +15,7 @@
 package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,8 +83,9 @@ public class DepotAdminRolesDisplayContext {
 
 				String roleName = role.getName();
 
-				if (roleName.equals("Depot Administrator") ||
-					roleName.equals("Depot Owner")) {
+				if (Objects.equals(
+						roleName, DepotRolesConstants.DEPOT_ADMINISTRATOR) ||
+					Objects.equals(roleName, DepotRolesConstants.DEPOT_OWNER)) {
 
 					return false;
 				}
@@ -132,9 +134,9 @@ public class DepotAdminRolesDisplayContext {
 
 			Role role = userGroupRole.getRole();
 
-			String roleName = role.getName();
+			if (Objects.equals(
+					role.getName(), DepotRolesConstants.DEPOT_MEMBER)) {
 
-			if (roleName.equals("Depot Member")) {
 				itr.remove();
 			}
 		}

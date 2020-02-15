@@ -235,6 +235,9 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 			return;
 		}
 
+		Map<String, Collection<ConfigurationModel>> configurationModelsMap =
+			new ConcurrentHashMap<>();
+
 		if (_clusterMasterExecutor.isMaster()) {
 			Bundle[] bundles = _bundleContext.getBundles();
 
@@ -253,7 +256,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 				configurationModelsList.addAll(configurationModels.values());
 
-				_configurationModelsMap.put(
+				configurationModelsMap.put(
 					bundle.getSymbolicName(), configurationModels.values());
 			}
 
@@ -264,7 +267,8 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 		_bundleTracker = new BundleTracker<>(
 			_bundleContext, Bundle.ACTIVE,
-			new ConfigurationModelsBundleTrackerCustomizer());
+			new ConfigurationModelsBundleTrackerCustomizer(
+				configurationModelsMap));
 
 		_bundleTracker.open();
 	}
@@ -289,9 +293,6 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
-
-	private final Map<String, Collection<ConfigurationModel>>
-		_configurationModelsMap = new ConcurrentHashMap<>();
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
@@ -374,6 +375,16 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 			_commit(_configurationModelIndexer);
 		}
+
+		private ConfigurationModelsBundleTrackerCustomizer(
+			Map<String, Collection<ConfigurationModel>>
+				configurationModelsMap) {
+
+			_configurationModelsMap = configurationModelsMap;
+		}
+
+		private final Map<String, Collection<ConfigurationModel>>
+			_configurationModelsMap;
 
 	}
 

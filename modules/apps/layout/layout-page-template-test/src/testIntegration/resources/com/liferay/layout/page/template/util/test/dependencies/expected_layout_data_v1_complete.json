@@ -281,6 +281,7 @@
 		}
 	},
 	"rootItems": {
+		"dropZone": "",
 		"main": "MAIN-UUID"
 	},
 	"version": 1

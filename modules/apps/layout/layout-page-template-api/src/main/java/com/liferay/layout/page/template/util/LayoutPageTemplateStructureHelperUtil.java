@@ -49,7 +49,8 @@ public class LayoutPageTemplateStructureHelperUtil {
 
 		LayoutStructureItem rowLayoutStructureItem =
 			layoutStructure.addRowLayoutStructureItem(
-				containerLayoutStructureItem.getItemId(), 0, 0);
+				containerLayoutStructureItem.getItemId(), 0,
+				fragmentEntryLinks.size());
 
 		if (fragmentEntryLinks.isEmpty() &&
 			(type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {

@@ -190,6 +190,54 @@ public class SpiraProject extends BaseSpiraArtifact {
 			this, new SearchParameter("Path", testCasePath));
 	}
 
+	public SpiraTestSetFolder getSpiraTestSetFolderByID(int testSetFolderID)
+		throws IOException {
+
+		List<SpiraTestSetFolder> spiraTestSetFolders =
+			SpiraTestSetFolder.getSpiraTestSetFolders(
+				this, new SearchParameter("TestSetFolderId", testSetFolderID));
+
+		if (spiraTestSetFolders.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test set folder ID " + testSetFolderID);
+		}
+
+		if (spiraTestSetFolders.isEmpty()) {
+			throw new RuntimeException(
+				"Missing test set folder ID " + testSetFolderID);
+		}
+
+		return spiraTestSetFolders.get(0);
+	}
+
+	public SpiraTestSetFolder getSpiraTestSetFolderByPath(
+			String testSetFolderPath)
+		throws IOException {
+
+		List<SpiraTestSetFolder> spiraTestSetFolders =
+			getSpiraTestSetFoldersByPath(testSetFolderPath);
+
+		if (spiraTestSetFolders.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test set folder path " + testSetFolderPath);
+		}
+
+		if (spiraTestSetFolders.isEmpty()) {
+			throw new RuntimeException(
+				"Missing test set folder path " + testSetFolderPath);
+		}
+
+		return spiraTestSetFolders.get(0);
+	}
+
+	public List<SpiraTestSetFolder> getSpiraTestSetFoldersByPath(
+			String testCaseSetPath)
+		throws IOException {
+
+		return SpiraTestSetFolder.getSpiraTestSetFolders(
+			this, new SearchParameter("Path", testCaseSetPath));
+	}
+
 	protected SpiraRelease getSpiraReleaseByIndentLevel(String indentLevel)
 		throws IOException {
 
@@ -224,6 +272,25 @@ public class SpiraProject extends BaseSpiraArtifact {
 		}
 
 		return spiraTestCaseFolders.get(0);
+	}
+
+	protected SpiraTestSetFolder getSpiraTestSetFolderByIndentLevel(
+			String indentLevel)
+		throws IOException {
+
+		List<SpiraTestSetFolder> spiraTestSetFolders =
+			SpiraTestSetFolder.getSpiraTestSetFolders(
+				this, new SearchParameter("IndentLevel", indentLevel));
+
+		if (spiraTestSetFolders.size() > 1) {
+			throw new RuntimeException("Duplicate indent level " + indentLevel);
+		}
+
+		if (spiraTestSetFolders.isEmpty()) {
+			throw new RuntimeException("Missing indent level " + indentLevel);
+		}
+
+		return spiraTestSetFolders.get(0);
 	}
 
 	private SpiraProject(JSONObject jsonObject) {

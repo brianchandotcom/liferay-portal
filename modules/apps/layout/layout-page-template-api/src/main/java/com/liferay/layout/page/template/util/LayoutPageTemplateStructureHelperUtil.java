@@ -71,7 +71,8 @@ public class LayoutPageTemplateStructureHelperUtil {
 
 		LayoutStructureItem rowLayoutStructureItem =
 			layoutStructure.addRowLayoutStructureItem(
-				containerLayoutStructureItem.getItemId(), 0, 0);
+				containerLayoutStructureItem.getItemId(), 0,
+				fragmentEntryLinks.size());
 
 		for (int i = 0; i < fragmentEntryLinks.size(); i++) {
 			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);

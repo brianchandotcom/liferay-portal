@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/form": "3.3.0",
+		"@clayui/form": "3.5.0",
 		"clay-button": "2.20.2",
 		"clay-checkbox": "2.20.2",
 		"clay-dropdown": "2.20.2",

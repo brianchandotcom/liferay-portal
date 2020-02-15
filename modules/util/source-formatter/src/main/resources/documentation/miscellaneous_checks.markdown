@@ -31,7 +31,6 @@ BNDStylingCheck | .bnd | |
 BNDSuiteCheck | .bnd | |
 [BNDWebContextPathCheck](checks/bnd_web_context_path_check.markdown#bndwebcontextpathcheck) | .bnd | |
 BNDWhitespaceCheck | .bnd | |
-[BuilderCheck](checks/builder_check.markdown#buildercheck) | .java | |
 CDNCheck | | |
 CQLKeywordCheck | .cql | |
 CSSCommentsCheck | .css or .scss | |
@@ -251,6 +250,7 @@ LocalPatternCheck | .java | |
 [LocalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalVariableName) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that local, non-final variable names conform to a specified pattern. |
 LocaleUtilCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LogMessageCheck | .java | |
+MapBuilderCheck | .java | |
 [MapIterationCheck](checks/map_iteration_check.markdown#mapiterationcheck) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 MarkdownFileExtensionCheck | .markdown or .md | |
 MarkdownSourceFormatterDocumentationCheck | .markdown or .md | |

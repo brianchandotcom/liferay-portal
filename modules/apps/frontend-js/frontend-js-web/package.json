@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.1.0",
-		"@clayui/form": "3.3.0",
-		"@clayui/icon": "3.0.2",
-		"@clayui/modal": "3.1.4",
+		"@clayui/alert": "3.2.0",
+		"@clayui/form": "3.5.0",
+		"@clayui/icon": "3.0.3",
+		"@clayui/modal": "3.2.0",
 		"clay": "2.18.1",
 		"clay-alert": "2.20.2",
 		"liferay-amd-loader": "4.2.0",

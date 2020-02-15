@@ -13,7 +13,6 @@ AssertEqualsCheck | Miscellaneous | |
 AttributeOrderCheck | Miscellaneous | |
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/config_blocks.html#AvoidNestedBlocks) | Miscellaneous | Finds nested blocks (blocks that are used freely in the code). |
 [AvoidStarImportCheck](https://checkstyle.sourceforge.io/config_imports.html#AvoidStarImport) | Miscellaneous | Checks that there are no import statements that use the * notation. |
-[BuilderCheck](checks/builder_check.markdown#buildercheck) | Miscellaneous | |
 CamelCaseNameCheck | Miscellaneous | |
 [ChainingCheck](checks/chaining_check.markdown#chainingcheck) | Miscellaneous | |
 CompatClassImportsCheck | Miscellaneous | |
@@ -150,6 +149,7 @@ LocalPatternCheck | Miscellaneous | |
 [LocalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalVariableName) | Miscellaneous | Checks that local, non-final variable names conform to a specified pattern. |
 LocaleUtilCheck | Miscellaneous | |
 LogMessageCheck | Miscellaneous | |
+MapBuilderCheck | Miscellaneous | |
 [MapIterationCheck](checks/map_iteration_check.markdown#mapiterationcheck) | Miscellaneous | |
 [MemberNameCheck](https://checkstyle.sourceforge.io/config_naming.html#MemberName) | Miscellaneous | Checks that instance variable names conform to a specified pattern. |
 MethodCallsOrderCheck | Miscellaneous | |

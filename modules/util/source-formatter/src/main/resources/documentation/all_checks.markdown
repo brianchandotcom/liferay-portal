@@ -32,7 +32,6 @@ BNDStylingCheck | Miscellaneous | .bnd | |
 BNDSuiteCheck | Miscellaneous | .bnd | |
 [BNDWebContextPathCheck](checks/bnd_web_context_path_check.markdown#bndwebcontextpathcheck) | Miscellaneous | .bnd | |
 BNDWhitespaceCheck | Miscellaneous | .bnd | |
-[BuilderCheck](checks/builder_check.markdown#buildercheck) | Miscellaneous | .java | |
 CDNCheck | Miscellaneous | | |
 CQLKeywordCheck | Miscellaneous | .cql | |
 CSSCommentsCheck | Miscellaneous | .css or .scss | |
@@ -255,6 +254,7 @@ LocalPatternCheck | Miscellaneous | .java | |
 [LocalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalVariableName) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that local, non-final variable names conform to a specified pattern. |
 LocaleUtilCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LogMessageCheck | Miscellaneous | .java | |
+MapBuilderCheck | Miscellaneous | .java | |
 [MapIterationCheck](checks/map_iteration_check.markdown#mapiterationcheck) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 MarkdownFileExtensionCheck | Miscellaneous | .markdown or .md | |
 MarkdownSourceFormatterDocumentationCheck | Miscellaneous | .markdown or .md | |

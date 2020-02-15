@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.internal.security.permissions.contributor.test;
+package com.liferay.depot.internal.security.permission.contributor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;

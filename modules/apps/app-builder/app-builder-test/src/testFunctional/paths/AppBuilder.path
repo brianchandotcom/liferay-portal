@@ -129,11 +129,6 @@
 </tr>
 
 <!--APP_CREATION_SCREEN-->
-<tr>
-	<td>APP_NAME</td>
-	<td>//a[contains(text(),'${key_itemName}')]</td>
-	<td></td>
-</tr>
 
 <tr>
 	<td>DEPLOY_APP_TOGGLE</td>

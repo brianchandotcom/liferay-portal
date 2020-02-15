@@ -25,6 +25,7 @@
 			],
 			"config": {
 				"backgroundColorCssClass": "success",
+				"backgroundImage": {},
 				"paddingBottom": 3,
 				"paddingHorizontal": 3,
 				"paddingTop": 3,
@@ -39,6 +40,7 @@
 				"ROW2-UUID"
 			],
 			"config": {
+				"backgroundColorCssClass": "",
 				"backgroundImage": {
 					"title": "pexels-photo-255379.jpeg",
 					"url": "/documents/20118/0/pexels-photo-255379.jpeg/cfbc6f74-db17-9786-6102-d94835d8ef23?version=1.0&t=1573045173699&download=true"
@@ -57,6 +59,7 @@
 				"ROW3-UUID"
 			],
 			"config": {
+				"backgroundColorCssClass": "",
 				"backgroundImage": {
 					"classNameId": "30601",
 					"classPK": "38526",

@@ -45,11 +45,11 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 
 	public AdminSubscriptionSender(
 		KBArticle kbArticle,
-		ModelResourcePermission<KBArticle> modelResourcePermission,
+		ModelResourcePermission<KBArticle> kbArticleModelResourcePermission,
 		ServiceContext serviceContext) {
 
 		_kbArticle = kbArticle;
-		_kbArticleModelResourcePermission = modelResourcePermission;
+		_kbArticleModelResourcePermission = kbArticleModelResourcePermission;
 		_serviceContext = serviceContext;
 	}
 

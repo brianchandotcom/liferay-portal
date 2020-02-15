@@ -58,10 +58,10 @@ public class CalendarBookingAssetRenderer
 
 	public CalendarBookingAssetRenderer(
 		CalendarBooking calendarBooking,
-		ModelResourcePermission<Calendar> modelResourcePermission) {
+		ModelResourcePermission<Calendar> calendarModelResourcePermission) {
 
 		_calendarBooking = calendarBooking;
-		_calendarModelResourcePermission = modelResourcePermission;
+		_calendarModelResourcePermission = calendarModelResourcePermission;
 	}
 
 	@Override

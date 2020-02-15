@@ -29,7 +29,7 @@ public class JSConfigGeneratorModule {
 		List<String> dependencies, String contextPath) {
 
 		_jsConfigGeneratorPackage = jsConfigGeneratorPackage;
-		_id = moduleId;
+		_moduleId = moduleId;
 		_dependencies = dependencies;
 
 		int index = moduleId.indexOf(StringPool.SLASH);
@@ -55,7 +55,7 @@ public class JSConfigGeneratorModule {
 	 * @return
 	 */
 	public String getId() {
-		return _id;
+		return _moduleId;
 	}
 
 	public JSConfigGeneratorPackage getJSConfigGeneratorPackage() {
@@ -92,8 +92,8 @@ public class JSConfigGeneratorModule {
 	}
 
 	private final List<String> _dependencies;
-	private final String _id;
 	private final JSConfigGeneratorPackage _jsConfigGeneratorPackage;
+	private final String _moduleId;
 	private final String _name;
 	private final String _url;
 

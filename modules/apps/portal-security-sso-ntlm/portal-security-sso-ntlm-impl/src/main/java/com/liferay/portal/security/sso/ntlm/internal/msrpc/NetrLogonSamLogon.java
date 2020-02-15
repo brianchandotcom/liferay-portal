@@ -33,10 +33,10 @@ public class NetrLogonSamLogon extends DcerpcMessage {
 
 		_logonServer = logonServer;
 		_computerName = computerName;
-		_authenticator = netlogonAuthenticator;
-		_returnAuthenticator = returnNetlogonAuthenticator;
-		_logonInformation = netlogonNetworkInfo;
-		_validationInformation = netlogonValidationSamInfo;
+		_netlogonAuthenticator = netlogonAuthenticator;
+		_returnNetlogonAuthenticator = returnNetlogonAuthenticator;
+		_netlogonNetworkInfo = netlogonNetworkInfo;
+		_netlogonValidationSamInfo = netlogonValidationSamInfo;
 
 		_logonLevel = (short)logonLevel;
 		_validationLevel = (short)validationLevel;
@@ -51,7 +51,7 @@ public class NetrLogonSamLogon extends DcerpcMessage {
 		int returnAuthenticator = ndrBuffer.dec_ndr_long();
 
 		if (returnAuthenticator > 0) {
-			_returnAuthenticator.decode(ndrBuffer);
+			_returnNetlogonAuthenticator.decode(ndrBuffer);
 		}
 
 		ndrBuffer.dec_ndr_short();
@@ -61,7 +61,7 @@ public class NetrLogonSamLogon extends DcerpcMessage {
 		if (validationInformation > 0) {
 			ndrBuffer = ndrBuffer.deferred;
 
-			_validationInformation.decode(ndrBuffer);
+			_netlogonValidationSamInfo.decode(ndrBuffer);
 		}
 
 		_authoritative = (byte)ndrBuffer.dec_ndr_small();
@@ -76,26 +76,26 @@ public class NetrLogonSamLogon extends DcerpcMessage {
 		ndrBuffer.enc_ndr_referent(_computerName, 1);
 		ndrBuffer.enc_ndr_string(_computerName);
 
-		ndrBuffer.enc_ndr_referent(_authenticator, 1);
+		ndrBuffer.enc_ndr_referent(_netlogonAuthenticator, 1);
 
-		_authenticator.encode(ndrBuffer);
+		_netlogonAuthenticator.encode(ndrBuffer);
 
-		ndrBuffer.enc_ndr_referent(_returnAuthenticator, 1);
+		ndrBuffer.enc_ndr_referent(_returnNetlogonAuthenticator, 1);
 
-		_returnAuthenticator.encode(ndrBuffer);
+		_returnNetlogonAuthenticator.encode(ndrBuffer);
 
 		ndrBuffer.enc_ndr_short(_logonLevel);
 		ndrBuffer.enc_ndr_short(_logonLevel);
 
-		ndrBuffer.enc_ndr_referent(_logonInformation, 1);
+		ndrBuffer.enc_ndr_referent(_netlogonNetworkInfo, 1);
 
-		_logonInformation.encode(ndrBuffer);
+		_netlogonNetworkInfo.encode(ndrBuffer);
 
 		ndrBuffer.enc_ndr_short(_validationLevel);
 	}
 
 	public NetlogonValidationSamInfo getNetlogonValidationSamInfo() {
-		return _validationInformation;
+		return _netlogonValidationSamInfo;
 	}
 
 	@Override
@@ -107,18 +107,17 @@ public class NetrLogonSamLogon extends DcerpcMessage {
 		return _status;
 	}
 
-	private final NetlogonAuthenticator _authenticator;
-
 	@SuppressWarnings("unused")
 	private byte _authoritative;
 
 	private final String _computerName;
-	private final NetlogonNetworkInfo _logonInformation;
 	private final short _logonLevel;
 	private final String _logonServer;
-	private final NetlogonAuthenticator _returnAuthenticator;
+	private final NetlogonAuthenticator _netlogonAuthenticator;
+	private final NetlogonNetworkInfo _netlogonNetworkInfo;
+	private final NetlogonValidationSamInfo _netlogonValidationSamInfo;
+	private final NetlogonAuthenticator _returnNetlogonAuthenticator;
 	private int _status;
-	private final NetlogonValidationSamInfo _validationInformation;
 	private final short _validationLevel;
 
 }

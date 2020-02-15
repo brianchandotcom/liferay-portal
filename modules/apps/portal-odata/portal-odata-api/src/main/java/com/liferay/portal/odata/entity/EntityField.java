@@ -74,7 +74,7 @@ public class EntityField {
 
 		_name = name;
 		_type = type;
-		_sortableNameFunction = sortableFieldNameFunction;
+		_sortableFieldNameFunction = sortableFieldNameFunction;
 		_filterableFieldNameFunction = filterableFieldNameFunction;
 		_filterableFieldValueFunction = filterableFieldValueFunction;
 	}
@@ -119,7 +119,7 @@ public class EntityField {
 	 * @review
 	 */
 	public String getSortableName(Locale locale) {
-		return _sortableNameFunction.apply(locale);
+		return _sortableFieldNameFunction.apply(locale);
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class EntityField {
 	private final Function<Locale, String> _filterableFieldNameFunction;
 	private final Function<Object, String> _filterableFieldValueFunction;
 	private final String _name;
-	private final Function<Locale, String> _sortableNameFunction;
+	private final Function<Locale, String> _sortableFieldNameFunction;
 	private final Type _type;
 
 }

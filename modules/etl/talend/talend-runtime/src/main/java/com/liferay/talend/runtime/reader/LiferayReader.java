@@ -56,7 +56,7 @@ public class LiferayReader implements Reader<IndexedRecord> {
 		LiferaySource liferaySource,
 		LiferayInputProperties liferayInputProperties) {
 
-		_currentSource = liferaySource;
+		_liferaySource = liferaySource;
 
 		_liferayInputProperties = liferayInputProperties;
 
@@ -147,7 +147,7 @@ public class LiferayReader implements Reader<IndexedRecord> {
 
 	@Override
 	public Source getCurrentSource() {
-		return _currentSource;
+		return _liferaySource;
 	}
 
 	@Override
@@ -259,7 +259,6 @@ public class LiferayReader implements Reader<IndexedRecord> {
 
 	private transient int _currentItemIndex;
 	private int _currentPage;
-	private final Source _currentSource;
 	private Instant _currentTimestamp = Instant.now();
 	private int _dataCount;
 	private boolean _hasMore;
@@ -268,6 +267,7 @@ public class LiferayReader implements Reader<IndexedRecord> {
 		_jsonObjectIndexedRecordConverter;
 	private int _lastPage;
 	private final LiferayInputProperties _liferayInputProperties;
+	private final Source _liferaySource;
 	private boolean _started;
 
 }

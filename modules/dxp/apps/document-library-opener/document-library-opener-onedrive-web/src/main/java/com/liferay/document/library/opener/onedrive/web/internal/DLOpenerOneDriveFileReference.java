@@ -59,11 +59,11 @@ public class DLOpenerOneDriveFileReference<E extends PortalException> {
 	 */
 	public DLOpenerOneDriveFileReference(
 		long fileEntryId, UnsafeSupplier<String, E> titleUnsafeSupplier,
-		UnsafeSupplier<File, E> fileSupplier, long backgroundTaskId) {
+		UnsafeSupplier<File, E> fileUnsafeSupplier, long backgroundTaskId) {
 
 		_fileEntryId = fileEntryId;
 		_titleUnsafeSupplier = titleUnsafeSupplier;
-		_fileUnsafeSupplier = fileSupplier;
+		_fileUnsafeSupplier = fileUnsafeSupplier;
 		_backgroundTaskId = backgroundTaskId;
 	}
 

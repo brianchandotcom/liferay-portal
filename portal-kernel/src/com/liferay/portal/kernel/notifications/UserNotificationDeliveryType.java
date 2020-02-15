@@ -22,9 +22,9 @@ public class UserNotificationDeliveryType {
 	public UserNotificationDeliveryType(
 		String name, int type, boolean defaultValue, boolean modifiable) {
 
-		_default = defaultValue;
 		_name = name;
 		_type = type;
+		_defaultValue = defaultValue;
 		_modifiable = modifiable;
 	}
 
@@ -37,14 +37,14 @@ public class UserNotificationDeliveryType {
 	}
 
 	public boolean isDefault() {
-		return _default;
+		return _defaultValue;
 	}
 
 	public boolean isModifiable() {
 		return _modifiable;
 	}
 
-	private final boolean _default;
+	private final boolean _defaultValue;
 	private final boolean _modifiable;
 	private final String _name;
 	private final int _type;

@@ -231,13 +231,14 @@ public class HttpTunnelExtender
 			ServiceRegistration<Filter> authVerifierFilterServiceRegistration,
 			ServiceRegistration<ServletContextHelper>
 				servletContextHelperServiceRegistration,
-			ServiceRegistration<Servlet> tunneServletServiceRegistration) {
+			ServiceRegistration<Servlet> tunnelServletServiceRegistration) {
 
 			_authVerifierFilterServiceRegistration =
 				authVerifierFilterServiceRegistration;
 			_servletContextHelperServiceRegistration =
 				servletContextHelperServiceRegistration;
-			_tunnelServletServiceRegistration = tunneServletServiceRegistration;
+			_tunnelServletServiceRegistration =
+				tunnelServletServiceRegistration;
 		}
 
 		private final ServiceRegistration<Filter>

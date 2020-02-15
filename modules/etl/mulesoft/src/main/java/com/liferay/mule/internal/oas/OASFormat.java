@@ -39,7 +39,7 @@ public enum OASFormat {
 				continue;
 			}
 
-			if ((openAPIFormatDefinition == null) && oasFormat._default) {
+			if ((openAPIFormatDefinition == null) && oasFormat._defaultFormat) {
 				return oasFormat;
 			}
 
@@ -50,7 +50,7 @@ public enum OASFormat {
 				return oasFormat;
 			}
 
-			if (oasFormat._default) {
+			if (oasFormat._defaultFormat) {
 				defaultOASFormat = oasFormat;
 			}
 		}
@@ -62,12 +62,12 @@ public enum OASFormat {
 		String openAPIFormatDefinition, OASType oasType,
 		boolean defaultFormat) {
 
-		_default = defaultFormat;
 		_openAPIFormatDefinition = openAPIFormatDefinition;
 		_oasType = oasType;
+		_defaultFormat = defaultFormat;
 	}
 
-	private final boolean _default;
+	private final boolean _defaultFormat;
 	private final OASType _oasType;
 	private final String _openAPIFormatDefinition;
 

@@ -71,15 +71,14 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 	protected class TableUpdater implements Callable<Void> {
 
 		public TableUpdater(
-			String tableName, String foreignTableName,
-			String foreignColumnName) {
+			String tableName, String foreignTableName, String columnName) {
 
 			_tableName = tableName;
 
-			_columnName = foreignColumnName;
+			_columnName = columnName;
 
 			_foreignNamesArray = new String[][] {
-				{foreignTableName, foreignColumnName}
+				{foreignTableName, columnName}
 			};
 		}
 

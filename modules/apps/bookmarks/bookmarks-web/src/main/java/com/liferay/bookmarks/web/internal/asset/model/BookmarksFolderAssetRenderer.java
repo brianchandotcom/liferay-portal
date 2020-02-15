@@ -54,11 +54,13 @@ public class BookmarksFolderAssetRenderer
 
 	public BookmarksFolderAssetRenderer(
 		BookmarksFolder folder, TrashHelper trashHelper,
-		ModelResourcePermission<BookmarksFolder> modelResourcePermission) {
+		ModelResourcePermission<BookmarksFolder>
+			bookmarksFolderModelResourcePermission) {
 
 		_folder = folder;
 		_trashHelper = trashHelper;
-		_bookmarksFolderModelResourcePermission = modelResourcePermission;
+		_bookmarksFolderModelResourcePermission =
+			bookmarksFolderModelResourcePermission;
 	}
 
 	@Override

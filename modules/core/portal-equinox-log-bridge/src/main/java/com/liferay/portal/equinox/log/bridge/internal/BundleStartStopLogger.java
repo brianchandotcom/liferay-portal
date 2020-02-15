@@ -28,8 +28,8 @@ import org.slf4j.LoggerFactory;
  */
 public class BundleStartStopLogger implements SynchronousBundleListener {
 
-	public BundleStartStopLogger(AtomicBoolean atomicBoolean) {
-		_portalStarted = atomicBoolean;
+	public BundleStartStopLogger(AtomicBoolean portalStarted) {
+		_portalStarted = portalStarted;
 	}
 
 	@Override

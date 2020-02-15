@@ -105,7 +105,7 @@ public class Entity implements Comparable<Entity> {
 		String humanName, String table, String alias, boolean uuid,
 		boolean uuidAccessor, boolean externalReferenceCode,
 		boolean localService, boolean remoteService, boolean persistence,
-		String persistenceClass, String finderClassName, String dataSource,
+		String persistenceClassName, String finderClassName, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
 		boolean changeTrackingEnabled, boolean dynamicUpdateEnabled,
 		boolean jsonEnabled, boolean mvccEnabled, boolean trashEnabled,
@@ -133,7 +133,7 @@ public class Entity implements Comparable<Entity> {
 		_localService = localService;
 		_remoteService = remoteService;
 		_persistence = persistence;
-		_persistenceClassName = persistenceClass;
+		_persistenceClassName = persistenceClassName;
 		_finderClassName = finderClassName;
 		_changeTrackingEnabled = changeTrackingEnabled;
 		_dynamicUpdateEnabled = dynamicUpdateEnabled;

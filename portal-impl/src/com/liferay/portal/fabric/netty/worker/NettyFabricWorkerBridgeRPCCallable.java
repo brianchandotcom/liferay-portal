@@ -34,11 +34,11 @@ public class NettyFabricWorkerBridgeRPCCallable<T extends Serializable>
 	implements RPCCallable<T> {
 
 	public NettyFabricWorkerBridgeRPCCallable(
-		long id, ProcessCallable<T> processCallable, long rpcRelayTime) {
+		long id, ProcessCallable<T> processCallable, long rpcRelayTimeout) {
 
 		_id = id;
 		_processCallable = processCallable;
-		_rpcRelayTimeout = rpcRelayTime;
+		_rpcRelayTimeout = rpcRelayTimeout;
 	}
 
 	@Override

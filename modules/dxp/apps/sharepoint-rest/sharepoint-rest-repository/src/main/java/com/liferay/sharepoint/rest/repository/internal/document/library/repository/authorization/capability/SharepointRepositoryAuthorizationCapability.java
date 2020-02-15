@@ -45,12 +45,13 @@ public class SharepointRepositoryAuthorizationCapability
 
 	public SharepointRepositoryAuthorizationCapability(
 		TokenStore tokenStore,
-		SharepointRepositoryConfiguration sharepointRepositoryConfiguration,
+		SharepointRepositoryConfiguration
+			sharepointRepositoryOAuth2Configuration,
 		SharepointRepositoryTokenBroker sharepointOAuth2AuthorizationServer) {
 
 		_tokenStore = tokenStore;
 		_sharepointRepositoryOAuth2Configuration =
-			sharepointRepositoryConfiguration;
+			sharepointRepositoryOAuth2Configuration;
 		_sharepointOAuth2AuthorizationServer =
 			sharepointOAuth2AuthorizationServer;
 	}

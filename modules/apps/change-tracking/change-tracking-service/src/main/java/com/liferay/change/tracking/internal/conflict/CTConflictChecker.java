@@ -58,7 +58,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		_ctService = ctService;
 		_serviceTrackerMap = serviceTrackerMap;
-		_sourceCollectionId = sourceCTCollectionId;
+		_sourceCTCollectionId = sourceCTCollectionId;
 		_targetCTCollectionId = targetCTCollectionId;
 	}
 
@@ -114,7 +114,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		String constraintConflictsSQL = CTRowUtil.getConstraintConflictsSQL(
 			ctPersistence.getTableName(), primaryKeyName, columnNames,
-			_sourceCollectionId, _targetCTCollectionId, true);
+			_sourceCTCollectionId, _targetCTCollectionId, true);
 
 		List<Map.Entry<Long, Long>> nextPrimaryKeys =
 			_getConflictingPrimaryKeys(connection, constraintConflictsSQL);
@@ -242,7 +242,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 	private final Set<Long> _ignorablePrimaryKeys = new HashSet<>();
 	private final ServiceTrackerMap<ConstraintResolverKey, ConstraintResolver>
 		_serviceTrackerMap;
-	private final long _sourceCollectionId;
+	private final long _sourceCTCollectionId;
 	private final long _targetCTCollectionId;
 
 }

@@ -128,9 +128,9 @@ public abstract class BaseChannelImpl implements Channel {
 		channelListener.channelListenerRemoved(_userId);
 	}
 
-	protected BaseChannelImpl(long companyId, long usedId) {
+	protected BaseChannelImpl(long companyId, long userId) {
 		_companyId = companyId;
-		_userId = usedId;
+		_userId = userId;
 	}
 
 	protected abstract void doCleanUp() throws Exception;

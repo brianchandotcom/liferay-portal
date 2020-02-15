@@ -25,10 +25,10 @@ import com.liferay.portal.search.query.Query;
 public class FilterAggregationImpl
 	extends BaseAggregation implements FilterAggregation {
 
-	public FilterAggregationImpl(String name, Query query) {
+	public FilterAggregationImpl(String name, Query filterQuery) {
 		super(name);
 
-		_filterQuery = query;
+		_filterQuery = filterQuery;
 	}
 
 	@Override

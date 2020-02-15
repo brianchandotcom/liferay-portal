@@ -108,12 +108,10 @@ public class RESTBuilder {
 		}
 	}
 
-	public RESTBuilder(File copyrightFile, File restConfigDir)
-		throws Exception {
-
+	public RESTBuilder(File copyrightFile, File configDir) throws Exception {
 		_copyrightFile = copyrightFile;
 
-		_configDir = restConfigDir;
+		_configDir = configDir;
 
 		File configFile = new File(_configDir, "rest-config.yaml");
 

@@ -34,9 +34,9 @@ import java.util.List;
 public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 
 	public DLFileEntryDDMFormValuesReader(
-		FileEntry dlFileEntry, FileVersion fileVersion) {
+		FileEntry fileEntry, FileVersion fileVersion) {
 
-		_fileEntry = dlFileEntry;
+		_fileEntry = fileEntry;
 		_fileVersion = fileVersion;
 	}
 

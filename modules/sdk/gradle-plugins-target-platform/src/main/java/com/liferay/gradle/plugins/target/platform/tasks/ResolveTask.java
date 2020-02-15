@@ -290,8 +290,8 @@ public class ResolveTask extends DefaultTask {
 
 	private static class ProcessorWrapper extends Processor {
 
-		public ProcessorWrapper(Properties properties) {
-			_internalProperties = properties;
+		public ProcessorWrapper(Properties internalProperties) {
+			_internalProperties = internalProperties;
 		}
 
 		public Properties getProperties() {

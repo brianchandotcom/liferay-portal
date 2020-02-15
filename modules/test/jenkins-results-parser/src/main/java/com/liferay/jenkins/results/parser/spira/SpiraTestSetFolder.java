@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -30,6 +32,118 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
+
+	public static SpiraTestSetFolder createSpiraTestSetFolder(
+			SpiraProject spiraProject, String testSetFolderName)
+		throws IOException {
+
+		return createSpiraTestSetFolder(spiraProject, testSetFolderName, null);
+	}
+
+	public static SpiraTestSetFolder createSpiraTestSetFolder(
+			SpiraProject spiraProject, String testSetFolderName,
+			Integer parentTestSetFolderID)
+		throws IOException {
+
+		String testSetFolderPath = "/" + testSetFolderName;
+
+		if (parentTestSetFolderID != null) {
+			SpiraTestSetFolder parentSpiraTestSetFolder =
+				spiraProject.getSpiraTestSetFolderByID(parentTestSetFolderID);
+
+			if (parentSpiraTestSetFolder != null) {
+				testSetFolderPath =
+					parentSpiraTestSetFolder.getPath() + "/" +
+						testSetFolderName;
+			}
+		}
+
+		List<SpiraTestSetFolder> spiraTestSetFolders =
+			spiraProject.getSpiraTestSetFoldersByPath(testSetFolderPath);
+
+		if (!spiraTestSetFolders.isEmpty()) {
+			return spiraTestSetFolders.get(0);
+		}
+
+		String urlPath = "projects/{project_id}/test-set-folders";
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put(
+			"Name", StringEscapeUtils.unescapeJava(testSetFolderName));
+		requestJSONObject.put("ParentTestSetFolderId", parentTestSetFolderID);
+
+		JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
+			urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
+			requestJSONObject.toString());
+
+		return spiraProject.getSpiraTestSetFolderByID(
+			responseJSONObject.getInt("TestSetFolderId"));
+	}
+
+	public static SpiraTestSetFolder createSpiraTestSetFolderByPath(
+			SpiraProject spiraProject, String testSetFolderPath)
+		throws IOException {
+
+		List<SpiraTestSetFolder> spiraTestSetFolders =
+			spiraProject.getSpiraTestSetFoldersByPath(testSetFolderPath);
+
+		if (!spiraTestSetFolders.isEmpty()) {
+			return spiraTestSetFolders.get(0);
+		}
+
+		String testSetFolderName = getPathName(testSetFolderPath);
+		String parentTestSetFolderPath = getParentPath(testSetFolderPath);
+
+		if (parentTestSetFolderPath.isEmpty()) {
+			return createSpiraTestSetFolder(spiraProject, testSetFolderName);
+		}
+
+		SpiraTestSetFolder parentSpiraTestSetFolder =
+			createSpiraTestSetFolderByPath(
+				spiraProject, parentTestSetFolderPath);
+
+		return createSpiraTestSetFolder(
+			spiraProject, testSetFolderName, parentSpiraTestSetFolder.getID());
+	}
+
+	public static void deleteSpiraTestSetFolderByID(
+			SpiraProject spiraProject, int testSetFolderID)
+		throws IOException {
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+		urlPathReplacements.put(
+			"test_set_folder_id", String.valueOf(testSetFolderID));
+
+		SpiraRestAPIUtil.request(
+			"projects/{project_id}/test-set-folders/{test_set_folder_id}", null,
+			urlPathReplacements, HttpRequestMethod.DELETE, null);
+
+		_spiraTestSetFolders.remove(
+			_createSpiraTestSetFolderKey(
+				spiraProject.getID(), testSetFolderID));
+	}
+
+	public static void deleteSpiraTestSetFoldersByPath(
+			SpiraProject spiraProject, String testSetFolderPath)
+		throws IOException {
+
+		List<SpiraTestSetFolder> spiraTestSetFolders =
+			spiraProject.getSpiraTestSetFoldersByPath(testSetFolderPath);
+
+		for (SpiraTestSetFolder spiraTestSetFolder : spiraTestSetFolders) {
+			deleteSpiraTestSetFolderByID(
+				spiraProject, spiraTestSetFolder.getID());
+		}
+	}
 
 	@Override
 	public int getID() {

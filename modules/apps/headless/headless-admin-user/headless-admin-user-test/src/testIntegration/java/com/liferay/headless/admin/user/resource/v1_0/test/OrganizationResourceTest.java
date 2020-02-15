@@ -74,12 +74,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	public void testGraphQLDeleteOrganization() {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPatchOrganization() {
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};

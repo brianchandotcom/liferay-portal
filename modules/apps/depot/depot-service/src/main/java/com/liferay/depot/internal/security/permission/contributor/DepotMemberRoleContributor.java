@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.internal.security.permissions.contributor;
+package com.liferay.depot.internal.security.permission.contributor;
 
 import com.liferay.depot.internal.constants.DepotRolesConstants;
 import com.liferay.portal.kernel.exception.PortalException;

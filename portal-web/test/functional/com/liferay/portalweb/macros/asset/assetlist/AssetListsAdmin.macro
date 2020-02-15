@@ -1,7 +1,21 @@
 definition {
 
 	macro addDynamicSelection {
-		LexiconEntry.gotoAddMenuItem(menuItem = "Dynamic Selection");
+		if (isSet(depotName)) {
+			Click(locator1 = "Message#EMPTY_INFO_TAGLIB");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
+
+			Click(
+				key_menuItem = "Dynamic Selection",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		else {
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Dynamic Selection");
+
+		}
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
@@ -62,6 +76,16 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro configureAssetEntryType {
+		Panel.expandPanel(panel = "Source");
+
+		Select(
+			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
+			value1 = "${selectedAsset}");
+
+		PortletEntry.save();
 	}
 
 	macro deleteEntry {
@@ -162,6 +186,30 @@ definition {
 			key_assetTitle = "${assetTitle}",
 			locator1 = "AssetLists#ASSET_TYPE_ROW",
 			value1 = "${assetType}");
+
+		SelectFrameTop();
+
+		Click(locator1 = "Icon#CLOSE");
+	}
+
+	macro viewNoContent {
+		Click(
+			key_title = "${assetListTitle}",
+			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+
+		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
+
+		Click(
+			key_menuItem = "View Content",
+			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		var key_assetTitle = "${assetTitle}";
+
+		AssertElementNotPresent(locator1 = "AssetLists#ASSET_TITLE_ROW");
+
+		AssertElementNotPresent(locator1 = "AssetLists#ASSET_TYPE_ROW");
 
 		SelectFrameTop();
 

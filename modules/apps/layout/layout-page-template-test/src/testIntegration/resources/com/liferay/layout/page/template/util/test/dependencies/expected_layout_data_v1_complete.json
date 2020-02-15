@@ -74,7 +74,7 @@
 		"FRAGMENT0-UUID": {
 			"children": [],
 			"config": {
-				"fragmentEntryLinkId": "fragmentEntryLinkId0"
+				"fragmentEntryLinkId": 0
 			},
 			"itemId": "FRAGMENT0-UUID",
 			"parentId": "ROW0-COLUMN0-UUID",
@@ -83,7 +83,7 @@
 		"FRAGMENT1-UUID": {
 			"children": [],
 			"config": {
-				"fragmentEntryLinkId": "fragmentEntryLinkId1"
+				"fragmentEntryLinkId": 1
 			},
 			"itemId": "FRAGMENT1-UUID",
 			"parentId": "ROW0-COLUMN0-UUID",
@@ -92,7 +92,7 @@
 		"FRAGMENT2-UUID": {
 			"children": [],
 			"config": {
-				"fragmentEntryLinkId": "fragmentEntryLinkId2"
+				"fragmentEntryLinkId": 2
 			},
 			"itemId": "FRAGMENT2-UUID",
 			"parentId": "ROW0-COLUMN1-UUID",
@@ -101,7 +101,7 @@
 		"FRAGMENT3-UUID": {
 			"children": [],
 			"config": {
-				"fragmentEntryLinkId": "fragmentEntryLinkId3"
+				"fragmentEntryLinkId": 3
 			},
 			"itemId": "FRAGMENT3-UUID",
 			"parentId": "ROW0-COLUMN1-UUID",
@@ -110,7 +110,7 @@
 		"FRAGMENT4-UUID": {
 			"children": [],
 			"config": {
-				"fragmentEntryLinkId": "fragmentEntryLinkId4"
+				"fragmentEntryLinkId": 4
 			},
 			"itemId": "FRAGMENT4-UUID",
 			"parentId": "ROW1-COLUMN0-UUID",
@@ -119,7 +119,7 @@
 		"FRAGMENT5-UUID": {
 			"children": [],
 			"config": {
-				"fragmentEntryLinkId": "fragmentEntryLinkId5"
+				"fragmentEntryLinkId": 5
 			},
 			"itemId": "FRAGMENT5-UUID",
 			"parentId": "ROW1-COLUMN0-UUID",
@@ -128,7 +128,7 @@
 		"FRAGMENT6-UUID": {
 			"children": [],
 			"config": {
-				"fragmentEntryLinkId": "fragmentEntryLinkId6"
+				"fragmentEntryLinkId": 6
 			},
 			"itemId": "FRAGMENT6-UUID",
 			"parentId": "ROW1-COLUMN1-UUID",
@@ -137,7 +137,7 @@
 		"FRAGMENT7-UUID": {
 			"children": [],
 			"config": {
-				"fragmentEntryLinkId": "fragmentEntryLinkId7"
+				"fragmentEntryLinkId": 7
 			},
 			"itemId": "FRAGMENT7-UUID",
 			"parentId": "ROW1-COLUMN1-UUID",
@@ -146,7 +146,7 @@
 		"FRAGMENT8-UUID": {
 			"children": [],
 			"config": {
-				"fragmentEntryLinkId": "fragmentEntryLinkId8"
+				"fragmentEntryLinkId": 8
 			},
 			"itemId": "FRAGMENT8-UUID",
 			"parentId": "MAIN-UUID",

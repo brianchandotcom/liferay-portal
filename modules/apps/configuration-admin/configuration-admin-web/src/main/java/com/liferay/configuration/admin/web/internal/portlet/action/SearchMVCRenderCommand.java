@@ -23,50 +23,34 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenC
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
-import com.liferay.configuration.admin.web.internal.search.ConfigurationModelIndexer;
+import com.liferay.configuration.admin.web.internal.search.ClusterConfigurationModelIndexer;
 import com.liferay.configuration.admin.web.internal.search.FieldNames;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
-import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.BundleTracker;
-import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -88,11 +72,12 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		BundleTracker<ConfigurationModelIterator> bundleTracker =
-			_bundleTracker;
-
-		if (bundleTracker != null) {
-			_initialize();
+		try {
+			_clusterConfigurationModelIndexer.initialize();
+		}
+		catch (Exception exception) {
+			throw new PortletException(
+				"Unable to initialize configuration model index", exception);
 		}
 
 		Indexer indexer = _indexerRegistry.nullSafeGetIndexer(
@@ -203,93 +188,11 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		return "/search_results.jsp";
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		if (_clusterExecutor.isEnabled()) {
-			_initialize();
-		}
-	}
-
-	@Deactivate
-	protected synchronized void deactivate() {
-		if (_bundleTracker != null) {
-			_bundleTracker.close();
-		}
-	}
-
-	private void _commit(Indexer<ConfigurationModel> indexer) {
-		try {
-			_indexWriterHelper.commit(indexer.getSearchEngineId());
-		}
-		catch (SearchException searchException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to commit", searchException);
-			}
-		}
-	}
-
-	private synchronized void _initialize() {
-		if (_bundleTracker != null) {
-			return;
-		}
-
-		Map<String, Collection<ConfigurationModel>> configurationModelsMap =
-			new ConcurrentHashMap<>();
-
-		if (_clusterMasterExecutor.isMaster()) {
-			Bundle[] bundles = _bundleContext.getBundles();
-
-			List<ConfigurationModel> configurationModelsList =
-				new ArrayList<>();
-
-			for (Bundle bundle : bundles) {
-				if (bundle.getState() != Bundle.ACTIVE) {
-					continue;
-				}
-
-				Map<String, ConfigurationModel> configurationModels =
-					_configurationModelRetriever.getConfigurationModels(
-						bundle, ExtendedObjectClassDefinition.Scope.SYSTEM,
-						null);
-
-				configurationModelsList.addAll(configurationModels.values());
-
-				configurationModelsMap.put(
-					bundle.getSymbolicName(), configurationModels.values());
-			}
-
-			_configurationModelIndexer.reindex(configurationModelsList);
-
-			_commit(_configurationModelIndexer);
-		}
-
-		_bundleTracker = new BundleTracker<>(
-			_bundleContext, Bundle.ACTIVE,
-			new ConfigurationModelsBundleTrackerCustomizer(
-				configurationModelsMap));
-
-		_bundleTracker.open();
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SearchMVCRenderCommand.class);
-
-	private BundleContext _bundleContext;
-	private volatile BundleTracker<ConfigurationModelIterator> _bundleTracker;
-
 	@Reference
-	private ClusterExecutor _clusterExecutor;
-
-	@Reference
-	private ClusterMasterExecutor _clusterMasterExecutor;
+	private ClusterConfigurationModelIndexer _clusterConfigurationModelIndexer;
 
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;
-
-	@Reference
-	private ConfigurationModelIndexer _configurationModelIndexer;
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
@@ -298,94 +201,6 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 	private IndexerRegistry _indexerRegistry;
 
 	@Reference
-	private IndexWriterHelper _indexWriterHelper;
-
-	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
-
-	private class ConfigurationModelsBundleTrackerCustomizer
-		implements BundleTrackerCustomizer<ConfigurationModelIterator> {
-
-		@Override
-		public ConfigurationModelIterator addingBundle(
-			Bundle bundle, BundleEvent bundleEvent) {
-
-			if (!_clusterMasterExecutor.isMaster()) {
-				return null;
-			}
-
-			Collection<ConfigurationModel> configurationModels =
-				_configurationModelsMap.remove(bundle.getSymbolicName());
-
-			if (configurationModels != null) {
-				if (configurationModels.isEmpty()) {
-					return null;
-				}
-
-				return new ConfigurationModelIterator(configurationModels);
-			}
-
-			Map<String, ConfigurationModel> configurationModelsMap =
-				_configurationModelRetriever.getConfigurationModels(
-					bundle, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
-
-			if (configurationModelsMap.isEmpty()) {
-				return null;
-			}
-
-			_configurationModelIndexer.reindex(configurationModelsMap.values());
-
-			_commit(_configurationModelIndexer);
-
-			return new ConfigurationModelIterator(
-				configurationModelsMap.values());
-		}
-
-		@Override
-		public void modifiedBundle(
-			Bundle bundle, BundleEvent bundleEvent,
-			ConfigurationModelIterator configurationModelIterator) {
-
-			removedBundle(bundle, bundleEvent, configurationModelIterator);
-
-			addingBundle(bundle, bundleEvent);
-		}
-
-		@Override
-		public void removedBundle(
-			Bundle bundle, BundleEvent bundleEvent,
-			ConfigurationModelIterator configurationModelIterator) {
-
-			if (!_clusterMasterExecutor.isMaster()) {
-				return;
-			}
-
-			for (ConfigurationModel configurationModel :
-					configurationModelIterator.getResults()) {
-
-				try {
-					_configurationModelIndexer.delete(configurationModel);
-				}
-				catch (SearchException searchException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to reindex models", searchException);
-					}
-				}
-			}
-
-			_commit(_configurationModelIndexer);
-		}
-
-		private ConfigurationModelsBundleTrackerCustomizer(
-			Map<String, Collection<ConfigurationModel>>
-				configurationModelsMap) {
-
-			_configurationModelsMap = configurationModelsMap;
-		}
-
-		private final Map<String, Collection<ConfigurationModel>>
-			_configurationModelsMap;
-
-	}
 
 }

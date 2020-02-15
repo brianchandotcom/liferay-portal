@@ -18,6 +18,7 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.petra.string.StringBundler;
@@ -54,16 +55,21 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.AttributeDefinition;
 import org.osgi.service.metatype.ObjectClassDefinition;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -103,6 +109,44 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		catch (Exception exception) {
 			throw new SearchException(exception);
 		}
+	}
+
+	public BundleTracker<ConfigurationModelIterator> initialize() {
+		Map<String, Collection<ConfigurationModel>> configurationModelsMap =
+			new ConcurrentHashMap<>();
+
+		Bundle[] bundles = _bundleContext.getBundles();
+
+		List<ConfigurationModel> configurationModelsList = new ArrayList<>();
+
+		for (Bundle bundle : bundles) {
+			if (bundle.getState() != Bundle.ACTIVE) {
+				continue;
+			}
+
+			Map<String, ConfigurationModel> configurationModels =
+				_configurationModelRetriever.getConfigurationModels(
+					bundle, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+
+			configurationModelsList.addAll(configurationModels.values());
+
+			configurationModelsMap.put(
+				bundle.getSymbolicName(), configurationModels.values());
+		}
+
+		reindex(configurationModelsList);
+
+		_commit();
+
+		BundleTracker<ConfigurationModelIterator> bundleTracker =
+			new BundleTracker<>(
+				_bundleContext, Bundle.ACTIVE,
+				new ConfigurationModelsBundleTrackerCustomizer(
+					configurationModelsMap));
+
+		bundleTracker.open();
+
+		return bundleTracker;
 	}
 
 	@Override
@@ -166,6 +210,8 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		setPermissionAware(false);
 		setSelectAllLocales(false);
 		setStagingAware(false);
+
+		_bundleContext = bundleContext;
 	}
 
 	@Override
@@ -358,6 +404,17 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		}
 	}
 
+	private void _commit() {
+		try {
+			_indexWriterHelper.commit(getSearchEngineId());
+		}
+		catch (SearchException searchException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to commit", searchException);
+			}
+		}
+	}
+
 	private List<String> _getLocalizedValues(
 		List<String> attributeDescriptions,
 		ResourceBundleLoader resourceBundleLoader, Locale locale) {
@@ -419,6 +476,8 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationModelIndexer.class);
 
+	private BundleContext _bundleContext;
+
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
@@ -452,6 +511,83 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		private final String _key;
 		private final String _name;
 		private final Map<Locale, String> _values = new HashMap<>();
+
+	}
+
+	private class ConfigurationModelsBundleTrackerCustomizer
+		implements BundleTrackerCustomizer<ConfigurationModelIterator> {
+
+		@Override
+		public ConfigurationModelIterator addingBundle(
+			Bundle bundle, BundleEvent bundleEvent) {
+
+			Collection<ConfigurationModel> configurationModels =
+				_configurationModelsMap.remove(bundle.getSymbolicName());
+
+			if (configurationModels != null) {
+				if (configurationModels.isEmpty()) {
+					return null;
+				}
+
+				return new ConfigurationModelIterator(configurationModels);
+			}
+
+			Map<String, ConfigurationModel> configurationModelsMap =
+				_configurationModelRetriever.getConfigurationModels(
+					bundle, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+
+			if (configurationModelsMap.isEmpty()) {
+				return null;
+			}
+
+			reindex(configurationModelsMap.values());
+
+			_commit();
+
+			return new ConfigurationModelIterator(
+				configurationModelsMap.values());
+		}
+
+		@Override
+		public void modifiedBundle(
+			Bundle bundle, BundleEvent bundleEvent,
+			ConfigurationModelIterator configurationModelIterator) {
+
+			removedBundle(bundle, bundleEvent, configurationModelIterator);
+
+			addingBundle(bundle, bundleEvent);
+		}
+
+		@Override
+		public void removedBundle(
+			Bundle bundle, BundleEvent bundleEvent,
+			ConfigurationModelIterator configurationModelIterator) {
+
+			for (ConfigurationModel configurationModel :
+					configurationModelIterator.getResults()) {
+
+				try {
+					delete(configurationModel);
+				}
+				catch (SearchException searchException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to reindex models", searchException);
+					}
+				}
+			}
+
+			_commit();
+		}
+
+		private ConfigurationModelsBundleTrackerCustomizer(
+			Map<String, Collection<ConfigurationModel>>
+				configurationModelsMap) {
+
+			_configurationModelsMap = configurationModelsMap;
+		}
+
+		private final Map<String, Collection<ConfigurationModel>>
+			_configurationModelsMap;
 
 	}
 

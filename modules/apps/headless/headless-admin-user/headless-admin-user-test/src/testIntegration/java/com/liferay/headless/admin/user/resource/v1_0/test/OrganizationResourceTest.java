@@ -74,12 +74,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	public void testGraphQLDeleteOrganization() {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPatchOrganization() {
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};
@@ -224,16 +218,19 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	private Organization _toOrganization(
-		com.liferay.portal.kernel.model.Organization organization) {
+		com.liferay.portal.kernel.model.Organization
+			serviceBuilderOrganization) {
 
-		return new Organization() {
-			{
-				dateCreated = organization.getCreateDate();
-				dateModified = organization.getModifiedDate();
-				id = String.valueOf(organization.getOrganizationId());
-				name = organization.getName();
-			}
-		};
+		Organization organization = new Organization();
+
+		organization.setDateCreated(serviceBuilderOrganization.getCreateDate());
+		organization.setDateModified(
+			serviceBuilderOrganization.getModifiedDate());
+		organization.setId(
+			String.valueOf(serviceBuilderOrganization.getOrganizationId()));
+		organization.setName(serviceBuilderOrganization.getName());
+
+		return organization;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -26,6 +26,125 @@ definition {
 		}
 	}
 
+	@description = "This ensures that images are excluded with the dynamic selection that does not contain the keyword "Image" in a depot."
+	@priority = "5"
+	test ExcludeImagesDynamically {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		for (var i : list "1,2") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_${i}.doc",
+				dmDocumentTitle = "Document Text Title ${i}");
+		}
+
+		for (var i : list "1,2") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_${i}.png",
+				dmDocumentTitle = "Document Image Title ${i}");
+		}
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addDynamicSelection(
+			assetListTitle = "Depot Dynamic Asset List",
+			depotName = "Test Depot Name");
+
+		AssetListsAdmin.addKeywordsFilter(
+			keyWords = "Image",
+			queryAndOperator = "Any",
+			queryContains = "Does Not Contain");
+
+		for (var i : list "1,2") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Depot Dynamic Asset List",
+				assetTitle = "Document Text Title ${i}",
+				assetType = "Document");
+		}
+	}
+
+	@description = "This ensures that all web contents are displayed with the dynamic selection that show only Web Content Article in a depot."
+	@priority = "4"
+	test SelectAllWebContentDynamically {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document Title");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		for (var i : list "1,2,3") {
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title ${i}");
+
+			PortletEntry.publish();
+		}
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addDynamicSelection(
+			assetListTitle = "Depot Dynamic Asset List",
+			depotName = "Test Depot Name");
+
+		for (var i : list "1,2,3") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Depot Dynamic Asset List",
+				assetTitle = "WC WebContent Title ${i}",
+				assetType = "Web Content Article");
+		}
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.viewContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "Document Title",
+			assetType = "Document");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.editAssetList(assetListTitle = "Depot Dynamic Asset List");
+
+		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
+
+		for (var i : list "1,2,3") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Depot Dynamic Asset List",
+				assetTitle = "WC WebContent Title ${i}",
+				assetType = "Web Content Article");
+		}
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.viewNoContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "Document Title",
+			assetType = "Document");
+	}
+
 	@description = "This ensures that multiple web content can be selected through Content Sets in a depot."
 	@priority = "5"
 	test SelectMultipleWebContentManually {

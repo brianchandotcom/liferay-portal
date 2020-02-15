@@ -192,6 +192,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		try {
 			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 				classNameId, classPK);
+
 			AssetDisplayPageConfiguration assetDisplayPageConfiguration =
 				ConfigurationProviderUtil.getSystemConfiguration(
 					AssetDisplayPageConfiguration.class);

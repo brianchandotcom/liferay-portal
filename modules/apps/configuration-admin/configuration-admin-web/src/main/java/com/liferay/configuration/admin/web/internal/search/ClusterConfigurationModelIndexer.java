@@ -15,11 +15,13 @@
 package com.liferay.configuration.admin.web.internal.search;
 
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -101,7 +103,11 @@ public class ClusterConfigurationModelIndexer
 		}
 
 		if (_clusterMasterExecutor.isMaster()) {
-			_bundleTracker = _configurationModelIndexer.initialize();
+			try (SafeClosable safeClosable =
+					ProxyModeThreadLocal.setWithSafeClosable(true)) {
+
+				_bundleTracker = _configurationModelIndexer.initialize();
+			}
 		}
 		else {
 			NoticeableFuture<Void> noticeableFuture =
@@ -121,7 +127,11 @@ public class ClusterConfigurationModelIndexer
 
 	private synchronized void _stopBundleTracker() {
 		if (_bundleTracker != null) {
-			_bundleTracker.close();
+			try (SafeClosable safeClosable =
+					ProxyModeThreadLocal.setWithSafeClosable(true)) {
+
+				_bundleTracker.close();
+			}
 
 			_bundleTracker = null;
 		}

@@ -265,7 +265,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no ${assigneeType} associated with this account.")
+			value1 = "There are no ${assigneeType} associated with this account.");
 	}
 
 }

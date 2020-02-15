@@ -466,7 +466,8 @@ public class PortletSessionImplTest {
 
 		Assert.assertSame(httpSessionWrapper, portletSessionImpl.session);
 
-		// Set/get attribute when value class is loaded by Bootstrap classloader
+		// Set/get attribute when value class is loaded by the bootstrap class
+		// loader
 
 		String key = "key";
 		String value = "value";
@@ -477,7 +478,8 @@ public class PortletSessionImplTest {
 		Assert.assertSame(
 			value, _mockHttpSession.getAttribute(scopePrefix.concat(key)));
 
-		// Set/get attribute when value class is not loaded by PortalClassLoader
+		// Set/get attribute when value class is not loaded by the portal class
+		// loader
 
 		TestSerializable testSerializable = new TestSerializable("name");
 

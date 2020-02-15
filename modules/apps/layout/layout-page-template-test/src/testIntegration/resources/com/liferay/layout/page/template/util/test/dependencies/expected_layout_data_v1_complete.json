@@ -28,7 +28,7 @@
 				"paddingBottom": 3,
 				"paddingHorizontal": 3,
 				"paddingTop": 3,
-				"type": "fluid"
+				"type": "fixed"
 			},
 			"itemId": "CONTAINER1-UUID",
 			"parentId": "MAIN-UUID",
@@ -46,7 +46,7 @@
 				"paddingBottom": 3,
 				"paddingHorizontal": 3,
 				"paddingTop": 3,
-				"type": "fluid"
+				"type": "fixed"
 			},
 			"itemId": "CONTAINER2-UUID",
 			"parentId": "MAIN-UUID",
@@ -65,7 +65,7 @@
 				"paddingBottom": 3,
 				"paddingHorizontal": 3,
 				"paddingTop": 3,
-				"type": "fluid"
+				"type": "fixed"
 			},
 			"itemId": "CONTAINER3-UUID",
 			"parentId": "MAIN-UUID",

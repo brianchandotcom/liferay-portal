@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public abstract class LogParametersCheck extends BaseFileCheck {
+public abstract class BaseLogParametersCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {

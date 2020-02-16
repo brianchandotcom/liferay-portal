@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * @author Hugo Huijser
  */
-public abstract class JSPTermsBaseCheck extends BaseFileCheck {
+public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 
 	@Override
 	public void setAllFileNames(List<String> allFileNames) {

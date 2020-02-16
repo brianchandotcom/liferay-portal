@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public abstract class LineBreakCheck extends BaseFileCheck {
+public abstract class BaseLineBreakCheck extends BaseFileCheck {
 
 	protected void checkLineBreaks(
 		String line, String previousLine, String fileName, int lineNumber) {

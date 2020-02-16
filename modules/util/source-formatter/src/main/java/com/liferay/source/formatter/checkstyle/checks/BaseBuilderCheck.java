@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public abstract class BuilderCheck extends ChainedMethodCheck {
+public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

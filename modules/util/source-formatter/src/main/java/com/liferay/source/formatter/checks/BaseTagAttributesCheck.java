@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public abstract class TagAttributesCheck extends BaseFileCheck {
+public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 
 	protected abstract Tag doFormatLineBreaks(Tag tag, String absolutePath);
 

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Hugo Huijser
  */
-public class FTLTagAttributesCheck extends TagAttributesCheck {
+public class FTLTagAttributesCheck extends BaseTagAttributesCheck {
 
 	@Override
 	protected Tag doFormatLineBreaks(Tag tag, String absolutePath) {

@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public abstract class IfStatementCheck extends BaseFileCheck {
+public abstract class BaseIfStatementCheck extends BaseFileCheck {
 
 	protected void checkIfClauseParentheses(
 		String ifClause, String fileName, int lineNumber,

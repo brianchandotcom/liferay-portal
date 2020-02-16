@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public abstract class MessageCheck extends BaseCheck {
+public abstract class BaseMessageCheck extends BaseCheck {
 
 	protected void checkMessage(String literalStringValue, int lineNo) {
 		if (Validator.isNull(literalStringValue) ||

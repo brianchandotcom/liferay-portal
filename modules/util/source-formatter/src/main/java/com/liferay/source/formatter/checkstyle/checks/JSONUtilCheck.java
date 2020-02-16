@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * @author Hugo Huijser
  */
-public class JSONUtilCheck extends ChainedMethodCheck {
+public class JSONUtilCheck extends BaseChainedMethodCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

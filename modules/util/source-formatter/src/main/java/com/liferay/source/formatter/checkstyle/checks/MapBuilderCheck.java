@@ -21,23 +21,23 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class MapBuilderCheck extends BuilderCheck {
+public class MapBuilderCheck extends BaseBuilderCheck {
 
 	protected boolean allowNullValues() {
 		return false;
 	}
 
-	protected List<BuilderCheck.BuilderInformation>
+	protected List<BaseBuilderCheck.BuilderInformation>
 		getBuilderInformationList() {
 
 		return ListUtil.fromArray(
-			new BuilderCheck.BuilderInformation(
+			new BaseBuilderCheck.BuilderInformation(
 				"ConcurrentHashMap", "ConcurrentHashMapBuilder", "put"),
-			new BuilderCheck.BuilderInformation(
+			new BaseBuilderCheck.BuilderInformation(
 				"HashMap", "HashMapBuilder", "put"),
-			new BuilderCheck.BuilderInformation(
+			new BaseBuilderCheck.BuilderInformation(
 				"LinkedHashMap", "LinkedHashMapBuilder", "put"),
-			new BuilderCheck.BuilderInformation(
+			new BaseBuilderCheck.BuilderInformation(
 				"TreeMap", "TreeMapBuilder", "put"));
 	}
 

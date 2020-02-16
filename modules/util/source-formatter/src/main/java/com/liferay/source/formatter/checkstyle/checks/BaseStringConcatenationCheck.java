@@ -21,7 +21,7 @@ import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 /**
  * @author Hugo Huijser
  */
-public abstract class StringConcatenationCheck extends BaseCheck {
+public abstract class BaseStringConcatenationCheck extends BaseCheck {
 
 	protected void checkLiteralStringStartAndEndCharacter(
 		String literalString1, String literalString2, int lineNumber) {

@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public abstract class StylingCheck extends BaseFileCheck {
+public abstract class BaseStylingCheck extends BaseFileCheck {
 
 	protected String formatStyling(String content) {
 		content = _formatStyling(

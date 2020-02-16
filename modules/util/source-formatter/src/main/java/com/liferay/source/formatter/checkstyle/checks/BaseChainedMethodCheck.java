@@ -24,7 +24,7 @@ import java.util.Objects;
 /**
  * @author Hugo Huijser
  */
-public abstract class ChainedMethodCheck extends BaseCheck {
+public abstract class BaseChainedMethodCheck extends BaseCheck {
 
 	protected boolean containsVariableName(
 		DetailAST detailAST, String variableName) {

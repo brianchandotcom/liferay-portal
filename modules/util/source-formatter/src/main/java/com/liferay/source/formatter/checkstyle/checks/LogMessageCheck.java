@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class LogMessageCheck extends MessageCheck {
+public class LogMessageCheck extends BaseMessageCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

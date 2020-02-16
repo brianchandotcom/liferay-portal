@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public abstract class DefinitionKeysCheck extends BaseFileCheck {
+public abstract class BaseDefinitionKeysCheck extends BaseFileCheck {
 
 	protected List<String> getDefinitions(String content) {
 		List<String> definitions = new ArrayList<>();

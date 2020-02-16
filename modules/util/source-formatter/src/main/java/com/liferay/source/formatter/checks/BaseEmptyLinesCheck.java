@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public abstract class EmptyLinesCheck extends BaseFileCheck {
+public abstract class BaseEmptyLinesCheck extends BaseFileCheck {
 
 	protected String fixEmptyLinesBetweenTags(String content) {
 		Matcher matcher = _emptyLineBetweenTagsPattern1.matcher(content);

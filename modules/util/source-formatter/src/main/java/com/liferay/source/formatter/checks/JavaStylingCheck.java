@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaStylingCheck extends StylingCheck {
+public class JavaStylingCheck extends BaseStylingCheck {
 
 	@Override
 	protected String doProcess(

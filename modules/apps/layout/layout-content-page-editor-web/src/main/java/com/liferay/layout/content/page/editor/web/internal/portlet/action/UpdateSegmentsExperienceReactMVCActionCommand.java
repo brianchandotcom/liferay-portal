@@ -15,28 +15,17 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceService;
 
 import java.util.Collections;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,27 +39,15 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/update_segments_experience"
 	},
-	service = {AopService.class, MVCActionCommand.class}
+	service = MVCActionCommand.class
 )
 public class UpdateSegmentsExperienceReactMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
@@ -79,34 +56,12 @@ public class UpdateSegmentsExperienceReactMVCActionCommand
 			actionRequest, "segmentsEntryId");
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		try {
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceService.updateSegmentsExperience(
-					segmentsExperienceId, segmentsEntryId,
-					Collections.singletonMap(LocaleUtil.getDefault(), name),
-					true);
-
-			jsonObject.put("segmentsExperience", segmentsExperience);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
-		}
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		return JSONUtil.put(
+			"segmentsExperience",
+			_segmentsExperienceService.updateSegmentsExperience(
+				segmentsExperienceId, segmentsEntryId,
+				Collections.singletonMap(LocaleUtil.getDefault(), name), true));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateSegmentsExperienceReactMVCActionCommand.class);
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;

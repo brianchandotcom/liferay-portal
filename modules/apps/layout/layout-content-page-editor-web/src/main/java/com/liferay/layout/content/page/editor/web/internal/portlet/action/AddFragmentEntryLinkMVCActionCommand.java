@@ -24,7 +24,6 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -33,22 +32,17 @@ import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLin
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -56,7 +50,6 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,55 +63,40 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/add_fragment_entry_link"
 	},
-	service = {AopService.class, MVCActionCommand.class}
+	service = MVCActionCommand.class
 )
 public class AddFragmentEntryLinkMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _processAddFragmentEntryLink(
+			actionRequest, actionResponse);
 
-		try {
-			jsonObject = _processAddFragmentEntryLink(
-				actionRequest, actionResponse);
+		SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
 
-			SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
+		return jsonObject;
+	}
 
-			String errorMessage = "an-unexpected-error-occurred";
+	@Override
+	protected JSONObject processException(
+		ActionRequest actionRequest, Exception exception) {
 
-			if (exception instanceof NoSuchEntryException) {
-				errorMessage =
-					"the-fragment-can-no-longer-be-added-because-it-has-been-" +
-						"deleted";
-			}
+		String errorMessage = "an-unexpected-error-occurred";
 
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					_portal.getHttpServletRequest(actionRequest),
-					errorMessage));
+		if (exception instanceof NoSuchEntryException) {
+			errorMessage =
+				"the-fragment-can-no-longer-be-added-because-it-has-been-" +
+					"deleted";
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		return JSONUtil.put(
+			"error",
+			LanguageUtil.get(
+				_portal.getHttpServletRequest(actionRequest), errorMessage));
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(ActionRequest actionRequest)
@@ -241,9 +219,6 @@ public class AddFragmentEntryLinkMVCActionCommand
 				StringPool.BLANK));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddFragmentEntryLinkMVCActionCommand.class);
-
 	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
@@ -253,9 +228,6 @@ public class AddFragmentEntryLinkMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;

@@ -14,12 +14,11 @@
 
 package com.liferay.layout.util.template;
 
-import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 
 import java.util.ArrayList;
@@ -38,57 +37,48 @@ public class LayoutData {
 	}
 
 	public JSONObject getLayoutDataJSONObject() {
-		int columnId = 0;
-		int rowId = 0;
+		LayoutStructure layoutStructure = new LayoutStructure();
 
-		JSONArray layoutRowJSONArray = JSONFactoryUtil.createJSONArray();
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		int i = 0;
 
 		for (LayoutRow layoutRow : _layoutRows) {
-			JSONArray layoutColumnJSONArray = JSONFactoryUtil.createJSONArray();
+			LayoutStructureItem containerLayoutStructureItem =
+				layoutStructure.addContainerLayoutStructureItem(
+					rootLayoutStructureItem.getItemId(), i++);
 
-			for (LayoutColumn layoutColumn : layoutRow.getLayoutColumns()) {
-				JSONObject layoutColumnJSONObject = JSONUtil.put(
-					"columnId", String.valueOf(columnId++));
+			List<LayoutColumn> layoutColumns = layoutRow.getLayoutColumns();
 
-				JSONArray fragmentEntryLinkIdsJSONArray =
-					JSONFactoryUtil.createJSONArray();
+			LayoutStructureItem rowLayoutStructureItem =
+				layoutStructure.addRowLayoutStructureItem(
+					containerLayoutStructureItem.getItemId(), 0,
+					layoutColumns.size());
+
+			int j = 0;
+
+			for (LayoutColumn layoutColumn : layoutColumns) {
+				ColumnLayoutStructureItem columnLayoutStructureItem =
+					(ColumnLayoutStructureItem)
+						layoutStructure.addColumnLayoutStructureItem(
+							rowLayoutStructureItem.getItemId(), j++);
+
+				columnLayoutStructureItem.setSize(layoutColumn.getSize());
+
+				int k = 0;
 
 				for (long fragmentEntryLinkId :
 						layoutColumn.getFragmentEntryLinkIds()) {
 
-					fragmentEntryLinkIdsJSONArray.put(fragmentEntryLinkId);
+					layoutStructure.addFragmentLayoutStructureItem(
+						fragmentEntryLinkId,
+						columnLayoutStructureItem.getItemId(), k++);
 				}
-
-				layoutColumnJSONObject.put(
-					"fragmentEntryLinkIds", fragmentEntryLinkIdsJSONArray
-				).put(
-					"size", String.valueOf(layoutColumn.getSize())
-				);
-
-				layoutColumnJSONArray.put(layoutColumnJSONObject);
 			}
-
-			layoutRowJSONArray.put(
-				JSONUtil.put(
-					"columns", layoutColumnJSONArray
-				).put(
-					"config", JSONFactoryUtil.createJSONObject()
-				).put(
-					"rowId", String.valueOf(rowId++)
-				).put(
-					"type", String.valueOf(FragmentConstants.TYPE_COMPONENT)
-				));
 		}
 
-		return JSONUtil.put(
-			"config", JSONFactoryUtil.createJSONObject()
-		).put(
-			"nextColumnId", columnId
-		).put(
-			"nextRowId", rowId
-		).put(
-			"structure", layoutRowJSONArray
-		);
+		return layoutStructure.toJSONObject();
 	}
 
 	private LayoutData(

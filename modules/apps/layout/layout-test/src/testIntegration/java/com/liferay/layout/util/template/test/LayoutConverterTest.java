@@ -381,7 +381,7 @@ public class LayoutConverterTest {
 	public void testConvertOneTwoOneColumnsIIMultiplePortlets()
 		throws Exception {
 
-		_testConvertOneTwoOneColumnsMultiplePortlets("1_2_1_columns_i");
+		_testConvertOneTwoOneColumnsMultiplePortlets("1_2_1_columns_ii");
 	}
 
 	@Test

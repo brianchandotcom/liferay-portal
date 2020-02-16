@@ -117,6 +117,9 @@ public class AssetListItemSelectorView
 	@Reference
 	private Language _language;
 
+	@Reference
+	private Portal _portal;
+
 	@Reference(target = "(bundle.symbolic.name=com.liferay.asset.list.web)")
 	private ResourceBundleLoader _resourceBundleLoader;
 
@@ -299,10 +302,6 @@ public class AssetListItemSelectorView
 		}
 
 		private final HttpServletRequest _httpServletRequest;
-
-		@Reference
-		private Portal _portal;
-
 		private final PortletURL _portletURL;
 
 	}

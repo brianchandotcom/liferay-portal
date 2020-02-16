@@ -77,9 +77,13 @@ public class LayoutPageTemplateStructureHelperUtil {
 		for (int i = 0; i < fragmentEntryLinks.size(); i++) {
 			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
 
+			LayoutStructureItem columnLayoutStructureItem =
+				layoutStructure.addColumnLayoutStructureItem(
+					rowLayoutStructureItem.getItemId(), i);
+
 			layoutStructure.addFragmentLayoutStructureItem(
 				fragmentEntryLink.getFragmentEntryLinkId(),
-				rowLayoutStructureItem.getItemId(), i);
+				columnLayoutStructureItem.getItemId(), 0);
 		}
 
 		return layoutStructure.toJSONObject();

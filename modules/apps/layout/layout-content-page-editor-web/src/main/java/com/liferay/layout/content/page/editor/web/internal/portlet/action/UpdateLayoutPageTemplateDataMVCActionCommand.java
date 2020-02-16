@@ -17,19 +17,12 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,7 +31,6 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,22 +44,13 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/update_layout_page_template_data"
 	},
-	service = {AopService.class, MVCActionCommand.class}
+	service = MVCActionCommand.class
 )
 public class UpdateLayoutPageTemplateDataMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -79,44 +62,24 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 			SegmentsExperienceConstants.ID_DEFAULT);
 		String data = ParamUtil.getString(actionRequest, "data");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		_layoutPageTemplateStructureService.updateLayoutPageTemplateStructure(
+			themeDisplay.getScopeGroupId(),
+			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
+			segmentsExperienceId, data);
 
-		try {
-			_layoutPageTemplateStructureService.
-				updateLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(),
-					_portal.getClassNameId(Layout.class),
-					themeDisplay.getPlid(), segmentsExperienceId, data);
+		String fragmentEntryLinkIdsString = ParamUtil.getString(
+			actionRequest, "fragmentEntryLinkIds");
 
-			String fragmentEntryLinkIdsString = ParamUtil.getString(
-				actionRequest, "fragmentEntryLinkIds");
+		if (Validator.isNotNull(fragmentEntryLinkIdsString)) {
+			long[] toFragmentEntryLinkIds = JSONUtil.toLongArray(
+				JSONFactoryUtil.createJSONArray(fragmentEntryLinkIdsString));
 
-			if (Validator.isNotNull(fragmentEntryLinkIdsString)) {
-				long[] toFragmentEntryLinkIds = JSONUtil.toLongArray(
-					JSONFactoryUtil.createJSONArray(
-						fragmentEntryLinkIdsString));
-
-				_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
-					toFragmentEntryLinkIds);
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
+			_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
+				toFragmentEntryLinkIds);
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		return JSONFactoryUtil.createJSONObject();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateLayoutPageTemplateDataMVCActionCommand.class);
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

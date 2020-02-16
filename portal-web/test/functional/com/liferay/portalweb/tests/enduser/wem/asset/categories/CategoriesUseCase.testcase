@@ -237,44 +237,6 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "4"
-	test AddPageWithRequiredVocabulary {
-		property testray.component.names = "Categories";
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Vocabulary.addWithAssociatedAssetTypeCP(
-			assetType = "Page",
-			required = "true",
-			vocabularyName = "Vocabulary Name");
-
-		var categoryId = JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		JSONLayout.addPublicLayout(
-			assetCategoryIds = "${categoryId}",
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Page.addCategory(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		PortletEntry.save();
-
-		Navigator.openSiteURL(siteName = "Test Site Name");
-
-		Page.viewSpecificPG(pageNameList = "Test Page Name");
-	}
-
 	@priority = "3"
 	test AddSubcategoryConfigureParentCategory {
 		property test.name.skip.portal.instance = "CategoriesUseCase#AddSubcategoryConfigureParentCategory";

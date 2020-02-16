@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringBundler;
 /**
  * @author Hugo Huijser
  */
-public class JavaEnhancedForStatement extends JavaLoopStatement {
+public class JavaEnhancedForStatement extends BaseJavaLoopStatement {
 
 	public JavaEnhancedForStatement(
 		JavaExpression collectionJavaExpression,

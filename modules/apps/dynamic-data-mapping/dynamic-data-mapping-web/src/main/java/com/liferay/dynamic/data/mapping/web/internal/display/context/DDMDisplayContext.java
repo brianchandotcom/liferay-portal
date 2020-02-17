@@ -744,7 +744,7 @@ public class DDMDisplayContext {
 			_ddmWebRequestHelper.getPermissionChecker(),
 			_ddmWebRequestHelper.getScopeGroupId(),
 			_ddmWebRequestHelper.getLayout(), resourceName,
-			ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE);
+			ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE, false, false);
 	}
 
 	protected long getClassNameId() {

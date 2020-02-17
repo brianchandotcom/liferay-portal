@@ -61,6 +61,8 @@ export default class UnsafeHTML extends React.Component {
 			// eslint-disable-next-line no-unused-vars
 			contentRef,
 			markup,
+			// eslint-disable-next-line no-unused-vars
+			onRender,
 			...otherProps
 		} = this.props;
 

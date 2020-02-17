@@ -29,6 +29,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 	navigationItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getNavigationItems() %>"
 />
 
+<clay:alert
+	message='<%= LanguageUtil.get(resourceBundle, "view-current-fields-warning-message") %>'
+	style="info"
+	title='<%= LanguageUtil.get(resourceBundle, "info") %>'
+/>
+
 <clay:management-toolbar
 	actionDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getClearResultsURL() %>"

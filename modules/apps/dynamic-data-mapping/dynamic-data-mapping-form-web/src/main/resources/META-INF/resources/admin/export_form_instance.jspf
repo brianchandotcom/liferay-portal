@@ -40,6 +40,12 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 		title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
 	/>
 
+	<clay:alert
+		message='<%= LanguageUtil.get(resourceBundle, "exporting-fields-from-all-versions-warning-message") %>'
+		style="info"
+		title='<%= LanguageUtil.get(resourceBundle, "info") %>'
+	/>
+
 	<aui:select label="file-extension" name="fileExtension">
 
 		<%

@@ -405,7 +405,7 @@
 <!--WIDGETS-->
 <tr>
 	<td>WIDGETS_APPLICATION_SEARCH_FIELD</td>
-	<td>//form[@role='search']//input[contains(@placeholder,'Search')]</td>
+	<td>//div[@role='search']//input[contains(@placeholder,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

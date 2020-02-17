@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
@@ -131,7 +132,7 @@ public class LayoutDataConverter {
 
 						_addFragmentEntryLink(
 							fragmentEntryLinksJSONArray.getString(k),
-							layoutStructure,
+							inputDataJSONObject, layoutStructure,
 							columnLayoutStructureItem.getItemId(), k);
 					}
 				}
@@ -143,7 +144,8 @@ public class LayoutDataConverter {
 					columnJSONObject.getJSONArray("fragmentEntryLinkIds");
 
 				_addFragmentEntryLink(
-					fragmentEntryLinkIdsJSONArray.getString(0), layoutStructure,
+					fragmentEntryLinkIdsJSONArray.getString(0),
+					inputDataJSONObject, layoutStructure,
 					rootLayoutStructureItem.getItemId(), i);
 			}
 		}
@@ -164,14 +166,26 @@ public class LayoutDataConverter {
 	}
 
 	private static void _addFragmentEntryLink(
-		String fragmentEntryLinkId, LayoutStructure layoutStructure,
-		String parentItemId, int position) {
+		String fragmentEntryLinkId, JSONObject inputDataJSONObject,
+		LayoutStructure layoutStructure, String parentItemId, int position) {
 
 		if (fragmentEntryLinkId.equals(
 				LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
 
-			layoutStructure.addDropZoneLayoutStructureItem(
-				parentItemId, position);
+			DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+				(DropZoneLayoutStructureItem)
+					layoutStructure.addDropZoneLayoutStructureItem(
+						parentItemId, position);
+
+			dropZoneLayoutStructureItem.setAllowNewFragmentEntries(
+				inputDataJSONObject.getBoolean(
+					"allowNewFragmentEntries", true));
+
+			JSONArray fragmentEntryKeysJSONArray =
+				inputDataJSONObject.getJSONArray("fragmentEntryKeys");
+
+			dropZoneLayoutStructureItem.setFragmentEntryKeys(
+				JSONUtil.toStringList(fragmentEntryKeysJSONArray));
 
 			return;
 		}

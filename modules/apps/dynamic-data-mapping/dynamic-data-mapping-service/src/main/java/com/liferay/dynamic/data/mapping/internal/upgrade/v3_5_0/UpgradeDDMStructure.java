@@ -58,146 +58,14 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		_ddmFormLayoutSerializer = ddmFormLayoutSerializer;
 	}
 
-	protected void doStructureDefinitionUpgrade() throws Exception {
-		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select * from DDMStructure where classNameId = ? or " +
-					"classNameId = ? ");
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update DDMStructure set definition = ? where " +
-						"structureId = ?")) {
-
-			ps1.setLong(
-				1,
-				PortalUtil.getClassNameId(
-					"com.liferay.document.library.kernel.model." +
-						"DLFileEntryMetadata"));
-			ps1.setLong(
-				2,
-				PortalUtil.getClassNameId(
-					"com.liferay.journal.model.JournalArticle"));
-
-			try (ResultSet rs = ps1.executeQuery()) {
-				while (rs.next()) {
-					String definition = upgradeDefinition(
-						rs.getLong("companyId"), rs.getString("definition"));
-
-					ps2.setString(1, definition);
-
-					ps2.setLong(2, rs.getLong("structureId"));
-					ps2.addBatch();
-				}
-
-				ps2.executeBatch();
-			}
-		}
-	}
-
-	protected void doStructureLayoutUpgrade() throws Exception {
-		StringBundler sb1 = new StringBundler(11);
-
-		sb1.append("select DDMStructureLayout.definition, ");
-		sb1.append("DDMStructureLayout.structureLayoutId, ");
-		sb1.append("DDMStructure.structureKey, DDMStructure.classNameId from ");
-		sb1.append("DDMStructureLayout inner join DDMStructureVersion on ");
-		sb1.append("DDMStructureVersion.structureVersionId = ");
-		sb1.append("DDMStructureLayout.structureVersionId inner join ");
-		sb1.append("DDMStructure on DDMStructure.structureId = ");
-		sb1.append("DDMStructureVersion.structureId and DDMStructure.version ");
-		sb1.append("= DDMStructureVersion.version where ");
-		sb1.append("DDMStructure.classNameId = ? or DDMStructure.classNameId ");
-		sb1.append("= ?");
-
-		try (PreparedStatement ps1 = connection.prepareStatement(
-				sb1.toString());
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update DDMStructureLayout set definition = ?, " +
-						"classNameId = ?, structureLayoutKey = ? where " +
-							"structureLayoutId = ?")) {
-
-			ps1.setLong(
-				1,
-				PortalUtil.getClassNameId(
-					"com.liferay.document.library.kernel.model." +
-						"DLFileEntryMetadata"));
-			ps1.setLong(
-				2,
-				PortalUtil.getClassNameId(
-					"com.liferay.journal.model.JournalArticle"));
-
-			try (ResultSet rs = ps1.executeQuery()) {
-				while (rs.next()) {
-					ps2.setString(
-						1,
-						upgradeDDMFormLayoutDefinition(
-							rs.getString("definition")));
-					ps2.setLong(2, rs.getLong("classNameId"));
-					ps2.setString(3, rs.getString("structureKey"));
-					ps2.setLong(4, rs.getLong("structureLayoutId"));
-
-					ps2.addBatch();
-				}
-
-				ps2.executeBatch();
-			}
-		}
-	}
-
-	protected void doStructureVersionDefinitionUpgrade() throws Exception {
-		StringBundler sb1 = new StringBundler(6);
-
-		sb1.append("select DDMStructure.structureKey, DDMStructureVersion.* ");
-		sb1.append("from DDMStructureVersion inner join DDMStructure on ");
-		sb1.append("DDMStructure.structureId = ");
-		sb1.append("DDMStructureVersion.structureId where ");
-		sb1.append("DDMStructure.classNameId = ? or DDMStructure.classNameId ");
-		sb1.append("= ?");
-
-		try (PreparedStatement ps1 = connection.prepareStatement(
-				sb1.toString());
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update DDMStructureVersion set definition = ? where " +
-						"structureVersionId = ?")) {
-
-			ps1.setLong(
-				1,
-				PortalUtil.getClassNameId(
-					"com.liferay.document.library.kernel.model." +
-						"DLFileEntryMetadata"));
-			ps1.setLong(
-				2,
-				PortalUtil.getClassNameId(
-					"com.liferay.journal.model.JournalArticle"));
-
-			try (ResultSet rs = ps1.executeQuery()) {
-				while (rs.next()) {
-					String definition = upgradeDefinition(
-						rs.getLong("companyId"), rs.getString("definition"));
-
-					ps2.setString(1, definition);
-
-					ps2.setLong(2, rs.getLong("structureVersionId"));
-					ps2.addBatch();
-				}
-
-				ps2.executeBatch();
-			}
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
-		doStructureDefinitionUpgrade();
-		doStructureVersionDefinitionUpgrade();
-		doStructureLayoutUpgrade();
+		_upgradeStructureDefinition();
+		_upgradeStructureVersionDefinition();
+		_upgradeStructureLayoutDefinition();
 	}
 
-	protected void upgradeColorField(JSONObject jsonObject) {
+	private void _upgradeColorField(JSONObject jsonObject) {
 		jsonObject.put(
 			"dataType", "string"
 		).put(
@@ -207,7 +75,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		);
 	}
 
-	protected void upgradeDateField(JSONObject jsonObject) {
+	private void _upgradeDateField(JSONObject jsonObject) {
 		jsonObject.put(
 			"dataType", "string"
 		).put(
@@ -217,7 +85,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		);
 	}
 
-	protected String upgradeDDMFormLayoutDefinition(String content) {
+	private String _upgradeDDMFormLayoutDefinition(String content) {
 		DDMFormLayoutDeserializerDeserializeResponse
 			ddmFormLayoutDeserializerDeserializeResponse =
 				_ddmFormLayoutDeserializer.deserialize(
@@ -303,7 +171,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		return ddmFormLayoutSerializerSerializeResponse.getContent();
 	}
 
-	protected void upgradeDecimalField(JSONObject jsonObject) {
+	private void _upgradeDecimalField(JSONObject jsonObject) {
 		jsonObject.put(
 			"dataType", "decimal"
 		).put(
@@ -313,19 +181,19 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		);
 	}
 
-	protected String upgradeDefinition(long companyId, String definition)
+	private String _upgradeDefinition(long companyId, String definition)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(definition);
 
 		jsonObject.put(
 			"fields",
-			upgradeFields(companyId, jsonObject.getJSONArray("fields")));
+			_upgradeFields(companyId, jsonObject.getJSONArray("fields")));
 
 		return jsonObject.toString();
 	}
 
-	protected void upgradeDocumentLibraryField(JSONObject jsonObject) {
+	private void _upgradeDocumentLibraryField(JSONObject jsonObject) {
 		jsonObject.put(
 			"dataType", "string"
 		).put(
@@ -335,7 +203,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		);
 	}
 
-	protected JSONArray upgradeFields(long companyId, JSONArray fieldsJSONArray)
+	private JSONArray _upgradeFields(long companyId, JSONArray fieldsJSONArray)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -347,28 +215,28 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 				String type = jsonObject.getString("type");
 
 				if (StringUtil.equals(type, "ddm-color")) {
-					upgradeColorField(jsonObject);
+					_upgradeColorField(jsonObject);
 				}
 				else if (StringUtil.equals(type, "ddm-date")) {
-					upgradeDateField(jsonObject);
+					_upgradeDateField(jsonObject);
 				}
 				else if (type.startsWith("ddm-decimal")) {
-					upgradeDecimalField(jsonObject);
+					_upgradeDecimalField(jsonObject);
 				}
 				else if (type.startsWith("ddm-documentlibrary")) {
-					upgradeDocumentLibraryField(jsonObject);
+					_upgradeDocumentLibraryField(jsonObject);
 				}
 				else if (type.startsWith("ddm-geolocation")) {
-					upgradeGeolocation(jsonObject);
+					_upgradeGeolocation(jsonObject);
 				}
 				else if (type.startsWith("ddm-integer")) {
-					upgradeIntegerField(jsonObject);
+					_upgradeIntegerField(jsonObject);
 				}
 				else if (type.startsWith("ddm-number")) {
-					upgradeNumberField(jsonObject);
+					_upgradeNumberField(jsonObject);
 				}
 				else if (StringUtil.equals(type, "ddm-separator")) {
-					upgradeSeparatorField(jsonObject);
+					_upgradeSeparatorField(jsonObject);
 				}
 				else if (type.startsWith("ddm-")) {
 					jsonObject.put(
@@ -378,16 +246,16 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 					);
 				}
 				else if (StringUtil.equals(type, "text")) {
-					upgradeTextField(companyId, jsonObject);
+					_upgradeTextField(companyId, jsonObject);
 				}
 				else if (StringUtil.equals(type, "textarea")) {
-					upgradeTextArea(companyId, jsonObject);
+					_upgradeTextArea(companyId, jsonObject);
 				}
 
 				if (jsonObject.has("nestedFields")) {
 					jsonObject.put(
 						"nestedFields",
-						upgradeFields(
+						_upgradeFields(
 							companyId,
 							jsonObject.getJSONArray("nestedFields")));
 				}
@@ -399,7 +267,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		return jsonArray;
 	}
 
-	protected void upgradeGeolocation(JSONObject jsonObject) {
+	private void _upgradeGeolocation(JSONObject jsonObject) {
 		jsonObject.put(
 			"dataType", "string"
 		).put(
@@ -407,7 +275,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		);
 	}
 
-	protected void upgradeIntegerField(JSONObject jsonObject) {
+	private void _upgradeIntegerField(JSONObject jsonObject) {
 		jsonObject.put(
 			"type", "numeric"
 		).put(
@@ -415,7 +283,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		);
 	}
 
-	protected void upgradeNumberField(JSONObject jsonObject) {
+	private void _upgradeNumberField(JSONObject jsonObject) {
 		jsonObject.put(
 			"dataType", "decimal"
 		).put(
@@ -425,7 +293,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		);
 	}
 
-	protected void upgradeSeparatorField(JSONObject jsonObject) {
+	private void _upgradeSeparatorField(JSONObject jsonObject) {
 		jsonObject.put(
 			"dataType", StringPool.BLANK
 		).put(
@@ -433,7 +301,139 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		);
 	}
 
-	protected void upgradeTextArea(long companyId, JSONObject jsonObject)
+	private void _upgradeStructureDefinition() throws Exception {
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				"select * from DDMStructure where classNameId = ? or " +
+					"classNameId = ? ");
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDMStructure set definition = ? where " +
+						"structureId = ?")) {
+
+			ps1.setLong(
+				1,
+				PortalUtil.getClassNameId(
+					"com.liferay.document.library.kernel.model." +
+						"DLFileEntryMetadata"));
+			ps1.setLong(
+				2,
+				PortalUtil.getClassNameId(
+					"com.liferay.journal.model.JournalArticle"));
+
+			try (ResultSet rs = ps1.executeQuery()) {
+				while (rs.next()) {
+					String definition = _upgradeDefinition(
+						rs.getLong("companyId"), rs.getString("definition"));
+
+					ps2.setString(1, definition);
+
+					ps2.setLong(2, rs.getLong("structureId"));
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
+			}
+		}
+	}
+
+	private void _upgradeStructureLayoutDefinition() throws Exception {
+		StringBundler sb1 = new StringBundler(11);
+
+		sb1.append("select DDMStructureLayout.definition, ");
+		sb1.append("DDMStructureLayout.structureLayoutId, ");
+		sb1.append("DDMStructure.structureKey, DDMStructure.classNameId from ");
+		sb1.append("DDMStructureLayout inner join DDMStructureVersion on ");
+		sb1.append("DDMStructureVersion.structureVersionId = ");
+		sb1.append("DDMStructureLayout.structureVersionId inner join ");
+		sb1.append("DDMStructure on DDMStructure.structureId = ");
+		sb1.append("DDMStructureVersion.structureId and DDMStructure.version ");
+		sb1.append("= DDMStructureVersion.version where ");
+		sb1.append("DDMStructure.classNameId = ? or DDMStructure.classNameId ");
+		sb1.append("= ?");
+
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				sb1.toString());
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDMStructureLayout set definition = ?, " +
+						"classNameId = ?, structureLayoutKey = ? where " +
+							"structureLayoutId = ?")) {
+
+			ps1.setLong(
+				1,
+				PortalUtil.getClassNameId(
+					"com.liferay.document.library.kernel.model." +
+						"DLFileEntryMetadata"));
+			ps1.setLong(
+				2,
+				PortalUtil.getClassNameId(
+					"com.liferay.journal.model.JournalArticle"));
+
+			try (ResultSet rs = ps1.executeQuery()) {
+				while (rs.next()) {
+					ps2.setString(
+						1,
+						_upgradeDDMFormLayoutDefinition(
+							rs.getString("definition")));
+					ps2.setLong(2, rs.getLong("classNameId"));
+					ps2.setString(3, rs.getString("structureKey"));
+					ps2.setLong(4, rs.getLong("structureLayoutId"));
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
+			}
+		}
+	}
+
+	private void _upgradeStructureVersionDefinition() throws Exception {
+		StringBundler sb1 = new StringBundler(6);
+
+		sb1.append("select DDMStructure.structureKey, DDMStructureVersion.* ");
+		sb1.append("from DDMStructureVersion inner join DDMStructure on ");
+		sb1.append("DDMStructure.structureId = ");
+		sb1.append("DDMStructureVersion.structureId where ");
+		sb1.append("DDMStructure.classNameId = ? or DDMStructure.classNameId ");
+		sb1.append("= ?");
+
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				sb1.toString());
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDMStructureVersion set definition = ? where " +
+						"structureVersionId = ?")) {
+
+			ps1.setLong(
+				1,
+				PortalUtil.getClassNameId(
+					"com.liferay.document.library.kernel.model." +
+						"DLFileEntryMetadata"));
+			ps1.setLong(
+				2,
+				PortalUtil.getClassNameId(
+					"com.liferay.journal.model.JournalArticle"));
+
+			try (ResultSet rs = ps1.executeQuery()) {
+				while (rs.next()) {
+					String definition = _upgradeDefinition(
+						rs.getLong("companyId"), rs.getString("definition"));
+
+					ps2.setString(1, definition);
+
+					ps2.setLong(2, rs.getLong("structureVersionId"));
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
+			}
+		}
+	}
+
+	private void _upgradeTextArea(long companyId, JSONObject jsonObject)
 		throws Exception {
 
 		jsonObject.put(
@@ -476,7 +476,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		);
 	}
 
-	protected void upgradeTextField(long companyId, JSONObject jsonObject)
+	private void _upgradeTextField(long companyId, JSONObject jsonObject)
 		throws Exception {
 
 		jsonObject.put(

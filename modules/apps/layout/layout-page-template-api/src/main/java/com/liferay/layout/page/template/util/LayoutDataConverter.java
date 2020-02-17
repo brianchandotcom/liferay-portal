@@ -129,20 +129,10 @@ public class LayoutDataConverter {
 					for (int k = 0; k < fragmentEntryLinksJSONArray.length();
 						 k++) {
 
-						String fragmentEntryLinkId =
-							fragmentEntryLinksJSONArray.getString(k);
-
-						if (fragmentEntryLinkId.equals(
-								LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
-
-							layoutStructure.addDropZoneLayoutStructureItem(
-								columnLayoutStructureItem.getItemId(), k);
-						}
-						else {
-							layoutStructure.addFragmentLayoutStructureItem(
-								GetterUtil.getLong(fragmentEntryLinkId),
-								columnLayoutStructureItem.getItemId(), k);
-						}
+						_addFragmentEntryLink(
+							fragmentEntryLinksJSONArray.getString(k),
+							layoutStructure,
+							columnLayoutStructureItem.getItemId(), k);
 					}
 				}
 			}
@@ -152,20 +142,9 @@ public class LayoutDataConverter {
 				JSONArray fragmentEntryLinkIdsJSONArray =
 					columnJSONObject.getJSONArray("fragmentEntryLinkIds");
 
-				String fragmentEntryLinkId =
-					fragmentEntryLinkIdsJSONArray.getString(0);
-
-				if (fragmentEntryLinkId.equals(
-						LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
-
-					layoutStructure.addDropZoneLayoutStructureItem(
-						rootLayoutStructureItem.getItemId(), i);
-				}
-				else {
-					layoutStructure.addFragmentLayoutStructureItem(
-						GetterUtil.getLong(fragmentEntryLinkId),
-						rootLayoutStructureItem.getItemId(), i);
-				}
+				_addFragmentEntryLink(
+					fragmentEntryLinkIdsJSONArray.getString(0), layoutStructure,
+					rootLayoutStructureItem.getItemId(), i);
 			}
 		}
 
@@ -182,6 +161,23 @@ public class LayoutDataConverter {
 		}
 
 		return false;
+	}
+
+	private static void _addFragmentEntryLink(
+		String fragmentEntryLinkId, LayoutStructure layoutStructure,
+		String parentItemId, int position) {
+
+		if (fragmentEntryLinkId.equals(
+				LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
+
+			layoutStructure.addDropZoneLayoutStructureItem(
+				parentItemId, position);
+
+			return;
+		}
+
+		layoutStructure.addFragmentLayoutStructureItem(
+			GetterUtil.getLong(fragmentEntryLinkId), parentItemId, position);
 	}
 
 	private static JSONObject _getBackgroundImageJSONObject(

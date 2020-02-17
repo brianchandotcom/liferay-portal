@@ -14,13 +14,14 @@
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import {useEffect, useLayoutEffect} from 'react';
+import {useLayoutEffect, useMemo} from 'react';
 
+import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {config} from '../../config/index';
 import createSelectEditableValue from '../../selectors/selectEditableValue';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useSelector} from '../../store/index';
-import {useIsActive, useIsHovered} from '../Controls';
+import {useHoveredItemId, useHoveredItemType, useIsActive} from '../Controls';
 import {useEditableDecoration} from './EditableDecorationContext';
 import {EDITABLE_DECORATION_CLASS_NAMES} from './EditableDecorationMask';
 import getEditableUniqueId from './getEditableUniqueId';
@@ -31,8 +32,9 @@ export default function FragmentContentDecoration({
 	fragmentEntryLinkId,
 	itemId
 }) {
+	const hoveredItemId = useHoveredItemId();
+	const hoveredItemType = useHoveredItemType();
 	const isActive = useIsActive();
-	const isHovered = useIsHovered();
 	const languageId = useSelector(state => state.languageId);
 	const segmentsExperienceId = useSelector(
 		selectPrefixedSegmentsExperienceId
@@ -59,42 +61,80 @@ export default function FragmentContentDecoration({
 
 	const className = classNames({
 		[EDITABLE_DECORATION_CLASS_NAMES.active]: isActive(editableUniqueId),
-		[EDITABLE_DECORATION_CLASS_NAMES.hovered]: isHovered(editableUniqueId),
 
-		[EDITABLE_DECORATION_CLASS_NAMES.mapped]:
-			editableValue &&
-			((editableValue.classNameId &&
-				editableValue.classPK &&
-				editableValue.fieldId) ||
-				editableValue.mappedField),
+		[EDITABLE_DECORATION_CLASS_NAMES.hovered]: useMemo(() => {
+			if (hoveredItemType === ITEM_TYPES.editable) {
+				return editableUniqueId === hoveredItemId;
+			}
+			else if (hoveredItemType === ITEM_TYPES.mappedContent) {
+				return (
+					`${editableValue.classNameId}-${editableValue.classPK}` ===
+					hoveredItemId
+				);
+			}
 
-		[EDITABLE_DECORATION_CLASS_NAMES.highlighted]: [
-			itemId,
-			...Array.from(
-				element.querySelectorAll('lfr-editable')
-			).map(editableElement =>
-				getEditableUniqueId(fragmentEntryLinkId, editableElement.id)
-			)
-		].some(_itemId => isActive(_itemId)),
+			return false;
+		}, [editableUniqueId, editableValue, hoveredItemId, hoveredItemType]),
 
-		[EDITABLE_DECORATION_CLASS_NAMES.translated]:
-			config.defaultLanguageId !== languageId &&
-			(editableValue[languageId] ||
-				(editableValue[segmentsExperienceId] &&
-					editableValue[segmentsExperienceId][languageId]))
+		[EDITABLE_DECORATION_CLASS_NAMES.mapped]: useMemo(
+			() =>
+				editableValue &&
+				((editableValue.classNameId &&
+					editableValue.classPK &&
+					editableValue.fieldId) ||
+					editableValue.mappedField),
+			[editableValue]
+		),
+
+		[EDITABLE_DECORATION_CLASS_NAMES.highlighted]: useMemo(
+			() =>
+				[
+					itemId,
+					...Array.from(
+						element.querySelectorAll('lfr-editable')
+					).map(editableElement =>
+						getEditableUniqueId(
+							fragmentEntryLinkId,
+							editableElement.id
+						)
+					)
+				].some(_itemId => isActive(_itemId)),
+			[element, fragmentEntryLinkId, isActive, itemId]
+		),
+
+		[EDITABLE_DECORATION_CLASS_NAMES.translated]: useMemo(
+			() =>
+				config.defaultLanguageId !== languageId &&
+				(editableValue[languageId] ||
+					(editableValue[segmentsExperienceId] &&
+						editableValue[segmentsExperienceId][languageId])),
+			[editableValue, languageId, segmentsExperienceId]
+		)
 	});
 
 	useLayoutEffect(() => {
-		registerElement(editableUniqueId, editableElement);
-
-		return () => {
+		if (className) {
+			registerElement(editableUniqueId, editableElement);
+			updateClassName(editableUniqueId, className);
+		}
+		else {
 			unregisterElement(editableUniqueId);
-		};
-	}, [editableElement, editableUniqueId, registerElement, unregisterElement]);
+		}
+	}, [
+		className,
+		editableElement,
+		editableUniqueId,
+		registerElement,
+		unregisterElement,
+		updateClassName
+	]);
 
-	useEffect(() => {
-		updateClassName(editableUniqueId, className);
-	}, [className, editableElement, editableUniqueId, updateClassName]);
+	useLayoutEffect(
+		() => () => {
+			unregisterElement(editableUniqueId);
+		},
+		[editableUniqueId, unregisterElement]
+	);
 
 	return null;
 }

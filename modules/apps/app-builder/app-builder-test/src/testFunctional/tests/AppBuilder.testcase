@@ -30,13 +30,6 @@ definition {
 		}
 		else {
 
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "App Builder",
-				panel = "Control Panel",
-				portlet = "Custom Objects");
-
 			AppBuilderAdmin.teardownAppBuilder();
 
 			Page.tearDownCP();
@@ -44,6 +37,18 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "App Builder Site Name");
 
 			JSONUser.tearDownNonAdminUsers();
+
+			for (var roleTitle : list "Account Administrator,Account Owner,Portal Content Reviewer,Power User,User") {
+				Permissions.removePermissionViaAPI(
+					resourceAction = "ACCESS_IN_CONTROL_PANEL",
+					resourceName = "com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet",
+					roleTitle = "${roleTitle}");
+
+				Permissions.removePermissionViaAPI(
+					resourceAction = "MANAGE",
+					resourceName = "com.liferay.app.builder",
+					roleTitle = "${roleTitle}");
+			}
 
 		}
 	}
@@ -2747,6 +2752,137 @@ definition {
 		DetailsView.validateEntry(entry = "Bester");
 
 		DetailsView.deleteEntry(itemName = "Changed");
+	}
+
+	@description = "Set App Builder manage permission for User and Portal Content Reviewer and perform CRUD operations"
+	@priority = "5"
+	test SetAppBuilderManagePermissionFor2RolesAndPerformCRUD {
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet",
+			roleTitle = "User");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE",
+			resourceName = "com.liferay.app.builder",
+			roleTitle = "User");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Admin object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "Form View Admin");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text",
+			tableViewName = "Table View Admin");
+
+		App.add(
+			appTitle = "App Admin",
+			deployOption = "Product Menu",
+			formViewName = "Form View Admin",
+			tableViewName = "Table View Admin");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "App Admin");
+
+		AppBuilderAdmin.validateProductMenuApp(appName = "App Admin");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Admin object");
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
+		AppBuilderAdmin.addAllPermissionsFromRoles(roleList = "User");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
+		AppBuilderAdmin.validatePermissionsFromRolesAreChecked(roleList = "User");
+		Button.clickSave();
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Form Views");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Form View Admin");
+		AppBuilderAdmin.editItem(itemName = "Form View Admin");
+		FormViewBuilder.setName(formViewName = "Form View UserA");
+		FormViewBuilder.save();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Form View UserA");
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Table View Admin");
+		AppBuilderAdmin.editItem(itemName = "Table View Admin");
+		TableViewBuilder.setName(tableViewName = "Table View UserA");
+		TableViewBuilder.save();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Table View UserA");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.undeployApp(itemName = "App Admin");
+
+		AppBuilderAdmin.gotoBack();
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
+
+		AppBuilderAdmin.performCustomObjectCRUD();
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet",
+			roleTitle = "User");
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "MANAGE",
+			resourceName = "com.liferay.app.builder",
+			roleTitle = "User");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Portal Content Reviewer",
+			userEmailAddress = "userea@liferay.com");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet",
+			roleTitle = "Portal Content Reviewer");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE",
+			resourceName = "com.liferay.app.builder",
+			roleTitle = "Portal Content Reviewer");
+
+		AppBuilderAdmin.performCustomObjectCRUD();
 	}
 
 }

@@ -19,9 +19,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
-import React, {useContext, useMemo, useState} from 'react';
-
-import MillerColumnsContext from './MillerColumnsContext';
+import React, {useMemo, useState} from 'react';
 
 const ITEM_STATES_COLORS = {
 	'conversion-draft': 'info',
@@ -31,7 +29,8 @@ const ITEM_STATES_COLORS = {
 
 const noop = () => {};
 
-const MillerColumnsColumnItem = ({
+const MillerColumnsItem = ({
+	actionHandlers = {},
 	actions = [],
 	active,
 	bulkActions = '',
@@ -40,15 +39,12 @@ const MillerColumnsColumnItem = ({
 	draggable,
 	hasChild,
 	itemId,
+	namespace,
 	selectable,
 	states = [],
 	title,
 	url
 }) => {
-	const {actionHandlers = {}, namespace = ''} = useContext(
-		MillerColumnsContext
-	);
-
 	const [dropdownActionsActive, setDropdownActionsActive] = useState();
 
 	const dropdownActions = useMemo(() => {
@@ -191,4 +187,4 @@ const MillerColumnsColumnItem = ({
 	);
 };
 
-export default MillerColumnsColumnItem;
+export default MillerColumnsItem;

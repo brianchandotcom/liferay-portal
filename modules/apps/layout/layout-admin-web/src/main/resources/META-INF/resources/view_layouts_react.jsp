@@ -71,7 +71,7 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 					<div>
 						<react:component
 							data="<%= layoutData %>"
-							module="js/Layout"
+							module="js/layout/Layout"
 						/>
 					</div>
 				</c:otherwise>

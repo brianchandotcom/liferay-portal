@@ -16,7 +16,7 @@ import React, {useEffect, useRef} from 'react';
 
 import MillerColumnsColumn from './MillerColumnsColumn';
 
-const MillerColumns = ({columns}) => {
+const MillerColumns = ({actionHandlers, columns, namespace}) => {
 	const rowRef = useRef();
 
 	useEffect(() => {
@@ -28,7 +28,12 @@ const MillerColumns = ({columns}) => {
 	return (
 		<div className="bg-white miller-columns-row" ref={rowRef}>
 			{columns.map((items, index) => (
-				<MillerColumnsColumn items={items} key={index} />
+				<MillerColumnsColumn
+					actionHandlers={actionHandlers}
+					items={items}
+					key={index}
+					namespace={namespace}
+				/>
 			))}
 		</div>
 	);

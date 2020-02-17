@@ -144,6 +144,7 @@
 		<check name="EmptyCollectionCheck" />
 		<check name="GetterUtilCheck" />
 		<check name="Java2HTMLCheck" />
+		<check name="JavaAbstractMethodCheck" />
 		<check name="JavaAggregateTestRuleParameterOrderCheck" />
 		<check name="JavaAnnotationDefaultAttributeCheck" />
 		<check name="JavaAnnotationsCheck" />

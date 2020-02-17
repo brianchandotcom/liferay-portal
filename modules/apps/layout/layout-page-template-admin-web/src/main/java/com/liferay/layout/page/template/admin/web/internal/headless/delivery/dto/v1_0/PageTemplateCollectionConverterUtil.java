@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 
 import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Jürgen Kappler
@@ -27,8 +28,19 @@ public class PageTemplateCollectionConverterUtil {
 
 		return new PageTemplateCollection() {
 			{
-				description = layoutPageTemplateCollection.getDescription();
 				name = layoutPageTemplateCollection.getName();
+
+				setDescription(
+					() -> {
+						String description =
+							layoutPageTemplateCollection.getDescription();
+
+						if (Validator.isNull(description)) {
+							return null;
+						}
+
+						return description;
+					});
 			}
 		};
 	}

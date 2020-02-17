@@ -121,13 +121,6 @@ public class DDMFormInstanceLocalServiceWrapper
 			ddmFormInstance, modelPermissions);
 	}
 
-	@Override
-	public int countFormInstances(String uuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmFormInstanceLocalService.countFormInstances(uuid);
-	}
-
 	/**
 	 * Creates a new ddm form instance with the primary key. Does not add the ddm form instance to the database.
 	 *
@@ -488,6 +481,11 @@ public class DDMFormInstanceLocalServiceWrapper
 	@Override
 	public int getFormInstancesCount(long groupId) {
 		return _ddmFormInstanceLocalService.getFormInstancesCount(groupId);
+	}
+
+	@Override
+	public int getFormInstancesCount(String uuid) {
+		return _ddmFormInstanceLocalService.getFormInstancesCount(uuid);
 	}
 
 	@Override

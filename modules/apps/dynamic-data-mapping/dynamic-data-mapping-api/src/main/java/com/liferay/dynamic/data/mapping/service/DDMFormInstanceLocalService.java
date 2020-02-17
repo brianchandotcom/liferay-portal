@@ -111,8 +111,6 @@ public interface DDMFormInstanceLocalService
 			DDMFormInstance ddmFormInstance, ModelPermissions modelPermissions)
 		throws PortalException;
 
-	public int countFormInstances(String uuid) throws PortalException;
-
 	/**
 	 * Creates a new ddm form instance with the primary key. Does not add the ddm form instance to the database.
 	 *
@@ -343,6 +341,9 @@ public interface DDMFormInstanceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFormInstancesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFormInstancesCount(String uuid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormValues getFormInstanceSettingsFormValues(

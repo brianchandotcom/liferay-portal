@@ -67,13 +67,6 @@ public class DDMFormInstanceServiceWrapper
 	}
 
 	@Override
-	public int countFormInstances(String uuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmFormInstanceService.countFormInstances(uuid);
-	}
-
-	@Override
 	public void deleteFormInstance(long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -109,6 +102,11 @@ public class DDMFormInstanceServiceWrapper
 	public int getFormInstancesCount(long companyId, long groupId) {
 		return _ddmFormInstanceService.getFormInstancesCount(
 			companyId, groupId);
+	}
+
+	@Override
+	public int getFormInstancesCount(String uuid) {
+		return _ddmFormInstanceService.getFormInstancesCount(uuid);
 	}
 
 	/**

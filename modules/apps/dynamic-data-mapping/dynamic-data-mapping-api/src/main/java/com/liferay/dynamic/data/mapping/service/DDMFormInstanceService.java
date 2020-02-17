@@ -71,8 +71,6 @@ public interface DDMFormInstanceService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public int countFormInstances(String uuid) throws PortalException;
-
 	public void deleteFormInstance(long ddmFormInstanceId)
 		throws PortalException;
 
@@ -90,6 +88,9 @@ public interface DDMFormInstanceService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFormInstancesCount(long companyId, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFormInstancesCount(String uuid);
 
 	/**
 	 * Returns the OSGi service identifier.

@@ -74,6 +74,22 @@
 					"if": {
 						"properties": {
 							"type": {
+								"const": "Row"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/RowDefinition"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
 								"const": "Root"
 							}
 						}
@@ -137,6 +153,23 @@
 		"RootDefinition": {
 			"additionalProperties": false,
 			"title": "The RootDefinition Schema",
+			"type": "object"
+		},
+		"RowDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"gutters": {
+					"title": "The gutters Schema",
+					"type": "boolean"
+				},
+				"numberOfColumns": {
+					"maximum" : 6,
+					"minimum" : 1,
+					"title": "The backgroundImage Schema",
+					"type": "integer"
+				}
+			},
+			"title": "The RowDefinition Schema",
 			"type": "object"
 		},
 		"SectionDefinition": {

@@ -216,7 +216,7 @@ public class PageTemplateCollection {
 	protected String name;
 
 	@Schema(
-		description = "A valid external identifier to reference this page template."
+		description = "A valid external identifier to reference this page template collection."
 	)
 	public String getUuid() {
 		return uuid;
@@ -240,7 +240,7 @@ public class PageTemplateCollection {
 	}
 
 	@GraphQLField(
-		description = "A valid external identifier to reference this page template."
+		description = "A valid external identifier to reference this page template collection."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String uuid;

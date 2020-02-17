@@ -15,8 +15,10 @@
 import IncrementalDomRenderer from 'metal-incremental-dom';
 import JSXComponent from 'metal-jsx';
 import Soy from 'metal-soy';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
+
+import Observer from './Observer.es';
 
 /**
  * The Adapter needs the React component instance to render and the soy template
@@ -58,10 +60,42 @@ import ReactDOM from 'react-dom';
 
 function getConnectedReactComponentAdapter(ReactComponent, templates) {
 	class ReactComponentAdapter extends JSXComponent {
+		created() {
+			this.observer = new Observer();
+		}
+
 		disposed() {
 			if (this.instance_) {
 				ReactDOM.unmountComponentAtNode(this.instance_);
 			}
+		}
+
+		willReceiveProps(changes) {
+			if (changes) {
+				// eslint-disable-next-line no-unused-vars
+				const {events, ref, store, ...otherProps} = this.props;
+				const newValues = {};
+				const keys = Object.keys(changes);
+
+				keys.forEach(key => {
+					newValues[key] = changes[key].newVal;
+				});
+
+				this.observer.dispatch({
+					...otherProps,
+					...events,
+					...store,
+					...newValues
+				});
+			}
+		}
+
+		/**
+		 * Disable Metal rendering and let React render in the best
+		 * possible way.
+		 */
+		shouldUpdate() {
+			return false;
 		}
 
 		render() {
@@ -82,12 +116,14 @@ function getConnectedReactComponentAdapter(ReactComponent, templates) {
 
 			// eslint-disable-next-line liferay-portal/no-react-dom-render
 			ReactDOM.render(
-				<ReactComponent
-					{...otherProps}
-					{...events}
-					{...store}
-					instance={this}
-				/>,
+				<ObserverSubscribe observer={this.observer}>
+					<ReactComponent
+						{...otherProps}
+						{...events}
+						{...store}
+						instance={this}
+					/>
+				</ObserverSubscribe>,
 				element
 			);
 
@@ -101,6 +137,29 @@ function getConnectedReactComponentAdapter(ReactComponent, templates) {
 
 	return ReactComponentAdapter;
 }
+
+/**
+ * Adds a sub observer to maintain the updated state of the
+ * component.
+ */
+const ObserverSubscribe = ({children, observer}) => {
+	const [state, setState] = useState({});
+
+	useEffect(() => {
+		const change = value => setState({...state, ...value});
+
+		observer.subscribe(change);
+
+		return () => {
+			observer.unsubscribe(change);
+		};
+	}, [state, setState, observer]);
+
+	return React.cloneElement(children, {
+		...children.props,
+		...state
+	});
+};
 
 export {getConnectedReactComponentAdapter};
 export default getConnectedReactComponentAdapter;

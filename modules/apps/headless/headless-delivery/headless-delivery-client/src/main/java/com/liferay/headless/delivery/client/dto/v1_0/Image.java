@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Image {
+public class Image implements Cloneable {
 
 	public String getCaption() {
 		return caption;
@@ -90,6 +90,11 @@ public class Image {
 	}
 
 	protected Long imageId;
+
+	@Override
+	public Image clone() throws CloneNotSupportedException {
+		return (Image)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

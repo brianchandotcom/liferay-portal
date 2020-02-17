@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Settings {
+public class Settings implements Cloneable {
 
 	public String getColorSchemeName() {
 		return colorSchemeName;
@@ -151,6 +151,11 @@ public class Settings {
 	}
 
 	protected Object themeSettings;
+
+	@Override
+	public Settings clone() throws CloneNotSupportedException {
+		return (Settings)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

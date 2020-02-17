@@ -334,8 +334,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			documentFolderResource.patchDocumentFolder(
 				postDocumentFolder.getId(), randomPatchDocumentFolder);
 
-		DocumentFolder expectedPatchDocumentFolder =
-			(DocumentFolder)BeanUtils.cloneBean(postDocumentFolder);
+		DocumentFolder expectedPatchDocumentFolder = postDocumentFolder.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchDocumentFolder, randomPatchDocumentFolder);

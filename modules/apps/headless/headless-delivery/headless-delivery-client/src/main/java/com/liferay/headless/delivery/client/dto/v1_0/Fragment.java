@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Fragment {
+public class Fragment implements Cloneable {
 
 	public String getFragmentCollectionName() {
 		return fragmentCollectionName;
@@ -70,6 +70,11 @@ public class Fragment {
 	}
 
 	protected String fragmentName;
+
+	@Override
+	public Fragment clone() throws CloneNotSupportedException {
+		return (Fragment)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

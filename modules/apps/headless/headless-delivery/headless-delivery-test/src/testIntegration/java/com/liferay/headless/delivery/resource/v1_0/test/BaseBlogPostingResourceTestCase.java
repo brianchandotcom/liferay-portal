@@ -332,8 +332,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting patchBlogPosting = blogPostingResource.patchBlogPosting(
 			postBlogPosting.getId(), randomPatchBlogPosting);
 
-		BlogPosting expectedPatchBlogPosting = (BlogPosting)BeanUtils.cloneBean(
-			postBlogPosting);
+		BlogPosting expectedPatchBlogPosting = postBlogPosting.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchBlogPosting, randomPatchBlogPosting);

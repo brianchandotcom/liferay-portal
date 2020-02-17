@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class MappedValue {
+public class MappedValue implements Cloneable {
 
 	public Long getClassNameId() {
 		return classNameId;
@@ -90,6 +90,11 @@ public class MappedValue {
 	}
 
 	protected String fieldId;
+
+	@Override
+	public MappedValue clone() throws CloneNotSupportedException {
+		return (MappedValue)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

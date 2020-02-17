@@ -633,8 +633,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization patchOrganization = organizationResource.patchOrganization(
 			postOrganization.getId(), randomPatchOrganization);
 
-		Organization expectedPatchOrganization =
-			(Organization)BeanUtils.cloneBean(postOrganization);
+		Organization expectedPatchOrganization = postOrganization.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchOrganization, randomPatchOrganization);

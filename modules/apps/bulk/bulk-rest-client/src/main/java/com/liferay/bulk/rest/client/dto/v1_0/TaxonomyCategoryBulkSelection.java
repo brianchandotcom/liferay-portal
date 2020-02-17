@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class TaxonomyCategoryBulkSelection {
+public class TaxonomyCategoryBulkSelection implements Cloneable {
 
 	public DocumentBulkSelection getDocumentBulkSelection() {
 		return documentBulkSelection;
@@ -99,6 +99,13 @@ public class TaxonomyCategoryBulkSelection {
 	}
 
 	protected Long[] taxonomyCategoryIdsToRemove;
+
+	@Override
+	public TaxonomyCategoryBulkSelection clone()
+		throws CloneNotSupportedException {
+
+		return (TaxonomyCategoryBulkSelection)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

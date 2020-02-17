@@ -744,7 +744,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				postTaxonomyVocabulary.getId(), randomPatchTaxonomyVocabulary);
 
 		TaxonomyVocabulary expectedPatchTaxonomyVocabulary =
-			(TaxonomyVocabulary)BeanUtils.cloneBean(postTaxonomyVocabulary);
+			postTaxonomyVocabulary.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchTaxonomyVocabulary, randomPatchTaxonomyVocabulary);

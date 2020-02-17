@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageDefinition {
+public class PageDefinition implements Cloneable {
 
 	public PageElement getPageElement() {
 		return pageElement;
@@ -69,6 +69,11 @@ public class PageDefinition {
 	}
 
 	protected Settings settings;
+
+	@Override
+	public PageDefinition clone() throws CloneNotSupportedException {
+		return (PageDefinition)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

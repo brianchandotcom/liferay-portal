@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Location {
+public class Location implements Cloneable {
 
 	public String getAddressCountry() {
 		return addressCountry;
@@ -113,6 +113,11 @@ public class Location {
 	}
 
 	protected Long id;
+
+	@Override
+	public Location clone() throws CloneNotSupportedException {
+		return (Location)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -350,7 +350,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				randomPatchMessageBoardMessage);
 
 		MessageBoardMessage expectedPatchMessageBoardMessage =
-			(MessageBoardMessage)BeanUtils.cloneBean(postMessageBoardMessage);
+			postMessageBoardMessage.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchMessageBoardMessage, randomPatchMessageBoardMessage);

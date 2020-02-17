@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class NavigationMenuItem {
+public class NavigationMenuItem implements Cloneable {
 
 	public Creator getCreator() {
 		return creator;
@@ -254,6 +254,11 @@ public class NavigationMenuItem {
 	}
 
 	protected String url;
+
+	@Override
+	public NavigationMenuItem clone() throws CloneNotSupportedException {
+		return (NavigationMenuItem)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

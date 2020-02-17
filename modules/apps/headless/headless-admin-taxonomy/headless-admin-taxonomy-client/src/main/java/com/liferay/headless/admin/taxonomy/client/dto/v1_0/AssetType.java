@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AssetType {
+public class AssetType implements Cloneable {
 
 	public Boolean getRequired() {
 		return required;
@@ -88,6 +88,11 @@ public class AssetType {
 	}
 
 	protected String type;
+
+	@Override
+	public AssetType clone() throws CloneNotSupportedException {
+		return (AssetType)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageElement {
+public class PageElement implements Cloneable {
 
 	public static enum Type {
 
@@ -128,6 +128,11 @@ public class PageElement {
 	}
 
 	protected Type type;
+
+	@Override
+	public PageElement clone() throws CloneNotSupportedException {
+		return (PageElement)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

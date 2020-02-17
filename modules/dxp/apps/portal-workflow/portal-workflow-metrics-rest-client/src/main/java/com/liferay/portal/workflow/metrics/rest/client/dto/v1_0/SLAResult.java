@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SLAResult {
+public class SLAResult implements Cloneable {
 
 	public static enum Status {
 
@@ -189,6 +189,11 @@ public class SLAResult {
 	}
 
 	protected Status status;
+
+	@Override
+	public SLAResult clone() throws CloneNotSupportedException {
+		return (SLAResult)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SectionDefinition {
+public class SectionDefinition implements Cloneable {
 
 	public String getBackgroundColorCssClass() {
 		return backgroundColorCssClass;
@@ -93,6 +93,11 @@ public class SectionDefinition {
 	}
 
 	protected Layout layout;
+
+	@Override
+	public SectionDefinition clone() throws CloneNotSupportedException {
+		return (SectionDefinition)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

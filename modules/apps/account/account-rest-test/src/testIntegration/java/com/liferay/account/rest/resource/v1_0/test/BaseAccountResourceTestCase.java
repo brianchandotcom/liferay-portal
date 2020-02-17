@@ -589,8 +589,7 @@ public abstract class BaseAccountResourceTestCase {
 		Account patchAccount = accountResource.patchAccount(
 			postAccount.getId(), randomPatchAccount);
 
-		Account expectedPatchAccount = (Account)BeanUtils.cloneBean(
-			postAccount);
+		Account expectedPatchAccount = postAccount.clone();
 
 		_beanUtilsBean.copyProperties(expectedPatchAccount, randomPatchAccount);
 

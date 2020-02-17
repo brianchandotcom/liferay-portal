@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class App {
+public class App implements Cloneable {
 
 	public AppDeployment[] getAppDeployments() {
 		return appDeployments;
@@ -259,6 +259,11 @@ public class App {
 	}
 
 	protected Long userId;
+
+	@Override
+	public App clone() throws CloneNotSupportedException {
+		return (App)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

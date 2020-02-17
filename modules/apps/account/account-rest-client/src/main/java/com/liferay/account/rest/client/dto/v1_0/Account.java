@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Account {
+public class Account implements Cloneable {
 
 	public String getDescription() {
 		return description;
@@ -149,6 +149,11 @@ public class Account {
 	}
 
 	protected Integer status;
+
+	@Override
+	public Account clone() throws CloneNotSupportedException {
+		return (Account)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

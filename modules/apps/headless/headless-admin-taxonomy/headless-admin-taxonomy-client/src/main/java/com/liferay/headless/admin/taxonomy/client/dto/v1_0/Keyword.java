@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Keyword {
+public class Keyword implements Cloneable {
 
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -194,6 +194,11 @@ public class Keyword {
 	}
 
 	protected Long siteId;
+
+	@Override
+	public Keyword clone() throws CloneNotSupportedException {
+		return (Keyword)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

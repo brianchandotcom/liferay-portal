@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class KeywordBulkSelection {
+public class KeywordBulkSelection implements Cloneable {
 
 	public DocumentBulkSelection getDocumentBulkSelection() {
 		return documentBulkSelection;
@@ -93,6 +93,11 @@ public class KeywordBulkSelection {
 	}
 
 	protected String[] keywordsToRemove;
+
+	@Override
+	public KeywordBulkSelection clone() throws CloneNotSupportedException {
+		return (KeywordBulkSelection)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

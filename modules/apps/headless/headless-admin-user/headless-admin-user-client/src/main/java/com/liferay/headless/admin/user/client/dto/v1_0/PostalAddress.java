@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PostalAddress {
+public class PostalAddress implements Cloneable {
 
 	public String getAddressCountry() {
 		return addressCountry;
@@ -260,6 +260,11 @@ public class PostalAddress {
 	}
 
 	protected String streetAddressLine3;
+
+	@Override
+	public PostalAddress clone() throws CloneNotSupportedException {
+		return (PostalAddress)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

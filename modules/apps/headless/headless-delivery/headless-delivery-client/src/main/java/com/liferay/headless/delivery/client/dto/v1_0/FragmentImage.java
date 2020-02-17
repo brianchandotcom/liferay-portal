@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentImage {
+public class FragmentImage implements Cloneable {
 
 	public Object getTitle() {
 		return title;
@@ -67,6 +67,11 @@ public class FragmentImage {
 	}
 
 	protected Object url;
+
+	@Override
+	public FragmentImage clone() throws CloneNotSupportedException {
+		return (FragmentImage)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

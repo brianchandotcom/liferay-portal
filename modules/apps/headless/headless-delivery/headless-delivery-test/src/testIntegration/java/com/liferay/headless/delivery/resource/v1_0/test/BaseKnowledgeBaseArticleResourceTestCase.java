@@ -359,7 +359,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				randomPatchKnowledgeBaseArticle);
 
 		KnowledgeBaseArticle expectedPatchKnowledgeBaseArticle =
-			(KnowledgeBaseArticle)BeanUtils.cloneBean(postKnowledgeBaseArticle);
+			postKnowledgeBaseArticle.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchKnowledgeBaseArticle, randomPatchKnowledgeBaseArticle);

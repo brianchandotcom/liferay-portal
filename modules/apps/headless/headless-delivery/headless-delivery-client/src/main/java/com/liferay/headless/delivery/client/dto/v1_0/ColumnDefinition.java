@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ColumnDefinition {
+public class ColumnDefinition implements Cloneable {
 
 	public Integer getSize() {
 		return size;
@@ -46,6 +46,11 @@ public class ColumnDefinition {
 	}
 
 	protected Integer size;
+
+	@Override
+	public ColumnDefinition clone() throws CloneNotSupportedException {
+		return (ColumnDefinition)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

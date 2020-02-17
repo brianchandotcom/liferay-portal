@@ -348,7 +348,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				randomPatchMessageBoardSection);
 
 		MessageBoardSection expectedPatchMessageBoardSection =
-			(MessageBoardSection)BeanUtils.cloneBean(postMessageBoardSection);
+			postMessageBoardSection.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchMessageBoardSection, randomPatchMessageBoardSection);

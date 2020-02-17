@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class BlogPostingImage {
+public class BlogPostingImage implements Cloneable {
 
 	public static enum ViewableBy {
 
@@ -211,6 +211,11 @@ public class BlogPostingImage {
 	}
 
 	protected ViewableBy viewableBy;
+
+	@Override
+	public BlogPostingImage clone() throws CloneNotSupportedException {
+		return (BlogPostingImage)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

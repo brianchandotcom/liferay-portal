@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class InlineLink {
+public class InlineLink implements Cloneable {
 
 	public String getHref() {
 		return href;
@@ -46,6 +46,11 @@ public class InlineLink {
 	}
 
 	protected String href;
+
+	@Override
+	public InlineLink clone() throws CloneNotSupportedException {
+		return (InlineLink)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

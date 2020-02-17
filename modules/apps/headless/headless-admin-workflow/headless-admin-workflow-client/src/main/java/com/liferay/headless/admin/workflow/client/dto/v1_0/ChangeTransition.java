@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ChangeTransition {
+public class ChangeTransition implements Cloneable {
 
 	public String getComment() {
 		return comment;
@@ -90,6 +90,11 @@ public class ChangeTransition {
 	}
 
 	protected Long workflowTaskId;
+
+	@Override
+	public ChangeTransition clone() throws CloneNotSupportedException {
+		return (ChangeTransition)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

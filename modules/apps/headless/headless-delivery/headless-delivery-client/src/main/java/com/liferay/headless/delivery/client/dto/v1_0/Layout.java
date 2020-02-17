@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Layout {
+public class Layout implements Cloneable {
 
 	public static enum ContainerType {
 
@@ -150,6 +150,11 @@ public class Layout {
 	}
 
 	protected Integer paddingTop;
+
+	@Override
+	public Layout clone() throws CloneNotSupportedException {
+		return (Layout)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContentStructureField {
+public class ContentStructureField implements Cloneable {
 
 	public String getDataType() {
 		return dataType;
@@ -328,6 +328,11 @@ public class ContentStructureField {
 	}
 
 	protected Boolean showLabel;
+
+	@Override
+	public ContentStructureField clone() throws CloneNotSupportedException {
+		return (ContentStructureField)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

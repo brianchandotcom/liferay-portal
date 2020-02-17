@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class DataLayoutRow {
+public class DataLayoutRow implements Cloneable {
 
 	public DataLayoutColumn[] getDataLayoutColumns() {
 		return dataLayoutColumns;
@@ -49,6 +49,11 @@ public class DataLayoutRow {
 	}
 
 	protected DataLayoutColumn[] dataLayoutColumns;
+
+	@Override
+	public DataLayoutRow clone() throws CloneNotSupportedException {
+		return (DataLayoutRow)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

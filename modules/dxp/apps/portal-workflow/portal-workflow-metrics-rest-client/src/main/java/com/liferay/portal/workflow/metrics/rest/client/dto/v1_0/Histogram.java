@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Histogram {
+public class Histogram implements Cloneable {
 
 	public String getKey() {
 		return key;
@@ -67,6 +67,11 @@ public class Histogram {
 	}
 
 	protected Double value;
+
+	@Override
+	public Histogram clone() throws CloneNotSupportedException {
+		return (Histogram)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Assignee {
+public class Assignee implements Cloneable {
 
 	public Long getId() {
 		return id;
@@ -65,6 +65,11 @@ public class Assignee {
 	}
 
 	protected String name;
+
+	@Override
+	public Assignee clone() throws CloneNotSupportedException {
+		return (Assignee)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

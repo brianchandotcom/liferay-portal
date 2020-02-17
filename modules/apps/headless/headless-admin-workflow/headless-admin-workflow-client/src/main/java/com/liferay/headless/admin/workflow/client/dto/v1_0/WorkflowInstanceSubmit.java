@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WorkflowInstanceSubmit {
+public class WorkflowInstanceSubmit implements Cloneable {
 
 	public Map<String, ?> getContext() {
 		return context;
@@ -136,6 +136,11 @@ public class WorkflowInstanceSubmit {
 	}
 
 	protected String workflowDefinitionVersion;
+
+	@Override
+	public WorkflowInstanceSubmit clone() throws CloneNotSupportedException {
+		return (WorkflowInstanceSubmit)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

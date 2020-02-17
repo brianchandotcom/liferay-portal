@@ -695,7 +695,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				postTaxonomyCategory.getId(), randomPatchTaxonomyCategory);
 
 		TaxonomyCategory expectedPatchTaxonomyCategory =
-			(TaxonomyCategory)BeanUtils.cloneBean(postTaxonomyCategory);
+			postTaxonomyCategory.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchTaxonomyCategory, randomPatchTaxonomyCategory);

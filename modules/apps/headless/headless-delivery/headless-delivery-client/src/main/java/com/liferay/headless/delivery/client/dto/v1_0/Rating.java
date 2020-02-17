@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Rating {
+public class Rating implements Cloneable {
 
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -196,6 +196,11 @@ public class Rating {
 	}
 
 	protected Double worstRating;
+
+	@Override
+	public Rating clone() throws CloneNotSupportedException {
+		return (Rating)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -637,8 +637,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Document patchDocument = documentResource.patchDocument(
 			postDocument.getId(), randomPatchDocument, multipartFiles);
 
-		Document expectedPatchDocument = (Document)BeanUtils.cloneBean(
-			postDocument);
+		Document expectedPatchDocument = postDocument.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchDocument, randomPatchDocument);

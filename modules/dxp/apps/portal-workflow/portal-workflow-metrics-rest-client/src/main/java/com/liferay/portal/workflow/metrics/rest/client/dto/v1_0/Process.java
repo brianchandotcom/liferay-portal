@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Process {
+public class Process implements Cloneable {
 
 	public Long getId() {
 		return id;
@@ -151,6 +151,11 @@ public class Process {
 	}
 
 	protected Long untrackedInstanceCount;
+
+	@Override
+	public Process clone() throws CloneNotSupportedException {
+		return (Process)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

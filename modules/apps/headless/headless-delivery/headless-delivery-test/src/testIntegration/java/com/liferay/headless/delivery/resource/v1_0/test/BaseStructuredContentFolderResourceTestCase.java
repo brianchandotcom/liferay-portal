@@ -1160,8 +1160,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				randomPatchStructuredContentFolder);
 
 		StructuredContentFolder expectedPatchStructuredContentFolder =
-			(StructuredContentFolder)BeanUtils.cloneBean(
-				postStructuredContentFolder);
+			postStructuredContentFolder.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchStructuredContentFolder,

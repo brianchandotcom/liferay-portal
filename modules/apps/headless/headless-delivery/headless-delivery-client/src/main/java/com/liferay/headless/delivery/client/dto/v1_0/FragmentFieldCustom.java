@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentFieldCustom {
+public class FragmentFieldCustom implements Cloneable {
 
 	public String getType() {
 		return type;
@@ -65,6 +65,11 @@ public class FragmentFieldCustom {
 	}
 
 	protected Value value;
+
+	@Override
+	public FragmentFieldCustom clone() throws CloneNotSupportedException {
+		return (FragmentFieldCustom)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class MessageBoardMessage {
+public class MessageBoardMessage implements Cloneable {
 
 	public static enum ViewableBy {
 
@@ -522,6 +522,11 @@ public class MessageBoardMessage {
 	}
 
 	protected ViewableBy viewableBy;
+
+	@Override
+	public MessageBoardMessage clone() throws CloneNotSupportedException {
+		return (MessageBoardMessage)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

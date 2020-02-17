@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class KnowledgeBaseFolder {
+public class KnowledgeBaseFolder implements Cloneable {
 
 	public static enum ViewableBy {
 
@@ -375,6 +375,11 @@ public class KnowledgeBaseFolder {
 	}
 
 	protected ViewableBy viewableBy;
+
+	@Override
+	public KnowledgeBaseFolder clone() throws CloneNotSupportedException {
+		return (KnowledgeBaseFolder)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

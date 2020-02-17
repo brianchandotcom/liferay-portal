@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class TaxonomyCategory {
+public class TaxonomyCategory implements Cloneable {
 
 	public static enum ViewableBy {
 
@@ -393,6 +393,11 @@ public class TaxonomyCategory {
 	}
 
 	protected ViewableBy viewableBy;
+
+	@Override
+	public TaxonomyCategory clone() throws CloneNotSupportedException {
+		return (TaxonomyCategory)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContentField {
+public class ContentField implements Cloneable {
 
 	public String getDataType() {
 		return dataType;
@@ -216,6 +216,11 @@ public class ContentField {
 	}
 
 	protected Map<String, Object> value_i18n;
+
+	@Override
+	public ContentField clone() throws CloneNotSupportedException {
+		return (ContentField)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

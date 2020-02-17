@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentField {
+public class FragmentField implements Cloneable {
 
 	public String getId() {
 		return id;
@@ -67,6 +67,11 @@ public class FragmentField {
 	}
 
 	protected Object value;
+
+	@Override
+	public FragmentField clone() throws CloneNotSupportedException {
+		return (FragmentField)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class GenericError {
+public class GenericError implements Cloneable {
 
 	public String getMessage() {
 		return message;
@@ -48,6 +48,11 @@ public class GenericError {
 	}
 
 	protected String message;
+
+	@Override
+	public GenericError clone() throws CloneNotSupportedException {
+		return (GenericError)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

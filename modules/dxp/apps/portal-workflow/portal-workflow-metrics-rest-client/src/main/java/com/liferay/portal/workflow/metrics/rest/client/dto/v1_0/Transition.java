@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Transition {
+public class Transition implements Cloneable {
 
 	public String getLabel() {
 		return label;
@@ -67,6 +67,11 @@ public class Transition {
 	}
 
 	protected String name;
+
+	@Override
+	public Transition clone() throws CloneNotSupportedException {
+		return (Transition)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

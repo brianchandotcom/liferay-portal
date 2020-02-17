@@ -19,9 +19,9 @@ definition {
 			var key_contentName = "${webContentTitle}";
 
 			AssertClick(
-				key_breadcrumbName = "Workspaces",
+				key_breadcrumbName = "Sites",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Workspaces");
+				value1 = "Sites");
 
 			AssertClick(
 				key_groupTab = "Repository",

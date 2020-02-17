@@ -30,8 +30,6 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
-import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
-import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateCollectionConverterUtil;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateConverterUtil;
@@ -149,10 +147,6 @@ public class ExportUtil {
 			layoutPageTemplateCollectionKeyMap.get(
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
 
-		PageTemplateCollection pageTemplateCollection =
-			PageTemplateCollectionConverterUtil.toPageTemplateCollection(
-				layoutPageTemplateCollection);
-
 		String layoutPageTemplateCollectionKey =
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey();
 
@@ -170,10 +164,9 @@ public class ExportUtil {
 			layoutPageTemplateCollectionPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_COLLECTION_CONFIG,
-			objectWriter.writeValueAsString(pageTemplateCollection));
-
-		PageTemplate pageTemplate = PageTemplateConverterUtil.toPageTemplate(
-			layoutPageTemplateEntry);
+			objectWriter.writeValueAsString(
+				PageTemplateCollectionConverterUtil.toPageTemplateCollection(
+					layoutPageTemplateCollection)));
 
 		String layoutPageTemplateEntryPath =
 			layoutPageTemplateCollectionPath + StringPool.SLASH +
@@ -183,7 +176,9 @@ public class ExportUtil {
 			layoutPageTemplateEntryPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_PAGE_TEMPLATE_CONFIG,
-			objectWriter.writeValueAsString(pageTemplate));
+			objectWriter.writeValueAsString(
+				PageTemplateConverterUtil.toPageTemplate(
+					layoutPageTemplateEntry)));
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());

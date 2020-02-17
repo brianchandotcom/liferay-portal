@@ -42,7 +42,7 @@ const useSLANodes = (processId, fetchClient) => {
 								...node,
 								desc: node.initial
 									? processBeginsString
-									: `${processEndsString} ${node.name}`,
+									: `${processEndsString} ${node.label}`,
 								executionType: node.initial ? 'begin' : 'end'
 							};
 
@@ -56,23 +56,23 @@ const useSLANodes = (processId, fetchClient) => {
 						else if (node.type === 'TASK') {
 							nodeEnters.push({
 								...node,
-								desc: `${entersTaskString} ${node.name}`,
+								desc: `${entersTaskString} ${node.label}`,
 								executionType: 'enter'
 							});
 
 							nodeLeaves.push({
 								...node,
-								desc: `${leavesTaskString} ${node.name}`,
+								desc: `${leavesTaskString} ${node.label}`,
 								executionType: 'leave'
 							});
 						}
 					});
 
-					const compareToName = (curNode, nextNode) =>
-						curNode.name.localeCompare(nextNode.name);
+					const compareToLabel = (curNode, nextNode) =>
+						curNode.label.localeCompare(nextNode.label);
 
-					nodeEnters.sort(compareToName);
-					nodeLeaves.sort(compareToName);
+					nodeEnters.sort(compareToLabel);
+					nodeLeaves.sort(compareToLabel);
 
 					const nodes = [
 						...nodeBegins,
@@ -107,7 +107,7 @@ const useSLANodes = (processId, fetchClient) => {
 			.map(node => ({
 				...node,
 				compositeId: `${node.id}:on`,
-				desc: `${onTaskString} ${node.name}`,
+				desc: `${onTaskString} ${node.label}`,
 				executionType: 'on'
 			}));
 	};

@@ -20,6 +20,7 @@ test('Should test fetch', () => {
 			{
 				id: 26603,
 				initial: false,
+				label: 'Approved',
 				name: 'approved',
 				terminal: true,
 				type: 'STATE'
@@ -27,6 +28,7 @@ test('Should test fetch', () => {
 			{
 				id: 26605,
 				initial: true,
+				label: 'Created',
 				name: 'created',
 				terminal: false,
 				type: 'STATE'
@@ -34,6 +36,7 @@ test('Should test fetch', () => {
 			{
 				id: 26610,
 				initial: false,
+				label: 'Review',
 				name: 'review',
 				terminal: false,
 				type: 'TASK'
@@ -41,6 +44,7 @@ test('Should test fetch', () => {
 			{
 				id: 26625,
 				initial: false,
+				label: 'Update',
 				name: 'update',
 				terminal: false,
 				type: 'TASK'
@@ -115,6 +119,7 @@ test('Should test fetch data', () => {
 			{
 				id: 26603,
 				initial: false,
+				label: 'Approved',
 				name: 'approved',
 				terminal: true,
 				type: 'STATE'
@@ -122,6 +127,7 @@ test('Should test fetch data', () => {
 			{
 				id: 26605,
 				initial: true,
+				label: 'Created',
 				name: 'created',
 				terminal: false,
 				type: 'STATE'
@@ -129,6 +135,7 @@ test('Should test fetch data', () => {
 			{
 				id: 26610,
 				initial: false,
+				label: 'Review',
 				name: 'review',
 				terminal: false,
 				type: 'TASK'
@@ -136,6 +143,7 @@ test('Should test fetch data', () => {
 			{
 				id: 26625,
 				initial: false,
+				label: 'Update',
 				name: 'update',
 				terminal: false,
 				type: 'TASK'

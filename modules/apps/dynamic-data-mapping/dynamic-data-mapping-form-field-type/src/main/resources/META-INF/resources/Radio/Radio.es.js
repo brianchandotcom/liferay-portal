@@ -12,233 +12,93 @@
  * details.
  */
 
-import '../FieldBase/FieldBase.es';
-
 import './RadioRegister.soy';
 
-import 'clay-radio';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import {ClayRadio} from '@clayui/form';
+import React, {useMemo} from 'react';
 
+import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
+import {connectStore} from '../util/connectStore.es';
 import {setJSONArrayValue} from '../util/setters.es';
-import templates from './Radio.soy';
+import templates from './RadioAdapter.soy';
 
-/**
- * Radio.
- * @extends Component
- */
+const Radio = ({
+	disabled,
+	inline,
+	name,
+	onBlur,
+	onChange,
+	onFocus,
+	options,
+	value
+}) => (
+	<div className="ddm-radio" onBlur={onBlur} onFocus={onFocus}>
+		{options.map(option => (
+			<ClayRadio
+				checked={value === option.value}
+				disabled={disabled}
+				inline={inline}
+				key={option.value}
+				label={option.label}
+				name={name}
+				onChange={onChange}
+				value={option.value}
+			/>
+		))}
+	</div>
+);
 
-class Radio extends Component {
-	prepareStateForRender(state) {
-		const {predefinedValue} = state;
-		const predefinedValueArray = this._getArrayValue(predefinedValue);
+const RadioProxy = connectStore(
+	({
+		emit,
+		options = [
+			{
+				label: 'Option 1'
+			},
+			{
+				label: 'Option 2'
+			}
+		],
+		predefinedValue,
+		value,
+		readOnly,
+		inline,
+		name,
+		...otherProps
+	}) => {
+		const predefinedValueMemo = useMemo(() => {
+			const predefinedValueJSONArray =
+				setJSONArrayValue(predefinedValue) || [];
 
-		return {
-			...state,
-			predefinedValue: predefinedValueArray[0] || '',
-		};
+			return predefinedValueJSONArray[0];
+		}, [predefinedValue]);
+
+		return (
+			<FieldBaseProxy {...otherProps} name={name} readOnly={readOnly}>
+				<Radio
+					disabled={readOnly}
+					inline={inline}
+					name={name}
+					onBlur={event =>
+						emit('fieldBlurred', event, event.target.value)
+					}
+					onChange={event => emit('fieldFocused', event)}
+					onFocus={event =>
+						emit('fieldEdited', event, event.target.value)
+					}
+					options={options}
+					value={value ? value : predefinedValueMemo}
+				/>
+			</FieldBaseProxy>
+		);
 	}
+);
 
-	_getArrayValue(value) {
-		let newValue = value || '';
+const ReactRadioAdapter = getConnectedReactComponentAdapter(
+	RadioProxy,
+	templates
+);
 
-		if (!Array.isArray(newValue)) {
-			newValue = [newValue];
-		}
-
-		return newValue;
-	}
-
-	_handleFieldBlurred() {
-		this.emit('fieldBlurred', {
-			fieldInstance: this,
-			originalEvent: window.event,
-			value: window.event.target.value,
-		});
-	}
-
-	_handleFieldFocused(event) {
-		this.emit('fieldFocused', {
-			fieldInstance: this,
-			originalEvent: event,
-		});
-	}
-
-	_handleValueChanged(event) {
-		this.emit('fieldEdited', {
-			fieldInstance: this,
-			originalEvent: event,
-			value: event.target.value,
-		});
-	}
-}
-
-Radio.STATE = {
-	/**
-	 * @default 'string'
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	dataType: Config.string().value('string'),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FieldBase
-	 * @type {?bool}
-	 */
-
-	evaluable: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Radio
-	 * @type {?(string|undefined)}
-	 */
-
-	fieldName: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Radio
-	 * @type {?(string|undefined)}
-	 */
-
-	inline: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Radio
-	 * @type {?(string|undefined)}
-	 */
-
-	label: Config.string(),
-
-	/**
-	 * @default {}
-	 * @instance
-	 * @memberof Radio
-	 * @type {?(object|undefined)}
-	 */
-
-	localizedValue: Config.object().value({}),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Radio
-	 * @type {?(string|undefined)}
-	 */
-
-	options: Config.arrayOf(
-		Config.shapeOf({
-			label: Config.string(),
-			name: Config.string(),
-			value: Config.string(),
-		})
-	).value([
-		{
-			label: 'Option 1',
-		},
-		{
-			label: 'Option 2',
-		},
-	]),
-
-	/**
-	 * @default Choose an Option
-	 * @instance
-	 * @memberof Radio
-	 * @type {?string}
-	 */
-
-	predefinedValue: Config.oneOfType([
-		Config.array(),
-		Config.object(),
-		Config.string(),
-	])
-		.setter(setJSONArrayValue)
-		.value([]),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof Radio
-	 * @type {?bool}
-	 */
-
-	readOnly: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FieldBase
-	 * @type {?(bool|undefined)}
-	 */
-
-	repeatable: Config.bool(),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof Radio
-	 * @type {?bool}
-	 */
-
-	required: Config.bool().value(false),
-
-	/**
-	 * @default true
-	 * @instance
-	 * @memberof Radio
-	 * @type {?bool}
-	 */
-
-	showLabel: Config.bool().value(true),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Radio
-	 * @type {?(string|undefined)}
-	 */
-
-	spritemap: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Radio
-	 * @type {?(string|undefined)}
-	 */
-
-	tip: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	type: Config.string().value('radio'),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Radio
-	 * @type {?(string|undefined)}
-	 */
-
-	value: Config.string(),
-};
-
-Soy.register(Radio, templates);
-
-export default Radio;
+export {ReactRadioAdapter};
+export default ReactRadioAdapter;

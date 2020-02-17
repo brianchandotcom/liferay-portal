@@ -42,6 +42,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,7 +59,8 @@ public class SamlSameSiteLaxCookiesTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	public SamlSameSiteLaxCookiesTest() {
+	@BeforeClass
+	public static void setUpClass() {
 		_paramsMap = HashMapBuilder.put(
 			"RelayState", "TEST_RELAYSTATE"
 		).put(
@@ -78,7 +80,22 @@ public class SamlSameSiteLaxCookiesTest {
 		);
 	}
 
-	public void execute(URL url) throws Exception {
+	@Test
+	public void testACSSameSiteLaxCookiesSupport() throws Exception {
+		_execute(new URL("http://localhost:8080/c/portal/saml/acs"));
+	}
+
+	@Test
+	public void testSLOSameSiteLaxCookies() throws Exception {
+		_execute(new URL("http://localhost:8080/c/portal/saml/slo"));
+	}
+
+	@Test
+	public void testSSOSameSiteLaxCookies() throws Exception {
+		_execute(new URL("http://localhost:8080/c/portal/saml/sso"));
+	}
+
+	private void _execute(URL url) throws Exception {
 		CookieManager cookieManager = new CookieManager();
 
 		CookieHandler.setDefault(cookieManager);
@@ -133,22 +150,7 @@ public class SamlSameSiteLaxCookiesTest {
 			testValues.isEmpty());
 	}
 
-	@Test
-	public void testACSSameSiteLaxCookiesSupport() throws Exception {
-		execute(new URL("http://localhost:8080/c/portal/saml/acs"));
-	}
-
-	@Test
-	public void testSLOSameSiteLaxCookies() throws Exception {
-		execute(new URL("http://localhost:8080/c/portal/saml/slo"));
-	}
-
-	@Test
-	public void testSSOSameSiteLaxCookies() throws Exception {
-		execute(new URL("http://localhost:8080/c/portal/saml/sso"));
-	}
-
-	private final Map<String, String> _paramsMap;
-	private final String _postBody;
+	private static Map<String, String> _paramsMap;
+	private static String _postBody;
 
 }

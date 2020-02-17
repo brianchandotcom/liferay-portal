@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
@@ -53,9 +53,7 @@ public class BlogsEditEntryStatusBarControlMenuJSPDynamicInclude
 		String mvcRenderCommandName = ParamUtil.getString(
 			portletRequest, "mvcRenderCommandName");
 
-		if (Validator.isNotNull(mvcRenderCommandName) &&
-			!mvcRenderCommandName.equals("/blogs/edit_entry")) {
-
+		if (!StringUtil.equals(mvcRenderCommandName, "/blogs/edit_entry")) {
 			return;
 		}
 

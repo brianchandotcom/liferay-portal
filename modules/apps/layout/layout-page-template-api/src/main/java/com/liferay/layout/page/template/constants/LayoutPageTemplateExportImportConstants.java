@@ -12,24 +12,17 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0;
-
-import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+package com.liferay.layout.page.template.constants;
 
 /**
- * @author Rubén Pulido
+ * @author Jürgen Kappler
  */
-public class PageTemplateConverterUtil {
+public class LayoutPageTemplateExportImportConstants {
 
-	public static PageTemplate toPageTemplate(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+	public static final String FILE_NAME_PAGE_TEMPLATE_COLLECTION_CONFIG =
+		"page-template-collection.json";
 
-		return new PageTemplate() {
-			{
-				name = layoutPageTemplateEntry.getName();
-			}
-		};
-	}
+	public static final String FILE_NAME_PAGE_TEMPLATE_CONFIG =
+		"page-template.json";
 
 }

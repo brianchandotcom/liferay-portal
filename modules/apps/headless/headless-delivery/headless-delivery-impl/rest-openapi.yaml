@@ -1781,9 +1781,6 @@ components:
             description:
                 ""
             properties:
-                collectionName:
-                    readOnly: true
-                    type: string
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1808,6 +1805,10 @@ components:
                     type: string
                 pageDefinition:
                     $ref: "#/components/schemas/PageDefinition"
+                pageTemplateCollection:
+                    allOf:
+                        - $ref: "#/components/schemas/PageTemplateCollection"
+                    readOnly: true
                 taxonomyCategories:
                     description:
                         The categories associated with this page template.
@@ -1824,6 +1825,36 @@ components:
                 uuid:
                     description:
                         A valid external identifier to reference this page template.
+                    readOnly: true
+                    type: string
+            type: object
+        PageTemplateCollection:
+            description:
+                ""
+            properties:
+                creator:
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                description:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                uuid:
+                    description:
+                        A valid external identifier to reference this page template collection.
                     readOnly: true
                     type: string
             type: object

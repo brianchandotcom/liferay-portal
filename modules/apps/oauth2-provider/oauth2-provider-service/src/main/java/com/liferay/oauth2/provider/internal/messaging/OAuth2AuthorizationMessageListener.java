@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 
 import java.util.Calendar;
@@ -47,8 +47,8 @@ public class OAuth2AuthorizationMessageListener extends BaseMessageListener {
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			className, className, calendar.getTime(), 1, TimeUnit.DAY);
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, calendar.getTime(), null, 1, TimeUnit.DAY);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -72,5 +72,8 @@ public class OAuth2AuthorizationMessageListener extends BaseMessageListener {
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

@@ -49,13 +49,13 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setUpJSONFactory();
-		setUpLanguage();
+		_setUpJSONFactory();
+		_setUpLanguage();
 	}
 
 	@Test
 	public void testGetAvailableLocales() {
-		Map<String, Object> parameters = getParameters();
+		Map<String, Object> parameters = _getParameters();
 
 		JSONArray availableLocales = (JSONArray)parameters.get(
 			"availableLocales");
@@ -65,7 +65,7 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetNotDefinedPredefinedValue() {
-		Map<String, Object> parameters = getParameters();
+		Map<String, Object> parameters = _getParameters();
 
 		Assert.assertNull(parameters.get("predefinedValue"));
 	}
@@ -80,7 +80,7 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 
 		_ddmFormField.setProperty("predefinedValue", predefinedValue);
 
-		Map<String, Object> parameters = getParameters();
+		Map<String, Object> parameters = _getParameters();
 
 		String actualPredefinedValue = (String)parameters.get(
 			"predefinedValue");
@@ -88,7 +88,7 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals(expectedString, actualPredefinedValue);
 	}
 
-	protected DDMForm getDDMForm() {
+	private DDMForm _getDDMForm() {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setDefaultLocale(LocaleUtil.US);
@@ -96,8 +96,8 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 		return ddmForm;
 	}
 
-	protected Map<String, Object> getParameters() {
-		_ddmFormField.setDDMForm(getDDMForm());
+	private Map<String, Object> _getParameters() {
+		_ddmFormField.setDDMForm(_getDDMForm());
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
@@ -108,7 +108,7 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 			getParameters(_ddmFormField, ddmFormFieldRenderingContext);
 	}
 
-	protected void setUpJSONFactory() throws Exception {
+	private void _setUpJSONFactory() throws Exception {
 		MemberMatcher.field(
 			LocalizableTextDDMFormFieldTemplateContextContributor.class,
 			"jsonFactory"
@@ -117,7 +117,7 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
-	protected void setUpLanguage() throws Exception {
+	private void _setUpLanguage() throws Exception {
 		MemberMatcher.field(
 			LocalizableTextDDMFormFieldTemplateContextContributor.class,
 			"language"

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -75,6 +76,29 @@ public abstract class LayoutStructureItem {
 
 	public void deleteChildrenItem(String itemId) {
 		_childrenItemIds.remove(itemId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutStructureItem)) {
+			return false;
+		}
+
+		LayoutStructureItem layoutStructureItem = (LayoutStructureItem)obj;
+
+		if (Objects.equals(
+				_childrenItemIds, layoutStructureItem._childrenItemIds) &&
+			Objects.equals(_itemId, layoutStructureItem._itemId) &&
+			Objects.equals(_parentItemId, layoutStructureItem._parentItemId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public List<String> getChildrenItemIds() {

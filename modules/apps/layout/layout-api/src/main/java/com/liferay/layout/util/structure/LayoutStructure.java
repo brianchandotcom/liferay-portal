@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -229,6 +230,28 @@ public class LayoutStructure {
 
 		return _duplicateLayoutStructureItem(
 			itemId, layoutStructureItem.getParentItemId(), position);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutStructure)) {
+			return false;
+		}
+
+		LayoutStructure layoutStructure = (LayoutStructure)obj;
+
+		if (Objects.equals(_mainItemId, layoutStructure._mainItemId) &&
+			Objects.equals(
+				_layoutStructureItems, layoutStructure._layoutStructureItems)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public LayoutStructureItem getDropZoneLayoutStructureItem() {

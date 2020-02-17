@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
+import java.util.Objects;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -28,6 +30,42 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		super(parentItemId);
 
 		_backgroundImageJSONObject = JSONFactoryUtil.createJSONObject();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ContainerLayoutStructureItem)) {
+			return false;
+		}
+
+		ContainerLayoutStructureItem containerLayoutStructureItem =
+			(ContainerLayoutStructureItem)obj;
+
+		if (!Objects.equals(
+				_backgroundColorCssClass,
+				containerLayoutStructureItem._backgroundColorCssClass) ||
+			!Objects.equals(
+				_backgroundImageJSONObject.toJSONString(),
+				containerLayoutStructureItem._backgroundImageJSONObject.
+					toJSONString()) ||
+			!Objects.equals(
+				_containerType, containerLayoutStructureItem._containerType) ||
+			!Objects.equals(
+				_paddingBottom, containerLayoutStructureItem._paddingBottom) ||
+			!Objects.equals(
+				_paddingHorizontal,
+				containerLayoutStructureItem._paddingHorizontal) ||
+			!Objects.equals(
+				_paddingTop, containerLayoutStructureItem._paddingTop)) {
+
+			return false;
+		}
+
+		return super.equals(obj);
 	}
 
 	public String getBackgroundColorCssClass() {

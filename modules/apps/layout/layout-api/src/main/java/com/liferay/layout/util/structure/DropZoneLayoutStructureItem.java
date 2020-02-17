@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -31,6 +32,32 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 		super(parentItemId);
 
 		_fragmentEntryKeys = Collections.emptyList();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DropZoneLayoutStructureItem)) {
+			return false;
+		}
+
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+			(DropZoneLayoutStructureItem)obj;
+
+		if (!Objects.equals(
+				_allowNewFragmentEntries,
+				dropZoneLayoutStructureItem._allowNewFragmentEntries) ||
+			!Objects.equals(
+				_fragmentEntryKeys,
+				dropZoneLayoutStructureItem._fragmentEntryKeys)) {
+
+			return false;
+		}
+
+		return super.equals(obj);
 	}
 
 	public List<String> getFragmentEntryKeys() {

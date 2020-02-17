@@ -14,25 +14,31 @@
 
 package com.liferay.oauth2.provider.service.impl;
 
+import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.base.OAuth2AuthorizationLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Time;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(
+	configurationPid = "com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration",
 	property = "model.class.name=com.liferay.oauth2.provider.model.OAuth2Authorization",
 	service = AopService.class
 )
@@ -98,8 +104,13 @@ public class OAuth2AuthorizationLocalServiceImpl
 
 	@Override
 	public void deleteExpiredOAuth2Authorizations() {
-		oAuth2AuthorizationPersistence.removeByAccessTokenExpirationDate(
-			new Date());
+		Date purgeDate = new Date();
+
+		purgeDate.setTime(
+			purgeDate.getTime() +
+				_expiredAuthorizationsAfterlifeDurationMillis);
+
+		oAuth2AuthorizationFinder.removeByPurgeDate(purgeDate);
 	}
 
 	@Override
@@ -220,5 +231,21 @@ public class OAuth2AuthorizationLocalServiceImpl
 	public int getUserOAuth2AuthorizationsCount(long userId) {
 		return oAuth2AuthorizationPersistence.countByUserId(userId);
 	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		OAuth2ProviderConfiguration oAuth2ProviderConfiguration =
+			ConfigurableUtil.createConfigurable(
+				OAuth2ProviderConfiguration.class, properties);
+
+		int expiredAuthorizationsAfterlifeDuration =
+			oAuth2ProviderConfiguration.
+				expiredAuthorizationsAfterlifeDuration();
+
+		_expiredAuthorizationsAfterlifeDurationMillis =
+			expiredAuthorizationsAfterlifeDuration * Time.SECOND;
+	}
+
+	private long _expiredAuthorizationsAfterlifeDurationMillis;
 
 }

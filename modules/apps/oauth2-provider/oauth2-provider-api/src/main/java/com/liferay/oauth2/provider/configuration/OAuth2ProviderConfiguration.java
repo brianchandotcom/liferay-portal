@@ -83,4 +83,21 @@ public interface OAuth2ProviderConfiguration {
 	)
 	public boolean recycleRefreshToken();
 
+	@Meta.AD(
+		deflt = "86400",
+		description = "oauth2-expired-authorizations-afterlife-duration-description",
+		id = "oauth2.expired.authorizations.afterlife.duration",
+		name = "oauth2-expired-authorizations-afterlife-duration",
+		required = false
+	)
+	public int expiredAuthorizationsAfterlifeDuration();
+
+	@Meta.AD(
+		deflt = "60",
+		description = "oauth2-expired-authorizations-check-interval-description",
+		id = "oauth2.expired.authorizations.check.interval",
+		name = "oauth2-expired-authorizations-check-interval", required = false
+	)
+	public int expiredAuthorizationsCheckInterval();
+
 }

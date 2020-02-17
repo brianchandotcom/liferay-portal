@@ -16,14 +16,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {Align} from 'metal-position';
-import React, {
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-	useState
-} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import debounceRAF from '../../../core/debounceRAF';
@@ -111,7 +104,7 @@ export default function FloatingToolbar({
 		};
 	}, []);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		alignElement(toolbarRef, itemRef, () => {
 			alignElement(panelRef, toolbarRef);
 		});

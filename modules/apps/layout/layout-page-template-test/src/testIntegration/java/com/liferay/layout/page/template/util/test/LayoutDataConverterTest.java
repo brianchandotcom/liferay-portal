@@ -186,6 +186,45 @@ public class LayoutDataConverterTest {
 			fragmentEntryKeys.toString(), 2, fragmentEntryKeys.size());
 		Assert.assertEquals("fragmentEntry1", fragmentEntryKeys.get(0));
 		Assert.assertEquals("fragmentEntry2", fragmentEntryKeys.get(1));
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getMainLayoutStructureItem();
+
+		List<String> mainItemIds = layoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem containerLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(mainItemIds.get(0));
+
+		List<String> containerChildrenItemIds =
+			containerLayoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem rowLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				containerChildrenItemIds.get(0));
+
+		List<String> rowChildrenItemIds =
+			rowLayoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem columnLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(rowChildrenItemIds.get(0));
+
+		String expectedLayoutData = StringUtil.replace(
+			_read("expected_layout_data_v1_drop_zone.json"),
+			new String[] {
+				"MAIN-UUID", "CONTAINER-UUID", "ROW-UUID", "COLUMN-UUID",
+				"DROP-ZONE-UUID"
+			},
+			new String[] {
+				layoutStructure.getMainItemId(),
+				containerLayoutStructureItem.getItemId(),
+				rowLayoutStructureItem.getItemId(),
+				columnLayoutStructureItem.getItemId(),
+				dropZoneLayoutStructureItem.getItemId()
+			});
+
+		_testLayoutData(
+			layoutStructure.toJSONObject(),
+			JSONFactoryUtil.createJSONObject(expectedLayoutData));
 	}
 
 	private String _read(String fileName) throws Exception {

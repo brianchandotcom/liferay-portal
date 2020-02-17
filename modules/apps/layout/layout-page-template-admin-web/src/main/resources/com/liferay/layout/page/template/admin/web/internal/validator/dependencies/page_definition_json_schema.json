@@ -3,6 +3,11 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"additionalProperties": false,
 	"definitions": {
+		"FragmentImage": {
+			"additionalProperties": false,
+			"title": "The FragmentImage Schema",
+			"type": "object"
+		},
 		"PageElement": {
 			"additionalProperties": false,
 			"allOf": [
@@ -18,6 +23,22 @@
 						"properties": {
 							"definition": {
 								"$ref": "#/definitions/RootDefinition"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "Section"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/SectionDefinition"
 							}
 						}
 					}
@@ -57,6 +78,79 @@
 		"RootDefinition": {
 			"additionalProperties": false,
 			"title": "The RootDefinition Schema",
+			"type": "object"
+		},
+		"SectionDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"backgroundColorCssClass": {
+					"title": "The backgroundColorCssClass Schema",
+					"type": "string"
+				},
+				"backgroundImage": {
+					"$ref": "#/definitions/FragmentImage",
+					"title": "The backgroundImage Schema",
+					"type": "object"
+				},
+				"layout": {
+					"additionalProperties": false,
+					"properties": {
+						"containerType": {
+							"enum": [
+								"Fixed",
+								"Fluid"
+							],
+							"title": "The containerType Schema",
+							"type": "string"
+						},
+						"paddingBottom": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The paddingBottom Schema",
+							"type": "integer"
+						},
+						"paddingHorizontal": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The paddingHorizontal Schema",
+							"type": "integer"
+						},
+						"paddingTop": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The paddingTop Schema",
+							"type": "integer"
+						}
+					},
+					"title": "The layout Schema",
+					"type": "object"
+				}
+			},
+			"title": "The SectionDefinition Schema",
 			"type": "object"
 		}
 	},

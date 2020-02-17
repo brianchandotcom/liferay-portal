@@ -14,14 +14,14 @@
 
 import * as TYPES from '../actions/types';
 
-export default function languageReducer(state, action) {
+export const INITIAL_STATE = 'en-US';
+
+export default function languageReducer(languageId = INITIAL_STATE, action) {
 	switch (action.type) {
 		case TYPES.UPDATE_LANGUAGE_ID:
 			return action.languageId;
 
 		default:
-			break;
+			return languageId;
 	}
-
-	return state;
 }

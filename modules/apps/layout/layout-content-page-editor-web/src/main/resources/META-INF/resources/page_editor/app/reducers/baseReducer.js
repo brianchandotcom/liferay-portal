@@ -12,49 +12,23 @@
  * details.
  */
 
-import {TYPES} from '../actions/index';
+import {LOAD_REDUCER, UNLOAD_REDUCER} from '../actions/types';
 
-export default function baseReducer(state, action) {
-	let nextState = state;
+export const INITIAL_STATE = {};
 
+export default function baseReducer(reducers = INITIAL_STATE, action) {
 	switch (action.type) {
-		case TYPES.DISCARD:
-			break;
+		case LOAD_REDUCER:
+			return {...reducers, [action.key]: action.reducer};
 
-		case TYPES.LOAD_REDUCER:
-			{
-				const {key, reducer: reducerToAdd} = action;
+		case UNLOAD_REDUCER: {
+			const nextReducers = {...reducers};
+			delete nextReducers[action.key];
 
-				nextState = {
-					...state,
-					reducers: {
-						...state.reducers,
-						[key]: reducerToAdd
-					}
-				};
-			}
-			break;
-
-		case TYPES.PUBLISH:
-			break;
-
-		case TYPES.UNLOAD_REDUCER:
-			{
-				const {key} = action;
-
-				// eslint-disable-next-line no-unused-vars
-				const {[key]: reducerToRemove, ...reducers} = state.reducers;
-
-				nextState = {
-					...state,
-					reducers
-				};
-			}
-			break;
+			return nextReducers;
+		}
 
 		default:
-			break;
+			return reducers;
 	}
-
-	return nextState;
 }

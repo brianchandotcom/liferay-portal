@@ -12,60 +12,58 @@
  * details.
  */
 
-import {TYPES} from '../actions/index';
+import {
+	ADD_FRAGMENT_ENTRY_LINK,
+	UPDATE_COL_SIZE,
+	UPDATE_LAYOUT_DATA
+} from '../actions/types';
 
-function updateColSize(items, action) {
-	const {itemId, nextColumnItemId, nextColumnSize, size} = action;
+export const INITIAL_STATE = {
+	items: {}
+};
 
-	if (itemId in items) {
-		if (nextColumnItemId in items) {
-			return {
-				...items,
-				[itemId]: {
-					...items[itemId],
-					config: {
-						...items[itemId].config,
-						size
+export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
+	switch (action.type) {
+		case UPDATE_COL_SIZE: {
+			let items = layoutData.items;
+
+			if (action.itemId in items) {
+				items = {
+					...items,
+					[action.itemId]: {
+						...items[action.itemId],
+						config: {
+							...items[action.itemId].config,
+							size: action.size
+						}
 					}
-				},
-				[nextColumnItemId]: {
-					...items[nextColumnItemId],
-					config: {
-						...items[nextColumnItemId].config,
-						size: nextColumnSize
-					}
+				};
+
+				if (action.nextColumnItemId in items) {
+					items = {
+						...items,
+						[action.nextColumnItemId]: {
+							...items[action.nextColumnItemId],
+							config: {
+								...items[action.nextColumnItemId].config,
+								size: action.nextColumnSize
+							}
+						}
+					};
 				}
+			}
+
+			return {
+				...layoutData,
+				items
 			};
 		}
 
-		return {
-			...items,
-			[itemId]: {
-				...items[itemId],
-				config: {
-					...items[itemId].config,
-					size
-				}
-			}
-		};
-	}
-}
-
-export default function layoutDataReducer(state, action) {
-	switch (action.type) {
-		case TYPES.UPDATE_COL_SIZE:
-			return {
-				...state,
-				items: updateColSize(state.items, action)
-			};
-
-		case TYPES.UPDATE_LAYOUT_DATA:
-		case TYPES.ADD_FRAGMENT_ENTRY_LINK:
+		case UPDATE_LAYOUT_DATA:
+		case ADD_FRAGMENT_ENTRY_LINK:
 			return action.layoutData;
 
 		default:
-			break;
+			return layoutData;
 	}
-
-	return state;
 }

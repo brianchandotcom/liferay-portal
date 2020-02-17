@@ -12,7 +12,52 @@
  * details.
  */
 
-import {TYPES} from '../actions/index';
+import {ADD_FRAGMENT_ENTRY_LINK, DELETE_WIDGETS} from '../actions/types';
+
+export default function widgetsReducer(widgets, action) {
+	switch (action.type) {
+		case ADD_FRAGMENT_ENTRY_LINK: {
+			if (
+				action.fragmentEntryLink.editableValues.portletId &&
+				!action.fragmentEntryLink.editableValues.instanceable
+			) {
+				const widgetPath = getWidgetPath(
+					widgets,
+					action.fragmentEntryLink.editableValues.portletId
+				);
+
+				return setWidgetUsage(widgets, widgetPath, {used: true});
+			}
+
+			return widgets;
+		}
+
+		case DELETE_WIDGETS: {
+			let nextWidgets = widgets;
+
+			action.fragmentEntryLinks.forEach(fragmentEntryLink => {
+				if (
+					fragmentEntryLink.editableValues.portletId &&
+					!fragmentEntryLink.editableValues.instanceable
+				) {
+					const widgetPath = getWidgetPath(
+						nextWidgets,
+						fragmentEntryLink.editableValues.portletId
+					);
+
+					nextWidgets = setWidgetUsage(nextWidgets, widgetPath, {
+						used: false
+					});
+				}
+			});
+
+			return nextWidgets;
+		}
+
+		default:
+			return widgets;
+	}
+}
 
 /**
  * Get widget path from the widgets tree by portletId
@@ -82,50 +127,5 @@ function setWidgetUsage(widgets, path, usage) {
 			...widgets,
 			[currentPath]: setWidgetUsage(widgets[currentPath], restPath, usage)
 		};
-	}
-}
-
-export default function widgetsReducer(widgets, action) {
-	switch (action.type) {
-		case TYPES.ADD_FRAGMENT_ENTRY_LINK: {
-			if (
-				action.fragmentEntryLink.editableValues.portletId &&
-				!action.fragmentEntryLink.editableValues.instanceable
-			) {
-				const widgetPath = getWidgetPath(
-					widgets,
-					action.fragmentEntryLink.editableValues.portletId
-				);
-
-				return setWidgetUsage(widgets, widgetPath, {used: true});
-			}
-
-			return widgets;
-		}
-
-		case TYPES.DELETE_WIDGETS: {
-			let nextWidgets = widgets;
-
-			action.fragmentEntryLinks.forEach(fragmentEntryLink => {
-				if (
-					fragmentEntryLink.editableValues.portletId &&
-					!fragmentEntryLink.editableValues.instanceable
-				) {
-					const widgetPath = getWidgetPath(
-						nextWidgets,
-						fragmentEntryLink.editableValues.portletId
-					);
-
-					nextWidgets = setWidgetUsage(nextWidgets, widgetPath, {
-						used: false
-					});
-				}
-			});
-
-			return nextWidgets;
-		}
-
-		default:
-			return widgets;
 	}
 }

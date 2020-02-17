@@ -12,18 +12,19 @@
  * details.
  */
 
-import * as TYPES from '../actions/types';
+import {TOGGLE_SHOW_RESOLVED_COMMENTS} from '../actions/types';
 
-const INITIAL_STATE = false;
+export const INITIAL_STATE = false;
 
-export default function resolvedCommentsReducer(state = INITIAL_STATE, action) {
+export default function resolvedCommentsReducer(
+	toggleResolvedComments = INITIAL_STATE,
+	action
+) {
 	switch (action.type) {
-		case TYPES.TOGGLE_SHOW_RESOLVED_COMMENTS:
+		case TOGGLE_SHOW_RESOLVED_COMMENTS:
 			return action.showResolvedComments;
 
 		default:
-			break;
+			return toggleResolvedComments;
 	}
-
-	return state;
 }

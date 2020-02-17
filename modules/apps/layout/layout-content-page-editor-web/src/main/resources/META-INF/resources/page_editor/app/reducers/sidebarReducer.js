@@ -12,23 +12,21 @@
  * details.
  */
 
-import {TYPES} from '../actions/index';
+import {SWITCH_SIDEBAR_PANEL} from '../actions/types';
+import {config} from '../config/index';
 
-export default function sidebarReducer(state, action) {
-	let nextState = state;
+export const INITIAL_STATE = {
+	open: true,
+	panelId: config.panels && config.panels[0] && config.panels[0][0]
+};
 
-	switch (action.type) {
-		case TYPES.SWITCH_SIDEBAR_PANEL:
-			nextState = {
-				...state,
-				sidebarOpen: action.sidebarOpen,
-				sidebarPanelId: action.sidebarPanelId
-			};
-			break;
-
-		default:
-			break;
+export default function sidebarReducer(sidebarStatus = INITIAL_STATE, action) {
+	if (SWITCH_SIDEBAR_PANEL) {
+		return {
+			open: action.sidebarOpen,
+			panelId: action.sidebarPanelId
+		};
 	}
 
-	return nextState;
+	return sidebarStatus;
 }

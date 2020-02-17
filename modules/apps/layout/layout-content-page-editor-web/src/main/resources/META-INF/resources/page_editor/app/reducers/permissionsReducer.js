@@ -33,15 +33,17 @@ export const INITIAL_STATE = {
  * @param {boolean} [action.forceNewValue]
  */
 export default function permissionsReducer(state = INITIAL_STATE, action) {
-	if (action.type === TOGGLE_PERMISSION) {
-		return {
-			...state,
-			[action.key]:
-				typeof action.forceNewValue === 'undefined'
-					? !state[action.key]
-					: action.forceNewValue
-		};
-	}
+	switch (action.type) {
+		case TOGGLE_PERMISSION:
+			return {
+				...state,
+				[action.key]:
+					typeof action.forceNewValue === 'undefined'
+						? !state[action.key]
+						: action.forceNewValue
+			};
 
-	return state;
+		default:
+			return state;
+	}
 }

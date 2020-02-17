@@ -12,75 +12,41 @@
  * details.
  */
 
-import '../FieldBase/FieldBase.es';
-
 import './SeparatorRegister.soy';
 
-import 'clay-autocomplete';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import React, {useEffect, useRef} from 'react';
 
-import templates from './Separator.soy';
+import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
+import {connectStore} from '../util/connectStore.es';
+import templates from './SeparatorAdapter.soy';
 
-class Separator extends Component {}
+const Separator = ({style}) => {
+	const elRef = useRef(null);
 
-Separator.STATE = {
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Separator
-	 * @type {?(string|undefined)}
-	 */
+	useEffect(() => {
+		if (elRef.current) {
+			// The style is a string, to avoid creating a normalizer to generate compatibility
+			// with React, we can just add the raw value in the attribute, we don't need to
+			// worry about XSS here because it won't go to the server just for printing
+			// on the screen.
+			elRef.current.setAttribute('style', style);
+		}
+	}, [style]);
 
-	label: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Separator
-	 * @type {?(string|undefined)}
-	 */
-
-	name: Config.string().required(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Separator
-	 * @type {?(bool)}
-	 */
-
-	repeatable: Config.bool(),
-
-	/**
-	 * @default true
-	 * @instance
-	 * @memberof Separator
-	 * @type {?(bool)}
-	 */
-
-	showLabel: Config.bool().value(true),
-
-	/**
-	 * @default ''
-	 * @instance
-	 * @memberof Separator
-	 * @type {?(string|undefined)}
-	 */
-
-	style: Config.string().value(''),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Separator
-	 * @type {?(string|undefined)}
-	 */
-
-	tip: Config.string(),
+	return <div className="separator" ref={elRef} />;
 };
 
-Soy.register(Separator, templates);
+const SeparatorProxy = connectStore(({style, ...otherProps}) => (
+	<FieldBaseProxy {...otherProps}>
+		<Separator style={style} />
+	</FieldBaseProxy>
+));
 
-export default Separator;
+const ReactSeparatorAdapter = getConnectedReactComponentAdapter(
+	SeparatorProxy,
+	templates
+);
+
+export {ReactSeparatorAdapter};
+export default ReactSeparatorAdapter;

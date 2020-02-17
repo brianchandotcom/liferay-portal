@@ -133,12 +133,12 @@ public class SamlSameSiteLaxCookiesTest {
 
 		Collection<String> params = paramsMap.values();
 
-		try (BufferedReader in = new BufferedReader(
+		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(httpClient.getInputStream()))) {
 
 			String line;
 
-			while ((line = in.readLine()) != null) {
+			while ((line = bufferedReader.readLine()) != null) {
 				params.removeIf(line::contains);
 			}
 		}

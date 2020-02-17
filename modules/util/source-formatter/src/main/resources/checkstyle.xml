@@ -312,7 +312,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MapBuilderCheck">
 			<property name="checkInline" value="true" />
 			<property name="enabled" value="false" />
-			<property name="typeNames" value="ConcurrentHashMap,HashMap,LinkedHashMap,TreeMap" />
 			<message key="builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3})" />
 			<message key="builder.inline" value="Inline variable definition ''{0}'' ({1}) inside ''{2}'' ({3})" />
 			<message key="builder.use" value="Use ''{0}'' ({1}, {2})" />

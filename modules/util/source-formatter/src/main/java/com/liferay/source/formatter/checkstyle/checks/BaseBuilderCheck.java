@@ -133,7 +133,7 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 
 		String className = identDetailAST.getText();
 
-		List<String> typeNames = getAttributeValues(_TYPE_NAMES_KEY);
+		List<String> typeNames = _getTypeNames();
 
 		if (!typeNames.contains(className)) {
 			return;
@@ -238,14 +238,6 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 			_findBuilderInformationByBuilderClassName(builderClassName);
 
 		if (builderInformation == null) {
-			return;
-		}
-
-		String className = builderInformation.getClassName();
-
-		List<String> typeNames = getAttributeValues(_TYPE_NAMES_KEY);
-
-		if (!typeNames.contains(className)) {
 			return;
 		}
 
@@ -450,7 +442,7 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 			return;
 		}
 
-		List<String> typeNames = getAttributeValues(_TYPE_NAMES_KEY);
+		List<String> typeNames = _getTypeNames();
 
 		if (!typeNames.contains(newInstanceTypeName)) {
 			return;
@@ -643,6 +635,18 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 		return identDetailAST.getText();
 	}
 
+	private List<String> _getTypeNames() {
+		List<String> typeNames = new ArrayList<>();
+
+		for (BuilderInformation builderInformation :
+				getBuilderInformationList()) {
+
+			typeNames.add(builderInformation.getClassName());
+		}
+
+		return typeNames;
+	}
+
 	private List<String> _getVariableNames(DetailAST detailAST) {
 		return _getVariableNames(detailAST, null);
 	}
@@ -776,7 +780,5 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 
 	private static final String _RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
-
-	private static final String _TYPE_NAMES_KEY = "typeNames";
 
 }

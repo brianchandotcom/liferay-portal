@@ -293,7 +293,7 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"renderFragmentEntryURL",
 				getFragmentEntryActionURL(
-					"/content_layout/render_fragment_entry")
+					"/content_layout/get_fragment_entry_link")
 			).put(
 				"sidebarPanels", getSidebarPanels()
 			).put(

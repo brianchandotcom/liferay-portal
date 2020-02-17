@@ -23,16 +23,16 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,19 +46,20 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/render_fragment_entry"
+		"mvc.command.name=/content_layout/get_fragment_entry_link"
 	},
-	service = MVCActionCommand.class
+	service = MVCResourceCommand.class
 )
-public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class GetFragmentEntryLinkMVCResourceCommand
+	extends BaseMVCResourceCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		long fragmentEntryLinkId = ParamUtil.getLong(
-			actionRequest, "fragmentEntryLinkId");
+			resourceRequest, "fragmentEntryLinkId");
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
@@ -71,7 +72,8 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				new DefaultFragmentRendererContext(fragmentEntryLink);
 
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			defaultFragmentRendererContext.setLocale(themeDisplay.getLocale());
 
@@ -79,17 +81,17 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				FragmentEntryLinkConstants.EDIT);
 
 			long segmentsExperienceId = ParamUtil.getLong(
-				actionRequest, "segmentsExperienceId");
+				resourceRequest, "segmentsExperienceId");
 
 			defaultFragmentRendererContext.setSegmentsExperienceIds(
 				new long[] {segmentsExperienceId});
 
 			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(actionRequest);
+				_portal.getHttpServletRequest(resourceRequest);
 
 			String content = _fragmentRendererController.render(
 				defaultFragmentRendererContext, httpServletRequest,
-				_portal.getHttpServletResponse(actionResponse));
+				_portal.getHttpServletResponse(resourceResponse));
 
 			jsonObject.put(
 				"content", content
@@ -109,7 +111,7 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+			resourceRequest, resourceResponse, jsonObject);
 	}
 
 	@Reference

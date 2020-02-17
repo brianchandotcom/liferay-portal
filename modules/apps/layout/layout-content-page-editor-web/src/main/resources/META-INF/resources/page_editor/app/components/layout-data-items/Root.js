@@ -29,6 +29,10 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import TopperEmpty from '../TopperEmpty';
 
@@ -70,5 +74,10 @@ const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 		</TopperEmpty>
 	);
 });
+
+Root.propTypes = {
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
 
 export default Root;

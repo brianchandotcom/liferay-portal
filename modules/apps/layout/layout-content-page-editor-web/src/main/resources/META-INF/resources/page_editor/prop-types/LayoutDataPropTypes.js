@@ -12,8 +12,16 @@
  * details.
  */
 
-export {default as ConfigurationFieldPropTypes} from './ConfigurationFieldPropTypes';
-export {default as BackgroundImagePropTypes} from './BackgroundImagePropTypes';
-export {default as LayoutDataPropTypes} from './LayoutDataPropTypes';
-export {default as getEditableItemPropTypes} from './getEditableItemPropTypes';
-export {default as getLayoutDataItemPropTypes} from './getLayoutDataItemPropTypes';
+import PropTypes from 'prop-types';
+
+import getLayoutDataItemPropTypes from './getLayoutDataItemPropTypes';
+
+const LayoutDataPropTypes = PropTypes.shape({
+	items: PropTypes.objectOf(getLayoutDataItemPropTypes()),
+	rootItems: PropTypes.shape({
+		main: PropTypes.string
+	}),
+	version: PropTypes.number
+});
+
+export default LayoutDataPropTypes;

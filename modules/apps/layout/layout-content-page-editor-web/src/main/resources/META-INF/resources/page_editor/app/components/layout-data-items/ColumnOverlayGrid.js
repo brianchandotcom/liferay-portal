@@ -13,6 +13,7 @@
  */
 
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {createPortal} from 'react-dom';
 
@@ -65,3 +66,9 @@ export default function ColumnOverlayGrid({
 		document.body
 	);
 }
+
+ColumnOverlayGrid.propTypes = {
+	columnSpacing: PropTypes.bool.isRequired,
+	highlightedColumn: PropTypes.number.isRequired,
+	rowRect: PropTypes.instanceOf(DOMRect).isRequired
+};

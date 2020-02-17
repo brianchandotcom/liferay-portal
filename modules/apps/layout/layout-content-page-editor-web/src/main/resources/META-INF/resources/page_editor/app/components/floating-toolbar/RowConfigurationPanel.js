@@ -13,6 +13,7 @@
  */
 
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
@@ -139,5 +140,7 @@ export const RowConfigurationPanel = ({item}) => {
 };
 
 RowConfigurationPanel.propTypes = {
-	item: getLayoutDataItemPropTypes()
+	item: getLayoutDataItemPropTypes({
+		config: PropTypes.shape({numberOfColumns: PropTypes.number})
+	})
 };

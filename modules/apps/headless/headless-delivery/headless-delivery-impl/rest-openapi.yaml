@@ -1854,7 +1854,7 @@ components:
                     type: string
                 uuid:
                     description:
-                        A valid external identifier to reference this page template.
+                        A valid external identifier to reference this page template collection.
                     readOnly: true
                     type: string
             type: object

@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.util.test;
 
 import com.liferay.layout.page.template.util.LayoutDataConverter;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -205,6 +206,29 @@ public class LayoutDataConverterTest {
 		Assert.assertEquals(
 			expectedLayoutDataJSONObject.toJSONString(),
 			layoutStructureJSONObject.toJSONString());
+	}
+
+	@Test
+	public void testDropZone() throws Exception {
+		String actualLayoutData = LayoutDataConverter.convert(
+			_read("layout_data_v0_drop_zone.json"));
+
+		LayoutStructure layoutStructure = LayoutStructure.of(actualLayoutData);
+
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+			(DropZoneLayoutStructureItem)
+				layoutStructure.getDropZoneLayoutStructureItem();
+
+		Assert.assertFalse(
+			dropZoneLayoutStructureItem.isAllowNewFragmentEntries());
+
+		List<String> fragmentEntryKeys =
+			dropZoneLayoutStructureItem.getFragmentEntryKeys();
+
+		Assert.assertEquals(
+			fragmentEntryKeys.toString(), 2, fragmentEntryKeys.size());
+		Assert.assertEquals("fragmentEntry1", fragmentEntryKeys.get(0));
+		Assert.assertEquals("fragmentEntry2", fragmentEntryKeys.get(1));
 	}
 
 	private String _read(String fileName) throws Exception {

@@ -370,9 +370,7 @@ renderResponse.setTitle(headerTitle);
 								try {
 									boolean localizable = true;
 
-									List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-									for (DDMStructure ddmStructure : ddmStructures) {
+									for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
 										com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
 
 										try {
@@ -396,7 +394,7 @@ renderResponse.setTitle(headerTitle);
 												%>
 
 												<liferay-data-engine:data-layout-renderer
-													containerId="reportId"
+													containerId='<%= "reportId_" + ddmStructure.getStructureId() %>'
 													dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 													dataRecordValues="<%= ddmFormValuesToMapConverter.convert(ddmFormValues, DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId())) %>"
 													namespace="<%= renderResponse.getNamespace() %>"

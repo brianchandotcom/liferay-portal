@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.browser.web.internal;
+package com.liferay.asset.browser.web.internal.item.selector;
 
 import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.util.AssetHelper;

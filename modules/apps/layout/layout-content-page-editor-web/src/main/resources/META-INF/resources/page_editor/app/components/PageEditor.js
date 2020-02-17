@@ -204,7 +204,36 @@ export default function PageEditor({withinMasterPage = false}) {
 	);
 }
 
-function LayoutDataItem({fragmentEntryLinks, item, layoutData, ...otherProps}) {
+class LayoutDataItem extends React.PureComponent {
+	static getDerivedStateFromError(error) {
+		return {error};
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			error: null
+		};
+	}
+
+	render() {
+		return this.state.error ? (
+			<ClayAlert displayType="danger" title="Error">
+				There was an error showing this item
+			</ClayAlert>
+		) : (
+			<LayoutDataItemContent {...this.props} />
+		);
+	}
+}
+
+function LayoutDataItemContent({
+	fragmentEntryLinks,
+	item,
+	layoutData,
+	...otherProps
+}) {
 	const Component = LAYOUT_DATA_ITEMS[item.type];
 	const isActive = useIsActive()(item.itemId);
 	const isMounted = useIsMounted();

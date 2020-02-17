@@ -13,6 +13,7 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ItemSelector from '../../../common/components/ItemSelector';
@@ -272,3 +273,16 @@ export default function MappingSelector({
 		</>
 	);
 }
+
+MappingSelector.propTypes = {
+	fieldType: PropTypes.oneOf(Object.keys(COMPATIBLE_TYPES)),
+	mappedItem: PropTypes.oneOfType([
+		PropTypes.shape({
+			classNameId: PropTypes.string,
+			classPK: PropTypes.string,
+			fieldId: PropTypes.string
+		}),
+		PropTypes.shape({mappedField: PropTypes.string})
+	]),
+	onMappingSelect: PropTypes.func.isRequired
+};

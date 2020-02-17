@@ -13,9 +13,11 @@
  */
 
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
+import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {ConfigContext} from '../../config/index';
@@ -237,3 +239,24 @@ export default function LinkPanel({item}) {
 		</>
 	);
 }
+
+LinkPanel.propTypes = {
+	item: getEditableItemPropTypes({
+		config: PropTypes.oneOfType([
+			PropTypes.shape({
+				href: PropTypes.string,
+				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS))
+			}),
+			PropTypes.shape({
+				classNameId: PropTypes.string,
+				classPK: PropTypes.string,
+				fieldId: PropTypes.string,
+				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS))
+			}),
+			PropTypes.shape({
+				mappedField: PropTypes.string,
+				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS))
+			})
+		])
+	})
+};

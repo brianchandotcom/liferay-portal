@@ -13,6 +13,7 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import {CONTAINER_PADDING_IDENTIFIERS} from '../../config/constants/containerPaddingIdentifiers';
@@ -64,6 +65,12 @@ export const ContainerPaddingVerticalConfiguration = ({
 	</ClayForm.Group>
 );
 
+ContainerPaddingVerticalConfiguration.propTypes = {
+	onValueChange: PropTypes.func.isRequired,
+	paddingBottom: PropTypes.number,
+	paddingTop: PropTypes.number
+};
+
 export const ContainerPaddingHorizontalConfiguration = ({
 	onValueChange,
 	paddingHorizontal
@@ -89,3 +96,8 @@ export const ContainerPaddingHorizontalConfiguration = ({
 		</div>
 	</ClayForm.Group>
 );
+
+ContainerPaddingVerticalConfiguration.propTypes = {
+	onValueChange: PropTypes.func.isRequired,
+	paddingHorizontal: PropTypes.number
+};

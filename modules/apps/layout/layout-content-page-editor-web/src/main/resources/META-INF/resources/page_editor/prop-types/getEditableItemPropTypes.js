@@ -12,7 +12,16 @@
  * details.
  */
 
-export {default as ConfigurationFieldPropTypes} from './ConfigurationFieldPropTypes';
-export {default as BackgroundImagePropTypes} from './BackgroundImagePropTypes';
-export {default as getEditableItemPropTypes} from './getEditableItemPropTypes';
-export {default as getLayoutDataItemPropTypes} from './getLayoutDataItemPropTypes';
+import PropTypes from 'prop-types';
+
+import {EDITABLE_TYPES} from '../app/config/constants/editableTypes';
+
+export default function getEditableItemPropTypes(extraPropTypes = {}) {
+	return PropTypes.shape({
+		editableId: PropTypes.string.isRequired,
+		editableType: PropTypes.oneOf(Object.values(EDITABLE_TYPES)),
+		fragmentEntryLinkId: PropTypes.string.isRequired,
+		itemId: PropTypes.string.isRequired,
+		...extraPropTypes
+	});
+}

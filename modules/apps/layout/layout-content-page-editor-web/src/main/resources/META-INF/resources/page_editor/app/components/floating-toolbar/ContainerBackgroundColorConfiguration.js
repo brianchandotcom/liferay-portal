@@ -13,6 +13,7 @@
  */
 
 import ClayForm from '@clayui/form';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import ColorPalette from '../../../common/components/ColorPalette';
@@ -37,3 +38,8 @@ export const ContainerBackgroundColorConfiguration = ({
 		></ColorPalette>
 	</ClayForm.Group>
 );
+
+ContainerBackgroundColorConfiguration.propTypes = {
+	backgroundColor: PropTypes.string,
+	onValueChange: PropTypes.func.isRequired
+};

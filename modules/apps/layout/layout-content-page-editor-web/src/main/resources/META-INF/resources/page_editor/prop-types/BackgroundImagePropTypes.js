@@ -12,7 +12,21 @@
  * details.
  */
 
-export {default as ConfigurationFieldPropTypes} from './ConfigurationFieldPropTypes';
-export {default as BackgroundImagePropTypes} from './BackgroundImagePropTypes';
-export {default as getEditableItemPropTypes} from './getEditableItemPropTypes';
-export {default as getLayoutDataItemPropTypes} from './getLayoutDataItemPropTypes';
+import PropTypes from 'prop-types';
+
+const BackgroundImagePropTypes = PropTypes.oneOfType([
+	PropTypes.shape({
+		title: PropTypes.string,
+		url: PropTypes.string
+	}),
+	PropTypes.shape({
+		classNameId: PropTypes.string,
+		classPK: PropTypes.string,
+		fieldId: PropTypes.string
+	}),
+	PropTypes.shape({
+		mappedField: PropTypes.string
+	})
+]);
+
+export default BackgroundImagePropTypes;

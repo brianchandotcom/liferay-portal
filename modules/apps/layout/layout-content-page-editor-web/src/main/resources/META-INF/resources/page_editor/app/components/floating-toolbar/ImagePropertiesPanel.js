@@ -13,10 +13,12 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useState} from 'react';
 
 import {ImageSelector} from '../../../common/components/ImageSelector';
 import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
+import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ConfigContext} from '../../config/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
@@ -164,3 +166,12 @@ export function ImagePropertiesPanel({item}) {
 		</>
 	);
 }
+
+ImagePropertiesPanel.propTypes = {
+	item: getEditableItemPropTypes({
+		config: PropTypes.shape({
+			alt: PropTypes.string,
+			imageTitle: PropTypes.string
+		})
+	})
+};

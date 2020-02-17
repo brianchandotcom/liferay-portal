@@ -16,10 +16,15 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {Align} from 'metal-position';
+import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import debounceRAF from '../../../core/debounceRAF';
+import {
+	getEditableItemPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {EDITABLE_FLOATING_TOOLBAR_CLASSNAMES} from '../../config/constants/editableFloatingToolbarClassNames';
 import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../../config/constants/floatingToolbarConfigurations';
 import {useIsActive} from '../Controls';
@@ -184,6 +189,23 @@ export default function FloatingToolbar({
 		)
 	);
 }
+
+FloatingToolbar.propTypes = {
+	buttons: PropTypes.arrayOf(
+		PropTypes.shape({
+			icon: PropTypes.string.isRequired,
+			id: PropTypes.string.isRequired,
+			panelId: PropTypes.string,
+			title: PropTypes.string.isRequired
+		})
+	),
+	item: PropTypes.oneOfType([
+		getEditableItemPropTypes(),
+		getLayoutDataItemPropTypes()
+	]),
+	itemRef: PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+	onButtonClick: PropTypes.func.isRequired
+};
 
 /**
  * @type {object}

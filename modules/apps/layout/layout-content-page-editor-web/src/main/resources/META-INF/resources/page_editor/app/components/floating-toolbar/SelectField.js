@@ -18,13 +18,12 @@ import React from 'react';
 
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
-export const SelectField = ({field, onValueSelect, value = ''}) => (
+export const SelectField = ({field, onValueSelect, value}) => (
 	<ClayForm.Group small>
 		<label htmlFor={field.name}>{field.label}</label>
 
 		<ClaySelectWithOption
 			aria-label={field.label}
-			defaultValue={field.defaultValue}
 			id={field.name}
 			onChange={event => {
 				onValueSelect(
@@ -33,7 +32,7 @@ export const SelectField = ({field, onValueSelect, value = ''}) => (
 				);
 			}}
 			options={field.typeOptions.validValues}
-			value={value}
+			value={value || field.defaultValue}
 		/>
 	</ClayForm.Group>
 );

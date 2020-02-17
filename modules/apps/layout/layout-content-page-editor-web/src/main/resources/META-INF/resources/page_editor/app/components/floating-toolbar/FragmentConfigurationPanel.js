@@ -14,8 +14,13 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import {
+	ConfigurationFieldPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../../config/constants/fragmentConfigurationFieldTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
 import {ConfigContext} from '../../config/index';
@@ -46,6 +51,13 @@ const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
 			})}
 		</>
 	);
+};
+
+FieldSet.propTypes = {
+	configurationValues: PropTypes.object,
+	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),
+	label: PropTypes.string,
+	onValueSelect: PropTypes.func.isRequired
 };
 
 export const FragmentConfigurationPanel = ({item}) => {
@@ -116,6 +128,14 @@ export const FragmentConfigurationPanel = ({item}) => {
 	);
 };
 
+FragmentConfigurationPanel.propTypes = {
+	item: getLayoutDataItemPropTypes({
+		config: PropTypes.shape({
+			fragmentEntryLinkId: PropTypes.string.isRequired
+		}).isRequired
+	})
+};
+
 const RestoreButton = ({onRestoreButtonClick}) => (
 	<ClayButton
 		borderless
@@ -128,3 +148,7 @@ const RestoreButton = ({onRestoreButtonClick}) => (
 		<span className="ml-2">{Liferay.Language.get('restore-values')}</span>
 	</ClayButton>
 );
+
+RestoreButton.propTypes = {
+	onRestoreButtonClick: PropTypes.func.isRequired
+};

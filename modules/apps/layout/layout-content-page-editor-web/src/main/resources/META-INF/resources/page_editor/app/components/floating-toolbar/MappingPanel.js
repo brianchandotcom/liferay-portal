@@ -14,6 +14,7 @@
 
 import React, {useContext} from 'react';
 
+import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ConfigContext} from '../../config/index';
 import selectEditableValue from '../../selectors/selectEditableValue';
@@ -70,3 +71,7 @@ export function MappingPanel({item}) {
 		/>
 	);
 }
+
+MappingPanel.propTypes = {
+	item: getEditableItemPropTypes()
+};

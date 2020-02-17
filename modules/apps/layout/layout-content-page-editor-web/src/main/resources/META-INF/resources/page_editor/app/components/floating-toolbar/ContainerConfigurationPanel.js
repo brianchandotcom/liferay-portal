@@ -12,8 +12,13 @@
  * details.
  */
 
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import {
+	BackgroundImagePropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {CONTAINER_TYPES} from '../../config/constants/containerTypes';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
@@ -90,4 +95,15 @@ export const ContainerConfigurationPanel = ({item}) => {
 			/>
 		</>
 	);
+};
+
+ContainerConfigurationPanel.propTypes = {
+	item: getLayoutDataItemPropTypes({
+		config: PropTypes.shape({
+			backgroundImage: BackgroundImagePropTypes,
+			paddingBottom: PropTypes.number,
+			paddingHorizontal: PropTypes.number,
+			paddingTop: PropTypes.number
+		})
+	})
 };

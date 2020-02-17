@@ -12,7 +12,15 @@
  * details.
  */
 
-export {default as ConfigurationFieldPropTypes} from './ConfigurationFieldPropTypes';
-export {default as BackgroundImagePropTypes} from './BackgroundImagePropTypes';
-export {default as getEditableItemPropTypes} from './getEditableItemPropTypes';
-export {default as getLayoutDataItemPropTypes} from './getLayoutDataItemPropTypes';
+import PropTypes from 'prop-types';
+
+export default function getLayoutDataItemPropTypes(extraPropTypes = {}) {
+	return PropTypes.shape({
+		children: PropTypes.arrayOf(PropTypes.string).isRequired,
+		config: PropTypes.object,
+		itemId: PropTypes.string.isRequired,
+		parentId: PropTypes.string.isRequired,
+		type: PropTypes.string.isRequired,
+		...extraPropTypes
+	});
+}

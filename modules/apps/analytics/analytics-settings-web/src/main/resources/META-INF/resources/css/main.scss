@@ -17,4 +17,18 @@
 			padding: 0;
 		}	
 	}
+
+	.radio-buttons {
+		label {
+			cursor: pointer;
+		}
+
+		small {
+			margin: 0 0 0 1.4rem;
+		}
+
+		.radio {
+			margin-bottom: 0;
+		}
+	}
 }

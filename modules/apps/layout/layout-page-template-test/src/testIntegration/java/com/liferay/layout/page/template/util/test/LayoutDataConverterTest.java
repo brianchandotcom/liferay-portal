@@ -144,13 +144,61 @@ public class LayoutDataConverterTest {
 				row1Column1ChildrenItemIds.get(1), mainItemIds.get(4)
 			});
 
-		JSONObject expectedLayoutDataJSONObject =
-			JSONFactoryUtil.createJSONObject(expectedLayoutData);
+		_testLayoutData(
+			layoutStructure.toJSONObject(),
+			JSONFactoryUtil.createJSONObject(expectedLayoutData));
+	}
+
+	@Test
+	public void testConvertEmpty() throws Exception {
+		String actualLayoutData = LayoutDataConverter.convert(
+			_read("layout_data_v0_empty.json"));
+
+		LayoutStructure layoutStructure = LayoutStructure.of(actualLayoutData);
+
+		String expectedLayoutData = StringUtil.replace(
+			_read("expected_layout_data_v1_empty.json"), "MAIN-UUID",
+			layoutStructure.getMainItemId());
+
+		_testLayoutData(
+			layoutStructure.toJSONObject(),
+			JSONFactoryUtil.createJSONObject(expectedLayoutData));
+	}
+
+	@Test
+	public void testDropZone() throws Exception {
+		String actualLayoutData = LayoutDataConverter.convert(
+			_read("layout_data_v0_drop_zone.json"));
+
+		LayoutStructure layoutStructure = LayoutStructure.of(actualLayoutData);
+
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+			(DropZoneLayoutStructureItem)
+				layoutStructure.getDropZoneLayoutStructureItem();
+
+		Assert.assertFalse(
+			dropZoneLayoutStructureItem.isAllowNewFragmentEntries());
+
+		List<String> fragmentEntryKeys =
+			dropZoneLayoutStructureItem.getFragmentEntryKeys();
+
+		Assert.assertEquals(
+			fragmentEntryKeys.toString(), 2, fragmentEntryKeys.size());
+		Assert.assertEquals("fragmentEntry1", fragmentEntryKeys.get(0));
+		Assert.assertEquals("fragmentEntry2", fragmentEntryKeys.get(1));
+	}
+
+	private String _read(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void _testLayoutData(
+		JSONObject actualLayoutDataJSONObject,
+		JSONObject expectedLayoutDataJSONObject) {
 
 		JSONObject expectedItemsJSONObject =
 			expectedLayoutDataJSONObject.getJSONObject("items");
-
-		JSONObject actualLayoutDataJSONObject = layoutStructure.toJSONObject();
 
 		JSONObject actualItemsJSONObject =
 			actualLayoutDataJSONObject.getJSONObject("items");
@@ -185,55 +233,6 @@ public class LayoutDataConverterTest {
 		Assert.assertEquals(
 			expectedLayoutDataJSONObject.getInt("version"),
 			actualLayoutDataJSONObject.getInt("version"));
-	}
-
-	@Test
-	public void testConvertEmpty() throws Exception {
-		String actualLayoutData = LayoutDataConverter.convert(
-			_read("layout_data_v0_empty.json"));
-
-		LayoutStructure layoutStructure = LayoutStructure.of(actualLayoutData);
-
-		String expectedLayoutData = StringUtil.replace(
-			_read("expected_layout_data_v1_empty.json"), "MAIN-UUID",
-			layoutStructure.getMainItemId());
-
-		JSONObject expectedLayoutDataJSONObject =
-			JSONFactoryUtil.createJSONObject(expectedLayoutData);
-
-		JSONObject layoutStructureJSONObject = layoutStructure.toJSONObject();
-
-		Assert.assertEquals(
-			expectedLayoutDataJSONObject.toJSONString(),
-			layoutStructureJSONObject.toJSONString());
-	}
-
-	@Test
-	public void testDropZone() throws Exception {
-		String actualLayoutData = LayoutDataConverter.convert(
-			_read("layout_data_v0_drop_zone.json"));
-
-		LayoutStructure layoutStructure = LayoutStructure.of(actualLayoutData);
-
-		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
-			(DropZoneLayoutStructureItem)
-				layoutStructure.getDropZoneLayoutStructureItem();
-
-		Assert.assertFalse(
-			dropZoneLayoutStructureItem.isAllowNewFragmentEntries());
-
-		List<String> fragmentEntryKeys =
-			dropZoneLayoutStructureItem.getFragmentEntryKeys();
-
-		Assert.assertEquals(
-			fragmentEntryKeys.toString(), 2, fragmentEntryKeys.size());
-		Assert.assertEquals("fragmentEntry1", fragmentEntryKeys.get(0));
-		Assert.assertEquals("fragmentEntry2", fragmentEntryKeys.get(1));
-	}
-
-	private String _read(String fileName) throws Exception {
-		return new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 }

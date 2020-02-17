@@ -8,6 +8,20 @@ definition {
 		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
+	macro activeResultRanking {
+		AssertTextEquals(
+			key_status = "Inactive",
+			locator1 = "SearchTuning#RESULT_RANKINGS_STATUS",
+			value1 = "Inactive");
+
+		Click(locator1 = "SearchTuning#RESULT_RANKINGS_INACTIVE");
+
+		AssertTextEquals(
+			key_status = "Active",
+			locator1 = "SearchTuning#RESULT_RANKINGS_STATUS",
+			value1 = "Active");
+	}
+
 	macro addResult {
 		Button.click(button = "Add Result");
 
@@ -130,6 +144,20 @@ definition {
 		AssertElementNotPresent(
 			key_assetTitle = "${assetTitle}",
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
+	}
+
+	macro inActiveResultRanking {
+		AssertTextEquals(
+			key_status = "Active",
+			locator1 = "SearchTuning#RESULT_RANKINGS_STATUS",
+			value1 = "Active");
+
+		Click(locator1 = "SearchTuning#RESULT_RANKINGS_ACTIVE");
+
+		AssertTextEquals(
+			key_status = "Inactive",
+			locator1 = "SearchTuning#RESULT_RANKINGS_STATUS",
+			value1 = "Inactive");
 	}
 
 	macro pinResult {

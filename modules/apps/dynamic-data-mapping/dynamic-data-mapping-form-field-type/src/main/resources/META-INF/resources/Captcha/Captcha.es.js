@@ -49,9 +49,11 @@ const Captcha = ({html, name}) => {
 	useEffect(() => {
 		if (elRef.current) {
 			const fieldIndex = name.indexOf('_ddm');
-			Liferay.fire(`${name.substring(0, fieldIndex)}_simplecaptcha_attachEvent`);
+			Liferay.fire(
+				`${name.substring(0, fieldIndex)}_simplecaptcha_attachEvent`
+			);
 		}
-	}, [elRef]);
+	}, [elRef, name]);
 
 	return (
 		<>

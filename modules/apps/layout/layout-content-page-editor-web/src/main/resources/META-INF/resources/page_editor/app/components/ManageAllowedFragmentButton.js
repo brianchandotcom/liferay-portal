@@ -59,8 +59,7 @@ const ManageAllowedFragmentButton = ({item}) => {
 };
 
 ManageAllowedFragmentButton.propTypes = {
-	item: PropTypes.object,
-	onSelectedFragment: PropTypes.func.isRequired
+	item: PropTypes.object
 };
 
 export {ManageAllowedFragmentButton};

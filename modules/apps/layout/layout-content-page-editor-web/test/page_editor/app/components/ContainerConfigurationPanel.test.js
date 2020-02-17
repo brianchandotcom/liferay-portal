@@ -18,6 +18,7 @@ import React from 'react';
 
 import {ContainerConfigurationPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/ContainerConfigurationPanel';
 import {ConfigContext} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config';
+import {CONTAINER_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/containerTypes';
 import {PADDING_OPTIONS} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/paddingOptions';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 
@@ -25,7 +26,9 @@ const renderComponent = (dispatch = () => {}) =>
 	render(
 		<ConfigContext.Provider value={{themeColorsCssClasses: []}}>
 			<StoreAPIContextProvider dispatch={dispatch}>
-				<ContainerConfigurationPanel item={{}} />
+				<ContainerConfigurationPanel
+					item={{config: {type: CONTAINER_TYPES.fluid}}}
+				/>
 			</StoreAPIContextProvider>
 		</ConfigContext.Provider>
 	);

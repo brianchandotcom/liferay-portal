@@ -45,10 +45,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageTemplate")
+@GraphQLName("PageTemplateCollection")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageTemplate")
-public class PageTemplate {
+@XmlRootElement(name = "PageTemplateCollection")
+public class PageTemplateCollection {
 
 	@Schema
 	@Valid
@@ -136,6 +136,34 @@ public class PageTemplate {
 	protected Date dateModified;
 
 	@Schema
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@JsonIgnore
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String description;
+
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -162,34 +190,6 @@ public class PageTemplate {
 	protected Long id;
 
 	@Schema
-	public String[] getKeywords() {
-		return keywords;
-	}
-
-	public void setKeywords(String[] keywords) {
-		this.keywords = keywords;
-	}
-
-	@JsonIgnore
-	public void setKeywords(
-		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
-
-		try {
-			keywords = keywordsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] keywords;
-
-	@Schema
 	public String getName() {
 		return name;
 	}
@@ -214,128 +214,6 @@ public class PageTemplate {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
-
-	@Schema
-	@Valid
-	public PageDefinition getPageDefinition() {
-		return pageDefinition;
-	}
-
-	public void setPageDefinition(PageDefinition pageDefinition) {
-		this.pageDefinition = pageDefinition;
-	}
-
-	@JsonIgnore
-	public void setPageDefinition(
-		UnsafeSupplier<PageDefinition, Exception>
-			pageDefinitionUnsafeSupplier) {
-
-		try {
-			pageDefinition = pageDefinitionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PageDefinition pageDefinition;
-
-	@Schema
-	@Valid
-	public PageTemplateCollection getPageTemplateCollection() {
-		return pageTemplateCollection;
-	}
-
-	public void setPageTemplateCollection(
-		PageTemplateCollection pageTemplateCollection) {
-
-		this.pageTemplateCollection = pageTemplateCollection;
-	}
-
-	@JsonIgnore
-	public void setPageTemplateCollection(
-		UnsafeSupplier<PageTemplateCollection, Exception>
-			pageTemplateCollectionUnsafeSupplier) {
-
-		try {
-			pageTemplateCollection = pageTemplateCollectionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected PageTemplateCollection pageTemplateCollection;
-
-	@Schema(description = "The categories associated with this page template.")
-	@Valid
-	public TaxonomyCategory[] getTaxonomyCategories() {
-		return taxonomyCategories;
-	}
-
-	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
-		this.taxonomyCategories = taxonomyCategories;
-	}
-
-	@JsonIgnore
-	public void setTaxonomyCategories(
-		UnsafeSupplier<TaxonomyCategory[], Exception>
-			taxonomyCategoriesUnsafeSupplier) {
-
-		try {
-			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The categories associated with this page template."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected TaxonomyCategory[] taxonomyCategories;
-
-	@Schema
-	public Long[] getTaxonomyCategoryIds() {
-		return taxonomyCategoryIds;
-	}
-
-	public void setTaxonomyCategoryIds(Long[] taxonomyCategoryIds) {
-		this.taxonomyCategoryIds = taxonomyCategoryIds;
-	}
-
-	@JsonIgnore
-	public void setTaxonomyCategoryIds(
-		UnsafeSupplier<Long[], Exception> taxonomyCategoryIdsUnsafeSupplier) {
-
-		try {
-			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] taxonomyCategoryIds;
 
 	@Schema(
 		description = "A valid external identifier to reference this page template."
@@ -373,13 +251,14 @@ public class PageTemplate {
 			return true;
 		}
 
-		if (!(object instanceof PageTemplate)) {
+		if (!(object instanceof PageTemplateCollection)) {
 			return false;
 		}
 
-		PageTemplate pageTemplate = (PageTemplate)object;
+		PageTemplateCollection pageTemplateCollection =
+			(PageTemplateCollection)object;
 
-		return Objects.equals(toString(), pageTemplate.toString());
+		return Objects.equals(toString(), pageTemplateCollection.toString());
 	}
 
 	@Override
@@ -435,6 +314,20 @@ public class PageTemplate {
 			sb.append("\"");
 		}
 
+		if (description != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(description));
+
+			sb.append("\"");
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -443,30 +336,6 @@ public class PageTemplate {
 			sb.append("\"id\": ");
 
 			sb.append(id);
-		}
-
-		if (keywords != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"keywords\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < keywords.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(keywords[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < keywords.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		if (name != null) {
@@ -481,66 +350,6 @@ public class PageTemplate {
 			sb.append(_escape(name));
 
 			sb.append("\"");
-		}
-
-		if (pageDefinition != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"pageDefinition\": ");
-
-			sb.append(String.valueOf(pageDefinition));
-		}
-
-		if (pageTemplateCollection != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"pageTemplateCollection\": ");
-
-			sb.append(String.valueOf(pageTemplateCollection));
-		}
-
-		if (taxonomyCategories != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taxonomyCategories\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < taxonomyCategories.length; i++) {
-				sb.append(String.valueOf(taxonomyCategories[i]));
-
-				if ((i + 1) < taxonomyCategories.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (taxonomyCategoryIds != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taxonomyCategoryIds\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < taxonomyCategoryIds.length; i++) {
-				sb.append(taxonomyCategoryIds[i]);
-
-				if ((i + 1) < taxonomyCategoryIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		if (uuid != null) {
@@ -563,7 +372,7 @@ public class PageTemplate {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageTemplate",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection",
 		name = "x-class-name"
 	)
 	public String xClassName;

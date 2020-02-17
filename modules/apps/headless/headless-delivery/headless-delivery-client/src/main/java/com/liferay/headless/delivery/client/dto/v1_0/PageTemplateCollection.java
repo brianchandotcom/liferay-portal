@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.PageTemplateSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.PageTemplateCollectionSerDes;
 
 import java.util.Date;
 import java.util.Objects;
@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageTemplate implements Cloneable {
+public class PageTemplateCollection {
 
 	public Creator getCreator() {
 		return creator;
@@ -92,6 +92,27 @@ public class PageTemplate implements Cloneable {
 
 	protected Date dateModified;
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String description;
+
 	public Long getId() {
 		return id;
 	}
@@ -111,27 +132,6 @@ public class PageTemplate implements Cloneable {
 
 	protected Long id;
 
-	public String[] getKeywords() {
-		return keywords;
-	}
-
-	public void setKeywords(String[] keywords) {
-		this.keywords = keywords;
-	}
-
-	public void setKeywords(
-		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
-
-		try {
-			keywords = keywordsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String[] keywords;
-
 	public String getName() {
 		return name;
 	}
@@ -150,95 +150,6 @@ public class PageTemplate implements Cloneable {
 	}
 
 	protected String name;
-
-	public PageDefinition getPageDefinition() {
-		return pageDefinition;
-	}
-
-	public void setPageDefinition(PageDefinition pageDefinition) {
-		this.pageDefinition = pageDefinition;
-	}
-
-	public void setPageDefinition(
-		UnsafeSupplier<PageDefinition, Exception>
-			pageDefinitionUnsafeSupplier) {
-
-		try {
-			pageDefinition = pageDefinitionUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected PageDefinition pageDefinition;
-
-	public PageTemplateCollection getPageTemplateCollection() {
-		return pageTemplateCollection;
-	}
-
-	public void setPageTemplateCollection(
-		PageTemplateCollection pageTemplateCollection) {
-
-		this.pageTemplateCollection = pageTemplateCollection;
-	}
-
-	public void setPageTemplateCollection(
-		UnsafeSupplier<PageTemplateCollection, Exception>
-			pageTemplateCollectionUnsafeSupplier) {
-
-		try {
-			pageTemplateCollection = pageTemplateCollectionUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected PageTemplateCollection pageTemplateCollection;
-
-	public TaxonomyCategory[] getTaxonomyCategories() {
-		return taxonomyCategories;
-	}
-
-	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
-		this.taxonomyCategories = taxonomyCategories;
-	}
-
-	public void setTaxonomyCategories(
-		UnsafeSupplier<TaxonomyCategory[], Exception>
-			taxonomyCategoriesUnsafeSupplier) {
-
-		try {
-			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected TaxonomyCategory[] taxonomyCategories;
-
-	public Long[] getTaxonomyCategoryIds() {
-		return taxonomyCategoryIds;
-	}
-
-	public void setTaxonomyCategoryIds(Long[] taxonomyCategoryIds) {
-		this.taxonomyCategoryIds = taxonomyCategoryIds;
-	}
-
-	public void setTaxonomyCategoryIds(
-		UnsafeSupplier<Long[], Exception> taxonomyCategoryIdsUnsafeSupplier) {
-
-		try {
-			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long[] taxonomyCategoryIds;
 
 	public String getUuid() {
 		return uuid;
@@ -260,23 +171,19 @@ public class PageTemplate implements Cloneable {
 	protected String uuid;
 
 	@Override
-	public PageTemplate clone() throws CloneNotSupportedException {
-		return (PageTemplate)super.clone();
-	}
-
-	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
 		}
 
-		if (!(object instanceof PageTemplate)) {
+		if (!(object instanceof PageTemplateCollection)) {
 			return false;
 		}
 
-		PageTemplate pageTemplate = (PageTemplate)object;
+		PageTemplateCollection pageTemplateCollection =
+			(PageTemplateCollection)object;
 
-		return Objects.equals(toString(), pageTemplate.toString());
+		return Objects.equals(toString(), pageTemplateCollection.toString());
 	}
 
 	@Override
@@ -287,7 +194,7 @@ public class PageTemplate implements Cloneable {
 	}
 
 	public String toString() {
-		return PageTemplateSerDes.toJSON(this);
+		return PageTemplateCollectionSerDes.toJSON(this);
 	}
 
 }

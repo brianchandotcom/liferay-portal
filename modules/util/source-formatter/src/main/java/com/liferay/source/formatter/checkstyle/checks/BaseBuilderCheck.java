@@ -83,6 +83,8 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 
 	protected abstract List<BuilderInformation> getBuilderInformationList();
 
+	protected abstract boolean isSupportsNestedMethodCalls();
+
 	protected static class BuilderInformation {
 
 		public BuilderInformation(
@@ -177,6 +179,21 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 				continue;
 			}
 
+			if (isSupportsNestedMethodCalls()) {
+				parentDetailAST = getParentWithTokenType(
+					methodCallDetailAST, TokenTypes.DO_WHILE, TokenTypes.LAMBDA,
+					TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
+
+				if ((parentDetailAST != null) &&
+					(detailAST.getLineNo() <= parentDetailAST.getLineNo())) {
+
+					return;
+				}
+			}
+			else if (!equals(parentDetailAST.getParent(), detailAST)) {
+				return;
+			}
+
 			if (!ArrayUtil.contains(
 					builderInformation.getMethodNames(),
 					firstChildDetailAST.getText())) {
@@ -201,16 +218,6 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 
 					childDetailAST = childDetailAST.getNextSibling();
 				}
-			}
-
-			parentDetailAST = getParentWithTokenType(
-				methodCallDetailAST, TokenTypes.DO_WHILE, TokenTypes.LAMBDA,
-				TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
-
-			if ((parentDetailAST != null) &&
-				(detailAST.getLineNo() <= parentDetailAST.getLineNo())) {
-
-				return;
 			}
 		}
 

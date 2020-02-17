@@ -41,4 +41,8 @@ public class MapBuilderCheck extends BaseBuilderCheck {
 				"TreeMap", "TreeMapBuilder", "put"));
 	}
 
+	protected boolean isSupportsNestedMethodCalls() {
+		return true;
+	}
+
 }

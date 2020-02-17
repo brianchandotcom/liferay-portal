@@ -656,10 +656,16 @@ public class ProcessResourceImpl
 	}
 
 	private void _setUntrackedInstanceCount(Process process) {
-		process.setUntrackedInstanceCount(
+		long untrackedInstanceCount =
 			process.getInstanceCount() -
 				GetterUtil.getLong(process.getOnTimeInstanceCount()) -
-					GetterUtil.getLong(process.getOverdueInstanceCount()));
+					GetterUtil.getLong(process.getOverdueInstanceCount());
+
+		if (untrackedInstanceCount < 0) {
+			untrackedInstanceCount = 0;
+		}
+
+		process.setUntrackedInstanceCount(untrackedInstanceCount);
 	}
 
 	private FieldSort _toFieldSort(Sort[] sorts) {

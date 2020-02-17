@@ -101,17 +101,13 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 
 		StringBundler sb = new StringBundler(16);
 
-		String relayState = ParamUtil.getString(
-			httpServletRequest, "RelayState");
-		String samlRequest = ParamUtil.getString(
-			httpServletRequest, "SAMLRequest");
-		String samlResponse = ParamUtil.getString(
-			httpServletRequest, "SAMLResponse");
-
 		sb.append("<!DOCTYPE html>\n");
 		sb.append("<html><body onload=\"document.forms[0].submit()\">");
 		sb.append(
 			"<form action=\"?continue=true\" method=\"post\" name=\"fm\">");
+
+		String relayState = ParamUtil.getString(
+			httpServletRequest, "RelayState");
 
 		if (Validator.isNotNull(relayState)) {
 			sb.append("<input type=\"hidden\" name=\"RelayState\" value=\"");
@@ -119,11 +115,17 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 			sb.append("\"/>");
 		}
 
+		String samlRequest = ParamUtil.getString(
+			httpServletRequest, "SAMLRequest");
+
 		if (Validator.isNotNull(samlRequest)) {
 			sb.append("<input type=\"hidden\" name=\"SAMLRequest\" value=\"");
 			sb.append(samlRequest);
 			sb.append("\"/>");
 		}
+
+		String samlResponse = ParamUtil.getString(
+			httpServletRequest, "SAMLResponse");
 
 		if (Validator.isNotNull(samlResponse)) {
 			sb.append("<input type=\"hidden\" name=\"SAMLResponse\" value=\"");

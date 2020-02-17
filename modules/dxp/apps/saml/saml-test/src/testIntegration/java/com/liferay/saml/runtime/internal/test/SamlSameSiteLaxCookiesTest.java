@@ -102,9 +102,8 @@ public class SamlSameSiteLaxCookiesTest {
 
 		HttpURLConnection httpClient = (HttpURLConnection)url.openConnection();
 
-		httpClient.setRequestMethod("POST");
-
 		httpClient.setDoOutput(true);
+		httpClient.setRequestMethod("POST");
 
 		try (DataOutputStream wr = new DataOutputStream(
 				httpClient.getOutputStream())) {

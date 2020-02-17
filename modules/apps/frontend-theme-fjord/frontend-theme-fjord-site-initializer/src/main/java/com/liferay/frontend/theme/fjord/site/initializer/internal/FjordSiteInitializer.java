@@ -168,22 +168,22 @@ public class FjordSiteInitializer implements SiteInitializer {
 			homeFragmentEntries.addAll(footerFragmentEntries);
 
 			_addLayout(
+				homeFragmentEntries,
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Home", homeFragmentEntries, _PATH + "/fragments/home",
-				serviceContext);
+				"Home", _PATH + "/fragments/home", serviceContext);
 
 			_addLayout(
+				featuresFragmentEntries,
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Features", featuresFragmentEntries,
-				_PATH + "/fragments/features", serviceContext);
+				"Features", _PATH + "/fragments/features", serviceContext);
 
 			_addLayout(
+				downloadFragmentEntries,
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Download", downloadFragmentEntries,
-				_PATH + "/fragments/download", serviceContext);
+				"Download", _PATH + "/fragments/download", serviceContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -315,14 +315,14 @@ public class FjordSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addLayout(
-			long layoutPageTemplateCollectionId, String name,
-			List<FragmentEntry> fragmentEntries, String path,
+			List<FragmentEntry> fragmentEntries,
+			long layoutPageTemplateCollectionId, String name, String path,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_addLayoutPageTemplateEntry(
-				layoutPageTemplateCollectionId, name, fragmentEntries, path,
+				fragmentEntries, layoutPageTemplateCollectionId, name, path,
 				serviceContext);
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
@@ -361,8 +361,8 @@ public class FjordSiteInitializer implements SiteInitializer {
 	}
 
 	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
-			long layoutPageTemplateCollectionId, String name,
-			List<FragmentEntry> fragmentEntries, String path,
+			List<FragmentEntry> fragmentEntries,
+			long layoutPageTemplateCollectionId, String name, String path,
 			ServiceContext serviceContext)
 		throws Exception {
 

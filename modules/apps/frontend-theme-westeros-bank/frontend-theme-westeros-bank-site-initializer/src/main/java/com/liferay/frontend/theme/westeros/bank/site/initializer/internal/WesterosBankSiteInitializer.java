@@ -162,9 +162,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 			LayoutPageTemplateEntry personalLayoutPageTemplate =
 				_addLayoutPageTemplateEntry(
-					layoutPageTemplateCollection, "For You",
-					personalFragmentEntries, _PATH + "/page_templates",
-					"personal.jpg", serviceContext);
+					personalFragmentEntries, layoutPageTemplateCollection,
+					"For You", _PATH + "/page_templates", "personal.jpg",
+					serviceContext);
 
 			Layout personalLayout = _addParentLayout(
 				"For You",
@@ -225,8 +225,8 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 			LayoutPageTemplateEntry businessLayoutPageTemplate =
 				_addLayoutPageTemplateEntry(
-					layoutPageTemplateCollection, "For Your Business",
-					businessFragmentEntries, _PATH + "/page_templates",
+					businessFragmentEntries, layoutPageTemplateCollection,
+					"For Your Business", _PATH + "/page_templates",
 					"business.jpg", serviceContext);
 
 			Layout businessLayout = _addParentLayout(
@@ -462,9 +462,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 	}
 
 	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
+			List<FragmentEntry> fragmentEntries,
 			LayoutPageTemplateCollection layoutPageTemplateCollection,
-			String name, List<FragmentEntry> fragmentEntries,
-			String thumbnailPath, String thumbnailFileName,
+			String name, String thumbnailPath, String thumbnailFileName,
 			ServiceContext serviceContext)
 		throws Exception {
 

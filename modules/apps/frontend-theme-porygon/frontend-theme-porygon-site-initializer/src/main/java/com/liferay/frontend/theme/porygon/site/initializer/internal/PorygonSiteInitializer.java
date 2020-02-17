@@ -38,19 +38,25 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryModel;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.util.LayoutPageTemplateStructureHelperUtil;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -73,10 +79,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -257,7 +263,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			null, PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
 	}
 
-	private LayoutPageTemplateEntry _addDisplayPageEntry(
+	private void _addDisplayPageEntry(
 			String name, List<FragmentEntry> fragmentEntries,
 			String thumbnailPath, String thumbnailFileName,
 			DDMStructure ddmStructure, List<FileEntry> fileEntries,
@@ -275,9 +281,6 @@ public class PorygonSiteInitializer implements SiteInitializer {
 				previewFileEntryId, true, 0, 0, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		long[] fragmentEntryIds = ListUtil.toLongArray(
-			fragmentEntries, FragmentEntryModel::getFragmentEntryId);
-
 		Map<String, String> fileEntriesMap = _getFileEntriesMap(fileEntries);
 
 		URL url = _bundle.getEntry(_PATH + "/fragments/editable_values.json");
@@ -286,10 +289,54 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			StringUtil.read(url.openStream()), StringPool.DOLLAR,
 			StringPool.DOLLAR, fileEntriesMap);
 
-		return _layoutPageTemplateEntryLocalService.
-			updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), name,
-				fragmentEntryIds, editableValues, serviceContext);
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		List<FragmentEntryLink> fragmentEntryLinks = _addFragmentEntryLinks(
+			fragmentEntries, editableValues, draftLayout.getPlid(),
+			serviceContext);
+
+		JSONObject layoutDataJSONObject =
+			LayoutPageTemplateStructureHelperUtil.
+				generateContentLayoutStructure(fragmentEntryLinks);
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layoutPageTemplateEntry.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					draftLayout.getPlid());
+
+		if (layoutPageTemplateStructure == null) {
+			_layoutPageTemplateStructureLocalService.
+				addLayoutPageTemplateStructure(
+					serviceContext.getUserId(),
+					layoutPageTemplateEntry.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					draftLayout.getPlid(), layoutDataJSONObject.toString(),
+					serviceContext);
+		}
+		else {
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructure(
+					layoutPageTemplateEntry.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					draftLayout.getPlid(), layoutDataJSONObject.toString());
+		}
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_layoutCopyHelper.copyLayout(draftLayout, layout);
+
+				_layoutLocalService.updateStatus(
+					serviceContext.getUserId(), layout.getPlid(),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+				return null;
+			});
 	}
 
 	private List<FileEntry> _addFileEntries(ServiceContext serviceContext)
@@ -391,6 +438,30 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		}
 
 		return fragmentEntries;
+	}
+
+	private List<FragmentEntryLink> _addFragmentEntryLinks(
+			List<FragmentEntry> fragmentEntries, String editableValues,
+			long plid, ServiceContext serviceContext)
+		throws PortalException {
+
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+
+		for (FragmentEntry fragmentEntry : fragmentEntries) {
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(), 0,
+					fragmentEntry.getFragmentEntryId(),
+					_portal.getClassNameId(Layout.class.getName()), plid,
+					fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+					editableValues, StringPool.BLANK, 0, null, serviceContext);
+
+			fragmentEntryLinks.add(fragmentEntryLink);
+		}
+
+		return fragmentEntryLinks;
 	}
 
 	private Layout _addHomeLayout(
@@ -974,6 +1045,9 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
@@ -989,11 +1063,18 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	private DDMFormLayoutDeserializer _jsonDDMFormLayoutDeserializer;
 
 	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

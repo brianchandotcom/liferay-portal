@@ -22,7 +22,6 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -33,14 +32,17 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.util.LayoutPageTemplateStructureHelperUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -67,7 +69,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -425,6 +426,31 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 		return fragmentEntries;
 	}
 
+	private List<FragmentEntryLink> _addFragmentEntryLinks(
+			List<FragmentEntry> fragmentEntries, long plid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+
+		for (FragmentEntry fragmentEntry : fragmentEntries) {
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(), 0,
+					fragmentEntry.getFragmentEntryId(),
+					_portal.getClassNameId(Layout.class.getName()), plid,
+					fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+					StringPool.BLANK, StringPool.BLANK, 0, null,
+					serviceContext);
+
+			fragmentEntryLinks.add(fragmentEntryLink);
+		}
+
+		return fragmentEntryLinks;
+	}
+
 	private LayoutPageTemplateCollection _addLayoutPageTemplateCollection(
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -461,13 +487,55 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				previewFileEntryId);
 
-		long[] fragmentEntryIds = ListUtil.toLongArray(
-			fragmentEntries, FragmentEntryModel::getFragmentEntryId);
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
 
-		return _layoutPageTemplateEntryLocalService.
-			updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), name,
-				fragmentEntryIds, StringPool.BLANK, serviceContext);
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		List<FragmentEntryLink> fragmentEntryLinks = _addFragmentEntryLinks(
+			fragmentEntries, draftLayout.getPlid(), serviceContext);
+
+		JSONObject layoutDataJSONObject =
+			LayoutPageTemplateStructureHelperUtil.
+				generateContentLayoutStructure(fragmentEntryLinks);
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layoutPageTemplateEntry.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					draftLayout.getPlid());
+
+		if (layoutPageTemplateStructure == null) {
+			_layoutPageTemplateStructureLocalService.
+				addLayoutPageTemplateStructure(
+					serviceContext.getUserId(),
+					layoutPageTemplateEntry.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					draftLayout.getPlid(), layoutDataJSONObject.toString(),
+					serviceContext);
+		}
+		else {
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructure(
+					layoutPageTemplateEntry.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					draftLayout.getPlid(), layoutDataJSONObject.toString());
+		}
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_layoutCopyHelper.copyLayout(draftLayout, layout);
+
+				_layoutLocalService.updateStatus(
+					serviceContext.getUserId(), layout.getPlid(),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+				return null;
+			});
+
+		return layoutPageTemplateEntry;
 	}
 
 	private List<Layout> _addLayouts(

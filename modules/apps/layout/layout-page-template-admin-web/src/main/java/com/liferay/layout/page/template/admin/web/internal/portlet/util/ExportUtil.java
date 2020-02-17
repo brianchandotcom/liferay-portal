@@ -31,13 +31,14 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
+import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateCollectionConverterUtil;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateConverterUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -130,12 +131,11 @@ public class ExportUtil {
 			return;
 		}
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				getLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
-
 		layoutPageTemplateCollectionKeyMap.put(
-			layoutPageTemplateCollectionId, layoutPageTemplateCollection);
+			layoutPageTemplateCollectionId,
+			_layoutPageTemplateCollectionLocalService.
+				getLayoutPageTemplateCollection(
+					layoutPageTemplateCollectionId));
 	}
 
 	private void _populateZipWriter(
@@ -145,22 +145,19 @@ public class ExportUtil {
 			ZipWriter zipWriter)
 		throws Exception {
 
-		PageTemplate pageTemplate = PageTemplateConverterUtil.toPageTemplate(
-			layoutPageTemplateEntry);
-
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			layoutPageTemplateCollectionKeyMap.get(
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
 
-		StringBundler sb = new StringBundler(4);
+		PageTemplateCollection pageTemplateCollection =
+			PageTemplateCollectionConverterUtil.toPageTemplateCollection(
+				layoutPageTemplateCollection);
 
-		sb.append(_ROOT_FOLDER + StringPool.SLASH);
-		sb.append(
-			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey());
-		sb.append(StringPool.SLASH);
-		sb.append(layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
+		String layoutPageTemplateCollectionKey =
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey();
 
-		String path = sb.toString();
+		String layoutPageTemplateCollectionPath =
+			_ROOT_FOLDER + StringPool.SLASH + layoutPageTemplateCollectionKey;
 
 		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
 
@@ -170,7 +167,20 @@ public class ExportUtil {
 		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
 
 		zipWriter.addEntry(
-			path + StringPool.SLASH +
+			layoutPageTemplateCollectionPath + StringPool.SLASH +
+				LayoutPageTemplateExportImportConstants.
+					FILE_NAME_COLLECTION_CONFIG,
+			objectWriter.writeValueAsString(pageTemplateCollection));
+
+		PageTemplate pageTemplate = PageTemplateConverterUtil.toPageTemplate(
+			layoutPageTemplateEntry);
+
+		String layoutPageTemplateEntryPath =
+			layoutPageTemplateCollectionPath + StringPool.SLASH +
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
+
+		zipWriter.addEntry(
+			layoutPageTemplateEntryPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_PAGE_TEMPLATE_CONFIG,
 			objectWriter.writeValueAsString(pageTemplate));
@@ -186,7 +196,7 @@ public class ExportUtil {
 					layout);
 
 			zipWriter.addEntry(
-				path + "/page-definition.json",
+				layoutPageTemplateEntryPath + "/page-definition.json",
 				objectWriter.writeValueAsString(pageDefinition));
 		}
 
@@ -195,7 +205,8 @@ public class ExportUtil {
 
 		if (previewFileEntry != null) {
 			zipWriter.addEntry(
-				path + "/thumbnail." + previewFileEntry.getExtension(),
+				layoutPageTemplateEntryPath + "/thumbnail." +
+					previewFileEntry.getExtension(),
 				previewFileEntry.getContentStream());
 		}
 	}

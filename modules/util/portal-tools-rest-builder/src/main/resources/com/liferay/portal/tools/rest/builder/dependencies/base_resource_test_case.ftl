@@ -910,7 +910,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					);
 
-					${schemaName} expectedPatch${schemaName} = (${schemaName})BeanUtils.cloneBean(post${schemaName});
+					${schemaName} expectedPatch${schemaName} = post${schemaName}.clone();
 
 					_beanUtilsBean.copyProperties(expectedPatch${schemaName}, randomPatch${schemaName});
 

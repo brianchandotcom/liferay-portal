@@ -69,7 +69,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	protected JSONObject doTransactionalCommand(
+	protected JSONObject executeTransactionalMVCActionCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

@@ -104,7 +104,7 @@ public class AddPortletMVCActionCommand
 	}
 
 	@Override
-	protected JSONObject doTransactionalCommand(
+	protected JSONObject executeTransactionalMVCActionCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

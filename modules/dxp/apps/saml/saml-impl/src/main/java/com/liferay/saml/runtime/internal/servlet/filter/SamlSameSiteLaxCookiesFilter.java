@@ -74,7 +74,7 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 
 		boolean noscript = ParamUtil.getBoolean(httpServletRequest, "noscript");
 
-		if ((httpServletRequest.getParameter("continue") != null) ||
+		if (ParamUtil.getBoolean(httpServletRequest, "continue") ||
 			(!noscript && (httpServletRequest.getSession(false) != null))) {
 
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
@@ -112,7 +112,8 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 
 		sb.append("<!DOCTYPE html>\n");
 		sb.append("<html><body onload=\"document.forms[0].submit()\">");
-		sb.append("<form action=\"?continue\" method=\"post\" name=\"fm\">");
+		sb.append(
+			"<form action=\"?continue=true\" method=\"post\" name=\"fm\">");
 
 		if (relayState != null) {
 			sb.append("<input type=\"hidden\" name=\"RelayState\" value=\"");

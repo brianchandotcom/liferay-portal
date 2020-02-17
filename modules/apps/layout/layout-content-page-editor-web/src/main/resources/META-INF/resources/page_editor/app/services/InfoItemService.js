@@ -123,5 +123,16 @@ export default {
 			},
 			onNetworkStatus
 		);
+	},
+
+	/**
+	 * Get page contents
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 */
+	getPageContents({config, onNetworkStatus}) {
+		const {getPageContentsURL} = config;
+
+		return serviceFetch(config, getPageContentsURL, onNetworkStatus);
 	}
 };

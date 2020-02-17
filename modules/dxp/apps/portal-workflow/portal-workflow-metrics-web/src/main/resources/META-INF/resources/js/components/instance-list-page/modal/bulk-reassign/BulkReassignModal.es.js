@@ -144,9 +144,7 @@ const BulkReassignModal = () => {
 				})
 				.catch(() => {
 					setErrorToast(
-						Liferay.Language.get(
-							'your-connection-was-unexpectedly-lost'
-						)
+						Liferay.Language.get('your-request-has-failed')
 					);
 					setFetching(false);
 				});

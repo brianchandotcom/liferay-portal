@@ -31,6 +31,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.kernel.util.Validator;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -106,28 +107,31 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 
 		StringBundler sb = new StringBundler(16);
 
-		String relayState = httpServletRequest.getParameter("RelayState");
-		String samlRequest = httpServletRequest.getParameter("SAMLRequest");
-		String samlResponse = httpServletRequest.getParameter("SAMLResponse");
+		String relayState = ParamUtil.getString(
+			httpServletRequest, "RelayState");
+		String samlRequest = ParamUtil.getString(
+			httpServletRequest, "SAMLRequest");
+		String samlResponse = ParamUtil.getString(
+			httpServletRequest, "SAMLResponse");
 
 		sb.append("<!DOCTYPE html>\n");
 		sb.append("<html><body onload=\"document.forms[0].submit()\">");
 		sb.append(
 			"<form action=\"?continue=true\" method=\"post\" name=\"fm\">");
 
-		if (relayState != null) {
+		if (Validator.isNotNull(relayState)) {
 			sb.append("<input type=\"hidden\" name=\"RelayState\" value=\"");
 			sb.append(relayState);
 			sb.append("\"/>");
 		}
 
-		if (samlRequest != null) {
+		if (Validator.isNotNull(samlRequest)) {
 			sb.append("<input type=\"hidden\" name=\"SAMLRequest\" value=\"");
 			sb.append(samlRequest);
 			sb.append("\"/>");
 		}
 
-		if (samlResponse != null) {
+		if (Validator.isNotNull(samlResponse)) {
 			sb.append("<input type=\"hidden\" name=\"SAMLResponse\" value=\"");
 			sb.append(samlResponse);
 			sb.append("\"/>");

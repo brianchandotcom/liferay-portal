@@ -18,6 +18,7 @@ import languageReducer from './languageReducer';
 import layoutDataReducer from './layoutDataReducer';
 import mappingReducer from './mappingReducer';
 import networkReducer from './networkReducer';
+import pageContentsReducer from './pageContentsReducer';
 import permissionsReducer from './permissionsReducer';
 import resolvedCommentsReducer from './resolvedCommentsReducer';
 import sidebarReducer from './sidebarReducer';
@@ -48,6 +49,7 @@ export function reducer(state, action) {
 			layoutData: layoutDataReducer,
 			mappedInfoItems: mappingReducer,
 			network: networkReducer,
+			pageContents: pageContentsReducer,
 			permissions: permissionsReducer,
 			showResolvedComments: resolvedCommentsReducer,
 			widgets: widgetsReducer

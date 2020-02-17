@@ -103,7 +103,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 				<c:choose>
 					<c:when test="<%= dlEditFileEntryTypeDisplayContext.useDataEngineEditor() %>">
 						<liferay-util:html-top>
-							<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/document_library/css/data-engine.css") %>" rel="stylesheet" type="text/css" />
+							<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/document_library/css/data_engine.css") %>" rel="stylesheet" type="text/css" />
 						</liferay-util:html-top>
 
 						<liferay-data-engine:data-layout-builder

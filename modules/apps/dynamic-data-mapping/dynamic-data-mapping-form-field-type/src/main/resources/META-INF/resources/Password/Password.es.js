@@ -14,13 +14,77 @@
 
 import './PasswordRegister.soy';
 
-import Soy from 'metal-soy';
+import React, {useState} from 'react';
 
-import Text from '../Text/Text.es';
-import templates from './Password.soy';
+import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
+import {connectStore} from '../util/connectStore.es';
+import templates from './PasswordAdapter.soy';
 
-class Password extends Text {}
+const Password = ({
+	disabled,
+	name,
+	onBlur,
+	onFocus,
+	onInput,
+	placeholder,
+	value: initialValue
+}) => {
+	const [value, setValue] = useState(initialValue);
 
-Soy.register(Password, templates);
+	return (
+		<input
+			className="ddm-field-text form-control"
+			disabled={disabled}
+			id={name}
+			name={name}
+			onBlur={onBlur}
+			onFocus={onFocus}
+			onInput={event => {
+				onInput(event);
+				setValue(event.target.value);
+			}}
+			placeholder={placeholder}
+			type="password"
+			value={value}
+		/>
+	);
+};
 
-export default Password;
+const PasswordProxy = connectStore(
+	({
+		emit,
+		name,
+		placeholder,
+		predefinedValue,
+		readOnly,
+		value,
+		...otherProps
+	}) => (
+		<FieldBaseProxy {...otherProps} name={name} readOnly={readOnly}>
+			<Password
+				disabled={readOnly}
+				name={name}
+				onBlur={event =>
+					emit('fieldBlurred', event, event.target.value)
+				}
+				onFocus={event =>
+					emit('fieldFocused', event, event.target.value)
+				}
+				onInput={event =>
+					emit('fieldEdited', event, event.target.value)
+				}
+				placeholder={placeholder}
+				value={value ? value : predefinedValue}
+			/>
+		</FieldBaseProxy>
+	)
+);
+
+const ReactPasswordAdapter = getConnectedReactComponentAdapter(
+	PasswordProxy,
+	templates
+);
+
+export {ReactPasswordAdapter};
+export default ReactPasswordAdapter;

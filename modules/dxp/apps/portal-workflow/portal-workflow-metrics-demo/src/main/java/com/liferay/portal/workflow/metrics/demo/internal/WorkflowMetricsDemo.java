@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -230,6 +231,9 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 				workflowInstance.getWorkflowInstanceId(),
 				_toDate(completionLocalDateTime));
 		}
+
+		_slaWorkflowMetricsIndexer.reindex(
+			new String[] {String.valueOf(company.getCompanyId())});
 	}
 
 	@Deactivate
@@ -367,6 +371,11 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private SiteMemberUserDemoDataCreator _siteMemberUserDemoDataCreator;
+
+	@Reference(
+		target = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.search.SLAWorkflowMetricsIndexer))"
+	)
+	private Indexer<Object> _slaWorkflowMetricsIndexer;
 
 	@Reference
 	private WorkflowDefinitionDemoDataCreator

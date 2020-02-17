@@ -53,7 +53,8 @@ export default function Sidebar() {
 	const sidebarPanels = useSelector(
 		selectAvailableSidebarPanels(config.sidebarPanels)
 	);
-	const {sidebarOpen, sidebarPanelId} = store;
+	const sidebarOpen = store.sidebar.open;
+	const sidebarPanelId = store.sidebar.panelId;
 
 	const panel = sidebarPanels[sidebarPanelId];
 	const promise = panel

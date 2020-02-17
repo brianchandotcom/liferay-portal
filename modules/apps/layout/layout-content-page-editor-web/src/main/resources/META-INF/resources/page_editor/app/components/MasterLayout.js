@@ -41,7 +41,7 @@ export default function MasterPage() {
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const masterLayoutData = useSelector(state => state.masterLayoutData);
 	const sidebarOpen = useSelector(
-		state => state.sidebarPanelId && state.sidebarOpen
+		state => state.sidebar.panelId && state.sidebar.open
 	);
 
 	const mainItem = masterLayoutData.items[masterLayoutData.rootItems.main];

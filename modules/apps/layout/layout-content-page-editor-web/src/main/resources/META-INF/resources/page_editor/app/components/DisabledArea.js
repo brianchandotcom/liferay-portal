@@ -47,7 +47,7 @@ const DisabledArea = () => {
 	const [currentElementClicked, setCurrentElementClicked] = useState(null);
 	const [show, setShow] = useState(false);
 	const [position, setPosition] = useState('bottom');
-	const sidebarOpen = useSelector(state => state.sidebarOpen);
+	const sidebarOpen = useSelector(state => state.sidebar.open);
 
 	const isDisabled = element => {
 		const {height} = element.getBoundingClientRect();

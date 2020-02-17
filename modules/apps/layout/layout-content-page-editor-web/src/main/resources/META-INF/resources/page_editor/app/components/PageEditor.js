@@ -58,7 +58,7 @@ export default function PageEditor({withinMasterPage = false}) {
 	const layoutData = useSelector(state => state.layoutData);
 	const selectItem = useSelectItem();
 	const sidebarOpen = useSelector(
-		state => state.sidebarPanelId && state.sidebarOpen
+		state => state.sidebar.panelId && state.sidebar.open
 	);
 	const store = useSelector(state => state);
 

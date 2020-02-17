@@ -20,7 +20,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.FileImpl;
@@ -48,21 +47,22 @@ public class LayoutDataConverterTest {
 		String actualLayoutData = LayoutDataConverter.convert(
 			_read("layout_data_v0_complete.json"));
 
-		LayoutStructure layoutStructure = LayoutStructure.of(actualLayoutData);
+		LayoutStructure actualLayoutStructure = LayoutStructure.of(
+			actualLayoutData);
 
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getMainLayoutStructureItem();
+			actualLayoutStructure.getMainLayoutStructureItem();
 
 		List<String> mainItemIds = layoutStructureItem.getChildrenItemIds();
 
 		LayoutStructureItem container0LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(mainItemIds.get(0));
+			actualLayoutStructure.getLayoutStructureItem(mainItemIds.get(0));
 		LayoutStructureItem container1LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(mainItemIds.get(1));
+			actualLayoutStructure.getLayoutStructureItem(mainItemIds.get(1));
 		LayoutStructureItem container2LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(mainItemIds.get(2));
+			actualLayoutStructure.getLayoutStructureItem(mainItemIds.get(2));
 		LayoutStructureItem container3LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(mainItemIds.get(3));
+			actualLayoutStructure.getLayoutStructureItem(mainItemIds.get(3));
 
 		List<String> container0ChildrenItemIds =
 			container0LayoutStructureItem.getChildrenItemIds();
@@ -74,16 +74,16 @@ public class LayoutDataConverterTest {
 			container3LayoutStructureItem.getChildrenItemIds();
 
 		LayoutStructureItem row0LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
+			actualLayoutStructure.getLayoutStructureItem(
 				container0ChildrenItemIds.get(0));
 		LayoutStructureItem row1LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
+			actualLayoutStructure.getLayoutStructureItem(
 				container1ChildrenItemIds.get(0));
 		LayoutStructureItem row2LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
+			actualLayoutStructure.getLayoutStructureItem(
 				container2ChildrenItemIds.get(0));
 		LayoutStructureItem row3LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
+			actualLayoutStructure.getLayoutStructureItem(
 				container3ChildrenItemIds.get(0));
 
 		List<String> row0ChildrenItemIds =
@@ -96,13 +96,17 @@ public class LayoutDataConverterTest {
 			row3LayoutStructureItem.getChildrenItemIds();
 
 		LayoutStructureItem row0Column0LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(row0ChildrenItemIds.get(0));
+			actualLayoutStructure.getLayoutStructureItem(
+				row0ChildrenItemIds.get(0));
 		LayoutStructureItem row0Column1LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(row0ChildrenItemIds.get(1));
+			actualLayoutStructure.getLayoutStructureItem(
+				row0ChildrenItemIds.get(1));
 		LayoutStructureItem row1Column0LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(row1ChildrenItemIds.get(0));
+			actualLayoutStructure.getLayoutStructureItem(
+				row1ChildrenItemIds.get(0));
 		LayoutStructureItem row1Column1LayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(row1ChildrenItemIds.get(1));
+			actualLayoutStructure.getLayoutStructureItem(
+				row1ChildrenItemIds.get(1));
 
 		List<String> row0Column0ChildrenItemIds =
 			row0Column0LayoutStructureItem.getChildrenItemIds();
@@ -126,7 +130,7 @@ public class LayoutDataConverterTest {
 				"FRAGMENT7-UUID", "FRAGMENT8-UUID"
 			},
 			new String[] {
-				layoutStructure.getMainItemId(), mainItemIds.get(0),
+				actualLayoutStructure.getMainItemId(), mainItemIds.get(0),
 				mainItemIds.get(1), mainItemIds.get(2), mainItemIds.get(3),
 				container0ChildrenItemIds.get(0),
 				container1ChildrenItemIds.get(0),
@@ -144,9 +148,10 @@ public class LayoutDataConverterTest {
 				row1Column1ChildrenItemIds.get(1), mainItemIds.get(4)
 			});
 
-		_testLayoutData(
-			layoutStructure.toJSONObject(),
-			JSONFactoryUtil.createJSONObject(expectedLayoutData));
+		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
+			expectedLayoutData);
+
+		Assert.assertEquals(expectedLayoutStructure, actualLayoutStructure);
 	}
 
 	@Test
@@ -154,15 +159,17 @@ public class LayoutDataConverterTest {
 		String actualLayoutData = LayoutDataConverter.convert(
 			_read("layout_data_v0_empty.json"));
 
-		LayoutStructure layoutStructure = LayoutStructure.of(actualLayoutData);
+		LayoutStructure actualLayoutStructure = LayoutStructure.of(
+			actualLayoutData);
 
 		String expectedLayoutData = StringUtil.replace(
 			_read("expected_layout_data_v1_empty.json"), "MAIN-UUID",
-			layoutStructure.getMainItemId());
+			actualLayoutStructure.getMainItemId());
 
-		_testLayoutData(
-			layoutStructure.toJSONObject(),
-			JSONFactoryUtil.createJSONObject(expectedLayoutData));
+		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
+			expectedLayoutData);
+
+		Assert.assertEquals(expectedLayoutStructure, actualLayoutStructure);
 	}
 
 	@Test
@@ -170,11 +177,12 @@ public class LayoutDataConverterTest {
 		String actualLayoutData = LayoutDataConverter.convert(
 			_read("layout_data_v0_drop_zone.json"));
 
-		LayoutStructure layoutStructure = LayoutStructure.of(actualLayoutData);
+		LayoutStructure actualLayoutStructure = LayoutStructure.of(
+			actualLayoutData);
 
 		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
 			(DropZoneLayoutStructureItem)
-				layoutStructure.getDropZoneLayoutStructureItem();
+				actualLayoutStructure.getDropZoneLayoutStructureItem();
 
 		Assert.assertFalse(
 			dropZoneLayoutStructureItem.isAllowNewFragmentEntries());
@@ -188,25 +196,26 @@ public class LayoutDataConverterTest {
 		Assert.assertEquals("fragmentEntry2", fragmentEntryKeys.get(1));
 
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getMainLayoutStructureItem();
+			actualLayoutStructure.getMainLayoutStructureItem();
 
 		List<String> mainItemIds = layoutStructureItem.getChildrenItemIds();
 
 		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(mainItemIds.get(0));
+			actualLayoutStructure.getLayoutStructureItem(mainItemIds.get(0));
 
 		List<String> containerChildrenItemIds =
 			containerLayoutStructureItem.getChildrenItemIds();
 
 		LayoutStructureItem rowLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
+			actualLayoutStructure.getLayoutStructureItem(
 				containerChildrenItemIds.get(0));
 
 		List<String> rowChildrenItemIds =
 			rowLayoutStructureItem.getChildrenItemIds();
 
 		LayoutStructureItem columnLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(rowChildrenItemIds.get(0));
+			actualLayoutStructure.getLayoutStructureItem(
+				rowChildrenItemIds.get(0));
 
 		String expectedLayoutData = StringUtil.replace(
 			_read("expected_layout_data_v1_drop_zone.json"),
@@ -215,63 +224,22 @@ public class LayoutDataConverterTest {
 				"DROP-ZONE-UUID"
 			},
 			new String[] {
-				layoutStructure.getMainItemId(),
+				actualLayoutStructure.getMainItemId(),
 				containerLayoutStructureItem.getItemId(),
 				rowLayoutStructureItem.getItemId(),
 				columnLayoutStructureItem.getItemId(),
 				dropZoneLayoutStructureItem.getItemId()
 			});
 
-		_testLayoutData(
-			layoutStructure.toJSONObject(),
-			JSONFactoryUtil.createJSONObject(expectedLayoutData));
+		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
+			expectedLayoutData);
+
+		Assert.assertEquals(expectedLayoutStructure, actualLayoutStructure);
 	}
 
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
-	}
-
-	private void _testLayoutData(
-		JSONObject actualLayoutDataJSONObject,
-		JSONObject expectedLayoutDataJSONObject) {
-
-		JSONObject expectedItemsJSONObject =
-			expectedLayoutDataJSONObject.getJSONObject("items");
-
-		JSONObject actualItemsJSONObject =
-			actualLayoutDataJSONObject.getJSONObject("items");
-
-		Assert.assertEquals(
-			expectedItemsJSONObject.keySet(), actualItemsJSONObject.keySet());
-
-		for (String key : expectedItemsJSONObject.keySet()) {
-			JSONObject expectedItemJSONObject =
-				expectedItemsJSONObject.getJSONObject(key);
-			JSONObject actualItemJSONObject =
-				actualItemsJSONObject.getJSONObject(key);
-
-			Assert.assertEquals(
-				expectedItemJSONObject.toJSONString(),
-				actualItemJSONObject.toJSONString());
-		}
-
-		Assert.assertEquals(
-			expectedLayoutDataJSONObject.keySet(),
-			actualLayoutDataJSONObject.keySet());
-
-		JSONObject expectedRootItemsJSONObject =
-			expectedLayoutDataJSONObject.getJSONObject("rootItems");
-		JSONObject actualRootItemsJSONObject =
-			actualLayoutDataJSONObject.getJSONObject("rootItems");
-
-		Assert.assertEquals(
-			expectedRootItemsJSONObject.toJSONString(),
-			actualRootItemsJSONObject.toJSONString());
-
-		Assert.assertEquals(
-			expectedLayoutDataJSONObject.getInt("version"),
-			actualLayoutDataJSONObject.getInt("version"));
 	}
 
 }

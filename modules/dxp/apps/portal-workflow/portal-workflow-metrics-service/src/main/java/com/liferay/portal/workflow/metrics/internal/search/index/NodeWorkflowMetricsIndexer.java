@@ -57,7 +57,7 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
 					_slaTaskResultWorkflowMetricsIndexer.getIndexName(),
-					_creatWorkflowMetricsSLATaskResultDocument(
+					_slaTaskResultWorkflowMetricsIndexer.creatDefaultDocument(
 						GetterUtil.getLong(document.get("companyId")),
 						GetterUtil.getLong(document.get("processId")),
 						GetterUtil.getLong(document.get("nodeId")),
@@ -190,26 +190,6 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		document.addKeyword("taskName", taskName);
 		document.addKeyword("tokenId", 0);
 		document.addKeyword("version", version);
-
-		return document;
-	}
-
-	private Document _creatWorkflowMetricsSLATaskResultDocument(
-		long companyId, long processId, long taskId, String taskName) {
-
-		Document document = new DocumentImpl();
-
-		document.addUID(
-			"WorkflowMetricsSLATaskResult",
-			digest(companyId, 0, processId, 0, taskId));
-		document.addKeyword("companyId", companyId);
-		document.addKeyword("deleted", false);
-		document.addKeyword("instanceCompleted", false);
-		document.addKeyword("instanceId", 0);
-		document.addKeyword("processId", processId);
-		document.addKeyword("slaDefinitionId", 0);
-		document.addKeyword("taskId", taskId);
-		document.addKeyword("taskName", taskName);
 
 		return document;
 	}

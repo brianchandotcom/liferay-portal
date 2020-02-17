@@ -131,7 +131,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 			return;
 		}
 
-		if (_hasIndex(getIndexName())) {
+		if (hasIndex(getIndexName())) {
 			return;
 		}
 
@@ -166,7 +166,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 			return;
 		}
 
-		if (!_hasIndex(getIndexName())) {
+		if (!hasIndex(getIndexName())) {
 			return;
 		}
 
@@ -246,6 +246,20 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 		return kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
 			kaleoDefinitionVersionId);
+	}
+
+	protected boolean hasIndex(String indexName) {
+		if (searchEngineAdapter == null) {
+			return false;
+		}
+
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(indexName);
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		return indicesExistsIndexResponse.isExists();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -353,16 +367,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 	@Reference
 	protected WorkflowMetricsPortalExecutor workflowMetricsPortalExecutor;
-
-	private boolean _hasIndex(String indexName) {
-		IndicesExistsIndexRequest indicesExistsIndexRequest =
-			new IndicesExistsIndexRequest(indexName);
-
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			searchEngineAdapter.execute(indicesExistsIndexRequest);
-
-		return indicesExistsIndexResponse.isExists();
-	}
 
 	private void _updateDocument(Document document) {
 		if (searchEngineAdapter == null) {

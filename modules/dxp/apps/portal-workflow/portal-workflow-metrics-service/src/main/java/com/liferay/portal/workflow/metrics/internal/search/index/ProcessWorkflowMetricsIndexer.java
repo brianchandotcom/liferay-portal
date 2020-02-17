@@ -60,7 +60,7 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
 				_slaInstanceResultWorkflowMetricsIndexer.getIndexName(),
-				_creatWorkflowMetricsSLAInstanceResultDocument(
+				_slaInstanceResultWorkflowMetricsIndexer.creatDefaultDocument(
 					GetterUtil.getLong(document.get("companyId")),
 					GetterUtil.getLong(document.get("processId")))) {
 
@@ -160,24 +160,6 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", 0);
 		document.addKeyword("processId", kaleoDefinitionId);
-
-		return document;
-	}
-
-	private Document _creatWorkflowMetricsSLAInstanceResultDocument(
-		long companyId, long kaleoDefinitionId) {
-
-		Document document = new DocumentImpl();
-
-		document.addUID(
-			"WorkflowMetricsSLAInstanceResult",
-			digest(companyId, 0, kaleoDefinitionId, 0));
-		document.addKeyword("companyId", companyId);
-		document.addKeyword("deleted", false);
-		document.addKeyword("instanceCompleted", false);
-		document.addKeyword("instanceId", 0);
-		document.addKeyword("processId", kaleoDefinitionId);
-		document.addKeyword("slaDefinitionId", 0);
 
 		return document;
 	}

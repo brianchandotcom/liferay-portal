@@ -448,7 +448,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				name, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED, 0, serviceContext);
 
 		long previewFileEntryId = _getPreviewFileEntryId(
 			LayoutAdminPortletKeys.GROUP_PAGES,
@@ -528,7 +528,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			_portal.getClassNameId(LayoutPageTemplateEntry.class),
 			layoutPageTemplateEntryId, nameMap, new HashMap<>(),
 			new HashMap<>(), new HashMap<>(), new HashMap<>(), "content", null,
-			false, false, new HashMap<>(), serviceContext);
+			false, false, new HashMap<>(), 0, serviceContext);
 	}
 
 	private void _configureFragmentEntryLink(

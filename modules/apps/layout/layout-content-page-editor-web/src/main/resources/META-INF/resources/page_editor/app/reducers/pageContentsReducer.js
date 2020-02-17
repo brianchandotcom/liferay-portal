@@ -14,14 +14,17 @@
 
 import {TYPES} from '../actions/index';
 
-export default function pageContentsReducer(state, action) {
+const INITIAL_STATE = [];
+
+export default function pageContentsReducer(
+	pageContents = INITIAL_STATE,
+	action
+) {
 	switch (action.type) {
 		case TYPES.UPDATE_PAGE_CONTENTS:
 			return [...action.pageContents];
 
 		default:
-			break;
+			return pageContents;
 	}
-
-	return state;
 }

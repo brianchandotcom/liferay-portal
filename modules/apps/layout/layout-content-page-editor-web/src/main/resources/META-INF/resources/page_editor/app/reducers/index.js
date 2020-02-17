@@ -24,38 +24,36 @@ import resolvedCommentsReducer from './resolvedCommentsReducer';
 import sidebarReducer from './sidebarReducer';
 import widgetsReducer from './widgetsReducer';
 
-function combineReducers(reducersObject) {
-	return (state, action) =>
-		Object.entries(reducersObject).reduce(
-			(nextState, [namespace, reducer]) => ({
-				...nextState,
-				[namespace]: reducer(nextState[namespace], action)
-			}),
-			state
-		);
-}
-
 /**
  * Runs the base reducer plus any dynamically loaded reducers that have
  * been registered from plugins.
  */
 export function reducer(state, action) {
-	return [
-		baseReducer,
-		sidebarReducer,
-		combineReducers({
-			fragmentEntryLinks: fragmentEntryLinksReducer,
-			languageId: languageReducer,
-			layoutData: layoutDataReducer,
-			mappedInfoItems: mappingReducer,
-			network: networkReducer,
-			pageContents: pageContentsReducer,
-			permissions: permissionsReducer,
-			showResolvedComments: resolvedCommentsReducer,
-			widgets: widgetsReducer
-		}),
-		...Object.values(state.reducers)
-	].reduce((nextState, nextReducer) => {
-		return nextReducer(nextState, action);
-	}, state);
+	return [combinedReducer, ...Object.values(state.reducers)].reduce(
+		(nextState, nextReducer) => {
+			return nextReducer(nextState, action);
+		},
+		state
+	);
 }
+
+const combinedReducer = (state, action) =>
+	Object.entries({
+		fragmentEntryLinks: fragmentEntryLinksReducer,
+		languageId: languageReducer,
+		layoutData: layoutDataReducer,
+		mappedInfoItems: mappingReducer,
+		network: networkReducer,
+		pageContents: pageContentsReducer,
+		permissions: permissionsReducer,
+		reducers: baseReducer,
+		showResolvedComments: resolvedCommentsReducer,
+		sidebar: sidebarReducer,
+		widgets: widgetsReducer
+	}).reduce(
+		(nextState, [namespace, reducer]) => ({
+			...nextState,
+			[namespace]: reducer(nextState[namespace], action)
+		}),
+		state
+	);

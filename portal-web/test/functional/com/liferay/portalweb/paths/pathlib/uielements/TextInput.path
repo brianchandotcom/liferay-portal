@@ -500,7 +500,7 @@
 </tr>
 <tr>
 	<td>FRAGMENTS_SEARCH</td>
-	<td>//input[contains(@placeholder,'Search')]</td>
+	<td>//div[contains(@class,'modal-content')]//input[contains(@placeholder,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

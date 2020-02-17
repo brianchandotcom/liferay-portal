@@ -126,7 +126,7 @@ definition {
 	}
 
 	macro clearAllFilter {
-		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_FILTER_CLEAR_ALL");
+		Click(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
 	}
 
 	macro createUsersAndAssignInstances {

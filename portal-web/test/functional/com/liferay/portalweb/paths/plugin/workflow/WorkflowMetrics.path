@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>FILTER_CLEAR_ALL</td>
-	<td>//span[contains(text(),'Clear All')]</td>
+	<td>//span[contains(text(),'Clear All')] | //button[contains(text(),'Clear All')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -297,11 +297,6 @@
 <tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT</td>
 	<td>//div[contains(@class,'workload-by-assignee-card')]//td[contains(@class,'text-right')]//span[contains(text(),'${key_taskCount}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METRICS_WORKLOAD_BY_ASSIGNEE_FILTER_CLEAR_ALL</td>
-	<td>//a[@class='component-link tbar-link']</td>
 	<td></td>
 </tr>
 <tr>

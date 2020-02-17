@@ -275,9 +275,7 @@ describe('The BulkReassignModal component should', () => {
 		const alertError = getByTestId('alertError');
 		const nextBtn = getByTestId('nextButton');
 
-		expect(alertError).toHaveTextContent(
-			'your-connection-was-unexpectedly-lost'
-		);
+		expect(alertError).toHaveTextContent('your-request-has-failed');
 
 		expect(nextBtn).not.toBeDisabled();
 

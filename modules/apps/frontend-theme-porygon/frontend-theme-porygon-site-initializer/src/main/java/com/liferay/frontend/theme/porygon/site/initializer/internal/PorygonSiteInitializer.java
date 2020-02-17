@@ -886,7 +886,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		layoutTypePortlet.resetModes();
 		layoutTypePortlet.resetStates();
 
-		layout = _layoutService.updateLayout(
+		_layoutService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 	}

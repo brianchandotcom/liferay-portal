@@ -14,10 +14,10 @@
 
 import React, {useEffect, useRef} from 'react';
 
-import Breadcrumbs from './breadcrumbs/Breadcrumbs.es';
-import MillerColumns from './miller_columns/MillerColumns.es';
-import MillerColumnsContext from './miller_columns/MillerColumnsContext.es';
-import actionHandlers from './miller_columns/actionHandlers.es';
+import Breadcrumbs from './breadcrumbs/Breadcrumbs';
+import MillerColumns from './miller_columns/MillerColumns';
+import MillerColumnsContext from './miller_columns/MillerColumnsContext';
+import actionHandlers from './miller_columns/actionHandlers';
 
 const Layout = ({
 	breadcrumbEntries,

@@ -21,7 +21,7 @@ import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React, {useContext, useMemo, useState} from 'react';
 
-import MillerColumnsContext from './MillerColumnsContext.es';
+import MillerColumnsContext from './MillerColumnsContext';
 
 const ITEM_STATES_COLORS = {
 	'conversion-draft': 'info',

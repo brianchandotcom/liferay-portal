@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import MillerColumnsColumnItem from './MillerColumnsColumnItem.es';
+import MillerColumnsColumnItem from './MillerColumnsColumnItem';
 
 const MillerColumnsColumn = ({items}) => (
 	<ul className="col-11 col-lg-4 col-md-6 miller-columns-col show-quick-actions-on-hover">

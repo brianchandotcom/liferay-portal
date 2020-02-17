@@ -12,26 +12,21 @@
  * details.
  */
 
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 
-import MillerColumnsColumn from './MillerColumnsColumn.es';
+import BreadcrumbsItem from './BreadcrumbsItem';
 
-const MillerColumns = ({columns}) => {
-	const rowRef = useRef();
+const Breadcrumbs = ({entries}) => (
+	<ol className="breadcrumb">
+		{entries.map((entry, index) => (
+			<BreadcrumbsItem
+				active={index === entries.length - 1}
+				key={entry.url}
+				title={entry.title}
+				url={entry.url}
+			/>
+		))}
+	</ol>
+);
 
-	useEffect(() => {
-		if (rowRef.current) {
-			rowRef.current.scrollLeft = rowRef.current.scrollWidth;
-		}
-	}, []);
-
-	return (
-		<div className="bg-white miller-columns-row" ref={rowRef}>
-			{columns.map((items, index) => (
-				<MillerColumnsColumn items={items} key={index} />
-			))}
-		</div>
-	);
-};
-
-export default MillerColumns;
+export default Breadcrumbs;

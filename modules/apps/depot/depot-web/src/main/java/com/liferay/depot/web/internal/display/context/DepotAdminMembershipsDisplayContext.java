@@ -14,16 +14,28 @@
 
 package com.liferay.depot.web.internal.display.context;
 
+import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
+import com.liferay.depot.web.internal.item.selector.criteria.depot.group.criterion.DepotGroupItemSelectorCriterion;
+import com.liferay.depot.web.internal.item.selector.util.ItemSelectorUtil;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -35,8 +47,9 @@ import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * @author Cristina González
@@ -44,12 +57,15 @@ import javax.servlet.http.HttpServletRequest;
 public class DepotAdminMembershipsDisplayContext {
 
 	public DepotAdminMembershipsDisplayContext(
-			HttpServletRequest httpServletRequest)
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
+		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-		_user = PortalUtil.getSelectedUser(httpServletRequest);
+		_user = PortalUtil.getSelectedUser(liferayPortletRequest);
 	}
 
 	public List<Group> getDepotGroups(int start, int end)
@@ -64,6 +80,24 @@ public class DepotAdminMembershipsDisplayContext {
 		List<Group> groups = _getDepotGroups();
 
 		return groups.size();
+	}
+
+	public String getItemSelectorEventName() {
+		return _liferayPortletResponse.getNamespace() + "selectDepotGroup";
+	}
+
+	public PortletURL getItemSelectorURL() {
+		ItemSelector itemSelector = ItemSelectorUtil.getItemSelector();
+
+		ItemSelectorCriterion itemSelectorCriterion =
+			new DepotGroupItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new GroupItemSelectorReturnType());
+
+		return itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
+			getItemSelectorEventName(), itemSelectorCriterion);
 	}
 
 	public String getRoles(Group group) {
@@ -87,6 +121,21 @@ public class DepotAdminMembershipsDisplayContext {
 
 	public User getUser() {
 		return _user;
+	}
+
+	public boolean isDeletable() {
+		return isSelectable();
+	}
+
+	public boolean isSelectable() {
+		String myAccountPortletId = PortletProviderUtil.getPortletId(
+			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
+			PortletProvider.Action.VIEW);
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		return !Objects.equals(
+			portletDisplay.getPortletName(), myAccountPortletId);
 	}
 
 	private List<Group> _getDepotGroups() throws PortalException {
@@ -127,6 +176,8 @@ public class DepotAdminMembershipsDisplayContext {
 	}
 
 	private List<Group> _depotGroups;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 	private final User _user;
 

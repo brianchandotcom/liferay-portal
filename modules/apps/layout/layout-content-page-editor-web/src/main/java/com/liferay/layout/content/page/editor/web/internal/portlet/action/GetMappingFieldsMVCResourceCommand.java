@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Set;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,16 +47,16 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/get_mapping_fields"
 	},
-	service = MVCActionCommand.class
+	service = MVCResourceCommand.class
 )
-public class GetMappingFieldsMVCActionCommand extends BaseMVCActionCommand {
+public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
 
 		InfoDisplayContributor infoDisplayContributor =
 			_infoDisplayContributorTracker.getInfoDisplayContributor(
@@ -64,7 +64,7 @@ public class GetMappingFieldsMVCActionCommand extends BaseMVCActionCommand {
 
 		if (infoDisplayContributor == null) {
 			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse,
+				resourceRequest, resourceResponse,
 				JSONFactoryUtil.createJSONArray());
 
 			return;
@@ -72,8 +72,8 @@ public class GetMappingFieldsMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		long classTypeId = ParamUtil.getLong(resourceRequest, "classTypeId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Set<InfoDisplayField> infoDisplayFields =
@@ -93,7 +93,7 @@ public class GetMappingFieldsMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonArray);
+			resourceRequest, resourceResponse, jsonArray);
 	}
 
 	@Reference

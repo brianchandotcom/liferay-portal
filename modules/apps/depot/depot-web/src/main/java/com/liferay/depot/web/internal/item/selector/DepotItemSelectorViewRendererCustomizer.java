@@ -73,8 +73,9 @@ public class DepotItemSelectorViewRendererCustomizer
 			return itemSelectorViewRenderer;
 		}
 
-		PortletItemSelectorView portletItemSelectorView =
-			(PortletItemSelectorView)itemSelectorView;
+		PortletItemSelectorView<? extends ItemSelectorCriterion>
+			portletItemSelectorView =
+				(PortletItemSelectorView<?>)itemSelectorView;
 
 		List<String> portletIds = portletItemSelectorView.getPortletIds();
 
@@ -119,21 +120,16 @@ public class DepotItemSelectorViewRendererCustomizer
 
 						Group scopeGroup = themeDisplay.getScopeGroup();
 
-						Stream<String> stream = portletIds.stream();
+						if (scopeGroup.getType() != GroupConstants.TYPE_DEPOT) {
+							itemSelectorViewRenderer.renderHTML(pageContext);
 
-						String portletId = stream.filter(
-							candidatePortletId ->
-								_depotApplicationController.isEnabled(
-									candidatePortletId, scopeGroup.getGroupId())
-						).findFirst(
-						).orElse(
-							StringPool.BLANK
-						);
+							return;
+						}
 
-						if ((scopeGroup.getType() !=
-								GroupConstants.TYPE_DEPOT) ||
-							Validator.isNotNull(portletId)) {
+						String portletId = _getPortletId(
+							scopeGroup.getGroupId());
 
+						if (Validator.isNotNull(portletId)) {
 							itemSelectorViewRenderer.renderHTML(pageContext);
 
 							return;
@@ -148,11 +144,8 @@ public class DepotItemSelectorViewRendererCustomizer
 								new DepotApplicationDisplayContext(
 									httpServletRequest, _portal);
 
-						if (Validator.isNull(portletId)) {
-							portletId = portletIds.get(0);
-						}
-
-						depotApplicationDisplayContext.setPortletId(portletId);
+						depotApplicationDisplayContext.setPortletId(
+							portletIds.get(0));
 						depotApplicationDisplayContext.setPortletURL(
 							itemSelectorViewRenderer.getPortletURL());
 
@@ -163,6 +156,18 @@ public class DepotItemSelectorViewRendererCustomizer
 						requestDispatcher.include(
 							httpServletRequest, httpServletResponse);
 					});
+			}
+
+			private String _getPortletId(long groupId) {
+				Stream<String> stream = portletIds.stream();
+
+				return stream.filter(
+					portletId -> _depotApplicationController.isEnabled(
+						portletId, groupId)
+				).findFirst(
+				).orElse(
+					StringPool.BLANK
+				);
 			}
 
 		};

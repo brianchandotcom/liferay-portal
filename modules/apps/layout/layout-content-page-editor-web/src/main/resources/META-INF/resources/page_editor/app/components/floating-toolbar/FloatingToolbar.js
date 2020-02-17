@@ -42,7 +42,7 @@ export default function FloatingToolbar({
 	const panelRef = useRef(null);
 	const show = useIsActive()(item.itemId);
 	const toolbarRef = useRef(null);
-	const [wrapperScrollPosition, setWrapperScrollPosition] = useState(0);
+	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 	const [windowWidth, setWindowWidth] = useState(0);
 
 	const PanelComponent = useMemo(
@@ -94,22 +94,20 @@ export default function FloatingToolbar({
 	);
 
 	useEffect(() => {
-		const wrapper = document.getElementById('wrapper');
-
 		const handleWindowResize = debounceRAF(() => {
 			setWindowWidth(window.innerWidth);
 		});
 
-		const handleWrapperScroll = debounceRAF(() => {
-			setWrapperScrollPosition(wrapper.scrollTop);
+		const handleWindowScroll = debounceRAF(() => {
+			setWindowScrollPosition(window.scrollY);
 		});
 
 		window.addEventListener('resize', handleWindowResize);
-		wrapper.addEventListener('scroll', handleWrapperScroll);
+		window.addEventListener('scroll', handleWindowScroll);
 
 		return () => {
 			window.removeEventListener('resize', handleWindowResize);
-			wrapper.removeEventListener('scroll', handleWrapperScroll);
+			window.removeEventListener('scroll', handleWindowScroll);
 		};
 	}, []);
 
@@ -122,8 +120,8 @@ export default function FloatingToolbar({
 		itemRef,
 		panelId,
 		show,
-		windowWidth,
-		wrapperScrollPosition
+		windowScrollPosition,
+		windowWidth
 	]);
 
 	useEffect(() => {

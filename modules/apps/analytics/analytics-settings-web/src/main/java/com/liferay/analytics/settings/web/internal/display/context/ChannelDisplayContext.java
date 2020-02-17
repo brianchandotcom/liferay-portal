@@ -122,7 +122,7 @@ public class ChannelDisplayContext {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/view_configuration_screen");
-		portletURL.setParameter("configurationScreenKey", "synced-sites");
+		portletURL.setParameter("configurationScreenKey", "add-new-property");
 
 		return portletURL;
 	}

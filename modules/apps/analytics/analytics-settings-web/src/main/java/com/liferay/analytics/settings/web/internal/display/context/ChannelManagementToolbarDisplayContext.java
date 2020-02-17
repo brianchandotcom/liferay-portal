@@ -77,8 +77,15 @@ public class ChannelManagementToolbarDisplayContext
 		return new CreationMenu() {
 			{
 				addPrimaryDropdownItem(
-					dropdownItem -> dropdownItem.setLabel(
-						LanguageUtil.get(_resourceBundle, "new-property")));
+					dropdownItem -> {
+						dropdownItem.setHref(
+							liferayPortletResponse.createRenderURL(),
+							"mvcRenderCommandName",
+							"/analytics_settings/add_new_property", "redirect",
+							currentURLObj.toString());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_resourceBundle, "new-property"));
+					});
 			}
 		};
 	}

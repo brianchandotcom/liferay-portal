@@ -105,11 +105,11 @@ public class SamlSameSiteLaxCookiesTest {
 		httpClient.setDoOutput(true);
 		httpClient.setRequestMethod("POST");
 
-		try (DataOutputStream wr = new DataOutputStream(
+		try (DataOutputStream dataOutputStream = new DataOutputStream(
 				httpClient.getOutputStream())) {
 
-			wr.writeBytes(_postBody);
-			wr.flush();
+			dataOutputStream.writeBytes(_postBody);
+			dataOutputStream.flush();
 		}
 
 		String contentType = httpClient.getHeaderField("Content-Type");

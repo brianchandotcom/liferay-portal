@@ -134,18 +134,18 @@ function FragmentContent({fragmentEntryLinkId, itemId}, ref) {
 
 	return (
 		<>
-			<UnsafeHTML
-				className="page-editor__fragment"
-				contentRef={ref}
-				markup={content}
-				onRender={updateEditableElements}
-			/>
-
 			<FragmentContentInteractionsFilter
-				element={element}
+				editableElements={editableElements}
 				fragmentEntryLinkId={fragmentEntryLinkId}
 				itemId={itemId}
-			/>
+			>
+				<UnsafeHTML
+					className="page-editor__fragment"
+					contentRef={ref}
+					markup={content}
+					onRender={updateEditableElements}
+				/>
+			</FragmentContentInteractionsFilter>
 
 			<FragmentContentFloatingToolbar
 				element={element}

@@ -239,6 +239,8 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 		_ddmFormInstanceDemoDataCreator.delete();
 		_workflowMetricsSLADefinitionDemoDataCreator.delete();
 
+		_workflowDefinitionLinkDemoDataCreator.delete();
+
 		_workflowDefinitionDemoDataCreator.delete();
 
 		_omniAdminUserDemoDataCreator.delete();

@@ -12,28 +12,15 @@
  * details.
  */
 
-import ClayForm, {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React from 'react';
 
-import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-
-export const CheckboxField = ({field, onValueSelect, value}) => (
-	<ClayForm.Group>
-		<ClayCheckbox
-			aria-label={field.label}
-			checked={value}
-			defaultChecked={field.defaultValue}
-			label={field.label}
-			onChange={event => {
-				onValueSelect(field.name, event.target.checked);
-			}}
-		/>
-	</ClayForm.Group>
-);
-
-CheckboxField.propTypes = {
-	field: PropTypes.shape(ConfigurationFieldPropTypes),
-	onValueSelect: PropTypes.func.isRequired,
-	value: PropTypes.string
+const ConfigurationFieldPropTypes = {
+	dataType: PropTypes.string,
+	defaultValue: PropTypes.string,
+	description: PropTypes.string,
+	label: PropTypes.string,
+	name: PropTypes.string.isRequired,
+	type: PropTypes.string
 };
+
+export default ConfigurationFieldPropTypes;

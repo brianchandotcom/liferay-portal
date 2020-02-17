@@ -13,9 +13,12 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React from 'react';
 
-export const SelectField = ({field, onValueSelect, value}) => (
+import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+
+export const SelectField = ({field, onValueSelect, value = ''}) => (
 	<ClayForm.Group small>
 		<label htmlFor={field.name}>{field.label}</label>
 
@@ -34,3 +37,20 @@ export const SelectField = ({field, onValueSelect, value}) => (
 		/>
 	</ClayForm.Group>
 );
+
+SelectField.propTypes = {
+	field: PropTypes.shape({
+		...ConfigurationFieldPropTypes,
+		typeOptions: PropTypes.shape({
+			validValues: PropTypes.arrayOf(
+				PropTypes.shape({
+					label: PropTypes.string.isRequired,
+					value: PropTypes.string.isRequired
+				})
+			).isRequired
+		}).isRequired
+	}),
+
+	onValueSelect: PropTypes.func.isRequired,
+	value: PropTypes.string
+};

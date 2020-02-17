@@ -13,9 +13,11 @@
  */
 
 import ClayForm from '@clayui/form';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import ItemSelector from '../../../common/components/ItemSelector';
+import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {ConfigContext} from '../../config/index';
 
 export const ItemCollectionSelectorField = ({field, onValueSelect, value}) => {
@@ -43,4 +45,10 @@ export const ItemCollectionSelectorField = ({field, onValueSelect, value}) => {
 			/>
 		</ClayForm.Group>
 	);
+};
+
+ItemCollectionSelectorField.propTypes = {
+	field: PropTypes.shape(ConfigurationFieldPropTypes),
+	onValueSelect: PropTypes.func.isRequired,
+	value: PropTypes.string
 };

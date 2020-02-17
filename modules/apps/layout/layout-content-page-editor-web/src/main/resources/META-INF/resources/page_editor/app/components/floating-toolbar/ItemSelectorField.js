@@ -14,9 +14,11 @@
 
 import ClayForm from '@clayui/form';
 import {useIsMounted} from 'frontend-js-react-web';
+import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ItemSelector from '../../../common/components/ItemSelector';
+import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {ConfigContext} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
 
@@ -53,6 +55,17 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 			)}
 		</>
 	);
+};
+
+ItemSelectorField.propTypes = {
+	field: PropTypes.shape({
+		...ConfigurationFieldPropTypes,
+		typeOptions: PropTypes.shape({
+			enableSelectTemplate: PropTypes.bool
+		})
+	}),
+	onValueSelect: PropTypes.func.isRequired,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 };
 
 const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
@@ -140,4 +153,13 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 			</ClayForm.Group>
 		</>
 	);
+};
+
+TemplateSelector.propTypes = {
+	item: PropTypes.shape(ConfigurationFieldPropTypes),
+	onTemplateSelect: PropTypes.func.isRequired,
+	selectedTemplate: PropTypes.shape({
+		infoItemRendererKey: PropTypes.string,
+		templateKey: PropTypes.string
+	})
 };

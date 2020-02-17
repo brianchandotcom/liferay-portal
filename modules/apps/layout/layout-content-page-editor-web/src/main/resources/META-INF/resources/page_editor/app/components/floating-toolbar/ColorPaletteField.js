@@ -13,9 +13,11 @@
  */
 
 import ClayForm from '@clayui/form';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import ColorPalette from '../../../common/components/ColorPalette';
+import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export const ColorPaletteField = ({field, onValueSelect, value}) => (
 	<ClayForm.Group>
@@ -31,3 +33,12 @@ export const ColorPaletteField = ({field, onValueSelect, value}) => (
 		/>
 	</ClayForm.Group>
 );
+
+ColorPaletteField.propTypes = {
+	field: PropTypes.shape(ConfigurationFieldPropTypes),
+	onValueSelect: PropTypes.func.isRequired,
+	value: PropTypes.shape({
+		cssClass: PropTypes.string,
+		rgbValue: PropTypes.string
+	})
+};

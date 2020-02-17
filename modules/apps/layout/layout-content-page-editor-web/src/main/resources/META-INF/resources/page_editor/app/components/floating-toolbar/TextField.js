@@ -13,7 +13,10 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React from 'react';
+
+import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export const TextField = ({field, onValueSelect}) => (
 	<ClayForm.Group>
@@ -31,3 +34,9 @@ export const TextField = ({field, onValueSelect}) => (
 		/>
 	</ClayForm.Group>
 );
+
+TextField.propTypes = {
+	field: PropTypes.shape(ConfigurationFieldPropTypes),
+	onValueSelect: PropTypes.func.isRequired,
+	value: PropTypes.string
+};

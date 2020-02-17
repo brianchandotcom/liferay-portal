@@ -64,6 +64,13 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
+		if (ParamUtil.getBoolean(httpServletRequest, "continue") ||
+			(!ParamUtil.getBoolean(httpServletRequest, "noscript") &&
+			 (httpServletRequest.getSession(false) != null))) {
+
+			return false;
+		}
+
 		return true;
 	}
 
@@ -73,21 +80,11 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		boolean noscript = ParamUtil.getBoolean(httpServletRequest, "noscript");
-
-		if (ParamUtil.getBoolean(httpServletRequest, "continue") ||
-			(!noscript && (httpServletRequest.getSession(false) != null))) {
-
-			filterChain.doFilter(httpServletRequest, httpServletResponse);
-
-			return;
-		}
-
 		httpServletResponse.setContentType("text/html");
 
 		PrintWriter writer = httpServletResponse.getWriter();
 
-		if (noscript) {
+		if (ParamUtil.getBoolean(httpServletRequest, "noscript")) {
 			ResourceBundle resourceBundle =
 				_resourceBundleLoader.loadResourceBundle(
 					_portal.getLocale(httpServletRequest));

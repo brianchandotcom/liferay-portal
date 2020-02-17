@@ -176,11 +176,6 @@ public class LayoutStructure {
 
 		_updateLayoutStructure(rowLayoutStructureItem, newPosition);
 
-		for (int i = 0; i < numberOfColumns; i++) {
-			_addColumnLayoutStructureItem(
-				rowLayoutStructureItem.getItemId(), i, 4);
-		}
-
 		rowLayoutStructureItem.setNumberOfColumns(numberOfColumns);
 
 		return rowLayoutStructureItem;

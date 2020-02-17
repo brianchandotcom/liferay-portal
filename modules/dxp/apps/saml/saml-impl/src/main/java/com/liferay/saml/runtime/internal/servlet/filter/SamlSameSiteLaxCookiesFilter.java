@@ -21,17 +21,15 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.PrintWriter;
-
-import java.util.ResourceBundle;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.liferay.portal.kernel.util.Validator;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -99,38 +97,15 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(8 + 5 * _PARAMS.length);
 
 		sb.append("<!DOCTYPE html>\n");
 		sb.append("<html><body onload=\"document.forms[0].submit()\">");
-		sb.append(
-			"<form action=\"?continue=true\" method=\"post\" name=\"fm\">");
+		sb.append("<form action=\"?continue=true\" method=\"post\"");
+		sb.append("name=\"fm\">");
 
-		String relayState = ParamUtil.getString(
-			httpServletRequest, "RelayState");
-
-		if (Validator.isNotNull(relayState)) {
-			sb.append("<input type=\"hidden\" name=\"RelayState\" value=\"");
-			sb.append(relayState);
-			sb.append("\"/>");
-		}
-
-		String samlRequest = ParamUtil.getString(
-			httpServletRequest, "SAMLRequest");
-
-		if (Validator.isNotNull(samlRequest)) {
-			sb.append("<input type=\"hidden\" name=\"SAMLRequest\" value=\"");
-			sb.append(samlRequest);
-			sb.append("\"/>");
-		}
-
-		String samlResponse = ParamUtil.getString(
-			httpServletRequest, "SAMLResponse");
-
-		if (Validator.isNotNull(samlResponse)) {
-			sb.append("<input type=\"hidden\" name=\"SAMLResponse\" value=\"");
-			sb.append(samlResponse);
-			sb.append("\"/>");
+		for (String param : _PARAMS) {
+			_processParameter(httpServletRequest, sb, param);
 		}
 
 		sb.append("<noscript><iframe src=\"?noscript=true\" ");
@@ -139,6 +114,7 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 		sb.append("</html>");
 
 		printWriter.write(sb.toString());
+
 		printWriter.close();
 	}
 
@@ -146,6 +122,25 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 	protected Log getLog() {
 		return _log;
 	}
+
+	private void _processParameter(
+		HttpServletRequest httpServletRequest, StringBundler sb,
+		String paramName) {
+
+		String paramValue = ParamUtil.getString(httpServletRequest, paramName);
+
+		if (Validator.isNotNull(paramValue)) {
+			sb.append("<input type=\"hidden\" name=");
+			sb.append(paramName);
+			sb.append(" value=\"");
+			sb.append(paramValue);
+			sb.append("\"/>");
+		}
+	}
+
+	private static final String[] _PARAMS = {
+		"RelayState", "SAMLRequest", "SAMLResponse"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlSameSiteLaxCookiesFilter.class);

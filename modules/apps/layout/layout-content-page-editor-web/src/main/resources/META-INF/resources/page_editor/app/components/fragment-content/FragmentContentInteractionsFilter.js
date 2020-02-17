@@ -14,7 +14,7 @@
 
 import {closest} from 'metal-dom';
 import PropTypes from 'prop-types';
-import {useEffect} from 'react';
+import React, {useMemo} from 'react';
 
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {useHoverItem, useIsActive, useSelectItem} from '../Controls';
@@ -22,7 +22,8 @@ import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
 import getEditableUniqueId from './getEditableUniqueId';
 
 export default function FragmentContentInteractionsFilter({
-	element,
+	children,
+	editableElements,
 	fragmentEntryLinkId,
 	itemId
 }) {
@@ -31,91 +32,93 @@ export default function FragmentContentInteractionsFilter({
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 
-	useEffect(() => {
-		if (!element) {
-			return;
+	const siblingIds = useMemo(
+		() => [
+			itemId,
+			...editableElements.map(editableElement =>
+				getEditableUniqueId(fragmentEntryLinkId, editableElement.id)
+			)
+		],
+		[fragmentEntryLinkId, itemId, editableElements]
+	);
+
+	const hoverEditable = event => {
+		const editableElement = closest(event.target, 'lfr-editable');
+
+		if (editableElement) {
+			event.stopPropagation();
+
+			hoverItem(
+				getEditableUniqueId(fragmentEntryLinkId, editableElement.id),
+				{itemType: ITEM_TYPES.editable}
+			);
 		}
+	};
 
-		const clearHover = () => {
-			hoverItem(null);
-		};
+	const preventLinkClick = event => {
+		const closestElement = closest(event.target, '[href]');
 
-		const hoverEditable = event => {
-			const editableElement = closest(event.target, 'lfr-editable');
+		if (
+			closestElement &&
+			!closestElement.dataset.lfrPageEditorHrefEnabled
+		) {
+			event.preventDefault();
+		}
+	};
 
-			if (editableElement) {
+	const selectEditable = event => {
+		const editableElement = closest(event.target, 'lfr-editable');
+
+		if (editableElement) {
+			event.stopPropagation();
+
+			const editableUniqueId = getEditableUniqueId(
+				fragmentEntryLinkId,
+				editableElement.id
+			);
+
+			if (isActive(editableUniqueId)) {
 				event.stopPropagation();
-
-				hoverItem(
-					getEditableUniqueId(
-						fragmentEntryLinkId,
-						editableElement.id
-					),
-					{itemType: ITEM_TYPES.editable}
-				);
 			}
 			else {
-				hoverItem(itemId);
+				selectItem(editableUniqueId, {
+					itemType: ITEM_TYPES.editable,
+					multiSelect: event.shiftKey
+				});
 			}
-		};
+		}
+	};
 
-		const preventLinkClick = event => {
-			const closestElement = closest(event.target, '[href]');
+	const enableProcessor = event => {
+		const editableElement = closest(event.target, 'lfr-editable');
 
-			if (
-				closestElement &&
-				!('data-lfr-page-editor-href-enabled' in element.dataset)
-			) {
-				event.preventDefault();
+		if (editableElement) {
+			const editableUniqueId = getEditableUniqueId(
+				fragmentEntryLinkId,
+				editableElement.id
+			);
+
+			if (isActive(editableUniqueId)) {
+				setEditableProcessorUniqueId(editableUniqueId);
 			}
+		}
+	};
+
+	const props = {
+		onClickCapture: preventLinkClick
+	};
+
+	if (siblingIds.some(isActive)) {
+		props.onClickCapture = event => {
+			preventLinkClick(event);
+			selectEditable(event);
 		};
 
-		const selectEditable = event => {
-			const editableElement = closest(event.target, 'lfr-editable');
+		props.onDoubleClickCapture = enableProcessor;
+		props.onMouseOverCapture = hoverEditable;
+	}
 
-			const parentOrChildIsActive = [
-				itemId,
-				...Array.from(
-					element.querySelectorAll('lfr-editable')
-				).map(editableElement =>
-					getEditableUniqueId(fragmentEntryLinkId, editableElement.id)
-				)
-			].some(isActive);
-
-			if (editableElement && parentOrChildIsActive) {
-				event.stopPropagation();
-
-				const editableUniqueId = getEditableUniqueId(
-					fragmentEntryLinkId,
-					editableElement.id
-				);
-
-				if (isActive(editableUniqueId)) {
-					setEditableProcessorUniqueId(editableUniqueId);
-				}
-				else {
-					selectItem(editableUniqueId, {
-						itemType: ITEM_TYPES.editable,
-						multiSelect: event.shiftKey
-					});
-				}
-			}
-		};
-
-		element.addEventListener('click', preventLinkClick, true);
-		element.addEventListener('click', selectEditable, true);
-		element.addEventListener('mouseleave', clearHover, true);
-		element.addEventListener('mouseover', hoverEditable, true);
-
-		return () => {
-			element.removeEventListener('click', preventLinkClick, true);
-			element.removeEventListener('click', selectEditable, true);
-			element.removeEventListener('mouseleave', clearHover, true);
-			element.removeEventListener('mouseover', hoverEditable, true);
-		};
-	});
-
-	return null;
+	return <div {...props}>{children}</div>;
 }
 
 FragmentContentInteractionsFilter.propTypes = {

@@ -22,8 +22,8 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortletInstanceConfigurationUtil.getBlogsPortletInstanceConfiguration(themeDisplay);
 %>
 
-<liferay-util:buffer
-	var="saveStatus"
+<liferay-frontend:info-bar
+	fixed="<%= true %>"
 >
 	<c:choose>
 		<c:when test="<%= entry != null %>">
@@ -37,11 +37,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus"></small>
 		</c:otherwise>
 	</c:choose>
-</liferay-util:buffer>
 
-<liferay-util:buffer
-	var="readingTime"
->
 	<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
 		<small class="reading-time-wrapper text-muted">
 			<liferay-reading-time:reading-time
@@ -51,11 +47,4 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			/>
 		</small>
 	</c:if>
-</liferay-util:buffer>
-
-<liferay-frontend:info-bar
-	fixed="<%= true %>"
->
-	<%= saveStatus %>
-	<%= readingTime %>
 </liferay-frontend:info-bar>

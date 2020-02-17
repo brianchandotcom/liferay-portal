@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ConstantNameCheck" />
+		<suppress checks="MemberNameCheck" />
+		<suppress checks="MethodNameCheck" />
+	</checkstyle>
+</suppressions>

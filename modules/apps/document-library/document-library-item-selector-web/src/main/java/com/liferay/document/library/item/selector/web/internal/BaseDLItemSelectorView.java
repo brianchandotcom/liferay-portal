@@ -31,7 +31,7 @@ import com.liferay.staging.StagingGroupHelper;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -65,12 +65,7 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 	@Override
 	public List<String> getPortletIds() {
-		List<String> list = new ArrayList<>();
-
-		list.add(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
-		list.add(DLPortletKeys.DOCUMENT_LIBRARY);
-
-		return list;
+		return _portletIds;
 	}
 
 	@Override
@@ -136,5 +131,8 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 	@Reference
 	protected StagingGroupHelper stagingGroupHelper;
+
+	private static final List<String> _portletIds = Arrays.asList(
+		DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, DLPortletKeys.DOCUMENT_LIBRARY);
 
 }

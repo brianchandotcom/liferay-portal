@@ -40,7 +40,6 @@ import com.liferay.taglib.util.PortalIncludeUtil;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -173,15 +172,16 @@ public class DepotItemSelectorViewRendererCustomizer
 	public Collection<Class<? extends ItemSelectorCriterion>>
 		getSupportedItemSelectorCriterionClasses() {
 
-		return new ArrayList<>(
-			Arrays.asList(
-				AudioItemSelectorCriterion.class,
-				FileItemSelectorCriterion.class,
-				ImageItemSelectorCriterion.class,
-				InfoItemItemSelectorCriterion.class,
-				LayoutItemSelectorCriterion.class,
-				VideoItemSelectorCriterion.class));
+		return _supportedItemSelectorCriterionClasses;
 	}
+
+	private static final List<Class<? extends ItemSelectorCriterion>>
+		_supportedItemSelectorCriterionClasses = Arrays.asList(
+			AudioItemSelectorCriterion.class, FileItemSelectorCriterion.class,
+			ImageItemSelectorCriterion.class,
+			InfoItemItemSelectorCriterion.class,
+			LayoutItemSelectorCriterion.class,
+			VideoItemSelectorCriterion.class);
 
 	@Reference
 	private DepotApplicationController _depotApplicationController;

@@ -78,7 +78,7 @@ public class JournalArticleItemSelectorView
 
 	@Override
 	public List<String> getPortletIds() {
-		return Collections.singletonList(JournalPortletKeys.JOURNAL);
+		return _portletIds;
 	}
 
 	public ServletContext getServletContext() {
@@ -135,6 +135,8 @@ public class JournalArticleItemSelectorView
 			JournalWebConfiguration.class, properties);
 	}
 
+	private static final List<String> _portletIds = Collections.singletonList(
+		JournalPortletKeys.JOURNAL);
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Arrays.asList(
 			new InfoItemItemSelectorReturnType(),

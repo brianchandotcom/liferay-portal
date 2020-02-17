@@ -102,6 +102,10 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="mainMetadataFields" label="main-metadata-fields">
 				<c:choose>
 					<c:when test="<%= dlEditFileEntryTypeDisplayContext.useDataEngineEditor() %>">
+						<liferay-util:html-top>
+							<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/document_library/css/data-engine.css") %>" rel="stylesheet" type="text/css" />
+						</liferay-util:html-top>
+
 						<liferay-data-engine:data-layout-builder
 							componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
 							contentType="document-library"

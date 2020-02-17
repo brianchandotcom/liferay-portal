@@ -13,6 +13,7 @@
  */
 
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function SidebarPanelHeader({padded = true, ...props}) {
@@ -32,3 +33,7 @@ export default function SidebarPanelHeader({padded = true, ...props}) {
 		/>
 	);
 }
+
+SidebarPanelHeader.propTypes = {
+	padded: PropTypes.bool
+};

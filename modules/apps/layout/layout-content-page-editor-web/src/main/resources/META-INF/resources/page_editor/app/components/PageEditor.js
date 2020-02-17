@@ -15,8 +15,13 @@
 import ClayAlert from '@clayui/alert';
 import classNames from 'classnames';
 import {useEventListener, useIsMounted} from 'frontend-js-react-web';
+import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../prop-types/index';
 import {
 	ARROW_DOWN_KEYCODE,
 	ARROW_UP_KEYCODE
@@ -204,6 +209,10 @@ export default function PageEditor({withinMasterPage = false}) {
 	);
 }
 
+PageEditor.propTypes = {
+	withinMasterPage: PropTypes.bool
+};
+
 class LayoutDataItem extends React.PureComponent {
 	static getDerivedStateFromError(error) {
 		return {error};
@@ -232,6 +241,12 @@ class LayoutDataItem extends React.PureComponent {
 		);
 	}
 }
+
+LayoutDataItem.propTypes = {
+	fragmentEntryLinks: PropTypes.object.isRequired,
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
 
 function LayoutDataItemContent({
 	fragmentEntryLinks,
@@ -270,3 +285,9 @@ function LayoutDataItemContent({
 		</Component>
 	);
 }
+
+LayoutDataItemContent.propTypes = {
+	fragmentEntryLinks: PropTypes.object.isRequired,
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};

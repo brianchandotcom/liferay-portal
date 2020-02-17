@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
@@ -64,3 +65,10 @@ export default function ColorPalette({
 		</>
 	);
 }
+
+ColorPalette.propTypes = {
+	label: PropTypes.string,
+	onClear: PropTypes.func,
+	onColorSelect: PropTypes.func.isRequired,
+	selectedColor: PropTypes.string
+};

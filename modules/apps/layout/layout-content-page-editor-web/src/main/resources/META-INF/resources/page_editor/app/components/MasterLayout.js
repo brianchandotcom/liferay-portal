@@ -16,8 +16,13 @@ import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import {closest} from 'metal-dom';
+import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../prop-types/index';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
@@ -88,6 +93,12 @@ function MasterLayoutDataItem({fragmentEntryLinks, item, layoutData}) {
 		</Component>
 	);
 }
+
+MasterLayoutDataItem.propTypes = {
+	fragmentEntryLinks: PropTypes.object.isRequired,
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
 
 function DropZoneContainer() {
 	return <PageEditor withinMasterPage />;
@@ -198,6 +209,12 @@ const FragmentContent = React.memo(function FragmentContent({
 	return <UnsafeHTML contentRef={ref} markup={content} />;
 });
 
+FragmentContent.propTypes = {
+	content: PropTypes.string.isRequired,
+	editableValues: PropTypes.object.isRequired,
+	languageId: PropTypes.string
+};
+
 function Fragment({fragmentEntryLinks, item}) {
 	const config = useContext(ConfigContext);
 
@@ -214,6 +231,15 @@ function Fragment({fragmentEntryLinks, item}) {
 		/>
 	);
 }
+
+Fragment.propTypes = {
+	fragmentEntryLinks: PropTypes.object.isRequired,
+	item: getLayoutDataItemPropTypes({
+		config: PropTypes.shape({
+			fragmentEntryLinkId: PropTypes.string.isRequired
+		})
+	}).isRequired
+};
 
 function editableIsMapped(editableValue) {
 	return (

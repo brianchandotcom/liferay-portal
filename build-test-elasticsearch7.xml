@@ -63,7 +63,7 @@ xpack.security.transport.ssl.verification_mode: certificate</echo>
 			<var name="elasticsearch.analysis-stempel.zip.name" unset="true" />
 			<var name="elasticsearch.analysis-stempel.zip.url" unset="true" />
 
-			<property name="elasticsearch.version" value="7.5.1" />
+			<property name="elasticsearch.version" value="7.6.0" />
 			<property name="elastic.kibana.dir" value="${app.server.parent.dir}/kibana-${elasticsearch.version}" />
 			<property name="elastic.kibana.tar.name.linux" value="kibana-${elasticsearch.version}-linux-x86_64.tar.gz" />
 			<property name="elastic.kibana.tar.name.mac" value="kibana-${elasticsearch.version}-darwin-x86_64.tar.gz" />

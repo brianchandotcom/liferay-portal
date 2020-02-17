@@ -122,6 +122,7 @@ export default function FragmentContentProcessor({
 			},
 			() => {
 				processor.destroyEditor(editableElement, editableValue.config);
+				setEditableProcessorUniqueId(null);
 			},
 			config
 		);
@@ -135,7 +136,8 @@ export default function FragmentContentProcessor({
 		editableValues,
 		fragmentEntryLinkId,
 		languageId,
-		segmentsExperienceId
+		segmentsExperienceId,
+		setEditableProcessorUniqueId
 	]);
 
 	return null;

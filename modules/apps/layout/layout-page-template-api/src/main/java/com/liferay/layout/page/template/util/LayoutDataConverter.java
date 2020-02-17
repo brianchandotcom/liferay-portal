@@ -77,28 +77,32 @@ public class LayoutDataConverter {
 			if (inputRowJSONObject.getInt("type") ==
 					FragmentConstants.TYPE_COMPONENT) {
 
-				JSONObject inputRowConfigJSONObject =
-					inputRowJSONObject.getJSONObject("config");
-
 				ContainerLayoutStructureItem containerLayoutStructureItem =
 					(ContainerLayoutStructureItem)
 						layoutStructure.addContainerLayoutStructureItem(
 							rootLayoutStructureItem.getItemId(), i);
 
-				containerLayoutStructureItem.setBackgroundColorCssClass(
-					inputRowConfigJSONObject.getString(
-						"backgroundColorCssClass"));
-				containerLayoutStructureItem.setBackgroundImageJSONObject(
-					_getBackgroundImageJSONObject(inputRowConfigJSONObject));
-				containerLayoutStructureItem.setContainerType(
-					inputRowConfigJSONObject.getString(
-						"containerType", "fixed"));
-				containerLayoutStructureItem.setPaddingBottom(
-					inputRowConfigJSONObject.getInt("paddingVertical", 3));
-				containerLayoutStructureItem.setPaddingHorizontal(
-					inputRowConfigJSONObject.getInt("paddingHorizontal", 3));
-				containerLayoutStructureItem.setPaddingTop(
-					inputRowConfigJSONObject.getInt("paddingVertical", 3));
+				JSONObject inputRowConfigJSONObject =
+					inputRowJSONObject.getJSONObject("config");
+
+				if (inputRowConfigJSONObject != null) {
+					containerLayoutStructureItem.setBackgroundColorCssClass(
+						inputRowConfigJSONObject.getString(
+							"backgroundColorCssClass"));
+					containerLayoutStructureItem.setBackgroundImageJSONObject(
+						_getBackgroundImageJSONObject(
+							inputRowConfigJSONObject));
+					containerLayoutStructureItem.setContainerType(
+						inputRowConfigJSONObject.getString(
+							"containerType", "fixed"));
+					containerLayoutStructureItem.setPaddingBottom(
+						inputRowConfigJSONObject.getInt("paddingVertical", 3));
+					containerLayoutStructureItem.setPaddingHorizontal(
+						inputRowConfigJSONObject.getInt(
+							"paddingHorizontal", 3));
+					containerLayoutStructureItem.setPaddingTop(
+						inputRowConfigJSONObject.getInt("paddingVertical", 3));
+				}
 
 				RowLayoutStructureItem rowLayoutStructureItem =
 					(RowLayoutStructureItem)
@@ -106,10 +110,12 @@ public class LayoutDataConverter {
 							containerLayoutStructureItem.getItemId(), 0,
 							columnsJSONArray.length());
 
-				boolean columnSpacing = inputRowConfigJSONObject.getBoolean(
-					"columnSpacing", true);
+				if (inputRowConfigJSONObject != null) {
+					boolean columnSpacing = inputRowConfigJSONObject.getBoolean(
+						"columnSpacing", true);
 
-				rowLayoutStructureItem.setGutters(columnSpacing);
+					rowLayoutStructureItem.setGutters(columnSpacing);
+				}
 
 				for (int j = 0; j < columnsJSONArray.length(); j++) {
 					JSONObject inputColumnJSONObject =

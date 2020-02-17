@@ -14,9 +14,10 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -34,24 +35,18 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 	extends BaseMVCActionCommand implements MVCActionCommand {
 
 	@Override
-	public boolean processAction(
-			final ActionRequest actionRequest,
-			final ActionResponse actionResponse)
-		throws PortletException {
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = null;
 
 		try {
-			Callable<Boolean> callable = new Callable<Boolean>() {
+			Callable<JSONObject> callable = () -> doTransactionalCommand(
+				actionRequest, actionResponse);
 
-				@Override
-				public Boolean call() throws Exception {
-					doTransactionalCommand(actionRequest, actionResponse);
-
-					return SessionErrors.isEmpty(actionRequest);
-				}
-
-			};
-
-			return TransactionInvokerUtil.invoke(_transactionConfig, callable);
+			jsonObject = TransactionInvokerUtil.invoke(
+				_transactionConfig, callable);
 		}
 		catch (Throwable t) {
 			if (t instanceof PortletException) {
@@ -60,21 +55,19 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 
 			throw new PortletException(t);
 		}
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
 
-	protected abstract void doTransactionalCommand(
+	protected abstract JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
 
-	private static final TransactionConfig _transactionConfig;
-
-	static {
-		TransactionConfig.Builder builder = new TransactionConfig.Builder();
-
-		builder.setPropagation(Propagation.REQUIRES_NEW);
-		builder.setRollbackForClasses(Exception.class);
-
-		_transactionConfig = builder.build();
-	}
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 }

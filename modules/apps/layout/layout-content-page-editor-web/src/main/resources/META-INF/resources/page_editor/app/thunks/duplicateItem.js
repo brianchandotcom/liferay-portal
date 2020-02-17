@@ -33,7 +33,7 @@ export default function duplicateItem({
 			({duplicatedFragmentEntryLinks, duplicatedItemId, layoutData}) => {
 				dispatch(
 					updateLayoutData({
-						duplicatedFragmentEntryLinks,
+						addedFragmentEntryLinks: duplicatedFragmentEntryLinks,
 						layoutData
 					})
 				);

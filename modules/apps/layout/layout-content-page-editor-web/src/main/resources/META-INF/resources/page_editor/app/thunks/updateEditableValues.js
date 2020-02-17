@@ -13,7 +13,9 @@
  */
 
 import updateEditableValuesAction from '../actions/updateEditableValues';
+import updatePageContents from '../actions/updatePageContents';
 import FragmentService from '../services/FragmentService';
+import InfoItemService from '../services/InfoItemService';
 
 export default function updateEditableValues({
 	config,
@@ -27,14 +29,27 @@ export default function updateEditableValues({
 			editableValues,
 			fragmentEntryLinkId,
 			onNetworkStatus: dispatch
-		}).then(() => {
-			dispatch(
-				updateEditableValuesAction({
-					editableValues,
-					fragmentEntryLinkId,
-					segmentsExperienceId
-				})
-			);
-		});
+		})
+			.then(() => {
+				dispatch(
+					updateEditableValuesAction({
+						editableValues,
+						fragmentEntryLinkId,
+						segmentsExperienceId
+					})
+				);
+			})
+			.then(() => {
+				InfoItemService.getPageContents({
+					config,
+					onNetworkStatus: dispatch
+				}).then(pageContents => {
+					dispatch(
+						updatePageContents({
+							pageContents
+						})
+					);
+				});
+			});
 	};
 }

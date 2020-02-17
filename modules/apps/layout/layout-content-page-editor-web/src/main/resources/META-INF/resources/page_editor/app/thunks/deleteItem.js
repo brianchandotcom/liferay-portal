@@ -14,6 +14,8 @@
 
 import deleteWidgets from '../actions/deleteWidgets';
 import updateLayoutData from '../actions/updateLayoutData';
+import updatePageContents from '../actions/updatePageContents';
+import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 
 export default function deleteItem({config, itemId, store}) {
@@ -25,24 +27,37 @@ export default function deleteItem({config, itemId, store}) {
 			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId
-		}).then(({deletedFragmentEntryLinkIds = [], layoutData}) => {
-			const deletedWidgets = deletedFragmentEntryLinkIds
-				.map(
-					fragmentEntryLinkId =>
-						store.fragmentEntryLinks[fragmentEntryLinkId]
-				)
-				.filter(
-					fragmentEntryLink =>
-						fragmentEntryLink.editableValues.portletId
+		})
+			.then(({deletedFragmentEntryLinkIds = [], layoutData}) => {
+				const deletedWidgets = deletedFragmentEntryLinkIds
+					.map(
+						fragmentEntryLinkId =>
+							store.fragmentEntryLinks[fragmentEntryLinkId]
+					)
+					.filter(
+						fragmentEntryLink =>
+							fragmentEntryLink.editableValues.portletId
+					);
+
+				if (deletedWidgets.length) {
+					dispatch(deleteWidgets(deletedWidgets));
+				}
+
+				dispatch(
+					updateLayoutData({deletedFragmentEntryLinkIds, layoutData})
 				);
-
-			if (deletedWidgets.length) {
-				dispatch(deleteWidgets(deletedWidgets));
-			}
-
-			dispatch(
-				updateLayoutData({deletedFragmentEntryLinkIds, layoutData})
-			);
-		});
+			})
+			.then(() => {
+				InfoItemService.getPageContents({
+					config,
+					onNetworkStatus: dispatch
+				}).then(pageContents => {
+					dispatch(
+						updatePageContents({
+							pageContents
+						})
+					);
+				});
+			});
 	};
 }

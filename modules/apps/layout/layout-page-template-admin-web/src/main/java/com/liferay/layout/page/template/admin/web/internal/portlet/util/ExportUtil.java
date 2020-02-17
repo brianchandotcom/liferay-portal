@@ -72,7 +72,8 @@ public class ExportUtil {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-		Map<Long, String> layoutPageTemplateCollectionKeyMap = new HashMap<>();
+		Map<Long, LayoutPageTemplateCollection>
+			layoutPageTemplateCollectionKeyMap = new HashMap<>();
 
 		try {
 			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
@@ -115,7 +116,8 @@ public class ExportUtil {
 	}
 
 	private void _populateLayoutPageTemplateCollectionKeyMap(
-			Map<Long, String> layoutPageTemplateCollectionKeyMap,
+			Map<Long, LayoutPageTemplateCollection>
+				layoutPageTemplateCollectionKeyMap,
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
 
@@ -133,27 +135,29 @@ public class ExportUtil {
 				getLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
 
 		layoutPageTemplateCollectionKeyMap.put(
-			layoutPageTemplateCollectionId,
-			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey());
+			layoutPageTemplateCollectionId, layoutPageTemplateCollection);
 	}
 
 	private void _populateZipWriter(
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
-			Map<Long, String> layoutPageTemplateCollectionKeyMap,
+			Map<Long, LayoutPageTemplateCollection>
+				layoutPageTemplateCollectionKeyMap,
 			ZipWriter zipWriter)
 		throws Exception {
 
 		PageTemplate pageTemplate = PageTemplateConverterUtil.toPageTemplate(
 			layoutPageTemplateEntry);
 
-		String layoutPageTemplateCollectionKey =
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			layoutPageTemplateCollectionKeyMap.get(
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(_ROOT_FOLDER + StringPool.SLASH);
-		sb.append(layoutPageTemplateCollectionKey + StringPool.SLASH);
+		sb.append(
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey());
+		sb.append(StringPool.SLASH);
 		sb.append(layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
 
 		String path = sb.toString();

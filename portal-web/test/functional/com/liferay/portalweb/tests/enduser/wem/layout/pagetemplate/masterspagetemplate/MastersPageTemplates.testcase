@@ -577,6 +577,110 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-102194. When checking the checkbox beside Select New Fragments Automatically, the new fragment will be available in content page."
+	@priority = "5"
+	test CheckSelectNewFragmentsAutomaticallyInAllowedFragments {
+		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+			item = "Edit",
+			masterLayoutName = "Custom Masters Page Template");
+
+		AssertClick(
+			locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS",
+			value1 = "Configure Allowed Fragments");
+
+		Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ALL_FRAGMENTS");
+
+		Uncheck.uncheckToggleSwitch(
+			key_fragmentName = "Select New Fragments Automatically",
+			locator1 = "Checkbox#ALLowed_FRAGMENT");
+
+		Button.clickSave();
+
+		Button.clickNoError(button = "Publish Master");
+
+		task ("Add a second custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template 2");
+		}
+
+		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+			item = "Edit",
+			masterLayoutName = "Custom Masters Page Template 2");
+
+		AssertClick(
+			locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS",
+			value1 = "Configure Allowed Fragments");
+
+		Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ALL_FRAGMENTS");
+
+		MastersPageTemplates.searchAllowedFragments(searchValue = "Select New Fragments Automatically");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_fragmentName = "Select New Fragments Automatically",
+			locator1 = "Checkbox#ALLowed_FRAGMENT");
+
+		Button.clickSave();
+
+		Button.clickNoError(button = "Publish Master");
+
+		task ("Add a page based on the first custom master") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name 1");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a page based on the second custom master") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template 2",
+				pageName = "Test Page Name 2");
+
+			PageEditor.clickPublish();
+		}
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdmin.addCollection(collectionName = "Collection Name");
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+		Button.clickPublish();
+
+		task ("Assert the new fragment does not exist in page with the first custom master") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name-1");
+
+			ContentPages.clickPencil();
+
+			PageEditor.searchFragmentViaSidebar(fragmentName = "Fragment Name");
+
+			AssertElementNotPresent(
+				key_fragmentName = "Fragment Name",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS");
+		}
+
+		task ("Assert the new fragment exists in page with the second custom master") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name-2");
+
+			ContentPages.clickPencil();
+
+			PageEditor.searchFragmentViaSidebar(fragmentName = "Fragment Name");
+
+			AssertVisible(
+				key_fragmentName = "Fragment Name",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS");
+		}
+	}
+
 	@description = "This is a test for LPS-102194. Only can add allowed fragments to drop zone in fragment pages when set them in master."
 	@priority = "5"
 	test ConfigureAllowedFragmentsInDropZone {

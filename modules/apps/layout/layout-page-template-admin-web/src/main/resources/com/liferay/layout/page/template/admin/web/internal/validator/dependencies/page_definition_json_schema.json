@@ -3,6 +3,19 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"additionalProperties": false,
 	"definitions": {
+		"ColumnDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"size": {
+					"maximum" : 12,
+					"minimum" : 1,
+					"title": "The size Schema",
+					"type": "integer"
+				}
+			},
+			"title": "The ColumnDefinition Schema",
+			"type": "object"
+		},
 		"FragmentImage": {
 			"additionalProperties": false,
 			"properties": {
@@ -70,6 +83,22 @@
 		"PageElement": {
 			"additionalProperties": false,
 			"allOf": [
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "Column"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/ColumnDefinition"
+							}
+						}
+					}
+				},
 				{
 					"if": {
 						"properties": {

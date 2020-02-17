@@ -81,11 +81,6 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public int countFormInstances(String uuid) throws PortalException {
-		return ddmFormInstanceLocalService.countFormInstances(uuid);
-	}
-
-	@Override
 	public void deleteFormInstance(long ddmFormInstanceId)
 		throws PortalException {
 
@@ -149,6 +144,11 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 	@Override
 	public int getFormInstancesCount(long companyId, long groupId) {
 		return ddmFormInstanceFinder.filterCountByC_G(companyId, groupId);
+	}
+
+	@Override
+	public int getFormInstancesCount(String uuid) {
+		return ddmFormInstanceLocalService.getFormInstancesCount(uuid);
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
+import com.liferay.dynamic.data.mapping.staging.DDMFormInstanceStagingHelper;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -319,15 +320,14 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 	}
 
 	protected DDMFormDisplayContext createDDMFormDisplayContext(
-			RenderRequest renderRequest)
-		throws PortalException {
+		RenderRequest renderRequest) {
 
 		return new DDMFormDisplayContext(
 			renderRequest, new MockRenderResponse(),
 			mock(DDMFormFieldTypeServicesTracker.class),
 			_ddmFormInstanceLocalService,
 			mock(DDMFormInstanceRecordVersionLocalService.class),
-			_ddmFormInstanceService,
+			_ddmFormInstanceService, _ddmFormInstanceStagingHelper,
 			mock(DDMFormInstanceVersionLocalService.class),
 			mock(DDMFormRenderer.class), mock(DDMFormValuesFactory.class),
 			mock(DDMFormValuesMerger.class), _ddmFormWebConfiguration,
@@ -472,6 +472,9 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Mock
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Mock
+	private DDMFormInstanceStagingHelper _ddmFormInstanceStagingHelper;
 
 	@Mock
 	private DDMFormWebConfiguration _ddmFormWebConfiguration;

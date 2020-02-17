@@ -187,11 +187,6 @@ public class DDMFormInstanceLocalServiceImpl
 	}
 
 	@Override
-	public int countFormInstances(String uuid) throws PortalException {
-		return ddmFormInstancePersistence.countByUuid(uuid);
-	}
-
-	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE
@@ -274,6 +269,11 @@ public class DDMFormInstanceLocalServiceImpl
 	@Override
 	public int getFormInstancesCount(long groupId) {
 		return ddmFormInstancePersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getFormInstancesCount(String uuid) {
+		return ddmFormInstancePersistence.countByUuid(uuid);
 	}
 
 	@Override

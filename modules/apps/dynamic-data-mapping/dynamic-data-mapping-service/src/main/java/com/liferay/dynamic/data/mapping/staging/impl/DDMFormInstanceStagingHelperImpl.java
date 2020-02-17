@@ -47,22 +47,20 @@ public class DDMFormInstanceStagingHelperImpl
 				user.isPasswordEncrypted());
 
 			int countFormInstances =
-				DDMFormInstanceServiceHttp.countFormInstances(
+				DDMFormInstanceServiceHttp.getFormInstancesCount(
 					httpPrincipal, uuid);
 
 			if (countFormInstances > 0) {
 				return true;
 			}
-
-			return false;
 		}
 		catch (PortalException | SystemException exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception, exception);
 			}
-
-			return false;
 		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

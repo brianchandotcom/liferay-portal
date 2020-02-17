@@ -17,6 +17,7 @@ package com.liferay.saml.runtime.internal.servlet.filter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -71,11 +72,7 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		boolean noscript = false;
-
-		if (httpServletRequest.getParameter("noscript") != null) {
-			noscript = true;
-		}
+		boolean noscript = ParamUtil.getBoolean(httpServletRequest, "noscript");
 
 		if ((httpServletRequest.getParameter("continue") != null) ||
 			(!noscript && (httpServletRequest.getSession(false) != null))) {
@@ -135,7 +132,7 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 			sb.append("\"/>");
 		}
 
-		sb.append("<noscript><iframe src=\"?noscript\" ");
+		sb.append("<noscript><iframe src=\"?noscript=true\" ");
 		sb.append("style=\"width: 100%; border: 0;\">");
 		sb.append("</iframe></noscript></form></body></html>");
 		sb.append("</html>");

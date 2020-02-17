@@ -16,6 +16,11 @@
 			"title": "The ColumnDefinition Schema",
 			"type": "object"
 		},
+		"FragmentField": {
+			"additionalProperties": false,
+			"title": "The FragmentField Schema",
+			"type": "object"
+		},
 		"FragmentImage": {
 			"additionalProperties": false,
 			"properties": {
@@ -41,6 +46,38 @@
 				}
 			},
 			"title": "The FragmentImage Schema",
+			"type": "object"
+		},
+		"FragmentInstanceDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"fragment": {
+					"properties": {
+						"fragmentCollectionName": {
+							"title": "The fragmentCollectionName Schema",
+							"type": "string"
+						},
+						"fragmentName": {
+							"title": "The fragmentName Schema",
+							"type": "string"
+						}
+					},
+					"title": "The fragment Schema",
+					"type": "object"
+				},
+				"fragmentConfig": {
+					"title": "The fragmentConfig Schema",
+					"type": "object"
+				},
+				"fragmentFields": {
+					"items": {
+						"$ref": "#/definitions/FragmentField"
+					},
+					"title": "The fragmentFields Schema",
+					"type": "array"
+				}
+			},
+			"title": "The FragmentInstanceDefinition Schema",
 			"type": "object"
 		},
 		"InlineValue": {
@@ -95,6 +132,22 @@
 						"properties": {
 							"definition": {
 								"$ref": "#/definitions/ColumnDefinition"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "Fragment"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/FragmentInstanceDefinition"
 							}
 						}
 					}

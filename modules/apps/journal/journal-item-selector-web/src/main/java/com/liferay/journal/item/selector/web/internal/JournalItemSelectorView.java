@@ -17,8 +17,10 @@ package com.liferay.journal.item.selector.web.internal;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.PortletItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import com.liferay.journal.item.selector.web.internal.constants.JournalItemSelectorWebKeys;
 import com.liferay.journal.item.selector.web.internal.display.context.JournalItemSelectorViewDisplayContext;
@@ -52,11 +54,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = ItemSelectorView.class
 )
 public class JournalItemSelectorView
-	implements ItemSelectorView<JournalItemSelectorCriterion> {
+	implements PortletItemSelectorView<JournalItemSelectorCriterion> {
 
 	@Override
 	public Class<JournalItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return JournalItemSelectorCriterion.class;
+	}
+
+	@Override
+	public List<String> getPortletIds() {
+		return Collections.singletonList(JournalPortletKeys.JOURNAL);
 	}
 
 	public ServletContext getServletContext() {

@@ -17,9 +17,11 @@ package com.liferay.journal.web.internal.item.selector;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.PortletItemSelectorView;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import java.io.IOException;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -59,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class JournalArticleItemSelectorView
 	implements InfoItemSelectorView,
-			   ItemSelectorView<InfoItemItemSelectorCriterion> {
+			   PortletItemSelectorView<InfoItemItemSelectorCriterion> {
 
 	@Override
 	public String getClassName() {
@@ -71,6 +74,11 @@ public class JournalArticleItemSelectorView
 		getItemSelectorCriterionClass() {
 
 		return InfoItemItemSelectorCriterion.class;
+	}
+
+	@Override
+	public List<String> getPortletIds() {
+		return Collections.singletonList(JournalPortletKeys.JOURNAL);
 	}
 
 	public ServletContext getServletContext() {

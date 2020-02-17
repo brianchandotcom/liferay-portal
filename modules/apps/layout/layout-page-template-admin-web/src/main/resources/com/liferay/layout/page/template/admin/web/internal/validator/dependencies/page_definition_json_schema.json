@@ -5,7 +5,66 @@
 	"definitions": {
 		"FragmentImage": {
 			"additionalProperties": false,
+			"properties": {
+				"title": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineValue"
+						},
+						{
+							"$ref": "#/definitions/MappedValue"
+						}
+					]
+				},
+				"url": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineValue"
+						},
+						{
+							"$ref": "#/definitions/MappedValue"
+						}
+					]
+				}
+			},
 			"title": "The FragmentImage Schema",
+			"type": "object"
+		},
+		"InlineValue": {
+			"additionalProperties": false,
+			"properties": {
+				"value": {
+					"title": "The value Schema",
+					"type": "string"
+				},
+				"value_i18n": {
+					"additionalProperties": {
+						"type": "string"
+					},
+					"title": "The value_i18n Schema",
+					"type": "object"
+				}
+			},
+			"title": "The InlineValue Schema",
+			"type": "object"
+		},
+		"MappedValue": {
+			"additionalProperties": false,
+			"properties": {
+				"classNameId": {
+					"title": "The classNameId Schema",
+					"type": "integer"
+				},
+				"classPK": {
+					"title": "The classPK Schema",
+					"type": "integer"
+				},
+				"fieldId": {
+					"title": "The fieldId Schema",
+					"type": "string"
+				}
+			},
+			"title": "The MappedValue Schema",
 			"type": "object"
 		},
 		"PageElement": {

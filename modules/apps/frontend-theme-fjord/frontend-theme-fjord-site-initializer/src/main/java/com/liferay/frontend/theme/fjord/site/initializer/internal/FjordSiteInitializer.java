@@ -312,7 +312,7 @@ public class FjordSiteInitializer implements SiteInitializer {
 			_portal.getClassNameId(LayoutPageTemplateEntry.class),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), nameMap,
 			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			"content", null, false, false, new HashMap<>(), serviceContext);
+			"content", null, false, false, new HashMap<>(), 0, serviceContext);
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
@@ -345,7 +345,7 @@ public class FjordSiteInitializer implements SiteInitializer {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollectionId, name,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		long previewFileEntryId = _getPreviewFileEntryId(

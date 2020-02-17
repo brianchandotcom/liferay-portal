@@ -205,6 +205,7 @@ export default function Sidebar() {
 										className={classNames({active})}
 										data-tooltip-align="left"
 										href={url}
+										key={panel.sidebarPanelId}
 										title={label}
 									>
 										<ClayIcon symbol={icon} />
@@ -219,31 +220,19 @@ export default function Sidebar() {
 								).then(...swallow);
 
 							return (
-								<>
-									{isLink ? (
-										<a
-											className={classNames({active})}
-											href={url}
-										>
-											<ClayIcon symbol={icon} />
-										</a>
-									) : (
-										<ClayButtonWithIcon
-											aria-pressed={active}
-											className={classNames({active})}
-											data-tooltip-align="left"
-											displayType="unstyled"
-											id={panel.sidebarPanelId}
-											key={panel.sidebarPanelId}
-											onClick={() => handleClick(panel)}
-											onFocus={prefetch}
-											onMouseEnter={prefetch}
-											symbol={icon}
-											title={label}
-										/>
-									)}
-									);
-								</>
+								<ClayButtonWithIcon
+									aria-pressed={active}
+									className={classNames({active})}
+									data-tooltip-align="left"
+									displayType="unstyled"
+									id={panel.sidebarPanelId}
+									key={panel.sidebarPanelId}
+									onClick={() => handleClick(panel)}
+									onFocus={prefetch}
+									onMouseEnter={prefetch}
+									symbol={icon}
+									title={label}
+								/>
 							);
 						});
 

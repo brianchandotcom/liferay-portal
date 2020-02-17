@@ -685,6 +685,70 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-102194. Assert contents in drop zone shouldn't be changed and available fragments should be changed in sidebar after editing allowed fragments."
+	@priority = "4"
+	test EditAllowedFragments {
+		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+			item = "Edit",
+			masterLayoutName = "Custom Masters Page Template");
+
+		AssertClick(
+			locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS",
+			value1 = "Configure Allowed Fragments");
+
+		MastersPageTemplates.selectAllowedFragments(fragmentNameList = "Heading");
+
+		Button.clickNoError(button = "Publish Master");
+
+		task ("Add a content page based on custom master") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name");
+		}
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.viewFragment(fragmentName = "Heading");
+
+		PageEditor.gotoTab(tabName = "Look and Feel");
+
+		Click(
+			key_text = "Edit Master",
+			locator1 = "Button#ANY");
+
+		AssertClick(
+			locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS",
+			value1 = "Configure Allowed Fragments");
+
+		MastersPageTemplates.selectAllowedFragments(fragmentNameList = "Button");
+
+		MastersPageTemplates.propagateChange();
+
+		task ("Assert Heading fragment exist and the could only add button fragment in page editor sidebar") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+
+			ContentPages.clickPencil();
+
+			PageEditor.viewFragment(fragmentName = "Heading");
+
+			PageEditor.searchFragmentViaSidebar(fragmentName = "Button");
+
+			AssertVisible(
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS");
+
+			PageEditor.searchFragmentViaSidebar(fragmentName = "Heading");
+
+			AssertElementNotPresent(
+				key_fragmentName = "Heading",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS");
+		}
+	}
+
 	@description = "This is for LPS-102200. Can edit master page template elements from  "Look and Feel" of page editor."
 	@priority = "5"
 	test EditMasterPageTemplateViaPageEditorLookAndFeel {

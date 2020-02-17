@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.browser.web.internal.item.selector;
+package com.liferay.asset.browser.web.internal.item.selector.resolver;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;

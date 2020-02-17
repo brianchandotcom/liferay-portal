@@ -70,7 +70,7 @@ public class PostgreSQLTransformerLogicTest
 
 	@Override
 	protected String getCastLongTransformedSQL() {
-		return "select CAST(foo AS INTEGER) from Foo";
+		return "select CAST(foo AS BIGINT) from Foo";
 	}
 
 	@Override

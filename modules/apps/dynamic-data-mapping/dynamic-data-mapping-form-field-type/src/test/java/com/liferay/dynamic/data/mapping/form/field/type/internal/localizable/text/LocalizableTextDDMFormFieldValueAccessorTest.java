@@ -39,27 +39,23 @@ public class LocalizableTextDDMFormFieldValueAccessorTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpLocalizableTextDDMFormFieldValueAccessor();
+		_setUpLocalizableTextDDMFormFieldValueAccessor();
 	}
 
 	@Test
 	public void testEmpty() {
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"localizableText", new UnlocalizedValue("{}"));
-
 		Assert.assertTrue(
 			_localizableTextDDMFormFieldValueAccessor.isEmpty(
-				ddmFormFieldValue, LocaleUtil.US));
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					"localizableText", new UnlocalizedValue("{}")),
+				LocaleUtil.US));
 	}
 
 	@Test
 	public void testMalformedJson() {
-		String malformedJSON = "{";
-
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"localizableText", new UnlocalizedValue(malformedJSON));
+				"localizableText", new UnlocalizedValue("{"));
 
 		JSONObject value = _localizableTextDDMFormFieldValueAccessor.getValue(
 			ddmFormFieldValue, LocaleUtil.US);
@@ -83,7 +79,7 @@ public class LocalizableTextDDMFormFieldValueAccessorTest extends PowerMockito {
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
-	protected void setUpLocalizableTextDDMFormFieldValueAccessor()
+	private void _setUpLocalizableTextDDMFormFieldValueAccessor()
 		throws Exception {
 
 		_localizableTextDDMFormFieldValueAccessor =

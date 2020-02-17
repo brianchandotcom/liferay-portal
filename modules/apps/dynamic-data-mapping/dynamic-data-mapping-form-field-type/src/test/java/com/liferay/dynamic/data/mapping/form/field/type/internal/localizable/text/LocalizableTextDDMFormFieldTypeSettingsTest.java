@@ -51,9 +51,9 @@ public class LocalizableTextDDMFormFieldTypeSettingsTest
 	@Before
 	@Override
 	public void setUp() {
-		setUpLanguageUtil();
-		setUpPortalUtil();
-		setUpResourceBundleUtil();
+		_setUpLanguageUtil();
+		_setUpPortalUtil();
+		_setUpResourceBundleUtil();
 	}
 
 	@Test
@@ -85,8 +85,7 @@ public class LocalizableTextDDMFormFieldTypeSettingsTest
 			"FALSE", tooltipDDMFormField.getVisibilityExpression());
 	}
 
-	@Override
-	protected void setUpLanguageUtil() {
+	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		Language language = PowerMockito.mock(Language.class);
@@ -94,7 +93,7 @@ public class LocalizableTextDDMFormFieldTypeSettingsTest
 		languageUtil.setLanguage(language);
 	}
 
-	protected void setUpPortalUtil() {
+	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		Portal portal = mock(Portal.class);
@@ -110,8 +109,7 @@ public class LocalizableTextDDMFormFieldTypeSettingsTest
 		portalUtil.setPortal(portal);
 	}
 
-	@Override
-	protected void setUpResourceBundleUtil() {
+	private void _setUpResourceBundleUtil() {
 		PowerMockito.mockStatic(ResourceBundleUtil.class);
 
 		PowerMockito.when(

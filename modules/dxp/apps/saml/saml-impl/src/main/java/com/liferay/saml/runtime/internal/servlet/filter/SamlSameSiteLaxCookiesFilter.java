@@ -82,14 +82,14 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 
 		httpServletResponse.setContentType("text/html");
 
-		PrintWriter writer = httpServletResponse.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		if (ParamUtil.getBoolean(httpServletRequest, "noscript")) {
 			ResourceBundle resourceBundle =
 				_resourceBundleLoader.loadResourceBundle(
 					_portal.getLocale(httpServletRequest));
 
-			writer.write(
+			printWriter.write(
 				StringBundler.concat(
 					"<!DOCTYPE html>\n<html><body>",
 					ResourceBundleUtil.getString(
@@ -97,7 +97,7 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 						"your-browser-must-support-javascript-to-proceed"),
 					"</body></html>"));
 
-			writer.close();
+			printWriter.close();
 
 			return;
 		}
@@ -139,8 +139,8 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 		sb.append("</iframe></noscript></form></body></html>");
 		sb.append("</html>");
 
-		writer.write(sb.toString());
-		writer.close();
+		printWriter.write(sb.toString());
+		printWriter.close();
 	}
 
 	@Override

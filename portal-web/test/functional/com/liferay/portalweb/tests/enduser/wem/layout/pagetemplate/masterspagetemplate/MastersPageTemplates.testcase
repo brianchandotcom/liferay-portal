@@ -514,6 +514,69 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-102194. Assert contents in drop zone shouldn't be changed and available fragments should be changed in sidebar after changing master page which set allowed fragments in drop zone."
+	@priority = "4"
+	test ChangeMasterPageWithAllowedFragments {
+		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+			item = "Edit",
+			masterLayoutName = "Custom Masters Page Template");
+
+		AssertClick(
+			locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS",
+			value1 = "Configure Allowed Fragments");
+
+		MastersPageTemplates.selectAllowedFragments(fragmentNameList = "Heading");
+
+		Button.clickNoError(button = "Publish Master");
+
+		task ("Add a content page based on Blank") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Page Name");
+		}
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.viewFragment(fragmentName = "Button");
+
+		PageEditor.viewFragment(fragmentName = "Heading");
+
+		PageEditor.gotoTab(tabName = "Look and Feel");
+
+		AssertClick(
+			key_text = "Change Master",
+			locator1 = "Button#ANY",
+			value1 = "Change Master");
+
+		MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
+
+		Button.clickSave();
+
+		task ("Assert the only Heading fragment exist in page editor sidebar") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+
+			ContentPages.clickPencil();
+
+			PageEditor.searchFragmentViaSidebar(fragmentName = "Heading");
+
+			AssertVisible(
+				key_fragmentName = "Heading",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS");
+
+			PageEditor.searchFragmentViaSidebar(fragmentName = "Button");
+
+			AssertElementNotPresent(
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS");
+		}
+	}
+
 	@description = "This is a test for LPS-102194. Only can add allowed fragments to drop zone in fragment pages when set them in master."
 	@priority = "5"
 	test ConfigureAllowedFragmentsInDropZone {

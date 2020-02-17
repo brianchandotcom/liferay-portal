@@ -292,7 +292,6 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			"3.4.0", "3.5.0",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v3_5_0.
 				UpgradeDDMStructure(
-					ddmFormJSONDeserializer, ddmFormXSDDeserializer,
 					_ddmFormLayoutDeserializer, ddmFormLayoutSerializer),
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v3_5_0.
 				UpgradeResourcePermission(

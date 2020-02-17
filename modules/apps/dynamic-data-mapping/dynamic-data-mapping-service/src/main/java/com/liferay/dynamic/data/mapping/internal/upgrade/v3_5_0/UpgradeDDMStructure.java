@@ -14,19 +14,14 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v3_5_0;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
-import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -56,35 +51,11 @@ import java.util.Set;
 public class UpgradeDDMStructure extends UpgradeProcess {
 
 	public UpgradeDDMStructure(
-		DDMFormDeserializer ddmFormJSONDeserializer,
-		DDMFormDeserializer ddmFormXSDDeserializer,
 		DDMFormLayoutDeserializer ddmFormLayoutDeserializer,
 		DDMFormLayoutSerializer ddmFormLayoutSerializer) {
 
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
-		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
 		_ddmFormLayoutDeserializer = ddmFormLayoutDeserializer;
 		_ddmFormLayoutSerializer = ddmFormLayoutSerializer;
-	}
-
-	protected DDMForm deserialize(String content, String type) {
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
-
-		DDMFormDeserializer ddmFormDeserializer = null;
-
-		if (StringUtil.equalsIgnoreCase(type, "json")) {
-			ddmFormDeserializer = _ddmFormJSONDeserializer;
-		}
-		else if (StringUtil.equalsIgnoreCase(type, "xsd")) {
-			ddmFormDeserializer = _ddmFormXSDDeserializer;
-		}
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				ddmFormDeserializer.deserialize(builder.build());
-
-		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
 	protected void doStructureDefinitionUpgrade() throws Exception {
@@ -224,62 +195,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		doStructureDefinitionUpgrade();
 		doStructureVersionDefinitionUpgrade();
 		doStructureLayoutUpgrade();
-	}
-
-	protected DDMForm getDDMForm(String definition, String storageType) {
-		if (storageType.equals("expando") || storageType.equals("xml")) {
-			return deserialize(definition, "xsd");
-		}
-
-		return deserialize(definition, "json");
-	}
-
-	protected String getNextVersion(String version) {
-		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
-
-		return versionParts[0] + StringPool.PERIOD + ++versionParts[1];
-	}
-
-	protected long getStructureVersionId(long structureId) throws Exception {
-		StringBundler sb1 = new StringBundler(6);
-
-		sb1.append("select DDMStructureVersion.structureVersionId from ");
-		sb1.append("DDMStructureVersion inner join DDMStructure on ");
-		sb1.append("DDMStructure.structureId = ");
-		sb1.append("DDMStructureVersion.structureId and DDMStructure.version ");
-		sb1.append("= DDMStructureVersion.version where ");
-		sb1.append("DDMStructure.structureId = ?");
-
-		try (PreparedStatement ps1 = connection.prepareStatement(
-				sb1.toString())) {
-
-			ps1.setLong(1, structureId);
-
-			try (ResultSet rs = ps1.executeQuery()) {
-				rs.next();
-
-				return rs.getLong("structureVersionId");
-			}
-		}
-	}
-
-	protected String getVersion(Long structureId) throws Exception {
-		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select MAX(version) from DDMStructureVersion where " +
-					"structureId = ?")) {
-
-			ps1.setLong(1, structureId);
-
-			try (ResultSet rs = ps1.executeQuery()) {
-				while (rs.next()) {
-					String lastVersion = rs.getString(1);
-
-					return getNextVersion(lastVersion);
-				}
-			}
-		}
-
-		return DDMStructureConstants.VERSION_DEFAULT;
 	}
 
 	protected void upgradeColorField(JSONObject jsonObject) {
@@ -604,9 +519,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		);
 	}
 
-	private final DDMFormDeserializer _ddmFormJSONDeserializer;
 	private final DDMFormLayoutDeserializer _ddmFormLayoutDeserializer;
 	private final DDMFormLayoutSerializer _ddmFormLayoutSerializer;
-	private final DDMFormDeserializer _ddmFormXSDDeserializer;
 
 }

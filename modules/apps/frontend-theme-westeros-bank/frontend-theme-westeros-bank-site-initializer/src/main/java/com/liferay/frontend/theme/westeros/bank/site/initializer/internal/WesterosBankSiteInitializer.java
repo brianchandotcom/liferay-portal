@@ -488,8 +488,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			Layout layout = _layoutLocalService.addLayout(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				false, parentLayout.getLayoutId(), nameMap, new HashMap<>(),
-				new HashMap<>(), new HashMap<>(), new HashMap<>(), "content",
-				StringPool.BLANK, false, new HashMap<>(), serviceContext);
+				new HashMap<>(), new HashMap<>(), new HashMap<>(),
+				LayoutConstants.TYPE_CONTENT, StringPool.BLANK, false,
+				new HashMap<>(), serviceContext);
 
 			int fragmentKeyId = random.nextInt(
 				_LAYOUT_NAMES_FRAGMENT_KEYS.length);
@@ -527,8 +528,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			_portal.getClassNameId(LayoutPageTemplateEntry.class),
 			layoutPageTemplateEntryId, nameMap, new HashMap<>(),
-			new HashMap<>(), new HashMap<>(), new HashMap<>(), "content", null,
-			false, false, new HashMap<>(), 0, serviceContext);
+			new HashMap<>(), new HashMap<>(), new HashMap<>(),
+			LayoutConstants.TYPE_CONTENT, null, false, false, new HashMap<>(),
+			0, serviceContext);
 	}
 
 	private void _configureFragmentEntryLink(

@@ -157,17 +157,17 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
-	<td>//button[normalize-space()='${key_collectionName}']</td>
+	<td>//*[normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED</td>
-	<td>//button[@aria-expanded='false'][normalize-space()='${key_collectionName}']</td>
+	<td>//a[contains(@class,'sheet-subtitle collapsed')]/*[normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED</td>
-	<td>//button[@aria-expanded='true'][normalize-space()='${key_collectionName}']</td>
+	<td>//a[@class='collapse-icon sheet-subtitle']/*[normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>

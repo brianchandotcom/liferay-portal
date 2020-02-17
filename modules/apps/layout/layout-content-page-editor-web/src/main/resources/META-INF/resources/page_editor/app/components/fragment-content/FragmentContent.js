@@ -32,148 +32,152 @@ import FragmentContentProcessor from './FragmentContentProcessor';
 import getEditableUniqueId from './getEditableUniqueId';
 import resolveEditableValue from './resolveEditableValue';
 
-function FragmentContent({fragmentEntryLinkId, itemId}, ref) {
-	const element = ref.current;
-	const isMounted = useIsMounted();
-	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
+const FragmentContent = React.forwardRef(
+	({fragmentEntryLinkId, itemId}, ref) => {
+		const element = ref.current;
+		const isMounted = useIsMounted();
+		const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 
-	const [editableElements, setEditableElements] = useState([]);
+		const [editableElements, setEditableElements] = useState([]);
 
-	const updateEditableElements = (parent = element) => {
-		setEditableElements(
-			parent ? Array.from(parent.querySelectorAll('lfr-editable')) : []
+		const updateEditableElements = (parent = element) => {
+			setEditableElements(
+				parent
+					? Array.from(parent.querySelectorAll('lfr-editable'))
+					: []
+			);
+		};
+
+		const languageId = useSelector(state => state.languageId);
+
+		const segmentsExperienceId = useSelector(
+			selectPrefixedSegmentsExperienceId
 		);
-	};
 
-	const languageId = useSelector(state => state.languageId);
+		const defaultContent = useSelector(state =>
+			state.fragmentEntryLinks[fragmentEntryLinkId]
+				? state.fragmentEntryLinks[fragmentEntryLinkId].content
+				: ''
+		);
 
-	const segmentsExperienceId = useSelector(
-		selectPrefixedSegmentsExperienceId
-	);
+		const editableValues = useSelector(state =>
+			state.fragmentEntryLinks[fragmentEntryLinkId]
+				? state.fragmentEntryLinks[fragmentEntryLinkId].editableValues
+				: {}
+		);
 
-	const defaultContent = useSelector(state =>
-		state.fragmentEntryLinks[fragmentEntryLinkId]
-			? state.fragmentEntryLinks[fragmentEntryLinkId].content
-			: ''
-	);
+		const [content, setContent] = useState(defaultContent);
 
-	const editableValues = useSelector(state =>
-		state.fragmentEntryLinks[fragmentEntryLinkId]
-			? state.fragmentEntryLinks[fragmentEntryLinkId].editableValues
-			: {}
-	);
+		useEffect(() => {
+			let element = document.createElement('div');
+			element.innerHTML = defaultContent;
 
-	const [content, setContent] = useState(defaultContent);
+			const updateContent = debounce(() => {
+				if (isMounted() && element) {
+					setContent(element.innerHTML);
+				}
+			}, 50);
 
-	useEffect(() => {
-		let element = document.createElement('div');
-		element.innerHTML = defaultContent;
-
-		const updateContent = debounce(() => {
-			if (isMounted() && element) {
-				setContent(element.innerHTML);
-			}
-		}, 50);
-
-		Array.from(
-			element.querySelectorAll('[data-lfr-background-image-id]')
-		).map(editable => {
-			resolveEditableValue(
-				editableValues,
-				editable.dataset.lfrBackgroundImageId,
-				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-				languageId,
-				segmentsExperienceId
-			).then(([value, _editableConfig]) => {
-				const processor = Processors['background-image'];
-
-				processor.render(editable, value);
-				updateContent();
-			});
-		});
-
-		Array.from(element.querySelectorAll('lfr-editable')).forEach(
-			editable => {
-				editable.classList.add('page-editor__editable');
-
+			Array.from(
+				element.querySelectorAll('[data-lfr-background-image-id]')
+			).map(editable => {
 				resolveEditableValue(
 					editableValues,
-					editable.getAttribute('id'),
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					editable.dataset.lfrBackgroundImageId,
+					BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 					languageId,
 					segmentsExperienceId
-				).then(([value, editableConfig]) => {
-					const processor =
-						Processors[editable.getAttribute('type')] ||
-						Processors.fallback;
+				).then(([value, _editableConfig]) => {
+					const processor = Processors['background-image'];
 
-					processor.render(editable, value, editableConfig);
+					processor.render(editable, value);
 					updateContent();
 				});
-			}
-		);
+			});
 
-		return () => {
-			element = null;
-		};
-	}, [
-		defaultContent,
-		editableValues,
-		isMounted,
-		languageId,
-		segmentsExperienceId
-	]);
+			Array.from(element.querySelectorAll('lfr-editable')).forEach(
+				editable => {
+					editable.classList.add('page-editor__editable');
 
-	const onFloatingToolbarButtonClick = (buttonId, editableId) => {
-		if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {
-			setEditableProcessorUniqueId(
-				getEditableUniqueId(fragmentEntryLinkId, editableId)
+					resolveEditableValue(
+						editableValues,
+						editable.getAttribute('id'),
+						EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+						languageId,
+						segmentsExperienceId
+					).then(([value, editableConfig]) => {
+						const processor =
+							Processors[editable.getAttribute('type')] ||
+							Processors.fallback;
+
+						processor.render(editable, value, editableConfig);
+						updateContent();
+					});
+				}
 			);
-		}
-	};
 
-	return (
-		<>
-			<FragmentContentInteractionsFilter
-				editableElements={editableElements}
-				fragmentEntryLinkId={fragmentEntryLinkId}
-				itemId={itemId}
-			>
-				<UnsafeHTML
-					className="page-editor__fragment"
-					contentRef={ref}
-					markup={content}
-					onRender={updateEditableElements}
-				/>
-			</FragmentContentInteractionsFilter>
+			return () => {
+				element = null;
+			};
+		}, [
+			defaultContent,
+			editableValues,
+			isMounted,
+			languageId,
+			segmentsExperienceId
+		]);
 
-			<FragmentContentFloatingToolbar
-				element={element}
-				fragmentEntryLinkId={fragmentEntryLinkId}
-				onButtonClick={onFloatingToolbarButtonClick}
-			/>
+		const onFloatingToolbarButtonClick = (buttonId, editableId) => {
+			if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {
+				setEditableProcessorUniqueId(
+					getEditableUniqueId(fragmentEntryLinkId, editableId)
+				);
+			}
+		};
 
-			<FragmentContentProcessor
-				element={element}
-				fragmentEntryLinkId={fragmentEntryLinkId}
-			/>
-
-			{editableElements.map(editableElement => (
-				<FragmentContentDecoration
-					editableElement={editableElement}
-					element={element}
+		return (
+			<>
+				<FragmentContentInteractionsFilter
+					editableElements={editableElements}
 					fragmentEntryLinkId={fragmentEntryLinkId}
 					itemId={itemId}
-					key={editableElement.id}
+				>
+					<UnsafeHTML
+						className="page-editor__fragment"
+						contentRef={ref}
+						markup={content}
+						onRender={updateEditableElements}
+					/>
+				</FragmentContentInteractionsFilter>
+
+				<FragmentContentFloatingToolbar
+					element={element}
+					fragmentEntryLinkId={fragmentEntryLinkId}
+					onButtonClick={onFloatingToolbarButtonClick}
 				/>
-			))}
-		</>
-	);
-}
+
+				<FragmentContentProcessor
+					element={element}
+					fragmentEntryLinkId={fragmentEntryLinkId}
+				/>
+
+				{editableElements.map(editableElement => (
+					<FragmentContentDecoration
+						editableElement={editableElement}
+						element={element}
+						fragmentEntryLinkId={fragmentEntryLinkId}
+						itemId={itemId}
+						key={editableElement.id}
+					/>
+				))}
+			</>
+		);
+	}
+);
 
 FragmentContent.propTypes = {
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	itemId: PropTypes.string.isRequired
 };
 
-export default React.forwardRef(FragmentContent);
+export default FragmentContent;

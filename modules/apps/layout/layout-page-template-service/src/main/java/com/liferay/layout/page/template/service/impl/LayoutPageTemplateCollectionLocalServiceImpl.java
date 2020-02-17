@@ -227,6 +227,10 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			name.trim());
 
 		layoutPageTemplateCollectionKey = StringUtil.replace(
+			layoutPageTemplateCollectionKey, CharPool.FORWARD_SLASH,
+			CharPool.DASH);
+
+		layoutPageTemplateCollectionKey = StringUtil.replace(
 			layoutPageTemplateCollectionKey, CharPool.SPACE, CharPool.DASH);
 
 		String curLayoutPageTemplateCollectionKey =

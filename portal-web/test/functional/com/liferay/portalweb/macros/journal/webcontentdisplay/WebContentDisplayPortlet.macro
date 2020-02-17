@@ -303,7 +303,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertClick(
-			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE",
 			value1 = "${webContentTitle}");
 
 		SelectFrame(value1 = "relative=top");

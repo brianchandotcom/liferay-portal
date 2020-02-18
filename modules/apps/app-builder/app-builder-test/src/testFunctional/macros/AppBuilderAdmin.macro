@@ -35,6 +35,10 @@ definition {
 		}
 
 		AppBuilderAdmin.continueNewCustomObject();
+
+		while (IsElementPresent(locator1 = "AppBuilder#BUTTON_CONTINUE")){
+			Pause(locator1 = "1000");
+		}
 	}
 
 	macro addOrRemovePermissionFromRoles {

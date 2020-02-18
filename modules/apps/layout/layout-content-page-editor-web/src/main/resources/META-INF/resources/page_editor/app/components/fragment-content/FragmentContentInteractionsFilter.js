@@ -19,6 +19,7 @@ import React, {useMemo} from 'react';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {useHoverItem, useIsActive, useSelectItem} from '../Controls';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
+import {getEditableElement} from './getEditableElement';
 import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 
@@ -47,7 +48,7 @@ export default function FragmentContentInteractionsFilter({
 	);
 
 	const hoverEditable = event => {
-		const editableElement = closest(event.target, 'lfr-editable');
+		const editableElement = getEditableElement(event.target);
 
 		if (editableElement) {
 			event.stopPropagation();
@@ -74,7 +75,7 @@ export default function FragmentContentInteractionsFilter({
 	};
 
 	const selectEditable = event => {
-		const editableElement = closest(event.target, 'lfr-editable');
+		const editableElement = getEditableElement(event.target);
 
 		if (editableElement) {
 			event.stopPropagation();
@@ -97,7 +98,7 @@ export default function FragmentContentInteractionsFilter({
 	};
 
 	const enableProcessor = event => {
-		const editableElement = closest(event.target, 'lfr-editable');
+		const editableElement = getEditableElement(event.target);
 
 		if (editableElement) {
 			const editableUniqueId = getEditableUniqueId(

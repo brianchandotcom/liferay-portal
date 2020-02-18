@@ -12,6 +12,7 @@
  * details.
  */
 
+import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 
 /**
@@ -29,7 +30,10 @@ export default function getActiveEditableElement(
 				fragmentElement.querySelectorAll('lfr-editable')
 		  ).find(editableElement =>
 				isActive(
-					getEditableUniqueId(fragmentEntryLinkId, editableElement.id)
+					getEditableUniqueId(
+						fragmentEntryLinkId,
+						getEditableElementId(editableElement)
+					)
 				)
 		  )
 		: null;

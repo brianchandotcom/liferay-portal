@@ -29,6 +29,7 @@ import FragmentContentDecoration from './FragmentContentDecoration';
 import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
 import FragmentContentInteractionsFilter from './FragmentContentInteractionsFilter';
 import FragmentContentProcessor from './FragmentContentProcessor';
+import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 import resolveEditableValue from './resolveEditableValue';
 
@@ -167,7 +168,7 @@ const FragmentContent = React.forwardRef(
 						element={element}
 						fragmentEntryLinkId={fragmentEntryLinkId}
 						itemId={itemId}
-						key={editableElement.id}
+						key={getEditableElementId(editableElement)}
 					/>
 				))}
 			</>

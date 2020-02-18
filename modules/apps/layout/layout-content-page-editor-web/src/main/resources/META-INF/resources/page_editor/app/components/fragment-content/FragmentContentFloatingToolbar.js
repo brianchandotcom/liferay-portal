@@ -23,6 +23,7 @@ import {useSelector} from '../../store/index';
 import {useIsActive} from '../Controls';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import getActiveEditableElement from './getActiveEditableElement';
+import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 
 export default function FragmentContentFloatingToolbar({
@@ -38,7 +39,7 @@ export default function FragmentContentFloatingToolbar({
 	);
 
 	const editableId = useMemo(
-		() => (editableElement ? editableElement.id : null),
+		() => (editableElement ? getEditableElementId(editableElement) : null),
 		[editableElement]
 	);
 

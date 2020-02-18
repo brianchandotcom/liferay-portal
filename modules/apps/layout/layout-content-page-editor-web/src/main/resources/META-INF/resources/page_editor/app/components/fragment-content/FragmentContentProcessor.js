@@ -25,6 +25,7 @@ import {
 	useEditableProcessorUniqueId,
 	useSetEditableProcessorUniqueId
 } from './EditableProcessorContext';
+import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 
 export default function FragmentContentProcessor({
@@ -49,7 +50,7 @@ export default function FragmentContentProcessor({
 						editableElement =>
 							getEditableUniqueId(
 								fragmentEntryLinkId,
-								editableElement.id
+								getEditableElementId(editableElement)
 							) === editableProcessorUniqueId
 				  )
 				: null,
@@ -71,8 +72,8 @@ export default function FragmentContentProcessor({
 			return;
 		}
 
-		const editableId = editableElement.id;
 		const editableType = editableElement.getAttribute('type');
+		const editableId = getEditableElementId(editableElement);
 		const editableValue =
 			editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableId];
 		const processor = Processors[editableType] || Processors.fallback;

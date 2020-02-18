@@ -24,6 +24,7 @@ import {useSelector} from '../../store/index';
 import {useHoveredItemId, useHoveredItemType, useIsActive} from '../Controls';
 import {useEditableDecoration} from './EditableDecorationContext';
 import {EDITABLE_DECORATION_CLASS_NAMES} from './EditableDecorationMask';
+import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 
 export default function FragmentContentDecoration({
@@ -42,14 +43,14 @@ export default function FragmentContentDecoration({
 
 	const editableUniqueId = getEditableUniqueId(
 		fragmentEntryLinkId,
-		editableElement.id
+		getEditableElementId(editableElement)
 	);
 
 	const editableValue = useSelector(state =>
 		createSelectEditableValue(
 			state,
 			fragmentEntryLinkId,
-			editableElement.id
+			getEditableElementId(editableElement)
 		)
 	);
 
@@ -95,7 +96,7 @@ export default function FragmentContentDecoration({
 					).map(editableElement =>
 						getEditableUniqueId(
 							fragmentEntryLinkId,
-							editableElement.id
+							getEditableElementId(editableElement)
 						)
 					)
 				].some(_itemId => isActive(_itemId)),

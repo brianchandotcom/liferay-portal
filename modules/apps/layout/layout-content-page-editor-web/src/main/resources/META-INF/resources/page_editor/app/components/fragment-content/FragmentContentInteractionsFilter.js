@@ -19,6 +19,7 @@ import React, {useMemo} from 'react';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {useHoverItem, useIsActive, useSelectItem} from '../Controls';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
+import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 
 export default function FragmentContentInteractionsFilter({
@@ -36,7 +37,10 @@ export default function FragmentContentInteractionsFilter({
 		() => [
 			itemId,
 			...editableElements.map(editableElement =>
-				getEditableUniqueId(fragmentEntryLinkId, editableElement.id)
+				getEditableUniqueId(
+					fragmentEntryLinkId,
+					getEditableElementId(editableElement)
+				)
 			)
 		],
 		[fragmentEntryLinkId, itemId, editableElements]
@@ -49,7 +53,10 @@ export default function FragmentContentInteractionsFilter({
 			event.stopPropagation();
 
 			hoverItem(
-				getEditableUniqueId(fragmentEntryLinkId, editableElement.id),
+				getEditableUniqueId(
+					fragmentEntryLinkId,
+					getEditableElementId(editableElement)
+				),
 				{itemType: ITEM_TYPES.editable}
 			);
 		}
@@ -74,7 +81,7 @@ export default function FragmentContentInteractionsFilter({
 
 			const editableUniqueId = getEditableUniqueId(
 				fragmentEntryLinkId,
-				editableElement.id
+				getEditableElementId(editableElement)
 			);
 
 			if (isActive(editableUniqueId)) {
@@ -95,7 +102,7 @@ export default function FragmentContentInteractionsFilter({
 		if (editableElement) {
 			const editableUniqueId = getEditableUniqueId(
 				fragmentEntryLinkId,
-				editableElement.id
+				getEditableElementId(editableElement)
 			);
 
 			if (isActive(editableUniqueId)) {

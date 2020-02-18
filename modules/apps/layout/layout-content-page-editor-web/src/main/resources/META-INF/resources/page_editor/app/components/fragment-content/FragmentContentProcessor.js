@@ -14,7 +14,9 @@
 
 import {useEffect, useMemo} from 'react';
 
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {config} from '../../config/index';
 import Processors from '../../processors/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
@@ -73,10 +75,17 @@ export default function FragmentContentProcessor({
 			return;
 		}
 
-		const editableType = editableElement.getAttribute('type');
 		const editableId = getEditableElementId(editableElement);
-		const editableValue =
-			editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableId];
+		const editableType =
+			editableElement.getAttribute('type') ||
+			EDITABLE_TYPES.backgroundImage;
+
+		const processorKey =
+			editableType === EDITABLE_TYPES.backgroundImage
+				? BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+				: EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
+
+		const editableValue = editableValues[processorKey][editableId];
 		const processor = Processors[editableType] || Processors.fallback;
 
 		processor.createEditor(

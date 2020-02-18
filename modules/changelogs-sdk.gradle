@@ -129,16 +129,13 @@ buildChangelogs {
 				standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
 				exec {
-					List<String> gitLogFiles = []
-
-					gitLogFiles.add("modules/sdk/" + sdkProjectDir.name + "/build.gradle")
+					List<String> commandLineArgs = ["git", "--no-pager", "log", "--pretty=format:%H:%cd:%s", "--date=short", "-p", "${commitRange}", "--", "modules/sdk/" + sdkProjectDir.name + "/build.gradle"]
 
 					if (project.properties["projectName"] == "gradle-plugins") {
-						gitLogFiles.add("modules/sdk/" + sdkProjectDir.name + "/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+						commandLineArgs.add("modules/sdk/" + sdkProjectDir.name + "/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
 					}
 
-					commandLine "git", "--no-pager", "log", "--pretty=format:%H:%cd:%s", "--date=short", "-p", "${commitRange}", "--"
-					args gitLogFiles
+					commandLine commandLineArgs
 					standardOutput = standardOutputByteArrayOutputStream
 					workingDir = projectDir.parentFile
 				}

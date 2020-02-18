@@ -143,6 +143,23 @@ public class AnalyticsReportsDisplayContext {
 		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsURL");
 	}
 
+	public enum TimeSpan {
+
+		LAST_7_DAYS("last-7-days"), LAST_24_HOURS("last-24-hours"),
+		LAST_30_DAYS("last-30-days");
+
+		public String getLabel() {
+			return _label;
+		}
+
+		private TimeSpan(String label) {
+			_label = label;
+		}
+
+		private final String _label;
+
+	}
+
 	protected Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
 			"authorName",

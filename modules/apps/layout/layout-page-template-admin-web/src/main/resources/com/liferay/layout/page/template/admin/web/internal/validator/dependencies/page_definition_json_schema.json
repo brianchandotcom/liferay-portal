@@ -63,6 +63,20 @@
 		},
 		"FragmentFieldHTML": {
 			"additionalProperties": false,
+			"properties": {
+				"html": {
+					"additionalProperties": false,
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineValue"
+						},
+						{
+							"$ref": "#/definitions/MappedValue"
+						}
+					],
+					"type": "object"
+				}
+			},
 			"title": "The FragmentFieldHTML Schema",
 			"type": "object"
 		},

@@ -383,7 +383,7 @@ public class FinderCacheImpl
 		}
 
 		if (result instanceof List<?>) {
-			List<Serializable> list = (List<Serializable>)result;
+			List<BaseModel<?>> list = (List<BaseModel<?>>)result;
 
 			if (list.isEmpty()) {
 				return new EmptyResult(args);
@@ -397,10 +397,8 @@ public class FinderCacheImpl
 
 			ArrayList<Serializable> cachedList = new ArrayList<>(list.size());
 
-			for (Serializable curResult : list) {
-				Serializable primaryKey = _resultToPrimaryKey(args, curResult);
-
-				cachedList.add(primaryKey);
+			for (BaseModel<?> curResult : list) {
+				cachedList.add(curResult.getPrimaryKeyObj());
 			}
 
 			return cachedList;

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author Hugo Huijser
@@ -67,6 +68,15 @@ public class LinkedHashMapBuilder<K, V> extends BaseMapBuilder {
 		return linkedHashMapWrapper.put(keyUnsafeSupplier, value);
 	}
 
+	public static <K, V> LinkedHashMapWrapper<K, V> putAll(
+		Map<? extends K, ? extends V> inputMap) {
+
+		LinkedHashMapWrapper<K, V> linkedHashMapWrapper =
+			new LinkedHashMapWrapper<>();
+
+		return linkedHashMapWrapper.putAll(inputMap);
+	}
+
 	public static final class LinkedHashMapWrapper<K, V>
 		extends BaseMapWrapper<K, V> {
 
@@ -110,6 +120,14 @@ public class LinkedHashMapBuilder<K, V> extends BaseMapBuilder {
 			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
 
 			doPut(keyUnsafeSupplier, value);
+
+			return this;
+		}
+
+		public LinkedHashMapWrapper<K, V> putAll(
+			Map<? extends K, ? extends V> inputMap) {
+
+			doPutAll(inputMap);
 
 			return this;
 		}

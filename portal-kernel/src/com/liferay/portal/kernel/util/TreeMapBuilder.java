@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -62,6 +63,14 @@ public class TreeMapBuilder<K, V> extends BaseMapBuilder {
 		return treeMapWrapper.put(keyUnsafeSupplier, value);
 	}
 
+	public static <K, V> TreeMapWrapper<K, V> putAll(
+		Map<? extends K, ? extends V> inputMap) {
+
+		TreeMapWrapper<K, V> treeMapWrapper = new TreeMapWrapper<>();
+
+		return treeMapWrapper.putAll(inputMap);
+	}
+
 	public static final class TreeMapWrapper<K, V>
 		extends BaseMapWrapper<K, V> {
 
@@ -105,6 +114,14 @@ public class TreeMapBuilder<K, V> extends BaseMapBuilder {
 			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
 
 			doPut(keyUnsafeSupplier, value);
+
+			return this;
+		}
+
+		public TreeMapWrapper<K, V> putAll(
+			Map<? extends K, ? extends V> inputMap) {
+
+			doPutAll(inputMap);
 
 			return this;
 		}

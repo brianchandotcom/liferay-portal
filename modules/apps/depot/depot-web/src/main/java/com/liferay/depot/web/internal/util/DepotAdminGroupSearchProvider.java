@@ -98,7 +98,7 @@ public class DepotAdminGroupSearchProvider {
 			LanguageUtil.get(
 				ResourceBundleUtil.getBundle(
 					portletRequest.getLocale(), getClass()),
-				"no-repositories-were-found"));
+				"no-asset-libraries-were-found"));
 
 		groupSearch.setResults(results);
 

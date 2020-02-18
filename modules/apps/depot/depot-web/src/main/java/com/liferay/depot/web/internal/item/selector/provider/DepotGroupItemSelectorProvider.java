@@ -42,7 +42,7 @@ public class DepotGroupItemSelectorProvider
 
 	@Override
 	public String getEmptyResultsMessage() {
-		return "no-repositories-were-found";
+		return "no-asset-libraries-were-found";
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class DepotGroupItemSelectorProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "repository");
+		return _language.get(locale, "asset-library");
 	}
 
 	@Override

@@ -228,7 +228,8 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			defaultLocale, DepotEntryLocalServiceImpl.class);
 
-		return Optional.of(_language.get(resourceBundle, "unnamed-repository"));
+		return Optional.of(
+			_language.get(resourceBundle, "unnamed-asset-library"));
 	}
 
 	private void _validateNameMap(
@@ -256,7 +257,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 			throw new LocaleException(
 				LocaleException.TYPE_DEFAULT,
-				"Must have at least one valid locale for repository " +
+				"Must have at least one valid locale for asset library " +
 					depotEntry.getGroupId());
 		}
 
@@ -268,7 +269,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 			throw new LocaleException(
 				LocaleException.TYPE_DEFAULT,
-				"Must have at least one valid locale for repository " +
+				"Must have at least one valid locale for asset library " +
 					depotEntry.getGroupId());
 		}
 	}

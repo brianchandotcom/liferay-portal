@@ -15,7 +15,7 @@
 export default function confirmDepotEntryDeletion() {
 	return confirm(
 		Liferay.Language.get(
-			'removing-a-repository-can-affect-sites-that-use-the-contents-stored-in-it.-are-you-sure-you-want-to-continue-removing-this-repository'
+			'removing-an-asset-library-can-affect-sites-that-use-the-contents-stored-in-it.-are-you-sure-you-want-to-continue-removing-this-asset-library'
 		)
 	);
 }

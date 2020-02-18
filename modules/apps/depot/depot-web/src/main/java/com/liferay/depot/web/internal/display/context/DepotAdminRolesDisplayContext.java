@@ -34,12 +34,14 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,6 +59,21 @@ public class DepotAdminRolesDisplayContext {
 		_permissionChecker = _themeDisplay.getPermissionChecker();
 
 		_user = PortalUtil.getSelectedUser(httpServletRequest);
+	}
+
+	public String getAssetLibraryLabel() {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
+		return ResourceBundleUtil.getString(resourceBundle, "asset-library");
+	}
+
+	public String getLabel() {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, "asset-library-roles");
 	}
 
 	public List<UserGroupRole> getUserGroupRoles(int start, int end)

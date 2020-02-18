@@ -22,7 +22,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = new DepotAdminRole
 
 <h3 class="autofit-row sheet-subtitle">
 	<span class="autofit-col autofit-col-expand">
-		<span class="heading-text"><liferay-ui:message key="repositories" /></span>
+		<span class="heading-text"><%= depotAdminRolesDisplayContext.getLabel() %></span>
 	</span>
 </h3>
 
@@ -30,8 +30,8 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = new DepotAdminRole
 	compactEmptyResultsMessage="<%= true %>"
 	cssClass="lfr-search-container-depot-roles"
 	curParam="depotRolesCur"
-	emptyResultsMessage="this-user-is-not-assigned-any-repository-roles"
-	headerNames="title,repository,null"
+	emptyResultsMessage="this-user-is-not-assigned-any-asset-library-roles"
+	headerNames="title,asset-library,null"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= depotAdminRolesDisplayContext.getUserGroupRolesCount() %>"
 >
@@ -58,7 +58,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = new DepotAdminRole
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
-			name="repository"
+			name="<%= depotAdminRolesDisplayContext.getAssetLibraryLabel() %>"
 		>
 			<liferay-staging:descriptive-name
 				group="<%= userGroupRole.getGroup() %>"

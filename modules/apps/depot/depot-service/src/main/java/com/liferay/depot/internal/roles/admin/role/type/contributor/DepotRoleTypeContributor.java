@@ -44,7 +44,7 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public String getName() {
-		return "repository";
+		return "asset-library";
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, DepotRoleTypeContributor.class);
 
-		return _language.get(resourceBundle, "repository-roles");
+		return _language.get(resourceBundle, "asset-library-roles");
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, DepotRoleTypeContributor.class);
 
-		return _language.get(resourceBundle, "repository-role");
+		return _language.get(resourceBundle, "asset-library-role");
 	}
 
 	@Override

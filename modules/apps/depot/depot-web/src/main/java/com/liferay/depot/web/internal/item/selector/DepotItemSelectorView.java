@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -75,8 +76,10 @@ public class DepotItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return ResourceBundleUtil.getString(
-			_portal.getResourceBundle(locale), "repositories");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return ResourceBundleUtil.getString(resourceBundle, "asset-libraries");
 	}
 
 	@Override

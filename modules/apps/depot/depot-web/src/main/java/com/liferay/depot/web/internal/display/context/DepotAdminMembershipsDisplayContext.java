@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
@@ -47,6 +48,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -98,6 +100,13 @@ public class DepotAdminMembershipsDisplayContext {
 		return _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
 			getItemSelectorEventName(), itemSelectorCriterion);
+	}
+
+	public String getLabel() {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
+		return ResourceBundleUtil.getString(resourceBundle, "asset-libraries");
 	}
 
 	public String getRoles(Group group) {

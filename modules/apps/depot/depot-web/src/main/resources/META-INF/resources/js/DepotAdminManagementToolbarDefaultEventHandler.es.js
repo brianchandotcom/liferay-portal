@@ -20,7 +20,7 @@ import confirmDepotEntryDeletion from './confirmDepotEntryDeletion.es';
 class DepotAdminManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addDepotEntry(itemData) {
 		openSimpleInputModal({
-			dialogTitle: Liferay.Language.get('add-repository'),
+			dialogTitle: Liferay.Language.get('add-asset-library'),
 			formSubmitURL: itemData.addDepotEntryURL,
 			mainFieldLabel: Liferay.Language.get('name'),
 			mainFieldName: 'name',

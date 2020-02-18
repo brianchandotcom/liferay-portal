@@ -30,7 +30,7 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 	>
 		<aui:model-context bean="<%= depotAdminDetailsDisplayContext.getGroup() %>" model="<%= Group.class %>" />
 
-		<aui:input name="repositoryId" type="resource" value="<%= String.valueOf(depotAdminDetailsDisplayContext.getDepotEntryId()) %>" />
+		<aui:input name="assetLibraryId" type="resource" value="<%= String.valueOf(depotAdminDetailsDisplayContext.getDepotEntryId()) %>" />
 
 		<aui:input name="name" placeholder="name" required="<%= true %>" value="<%= depotAdminDetailsDisplayContext.getDepotName(locale) %>" />
 
@@ -43,7 +43,7 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 		label='<%= LanguageUtil.get(request, "applications") %>'
 	>
 		<p class="text-muted">
-			<liferay-ui:message key="repository-applications-description" />
+			<liferay-ui:message key="asset-library-applications-description" />
 		</p>
 
 		<div class="row">

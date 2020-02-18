@@ -18,13 +18,14 @@ import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.depot.web.internal.constants.DepotAdminPanelCategoryKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -48,7 +49,10 @@ public class DepotAdminPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "repositories");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return ResourceBundleUtil.getString(resourceBundle, "asset-libraries");
 	}
 
 	@Override

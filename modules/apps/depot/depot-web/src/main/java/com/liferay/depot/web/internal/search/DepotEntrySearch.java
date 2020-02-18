@@ -78,7 +78,7 @@ public class DepotEntrySearch extends SearchContainer<DepotEntry> {
 	}
 
 	private static final String _EMPTY_RESULTS_MESSAGE =
-		"no-repositories-were-found";
+		"no-asset-libraries-were-found";
 
 	private static List<String> _headerNames = Arrays.asList("name");
 	private static Map<String, String> _orderableHeaders = HashMapBuilder.put(

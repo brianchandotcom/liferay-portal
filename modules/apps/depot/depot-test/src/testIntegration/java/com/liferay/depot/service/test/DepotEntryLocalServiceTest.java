@@ -262,7 +262,7 @@ public class DepotEntryLocalServiceTest {
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
 		Assert.assertEquals(
-			"Unnamed Repository", group.getName(LocaleUtil.getDefault()));
+			"Unnamed Asset Library", group.getName(LocaleUtil.getDefault()));
 	}
 
 	@Test

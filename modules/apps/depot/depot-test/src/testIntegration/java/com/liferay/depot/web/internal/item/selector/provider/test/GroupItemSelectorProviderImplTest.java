@@ -128,7 +128,8 @@ public class GroupItemSelectorProviderImplTest {
 	@Test
 	public void testGetLabel() {
 		Assert.assertEquals(
-			"Repository", _groupItemSelectorProvider.getLabel(LocaleUtil.US));
+			"Asset Library",
+			_groupItemSelectorProvider.getLabel(LocaleUtil.US));
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {

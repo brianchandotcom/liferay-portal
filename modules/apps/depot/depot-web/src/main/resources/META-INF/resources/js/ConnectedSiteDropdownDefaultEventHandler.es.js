@@ -19,7 +19,7 @@ class ConnectedSiteDropdownDefaultEventHandler extends DefaultEventHandler {
 		if (
 			confirm(
 				Liferay.Language.get(
-					'removing-this-site-connection-will-not-allow-the-site-to-consume-data-from-this-repository-directly'
+					'removing-this-site-connection-will-not-allow-the-site-to-consume-data-from-this-asset-library-directly'
 				)
 			)
 		) {

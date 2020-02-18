@@ -36,7 +36,7 @@ Group group = depotEntry.getGroup();
 renderResponse.setTitle(group.getDescriptiveName(locale));
 %>
 
-<liferay-ui:success key='<%= DepotPortletKeys.DEPOT_ADMIN + "requestProcessed" %>' message="repository-was-added" />
+<liferay-ui:success key='<%= DepotPortletKeys.DEPOT_ADMIN + "requestProcessed" %>' message="asset-library-was-added" />
 
 <portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />
 

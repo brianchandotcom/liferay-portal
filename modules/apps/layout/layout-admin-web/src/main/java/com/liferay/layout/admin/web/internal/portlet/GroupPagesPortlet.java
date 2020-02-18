@@ -195,6 +195,12 @@ public class GroupPagesPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_COPY_HELPER, _layoutCopyHelper);
 			renderRequest.setAttribute(
+				LayoutEditorTypeConfiguration.class.getName(),
+				_layoutEditorTypeConfiguration);
+			renderRequest.setAttribute(
+				StagingGroupHelper.class.getName(), _stagingGroupHelper);
+
+			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT,
 				new LayoutsAdminDisplayContext(
 					_layoutConverterConfiguration,
@@ -209,11 +215,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
 					_stagingGroupHelper));
-			renderRequest.setAttribute(
-				LayoutEditorTypeConfiguration.class.getName(),
-				_layoutEditorTypeConfiguration);
-			renderRequest.setAttribute(
-				StagingGroupHelper.class.getName(), _stagingGroupHelper);
 
 			super.doDispatch(renderRequest, renderResponse);
 		}

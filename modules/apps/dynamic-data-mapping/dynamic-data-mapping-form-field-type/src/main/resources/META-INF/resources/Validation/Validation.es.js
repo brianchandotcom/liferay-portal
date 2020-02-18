@@ -35,6 +35,10 @@ import VALIDATIONS from '../util/validations.es';
 import templates from './Validation.soy';
 
 class Validation extends Component {
+	created() {
+		this._enableValidation = false;
+	}
+
 	prepareStateForRender(state) {
 		const {defaultLanguageId, editingLanguageId} = this;
 		const parsedState = this._getStateFromValue(state.value);
@@ -154,6 +158,7 @@ class Validation extends Component {
 	_getValue() {
 		let expression = {};
 		const {
+			_enableValidation: enableValidation,
 			editingLanguageId,
 			validation: {fieldName: name},
 		} = this;
@@ -168,7 +173,6 @@ class Validation extends Component {
 			parameter = this.refs.parameter.value;
 		}
 
-		const enableValidation = this.refs.enableValidation.value;
 		let selectedValidation = this._getSelectedValidation();
 
 		if (
@@ -231,6 +235,11 @@ class Validation extends Component {
 		}
 
 		return validation;
+	}
+
+	_updateCheckboxValue(event) {
+		this._enableValidation = event.value;
+		this._updateValue();
 	}
 
 	_updateValue() {

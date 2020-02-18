@@ -2,10 +2,11 @@
 
 {template .render}
 	{@param name: string}
-	{@param? _updateValue: any}
-	{@param? id: string}
 	{@param spritemap: string}
+	{@param? _updateCheckboxValue: any}
+	{@param? _updateValue: any}
 	{@param? dataType: string}
+	{@param? id: string}
 	{@param? enableValidation: bool}
 	{@param? errorMessage: string}
 	{@param? label: string}
@@ -25,6 +26,7 @@
 	]>}
 
 	{call .content}
+		{param _updateCheckboxValue: $_updateCheckboxValue /}
 		{param _updateValue: $_updateValue /}
 		{param dataType: $dataType /}
 		{param enableValidation: $enableValidation /}
@@ -44,6 +46,7 @@
 
 {template .content}
 	{@param name: string}
+	{@param? _updateCheckboxValue: any}
 	{@param? _updateValue: any}
 	{@param? dataType: string}
 	{@param? enableValidation: bool}
@@ -68,7 +71,7 @@
 	<div class="form-group lfr-ddm-form-field-validation">
 		{call CheckboxAdapter.render}
 			{param events: [
-				'fieldEdited': $_updateValue
+				'fieldEdited': $_updateCheckboxValue
 			] /}
 			{param label: $label /}
 			{param name: 'enableValidation' /}

@@ -121,6 +121,28 @@ renderResponse.setTitle(oAuth2Application.getName());
 					<%= HtmlUtil.escape(oAuth2Authorization.getRemoteIPInfo()) %>, <%= HtmlUtil.escape(oAuth2Authorization.getRemoteHostInfo()) %>
 				</p>
 
+				<%
+				Date expirationDate = oAuth2Authorization.getRefreshTokenExpirationDate();
+
+				if (expirationDate == null) {
+					expirationDate = oAuth2Authorization.getAccessTokenExpirationDate();
+				}
+
+				String key;
+
+				if (expirationDate.before(new Date())) {
+					key = "x-ago";
+				}
+				else {
+					key = "within-x";
+				}
+				%>
+
+				<p class="authorization text-truncate">
+					<span><liferay-ui:message key="expiration" /></span>:
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(locale, Math.abs(System.currentTimeMillis() - expirationDate.getTime()), true) %>" key="<%= key %>" translateArguments="<%= false %>" />
+				</p>
+
 				<p class="buttons">
 					<aui:button cssClass="remove-access" id="removeAccess" value="remove-access" />
 					<aui:button href="<%= PortalUtil.escapeRedirect(redirect) %>" value="cancel" />

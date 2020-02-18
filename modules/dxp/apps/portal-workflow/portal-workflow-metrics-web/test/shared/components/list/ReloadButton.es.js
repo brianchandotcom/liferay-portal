@@ -14,15 +14,16 @@ import React from 'react';
 import ReloadButton from '../../../../src/main/resources/META-INF/resources/js/shared/components/list/ReloadButton.es';
 
 test('Should component reload page', () => {
-	const component = shallow(<ReloadButton />);
+	Object.defineProperty(window, 'location', {
+		value: {reload: jest.fn()},
+		writable: true
+	});
 
-	window.location.reload = jest.fn();
+	const component = shallow(<ReloadButton />);
 
 	const instance = component.instance();
 
 	instance.reloadPage();
 
 	expect(window.location.reload).toHaveBeenCalled();
-
-	window.location.reload.mockRestore();
 });

@@ -209,6 +209,13 @@ describe('ExperienceToolbarSection', () => {
 
 		const lockIcon = within(experience).getByRole('presentation');
 
+		// Hackily work around:
+		//
+		//      "TypeError: Cannot read property '_defaultView' of undefined"
+		//
+		// Caused by: https://github.com/jsdom/jsdom/issues/2499
+		document.activeElement.blur = () => {};
+
 		userEvent.click(lockIcon);
 
 		getByText('experience-locked');
@@ -422,7 +429,9 @@ describe('ExperienceToolbarSection', () => {
 
 		userEvent.selectOptions(audienceInput, 'A segment #1');
 
-		userEvent.click(getByText('save'));
+		// Grab parentElement here to work around jsdom v13 issue.
+		// "TypeError: Cannot read property '_defaultView' of undefined"
+		userEvent.click(getByText('save').parentElement);
 
 		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(2));
 
@@ -502,7 +511,9 @@ describe('ExperienceToolbarSection', () => {
 		expect(nameInput.value).toBe('New Experience #1');
 		expect(segmentSelect.value).toBe('test-segment-id-00');
 
-		userEvent.click(getByText('save'));
+		// Grab parentElement here to work around jsdom v13 issue.
+		// "TypeError: Cannot read property '_defaultView' of undefined"
+		userEvent.click(getByText('save').parentElement);
 
 		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(1));
 

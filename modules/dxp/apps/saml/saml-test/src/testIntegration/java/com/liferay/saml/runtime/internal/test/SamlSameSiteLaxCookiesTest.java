@@ -131,7 +131,7 @@ public class SamlSameSiteLaxCookiesTest {
 
 		Map<String, String> paramsMap = new HashMap<>(_paramsMap);
 
-		Collection<String> params = paramsMap.values();
+		Collection<String> paramValues = paramsMap.values();
 
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(httpClient.getInputStream()))) {
@@ -139,14 +139,14 @@ public class SamlSameSiteLaxCookiesTest {
 			String line;
 
 			while ((line = bufferedReader.readLine()) != null) {
-				params.removeIf(line::contains);
+				paramValues.removeIf(line::contains);
 			}
 		}
 
 		Assert.assertTrue(
 			"Missing reflected fields in response content: " +
 				paramsMap.keySet(),
-			params.isEmpty());
+			paramValues.isEmpty());
 	}
 
 	private static Map<String, String> _paramsMap;

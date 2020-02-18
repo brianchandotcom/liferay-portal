@@ -106,7 +106,7 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(8 + 5 * _PARAMS.length);
+		StringBundler sb = new StringBundler(7 + 5 * _PARAMS.length);
 
 		sb.append("<!DOCTYPE html>\n");
 		sb.append("<html><body onload=\"document.forms[0].submit()\">");

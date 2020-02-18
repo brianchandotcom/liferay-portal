@@ -16,6 +16,7 @@ package com.liferay.site.navigation.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -120,18 +121,15 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 		addSiteNavigationMenuURL.setParameter(
 			"redirect", themeDisplay.getURLCurrent());
 
-		return new CreationMenu() {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData("action", "addSiteNavigationMenu");
-						dropdownItem.putData(
-							"addSiteNavigationMenuURL",
-							addSiteNavigationMenuURL.toString());
-						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
-					});
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.putData("action", "addSiteNavigationMenu");
+				dropdownItem.putData(
+					"addSiteNavigationMenuURL",
+					addSiteNavigationMenuURL.toString());
+				dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 			}
-		};
+		).build();
 	}
 
 	@Override

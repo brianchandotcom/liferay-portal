@@ -16,6 +16,7 @@ package com.liferay.user.associated.data.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.BaseManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -67,9 +68,7 @@ public class UADExportProcessManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		CreationMenu creationMenu = new CreationMenu();
-
-		creationMenu.addPrimaryDropdownItem(
+		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				User selectedUser = PortalUtil.getSelectedUser(request);
 
@@ -81,9 +80,8 @@ public class UADExportProcessManagementToolbarDisplayContext
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(request, "add-export-processes"));
-			});
-
-		return creationMenu;
+			}
+		).build();
 	}
 
 	public List<LabelItem> getFilterLabelItems() {

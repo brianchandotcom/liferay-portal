@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -126,33 +127,29 @@ public class KaleoFormsViewRecordsDisplayContext {
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/admin/edit_request.jsp", "redirect",
-							PortalUtil.getCurrentURL(
-								_kaleoFormsAdminRequestHelper.getRequest()),
-							"backURL",
-							PortalUtil.getCurrentURL(
-								_kaleoFormsAdminRequestHelper.getRequest()),
-							"kaleoProcessId",
-							String.valueOf(_kaleoProcess.getKaleoProcessId()));
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcPath",
+					"/admin/edit_request.jsp", "redirect",
+					PortalUtil.getCurrentURL(
+						_kaleoFormsAdminRequestHelper.getRequest()),
+					"backURL",
+					PortalUtil.getCurrentURL(
+						_kaleoFormsAdminRequestHelper.getRequest()),
+					"kaleoProcessId",
+					String.valueOf(_kaleoProcess.getKaleoProcessId()));
 
-						dropdownItem.setLabel(
-							LanguageUtil.format(
-								_kaleoFormsAdminRequestHelper.getRequest(),
-								"submit-new-x",
-								HtmlUtil.escape(
-									_kaleoProcess.getName(
-										_kaleoFormsAdminRequestHelper.
-											getLocale())),
-								false));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.format(
+						_kaleoFormsAdminRequestHelper.getRequest(),
+						"submit-new-x",
+						HtmlUtil.escape(
+							_kaleoProcess.getName(
+								_kaleoFormsAdminRequestHelper.getLocale())),
+						false));
 			}
-		};
+		).build();
 	}
 
 	public OrderByComparator<DDLRecord> getDDLRecordOrderByComparator(

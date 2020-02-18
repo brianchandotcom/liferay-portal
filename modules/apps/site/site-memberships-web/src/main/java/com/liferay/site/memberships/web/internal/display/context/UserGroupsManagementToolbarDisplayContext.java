@@ -16,6 +16,7 @@ package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -191,30 +192,25 @@ public class UserGroupsManagementToolbarDisplayContext
 				"mvcPath", "/select_user_groups.jsp");
 			selectUserGroupsURL.setWindowState(LiferayWindowState.POP_UP);
 
-			return new CreationMenu() {
-				{
-					addDropdownItem(
-						dropdownItem -> {
-							dropdownItem.putData("action", "selectUserGroups");
+			return CreationMenuBuilder.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.putData("action", "selectUserGroups");
 
-							ThemeDisplay themeDisplay =
-								(ThemeDisplay)request.getAttribute(
-									WebKeys.THEME_DISPLAY);
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)request.getAttribute(
+							WebKeys.THEME_DISPLAY);
 
-							dropdownItem.putData(
-								"groupTypeLabel",
-								GroupUtil.getGroupTypeLabel(
-									_userGroupsDisplayContext.getGroupId(),
-									themeDisplay.getLocale()));
+					dropdownItem.putData(
+						"groupTypeLabel",
+						GroupUtil.getGroupTypeLabel(
+							_userGroupsDisplayContext.getGroupId(),
+							themeDisplay.getLocale()));
 
-							dropdownItem.putData(
-								"selectUserGroupsURL",
-								selectUserGroupsURL.toString());
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, "add"));
-						});
+					dropdownItem.putData(
+						"selectUserGroupsURL", selectUserGroupsURL.toString());
+					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 				}
-			};
+			).build();
 		}
 		catch (Exception exception) {
 			return null;

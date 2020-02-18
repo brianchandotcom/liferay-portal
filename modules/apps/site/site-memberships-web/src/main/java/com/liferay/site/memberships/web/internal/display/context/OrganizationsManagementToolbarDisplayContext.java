@@ -16,6 +16,7 @@ package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -111,31 +112,26 @@ public class OrganizationsManagementToolbarDisplayContext
 				"mvcPath", "/select_organizations.jsp");
 			selectOrganizationsURL.setWindowState(LiferayWindowState.POP_UP);
 
-			return new CreationMenu() {
-				{
-					addDropdownItem(
-						dropdownItem -> {
-							dropdownItem.putData(
-								"action", "selectOrganizations");
+			return CreationMenuBuilder.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.putData("action", "selectOrganizations");
 
-							ThemeDisplay themeDisplay =
-								(ThemeDisplay)request.getAttribute(
-									WebKeys.THEME_DISPLAY);
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)request.getAttribute(
+							WebKeys.THEME_DISPLAY);
 
-							dropdownItem.putData(
-								"groupTypeLabel",
-								GroupUtil.getGroupTypeLabel(
-									_organizationsDisplayContext.getGroupId(),
-									themeDisplay.getLocale()));
+					dropdownItem.putData(
+						"groupTypeLabel",
+						GroupUtil.getGroupTypeLabel(
+							_organizationsDisplayContext.getGroupId(),
+							themeDisplay.getLocale()));
 
-							dropdownItem.putData(
-								"selectOrganizationsURL",
-								selectOrganizationsURL.toString());
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, "add"));
-						});
+					dropdownItem.putData(
+						"selectOrganizationsURL",
+						selectOrganizationsURL.toString());
+					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 				}
-			};
+			).build();
 		}
 		catch (Exception exception) {
 			return null;

@@ -16,6 +16,7 @@ package com.liferay.site.teams.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -98,18 +99,14 @@ public class SiteTeamsManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							liferayPortletResponse.createRenderURL(), "mvcPath",
-							"/edit_team.jsp");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "add-team"));
-					});
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					liferayPortletResponse.createRenderURL(), "mvcPath",
+					"/edit_team.jsp");
+				dropdownItem.setLabel(LanguageUtil.get(request, "add-team"));
 			}
-		};
+		).build();
 	}
 
 	@Override

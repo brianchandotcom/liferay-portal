@@ -383,25 +383,26 @@ public class FinderCacheImpl
 		}
 
 		if (result instanceof List<?>) {
-			List<BaseModel<?>> list = (List<BaseModel<?>>)result;
+			List<BaseModel<?>> baseModels = (List<BaseModel<?>>)result;
 
-			if (list.isEmpty()) {
+			if (baseModels.isEmpty()) {
 				return new EmptyResult(args);
 			}
 
-			if ((list.size() > _valueObjectFinderCacheListThreshold) &&
+			if ((baseModels.size() > _valueObjectFinderCacheListThreshold) &&
 				(_valueObjectFinderCacheListThreshold > 0)) {
 
 				return null;
 			}
 
-			ArrayList<Serializable> cachedList = new ArrayList<>(list.size());
+			ArrayList<Serializable> primaryKeys = new ArrayList<>(
+				baseModels.size());
 
-			for (BaseModel<?> curResult : list) {
-				cachedList.add(curResult.getPrimaryKeyObj());
+			for (BaseModel<?> baseModel : baseModels) {
+				primaryKeys.add(baseModel.getPrimaryKeyObj());
 			}
 
-			return cachedList;
+			return primaryKeys;
 		}
 
 		return result;

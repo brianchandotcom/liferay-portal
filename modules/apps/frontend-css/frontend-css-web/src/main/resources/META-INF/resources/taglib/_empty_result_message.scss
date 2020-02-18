@@ -22,6 +22,7 @@
 	}
 
 	.taglib-empty-result-message-description {
+		color: #6b6c7e;
 		margin-top: 8px;
 	}
 
@@ -44,11 +45,6 @@
 	.taglib-empty-result-message-header,
 	.taglib-empty-result-message-header-has-plus-btn {
 		background-image: url(@theme_image_path@/states/empty_state.gif);
-	}
-
-	.taglib-empty-result-message-title {
-		font-size: 1.25rem;
-		margin-top: 40px;
 	}
 
 	.taglib-empty-search-result-message-header {
@@ -76,5 +72,31 @@
 		margin: auto;
 		max-width: 250px;
 		padding-top: 250px;
+	}
+
+	.taglib-empty-result-message-title {
+		font-size: 1rem;
+		margin-top: 48px;
+	}
+
+	.taglib-empty-result-message-description {
+		font-size: 0.875rem;
+	}
+
+	.taglib-empty-result-message-header + .taglib-empty-result-message-title,
+	.taglib-empty-search-result-message-header
+		+ .taglib-empty-result-message-title {
+		font-size: 1.25rem;
+		font-weight: bold;
+		margin-top: 0;
+		text-align: center;
+	}
+
+	.taglib-empty-result-message-header
+		~ .taglib-empty-result-message-description,
+	.taglib-empty-search-result-message-header
+		~ .taglib-empty-result-message-description {
+		font-size: 1rem;
+		text-align: center;
 	}
 }

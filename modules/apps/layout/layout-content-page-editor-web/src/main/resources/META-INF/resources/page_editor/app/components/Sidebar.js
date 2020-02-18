@@ -203,7 +203,9 @@ export default function Sidebar() {
 								return (
 									<a
 										className={classNames({active})}
+										data-tooltip-align="left"
 										href={url}
+										title={label}
 									>
 										<ClayIcon symbol={icon} />
 									</a>

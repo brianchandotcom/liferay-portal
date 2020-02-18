@@ -362,6 +362,42 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.data.engine.spi.jar!accessors-smart.jar</file-name>
+				<version>1.1</version>
+				<project-name>ASM based accessors helper used by json-smart</project-name>
+				<project-url>http://www.minidev.net/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.data.engine.spi.jar!json-path.jar</file-name>
+				<version>2.2.0</version>
+				<project-name>Json Path</project-name>
+				<project-url>https://github.com/jayway/JsonPath</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.data.engine.spi.jar!json-smart.jar</file-name>
+				<version>2.2.1</version>
+				<project-name>JSON Small and Fast Parser</project-name>
+				<project-url>http://www.minidev.net/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.document.library.asset.auto.tagger.tensorflow.jar!libtensorflow.jar</file-name>
 				<version>1.10.0</version>
 				<project-name>org.tensorflow:libtensorflow</project-name>
@@ -4335,40 +4371,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.web.form.web.jar!rhino.jar</file-name>
-				<version>1.7R4</version>
-				<project-name>Mozilla Rhino 1.7R4</project-name>
-				<project-url>https://developer.mozilla.org/en/Rhino</project-url>
-				<licenses>
-					<license>
-						<license-name>Mozilla Public License, Version 2.0</license-name>
-						<license-url>http://www.mozilla.org/MPL/2.0/index.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.web.proxy.web.jar!concurrent.jar</file-name>
-				<version>1.3.4</version>
-				<project-name>Dough Lea's util.concurrent package</project-name>
-				<licenses>
-					<license>
-						<license-name>Public domain, Sun Microsoystems</license-name>
-						<license-url>&gt;http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/concurrent/intro.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.web.proxy.web.jar!org.portletbridge.core.jar</file-name>
-				<version>1.1.2</version>
-				<project-name>org.portletbridge</project-name>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.wiki.engine.creole.jar!antlr.jar</file-name>
 				<version>3.0.1</version>
 				<project-name>AntLR Parser Generator</project-name>
@@ -4574,7 +4576,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/com.liferay.jenkins.results.parser.jar</file-name>
-				<version>1.0.428</version>
+				<version>1.0.543</version>
 				<project-name>Liferay Jenkins Results Parser</project-name>
 				<licenses>
 					<license>
@@ -6246,6 +6248,18 @@
 				<comments>Removed org.json.* because it json-java.jar. See LPS-78517.</comments>
 			</library>
 			<library>
+				<file-name>lib/portal/jackson-databind.jar</file-name>
+				<version>2.10.0.LIFERAY-PATCHED-1</version>
+				<project-name>Jackson Databind</project-name>
+				<project-url>https://github.com/FasterXML/jackson-databind</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/jai-imageio-core.jar</file-name>
 				<version>1.4.0</version>
 				<project-name>Java Advanced Imaging Image I/O Tools API Core (standalone)</project-name>
@@ -6266,18 +6280,6 @@
 					<license>
 						<license-name>BSD Style License</license-name>
 						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jackson-databind.jar</file-name>
-				<version>2.10.0.LIFERAY-PATCHED-1</version>
-				<project-name>Jackson Databind</project-name>
-				<project-url>https://github.com/FasterXML/jackson-databind</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -7845,51 +7847,6 @@
 					<license>
 						<license-name>BSD Style License</license-name>
 						<license-url>http://developer.yahoo.com/yui/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>opensocial-portlet.war!org.osgi.annotation.versioning.jar</file-name>
-				<version>1.1.0</version>
-				<project-name>org.osgi:org.osgi.annotation.versioning</project-name>
-				<project-url>https://www.osgi.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache-2.0; link="http://www.apache.org/licenses/LICENSE-2.0"; description="Apache License, Version 2.0"</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>powwow-portlet.war!jericho-html.jar</file-name>
-				<version>3.1</version>
-				<project-name>Jericho HTML Parser</project-name>
-				<project-url>http://jericho.htmlparser.net</project-url>
-				<licenses>
-					<license>
-						<license-name>GNU Lesser General Public License (LGPL)</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>powwow-portlet.war!org.osgi.annotation.versioning.jar</file-name>
-				<version>1.1.0</version>
-				<project-name>org.osgi:org.osgi.annotation.versioning</project-name>
-				<project-url>https://www.osgi.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache-2.0; link="http://www.apache.org/licenses/LICENSE-2.0"; description="Apache License, Version 2.0"</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>tasks-portlet.war!org.osgi.annotation.versioning.jar</file-name>
-				<version>1.1.0</version>
-				<project-name>org.osgi:org.osgi.annotation.versioning</project-name>
-				<project-url>https://www.osgi.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache-2.0; link="http://www.apache.org/licenses/LICENSE-2.0"; description="Apache License, Version 2.0"</license-name>
 					</license>
 				</licenses>
 			</library>

@@ -149,7 +149,7 @@ const FragmentContent = React.forwardRef(
 				</FragmentContentInteractionsFilter>
 
 				<FragmentContentFloatingToolbar
-					element={element}
+					editableElements={editableElements}
 					fragmentEntryLinkId={fragmentEntryLinkId}
 					onButtonClick={onFloatingToolbarButtonClick}
 				/>

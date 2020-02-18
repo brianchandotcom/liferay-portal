@@ -62,6 +62,20 @@ public class PageDefinitionValidatorTest {
 	}
 
 	@Test
+	public void testValidatePageDefinitionInvalidFragmentExtraProperties()
+		throws Exception {
+
+		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expectMessage(
+			new StringStartsWith(
+				"/pageElement/pageElements/0/definition: extraneous key " +
+					"[extra] is not permitted"));
+
+		PageDefinitionValidator.validatePageDefinition(
+			_read("page_definition_invalid_fragment_extra_properties.json"));
+	}
+
+	@Test
 	public void testValidatePageDefinitionInvalidPageElementExtraProperties()
 		throws Exception {
 
@@ -109,6 +123,14 @@ public class PageDefinitionValidatorTest {
 
 		PageDefinitionValidator.validatePageDefinition(
 			_read("page_definition_valid_column_complete.json"));
+	}
+
+	@Test
+	public void testValidatePageDefinitionValidFragmentComplete()
+		throws Exception {
+
+		PageDefinitionValidator.validatePageDefinition(
+			_read("page_definition_valid_fragment_complete.json"));
 	}
 
 	@Test

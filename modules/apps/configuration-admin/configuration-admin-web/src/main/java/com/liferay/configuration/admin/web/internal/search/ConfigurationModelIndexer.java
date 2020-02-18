@@ -550,10 +550,6 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		public void modifiedBundle(
 			Bundle bundle, BundleEvent bundleEvent,
 			Collection<ConfigurationModel> configurationModels) {
-
-			removedBundle(bundle, bundleEvent, configurationModels);
-
-			addingBundle(bundle, bundleEvent);
 		}
 
 		@Override

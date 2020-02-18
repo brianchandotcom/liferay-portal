@@ -265,6 +265,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKFLOW_PROCESS_VALUE_OVERDUE</td>
+	<td>//a[contains(text(),'${key_workflowProcessName}')]/ancestor::td/following-sibling::td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKFLOW_PROCESS_VALUE_ON_TIME</td>
+	<td>//a[contains(text(),'${key_workflowProcessName}')]/ancestor::td/following-sibling::td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKFLOW_PROCESS_VALUE_TOTAL_PENDING</td>
+	<td>//a[contains(text(),'${key_workflowProcessName}')]/ancestor::td/following-sibling::td[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_EMPTY_MESSAGE</td>
 	<td>//div[contains(@class, 'panel-body')]//div[contains(@class, 'empty-message')] | //div[contains(@class, 'panel-body')]//p[contains(@class, 'small')]</td>
 	<td></td>

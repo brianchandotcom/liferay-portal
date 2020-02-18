@@ -125,6 +125,26 @@ definition {
 			value1 = "${key_untracked}");
 	}
 
+	macro checkWorkflowReports {
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_VALUE_OVERDUE",
+			value1 = "${key_overdueValue}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_VALUE_ON_TIME",
+			value1 = "${key_onTimeValue}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_VALUE_TOTAL_PENDING",
+			value1 = "${key_totalPendingValue}");
+	}
+
 	macro clearAllFilter {
 		Click(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
 	}

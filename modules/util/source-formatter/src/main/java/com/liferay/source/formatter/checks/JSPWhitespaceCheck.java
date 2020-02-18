@@ -58,7 +58,10 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 	protected String formatDoubleSpace(String line) {
 		String trimmedLine = StringUtil.trim(line);
 
-		if (trimmedLine.startsWith("#")) {
+		if (trimmedLine.startsWith(StringPool.DOUBLE_SLASH) ||
+			trimmedLine.startsWith(StringPool.POUND) ||
+			trimmedLine.startsWith(StringPool.STAR)) {
+
 			return line;
 		}
 

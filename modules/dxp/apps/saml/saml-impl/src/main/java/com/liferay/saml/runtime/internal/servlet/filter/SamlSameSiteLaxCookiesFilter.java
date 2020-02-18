@@ -108,10 +108,9 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 			_processParameter(httpServletRequest, sb, param);
 		}
 
-		sb.append("<noscript><iframe src=\"?noscript=true\" ");
-		sb.append("style=\"width: 100%; border: 0;\">");
-		sb.append("</iframe></noscript></form></body></html>");
-		sb.append("</html>");
+		sb.append("<noscript><meta http-equiv=\"refresh\" ");
+		sb.append("content=\"0;URL='?noscript=true'\"/>");
+		sb.append("</noscript></form></body></html>");
 
 		printWriter.write(sb.toString());
 

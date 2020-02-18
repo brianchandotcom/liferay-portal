@@ -16,6 +16,7 @@ package com.liferay.account.rest.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.rest.dto.v1_0.AccountUser;
+import com.liferay.account.rest.internal.odata.entity.v1_0.AccountUserEntityModel;
 import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -33,14 +34,18 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
 import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,7 +58,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/account-user.properties",
 	scope = ServiceScope.PROTOTYPE, service = AccountUserResource.class
 )
-public class AccountUserResourceImpl extends BaseAccountUserResourceImpl {
+public class AccountUserResourceImpl
+	extends BaseAccountUserResourceImpl implements EntityModelResource {
 
 	@Override
 	public Page<AccountUser> getAccountUsersPage(
@@ -72,6 +78,13 @@ public class AccountUserResourceImpl extends BaseAccountUserResourceImpl {
 					BooleanClauseOccur.MUST);
 			},
 			search, filter, pagination, sorts);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _accountUserEntityModel;
 	}
 
 	@Override
@@ -171,6 +184,9 @@ public class AccountUserResourceImpl extends BaseAccountUserResourceImpl {
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	private final AccountUserEntityModel _accountUserEntityModel =
+		new AccountUserEntityModel();
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;

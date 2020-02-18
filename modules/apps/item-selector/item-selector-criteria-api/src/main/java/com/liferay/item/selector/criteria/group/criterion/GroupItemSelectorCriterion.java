@@ -28,6 +28,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_privateLayout = privateLayout;
 	}
 
+	public String getPortletId() {
+		return _portletId;
+	}
+
 	public String getTarget() {
 		return _target;
 	}
@@ -60,6 +64,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_includeUserPersonalSite = includeUserPersonalSite;
 	}
 
+	public void setPortletId(String portletId) {
+		_portletId = portletId;
+	}
+
 	public void setPrivateLayout(boolean privateLayout) {
 		_privateLayout = privateLayout;
 	}
@@ -71,6 +79,7 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private boolean _allowNavigation = true;
 	private boolean _includeFormsSite;
 	private boolean _includeUserPersonalSite;
+	private String _portletId;
 	private boolean _privateLayout;
 	private String _target;
 

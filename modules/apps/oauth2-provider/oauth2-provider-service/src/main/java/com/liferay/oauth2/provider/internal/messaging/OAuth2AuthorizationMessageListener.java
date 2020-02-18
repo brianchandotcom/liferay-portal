@@ -64,7 +64,7 @@ public class OAuth2AuthorizationMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_oAuth2AuthorizationLocalService.deleteExpiredAccessTokens();
+		_oAuth2AuthorizationLocalService.deleteExpiredOAuth2Authorizations();
 	}
 
 	@Reference

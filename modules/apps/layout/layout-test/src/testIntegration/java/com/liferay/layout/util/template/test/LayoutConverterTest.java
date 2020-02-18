@@ -18,9 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.layout.util.template.LayoutData;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -866,11 +870,112 @@ public class LayoutConverterTest {
 		Assert.assertTrue(layoutConverter.isConvertible(layout));
 	}
 
+	private LayoutStructure _convertToReadableItemIds(
+		LayoutStructure layoutStructure) {
+
+		LayoutStructure newLayoutStructure = new LayoutStructure();
+
+		Map<String, String> itemIds = new HashMap<>();
+
+		for (LayoutStructureItem layoutStructureItem :
+				layoutStructure.getLayoutStructureItems()) {
+
+			String parentItemId = StringPool.BLANK;
+
+			if (Validator.isNotNull(layoutStructureItem.getParentItemId())) {
+				LayoutStructureItem parentLayoutStructureItem =
+					layoutStructure.getLayoutStructureItem(
+						layoutStructureItem.getParentItemId());
+
+				parentItemId = itemIds.computeIfAbsent(
+					parentLayoutStructureItem.getItemId(),
+					itemId -> _getReadableItemId(
+						layoutStructure, parentLayoutStructureItem));
+			}
+
+			LayoutStructureItem newLayoutStructureItem =
+				LayoutStructureItemUtil.create(
+					layoutStructureItem.getItemType(), parentItemId);
+
+			String newItemId = itemIds.computeIfAbsent(
+				layoutStructureItem.getItemId(),
+				itemId -> _getReadableItemId(
+					layoutStructure, layoutStructureItem));
+
+			newLayoutStructureItem.setItemId(newItemId);
+
+			List<String> newChildrenItemIds = new ArrayList<>();
+
+			for (String childrenItemId :
+					layoutStructureItem.getChildrenItemIds()) {
+
+				LayoutStructureItem childrenLayoutStructureItem =
+					layoutStructure.getLayoutStructureItem(childrenItemId);
+
+				String newChildrenItemId = itemIds.computeIfAbsent(
+					childrenItemId,
+					itemId -> _getReadableItemId(
+						layoutStructure, childrenLayoutStructureItem));
+
+				newChildrenItemIds.add(newChildrenItemId);
+			}
+
+			newLayoutStructureItem.setChildrenItemIds(newChildrenItemIds);
+
+			newLayoutStructureItem.updateItemConfig(
+				layoutStructureItem.getItemConfigJSONObject());
+
+			newLayoutStructure.addLayoutStructureItem(newLayoutStructureItem);
+		}
+
+		String mainItemId = itemIds.computeIfAbsent(
+			layoutStructure.getMainItemId(),
+			itemId -> _getReadableItemId(
+				layoutStructure, layoutStructure.getMainLayoutStructureItem()));
+
+		newLayoutStructure.setMainItemId(mainItemId);
+
+		return newLayoutStructure;
+	}
+
 	private String _getLayoutTemplateId(Layout layout) {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
 		return layoutTypePortlet.getLayoutTemplateId();
+	}
+
+	private String _getReadableItemId(
+		LayoutStructure layoutStructure,
+		LayoutStructureItem layoutStructureItem) {
+
+		String parentItemId = layoutStructureItem.getParentItemId();
+
+		if (Validator.isNull(parentItemId)) {
+			return StringUtil.toUpperCase(layoutStructureItem.getItemType());
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		LayoutStructureItem parentLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(parentItemId);
+
+		String uuid = _getReadableItemId(
+			layoutStructure, parentLayoutStructureItem);
+
+		sb.append(uuid);
+
+		sb.append(StringPool.DASH);
+		sb.append(StringUtil.toUpperCase(layoutStructureItem.getItemType()));
+
+		List<String> childrenItemIds =
+			parentLayoutStructureItem.getChildrenItemIds();
+
+		int position = childrenItemIds.indexOf(layoutStructureItem.getItemId());
+
+		sb.append(position);
+
+		return sb.toString();
 	}
 
 	private String _read(String fileName) throws Exception {

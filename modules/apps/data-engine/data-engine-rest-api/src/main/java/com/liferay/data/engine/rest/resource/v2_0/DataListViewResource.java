@@ -25,6 +25,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -50,12 +51,22 @@ public interface DataListViewResource {
 			Long dataDefinitionId, DataListView dataListView)
 		throws Exception;
 
+	public Response postDataDefinitionDataListViewBatch(
+			Long dataDefinitionId, String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteDataListView(Long dataListViewId) throws Exception;
+
+	public Response deleteDataListViewBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public DataListView getDataListView(Long dataListViewId) throws Exception;
 
 	public DataListView putDataListView(
 			Long dataListViewId, DataListView dataListView)
+		throws Exception;
+
+	public Response putDataListViewBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

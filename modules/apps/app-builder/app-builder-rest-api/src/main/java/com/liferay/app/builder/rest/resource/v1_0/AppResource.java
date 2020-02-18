@@ -45,9 +45,15 @@ public interface AppResource {
 
 	public void deleteApp(Long appId) throws Exception;
 
+	public Response deleteAppBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public App getApp(Long appId) throws Exception;
 
 	public App putApp(Long appId, App app) throws Exception;
+
+	public Response putAppBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public Response putAppDeployment(
 			Long appId, DeploymentAction deploymentAction)

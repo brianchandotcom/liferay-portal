@@ -27,6 +27,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -46,6 +47,10 @@ public interface KnowledgeBaseArticleResource {
 	public void deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
 		throws Exception;
 
+	public Response deleteKnowledgeBaseArticleBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(
 			Long knowledgeBaseArticleId)
 		throws Exception;
@@ -58,6 +63,10 @@ public interface KnowledgeBaseArticleResource {
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
 			Long knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception;
+
+	public Response putKnowledgeBaseArticleBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
@@ -103,6 +112,10 @@ public interface KnowledgeBaseArticleResource {
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception;
 
+	public Response postKnowledgeBaseFolderKnowledgeBaseArticleBatch(
+			Long knowledgeBaseFolderId, String callbackURL, Object object)
+		throws Exception;
+
 	public Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -110,6 +123,10 @@ public interface KnowledgeBaseArticleResource {
 
 	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
 			Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception;
+
+	public Response postSiteKnowledgeBaseArticleBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public void putSiteKnowledgeBaseArticleSubscribe(Long siteId)

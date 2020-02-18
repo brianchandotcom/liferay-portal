@@ -27,6 +27,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -46,6 +47,10 @@ public interface MessageBoardMessageResource {
 	public void deleteMessageBoardMessage(Long messageBoardMessageId)
 		throws Exception;
 
+	public Response deleteMessageBoardMessageBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public MessageBoardMessage getMessageBoardMessage(
 			Long messageBoardMessageId)
 		throws Exception;
@@ -56,6 +61,10 @@ public interface MessageBoardMessageResource {
 
 	public MessageBoardMessage putMessageBoardMessage(
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+		throws Exception;
+
+	public Response putMessageBoardMessageBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)
@@ -98,6 +107,10 @@ public interface MessageBoardMessageResource {
 
 	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
 			Long messageBoardThreadId, MessageBoardMessage messageBoardMessage)
+		throws Exception;
+
+	public Response postMessageBoardThreadMessageBoardMessageBatch(
+			Long messageBoardThreadId, String callbackURL, Object object)
 		throws Exception;
 
 	public Page<MessageBoardMessage> getSiteMessageBoardMessagesPage(

@@ -26,6 +26,8 @@ data.put("maxPages", PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES);
 %>
 
 <div>
+	<span aria-hidden="true" class="loading-animation"></span>
+
 	<react:component
 		data="<%= data %>"
 		module="js/index.es"

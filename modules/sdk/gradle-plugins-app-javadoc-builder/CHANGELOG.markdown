@@ -1,56 +1,9 @@
 # Liferay Gradle Plugins App Javadoc Builder Change Log
 
-## 1.0.1 - 2016-08-10
+## 1.2.2 - 2018-11-19
 
-### Commits
-- [LRDOCS-2841]: Avoid crashing if subproject "javadoc" is not a Javadoc task
-(5416a3c23b)
-
-## 1.0.2 - 2016-10-04
-
-### Commits
-- [LPS-67573]: Export package (1aeb1dc458)
-- [LPS-67573]: Make methods private to reduce API surface (7135ed85f2)
-- [LPS-68506]: Add logging (8844dcef1f)
-- [LPS-68506]: Add option to exclude subprojects from "appJavadoc" (5aa709a656)
-- [LPS-68231]: Test plugins with Gradle 3.1 (49ec4cdbd8)
-- [LPS-67658]: Convert gradle-plugins-app-javadoc-builder sample into a smoke
-test (864be6a959)
-- [LPS-67658]: Configure GradleTest in gradle-plugins-app-javadoc-builder
-(9593e1f8ae)
-- [LPS-67658]: Need "compileOnly" to keep dependencies out of "compile"
-(4a3cd0bc9d)
-- [LPS-67658]: These plugins must work with Gradle 2.5+ (5b963e363d)
-- [LPS-66709]: Edit README (cd7c0f0446)
-- [LPS-66709]: README for gradle-plugins-app-javadoc-builder (5c68bff8ea)
-
-## 1.1.0 - 2016-10-04
-
-### Commits
-- [LPS-68506]: Update README (7506287284)
-
-### Description
-- [LPS-68506]: Add the ability to exclude subprojects from the API documentation
-by using the `appJavadocBuilder.onlyIf` property.
-- [LPS-67573]: Make most methods private in order to reduce API surface.
-
-## 1.1.1 - 2016-10-12
-
-### Commits
-- [LPS-68666]: Allow to define which subprojects to include in "appJavadoc"
-(ecf12dcbab)
-- [LPS-68506]: Reduce choppiness in README method description (071fecd122)
-- [LPS-68506]: Edit README method descriptions to follow closely with Liferay's
-Javadoc guidelines (499ffd66fc)
-
-## 1.2.0 - 2016-10-12
-
-### Commits
-- [LPS-68666]: Update readmes (9bc6b579c1)
-
-### Description
-- [LPS-68666]: Add the ability to define which subprojects to include in the API
-documentation of the app by using the `appJavadocBuilder.subprojects` property.
+### Dependencies
+- [LPS-87466]: Update the com.liferay.gradle.util dependency to version 1.0.33.
 
 ## 1.2.1 - 2018-11-16
 
@@ -88,7 +41,54 @@ performance (8dd499456b)
 - [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.28.
 - [LPS-72914]: Update the com.liferay.gradle.util dependency to version 1.0.27.
 
-## 1.2.2 - 2018-11-19
+## 1.2.0 - 2016-10-12
 
-### Dependencies
-- [LPS-87466]: Update the com.liferay.gradle.util dependency to version 1.0.33.
+### Commits
+- [LPS-68666]: Update readmes (9bc6b579c1)
+
+### Description
+- [LPS-68666]: Add the ability to define which subprojects to include in the API
+documentation of the app by using the `appJavadocBuilder.subprojects` property.
+
+## 1.1.1 - 2016-10-12
+
+### Commits
+- [LPS-68666]: Allow to define which subprojects to include in "appJavadoc"
+(ecf12dcbab)
+- [LPS-68506]: Reduce choppiness in README method description (071fecd122)
+- [LPS-68506]: Edit README method descriptions to follow closely with Liferay's
+Javadoc guidelines (499ffd66fc)
+
+## 1.1.0 - 2016-10-04
+
+### Commits
+- [LPS-68506]: Update README (7506287284)
+
+### Description
+- [LPS-68506]: Add the ability to exclude subprojects from the API documentation
+by using the `appJavadocBuilder.onlyIf` property.
+- [LPS-67573]: Make most methods private in order to reduce API surface.
+
+## 1.0.2 - 2016-10-04
+
+### Commits
+- [LPS-67573]: Export package (1aeb1dc458)
+- [LPS-67573]: Make methods private to reduce API surface (7135ed85f2)
+- [LPS-68506]: Add logging (8844dcef1f)
+- [LPS-68506]: Add option to exclude subprojects from "appJavadoc" (5aa709a656)
+- [LPS-68231]: Test plugins with Gradle 3.1 (49ec4cdbd8)
+- [LPS-67658]: Convert gradle-plugins-app-javadoc-builder sample into a smoke
+test (864be6a959)
+- [LPS-67658]: Configure GradleTest in gradle-plugins-app-javadoc-builder
+(9593e1f8ae)
+- [LPS-67658]: Need "compileOnly" to keep dependencies out of "compile"
+(4a3cd0bc9d)
+- [LPS-67658]: These plugins must work with Gradle 2.5+ (5b963e363d)
+- [LPS-66709]: Edit README (cd7c0f0446)
+- [LPS-66709]: README for gradle-plugins-app-javadoc-builder (5c68bff8ea)
+
+## 1.0.1 - 2016-08-10
+
+### Commits
+- [LRDOCS-2841]: Avoid crashing if subproject "javadoc" is not a Javadoc task
+(5416a3c23b)

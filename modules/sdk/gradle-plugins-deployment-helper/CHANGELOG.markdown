@@ -1,29 +1,9 @@
 # Liferay Gradle Plugins Deployment Helper Change Log
 
-## 1.0.1 - 2015-11-14
-
-### Commits
-- [LPS-57123]: Update Gradle plugin up-to-date check (79756db97c)
-- [LPS-59564]: Update directory layout for "sdk" modules (ea19635556)
-
-## 1.0.3 - 2016-06-16
-
-### Commits
-- [LPS-64816]: Update Gradle plugin samples (3331002e5d)
-- [LPS-65612]: Update sample (9e1045c7e2)
-- [LPS-65612]: Make deployment path optional (e9d985894b)
-- [LPS-65612]: Reuse configuration variable and simplify (6ff097c337)
-- [LPS-65612]: Add task group (0d137a87d7)
-- [LPS-65612]: Use Gradle method (43fc05f36a)
-- [LPS-65612]: Fix CLI arguments (14540c95b6)
-- [LPS-61099]: Delete build.xml in modules (c9a7e1d370)
-- [LPS-61848]: An empty settings.gradle is enough (2e5eb90e23)
-- [LPS-61088]: Remove classes and resources dir from Include-Resource
-(1b0e1275bc)
+## 1.0.5 - 2018-11-19
 
 ### Dependencies
-- [LPS-65749]: Update the com.liferay.gradle.util dependency to version 1.0.26.
-- [LPS-65086]: Update the com.liferay.gradle.util dependency to version 1.0.25.
+- [LPS-87466]: Update the com.liferay.gradle.util dependency to version 1.0.33.
 
 ## 1.0.4 - 2018-11-16
 
@@ -73,7 +53,27 @@
 - [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.28.
 - [LPS-72914]: Update the com.liferay.gradle.util dependency to version 1.0.27.
 
-## 1.0.5 - 2018-11-19
+## 1.0.3 - 2016-06-16
+
+### Commits
+- [LPS-64816]: Update Gradle plugin samples (3331002e5d)
+- [LPS-65612]: Update sample (9e1045c7e2)
+- [LPS-65612]: Make deployment path optional (e9d985894b)
+- [LPS-65612]: Reuse configuration variable and simplify (6ff097c337)
+- [LPS-65612]: Add task group (0d137a87d7)
+- [LPS-65612]: Use Gradle method (43fc05f36a)
+- [LPS-65612]: Fix CLI arguments (14540c95b6)
+- [LPS-61099]: Delete build.xml in modules (c9a7e1d370)
+- [LPS-61848]: An empty settings.gradle is enough (2e5eb90e23)
+- [LPS-61088]: Remove classes and resources dir from Include-Resource
+(1b0e1275bc)
 
 ### Dependencies
-- [LPS-87466]: Update the com.liferay.gradle.util dependency to version 1.0.33.
+- [LPS-65749]: Update the com.liferay.gradle.util dependency to version 1.0.26.
+- [LPS-65086]: Update the com.liferay.gradle.util dependency to version 1.0.25.
+
+## 1.0.1 - 2015-11-14
+
+### Commits
+- [LPS-57123]: Update Gradle plugin up-to-date check (79756db97c)
+- [LPS-59564]: Update directory layout for "sdk" modules (ea19635556)

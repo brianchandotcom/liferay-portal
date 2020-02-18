@@ -1,23 +1,9 @@
 # Liferay Gradle Plugins Dependency Checker Change Log
 
-## 1.0.1 - 2017-11-15
-
-### Commits
-- [LPS-75910]: Encode double quotes in Maven Central query URL (8c99d1f0b8)
-- [LPS-66709]: Update supported Gradle versions in READMEs (06e315582b)
-- [LPS-70113]: Update usage (d96945b566)
-- [LPS-70113]: No need to use impl inside internal - sdk (b5d6722a8d)
-- [LPS-70060]: Test plugins with Gradle 3.3 (09bed59a42)
-- [LPS-69847]: Fix Gradle test (f71207cfca)
-- [LPS-69847]: Edit README (e77170db79)
+## 1.0.3 - 2018-11-19
 
 ### Dependencies
-- [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.29.
-- [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.28.
-- [LPS-72914]: Update the com.liferay.gradle.util dependency to version 1.0.27.
-
-### Description
-- [LPS-75910]: Fix Maven Central query URL.
+- [LPS-87466]: Update the com.liferay.gradle.util dependency to version 1.0.33.
 
 ## 1.0.2 - 2018-11-16
 
@@ -47,7 +33,21 @@
 - [LPS-77425]: Update the com.liferay.gradle.util dependency to version 1.0.29.
 - [LPS-77425]: Update the expiringmap dependency to version 0.5.7.
 
-## 1.0.3 - 2018-11-19
+## 1.0.1 - 2017-11-15
+
+### Commits
+- [LPS-75910]: Encode double quotes in Maven Central query URL (8c99d1f0b8)
+- [LPS-66709]: Update supported Gradle versions in READMEs (06e315582b)
+- [LPS-70113]: Update usage (d96945b566)
+- [LPS-70113]: No need to use impl inside internal - sdk (b5d6722a8d)
+- [LPS-70060]: Test plugins with Gradle 3.3 (09bed59a42)
+- [LPS-69847]: Fix Gradle test (f71207cfca)
+- [LPS-69847]: Edit README (e77170db79)
 
 ### Dependencies
-- [LPS-87466]: Update the com.liferay.gradle.util dependency to version 1.0.33.
+- [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.29.
+- [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.28.
+- [LPS-72914]: Update the com.liferay.gradle.util dependency to version 1.0.27.
+
+### Description
+- [LPS-75910]: Fix Maven Central query URL.

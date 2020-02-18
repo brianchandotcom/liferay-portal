@@ -1142,15 +1142,19 @@ public class LayoutConverterTest {
 
 		JSONObject layoutDataJSONObject = layoutData.getLayoutDataJSONObject();
 
+		LayoutStructure actualLayoutStructure = LayoutStructure.of(
+			layoutDataJSONObject.toString());
+
+		actualLayoutStructure = _convertToReadableItemIds(
+			actualLayoutStructure);
+
 		String expectedLayoutData = _read(
 			String.format("expected_layout_data_%s.json", layoutTemplateId));
 
-		JSONObject expectedLayoutDataJSONObject =
-			JSONFactoryUtil.createJSONObject(expectedLayoutData);
+		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
+			expectedLayoutData);
 
-		Assert.assertEquals(
-			expectedLayoutDataJSONObject.toJSONString(),
-			layoutDataJSONObject.toJSONString());
+		Assert.assertEquals(expectedLayoutStructure, actualLayoutStructure);
 	}
 
 	private void _testConvertOneTwoColumnsMultiplePortlets(

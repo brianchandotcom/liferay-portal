@@ -62,26 +62,28 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 
 					<liferay-ui:icon
 						label="<%= true %>"
-						linkCssClass="btn btn-primary btn-sm mb-3"
+						linkCssClass="btn btn-secondary btn-sm"
 						markupView="lexicon"
 						message="start-free-trial"
 						target="_blank"
 						url="<%= SegmentsExperimentUtil.ANALYTICS_CLOUD_TRIAL_URL %>"
 					/>
+
+					<portlet:actionURL name="/segments_experiment/hide_panel" var="hideSegmentsExperimentPanelURL">
+						<portlet:param name="redirect" value="<%= themeDisplay.getLayoutFriendlyURL(layout) %>" />
+					</portlet:actionURL>
+
+					<liferay-ui:icon
+						label="<%= true %>"
+						linkCssClass="d-block font-weight-bold mb-3 mt-5"
+						markupView="lexicon"
+						message="dont-show-me-this-again"
+						url="<%= hideSegmentsExperimentPanelURL %>"
+					/>
+
+					<p class="text-secondary"><liferay-ui:message key="dont-show-me-this-again-help" /></p>
 				</c:otherwise>
 			</c:choose>
-
-			<portlet:actionURL name="/segments_experiment/hide_panel" var="hideSegmentsExperimentPanelURL">
-				<portlet:param name="redirect" value="<%= themeDisplay.getLayoutFriendlyURL(layout) %>" />
-			</portlet:actionURL>
-
-			<liferay-ui:icon
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm mb-4"
-				markupView="lexicon"
-				message="hide-ab-test-panel"
-				url="<%= hideSegmentsExperimentPanelURL %>"
-			/>
 		</div>
 	</c:otherwise>
 </c:choose>

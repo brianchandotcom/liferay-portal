@@ -55,7 +55,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		Class<? extends BaseSpiraArtifact> baseSpiraArtifactClass,
 		SearchParameter[] searchParameters) {
 
-		List<SearchParameter[]> previousSearchParameters =
+		List<List<SearchParameter>> previousSearchParameters =
 			previousSearchParametersMap.get(baseSpiraArtifactClass);
 
 		if (previousSearchParameters == null) {
@@ -66,25 +66,29 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 				baseSpiraArtifactClass, previousSearchParameters);
 		}
 
-		previousSearchParameters.add(searchParameters);
+		previousSearchParameters.add(Arrays.asList(searchParameters));
 	}
 
 	protected static boolean isPreviousSearch(
 		Class<? extends BaseSpiraArtifact> baseSpiraArtifactClass,
 		SearchParameter... searchParameters) {
 
-		for (SearchParameter[] previousSearchParameters :
-				previousSearchParametersMap.get(baseSpiraArtifactClass)) {
+		List<List<SearchParameter>> previousSearchParametersList =
+			previousSearchParametersMap.get(baseSpiraArtifactClass);
 
-			if (previousSearchParameters.length != searchParameters.length) {
+		if (previousSearchParametersList == null) {
+			return false;
+		}
+
+		for (List<SearchParameter> previousSearchParameters :
+				previousSearchParametersList) {
+
+			if (previousSearchParameters.size() != searchParameters.length) {
 				continue;
 			}
 
-			List<SearchParameter> previousSearchParametersList = Arrays.asList(
-				previousSearchParameters);
-
 			for (SearchParameter searchParameter : searchParameters) {
-				if (!previousSearchParametersList.contains(searchParameter)) {
+				if (!previousSearchParameters.contains(searchParameter)) {
 					break;
 				}
 			}
@@ -115,7 +119,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	}
 
 	protected static final Map
-		<Class<? extends BaseSpiraArtifact>, List<SearchParameter[]>>
+		<Class<? extends BaseSpiraArtifact>, List<List<SearchParameter>>>
 			previousSearchParametersMap = Collections.synchronizedMap(
 				new HashMap<>());
 

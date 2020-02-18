@@ -16,7 +16,6 @@ package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.depot.web.internal.item.selector.criteria.depot.group.criterion.DepotGroupItemSelectorCriterion;
-import com.liferay.depot.web.internal.item.selector.util.ItemSelectorUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
@@ -57,12 +56,15 @@ import javax.portlet.PortletURL;
 public class DepotAdminMembershipsDisplayContext {
 
 	public DepotAdminMembershipsDisplayContext(
+			ItemSelector itemSelector,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
+		_itemSelector = itemSelector;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 		_user = PortalUtil.getSelectedUser(liferayPortletRequest);
@@ -87,15 +89,13 @@ public class DepotAdminMembershipsDisplayContext {
 	}
 
 	public PortletURL getItemSelectorURL() {
-		ItemSelector itemSelector = ItemSelectorUtil.getItemSelector();
-
 		ItemSelectorCriterion itemSelectorCriterion =
 			new DepotGroupItemSelectorCriterion();
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new GroupItemSelectorReturnType());
 
-		return itemSelector.getItemSelectorURL(
+		return _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
 			getItemSelectorEventName(), itemSelectorCriterion);
 	}
@@ -176,6 +176,7 @@ public class DepotAdminMembershipsDisplayContext {
 	}
 
 	private List<Group> _depotGroups;
+	private final ItemSelector _itemSelector;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;

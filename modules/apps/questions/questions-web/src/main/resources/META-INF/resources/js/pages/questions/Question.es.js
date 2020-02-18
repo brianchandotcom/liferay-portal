@@ -161,13 +161,17 @@ export default ({
 											/>
 										</ClayButton>
 
-										<ClayButton className="btn btn-secondary">
-											<Link
-												to={`/questions/${questionId}/edit`}
-											>
-												{Liferay.Language.get('edit')}
-											</Link>
-										</ClayButton>
+										{question.actions.replace && (
+											<ClayButton className="btn btn-secondary">
+												<Link
+													to={`/questions/${questionId}/edit`}
+												>
+													{Liferay.Language.get(
+														'edit'
+													)}
+												</Link>
+											</ClayButton>
+										)}
 									</ClayButton.Group>
 								</div>
 							</div>

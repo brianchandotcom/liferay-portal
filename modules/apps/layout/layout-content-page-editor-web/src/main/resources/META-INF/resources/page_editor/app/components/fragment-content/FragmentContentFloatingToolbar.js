@@ -44,7 +44,11 @@ export default function FragmentContentFloatingToolbar({
 	);
 
 	const editableType = useMemo(
-		() => (editableElement ? editableElement.getAttribute('type') : null),
+		() =>
+			editableElement
+				? editableElement.getAttribute('type') ||
+				  EDITABLE_TYPES.backgroundImage
+				: null,
 		[editableElement]
 	);
 
@@ -84,7 +88,8 @@ export default function FragmentContentFloatingToolbar({
 		}
 
 		if (
-			editableType === EDITABLE_TYPES.image &&
+			(editableType === EDITABLE_TYPES.image ||
+				editableType === EDITABLE_TYPES.backgroundImage) &&
 			!editableValue.mappedField &&
 			!editableValue.fieldId
 		) {

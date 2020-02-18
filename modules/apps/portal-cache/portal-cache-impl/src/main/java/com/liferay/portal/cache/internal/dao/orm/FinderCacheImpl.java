@@ -218,8 +218,36 @@ public class FinderCacheImpl
 			return;
 		}
 
-		Serializable primaryKey = _resultToPrimaryKey(
-			args, (Serializable)result);
+		Serializable primaryKey = (Serializable)result;
+
+		if (result instanceof BaseModel<?>) {
+			BaseModel<?> model = (BaseModel<?>)result;
+
+			primaryKey = model.getPrimaryKeyObj();
+		}
+		else if (result instanceof List<?>) {
+			List<BaseModel<?>> baseModels = (List<BaseModel<?>>)result;
+
+			if (baseModels.isEmpty()) {
+				primaryKey = new EmptyResult(args);
+			}
+			else if ((baseModels.size() >
+						_valueObjectFinderCacheListThreshold) &&
+					 (_valueObjectFinderCacheListThreshold > 0)) {
+
+				primaryKey = null;
+			}
+			else {
+				ArrayList<Serializable> primaryKeys = new ArrayList<>(
+					baseModels.size());
+
+				for (BaseModel<?> baseModel : baseModels) {
+					primaryKeys.add(baseModel.getPrimaryKeyObj());
+				}
+
+				primaryKey = primaryKeys;
+			}
+		}
 
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
 			finderPath.getCacheName());
@@ -371,43 +399,6 @@ public class FinderCacheImpl
 		}
 
 		return ThreadLocalFilterThreadLocal.isFilterInvoked();
-	}
-
-	private Serializable _resultToPrimaryKey(
-		Object[] args, Serializable result) {
-
-		Serializable primaryKey = result;
-
-		if (result instanceof BaseModel<?>) {
-			BaseModel<?> model = (BaseModel<?>)result;
-
-			primaryKey = model.getPrimaryKeyObj();
-		}
-		else if (result instanceof List<?>) {
-			List<BaseModel<?>> baseModels = (List<BaseModel<?>>)result;
-
-			if (baseModels.isEmpty()) {
-				primaryKey = new EmptyResult(args);
-			}
-			else if ((baseModels.size() >
-						_valueObjectFinderCacheListThreshold) &&
-					 (_valueObjectFinderCacheListThreshold > 0)) {
-
-				primaryKey = null;
-			}
-			else {
-				ArrayList<Serializable> primaryKeys = new ArrayList<>(
-					baseModels.size());
-
-				for (BaseModel<?> baseModel : baseModels) {
-					primaryKeys.add(baseModel.getPrimaryKeyObj());
-				}
-
-				primaryKey = primaryKeys;
-			}
-		}
-
-		return primaryKey;
 	}
 
 	private static final String _GROUP_KEY_PREFIX =

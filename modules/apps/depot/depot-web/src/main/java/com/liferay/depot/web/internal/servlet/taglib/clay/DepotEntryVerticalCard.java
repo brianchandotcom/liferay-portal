@@ -51,10 +51,11 @@ public class DepotEntryVerticalCard
 		super(depotEntry, rowChecker);
 
 		_depotEntry = depotEntry;
-		_group = depotEntry.getGroup();
 		_groupURLProvider = groupURLProvider;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_group = depotEntry.getGroup();
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

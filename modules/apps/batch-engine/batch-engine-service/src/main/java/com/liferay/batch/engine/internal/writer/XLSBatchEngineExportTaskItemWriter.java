@@ -47,9 +47,10 @@ public class XLSBatchEngineExportTaskItemWriter
 			throw new IllegalArgumentException("Field names are not set");
 		}
 
+		_outputStream = outputStream;
+
 		_columnValuesExtractor = new ColumnValuesExtractor(
 			fieldMap, fieldNames);
-		_outputStream = outputStream;
 
 		_workbook = new XSSFWorkbook();
 

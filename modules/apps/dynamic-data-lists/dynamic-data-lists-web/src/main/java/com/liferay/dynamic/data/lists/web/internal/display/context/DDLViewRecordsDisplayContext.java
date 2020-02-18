@@ -87,6 +87,7 @@ public class DDLViewRecordsDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_formDDMTemplateId = formDDMTemplateId;
 
 		_ddlRecordSet = (DDLRecordSet)_liferayPortletRequest.getAttribute(
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
@@ -95,8 +96,6 @@ public class DDLViewRecordsDisplayContext {
 			PortalUtil.getHttpServletRequest(liferayPortletRequest));
 
 		_ddmStructure = _ddlRecordSet.getDDMStructure(formDDMTemplateId);
-
-		_formDDMTemplateId = formDDMTemplateId;
 
 		User user = PortalUtil.getUser(liferayPortletRequest);
 

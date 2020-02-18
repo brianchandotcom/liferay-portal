@@ -44,9 +44,10 @@ public class OptionsDDMFormFieldContextHelper {
 	public OptionsDDMFormFieldContextHelper(
 		JSONFactory jsonFactory, DDMFormField ddmFormField, String value) {
 
-		_ddmForm = ddmFormField.getDDMForm();
 		_jsonFactory = jsonFactory;
 		_value = value;
+
+		_ddmForm = ddmFormField.getDDMForm();
 	}
 
 	public Map<String, Object> getValue() {

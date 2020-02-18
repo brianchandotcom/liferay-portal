@@ -46,10 +46,11 @@ public abstract class BaseItemSelectorViewDisplayContext
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
-		this.httpServletRequest = httpServletRequest;
 		_assetPublisherHelper = assetPublisherHelper;
 		_groupItemSelectorCriterion = groupItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
+
+		this.httpServletRequest = httpServletRequest;
 		this.portletURL = portletURL;
 	}
 

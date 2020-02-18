@@ -144,8 +144,6 @@ public class DDMFormAdminDisplayContext {
 		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
 		NPMResolver npmResolver, Portal portal) {
 
-		this.renderRequest = renderRequest;
-		this.renderResponse = renderResponse;
 		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener =
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 		_ddmFormBuilderContextFactory = ddmFormBuilderContextFactory;
@@ -159,16 +157,19 @@ public class DDMFormAdminDisplayContext {
 		_ddmFormInstanceService = ddmFormInstanceService;
 		_ddmFormInstanceVersionLocalService =
 			ddmFormInstanceVersionLocalService;
-		this.ddmFormRenderer = ddmFormRenderer;
 		_ddmFormTemplateContextFactory = ddmFormTemplateContextFactory;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmFormWebConfiguration = ddmFormWebConfiguration;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmStructureService = ddmStructureService;
-		this.jsonFactory = jsonFactory;
 		_npmResolver = npmResolver;
 		_portal = portal;
+
+		this.renderRequest = renderRequest;
+		this.renderResponse = renderResponse;
+		this.ddmFormRenderer = ddmFormRenderer;
+		this.jsonFactory = jsonFactory;
 
 		formAdminRequestHelper = new DDMFormAdminRequestHelper(renderRequest);
 

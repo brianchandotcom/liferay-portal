@@ -19,11 +19,6 @@ package com.liferay.layout.admin.web.internal.constants;
  */
 public class LayoutAdminWebKeys {
 
-	public static final String LAYOUT_CONVERTER_REGISTRY =
-		"LAYOUT_CONVERTER_REGISTRY";
-
-	public static final String LAYOUT_COPY_HELPER = "LAYOUT_COPY_HELPER";
-
 	public static final String LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT =
 		"LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT";
 

@@ -16,6 +16,10 @@ package com.liferay.analytics.reports.web.internal.display.context;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -23,11 +27,15 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -131,6 +139,8 @@ public class AnalyticsReportsDisplayContext {
 						return layout.getPlid();
 					}
 				).build()
+			).put(
+				"timeSpans", _getTimeSpansJSONArray(_themeDisplay.getLocale())
 			).build()
 		).put(
 			"props", getProps()
@@ -190,6 +200,27 @@ public class AnalyticsReportsDisplayContext {
 		}
 
 		return layout.getPublishDate();
+	}
+
+	private JSONArray _getTimeSpansJSONArray(Locale locale) {
+		JSONArray segmentsExperimentRelsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		Stream<TimeSpan> stream = Arrays.stream(TimeSpan.values());
+
+		stream.forEach(
+			timeSpan -> segmentsExperimentRelsJSONArray.put(
+				JSONUtil.put(
+					"label",
+					LanguageUtil.get(resourceBundle, timeSpan.getLabel())
+				).put(
+					"value", timeSpan.getLabel()
+				)));
+
+		return segmentsExperimentRelsJSONArray;
 	}
 
 	private final AnalyticsReportsInfoItem _analyticsReportsInfoItem;

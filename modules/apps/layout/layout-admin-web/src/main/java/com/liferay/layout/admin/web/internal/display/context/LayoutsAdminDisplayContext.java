@@ -23,7 +23,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.admin.web.internal.configuration.LayoutEditorTypeConfiguration;
-import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
@@ -114,11 +113,17 @@ public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
 		LayoutConverterConfiguration layoutConverterConfiguration,
+		LayoutConverterRegistry layoutConverterRegistry,
+		LayoutCopyHelper layoutCopyHelper,
+		LayoutEditorTypeConfiguration layoutEditorTypeConfiguration,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		StagingGroupHelper stagingGroupHelper) {
 
 		_layoutConverterConfiguration = layoutConverterConfiguration;
+		_layoutConverterRegistry = layoutConverterRegistry;
+		_layoutCopyHelper = layoutCopyHelper;
+		_layoutEditorTypeConfiguration = layoutEditorTypeConfiguration;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_stagingGroupHelper = stagingGroupHelper;
@@ -129,15 +134,6 @@ public class LayoutsAdminDisplayContext {
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(
 			httpServletRequest);
 
-		_layoutCopyHelper =
-			(LayoutCopyHelper)_liferayPortletRequest.getAttribute(
-				LayoutAdminWebKeys.LAYOUT_COPY_HELPER);
-		_layoutConverterRegistry =
-			(LayoutConverterRegistry)_liferayPortletRequest.getAttribute(
-				LayoutAdminWebKeys.LAYOUT_CONVERTER_REGISTRY);
-		_layoutEditorTypeConfiguration =
-			(LayoutEditorTypeConfiguration)_liferayPortletRequest.getAttribute(
-				LayoutEditorTypeConfiguration.class.getName());
 		themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

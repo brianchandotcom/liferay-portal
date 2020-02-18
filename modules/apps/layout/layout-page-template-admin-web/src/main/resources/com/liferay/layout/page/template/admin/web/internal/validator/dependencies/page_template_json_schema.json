@@ -1,0 +1,18 @@
+{
+	"$id": "http://example.com/root.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"additionalProperties": false,
+	"definitions": {
+	},
+	"properties": {
+		"name": {
+			"title": "The name Schema",
+			"type": "string"
+		}
+	},
+	"required": [
+		"name"
+	],
+	"title": "The PageTemplate Schema",
+	"type": "object"
+}

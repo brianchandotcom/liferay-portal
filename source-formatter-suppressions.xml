@@ -31,6 +31,8 @@
 		<suppress checks="MapBuilderCheck" files="portal-kernel/src/com/liferay/portal/kernel/search/BaseIndexer\.java" />
 		<suppress checks="MapBuilderCheck" files="portal-kernel/src/com/liferay/ratings/kernel/display/context/GroupPortletRatingsDefinitionDisplayContext\.java" />
 		<suppress checks="MapBuilderCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/HashMapBuilderTest\.java" />
+		<suppress checks="MapBuilderCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/LinkedHashMapBuilderTest\.java" />
+		<suppress checks="MapBuilderCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/TreeMapBuilderTest\.java" />
 		<suppress checks="MemberNameCheck" files="portal-impl/src/com/liferay/portlet/trash/util/TrashImpl\.java" />
 		<suppress checks="MemberNameCheck" files="portal-impl/test/unit/com/liferay/portal/bean/ConstantsBeanFactoryImplTest\.java" />
 		<suppress checks="MemberNameCheck" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />

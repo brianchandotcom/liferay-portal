@@ -17,6 +17,7 @@ package com.liferay.saml.runtime.internal.servlet.filter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -25,11 +26,14 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.PrintWriter;
 
+import java.util.Map;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -41,7 +45,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	immediate = true,
 	property = {
-		"before-filter=Session Id Filter", "dispatcher=REQUEST",
+		"before-filter=Session Id Filter", "dispatcher=REQUEST", "enabled=true",
 		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
 		"servlet-context-name=",
 		"servlet-filter-name=SAML SameSite Lax Support Filter",
@@ -54,7 +58,7 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public boolean isFilterEnabled() {
-		return true;
+		return _enabled;
 	}
 
 	@Override
@@ -70,6 +74,11 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 		}
 
 		return true;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_enabled = MapUtil.getBoolean(properties, "enabled");
 	}
 
 	@Override
@@ -143,6 +152,8 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SamlSameSiteLaxCookiesFilter.class);
+
+	private boolean _enabled = true;
 
 	@Reference
 	private Portal _portal;

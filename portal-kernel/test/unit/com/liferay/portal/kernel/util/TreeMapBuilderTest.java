@@ -27,30 +27,11 @@ import org.junit.Test;
 /**
  * @author Hugo Huijser
  */
-public class HashMapBuilderTest {
-
-	@Test
-	public void testHashMapBuilder() {
-		Map<String, Integer> map1 = new HashMap<>();
-
-		map1.put("One", 1);
-		map1.put("Three", 3);
-		map1.put("Two", 2);
-
-		Map<String, Integer> map2 = HashMapBuilder.put(
-			"One", 1
-		).put(
-			"Three", 3
-		).put(
-			"Two", 2
-		).build();
-
-		Assert.assertEquals(map1, map2);
-	}
+public class TreeMapBuilderTest {
 
 	@Test
 	public void testNullValues() {
-		Map<String, Object> map = HashMapBuilder.<String, Object>put(
+		Map<String, Object> map = TreeMapBuilder.<String, Object>put(
 			"Hello", null
 		).build();
 
@@ -73,7 +54,7 @@ public class HashMapBuilderTest {
 
 		Assert.assertEquals(
 			map,
-			HashMapBuilder.putAll(
+			TreeMapBuilder.putAll(
 				map
 			).build());
 	}
@@ -86,7 +67,7 @@ public class HashMapBuilderTest {
 		map1.put("Three", 3);
 		map1.put("Two", 2);
 
-		HashMap<String, Integer> map2 = HashMapBuilder.put(
+		Map<String, Integer> map2 = TreeMapBuilder.put(
 			"Four", 4
 		).putAll(
 			map1
@@ -95,6 +76,25 @@ public class HashMapBuilderTest {
 		Assert.assertEquals(Integer.valueOf(4), map2.get("Four"));
 
 		_assertContainsAll(map1, map2);
+	}
+
+	@Test
+	public void testTreeMapBuilder() {
+		Map<String, Integer> map1 = new HashMap<>();
+
+		map1.put("One", 1);
+		map1.put("Three", 3);
+		map1.put("Two", 2);
+
+		Map<String, Integer> map2 = TreeMapBuilder.put(
+			"One", 1
+		).put(
+			"Three", 3
+		).put(
+			"Two", 2
+		).build();
+
+		Assert.assertEquals(map1, map2);
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class HashMapBuilderTest {
 			map1.put(s, StringUtil.trim(s.toLowerCase()));
 		}
 
-		HashMap<String, String> map2 = HashMapBuilder.put(
+		Map<String, String> map2 = TreeMapBuilder.put(
 			list, s -> StringUtil.trim(s.toLowerCase())
 		).build();
 
@@ -136,7 +136,7 @@ public class HashMapBuilderTest {
 
 		map1.put(s2, array2.length);
 
-		Map<String, Integer> map2 = HashMapBuilder.put(
+		Map<String, Integer> map2 = TreeMapBuilder.put(
 			s1,
 			() -> {
 				String[] array = StringUtil.split(s1, ' ');
@@ -170,7 +170,7 @@ public class HashMapBuilderTest {
 	private void _testUnsafeSupplierKey(
 		boolean allowVegatables, int expectedSize) {
 
-		Map<String, String> map = HashMapBuilder.put(
+		Map<String, String> map = TreeMapBuilder.put(
 			"Apple", "Fruit"
 		).put(
 			"Banana", "Fruit"
@@ -191,7 +191,7 @@ public class HashMapBuilderTest {
 	private void _testUnsafeSupplierValue(
 		boolean allowVegatables, int expectedSize) {
 
-		Map<String, String> map = HashMapBuilder.put(
+		Map<String, String> map = TreeMapBuilder.put(
 			"Apple", "Fruit"
 		).put(
 			"Banana", "Fruit"

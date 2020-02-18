@@ -25,6 +25,7 @@ import {
 	useEditableProcessorUniqueId,
 	useSetEditableProcessorUniqueId
 } from './EditableProcessorContext';
+import getAllEditables from './getAllEditables';
 import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 
@@ -46,7 +47,7 @@ export default function FragmentContentProcessor({
 	const editableElement = useMemo(
 		() =>
 			element
-				? Array.from(element.querySelectorAll('lfr-editable')).find(
+				? getAllEditables(element).find(
 						editableElement =>
 							getEditableUniqueId(
 								fragmentEntryLinkId,

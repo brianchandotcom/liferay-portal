@@ -29,6 +29,7 @@ import FragmentContentDecoration from './FragmentContentDecoration';
 import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
 import FragmentContentInteractionsFilter from './FragmentContentInteractionsFilter';
 import FragmentContentProcessor from './FragmentContentProcessor';
+import getAllEditables from './getAllEditables';
 import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 import resolveEditableValue from './resolveEditableValue';
@@ -42,11 +43,7 @@ const FragmentContent = React.forwardRef(
 		const [editableElements, setEditableElements] = useState([]);
 
 		const updateEditableElements = (parent = element) => {
-			setEditableElements(
-				parent
-					? Array.from(parent.querySelectorAll('lfr-editable'))
-					: []
-			);
+			setEditableElements(parent ? getAllEditables(parent) : []);
 		};
 
 		const languageId = useSelector(state => state.languageId);

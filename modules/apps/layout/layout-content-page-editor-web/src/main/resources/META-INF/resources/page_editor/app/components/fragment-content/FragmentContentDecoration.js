@@ -24,6 +24,7 @@ import {useSelector} from '../../store/index';
 import {useHoveredItemId, useHoveredItemType, useIsActive} from '../Controls';
 import {useEditableDecoration} from './EditableDecorationContext';
 import {EDITABLE_DECORATION_CLASS_NAMES} from './EditableDecorationMask';
+import getAllEditables from './getAllEditables';
 import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 
@@ -91,9 +92,7 @@ export default function FragmentContentDecoration({
 			() =>
 				[
 					itemId,
-					...Array.from(
-						element.querySelectorAll('lfr-editable')
-					).map(editableElement =>
+					...getAllEditables(element).map(editableElement =>
 						getEditableUniqueId(
 							fragmentEntryLinkId,
 							getEditableElementId(editableElement)

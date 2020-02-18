@@ -18,7 +18,6 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
-import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.petra.string.StringBundler;
@@ -111,7 +110,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		}
 	}
 
-	public BundleTracker<ConfigurationModelIterator> initialize() {
+	public BundleTracker<Collection<ConfigurationModel>> initialize() {
 		Map<String, Collection<ConfigurationModel>> configurationModelsMap =
 			new ConcurrentHashMap<>();
 
@@ -138,7 +137,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 		_commit();
 
-		BundleTracker<ConfigurationModelIterator> bundleTracker =
+		BundleTracker<Collection<ConfigurationModel>> bundleTracker =
 			new BundleTracker<>(
 				_bundleContext, Bundle.ACTIVE,
 				new ConfigurationModelsBundleTrackerCustomizer(
@@ -515,10 +514,10 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 	}
 
 	private class ConfigurationModelsBundleTrackerCustomizer
-		implements BundleTrackerCustomizer<ConfigurationModelIterator> {
+		implements BundleTrackerCustomizer<Collection<ConfigurationModel>> {
 
 		@Override
-		public ConfigurationModelIterator addingBundle(
+		public Collection<ConfigurationModel> addingBundle(
 			Bundle bundle, BundleEvent bundleEvent) {
 
 			Collection<ConfigurationModel> configurationModels =
@@ -529,7 +528,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 					return null;
 				}
 
-				return new ConfigurationModelIterator(configurationModels);
+				return configurationModels;
 			}
 
 			Map<String, ConfigurationModel> configurationModelsMap =
@@ -544,16 +543,15 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 			_commit();
 
-			return new ConfigurationModelIterator(
-				configurationModelsMap.values());
+			return configurationModelsMap.values();
 		}
 
 		@Override
 		public void modifiedBundle(
 			Bundle bundle, BundleEvent bundleEvent,
-			ConfigurationModelIterator configurationModelIterator) {
+			Collection<ConfigurationModel> configurationModels) {
 
-			removedBundle(bundle, bundleEvent, configurationModelIterator);
+			removedBundle(bundle, bundleEvent, configurationModels);
 
 			addingBundle(bundle, bundleEvent);
 		}
@@ -561,11 +559,9 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		@Override
 		public void removedBundle(
 			Bundle bundle, BundleEvent bundleEvent,
-			ConfigurationModelIterator configurationModelIterator) {
+			Collection<ConfigurationModel> configurationModels) {
 
-			for (ConfigurationModel configurationModel :
-					configurationModelIterator.getResults()) {
-
+			for (ConfigurationModel configurationModel : configurationModels) {
 				try {
 					delete(configurationModel);
 				}

@@ -14,7 +14,7 @@
 
 package com.liferay.configuration.admin.web.internal.search;
 
-import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
+import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+
+import java.util.Collection;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -142,7 +144,7 @@ public class ClusterConfigurationModelIndexer
 	private static final MethodKey _resetMethodKey = new MethodKey(
 		ClusterConfigurationModelIndexer.class, "_reset", String.class);
 
-	private BundleTracker<ConfigurationModelIterator> _bundleTracker;
+	private BundleTracker<Collection<ConfigurationModel>> _bundleTracker;
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;

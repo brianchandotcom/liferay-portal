@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
@@ -417,6 +420,20 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		if (userNotificationDelivery.getUserId() != userId) {
 			throw new PrincipalException();
+		}
+
+		UserNotificationDefinition userNotificationDefinition =
+			UserNotificationManagerUtil.fetchUserNotificationDefinition(
+				userNotificationDelivery.getPortletId(),
+				userNotificationDelivery.getClassNameId(),
+				userNotificationDelivery.getNotificationType());
+
+		UserNotificationDeliveryType userNotificationDeliveryType =
+			userNotificationDefinition.getUserNotificationDeliveryType(
+				userNotificationDelivery.getDeliveryType());
+
+		if (!userNotificationDeliveryType.isModifiable()) {
+			return;
 		}
 
 		_userNotificationDeliveryLocalService.updateUserNotificationDelivery(

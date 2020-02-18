@@ -110,7 +110,9 @@
 
 												UserNotificationDelivery userNotificationDelivery = UserNotificationDeliveryLocalServiceUtil.getUserNotificationDelivery(themeDisplay.getUserId(), entry.getKey(), userNotificationDefinition.getClassNameId(), userNotificationDefinition.getNotificationType(), userNotificationDeliveryType.getType(), userNotificationDeliveryType.isDefault());
 
-												userNotificationDeliveryIds.add(userNotificationDelivery.getUserNotificationDeliveryId());
+												if (userNotificationDeliveryType.isModifiable()) {
+													userNotificationDeliveryIds.add(userNotificationDelivery.getUserNotificationDeliveryId());
+												}
 											%>
 
 												<td class="lfr-<%= userNotificationDeliveryType.getName() %>-column">

@@ -95,14 +95,14 @@ public class AssetCategoryLocalServiceTest {
 				RandomTestUtil.randomString(), titleMap, null, null,
 				serviceContext);
 
-		String categoryName = RandomTestUtil.randomString();
+		String assetCategoryName = RandomTestUtil.randomString();
 
 		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), categoryName,
+			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
 			assetVocabulary.getVocabularyId(), serviceContext);
 
 		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), categoryName,
+			TestPropsValues.getUserId(), _group.getGroupId(), assetCategoryName,
 			assetVocabulary.getVocabularyId(), serviceContext);
 	}
 
@@ -146,16 +146,16 @@ public class AssetCategoryLocalServiceTest {
 		int nameMaxLength = ModelHintsUtil.getMaxLength(
 			AssetCategory.class.getName(), "name");
 
-		String categoryName = RandomTestUtil.randomString(nameMaxLength);
+		String assetCategoryName = RandomTestUtil.randomString(nameMaxLength);
 
 		_assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			categoryName + RandomTestUtil.randomString(10),
+			assetCategoryName + RandomTestUtil.randomString(10),
 			assetVocabulary.getVocabularyId(), serviceContext);
 
 		_assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			categoryName + RandomTestUtil.randomString(10),
+			assetCategoryName + RandomTestUtil.randomString(10),
 			assetVocabulary.getVocabularyId(), serviceContext);
 	}
 
@@ -178,14 +178,14 @@ public class AssetCategoryLocalServiceTest {
 		int nameMaxLength = ModelHintsUtil.getMaxLength(
 			AssetCategory.class.getName(), "name");
 
-		String categoryName = RandomTestUtil.randomString(nameMaxLength);
+		String assetCategoryName = RandomTestUtil.randomString(nameMaxLength);
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			categoryName + RandomTestUtil.randomString(10),
+			assetCategoryName + RandomTestUtil.randomString(10),
 			assetVocabulary.getVocabularyId(), serviceContext);
 
-		Assert.assertEquals(categoryName, assetCategory.getName());
+		Assert.assertEquals(assetCategoryName, assetCategory.getName());
 	}
 
 	@Test

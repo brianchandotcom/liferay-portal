@@ -132,7 +132,7 @@ public class ClusterConfigurationModelIndexer
 		clusterConfigurationModelIndexer._reset();
 	}
 
-	private synchronized void _reset() {
+	private void _reset() {
 		_initialized = false;
 	}
 

@@ -12,7 +12,6 @@
  * details.
  */
 
-import getAllEditables from './getAllEditables';
 import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 
@@ -22,12 +21,12 @@ import getEditableUniqueId from './getEditableUniqueId';
  * @param {function} isActive
  */
 export default function getActiveEditableElement(
-	fragmentElement,
+	editableElements,
 	fragmentEntryLinkId,
 	isActive
 ) {
-	return fragmentElement
-		? getAllEditables(fragmentElement).find(editableElement =>
+	return editableElements
+		? editableElements.find(editableElement =>
 				isActive(
 					getEditableUniqueId(
 						fragmentEntryLinkId,

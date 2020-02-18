@@ -58,7 +58,8 @@ public class FragmentLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	public JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put("fragmentEntryLinkId", _fragmentEntryLinkId);
+		return JSONUtil.put(
+			"fragmentEntryLinkId", String.valueOf(_fragmentEntryLinkId));
 	}
 
 	@Override

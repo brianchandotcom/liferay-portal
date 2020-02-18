@@ -189,6 +189,10 @@ public class AssetCategoryPropertyLocalServiceImpl
 	}
 
 	protected void validate(String key, String value) throws PortalException {
+		if (!_assetHelper.isValidWord(key)) {
+			throw new CategoryPropertyKeyException("Invalid key " + key);
+		}
+
 		int keyMaxLength = ModelHintsUtil.getMaxLength(
 			AssetCategoryProperty.class.getName(), "key");
 
@@ -197,20 +201,16 @@ public class AssetCategoryPropertyLocalServiceImpl
 				"Maximum length of key exceeded");
 		}
 
+		if (!_assetHelper.isValidWord(value)) {
+			throw new CategoryPropertyValueException("Invalid value " + value);
+		}
+
 		int valueMaxLength = ModelHintsUtil.getMaxLength(
 			AssetCategoryProperty.class.getName(), "value");
 
 		if (value.length() > valueMaxLength) {
 			throw new CategoryPropertyValueException(
 				"Maximum length of value exceeded");
-		}
-
-		if (!_assetHelper.isValidWord(key)) {
-			throw new CategoryPropertyKeyException("Invalid key " + key);
-		}
-
-		if (!_assetHelper.isValidWord(value)) {
-			throw new CategoryPropertyValueException("Invalid value " + value);
 		}
 	}
 

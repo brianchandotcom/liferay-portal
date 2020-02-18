@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -188,40 +189,33 @@ public class BasicFragmentManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData("action", "addFragmentEntry");
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.putData("action", "addFragmentEntry");
 
-						PortletURL addFragmentEntryURL =
-							liferayPortletResponse.createActionURL();
+				PortletURL addFragmentEntryURL =
+					liferayPortletResponse.createActionURL();
 
-						addFragmentEntryURL.setParameter(
-							ActionRequest.ACTION_NAME,
-							"/fragment/add_fragment_entry");
-						addFragmentEntryURL.setParameter(
-							"fragmentCollectionId",
-							String.valueOf(
-								fragmentDisplayContext.
-									getFragmentCollectionId()));
-						addFragmentEntryURL.setParameter(
-							"type",
-							String.valueOf(FragmentConstants.TYPE_COMPONENT));
+				addFragmentEntryURL.setParameter(
+					ActionRequest.ACTION_NAME, "/fragment/add_fragment_entry");
+				addFragmentEntryURL.setParameter(
+					"fragmentCollectionId",
+					String.valueOf(
+						fragmentDisplayContext.getFragmentCollectionId()));
+				addFragmentEntryURL.setParameter(
+					"type", String.valueOf(FragmentConstants.TYPE_COMPONENT));
 
-						dropdownItem.putData(
-							"addFragmentEntryURL",
-							addFragmentEntryURL.toString());
+				dropdownItem.putData(
+					"addFragmentEntryURL", addFragmentEntryURL.toString());
 
-						dropdownItem.putData(
-							"title",
-							LanguageUtil.format(
-								request, "add-x",
-								FragmentConstants.TYPE_COMPONENT_LABEL, true));
-						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
-					});
+				dropdownItem.putData(
+					"title",
+					LanguageUtil.format(
+						request, "add-x",
+						FragmentConstants.TYPE_COMPONENT_LABEL, true));
+				dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 			}
-		};
+		).build();
 	}
 
 	@Override

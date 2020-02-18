@@ -16,6 +16,7 @@ package com.liferay.expando.web.internal.display.context;
 
 import com.liferay.expando.constants.ExpandoPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -72,33 +73,28 @@ public class ExpandoDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
-		return new CreationMenu() {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						PortletResponse portletResponse =
-							(PortletResponse)_httpServletRequest.getAttribute(
-								JavaConstants.JAVAX_PORTLET_RESPONSE);
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				PortletResponse portletResponse =
+					(PortletResponse)_httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-						LiferayPortletResponse liferayPortletResponse =
-							PortalUtil.getLiferayPortletResponse(
-								portletResponse);
+				LiferayPortletResponse liferayPortletResponse =
+					PortalUtil.getLiferayPortletResponse(portletResponse);
 
-						String modelResource = ParamUtil.getString(
-							_httpServletRequest, "modelResource");
+				String modelResource = ParamUtil.getString(
+					_httpServletRequest, "modelResource");
 
-						dropdownItem.setHref(
-							liferayPortletResponse.createRenderURL(), "mvcPath",
-							"/edit/select_field_type.jsp", "redirect",
-							PortalUtil.getCurrentURL(_httpServletRequest),
-							"modelResource", modelResource);
+				dropdownItem.setHref(
+					liferayPortletResponse.createRenderURL(), "mvcPath",
+					"/edit/select_field_type.jsp", "redirect",
+					PortalUtil.getCurrentURL(_httpServletRequest),
+					"modelResource", modelResource);
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "add-custom-field"));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "add-custom-field"));
 			}
-		};
+		).build();
 	}
 
 	public List<NavigationItem> getNavigationItems(final String label) {

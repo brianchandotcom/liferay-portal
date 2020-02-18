@@ -40,6 +40,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -176,22 +177,17 @@ public class DDLDisplayContext {
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_record_set.jsp", "redirect",
-							PortalUtil.getCurrentURL(
-								_ddlRequestHelper.getRequest()));
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcPath",
+					"/edit_record_set.jsp", "redirect",
+					PortalUtil.getCurrentURL(_ddlRequestHelper.getRequest()));
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_ddlRequestHelper.getRequest(), "add"));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(_ddlRequestHelper.getRequest(), "add"));
 			}
-		};
+		).build();
 	}
 
 	public String getCSVExport() {

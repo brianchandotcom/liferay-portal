@@ -27,6 +27,7 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebConstants;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -173,9 +174,7 @@ public class ChangeListsDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		CreationMenu creationMenu = new CreationMenu();
-
-		creationMenu.addDropdownItem(
+		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				PortletURL portletURL = PortletURLFactoryUtil.create(
 					_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
@@ -190,9 +189,8 @@ public class ChangeListsDisplayContext {
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "add-change-list"));
-			});
-
-		return creationMenu;
+			}
+		).build();
 	}
 
 	public long getCTCollectionAgeTime(CTCollection ctCollection) {

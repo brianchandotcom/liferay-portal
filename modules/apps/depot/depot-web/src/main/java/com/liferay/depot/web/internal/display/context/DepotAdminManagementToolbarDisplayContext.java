@@ -21,6 +21,7 @@ import com.liferay.depot.web.internal.resource.DepotPermission;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -113,27 +114,26 @@ public class DepotAdminManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
-			PortletURL addDepotEntryURL =
-				DepotEntryURLUtil.getAddDepotEntryActionURL(
-					themeDisplay.getURLCurrent(), liferayPortletResponse);
+			return CreationMenuBuilder.addPrimaryDropdownItem(
+				dropdownItem -> {
+					dropdownItem.putData("action", "addDepotEntry");
 
-			return new CreationMenu() {
-				{
-					addPrimaryDropdownItem(
-						dropdownItem -> {
-							dropdownItem.putData("action", "addDepotEntry");
-							dropdownItem.putData(
-								"addDepotEntryURL",
-								addDepotEntryURL.toString());
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, "add"));
-						});
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)request.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					PortletURL addDepotEntryURL =
+						DepotEntryURLUtil.getAddDepotEntryActionURL(
+							themeDisplay.getURLCurrent(),
+							liferayPortletResponse);
+
+					dropdownItem.putData(
+						"addDepotEntryURL", addDepotEntryURL.toString());
+
+					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 				}
-			};
+			).build();
 		}
 		catch (Exception exception) {
 		}

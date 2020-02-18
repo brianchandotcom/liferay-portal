@@ -34,6 +34,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -145,30 +146,25 @@ public class DDLViewRecordsDisplayContext {
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_liferayPortletResponse.createRenderURL(),
-							"mvcPath", "/edit_record.jsp", "redirect",
-							PortalUtil.getCurrentURL(
-								_ddlRequestHelper.getRequest()),
-							"recordSetId",
-							String.valueOf(_ddlRecordSet.getRecordSetId()),
-							"formDDMTemplateId",
-							String.valueOf(_formDDMTemplateId));
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_liferayPortletResponse.createRenderURL(), "mvcPath",
+					"/edit_record.jsp", "redirect",
+					PortalUtil.getCurrentURL(_ddlRequestHelper.getRequest()),
+					"recordSetId",
+					String.valueOf(_ddlRecordSet.getRecordSetId()),
+					"formDDMTemplateId", String.valueOf(_formDDMTemplateId));
 
-						dropdownItem.setLabel(
-							LanguageUtil.format(
-								_ddlRequestHelper.getRequest(), "add-x",
-								HtmlUtil.escape(
-									_ddmStructure.getName(
-										_ddlRequestHelper.getLocale())),
-								false));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.format(
+						_ddlRequestHelper.getRequest(), "add-x",
+						HtmlUtil.escape(
+							_ddmStructure.getName(
+								_ddlRequestHelper.getLocale())),
+						false));
 			}
-		};
+		).build();
 	}
 
 	public OrderByComparator<DDLRecord> getDDLRecordOrderByComparator(

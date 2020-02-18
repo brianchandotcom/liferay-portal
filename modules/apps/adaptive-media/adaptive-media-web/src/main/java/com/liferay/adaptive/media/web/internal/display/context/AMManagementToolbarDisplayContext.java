@@ -17,6 +17,7 @@ package com.liferay.adaptive.media.web.internal.display.context;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.web.internal.constants.AMWebKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -51,9 +52,7 @@ public class AMManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		CreationMenu creationMenu = new CreationMenu();
-
-		creationMenu.addDropdownItem(
+		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_liferayPortletResponse.createRenderURL(),
@@ -63,9 +62,8 @@ public class AMManagementToolbarDisplayContext {
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_httpServletRequest, "add-image-resolution"));
-			});
-
-		return creationMenu;
+			}
+		).build();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

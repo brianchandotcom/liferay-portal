@@ -17,6 +17,7 @@ package com.liferay.blogs.web.internal.display.context;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -139,19 +140,16 @@ public class BlogEntriesManagementToolbarDisplayContext
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							liferayPortletResponse.createRenderURL(),
-							"mvcRenderCommandName", "/blogs/edit_entry",
-							"redirect", currentURLObj.toString());
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "add-blog-entry"));
-					});
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					liferayPortletResponse.createRenderURL(),
+					"mvcRenderCommandName", "/blogs/edit_entry", "redirect",
+					currentURLObj.toString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(request, "add-blog-entry"));
 			}
-		};
+		).build();
 	}
 
 	@Override

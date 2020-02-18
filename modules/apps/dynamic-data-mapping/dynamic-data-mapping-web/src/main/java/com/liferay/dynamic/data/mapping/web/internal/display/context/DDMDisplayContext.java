@@ -39,6 +39,7 @@ import com.liferay.dynamic.data.mapping.web.internal.security.permission.resourc
 import com.liferay.dynamic.data.mapping.web.internal.security.permission.resource.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.web.internal.util.PortletDisplayTemplateUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -322,8 +323,8 @@ public class DDMDisplayContext {
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
 				PortletURL redirect = _renderResponse.createRenderURL();
 
 				redirect.setParameter("mvcPath", "/select_structure.jsp");
@@ -333,20 +334,15 @@ public class DDMDisplayContext {
 					ParamUtil.getString(
 						_renderRequest, "eventName", "selectStructure"));
 
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_structure.jsp", "redirect", redirect,
-							"groupId",
-							String.valueOf(
-								_ddmWebRequestHelper.getScopeGroupId()));
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_ddmWebRequestHelper.getRequest(), "add"));
-					});
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcPath",
+					"/edit_structure.jsp", "redirect", redirect, "groupId",
+					String.valueOf(_ddmWebRequestHelper.getScopeGroupId()));
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_ddmWebRequestHelper.getRequest(), "add"));
 			}
-		};
+		).build();
 	}
 
 	public String getSelectStructureSearchActionURL() {
@@ -419,12 +415,9 @@ public class DDMDisplayContext {
 		addTemplateURL.setParameter(
 			"groupId", String.valueOf(_ddmWebRequestHelper.getScopeGroupId()));
 
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					getCreationMenuDropdownItem(addTemplateURL, "add"));
-			}
-		};
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			getCreationMenuDropdownItem(addTemplateURL, "add")
+		).build();
 	}
 
 	public SearchContainer<DDMStructure> getStructureSearch() throws Exception {

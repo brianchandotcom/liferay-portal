@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -68,33 +69,27 @@ public class ManagementToolbarsDisplayContext {
 			return _creationMenu;
 		}
 
-		_creationMenu = new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref("#1");
-						dropdownItem.setLabel("Sample 1");
-					});
-
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref("#2");
-						dropdownItem.setLabel("Sample 2");
-					});
-
-				addFavoriteDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref("#3");
-						dropdownItem.setLabel("Favorite 1");
-					});
-
-				addFavoriteDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref("#4");
-						dropdownItem.setLabel("Other item");
-					});
+		_creationMenu = CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("#1");
+				dropdownItem.setLabel("Sample 1");
 			}
-		};
+		).addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("#2");
+				dropdownItem.setLabel("Sample 2");
+			}
+		).addFavoriteDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("#3");
+				dropdownItem.setLabel("Favorite 1");
+			}
+		).addFavoriteDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("#4");
+				dropdownItem.setLabel("Other item");
+			}
+		).build();
 
 		return _creationMenu;
 	}

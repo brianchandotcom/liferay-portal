@@ -53,7 +53,7 @@ export default withRouter(({history}) => {
 					<ClayForm.FeedbackGroup>
 						<ClayForm.FeedbackItem>
 							{Liferay.Language.get(
-								'be-specific-and-imagine-you-are-asking-a-question-to-another-developer'
+								'be-specific-and-imagine-you-are-asking-a-question-to-another-person'
 							)}
 						</ClayForm.FeedbackItem>
 					</ClayForm.FeedbackGroup>

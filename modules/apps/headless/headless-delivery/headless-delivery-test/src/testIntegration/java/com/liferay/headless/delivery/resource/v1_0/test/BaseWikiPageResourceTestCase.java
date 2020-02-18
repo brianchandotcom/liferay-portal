@@ -396,9 +396,11 @@ public abstract class BaseWikiPageResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						wikiPage1, entityField.getName(), "Aaa");
+						wikiPage1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						wikiPage2, entityField.getName(), "Bbb");
+						wikiPage2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

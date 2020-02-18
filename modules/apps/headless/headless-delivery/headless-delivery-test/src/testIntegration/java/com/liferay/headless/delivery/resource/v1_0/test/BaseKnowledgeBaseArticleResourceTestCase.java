@@ -747,9 +747,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						knowledgeBaseArticle1, entityField.getName(), "Aaa");
+						knowledgeBaseArticle1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						knowledgeBaseArticle2, entityField.getName(), "Bbb");
+						knowledgeBaseArticle2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1115,9 +1117,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						knowledgeBaseArticle1, entityField.getName(), "Aaa");
+						knowledgeBaseArticle1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						knowledgeBaseArticle2, entityField.getName(), "Bbb");
+						knowledgeBaseArticle2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1461,9 +1465,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						knowledgeBaseArticle1, entityField.getName(), "Aaa");
+						knowledgeBaseArticle1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						knowledgeBaseArticle2, entityField.getName(), "Bbb");
+						knowledgeBaseArticle2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

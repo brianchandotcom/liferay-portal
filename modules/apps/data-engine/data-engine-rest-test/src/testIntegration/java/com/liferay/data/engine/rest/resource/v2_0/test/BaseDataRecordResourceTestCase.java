@@ -343,9 +343,11 @@ public abstract class BaseDataRecordResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						dataRecord1, entityField.getName(), "Aaa");
+						dataRecord1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						dataRecord2, entityField.getName(), "Bbb");
+						dataRecord2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -592,9 +594,11 @@ public abstract class BaseDataRecordResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						dataRecord1, entityField.getName(), "Aaa");
+						dataRecord1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						dataRecord2, entityField.getName(), "Bbb");
+						dataRecord2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

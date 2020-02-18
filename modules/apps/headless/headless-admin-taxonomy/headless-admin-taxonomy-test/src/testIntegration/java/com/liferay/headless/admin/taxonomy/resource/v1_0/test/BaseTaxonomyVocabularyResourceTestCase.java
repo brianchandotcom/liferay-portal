@@ -426,9 +426,11 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						taxonomyVocabulary1, entityField.getName(), "Aaa");
+						taxonomyVocabulary1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						taxonomyVocabulary2, entityField.getName(), "Bbb");
+						taxonomyVocabulary2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

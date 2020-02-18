@@ -662,9 +662,11 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						documentFolder1, entityField.getName(), "Aaa");
+						documentFolder1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						documentFolder2, entityField.getName(), "Bbb");
+						documentFolder2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -987,9 +989,11 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						documentFolder1, entityField.getName(), "Aaa");
+						documentFolder1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						documentFolder2, entityField.getName(), "Bbb");
+						documentFolder2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

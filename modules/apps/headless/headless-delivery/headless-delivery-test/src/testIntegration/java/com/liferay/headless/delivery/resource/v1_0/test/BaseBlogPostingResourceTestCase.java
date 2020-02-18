@@ -596,9 +596,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						blogPosting1, entityField.getName(), "Aaa");
+						blogPosting1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						blogPosting2, entityField.getName(), "Bbb");
+						blogPosting2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

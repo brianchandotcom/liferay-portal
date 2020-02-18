@@ -291,9 +291,11 @@ public abstract class BaseProcessResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						process1, entityField.getName(), "Aaa");
+						process1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						process2, entityField.getName(), "Bbb");
+						process2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

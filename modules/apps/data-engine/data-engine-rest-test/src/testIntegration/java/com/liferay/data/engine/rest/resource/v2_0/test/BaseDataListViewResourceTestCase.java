@@ -350,9 +350,11 @@ public abstract class BaseDataListViewResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						dataListView1, entityField.getName(), "Aaa");
+						dataListView1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						dataListView2, entityField.getName(), "Bbb");
+						dataListView2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

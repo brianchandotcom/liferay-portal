@@ -554,9 +554,11 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						blogPostingImage1, entityField.getName(), "Aaa");
+						blogPostingImage1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						blogPostingImage2, entityField.getName(), "Bbb");
+						blogPostingImage2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

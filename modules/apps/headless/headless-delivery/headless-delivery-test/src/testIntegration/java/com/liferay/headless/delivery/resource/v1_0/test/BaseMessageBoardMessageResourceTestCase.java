@@ -734,9 +734,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						messageBoardMessage1, entityField.getName(), "Aaa");
+						messageBoardMessage1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						messageBoardMessage2, entityField.getName(), "Bbb");
+						messageBoardMessage2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1097,9 +1099,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						messageBoardMessage1, entityField.getName(), "Aaa");
+						messageBoardMessage1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						messageBoardMessage2, entityField.getName(), "Bbb");
+						messageBoardMessage2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1436,9 +1440,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						messageBoardMessage1, entityField.getName(), "Aaa");
+						messageBoardMessage1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						messageBoardMessage2, entityField.getName(), "Bbb");
+						messageBoardMessage2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

@@ -447,9 +447,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						structuredContent1, entityField.getName(), "Aaa");
+						structuredContent1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						structuredContent2, entityField.getName(), "Bbb");
+						structuredContent2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -756,9 +758,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						structuredContent1, entityField.getName(), "Aaa");
+						structuredContent1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						structuredContent2, entityField.getName(), "Bbb");
+						structuredContent2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1322,9 +1326,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						structuredContent1, entityField.getName(), "Aaa");
+						structuredContent1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						structuredContent2, entityField.getName(), "Bbb");
+						structuredContent2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

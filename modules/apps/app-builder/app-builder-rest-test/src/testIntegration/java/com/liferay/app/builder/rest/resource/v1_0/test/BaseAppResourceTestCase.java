@@ -460,8 +460,12 @@ public abstract class BaseAppResourceTestCase {
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else {
-					BeanUtils.setProperty(app1, entityField.getName(), "Aaa");
-					BeanUtils.setProperty(app2, entityField.getName(), "Bbb");
+					BeanUtils.setProperty(
+						app1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
+					BeanUtils.setProperty(
+						app2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -663,8 +667,12 @@ public abstract class BaseAppResourceTestCase {
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else {
-					BeanUtils.setProperty(app1, entityField.getName(), "Aaa");
-					BeanUtils.setProperty(app2, entityField.getName(), "Bbb");
+					BeanUtils.setProperty(
+						app1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
+					BeanUtils.setProperty(
+						app2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

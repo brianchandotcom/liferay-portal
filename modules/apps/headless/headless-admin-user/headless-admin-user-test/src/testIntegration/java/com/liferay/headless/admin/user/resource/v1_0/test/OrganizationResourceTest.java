@@ -51,21 +51,9 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@After
 	@Override
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		_deleteOrganizations(_childOrganizations);
 		_deleteOrganizations(_organizations);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetOrganizationOrganizationsPageWithSortString() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetOrganizationsPageWithSortString() {
 	}
 
 	@Ignore

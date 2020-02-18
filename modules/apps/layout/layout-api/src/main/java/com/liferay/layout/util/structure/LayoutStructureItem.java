@@ -143,6 +143,13 @@ public abstract class LayoutStructureItem {
 		);
 	}
 
+	@Override
+	public String toString() {
+		JSONObject jsonObject = toJSONObject();
+
+		return jsonObject.toJSONString();
+	}
+
 	public abstract void updateItemConfig(JSONObject itemConfigJSONObject);
 
 	private List<String> _childrenItemIds;

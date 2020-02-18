@@ -353,6 +353,13 @@ public class LayoutStructure {
 		);
 	}
 
+	@Override
+	public String toString() {
+		JSONObject jsonObject = toJSONObject();
+
+		return jsonObject.toJSONString();
+	}
+
 	public LayoutStructureItem updateItemConfig(
 		JSONObject itemConfigJSONObject, String itemId) {
 

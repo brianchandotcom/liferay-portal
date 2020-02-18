@@ -94,12 +94,12 @@ export const createComment = (articleBody, messageBoardMessageId) =>
             }
         }`);
 
-export const createQuestion = (articleBody, headline, keywords, siteKey) => {
-	keywords = keywords.length ? keywords.split(',').filter(x => x) : null;
+export const createQuestion = (articleBody, headline, tags, siteKey) => {
+	tags = tags.length ? tags.split(',').filter(x => x) : null;
 
 	return request(gql`
         mutation {
-            createSiteMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, headline: ${headline}, keywords: ${keywords}, showAsQuestion: true, viewableBy: ANYONE}, siteKey: ${siteKey}){
+            createSiteMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, headline: ${headline}, keywords: ${tags}, showAsQuestion: true, viewableBy: ANYONE}, siteKey: ${siteKey}){
                 articleBody
                 headline
                 keywords
@@ -142,7 +142,7 @@ export const deleteMessage = messageBoardMessage =>
 		return data;
 	});
 
-export const getKeywords = (page = 1, siteKey) =>
+export const getTags = (page = 1, siteKey) =>
 	request(gql`
         query {
             keywords(page: ${page}, pageSize: 20, siteKey: ${siteKey} sort: "dateModified:desc"){
@@ -300,16 +300,16 @@ export const hasListPermissions = (permission, siteKey) =>
 
 export const getThreads = ({
 	creatorId = '',
-	keyword = '',
 	page = 1,
 	pageSize = 30,
 	search = '',
 	siteKey,
-	sort = 'dateModified:desc'
+	sort = 'dateModified:desc',
+	tag = ''
 }) => {
 	let filter = '';
-	if (keyword) {
-		filter = `keywords/any(x:x eq '${keyword}')`;
+	if (tag) {
+		filter = `keywords/any(x:x eq '${tag}')`;
 	}
 	else if (creatorId) {
 		filter = `creator/id eq ${creatorId}`;
@@ -431,14 +431,14 @@ export const updateMessage = (articleBody, messageBoardMessageId) =>
 export const updateThread = (
 	articleBody,
 	headline,
-	keywords,
+	tags,
 	messageBoardThreadId
 ) => {
-	keywords = keywords.length ? keywords.split(',').filter(x => x) : null;
+	tags = tags.length ? tags.split(',').filter(x => x) : null;
 
 	return request(gql`
         mutation {
-            patchMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, headline: ${headline}, keywords: ${keywords}}, messageBoardThreadId: ${messageBoardThreadId}){
+            patchMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, headline: ${headline}, keywords: ${tags}}, messageBoardThreadId: ${messageBoardThreadId}){
                 articleBody
                 headline
                 keywords

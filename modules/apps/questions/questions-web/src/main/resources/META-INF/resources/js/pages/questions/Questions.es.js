@@ -19,15 +19,15 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import KeywordsList from '../../components/KeywordList.es';
 import QuestionBadge from '../../components/QuestionsBadge.es';
+import TagList from '../../components/TagList.es';
 import UserIcon from '../../components/UserIcon.es';
 import {getThreads} from '../../utils/client.es';
 import {dateToInternationalHuman} from '../../utils/utils.es';
 
 export default ({
 	match: {
-		params: {creatorId, keyword}
+		params: {creatorId, tag}
 	}
 }) => {
 	const context = useContext(AppContext);
@@ -40,14 +40,14 @@ export default ({
 	useEffect(() => {
 		getThreads({
 			creatorId,
-			keyword,
 			page,
 			pageSize,
-			siteKey: context.siteKey
+			siteKey: context.siteKey,
+			tag
 		})
 			.then(data => setQuestions(data))
 			.then(() => setLoading(false));
-	}, [keyword, page, pageSize, context.siteKey, creatorId]);
+	}, [creatorId, page, pageSize, context.siteKey, tag]);
 
 	const hasValidAnswer = question =>
 		question.messageBoardMessages.items.filter(
@@ -144,7 +144,7 @@ export default ({
 								</div>
 							</div>
 							<div>
-								<KeywordsList keywords={question.keywords} />
+								<TagList tags={question.keywords} />
 							</div>
 						</div>
 					</div>

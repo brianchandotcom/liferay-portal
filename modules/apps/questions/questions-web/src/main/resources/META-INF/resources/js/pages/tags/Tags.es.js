@@ -18,7 +18,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import {getKeywords} from '../../utils/client.es';
+import {getTags} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {dateToInternationalHuman} from '../../utils/utils.es';
 
@@ -26,29 +26,29 @@ export default () => {
 	const context = useContext(AppContext);
 
 	const [page, setPage] = useState(1);
-	const [keywords, setKeywords] = useState({});
+	const [tags, setTags] = useState({});
 
 	useEffect(() => {
-		getKeywords(page, context.siteKey).then(data => setKeywords(data));
-	}, [context.siteKey, page]);
+		getTags(page, context.siteKey).then(data => setTags(data));
+	}, [page, context.siteKey]);
 
 	return (
 		<>
 			<div className="container">
 				<div className="row">
-					{keywords.items &&
-						keywords.items.map(keyword => (
+					{tags.items &&
+						tags.items.map(tag => (
 							<div
-								className="col-md-3 question-keywords"
-								key={keyword.id}
+								className="col-md-3 question-tags"
+								key={tag.id}
 							>
 								<ClayCardWithNavigation>
 									<ClayCard.Body>
 										<ClayCard.Description displayType="title">
 											<Link
-												to={`/questions/keyword/${keyword.name}`}
+												to={`/questions/tag/${tag.name}`}
 											>
-												{keyword.name}
+												{tag.name}
 											</Link>
 										</ClayCard.Description>
 										<ClayCard.Description displayType="text">
@@ -56,7 +56,7 @@ export default () => {
 												Liferay.Language.get(
 													'used-x-times'
 												),
-												[keyword.keywordUsageCount]
+												[tag.keywordUsageCount]
 											)}
 										</ClayCard.Description>
 										<ClayCard.Description displayType="text">
@@ -66,7 +66,7 @@ export default () => {
 												),
 												[
 													dateToInternationalHuman(
-														keyword.dateCreated
+														tag.dateCreated
 													)
 												]
 											)}
@@ -77,14 +77,12 @@ export default () => {
 						))}
 				</div>
 			</div>
-			{keywords.lastPage > 1 && (
+			{tags.lastPage > 1 && (
 				<ClayPaginationWithBasicItems
 					activePage={page}
 					ellipsisBuffer={2}
 					onPageChange={setPage}
-					totalPages={Math.ceil(
-						keywords.totalCount / keywords.pageSize
-					)}
+					totalPages={Math.ceil(tags.totalCount / tags.pageSize)}
 				/>
 			)}
 		</>

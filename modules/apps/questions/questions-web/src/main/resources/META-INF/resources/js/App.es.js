@@ -18,11 +18,11 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import {AppContextProvider} from './AppContext.es';
 import NavigationBar from './pages/NavigationBar.es';
 import EditAnswer from './pages/answers/EditAnswer.es';
-import Keywords from './pages/keywords/Keywords.es';
 import EditQuestion from './pages/questions/EditQuestion.es';
 import NewQuestion from './pages/questions/NewQuestion.es';
 import Question from './pages/questions/Question.es';
 import Questions from './pages/questions/Questions.es';
+import Tags from './pages/tags/Tags.es';
 
 export default props => {
 	return (
@@ -35,20 +35,18 @@ export default props => {
 						<Route
 							exact
 							path="/"
-							render={props => (
-								<Questions {...props} keyword={''} />
-							)}
+							render={props => <Questions {...props} tag={''} />}
 						/>
 						<Route
 							component={EditAnswer}
 							path="/answers/:answerId/edit"
 						/>
 						<Route
-							path="/questions/keyword/:keyword"
+							path="/questions/tag/:tag"
 							render={props => (
 								<Questions
 									{...props}
-									keyword={props.match.params.keyword}
+									tag={props.match.params.tag}
 								/>
 							)}
 						/>
@@ -57,7 +55,7 @@ export default props => {
 							render={props => (
 								<Questions
 									{...props}
-									keyword={props.match.params.creatorId}
+									tag={props.match.params.creatorId}
 								/>
 							)}
 						/>
@@ -76,7 +74,7 @@ export default props => {
 							component={Question}
 							path="/questions/:questionId"
 						/>
-						<Route component={Keywords} path="/keywords" />
+						<Route component={Tags} path="/tags" />
 					</Switch>
 				</div>
 			</Router>

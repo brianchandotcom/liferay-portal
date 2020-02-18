@@ -23,9 +23,9 @@ import {Link} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import Answer from '../../components/Answer.es';
 import CreatorRow from '../../components/CreatorRow.es';
-import KeywordList from '../../components/KeywordList.es';
 import Rating from '../../components/Rating.es';
 import Subscription from '../../components/Subscription.es';
+import TagList from '../../components/TagList.es';
 import {
 	createAnswer,
 	getThread,
@@ -175,7 +175,7 @@ export default ({
 								<p>{parser.toReact(question.articleBody)}</p>
 							</div>
 
-							<KeywordList keywords={question.keywords} />
+							<TagList tags={question.keywords} />
 						</div>
 
 						<div

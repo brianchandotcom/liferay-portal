@@ -16,12 +16,12 @@ import ClayLabel from '@clayui/label';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-export default ({keywords = []}) => (
+export default ({tags = []}) => (
 	<>
-		{keywords.map(keyword => (
-			<ClayLabel displayType="secondary" key={keyword}>
-				<Link key={keyword} to={`/questions/keyword/${keyword}`}>
-					{keyword}
+		{tags.map(tag => (
+			<ClayLabel displayType="secondary" key={tag}>
+				<Link key={tag} to={`/questions/tag/${tag}`}>
+					{tag}
 				</Link>
 			</ClayLabel>
 		))}

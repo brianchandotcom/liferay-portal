@@ -25,15 +25,12 @@ export default withRouter(({history}) => {
 	const context = useContext(AppContext);
 	const [articleBody, setArticleBody] = useState('');
 	const [headline, setHeadline] = useState('');
-	const [keywords, setKeywords] = useState('');
+	const [tags, setTags] = useState('');
 
 	const submit = () =>
-		createQuestion(
-			articleBody,
-			headline,
-			keywords,
-			context.siteKey
-		).then(() => history.push('/'));
+		createQuestion(articleBody, headline, tags, context.siteKey).then(() =>
+			history.push('/')
+		);
 
 	return (
 		<>
@@ -89,18 +86,18 @@ export default withRouter(({history}) => {
 				</ClayForm.Group>
 				<ClayForm.Group className="form-group-sm">
 					<label htmlFor="basicInput">
-						{Liferay.Language.get('keywords')}
+						{Liferay.Language.get('tags')}
 					</label>
 					<ClayInput
-						onChange={event => setKeywords(event.target.value)}
-						placeholder={Liferay.Language.get('add-your-keywords')}
+						onChange={event => setTags(event.target.value)}
+						placeholder={Liferay.Language.get('add-your-tags')}
 						type="text"
-						value={keywords}
+						value={tags}
 					/>
 					<ClayForm.FeedbackGroup>
 						<ClayForm.FeedbackItem>
 							{Liferay.Language.get(
-								'add-up-to-5-keywords-to-describe-what-your-question-is-about'
+								'add-up-to-5-tags-to-describe-what-your-question-is-about'
 							)}
 						</ClayForm.FeedbackItem>
 					</ClayForm.FeedbackGroup>

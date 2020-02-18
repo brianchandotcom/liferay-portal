@@ -1,0 +1,18 @@
+definition {
+
+	macro deployOSGiConfigs {
+		Variables.assertDefined(parameterList = "${OSGiConfigs},${OSGiConfigFileName}");
+
+		var configList = "";
+
+		for (var OSGiConfig : list "${OSGiConfigs}") {
+			var configList = '''${OSGiConfig}
+${configList}''';
+		}
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		FileUtil.write("${liferayHome}/osgi/configs/${OSGiConfigFileName}", "${configList}");
+	}
+
+}

@@ -81,7 +81,7 @@ public class ChannelManagementToolbarDisplayContext
 						dropdownItem.setHref(
 							liferayPortletResponse.createRenderURL(),
 							"mvcRenderCommandName",
-							"/analytics_settings/add_new_property", "redirect",
+							"/analytics_settings/add_channel", "redirect",
 							currentURLObj.toString());
 						dropdownItem.setLabel(
 							LanguageUtil.get(_resourceBundle, "new-property"));

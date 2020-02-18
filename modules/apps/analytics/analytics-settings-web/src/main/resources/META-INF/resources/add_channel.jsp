@@ -28,7 +28,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "add-new-property"), currentURL);
 %>
 
-<portlet:actionURL name="/analytics/add_new_property" var="addNewPropertyURL" />
+<portlet:actionURL name="/analytics/add_channel" var="addChannelURL" />
 
 <div class="container-fluid container-fluid-max-xl">
 	<div class="col-12">
@@ -43,7 +43,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 	</div>
 </div>
 
-<aui:form action="<%= addNewPropertyURL %>" method="post" name="fm">
+<aui:form action="<%= addChannelURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<div class="portlet-analytics-settings sheet sheet-lg">

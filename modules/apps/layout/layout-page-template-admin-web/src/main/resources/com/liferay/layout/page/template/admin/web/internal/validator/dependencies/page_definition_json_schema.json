@@ -463,6 +463,44 @@
 			"$id": "#/properties/pageElement",
 			"$ref": "#/definitions/PageElement",
 			"title": "The pageElement Schema"
+		},
+		"settings": {
+			"additionalProperties": false,
+			"properties": {
+				"colorSchemeName": {
+					"title": "The colorSchemeName Schema",
+					"type": "string"
+				},
+				"css": {
+					"title": "The css Schema",
+					"type": "string"
+				},
+				"javascript": {
+					"title": "The javascript Schema",
+					"type": "string"
+				},
+				"masterPage": {
+					"additionalProperties": false,
+					"properties": {
+						"name": {
+							"title": "The name Schema",
+							"type": "string"
+						}
+					},
+					"title": "The masterPage Schema",
+					"type": "object"
+				},
+				"themeName": {
+					"title": "The themeName Schema",
+					"type": "string"
+				},
+				"themeSettings": {
+					"title": "The themeSettings Schema",
+					"type": "object"
+				}
+			},
+			"title": "The settings Schema",
+			"type": "object"
 		}
 	},
 	"required": [

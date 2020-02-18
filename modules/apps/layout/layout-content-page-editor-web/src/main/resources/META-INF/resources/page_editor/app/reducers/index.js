@@ -29,7 +29,7 @@ import widgetsReducer from './widgetsReducer';
  * been registered from plugins.
  */
 export function reducer(state, action) {
-	return [combinedReducer, ...Object.values(state.reducers)].reduce(
+	return [combinedReducer, ...Object.values(state.reducers || {})].reduce(
 		(nextState, nextReducer) => {
 			return nextReducer(nextState, action);
 		},

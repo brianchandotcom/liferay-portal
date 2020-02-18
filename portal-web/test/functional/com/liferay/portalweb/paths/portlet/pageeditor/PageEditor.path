@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME</td>
-	<td>//h1[contains(@class,'fragments-editor-sidebar-section')]//span[contains(.,'${key_fragmentName}')]</td>
+	<td>//h1[contains(@class,'page-editor__sidebar__panel-header')]//span[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -202,7 +202,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_TAB_BUTTON</td>
-	<td>//button[contains(@title,'${key_tabName}')]</td>
+	<td>//div[contains(@class,'page-editor__sidebar__buttons')]//button[contains(@title,'${key_tabName}')]</td>
 	<td></td>
 </tr>
 <tr>

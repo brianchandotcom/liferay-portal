@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -53,7 +54,15 @@ public interface DataRecordCollectionResource {
 			Long dataDefinitionId, DataRecordCollection dataRecordCollection)
 		throws Exception;
 
+	public Response postDataDefinitionDataRecordCollectionBatch(
+			Long dataDefinitionId, String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteDataRecordCollection(Long dataRecordCollectionId)
+		throws Exception;
+
+	public Response deleteDataRecordCollectionBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public DataRecordCollection getDataRecordCollection(
@@ -63,6 +72,10 @@ public interface DataRecordCollectionResource {
 	public DataRecordCollection putDataRecordCollection(
 			Long dataRecordCollectionId,
 			DataRecordCollection dataRecordCollection)
+		throws Exception;
+
+	public Response putDataRecordCollectionBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

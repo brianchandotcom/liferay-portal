@@ -230,7 +230,10 @@ public class BatchEngineTaskMethodRegistryImpl
 				return null;
 			}
 
-			return _getItemClass((ParameterizedType)genericSuperclassType);
+			Class<?> genericSuperclass = (Class)genericSuperclassType;
+
+			return _getItemClassFromGenericInterfaces(
+				genericSuperclass.getGenericInterfaces());
 		}
 
 		private final BundleContext _bundleContext;

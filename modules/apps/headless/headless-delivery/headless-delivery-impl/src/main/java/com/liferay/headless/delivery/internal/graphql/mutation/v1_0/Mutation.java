@@ -63,6 +63,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotEmpty;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -228,6 +229,19 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public Response deleteBlogPostingBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.deleteBlogPostingBatch(
+				callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Updates the blog post using only the fields received in the request body. Any other fields are left untouched. Returns the updated blog post."
 	)
@@ -256,6 +270,19 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.putBlogPosting(
 				blogPostingId, blogPosting));
+	}
+
+	@GraphQLField
+	public Response updateBlogPostingBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.putBlogPostingBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -318,6 +345,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createSiteBlogPostingBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource -> blogPostingResource.postSiteBlogPostingBatch(
+				Long.valueOf(siteKey), callbackURL, object));
+	}
+
+	@GraphQLField
 	public boolean updateSiteBlogPostingSubscribe(
 			@GraphQLName("siteKey") @NotEmpty String siteKey)
 		throws Exception {
@@ -362,6 +403,20 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public Response deleteBlogPostingImageBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingImageResource ->
+				blogPostingImageResource.deleteBlogPostingImageBatch(
+					callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata."
 	)
@@ -382,6 +437,22 @@ public class Mutation {
 					Long.valueOf(siteKey), multipartBody));
 	}
 
+	@GraphQLField
+	public Response createSiteBlogPostingImageBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingImageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingImageResource ->
+				blogPostingImageResource.postSiteBlogPostingImageBatch(
+					Long.valueOf(siteKey), multipartBody, callbackURL, object));
+	}
+
 	@GraphQLField(description = "Creates a new comment on the blog post.")
 	public Comment createBlogPostingComment(
 			@GraphQLName("blogPostingId") Long blogPostingId,
@@ -393,6 +464,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			commentResource -> commentResource.postBlogPostingComment(
 				blogPostingId, comment));
+	}
+
+	@GraphQLField
+	public Response createBlogPostingCommentBatch(
+			@GraphQLName("blogPostingId") Long blogPostingId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.postBlogPostingCommentBatch(
+				blogPostingId, callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -409,6 +494,19 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public Response deleteCommentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.deleteCommentBatch(
+				callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
@@ -421,6 +519,19 @@ public class Mutation {
 			_commentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			commentResource -> commentResource.putComment(commentId, comment));
+	}
+
+	@GraphQLField
+	public Response updateCommentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.putCommentBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -451,6 +562,20 @@ public class Mutation {
 				documentId, comment));
 	}
 
+	@GraphQLField
+	public Response createDocumentCommentBatch(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource -> commentResource.postDocumentCommentBatch(
+				documentId, callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Creates a new comment on the structured content."
 	)
@@ -464,6 +589,21 @@ public class Mutation {
 			this::_populateResourceContext,
 			commentResource -> commentResource.postStructuredContentComment(
 				structuredContentId, comment));
+	}
+
+	@GraphQLField
+	public Response createStructuredContentCommentBatch(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.postStructuredContentCommentBatch(
+					structuredContentId, callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -485,6 +625,22 @@ public class Mutation {
 				documentFolderId, multipartBody));
 	}
 
+	@GraphQLField
+	public Response createDocumentFolderDocumentBatch(
+			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource ->
+				documentResource.postDocumentFolderDocumentBatch(
+					documentFolderId, multipartBody, callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the document and returns a 204 if the operation succeeds."
 	)
@@ -497,6 +653,19 @@ public class Mutation {
 			documentResource -> documentResource.deleteDocument(documentId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDocumentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.deleteDocumentBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -535,6 +704,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentResource -> documentResource.putDocument(
 				documentId, multipartBody));
+	}
+
+	@GraphQLField
+	public Response updateDocumentBatch(
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.putDocumentBatch(
+				multipartBody, callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -602,6 +785,21 @@ public class Mutation {
 				Long.valueOf(siteKey), multipartBody));
 	}
 
+	@GraphQLField
+	public Response createSiteDocumentBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource -> documentResource.postSiteDocumentBatch(
+				Long.valueOf(siteKey), multipartBody, callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the document folder and returns a 204 if the operation succeeds."
 	)
@@ -616,6 +814,20 @@ public class Mutation {
 				documentFolderResource.deleteDocumentFolder(documentFolderId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDocumentFolderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.deleteDocumentFolderBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -647,6 +859,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentFolderResource -> documentFolderResource.putDocumentFolder(
 				documentFolderId, documentFolder));
+	}
+
+	@GraphQLField
+	public Response updateDocumentFolderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.putDocumentFolderBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField
@@ -709,6 +935,21 @@ public class Mutation {
 					Long.valueOf(siteKey), documentFolder));
 	}
 
+	@GraphQLField
+	public Response createSiteDocumentFolderBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.postSiteDocumentFolderBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the knowledge base article and returns a 204 if the operation succeeds."
 	)
@@ -724,6 +965,20 @@ public class Mutation {
 					knowledgeBaseArticleId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteKnowledgeBaseArticleBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.deleteKnowledgeBaseArticleBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -758,6 +1013,20 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.putKnowledgeBaseArticle(
 					knowledgeBaseArticleId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	public Response updateKnowledgeBaseArticleBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticleBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -876,6 +1145,22 @@ public class Mutation {
 						knowledgeBaseFolderId, knowledgeBaseArticle));
 	}
 
+	@GraphQLField
+	public Response createKnowledgeBaseFolderKnowledgeBaseArticleBatch(
+			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					postKnowledgeBaseFolderKnowledgeBaseArticleBatch(
+						knowledgeBaseFolderId, callbackURL, object));
+	}
+
 	@GraphQLField(description = "Creates a new knowledge base article.")
 	public KnowledgeBaseArticle createSiteKnowledgeBaseArticle(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -889,6 +1174,21 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
 					Long.valueOf(siteKey), knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	public Response createSiteKnowledgeBaseArticleBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticleBatch(
+					Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField
@@ -946,6 +1246,24 @@ public class Mutation {
 						knowledgeBaseArticleId, multipartBody));
 	}
 
+	@GraphQLField
+	public Response createKnowledgeBaseArticleKnowledgeBaseAttachmentBatch(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.
+					postKnowledgeBaseArticleKnowledgeBaseAttachmentBatch(
+						knowledgeBaseArticleId, multipartBody, callbackURL,
+						object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the knowledge base file attachment and returns a 204 if the operation succeeds."
 	)
@@ -964,6 +1282,20 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public Response deleteKnowledgeBaseAttachmentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.
+					deleteKnowledgeBaseAttachmentBatch(callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the knowledge base folder and returns a 204 if the operation succeeds."
 	)
@@ -979,6 +1311,20 @@ public class Mutation {
 					knowledgeBaseFolderId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteKnowledgeBaseFolderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.deleteKnowledgeBaseFolderBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1015,6 +1361,20 @@ public class Mutation {
 					knowledgeBaseFolderId, knowledgeBaseFolder));
 	}
 
+	@GraphQLField
+	public Response updateKnowledgeBaseFolderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.putKnowledgeBaseFolderBatch(
+					callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Creates a knowledge base folder inside the parent folder."
 	)
@@ -1049,6 +1409,21 @@ public class Mutation {
 					Long.valueOf(siteKey), knowledgeBaseFolder));
 	}
 
+	@GraphQLField
+	public Response createSiteKnowledgeBaseFolderBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseFolderResource ->
+				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolderBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the message board attachment and returns a 204 if the operation succeeds."
 	)
@@ -1065,6 +1440,20 @@ public class Mutation {
 					messageBoardAttachmentId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteMessageBoardAttachmentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardAttachmentResource ->
+				messageBoardAttachmentResource.
+					deleteMessageBoardAttachmentBatch(callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1090,6 +1479,24 @@ public class Mutation {
 						messageBoardMessageId, multipartBody));
 	}
 
+	@GraphQLField
+	public Response createMessageBoardMessageMessageBoardAttachmentBatch(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardAttachmentResource ->
+				messageBoardAttachmentResource.
+					postMessageBoardMessageMessageBoardAttachmentBatch(
+						messageBoardMessageId, multipartBody, callbackURL,
+						object));
+	}
+
 	@GraphQLField(
 		description = "Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
 	)
@@ -1112,6 +1519,24 @@ public class Mutation {
 						messageBoardThreadId, multipartBody));
 	}
 
+	@GraphQLField
+	public Response createMessageBoardThreadMessageBoardAttachmentBatch(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardAttachmentResource ->
+				messageBoardAttachmentResource.
+					postMessageBoardThreadMessageBoardAttachmentBatch(
+						messageBoardThreadId, multipartBody, callbackURL,
+						object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the message board message and returns a 204 if the operation succeeds."
 	)
@@ -1127,6 +1552,20 @@ public class Mutation {
 					messageBoardMessageId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteMessageBoardMessageBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.deleteMessageBoardMessageBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1161,6 +1600,20 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.putMessageBoardMessage(
 					messageBoardMessageId, messageBoardMessage));
+	}
+
+	@GraphQLField
+	public Response updateMessageBoardMessageBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.putMessageBoardMessageBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1279,6 +1732,22 @@ public class Mutation {
 						messageBoardThreadId, messageBoardMessage));
 	}
 
+	@GraphQLField
+	public Response createMessageBoardThreadMessageBoardMessageBatch(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					postMessageBoardThreadMessageBoardMessageBatch(
+						messageBoardThreadId, callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the message board section and returns a 204 if the operation succeeds."
 	)
@@ -1294,6 +1763,20 @@ public class Mutation {
 					messageBoardSectionId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteMessageBoardSectionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.deleteMessageBoardSectionBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1328,6 +1811,20 @@ public class Mutation {
 			messageBoardSectionResource ->
 				messageBoardSectionResource.putMessageBoardSection(
 					messageBoardSectionId, messageBoardSection));
+	}
+
+	@GraphQLField
+	public Response updateMessageBoardSectionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.putMessageBoardSectionBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField
@@ -1394,6 +1891,21 @@ public class Mutation {
 					Long.valueOf(siteKey), messageBoardSection));
 	}
 
+	@GraphQLField
+	public Response createSiteMessageBoardSectionBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.postSiteMessageBoardSectionBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Creates a new message board thread inside a section."
 	)
@@ -1412,6 +1924,22 @@ public class Mutation {
 						messageBoardSectionId, messageBoardThread));
 	}
 
+	@GraphQLField
+	public Response createMessageBoardSectionMessageBoardThreadBatch(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.
+					postMessageBoardSectionMessageBoardThreadBatch(
+						messageBoardSectionId, callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the message board thread and returns a 204 if the operation succeeds."
 	)
@@ -1427,6 +1955,20 @@ public class Mutation {
 					messageBoardThreadId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteMessageBoardThreadBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.deleteMessageBoardThreadBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1461,6 +2003,20 @@ public class Mutation {
 			messageBoardThreadResource ->
 				messageBoardThreadResource.putMessageBoardThread(
 					messageBoardThreadId, messageBoardThread));
+	}
+
+	@GraphQLField
+	public Response updateMessageBoardThreadBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.putMessageBoardThreadBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1555,6 +2111,21 @@ public class Mutation {
 					Long.valueOf(siteKey), messageBoardThread));
 	}
 
+	@GraphQLField
+	public Response createSiteMessageBoardThreadBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.postSiteMessageBoardThreadBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
 	@GraphQLField(description = "Creates a new structured content.")
 	public StructuredContent createSiteStructuredContent(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -1568,6 +2139,21 @@ public class Mutation {
 			structuredContentResource ->
 				structuredContentResource.postSiteStructuredContent(
 					Long.valueOf(siteKey), structuredContent));
+	}
+
+	@GraphQLField
+	public Response createSiteStructuredContentBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.postSiteStructuredContentBatch(
+					Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField
@@ -1606,6 +2192,23 @@ public class Mutation {
 						structuredContentFolderId, structuredContent));
 	}
 
+	@GraphQLField
+	public Response createStructuredContentFolderStructuredContentBatch(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					postStructuredContentFolderStructuredContentBatch(
+						structuredContentFolderId, callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the structured content and returns a 204 if the operation succeeds."
 	)
@@ -1621,6 +2224,20 @@ public class Mutation {
 					structuredContentId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteStructuredContentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteStructuredContentBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1655,6 +2272,20 @@ public class Mutation {
 			structuredContentResource ->
 				structuredContentResource.putStructuredContent(
 					structuredContentId, structuredContent));
+	}
+
+	@GraphQLField
+	public Response updateStructuredContentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putStructuredContentBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1766,6 +2397,22 @@ public class Mutation {
 					Long.valueOf(siteKey), structuredContentFolder));
 	}
 
+	@GraphQLField
+	public Response createSiteStructuredContentFolderBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					postSiteStructuredContentFolderBatch(
+						Long.valueOf(siteKey), callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Creates a new structured content folder in an existing folder."
 	)
@@ -1805,6 +2452,20 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public Response deleteStructuredContentFolderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					deleteStructuredContentFolderBatch(callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
@@ -1839,6 +2500,20 @@ public class Mutation {
 			structuredContentFolderResource ->
 				structuredContentFolderResource.putStructuredContentFolder(
 					structuredContentFolderId, structuredContentFolder));
+	}
+
+	@GraphQLField
+	public Response updateStructuredContentFolderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.putStructuredContentFolderBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField
@@ -1888,6 +2563,20 @@ public class Mutation {
 				Long.valueOf(siteKey), wikiNode));
 	}
 
+	@GraphQLField
+	public Response createSiteWikiNodeBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.postSiteWikiNodeBatch(
+				Long.valueOf(siteKey), callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the wiki node and returns a 204 if the operation succeeds."
 	)
@@ -1900,6 +2589,19 @@ public class Mutation {
 			wikiNodeResource -> wikiNodeResource.deleteWikiNode(wikiNodeId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteWikiNodeBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.deleteWikiNodeBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -1915,6 +2617,19 @@ public class Mutation {
 			this::_populateResourceContext,
 			wikiNodeResource -> wikiNodeResource.putWikiNode(
 				wikiNodeId, wikiNode));
+	}
+
+	@GraphQLField
+	public Response updateWikiNodeBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.putWikiNodeBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField
@@ -1958,6 +2673,20 @@ public class Mutation {
 				wikiNodeId, wikiPage));
 	}
 
+	@GraphQLField
+	public Response createWikiNodeWikiPageBatch(
+			@GraphQLName("wikiNodeId") Long wikiNodeId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.postWikiNodeWikiPageBatch(
+				wikiNodeId, callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Creates a child wiki page of the parent wiki page."
 	)
@@ -1987,6 +2716,19 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public Response deleteWikiPageBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.deleteWikiPageBatch(
+				callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Replaces the wiki page with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
@@ -2000,6 +2742,19 @@ public class Mutation {
 			this::_populateResourceContext,
 			wikiPageResource -> wikiPageResource.putWikiPage(
 				wikiPageId, wikiPage));
+	}
+
+	@GraphQLField
+	public Response updateWikiPageBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.putWikiPageBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField
@@ -2047,6 +2802,20 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public Response deleteWikiPageAttachmentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageAttachmentResource ->
+				wikiPageAttachmentResource.deleteWikiPageAttachmentBatch(
+					callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata."
 	)
@@ -2065,6 +2834,22 @@ public class Mutation {
 			wikiPageAttachmentResource ->
 				wikiPageAttachmentResource.postWikiPageWikiPageAttachment(
 					wikiPageId, multipartBody));
+	}
+
+	@GraphQLField
+	public Response createWikiPageWikiPageAttachmentBatch(
+			@GraphQLName("wikiPageId") Long wikiPageId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wikiPageAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageAttachmentResource ->
+				wikiPageAttachmentResource.postWikiPageWikiPageAttachmentBatch(
+					wikiPageId, multipartBody, callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

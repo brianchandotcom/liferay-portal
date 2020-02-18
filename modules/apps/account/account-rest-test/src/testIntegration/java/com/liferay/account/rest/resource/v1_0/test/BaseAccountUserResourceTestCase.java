@@ -394,9 +394,11 @@ public abstract class BaseAccountUserResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						accountUser1, entityField.getName(), "Aaa");
+						accountUser1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						accountUser2, entityField.getName(), "Bbb");
+						accountUser2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

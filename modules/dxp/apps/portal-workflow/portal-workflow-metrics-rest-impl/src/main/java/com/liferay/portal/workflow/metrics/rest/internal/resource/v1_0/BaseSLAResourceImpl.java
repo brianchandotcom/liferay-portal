@@ -14,15 +14,22 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
@@ -34,8 +41,11 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
+import java.io.Serializable;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Generated;
@@ -55,6 +65,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -63,7 +76,9 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseSLAResourceImpl implements SLAResource {
+public abstract class BaseSLAResourceImpl
+	implements SLAResource, BatchEngineTaskItemDelegate<SLA>,
+			   EntityModelResource {
 
 	/**
 	 * Invoke this method with the command line:
@@ -117,6 +132,47 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/slas/batch' -d $'{"calendarKey": ___, "dateModified": ___, "description": ___, "duration": ___, "id": ___, "name": ___, "pauseNodeKeys": ___, "processId": ___, "startNodeKeys": ___, "status": ___, "stopNodeKeys": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "processId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/processes/{processId}/slas/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "SLA")})
+	public Response postProcessSLABatch(
+			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
+				processId,
+			SLA sla,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
+		importTaskResource.setContextCompany(contextCompany);
+		importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		importTaskResource.setContextUriInfo(contextUriInfo);
+		importTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			importTaskResource.postImportTask(
+				SLA.class.getName(), callbackURL, null, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/slas/{slaId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -128,6 +184,45 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	public void deleteSLA(
 			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId)
 		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/slas/{slaId}/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes("application/json")
+	@DELETE
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "slaId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/slas/{slaId}/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "SLA")})
+	public Response deleteSLABatch(
+			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
+		importTaskResource.setContextCompany(contextCompany);
+		importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		importTaskResource.setContextUriInfo(contextUriInfo);
+		importTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			importTaskResource.deleteImportTask(
+				SLA.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	/**
@@ -166,6 +261,137 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 		throws Exception {
 
 		return new SLA();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/slas/{slaId}/batch' -d $'{"calendarKey": ___, "dateModified": ___, "description": ___, "duration": ___, "id": ___, "name": ___, "pauseNodeKeys": ___, "processId": ___, "startNodeKeys": ___, "status": ___, "stopNodeKeys": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "slaId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/slas/{slaId}/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "SLA")})
+	public Response putSLABatch(
+			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId,
+			SLA sla,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
+		importTaskResource.setContextCompany(contextCompany);
+		importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		importTaskResource.setContextUriInfo(contextUriInfo);
+		importTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			importTaskResource.putImportTask(
+				SLA.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	@Override
+	@SuppressWarnings("PMD.UnusedLocalVariable")
+	public void create(
+			java.util.Collection<SLA> slas,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (SLA sla : slas) {
+			postProcessSLA(
+				Long.valueOf((String)parameters.get("processId")), sla);
+		}
+	}
+
+	@Override
+	public void delete(
+			java.util.Collection<SLA> slas,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (SLA sla : slas) {
+			deleteSLA(sla.getId());
+		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
+		throws Exception {
+
+		return getEntityModel(
+			new MultivaluedHashMap<String, Object>(multivaluedMap));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
+	public com.liferay.batch.engine.pagination.Page<SLA> read(
+			Filter filter,
+			com.liferay.batch.engine.pagination.Pagination pagination,
+			Sort[] sorts, Map<String, Serializable> parameters, String search)
+		throws Exception {
+
+		Page<SLA> page = getProcessSLAsPage(
+			(Long)parameters.get("processId"),
+			(Integer)parameters.get("status"),
+			Pagination.of(pagination.getPage(), pagination.getPageSize()));
+
+		return com.liferay.batch.engine.pagination.Page.of(
+			page.getItems(), pagination, page.getTotalCount());
+	}
+
+	@Override
+	public void setLanguageId(String languageId) {
+		this.contextAcceptLanguage = new AcceptLanguage() {
+
+			@Override
+			public List<Locale> getLocales() {
+				return null;
+			}
+
+			@Override
+			public String getPreferredLanguageId() {
+				return languageId;
+			}
+
+			@Override
+			public Locale getPreferredLocale() {
+				return LocaleUtil.fromLanguageId(languageId);
+			}
+
+		};
+	}
+
+	@Override
+	public void update(
+			java.util.Collection<SLA> slas,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (SLA sla : slas) {
+			putSLA(
+				sla.getId() != null ? sla.getId() :
+				(Long)parameters.get("slaId"),
+				sla);
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -262,6 +488,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
+	protected ImportTaskResource importTaskResource;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;

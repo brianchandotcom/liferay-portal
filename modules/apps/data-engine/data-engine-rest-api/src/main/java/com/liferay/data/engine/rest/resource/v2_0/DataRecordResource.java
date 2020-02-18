@@ -25,6 +25,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -50,6 +51,10 @@ public interface DataRecordResource {
 			Long dataDefinitionId, DataRecord dataRecord)
 		throws Exception;
 
+	public Response postDataDefinitionDataRecordBatch(
+			Long dataDefinitionId, String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
 			Long dataRecordCollectionId, Long dataListViewId, String keywords,
 			Pagination pagination, Sort[] sorts)
@@ -59,15 +64,25 @@ public interface DataRecordResource {
 			Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception;
 
+	public Response postDataRecordCollectionDataRecordBatch(
+			Long dataRecordCollectionId, String callbackURL, Object object)
+		throws Exception;
+
 	public String getDataRecordCollectionDataRecordExport(
 			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception;
 
 	public void deleteDataRecord(Long dataRecordId) throws Exception;
 
+	public Response deleteDataRecordBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public DataRecord getDataRecord(Long dataRecordId) throws Exception;
 
 	public DataRecord putDataRecord(Long dataRecordId, DataRecord dataRecord)
+		throws Exception;
+
+	public Response putDataRecordBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

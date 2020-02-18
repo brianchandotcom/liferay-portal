@@ -28,6 +28,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -67,6 +68,19 @@ public class Mutation {
 				organization));
 	}
 
+	@GraphQLField
+	public Response createOrganizationBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource -> organizationResource.postOrganizationBatch(
+				callbackURL, object));
+	}
+
 	@GraphQLField(description = "Deletes an organization.")
 	public boolean deleteOrganization(
 			@GraphQLName("organizationId") String organizationId)
@@ -79,6 +93,20 @@ public class Mutation {
 				organizationId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteOrganizationBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource ->
+				organizationResource.deleteOrganizationBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -109,6 +137,19 @@ public class Mutation {
 			this::_populateResourceContext,
 			organizationResource -> organizationResource.putOrganization(
 				organizationId, organization));
+	}
+
+	@GraphQLField
+	public Response updateOrganizationBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource -> organizationResource.putOrganizationBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField

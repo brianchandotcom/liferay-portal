@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -45,11 +46,18 @@ public interface FormRecordResource {
 	public FormRecord putFormRecord(Long formRecordId, FormRecord formRecord)
 		throws Exception;
 
+	public Response putFormRecordBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<FormRecord> getFormFormRecordsPage(
 			Long formId, Pagination pagination)
 		throws Exception;
 
 	public FormRecord postFormFormRecord(Long formId, FormRecord formRecord)
+		throws Exception;
+
+	public Response postFormFormRecordBatch(
+			Long formId, String callbackURL, Object object)
 		throws Exception;
 
 	public FormRecord getFormFormRecordByLatestDraft(Long formId)

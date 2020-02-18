@@ -20,7 +20,8 @@
 		}
 
 		&--linked {
-			&.btn.active,
+			&.btn.btn-sm.active,
+			&:focus,
 			&:hover {
 				background-color: fade_out(#0b5fff, 0.94);
 			}
@@ -31,7 +32,8 @@
 		}
 
 		&--mapped {
-			&.btn.active,
+			&.btn.btn-sm.active,
+			&:focus,
 			&:hover {
 				background-color: fade_out(#af78ff, 0.9);
 			}

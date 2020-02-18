@@ -51,7 +51,7 @@ const handleFieldClicked = (state, event) => {
 
 	return {
 		focusedField,
-		previousFocusedField: focusedField
+		previousFocusedField: focusedField,
 	};
 };
 

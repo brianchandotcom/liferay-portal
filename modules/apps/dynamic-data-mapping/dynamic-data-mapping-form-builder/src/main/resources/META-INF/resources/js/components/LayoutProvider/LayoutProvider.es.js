@@ -165,8 +165,8 @@ class LayoutProvider extends Component {
 						...settingsContext,
 						availableLanguageIds,
 						defaultLanguageId,
-						pages: this.getLocalizedPages(settingsContext.pages)
-					}
+						pages: this.getLocalizedPages(settingsContext.pages),
+					},
 				};
 			},
 			true,

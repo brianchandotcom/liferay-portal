@@ -19,7 +19,7 @@ export const createField = (props, event) => {
 		defaultLanguageId,
 		editingLanguageId,
 		fieldNameGenerator,
-		spritemap
+		spritemap,
 	} = props;
 	const {fieldType, skipFieldNameGeneration = false} = event;
 
@@ -51,8 +51,8 @@ export const createField = (props, event) => {
 				fieldType,
 				newFieldName
 			),
-			type: fieldType.name
-		}
+			type: fieldType.name,
+		},
 	};
 
 	const {fieldName, name, settingsContext} = newField;
@@ -68,7 +68,7 @@ export const createField = (props, event) => {
 		name,
 		settingsContext,
 		spritemap,
-		type: fieldType.name
+		type: fieldType.name,
 	};
 };
 

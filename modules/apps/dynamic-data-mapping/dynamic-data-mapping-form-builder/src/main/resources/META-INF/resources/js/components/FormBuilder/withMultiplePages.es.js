@@ -245,7 +245,7 @@ const withMultiplePages = ChildComponent => {
 	}
 
 	MultiplePages.PROPS = {
-		...formBuilderProps
+		...formBuilderProps,
 	};
 
 	MultiplePages.STATE = {

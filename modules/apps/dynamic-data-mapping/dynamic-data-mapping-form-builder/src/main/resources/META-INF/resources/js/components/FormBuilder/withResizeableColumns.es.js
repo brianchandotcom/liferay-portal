@@ -99,7 +99,7 @@ const withResizeableColumns = ChildComponent => {
 					`[data-ddm-field-column="${source.dataset.ddmFieldColumn}"]`,
 					`[data-ddm-field-page="${source.dataset.ddmFieldPage}"]`,
 					`[data-ddm-field-row="${source.dataset.ddmFieldRow}"]`,
-					'> .ddm-field-container'
+					'> .ddm-field-container',
 				].join('')
 			);
 
@@ -140,7 +140,7 @@ const withResizeableColumns = ChildComponent => {
 	}
 
 	ResizeableColumns.PROPS = {
-		...formBuilderProps
+		...formBuilderProps,
 	};
 
 	return ResizeableColumns;

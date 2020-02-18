@@ -593,9 +593,9 @@ class Sidebar extends Component {
 					data,
 					fieldType: {
 						...fieldType,
-						editable: true
+						editable: true,
 					},
-					indexes
+					indexes,
 				});
 			}
 			else {
@@ -603,9 +603,9 @@ class Sidebar extends Component {
 					data,
 					fieldType: {
 						...fieldType,
-						editable: true
+						editable: true,
 					},
-					indexes
+					indexes,
 				});
 			}
 		}

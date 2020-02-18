@@ -122,7 +122,7 @@ const withMoveableFields = ChildComponent => {
 	}
 
 	MoveableFields.PROPS = {
-		...formBuilderProps
+		...formBuilderProps,
 	};
 
 	return MoveableFields;

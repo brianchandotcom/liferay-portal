@@ -15,7 +15,7 @@
 import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 
 import {createField} from '../../../util/fieldSupport.es';
-import {updateFocusedField} from '../util/settingsContext.es';
+import {updateField} from '../util/settingsContext.es';
 
 const getContext = (context, nestedIndexes = []) => {
 	if (nestedIndexes.length) {
@@ -58,7 +58,7 @@ const handleFieldAdded = (props, state, event) => {
 				...newField,
 				columnIndex,
 				pageIndex,
-				rowIndex
+				rowIndex,
 			},
 			pages: FormSupport.addFieldToColumn(
 				pages,
@@ -67,7 +67,7 @@ const handleFieldAdded = (props, state, event) => {
 				columnIndex,
 				newField
 			),
-			previousFocusedField: newField
+			previousFocusedField: newField,
 		};
 	}
 	else {
@@ -83,19 +83,12 @@ const handleFieldAdded = (props, state, event) => {
 			newField.fieldName
 		)[0];
 
-		newContext = updateFocusedField(
-			props,
-			{focusedField: newContext},
-			'nestedFields',
-			[...newContext.nestedFields, newField]
-		);
+		newContext = updateField(props, newContext, 'nestedFields', [
+			...newContext.nestedFields,
+			newField,
+		]);
 
-		newContext = updateFocusedField(
-			props,
-			{focusedField: newContext},
-			'rows',
-			newContext.rows
-		);
+		newContext = updateField(props, newContext, 'rows', newContext.rows);
 
 		currentContext[0].rows = newContext.rows;
 		currentContext[0].settingsContext = newContext.settingsContext;
@@ -106,10 +99,10 @@ const handleFieldAdded = (props, state, event) => {
 				...newField,
 				columnIndex,
 				pageIndes: 0,
-				rowIndex
+				rowIndex,
 			},
 			pages,
-			previousFocusedField: newField
+			previousFocusedField: newField,
 		};
 	}
 };

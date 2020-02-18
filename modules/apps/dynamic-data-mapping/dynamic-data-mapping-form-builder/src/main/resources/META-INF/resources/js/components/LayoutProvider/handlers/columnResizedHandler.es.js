@@ -93,21 +93,21 @@ export const handleResizeRight = (
 	const currentContext = getContext(pages, indexes.slice(0, -1));
 
 	const currentColumn = getColumn(currentContext, [
-		indexes[indexes.length - 1]
+		indexes[indexes.length - 1],
 	]);
 
 	const nextColumn = getColumn(currentContext, [
 		{
 			columnIndex: columnIndex + 1,
 			pageIndex,
-			rowIndex
-		}
+			rowIndex,
+		},
 	]);
 
 	const currentColumnPosition = getColumnPosition(currentContext, {
 		columnIndex,
 		pageIndex: indexes.length > 1 ? 0 : pageIndex,
-		rowIndex
+		rowIndex,
 	});
 
 	let newContext = currentContext;
@@ -123,7 +123,7 @@ export const handleResizeRight = (
 
 		newCurrentColumn = {
 			...currentColumn,
-			size: currentColumn.size - newSize
+			size: currentColumn.size - newSize,
 		};
 
 		newContext = FormSupport.addColumn(
@@ -133,7 +133,7 @@ export const handleResizeRight = (
 			rowIndex,
 			{
 				fields: [],
-				size: newSize
+				size: newSize,
 			}
 		);
 	}
@@ -204,7 +204,7 @@ export const handleResizeRight = (
 
 	if (indexes.length > 1) {
 		newContext = [
-			updateField(props, newContext[0], 'rows', newContext[0].rows)
+			updateField(props, newContext[0], 'rows', newContext[0].rows),
 		];
 
 		currentContext[0].settingsContext = newContext[0].settingsContext;
@@ -224,21 +224,21 @@ const handleResizeLeft = (props, state, source, indexes, columnTarget) => {
 	const currentContext = getContext(pages, indexes.slice(0, -1));
 
 	const currentColumn = getColumn(currentContext, [
-		indexes[indexes.length - 1]
+		indexes[indexes.length - 1],
 	]);
 
 	const previousColumn = getColumn(currentContext, [
 		{
 			columnIndex: columnIndex - 1,
 			pageIndex,
-			rowIndex
-		}
+			rowIndex,
+		},
 	]);
 
 	const previousColumnPosition = getColumnPosition(currentContext, {
 		columnIndex: columnIndex - 1,
 		pageIndex: indexes.length > 1 ? 0 : pageIndex,
-		rowIndex
+		rowIndex,
 	});
 
 	let newContext = currentContext;
@@ -251,7 +251,7 @@ const handleResizeLeft = (props, state, source, indexes, columnTarget) => {
 			rowIndex,
 			{
 				fields: [],
-				size: columnTarget
+				size: columnTarget,
 			}
 		);
 
@@ -262,7 +262,7 @@ const handleResizeLeft = (props, state, source, indexes, columnTarget) => {
 			columnIndex + 1,
 			{
 				...currentColumn,
-				size: currentColumn.size - columnTarget
+				size: currentColumn.size - columnTarget,
 			}
 		);
 
@@ -331,7 +331,7 @@ const handleResizeLeft = (props, state, source, indexes, columnTarget) => {
 
 	if (indexes.length > 1) {
 		newContext = [
-			updateField(props, newContext[0], 'rows', newContext[0].rows)
+			updateField(props, newContext[0], 'rows', newContext[0].rows),
 		];
 
 		currentContext[0].settingsContext = newContext[0].settingsContext;

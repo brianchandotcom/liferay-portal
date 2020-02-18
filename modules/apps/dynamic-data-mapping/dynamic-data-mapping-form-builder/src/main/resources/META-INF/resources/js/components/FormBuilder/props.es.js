@@ -132,7 +132,7 @@ export default {
 	successPageSettings: Config.shapeOf({
 		body: Config.object(),
 		enabled: Config.bool(),
-		title: Config.object()
+		title: Config.object(),
 	}).value({}),
 
 	/**
@@ -142,5 +142,5 @@ export default {
 	 * @type {?string}
 	 */
 
-	view: Config.string()
+	view: Config.string(),
 };

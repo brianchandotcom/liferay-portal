@@ -46,7 +46,7 @@ class FieldActionsDropDown extends Component {
 					disabled={disabled}
 					events={{
 						expandedChanged: this._handleExpandedChanged.bind(this),
-						itemClicked: this._handleItemClicked.bind(this)
+						itemClicked: this._handleItemClicked.bind(this),
 					}}
 					expanded={expanded}
 					items={items}
@@ -112,8 +112,8 @@ class FieldActionsDropDown extends Component {
 
 	_handleItemClicked({
 		data: {
-			item: {action}
-		}
+			item: {action},
+		},
 	}) {
 		const {fieldName} = this.state;
 
@@ -158,7 +158,7 @@ FieldActionsDropDown.PROPS = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
 };
 
 FieldActionsDropDown.STATE = {
@@ -169,7 +169,7 @@ FieldActionsDropDown.STATE = {
 	 * @type {!Object}
 	 */
 
-	fieldName: Config.string()
+	fieldName: Config.string(),
 };
 
 export {getFieldContainer};

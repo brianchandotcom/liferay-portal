@@ -16,8 +16,8 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.
 
 import {updateRulesReferences} from '../util/rules.es';
 import {
-	updateFocusedField,
-	updateSettingsContextProperty
+	updateField,
+	updateSettingsContextProperty,
 } from '../util/settingsContext.es';
 
 export const updatePages = (
@@ -42,7 +42,13 @@ export const updatePages = (
 					...field,
 					fieldName: newFieldName,
 					name: newFieldName,
-					[propertyName]: propertyValue
+					[propertyName]: propertyValue,
+					settingsContext: updateSettingsContextProperty(
+						editingLanguageId,
+						field.settingsContext,
+						propertyName,
+						propertyValue
+					),
 				};
 			}
 
@@ -69,7 +75,7 @@ export const updatePages = (
 								}
 
 								return fieldName;
-							})
+							}),
 						};
 					});
 
@@ -83,7 +89,7 @@ export const updatePages = (
 							field.settingsContext,
 							'rows',
 							rows
-						)
+						),
 					};
 				}
 
@@ -97,13 +103,13 @@ export const updatePages = (
 	return newPages;
 };
 
-export const updateField = (props, state, propertyName, propertyValue) => {
+export const updateState = (props, state, propertyName, propertyValue) => {
 	const {editingLanguageId} = props;
 	const {focusedField, pages, rules} = state;
 	const {fieldName: previousFieldName} = focusedField;
-	const newFocusedField = updateFocusedField(
+	const newFocusedField = updateField(
 		props,
-		state,
+		focusedField,
 		propertyName,
 		propertyValue
 	);
@@ -121,7 +127,11 @@ export const updateField = (props, state, propertyName, propertyValue) => {
 	return {
 		focusedField: newFocusedField,
 		pages: newPages,
-		rules: updateRulesReferences(rules || [], focusedField, newFocusedField)
+		rules: updateRulesReferences(
+			rules || [],
+			focusedField,
+			newFocusedField
+		),
 	};
 };
 
@@ -130,7 +140,7 @@ export const handleFieldEdited = (props, state, event) => {
 	let newState = {};
 
 	if (propertyName !== 'name' || propertyValue !== '') {
-		newState = updateField(props, state, propertyName, propertyValue);
+		newState = updateState(props, state, propertyName, propertyValue);
 	}
 
 	return newState;

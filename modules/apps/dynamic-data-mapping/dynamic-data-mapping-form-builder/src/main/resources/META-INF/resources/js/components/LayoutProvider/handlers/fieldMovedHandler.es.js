@@ -14,7 +14,7 @@
 
 import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 
-import {updateFocusedField} from '../util/settingsContext.es';
+import {updateField} from '../util/settingsContext.es';
 import createSection from './sectionAddedHandler.es';
 
 const addRow = (props, targetContext, indexes, fields) => {
@@ -31,9 +31,9 @@ const addRow = (props, targetContext, indexes, fields) => {
 			}
 		});
 
-		newTargetContext = updateFocusedField(
+		newTargetContext = updateField(
 			props,
-			{focusedField: newTargetContext},
+			newTargetContext,
 			'nestedFields',
 			newNestedFields
 		);
@@ -50,12 +50,12 @@ const addRow = (props, targetContext, indexes, fields) => {
 
 	if (newTargetContext[0].nestedFields) {
 		newTargetContext = [
-			updateFocusedField(
+			updateField(
 				props,
-				{focusedField: newTargetContext[0]},
+				newTargetContext[0],
 				'rows',
 				newTargetContext[0].rows
-			)
+			),
 		];
 	}
 
@@ -126,9 +126,9 @@ export default (props, state, {addedToPlaceholder, source, target}) => {
 			{...state, pages},
 			{
 				data: {
-					target: target.children[0]
+					target: target.children[0],
 				},
-				newField: currentContext[0]
+				newField: currentContext[0],
 			}
 		).pages;
 	}
@@ -185,9 +185,9 @@ export default (props, state, {addedToPlaceholder, source, target}) => {
 			sourceNestedIndexes.length > 1 ? 0 : pageIndex
 		].nestedFields
 	) {
-		const newSectionContext = updateFocusedField(
+		const newSectionContext = updateField(
 			props,
-			{focusedField: currentContextParentContext[0]},
+			currentContextParentContext[0],
 			'rows',
 			currentContextParentContext[
 				sourceNestedIndexes.length > 1 ? 0 : pageIndex
@@ -200,7 +200,7 @@ export default (props, state, {addedToPlaceholder, source, target}) => {
 	}
 
 	return {
-		pages
+		pages,
 	};
 	/*
 	const {columnIndex, pageIndex, rowIndex} = source;

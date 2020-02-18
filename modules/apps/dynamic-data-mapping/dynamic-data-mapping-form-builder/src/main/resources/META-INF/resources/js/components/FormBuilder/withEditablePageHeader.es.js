@@ -125,7 +125,7 @@ const withEditablePageHeader = ChildComponent => {
 	}
 
 	EditablePageHeader.PROPS = {
-		...formBuilderProps
+		...formBuilderProps,
 	};
 
 	return EditablePageHeader;

@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 
 import java.util.Collection;
 
+import javax.portlet.PortletException;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -52,7 +54,7 @@ public class ClusterConfigurationModelIndexer
 		return ClusterConfigurationModelIndexer.class.getName();
 	}
 
-	public void initialize() throws Exception {
+	public void initialize() throws PortletException {
 		if (!_initialized) {
 			_initialize();
 		}
@@ -99,7 +101,7 @@ public class ClusterConfigurationModelIndexer
 		clusterConfigurationModelIndexer._reset();
 	}
 
-	private synchronized void _initialize() throws Exception {
+	private synchronized void _initialize() throws PortletException {
 		if (_initialized) {
 			return;
 		}
@@ -117,7 +119,14 @@ public class ClusterConfigurationModelIndexer
 					new MethodHandler(
 						_initializeMethodKey, getOSGiServiceIdentifier()));
 
-			noticeableFuture.get();
+			try {
+				noticeableFuture.get();
+			}
+			catch (Exception exception) {
+				throw new PortletException(
+					"Unable to initialize configuration model index",
+					exception);
+			}
 		}
 
 		_initialized = true;

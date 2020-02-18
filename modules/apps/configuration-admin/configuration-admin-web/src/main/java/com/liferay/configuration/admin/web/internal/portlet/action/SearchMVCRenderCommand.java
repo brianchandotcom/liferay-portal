@@ -72,13 +72,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			_clusterConfigurationModelIndexer.initialize();
-		}
-		catch (Exception exception) {
-			throw new PortletException(
-				"Unable to initialize configuration model index", exception);
-		}
+		_clusterConfigurationModelIndexer.initialize();
 
 		Indexer indexer = _indexerRegistry.nullSafeGetIndexer(
 			ConfigurationModel.class);

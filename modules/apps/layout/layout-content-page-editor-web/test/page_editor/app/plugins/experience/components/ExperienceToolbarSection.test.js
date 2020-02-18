@@ -98,6 +98,7 @@ const mockState = {
 		}
 	},
 	permissions: {
+		EDIT_SEGMENTS_ENTRY: true,
 		UPDATE: true
 	},
 	segmentsExperienceId: '0',
@@ -119,7 +120,6 @@ const mockConfig = {
 	classPK: 'test-classPK',
 	defaultSegmentsExperienceId: '0',
 	deleteSegmentsExperienceURL: MOCK_DELETE_URL,
-	hasEditSegmentsEntryPermission: true,
 	updateSegmentsExperiencePriorityURL: MOCK_UPDATE_PRIORITY_URL,
 	updateSegmentsExperienceURL: MOCK_UPDATE_URL
 };

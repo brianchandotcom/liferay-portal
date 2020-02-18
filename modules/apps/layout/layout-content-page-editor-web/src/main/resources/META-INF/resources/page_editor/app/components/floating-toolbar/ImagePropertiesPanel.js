@@ -147,22 +147,27 @@ export function ImagePropertiesPanel({item}) {
 				onClearButtonPressed={() => onImageChange('', '')}
 				onImageSelected={image => onImageChange(image.title, image.url)}
 			/>
-			<label htmlFor="imageDescription">
-				{Liferay.Language.get('image-description')}
-			</label>
-			<ClayInput
-				id="imageDescription"
-				onChange={event => {
-					setImageDescription(event.target.value);
 
-					debounceUpdateRowConfig({
-						alt: event.target.value
-					});
-				}}
-				sizing="sm"
-				type="text"
-				value={imageDescription || ''}
-			/>
+			{editableType === EDITABLE_TYPES.image && (
+				<>
+					<label htmlFor="imageDescription">
+						{Liferay.Language.get('image-description')}
+					</label>
+					<ClayInput
+						id="imageDescription"
+						onChange={event => {
+							setImageDescription(event.target.value);
+
+							debounceUpdateRowConfig({
+								alt: event.target.value
+							});
+						}}
+						sizing="sm"
+						type="text"
+						value={imageDescription || ''}
+					/>
+				</>
+			)}
 		</>
 	);
 }

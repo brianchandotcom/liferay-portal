@@ -698,6 +698,10 @@ definition {
 			dmDocumentTitle = "DM Title 1",
 			groupName = "Guest");
 
+		OSGiConfig.deployOSGiConfigs(
+			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
+			OSGiConfigs = "connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
+
 		AntCommand(
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "create-follower-indices");

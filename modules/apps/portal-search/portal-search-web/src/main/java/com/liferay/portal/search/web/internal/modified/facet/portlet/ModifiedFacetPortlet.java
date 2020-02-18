@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.modified.facet.portlet;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -106,8 +107,9 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 					renderRequest));
 
 		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			new ModifiedFacetDisplayBuilder(
-				getCalendarFactory(), getDateFormatFactory(), http);
+			createModifiedFacetDisplayBuilder(
+				getCalendarFactory(), getDateFormatFactory(), http,
+				renderRequest);
 
 		modifiedFacetDisplayBuilder.setCurrentURL(
 			portal.getCurrentURL(renderRequest));
@@ -147,6 +149,19 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 		modifiedFacetDisplayBuilder.setTotalHits(searchResponse.getTotalHits());
 
 		return modifiedFacetDisplayBuilder.build();
+	}
+
+	protected ModifiedFacetDisplayBuilder createModifiedFacetDisplayBuilder(
+		CalendarFactory calendarFactory, DateFormatFactory dateFormatFactory,
+		Http http, RenderRequest renderRequest) {
+
+		try {
+			return new ModifiedFacetDisplayBuilder(
+				calendarFactory, dateFormatFactory, http, renderRequest);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
 	}
 
 	protected CalendarFactory getCalendarFactory() {

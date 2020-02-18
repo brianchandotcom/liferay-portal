@@ -19,45 +19,69 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetCalendarDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetTermDisplayContext" %>
+
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <portlet:defineObjects />
 
 <%
 ModifiedFacetDisplayContext modifiedFacetDisplayContext = (ModifiedFacetDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
 
-ModifiedFacetTermDisplayContext customRangeModifiedFacetTermDisplayContext = modifiedFacetDisplayContext.getCustomRangeModifiedFacetTermDisplayContext();
+if (modifiedFacetDisplayContext.isRenderNothing()) {
+	return;
+}
 
+ModifiedFacetTermDisplayContext customRangeModifiedFacetTermDisplayContext = modifiedFacetDisplayContext.getCustomRangeModifiedFacetTermDisplayContext();
 ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifiedFacetDisplayContext.getModifiedFacetCalendarDisplayContext();
+ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfiguration = modifiedFacetDisplayContext.getModifiedFacetPortletInstanceConfiguration();
+List<ModifiedFacetTermDisplayContext> modifiedFacetTermDisplayContexts = modifiedFacetDisplayContext.getModifiedFacetTermDisplayContexts();
+
+Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+contextObjects.put("customRangeModifiedFacetTermDisplayContext", customRangeModifiedFacetTermDisplayContext);
+contextObjects.put("modifiedFacetCalendarDisplayContext", modifiedFacetCalendarDisplayContext);
+contextObjects.put("modifiedFacetDisplayContext", modifiedFacetDisplayContext);
+contextObjects.put("namespace", renderResponse.getNamespace());
 %>
 
 <c:if test="<%= !modifiedFacetDisplayContext.isRenderNothing() %>">
-	<liferay-ui:panel-container
-		extended="<%= true %>"
-		id='<%= renderResponse.getNamespace() + "facetModifiedPanelContainer" %>'
-		markupView="lexicon"
-		persistState="<%= true %>"
-	>
-		<liferay-ui:panel
-			collapsible="<%= true %>"
-			cssClass="search-facet"
-			id='<%= renderResponse.getNamespace() + "facetModifiedPanel" %>'
-			markupView="lexicon"
-			persistState="<%= true %>"
-			title="last-modified"
-		>
-			<aui:form method="get" name="fm">
-				<aui:input autocomplete="off" name="inputFacetName" type="hidden" value="modified" />
-				<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= modifiedFacetDisplayContext.getParameterName() %>" />
+	<aui:form method="get" name="fm">
+		<aui:input autocomplete="off" name="inputFacetName" type="hidden" value="modified" />
+		<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= HtmlUtil.escapeAttribute(modifiedFacetDisplayContext.getParameterName()) %>" />
 
-				<aui:field-wrapper cssClass='<%= renderResponse.getNamespace() + "calendar calendar_" %>' label="" name="<%= HtmlUtil.escapeAttribute(modifiedFacetDisplayContext.getParameterName()) %>">
+		<liferay-ddm:template-renderer
+			className="<%= ModifiedFacetTermDisplayContext.class.getName() %>"
+			contextObjects="<%= contextObjects %>"
+			displayStyle="<%= modifiedFacetPortletInstanceConfiguration.displayStyle() %>"
+			displayStyleGroupId="<%= modifiedFacetDisplayContext.getDisplayStyleGroupId() %>"
+			entries="<%= modifiedFacetTermDisplayContexts %>"
+		>
+			<liferay-ui:panel-container
+				extended="<%= true %>"
+				id='<%= renderResponse.getNamespace() + "facetModifiedPanelContainer" %>'
+				markupView="lexicon"
+				persistState="<%= true %>"
+			>
+				<liferay-ui:panel
+					collapsible="<%= true %>"
+					cssClass="search-facet"
+					id='<%= renderResponse.getNamespace() + "facetModifiedPanel" %>'
+					markupView="lexicon"
+					persistState="<%= true %>"
+					title="last-modified"
+				>
 					<ul class="list-unstyled modified">
 
 						<%
@@ -130,14 +154,14 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 							<aui:button cssClass="modified-facet-custom-range-filter-button" disabled="<%= modifiedFacetCalendarDisplayContext.isRangeBackwards() %>" name="searchCustomRangeButton" value="search" />
 						</div>
 					</ul>
-				</aui:field-wrapper>
 
-				<c:if test="<%= !modifiedFacetDisplayContext.isNothingSelected() %>">
-					<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
-				</c:if>
-			</aui:form>
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
+					<c:if test="<%= !modifiedFacetDisplayContext.isNothingSelected() %>">
+						<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
+					</c:if>
+				</liferay-ui:panel>
+			</liferay-ui:panel-container>
+		</liferay-ddm:template-renderer>
+	</aui:form>
 
 	<aui:script use="liferay-search-modified-facet">
 		new Liferay.Search.ModifiedFacetFilter({
@@ -155,5 +179,9 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 			),
 			toInputName: '<portlet:namespace />toInput'
 		});
+
+		Liferay.Search.FacetUtil.enableInputs(
+			document.querySelectorAll('#<portlet:namespace />fm .facet-term')
+		);
 	</aui:script>
 </c:if>

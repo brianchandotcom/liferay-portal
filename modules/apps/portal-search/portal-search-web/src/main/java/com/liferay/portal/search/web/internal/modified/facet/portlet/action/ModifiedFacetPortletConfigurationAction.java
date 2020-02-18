@@ -17,22 +17,28 @@ package com.liferay.portal.search.web.internal.modified.facet.portlet.action;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
+import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayBuilder;
 
 import java.text.ParseException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -50,6 +56,26 @@ public class ModifiedFacetPortletConfigurationAction
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/modified/facet/configuration.jsp";
+	}
+
+	@Override
+	public void include(
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		RenderRequest renderRequest =
+			(RenderRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
+			createModifiedFacetDisplayBuilder(renderRequest);
+
+		httpServletRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			modifiedFacetDisplayBuilder.build());
+
+		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -77,6 +103,18 @@ public class ModifiedFacetPortletConfigurationAction
 
 		if (SessionErrors.isEmpty(actionRequest)) {
 			super.processAction(portletConfig, actionRequest, actionResponse);
+		}
+	}
+
+	protected ModifiedFacetDisplayBuilder createModifiedFacetDisplayBuilder(
+		RenderRequest renderRequest) {
+
+		try {
+			return new ModifiedFacetDisplayBuilder(
+				null, null, null, renderRequest);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
 		}
 	}
 

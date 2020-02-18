@@ -18,11 +18,14 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -32,7 +35,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
+import com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration;
 import com.liferay.portal.util.CalendarFactoryImpl;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 import com.liferay.portal.util.HtmlImpl;
@@ -40,10 +45,13 @@ import com.liferay.portal.util.HttpImpl;
 
 import java.util.List;
 
+import javax.portlet.RenderRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -335,8 +343,7 @@ public class ModifiedFacetDisplayBuilderTest {
 
 	protected ModifiedFacetDisplayBuilder createDisplayBuilder() {
 		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
-			new ModifiedFacetDisplayBuilder(
-				_calendarFactory, _dateFormatFactory, _httpImpl);
+			createModifiedFacetDisplayBuilder();
 
 		mockFacetConfiguration();
 
@@ -345,6 +352,17 @@ public class ModifiedFacetDisplayBuilderTest {
 		modifiedFacetDisplayBuilder.setTimeZone(TimeZoneUtil.getDefault());
 
 		return modifiedFacetDisplayBuilder;
+	}
+
+	protected ModifiedFacetDisplayBuilder createModifiedFacetDisplayBuilder() {
+		try {
+			return new ModifiedFacetDisplayBuilder(
+				_calendarFactory, _dateFormatFactory, _httpImpl,
+				getRenderRequest());
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
 	}
 
 	protected JSONArray createRangesJSONArray(String... labelsAndRanges) {
@@ -374,6 +392,46 @@ public class ModifiedFacetDisplayBuilderTest {
 		facetConfiguration.setDataJSONObject(dataJSONObject);
 
 		return facetConfiguration;
+	}
+
+	protected PortletDisplay getPortletDisplay() throws ConfigurationException {
+		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
+
+		Mockito.doReturn(
+			Mockito.mock(ModifiedFacetPortletInstanceConfiguration.class)
+		).when(
+			portletDisplay
+		).getPortletInstanceConfiguration(
+			Matchers.any()
+		);
+
+		return portletDisplay;
+	}
+
+	protected RenderRequest getRenderRequest() throws ConfigurationException {
+		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
+
+		Mockito.doReturn(
+			getThemeDisplay()
+		).when(
+			renderRequest
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
+
+		return renderRequest;
+	}
+
+	protected ThemeDisplay getThemeDisplay() throws ConfigurationException {
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.doReturn(
+			getPortletDisplay()
+		).when(
+			themeDisplay
+		).getPortletDisplay();
+
+		return themeDisplay;
 	}
 
 	protected void mockFacetConfiguration(String... labelsAndRanges) {

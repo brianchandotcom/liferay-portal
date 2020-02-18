@@ -37,13 +37,20 @@ AUI.add(
 
 			instance._initializeFormValidator();
 
-			instance.searchCustomRangeButton.on(
-				'click',
-				A.bind(instance.filter, instance)
-			);
+			if (instance.searchCustomRangeButton) {
+				instance.searchCustomRangeButton.on(
+					'click',
+					A.bind(instance.filter, instance)
+				);
+			}
 
-			instance.fromInput.on('keydown', instance._onDateInputKeyDown);
-			instance.toInput.on('keydown', instance._onDateInputKeyDown);
+			if (instance.fromInput) {
+				instance.fromInput.on('keydown', instance._onDateInputKeyDown);
+			}
+
+			if (instance.toInput) {
+				instance.toInput.on('keydown', instance._onDateInputKeyDown);
+			}
 		};
 
 		A.mix(ModifiedFacetFilter.prototype, {
@@ -106,15 +113,19 @@ AUI.add(
 					customRangeValidator.validate();
 				};
 
-				instance.fromInputDatePicker.on(
-					'selectionChange',
-					onRangeSelectionChange
-				);
+				if (instance.fromInputDatePicker) {
+					instance.fromInputDatePicker.on(
+						'selectionChange',
+						onRangeSelectionChange
+					);
+				}
 
-				instance.toInputDatePicker.on(
-					'selectionChange',
-					onRangeSelectionChange
-				);
+				if (instance.toInputDatePicker) {
+					instance.toInputDatePicker.on(
+						'selectionChange',
+						onRangeSelectionChange
+					);
+				}
 			},
 
 			_onDateInputKeyDown(event) {

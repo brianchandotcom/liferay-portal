@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.internal.modified.facet.display.context;
 
+import com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -35,10 +37,20 @@ public class ModifiedFacetDisplayContext implements Serializable {
 		return _defaultModifiedFacetTermDisplayContext;
 	}
 
+	public long getDisplayStyleGroupId() {
+		return _displayStyleGroupId;
+	}
+
 	public ModifiedFacetCalendarDisplayContext
 		getModifiedFacetCalendarDisplayContext() {
 
 		return _modifiedFacetCalendarDisplayContext;
+	}
+
+	public ModifiedFacetPortletInstanceConfiguration
+		getModifiedFacetPortletInstanceConfiguration() {
+
+		return _modifiedFacetPortletInstanceConfiguration;
 	}
 
 	public List<ModifiedFacetTermDisplayContext>
@@ -80,6 +92,18 @@ public class ModifiedFacetDisplayContext implements Serializable {
 		_defaultModifiedFacetTermDisplayContext = defaultTermDisplayContext;
 	}
 
+	public void setDisplayStyleGroupId(long displayStyleGroupId) {
+		_displayStyleGroupId = displayStyleGroupId;
+	}
+
+	public void setModifiedFacetPortletInstanceConfiguration(
+		ModifiedFacetPortletInstanceConfiguration
+			modifiedFacetPortletInstanceConfiguration) {
+
+		_modifiedFacetPortletInstanceConfiguration =
+			modifiedFacetPortletInstanceConfiguration;
+	}
+
 	public void setModifiedFacetTermDisplayContexts(
 		List<ModifiedFacetTermDisplayContext>
 			modifiedFacetTermDisplayContexts) {
@@ -103,8 +127,11 @@ public class ModifiedFacetDisplayContext implements Serializable {
 		_customRangeModifiedFacetTermDisplayContext;
 	private ModifiedFacetTermDisplayContext
 		_defaultModifiedFacetTermDisplayContext;
+	private long _displayStyleGroupId;
 	private ModifiedFacetCalendarDisplayContext
 		_modifiedFacetCalendarDisplayContext;
+	private ModifiedFacetPortletInstanceConfiguration
+		_modifiedFacetPortletInstanceConfiguration;
 	private List<ModifiedFacetTermDisplayContext>
 		_modifiedFacetTermDisplayContexts;
 	private boolean _nothingSelected;

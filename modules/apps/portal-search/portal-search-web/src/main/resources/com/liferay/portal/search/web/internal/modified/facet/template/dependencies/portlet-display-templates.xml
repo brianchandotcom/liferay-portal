@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key>modified-facet-radio-ftl</template-key>
+		<name>portlet-display-template-name-radio-layout</name>
+		<description>portlet-display-template-description-radio</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portal/search/web/internal/modified/facet/template/dependencies/portlet_display_template_radio.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

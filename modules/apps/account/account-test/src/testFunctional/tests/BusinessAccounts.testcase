@@ -629,6 +629,57 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Update Accounts Name for Test");
 	}
 
+	@priority = "4"
+	test UpdateAccountUser {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is an Account with User.",
+			accountName = "Account with User");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Users");
+
+		AccountUsers.addUsers(
+			accountName = "Account with User",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Users");
+
+		AccountUsers.editUser(
+			accountUser = "userfn userln",
+			editFirstName = "edituserfn");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Users");
+
+		LexiconEntry.viewEntryName(rowEntry = "edituserfn userln");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with User");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		Accounts.viewAssignee(assigneeName = "edituserfn");
+	}
+
 	@description = "This is a use case for LPS-101221."
 	@priority = "4"
 	test UpdateInactiveAccountViaNameLink {

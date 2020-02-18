@@ -270,7 +270,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				if (commentIdElement) {
 					Util.setFormValues(form, {
 						commentId: commentIdElement.value,
-						<%= randomNamespace + Constants.CMD %>: '<%= Constants.DELETE %>'
+						<%= Constants.CMD %>: '<%= Constants.DELETE %>'
 					});
 
 					<%= namespace + randomNamespace %>sendMessage(form);
@@ -311,7 +311,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					Util.setFormValues(form, {
 						body: editorInstance.getHTML(),
 						parentCommentId: parentCommentIdElement.value,
-						<%= randomNamespace + Constants.CMD %>: '<%= Constants.ADD %>'
+						<%= Constants.CMD %>: '<%= Constants.ADD %>'
 					});
 				}
 
@@ -562,7 +562,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				Util.setFormValues(form, {
 					<%= randomNamespace %>className:
 						'<%= discussionTaglibHelper.getSubscriptionClassName() %>',
-					<%= randomNamespace + Constants.CMD %>: subscribe
+					<%= Constants.CMD %>: subscribe
 						? '<%= Constants.SUBSCRIBE_TO_COMMENTS %>'
 						: '<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>'
 				});
@@ -589,7 +589,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					Util.setFormValues(form, {
 						body: editorInstance.getHTML(),
 						commentId: commentIdElement.value,
-						<%= randomNamespace + Constants.CMD %>: '<%= Constants.UPDATE %>'
+						<%= Constants.CMD %>: '<%= Constants.UPDATE %>'
 					});
 
 					<%= namespace + randomNamespace %>sendMessage(form);

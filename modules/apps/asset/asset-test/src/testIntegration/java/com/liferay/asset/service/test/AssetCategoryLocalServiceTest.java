@@ -127,6 +127,38 @@ public class AssetCategoryLocalServiceTest {
 			assetVocabulary.getVocabularyId(), serviceContext);
 	}
 
+	@Test(expected = DuplicateCategoryException.class)
+	public void testCannotAddDuplicatedCategoryWithLongName() throws Exception {
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), titleMap, null, null,
+				serviceContext);
+
+		int maxNameLength = ModelHintsUtil.getMaxLength(
+			AssetCategory.class.getName(), "name");
+
+		String categoryName = RandomTestUtil.randomString(maxNameLength);
+
+		_assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			categoryName + RandomTestUtil.randomString(10),
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		_assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			categoryName + RandomTestUtil.randomString(10),
+			assetVocabulary.getVocabularyId(), serviceContext);
+	}
+
 	@Test
 	public void testCategoryWithLongNameIsTrimmed() throws Exception {
 		Map<Locale, String> titleMap = HashMapBuilder.put(

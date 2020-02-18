@@ -143,10 +143,10 @@ public class AssetCategoryLocalServiceTest {
 				RandomTestUtil.randomString(), titleMap, null, null,
 				serviceContext);
 
-		int maxNameLength = ModelHintsUtil.getMaxLength(
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
 			AssetCategory.class.getName(), "name");
 
-		String categoryName = RandomTestUtil.randomString(maxNameLength);
+		String categoryName = RandomTestUtil.randomString(nameMaxLength);
 
 		_assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
@@ -175,10 +175,10 @@ public class AssetCategoryLocalServiceTest {
 				RandomTestUtil.randomString(), titleMap, null, null,
 				serviceContext);
 
-		int maxNameLength = ModelHintsUtil.getMaxLength(
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
 			AssetCategory.class.getName(), "name");
 
-		String categoryName = RandomTestUtil.randomString(maxNameLength);
+		String categoryName = RandomTestUtil.randomString(nameMaxLength);
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),

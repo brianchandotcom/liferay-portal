@@ -117,7 +117,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("1_column", portletIdsMaps);
+		_testConvert("1_column", portletIdsMaps, false);
 	}
 
 	@Test
@@ -141,7 +141,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("1_column", portletIdsMaps);
+		_testConvert("1_column", portletIdsMaps, true);
 	}
 
 	@Test
@@ -191,7 +191,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("1_3_1_columns", portletIdsMaps);
+		_testConvert("1_3_1_columns", portletIdsMaps, false);
 	}
 
 	@Test
@@ -239,7 +239,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("1_3_1_columns", portletIdsMaps);
+		_testConvert("1_3_1_columns", portletIdsMaps, true);
 	}
 
 	@Test
@@ -295,7 +295,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("1_3_2_columns", portletIdsMaps);
+		_testConvert("1_3_2_columns", portletIdsMaps, false);
 	}
 
 	@Test
@@ -348,7 +348,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("1_3_2_columns", portletIdsMaps);
+		_testConvert("1_3_2_columns", portletIdsMaps, true);
 	}
 
 	@Test
@@ -437,7 +437,8 @@ public class LayoutConverterTest {
 			}
 		).build();
 
-		_testConvert("3_columns", Collections.singletonList(portletIdsMap));
+		_testConvert(
+			"3_columns", Collections.singletonList(portletIdsMap), false);
 	}
 
 	@Test
@@ -464,7 +465,8 @@ public class LayoutConverterTest {
 			}
 		).build();
 
-		_testConvert("3_columns", Collections.singletonList(portletIdsMap));
+		_testConvert(
+			"3_columns", Collections.singletonList(portletIdsMap), true);
 	}
 
 	@Test
@@ -532,7 +534,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("3_2_3_columns", portletIdsMaps);
+		_testConvert("3_2_3_columns", portletIdsMaps, false);
 	}
 
 	@Test
@@ -597,7 +599,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("3_2_3_columns", portletIdsMaps);
+		_testConvert("3_2_3_columns", portletIdsMaps, true);
 	}
 
 	@Test
@@ -690,7 +692,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("2_1_2_columns", portletIdsMaps);
+		_testConvert("2_1_2_columns", portletIdsMaps, false);
 	}
 
 	@Test
@@ -738,7 +740,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("2_1_2_columns", portletIdsMaps);
+		_testConvert("2_1_2_columns", portletIdsMaps, true);
 	}
 
 	@Test
@@ -778,7 +780,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("2_2_columns", portletIdsMaps);
+		_testConvert("2_2_columns", portletIdsMaps, false);
 	}
 
 	@Test
@@ -819,7 +821,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert("2_2_columns", portletIdsMaps);
+		_testConvert("2_2_columns", portletIdsMaps, true);
 	}
 
 	@Test
@@ -984,7 +986,8 @@ public class LayoutConverterTest {
 	}
 
 	private void _testConvert(
-			String layoutTemplateId, List<Map<String, String[]>> portletIdsMaps)
+			String layoutTemplateId, List<Map<String, String[]>> portletIdsMaps,
+			boolean singlePortlet)
 		throws Exception {
 
 		int columnId = 0;
@@ -1041,8 +1044,14 @@ public class LayoutConverterTest {
 
 		JSONObject layoutDataJSONObject = layoutData.getLayoutDataJSONObject();
 
+		String format = "expected_layout_data_%s_multiple_portlets.json";
+
+		if (singlePortlet) {
+			format = "expected_layout_data_%s_single_portlet.json";
+		}
+
 		String expectedLayoutData = _read(
-			String.format("expected_layout_data_%s.json", layoutTemplateId));
+			String.format(format, layoutTemplateId));
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
@@ -1191,7 +1200,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert(layoutTemplateId, portletIdsMaps);
+		_testConvert(layoutTemplateId, portletIdsMaps, false);
 	}
 
 	private void _testConvertOneTwoColumnsSinglePortlet(String layoutTemplateId)
@@ -1223,7 +1232,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert(layoutTemplateId, portletIdsMaps);
+		_testConvert(layoutTemplateId, portletIdsMaps, true);
 	}
 
 	private void _testConvertOneTwoOneColumnsMultiplePortlets(
@@ -1267,7 +1276,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert(layoutTemplateId, portletIdsMaps);
+		_testConvert(layoutTemplateId, portletIdsMaps, false);
 	}
 
 	private void _testConvertOneTwoOneColumnsSinglePortlet(
@@ -1307,7 +1316,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert(layoutTemplateId, portletIdsMaps);
+		_testConvert(layoutTemplateId, portletIdsMaps, true);
 	}
 
 	private void _testConvertTwoColumnsMultiplePortlets(String layoutTemplateId)
@@ -1334,7 +1343,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert(layoutTemplateId, portletIdsMaps);
+		_testConvert(layoutTemplateId, portletIdsMaps, false);
 	}
 
 	private void _testConvertTwoColumnsSinglePortlet(String layoutTemplateId)
@@ -1359,7 +1368,7 @@ public class LayoutConverterTest {
 				}
 			};
 
-		_testConvert(layoutTemplateId, portletIdsMaps);
+		_testConvert(layoutTemplateId, portletIdsMaps, true);
 	}
 
 	@Inject

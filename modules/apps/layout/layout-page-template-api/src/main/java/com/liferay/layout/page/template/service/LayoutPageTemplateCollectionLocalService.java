@@ -196,6 +196,10 @@ public interface LayoutPageTemplateCollectionLocalService
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
 		long layoutPageTemplateCollectionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
+		long groupId, String layoutPageTemplateCollectionKey);
+
 	/**
 	 * Returns the layout page template collection matching the UUID and group.
 	 *

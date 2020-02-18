@@ -232,6 +232,15 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 			layoutPageTemplateCollectionId);
 	}
 
+	public static
+		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
+			fetchLayoutPageTemplateCollection(
+				long groupId, String layoutPageTemplateCollectionKey) {
+
+		return getService().fetchLayoutPageTemplateCollection(
+			groupId, layoutPageTemplateCollectionKey);
+	}
+
 	/**
 	 * Returns the layout page template collection matching the UUID and group.
 	 *

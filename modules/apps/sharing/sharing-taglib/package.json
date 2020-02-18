@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"@clayui/icon": "3.0.2",
-		"@clayui/sticker": "3.0.4",
+		"@clayui/icon": "3.0.3",
+		"@clayui/sticker": "3.0.5",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0",

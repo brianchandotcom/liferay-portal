@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
@@ -121,24 +122,20 @@ public class MasterLayoutManagementToolbarDisplayContext
 			String.valueOf(
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT));
 
-		return new CreationMenu() {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						Map<String, Object> dropDownItemData =
-							HashMapBuilder.<String, Object>put(
-								"action", "addMasterLayout"
-							).put(
-								"addMasterLayoutURL",
-								addMasterLayoutURL.toString()
-							).build();
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				Map<String, Object> dropDownItemData =
+					HashMapBuilder.<String, Object>put(
+						"action", "addMasterLayout"
+					).put(
+						"addMasterLayoutURL", addMasterLayoutURL.toString()
+					).build();
 
-						dropdownItem.setData(dropDownItemData);
+				dropdownItem.setData(dropDownItemData);
 
-						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
-					});
+				dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 			}
-		};
+		).build();
 	}
 
 	@Override

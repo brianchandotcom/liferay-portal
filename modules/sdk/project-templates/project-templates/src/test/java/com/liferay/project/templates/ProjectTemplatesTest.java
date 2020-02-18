@@ -3286,8 +3286,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		testContains(
 			mavenProjectDir, "pom.xml",
-			"<artifactId>com.liferay.ant.bnd</artifactId>\n", "<version>",
-			gradleAntBndVersion);
+			"<artifactId>com.liferay.ant.bnd</artifactId>\n\t\t\t\t\t\t" +
+				"<version>" + gradleAntBndVersion);
 	}
 
 	@Test
@@ -3330,6 +3330,33 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		Assert.assertEquals(
 			"com.liferay.plugin versions do not match",
 			standaloneGradlePluginVersion, workspaceGradlePluginVersion);
+	}
+
+	@Test
+	public void testComparePortalToolsBundleSupportPluginVersions()
+		throws Exception {
+
+		File workspaceDir = buildWorkspace(temporaryFolder, "7.3.0");
+
+		Optional<String> result = executeGradle(
+			workspaceDir, true, _gradleDistribution, ":tasks");
+
+		Matcher matcher = _portalToolsBundleSupportVersionPattern.matcher(
+			result.get());
+
+		String portalToolsBundleSupportVersion = null;
+
+		if (matcher.matches()) {
+			portalToolsBundleSupportVersion = matcher.group(1);
+		}
+
+		File mavenWorkspaceDir = _buildTemplateWithMaven(
+			"workspace", "mavenWS", "liferayMaven", "-DliferayVersion=7.3.0");
+
+		testContains(
+			mavenWorkspaceDir, "pom.xml",
+			"<artifactId>com.liferay.portal.tools.bundle.support</artifactId>" +
+				"\n\t\t\t\t<version>" + portalToolsBundleSupportVersion);
 	}
 
 	@Test
@@ -4696,5 +4723,10 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		".*com\\.liferay\\.gradle\\.plugins:([0-9]+\\.[0-9]+\\.[0-9]+).*",
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private static XPathExpression _pomXmlNpmInstallXPathExpression;
+	private static final Pattern _portalToolsBundleSupportVersionPattern =
+		Pattern.compile(
+			".*com\\.liferay\\.portal\\.tools\\.bundle\\.support" +
+				":([0-9]+\\.[0-9]+\\.[0-9]+).*",
+			Pattern.DOTALL | Pattern.MULTILINE);
 
 }

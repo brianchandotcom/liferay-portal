@@ -149,7 +149,7 @@ definition {
 			assetType = "Web Content Article");
 	}
 
-	@description = "This ensures that all web contents are displayed with the dynamic selection that show only Web Content Article in a depot."
+	@description = "This ensures that only web contents configured to show with dynamic selection are displayed in a depot."
 	@priority = "4"
 	test SelectAllWebContentDynamically {
 		DepotNavigator.openDepotAdmin();
@@ -337,7 +337,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the Content Sets can be set in a depot."
+	@description = "This ensures that Content Sets can be set in a depot."
 	@priority = "5"
 	test Smoke {
 		DepotNavigator.openDepotAdmin();

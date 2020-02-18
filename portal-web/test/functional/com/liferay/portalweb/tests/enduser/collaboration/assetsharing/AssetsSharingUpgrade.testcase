@@ -22,7 +22,7 @@ definition {
 
 	@priority = "5"
 	test ViewSharedAssetsArchive72101 {
-		property data.archive.type = "data-archive-googledrive";
+		property data.archive.type = "data-archive-asset-sharing";
 		property portal.version = "7.2.10.1";
 
 		Upgrade.viewSharedDocument();

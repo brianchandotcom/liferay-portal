@@ -57,7 +57,7 @@ definition {
 		property portal.release = "false";
 		property testray.component.names = "Site Pages Administration";
 
-		for (var portlet : list "Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Form,Hello Soy Portlet,RSS Publisher,Application Authorization Request") {
+		for (var portlet : list "Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Form,Application Authorization Request,RSS Publisher,Application Authorization Request") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			SitePages.addPublicPage(

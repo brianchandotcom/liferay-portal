@@ -611,7 +611,7 @@ definition {
 	@description = "LRQA-53647 Automate LPS-86638: [Reports] See a list of reports available for all running processes"
 	test SeeListOfReports {
 		property test.name.skip.portal.instance = "WorkflowMetrics#SeeListOfReports";
-		
+
 		var key_testSLADefinitionDays = "0";
 		var key_testSLADefinitionHours = "0001";
 		var key_testSLADefinitionDescription = "SLA Description";

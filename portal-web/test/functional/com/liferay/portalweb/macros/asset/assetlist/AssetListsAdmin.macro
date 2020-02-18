@@ -94,6 +94,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deleteManualSelectionAssets {
+		for (var assetName : list "${assetsList}") {
+			Click(
+				key_entryName = "${assetName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
+		}
+	}
+
 	macro editAssetList {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = "${assetListTitle}",

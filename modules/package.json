@@ -9,6 +9,9 @@
 		"metal-jest-serializer": "2.0.0"
 	},
 	"private": true,
+	"resolutions": {
+		"dnd-core": "10.0.1"
+	},
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"

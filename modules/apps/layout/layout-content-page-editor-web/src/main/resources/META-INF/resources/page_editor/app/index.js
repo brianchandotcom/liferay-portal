@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-import {DragDropContextProvider} from 'react-dnd';
+import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import App from './components/App';
@@ -55,8 +55,8 @@ export default function(data) {
 	const config = getConfig(data.config);
 
 	return (
-		<DragDropContextProvider backend={HTML5Backend}>
+		<DndProvider backend={HTML5Backend}>
 			<Container config={config} state={data.state} />
-		</DragDropContextProvider>
+		</DndProvider>
 	);
 }

@@ -15,7 +15,7 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import {DragDropContextProvider} from 'react-dnd';
+import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import {ConfigContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
@@ -50,13 +50,13 @@ const fragments = [
 
 const RenderFragmentsSidebar = () => {
 	return (
-		<DragDropContextProvider backend={HTML5Backend}>
+		<DndProvider backend={HTML5Backend}>
 			<ConfigContext.Provider value={{fragments}}>
 				<StoreAPIContextProvider>
 					<FragmentsSidebar />
 				</StoreAPIContextProvider>
 			</ConfigContext.Provider>
-		</DragDropContextProvider>
+		</DndProvider>
 	);
 };
 

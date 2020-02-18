@@ -1149,7 +1149,8 @@ public class LayoutConverterTest {
 			actualLayoutStructure);
 
 		String expectedLayoutData = _read(
-			String.format("expected_layout_data_%s.json", layoutTemplateId));
+			String.format(
+				"expected_layout_data_%s_no_portlets.json", layoutTemplateId));
 
 		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
 			expectedLayoutData);

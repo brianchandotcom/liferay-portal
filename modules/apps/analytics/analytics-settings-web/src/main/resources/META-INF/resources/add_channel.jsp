@@ -57,7 +57,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 
 		<div class="mb-5 mt-4 radio-buttons">
 			<label class="d-block mb-3">
-				<aui:input checked="<%= true %>" label="combined-property" name="role" type="radio" value="1" />
+				<aui:input checked="<%= true %>" label="combined-property" name="channelType" type="radio" value="combined" />
 
 				<small class="text-secondary">
 					<liferay-ui:message key="all-selected-sites-will-be-combined-in-to-a-single-property" />
@@ -65,7 +65,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 			</label>
 
 			<label class="d-block mb-3">
-				<aui:input label="multiple-properties" name="role" type="radio" value="2" />
+				<aui:input label="multiple-properties" name="channelType" type="radio" value="multiple" />
 
 				<small class="text-secondary">
 					<liferay-ui:message key="each-site-selected-will-become-its-own-property" />

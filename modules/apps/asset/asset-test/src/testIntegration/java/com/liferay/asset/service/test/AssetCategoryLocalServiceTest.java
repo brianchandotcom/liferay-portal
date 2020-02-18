@@ -15,6 +15,7 @@
 package com.liferay.asset.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
@@ -37,6 +38,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import io.netty.util.internal.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -72,6 +75,28 @@ public class AssetCategoryLocalServiceTest {
 		if (_organizationIndexer != null) {
 			IndexerRegistryUtil.register(_organizationIndexer);
 		}
+	}
+
+	@Test(expected = AssetCategoryNameException.class)
+	public void testCannotAddCategoryWithEmptyName() throws Exception {
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), titleMap, null, null,
+				serviceContext);
+
+		_assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			StringUtil.EMPTY_STRING, assetVocabulary.getVocabularyId(),
+			serviceContext);
 	}
 
 	@Test

@@ -59,15 +59,13 @@ export default function FragmentContentFloatingToolbar({
 			? BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
 			: EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
 
-	const editableValue = useSelector(state =>
-		editableId
-			? selectEditableValue(
-					state,
-					fragmentEntryLinkId,
-					editableId,
-					processorKey
-			  )
-			: {}
+	const state = useSelector(state => state);
+
+	const editableValue = selectEditableValue(
+		state,
+		fragmentEntryLinkId,
+		editableId,
+		processorKey
 	);
 
 	const floatingToolbarButtons = useMemo(() => {

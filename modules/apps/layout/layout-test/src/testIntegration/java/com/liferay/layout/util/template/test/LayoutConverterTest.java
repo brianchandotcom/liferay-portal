@@ -1088,45 +1088,34 @@ public class LayoutConverterTest {
 				fromIndex = fromIndex + numberOfPortletsInColumn;
 
 				Set<String> existingPortletIds = new HashSet<>();
-				List<String> fragmentEntryLinkIdsInColumn = new ArrayList<>();
 
 				for (FragmentEntryLink fragmentEntryLink :
 						fragmentEntryLinksInColumn) {
-
-					fragmentEntryLinkIdsInColumn.add(
-						String.format(
-							"\"%s\"",
-							fragmentEntryLink.getFragmentEntryLinkId()));
 
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 						fragmentEntryLink.getEditableValues());
 
 					String portletId = jsonObject.getString("portletId");
 
-					String instanceId = jsonObject.getString("instanceId");
+					existingPortletIds.add(
+						PortletIdCodec.encode(
+							portletId, jsonObject.getString("instanceId")));
 
-					if (Validator.isNotNull(instanceId)) {
-						portletId = PortletIdCodec.encode(
-							portletId, instanceId);
-					}
-
-					existingPortletIds.add(portletId);
+					expectedLayoutData = StringUtil.replaceFirst(
+						expectedLayoutData,
+						entry.getKey() + ":" +
+							PortletIdCodec.decodePortletName(portletId),
+						String.valueOf(
+							fragmentEntryLink.getFragmentEntryLinkId()));
 				}
 
 				Assert.assertEquals(
-					fragmentEntryLinkIdsInColumn.toString(), portletIds.size(),
-					fragmentEntryLinkIdsInColumn.size());
+					fragmentEntryLinksInColumn.toString(), portletIds.size(),
+					fragmentEntryLinksInColumn.size());
 
 				for (String portletId : portletIds) {
 					Assert.assertTrue(existingPortletIds.contains(portletId));
 				}
-
-				String fragmentEntryLinkIdsJoined = StringUtil.merge(
-					fragmentEntryLinkIdsInColumn, StringPool.COMMA_AND_SPACE);
-
-				expectedLayoutData = StringUtil.replaceFirst(
-					expectedLayoutData, "[]",
-					String.format("[%s]", fragmentEntryLinkIdsJoined));
 			}
 		}
 

@@ -22,6 +22,8 @@ definition {
 
 		Alert.viewSuccessMessage();
 
+		Refresh();
+
 		AssertTextEquals.assertPartialText(
 			key_tableEntry = "${assigneeName}",
 			locator1 = "LexiconTable#TABLE_ENTRY",

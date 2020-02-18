@@ -15,21 +15,29 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.builder.ScopeSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacetPortletInstanceConfiguration;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.RenderRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -203,10 +211,11 @@ public class ScopeSearchFacetDisplayContextTest {
 	}
 
 	protected ScopeSearchFacetDisplayContext createDisplayContext(
-		String parameterValue) {
+			String parameterValue)
+		throws ConfigurationException {
 
 		ScopeSearchFacetDisplayBuilder scopeSearchFacetDisplayBuilder =
-			new ScopeSearchFacetDisplayBuilder();
+			new ScopeSearchFacetDisplayBuilder(getRenderRequest());
 
 		scopeSearchFacetDisplayBuilder.setFacet(_facet);
 		scopeSearchFacetDisplayBuilder.setFrequenciesVisible(true);
@@ -252,6 +261,46 @@ public class ScopeSearchFacetDisplayContextTest {
 		).getTerm();
 
 		return termCollector;
+	}
+
+	protected PortletDisplay getPortletDisplay() throws ConfigurationException {
+		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
+
+		Mockito.doReturn(
+			Mockito.mock(SiteFacetPortletInstanceConfiguration.class)
+		).when(
+			portletDisplay
+		).getPortletInstanceConfiguration(
+			Matchers.any()
+		);
+
+		return portletDisplay;
+	}
+
+	protected RenderRequest getRenderRequest() throws ConfigurationException {
+		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
+
+		Mockito.doReturn(
+			getThemeDisplay()
+		).when(
+			renderRequest
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
+
+		return renderRequest;
+	}
+
+	protected ThemeDisplay getThemeDisplay() throws ConfigurationException {
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.doReturn(
+			getPortletDisplay()
+		).when(
+			themeDisplay
+		).getPortletDisplay();
+
+		return themeDisplay;
 	}
 
 	protected void setUpOneTermCollector(long groupId, int count) {

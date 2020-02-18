@@ -18,14 +18,19 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetTermDisplayContext;
+import com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacetPortletInstanceConfiguration;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +40,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.RenderRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -42,10 +49,25 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ScopeSearchFacetDisplayBuilder {
 
+	public ScopeSearchFacetDisplayBuilder(RenderRequest renderRequest)
+		throws ConfigurationException {
+
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		_siteFacetPortletInstanceConfiguration =
+			portletDisplay.getPortletInstanceConfiguration(
+				SiteFacetPortletInstanceConfiguration.class);
+	}
+
 	public ScopeSearchFacetDisplayContext build() {
 		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
 			new ScopeSearchFacetDisplayContext();
 
+		scopeSearchFacetDisplayContext.setDisplayStyleGroupId(
+			getDisplayStyleGroupId());
 		scopeSearchFacetDisplayContext.setNothingSelected(isNothingSelected());
 		scopeSearchFacetDisplayContext.setParameterName(_parameterName);
 		scopeSearchFacetDisplayContext.setParameterValue(
@@ -53,6 +75,8 @@ public class ScopeSearchFacetDisplayBuilder {
 		scopeSearchFacetDisplayContext.setParameterValues(
 			getParameterValueStrings());
 		scopeSearchFacetDisplayContext.setRenderNothing(isRenderNothing());
+		scopeSearchFacetDisplayContext.setSiteFacetPortletInstanceConfiguration(
+			_siteFacetPortletInstanceConfiguration);
 		scopeSearchFacetDisplayContext.setTermDisplayContexts(
 			buildTermDisplayContexts(getTermCollectors()));
 
@@ -213,6 +237,17 @@ public class ScopeSearchFacetDisplayBuilder {
 		}
 	}
 
+	protected long getDisplayStyleGroupId() {
+		long displayStyleGroupId =
+			_siteFacetPortletInstanceConfiguration.displayStyleGroupId();
+
+		if (displayStyleGroupId <= 0) {
+			displayStyleGroupId = _themeDisplay.getScopeGroupId();
+		}
+
+		return displayStyleGroupId;
+	}
+
 	protected List<ScopeSearchFacetTermDisplayContext>
 		getEmptySearchResultTermDisplayContexts() {
 
@@ -244,6 +279,10 @@ public class ScopeSearchFacetDisplayBuilder {
 	}
 
 	protected List<TermCollector> getTermCollectors() {
+		if (_facet == null) {
+			return Collections.emptyList();
+		}
+
 		FacetCollector facetCollector = _facet.getFacetCollector();
 
 		if (facetCollector != null) {
@@ -306,5 +345,8 @@ public class ScopeSearchFacetDisplayBuilder {
 	private String _parameterName;
 	private List<Long> _selectedGroupIds = Collections.emptyList();
 	private boolean _showCounts;
+	private final SiteFacetPortletInstanceConfiguration
+		_siteFacetPortletInstanceConfiguration;
+	private final ThemeDisplay _themeDisplay;
 
 }

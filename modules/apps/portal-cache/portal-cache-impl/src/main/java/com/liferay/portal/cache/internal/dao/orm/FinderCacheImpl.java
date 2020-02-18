@@ -143,8 +143,42 @@ public class FinderCacheImpl
 			return null;
 		}
 
-		return _primaryKeyToResult(
-			finderPath, args, basePersistenceImpl, primaryKey);
+		if (primaryKey instanceof EmptyResult) {
+			EmptyResult emptyResult = (EmptyResult)primaryKey;
+
+			if (emptyResult.matches(args)) {
+				return Collections.emptyList();
+			}
+
+			return null;
+		}
+
+		if (primaryKey instanceof List<?>) {
+			List<Serializable> primaryKeys = (List<Serializable>)primaryKey;
+
+			Set<Serializable> primaryKeysSet = new HashSet<>(primaryKeys);
+
+			Map<Serializable, ? extends BaseModel<?>> map =
+				basePersistenceImpl.fetchByPrimaryKeys(primaryKeysSet);
+
+			if (map.size() < primaryKeysSet.size()) {
+				return null;
+			}
+
+			List<Serializable> list = new ArrayList<>(primaryKeys.size());
+
+			for (Serializable curPrimaryKey : primaryKeys) {
+				list.add(map.get(curPrimaryKey));
+			}
+
+			return Collections.unmodifiableList(list);
+		}
+
+		if (BaseModel.class.isAssignableFrom(finderPath.getResultClass())) {
+			return basePersistenceImpl.fetchByPrimaryKey(primaryKey);
+		}
+
+		return primaryKey;
 	}
 
 	@Override
@@ -337,49 +371,6 @@ public class FinderCacheImpl
 		}
 
 		return ThreadLocalFilterThreadLocal.isFilterInvoked();
-	}
-
-	private Serializable _primaryKeyToResult(
-		FinderPath finderPath, Object[] args,
-		BasePersistenceImpl<? extends BaseModel<?>> basePersistenceImpl,
-		Serializable primaryKey) {
-
-		if (primaryKey instanceof EmptyResult) {
-			EmptyResult emptyResult = (EmptyResult)primaryKey;
-
-			if (emptyResult.matches(args)) {
-				return (Serializable)Collections.emptyList();
-			}
-
-			return null;
-		}
-
-		if (primaryKey instanceof List<?>) {
-			List<Serializable> primaryKeys = (List<Serializable>)primaryKey;
-
-			Set<Serializable> primaryKeysSet = new HashSet<>(primaryKeys);
-
-			Map<Serializable, ? extends BaseModel<?>> map =
-				basePersistenceImpl.fetchByPrimaryKeys(primaryKeysSet);
-
-			if (map.size() < primaryKeysSet.size()) {
-				return null;
-			}
-
-			List<Serializable> list = new ArrayList<>(primaryKeys.size());
-
-			for (Serializable curPrimaryKey : primaryKeys) {
-				list.add(map.get(curPrimaryKey));
-			}
-
-			return (Serializable)Collections.unmodifiableList(list);
-		}
-
-		if (BaseModel.class.isAssignableFrom(finderPath.getResultClass())) {
-			return basePersistenceImpl.fetchByPrimaryKey(primaryKey);
-		}
-
-		return primaryKey;
 	}
 
 	private Serializable _resultToPrimaryKey(

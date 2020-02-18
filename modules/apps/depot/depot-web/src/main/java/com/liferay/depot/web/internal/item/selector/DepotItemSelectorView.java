@@ -14,6 +14,8 @@
 
 package com.liferay.depot.web.internal.item.selector;
 
+import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
+import com.liferay.depot.web.internal.application.list.DepotPanelAppController;
 import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.depot.web.internal.util.DepotSupportChecker;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.item.selector.display.context.SitesItemSelectorViewDisplayContext;
@@ -83,6 +86,27 @@ public class DepotItemSelectorView
 	}
 
 	@Override
+	public boolean isVisible(
+		GroupItemSelectorCriterion groupItemSelectorCriterion) {
+
+		if (!_depotSupportChecker.isEnabled()) {
+			return false;
+		}
+
+		if (groupItemSelectorCriterion == null) {
+			return true;
+		}
+
+		String portletId = groupItemSelectorCriterion.getPortletId();
+
+		if (Validator.isNull(portletId)) {
+			return true;
+		}
+
+		return _depotPanelAppController.isShow(portletId);
+	}
+
+	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
 		return _depotSupportChecker.isEnabled();
 	}
@@ -113,6 +137,12 @@ public class DepotItemSelectorView
 
 	@Reference
 	private DepotAdminGroupSearchProvider _depotAdminGroupSearchProvider;
+
+	@Reference
+	private DepotApplicationController _depotApplicationController;
+
+	@Reference
+	private DepotPanelAppController _depotPanelAppController;
 
 	@Reference
 	private DepotSupportChecker _depotSupportChecker;

@@ -49,6 +49,17 @@ public class DepotApplicationController {
 		return depotApplications;
 	}
 
+	public boolean isEnabled(String portletId) {
+		DepotApplication depotApplication = _serviceTrackerMap.getService(
+			portletId);
+
+		if (depotApplication == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isEnabled(String portletId, long groupId) {
 		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
 			groupId);

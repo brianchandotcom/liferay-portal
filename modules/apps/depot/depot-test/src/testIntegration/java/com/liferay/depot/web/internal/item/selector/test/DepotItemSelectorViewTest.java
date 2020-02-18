@@ -16,9 +16,13 @@ package com.liferay.depot.web.internal.item.selector.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.test.util.DepotTestUtil;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -44,13 +48,44 @@ public class DepotItemSelectorViewTest {
 
 	@Test
 	public void testIsVisible() {
-		Assert.assertTrue(_depotItemSelectorView.isVisible(null));
+		Assert.assertTrue(
+			_depotItemSelectorView.isVisible((GroupItemSelectorCriterion)null));
+		Assert.assertTrue(_depotItemSelectorView.isVisible((ThemeDisplay)null));
+	}
+
+	@Test
+	public void testIsVisibleForAnUnsupportedApplication() {
+		GroupItemSelectorCriterion groupItemSelectorCriterion =
+			new GroupItemSelectorCriterion();
+
+		groupItemSelectorCriterion.setPortletId(RandomTestUtil.randomString());
+
+		Assert.assertFalse(
+			_depotItemSelectorView.isVisible(groupItemSelectorCriterion));
+	}
+
+	@Test
+	public void testIsVisibleForASupportedApplication() {
+		GroupItemSelectorCriterion groupItemSelectorCriterion =
+			new GroupItemSelectorCriterion();
+
+		groupItemSelectorCriterion.setPortletId(
+			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+
+		Assert.assertTrue(
+			_depotItemSelectorView.isVisible(groupItemSelectorCriterion));
 	}
 
 	@Test
 	public void testIsVisibleWithDepotDisabled() throws Exception {
 		DepotTestUtil.withDepotDisabled(
-			() -> Assert.assertFalse(_depotItemSelectorView.isVisible(null)));
+			() -> {
+				Assert.assertFalse(
+					_depotItemSelectorView.isVisible(
+						(GroupItemSelectorCriterion)null));
+				Assert.assertFalse(
+					_depotItemSelectorView.isVisible((ThemeDisplay)null));
+			});
 	}
 
 	@Inject(filter = "component.name=*.DepotItemSelectorView")

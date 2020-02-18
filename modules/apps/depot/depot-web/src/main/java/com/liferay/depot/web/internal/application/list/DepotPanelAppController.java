@@ -64,15 +64,19 @@ public class DepotPanelAppController {
 	public boolean isShow(PanelApp panelApp, long groupId) {
 		String portletId = panelApp.getPortletId();
 
-		if (portletId.equals(DepotPortletKeys.DEPOT_ADMIN) ||
-			portletId.equals(DepotPortletKeys.DEPOT_SETTINGS) ||
-			_panelCategoryHelper.containsPortlet(
-				portletId, PanelCategoryKeys.CONTROL_PANEL)) {
-
+		if (_isAlwaysShow(portletId)) {
 			return true;
 		}
 
 		return _depotApplicationController.isEnabled(portletId, groupId);
+	}
+
+	public boolean isShow(String portletId) {
+		if (_isAlwaysShow(portletId)) {
+			return true;
+		}
+
+		return _depotApplicationController.isEnabled(portletId);
 	}
 
 	@Activate
@@ -102,6 +106,18 @@ public class DepotPanelAppController {
 		}
 
 		_serviceRegistrations.clear();
+	}
+
+	private boolean _isAlwaysShow(String portletId) {
+		if (portletId.equals(DepotPortletKeys.DEPOT_ADMIN) ||
+			portletId.equals(DepotPortletKeys.DEPOT_SETTINGS) ||
+			_panelCategoryHelper.containsPortlet(
+				portletId, PanelCategoryKeys.CONTROL_PANEL)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

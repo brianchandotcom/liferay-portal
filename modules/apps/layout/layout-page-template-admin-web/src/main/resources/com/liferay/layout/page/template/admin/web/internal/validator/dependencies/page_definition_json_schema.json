@@ -50,6 +50,14 @@
 		},
 		"FragmentFieldCustom": {
 			"additionalProperties": false,
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"value": {
+					"type": "object"
+				}
+			},
 			"title": "The FragmentFieldCustom Schema",
 			"type": "object"
 		},

@@ -273,8 +273,9 @@ class LayoutProvider extends Component {
 	_fieldActionsValueFn() {
 		return [
 			{
-				action: indexes => this.dispatch('fieldDuplicated', {indexes}),
-				label: Liferay.Language.get('duplicate'),
+				action: fieldName =>
+					this.dispatch('fieldDuplicated', {fieldName}),
+				label: Liferay.Language.get('duplicate')
 			},
 			{
 				action: indexes => this.dispatch('fieldDeleted', {indexes}),

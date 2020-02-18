@@ -19,14 +19,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +49,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -64,7 +75,60 @@ public class LayoutPageTemplatesImporterImpl
 							zipFile.getName());
 				}
 			}
+
+			for (Map.Entry<String, PageTemplateCollectionEntry> entry :
+					pageTemplateCollectionEntryMap.entrySet()) {
+
+				PageTemplateCollectionEntry pageTemplateCollectionEntry =
+					entry.getValue();
+
+				LayoutPageTemplateCollection layoutPageTemplateCollection =
+					_getLayoutPageTemplateCollection(
+						groupId, pageTemplateCollectionEntry, overwrite);
+
+				_processPageTemplateEntries(
+					groupId, layoutPageTemplateCollection,
+					pageTemplateCollectionEntry.getPageTemplatesEntries(),
+					overwrite);
+			}
 		}
+	}
+
+	private LayoutPageTemplateCollection _getLayoutPageTemplateCollection(
+			long groupId,
+			PageTemplateCollectionEntry pageTemplateCollectionEntry,
+			boolean overwrite)
+		throws PortalException {
+
+		String layoutPageTemplateCollectionKey =
+			pageTemplateCollectionEntry.getKey();
+
+		PageTemplateCollection pageTemplateCollection =
+			pageTemplateCollectionEntry.getPageTemplateCollection();
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollection(
+					groupId, layoutPageTemplateCollectionKey);
+
+		if (layoutPageTemplateCollection == null) {
+			return _layoutPageTemplateCollectionService.
+				addLayoutPageTemplateCollection(
+					groupId, pageTemplateCollection.getName(),
+					pageTemplateCollection.getDescription(),
+					ServiceContextThreadLocal.getServiceContext());
+		}
+
+		if (overwrite) {
+			return _layoutPageTemplateCollectionService.
+				updateLayoutPageTemplateCollection(
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					pageTemplateCollection.getName(),
+					pageTemplateCollection.getDescription());
+		}
+
+		return layoutPageTemplateCollection;
 	}
 
 	private PageDefinition _getPageDefinition(String fileName, ZipFile zipFile)
@@ -187,12 +251,66 @@ public class LayoutPageTemplatesImporterImpl
 		return false;
 	}
 
+	private void _processPageTemplateEntries(
+			long groupId,
+			LayoutPageTemplateCollection layoutPageTemplateCollection,
+			Map<String, PageTemplateEntry> pageTemplateEntryMap,
+			boolean overwrite)
+		throws PortalException {
+
+		for (Map.Entry<String, PageTemplateEntry> entry :
+				pageTemplateEntryMap.entrySet()) {
+
+			PageTemplateEntry pageTemplateEntry = entry.getValue();
+
+			PageTemplate pageTemplate = pageTemplateEntry.getPageTemplate();
+
+			String layoutPageTemplateEntryKey = entry.getKey();
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						groupId, layoutPageTemplateEntryKey);
+
+			if (layoutPageTemplateEntry == null) {
+				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+					groupId,
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					pageTemplate.getName(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+					WorkflowConstants.STATUS_APPROVED,
+					ServiceContextThreadLocal.getServiceContext());
+			}
+			else if (overwrite) {
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					pageTemplate.getName());
+			}
+		}
+	}
+
 	private static final String _ROOT_FOLDER = "page-templates";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplatesImporterImpl.class);
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
+
+	@Reference
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
+	@Reference
+	private LayoutPageTemplateCollectionService
+		_layoutPageTemplateCollectionService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	private class PageTemplateCollectionEntry {
 
@@ -211,6 +329,18 @@ public class LayoutPageTemplatesImporterImpl
 			_pageTemplateEntries.put(key, pageTemplateEntry);
 		}
 
+		public String getKey() {
+			return _key;
+		}
+
+		public PageTemplateCollection getPageTemplateCollection() {
+			return _pageTemplateCollection;
+		}
+
+		public Map<String, PageTemplateEntry> getPageTemplatesEntries() {
+			return _pageTemplateEntries;
+		}
+
 		private final String _key;
 		private final PageTemplateCollection _pageTemplateCollection;
 		private final Map<String, PageTemplateEntry> _pageTemplateEntries;
@@ -224,6 +354,14 @@ public class LayoutPageTemplatesImporterImpl
 
 			_pageTemplate = pageTemplate;
 			_pageDefinition = pageDefinition;
+		}
+
+		public PageDefinition getPageDefinition() {
+			return _pageDefinition;
+		}
+
+		public PageTemplate getPageTemplate() {
+			return _pageTemplate;
 		}
 
 		private final PageDefinition _pageDefinition;

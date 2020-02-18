@@ -95,6 +95,23 @@
 		},
 		"FragmentFieldText": {
 			"additionalProperties": false,
+			"properties": {
+				"fragmentLink": {
+					"$ref": "#/definitions/FragmentLink"
+				},
+				"text": {
+					"additionalProperties": false,
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineValue"
+						},
+						{
+							"$ref": "#/definitions/MappedValue"
+						}
+					],
+					"type": "object"
+				}
+			},
 			"title": "The FragmentFieldText Schema",
 			"type": "object"
 		},

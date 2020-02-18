@@ -44,7 +44,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 </div>
 
 <aui:form action="<%= addChannelURL %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<liferay-portlet:renderURL varImpl="selectSitesURL">
+		<portlet:param name="mvcRenderCommandName" value="/view_configuration_screen" />
+		<portlet:param name="configurationScreenKey" value="synced-sites" />
+	</liferay-portlet:renderURL>
+
+	<aui:input name="redirect" type="hidden" value="<%= selectSitesURL %>" />
 
 	<div class="portlet-analytics-settings sheet sheet-lg">
 		<h2 class="autofit-row">

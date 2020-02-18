@@ -89,15 +89,15 @@ public class LayoutDataConverter {
 						"backgroundColorCssClass"));
 				containerLayoutStructureItem.setBackgroundImageJSONObject(
 					_getBackgroundImageJSONObject(inputRowConfigJSONObject));
+				containerLayoutStructureItem.setContainerType(
+					inputRowConfigJSONObject.getString(
+						"containerType", "fixed"));
 				containerLayoutStructureItem.setPaddingBottom(
 					inputRowConfigJSONObject.getInt("paddingVertical", 3));
 				containerLayoutStructureItem.setPaddingHorizontal(
 					inputRowConfigJSONObject.getInt("paddingHorizontal", 3));
 				containerLayoutStructureItem.setPaddingTop(
 					inputRowConfigJSONObject.getInt("paddingVertical", 3));
-				containerLayoutStructureItem.setContainerType(
-					inputRowConfigJSONObject.getString(
-						"containerType", "fixed"));
 
 				RowLayoutStructureItem rowLayoutStructureItem =
 					(RowLayoutStructureItem)

@@ -129,11 +129,7 @@ public class ClusterConfigurationModelIndexer
 				IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
 					osgiServiceIdentifier);
 
-		clusterConfigurationModelIndexer._reset();
-	}
-
-	private void _reset() {
-		_initialized = false;
+		clusterConfigurationModelIndexer._initialized = false;
 	}
 
 	private synchronized void _stopBundleTracker() {
@@ -173,7 +169,7 @@ public class ClusterConfigurationModelIndexer
 
 		@Override
 		public void masterTokenAcquired() {
-			_reset();
+			_initialized = false;
 
 			ClusterRequest clusterRequest =
 				ClusterRequest.createMulticastRequest(

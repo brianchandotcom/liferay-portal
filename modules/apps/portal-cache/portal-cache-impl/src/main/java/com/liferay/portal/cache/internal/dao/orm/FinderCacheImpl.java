@@ -139,12 +139,12 @@ public class FinderCacheImpl
 			}
 		}
 
-		if (primaryKey != null) {
-			return _primaryKeyToResult(
-				finderPath, args, basePersistenceImpl, primaryKey);
+		if (primaryKey == null) {
+			return null;
 		}
 
-		return null;
+		return _primaryKeyToResult(
+			finderPath, args, basePersistenceImpl, primaryKey);
 	}
 
 	@Override

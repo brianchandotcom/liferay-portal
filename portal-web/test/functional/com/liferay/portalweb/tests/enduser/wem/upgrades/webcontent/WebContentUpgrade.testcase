@@ -133,4 +133,26 @@ definition {
 		Upgrade.publishWCDraft();
 	}
 
+	@description = "This is a use case for LPS-98619."
+	@priority = "3"
+	test ViewWebContentWithImageArchive621021 {
+		property data.archive.type = "data-archive-web-content-with-image";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCPWithoutContentField(
+			field = "Image",
+			webContentImage = "10470",
+			webContentTitle = "Web Content Title");
+
+		AssertVisible(locator1 = "Button#PREVIEW");
+	}
+
 }

@@ -80,6 +80,58 @@ definition {
 	}
 
 	@priority = "4"
+	test AssignExistingUserToAccount {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is an account with user.",
+			accountName = "Account Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Users");
+
+		AccountUsers.addUsers(
+			accountName = "Account Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is a test for adding user to account.",
+			accountName = "Account with Exist User",
+			domainNames = "liferay.com");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		Accounts.addAssignee(
+			accountName = "Account with Exist User",
+			assigneeName = "userfn",
+			assigneeType = "Users");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Exist User");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		Accounts.viewAssignee(assigneeName = "userfn");
+	}
+
+	@priority = "4"
 	test AssignOrganizationToAccount {
 		JSONOrganization.addOrganization(
 			organizationName = "Organization for Account",

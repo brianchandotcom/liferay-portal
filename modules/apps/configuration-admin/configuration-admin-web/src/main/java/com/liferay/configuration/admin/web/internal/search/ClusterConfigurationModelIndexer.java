@@ -55,8 +55,39 @@ public class ClusterConfigurationModelIndexer
 	}
 
 	public void initialize() throws PortletException {
-		if (!_initialized) {
-			_initialize();
+		if (_initialized) {
+			return;
+		}
+
+		synchronized (this) {
+			if (_initialized) {
+				return;
+			}
+
+			if (_clusterMasterExecutor.isMaster()) {
+				try (SafeClosable safeClosable =
+						ProxyModeThreadLocal.setWithSafeClosable(true)) {
+
+					_bundleTracker = _configurationModelIndexer.initialize();
+				}
+			}
+			else {
+				NoticeableFuture<Void> noticeableFuture =
+					_clusterMasterExecutor.executeOnMaster(
+						new MethodHandler(
+							_initializeMethodKey, getOSGiServiceIdentifier()));
+
+				try {
+					noticeableFuture.get();
+				}
+				catch (Exception exception) {
+					throw new PortletException(
+						"Unable to initialize configuration model index",
+						exception);
+				}
+			}
+
+			_initialized = true;
 		}
 	}
 
@@ -99,37 +130,6 @@ public class ClusterConfigurationModelIndexer
 					osgiServiceIdentifier);
 
 		clusterConfigurationModelIndexer._reset();
-	}
-
-	private synchronized void _initialize() throws PortletException {
-		if (_initialized) {
-			return;
-		}
-
-		if (_clusterMasterExecutor.isMaster()) {
-			try (SafeClosable safeClosable =
-					ProxyModeThreadLocal.setWithSafeClosable(true)) {
-
-				_bundleTracker = _configurationModelIndexer.initialize();
-			}
-		}
-		else {
-			NoticeableFuture<Void> noticeableFuture =
-				_clusterMasterExecutor.executeOnMaster(
-					new MethodHandler(
-						_initializeMethodKey, getOSGiServiceIdentifier()));
-
-			try {
-				noticeableFuture.get();
-			}
-			catch (Exception exception) {
-				throw new PortletException(
-					"Unable to initialize configuration model index",
-					exception);
-			}
-		}
-
-		_initialized = true;
 	}
 
 	private synchronized void _reset() {

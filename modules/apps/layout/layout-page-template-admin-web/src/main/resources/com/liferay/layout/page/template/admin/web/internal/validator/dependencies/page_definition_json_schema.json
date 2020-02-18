@@ -18,7 +18,49 @@
 		},
 		"FragmentField": {
 			"additionalProperties": false,
+			"oneOf": [
+				{
+					"$ref": "#/definitions/FragmentFieldBackgroundImage"
+				},
+				{
+					"$ref": "#/definitions/FragmentFieldCustom"
+				},
+				{
+					"$ref": "#/definitions/FragmentFieldHTML"
+				},
+				{
+					"$ref": "#/definitions/FragmentFieldImage"
+				},
+				{
+					"$ref": "#/definitions/FragmentFieldText"
+				}
+			],
 			"title": "The FragmentField Schema",
+			"type": "object"
+		},
+		"FragmentFieldBackgroundImage": {
+			"additionalProperties": false,
+			"title": "The FragmentFieldBackgroundImage Schema",
+			"type": "object"
+		},
+		"FragmentFieldCustom": {
+			"additionalProperties": false,
+			"title": "The FragmentFieldCustom Schema",
+			"type": "object"
+		},
+		"FragmentFieldHTML": {
+			"additionalProperties": false,
+			"title": "The FragmentFieldHTML Schema",
+			"type": "object"
+		},
+		"FragmentFieldImage": {
+			"additionalProperties": false,
+			"title": "The FragmentFieldImage Schema",
+			"type": "object"
+		},
+		"FragmentFieldText": {
+			"additionalProperties": false,
+			"title": "The FragmentFieldText Schema",
 			"type": "object"
 		},
 		"FragmentImage": {

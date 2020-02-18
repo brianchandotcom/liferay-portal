@@ -10,6 +10,8 @@
 		<suppress checks="BuilderCheck" files="portal-kernel/src/com/liferay/portal/kernel/search/BaseIndexer\.java" />
 		<suppress checks="BuilderCheck" files="portal-kernel/src/com/liferay/ratings/kernel/display/context/GroupPortletRatingsDefinitionDisplayContext\.java" />
 		<suppress checks="BuilderCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/HashMapBuilderTest\.java" />
+		<suppress checks="BuilderCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/LinkedHashMapBuilderTest\.java" />
+		<suppress checks="BuilderCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/TreeMapBuilderTest\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/PackagingUtil\.java" />
 		<suppress checks="CamelCaseNameCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/ListUtilTest\.java" />

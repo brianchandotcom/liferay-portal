@@ -31,9 +31,22 @@
 				publishGlobalLink.addEventListener('click', function(event) {
 					event.preventDefault();
 
-					Liferay.LayoutExporter.publishToLive({
+					Liferay.Util.openWindow({
+						dialog: {
+							constrain: true,
+							modal: true,
+							on: {
+								visibleChange: function(event) {
+									var instance = this;
+
+									if (!event.newVal) {
+										instance.destroy();
+									}
+								}
+							}
+						},
 						title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-						url: publishGlobalLink.getAttribute('href')
+						uri: publishGlobalLink.getAttribute('href')
 					});
 				});
 			}
@@ -215,9 +228,22 @@
 					publishLink.addEventListener('click', function(event) {
 						event.preventDefault();
 
-						Liferay.LayoutExporter.publishToLive({
+						Liferay.Util.openWindow({
+							dialog: {
+								constrain: true,
+								modal: true,
+								on: {
+									visibleChange: function(event) {
+										var instance = this;
+
+										if (!event.newVal) {
+											instance.destroy();
+										}
+									}
+								}
+							},
 							title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-							url: publishLink.getAttribute('href')
+							uri: publishLink.getAttribute('href')
 						});
 					});
 				}

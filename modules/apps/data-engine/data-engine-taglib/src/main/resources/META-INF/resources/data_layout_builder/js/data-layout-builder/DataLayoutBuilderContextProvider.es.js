@@ -16,6 +16,7 @@ import React, {useContext, useEffect} from 'react';
 
 import AppContext from '../AppContext.es';
 import {
+	UPDATE_EDITING_LANGUAGE_ID,
 	UPDATE_FIELD_TYPES,
 	UPDATE_FOCUSED_FIELD,
 	UPDATE_PAGES
@@ -24,6 +25,24 @@ import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 
 export default ({children, dataLayoutBuilder}) => {
 	const [, dispatch] = useContext(AppContext);
+
+	useEffect(() => {
+		const provider = dataLayoutBuilder.getLayoutProvider();
+
+		const eventHandler = provider.on(
+			'editingLanguageIdChanged',
+			({newVal}) => {
+				provider.once('rendered', () => {
+					dispatch({
+						payload: newVal,
+						type: UPDATE_EDITING_LANGUAGE_ID
+					});
+				});
+			}
+		);
+
+		return () => eventHandler.removeListener();
+	}, [dataLayoutBuilder, dispatch]);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();

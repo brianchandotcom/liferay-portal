@@ -32,6 +32,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -111,6 +112,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response deleteFormDocumentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_formDocumentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formDocumentResource ->
+				formDocumentResource.deleteFormDocumentBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
 	public FormRecord updateFormRecord(
 			@GraphQLName("formRecordId") Long formRecordId,
 			@GraphQLName("formRecord") FormRecord formRecord)
@@ -124,6 +139,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response updateFormRecordBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_formRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formRecordResource -> formRecordResource.putFormRecordBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
 	public FormRecord createFormFormRecord(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("formRecord") FormRecord formRecord)
@@ -134,6 +162,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			formRecordResource -> formRecordResource.postFormFormRecord(
 				formId, formRecord));
+	}
+
+	@GraphQLField
+	public Response createFormFormRecordBatch(
+			@GraphQLName("formId") Long formId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_formRecordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formRecordResource -> formRecordResource.postFormFormRecordBatch(
+				formId, callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

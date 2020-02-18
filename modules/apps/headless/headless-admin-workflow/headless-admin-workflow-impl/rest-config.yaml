@@ -6,4 +6,5 @@ application:
     name: "Liferay.Headless.Admin.Workflow"
 author: "Javier Gamarra"
 clientDir: "../headless-admin-workflow-client/src/main/java"
+generateBatch: false
 testDir: "../headless-admin-workflow-test/src/testIntegration/java"

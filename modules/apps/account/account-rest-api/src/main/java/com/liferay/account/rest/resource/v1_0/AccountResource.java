@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -48,7 +49,13 @@ public interface AccountResource {
 
 	public Account postAccount(Account account) throws Exception;
 
+	public Response postAccountBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteAccount(Long accountId) throws Exception;
+
+	public Response deleteAccountBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public Account getAccount(Long accountId) throws Exception;
 
@@ -56,6 +63,9 @@ public interface AccountResource {
 		throws Exception;
 
 	public Account putAccount(Long accountId, Account account) throws Exception;
+
+	public Response putAccountBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

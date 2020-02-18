@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotEmpty;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -82,6 +83,19 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public Response deleteKeywordBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.deleteKeywordBatch(
+				callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Replaces the keyword with the information sent in the request body. Any missing fields are deleted, unless required."
 	)
@@ -96,6 +110,19 @@ public class Mutation {
 			keywordResource -> keywordResource.putKeyword(keywordId, keyword));
 	}
 
+	@GraphQLField
+	public Response updateKeywordBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.putKeywordBatch(
+				callbackURL, object));
+	}
+
 	@GraphQLField(description = "Inserts a new keyword in a Site.")
 	public Keyword createSiteKeyword(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -107,6 +134,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			keywordResource -> keywordResource.postSiteKeyword(
 				Long.valueOf(siteKey), keyword));
+	}
+
+	@GraphQLField
+	public Response createSiteKeywordBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.postSiteKeywordBatch(
+				Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField(description = "Inserts a new child taxonomy category.")
@@ -141,6 +182,20 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public Response deleteTaxonomyCategoryBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.deleteTaxonomyCategoryBatch(
+					callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Updates only the fields received in the request body. Other fields are left untouched."
 	)
@@ -173,6 +228,20 @@ public class Mutation {
 					taxonomyCategoryId, taxonomyCategory));
 	}
 
+	@GraphQLField
+	public Response updateTaxonomyCategoryBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.putTaxonomyCategoryBatch(
+					callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Inserts a new taxonomy category in a taxonomy vocabulary."
 	)
@@ -187,6 +256,22 @@ public class Mutation {
 			taxonomyCategoryResource ->
 				taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 					taxonomyVocabularyId, taxonomyCategory));
+	}
+
+	@GraphQLField
+	public Response createTaxonomyVocabularyTaxonomyCategoryBatch(
+			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.
+					postTaxonomyVocabularyTaxonomyCategoryBatch(
+						taxonomyVocabularyId, callbackURL, object));
 	}
 
 	@GraphQLField(description = "Inserts a new taxonomy vocabulary in a Site.")
@@ -204,6 +289,21 @@ public class Mutation {
 					Long.valueOf(siteKey), taxonomyVocabulary));
 	}
 
+	@GraphQLField
+	public Response createSiteTaxonomyVocabularyBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.postSiteTaxonomyVocabularyBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the taxonomy vocabulary and returns a 204 if the operation succeeds."
 	)
@@ -219,6 +319,20 @@ public class Mutation {
 					taxonomyVocabularyId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteTaxonomyVocabularyBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.deleteTaxonomyVocabularyBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField(
@@ -253,6 +367,20 @@ public class Mutation {
 			taxonomyVocabularyResource ->
 				taxonomyVocabularyResource.putTaxonomyVocabulary(
 					taxonomyVocabularyId, taxonomyVocabulary));
+	}
+
+	@GraphQLField
+	public Response updateTaxonomyVocabularyBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.putTaxonomyVocabularyBatch(
+					callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.feature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -129,7 +130,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(new CompanyContextProvider(_portal));
 		featureContext.register(
 			new ContextContainerRequestFilter(
-				_groupLocalService, _language, _portal,
+				_groupLocalService, _importTaskResource, _language, _portal,
 				_resourceActionLocalService, _resourcePermissionLocalService,
 				_roleLocalService, _getScopeChecker()));
 		featureContext.register(
@@ -187,6 +188,9 @@ public class VulcanFeature implements Feature {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ImportTaskResource _importTaskResource;
 
 	@Reference
 	private Language _language;

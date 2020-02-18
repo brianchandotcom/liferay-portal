@@ -69,21 +69,12 @@ public class LayoutPageTemplateStructureHelperUtil {
 			layoutStructure.addContainerLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
-		LayoutStructureItem rowLayoutStructureItem =
-			layoutStructure.addRowLayoutStructureItem(
-				containerLayoutStructureItem.getItemId(), 0,
-				fragmentEntryLinks.size());
-
 		for (int i = 0; i < fragmentEntryLinks.size(); i++) {
 			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
 
-			LayoutStructureItem columnLayoutStructureItem =
-				layoutStructure.addColumnLayoutStructureItem(
-					rowLayoutStructureItem.getItemId(), i);
-
 			layoutStructure.addFragmentLayoutStructureItem(
 				fragmentEntryLink.getFragmentEntryLinkId(),
-				columnLayoutStructureItem.getItemId(), 0);
+				containerLayoutStructureItem.getItemId(), i);
 		}
 
 		return layoutStructure.toJSONObject();

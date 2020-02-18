@@ -78,10 +78,12 @@ public class FragmentEntryLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", fragmentEntryLinkId=");
@@ -137,6 +139,7 @@ public class FragmentEntryLinkCacheModel
 			new FragmentEntryLinkImpl();
 
 		fragmentEntryLinkImpl.setMvccVersion(mvccVersion);
+		fragmentEntryLinkImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			fragmentEntryLinkImpl.setUuid("");
@@ -251,6 +254,8 @@ public class FragmentEntryLinkCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		fragmentEntryLinkId = objectInput.readLong();
@@ -287,6 +292,8 @@ public class FragmentEntryLinkCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -377,6 +384,7 @@ public class FragmentEntryLinkCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long fragmentEntryLinkId;
 	public long groupId;

@@ -14,7 +14,10 @@
 
 package com.liferay.fragment.service;
 
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link FragmentEntryLinkLocalService}.
@@ -40,15 +43,15 @@ public class FragmentEntryLinkLocalServiceWrapper
 	 * @return the fragment entry link that was added
 	 */
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
-		com.liferay.fragment.model.FragmentEntryLink fragmentEntryLink) {
+	public FragmentEntryLink addFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink) {
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			fragmentEntryLink);
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink addFragmentEntryLink(
+	public FragmentEntryLink addFragmentEntryLink(
 			long userId, long groupId, long originalFragmentEntryLinkId,
 			long fragmentEntryId, long classNameId, long classPK, String css,
 			String html, String js, String configuration, String editableValues,
@@ -69,9 +72,7 @@ public class FragmentEntryLinkLocalServiceWrapper
 	 * @return the new fragment entry link
 	 */
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink createFragmentEntryLink(
-		long fragmentEntryLinkId) {
-
+	public FragmentEntryLink createFragmentEntryLink(long fragmentEntryLinkId) {
 		return _fragmentEntryLinkLocalService.createFragmentEntryLink(
 			fragmentEntryLinkId);
 	}
@@ -95,8 +96,8 @@ public class FragmentEntryLinkLocalServiceWrapper
 	 * @return the fragment entry link that was removed
 	 */
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink deleteFragmentEntryLink(
-		com.liferay.fragment.model.FragmentEntryLink fragmentEntryLink) {
+	public FragmentEntryLink deleteFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink) {
 
 		return _fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLink);
@@ -110,8 +111,7 @@ public class FragmentEntryLinkLocalServiceWrapper
 	 * @throws PortalException if a fragment entry link with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink deleteFragmentEntryLink(
-			long fragmentEntryLinkId)
+	public FragmentEntryLink deleteFragmentEntryLink(long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentEntryLinkLocalService.deleteFragmentEntryLink(
@@ -132,7 +132,7 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
+	public java.util.List<FragmentEntryLink>
 		deleteLayoutPageTemplateEntryFragmentEntryLinks(
 			long groupId, long classNameId, long classPK) {
 
@@ -245,9 +245,7 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink fetchFragmentEntryLink(
-		long fragmentEntryLinkId) {
-
+	public FragmentEntryLink fetchFragmentEntryLink(long fragmentEntryLinkId) {
 		return _fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 			fragmentEntryLinkId);
 	}
@@ -260,8 +258,8 @@ public class FragmentEntryLinkLocalServiceWrapper
 	 * @return the matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
 	 */
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink
-		fetchFragmentEntryLinkByUuidAndGroupId(String uuid, long groupId) {
+	public FragmentEntryLink fetchFragmentEntryLinkByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _fragmentEntryLinkLocalService.
 			fetchFragmentEntryLinkByUuidAndGroupId(uuid, groupId);
@@ -301,8 +299,7 @@ public class FragmentEntryLinkLocalServiceWrapper
 	 * @throws PortalException if a fragment entry link with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink getFragmentEntryLink(
-			long fragmentEntryLinkId)
+	public FragmentEntryLink getFragmentEntryLink(long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
@@ -318,8 +315,8 @@ public class FragmentEntryLinkLocalServiceWrapper
 	 * @throws PortalException if a matching fragment entry link could not be found
 	 */
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink
-			getFragmentEntryLinkByUuidAndGroupId(String uuid, long groupId)
+	public FragmentEntryLink getFragmentEntryLinkByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentEntryLinkLocalService.
@@ -338,40 +335,36 @@ public class FragmentEntryLinkLocalServiceWrapper
 	 * @return the range of fragment entry links
 	 */
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
-		getFragmentEntryLinks(int start, int end) {
+	public java.util.List<FragmentEntryLink> getFragmentEntryLinks(
+		int start, int end) {
 
 		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
-		getFragmentEntryLinks(
-			long groupId, long fragmentEntryId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.fragment.model.FragmentEntryLink>
-					orderByComparator) {
+	public java.util.List<FragmentEntryLink> getFragmentEntryLinks(
+		long groupId, long fragmentEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntryLink>
+			orderByComparator) {
 
 		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(
 			groupId, fragmentEntryId, start, end, orderByComparator);
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
-		getFragmentEntryLinks(long groupId, long classNameId, long classPK) {
+	public java.util.List<FragmentEntryLink> getFragmentEntryLinks(
+		long groupId, long classNameId, long classPK) {
 
 		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(
 			groupId, classNameId, classPK);
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
-		getFragmentEntryLinks(
-			long groupId, long fragmentEntryId, long classNameId,
-			int layoutPageTemplateType, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.fragment.model.FragmentEntryLink>
-					orderByComparator) {
+	public java.util.List<FragmentEntryLink> getFragmentEntryLinks(
+		long groupId, long fragmentEntryId, long classNameId,
+		int layoutPageTemplateType, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntryLink>
+			orderByComparator) {
 
 		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(
 			groupId, fragmentEntryId, classNameId, layoutPageTemplateType,
@@ -379,13 +372,11 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
-		getFragmentEntryLinks(
-			long groupId, long fragmentEntryId, long classNameId, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.fragment.model.FragmentEntryLink>
-					orderByComparator) {
+	public java.util.List<FragmentEntryLink> getFragmentEntryLinks(
+		long groupId, long fragmentEntryId, long classNameId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntryLink>
+			orderByComparator) {
 
 		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(
 			groupId, fragmentEntryId, classNameId, start, end,
@@ -393,15 +384,15 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
-		getFragmentEntryLinks(String rendererKey) {
+	public java.util.List<FragmentEntryLink> getFragmentEntryLinks(
+		String rendererKey) {
 
 		return _fragmentEntryLinkLocalService.getFragmentEntryLinks(
 			rendererKey);
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
+	public java.util.List<FragmentEntryLink>
 		getFragmentEntryLinksByFragmentEntryId(long fragmentEntryId) {
 
 		return _fragmentEntryLinkLocalService.
@@ -416,7 +407,7 @@ public class FragmentEntryLinkLocalServiceWrapper
 	 * @return the matching fragment entry links, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
+	public java.util.List<FragmentEntryLink>
 		getFragmentEntryLinksByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _fragmentEntryLinkLocalService.
@@ -434,12 +425,11 @@ public class FragmentEntryLinkLocalServiceWrapper
 	 * @return the range of matching fragment entry links, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
+	public java.util.List<FragmentEntryLink>
 		getFragmentEntryLinksByUuidAndCompanyId(
 			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.fragment.model.FragmentEntryLink>
-					orderByComparator) {
+			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntryLink>
+				orderByComparator) {
 
 		return _fragmentEntryLinkLocalService.
 			getFragmentEntryLinksByUuidAndCompanyId(
@@ -530,15 +520,15 @@ public class FragmentEntryLinkLocalServiceWrapper
 	 * @return the fragment entry link that was updated
 	 */
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
-		com.liferay.fragment.model.FragmentEntryLink fragmentEntryLink) {
+	public FragmentEntryLink updateFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink) {
 
 		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLink);
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
+	public FragmentEntryLink updateFragmentEntryLink(
 			long fragmentEntryLinkId, int position)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -547,7 +537,7 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
+	public FragmentEntryLink updateFragmentEntryLink(
 			long userId, long fragmentEntryLinkId,
 			long originalFragmentEntryLinkId, long fragmentEntryId,
 			long classNameId, long classPK, String css, String html, String js,
@@ -563,7 +553,7 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
+	public FragmentEntryLink updateFragmentEntryLink(
 			long fragmentEntryLinkId, String editableValues)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -572,7 +562,7 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
+	public FragmentEntryLink updateFragmentEntryLink(
 			long fragmentEntryLinkId, String editableValues,
 			boolean updateClassedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -607,6 +597,26 @@ public class FragmentEntryLinkLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_fragmentEntryLinkLocalService.updateLatestChanges(fragmentEntryLinkId);
+	}
+
+	@Override
+	public CTPersistence<FragmentEntryLink> getCTPersistence() {
+		return _fragmentEntryLinkLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<FragmentEntryLink> getModelClass() {
+		return _fragmentEntryLinkLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<FragmentEntryLink>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _fragmentEntryLinkLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

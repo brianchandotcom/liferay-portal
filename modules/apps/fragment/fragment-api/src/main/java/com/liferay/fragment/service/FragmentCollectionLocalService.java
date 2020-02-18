@@ -16,6 +16,7 @@ package com.liferay.fragment.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -58,7 +61,8 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface FragmentCollectionLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+	extends BaseLocalService, CTService<FragmentCollection>,
+			PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -350,5 +354,20 @@ public interface FragmentCollectionLocalService
 	public FragmentCollection updateFragmentCollection(
 			long fragmentCollectionId, String name, String description)
 		throws PortalException;
+
+	@Override
+	@Transactional(enabled = false)
+	public CTPersistence<FragmentCollection> getCTPersistence();
+
+	@Override
+	@Transactional(enabled = false)
+	public Class<FragmentCollection> getModelClass();
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<FragmentCollection>, R, E>
+				updateUnsafeFunction)
+		throws E;
 
 }

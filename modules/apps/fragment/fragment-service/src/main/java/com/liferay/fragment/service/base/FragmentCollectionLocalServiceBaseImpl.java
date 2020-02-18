@@ -23,6 +23,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -43,6 +44,8 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -504,7 +507,7 @@ public abstract class FragmentCollectionLocalServiceBaseImpl
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
 			FragmentCollectionLocalService.class, IdentifiableOSGiService.class,
-			PersistedModelLocalService.class
+			CTService.class, PersistedModelLocalService.class
 		};
 	}
 
@@ -524,8 +527,23 @@ public abstract class FragmentCollectionLocalServiceBaseImpl
 		return FragmentCollectionLocalService.class.getName();
 	}
 
-	protected Class<?> getModelClass() {
+	@Override
+	public CTPersistence<FragmentCollection> getCTPersistence() {
+		return fragmentCollectionPersistence;
+	}
+
+	@Override
+	public Class<FragmentCollection> getModelClass() {
 		return FragmentCollection.class;
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<FragmentCollection>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return updateUnsafeFunction.apply(fragmentCollectionPersistence);
 	}
 
 	protected String getModelClassName() {

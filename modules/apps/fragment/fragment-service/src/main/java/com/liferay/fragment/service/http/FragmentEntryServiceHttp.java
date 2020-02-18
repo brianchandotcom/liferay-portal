@@ -1124,8 +1124,8 @@ public class FragmentEntryServiceHttp {
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 			HttpPrincipal httpPrincipal, long fragmentEntryId, String name,
-			String css, String html, String js, String configuration,
-			int status)
+			String css, String html, String js, boolean cacheable,
+			String configuration, long previewFileEntryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1134,8 +1134,8 @@ public class FragmentEntryServiceHttp {
 				_updateFragmentEntryParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, fragmentEntryId, name, css, html, js, configuration,
-				status);
+				methodKey, fragmentEntryId, name, css, html, js, cacheable,
+				configuration, previewFileEntryId, status);
 
 			Object returnObj = null;
 
@@ -1167,8 +1167,8 @@ public class FragmentEntryServiceHttp {
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 			HttpPrincipal httpPrincipal, long fragmentEntryId, String name,
-			String css, String html, String js, boolean cacheable,
-			String configuration, long previewFileEntryId, int status)
+			String css, String html, String js, String configuration,
+			int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1177,8 +1177,8 @@ public class FragmentEntryServiceHttp {
 				_updateFragmentEntryParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, fragmentEntryId, name, css, html, js, cacheable,
-				configuration, previewFileEntryId, status);
+				methodKey, fragmentEntryId, name, css, html, js, configuration,
+				status);
 
 			Object returnObj = null;
 
@@ -1364,12 +1364,12 @@ public class FragmentEntryServiceHttp {
 	private static final Class<?>[] _updateFragmentEntryParameterTypes28 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
-			String.class, int.class
+			boolean.class, String.class, long.class, int.class
 		};
 	private static final Class<?>[] _updateFragmentEntryParameterTypes29 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
-			boolean.class, String.class, long.class, int.class
+			String.class, int.class
 		};
 	private static final Class<?>[] _updateFragmentEntryParameterTypes30 =
 		new Class[] {

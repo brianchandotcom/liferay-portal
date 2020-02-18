@@ -46,6 +46,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -122,9 +123,37 @@ public class AssetCategoryLocalServiceTest {
 				serviceContext);
 
 		_assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(), StringPool.BLANK,
+			assetVocabulary.getVocabularyId(), serviceContext);
+	}
+
+	@Test
+	public void testCategoryWithLongNameIsTrimmed() throws Exception {
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), titleMap, null, null,
+				serviceContext);
+
+		int maxNameLength = ModelHintsUtil.getMaxLength(
+			AssetCategory.class.getName(), "name");
+
+		String categoryName = RandomTestUtil.randomString(maxNameLength);
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			StringPool.BLANK, assetVocabulary.getVocabularyId(),
-			serviceContext);
+			categoryName + RandomTestUtil.randomString(10),
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		Assert.assertEquals(categoryName, assetCategory.getName());
 	}
 
 	@Test

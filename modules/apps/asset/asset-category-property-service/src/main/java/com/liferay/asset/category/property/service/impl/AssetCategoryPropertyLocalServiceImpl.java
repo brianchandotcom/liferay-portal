@@ -22,6 +22,7 @@ import com.liferay.asset.category.property.service.base.AssetCategoryPropertyLoc
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
@@ -188,6 +189,22 @@ public class AssetCategoryPropertyLocalServiceImpl
 	}
 
 	protected void validate(String key, String value) throws PortalException {
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			AssetCategoryProperty.class.getName(), "key");
+
+		if (key.length() > nameMaxLength) {
+			throw new CategoryPropertyKeyException(
+				"Maximum length of key exceeded");
+		}
+
+		int valueMaxLength = ModelHintsUtil.getMaxLength(
+			AssetCategoryProperty.class.getName(), "value");
+
+		if (value.length() > valueMaxLength) {
+			throw new CategoryPropertyValueException(
+				"Maximum length of value exceeded");
+		}
+
 		if (!_assetHelper.isValidWord(key)) {
 			throw new CategoryPropertyKeyException("Invalid key " + key);
 		}

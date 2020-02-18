@@ -1044,6 +1044,12 @@ public class LayoutConverterTest {
 
 		JSONObject layoutDataJSONObject = layoutData.getLayoutDataJSONObject();
 
+		LayoutStructure actualLayoutStructure = LayoutStructure.of(
+			layoutDataJSONObject.toString());
+
+		actualLayoutStructure = _convertToReadableItemIds(
+			actualLayoutStructure);
+
 		String format = "expected_layout_data_%s_multiple_portlets.json";
 
 		if (singlePortlet) {
@@ -1124,12 +1130,10 @@ public class LayoutConverterTest {
 			}
 		}
 
-		JSONObject expectedLayoutDataJSONObject =
-			JSONFactoryUtil.createJSONObject(expectedLayoutData);
+		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
+			expectedLayoutData);
 
-		Assert.assertEquals(
-			expectedLayoutDataJSONObject.toJSONString(),
-			layoutDataJSONObject.toJSONString());
+		Assert.assertEquals(expectedLayoutStructure, actualLayoutStructure);
 	}
 
 	private void _testConvertNoPortlets(String layoutTemplateId)

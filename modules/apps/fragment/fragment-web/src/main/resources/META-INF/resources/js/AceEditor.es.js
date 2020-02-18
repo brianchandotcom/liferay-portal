@@ -146,7 +146,6 @@ class AceEditor extends Component {
 	_getAutocompleteMatch(content) {
 		let match = null;
 		let matchContent = content;
-		const matchIndex = null;
 
 		if (
 			matchContent.lastIndexOf('<') >= 0 ||
@@ -158,21 +157,18 @@ class AceEditor extends Component {
 			if (/<lfr[\w]*[^<lfr]*$/.test(matchContent)) {
 				match = {
 					content: matchContent.substring(1),
-					start: matchIndex,
 					type: MATCH_TAG
 				};
 			}
 			else if (/\[@[^\]]+$/.test(matchContent)) {
 				match = {
 					content: matchContent.substring(2),
-					start: matchIndex,
 					type: MATCH_TAGLIB
 				};
 			}
 			else if (/\${[^}]+$/.test(matchContent)) {
 				match = {
 					content: matchContent.substring(2),
-					start: matchIndex,
 					type: MATCH_VARIABLE
 				};
 			}

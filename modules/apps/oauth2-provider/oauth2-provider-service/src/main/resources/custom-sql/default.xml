@@ -1,6 +1,19 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationFinder.findByPurgeDate">
+		<![CDATA[
+			SELECT
+				{OAuth2Authorization.*}
+		 	FROM
+			 	OAuth2Authorization
+			WHERE
+				(OAuth2Authorization.refreshTokenExpirationDate IS NOT NULL) AND
+				(OAuth2Authorization.refreshTokenExpirationDate < ?) OR
+				(OAuth2Authorization.refreshTokenExpirationDate IS NULL) AND
+				(OAuth2Authorization.accessTokenExpirationDate < ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder.findByC_A_B_A">
 		<![CDATA[
 			SELECT

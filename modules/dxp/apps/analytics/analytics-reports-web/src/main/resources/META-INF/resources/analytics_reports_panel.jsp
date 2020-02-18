@@ -63,26 +63,28 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 
 						<liferay-ui:icon
 							label="<%= true %>"
-							linkCssClass="btn btn-primary btn-sm mb-3"
+							linkCssClass="btn btn-secondary btn-sm"
 							markupView="lexicon"
 							message="start-free-trial"
 							target="_blank"
 							url="<%= AnalyticsReportsUtil.ANALYTICS_CLOUD_TRIAL_URL %>"
 						/>
+
+						<portlet:actionURL name="/analytics_reports/hide_panel" var="hideAnalyticsReportsPanelURL">
+							<portlet:param name="redirect" value="<%= themeDisplay.getLayoutFriendlyURL(layout) %>" />
+						</portlet:actionURL>
+
+						<liferay-ui:icon
+							label="<%= true %>"
+							linkCssClass="d-block font-weight-bold mb-3 mt-5"
+							markupView="lexicon"
+							message="dont-show-me-this-again"
+							url="<%= hideAnalyticsReportsPanelURL %>"
+						/>
+
+						<p class="text-secondary"><liferay-ui:message key="dont-show-me-this-again-help" /></p>
 					</c:otherwise>
 				</c:choose>
-
-				<portlet:actionURL name="/analytics_reports/hide_panel" var="hideAnalyticsReportsPanelURL">
-					<portlet:param name="redirect" value="<%= themeDisplay.getLayoutFriendlyURL(layout) %>" />
-				</portlet:actionURL>
-
-				<liferay-ui:icon
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm mb-4"
-					markupView="lexicon"
-					message="hide-content-performance-panel"
-					url="<%= hideAnalyticsReportsPanelURL %>"
-				/>
 			</div>
 		</div>
 	</c:otherwise>

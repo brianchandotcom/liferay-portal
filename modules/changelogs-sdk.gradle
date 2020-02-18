@@ -54,7 +54,7 @@ buildChangelogs {
 
 			File changelogDescriptionsFile = file("sdk/" + sdkProjectDir.name + "/CHANGELOG.descriptions")
 
-			changelogCommitsFile.getText("UTF-8").split("\n").reverse().each {
+			changelogCommitsFile.getText("UTF-8").split("\n").each {
 				String recordCommitLine ->
 
 				Matcher matcher = recordCommitLine =~ /(\d+\.\d+\.\d+):([a-f0-9]+\.\.[a-f0-9]+)/

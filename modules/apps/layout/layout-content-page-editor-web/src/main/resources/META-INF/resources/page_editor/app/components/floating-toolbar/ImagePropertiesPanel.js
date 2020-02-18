@@ -19,22 +19,29 @@ import React, {useCallback, useContext, useState} from 'react';
 import {ImageSelector} from '../../../common/components/ImageSelector';
 import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
 import {getEditableItemPropTypes} from '../../../prop-types/index';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {ConfigContext} from '../../config/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 
 export function ImagePropertiesPanel({item}) {
-	const {editableId, fragmentEntryLinkId} = item;
+	const {editableId, editableType, fragmentEntryLinkId} = item;
 
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const state = useSelector(state => state);
 
+	const processoryKey =
+		editableType === EDITABLE_TYPES.backgroundImage
+			? BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+			: EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
+
 	const editableValue =
 		state.fragmentEntryLinks[fragmentEntryLinkId].editableValues[
-			EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+			processoryKey
 		][editableId];
 
 	const editableConfig = editableValue.config || {};
@@ -47,12 +54,11 @@ export function ImagePropertiesPanel({item}) {
 		newConfig => {
 			const editableValues =
 				state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
-			const editableProcessorValues =
-				editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
+			const editableProcessorValues = editableValues[processoryKey];
 
 			const nextEditableValues = {
 				...editableValues,
-				[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
+				[processoryKey]: {
 					...editableProcessorValues,
 					[editableId]: {
 						...editableProcessorValues[editableId],
@@ -79,6 +85,7 @@ export function ImagePropertiesPanel({item}) {
 			editableConfig,
 			editableId,
 			fragmentEntryLinkId,
+			processoryKey,
 			state.fragmentEntryLinks,
 			state.segmentsExperienceId
 		]
@@ -89,8 +96,7 @@ export function ImagePropertiesPanel({item}) {
 	const onImageChange = (imageTitle, imageUrl) => {
 		const {editableValues} = state.fragmentEntryLinks[fragmentEntryLinkId];
 
-		const editableProcessorValues =
-			editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
+		const editableProcessorValues = editableValues[processoryKey];
 
 		const editableValue = editableProcessorValues[editableId];
 
@@ -121,7 +127,7 @@ export function ImagePropertiesPanel({item}) {
 		const nextEditableValues = {
 			...editableValues,
 
-			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
+			[processoryKey]: {
 				...editableProcessorValues,
 				[editableId]: {
 					...nextEditableValue

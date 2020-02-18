@@ -15,8 +15,10 @@
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import {EDITABLE_FLOATING_TOOLBAR_CLASSNAMES} from '../../config/constants/editableFloatingToolbarClassNames';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import selectEditableValue from '../../selectors/selectEditableValue';
 import {useSelector} from '../../store/index';
@@ -52,9 +54,19 @@ export default function FragmentContentFloatingToolbar({
 		[editableElement]
 	);
 
+	const processorKey =
+		editableType === EDITABLE_TYPES.backgroundImage
+			? BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+			: EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
+
 	const editableValue = useSelector(state =>
 		editableId
-			? selectEditableValue(state, fragmentEntryLinkId, editableId)
+			? selectEditableValue(
+					state,
+					fragmentEntryLinkId,
+					editableId,
+					processorKey
+			  )
 			: {}
 	);
 

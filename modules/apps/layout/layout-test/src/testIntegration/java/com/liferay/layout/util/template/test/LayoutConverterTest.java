@@ -156,26 +156,26 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-2",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-2",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-3",
+			"column-4",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).build();
 		Map<String, String[]> portletIdsMap3 = TreeMapBuilder.put(
-			"column-1",
+			"column-5",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
@@ -208,23 +208,23 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-2",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet"
 			}
 		).put(
-			"column-2",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
 			}
 		).put(
-			"column-3",
+			"column-4",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).build();
 		Map<String, String[]> portletIdsMap3 = TreeMapBuilder.put(
-			"column-1",
+			"column-5",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
@@ -254,32 +254,32 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-2",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-2",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-3",
+			"column-4",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).build();
 		Map<String, String[]> portletIdsMap3 = TreeMapBuilder.put(
-			"column-1",
+			"column-5",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-2",
+			"column-6",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
@@ -312,28 +312,28 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-2",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet"
 			}
 		).put(
-			"column-2",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
 			}
 		).put(
-			"column-3",
+			"column-4",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).build();
 		Map<String, String[]> portletIdsMap3 = TreeMapBuilder.put(
-			"column-1",
+			"column-5",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-2",
+			"column-6",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
@@ -493,32 +493,32 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-4",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-2",
+			"column-5",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).build();
 		Map<String, String[]> portletIdsMap3 = TreeMapBuilder.put(
-			"column-1",
+			"column-6",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-2",
+			"column-7",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-3|",
+			"column-8",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
@@ -563,28 +563,28 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-4",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet"
 			}
 		).put(
-			"column-2",
+			"column-5",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
 			}
 		).build();
 		Map<String, String[]> portletIdsMap3 = TreeMapBuilder.put(
-			"column-1",
+			"column-6",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-2",
+			"column-7",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-3|",
+			"column-8",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
@@ -663,20 +663,20 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).build();
 		Map<String, String[]> portletIdsMap3 = TreeMapBuilder.put(
-			"column-1",
+			"column-4",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-2",
+			"column-5",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
@@ -714,18 +714,18 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet"
 			}
 		).build();
 		Map<String, String[]> portletIdsMap3 = TreeMapBuilder.put(
-			"column-1",
+			"column-4",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
 			}
 		).put(
-			"column-2",
+			"column-5",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
@@ -759,13 +759,13 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-2",
+			"column-4",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
@@ -802,12 +802,12 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet"
 			}
 		).put(
-			"column-2",
+			"column-4",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
 			}
@@ -1172,13 +1172,13 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-2",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-2",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
@@ -1206,12 +1206,12 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-2",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet"
 			}
 		).put(
-			"column-2",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
 			}
@@ -1240,20 +1240,20 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-2",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).put(
-			"column-2",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}
 		).build();
 		Map<String, String[]> portletIdsMap3 = TreeMapBuilder.put(
-			"column-1",
+			"column-4",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet",
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
@@ -1283,18 +1283,18 @@ public class LayoutConverterTest {
 			}
 		).build();
 		Map<String, String[]> portletIdsMap2 = TreeMapBuilder.put(
-			"column-1",
+			"column-2",
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet"
 			}
 		).put(
-			"column-2",
+			"column-3",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
 			}
 		).build();
 		Map<String, String[]> portletIdsMap3 = TreeMapBuilder.put(
-			"column-3",
+			"column-4",
 			new String[] {
 				"com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
 			}

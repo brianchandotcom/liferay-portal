@@ -70,6 +70,85 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the asset can be removed in Content Sets."
+	@priority = "4"
+	test RemoveAssetFromContentSet {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		for (var i : list "1,2,3") {
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title ${i}");
+
+			PortletEntry.publish();
+		}
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.addManualSelection(
+			assetListTitle = "Depot Manual Asset List",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.viewAssetList(
+			assetListTitle = "Depot Manual Asset List",
+			type = "Manual");
+
+		for (var i : list "1,2,3") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(
+				depotName = "Test Depot Name",
+				portlet = "Content Sets");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Depot Manual Asset List",
+				assetName = "WC WebContent Title ${i}",
+				assetType = "Basic Web Content");
+		}
+
+		AssetListsAdmin.deleteManualSelectionAssets(assetsList = "WC WebContent Title 2");
+
+		for (var i : list "1,3") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(
+				depotName = "Test Depot Name",
+				portlet = "Content Sets");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Depot Manual Asset List",
+				assetTitle = "WC WebContent Title ${i}",
+				assetType = "Web Content Article");
+		}
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.viewNoContent(
+			assetListTitle = "Depot Manual Asset List",
+			assetTitle = "WC WebContent Title 2",
+			assetType = "Web Content Article");
+	}
+
 	@description = "This ensures that all web contents are displayed with the dynamic selection that show only Web Content Article in a depot."
 	@priority = "4"
 	test SelectAllWebContentDynamically {
@@ -143,6 +222,62 @@ definition {
 			assetListTitle = "Depot Dynamic Asset List",
 			assetTitle = "Document Title",
 			assetType = "Document");
+	}
+
+	@description = "This ensures that multiple documents can be selected through Content Sets in a depot."
+	@priority = "5"
+	test SelectMultipleDocumentsManually {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.txt");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.viewAssetList(
+			assetListTitle = "Depot Manual Asset List",
+			type = "Manual");
+
+		for (var documentName : list "Document_1.doc,Document_2.jpg,Document_3.txt") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(
+				depotName = "Test Depot Name",
+				portlet = "Content Sets");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Depot Manual Asset List",
+				assetName = "${documentName}",
+				assetType = "Basic Document");
+		}
+
+		for (var documentName : list "Document_1.doc,Document_2.jpg,Document_3.txt") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(
+				depotName = "Test Depot Name",
+				portlet = "Content Sets");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Depot Manual Asset List",
+				assetTitle = "${documentName}",
+				assetType = "Document");
+		}
 	}
 
 	@description = "This ensures that multiple web content can be selected through Content Sets in a depot."

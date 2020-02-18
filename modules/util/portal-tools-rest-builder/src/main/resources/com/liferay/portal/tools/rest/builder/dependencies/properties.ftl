@@ -3,7 +3,7 @@
 #
 
 api.version=${openAPIYAML.info.version}
-<#if configYAML.generateBatch>
+<#if schemaName?? && configYAML.generateBatch>
 batch.engine.task.item.delegate=true
 </#if>
 osgi.jaxrs.application.select=(osgi.jaxrs.name=${configYAML.application.name})

@@ -42,37 +42,35 @@ export default () => {
 								className="col-md-3 question-tags"
 								key={tag.id}
 							>
-								<ClayCardWithNavigation>
-									<ClayCard.Body>
-										<ClayCard.Description displayType="title">
-											<Link
-												to={`/questions/tag/${tag.name}`}
-											>
+								<Link to={`/questions/tag/${tag.name}`}>
+									<ClayCardWithNavigation>
+										<ClayCard.Body>
+											<ClayCard.Description displayType="title">
 												{tag.name}
-											</Link>
-										</ClayCard.Description>
-										<ClayCard.Description displayType="text">
-											{lang.sub(
-												Liferay.Language.get(
-													'used-x-times'
-												),
-												[tag.keywordUsageCount]
-											)}
-										</ClayCard.Description>
-										<ClayCard.Description displayType="text">
-											{lang.sub(
-												Liferay.Language.get(
-													'latest-usage'
-												),
-												[
-													dateToInternationalHuman(
-														tag.dateCreated
-													)
-												]
-											)}
-										</ClayCard.Description>
-									</ClayCard.Body>
-								</ClayCardWithNavigation>
+											</ClayCard.Description>
+											<ClayCard.Description displayType="text">
+												{lang.sub(
+													Liferay.Language.get(
+														'used-x-times'
+													),
+													[tag.keywordUsageCount]
+												)}
+											</ClayCard.Description>
+											<ClayCard.Description displayType="text">
+												{lang.sub(
+													Liferay.Language.get(
+														'latest-usage'
+													),
+													[
+														dateToInternationalHuman(
+															tag.dateCreated
+														)
+													]
+												)}
+											</ClayCard.Description>
+										</ClayCard.Body>
+									</ClayCardWithNavigation>
+								</Link>
 							</div>
 						))}
 				</div>

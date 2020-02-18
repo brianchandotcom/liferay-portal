@@ -64,7 +64,7 @@ const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 							)}
 						>
 							<div className="taglib-empty-result-message-header"></div>
-							<div className="text-center text-muted">
+							<div className="taglib-empty-result-message-title">
 								{Liferay.Language.get('place-fragments-here')}
 							</div>
 						</div>

@@ -154,6 +154,10 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
+	public static void deleteExpiredOAuth2Authorizations() {
+		getService().deleteExpiredOAuth2Authorizations();
+	}
+
 	/**
 	 * Deletes the o auth2 authorization with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

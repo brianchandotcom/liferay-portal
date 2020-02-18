@@ -12,7 +12,7 @@
  * details.
  */
 
-import {TYPES} from '../actions/index';
+import {UPDATE_PAGE_CONTENTS} from '../actions/types';
 
 const INITIAL_STATE = [];
 
@@ -21,7 +21,7 @@ export default function pageContentsReducer(
 	action
 ) {
 	switch (action.type) {
-		case TYPES.UPDATE_PAGE_CONTENTS:
+		case UPDATE_PAGE_CONTENTS:
 			return [...action.pageContents];
 
 		default:

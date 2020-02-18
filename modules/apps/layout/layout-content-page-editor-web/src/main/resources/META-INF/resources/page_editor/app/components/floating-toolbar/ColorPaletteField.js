@@ -35,7 +35,7 @@ export const ColorPaletteField = ({field, onValueSelect, value}) => (
 );
 
 ColorPaletteField.propTypes = {
-	field: PropTypes.shape(ConfigurationFieldPropTypes),
+	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onValueSelect: PropTypes.func.isRequired,
 	value: PropTypes.shape({
 		cssClass: PropTypes.string,

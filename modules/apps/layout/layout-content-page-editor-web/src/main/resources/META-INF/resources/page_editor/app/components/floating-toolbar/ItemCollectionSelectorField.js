@@ -48,7 +48,7 @@ export const ItemCollectionSelectorField = ({field, onValueSelect, value}) => {
 };
 
 ItemCollectionSelectorField.propTypes = {
-	field: PropTypes.shape(ConfigurationFieldPropTypes),
+	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onValueSelect: PropTypes.func.isRequired,
 	value: PropTypes.string
 };

@@ -36,7 +36,7 @@ export const TextField = ({field, onValueSelect}) => (
 );
 
 TextField.propTypes = {
-	field: PropTypes.shape(ConfigurationFieldPropTypes),
+	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onValueSelect: PropTypes.func.isRequired,
 	value: PropTypes.string
 };

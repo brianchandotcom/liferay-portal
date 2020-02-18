@@ -156,7 +156,7 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 };
 
 TemplateSelector.propTypes = {
-	item: PropTypes.shape(ConfigurationFieldPropTypes),
+	item: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onTemplateSelect: PropTypes.func.isRequired,
 	selectedTemplate: PropTypes.shape({
 		infoItemRendererKey: PropTypes.string,

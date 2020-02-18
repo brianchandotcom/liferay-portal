@@ -148,9 +148,9 @@ class AceEditor extends Component {
 		let matchContent = content;
 
 		if (
-			matchContent.lastIndexOf('<') >= 0 ||
-			matchContent.lastIndexOf('${') >= 0 ||
-			matchContent.lastIndexOf('[@') >= 0
+			matchContent.indexOf('<') >= 0 ||
+			matchContent.indexOf('${') >= 0 ||
+			matchContent.indexOf('[@') >= 0
 		) {
 			matchContent = matchContent.trim();
 

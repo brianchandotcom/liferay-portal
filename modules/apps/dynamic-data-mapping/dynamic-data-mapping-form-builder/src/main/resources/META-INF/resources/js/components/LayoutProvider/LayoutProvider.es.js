@@ -149,25 +149,29 @@ class LayoutProvider extends Component {
 
 		const visitor = new PagesVisitor(pages);
 
-		pages = visitor.mapFields(field => {
-			const {options, settingsContext} = field;
+		pages = visitor.mapFields(
+			field => {
+				const {options, settingsContext} = field;
 
-			return {
-				...getFieldProperties(
-					settingsContext,
-					defaultLanguageId,
-					editingLanguageId
-				),
-				options,
-				selected: focusedField.fieldName === field.fieldName,
-				settingsContext: {
-					...settingsContext,
-					availableLanguageIds,
-					defaultLanguageId,
-					pages: this.getLocalizedPages(settingsContext.pages),
-				},
-			};
-		});
+				return {
+					...getFieldProperties(
+						settingsContext,
+						defaultLanguageId,
+						editingLanguageId
+					),
+					options,
+					selected: focusedField.fieldName === field.fieldName,
+					settingsContext: {
+						...settingsContext,
+						availableLanguageIds,
+						defaultLanguageId,
+						pages: this.getLocalizedPages(settingsContext.pages)
+					}
+				};
+			},
+			true,
+			true
+		);
 
 		visitor.setPages(pages);
 

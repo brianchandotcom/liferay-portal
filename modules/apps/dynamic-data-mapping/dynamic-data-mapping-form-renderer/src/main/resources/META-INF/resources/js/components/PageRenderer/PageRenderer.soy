@@ -213,7 +213,11 @@
 			{foreach $field in $column.fields}
 				{let $fieldType: $field.type /}
 
-				<div class="ddm-field" data-field-name="{$field.fieldName}">
+				<div
+					class="ddm-field"
+					data-field-name="{$field.fieldName}"
+					data-onclick="{$_handleFieldClicked}"
+				>
 					{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
 						{param _handleFieldBlurred: $_handleFieldBlurred /}
 						{param _handleFieldClicked: $_handleFieldClicked /}
@@ -258,8 +262,6 @@
 
 					{let $attributesDrag kind="attributes"}
 						class="ddm-drag"
-
-						data-onclick="{$_handleFieldClicked}"
 					{/let}
 
 					<div {$attributesDrag}>

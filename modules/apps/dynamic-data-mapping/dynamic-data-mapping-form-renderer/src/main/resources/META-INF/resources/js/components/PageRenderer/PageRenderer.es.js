@@ -27,6 +27,7 @@ import 'clay-dropdown';
 import 'clay-modal';
 import core from 'metal';
 import Component from 'metal-component';
+import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
@@ -89,12 +90,15 @@ class PageRenderer extends Component {
 		this.emit('fieldBlurred', event);
 	}
 
-	_handleFieldClicked({delegateTarget}) {
-		const fieldNode = delegateTarget.parentElement.parentElement;
-		const indexes = FormSupport.getIndexes(fieldNode);
+	_handleFieldClicked(event) {
+		const {delegateTarget} = event;
+		const {fieldName} = delegateTarget.dataset;
+
+		event.stopPropagation();
 
 		this.emit('fieldClicked', {
-			...indexes,
+			...FormSupport.getIndexes(dom.closest(delegateTarget, '.col-ddm')),
+			fieldName
 		});
 	}
 

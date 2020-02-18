@@ -51,7 +51,7 @@ export default withRouter(
 								setArticleBody(event.target.value)
 							}
 							placeholder={Liferay.Language.get(
-								'what-is-your-programming-question'
+								'what-is-your-question'
 							)}
 							required
 							type="text"

@@ -16,6 +16,7 @@ package com.liferay.asset.category.property.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.category.property.exception.CategoryPropertyKeyException;
+import com.liferay.asset.category.property.exception.CategoryPropertyValueException;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -91,6 +92,38 @@ public class AssetCategoryPropertyLocalServiceTest {
 			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
 			RandomTestUtil.randomString(maxNameLength + 1),
 			RandomTestUtil.randomString());
+	}
+
+	@Test(expected = CategoryPropertyValueException.class)
+	public void testCannotAddCategoryPropertyWithVeryLongValue()
+		throws Exception {
+
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), titleMap, null, null,
+				serviceContext);
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		int maxNameLength = ModelHintsUtil.getMaxLength(
+			AssetCategoryProperty.class.getName(), "value");
+
+		_assetCategoryPropertyLocalService.addCategoryProperty(
+			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(maxNameLength + 1));
 	}
 
 	@Inject

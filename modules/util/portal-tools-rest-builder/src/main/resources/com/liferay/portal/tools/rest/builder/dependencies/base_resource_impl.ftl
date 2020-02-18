@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -48,6 +49,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Generated;
@@ -292,12 +294,14 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 		}
 
 		@Override
-		public Page<${schemaName}> read(Filter filter, Pagination pagination, Sort[] sorts, Map<String, Serializable> parameters, String search) throws Exception {
+		public com.liferay.batch.engine.pagination.Page<${schemaName}> read(Filter filter, com.liferay.batch.engine.pagination.Pagination pagination, Sort[] sorts, Map<String, Serializable> parameters, String search) throws Exception {
 			<#if getBatchJavaMethodSignature??>
-				return get${getBatchJavaMethodSignature.parentSchemaName!}${schemaName}sPage(
+				Page<${schemaName}> page = get${getBatchJavaMethodSignature.parentSchemaName!}${schemaName}sPage(
 					<#list getBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if stringUtil.equals(javaMethodParameter.parameterName, "filter") || stringUtil.equals(javaMethodParameter.parameterName, "pagination") || stringUtil.equals(javaMethodParameter.parameterName, "search") || stringUtil.equals(javaMethodParameter.parameterName, "sorts") || stringUtil.equals(javaMethodParameter.parameterName, "user")>
+						<#if stringUtil.equals(javaMethodParameter.parameterName, "filter") || stringUtil.equals(javaMethodParameter.parameterName, "search") || stringUtil.equals(javaMethodParameter.parameterName, "sorts") || stringUtil.equals(javaMethodParameter.parameterName, "user")>
 							${javaMethodParameter.parameterName}
+						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+							Pagination.of(pagination.getPage(), pagination.getPageSize())
 						<#else>
 							<#if javaMethodParameter.parameterType?contains("java.lang.Boolean")>
 								(Boolean
@@ -317,10 +321,29 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 						</#if>
 						<#sep>, </#sep>
 					</#list>
-				);
+					);
+				return com.liferay.batch.engine.pagination.Page.of(page.getItems(), pagination, page.getTotalCount());
 			<#else>
 				return null;
 			</#if>
+		}
+
+		@Override
+		public void setLanguageId(String languageId) {
+			this.contextAcceptLanguage = new AcceptLanguage() {
+				@Override
+				public List<Locale> getLocales() {
+					return null;
+				}
+				@Override
+				public String getPreferredLanguageId() {
+					return languageId;
+				}
+				@Override
+				public Locale getPreferredLocale() {
+					return LocaleUtil.fromLanguageId(languageId);
+				}
+			};
 		}
 
 		@Override

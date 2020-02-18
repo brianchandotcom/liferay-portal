@@ -25,7 +25,6 @@ Liferay-JS-Resources-Top-Head-Authenticated:\
 	/aui/aui-overlay-mask-deprecated/aui-overlay-mask-deprecated.js,\
 	/aui/aui-parse-content/aui-parse-content.js,\
 	\
-	/liferay/layout_exporter.js,\
 	/liferay/session.js,\
 	\
 	/liferay/deprecated.js

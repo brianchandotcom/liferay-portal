@@ -26,6 +26,14 @@ import {
 	getComponentCache,
 	initComponentCache
 } from './component.es';
+import {
+	getLayoutIcons,
+	hideLayoutPane,
+	proposeLayout,
+	publishToLive,
+	showLayoutPane,
+	toggleLayoutDetails
+} from './layout_exporter.es';
 import portlet from './portlet/portlet.es';
 import SideNavigation from './side_navigation.es';
 import getCountries from './util/address/get_countries.es';
@@ -60,6 +68,15 @@ Liferay.initComponentCache = initComponentCache;
 Liferay.Address = {
 	getCountries,
 	getRegions
+};
+
+Liferay.LayoutExporter = {
+	all: hideLayoutPane,
+	details: toggleLayoutDetails,
+	icons: getLayoutIcons(),
+	proposeLayout,
+	publishToLive,
+	selected: showLayoutPane
 };
 
 Liferay.SideNavigation = SideNavigation;

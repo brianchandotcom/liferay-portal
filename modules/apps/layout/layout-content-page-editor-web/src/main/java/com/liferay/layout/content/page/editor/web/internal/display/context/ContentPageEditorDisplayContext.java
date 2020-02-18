@@ -292,8 +292,7 @@ public class ContentPageEditorDisplayContext {
 				"redirectURL", _getRedirect()
 			).put(
 				"renderFragmentEntryURL",
-				getFragmentEntryActionURL(
-					"/content_layout/get_fragment_entry_link")
+				_getResourceURL("/content_layout/get_fragment_entry_link")
 			).put(
 				"sidebarPanels", getSidebarPanels()
 			).put(

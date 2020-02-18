@@ -196,7 +196,7 @@ if (Validator.isNotNull(portletResource)) {
 							scope = ResourceConstants.SCOPE_GROUP_TEMPLATE;
 						}
 
-						ResultRow row = new ResultRow(new Object[] {role, actionId, resource, target, scope, supportsFilterByGroup, groups, groupIdsArray, groupNames}, target, relatedPortletResources.size());
+						ResultRow row = new ResultRow(new Object[] {role, actionId, resource, target, scope, supportsFilterByGroup, groups, groupIdsArray, groupNames, curPortlet.getPortletId()}, target, relatedPortletResources.size());
 
 						relatedPortletResources.add(curPortlet.getPortletId());
 

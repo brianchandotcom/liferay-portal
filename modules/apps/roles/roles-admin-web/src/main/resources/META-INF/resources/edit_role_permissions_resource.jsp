@@ -141,7 +141,7 @@ for (int i = 0; i < results.size(); i++) {
 		scope = ResourceConstants.SCOPE_GROUP_TEMPLATE;
 	}
 
-	ResultRow row = new ResultRow(new Object[] {role, actionId, curResource, target, scope, supportsFilterByGroup, groups, groupIdsArray, groupNames}, target, i);
+	ResultRow row = new ResultRow(new Object[] {role, actionId, curResource, target, scope, supportsFilterByGroup, groups, groupIdsArray, groupNames, curPortletId}, target, i);
 
 	row.addText(_getActionLabel(request, themeDisplay, curResource, actionId));
 

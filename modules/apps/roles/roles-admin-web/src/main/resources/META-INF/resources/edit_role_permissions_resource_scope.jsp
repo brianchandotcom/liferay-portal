@@ -26,6 +26,7 @@ String target = (String)objArray[3];
 Boolean supportsFilterByGroup = (Boolean)objArray[5];
 long[] groupIdsArray = (long[])objArray[7];
 List groupNames = (List)objArray[8];
+String portletId = (String)objArray[9];
 %>
 
 <aui:input name='<%= "groupIds" + HtmlUtil.escapeAttribute(target) %>' type="hidden" value="<%= StringUtil.merge(groupIdsArray) %>" />
@@ -44,6 +45,7 @@ List groupNames = (List)objArray[8];
 			groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new URLItemSelectorReturnType());
 			groupItemSelectorCriterion.setIncludeFormsSite(true);
 			groupItemSelectorCriterion.setIncludeUserPersonalSite(true);
+			groupItemSelectorCriterion.setPortletId(portletId);
 			groupItemSelectorCriterion.setTarget(target);
 
 			PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), liferayPortletResponse.getNamespace() + "selectGroup", groupItemSelectorCriterion);

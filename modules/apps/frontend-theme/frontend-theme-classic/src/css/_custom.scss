@@ -91,6 +91,21 @@ body {
 #content.container-fluid {
 	padding: 0;
 
+	.portlet-dropzone {
+		box-shadow: inset 0 0 0 1px rgba(11, 95, 255, 0);
+		transition: box-shadow ease 0.5s 0.5s;
+	}
+
+	.yui3-dd-drop-active-valid .portlet-dropzone {
+		box-shadow: inset 0 0 0 1px rgba(11, 95, 255, 0.2);
+		transition-delay: 0s;
+	}
+
+	.yui3-dd-drop-over .portlet-dropzone {
+		box-shadow: inset 0 0 0 1px #0b5fff;
+		transition-delay: 0s;
+	}
+
 	.row {
 		margin: 0;
 

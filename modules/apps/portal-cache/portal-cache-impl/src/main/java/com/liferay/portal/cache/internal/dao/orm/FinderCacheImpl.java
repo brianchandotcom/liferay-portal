@@ -34,10 +34,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilterThreadLocal;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -45,7 +41,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -411,47 +406,6 @@ public class FinderCacheImpl
 	private Props _props;
 	private boolean _valueObjectFinderCacheEnabled;
 	private int _valueObjectFinderCacheListThreshold;
-
-	private static class EmptyResult implements Externalizable {
-
-		public EmptyResult() {
-		}
-
-		public boolean matches(Object[] args) {
-			if (args.length != _args.length) {
-				return false;
-			}
-
-			for (int i = 0; i < _args.length; i++) {
-				if (!Objects.equals(args[i], _args[i])) {
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		@Override
-		public void readExternal(ObjectInput objectInput)
-			throws ClassNotFoundException, IOException {
-
-			_args = (Object[])objectInput.readObject();
-		}
-
-		@Override
-		public void writeExternal(ObjectOutput objectOutput)
-			throws IOException {
-
-			objectOutput.writeObject(_args);
-		}
-
-		private EmptyResult(Object[] args) {
-			_args = args;
-		}
-
-		private Object[] _args;
-
-	}
 
 	private static class LocalCacheKey {
 

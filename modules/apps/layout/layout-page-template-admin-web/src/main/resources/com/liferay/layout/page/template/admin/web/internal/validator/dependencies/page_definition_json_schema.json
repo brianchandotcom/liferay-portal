@@ -82,6 +82,14 @@
 		},
 		"FragmentFieldImage": {
 			"additionalProperties": false,
+			"properties": {
+				"fragmentImage": {
+					"$ref": "#/definitions/FragmentImage"
+				},
+				"fragmentLink": {
+					"$ref": "#/definitions/FragmentLink"
+				}
+			},
 			"title": "The FragmentFieldImage Schema",
 			"type": "object"
 		},
@@ -147,6 +155,42 @@
 				}
 			},
 			"title": "The FragmentInstanceDefinition Schema",
+			"type": "object"
+		},
+		"FragmentLink": {
+			"additionalProperties": false,
+			"properties": {
+				"target": {
+					"enum": [
+						"Blank",
+						"Self"
+					],
+					"title": "The target Schema",
+					"type": "string"
+				},
+				"value": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineLink"
+						},
+						{
+							"$ref": "#/definitions/MappedValue"
+						}
+					]
+				}
+			},
+			"title": "The FragmentLink Schema",
+			"type": "object"
+		},
+		"InlineLink": {
+			"additionalProperties": false,
+			"properties": {
+				"href": {
+					"title": "The href Schema",
+					"type": "string"
+				}
+			},
+			"title": "The InlineLink Schema",
 			"type": "object"
 		},
 		"InlineValue": {

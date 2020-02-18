@@ -18,7 +18,12 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWebKeys;
 import com.liferay.analytics.settings.web.internal.search.GroupChecker;
 import com.liferay.analytics.settings.web.internal.search.GroupSearch;
+import com.liferay.analytics.settings.web.internal.util.AnalyticsSettingsUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -33,16 +38,26 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.util.EntityUtils;
+
 /**
  * @author Marcellus Tavares
+ * @author André Miranda
  */
 public class GroupDisplayContext {
 
@@ -55,6 +70,15 @@ public class GroupDisplayContext {
 		_analyticsConfiguration =
 			(AnalyticsConfiguration)renderRequest.getAttribute(
 				AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
+	}
+
+	public String getChannelName(Long groupId) {
+		if (_channelNames == null) {
+			return StringPool.BLANK;
+		}
+
+		return _channelNames.getOrDefault(
+			String.valueOf(groupId), StringPool.BLANK);
 	}
 
 	public GroupSearch getGroupSearch() {
@@ -89,6 +113,8 @@ public class GroupDisplayContext {
 
 		groupSearch.setTotal(total);
 
+		_fetchChannelNames(groups);
+
 		return groupSearch;
 	}
 
@@ -111,6 +137,66 @@ public class GroupDisplayContext {
 		portletURL.setParameter("configurationScreenKey", "synced-sites");
 
 		return portletURL;
+	}
+
+	private void _fetchChannelNames(List<Group> groups) {
+		_channelNames = Collections.emptyMap();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (groups.isEmpty() ||
+			!AnalyticsSettingsUtil.isAnalyticsEnabled(
+				themeDisplay.getCompanyId())) {
+
+			return;
+		}
+
+		Stream<Group> stream = groups.stream();
+
+		List<String> groupIds = stream.map(
+			Group::getGroupId
+		).map(
+			String::valueOf
+		).collect(
+			Collectors.toList()
+		);
+
+		try {
+			HttpResponse httpResponse = AnalyticsSettingsUtil.doPost(
+				JSONUtil.put(
+					"dataSourceId",
+					AnalyticsSettingsUtil.getAsahFaroBackendDataSourceId(
+						themeDisplay.getCompanyId())
+				).put(
+					"groupIds", groupIds
+				),
+				themeDisplay.getCompanyId(),
+				String.format(
+					"api/1.0/channels/query_channel_names",
+					AnalyticsSettingsUtil.getAsahFaroBackendDataSourceId(
+						themeDisplay.getCompanyId())));
+
+			StatusLine statusLine = httpResponse.getStatusLine();
+
+			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+				_log.error("Failed to fetch channels");
+
+				return;
+			}
+
+			JSONObject channelsJSONObject = JSONFactoryUtil.createJSONObject(
+				EntityUtils.toString(httpResponse.getEntity()));
+
+			_channelNames = new HashMap<>();
+
+			for (String key : channelsJSONObject.keySet()) {
+				_channelNames.put(key, channelsJSONObject.getString(key));
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
 	}
 
 	private long[] _getClassNameIds() {
@@ -171,6 +257,7 @@ public class GroupDisplayContext {
 		GroupDisplayContext.class);
 
 	private final AnalyticsConfiguration _analyticsConfiguration;
+	private Map<String, String> _channelNames;
 	private long[] _classNameIds;
 	private String _keywords;
 	private String _orderByCol;

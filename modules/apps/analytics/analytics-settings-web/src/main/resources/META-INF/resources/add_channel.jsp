@@ -110,6 +110,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="assigned-property"
+					value="<%= HtmlUtil.escape(groupDisplayContext.getChannelName(group.getGroupId())) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smaller table-cell-ws-nowrap"
 					name="child-sites"
 					value="<%= String.valueOf(childSites.size()) %>"

@@ -40,6 +40,11 @@
 		},
 		"FragmentFieldBackgroundImage": {
 			"additionalProperties": false,
+			"properties": {
+				"backgroundImage": {
+					"$ref": "#/definitions/FragmentImage"
+				}
+			},
 			"title": "The FragmentFieldBackgroundImage Schema",
 			"type": "object"
 		},

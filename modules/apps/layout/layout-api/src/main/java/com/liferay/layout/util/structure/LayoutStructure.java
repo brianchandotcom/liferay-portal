@@ -317,6 +317,10 @@ public class LayoutStructure {
 		return layoutStructureItem;
 	}
 
+	public void setMainItemId(String mainItemId) {
+		_mainItemId = mainItemId;
+	}
+
 	public JSONObject toJSONObject() {
 		String dropZoneItemId = StringPool.BLANK;
 		JSONObject layoutStructureItemsJSONObject =

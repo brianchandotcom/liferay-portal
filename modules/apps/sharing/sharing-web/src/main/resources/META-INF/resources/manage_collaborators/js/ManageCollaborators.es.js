@@ -445,7 +445,7 @@ const ManageCollaborators = ({
 												sharingEntryId
 											}
 											label={Liferay.Language.get(
-												'allow-the-document-to-be-shared-with-other-users'
+												'allow-the-item-to-be-shared-with-other-users'
 											)}
 											onChange={
 												handleShareableCheckboxChange

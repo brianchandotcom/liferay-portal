@@ -51,7 +51,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 		<div class="taglib-discussion" id="<%= namespace %>discussionContainer">
 			<aui:form action="<%= discussionTaglibHelper.getFormAction() %>" method="post" name="<%= discussionTaglibHelper.getFormName() %>" portletNamespace="<%= namespace + randomNamespace %>">
 				<input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
-				<input name="namespace" type="hidden" value="<%= namespace %>" />
+				<input name="namespace" type="hidden" value="<%= namespace + randomNamespace %>" />
 
 				<%
 				String contentURL = PortalUtil.getCanonicalURL(discussionTaglibHelper.getRedirect(), themeDisplay, layout);

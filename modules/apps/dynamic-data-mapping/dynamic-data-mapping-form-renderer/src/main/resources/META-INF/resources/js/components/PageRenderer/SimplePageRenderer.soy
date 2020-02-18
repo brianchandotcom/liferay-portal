@@ -42,5 +42,10 @@
 				{param spritemap: $spritemap /}
 			{/call}
 		</div>
+		{if $showSubmitButton}
+			<button class="btn btn-primary lfr-ddm-form-submit pull-right" type="submit">
+				{$submitLabel}
+			</button>
+		{/if}
 	</div>
 {/deltemplate}

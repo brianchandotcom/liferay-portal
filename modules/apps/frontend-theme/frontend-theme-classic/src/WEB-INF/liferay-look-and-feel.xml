@@ -15,7 +15,7 @@
 			<setting configurable="true" key="show-maximize-minimize-application-links" type="checkbox" value="false" />
 			<setting configurable="false" key="show-site-name-default" value="true" />
 			<setting configurable="false" key="show-site-name-supported" value="true" />
-			<setting configurable="true" key="wrap-widget-page-content" type="checkbox" value="false" />
+			<setting configurable="true" key="wrap-widget-page-content" type="checkbox" value="true" />
 		</settings>
 		<roles>
 			<role-name>User</role-name>

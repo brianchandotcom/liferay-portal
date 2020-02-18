@@ -152,25 +152,22 @@ buildChangelogs {
 					}
 					else {
 
-						matcher = gitLogLine =~ /^\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"|^\+([^ \t]+)=([0-9.]+)/
+						matcher = gitLogLine =~ /^\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
 
-						if (matcher.find()) {
-							String dependencyName = ""
-							String dependencyVersion = ""
+						if (!matcher.find()) {
+							matcher = gitLogLine =~ /^\+([^ \t]+)=([0-9.]+)/
 
-							if (matcher.group(1) != null) {
-								dependencyName = matcher.group(1)
-								dependencyVersion = matcher.group(2)
+							if (!matcher.find()) {
+								return
 							}
-							else {
-								dependencyName = matcher.group(3)
-								dependencyVersion = matcher.group(4)
-							}
-
-							dependencies = dependencies + """\
-								|
-								|- [${gitLogAttributes["TICKET-NUMBER"]}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
 						}
+
+						String dependencyName = matcher.group(1)
+						String dependencyVersion = matcher.group(2)
+
+						dependencies = dependencies + """\
+							|
+							|- [${gitLogAttributes["TICKET-NUMBER"]}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
 					}
 				}
 

@@ -693,8 +693,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 									BeanUtils.setProperty(${schemaVarName}2, entityField.getName(), Collections.singletonMap("Bbb", "Bbb"));
 								}
 								else {
-									BeanUtils.setProperty(${schemaVarName}1, entityField.getName(), "Aaa");
-									BeanUtils.setProperty(${schemaVarName}2, entityField.getName(), "Bbb");
+									BeanUtils.setProperty(${schemaVarName}1, entityField.getName(), "Aaa" + RandomTestUtil.randomString());
+									BeanUtils.setProperty(${schemaVarName}2, entityField.getName(), "Bbb" + RandomTestUtil.randomString());
 								}
 							});
 					}

@@ -12,8 +12,6 @@
  * details.
  */
 
-/* eslint-disable no-useless-escape	 */
-
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -164,14 +162,14 @@ class AceEditor extends Component {
 					type: MATCH_TAG
 				};
 			}
-			else if (/\[\@[^\]\[]+$/.test(matchContent)) {
+			else if (/\[@[^\]]+$/.test(matchContent)) {
 				match = {
 					content: matchContent.substring(2),
 					start: matchIndex,
 					type: MATCH_TAGLIB
 				};
 			}
-			else if (/\$\{[^\}]+$/.test(matchContent)) {
+			else if (/\${[^}]+$/.test(matchContent)) {
 				match = {
 					content: matchContent.substring(2),
 					start: matchIndex,

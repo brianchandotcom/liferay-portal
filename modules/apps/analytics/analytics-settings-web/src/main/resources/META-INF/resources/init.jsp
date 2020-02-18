@@ -40,6 +40,7 @@ page import="com.liferay.analytics.settings.web.internal.search.ChannelSearch" %
 page import="com.liferay.analytics.settings.web.internal.user.AnalyticsUsersManager" %><%@
 page import="com.liferay.analytics.settings.web.internal.util.AnalyticsSettingsUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
@@ -49,7 +50,8 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.SetUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
-<%@ page import="java.util.Set" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.Set" %>
 
 <liferay-frontend:defineObjects />
 

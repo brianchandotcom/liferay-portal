@@ -173,16 +173,18 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 
 		List<SpiraTestCaseFolder> spiraTestCaseFolders = new ArrayList<>();
 
-		for (SpiraTestCaseFolder spiraTestCaseFolder :
-				_spiraTestCaseFolders.values()) {
+		if (isPreviousSearch(SpiraTestCaseFolder.class, searchParameters)) {
+			for (SpiraTestCaseFolder spiraTestCaseFolder :
+					_spiraTestCaseFolders.values()) {
 
-			if (spiraTestCaseFolder.matches(searchParameters)) {
-				spiraTestCaseFolders.add(spiraTestCaseFolder);
+				if (spiraTestCaseFolder.matches(searchParameters)) {
+					spiraTestCaseFolders.add(spiraTestCaseFolder);
+				}
 			}
-		}
 
-		if (!spiraTestCaseFolders.isEmpty()) {
-			return spiraTestCaseFolders;
+			if (!spiraTestCaseFolders.isEmpty()) {
+				return spiraTestCaseFolders;
+			}
 		}
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
@@ -211,6 +213,9 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 				spiraTestCaseFolders.add(spiraTestCaseFolder);
 			}
 		}
+
+		addPreviousSearchParameters(
+			SpiraTestCaseFolder.class, searchParameters);
 
 		return spiraTestCaseFolders;
 	}

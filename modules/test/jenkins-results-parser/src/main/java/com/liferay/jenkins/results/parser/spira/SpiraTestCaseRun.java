@@ -92,14 +92,18 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
 
-		for (SpiraTestCaseRun spiraTestCaseRun : _spiraTestCaseRuns.values()) {
-			if (spiraTestCaseRun.matches(searchParameters)) {
-				spiraTestCaseRuns.add(spiraTestCaseRun);
-			}
-		}
+		if (isPreviousSearch(SpiraTestCaseRun.class, searchParameters)) {
+			for (SpiraTestCaseRun spiraTestCaseRun :
+					_spiraTestCaseRuns.values()) {
 
-		if (!spiraTestCaseRuns.isEmpty()) {
-			return spiraTestCaseRuns;
+				if (spiraTestCaseRun.matches(searchParameters)) {
+					spiraTestCaseRuns.add(spiraTestCaseRun);
+				}
+			}
+
+			if (!spiraTestCaseRuns.isEmpty()) {
+				return spiraTestCaseRuns;
+			}
 		}
 
 		Map<String, String> urlParameters = new HashMap<>();
@@ -145,6 +149,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 				spiraTestCaseRuns.add(spiraTestCaseRun);
 			}
 		}
+
+		addPreviousSearchParameters(SpiraTestCaseRun.class, searchParameters);
 
 		return spiraTestCaseRuns;
 	}

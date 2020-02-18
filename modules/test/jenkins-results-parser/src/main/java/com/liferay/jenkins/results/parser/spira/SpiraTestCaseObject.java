@@ -177,14 +177,16 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		List<SpiraTestCaseObject> spiraTestCases = new ArrayList<>();
 
-		for (SpiraTestCaseObject spiraTestCase : _spiraTestCases.values()) {
-			if (spiraTestCase.matches(searchParameters)) {
-				spiraTestCases.add(spiraTestCase);
+		if (isPreviousSearch(SpiraTestCaseObject.class, searchParameters)) {
+			for (SpiraTestCaseObject spiraTestCase : _spiraTestCases.values()) {
+				if (spiraTestCase.matches(searchParameters)) {
+					spiraTestCases.add(spiraTestCase);
+				}
 			}
-		}
 
-		if (!spiraTestCases.isEmpty()) {
-			return spiraTestCases;
+			if (!spiraTestCases.isEmpty()) {
+				return spiraTestCases;
+			}
 		}
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
@@ -221,6 +223,9 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 				spiraTestCases.add(spiraTestCase);
 			}
 		}
+
+		addPreviousSearchParameters(
+			SpiraTestCaseObject.class, searchParameters);
 
 		return spiraTestCases;
 	}

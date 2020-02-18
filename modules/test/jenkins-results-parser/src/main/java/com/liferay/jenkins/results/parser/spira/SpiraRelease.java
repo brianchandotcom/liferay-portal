@@ -185,14 +185,16 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 		List<SpiraRelease> spiraReleases = new ArrayList<>();
 
-		for (SpiraRelease spiraRelease : _spiraReleases.values()) {
-			if (spiraRelease.matches(searchParameters)) {
-				spiraReleases.add(spiraRelease);
+		if (isPreviousSearch(SpiraRelease.class, searchParameters)) {
+			for (SpiraRelease spiraRelease : _spiraReleases.values()) {
+				if (spiraRelease.matches(searchParameters)) {
+					spiraReleases.add(spiraRelease);
+				}
 			}
-		}
 
-		if (!spiraReleases.isEmpty()) {
-			return spiraReleases;
+			if (!spiraReleases.isEmpty()) {
+				return spiraReleases;
+			}
 		}
 
 		Map<String, String> urlParameters = new HashMap<>();
@@ -229,6 +231,8 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 				spiraReleases.add(spiraRelease);
 			}
 		}
+
+		addPreviousSearchParameters(SpiraRelease.class, searchParameters);
 
 		return spiraReleases;
 	}

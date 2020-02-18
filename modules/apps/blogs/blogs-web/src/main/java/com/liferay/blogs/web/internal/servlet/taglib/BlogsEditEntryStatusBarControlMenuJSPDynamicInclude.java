@@ -50,6 +50,10 @@ public class BlogsEditEntryStatusBarControlMenuJSPDynamicInclude
 			(PortletRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
+		if (portletRequest == null) {
+			return;
+		}
+
 		String mvcRenderCommandName = ParamUtil.getString(
 			portletRequest, "mvcRenderCommandName");
 

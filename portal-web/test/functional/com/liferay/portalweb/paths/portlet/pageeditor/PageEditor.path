@@ -182,7 +182,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_SECTION_TITLE</td>
-	<td>//div[contains(@class,'sidebar-section')]//h1</td>
+	<td>//div[contains(@class,'page-editor')]/div/h1</td>
 	<td></td>
 </tr>
 <tr>

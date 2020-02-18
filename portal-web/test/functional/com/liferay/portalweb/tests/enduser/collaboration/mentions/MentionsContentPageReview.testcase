@@ -37,13 +37,13 @@ definition {
 
 			User.logoutPG();
 
-			User.firstLoginPG(
+			User.loginPG(
 				password = "test",
 				userEmailAddress = "user2@liferay.com");
 
 			User.logoutPG();
 
-			User.firstLoginPG();
+			User.loginPG();
 		}
 	}
 
@@ -74,13 +74,13 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG(
+		User.loginPG(
 			password = "test",
 			userEmailAddress = "user1@liferay.com");
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.loginPG();
 
 		ProductMenu.gotoPortlet(
 			category = "Users",

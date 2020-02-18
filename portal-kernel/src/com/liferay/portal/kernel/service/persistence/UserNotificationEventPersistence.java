@@ -1432,7 +1432,7 @@ public interface UserNotificationEventPersistence
 	 * @param actionRequired the action required
 	 * @return the matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_AR(
+	public java.util.List<UserNotificationEvent> findByU_D_A(
 		long userId, boolean delivered, boolean actionRequired);
 
 	/**
@@ -1449,7 +1449,7 @@ public interface UserNotificationEventPersistence
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_AR(
+	public java.util.List<UserNotificationEvent> findByU_D_A(
 		long userId, boolean delivered, boolean actionRequired, int start,
 		int end);
 
@@ -1468,7 +1468,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_AR(
+	public java.util.List<UserNotificationEvent> findByU_D_A(
 		long userId, boolean delivered, boolean actionRequired, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -1490,7 +1490,7 @@ public interface UserNotificationEventPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_AR(
+	public java.util.List<UserNotificationEvent> findByU_D_A(
 		long userId, boolean delivered, boolean actionRequired, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -1507,7 +1507,7 @@ public interface UserNotificationEventPersistence
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_D_AR_First(
+	public UserNotificationEvent findByU_D_A_First(
 			long userId, boolean delivered, boolean actionRequired,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<UserNotificationEvent> orderByComparator)
@@ -1522,7 +1522,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_D_AR_First(
+	public UserNotificationEvent fetchByU_D_A_First(
 		long userId, boolean delivered, boolean actionRequired,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator);
@@ -1537,7 +1537,7 @@ public interface UserNotificationEventPersistence
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_D_AR_Last(
+	public UserNotificationEvent findByU_D_A_Last(
 			long userId, boolean delivered, boolean actionRequired,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<UserNotificationEvent> orderByComparator)
@@ -1552,7 +1552,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_D_AR_Last(
+	public UserNotificationEvent fetchByU_D_A_Last(
 		long userId, boolean delivered, boolean actionRequired,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator);
@@ -1568,7 +1568,7 @@ public interface UserNotificationEventPersistence
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public UserNotificationEvent[] findByU_D_AR_PrevAndNext(
+	public UserNotificationEvent[] findByU_D_A_PrevAndNext(
 			long userNotificationEventId, long userId, boolean delivered,
 			boolean actionRequired,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -1582,7 +1582,7 @@ public interface UserNotificationEventPersistence
 	 * @param delivered the delivered
 	 * @param actionRequired the action required
 	 */
-	public void removeByU_D_AR(
+	public void removeByU_D_A(
 		long userId, boolean delivered, boolean actionRequired);
 
 	/**
@@ -1593,7 +1593,7 @@ public interface UserNotificationEventPersistence
 	 * @param actionRequired the action required
 	 * @return the number of matching user notification events
 	 */
-	public int countByU_D_AR(
+	public int countByU_D_A(
 		long userId, boolean delivered, boolean actionRequired);
 
 	/**
@@ -1604,7 +1604,7 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_A(
+	public java.util.List<UserNotificationEvent> findByU_D_Archived(
 		long userId, boolean delivered, boolean archived);
 
 	/**
@@ -1621,7 +1621,7 @@ public interface UserNotificationEventPersistence
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_A(
+	public java.util.List<UserNotificationEvent> findByU_D_Archived(
 		long userId, boolean delivered, boolean archived, int start, int end);
 
 	/**
@@ -1639,7 +1639,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_A(
+	public java.util.List<UserNotificationEvent> findByU_D_Archived(
 		long userId, boolean delivered, boolean archived, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator);
@@ -1660,7 +1660,7 @@ public interface UserNotificationEventPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_A(
+	public java.util.List<UserNotificationEvent> findByU_D_Archived(
 		long userId, boolean delivered, boolean archived, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator,
@@ -1676,7 +1676,7 @@ public interface UserNotificationEventPersistence
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_D_A_First(
+	public UserNotificationEvent findByU_D_Archived_First(
 			long userId, boolean delivered, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<UserNotificationEvent> orderByComparator)
@@ -1691,7 +1691,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_D_A_First(
+	public UserNotificationEvent fetchByU_D_Archived_First(
 		long userId, boolean delivered, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator);
@@ -1706,7 +1706,7 @@ public interface UserNotificationEventPersistence
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_D_A_Last(
+	public UserNotificationEvent findByU_D_Archived_Last(
 			long userId, boolean delivered, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<UserNotificationEvent> orderByComparator)
@@ -1721,7 +1721,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_D_A_Last(
+	public UserNotificationEvent fetchByU_D_Archived_Last(
 		long userId, boolean delivered, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator);
@@ -1737,7 +1737,7 @@ public interface UserNotificationEventPersistence
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public UserNotificationEvent[] findByU_D_A_PrevAndNext(
+	public UserNotificationEvent[] findByU_D_Archived_PrevAndNext(
 			long userNotificationEventId, long userId, boolean delivered,
 			boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -1751,7 +1751,8 @@ public interface UserNotificationEventPersistence
 	 * @param delivered the delivered
 	 * @param archived the archived
 	 */
-	public void removeByU_D_A(long userId, boolean delivered, boolean archived);
+	public void removeByU_D_Archived(
+		long userId, boolean delivered, boolean archived);
 
 	/**
 	 * Returns the number of user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
@@ -1761,7 +1762,8 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the number of matching user notification events
 	 */
-	public int countByU_D_A(long userId, boolean delivered, boolean archived);
+	public int countByU_D_Archived(
+		long userId, boolean delivered, boolean archived);
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -1771,7 +1773,7 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_A_A(
 		long userId, boolean actionRequired, boolean archived);
 
 	/**
@@ -1788,7 +1790,7 @@ public interface UserNotificationEventPersistence
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_A_A(
 		long userId, boolean actionRequired, boolean archived, int start,
 		int end);
 
@@ -1807,7 +1809,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_A_A(
 		long userId, boolean actionRequired, boolean archived, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -1829,7 +1831,7 @@ public interface UserNotificationEventPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_A_A(
 		long userId, boolean actionRequired, boolean archived, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -1846,7 +1848,7 @@ public interface UserNotificationEventPersistence
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_AR_A_First(
+	public UserNotificationEvent findByU_A_A_First(
 			long userId, boolean actionRequired, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<UserNotificationEvent> orderByComparator)
@@ -1861,7 +1863,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_AR_A_First(
+	public UserNotificationEvent fetchByU_A_A_First(
 		long userId, boolean actionRequired, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator);
@@ -1876,7 +1878,7 @@ public interface UserNotificationEventPersistence
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_AR_A_Last(
+	public UserNotificationEvent findByU_A_A_Last(
 			long userId, boolean actionRequired, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<UserNotificationEvent> orderByComparator)
@@ -1891,7 +1893,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_AR_A_Last(
+	public UserNotificationEvent fetchByU_A_A_Last(
 		long userId, boolean actionRequired, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator);
@@ -1907,7 +1909,7 @@ public interface UserNotificationEventPersistence
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public UserNotificationEvent[] findByU_AR_A_PrevAndNext(
+	public UserNotificationEvent[] findByU_A_A_PrevAndNext(
 			long userNotificationEventId, long userId, boolean actionRequired,
 			boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -1921,7 +1923,7 @@ public interface UserNotificationEventPersistence
 	 * @param actionRequired the action required
 	 * @param archived the archived
 	 */
-	public void removeByU_AR_A(
+	public void removeByU_A_A(
 		long userId, boolean actionRequired, boolean archived);
 
 	/**
@@ -1932,7 +1934,7 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the number of matching user notification events
 	 */
-	public int countByU_AR_A(
+	public int countByU_A_A(
 		long userId, boolean actionRequired, boolean archived);
 
 	/**
@@ -2127,7 +2129,7 @@ public interface UserNotificationEventPersistence
 	 * @param actionRequired the action required
 	 * @return the matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_AR(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired);
 
@@ -2146,7 +2148,7 @@ public interface UserNotificationEventPersistence
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_AR(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, int start, int end);
 
@@ -2166,7 +2168,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_AR(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2189,7 +2191,7 @@ public interface UserNotificationEventPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_AR(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2207,7 +2209,7 @@ public interface UserNotificationEventPersistence
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_DT_D_AR_First(
+	public UserNotificationEvent findByU_DT_D_A_First(
 			long userId, int deliveryType, boolean delivered,
 			boolean actionRequired,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -2224,7 +2226,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_DT_D_AR_First(
+	public UserNotificationEvent fetchByU_DT_D_A_First(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2241,7 +2243,7 @@ public interface UserNotificationEventPersistence
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_DT_D_AR_Last(
+	public UserNotificationEvent findByU_DT_D_A_Last(
 			long userId, int deliveryType, boolean delivered,
 			boolean actionRequired,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -2258,7 +2260,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_DT_D_AR_Last(
+	public UserNotificationEvent fetchByU_DT_D_A_Last(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2276,7 +2278,7 @@ public interface UserNotificationEventPersistence
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public UserNotificationEvent[] findByU_DT_D_AR_PrevAndNext(
+	public UserNotificationEvent[] findByU_DT_D_A_PrevAndNext(
 			long userNotificationEventId, long userId, int deliveryType,
 			boolean delivered, boolean actionRequired,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -2291,7 +2293,7 @@ public interface UserNotificationEventPersistence
 	 * @param delivered the delivered
 	 * @param actionRequired the action required
 	 */
-	public void removeByU_DT_D_AR(
+	public void removeByU_DT_D_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired);
 
@@ -2304,7 +2306,7 @@ public interface UserNotificationEventPersistence
 	 * @param actionRequired the action required
 	 * @return the number of matching user notification events
 	 */
-	public int countByU_DT_D_AR(
+	public int countByU_DT_D_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired);
 
@@ -2317,7 +2319,7 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_Archived(
 		long userId, int deliveryType, boolean delivered, boolean archived);
 
 	/**
@@ -2335,7 +2337,7 @@ public interface UserNotificationEventPersistence
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_Archived(
 		long userId, int deliveryType, boolean delivered, boolean archived,
 		int start, int end);
 
@@ -2355,7 +2357,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_Archived(
 		long userId, int deliveryType, boolean delivered, boolean archived,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2378,7 +2380,7 @@ public interface UserNotificationEventPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_Archived(
 		long userId, int deliveryType, boolean delivered, boolean archived,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2396,7 +2398,7 @@ public interface UserNotificationEventPersistence
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_DT_D_A_First(
+	public UserNotificationEvent findByU_DT_D_Archived_First(
 			long userId, int deliveryType, boolean delivered, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<UserNotificationEvent> orderByComparator)
@@ -2412,7 +2414,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_DT_D_A_First(
+	public UserNotificationEvent fetchByU_DT_D_Archived_First(
 		long userId, int deliveryType, boolean delivered, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator);
@@ -2428,7 +2430,7 @@ public interface UserNotificationEventPersistence
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_DT_D_A_Last(
+	public UserNotificationEvent findByU_DT_D_Archived_Last(
 			long userId, int deliveryType, boolean delivered, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<UserNotificationEvent> orderByComparator)
@@ -2444,7 +2446,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_DT_D_A_Last(
+	public UserNotificationEvent fetchByU_DT_D_Archived_Last(
 		long userId, int deliveryType, boolean delivered, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator);
@@ -2461,7 +2463,7 @@ public interface UserNotificationEventPersistence
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public UserNotificationEvent[] findByU_DT_D_A_PrevAndNext(
+	public UserNotificationEvent[] findByU_DT_D_Archived_PrevAndNext(
 			long userNotificationEventId, long userId, int deliveryType,
 			boolean delivered, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -2476,7 +2478,7 @@ public interface UserNotificationEventPersistence
 	 * @param delivered the delivered
 	 * @param archived the archived
 	 */
-	public void removeByU_DT_D_A(
+	public void removeByU_DT_D_Archived(
 		long userId, int deliveryType, boolean delivered, boolean archived);
 
 	/**
@@ -2488,7 +2490,7 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the number of matching user notification events
 	 */
-	public int countByU_DT_D_A(
+	public int countByU_DT_D_Archived(
 		long userId, int deliveryType, boolean delivered, boolean archived);
 
 	/**
@@ -2500,7 +2502,7 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_A_A(
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived);
 
@@ -2519,7 +2521,7 @@ public interface UserNotificationEventPersistence
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_A_A(
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		int start, int end);
 
@@ -2539,7 +2541,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_A_A(
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2562,7 +2564,7 @@ public interface UserNotificationEventPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_A_A(
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2580,7 +2582,7 @@ public interface UserNotificationEventPersistence
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_DT_AR_A_First(
+	public UserNotificationEvent findByU_DT_A_A_First(
 			long userId, int deliveryType, boolean actionRequired,
 			boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -2597,7 +2599,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_DT_AR_A_First(
+	public UserNotificationEvent fetchByU_DT_A_A_First(
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator);
@@ -2613,7 +2615,7 @@ public interface UserNotificationEventPersistence
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_DT_AR_A_Last(
+	public UserNotificationEvent findByU_DT_A_A_Last(
 			long userId, int deliveryType, boolean actionRequired,
 			boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -2630,7 +2632,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_DT_AR_A_Last(
+	public UserNotificationEvent fetchByU_DT_A_A_Last(
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
 			orderByComparator);
@@ -2647,7 +2649,7 @@ public interface UserNotificationEventPersistence
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public UserNotificationEvent[] findByU_DT_AR_A_PrevAndNext(
+	public UserNotificationEvent[] findByU_DT_A_A_PrevAndNext(
 			long userNotificationEventId, long userId, int deliveryType,
 			boolean actionRequired, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -2662,7 +2664,7 @@ public interface UserNotificationEventPersistence
 	 * @param actionRequired the action required
 	 * @param archived the archived
 	 */
-	public void removeByU_DT_AR_A(
+	public void removeByU_DT_A_A(
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived);
 
@@ -2675,7 +2677,7 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the number of matching user notification events
 	 */
-	public int countByU_DT_AR_A(
+	public int countByU_DT_A_A(
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived);
 
@@ -2688,7 +2690,7 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_D_A_A(
 		long userId, boolean delivered, boolean actionRequired,
 		boolean archived);
 
@@ -2707,7 +2709,7 @@ public interface UserNotificationEventPersistence
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_D_A_A(
 		long userId, boolean delivered, boolean actionRequired,
 		boolean archived, int start, int end);
 
@@ -2727,7 +2729,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_D_A_A(
 		long userId, boolean delivered, boolean actionRequired,
 		boolean archived, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2750,7 +2752,7 @@ public interface UserNotificationEventPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_D_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_D_A_A(
 		long userId, boolean delivered, boolean actionRequired,
 		boolean archived, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2768,7 +2770,7 @@ public interface UserNotificationEventPersistence
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_D_AR_A_First(
+	public UserNotificationEvent findByU_D_A_A_First(
 			long userId, boolean delivered, boolean actionRequired,
 			boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -2785,7 +2787,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_D_AR_A_First(
+	public UserNotificationEvent fetchByU_D_A_A_First(
 		long userId, boolean delivered, boolean actionRequired,
 		boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2802,7 +2804,7 @@ public interface UserNotificationEventPersistence
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_D_AR_A_Last(
+	public UserNotificationEvent findByU_D_A_A_Last(
 			long userId, boolean delivered, boolean actionRequired,
 			boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -2819,7 +2821,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_D_AR_A_Last(
+	public UserNotificationEvent fetchByU_D_A_A_Last(
 		long userId, boolean delivered, boolean actionRequired,
 		boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -2837,7 +2839,7 @@ public interface UserNotificationEventPersistence
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public UserNotificationEvent[] findByU_D_AR_A_PrevAndNext(
+	public UserNotificationEvent[] findByU_D_A_A_PrevAndNext(
 			long userNotificationEventId, long userId, boolean delivered,
 			boolean actionRequired, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -2852,7 +2854,7 @@ public interface UserNotificationEventPersistence
 	 * @param actionRequired the action required
 	 * @param archived the archived
 	 */
-	public void removeByU_D_AR_A(
+	public void removeByU_D_A_A(
 		long userId, boolean delivered, boolean actionRequired,
 		boolean archived);
 
@@ -2865,7 +2867,7 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the number of matching user notification events
 	 */
-	public int countByU_D_AR_A(
+	public int countByU_D_A_A(
 		long userId, boolean delivered, boolean actionRequired,
 		boolean archived);
 
@@ -3080,7 +3082,7 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_A_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, boolean archived);
 
@@ -3100,7 +3102,7 @@ public interface UserNotificationEventPersistence
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_A_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, boolean archived, int start, int end);
 
@@ -3121,7 +3123,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_A_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, boolean archived, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -3145,7 +3147,7 @@ public interface UserNotificationEventPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public java.util.List<UserNotificationEvent> findByU_DT_D_AR_A(
+	public java.util.List<UserNotificationEvent> findByU_DT_D_A_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, boolean archived, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -3164,7 +3166,7 @@ public interface UserNotificationEventPersistence
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_DT_D_AR_A_First(
+	public UserNotificationEvent findByU_DT_D_A_A_First(
 			long userId, int deliveryType, boolean delivered,
 			boolean actionRequired, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -3182,7 +3184,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_DT_D_AR_A_First(
+	public UserNotificationEvent fetchByU_DT_D_A_A_First(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -3200,7 +3202,7 @@ public interface UserNotificationEventPersistence
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent findByU_DT_D_AR_A_Last(
+	public UserNotificationEvent findByU_DT_D_A_A_Last(
 			long userId, int deliveryType, boolean delivered,
 			boolean actionRequired, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -3218,7 +3220,7 @@ public interface UserNotificationEventPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public UserNotificationEvent fetchByU_DT_D_AR_A_Last(
+	public UserNotificationEvent fetchByU_DT_D_A_A_Last(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent>
@@ -3237,7 +3239,7 @@ public interface UserNotificationEventPersistence
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public UserNotificationEvent[] findByU_DT_D_AR_A_PrevAndNext(
+	public UserNotificationEvent[] findByU_DT_D_A_A_PrevAndNext(
 			long userNotificationEventId, long userId, int deliveryType,
 			boolean delivered, boolean actionRequired, boolean archived,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -3253,7 +3255,7 @@ public interface UserNotificationEventPersistence
 	 * @param actionRequired the action required
 	 * @param archived the archived
 	 */
-	public void removeByU_DT_D_AR_A(
+	public void removeByU_DT_D_A_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, boolean archived);
 
@@ -3267,7 +3269,7 @@ public interface UserNotificationEventPersistence
 	 * @param archived the archived
 	 * @return the number of matching user notification events
 	 */
-	public int countByU_DT_D_AR_A(
+	public int countByU_DT_D_A_A(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, boolean archived);
 

@@ -1126,7 +1126,31 @@ public class LayoutConverterTest {
 	private void _testConvertNoPortlets(String layoutTemplateId)
 		throws Exception {
 
-		_testConvert(layoutTemplateId, new ArrayList<>());
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.setProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId);
+
+		Layout layout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), typeSettingsProperties.toString());
+
+		LayoutConverter layoutConverter =
+			_layoutConverterRegistry.getLayoutConverter(
+				_getLayoutTemplateId(layout));
+
+		LayoutData layoutData = layoutConverter.convert(layout);
+
+		JSONObject layoutDataJSONObject = layoutData.getLayoutDataJSONObject();
+
+		String expectedLayoutData = _read(
+			String.format("expected_layout_data_%s.json", layoutTemplateId));
+
+		JSONObject expectedLayoutDataJSONObject =
+			JSONFactoryUtil.createJSONObject(expectedLayoutData);
+
+		Assert.assertEquals(
+			expectedLayoutDataJSONObject.toJSONString(),
+			layoutDataJSONObject.toJSONString());
 	}
 
 	private void _testConvertOneTwoColumnsMultiplePortlets(

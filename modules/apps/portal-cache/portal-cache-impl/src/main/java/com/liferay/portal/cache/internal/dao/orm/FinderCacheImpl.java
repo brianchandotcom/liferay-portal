@@ -376,36 +376,38 @@ public class FinderCacheImpl
 	private Serializable _resultToPrimaryKey(
 		Object[] args, Serializable result) {
 
+		Serializable primaryKey = result;
+
 		if (result instanceof BaseModel<?>) {
 			BaseModel<?> model = (BaseModel<?>)result;
 
-			return model.getPrimaryKeyObj();
+			primaryKey = model.getPrimaryKeyObj();
 		}
-
-		if (result instanceof List<?>) {
+		else if (result instanceof List<?>) {
 			List<BaseModel<?>> baseModels = (List<BaseModel<?>>)result;
 
 			if (baseModels.isEmpty()) {
-				return new EmptyResult(args);
+				primaryKey = new EmptyResult(args);
 			}
+			else if ((baseModels.size() >
+						_valueObjectFinderCacheListThreshold) &&
+					 (_valueObjectFinderCacheListThreshold > 0)) {
 
-			if ((baseModels.size() > _valueObjectFinderCacheListThreshold) &&
-				(_valueObjectFinderCacheListThreshold > 0)) {
-
-				return null;
+				primaryKey = null;
 			}
+			else {
+				ArrayList<Serializable> primaryKeys = new ArrayList<>(
+					baseModels.size());
 
-			ArrayList<Serializable> primaryKeys = new ArrayList<>(
-				baseModels.size());
+				for (BaseModel<?> baseModel : baseModels) {
+					primaryKeys.add(baseModel.getPrimaryKeyObj());
+				}
 
-			for (BaseModel<?> baseModel : baseModels) {
-				primaryKeys.add(baseModel.getPrimaryKeyObj());
+				primaryKey = primaryKeys;
 			}
-
-			return primaryKeys;
 		}
 
-		return result;
+		return primaryKey;
 	}
 
 	private static final String _GROUP_KEY_PREFIX =

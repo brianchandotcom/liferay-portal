@@ -130,7 +130,7 @@ definition {
 			key_tab = "Sites",
 			locator1 = "NavTab#TAB_LINK");
 
-		AssertElementPresent(
+		AssertElementPresent.assertVisible(
 			key_title = "Connected Sites",
 			locator1 = "Header#H3_TITLE");
 	}

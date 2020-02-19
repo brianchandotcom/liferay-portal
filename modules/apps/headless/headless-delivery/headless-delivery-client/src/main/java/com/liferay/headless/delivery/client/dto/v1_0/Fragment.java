@@ -50,6 +50,27 @@ public class Fragment implements Cloneable {
 
 	protected String fragmentCollectionName;
 
+	public String getFragmentKey() {
+		return fragmentKey;
+	}
+
+	public void setFragmentKey(String fragmentKey) {
+		this.fragmentKey = fragmentKey;
+	}
+
+	public void setFragmentKey(
+		UnsafeSupplier<String, Exception> fragmentKeyUnsafeSupplier) {
+
+		try {
+			fragmentKey = fragmentKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fragmentKey;
+
 	public String getFragmentName() {
 		return fragmentName;
 	}

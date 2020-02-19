@@ -742,7 +742,7 @@
 		<exception>ContentName</exception>
 		<exception>DataProviderInstanceName</exception>
 		<exception>DataProviderInstanceURL</exception>
-		<exception>DuplicateDataProviderInstanceParameterName</exception>
+		<exception>DuplicateDataProviderInstanceInputParameterName</exception>
 		<exception>FormInstanceName</exception>
 		<exception>FormInstanceRecordExporter</exception>
 		<exception>FormInstanceRecordGroupId</exception>

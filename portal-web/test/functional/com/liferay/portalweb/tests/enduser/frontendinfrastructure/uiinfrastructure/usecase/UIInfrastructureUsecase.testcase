@@ -22,11 +22,32 @@ definition {
 	@description = "This is a use case for LPS-95157."
 	@priority = "5"
 	test RefreshHomePage {
+		Navigator.gotoPage(pageName = "Home");
+
+		Refresh();
+
+		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_HOME_PAGE_NAV_LEFT_PNG");
+
+		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_HOME_PAGE_NAV_RIGHT_PNG");
+
+		takeScreenshot();
 	}
 
 	@description = "This is a use case for LPS-95157."
 	@priority = "5"
 	test RefreshWebContent {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		Refresh();
+
+		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_WEB_CONTENT_NAV_LEFT_PNG");
+
+		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_WEB_CONTENT_NAV_RIGHT_PNG");
+
+		takeScreenshot();
 	}
 
 	@priority = "5"

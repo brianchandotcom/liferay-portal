@@ -44,11 +44,6 @@ const SaveFragmentCompositionModal = ({
 		setThumbnail(image);
 	};
 
-	const thumbnailSelectorConfig = {
-		imageSelectorURL,
-		portletNamespace
-	};
-
 	const [loading] = useState(false);
 
 	const nameInputId = `${portletNamespace}fragmentCompositionName`;
@@ -102,7 +97,6 @@ const SaveFragmentCompositionModal = ({
 									displayType="secondary"
 									onClick={() =>
 										openImageSelector(
-											thumbnailSelectorConfig,
 											handleThumbnailSelected
 										)
 									}

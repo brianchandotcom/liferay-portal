@@ -45,12 +45,9 @@ export function ImageSelector({
 					<ClayButton
 						displayType="secondary"
 						onClick={() =>
-							openImageSelector(
-								{imageSelectorURL, portletNamespace},
-								image => {
-									onImageSelected(image);
-								}
-							)
+							openImageSelector(image => {
+								onImageSelected(image);
+							})
 						}
 						small
 					>

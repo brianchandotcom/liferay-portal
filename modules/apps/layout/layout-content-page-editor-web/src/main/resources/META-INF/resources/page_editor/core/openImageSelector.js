@@ -14,14 +14,14 @@
 
 import {ItemSelectorDialog} from 'frontend-js-web';
 
-export function openImageSelector(config, callback, destroyedCallback = null) {
-	const {imageSelectorURL, portletNamespace} = config;
+import {config} from '../app/config/index';
 
+export function openImageSelector(callback, destroyedCallback = null) {
 	const itemSelectorDialog = new ItemSelectorDialog({
-		eventName: `${portletNamespace}selectImage`,
+		eventName: `${config.portletNamespace}selectImage`,
 		singleSelect: true,
 		title: Liferay.Language.get('select'),
-		url: imageSelectorURL
+		url: config.imageSelectorURL
 	});
 
 	itemSelectorDialog.on('selectedItemChange', event => {

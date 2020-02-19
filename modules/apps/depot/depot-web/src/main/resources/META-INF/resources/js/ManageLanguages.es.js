@@ -122,7 +122,7 @@ const ManageLanguages = ({
 							displayType="primary"
 							onClick={() => onModalSave(selectedLocales)}
 						>
-							{Liferay.Language.get('save')}
+							{Liferay.Language.get('done')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

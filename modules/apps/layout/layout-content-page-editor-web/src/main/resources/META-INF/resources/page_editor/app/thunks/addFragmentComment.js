@@ -18,7 +18,7 @@ import FragmentService from '../services/FragmentService';
 export default function addFragmentComment({
 	body,
 	fragmentEntryLinkId,
-	parentCommentId
+	parentCommentId = undefined
 }) {
 	return dispatch => {
 		return FragmentService.addComment({

@@ -61,7 +61,7 @@ const RemoveButton = ({node}) => {
 			onClick={event => {
 				event.stopPropagation();
 
-				dispatch(deleteItem({config, itemId: node.id, store}));
+				dispatch(deleteItem({itemId: node.id, store}));
 			}}
 		>
 			<ClayIcon symbol="times-circle" />

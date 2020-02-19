@@ -18,7 +18,6 @@ import FragmentService from '../services/FragmentService';
 export default function editFragmentComment({
 	body,
 	commentId,
-	config,
 	fragmentEntryLinkId,
 	parentCommentId,
 	resolved = false

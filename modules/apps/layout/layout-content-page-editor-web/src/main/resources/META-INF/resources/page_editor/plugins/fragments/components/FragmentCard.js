@@ -64,7 +64,6 @@ export default function FragmentCard({
 
 			dispatch(
 				addFragment({
-					config,
 					fragmentEntryKey,
 					groupId,
 					parentItemId: parentId,

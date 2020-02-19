@@ -18,7 +18,6 @@ import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 
 export default function updateItemConfig({
-	config,
 	itemConfig,
 	itemId,
 	segmentsExperienceId

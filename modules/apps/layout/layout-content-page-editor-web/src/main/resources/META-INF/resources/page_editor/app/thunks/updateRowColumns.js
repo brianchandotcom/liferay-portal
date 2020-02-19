@@ -16,7 +16,6 @@ import updateLayoutData from '../actions/updateLayoutData';
 import LayoutService from '../services/LayoutService';
 
 export default function updateRowColumns({
-	config,
 	itemId,
 	numberOfColumns,
 	segmentsExperienceId

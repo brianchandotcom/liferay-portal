@@ -18,7 +18,6 @@ import FragmentService from '../services/FragmentService';
 import InfoItemService from '../services/InfoItemService';
 
 export default function updateEditableValues({
-	config,
 	editableValues,
 	fragmentEntryLinkId,
 	segmentsExperienceId

@@ -132,7 +132,6 @@ export default function PageEditor({withinMasterPage = false}) {
 
 				dispatch(
 					moveItem({
-						config,
 						itemId,
 						parentItemId: parentId,
 						position,

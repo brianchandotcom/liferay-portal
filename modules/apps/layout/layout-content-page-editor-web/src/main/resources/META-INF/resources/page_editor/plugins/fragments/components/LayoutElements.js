@@ -18,7 +18,6 @@ import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {useSelectItem} from '../../../app/components/Controls';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../../app/config/constants/layoutDataItemDefaultConfigurations';
 import {ConfigContext} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addItem from '../../../app/thunks/addItem';
@@ -45,8 +44,6 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 
 	const [, drag, preview] = useDrag({
 		end(item, monitor) {
-			const itemConfig = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[type];
-
 			const result = monitor.getDropResult();
 
 			if (!result) {
@@ -57,8 +54,6 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 
 			dispatch(
 				addItem({
-					config,
-					itemConfig,
 					itemType: item.type,
 					parentItemId: parentId,
 					position,

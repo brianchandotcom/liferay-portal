@@ -46,7 +46,6 @@ export default function Widget({instanceable, portletId, title, used}) {
 
 			dispatch(
 				addWidget({
-					config,
 					parentItemId: parentId,
 					portletId,
 					position,

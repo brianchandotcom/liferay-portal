@@ -16,7 +16,6 @@ import addFragmentEntryLink from '../actions/addFragmentEntryLink';
 import FragmentService from '../services/FragmentService';
 
 export default function addFragment({
-	config,
 	fragmentEntryKey,
 	groupId,
 	parentItemId,

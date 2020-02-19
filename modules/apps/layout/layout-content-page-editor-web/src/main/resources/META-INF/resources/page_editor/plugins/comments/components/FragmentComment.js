@@ -270,7 +270,6 @@ export default function FragmentComment({
 						dispatch(
 							deleteFragmentComment({
 								commentId,
-								config,
 								fragmentEntryLinkId,
 								parentCommentId
 							})

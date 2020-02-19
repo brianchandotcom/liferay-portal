@@ -39,7 +39,6 @@ export default function ReplyCommentForm({
 		dispatch(
 			addFragmentComment({
 				body: textareaContent,
-				config,
 				fragmentEntryLinkId,
 				parentCommentId
 			})

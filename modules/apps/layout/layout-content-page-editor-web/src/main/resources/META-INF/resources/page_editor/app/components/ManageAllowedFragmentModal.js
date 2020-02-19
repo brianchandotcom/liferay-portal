@@ -37,7 +37,6 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 
 		dispatch(
 			updateItemConfig({
-				config,
 				itemConfig: {
 					allowNewFragmentEntries,
 					fragmentEntryKeys: [...selectedFragments]

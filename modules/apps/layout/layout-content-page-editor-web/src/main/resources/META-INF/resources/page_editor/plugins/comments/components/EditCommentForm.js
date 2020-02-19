@@ -38,7 +38,6 @@ export default function EditCommentForm({
 			editFragmentComment({
 				body: textareaContent,
 				commentId: comment.commentId,
-				config,
 				fragmentEntryLinkId,
 				parentCommentId: comment.parentCommentId
 			})

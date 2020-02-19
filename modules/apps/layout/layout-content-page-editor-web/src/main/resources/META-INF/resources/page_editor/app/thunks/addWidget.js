@@ -15,13 +15,7 @@
 import addFragmentEntryLink from '../actions/addFragmentEntryLink';
 import WidgetService from '../services/WidgetService';
 
-export default function addWidget({
-	config,
-	parentItemId,
-	portletId,
-	position,
-	store
-}) {
+export default function addWidget({parentItemId, portletId, position, store}) {
 	return dispatch => {
 		const {segmentsExperienceId} = store;
 

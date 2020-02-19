@@ -91,7 +91,6 @@ export default function LinkPanel({item}) {
 		updateMappedHrefValue({
 			classNameId: editableConfig.classNameId,
 			classPK: editableConfig.classPK,
-			config,
 			fieldId: editableConfig.fieldId,
 			languageId
 		});
@@ -126,7 +125,6 @@ export default function LinkPanel({item}) {
 
 			dispatch(
 				updateEditableValues({
-					config,
 					editableValues: nextEditableValues,
 					fragmentEntryLinkId,
 					segmentsExperienceId
@@ -148,7 +146,6 @@ export default function LinkPanel({item}) {
 	const updateMappedHrefValue = ({
 		classNameId,
 		classPK,
-		config,
 		fieldId,
 		languageId
 	}) => {
@@ -202,7 +199,6 @@ export default function LinkPanel({item}) {
 						updateMappedHrefValue({
 							classNameId: mappedItem.classNameId,
 							classPK: mappedItem.classPK,
-							config,
 							fieldId: mappedItem.fieldId,
 							languageId
 						});

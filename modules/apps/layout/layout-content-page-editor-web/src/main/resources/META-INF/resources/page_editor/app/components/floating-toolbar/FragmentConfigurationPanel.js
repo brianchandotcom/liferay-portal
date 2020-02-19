@@ -86,7 +86,6 @@ export const FragmentConfigurationPanel = ({item}) => {
 	const onRestoreButtonClick = () => {
 		dispatch(
 			updateFragmentConfiguration({
-				config,
 				configurationValues: defaultConfigurationValues,
 				fragmentEntryLink,
 				segmentsExperienceId
@@ -102,7 +101,6 @@ export const FragmentConfigurationPanel = ({item}) => {
 
 		dispatch(
 			updateFragmentConfiguration({
-				config,
 				configurationValues: nextConfigurationValues,
 				fragmentEntryLink,
 				segmentsExperienceId

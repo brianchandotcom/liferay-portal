@@ -72,7 +72,6 @@ export function ImagePropertiesPanel({item}) {
 
 			dispatch(
 				updateEditableValues({
-					config,
 					editableValues: nextEditableValues,
 					fragmentEntryLinkId,
 					segmentsExperienceId: state.segmentsExperienceId
@@ -137,7 +136,6 @@ export function ImagePropertiesPanel({item}) {
 
 		dispatch(
 			updateEditableValues({
-				config,
 				editableValues: nextEditableValues,
 				fragmentEntryLinkId,
 				segmentsExperienceId: state.segmentsExperienceId

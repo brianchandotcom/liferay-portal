@@ -60,7 +60,6 @@ const ContainerWithControls = React.forwardRef(
 			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
 				dispatch(
 					duplicateItem({
-						config,
 						itemId: item.itemId,
 						selectItem,
 						store: {segmentsExperienceId}

@@ -59,8 +59,6 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 		if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
 			dispatch(
 				duplicateItem({
-					config,
-					fragmentEntryLinkId: item.config.fragmentEntryLinkId,
 					itemId: item.itemId,
 					selectItem,
 					store: state

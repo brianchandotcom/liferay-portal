@@ -17,7 +17,6 @@ import FragmentService from '../services/FragmentService';
 
 export default function deleteFragmentComment({
 	commentId,
-	config,
 	fragmentEntryLinkId,
 	parentCommentId
 }) {

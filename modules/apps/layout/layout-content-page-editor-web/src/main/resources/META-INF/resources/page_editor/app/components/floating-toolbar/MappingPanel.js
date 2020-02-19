@@ -60,7 +60,6 @@ export function MappingPanel({item}) {
 
 		dispatch(
 			updateEditableValues({
-				config,
 				editableValues: nextEditableValues,
 				fragmentEntryLinkId,
 				segmentsExperienceId: state.segmentsExperienceId

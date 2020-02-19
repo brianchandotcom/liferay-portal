@@ -30,7 +30,6 @@ export default function(
 		valuePromise = getMappingValue({
 			classNameId: editableValue.classNameId,
 			classPK: editableValue.classPK,
-			config,
 			fieldId: editableValue.fieldId,
 			languageId
 		});
@@ -51,7 +50,6 @@ export default function(
 		configPromise = getMappingValue({
 			classNameId: editableValue.config.classNameId,
 			classPK: editableValue.config.classPK,
-			config,
 			fieldId: editableValue.config.fieldId
 		}).then(href => {
 			return {...editableValue.config, href};
@@ -101,7 +99,12 @@ function editableIsMappedToInfoItem(editableValue) {
 	);
 }
 
-function getMappingValue({classNameId, classPK, config, fieldId, languageId}) {
+function getMappingValue({
+	classNameId,
+	classPK,
+	fieldId,
+	languageId = undefined
+}) {
 	return InfoItemService.getAssetFieldValue({
 		classNameId,
 		classPK,

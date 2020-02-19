@@ -116,7 +116,6 @@ export default function FragmentContentProcessor({
 
 				dispatch(
 					updateEditableValues({
-						config,
 						editableValues: {
 							...editableValues,
 							[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {

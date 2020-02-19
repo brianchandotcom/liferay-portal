@@ -18,7 +18,7 @@ import updatePageContents from '../actions/updatePageContents';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 
-export default function deleteItem({config, itemId, store}) {
+export default function deleteItem({itemId, store}) {
 	return dispatch => {
 		const {segmentsExperienceId} = store;
 

@@ -18,7 +18,6 @@ import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarke
 import FragmentService from '../services/FragmentService';
 
 export default function updateFragmentConfiguration({
-	config,
 	configurationValues,
 	fragmentEntryLink,
 	segmentsExperienceId
@@ -50,7 +49,8 @@ export default function updateFragmentConfiguration({
 				dispatch(
 					updateEditableValues({
 						editableValues: nextEditableValues,
-						fragmentEntryLinkId
+						fragmentEntryLinkId,
+						segmentsExperienceId
 					})
 				);
 

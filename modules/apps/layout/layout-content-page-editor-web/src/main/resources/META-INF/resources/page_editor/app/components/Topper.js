@@ -96,7 +96,6 @@ export default function Topper({
 			dispatch(
 				moveItem({
 					...data,
-					config,
 					store
 				})
 			)
@@ -259,7 +258,6 @@ export default function Topper({
 
 									dispatch(
 										deleteItem({
-											config,
 											itemId: item.itemId,
 											store
 										})

@@ -75,7 +75,6 @@ export const RowConfigurationPanel = ({item}) => {
 			if (item && item.itemId) {
 				dispatch(
 					updateRowColumns({
-						config,
 						itemId: item.itemId,
 						numberOfColumns: newNumberOfColumns,
 						segmentsExperienceId
@@ -88,7 +87,6 @@ export const RowConfigurationPanel = ({item}) => {
 
 		dispatch(
 			updateItemConfig({
-				config,
 				itemConfig: {
 					[identifier]: value
 				},

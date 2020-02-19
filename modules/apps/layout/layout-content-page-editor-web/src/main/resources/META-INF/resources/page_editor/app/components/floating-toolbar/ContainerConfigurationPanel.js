@@ -51,7 +51,6 @@ export const ContainerConfigurationPanel = ({item}) => {
 	const handleConfigurationValueChanged = itemConfig => {
 		dispatch(
 			updateItemConfig({
-				config,
 				itemConfig,
 				itemId: item.itemId,
 				segmentsExperienceId

@@ -35,7 +35,6 @@ const UNMAPPED_OPTION = {
 };
 
 function loadFields({
-	config,
 	dispatch,
 	fieldType,
 	selectedItem,
@@ -99,7 +98,6 @@ export default function MappingSelector({
 
 	const onInfoItemSelect = selectedItem => {
 		loadFields({
-			config,
 			dispatch,
 			fieldType,
 			selectedItem: {

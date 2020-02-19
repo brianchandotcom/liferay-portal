@@ -19,6 +19,9 @@ package com.liferay.layout.page.template.constants;
  */
 public class LayoutPageTemplateExportImportConstants {
 
+	public static final String FILE_NAME_PAGE_DEFINITION_CONFIG =
+		"page-definition.json";
+
 	public static final String FILE_NAME_PAGE_TEMPLATE_COLLECTION_CONFIG =
 		"page-template-collection.json";
 

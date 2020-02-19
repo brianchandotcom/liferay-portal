@@ -90,6 +90,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 						fragmentCollectionName = _getFragmentCollectionName(
 							fragmentCollectionContributorTracker, fragmentEntry,
 							fragmentRendererTracker, rendererKey);
+						fragmentKey = _getFragmentKey(
+							fragmentEntry, rendererKey);
 						fragmentName = _getFragmentName(
 							fragmentEntry, fragmentEntryLink,
 							fragmentRendererTracker, rendererKey);
@@ -302,6 +304,16 @@ public class FragmentInstanceDefinitionConverterUtil {
 						"EditableFragmentEntryProcessor")));
 
 		return fragmentFields.toArray(new FragmentField[0]);
+	}
+
+	private static String _getFragmentKey(
+		FragmentEntry fragmentEntry, String rendererKey) {
+
+		if (fragmentEntry != null) {
+			return fragmentEntry.getFragmentEntryKey();
+		}
+
+		return rendererKey;
 	}
 
 	private static String _getFragmentName(

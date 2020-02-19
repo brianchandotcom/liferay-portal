@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE project>
-
-<project basedir="." default="deploy" name="sharepoint-hook">
-	<import file="../../../../../tools/sdk/hooks/build-common-hook.xml" />
-</project>

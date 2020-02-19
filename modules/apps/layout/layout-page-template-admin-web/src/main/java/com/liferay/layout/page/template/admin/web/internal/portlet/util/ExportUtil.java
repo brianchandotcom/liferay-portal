@@ -163,7 +163,7 @@ public class ExportUtil {
 		zipWriter.addEntry(
 			layoutPageTemplateCollectionPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.
-					FILE_NAME_COLLECTION_CONFIG,
+					FILE_NAME_PAGE_TEMPLATE_COLLECTION_CONFIG,
 			objectWriter.writeValueAsString(
 				PageTemplateCollectionConverterUtil.toPageTemplateCollection(
 					layoutPageTemplateCollection)));

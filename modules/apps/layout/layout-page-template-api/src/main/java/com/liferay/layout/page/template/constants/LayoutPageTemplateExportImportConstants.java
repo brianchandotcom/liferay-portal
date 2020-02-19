@@ -19,7 +19,7 @@ package com.liferay.layout.page.template.constants;
  */
 public class LayoutPageTemplateExportImportConstants {
 
-	public static final String FILE_NAME_COLLECTION_CONFIG =
+	public static final String FILE_NAME_PAGE_TEMPLATE_COLLECTION_CONFIG =
 		"page-template-collection.json";
 
 	public static final String FILE_NAME_PAGE_TEMPLATE_CONFIG =

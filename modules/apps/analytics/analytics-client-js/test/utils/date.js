@@ -17,7 +17,7 @@ import {
 	getTimezoneOffsetHour
 } from '../../src/utils/date';
 
-jest.config = describe('convertUTCDateToLocalDate()', () => {
+describe('convertUTCDateToLocalDate()', () => {
 	it('returns the converted local date', () => {
 		const date = new Date('2020-01-01T00:00:00.000Z');
 

@@ -122,9 +122,6 @@ public abstract class PoshiNodeFactory {
 				poshiScriptParserException.setFilePath(url.getFile());
 			}
 
-			PoshiScriptParserException.exceptions.add(
-				poshiScriptParserException);
-
 			throw poshiScriptParserException;
 		}
 

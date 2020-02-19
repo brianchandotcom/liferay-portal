@@ -33,18 +33,15 @@ public class PoshiScriptParserException extends Exception {
 	public static final String TRANSLATION_LOSS_MESSAGE =
 		"Poshi Script syntax is not preserved in translation";
 
-	public static Set<PoshiScriptParserException> exceptions =
-		Collections.synchronizedSet(new HashSet<>());
-
 	public static void throwExceptions() throws Exception {
-		if (!exceptions.isEmpty()) {
+		if (!_instances.isEmpty()) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("\n");
-			sb.append(exceptions.size());
+			sb.append(_instances.size());
 			sb.append(" errors in Poshi Script syntax\n\n\n");
 
-			for (Exception exception : exceptions) {
+			for (Exception exception : _instances) {
 				sb.append(exception.getMessage());
 				sb.append("\n\n");
 			}
@@ -57,10 +54,12 @@ public class PoshiScriptParserException extends Exception {
 
 	public PoshiScriptParserException(String msg) {
 		super(msg);
+
+		_instances.add(this);
 	}
 
 	public PoshiScriptParserException(String msg, PoshiNode poshiNode) {
-		super(msg);
+		this(msg);
 
 		setErrorLineNumber(poshiNode.getPoshiScriptLineNumber());
 
@@ -74,7 +73,7 @@ public class PoshiScriptParserException extends Exception {
 	public PoshiScriptParserException(
 		String msg, String poshiScript, PoshiNode parentPoshiNode) {
 
-		super(msg);
+		this(msg);
 
 		setPoshiNode(parentPoshiNode);
 
@@ -209,6 +208,9 @@ public class PoshiScriptParserException extends Exception {
 	private static final int _ERROR_SNIPPET_POSTFIX_SIZE = 10;
 
 	private static final int _ERROR_SNIPPET_PREFIX_SIZE = 10;
+
+	private static final Set<PoshiScriptParserException> _instances =
+		Collections.synchronizedSet(new HashSet<>());
 
 	private int _errorLineNumber;
 	private String _filePath = "Unknown file";

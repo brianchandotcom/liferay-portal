@@ -1,5 +1,3 @@
-import com.liferay.gradle.plugins.target.platform.tasks.DependencyManagementTask
-
 apply plugin: "com.liferay.target.platform.ide"
 apply plugin: "java"
 
@@ -15,15 +13,14 @@ repositories {
 	}
 }
 
-task dependencyManagementTest(type: DependencyManagementTask)
 task runGradleTest
 
-dependencyManagementTest {
+dependencyManagement {
 	outputFile = "${buildDir}/test.txt"
 }
 
 runGradleTest {
-	dependsOn dependencyManagementTest
+	dependsOn dependencyManagement
 
 	doLast {
 		File txtFile = file("${buildDir}/test.txt")

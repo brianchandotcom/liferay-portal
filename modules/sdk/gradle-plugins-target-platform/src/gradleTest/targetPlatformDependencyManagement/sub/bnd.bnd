@@ -1,0 +1,4 @@
+Bundle-Activator: sub.SubBundleActivator
+Bundle-Name: sub
+Bundle-SymbolicName: sub
+Bundle-Version: 1.0.0

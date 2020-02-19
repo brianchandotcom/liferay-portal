@@ -20,6 +20,7 @@ Import-Package:\
 	!org.apache.neethi.*,\
 	\
 	*
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore
 -includeresource:\
 	lib/copy-ws.jar;lib:=true,\
 	lib/lists-ws.jar;lib:=true,\

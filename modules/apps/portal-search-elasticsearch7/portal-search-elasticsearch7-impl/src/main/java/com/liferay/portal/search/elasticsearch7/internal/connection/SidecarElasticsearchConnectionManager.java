@@ -15,7 +15,10 @@
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.petra.process.ProcessExecutor;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
@@ -53,6 +56,21 @@ public class SidecarElasticsearchConnectionManager {
 				com.liferay.portal.search.elasticsearch7.configuration.
 					OperationMode.EMBEDDED) {
 
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(8);
+
+				sb.append("Liferay is configured to use Elasticsearch engine ");
+				sb.append("running in a child process of current process ");
+				sb.append("named as sidecar. Do NOT use sidecar in ");
+				sb.append("production. Sidecar is useful for development and ");
+				sb.append("demonstration purposes. Refer to the ");
+				sb.append("documentation for details on the limitations of ");
+				sb.append("sidecar. Remote Elasticsearch connections can be ");
+				sb.append("configured in the Control Panel.");
+
+				_log.warn(sb.toString());
+			}
+
 			elasticsearchConnection = new SidecarElasticsearchConnection(
 				new Sidecar(
 					componentContext,
@@ -77,6 +95,9 @@ public class SidecarElasticsearchConnectionManager {
 	protected void deactivate() {
 		_serviceRegistration.unregister();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SidecarElasticsearchConnectionManager.class);
 
 	@Reference
 	private File _file;

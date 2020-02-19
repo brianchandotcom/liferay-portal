@@ -68,9 +68,8 @@ public class SidecarMainProcessCallable
 	}
 
 	private void _loadModifiedClasses() throws Exception {
-		Thread thread = Thread.currentThread();
-
-		ClassLoader classLoader = thread.getContextClassLoader();
+		ClassLoader classLoader =
+			SidecarMainProcessCallable.class.getClassLoader();
 
 		Method defineClassMethod = ReflectionUtil.getDeclaredMethod(
 			ClassLoader.class, "defineClass", String.class, byte[].class,

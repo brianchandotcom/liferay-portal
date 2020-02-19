@@ -283,7 +283,7 @@ public class BreadcrumbUtil {
 			layoutsPageCount = group.getPublicLayoutsPageCount();
 		}
 
-		if ((layoutsPageCount > 0) && !group.isGuest()) {
+		if ((layoutsPageCount > 0) && !_checkIfCurrentSiteIsGuestSite(group)) {
 			String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
 				layoutSet, themeDisplay);
 
@@ -346,6 +346,26 @@ public class BreadcrumbUtil {
 		breadcrumbEntry.setURL(layoutURL);
 
 		breadcrumbEntries.add(breadcrumbEntry);
+	}
+
+	private static boolean _checkIfCurrentSiteIsGuestSite(Group group) {
+		if (group.isGuest()) {
+			return true;
+		}
+
+		if (group.isStaged()) {
+			Group liveGroup = group.getLiveGroup();
+
+			if (liveGroup != null) {
+				String groupKey = liveGroup.getGroupKey();
+
+				if (groupKey.equals(GroupConstants.GUEST)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private static LayoutSet _getParentLayoutSet(LayoutSet layoutSet)

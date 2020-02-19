@@ -15,7 +15,7 @@
 </tr>	
 <tr>
 	<td>ASSET_LIST_ENTRY_TITLE</td>
-	<td>//li[contains(@class,'list-group-item')]//a[contains(.,'${key_title}')]</td>
+	<td>//li[contains(@class,'list-group-item')]//a[contains(.,'${key_title}')] | //li[contains(@class,'list-group-item')]//p[contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
 <tr>

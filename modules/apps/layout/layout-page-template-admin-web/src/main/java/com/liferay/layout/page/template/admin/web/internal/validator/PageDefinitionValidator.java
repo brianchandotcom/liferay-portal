@@ -26,10 +26,10 @@ import java.io.InputStream;
  */
 public class PageDefinitionValidator {
 
-	public static void validatePageDefinition(String pageDefinition)
+	public static void validatePageDefinition(String pageDefinitionJSON)
 		throws PageDefinitionValidatorException {
 
-		if (Validator.isNull(pageDefinition)) {
+		if (Validator.isNull(pageDefinitionJSON)) {
 			return;
 		}
 
@@ -39,7 +39,7 @@ public class PageDefinitionValidator {
 
 		try {
 			JSONValidator.validate(
-				pageDefinition, pageDefinitionJSONSchemaInputStream);
+				pageDefinitionJSON, pageDefinitionJSONSchemaInputStream);
 		}
 		catch (JSONValidatorException jsonValidatorException) {
 			throw new PageDefinitionValidatorException(

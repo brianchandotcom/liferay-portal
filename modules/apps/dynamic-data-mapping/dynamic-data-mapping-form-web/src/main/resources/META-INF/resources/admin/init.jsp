@@ -89,7 +89,6 @@ String mainRequire = ddmFormAdminDisplayContext.getMainRequire();
 String rolesURL = ddmFormAdminDisplayContext.getRolesURL();
 String serializedDDMFormRules = ddmFormAdminDisplayContext.getSerializedDDMFormRules();
 String serializedFormBuilderContext = ddmFormAdminDisplayContext.getSerializedFormBuilderContext();
-String serializedSettingsForm = ddmFormAdminDisplayContext.serializeSettingsForm();
 %>
 
 <%@ include file="/admin/init-ext.jsp" %>

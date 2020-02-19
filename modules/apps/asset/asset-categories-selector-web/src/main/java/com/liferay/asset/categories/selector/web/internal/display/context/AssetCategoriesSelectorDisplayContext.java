@@ -104,15 +104,15 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _eventName;
 	}
 
-	public List<String> getSelectedCategories() {
-		if (_selectedCategories != null) {
-			return _selectedCategories;
+	public List<String> getSelectedCategoriesIds() {
+		if (_selectedCategoriesIds != null) {
+			return _selectedCategoriesIds;
 		}
 
-		_selectedCategories = StringUtil.split(
+		_selectedCategoriesIds = StringUtil.split(
 			ParamUtil.getString(_httpServletRequest, "selectedCategories"));
 
-		return _selectedCategories;
+		return _selectedCategoriesIds;
 	}
 
 	public long[] getVocabularyIds() {
@@ -216,7 +216,9 @@ public class AssetCategoriesSelectorDisplayContext {
 				"nodePath", category.getPath(themeDisplay.getLocale(), true)
 			);
 
-			if (getSelectedCategories().contains(
+			List<String> selectedCategoriesIds = getSelectedCategoriesIds();
+
+			if (selectedCategoriesIds.contains(
 					String.valueOf(category.getCategoryId()))) {
 
 				jsonObject.put("selected", true);
@@ -259,7 +261,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private List<String> _selectedCategories;
+	private List<String> _selectedCategoriesIds;
 	private Boolean _singleSelect;
 	private long[] _vocabularyIds;
 

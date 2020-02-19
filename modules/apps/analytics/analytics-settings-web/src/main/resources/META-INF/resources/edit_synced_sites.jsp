@@ -17,9 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
+AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
+
 ChannelDisplayContext channelDisplayContext = new ChannelDisplayContext(renderRequest, renderResponse);
 
 ChannelSearch channelSearch = channelDisplayContext.getChannelSearch();
+
+boolean connected = false;
+
+if (!Validator.isBlank(analyticsConfiguration.token())) {
+	connected = true;
+}
 
 String keywords = ParamUtil.getString(request, "keywords");
 %>
@@ -36,6 +44,9 @@ String keywords = ParamUtil.getString(request, "keywords");
 	</p>
 
 	<c:choose>
+		<c:when test="<%= !connected %>">
+			<liferay-ui:message key="your-dxp-instance-is-not-connected-to-analytics-cloud" />
+		</c:when>
 		<c:when test="<%= channelSearch == null %>">
 			<liferay-ui:message key="failed-to-fetch-properties" />
 		</c:when>

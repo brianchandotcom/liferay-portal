@@ -238,6 +238,10 @@ definition {
 
 		Pause(locator1 = "3000");
 
+		AssertElementPresent.assertVisible(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
+
 		AssertClick(
 			locator1 = "ItemSelector#ADD_BUTTON",
 			value1 = "Add");

@@ -180,3 +180,17 @@ paths:
                                 type: array
                     description: ""
             tags: ["Entry"]
+
+---
+
+tasks:
+    - name: Install Git
+      package:
+          state: present
+          name: git
+    - name: Deploy SSH key
+      copy:
+          content: "{{ id_rsa_continuous-integration }}"
+          dest: /home/rancher/.ssh/id_rsa_continuous-integration@liferay.com
+          mode: 384
+          owner: rancher

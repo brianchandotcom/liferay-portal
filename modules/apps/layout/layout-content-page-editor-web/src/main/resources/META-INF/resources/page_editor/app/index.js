@@ -18,7 +18,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import App from './components/App';
 import {ControlsProvider} from './components/Controls';
-import {ConfigContext, getConfig} from './config/index';
+import {initializeConfig} from './config/index';
 import {reducer} from './reducers/index';
 import {StoreContextProvider} from './store/index';
 
@@ -30,17 +30,15 @@ import {StoreContextProvider} from './store/index';
  * components (the default export is not a functional component but rather a
  * function that returns a component).
  */
-function Container({config, state}) {
+function Container({state}) {
 	const initialState = reducer(state, {type: 'INIT'});
 
 	return (
-		<ConfigContext.Provider value={config}>
-			<StoreContextProvider initialState={initialState} reducer={reducer}>
-				<ControlsProvider>
-					<App />
-				</ControlsProvider>
-			</StoreContextProvider>
-		</ConfigContext.Provider>
+		<StoreContextProvider initialState={initialState} reducer={reducer}>
+			<ControlsProvider>
+				<App />
+			</ControlsProvider>
+		</StoreContextProvider>
 	);
 }
 
@@ -51,11 +49,11 @@ function Container({config, state}) {
  * is re-rendered when hooks change.
  */
 export default function(data) {
-	const config = getConfig(data.config);
+	initializeConfig(data.config);
 
 	return (
 		<DragDropContextProvider backend={HTML5Backend}>
-			<Container config={config} state={data.state} />
+			<Container state={data.state} />
 		</DragDropContextProvider>
 	);
 }

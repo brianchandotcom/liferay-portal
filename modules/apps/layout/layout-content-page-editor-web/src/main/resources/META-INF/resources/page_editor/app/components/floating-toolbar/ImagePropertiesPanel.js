@@ -14,7 +14,7 @@
 
 import {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {ImageSelector} from '../../../common/components/ImageSelector';
 import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
@@ -22,7 +22,6 @@ import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
-import {ConfigContext} from '../../config/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
@@ -30,7 +29,6 @@ import updateEditableValues from '../../thunks/updateEditableValues';
 export function ImagePropertiesPanel({item}) {
 	const {editableId, editableType, fragmentEntryLinkId} = item;
 
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const state = useSelector(state => state);
 
@@ -79,7 +77,6 @@ export function ImagePropertiesPanel({item}) {
 			);
 		},
 		[
-			config,
 			dispatch,
 			editableConfig,
 			editableId,

@@ -14,24 +14,20 @@
 
 import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import ItemSelector from '../../../common/components/ItemSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {ConfigContext} from '../../config/index';
+import {config} from '../../config/index';
 
 export const ItemCollectionSelectorField = ({field, onValueSelect, value}) => {
-	const config = useContext(ConfigContext);
-
-	const {infoListSelectorURL, portletNamespace} = config;
-
-	const eventName = `${portletNamespace}selectInfoList`;
+	const eventName = `${config.portletNamespace}selectInfoList`;
 
 	return (
 		<ClayForm.Group small>
 			<ItemSelector
 				eventName={eventName}
-				itemSelectorURL={infoListSelectorURL}
+				itemSelectorURL={config.infoListSelectorURL}
 				label={field.label}
 				onItemSelect={item => {
 					onValueSelect(field.name, {

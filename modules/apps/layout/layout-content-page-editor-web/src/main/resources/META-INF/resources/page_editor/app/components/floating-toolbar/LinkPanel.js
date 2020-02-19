@@ -14,13 +14,12 @@
 
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
 import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
-import {ConfigContext} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
@@ -69,7 +68,6 @@ export default function LinkPanel({item}) {
 	const segmentsExperienceId = useSelector(
 		state => state.segmentsExperienceId
 	);
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 
 	const editableValue =
@@ -95,7 +93,6 @@ export default function LinkPanel({item}) {
 			languageId
 		});
 	}, [
-		config,
 		editableConfig.classNameId,
 		editableConfig.classPK,
 		editableConfig.fieldId,
@@ -132,7 +129,6 @@ export default function LinkPanel({item}) {
 			);
 		},
 		[
-			config,
 			dispatch,
 			editableId,
 			fragmentEntryLinkId,

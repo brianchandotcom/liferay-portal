@@ -12,13 +12,12 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React from 'react';
 
 import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
-import {ConfigContext} from '../../config/index';
 import selectEditableValue from '../../selectors/selectEditableValue';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
@@ -27,7 +26,6 @@ import MappingSelector from './MappingSelector';
 export function MappingPanel({item}) {
 	const {editableId, editableType, fragmentEntryLinkId} = item;
 
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const state = useSelector(state => state);
 

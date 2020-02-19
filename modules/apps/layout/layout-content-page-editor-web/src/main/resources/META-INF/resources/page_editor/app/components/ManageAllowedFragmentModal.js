@@ -15,15 +15,13 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
-import {ConfigContext} from '../config/index';
 import {useDispatch} from '../store/index';
 import updateItemConfig from '../thunks/updateItemConfig';
 import AllowedFragmentSelector from './AllowedFragmentSelector';
 
 const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 
 	const [allowNewFragmentEntries, setAllowNewFragmentEntries] = useState(

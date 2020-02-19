@@ -15,9 +15,8 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {ConfigContext} from '../../app/config/index';
 import {openImageSelector} from '../../core/openImageSelector';
 
 export function ImageSelector({
@@ -26,8 +25,6 @@ export function ImageSelector({
 	onClearButtonPressed,
 	onImageSelected
 }) {
-	const {imageSelectorURL, portletNamespace} = useContext(ConfigContext);
-
 	return (
 		<>
 			<ClayForm.Group>

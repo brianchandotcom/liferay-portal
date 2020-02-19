@@ -15,13 +15,12 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {useSelectItem} from '../../../app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addFragment from '../../../app/thunks/addFragment';
 
@@ -47,7 +46,6 @@ export default function FragmentCard({
 	imagePreviewURL,
 	name
 }) {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
 	const selectItem = useSelectItem();

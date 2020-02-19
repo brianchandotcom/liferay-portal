@@ -17,7 +17,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import {closest} from 'metal-dom';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -26,7 +26,7 @@ import {
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../config/index';
+import {config} from '../config/index';
 import Processors from '../processors/index';
 import {useSelector} from '../store/index';
 import PageEditor from './PageEditor';
@@ -216,8 +216,6 @@ FragmentContent.propTypes = {
 };
 
 function Fragment({fragmentEntryLinks, item}) {
-	const config = useContext(ConfigContext);
-
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
 

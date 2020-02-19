@@ -14,12 +14,11 @@
 
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../../config/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
@@ -48,7 +47,6 @@ const ClayCheckboxWithState = ({onValueChange, ...otherProps}) => {
 };
 
 export const RowConfigurationPanel = ({item}) => {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(
 		selectPrefixedSegmentsExperienceId

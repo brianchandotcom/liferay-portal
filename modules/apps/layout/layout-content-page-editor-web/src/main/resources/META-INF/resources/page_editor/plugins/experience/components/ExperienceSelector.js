@@ -17,10 +17,10 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../../../app/config/index';
+import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import createExperience from '../thunks/createExperience';
 import removeExperience from '../thunks/removeExperience';
@@ -77,17 +77,9 @@ const ExperienceSelector = ({
 	selectId,
 	selectedExperience
 }) => {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const layoutData = useSelector(state => state.layoutData);
 	const layoutDataList = useSelector(state => state.layoutDataList);
-
-	const {
-		defaultSegmentsExperienceId,
-		editSegmentsEntryURL,
-		plid,
-		selectedSegmentsEntryId
-	} = config;
 
 	const hasEditSegmentsEntryPermission = useSelector(
 		({permissions}) => permissions.EDIT_SEGMENTS_ENTRY
@@ -127,29 +119,32 @@ const ExperienceSelector = ({
 		storeModalExperienceState({
 			experienceId,
 			experienceName,
-			plid,
+			plid: config.plid,
 			segmentId
 		});
 
-		Liferay.Util.navigate(editSegmentsEntryURL);
+		Liferay.Util.navigate(config.editSegmentsEntryURL);
 	};
 
 	useEffect(() => {
-		if (plid) {
+		if (config.plid) {
 			const modalExperienceState = recoverModalExperienceState();
 
-			if (modalExperienceState && plid === modalExperienceState.plid) {
+			if (
+				modalExperienceState &&
+				config.plid === modalExperienceState.plid
+			) {
 				setOpenModal(true);
 				setEditingExperience({
 					name: modalExperienceState.experienceName,
 					segmentsEntryId:
-						selectedSegmentsEntryId ||
+						config.selectedSegmentsEntryId ||
 						modalExperienceState.segmentId,
 					segmentsExperienceId: modalExperienceState.experienceId
 				});
 			}
 		}
-	}, [plid, selectedSegmentsEntryId]);
+	}, []);
 
 	const handleExperienceCreation = ({
 		name,
@@ -349,7 +344,9 @@ const ExperienceSelector = ({
 							activeExperienceId={
 								selectedExperience.segmentsExperienceId
 							}
-							defaultExperienceId={defaultSegmentsExperienceId}
+							defaultExperienceId={
+								config.defaultSegmentsExperienceId
+							}
 							experiences={experiences}
 							hasUpdatePermissions={hasUpdatePermissions}
 							onDeleteExperience={deleteExperience}

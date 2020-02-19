@@ -14,9 +14,8 @@
 
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import {ConfigContext} from '../../../app/config/index';
 import {useDispatch} from '../../../app/store/index';
 import addFragmentComment from '../../../app/thunks/addFragmentComment';
 import CommentForm from './CommentForm';
@@ -26,8 +25,6 @@ export default function AddCommentForm({fragmentEntryLinkId}) {
 	const [showButtons, setShowButtons] = useState(false);
 	const [textareaContent, setTextareaContent] = useState('');
 	const dispatch = useDispatch();
-
-	const config = useContext(ConfigContext);
 
 	const _handleCancelButtonClick = () => {
 		setShowButtons(false);

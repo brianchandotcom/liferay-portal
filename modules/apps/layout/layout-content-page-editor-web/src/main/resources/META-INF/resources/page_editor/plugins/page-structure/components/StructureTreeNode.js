@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import {
 	useHoverItem,
@@ -24,7 +24,6 @@ import {
 	useIsSelected,
 	useSelectItem
 } from '../../../app/components/Controls';
-import {ConfigContext} from '../../../app/config/index';
 import selectShowLayoutItemRemoveButton from '../../../app/selectors/selectShowLayoutItemRemoveButton';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
@@ -50,7 +49,6 @@ const NameButton = ({id, name}) => {
 };
 
 const RemoveButton = ({node}) => {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
 

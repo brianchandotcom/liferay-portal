@@ -15,7 +15,7 @@
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -23,7 +23,6 @@ import {
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../../config/index';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -35,7 +34,6 @@ import Container from './Container';
 
 const ContainerWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const config = useContext(ConfigContext);
 		const dispatch = useDispatch();
 		const isMounted = useIsMounted();
 		const [

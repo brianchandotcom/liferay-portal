@@ -29,7 +29,7 @@
 import {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -39,7 +39,6 @@ import updateColSize from '../../actions/updateColSize';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../../config/index';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -54,7 +53,6 @@ export const ResizingContext = React.createContext();
 
 const RowWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const config = useContext(ConfigContext);
 		const dispatch = useDispatch();
 		const {gutters} = {
 			...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[

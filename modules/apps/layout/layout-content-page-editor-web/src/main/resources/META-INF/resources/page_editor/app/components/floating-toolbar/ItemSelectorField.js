@@ -15,11 +15,10 @@
 import ClayForm from '@clayui/form';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import ItemSelector from '../../../common/components/ItemSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {ConfigContext} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch} from '../../store/index';
 
@@ -70,7 +69,6 @@ ItemSelectorField.propTypes = {
 };
 
 const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const [availableTemplates, setAvailableTemplates] = useState([]);
 	const isMounted = useIsMounted();
@@ -85,7 +83,7 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 				setAvailableTemplates(response);
 			});
 		}
-	}, [config, isMounted, item.className, item.classPK]);
+	}, [dispatch, isMounted, item.className, item.classPK]);
 
 	return (
 		<>

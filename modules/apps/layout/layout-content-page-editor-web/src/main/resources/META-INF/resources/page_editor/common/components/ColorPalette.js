@@ -15,9 +15,9 @@
 import ClayButton from '@clayui/button';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {ConfigContext} from '../../app/config/index';
+import {config} from '../../app/config/index';
 
 export default function ColorPalette({
 	label,
@@ -25,15 +25,13 @@ export default function ColorPalette({
 	onColorSelect,
 	selectedColor
 }) {
-	const {themeColorsCssClasses} = useContext(ConfigContext);
-
 	return (
 		<>
 			{label && <label htmlFor="colorPalette">{label}</label>}
 
 			<div className="palette-container" id="colorPalette">
 				<ul className="list-unstyled palette-items-container">
-					{themeColorsCssClasses.map(color => (
+					{config.themeColorsCssClasses.map(color => (
 						<li
 							className={classNames('palette-item', {
 								'palette-item-selected': color === selectedColor

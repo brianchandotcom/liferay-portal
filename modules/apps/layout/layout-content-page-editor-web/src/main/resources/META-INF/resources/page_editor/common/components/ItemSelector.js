@@ -17,9 +17,9 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import {ConfigContext} from '../../app/config/index';
+import {config} from '../../app/config/index';
 import {useSelector} from '../../app/store/index';
 import {openInfoItemSelector} from '../../core/openInfoItemSelector';
 
@@ -30,12 +30,10 @@ export default function ItemSelector({
 	onItemSelect,
 	selectedItemTitle
 }) {
-	const {infoItemSelectorURL, portletNamespace} = useContext(ConfigContext);
-
 	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
 	const [active, setActive] = useState(false);
 
-	const defaultEventName = `${portletNamespace}selectInfoItem`;
+	const defaultEventName = `${config.portletNamespace}selectInfoItem`;
 
 	return (
 		<>
@@ -83,7 +81,8 @@ export default function ItemSelector({
 									openInfoItemSelector(
 										onItemSelect,
 										eventName || defaultEventName,
-										itemSelectorURL || infoItemSelectorURL
+										itemSelectorURL ||
+											config.infoItemSelectorURL
 									)
 								}
 							>
@@ -98,7 +97,7 @@ export default function ItemSelector({
 							openInfoItemSelector(
 								onItemSelect,
 								eventName || defaultEventName,
-								itemSelectorURL || infoItemSelectorURL
+								itemSelectorURL || config.infoItemSelectorURL
 							)
 						}
 						small

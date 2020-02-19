@@ -14,13 +14,13 @@
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import ItemSelector from '../../../common/components/ItemSelector';
 import {addMappedInfoItem} from '../../actions/index';
 import {COMPATIBLE_TYPES} from '../../config/constants/compatibleTypes';
 import {PAGE_TYPES} from '../../config/constants/pageTypes';
-import {ConfigContext} from '../../config/index';
+import {config} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 
@@ -83,11 +83,10 @@ export default function MappingSelector({
 	mappedItem,
 	onMappingSelect
 }) {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
 
-	const {pageType, selectedMappingTypes} = config;
+	const {selectedMappingTypes} = config;
 
 	const [fields, setFields] = useState([]);
 	const [mappedItemTitle, setMappedItemTitle] = useState('');
@@ -174,14 +173,12 @@ export default function MappingSelector({
 		const data =
 			selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure
 				? {
-						config,
 						dispatch,
 						fieldType,
 						selectedMappingTypes,
 						selectedSourceTypeId
 				  }
 				: {
-						config,
 						dispatch,
 						fieldType,
 						selectedItem,
@@ -192,7 +189,6 @@ export default function MappingSelector({
 			setFields(newFields);
 		});
 	}, [
-		config,
 		dispatch,
 		fieldType,
 		selectedItem,
@@ -202,7 +198,7 @@ export default function MappingSelector({
 
 	return (
 		<>
-			{pageType === PAGE_TYPES.display && (
+			{config.pageType === PAGE_TYPES.display && (
 				<ClayForm.Group small>
 					<label htmlFor="mappingSelectorSourceSelect">
 						{Liferay.Language.get('source')}

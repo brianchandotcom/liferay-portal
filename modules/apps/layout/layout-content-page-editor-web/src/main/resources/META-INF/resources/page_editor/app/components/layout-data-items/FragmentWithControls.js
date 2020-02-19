@@ -26,7 +26,7 @@
  * details.
  */
 
-import React, {useContext, useMemo} from 'react';
+import React, {useMemo} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -34,7 +34,6 @@ import {
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../../config/index';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -44,7 +43,6 @@ import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import FragmentContent from '../fragment-content/FragmentContent';
 
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const selectItem = useSelectItem();
 	const state = useSelector(state => state);

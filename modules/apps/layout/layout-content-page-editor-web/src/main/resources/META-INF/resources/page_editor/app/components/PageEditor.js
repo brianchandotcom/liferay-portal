@@ -16,7 +16,7 @@ import ClayAlert from '@clayui/alert';
 import classNames from 'classnames';
 import {useEventListener, useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -29,7 +29,7 @@ import {
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {MOVE_ITEM_DIRECTIONS} from '../config/constants/moveItemDirections';
 import {PAGE_TYPES} from '../config/constants/pageTypes';
-import {ConfigContext} from '../config/index';
+import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
 import moveItem from '../thunks/moveItem';
 import {useActiveItemId, useIsActive, useSelectItem} from './Controls';
@@ -57,7 +57,6 @@ const LAYOUT_DATA_ITEMS = {
 
 export default function PageEditor({withinMasterPage = false}) {
 	const activeItemId = useActiveItemId();
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const layoutData = useSelector(state => state.layoutData);
@@ -66,8 +65,6 @@ export default function PageEditor({withinMasterPage = false}) {
 		state => state.sidebar.panelId && state.sidebar.open
 	);
 	const store = useSelector(state => state);
-
-	const {layoutConversionWarningMessages, pageType} = config;
 
 	const mainItem = layoutData.items[layoutData.rootItems.main];
 
@@ -140,16 +137,16 @@ export default function PageEditor({withinMasterPage = false}) {
 				);
 			}
 		},
-		[activeItemId, config, dispatch, layoutData.items, store]
+		[activeItemId, dispatch, layoutData.items, store]
 	);
 
 	useEventListener('keyup', onKeyUp, false, document.body);
 
-	const isPageConversion = pageType === PAGE_TYPES.conversion;
+	const isPageConversion = config.pageType === PAGE_TYPES.conversion;
 	const hasWarningMessages =
 		isPageConversion &&
-		layoutConversionWarningMessages &&
-		layoutConversionWarningMessages.length > 0;
+		config.layoutConversionWarningMessages &&
+		config.layoutConversionWarningMessages.length > 0;
 
 	return (
 		<>
@@ -169,12 +166,14 @@ export default function PageEditor({withinMasterPage = false}) {
 
 					{hasWarningMessages && (
 						<ClayAlert displayType="warning" variant="stripe">
-							{layoutConversionWarningMessages.map(message => (
-								<>
-									{message}
-									<br />
-								</>
-							))}
+							{config.layoutConversionWarningMessages.map(
+								message => (
+									<>
+										{message}
+										<br />
+									</>
+								)
+							)}
 						</ClayAlert>
 					)}
 				</div>

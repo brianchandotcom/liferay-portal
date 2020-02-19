@@ -19,9 +19,8 @@ import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {ConfigContext} from '../../../app/config/index';
 import FragmentService from '../../../app/services/FragmentService';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteFragmentComment from '../../../app/thunks/deleteFragmentComment';
@@ -59,7 +58,6 @@ export default function FragmentComment({
 		state => state.showResolvedComments
 	);
 	const dispatch = useDispatch();
-	const config = useContext(ConfigContext);
 
 	const showModifiedDateTooltip = !!(edited && modifiedDateDescription);
 

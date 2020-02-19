@@ -14,17 +14,15 @@
 
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addWidget from '../../../app/thunks/addWidget';
 
 export default function Widget({instanceable, portletId, title, used}) {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
 

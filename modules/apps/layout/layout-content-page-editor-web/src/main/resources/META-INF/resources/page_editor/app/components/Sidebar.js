@@ -25,13 +25,13 @@ import useLoad from '../../core/hooks/useLoad';
 import usePlugins from '../../core/hooks/usePlugins';
 import useStateSafe from '../../core/hooks/useStateSafe';
 import * as Actions from '../actions/index';
-import {ConfigContext} from '../config/index';
+import {config} from '../config/index';
 import selectAvailablePanels from '../selectors/selectAvailablePanels';
 import selectAvailableSidebarPanels from '../selectors/selectAvailableSidebarPanels';
 import {useDispatch, useSelector} from '../store/index';
 import {useSelectItem} from './Controls';
 
-const {Suspense, useCallback, useContext, useEffect} = React;
+const {Suspense, useCallback, useEffect} = React;
 
 /**
  * Failure to preload is a non-critical failure, so we'll use this to swallow
@@ -40,7 +40,6 @@ const {Suspense, useCallback, useContext, useEffect} = React;
 const swallow = [value => value, _error => undefined];
 
 export default function Sidebar() {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
 	const [hasError, setHasError] = useStateSafe(false);

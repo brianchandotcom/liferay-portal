@@ -20,11 +20,11 @@ import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
 import Button from '../../../common/components/Button';
 import {openImageSelector} from '../../../core/openImageSelector';
-import {ConfigContext} from '../../config/index';
+import {config} from '../../config/index';
 
 const SaveFragmentCompositionModal = ({
 	errorMessage,
@@ -32,10 +32,6 @@ const SaveFragmentCompositionModal = ({
 	onClose,
 	onErrorDismiss
 }) => {
-	const {collections, imageSelectorURL, portletNamespace} = useContext(
-		ConfigContext
-	);
-
 	const [fragmentCollectionId, setFragmentCollectionId] = useState(-1);
 
 	const [thumbnail, setThumbnail] = useState({});
@@ -46,8 +42,8 @@ const SaveFragmentCompositionModal = ({
 
 	const [loading] = useState(false);
 
-	const nameInputId = `${portletNamespace}fragmentCompositionName`;
-	const descriptionInputId = `${portletNamespace}fragmentCompositionDescription`;
+	const nameInputId = `${config.portletNamespace}fragmentCompositionName`;
+	const descriptionInputId = `${config.portletNamespace}fragmentCompositionDescription`;
 
 	return (
 		<ClayModal
@@ -142,7 +138,7 @@ const SaveFragmentCompositionModal = ({
 						<ClayInput.Group className="input-group-stacked-sm-down">
 							<ClayInput.GroupItem className="mr-4" shrink>
 								<ClayCheckbox
-									id={portletNamespace + 'saveInlineContent'}
+									id={`${config.portletNamespace}saveInlineContent`}
 									label={Liferay.Language.get(
 										'save-inline-content'
 									)}
@@ -150,7 +146,7 @@ const SaveFragmentCompositionModal = ({
 							</ClayInput.GroupItem>
 							<ClayInput.GroupItem>
 								<ClayCheckbox
-									id={`${portletNamespace}saveMappingConfiguration`}
+									id={`${config.portletNamespace}saveMappingConfiguration`}
 									label={Liferay.Language.get(
 										'save-mapping-configuration'
 									)}
@@ -159,62 +155,59 @@ const SaveFragmentCompositionModal = ({
 						</ClayInput.Group>
 					</ClayForm.Group>
 					<ClayForm.Group>
-						{collections.length > 0 ? (
+						{config.collections.length > 0 ? (
 							<>
 								<p className="sheet-tertiary-title">
 									{Liferay.Language.get('select-collection')}
 								</p>
 
 								<div className="row">
-									{collections.length > 0 &&
-										collections.map(collection => (
-											<div
-												className="col-md-4"
-												key={
+									{config.collections.map(collection => (
+										<div
+											className="col-md-4"
+											key={
+												collection.fragmentCollectionId
+											}
+										>
+											<ClayCard
+												className={
+													fragmentCollectionId ===
 													collection.fragmentCollectionId
+														? 'active'
+														: ''
+												}
+												horizontal
+												interactive
+												onClick={() =>
+													setFragmentCollectionId(
+														collection.fragmentCollectionId
+													)
 												}
 											>
-												<ClayCard
-													className={
-														fragmentCollectionId ===
-														collection.fragmentCollectionId
-															? 'active'
-															: ''
-													}
-													horizontal
-													interactive
-													onClick={() =>
-														setFragmentCollectionId(
-															collection.fragmentCollectionId
-														)
-													}
-												>
-													<ClayCard.Body>
-														<ClayCard.Row>
-															<span className="autofit-col">
-																<ClaySticker
-																	inline
+												<ClayCard.Body>
+													<ClayCard.Row>
+														<span className="autofit-col">
+															<ClaySticker inline>
+																<ClayIcon symbol="folder" />
+															</ClaySticker>
+														</span>
+														<span className="autofit-col autofit-col-expand">
+															<span className="autofit-section">
+																<ClayCard.Description
+																	displayType="title"
+																	truncate
 																>
-																	<ClayIcon symbol="folder" />
-																</ClaySticker>
+																	{
+																		collection.name
+																	}
+																</ClayCard.Description>
 															</span>
-															<span className="autofit-col autofit-col-expand">
-																<span className="autofit-section">
-																	<ClayCard.Description
-																		displayType="title"
-																		truncate
-																	>
-																		{
-																			collection.name
-																		}
-																	</ClayCard.Description>
-																</span>
-															</span>
-														</ClayCard.Row>
-													</ClayCard.Body>
-												</ClayCard>
-											</div>
-										))}
+														</span>
+													</ClayCard.Row>
+												</ClayCard.Body>
+											</ClayCard>
+										</div>
+									))}
 								</div>
 							</>
 						) : (

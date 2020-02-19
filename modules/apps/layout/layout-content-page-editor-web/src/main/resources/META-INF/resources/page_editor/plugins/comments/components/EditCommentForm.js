@@ -14,9 +14,8 @@
 
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import {ConfigContext} from '../../../app/config/index';
 import {useDispatch} from '../../../app/store/index';
 import editFragmentComment from '../../../app/thunks/editFragmentComment';
 import CommentForm from './CommentForm';
@@ -28,7 +27,6 @@ export default function EditCommentForm({
 }) {
 	const [editingComment, setEditingComment] = useState(false);
 	const [textareaContent, setTextareaContent] = useState(comment.body);
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 
 	const _handleCommentButtonClick = () => {

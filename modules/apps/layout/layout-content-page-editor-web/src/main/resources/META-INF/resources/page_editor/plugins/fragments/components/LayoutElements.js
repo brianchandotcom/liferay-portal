@@ -13,12 +13,11 @@
  */
 
 import classNames from 'classnames';
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {useSelectItem} from '../../../app/components/Controls';
-import {ConfigContext} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addItem from '../../../app/thunks/addItem';
 import Collapse from '../../../common/components/Collapse';
@@ -37,7 +36,6 @@ const layoutElements = [
 ];
 
 const LayoutElementCard = ({label, layoutColumns, type}) => {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
 	const selectItem = useSelectItem();

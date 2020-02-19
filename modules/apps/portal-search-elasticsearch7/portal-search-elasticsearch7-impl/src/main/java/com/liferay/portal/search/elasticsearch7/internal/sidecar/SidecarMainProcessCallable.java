@@ -72,28 +72,15 @@ public class SidecarMainProcessCallable
 
 		ClassLoader classLoader = thread.getContextClassLoader();
 
-		Method findLoadedClassMethod = ReflectionUtil.getDeclaredMethod(
-			ClassLoader.class, "findLoadedClass", String.class);
-
 		Method defineClassMethod = ReflectionUtil.getDeclaredMethod(
 			ClassLoader.class, "defineClass", String.class, byte[].class,
 			int.class, int.class);
 
 		for (Map.Entry<String, byte[]> entry : _modifiedClasses.entrySet()) {
-			String modifiedClassName = entry.getKey();
 			byte[] modifiedClassBytes = entry.getValue();
 
-			Class<?> clazz = (Class<?>)findLoadedClassMethod.invoke(
-				classLoader, modifiedClassName);
-
-			if (clazz != null) {
-				throw new IllegalStateException(
-					"Unable to modify " + modifiedClassName +
-						" cause it has been loaded");
-			}
-
 			defineClassMethod.invoke(
-				classLoader, modifiedClassName, modifiedClassBytes, 0,
+				classLoader, entry.getKey(), modifiedClassBytes, 0,
 				modifiedClassBytes.length);
 		}
 	}

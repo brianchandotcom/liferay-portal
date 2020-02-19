@@ -138,6 +138,8 @@ public class StartupAction extends SimpleAction {
 		}
 		else {
 			StartupHelperUtil.verifyRequiredSchemaVersion();
+
+			DBUpgrader.checkReleaseState();
 		}
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -197,13 +199,9 @@ public class StartupAction extends SimpleAction {
 
 		ResourceActionLocalServiceUtil.checkResourceActions();
 
-		// Verify
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Verify database");
+		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {
+			StartupHelperUtil.updateIndexes(true);
 		}
-
-		DBUpgrader.verify();
 
 		// Liferay JspFactory
 

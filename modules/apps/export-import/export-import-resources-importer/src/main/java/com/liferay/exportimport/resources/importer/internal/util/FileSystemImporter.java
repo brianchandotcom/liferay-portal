@@ -156,6 +156,8 @@ public class FileSystemImporter extends BaseImporter {
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
 		ThemeLocalService themeLocalService, DLURLHelper dlURLHelper) {
 
+		_dlURLHelper = dlURLHelper;
+
 		this.assetTagLocalService = assetTagLocalService;
 		this.ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 		this.ddmFormXSDDeserializer = ddmFormXSDDeserializer;
@@ -183,7 +185,6 @@ public class FileSystemImporter extends BaseImporter {
 		this.repositoryLocalService = repositoryLocalService;
 		this.saxReader = saxReader;
 		this.themeLocalService = themeLocalService;
-		_dlURLHelper = dlURLHelper;
 	}
 
 	@Override

@@ -43,10 +43,11 @@ public class JournalSelectDDMTemplateVerticalCard implements VerticalCard {
 		JournalSelectDDMTemplateDisplayContext
 			journalSelectDDMTemplateDisplayContext) {
 
-		_ddmTemplate = (DDMTemplate)baseModel;
-		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_journalSelectDDMTemplateDisplayContext =
 			journalSelectDDMTemplateDisplayContext;
+
+		_ddmTemplate = (DDMTemplate)baseModel;
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override

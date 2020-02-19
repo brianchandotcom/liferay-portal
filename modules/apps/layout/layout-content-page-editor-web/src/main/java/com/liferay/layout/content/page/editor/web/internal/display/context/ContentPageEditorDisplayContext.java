@@ -155,12 +155,13 @@ public class ContentPageEditorDisplayContext {
 		FragmentRendererController fragmentRendererController,
 		PortletRequest portletRequest) {
 
-		this.httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 		_commentManager = commentManager;
 		_contentPageEditorSidebarPanels = contentPageEditorSidebarPanels;
 		_fragmentRendererController = fragmentRendererController;
 		_portletRequest = portletRequest;
+
+		this.httpServletRequest = httpServletRequest;
 
 		infoDisplayContributorTracker =
 			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(

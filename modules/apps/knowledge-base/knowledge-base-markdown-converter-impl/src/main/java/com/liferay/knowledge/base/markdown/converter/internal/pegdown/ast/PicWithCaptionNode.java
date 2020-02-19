@@ -31,8 +31,9 @@ public class PicWithCaptionNode extends SuperNode {
 	public PicWithCaptionNode(String src, Node node) {
 		super(node);
 
-		_alt = _getAlt(node);
 		_src = src;
+
+		_alt = _getAlt(node);
 	}
 
 	@Override

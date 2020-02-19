@@ -37,22 +37,21 @@ public class OAuth2ConnectedApplicationsPortletDisplayContext
 		this(portletRequest, dlURLHelper);
 
 		_assignableScopes = assignableScopes;
+		_oAuth2Authorization = oAuth2Authorization;
 
 		super.oAuth2ApplicationService = oAuth2ApplicationService;
 		super.dlURLHelper = dlURLHelper;
-
-		_oAuth2Authorization = oAuth2Authorization;
 	}
 
 	public OAuth2ConnectedApplicationsPortletDisplayContext(
 		PortletRequest portletRequest, DLURLHelper dlURLHelper) {
 
+		this.dlURLHelper = dlURLHelper;
+
 		super.portletRequest = portletRequest;
 
 		super.themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		this.dlURLHelper = dlURLHelper;
 	}
 
 	public AssignableScopes getAssignableScopes() {

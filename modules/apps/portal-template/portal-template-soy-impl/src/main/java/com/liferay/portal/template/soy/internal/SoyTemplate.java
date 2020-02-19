@@ -79,11 +79,11 @@ public class SoyTemplate extends BaseTemplate {
 		}
 
 		_templateContextHelper = templateContextHelper;
+		_soyTofuCacheHandler = soyTofuCacheHandler;
+		_soyTemplateResourceFactory = soyTemplateResourceFactory;
 
 		_soyContextImpl = new SoyContextImpl(
 			context, templateContextHelper.getRestrictedVariables());
-		_soyTofuCacheHandler = soyTofuCacheHandler;
-		_soyTemplateResourceFactory = soyTemplateResourceFactory;
 
 		_setBaseContext();
 	}

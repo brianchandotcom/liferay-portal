@@ -44,12 +44,13 @@ public class PortletSharedSearchSettingsImpl
 		PortletSharedRequestHelper portletSharedRequestHelper,
 		RenderRequest renderRequest) {
 
-		_searchRequestBuilder = searchSettings.getSearchRequestBuilder();
 		_searchSettings = searchSettings;
 		_portletId = portletId;
 		_portletPreferencesOptional = portletPreferencesOptional;
 		_portletSharedRequestHelper = portletSharedRequestHelper;
 		_renderRequest = renderRequest;
+
+		_searchRequestBuilder = searchSettings.getSearchRequestBuilder();
 	}
 
 	@Override

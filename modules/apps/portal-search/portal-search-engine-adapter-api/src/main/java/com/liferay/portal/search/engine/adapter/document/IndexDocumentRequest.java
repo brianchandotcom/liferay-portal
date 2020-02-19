@@ -54,8 +54,9 @@ public class IndexDocumentRequest
 
 		_indexName = indexName;
 		_uid = uid;
-		_document = null;
 		_legacyDocument = legacyDocument;
+
+		_document = null;
 	}
 
 	public IndexDocumentRequest(
@@ -64,6 +65,7 @@ public class IndexDocumentRequest
 		_indexName = indexName;
 		_uid = uid;
 		_document = document;
+
 		_legacyDocument = null;
 	}
 

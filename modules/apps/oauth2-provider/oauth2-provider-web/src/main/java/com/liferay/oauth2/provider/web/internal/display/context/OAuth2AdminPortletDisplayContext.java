@@ -52,13 +52,13 @@ public class OAuth2AdminPortletDisplayContext
 
 		_oAuth2ProviderConfiguration = oAuth2ProviderConfiguration;
 
+		this.oAuth2ApplicationScopeAliasesLocalService =
+			oAuth2ApplicationScopeAliasesLocalService;
+
 		super.oAuth2ApplicationService = oAuth2ApplicationService;
 		super.portletRequest = portletRequest;
 		super.themeDisplay = themeDisplay;
 		super.dlURLHelper = dlURLHelper;
-
-		this.oAuth2ApplicationScopeAliasesLocalService =
-			oAuth2ApplicationScopeAliasesLocalService;
 	}
 
 	public List<GrantType> getGrantTypes(

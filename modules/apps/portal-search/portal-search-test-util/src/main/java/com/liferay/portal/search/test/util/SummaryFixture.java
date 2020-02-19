@@ -56,10 +56,11 @@ public class SummaryFixture<T> {
 		Class<T> clazz, Group group, Locale defaultLocale, User user) {
 
 		_class = clazz;
-		_indexer = IndexerRegistryUtil.getIndexer(clazz);
 		_group = group;
 		_defaultLocale = defaultLocale;
 		_user = user;
+
+		_indexer = IndexerRegistryUtil.getIndexer(clazz);
 	}
 
 	public void assertSummary(String title, String content, Document document)

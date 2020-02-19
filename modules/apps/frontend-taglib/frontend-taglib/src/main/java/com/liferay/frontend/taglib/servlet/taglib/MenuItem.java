@@ -47,9 +47,10 @@ public class MenuItem
 	}
 
 	public MenuItem(String label, String url) {
-		_id = StringPool.BLANK;
 		_label = label;
 		_url = url;
+
+		_id = StringPool.BLANK;
 
 		_anchorData = null;
 		_cssClass = StringPool.BLANK;

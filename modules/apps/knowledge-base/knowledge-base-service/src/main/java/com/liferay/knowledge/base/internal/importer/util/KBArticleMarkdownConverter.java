@@ -48,6 +48,8 @@ public class KBArticleMarkdownConverter {
 			DLURLHelper dlURLHelper)
 		throws KBArticleImportException {
 
+		_dlURLHelper = dlURLHelper;
+
 		MarkdownConverter markdownConverter =
 			MarkdownConverterFactoryUtil.create();
 
@@ -94,8 +96,6 @@ public class KBArticleMarkdownConverter {
 		String baseSourceURL = metadata.get(_METADATA_BASE_SOURCE_URL);
 
 		_sourceURL = buildSourceURL(baseSourceURL, fileEntryName);
-
-		_dlURLHelper = dlURLHelper;
 	}
 
 	public String getSourceURL() {

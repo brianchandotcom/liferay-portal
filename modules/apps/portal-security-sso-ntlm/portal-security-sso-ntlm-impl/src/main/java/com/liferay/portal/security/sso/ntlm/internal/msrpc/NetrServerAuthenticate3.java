@@ -29,12 +29,11 @@ public class NetrServerAuthenticate3 extends DcerpcMessage {
 
 		_primaryName = primaryName;
 		_accountName = accountName;
+		_secureChannelType = (short)secureChannelType;
 		_computerName = computerName;
 		_clientCredential = clientCredential;
 		_serverCredential = serverCredential;
 		_negotiateFlags = negotiateFlags;
-
-		_secureChannelType = (short)secureChannelType;
 
 		ptype = 0;
 		flags = DCERPC_FIRST_FRAG | DCERPC_LAST_FRAG;

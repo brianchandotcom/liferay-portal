@@ -15,13 +15,13 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
-import parser from 'bbcode-to-react';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Answer from '../../components/Answer.es';
+import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import CreatorRow from '../../components/CreatorRow.es';
 import Rating from '../../components/Rating.es';
 import Subscription from '../../components/Subscription.es';
@@ -176,7 +176,7 @@ export default ({
 								</div>
 							</div>
 							<div>
-								<p>{parser.toReact(question.articleBody)}</p>
+								<ArticleBodyRenderer {...question} />
 							</div>
 
 							<TagList tags={question.keywords} />

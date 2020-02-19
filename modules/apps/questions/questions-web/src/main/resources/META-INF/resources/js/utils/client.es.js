@@ -77,7 +77,7 @@ export const getURL = params => {
 export const createAnswer = (articleBody, messageBoardThreadId) =>
 	request(gql`
         mutation {
-            createMessageBoardThreadMessageBoardMessage(messageBoardMessage: {articleBody: ${articleBody}, viewableBy: ANYONE}, messageBoardThreadId: ${messageBoardThreadId}){
+            createMessageBoardThreadMessageBoardMessage(messageBoardMessage: {articleBody: ${articleBody}, encodingFormat: "html", viewableBy: ANYONE}, messageBoardThreadId: ${messageBoardThreadId}){
                 viewableBy
             }
         }`);
@@ -85,7 +85,7 @@ export const createAnswer = (articleBody, messageBoardThreadId) =>
 export const createComment = (articleBody, messageBoardMessageId) =>
 	request(gql`
         mutation {
-            createMessageBoardMessageMessageBoardMessage(messageBoardMessage: {articleBody: ${articleBody}, viewableBy: ANYONE}, parentMessageBoardMessageId: ${messageBoardMessageId}){
+            createMessageBoardMessageMessageBoardMessage(messageBoardMessage: {articleBody: ${articleBody}, encodingFormat: "html", viewableBy: ANYONE}, parentMessageBoardMessageId: ${messageBoardMessageId}){
                 articleBody
                 creator {
                 	name
@@ -99,7 +99,7 @@ export const createQuestion = (articleBody, headline, tags, siteKey) => {
 
 	return request(gql`
         mutation {
-            createSiteMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, headline: ${headline}, keywords: ${tags}, showAsQuestion: true, viewableBy: ANYONE}, siteKey: ${siteKey}){
+            createSiteMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, encodingFormat: "html", headline: ${headline}, keywords: ${tags}, showAsQuestion: true, viewableBy: ANYONE}, siteKey: ${siteKey}){
                 articleBody
                 headline
                 keywords
@@ -191,6 +191,7 @@ export const getThread = (
                 } 
                 dateCreated
                 dateModified
+                encodingFormat
                 headline
                 id 
                 keywords 
@@ -207,6 +208,7 @@ export const getThread = (
                             id
                             name
                         }
+                        encodingFormat
                         id
                         messageBoardMessages {
                             items {
@@ -216,6 +218,7 @@ export const getThread = (
                                     id
                                     name
                                 }
+                                encodingFormat
                                 id
                                 showAsAnswer
                             }

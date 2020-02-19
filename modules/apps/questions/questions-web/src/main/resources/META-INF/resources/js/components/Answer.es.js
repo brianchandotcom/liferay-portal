@@ -14,7 +14,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import parser from 'bbcode-to-react';
 import classnames from 'classnames';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
@@ -23,6 +22,7 @@ import {
 	deleteMessage,
 	markAsAnswerMessageBoardMessage
 } from '../utils/client.es';
+import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Comments from './Comments.es';
 import Rating from './Rating.es';
 import UserRow from './UserRow.es';
@@ -91,7 +91,7 @@ export default ({answer, answerChange, deleteAnswer}) => {
 							</p>
 						)}
 
-						<p>{parser.toReact(answer.articleBody)}</p>
+						<ArticleBodyRenderer {...answer} />
 
 						<ClayButton.Group spaced={true}>
 							{answer.actions.create && (

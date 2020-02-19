@@ -14,11 +14,11 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
-import parser from 'bbcode-to-react';
 import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import QuestionBadge from '../../components/QuestionsBadge.es';
 import TagList from '../../components/TagList.es';
 import UserIcon from '../../components/UserIcon.es';
@@ -109,7 +109,7 @@ export default ({
 						<div className="autofit-padded autofit-row">
 							<div className="autofit-col autofit-col-expand">
 								<p className="text-truncate">
-									{parser.toReact(question.articleBody)}
+									<ArticleBodyRenderer {...question} />
 								</p>
 							</div>
 						</div>

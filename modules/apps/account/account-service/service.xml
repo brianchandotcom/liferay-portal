@@ -151,6 +151,7 @@
 	<exceptions>
 		<exception>AccountEntryDomains</exception>
 		<exception>AccountEntryName</exception>
+		<exception>DuplicateAccountEntryId</exception>
 		<exception>DuplicateAccountEntryOrganizationRel</exception>
 		<exception>DuplicateAccountEntryUserRel</exception>
 	</exceptions>

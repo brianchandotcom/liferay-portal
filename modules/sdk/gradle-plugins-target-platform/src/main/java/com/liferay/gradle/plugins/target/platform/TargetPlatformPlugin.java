@@ -88,6 +88,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		final Configuration targetPlatformDistroConfiguration =
 			_addConfigurationTargetPlatformDistro(project);
 
+		_addTaskDependencyManagement(project);
+
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(
@@ -219,8 +221,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			logger.info(
 				"Explicitly excluding {} from resolution", afterProject);
 		}
-
-		_addTaskDependencyManagement(afterProject);
 	}
 
 	private void _configureTaskResolve(

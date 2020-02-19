@@ -159,7 +159,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 				<div class="autofit-col autofit-col-expand">
 					<div class="depot-type">
-						<liferay-ui:message key='<%= (group.getType() == GroupConstants.TYPE_DEPOT) ? "repository" : "site" %>' />
+						<liferay-ui:message key='<%= (group.getType() == GroupConstants.TYPE_DEPOT) ? "asset-library" : "site" %>' />
 					</div>
 
 					<div class="site-name text-truncate">

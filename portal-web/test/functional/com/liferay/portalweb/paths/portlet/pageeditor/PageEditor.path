@@ -162,12 +162,12 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED</td>
-	<td>//a[contains(@class,'sheet-subtitle collapsed')]/*[normalize-space()='${key_collectionName}']</td>
+	<td>//*[contains(@class,'sheet-subtitle collapsed')][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED</td>
-	<td>//a[@class='collapse-icon sheet-subtitle']/*[normalize-space()='${key_collectionName}']</td>
+	<td>//*[@class='collapse-icon sheet-subtitle'][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>

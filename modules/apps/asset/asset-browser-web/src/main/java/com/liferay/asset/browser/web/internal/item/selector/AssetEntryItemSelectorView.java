@@ -14,6 +14,7 @@
 
 package com.liferay.asset.browser.web.internal.item.selector;
 
+import com.liferay.asset.browser.web.internal.display.context.AssetBrowserDisplayContext;
 import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.JavaConstants;
 
 import java.io.IOException;
 
@@ -34,6 +36,8 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -81,40 +85,60 @@ public class AssetEntryItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		servletRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
+		HttpServletRequest httpServletRequest = _getDynamicServletRequest(
+			itemSelectorCriterion, servletRequest);
+
+		httpServletRequest.setAttribute(
+			AssetBrowserDisplayContext.class.getName(),
+			new AssetBrowserDisplayContext(
+				_assetHelper, httpServletRequest,
+				(RenderRequest)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST),
+				(RenderResponse)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE)));
+		httpServletRequest.setAttribute(
+			AssetWebKeys.ASSET_HELPER, _assetHelper);
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher("/view.jsp");
 
-		requestDispatcher.include(
-			new DynamicServletRequest(
-				(HttpServletRequest)servletRequest,
-				HashMapBuilder.put(
-					"groupId",
-					_toStringArray(itemSelectorCriterion.getGroupId())
-				).put(
-					"multipleSelection", _toStringArray(true)
-				).put(
-					"selectedGroupIds",
-					_toStringArray(
-						StringUtil.merge(
-							itemSelectorCriterion.getSelectedGroupIds(),
-							StringPool.COMMA))
-				).put(
-					"showNonindexable",
-					_toStringArray(itemSelectorCriterion.isShowNonindexable())
-				).put(
-					"showScheduled",
-					_toStringArray(itemSelectorCriterion.isShowScheduled())
-				).put(
-					"subtypeSelectionId",
-					_toStringArray(
-						itemSelectorCriterion.getSubtypeSelectionId())
-				).put(
-					"typeSelection",
-					_toStringArray(itemSelectorCriterion.getTypeSelection())
-				).build()),
-			servletResponse);
+		requestDispatcher.include(httpServletRequest, servletResponse);
+	}
+
+	private DynamicServletRequest _getDynamicServletRequest(
+		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion,
+		ServletRequest servletRequest) {
+
+		return new DynamicServletRequest(
+			(HttpServletRequest)servletRequest,
+			HashMapBuilder.put(
+				"groupId",
+				_toStringArray(assetEntryItemSelectorCriterion.getGroupId())
+			).put(
+				"multipleSelection", _toStringArray(true)
+			).put(
+				"selectedGroupIds",
+				_toStringArray(
+					StringUtil.merge(
+						assetEntryItemSelectorCriterion.getSelectedGroupIds(),
+						StringPool.COMMA))
+			).put(
+				"showNonindexable",
+				_toStringArray(
+					assetEntryItemSelectorCriterion.isShowNonindexable())
+			).put(
+				"showScheduled",
+				_toStringArray(
+					assetEntryItemSelectorCriterion.isShowScheduled())
+			).put(
+				"subtypeSelectionId",
+				_toStringArray(
+					assetEntryItemSelectorCriterion.getSubtypeSelectionId())
+			).put(
+				"typeSelection",
+				_toStringArray(
+					assetEntryItemSelectorCriterion.getTypeSelection())
+			).build());
 	}
 
 	private <T> String[] _toStringArray(T value) {

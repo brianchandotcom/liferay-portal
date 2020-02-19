@@ -18,7 +18,6 @@ import com.liferay.asset.browser.web.internal.configuration.AssetBrowserWebConfi
 import com.liferay.asset.browser.web.internal.constants.AssetBrowserPortletKeys;
 import com.liferay.asset.browser.web.internal.search.AddAssetEntryChecker;
 import com.liferay.asset.browser.web.internal.search.AssetBrowserSearch;
-import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -56,15 +55,14 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetBrowserDisplayContext {
 
 	public AssetBrowserDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		AssetHelper assetHelper, HttpServletRequest httpServletRequest,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_assetHelper = assetHelper;
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_assetHelper = (AssetHelper)renderRequest.getAttribute(
-			AssetWebKeys.ASSET_HELPER);
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);
 	}

@@ -51,7 +51,7 @@ page import="java.util.Objects" %>
 <portlet:defineObjects />
 
 <%
-AssetBrowserDisplayContext assetBrowserDisplayContext = new AssetBrowserDisplayContext(request, renderRequest, renderResponse);
+AssetBrowserDisplayContext assetBrowserDisplayContext = (AssetBrowserDisplayContext)request.getAttribute(AssetBrowserDisplayContext.class.getName());
 %>
 
 <%@ include file="/init-ext.jsp" %>

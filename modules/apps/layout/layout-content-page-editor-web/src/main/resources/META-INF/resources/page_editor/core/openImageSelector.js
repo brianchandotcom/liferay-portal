@@ -28,22 +28,25 @@ export function openImageSelector(callback, destroyedCallback = null) {
 		const selectedItem = event.selectedItem || {};
 
 		const {returnType, value} = selectedItem;
-		const selectedImage = {};
-
-		if (returnType === 'URL') {
-			selectedImage.title = value;
-			selectedImage.url = value;
-		}
 
 		if (returnType) {
-			const fileEntry = JSON.parse(value);
+			const selectedImage = {};
 
-			selectedImage.title = fileEntry.title;
-			selectedImage.url = fileEntry.url;
-		}
+			if (returnType === 'URL') {
+				selectedImage.title = value;
+				selectedImage.url = value;
+			}
+			else {
+				const fileEntry = JSON.parse(value);
 
-		if (selectedImage.url) {
+				selectedImage.title = fileEntry.title;
+				selectedImage.url = fileEntry.url;
+			}
+
 			callback(selectedImage);
+		}
+		else {
+			destroyedCallback();
 		}
 	});
 

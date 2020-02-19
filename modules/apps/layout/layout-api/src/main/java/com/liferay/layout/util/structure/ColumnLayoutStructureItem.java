@@ -15,6 +15,7 @@
 package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
@@ -61,6 +62,11 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 
 	public int getSize() {
 		return _size;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getItemId());
 	}
 
 	public void setSize(int size) {

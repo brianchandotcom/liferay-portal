@@ -15,6 +15,7 @@
 package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
@@ -65,6 +66,11 @@ public class FragmentLayoutStructureItem extends LayoutStructureItem {
 	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_FRAGMENT;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getItemId());
 	}
 
 	public void setFragmentEntryLinkId(long fragmentEntryLinkId) {

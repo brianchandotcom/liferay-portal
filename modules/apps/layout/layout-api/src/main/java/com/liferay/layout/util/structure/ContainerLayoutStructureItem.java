@@ -15,6 +15,7 @@
 package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -112,6 +113,11 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 	public int getPaddingTop() {
 		return _paddingTop;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getItemId());
 	}
 
 	public void setBackgroundColorCssClass(String backgroundColorCssClass) {

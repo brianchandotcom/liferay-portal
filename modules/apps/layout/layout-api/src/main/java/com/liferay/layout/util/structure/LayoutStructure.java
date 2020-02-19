@@ -14,6 +14,7 @@
 
 package com.liferay.layout.util.structure;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -280,6 +281,11 @@ public class LayoutStructure {
 
 	public LayoutStructureItem getMainLayoutStructureItem() {
 		return _layoutStructureItems.get(_mainItemId);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getMainItemId());
 	}
 
 	public LayoutStructureItem moveLayoutStructureItem(

@@ -15,6 +15,7 @@
 package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -76,6 +77,11 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_DROP_ZONE;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getItemId());
 	}
 
 	public boolean isAllowNewFragmentEntries() {

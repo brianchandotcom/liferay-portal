@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,18 +34,22 @@ public class AssetListEntryAssetEntryRelFinderImpl
 	extends AssetListEntryAssetEntryRelFinderBaseImpl
 	implements AssetListEntryAssetEntryRelFinder {
 
-	public static final String COUNT_BY_A_S_VISIBLE =
-		AssetListEntryAssetEntryRelFinder.class.getName() +
-			".countByA_S_Visible";
+	public static final String COUNT_BY_A_S =
+		AssetListEntryAssetEntryRelFinder.class.getName() + ".countByA_S";
 
 	@Override
-	public int countByA_S_Visible(long assetListEntryId, long segmentsEntryId) {
+	public int countByA_S(
+		long assetListEntryId, long segmentsEntryId, boolean visible) {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), COUNT_BY_A_S_VISIBLE);
+			String sql = _customSQL.get(getClass(), COUNT_BY_A_S);
+
+			sql = StringUtil.replace(
+				sql, "[$VISIBLE$]", visible ? "[$TRUE$]" : "[$FALSE$]");
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

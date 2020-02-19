@@ -399,11 +399,11 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 			assetListEntryId, segmentsEntryId);
 	}
 
-	public static int getAssetListEntryVisibleAssetEntryRelsCount(
-		long assetLIstEntryId, long segmentsEntryId) {
+	public static int getAssetListEntryAssetEntryRelsCount(
+		long assetLIstEntryId, long segmentsEntryId, boolean visible) {
 
-		return getService().getAssetListEntryVisibleAssetEntryRelsCount(
-			assetLIstEntryId, segmentsEntryId);
+		return getService().getAssetListEntryAssetEntryRelsCount(
+			assetLIstEntryId, segmentsEntryId, visible);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

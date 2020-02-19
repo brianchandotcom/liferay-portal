@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelFinder.countByA_S_Visible">
+	<sql id="com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelFinder.countByA_S">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -13,7 +13,7 @@
 			WHERE
 				(AssetListEntryAssetEntryRel.assetListEntryId = ?) AND
 				(AssetListEntryAssetEntryRel.segmentsEntryId = ?) AND
-				(AssetEntry.visible = 1)
+				(AssetEntry.visible = [$VISIBLE$])
 		]]>
 	</sql>
 </custom-sql>

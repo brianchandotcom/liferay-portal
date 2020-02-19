@@ -23,6 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AssetListEntryAssetEntryRelFinder {
 
-	public int countByA_S_Visible(long assetListEntryId, long segmentsEntryId);
+	public int countByA_S(
+		long assetListEntryId, long segmentsEntryId, boolean visible);
 
 }

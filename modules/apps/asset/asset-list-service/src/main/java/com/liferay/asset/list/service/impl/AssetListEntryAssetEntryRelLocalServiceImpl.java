@@ -183,11 +183,12 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 			assetListEntryId, segmentsEntryId);
 	}
 
-	public int getAssetListEntryVisibleAssetEntryRelsCount(
-		long assetLIstEntryId, long segmentsEntryId) {
+	@Override
+	public int getAssetListEntryAssetEntryRelsCount(
+		long assetLIstEntryId, long segmentsEntryId, boolean visible) {
 
-		return assetListEntryAssetEntryRelFinder.countByA_S_Visible(
-			assetLIstEntryId, segmentsEntryId);
+		return assetListEntryAssetEntryRelFinder.countByA_S(
+			assetLIstEntryId, segmentsEntryId, visible);
 	}
 
 	@Override

@@ -426,12 +426,12 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 	}
 
 	@Override
-	public int getAssetListEntryVisibleAssetEntryRelsCount(
-		long assetLIstEntryId, long segmentsEntryId) {
+	public int getAssetListEntryAssetEntryRelsCount(
+		long assetLIstEntryId, long segmentsEntryId, boolean visible) {
 
 		return _assetListEntryAssetEntryRelLocalService.
-			getAssetListEntryVisibleAssetEntryRelsCount(
-				assetLIstEntryId, segmentsEntryId);
+			getAssetListEntryAssetEntryRelsCount(
+				assetLIstEntryId, segmentsEntryId, visible);
 	}
 
 	@Override

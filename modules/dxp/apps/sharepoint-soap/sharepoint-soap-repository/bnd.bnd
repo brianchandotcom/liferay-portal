@@ -19,6 +19,9 @@ Import-Package:\
 	!org.apache.james.mime4j.*,\
 	!org.apache.neethi.*,\
 	\
-	com.liferay.petra.string.*,\
-	\
 	*
+-includeresource:\
+	lib/copy-ws.jar;lib:=true,\
+	lib/lists-ws.jar;lib:=true,\
+	lib/search-ws.jar;lib:=true,\
+	lib/versions-ws.jar;lib:=true

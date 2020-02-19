@@ -93,6 +93,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 				keyProperty="groupId"
 				modelVar="group"
 			>
+
 				<%
 				List<Group> childSites = group.getChildren(true);
 				%>

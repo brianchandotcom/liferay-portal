@@ -1019,7 +1019,7 @@
 			WHERE
 				[$WHERE$]
 				(Role_.companyId = ?) AND
-				(Role_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ROLE$]) AND
+				(Role_.classNameId = [$CLASS_NAME_ID$]) AND
 				(
 					(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
@@ -1208,7 +1208,7 @@
 			WHERE
 				[$WHERE$]
 				(Role_.companyId = ?) AND
-				(Role_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ROLE$]) AND
+				(Role_.classNameId = [$CLASS_NAME_ID$]) AND
 				(
 					(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])

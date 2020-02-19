@@ -142,7 +142,7 @@ const Languages = ({
 				<ClayTable.Head>
 					<ClayTable.Row>
 						<ClayTable.Cell expanded headingCell headingTitle>
-							{Liferay.Language.get('language')}
+							{Liferay.Language.get('active-language')}
 						</ClayTable.Cell>
 
 						{showActions && (
@@ -193,7 +193,7 @@ const Languages = ({
 
 				<ClayRadio
 					label={Liferay.Language.get(
-						'define-a-custom-default-language-and-additional-available-languages-for-this-repository'
+						'define-a-custom-default-language-and-additional-active-languages-for-this-repository'
 					)}
 					value={false}
 				/>

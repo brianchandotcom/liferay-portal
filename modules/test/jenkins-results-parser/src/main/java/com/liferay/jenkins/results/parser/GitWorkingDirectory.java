@@ -739,7 +739,7 @@ public class GitWorkingDirectory {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("git fetch --progress -v -f");
+		sb.append("git fetch -f");
 
 		if (noTags) {
 			sb.append(" --no-tags");
@@ -787,7 +787,7 @@ public class GitWorkingDirectory {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("git fetch --progress -v -f --no-tags ");
+		sb.append("git fetch -f --no-tags ");
 		sb.append(String.valueOf(localGitBranch.getDirectory()));
 		sb.append(" ");
 		sb.append(localGitBranch.getName());

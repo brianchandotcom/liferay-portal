@@ -19,7 +19,7 @@ import com.liferay.adaptive.media.web.internal.constants.AMWebKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -67,18 +67,14 @@ public class AMManagementToolbarDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "filter-by-state"));
-					});
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					_getFilterNavigationDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "filter-by-state"));
 			}
-		};
+		).build();
 	}
 
 	public List<LabelItem> getFilterLabelItems() {
@@ -145,59 +141,52 @@ public class AMManagementToolbarDisplayContext {
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		final String entriesNavigation = _getEntriesNavigation();
 
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(entriesNavigation.equals("all"));
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(entriesNavigation.equals("all"));
 
-						PortletURL allImageConfigurationEntriesURL =
-							PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse);
+				PortletURL allImageConfigurationEntriesURL =
+					PortletURLUtil.clone(
+						_currentURLObj, _liferayPortletResponse);
 
-						dropdownItem.setHref(
-							allImageConfigurationEntriesURL,
-							"entriesNavigation", "all");
+				dropdownItem.setHref(
+					allImageConfigurationEntriesURL, "entriesNavigation",
+					"all");
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "all"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							entriesNavigation.equals("enabled"));
-
-						PortletURL enabledImageConfigurationEntriesURL =
-							PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse);
-
-						dropdownItem.setHref(
-							enabledImageConfigurationEntriesURL,
-							"entriesNavigation", "enabled");
-
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "enabled"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							entriesNavigation.equals("disabled"));
-
-						PortletURL disabledImageConfigurationEntriesURL =
-							PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse);
-
-						dropdownItem.setHref(
-							disabledImageConfigurationEntriesURL,
-							"entriesNavigation", "disabled");
-
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "disabled"));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "all"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(entriesNavigation.equals("enabled"));
+
+				PortletURL enabledImageConfigurationEntriesURL =
+					PortletURLUtil.clone(
+						_currentURLObj, _liferayPortletResponse);
+
+				dropdownItem.setHref(
+					enabledImageConfigurationEntriesURL, "entriesNavigation",
+					"enabled");
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "enabled"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(entriesNavigation.equals("disabled"));
+
+				PortletURL disabledImageConfigurationEntriesURL =
+					PortletURLUtil.clone(
+						_currentURLObj, _liferayPortletResponse);
+
+				dropdownItem.setHref(
+					disabledImageConfigurationEntriesURL, "entriesNavigation",
+					"disabled");
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "disabled"));
+			}
+		).build();
 	}
 
 	private final PortletURL _currentURLObj;

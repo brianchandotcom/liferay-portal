@@ -20,6 +20,7 @@ import com.liferay.depot.service.DepotEntryGroupRelLocalServiceUtil;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
@@ -61,51 +62,44 @@ public class DepotAdminSitesDisplayContext {
 	public DropdownItemList getConnectedSiteDropdownItems(
 		DepotEntryGroupRel depotEntryGroupRel) {
 
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						ActionURL updateSearchableActionURL =
-							DepotEntryURLUtil.getUpdateSearchableActionURL(
-								depotEntryGroupRel.getDepotEntryGroupRelId(),
-								!depotEntryGroupRel.isSearchable(),
-								_currentURL.toString(),
-								_liferayPortletResponse);
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				ActionURL updateSearchableActionURL =
+					DepotEntryURLUtil.getUpdateSearchableActionURL(
+						depotEntryGroupRel.getDepotEntryGroupRelId(),
+						!depotEntryGroupRel.isSearchable(),
+						_currentURL.toString(), _liferayPortletResponse);
 
-						dropdownItem.setHref(
-							updateSearchableActionURL.toString());
+				dropdownItem.setHref(updateSearchableActionURL.toString());
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								PortalUtil.getHttpServletRequest(
-									_liferayPortletRequest),
-								_getUpdateSearchableKey(depotEntryGroupRel)));
-					});
-
-				add(
-					dropdownItem -> {
-						ActionURL disconnectSiteActionURL =
-							DepotEntryURLUtil.getDisconnectSiteActionURL(
-								depotEntryGroupRel.getDepotEntryGroupRelId(),
-								_currentURL.toString(),
-								_liferayPortletResponse);
-
-						dropdownItem.setData(
-							HashMapBuilder.<String, Object>put(
-								"action", "disconnect"
-							).put(
-								"disconnectSiteActionURL",
-								disconnectSiteActionURL.toString()
-							).build());
-
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								PortalUtil.getHttpServletRequest(
-									_liferayPortletRequest),
-								"disconnect"));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						PortalUtil.getHttpServletRequest(
+							_liferayPortletRequest),
+						_getUpdateSearchableKey(depotEntryGroupRel)));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				ActionURL disconnectSiteActionURL =
+					DepotEntryURLUtil.getDisconnectSiteActionURL(
+						depotEntryGroupRel.getDepotEntryGroupRelId(),
+						_currentURL.toString(), _liferayPortletResponse);
+
+				dropdownItem.setData(
+					HashMapBuilder.<String, Object>put(
+						"action", "disconnect"
+					).put(
+						"disconnectSiteActionURL",
+						disconnectSiteActionURL.toString()
+					).build());
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						PortalUtil.getHttpServletRequest(
+							_liferayPortletRequest),
+						"disconnect"));
+			}
+		).build();
 	}
 
 	public List<DepotEntryGroupRel> getDepotEntryGroupRels() {

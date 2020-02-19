@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
@@ -256,51 +257,37 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public DropdownItemList getFilterOptions() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							new DropdownItemList() {
-								{
-									add(
-										_getFilterNavigationDropdownItem(
-											"all"));
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					new DropdownItemList() {
+						{
+							add(_getFilterNavigationDropdownItem("all"));
 
-									add(
-										_getFilterNavigationDropdownItem(
-											"pending"));
+							add(_getFilterNavigationDropdownItem("pending"));
 
-									add(
-										_getFilterNavigationDropdownItem(
-											"completed"));
-								}
-							});
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_workflowTaskRequestHelper.getRequest(),
-								"filter"));
+							add(_getFilterNavigationDropdownItem("completed"));
+						}
 					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							new DropdownItemList() {
-								{
-									add(
-										_getOrderByDropdownItem(
-											"last-activity-date"));
-
-									add(_getOrderByDropdownItem("due-date"));
-								}
-							});
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_workflowTaskRequestHelper.getRequest(),
-								"order-by"));
-					});
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(
+						_workflowTaskRequestHelper.getRequest(), "filter"));
 			}
-		};
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					new DropdownItemList() {
+						{
+							add(_getOrderByDropdownItem("last-activity-date"));
+
+							add(_getOrderByDropdownItem("due-date"));
+						}
+					});
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(
+						_workflowTaskRequestHelper.getRequest(), "order-by"));
+			}
+		).build();
 	}
 
 	public String getHeaderTitle(WorkflowTask workflowTask)

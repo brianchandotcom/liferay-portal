@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPCreationMenu;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -193,70 +194,61 @@ public class WorkflowDefinitionDisplayContext {
 	public DropdownItemList getFilterOptions(
 		HttpServletRequest httpServletRequest) {
 
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							new DropdownItemList() {
-								{
-									add(
-										_getFilterNavigationDropdownItem(
-											"all",
-											_getCurrentNavigation(
-												httpServletRequest),
-											"all"));
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					new DropdownItemList() {
+						{
+							add(
+								_getFilterNavigationDropdownItem(
+									"all",
+									_getCurrentNavigation(httpServletRequest),
+									"all"));
 
-									add(
-										_getFilterNavigationDropdownItem(
-											"published",
-											_getCurrentNavigation(
-												httpServletRequest),
-											"published"));
+							add(
+								_getFilterNavigationDropdownItem(
+									"published",
+									_getCurrentNavigation(httpServletRequest),
+									"published"));
 
-									add(
-										_getFilterNavigationDropdownItem(
-											"not-published",
-											_getCurrentNavigation(
-												httpServletRequest),
-											"not-published"));
-								}
-							});
-
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_workflowDefinitionRequestHelper.getRequest(),
-								"filter"));
+							add(
+								_getFilterNavigationDropdownItem(
+									"not-published",
+									_getCurrentNavigation(httpServletRequest),
+									"not-published"));
+						}
 					});
 
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							new DropdownItemList() {
-								{
-									add(
-										_getOrderByDropdownItem(
-											"last-modified",
-											_getCurrentOrder(
-												httpServletRequest),
-											httpServletRequest));
-
-									add(
-										_getOrderByDropdownItem(
-											"title",
-											_getCurrentOrder(
-												httpServletRequest),
-											httpServletRequest));
-								}
-							});
-
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_workflowDefinitionRequestHelper.getRequest(),
-								"order-by"));
-					});
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(
+						_workflowDefinitionRequestHelper.getRequest(),
+						"filter"));
 			}
-		};
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					new DropdownItemList() {
+						{
+							add(
+								_getOrderByDropdownItem(
+									"last-modified",
+									_getCurrentOrder(httpServletRequest),
+									httpServletRequest));
+
+							add(
+								_getOrderByDropdownItem(
+									"title",
+									_getCurrentOrder(httpServletRequest),
+									httpServletRequest));
+						}
+					});
+
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(
+						_workflowDefinitionRequestHelper.getRequest(),
+						"order-by"));
+			}
+		).build();
 	}
 
 	public String getManageSubmissionsLink() {

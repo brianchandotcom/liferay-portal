@@ -18,7 +18,7 @@ import com.liferay.expando.constants.ExpandoPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringBundler;
@@ -50,26 +50,23 @@ public class ExpandoDisplayContext {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						PortletResponse portletResponse =
-							(PortletResponse)_httpServletRequest.getAttribute(
-								JavaConstants.JAVAX_PORTLET_RESPONSE);
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				PortletResponse portletResponse =
+					(PortletResponse)_httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-						dropdownItem.setHref(
-							StringBundler.concat(
-								"javascript:", portletResponse.getNamespace(),
-								"deleteCustomFields();"));
+				dropdownItem.setHref(
+					StringBundler.concat(
+						"javascript:", portletResponse.getNamespace(),
+						"deleteCustomFields();"));
 
-						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
+				dropdownItem.setIcon("trash");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+				dropdownItem.setQuickAction(true);
 			}
-		};
+		).build();
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {

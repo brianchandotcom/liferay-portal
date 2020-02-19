@@ -17,7 +17,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -117,38 +117,33 @@ public class RankingPortletDisplayBuilder {
 	}
 
 	protected List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "deactivateResultsRankingsEntries");
-						dropdownItem.setIcon("hidden");
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "deactivate"));
-						dropdownItem.setQuickAction(true);
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "activateResultsRankingsEntries");
-						dropdownItem.setIcon("undo");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "activate"));
-						dropdownItem.setQuickAction(true);
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "deleteResultsRankingsEntries");
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData(
+					"action", "deactivateResultsRankingsEntries");
+				dropdownItem.setIcon("hidden");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "deactivate"));
+				dropdownItem.setQuickAction(true);
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData(
+					"action", "activateResultsRankingsEntries");
+				dropdownItem.setIcon("undo");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "activate"));
+				dropdownItem.setQuickAction(true);
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteResultsRankingsEntries");
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -178,25 +173,22 @@ public class RankingPortletDisplayBuilder {
 	}
 
 	protected List<DropdownItem> getFilterItemsDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "filter-by-navigation"));
-					});
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems(getKeywords()));
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "order-by"));
-					});
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					_getFilterNavigationDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest, "filter-by-navigation"));
 			}
-		};
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					_getOrderByDropdownItems(getKeywords()));
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "order-by"));
+			}
+		).build();
 	}
 
 	protected String getKeywords() {
@@ -278,17 +270,14 @@ public class RankingPortletDisplayBuilder {
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(_renderResponse.createRenderURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "all"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(true);
+				dropdownItem.setHref(_renderResponse.createRenderURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "all"));
 			}
-		};
+		).build();
 	}
 
 	private String _getOrderByCol() {
@@ -298,30 +287,23 @@ public class RankingPortletDisplayBuilder {
 	private List<DropdownItem> _getOrderByDropdownItems(String keywords) {
 		PortletURL portletURL = _getPortletURL(keywords);
 
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), "keywords"));
-						dropdownItem.setHref(
-							portletURL, "orderByCol", "keywords");
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "search-query"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), _ORDER_BY_COL));
-						dropdownItem.setHref(
-							portletURL, "orderByCol", _ORDER_BY_COL);
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, _ORDER_BY_COL));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(_getOrderByCol(), "keywords"));
+				dropdownItem.setHref(portletURL, "orderByCol", "keywords");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "search-query"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(_getOrderByCol(), _ORDER_BY_COL));
+				dropdownItem.setHref(portletURL, "orderByCol", _ORDER_BY_COL);
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, _ORDER_BY_COL));
+			}
+		).build();
 	}
 
 	@SuppressWarnings("deprecation")

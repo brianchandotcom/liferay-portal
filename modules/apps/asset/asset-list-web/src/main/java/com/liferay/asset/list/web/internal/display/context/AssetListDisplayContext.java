@@ -27,7 +27,7 @@ import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -75,20 +75,15 @@ public class AssetListDisplayContext {
 	}
 
 	public List<DropdownItem> getAddAssetListEntryDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					_getAddAssetListEntryDropdownItemUnsafeConsumer(
-						AssetListEntryTypeConstants.TYPE_MANUAL_LABEL,
-						"manual-selection",
-						AssetListEntryTypeConstants.TYPE_MANUAL));
-				add(
-					_getAddAssetListEntryDropdownItemUnsafeConsumer(
-						AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL,
-						"dynamic-selection",
-						AssetListEntryTypeConstants.TYPE_DYNAMIC));
-			}
-		};
+		return DropdownItemListBuilder.add(
+			_getAddAssetListEntryDropdownItemUnsafeConsumer(
+				AssetListEntryTypeConstants.TYPE_MANUAL_LABEL,
+				"manual-selection", AssetListEntryTypeConstants.TYPE_MANUAL)
+		).add(
+			_getAddAssetListEntryDropdownItemUnsafeConsumer(
+				AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL,
+				"dynamic-selection", AssetListEntryTypeConstants.TYPE_DYNAMIC)
+		).build();
 	}
 
 	public SearchContainer<AssetEntry> getAssetListContentSearchContainer() {

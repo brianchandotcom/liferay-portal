@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -90,48 +91,40 @@ public class JournalManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "deleteEntries");
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteEntries");
 
-						boolean trashEnabled = _trashHelper.isTrashEnabled(
-							_themeDisplay.getScopeGroupId());
+				boolean trashEnabled = _trashHelper.isTrashEnabled(
+					_themeDisplay.getScopeGroupId());
 
-						dropdownItem.setIcon(
-							trashEnabled ? "trash" : "times-circle");
+				dropdownItem.setIcon(trashEnabled ? "trash" : "times-circle");
 
-						String label = "delete";
+				String label = "delete";
 
-						if (trashEnabled) {
-							label = "recycle-bin";
-						}
+				if (trashEnabled) {
+					label = "recycle-bin";
+				}
 
-						dropdownItem.setLabel(LanguageUtil.get(request, label));
+				dropdownItem.setLabel(LanguageUtil.get(request, label));
 
-						dropdownItem.setQuickAction(true);
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "expireEntries");
-						dropdownItem.setIcon("time");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "expire"));
-						dropdownItem.setQuickAction(true);
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "moveEntries");
-						dropdownItem.setIcon("move-folder");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "move"));
-						dropdownItem.setQuickAction(true);
-					});
+				dropdownItem.setQuickAction(true);
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "expireEntries");
+				dropdownItem.setIcon("time");
+				dropdownItem.setLabel(LanguageUtil.get(request, "expire"));
+				dropdownItem.setQuickAction(true);
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "moveEntries");
+				dropdownItem.setIcon("move-folder");
+				dropdownItem.setLabel(LanguageUtil.get(request, "move"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
 	}
 
 	@Override

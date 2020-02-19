@@ -17,6 +17,7 @@ package com.liferay.message.boards.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.message.boards.constants.MBCategoryConstants;
@@ -488,84 +489,68 @@ public class MBEntriesManagementToolbarDisplayContext {
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		String entriesNavigation = _getEntriesNavigation();
 
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(entriesNavigation.equals("all"));
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(entriesNavigation.equals("all"));
 
-						PortletURL navigationPortletURL = PortletURLUtil.clone(
-							_currentURLObj, _liferayPortletResponse);
+				PortletURL navigationPortletURL = PortletURLUtil.clone(
+					_currentURLObj, _liferayPortletResponse);
 
-						dropdownItem.setHref(
-							navigationPortletURL, "entriesNavigation", "all");
+				dropdownItem.setHref(
+					navigationPortletURL, "entriesNavigation", "all");
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "all"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							entriesNavigation.equals("threads"));
-
-						PortletURL navigationPortletURL = PortletURLUtil.clone(
-							_currentURLObj, _liferayPortletResponse);
-
-						dropdownItem.setHref(
-							navigationPortletURL, "entriesNavigation",
-							"threads");
-
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "threads"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							entriesNavigation.equals("categories"));
-
-						PortletURL navigationPortletURL = PortletURLUtil.clone(
-							_currentURLObj, _liferayPortletResponse);
-
-						dropdownItem.setHref(
-							navigationPortletURL, "entriesNavigation",
-							"categories");
-
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "categories"));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "all"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(entriesNavigation.equals("threads"));
+
+				PortletURL navigationPortletURL = PortletURLUtil.clone(
+					_currentURLObj, _liferayPortletResponse);
+
+				dropdownItem.setHref(
+					navigationPortletURL, "entriesNavigation", "threads");
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "threads"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(entriesNavigation.equals("categories"));
+
+				PortletURL navigationPortletURL = PortletURLUtil.clone(
+					_currentURLObj, _liferayPortletResponse);
+
+				dropdownItem.setHref(
+					navigationPortletURL, "entriesNavigation", "categories");
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "categories"));
+			}
+		).build();
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "title"));
-						dropdownItem.setHref(
-							_getCurrentSortingURL(), "orderByCol", "title");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "title"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "modified-date"));
-						dropdownItem.setHref(
-							_getCurrentSortingURL(), "orderByCol",
-							"modified-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "modified-date"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(getOrderByCol(), "title"));
+				dropdownItem.setHref(
+					_getCurrentSortingURL(), "orderByCol", "title");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "title"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(getOrderByCol(), "modified-date"));
+				dropdownItem.setHref(
+					_getCurrentSortingURL(), "orderByCol", "modified-date");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "modified-date"));
+			}
+		).build();
 	}
 
 	private final PortletURL _currentURLObj;

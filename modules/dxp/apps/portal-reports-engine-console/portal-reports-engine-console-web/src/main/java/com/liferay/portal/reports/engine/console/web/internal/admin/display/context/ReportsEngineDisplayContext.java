@@ -17,6 +17,7 @@ package com.liferay.portal.reports.engine.console.web.internal.admin.display.con
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -173,39 +174,31 @@ public class ReportsEngineDisplayContext {
 	}
 
 	public DropdownItemList getFilterOptions() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							new DropdownItemList() {
-								{
-									add(
-										_getFilterNavigationDropdownItem(
-											"all"));
-								}
-							});
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_reportsEngineRequestHelper.getRequest(),
-								"filter"));
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					new DropdownItemList() {
+						{
+							add(_getFilterNavigationDropdownItem("all"));
+						}
 					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							new DropdownItemList() {
-								{
-									add(_getOrderByDropdownItem("create-date"));
-								}
-							});
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_reportsEngineRequestHelper.getRequest(),
-								"order-by"));
-					});
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(
+						_reportsEngineRequestHelper.getRequest(), "filter"));
 			}
-		};
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					new DropdownItemList() {
+						{
+							add(_getOrderByDropdownItem("create-date"));
+						}
+					});
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(
+						_reportsEngineRequestHelper.getRequest(), "order-by"));
+			}
+		).build();
 	}
 
 	public String getOrderByType() {

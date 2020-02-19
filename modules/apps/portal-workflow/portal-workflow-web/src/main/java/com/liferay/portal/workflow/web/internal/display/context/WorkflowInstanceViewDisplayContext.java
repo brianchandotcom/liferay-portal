@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -150,49 +151,37 @@ public class WorkflowInstanceViewDisplayContext
 	public DropdownItemList getFilterOptions(
 		HttpServletRequest httpServletRequest) {
 
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							new DropdownItemList() {
-								{
-									add(
-										_getFilterNavigationDropdownItem(
-											"all"));
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					new DropdownItemList() {
+						{
+							add(_getFilterNavigationDropdownItem("all"));
 
-									add(
-										_getFilterNavigationDropdownItem(
-											"pending"));
+							add(_getFilterNavigationDropdownItem("pending"));
 
-									add(
-										_getFilterNavigationDropdownItem(
-											"completed"));
-								}
-							});
-
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "filter"));
+							add(_getFilterNavigationDropdownItem("completed"));
+						}
 					});
 
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							new DropdownItemList() {
-								{
-									add(
-										_getOrderByDropdownItem(
-											"last-activity-date"));
-
-									add(_getOrderByDropdownItem("end-date"));
-								}
-							});
-
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "order-by"));
-					});
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "filter"));
 			}
-		};
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					new DropdownItemList() {
+						{
+							add(_getOrderByDropdownItem("last-activity-date"));
+
+							add(_getOrderByDropdownItem("end-date"));
+						}
+					});
+
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "order-by"));
+			}
+		).build();
 	}
 
 	public String getHeaderTitle() {

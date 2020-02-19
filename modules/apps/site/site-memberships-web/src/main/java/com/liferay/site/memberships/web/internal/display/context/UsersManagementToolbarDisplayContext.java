@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.petra.string.StringPool;
@@ -329,47 +330,38 @@ public class UsersManagementToolbarDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getNavigation(), "all"));
-						dropdownItem.setHref(
-							getPortletURL(), "navigation", "all", "roleId",
-							"0");
-						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "selectRoles");
-						dropdownItem.putData(
-							"selectRolesURL",
-							_getSelectorURL("/select_site_role.jsp"));
-
-						PortletURL viewRoleURL =
-							liferayPortletResponse.createRenderURL();
-
-						viewRoleURL.setParameter("mvcPath", "/view.jsp");
-						viewRoleURL.setParameter("tabs1", "users");
-						viewRoleURL.setParameter("navigation", "roles");
-						viewRoleURL.setParameter(
-							"redirect", themeDisplay.getURLCurrent());
-						viewRoleURL.setParameter(
-							"groupId",
-							String.valueOf(_usersDisplayContext.getGroupId()));
-
-						dropdownItem.putData(
-							"viewRoleURL", viewRoleURL.toString());
-
-						dropdownItem.setActive(
-							Objects.equals(getNavigation(), "roles"));
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "roles"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(Objects.equals(getNavigation(), "all"));
+				dropdownItem.setHref(
+					getPortletURL(), "navigation", "all", "roleId", "0");
+				dropdownItem.setLabel(LanguageUtil.get(request, "all"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "selectRoles");
+				dropdownItem.putData(
+					"selectRolesURL", _getSelectorURL("/select_site_role.jsp"));
+
+				PortletURL viewRoleURL =
+					liferayPortletResponse.createRenderURL();
+
+				viewRoleURL.setParameter("mvcPath", "/view.jsp");
+				viewRoleURL.setParameter("tabs1", "users");
+				viewRoleURL.setParameter("navigation", "roles");
+				viewRoleURL.setParameter(
+					"redirect", themeDisplay.getURLCurrent());
+				viewRoleURL.setParameter(
+					"groupId",
+					String.valueOf(_usersDisplayContext.getGroupId()));
+
+				dropdownItem.putData("viewRoleURL", viewRoleURL.toString());
+
+				dropdownItem.setActive(
+					Objects.equals(getNavigation(), "roles"));
+				dropdownItem.setLabel(LanguageUtil.get(request, "roles"));
+			}
+		).build();
 	}
 
 	@Override

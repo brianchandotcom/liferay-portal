@@ -17,7 +17,7 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
@@ -189,39 +189,34 @@ public class SynonymsDisplayBuilder {
 	protected List<DropdownItem> buildSynonymSetDropdownItemList(
 		SynonymSet synonymSet, RenderURL editRenderURL) {
 
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(editRenderURL);
-						dropdownItem.setLabel(
-							_language.get(_httpServletRequest, "edit"));
-						dropdownItem.setQuickAction(true);
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "delete");
-
-						ActionURL deleteURL = _renderResponse.createActionURL();
-
-						deleteURL.setParameter(
-							ActionRequest.ACTION_NAME, "deleteSynonymSet");
-						deleteURL.setParameter(Constants.CMD, Constants.DELETE);
-						deleteURL.setParameter("rowIds", synonymSet.getId());
-						deleteURL.setParameter(
-							"redirect",
-							_portal.getCurrentURL(_httpServletRequest));
-
-						dropdownItem.putData("deleteURL", deleteURL.toString());
-
-						dropdownItem.setIcon("times");
-						dropdownItem.setLabel(
-							_language.get(_httpServletRequest, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(editRenderURL);
+				dropdownItem.setLabel(
+					_language.get(_httpServletRequest, "edit"));
+				dropdownItem.setQuickAction(true);
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "delete");
+
+				ActionURL deleteURL = _renderResponse.createActionURL();
+
+				deleteURL.setParameter(
+					ActionRequest.ACTION_NAME, "deleteSynonymSet");
+				deleteURL.setParameter(Constants.CMD, Constants.DELETE);
+				deleteURL.setParameter("rowIds", synonymSet.getId());
+				deleteURL.setParameter(
+					"redirect", _portal.getCurrentURL(_httpServletRequest));
+
+				dropdownItem.putData("deleteURL", deleteURL.toString());
+
+				dropdownItem.setIcon("times");
+				dropdownItem.setLabel(
+					_language.get(_httpServletRequest, "delete"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
 	}
 
 	protected SynonymSetIndexName buildSynonymSetIndexName() {
@@ -244,19 +239,15 @@ public class SynonymsDisplayBuilder {
 	}
 
 	protected List<DropdownItem> getDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "deleteMultipleSynonyms");
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							_language.get(_httpServletRequest, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteMultipleSynonyms");
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(
+					_language.get(_httpServletRequest, "delete"));
+				dropdownItem.setQuickAction(true);
 			}
-		};
+		).build();
 	}
 
 	protected boolean isDisabledManagementBar(

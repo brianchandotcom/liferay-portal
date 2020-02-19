@@ -28,6 +28,7 @@ import com.liferay.fragment.web.internal.security.permission.resource.FragmentPe
 import com.liferay.fragment.web.internal.util.FragmentPortletUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
@@ -87,28 +88,22 @@ public class FragmentDisplayContext {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(),
-							"mvcRenderCommandName",
-							"/fragment/edit_fragment_collection", "redirect",
-							_themeDisplay.getURLCurrent());
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "collection"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "openImportView");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "import"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/fragment/edit_fragment_collection", "redirect",
+					_themeDisplay.getURLCurrent());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "collection"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "openImportView");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "import"));
+			}
+		).build();
 	}
 
 	public List<DropdownItem> getCollectionsDropdownItems() {

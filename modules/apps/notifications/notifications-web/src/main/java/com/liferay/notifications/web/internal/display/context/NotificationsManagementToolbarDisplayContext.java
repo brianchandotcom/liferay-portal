@@ -16,6 +16,7 @@ package com.liferay.notifications.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -201,43 +202,40 @@ public class NotificationsManagementToolbarDisplayContext {
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		String navigation = _getNavigation();
 
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse),
-							SearchContainer.DEFAULT_CUR_PARAM, "0",
-							"navigation", "all");
-						dropdownItem.setActive(navigation.equals("all"));
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "all"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse),
-							SearchContainer.DEFAULT_CUR_PARAM, "0",
-							"navigation", "unread");
-						dropdownItem.setActive(navigation.equals("unread"));
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "unread"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse),
-							SearchContainer.DEFAULT_CUR_PARAM, "0",
-							"navigation", "read");
-						dropdownItem.setActive(navigation.equals("read"));
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "read"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLUtil.clone(
+						_currentURLObj, _liferayPortletResponse),
+					SearchContainer.DEFAULT_CUR_PARAM, "0", "navigation",
+					"all");
+				dropdownItem.setActive(navigation.equals("all"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "all"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLUtil.clone(
+						_currentURLObj, _liferayPortletResponse),
+					SearchContainer.DEFAULT_CUR_PARAM, "0", "navigation",
+					"unread");
+				dropdownItem.setActive(navigation.equals("unread"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "unread"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLUtil.clone(
+						_currentURLObj, _liferayPortletResponse),
+					SearchContainer.DEFAULT_CUR_PARAM, "0", "navigation",
+					"read");
+				dropdownItem.setActive(navigation.equals("read"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "read"));
+			}
+		).build();
 	}
 
 	private String _getNavigation() {
@@ -245,17 +243,14 @@ public class NotificationsManagementToolbarDisplayContext {
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(getSortingURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "date"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(true);
+				dropdownItem.setHref(getSortingURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "date"));
 			}
-		};
+		).build();
 	}
 
 	private boolean _isActionRequired() {

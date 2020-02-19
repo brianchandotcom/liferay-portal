@@ -17,7 +17,7 @@ package com.liferay.change.tracking.web.internal.display.context;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -96,33 +96,27 @@ public class ChangeListsHistoryDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterStatusDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "filter-by-status"));
-					});
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterUserDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "filter-by-user"));
-					});
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "order-by"));
-					});
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					_getFilterStatusDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "filter-by-status"));
 			}
-		};
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					_getFilterUserDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "filter-by-user"));
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "order-by"));
+			}
+		).build();
 	}
 
 	public String getOrderByType() {
@@ -186,75 +180,61 @@ public class ChangeListsHistoryDisplayContext {
 	}
 
 	private List<DropdownItem> _getFilterStatusDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getFilterByStatus(), "all"));
-						dropdownItem.setHref(
-							_getKeywordsURL(), "status", "all");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "all"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getFilterByStatus(), "published"));
-						dropdownItem.setHref(
-							_getKeywordsURL(), "status", "published");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "published"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getFilterByStatus(), "failed"));
-						dropdownItem.setHref(
-							_getKeywordsURL(), "status", "failed");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "failed"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(
-								_getFilterByStatus(), "in-progress"));
-						dropdownItem.setHref(
-							_getKeywordsURL(), "status", "in-progress");
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "in-progress"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getFilterByStatus(), "scheduled"));
-						dropdownItem.setHref(
-							_getKeywordsURL(), "status", "scheduled");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "scheduled"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(_getFilterByStatus(), "all"));
+				dropdownItem.setHref(_getKeywordsURL(), "status", "all");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "all"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(_getFilterByStatus(), "published"));
+				dropdownItem.setHref(_getKeywordsURL(), "status", "published");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "published"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(_getFilterByStatus(), "failed"));
+				dropdownItem.setHref(_getKeywordsURL(), "status", "failed");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "failed"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(_getFilterByStatus(), "in-progress"));
+				dropdownItem.setHref(
+					_getKeywordsURL(), "status", "in-progress");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "in-progress"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(_getFilterByStatus(), "scheduled"));
+				dropdownItem.setHref(_getKeywordsURL(), "status", "scheduled");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "scheduled"));
+			}
+		).build();
 	}
 
 	private List<DropdownItem> _getFilterUserDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							_getFilterByUser() ==
-								CTWebConstants.USER_FILTER_ALL);
-						dropdownItem.setHref(
-							_getKeywordsURL(), "user",
-							CTWebConstants.USER_FILTER_ALL);
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "all"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					_getFilterByUser() == CTWebConstants.USER_FILTER_ALL);
+				dropdownItem.setHref(
+					_getKeywordsURL(), "user", CTWebConstants.USER_FILTER_ALL);
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "all"));
 			}
-		};
+		).build();
 	}
 
 	private String _getKeywords() {
@@ -291,29 +271,24 @@ public class ChangeListsHistoryDisplayContext {
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), "publishDate"));
-						dropdownItem.setHref(
-							_getKeywordsURL(), "orderByCol", "publishDate");
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "publish-date"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), "name"));
-						dropdownItem.setHref(
-							_getKeywordsURL(), "orderByCol", "name");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "name"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(_getOrderByCol(), "publishDate"));
+				dropdownItem.setHref(
+					_getKeywordsURL(), "orderByCol", "publishDate");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "publish-date"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(_getOrderByCol(), "name"));
+				dropdownItem.setHref(_getKeywordsURL(), "orderByCol", "name");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "name"));
+			}
+		).build();
 	}
 
 	private PortletURL _getPortletURL() {

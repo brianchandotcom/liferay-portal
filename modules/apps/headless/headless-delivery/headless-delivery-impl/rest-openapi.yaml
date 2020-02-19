@@ -1595,7 +1595,6 @@ components:
                 encodingFormat:
                     description:
                         The media format of the thread's content (e.g., HTML, BBCode, etc.).
-                    readOnly: true
                     type: string
                 headline:
                     description:

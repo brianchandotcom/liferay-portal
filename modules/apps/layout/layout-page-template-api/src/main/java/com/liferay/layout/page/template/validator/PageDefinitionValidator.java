@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.validator;
+package com.liferay.layout.page.template.validator;
 
-import com.liferay.layout.page.template.admin.web.internal.exception.PageDefinitionValidatorException;
+import com.liferay.layout.page.template.exception.PageDefinitionValidatorException;
 import com.liferay.petra.json.validator.JSONValidator;
 import com.liferay.petra.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.util.Validator;

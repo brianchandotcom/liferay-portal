@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.validator;
+package com.liferay.layout.page.template.validator.test;
 
-import com.liferay.layout.page.template.admin.web.internal.exception.PageDefinitionValidatorException;
+import com.liferay.layout.page.template.exception.PageDefinitionValidatorException;
+import com.liferay.layout.page.template.validator.PageDefinitionValidator;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FileImpl;
 

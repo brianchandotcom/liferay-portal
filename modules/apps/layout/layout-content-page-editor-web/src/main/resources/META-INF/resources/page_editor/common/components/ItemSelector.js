@@ -40,7 +40,7 @@ export default function ItemSelector({
 
 			<div className="d-flex">
 				<ClayInput
-					className="mr-2"
+					className="mr-2 page-editor__item-selector__content-input"
 					id="itemSelectorInput"
 					readOnly
 					sizing="sm"

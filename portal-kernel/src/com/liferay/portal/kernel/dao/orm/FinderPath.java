@@ -72,7 +72,6 @@ public class FinderPath {
 		}
 
 		_initCacheKeyPrefix(methodName, params);
-		_initLocalCacheKeyPrefix();
 	}
 
 	public String encodeArguments(Object[] arguments) {
@@ -92,9 +91,20 @@ public class FinderPath {
 		return _getCacheKey(new String[] {_cacheKeyPrefix, encodedArguments});
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public Serializable encodeLocalCacheKey(String encodedArguments) {
 		return _getCacheKey(
-			new String[] {_localCacheKeyPrefix, encodedArguments});
+			new String[] {
+				_cacheName.concat(
+					StringPool.PERIOD
+				).concat(
+					_cacheKeyPrefix
+				),
+				encodedArguments
+			});
 	}
 
 	public String getCacheName() {
@@ -170,14 +180,6 @@ public class FinderPath {
 		_cacheKeyPrefix = sb.toString();
 	}
 
-	private void _initLocalCacheKeyPrefix() {
-		_localCacheKeyPrefix = _cacheName.concat(
-			StringPool.PERIOD
-		).concat(
-			_cacheKeyPrefix
-		);
-	}
-
 	private static final String _ARGS_SEPARATOR = "_A_";
 
 	private static final String _BASE_MODEL_CACHE_KEY_GENERATOR_NAME =
@@ -194,7 +196,6 @@ public class FinderPath {
 	private final long _columnBitmask;
 	private final boolean _entityCacheEnabled;
 	private final boolean _finderCacheEnabled;
-	private String _localCacheKeyPrefix;
 	private final Class<?> _resultClass;
 
 }

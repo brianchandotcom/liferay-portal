@@ -15,6 +15,7 @@
 package com.liferay.portal.cache.internal.dao.orm;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -113,15 +114,17 @@ public class FinderCacheImpl
 			return null;
 		}
 
-		String encodedArguments = finderPath.encodeArguments(args);
-		Map<Serializable, Serializable> localCache = null;
-		Serializable localCacheKey = null;
+		Serializable cacheKey = finderPath.encodeCacheKey(
+			finderPath.encodeArguments(args));
+		Map<LocalCacheKey, Serializable> localCache = null;
+		LocalCacheKey localCacheKey = null;
 		Serializable primaryKey = null;
 
 		if (_isLocalCacheEnabled()) {
 			localCache = _localCache.get();
 
-			localCacheKey = finderPath.encodeLocalCacheKey(encodedArguments);
+			localCacheKey = new LocalCacheKey(
+				finderPath.getCacheName(), cacheKey);
 
 			primaryKey = localCache.get(localCacheKey);
 		}
@@ -130,8 +133,7 @@ public class FinderCacheImpl
 			PortalCache<Serializable, Serializable> portalCache =
 				_getPortalCache(finderPath.getCacheName());
 
-			primaryKey = portalCache.get(
-				finderPath.encodeCacheKey(encodedArguments));
+			primaryKey = portalCache.get(cacheKey);
 
 			if ((primaryKey != null) && (localCache != null)) {
 				localCache.put(localCacheKey, primaryKey);
@@ -189,16 +191,15 @@ public class FinderCacheImpl
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
 			finderPath.getCacheName());
 
-		String encodedArguments = finderPath.encodeArguments(args);
-
-		Serializable cacheKey = finderPath.encodeCacheKey(encodedArguments);
+		Serializable cacheKey = finderPath.encodeCacheKey(
+			finderPath.encodeArguments(args));
 
 		if (primaryKey == null) {
 			if (_isLocalCacheEnabled()) {
-				Map<Serializable, Serializable> localCache = _localCache.get();
+				Map<LocalCacheKey, Serializable> localCache = _localCache.get();
 
 				localCache.remove(
-					finderPath.encodeLocalCacheKey(encodedArguments));
+					new LocalCacheKey(finderPath.getCacheName(), cacheKey));
 			}
 
 			if (quiet) {
@@ -211,10 +212,10 @@ public class FinderCacheImpl
 		}
 		else {
 			if (_isLocalCacheEnabled()) {
-				Map<Serializable, Serializable> localCache = _localCache.get();
+				Map<LocalCacheKey, Serializable> localCache = _localCache.get();
 
 				localCache.put(
-					finderPath.encodeLocalCacheKey(encodedArguments),
+					new LocalCacheKey(finderPath.getCacheName(), cacheKey),
 					primaryKey);
 			}
 
@@ -246,18 +247,20 @@ public class FinderCacheImpl
 			return;
 		}
 
-		String encodedArguments = finderPath.encodeArguments(args);
+		Serializable cacheKey = finderPath.encodeCacheKey(
+			finderPath.encodeArguments(args));
 
 		if (_isLocalCacheEnabled()) {
-			Map<Serializable, Serializable> localCache = _localCache.get();
+			Map<LocalCacheKey, Serializable> localCache = _localCache.get();
 
-			localCache.remove(finderPath.encodeLocalCacheKey(encodedArguments));
+			localCache.remove(
+				new LocalCacheKey(finderPath.getCacheName(), cacheKey));
 		}
 
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
 			finderPath.getCacheName());
 
-		portalCache.remove(finderPath.encodeCacheKey(encodedArguments));
+		portalCache.remove(cacheKey);
 	}
 
 	@Activate
@@ -467,6 +470,36 @@ public class FinderCacheImpl
 		}
 
 		private Object[] _args;
+
+	}
+
+	private static class LocalCacheKey {
+
+		@Override
+		public boolean equals(Object object) {
+			LocalCacheKey localCacheKey = (LocalCacheKey)object;
+
+			if (_className.equals(localCacheKey._className) &&
+				_cacheKey.equals(localCacheKey._cacheKey)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			return HashUtil.hash(_className.hashCode(), _cacheKey.hashCode());
+		}
+
+		private LocalCacheKey(String className, Serializable cacheKey) {
+			_className = className;
+			_cacheKey = cacheKey;
+		}
+
+		private final Serializable _cacheKey;
+		private final String _className;
 
 	}
 

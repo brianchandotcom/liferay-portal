@@ -14,7 +14,7 @@
 
 import {openImageSelector} from '../../core/openImageSelector';
 
-function createEditor(element, changeCallback, destroyCallback, config) {
+function createEditor(element, changeCallback, destroyCallback) {
 	openImageSelector(
 		image => changeCallback(image && image.url ? image.url : ''),
 		destroyCallback

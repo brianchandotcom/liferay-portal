@@ -133,8 +133,7 @@ export default function FragmentContentProcessor({
 			() => {
 				processor.destroyEditor(editableElement, editableValue.config);
 				setEditableProcessorUniqueId(null);
-			},
-			config
+			}
 		);
 
 		return () => {

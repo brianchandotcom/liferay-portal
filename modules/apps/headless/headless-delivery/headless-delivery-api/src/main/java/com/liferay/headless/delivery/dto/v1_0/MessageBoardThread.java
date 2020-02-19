@@ -325,7 +325,7 @@ public class MessageBoardThread {
 	@GraphQLField(
 		description = "The media format of the thread's content (e.g., HTML, BBCode, etc.)."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String encodingFormat;
 
 	@Schema(description = "The thread's main title.")

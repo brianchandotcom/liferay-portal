@@ -16,14 +16,13 @@ import ExperienceService from '../../../app/services/ExperienceService';
 import createExperienceAction from '../actions/createExperience';
 import selectExperienceAction from '../actions/selectExperience';
 
-export default function createExperience({name, segmentsEntryId}, config) {
+export default function createExperience({name, segmentsEntryId}) {
 	return dispatch => {
 		return ExperienceService.createExperience({
 			body: {
 				name,
 				segmentsEntryId
 			},
-			config,
 			dispatch
 		}).then(({fragmentEntryLinks, layoutData, segmentsExperience}) => {
 			ExperienceService.selectExperience({
@@ -31,7 +30,6 @@ export default function createExperience({name, segmentsEntryId}, config) {
 					segmentsExperienceId:
 						segmentsExperience.segmentsExperienceId
 				},
-				config,
 				dispatch
 			})
 				.then(portletIds => {

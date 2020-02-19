@@ -34,8 +34,7 @@ const ExperiencesList = ({
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 
-	const handleExperienceSelection = id =>
-		dispatch(selectExperience(id, config));
+	const handleExperienceSelection = id => dispatch(selectExperience(id));
 
 	return (
 		<ul className="list-unstyled mt-4" role="list">

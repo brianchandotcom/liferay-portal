@@ -158,10 +158,7 @@ const ExperienceSelector = ({
 	}) => {
 		if (segmentsExperienceId) {
 			return dispatch(
-				updateExperience(
-					{name, segmentsEntryId, segmentsExperienceId},
-					config
-				)
+				updateExperience({name, segmentsEntryId, segmentsExperienceId})
 			)
 				.then(() => {
 					if (isMounted()) {
@@ -191,13 +188,10 @@ const ExperienceSelector = ({
 		}
 		else {
 			return dispatch(
-				createExperience(
-					{
-						name,
-						segmentsEntryId
-					},
-					config
-				)
+				createExperience({
+					name,
+					segmentsEntryId
+				})
 			)
 				.then(() => {
 					if (isMounted()) {
@@ -279,15 +273,11 @@ const ExperienceSelector = ({
 		);
 
 		dispatch(
-			removeExperience(
-				{
-					fragmentEntryLinkIds: uniqueFragmentEntryLinks,
-					segmentsExperienceId: id,
-					selectedExperienceId:
-						selectedExperience.segmentsExperienceId
-				},
-				config
-			)
+			removeExperience({
+				fragmentEntryLinkIds: uniqueFragmentEntryLinks,
+				segmentsExperienceId: id,
+				selectedExperienceId: selectedExperience.segmentsExperienceId
+			})
 		).catch(_error => {
 			// TODO handle error
 		});
@@ -301,13 +291,10 @@ const ExperienceSelector = ({
 		);
 
 		dispatch(
-			updateExperiencePriority(
-				{
-					subtarget,
-					target
-				},
-				config
-			)
+			updateExperiencePriority({
+				subtarget,
+				target
+			})
 		);
 	};
 	const increasePriority = id => {
@@ -318,13 +305,10 @@ const ExperienceSelector = ({
 		);
 
 		dispatch(
-			updateExperiencePriority(
-				{
-					subtarget,
-					target
-				},
-				config
-			)
+			updateExperiencePriority({
+				subtarget,
+				target
+			})
 		);
 	};
 

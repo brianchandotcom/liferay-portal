@@ -12,21 +12,22 @@
  * details.
  */
 
+import {config} from '../../../app/config/index';
 import ExperienceService from '../../../app/services/ExperienceService';
 import deleteExperienceAction from '../actions/deleteExperience';
 import selectExperienceAction from '../actions/selectExperience';
 
-export default function removeExperience(
-	{fragmentEntryLinkIds, segmentsExperienceId, selectedExperienceId},
-	config
-) {
+export default function removeExperience({
+	fragmentEntryLinkIds,
+	segmentsExperienceId,
+	selectedExperienceId
+}) {
 	return dispatch => {
 		if (segmentsExperienceId === selectedExperienceId) {
 			return ExperienceService.selectExperience({
 				body: {
 					segmentsExperienceId: config.defaultSegmentsExperienceId
 				},
-				config,
 				dispatch
 			}).then(portletIds => {
 				dispatch(
@@ -41,7 +42,6 @@ export default function removeExperience(
 						fragmentEntryLinkIds,
 						segmentsExperienceId
 					},
-					config,
 					dispatch
 				}).then(() => {
 					return dispatch(
@@ -58,7 +58,6 @@ export default function removeExperience(
 					fragmentEntryLinkIds,
 					segmentsExperienceId
 				},
-				config,
 				dispatch
 			}).then(() => {
 				return dispatch(

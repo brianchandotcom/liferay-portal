@@ -224,6 +224,12 @@ $theme-colors-cp: map-deep-merge(
 	--input-label-font-size: var(--font-size-sm);
 	--input-label-margin-bottom: var(--spacer-0);
 
+	--input-font-size-sm: var(--font-size-sm);
+	--input-height-sm: #{$input-height-sm};
+
+	--input-font-size-lg: var(--font-size-lg);
+	--input-height-lg: #{$input-height-lg};
+
 	// Nav and Navbar
 
 	--nav-font-size: var(--navbar-font-size);

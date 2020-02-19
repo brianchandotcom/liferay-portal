@@ -177,7 +177,7 @@
 	border-color: transparent;
 }
 
-.btn {
+.btn:not(.btn-monospaced) {
 	@include button-size(
 		var(--btn-padding-y),
 		var(--btn-padding-x),
@@ -187,7 +187,7 @@
 	);
 }
 
-.btn-lg {
+.btn-lg:not(.btn-monospaced) {
 	@include button-size(
 		var(--btn-padding-y-lg),
 		var(--btn-padding-x-lg),
@@ -197,7 +197,7 @@
 	);
 }
 
-.btn-sm {
+.btn-sm:not(.btn-monospaced) {
 	@include button-size(
 		var(--btn-padding-y-sm),
 		var(--btn-padding-x-sm),
@@ -323,6 +323,16 @@
 		border-color: var(--input-focus-border-color);
 		color: var(--input-focus-color);
 	}
+}
+
+.form-control-lg {
+	font-size: var(--input-font-size-lg);
+	height: var(--input-height-lg);
+}
+
+.form-control-sm {
+	font-size: var(--input-font-size-sm);
+	height: var(--input-height-sm);
 }
 
 .input-group-inset-item {

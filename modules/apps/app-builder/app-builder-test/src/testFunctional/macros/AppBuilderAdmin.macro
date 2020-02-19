@@ -493,7 +493,7 @@ definition {
 	}
 
 	macro waitForSaveButton {
-		while (IsElementNotPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
+		while (IsVisible(locator1 = "AppBuilder#SAVE_BUTTON")) {
 			Pause(locator1 = "10000");
 		}
 	}

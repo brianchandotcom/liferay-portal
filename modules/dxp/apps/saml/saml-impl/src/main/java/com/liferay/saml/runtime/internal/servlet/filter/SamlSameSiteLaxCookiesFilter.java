@@ -17,6 +17,7 @@ package com.liferay.saml.runtime.internal.servlet.filter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -141,7 +142,7 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 			sb.append("<input type=\"hidden\" name=");
 			sb.append(paramName);
 			sb.append(" value=\"");
-			sb.append(paramValue);
+			sb.append(_html.escapeAttribute(paramValue));
 			sb.append("\"/>");
 		}
 	}
@@ -154,6 +155,9 @@ public class SamlSameSiteLaxCookiesFilter extends BaseSamlPortalFilter {
 		SamlSameSiteLaxCookiesFilter.class);
 
 	private boolean _enabled = true;
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private Portal _portal;

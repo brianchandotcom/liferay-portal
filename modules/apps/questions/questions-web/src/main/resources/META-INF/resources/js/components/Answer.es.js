@@ -94,7 +94,7 @@ export default ({answer, answerChange, deleteAnswer}) => {
 						<ArticleBodyRenderer {...answer} />
 
 						<ClayButton.Group spaced={true}>
-							{answer.actions["reply-to-message"] && (
+							{answer.actions['reply-to-message'] && (
 								<ClayButton
 									displayType="unstyled"
 									onClick={() => setShowNewComment(true)}

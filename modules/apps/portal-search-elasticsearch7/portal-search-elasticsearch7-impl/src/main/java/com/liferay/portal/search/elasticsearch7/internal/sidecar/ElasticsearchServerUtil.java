@@ -114,9 +114,8 @@ public class ElasticsearchServerUtil {
 
 	static {
 		try {
-			Thread currentThread = Thread.currentThread();
-
-			ClassLoader classLoader = currentThread.getContextClassLoader();
+			ClassLoader classLoader =
+				ElasticsearchServerUtil.class.getClassLoader();
 
 			_hooksField = ReflectionUtil.getDeclaredField(
 				classLoader.loadClass("java.lang.ApplicationShutdownHooks"),

@@ -29,15 +29,20 @@ import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 
 export default function FragmentContentFloatingToolbar({
-	element,
+	editableElements,
 	fragmentEntryLinkId,
 	onButtonClick
 }) {
 	const isActive = useIsActive();
 
 	const editableElement = useMemo(
-		() => getActiveEditableElement(element, fragmentEntryLinkId, isActive),
-		[element, fragmentEntryLinkId, isActive]
+		() =>
+			getActiveEditableElement(
+				editableElements,
+				fragmentEntryLinkId,
+				isActive
+			),
+		[editableElements, fragmentEntryLinkId, isActive]
 	);
 
 	const editableId = useMemo(
@@ -59,15 +64,13 @@ export default function FragmentContentFloatingToolbar({
 			? BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
 			: EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
 
-	const editableValue = useSelector(state =>
-		editableId
-			? selectEditableValue(
-					state,
-					fragmentEntryLinkId,
-					editableId,
-					processorKey
-			  )
-			: {}
+	const state = useSelector(state => state);
+
+	const editableValue = selectEditableValue(
+		state,
+		fragmentEntryLinkId,
+		editableId,
+		processorKey
 	);
 
 	const floatingToolbarButtons = useMemo(() => {

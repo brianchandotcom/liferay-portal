@@ -13,7 +13,7 @@
 				"paddingBottom": 4,
 				"paddingHorizontal": 4,
 				"paddingTop": 4,
-				"type": "fluid"
+				"type": "fixed"
 			},
 			"itemId": "CONTAINER0-UUID",
 			"parentId": "MAIN-UUID",

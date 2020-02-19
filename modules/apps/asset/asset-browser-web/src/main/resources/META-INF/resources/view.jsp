@@ -21,6 +21,12 @@
 />
 
 <aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectAssetFm">
+	<c:if test="<%= assetBrowserDisplayContext.isMultipleSelection() %>">
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= assetBrowserDisplayContext.getPortletBreadcrumbEntries() %>"
+		/>
+	</c:if>
+
 	<aui:input name="typeSelection" type="hidden" value="<%= assetBrowserDisplayContext.getTypeSelection() %>" />
 
 	<liferay-ui:search-container

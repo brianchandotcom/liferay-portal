@@ -327,10 +327,16 @@ public class MessageBoardThreadResourceImpl
 			MessageBoardThread messageBoardThread)
 		throws Exception {
 
+		String encodingFormat = messageBoardThread.getEncodingFormat();
+
+		if (encodingFormat == null) {
+			encodingFormat = MBMessageConstants.DEFAULT_FORMAT;
+		}
+
 		MBMessage mbMessage = _mbMessageService.addMessage(
 			siteId, messageBoardSectionId, messageBoardThread.getHeadline(),
-			messageBoardThread.getArticleBody(),
-			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(), false,
+			messageBoardThread.getArticleBody(), encodingFormat,
+			Collections.emptyList(), false,
 			_toPriority(siteId, messageBoardThread.getThreadType()), false,
 			ServiceContextUtil.createServiceContext(
 				null, messageBoardThread.getKeywords(),

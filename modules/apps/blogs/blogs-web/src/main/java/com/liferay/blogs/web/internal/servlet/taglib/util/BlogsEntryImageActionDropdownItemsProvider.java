@@ -16,7 +16,7 @@ package com.liferay.blogs.web.internal.servlet.taglib.util;
 
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -64,21 +64,18 @@ public class BlogsEntryImageActionDropdownItemsProvider {
 		PortletURL portletURL = (PortletURL)_httpServletRequest.getAttribute(
 			"view_images.jsp-portletURL");
 
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createActionURL(),
-							ActionRequest.ACTION_NAME, "/blogs/edit_image",
-							Constants.CMD, Constants.DELETE, "redirect",
-							portletURL.toString(), "fileEntryId",
-							_fileEntry.getFileEntryId());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "delete"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createActionURL(),
+					ActionRequest.ACTION_NAME, "/blogs/edit_image",
+					Constants.CMD, Constants.DELETE, "redirect",
+					portletURL.toString(), "fileEntryId",
+					_fileEntry.getFileEntryId());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
 			}
-		};
+		).build();
 	}
 
 	private final FileEntry _fileEntry;

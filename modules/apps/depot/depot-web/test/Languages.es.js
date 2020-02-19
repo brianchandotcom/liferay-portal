@@ -80,13 +80,13 @@ describe('Languages', () => {
 		).not.toBeNull();
 	});
 
-	it('renders a "manage" button if custom option is checked', () => {
+	it('renders a "edit" button if custom option is checked', () => {
 		const {getByText} = renderLanguagesComponent({
 			...defaultProps,
 			inheritLocales: false
 		});
 
-		expect(getByText('manage'));
+		expect(getByText('edit'));
 	});
 
 	it('changes the default language', () => {
@@ -147,10 +147,10 @@ describe('Languages', () => {
 				inheritLocales: false
 			});
 
-			fireEvent.click(result.getByText('manage'));
+			fireEvent.click(result.getByText('edit'));
 		});
 
-		it('renders a modal when user clicks on Manage button', async () => {
+		it('renders a modal when user clicks on Edit button', async () => {
 			const title = await waitForElement(() =>
 				result.getByText('language-selection')
 			);

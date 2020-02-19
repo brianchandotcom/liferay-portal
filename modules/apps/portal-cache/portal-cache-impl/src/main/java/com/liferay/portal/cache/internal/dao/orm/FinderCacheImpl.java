@@ -114,8 +114,7 @@ public class FinderCacheImpl
 			return null;
 		}
 
-		Serializable cacheKey = finderPath.encodeCacheKey(
-			finderPath.encodeArguments(args));
+		Serializable cacheKey = finderPath.encodeCacheKey(args);
 		Map<LocalCacheKey, Serializable> localCache = null;
 		LocalCacheKey localCacheKey = null;
 		Serializable primaryKey = null;
@@ -191,8 +190,7 @@ public class FinderCacheImpl
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
 			finderPath.getCacheName());
 
-		Serializable cacheKey = finderPath.encodeCacheKey(
-			finderPath.encodeArguments(args));
+		Serializable cacheKey = finderPath.encodeCacheKey(args);
 
 		if (primaryKey == null) {
 			if (_isLocalCacheEnabled()) {
@@ -247,8 +245,7 @@ public class FinderCacheImpl
 			return;
 		}
 
-		Serializable cacheKey = finderPath.encodeCacheKey(
-			finderPath.encodeArguments(args));
+		Serializable cacheKey = finderPath.encodeCacheKey(args);
 
 		if (_isLocalCacheEnabled()) {
 			Map<LocalCacheKey, Serializable> localCache = _localCache.get();

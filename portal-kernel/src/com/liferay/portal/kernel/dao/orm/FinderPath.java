@@ -74,6 +74,11 @@ public class FinderPath {
 		_initCacheKeyPrefix(methodName, params);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #encodeCacheKey(
+	 *             Object[])}
+	 */
+	@Deprecated
 	public String encodeArguments(Object[] arguments) {
 		String[] keys = new String[arguments.length * 2];
 
@@ -87,6 +92,35 @@ public class FinderPath {
 		return StringUtil.toHexString(_getCacheKey(keys));
 	}
 
+	public Serializable encodeCacheKey(Object[] arguments) {
+		CacheKeyGenerator cacheKeyGenerator = _cacheKeyGenerator;
+
+		if (cacheKeyGenerator == null) {
+			cacheKeyGenerator = CacheKeyGeneratorUtil.getCacheKeyGenerator(
+				_cacheKeyGeneratorCacheName);
+		}
+
+		String[] keys = new String[arguments.length * 2];
+
+		for (int i = 0; i < arguments.length; i++) {
+			int index = i * 2;
+
+			keys[index] = StringPool.PERIOD;
+			keys[index + 1] = StringUtil.toHexString(arguments[i]);
+		}
+
+		return cacheKeyGenerator.getCacheKey(
+			new String[] {
+				_cacheKeyPrefix,
+				StringUtil.toHexString(cacheKeyGenerator.getCacheKey(keys))
+			});
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #encodeCacheKey(
+	 *             Object[])}
+	 */
+	@Deprecated
 	public Serializable encodeCacheKey(String encodedArguments) {
 		return _getCacheKey(new String[] {_cacheKeyPrefix, encodedArguments});
 	}

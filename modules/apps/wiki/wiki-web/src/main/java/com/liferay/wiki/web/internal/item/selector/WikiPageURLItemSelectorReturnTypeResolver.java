@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.internal.item.selector.resolver;
+package com.liferay.wiki.web.internal.item.selector;
 
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.petra.string.StringBundler;

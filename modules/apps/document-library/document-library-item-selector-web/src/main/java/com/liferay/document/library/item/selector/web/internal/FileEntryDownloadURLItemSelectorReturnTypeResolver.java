@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web.internal.resolver;
+package com.liferay.document.library.item.selector.web.internal;
 
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
-import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -27,21 +25,21 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Pavel Savinov
  */
 @Component(
 	property = "service.ranking:Integer=100",
 	service = ItemSelectorReturnTypeResolver.class
 )
-public class FileEntryDownloadFileEntryItemSelectorReturnTypeResolver
+public class FileEntryDownloadURLItemSelectorReturnTypeResolver
 	implements ItemSelectorReturnTypeResolver
-		<DownloadFileEntryItemSelectorReturnType, FileEntry> {
+		<DownloadURLItemSelectorReturnType, FileEntry> {
 
 	@Override
-	public Class<DownloadFileEntryItemSelectorReturnType>
+	public Class<DownloadURLItemSelectorReturnType>
 		getItemSelectorReturnTypeClass() {
 
-		return DownloadFileEntryItemSelectorReturnType.class;
+		return DownloadURLItemSelectorReturnType.class;
 	}
 
 	@Override
@@ -53,26 +51,9 @@ public class FileEntryDownloadFileEntryItemSelectorReturnTypeResolver
 	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		JSONObject fileEntryJSONObject = JSONUtil.put(
-			"fileEntryId", fileEntry.getFileEntryId()
-		).put(
-			"groupId", fileEntry.getGroupId()
-		).put(
-			"title", fileEntry.getTitle()
-		).put(
-			"type", "document"
-		);
-
-		fileEntryJSONObject.put(
-			"url",
-			_dlURLHelper.getDownloadURL(
-				fileEntry, fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK, false, false)
-		).put(
-			"uuid", fileEntry.getUuid()
-		);
-
-		return fileEntryJSONObject.toString();
+		return _dlURLHelper.getDownloadURL(
+			fileEntry, fileEntry.getFileVersion(), themeDisplay,
+			StringPool.BLANK, false, false);
 	}
 
 	@Reference

@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web.internal.resolver;
+package com.liferay.document.library.item.selector.web.internal;
 
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
-import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -26,19 +27,21 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Roberto Díaz
+ * @author Alejandro Tardín
  */
 @Component(
 	property = "service.ranking:Integer=100",
 	service = ItemSelectorReturnTypeResolver.class
 )
-public class FileEntryURLItemSelectorReturnTypeResolver
+public class FileEntryDownloadFileEntryItemSelectorReturnTypeResolver
 	implements ItemSelectorReturnTypeResolver
-		<URLItemSelectorReturnType, FileEntry> {
+		<DownloadFileEntryItemSelectorReturnType, FileEntry> {
 
 	@Override
-	public Class<URLItemSelectorReturnType> getItemSelectorReturnTypeClass() {
-		return URLItemSelectorReturnType.class;
+	public Class<DownloadFileEntryItemSelectorReturnType>
+		getItemSelectorReturnTypeClass() {
+
+		return DownloadFileEntryItemSelectorReturnType.class;
 	}
 
 	@Override
@@ -50,14 +53,26 @@ public class FileEntryURLItemSelectorReturnTypeResolver
 	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
-			return _dlURLHelper.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK, false, false);
-		}
+		JSONObject fileEntryJSONObject = JSONUtil.put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"title", fileEntry.getTitle()
+		).put(
+			"type", "document"
+		);
 
-		return PortletFileRepositoryUtil.getPortletFileEntryURL(
-			themeDisplay, fileEntry, StringPool.BLANK, false);
+		fileEntryJSONObject.put(
+			"url",
+			_dlURLHelper.getDownloadURL(
+				fileEntry, fileEntry.getFileVersion(), themeDisplay,
+				StringPool.BLANK, false, false)
+		).put(
+			"uuid", fileEntry.getUuid()
+		);
+
+		return fileEntryJSONObject.toString();
 	}
 
 	@Reference

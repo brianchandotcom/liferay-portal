@@ -39,6 +39,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -77,7 +78,6 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -585,7 +585,7 @@ public class EditAssetListDisplayContext {
 				AssetListWebKeys.ITEM_SELECTOR);
 
 		ItemSelectorCriterion itemSelectorCriterion =
-			new SiteItemSelectorCriterion();
+			new GroupItemSelectorCriterion();
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new GroupItemSelectorReturnType());

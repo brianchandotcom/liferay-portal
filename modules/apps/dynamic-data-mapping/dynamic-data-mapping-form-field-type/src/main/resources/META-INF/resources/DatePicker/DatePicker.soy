@@ -146,6 +146,8 @@
 			{let $visibleInputAttributes kind="attributes"}
 				{if $ariaLabel}
 					aria-label="{$ariaLabel}"
+				{else}
+					aria-label="date_picker"
 				{/if}
 
 				class="form-control input-group-inset input-group-inset-after"
@@ -176,6 +178,7 @@
 			<input {$visibleInputAttributes} />
 
 			{let $hiddenInputAttributes kind="attributes"}
+				aria-label="date_picker_hidden"
 				name="{$name}"
 				type="hidden"
 

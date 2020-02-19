@@ -146,7 +146,7 @@
 							</div>
 					{/foreach}
 
-					<a class="select-arrow-down-container" href="javascript:;">
+					<a class="select-arrow-down-container">
 						{if $spritemap}
 							{call ClayIcon.render}
 								{param spritemap: $spritemap /}
@@ -185,7 +185,7 @@
 	{@param options: list<?>}
 	{@param? multiple: bool}
 
-	<select class="form-control hide" id="{$name}" name="{$name}" {if $multiple}multiple size="{length($options)}"{/if}>
+	<select aria-label="select" class="form-control hide" id="{$name}" name="{$name}" {if $multiple}multiple size="{length($options)}"{/if}>
 		<option disabled {if length($displayValues) == 0}selected{/if} value=""></option>
 
 		{foreach $option in $options}

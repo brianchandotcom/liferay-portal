@@ -24,12 +24,14 @@ $c: '.ddm-field-options';
 		margin: 0;
 		width: 100%;
 
-		label {
+		label,
+		p {
 			display: none;
 		}
 
 		.key-value-editor {
-			label {
+			label,
+			p {
 				color: #c4cfd6;
 				display: inline-block;
 				margin-right: 5px;
@@ -44,6 +46,7 @@ $c: '.ddm-field-options';
 			}
 
 			label,
+			p,
 			input {
 				font-size: 11px;
 			}

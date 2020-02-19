@@ -77,7 +77,7 @@
 		<table class="table table-autofit table-list table-striped">
 			<thead>
 				<tr>
-					<th></th>
+					<td></td>
 
 					{foreach $column in $columns}
 						{if $column.value}
@@ -97,6 +97,7 @@
 								{if $column.value}
 									<td>
 										{let $inputAttributes kind="attributes"}
+											aria-label="grid_{index($row)}_{index($column)}"
 											{if $column.value == $value[$row.value]}
 												checked
 											{/if}
@@ -140,6 +141,7 @@
 		{let $inputValue: $value[$row.value] ? $row.value + ';' + $value[$row.value] : '' /}
 
 		<input
+			aria-label="grid_hidden"
 			class="form-control"
 			name="{$name}"
 			type="hidden"

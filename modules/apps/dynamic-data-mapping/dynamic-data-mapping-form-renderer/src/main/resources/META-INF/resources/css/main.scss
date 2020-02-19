@@ -67,7 +67,8 @@ body .ddm-user-view-content {
 	font-weight: 500;
 }
 
-.lfr-ddm-form-field-container label {
+.lfr-ddm-form-field-container label,
+.lfr-ddm-form-field-container p {
 	padding-right: 40px;
 }
 
@@ -507,7 +508,8 @@ body .ddm-user-view-content {
 }
 
 .liferay-ddm-form-builder-sidebar-content {
-	label {
+	label,
+	p {
 		padding-right: 0;
 	}
 }
@@ -549,4 +551,20 @@ div.ddm-tooltip-container {
 	&.clay-tooltip-bottom {
 		margin-left: 108px;
 	}
+}
+
+p.ddm-label {
+	color: #272833;
+	cursor: default;
+	display: inline-block;
+	font-size: 0.875rem;
+	font-weight: 600;
+	margin-bottom: 0.25rem;
+	max-width: 100%;
+	word-wrap: break-word;
+}
+
+p .reference-mark {
+	color: #b95000;
+	font-size: 6px;
 }

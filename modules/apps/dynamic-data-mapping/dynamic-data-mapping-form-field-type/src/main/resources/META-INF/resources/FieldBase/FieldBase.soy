@@ -64,18 +64,20 @@
 			</div>
 		{/if}
 
-		{let $attributesLabel kind="attributes"}
+		{let $attributes kind="attributes"}
 			{if $id}
 				for="{$id}"
 			{/if}
 
 			{if not $showLabel and not $required}
 				class="ddm-empty"
+			{else}
+				class="ddm-label"
 			{/if}
 		{/let}
 
 		{if $label and $showLabel or $required or $tooltip or $repeatable}
-			<label {$attributesLabel}>
+			<p {$attributes}>
 				{if $label and $showLabel}
 					{$label}{sp}
 				{/if}
@@ -96,7 +98,7 @@
 						{param text: $tooltip /}
 					{/call}
 				{/if}
-			</label>
+			</p>
 		{/if}
 
 		{$contentRenderer}

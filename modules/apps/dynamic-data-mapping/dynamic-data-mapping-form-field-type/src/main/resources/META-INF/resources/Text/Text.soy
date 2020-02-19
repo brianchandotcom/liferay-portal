@@ -97,6 +97,8 @@
 	{let $inputValue: isNonnull($value) and $value != '' ? $value : $predefinedValue /}
 
 	{let $attributes kind="attributes"}
+		aria-label="text"
+
 		class="ddm-field-text form-control"
 
 		name="{$name}"

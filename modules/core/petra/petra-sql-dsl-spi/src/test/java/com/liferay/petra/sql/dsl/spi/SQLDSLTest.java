@@ -297,6 +297,18 @@ public class SQLDSLTest {
 		Assert.assertSame(
 			aliasMainExampleTable,
 			aliasMainExampleTable.mainExampleId.getTable());
+
+		Assert.assertFalse(
+			MainExampleTable.INSTANCE.mainExampleId.isNullAllowed());
+		Assert.assertFalse(aliasMainExampleTable.mainExampleId.isNullAllowed());
+		Assert.assertTrue(MainExampleTable.INSTANCE.name.isNullAllowed());
+		Assert.assertTrue(aliasMainExampleTable.name.isNullAllowed());
+
+		Assert.assertTrue(
+			MainExampleTable.INSTANCE.mainExampleId.isPrimaryKey());
+		Assert.assertTrue(aliasMainExampleTable.mainExampleId.isPrimaryKey());
+		Assert.assertFalse(MainExampleTable.INSTANCE.name.isPrimaryKey());
+		Assert.assertFalse(aliasMainExampleTable.name.isPrimaryKey());
 	}
 
 	@Test
@@ -1343,13 +1355,14 @@ public class SQLDSLTest {
 		public static final MainExampleTable INSTANCE = new MainExampleTable();
 
 		public final Column<MainExampleTable, Clob> description = createColumn(
-			"description", Clob.class, Types.CLOB);
+			"description", Clob.class, Types.CLOB, Column.DEFAULT_FLAGS);
 		public final Column<MainExampleTable, Integer> flag = createColumn(
-			"flag", Integer.class, Types.INTEGER);
+			"flag", Integer.class, Types.INTEGER, Column.DEFAULT_FLAGS);
 		public final Column<MainExampleTable, Long> mainExampleId =
-			createColumn("mainExampleId", Long.class, Types.BIGINT);
+			createColumn(
+				"mainExampleId", Long.class, Types.BIGINT, Column.PRIMARY_FLAG);
 		public final Column<MainExampleTable, String> name = createColumn(
-			"name", String.class, Types.VARCHAR);
+			"name", String.class, Types.VARCHAR, Column.DEFAULT_FLAGS);
 
 		private MainExampleTable() {
 			super("MainExample", MainExampleTable::new);
@@ -1364,11 +1377,14 @@ public class SQLDSLTest {
 			new ReferenceExampleTable();
 
 		public final Column<ReferenceExampleTable, Long> mainExampleId =
-			createColumn("mainExampleId", Long.class, Types.BIGINT);
+			createColumn(
+				"mainExampleId", Long.class, Types.BIGINT, Column.PRIMARY_FLAG);
 		public final Column<ReferenceExampleTable, String> name = createColumn(
-			"name", String.class, Types.VARCHAR);
+			"name", String.class, Types.VARCHAR, Column.DEFAULT_FLAGS);
 		public final Column<ReferenceExampleTable, Long> referenceExampleId =
-			createColumn("referenceExampleId", Long.class, Types.BIGINT);
+			createColumn(
+				"referenceExampleId", Long.class, Types.BIGINT,
+				Column.DEFAULT_FLAGS);
 
 		private ReferenceExampleTable() {
 			super("ReferenceExample", ReferenceExampleTable::new);

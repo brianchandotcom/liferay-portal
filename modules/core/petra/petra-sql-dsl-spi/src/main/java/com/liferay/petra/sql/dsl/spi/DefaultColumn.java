@@ -32,11 +32,19 @@ import java.util.function.Consumer;
 public class DefaultColumn<T extends BaseTable<T>, C>
 	extends BaseASTNode implements Column<T, C>, DefaultExpression<C> {
 
-	public DefaultColumn(T table, String name, Class<C> javaType, int sqlType) {
+	public DefaultColumn(
+		T table, String name, Class<C> javaType, int sqlType, int flags) {
+
 		_table = Objects.requireNonNull(table);
 		_name = Objects.requireNonNull(name);
 		_javaType = Objects.requireNonNull(javaType);
 		_sqlType = sqlType;
+
+		if ((flags & PRIMARY_FLAG) != 0) {
+			flags |= NULLITY_FLAG;
+		}
+
+		_flags = flags;
 	}
 
 	@Override
@@ -67,6 +75,11 @@ public class DefaultColumn<T extends BaseTable<T>, C>
 		}
 
 		return false;
+	}
+
+	@Override
+	public int getFlags() {
+		return _flags;
 	}
 
 	@Override
@@ -106,6 +119,7 @@ public class DefaultColumn<T extends BaseTable<T>, C>
 		consumer.accept(_name);
 	}
 
+	private final int _flags;
 	private final Class<C> _javaType;
 	private final String _name;
 	private final int _sqlType;

@@ -47,7 +47,8 @@ public abstract class BaseTable<T extends BaseTable<T>> implements Table<T> {
 		table.setAlias(_alias);
 
 		column = _COLUMN_FACTORY.createColumn(
-			table, column.getName(), column.getJavaType(), column.getSQLType());
+			table, column.getName(), column.getJavaType(), column.getSQLType(),
+			column.getFlags());
 
 		table.putColumn(columnAlias, column);
 
@@ -141,11 +142,11 @@ public abstract class BaseTable<T extends BaseTable<T>> implements Table<T> {
 	}
 
 	protected <C> Column<T, C> createColumn(
-		String name, Class<C> javaType, int sqlType) {
+		String name, Class<C> javaType, int sqlType, int flags) {
 
 		@SuppressWarnings("unchecked")
 		Column<T, C> column = _COLUMN_FACTORY.createColumn(
-			(T)this, name, javaType, sqlType);
+			(T)this, name, javaType, sqlType, flags);
 
 		_columnMap.put(name, column);
 

@@ -672,15 +672,20 @@ public class GitWorkingDirectory {
 					"temp-", remoteGitRef.getName()),
 				true, remoteGitRef.getSHA());
 
+			List<GitRemote> gitHubDevGitRemotes =
+				GitHubDevSyncUtil.getGitHubDevGitRemotes(this);
+
 			try {
 				GitHubDevSyncUtil.pushToAllRemotes(
 					true, liferayGitHubLocalGitBranch, remoteGitRef.getName(),
-					GitHubDevSyncUtil.getGitHubDevGitRemotes(this));
+					gitHubDevGitRemotes);
 			}
 			finally {
 				if (localGitBranch == null) {
 					deleteLocalGitBranch(liferayGitHubLocalGitBranch);
 				}
+
+				removeGitRemotes(gitHubDevGitRemotes);
 			}
 		}
 

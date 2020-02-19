@@ -40,6 +40,7 @@ JSONNamingCheck | Miscellaneous | |
 [JSONUtilCheck](checks/json_util_check.markdown#jsonutilcheck) | Miscellaneous | |
 Java2HTMLCheck | Miscellaneous | |
 [JavaAPISignatureCheck](checks/java_api_signature_check.markdown#javaapisignaturecheck) | Miscellaneous | |
+JavaAbstractMethodCheck | Miscellaneous | |
 JavaAggregateTestRuleParameterOrderCheck | Miscellaneous | |
 JavaAnnotationDefaultAttributeCheck | Miscellaneous | |
 JavaAnnotationsCheck | Miscellaneous | |

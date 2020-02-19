@@ -142,6 +142,7 @@ JSStylingCheck | .js or .jsx | |
 JSWhitespaceCheck | .js or .jsx | |
 Java2HTMLCheck | .java | |
 [JavaAPISignatureCheck](checks/java_api_signature_check.markdown#javaapisignaturecheck) | .java | |
+JavaAbstractMethodCheck | .java | |
 JavaAggregateTestRuleParameterOrderCheck | .java | |
 JavaAnnotationDefaultAttributeCheck | .java | |
 JavaAnnotationsCheck | .java | |

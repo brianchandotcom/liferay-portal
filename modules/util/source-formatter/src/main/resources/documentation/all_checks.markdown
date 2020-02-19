@@ -143,6 +143,7 @@ JSStylingCheck | Miscellaneous | .js or .jsx | |
 JSWhitespaceCheck | Miscellaneous | .js or .jsx | |
 Java2HTMLCheck | Miscellaneous | .java | |
 [JavaAPISignatureCheck](checks/java_api_signature_check.markdown#javaapisignaturecheck) | Miscellaneous | .java | |
+JavaAbstractMethodCheck | Miscellaneous | .java | |
 JavaAggregateTestRuleParameterOrderCheck | Miscellaneous | .java | |
 JavaAnnotationDefaultAttributeCheck | Miscellaneous | .java | |
 JavaAnnotationsCheck | Miscellaneous | .java | |

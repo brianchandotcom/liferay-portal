@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.saml.runtime.internal.test;
+package com.liferay.saml.runtime.internal.servlet.filter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -52,7 +52,7 @@ import org.junit.runner.RunWith;
  * @author Stian Sigvartsen
  */
 @RunWith(Arquillian.class)
-public class SamlSameSiteLaxCookiesTest {
+public class SamlSameSiteLaxCookiesFilterTest {
 
 	@ClassRule
 	@Rule

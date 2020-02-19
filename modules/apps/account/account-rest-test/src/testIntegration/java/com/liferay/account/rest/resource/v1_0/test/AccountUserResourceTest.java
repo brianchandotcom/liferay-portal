@@ -30,6 +30,8 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -37,6 +39,18 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetAccountUsersPageWithSortString() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetAccountUsersPage() throws Exception {
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

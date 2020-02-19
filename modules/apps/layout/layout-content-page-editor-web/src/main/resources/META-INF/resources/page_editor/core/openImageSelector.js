@@ -46,7 +46,9 @@ export function openImageSelector(callback, destroyedCallback = null) {
 			callback(selectedImage);
 		}
 		else {
-			destroyedCallback();
+			if (destroyedCallback) {
+				destroyedCallback();
+			}
 		}
 	});
 

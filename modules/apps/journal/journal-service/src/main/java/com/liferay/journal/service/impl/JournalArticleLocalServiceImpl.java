@@ -5661,9 +5661,13 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		updateDDMLinks(
-			article.getId(), groupId, ddmStructureKey, ddmTemplateKey,
-			addNewVersion);
+		if (classNameLocalService.getClassNameId(DDMStructure.class) !=
+				article.getClassNameId()) {
+
+			updateDDMLinks(
+				article.getId(), groupId, ddmStructureKey, ddmTemplateKey,
+				addNewVersion);
+		}
 
 		// Small image
 

@@ -119,19 +119,6 @@ public class GitRepositoryFactory {
 			return new GitHubRemoteGitRepository(gitRepositoryName, username);
 		}
 
-		if (hostname.contains("github-dev")) {
-			List<String> gitHubDevNodeHostnames =
-				GitHubDevSyncUtil.getGitHubDevNodeHostnames();
-
-			hostname = gitHubDevNodeHostnames.get(
-				JenkinsResultsParserUtil.getRandomValue(
-					0, gitHubDevNodeHostnames.size() - 1));
-
-			if (hostname.startsWith("slave-")) {
-				hostname = hostname.substring(6);
-			}
-		}
-
 		return new DefaultRemoteGitRepository(
 			hostname, gitRepositoryName, username);
 	}

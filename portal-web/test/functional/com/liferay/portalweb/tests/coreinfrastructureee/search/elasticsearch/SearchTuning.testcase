@@ -476,8 +476,8 @@ definition {
 			value1 = "There are no entries.");
 	}
 
-	test EnableAndDisableRankingsSmokeTest {
-		property test.name.skip.portal.instance = "SearchTuning#EnableAndDisableRrankingsSmokeTest";
+	test EnableAndDisableResultRankings {
+		property test.name.skip.portal.instance = "SearchTuning#EnableAndDisableResultRankings";
 
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(

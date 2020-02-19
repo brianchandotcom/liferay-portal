@@ -48,15 +48,16 @@ public class ConcurrentHashMapBuilderTest {
 		Assert.assertEquals(map1, map2);
 	}
 
-	@Test
-	public void testNullValues() {
-		Map<String, Object> map = ConcurrentHashMapBuilder.<String, Object>put(
+	@Test(expected = NullPointerException.class)
+	public void testIncorrectNullValue() {
+		ConcurrentHashMapBuilder.<String, Object>put(
 			"Hello", null
 		).build();
+	}
 
-		Assert.assertEquals(map.toString(), 1, map.size());
-
-		map = ConcurrentHashMapBuilder.<String, Object>put(
+	@Test
+	public void testNullValue() {
+		Map<String, Object> map = ConcurrentHashMapBuilder.<String, Object>put(
 			"Hello", () -> null
 		).build();
 

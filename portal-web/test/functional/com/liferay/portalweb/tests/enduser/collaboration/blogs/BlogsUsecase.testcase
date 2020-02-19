@@ -467,7 +467,7 @@ definition {
 
 		User.firstLoginPG(
 			password = "test",
-			userEmailAddress = "test@liferay.com",
+			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
 
 		Navigator.gotoSpecificURLPage(

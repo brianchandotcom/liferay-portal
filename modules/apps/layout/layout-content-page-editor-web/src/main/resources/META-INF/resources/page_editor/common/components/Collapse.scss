@@ -7,6 +7,7 @@ $collapseMarginBottom: $pageEditorSpacing * 2;
 	cursor: pointer;
 
 	.collapse-icon {
+		background: none;
 		border-color: $collapseLineColor;
 		font-size: 0.75rem;
 		margin-bottom: $collapseMarginBottom;

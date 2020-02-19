@@ -28,7 +28,7 @@ const ManageLanguages = ({
 	customLocales,
 	observer,
 	onModalClose = noop,
-	onModalSave = noop
+	onModalDone = noop
 }) => {
 	const [selectedLocales, setSelectedLocales] = useState(customLocales);
 
@@ -120,7 +120,7 @@ const ManageLanguages = ({
 
 						<ClayButton
 							displayType="primary"
-							onClick={() => onModalSave(selectedLocales)}
+							onClick={() => onModalDone(selectedLocales)}
 						>
 							{Liferay.Language.get('done')}
 						</ClayButton>
@@ -145,9 +145,9 @@ ManageLanguages.propTypes = {
 			localeId: PropTypes.string
 		})
 	).isRequired,
-	handleSaveBtn: PropTypes.func,
 	observer: PropTypes.object.isRequired,
-	onModalClose: PropTypes.func
+	onModalClose: PropTypes.func,
+	onModalDone: PropTypes.func
 };
 
 export default function(props) {

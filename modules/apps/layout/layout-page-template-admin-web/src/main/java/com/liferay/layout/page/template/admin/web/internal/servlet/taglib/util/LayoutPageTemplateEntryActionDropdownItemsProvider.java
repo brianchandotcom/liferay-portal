@@ -105,8 +105,13 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 					add(
 						_getRenameLayoutPageTemplateEntryActionUnsafeConsumer());
 
-					add(
-						_getConfigureLayoutPageTemplateEntryActionUnsafeConsumer());
+					if (_layoutPageTemplateEntry.getLayoutPrototypeId() > 0) {
+						add(_getConfigureLayoutPrototypeActionUnsafeConsumer());
+					}
+					else {
+						add(
+							_getConfigureLayoutPageTemplateEntryActionUnsafeConsumer());
+					}
 				}
 
 				if (ExportImportLayoutPageTemplateConfigurationUtil.enabled() &&
@@ -150,6 +155,27 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 				"selPlid", _layoutPageTemplateEntry.getPlid());
 
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "configure"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getConfigureLayoutPrototypeActionUnsafeConsumer() {
+
+		PortletURL configureLayoutPrototypeURL =
+			_renderResponse.createRenderURL();
+
+		configureLayoutPrototypeURL.setParameter(
+			"mvcPath", "/edit_layout_prototype.jsp");
+		configureLayoutPrototypeURL.setParameter(
+			"layoutPrototypeId",
+			String.valueOf(_layoutPageTemplateEntry.getLayoutPrototypeId()));
+		configureLayoutPrototypeURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+
+		return dropdownItem -> {
+			dropdownItem.setHref(configureLayoutPrototypeURL);
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "configure"));
 		};

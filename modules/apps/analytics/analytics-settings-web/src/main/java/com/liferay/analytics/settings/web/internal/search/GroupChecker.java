@@ -27,10 +27,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class GroupChecker extends EmptyOnClickRowChecker {
 
-	public GroupChecker(RenderResponse renderResponse, Set<String> ids) {
+	public GroupChecker(
+		RenderResponse renderResponse, Set<String> disabledIds) {
+
 		super(renderResponse);
 
-		_ids = ids;
+		_disabledIds = disabledIds;
 	}
 
 	@Override
@@ -39,7 +41,7 @@ public class GroupChecker extends EmptyOnClickRowChecker {
 		boolean disabled, String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
-		if (_ids.contains(value)) {
+		if (_disabledIds.contains(value)) {
 			disabled = true;
 		}
 
@@ -48,6 +50,6 @@ public class GroupChecker extends EmptyOnClickRowChecker {
 			checkBoxAllRowIds, checkBoxPostOnClick);
 	}
 
-	private final Set<String> _ids;
+	private final Set<String> _disabledIds;
 
 }

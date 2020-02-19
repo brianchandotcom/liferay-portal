@@ -18,6 +18,7 @@ import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.depot.web.internal.util.DepotSupportChecker;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
@@ -103,6 +104,7 @@ public class DepotItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
+				new GroupItemSelectorReturnType(),
 				new URLItemSelectorReturnType(),
 				new UUIDItemSelectorReturnType()));
 

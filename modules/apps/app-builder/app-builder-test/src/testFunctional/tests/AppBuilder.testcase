@@ -2149,14 +2149,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
@@ -2191,31 +2183,7 @@ definition {
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
 
-		AppBuilderAdmin.addOrRemovePermissionFromRoles(
-			addOrRemovePermission = "ADD",
-			permission = "ADD",
-			roleList = "User,Portal Content Reviewer");
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
-
-		AppBuilderAdmin.addOrRemovePermissionFromRoles(
-			addOrRemovePermission = "ADD",
-			permission = "DELETE",
-			roleList = "User,Portal Content Reviewer");
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
-
-		AppBuilderAdmin.addOrRemovePermissionFromRoles(
-			addOrRemovePermission = "ADD",
-			permission = "UPDATE",
-			roleList = "User,Portal Content Reviewer");
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
-
-		AppBuilderAdmin.addOrRemovePermissionFromRoles(
-			addOrRemovePermission = "ADD",
-			permission = "VIEW",
-			roleList = "User,Portal Content Reviewer");
+		AppBuilderAdmin.addAllPermissionsFromRoles(roleList = "Portal Content Reviewer");
 
 		JSONLayout.addPublicLayout(
 			groupName = "App Builder Site Name",

@@ -60,6 +60,15 @@ public class UserCardTag extends BaseClayCardTag {
 		putValue("userColorClass", userColorClass);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #setUserColorClass(String)}
+	 */
+	@Deprecated
+	public void setUserColorCssClass(String userColorCssClass) {
+		setUserColorClass(userColorCssClass);
+	}
+
 	private void _populateContext() {
 		Map<String, Object> context = getContext();
 

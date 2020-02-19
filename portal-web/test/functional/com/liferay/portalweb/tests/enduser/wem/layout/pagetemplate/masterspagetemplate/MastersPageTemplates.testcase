@@ -725,6 +725,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-102194. Assert all fragments inside collection are available in fragment pages when check the checkbox beside collection"
+	@priority = "4"
+	test ConfigureBasicComponentsAsAllowedFragments {
+		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+			item = "Edit",
+			masterLayoutName = "Custom Masters Page Template");
+
+		AssertClick(
+			locator1 = "Button#CONFIGURE_ALLOWED_FRAGMENTS",
+			value1 = "Configure Allowed Fragments");
+
+		MastersPageTemplates.selectAllowedFragments(fragmentNameList = "Basic Components");
+
+		Button.clickNoError(button = "Publish Master");
+
+		task ("Add a content page based on custom master") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name");
+		}
+
+		Pause(locator1 = "10000");
+
+		PageEditor.gotoTab(tabName = "Fragments");
+
+		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+		for (var fragmentName : list "Button,Card,Heading,HTML,Image,Paragraph,Separator,Slider,Social,Spacer,Video") {
+			AssertVisible(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS");
+		}
+	}
+
 	@description = "This is for LPS-102200. Assert the content in Drop Zone is not changed when change master of page."
 	@priority = "3"
 	test ContentInDropZoneIsNotChangedWhenChangeMasterofPage {

@@ -185,7 +185,7 @@ describe('Languages', () => {
 
 			fireEvent.click(checkboxes[0]);
 
-			fireEvent.click(result.getByText('save'));
+			fireEvent.click(result.getByText('done'));
 
 			const languagesList = await waitForElement(() =>
 				result.container.querySelectorAll('tbody > tr')
@@ -201,7 +201,7 @@ describe('Languages', () => {
 
 			fireEvent.click(checkboxes[2]);
 
-			fireEvent.click(result.getByText('save'));
+			fireEvent.click(result.getByText('done'));
 
 			const languagesList = await waitForElement(() =>
 				result.container.querySelectorAll('tbody > tr')

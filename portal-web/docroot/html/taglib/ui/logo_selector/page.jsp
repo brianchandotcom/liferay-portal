@@ -96,6 +96,7 @@ else {
 				{
 					boundingBox: '#<%= randomNamespace %>taglibLogoSelector',
 					contentBox: '#<%= randomNamespace %>taglibLogoSelectorContent',
+					defaultLogo: '<%= defaultLogo %>',
 					defaultLogoURL: '<%= defaultLogoURL %>',
 					editLogoFn: '<%= editLogoFn %>',
 					editLogoURL: '<%= uploadImageURL %>',

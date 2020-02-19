@@ -27,7 +27,7 @@ import {
 } from '../../../prop-types/index';
 import {EDITABLE_FLOATING_TOOLBAR_CLASSNAMES} from '../../config/constants/editableFloatingToolbarClassNames';
 import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../../config/constants/floatingToolbarConfigurations';
-import {useIsActive} from '../Controls';
+import {useHoverItem, useIsActive} from '../Controls';
 
 export default function FloatingToolbar({
 	buttons,
@@ -39,6 +39,7 @@ export default function FloatingToolbar({
 	const [panelId, setPanelId] = useState(null);
 	const panelRef = useRef(null);
 	const show = useIsActive()(item.itemId);
+	const hoverItem = useHoverItem();
 	const toolbarRef = useRef(null);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 	const [windowWidth, setWindowWidth] = useState(0);
@@ -135,6 +136,10 @@ export default function FloatingToolbar({
 				{createPortal(
 					<div
 						className="p-2 page-editor__floating-toolbar position-fixed"
+						onMouseOver={event => {
+							event.stopPropagation();
+							hoverItem(null);
+						}}
 						ref={toolbarRef}
 					>
 						<div className="popover position-static">

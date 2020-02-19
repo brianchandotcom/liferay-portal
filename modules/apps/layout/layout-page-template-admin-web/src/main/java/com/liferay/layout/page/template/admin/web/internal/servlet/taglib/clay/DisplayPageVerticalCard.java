@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
@@ -131,13 +131,10 @@ public class DisplayPageVerticalCard
 
 	@Override
 	public List<LabelItem> getLabels() {
-		return new LabelItemList() {
-			{
-				add(
-					labelItem -> labelItem.setStatus(
-						_layoutPageTemplateEntry.getStatus()));
-			}
-		};
+		return LabelItemListBuilder.add(
+			labelItem -> labelItem.setStatus(
+				_layoutPageTemplateEntry.getStatus())
+		).build();
 	}
 
 	@Override

@@ -21,7 +21,7 @@ import com.liferay.fragment.web.internal.security.permission.resource.FragmentPe
 import com.liferay.fragment.web.internal.servlet.taglib.util.BasicFragmentEntryActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -107,13 +107,9 @@ public class BasicFragmentEntryVerticalCard extends FragmentEntryVerticalCard {
 
 	@Override
 	public List<LabelItem> getLabels() {
-		return new LabelItemList() {
-			{
-				add(
-					labelItem -> labelItem.setStatus(
-						fragmentEntry.getStatus()));
-			}
-		};
+		return LabelItemListBuilder.add(
+			labelItem -> labelItem.setStatus(fragmentEntry.getStatus())
+		).build();
 	}
 
 	@Override

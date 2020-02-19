@@ -18,7 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.MasterLayoutActionDropdownItemsProvider;
@@ -141,13 +141,10 @@ public class MasterLayoutVerticalCard
 
 	@Override
 	public List<LabelItem> getLabels() {
-		return new LabelItemList() {
-			{
-				add(
-					labelItem -> labelItem.setStatus(
-						_layoutPageTemplateEntry.getStatus()));
-			}
-		};
+		return LabelItemListBuilder.add(
+			labelItem -> labelItem.setStatus(
+				_layoutPageTemplateEntry.getStatus())
+		).build();
 	}
 
 	@Override

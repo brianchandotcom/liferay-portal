@@ -21,7 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -159,30 +159,25 @@ public class BlogEntriesManagementToolbarDisplayContext
 			return null;
 		}
 
-		return new LabelItemList() {
-			{
-				add(
-					labelItem -> {
-						PortletURL removeLabelURL = getPortletURL();
+		return LabelItemListBuilder.add(
+			labelItem -> {
+				PortletURL removeLabelURL = getPortletURL();
 
-						removeLabelURL.setParameter(
-							"entriesNavigation", (String)null);
+				removeLabelURL.setParameter("entriesNavigation", (String)null);
 
-						labelItem.putData(
-							"removeLabelURL", removeLabelURL.toString());
+				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
-						labelItem.setCloseable(true);
+				labelItem.setCloseable(true);
 
-						User user = _themeDisplay.getUser();
+				User user = _themeDisplay.getUser();
 
-						String label = String.format(
-							"%s: %s", LanguageUtil.get(request, "owner"),
-							user.getFullName());
+				String label = String.format(
+					"%s: %s", LanguageUtil.get(request, "owner"),
+					user.getFullName());
 
-						labelItem.setLabel(label);
-					});
+				labelItem.setLabel(label);
 			}
-		};
+		).build();
 	}
 
 	@Override

@@ -19,7 +19,7 @@ import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -110,13 +110,10 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 		WorkflowCapability workflowCapability =
 			_fileEntry.getRepositoryCapability(WorkflowCapability.class);
 
-		return new LabelItemList() {
-			{
-				add(
-					labelItem -> labelItem.setStatus(
-						workflowCapability.getStatus(_fileEntry)));
-			}
-		};
+		return LabelItemListBuilder.add(
+			labelItem -> labelItem.setStatus(
+				workflowCapability.getStatus(_fileEntry))
+		).build();
 	}
 
 	@Override

@@ -19,7 +19,10 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
+import {useDrag, useDrop} from 'react-dnd';
+
+import {ACCEPTING_TYPES, DROP_ZONES} from './constants';
 
 const ITEM_STATES_COLORS = {
 	'conversion-draft': 'info',
@@ -35,17 +38,26 @@ const MillerColumnsItem = ({
 	active,
 	bulkActions = '',
 	checked,
+	child = [],
 	description,
 	draggable,
 	hasChild,
 	itemId,
+	columnId,
 	namespace,
+	onItemDrop = noop,
+	order,
+	parent,
+	parentable,
 	selectable,
 	states = [],
 	title,
 	url
 }) => {
+	const ref = useRef();
+
 	const [dropdownActionsActive, setDropdownActionsActive] = useState();
+	const [dropZone, setDropZone] = useState();
 
 	const dropdownActions = useMemo(() => {
 		const dropdownActions = [];
@@ -77,15 +89,114 @@ const MillerColumnsItem = ({
 		return quickActions;
 	}, [actions, actionHandlers]);
 
+	const getDropZone = monitor => {
+		if (!ref.current) {
+			return;
+		}
+
+		const clientOffset = monitor.getClientOffset();
+		const dropItemBoundingRect = ref.current.getBoundingClientRect();
+		const hoverTopLimit = 20;
+		const hoverBottomLimit = dropItemBoundingRect.height - hoverTopLimit;
+		const hoverClientY = clientOffset.y - dropItemBoundingRect.top;
+
+		let dropZone = DROP_ZONES.ELEMENT;
+
+		if (hoverClientY < hoverTopLimit) {
+			dropZone = DROP_ZONES.TOP;
+		}
+		else if (hoverClientY > hoverBottomLimit) {
+			dropZone = DROP_ZONES.BOTTOM;
+		}
+
+		return dropZone;
+	};
+
+	const isValidTarget = (dropZone, sourceItem, targetItemId) => {
+		let isValid;
+
+		if (
+			(parent && columnId <= sourceItem.columnId) ||
+			(columnId > sourceItem.columnId && !sourceItem.active)
+		) {
+			if (
+				dropZone !== DROP_ZONES.ELEMENT ||
+				(targetItemId !== sourceItem.id &&
+					dropZone === DROP_ZONES.ELEMENT &&
+					parentable)
+			) {
+				isValid = true;
+			}
+		}
+
+		return isValid;
+	};
+
+	const [{isDragging}, drag] = useDrag({
+		collect: monitor => ({
+			isDragging: !!monitor.isDragging()
+		}),
+		item: {
+			active,
+			columnId,
+			id: itemId,
+			type: ACCEPTING_TYPES.ITEM
+		}
+	});
+
+	const [{isOver}, drop] = useDrop({
+		accept: ACCEPTING_TYPES.ITEM,
+		canDrop(sourceItem, monitor) {
+			const dropZone = getDropZone(monitor);
+
+			return isValidTarget(dropZone, sourceItem, itemId);
+		},
+		collect: monitor => ({
+			isOver: !!monitor.isOver()
+		}),
+		drop(sourceItem, monitor) {
+			if (monitor.canDrop()) {
+				if (dropZone === DROP_ZONES.ELEMENT) {
+					onItemDrop(sourceItem.id, itemId, child.length);
+				}
+				else {
+					let newOrder = order;
+
+					if (dropZone === DROP_ZONES.BOTTOM) {
+						newOrder = order + 1;
+					}
+
+					onItemDrop(sourceItem.id, parent.id, newOrder);
+				}
+			}
+		},
+		hover(sourceItem, monitor) {
+			let dropZone;
+
+			if (isOver && monitor.canDrop()) {
+				dropZone = getDropZone(monitor);
+			}
+
+			setDropZone(dropZone);
+		}
+	});
+
+	drag(drop(ref));
+
 	return (
 		<li
 			className={classNames(
 				'autofit-row autofit-row-center list-group-item-flex miller-columns-item',
 				{
-					active
+					active,
+					dragging: isDragging,
+					'drop-bottom': isOver && dropZone === DROP_ZONES.BOTTOM,
+					'drop-element': isOver && dropZone === DROP_ZONES.ELEMENT,
+					'drop-top': isOver && dropZone === DROP_ZONES.TOP
 				}
 			)}
 			data-actions={bulkActions}
+			ref={ref}
 		>
 			<a className="miller-columns-item-mask" href={url}>
 				<span className="sr-only">{`${Liferay.Language.get(

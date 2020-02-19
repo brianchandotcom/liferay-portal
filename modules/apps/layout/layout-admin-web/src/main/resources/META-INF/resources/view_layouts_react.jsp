@@ -63,6 +63,7 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 
 					layoutProps.put("breadcrumbEntries", layoutsAdminReactDisplayContext.getBreadcrumbEntriesJSONArray());
 					layoutProps.put("layoutColumns", layoutsAdminReactDisplayContext.getLayoutColumnsJSONArray());
+					layoutProps.put("moveItemURL", layoutsAdminDisplayContext.getMoveLayoutColumnItemURL());
 					layoutProps.put("searchContainerId", "pages");
 
 					layoutData.put("props", layoutProps);

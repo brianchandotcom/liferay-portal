@@ -12,6 +12,7 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 
 import Breadcrumbs from '../breadcrumbs/Breadcrumbs';
@@ -21,6 +22,7 @@ import actionHandlers from './actionHandlers';
 const Layout = ({
 	breadcrumbEntries,
 	layoutColumns,
+	moveItemURL,
 	namespace,
 	searchContainerId
 }) => {
@@ -56,13 +58,30 @@ const Layout = ({
 		);
 	}, [namespace, searchContainerId]);
 
+	const saveData = (sourceItem, parentItem, order) => {
+		const formData = new FormData();
+
+		formData.append(`${namespace}plid`, sourceItem.id);
+		formData.append(`${namespace}parentPlid`, parentItem.id);
+
+		if (order) {
+			formData.append(`${namespace}priority`, order);
+		}
+
+		fetch(moveItemURL, {
+			body: formData,
+			method: 'POST'
+		});
+	};
+
 	return (
 		<div ref={layoutRef}>
 			<Breadcrumbs entries={breadcrumbEntries} />
 			<MillerColumns
 				actionHandlers={actionHandlers}
-				columns={layoutColumns}
+				initialColumns={layoutColumns}
 				namespace={namespace}
+				onItemMove={saveData}
 			/>
 		</div>
 	);
@@ -70,12 +89,13 @@ const Layout = ({
 
 export default function({
 	context: {namespace},
-	props: {breadcrumbEntries, layoutColumns, searchContainerId}
+	props: {breadcrumbEntries, layoutColumns, moveItemURL, searchContainerId}
 }) {
 	return (
 		<Layout
 			breadcrumbEntries={breadcrumbEntries}
 			layoutColumns={layoutColumns}
+			moveItemURL={moveItemURL}
 			namespace={namespace}
 			searchContainerId={searchContainerId}
 		/>

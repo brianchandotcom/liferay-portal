@@ -16,6 +16,10 @@
 		border-right: 1px solid $gray-400;
 	}
 
+	&.drop-target .miller-columns-item:last-child {
+		box-shadow: inset 0 -2px 0 0 #0b5fff;
+	}
+
 	@include media-breakpoint-up(md) {
 		height: calc(100vh - 384px);
 		min-height: 10rem;
@@ -32,6 +36,26 @@
 
 	&.active {
 		background-color: $light-l1;
+	}
+
+	&.dragging {
+		opacity: 0.4;
+	}
+
+	&.drop-bottom {
+		box-shadow: inset 0 -2px 0 0 $primary;
+	}
+
+	&.drop-top {
+		box-shadow: 0 -2px 0 0 $primary;
+
+		&:first-child {
+			box-shadow: inset 0 2px 0 0 $primary;
+		}
+	}
+
+	&.drop-element {
+		box-shadow: inset 0 0 0 0.125rem $white, inset 0 0 0 0.25rem $primary;
 	}
 
 	.custom-checkbox .custom-control-label {
@@ -57,21 +81,22 @@
 		cursor: move;
 		z-index: 2;
 	}
-}
 
-.miller-columns-item-mask {
-	height: 100%;
-	left: 0;
-	position: absolute;
-	top: 0;
-	transition: box-shadow 150ms ease-in-out;
-	width: 100%;
-	will-change: box-shadow;
-	z-index: 1;
+	&:not(.dragging) .miller-columns-item-mask {
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		transition: box-shadow 150ms ease-in-out;
+		width: 100%;
+		will-change: box-shadow;
+		z-index: 1;
 
-	&:focus {
-		box-shadow: inset 0 0 0 0.125rem $white, inset 0 0 0 0.25rem $primary-l1;
-		outline: 0;
+		&:focus {
+			box-shadow: inset 0 0 0 0.125rem $white,
+				inset 0 0 0 0.25rem $primary-l1;
+			outline: 0;
+		}
 	}
 }
 

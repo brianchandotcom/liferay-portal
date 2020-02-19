@@ -108,14 +108,6 @@ definition {
 			locator1 = "SearchTuning#SYNONYMS_ENTRY");
 	}
 
-	macro editSpecificResultRankingEntry {
-		var key_rowIndexNumber = "${rowIndexNumber}";
-
-		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
-
-		MenuItem.click(menuItem = "Edit");
-	}
-
 	macro editSynonymSet {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

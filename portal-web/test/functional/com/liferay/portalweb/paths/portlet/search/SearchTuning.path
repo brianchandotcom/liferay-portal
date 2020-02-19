@@ -15,6 +15,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESULT_RANKINGS_ACTIVE_RANKING</td>
+	<td>//tr[@data-qa-id='row'][.//descendant::td[contains(@class,'lfr-status-column') and contains(.,'Active')]]//a[normalize-space(text())='${key_query}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_RANKINGS_ALIAS_FIELD</td>
 	<td>//div[contains(@class,'form-group') and contains(.,'Alias')]//input[contains(@class,'form-control-inset')]</td>
 	<td></td>
@@ -47,6 +52,11 @@
 <tr>
 	<td>RESULT_RANKINGS_INACTIVE</td>
 	<td>//label[contains(.,'Inactive')]//span[contains(@class,'toggle-switch-handle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_RANKINGS_INACTIVE_RANKING</td>
+	<td>//tr[@data-qa-id='row'][.//descendant::td[contains(@class,'lfr-status-column') and contains(.,'Inactive')]]//a[normalize-space(text())='${key_query}']</td>
 	<td></td>
 </tr>
 <tr>

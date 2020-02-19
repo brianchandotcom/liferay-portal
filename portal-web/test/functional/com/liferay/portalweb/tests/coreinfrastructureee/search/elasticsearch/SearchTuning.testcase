@@ -499,10 +499,9 @@ definition {
 
 		Button.clickSave();
 
-		ProductMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Control Panel",
-			portlet = "Result Rankings");
+		AssertElementPresent(
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_INACTIVE_RANKING");
 
 		SearchTuning.addResultRanking(searchQuery = "Article");
 
@@ -514,12 +513,10 @@ definition {
 
 		Button.clickSave();
 
-		ProductMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Control Panel",
-			portlet = "Result Rankings");
+		Click(
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_INACTIVE_RANKING");
 
-		SearchTuning.editSpecificResultRankingEntry(rowIndexNumber = "1");
 
 		AssertElementNotPresent(
 			key_assetTitle = "Article 3",
@@ -564,7 +561,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Result Rankings");
 
-		SearchTuning.editSpecificResultRankingEntry(rowIndexNumber = "1");
+		Click(
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_INACTIVE_RANKING");
 
 		SearchTuning.activeResultRanking();
 

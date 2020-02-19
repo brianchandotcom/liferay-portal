@@ -81,6 +81,9 @@ definition {
 	}
 
 	macro editDate {
+
+		AppBuilderAdmin.waitForSaveButton();
+
 		Type(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormViewBuilder#DATE_FIELD",
@@ -88,6 +91,9 @@ definition {
 	}
 
 	macro editOptionsRow {
+
+		AppBuilderAdmin.waitForSaveButton();
+
 		var key_rowNumber = "${rowNumber}";
 
 		Type(
@@ -98,6 +104,9 @@ definition {
 	}
 
 	macro editText {
+
+		AppBuilderAdmin.waitForSaveButton();
+
 		Type(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormViewBuilder#TEXT_FIELD",

@@ -55,7 +55,8 @@ public class DepotMemberRoleContributor implements RoleContributor {
 				 userBag.hasUserOrgGroup(group))) {
 
 				Role role = _roleLocalService.getRole(
-					group.getCompanyId(), DepotRolesConstants.DEPOT_MEMBER);
+					group.getCompanyId(),
+					DepotRolesConstants.ASSET_LIBRARY_MEMBER);
 
 				roleCollection.addRoleId(role.getRoleId());
 			}

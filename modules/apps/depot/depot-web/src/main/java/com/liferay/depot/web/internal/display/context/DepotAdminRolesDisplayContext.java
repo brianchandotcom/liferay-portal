@@ -101,8 +101,10 @@ public class DepotAdminRolesDisplayContext {
 				String roleName = role.getName();
 
 				if (Objects.equals(
-						roleName, DepotRolesConstants.DEPOT_ADMINISTRATOR) ||
-					Objects.equals(roleName, DepotRolesConstants.DEPOT_OWNER)) {
+						roleName,
+						DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR) ||
+					Objects.equals(
+						roleName, DepotRolesConstants.ASSET_LIBRARY_OWNER)) {
 
 					return false;
 				}
@@ -152,7 +154,7 @@ public class DepotAdminRolesDisplayContext {
 			Role role = userGroupRole.getRole();
 
 			if (Objects.equals(
-					role.getName(), DepotRolesConstants.DEPOT_MEMBER)) {
+					role.getName(), DepotRolesConstants.ASSET_LIBRARY_MEMBER)) {
 
 				itr.remove();
 			}

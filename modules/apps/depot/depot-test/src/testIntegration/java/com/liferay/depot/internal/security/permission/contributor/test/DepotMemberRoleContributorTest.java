@@ -81,7 +81,7 @@ public class DepotMemberRoleContributorTest {
 
 			Role role = _roleLocalService.getRole(
 				TestPropsValues.getCompanyId(),
-				DepotRolesConstants.DEPOT_MEMBER);
+				DepotRolesConstants.ASSET_LIBRARY_MEMBER);
 
 			Assert.assertTrue(ArrayUtil.contains(roleIds, role.getRoleId()));
 		}

@@ -56,11 +56,13 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 
 			_assertRole(
 				company.getCompanyId(),
-				DepotRolesConstants.DEPOT_ADMINISTRATOR);
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
 			_assertRole(
-				company.getCompanyId(), DepotRolesConstants.DEPOT_MEMBER);
+				company.getCompanyId(),
+				DepotRolesConstants.ASSET_LIBRARY_MEMBER);
 			_assertRole(
-				company.getCompanyId(), DepotRolesConstants.DEPOT_OWNER);
+				company.getCompanyId(),
+				DepotRolesConstants.ASSET_LIBRARY_OWNER);
 		}
 		finally {
 			if (company != null) {

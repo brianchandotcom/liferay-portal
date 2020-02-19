@@ -81,8 +81,10 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 	@Override
 	public boolean isAllowDefinePermissions(Role role) {
 		if (Objects.equals(
-				role.getName(), DepotRolesConstants.DEPOT_ADMINISTRATOR) ||
-			Objects.equals(role.getName(), DepotRolesConstants.DEPOT_OWNER)) {
+				role.getName(),
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR) ||
+			Objects.equals(
+				role.getName(), DepotRolesConstants.ASSET_LIBRARY_OWNER)) {
 
 			return false;
 		}
@@ -97,9 +99,12 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 		}
 
 		if (Objects.equals(
-				role.getName(), DepotRolesConstants.DEPOT_ADMINISTRATOR) ||
-			Objects.equals(role.getName(), DepotRolesConstants.DEPOT_MEMBER) ||
-			Objects.equals(role.getName(), DepotRolesConstants.DEPOT_OWNER)) {
+				role.getName(),
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR) ||
+			Objects.equals(
+				role.getName(), DepotRolesConstants.ASSET_LIBRARY_MEMBER) ||
+			Objects.equals(
+				role.getName(), DepotRolesConstants.ASSET_LIBRARY_OWNER)) {
 
 			return false;
 		}

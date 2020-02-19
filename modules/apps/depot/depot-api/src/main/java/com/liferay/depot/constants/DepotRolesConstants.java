@@ -19,10 +19,11 @@ package com.liferay.depot.constants;
  */
 public class DepotRolesConstants {
 
-	public static final String DEPOT_ADMINISTRATOR = "Depot Administrator";
+	public static final String ASSET_LIBRARY_ADMINISTRATOR =
+		"Asset Library Administrator";
 
-	public static final String DEPOT_MEMBER = "Depot Member";
+	public static final String ASSET_LIBRARY_MEMBER = "Asset Library Member";
 
-	public static final String DEPOT_OWNER = "Depot Owner";
+	public static final String ASSET_LIBRARY_OWNER = "Asset Library Owner";
 
 }

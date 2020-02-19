@@ -85,7 +85,7 @@ public class DepotEntryLocalServiceTest {
 		Assert.assertTrue(
 			_userGroupRoleLocalService.hasUserGroupRole(
 				depotEntry.getUserId(), group.getGroupId(),
-				DepotRolesConstants.DEPOT_OWNER, true));
+				DepotRolesConstants.ASSET_LIBRARY_OWNER, true));
 	}
 
 	@Test(expected = DuplicateGroupException.class)

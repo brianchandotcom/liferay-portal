@@ -19,25 +19,24 @@ package com.liferay.portal.tools.java.parser;
  */
 public interface JavaTerm {
 
-	public abstract Position getEndPosition();
+	public Position getEndPosition();
 
-	public abstract Position getStartPosition();
+	public Position getStartPosition();
 
-	public abstract String getSuffix();
+	public String getSuffix();
 
-	public abstract void setEndPosition(Position endPosition);
+	public void setEndPosition(Position endPosition);
 
-	public abstract void setStartPosition(Position startPosition);
+	public void setStartPosition(Position startPosition);
 
-	public abstract void setSuffix(String suffix);
+	public void setSuffix(String suffix);
 
-	public abstract String toString(
-		String indent, String prefix, int maxLineLength);
+	public String toString(String indent, String prefix, int maxLineLength);
 
-	public abstract String toString(
+	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength);
 
-	public abstract String toString(
+	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak);
 

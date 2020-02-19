@@ -57,12 +57,12 @@ public interface SearchFacet {
 
 	public double getWeight();
 
-	public abstract void includeConfiguration(
+	public void includeConfiguration(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException;
 
-	public abstract void includeView(
+	public void includeView(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException;

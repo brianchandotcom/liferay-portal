@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -56,10 +58,12 @@ public class AssetBrowserDisplayContext {
 
 	public AssetBrowserDisplayContext(
 		AssetHelper assetHelper, HttpServletRequest httpServletRequest,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		PortletURL portletURL, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		_assetHelper = assetHelper;
 		_httpServletRequest = httpServletRequest;
+		_portletURL = portletURL;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -67,7 +71,7 @@ public class AssetBrowserDisplayContext {
 			_httpServletRequest);
 	}
 
-	public AssetBrowserSearch getAssetBrowserSearch() {
+	public AssetBrowserSearch getAssetBrowserSearch() throws PortletException {
 		AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(
 			_renderRequest, getPortletURL());
 
@@ -194,8 +198,9 @@ public class AssetBrowserDisplayContext {
 		return _groupId;
 	}
 
-	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+	public PortletURL getPortletURL() throws PortletException {
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, PortalUtil.getLiferayPortletResponse(_renderResponse));
 
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
 
@@ -471,6 +476,7 @@ public class AssetBrowserDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
+	private final PortletURL _portletURL;
 	private Long _refererAssetEntryId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

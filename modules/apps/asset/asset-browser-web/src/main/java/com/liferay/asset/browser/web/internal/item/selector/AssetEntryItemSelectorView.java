@@ -91,7 +91,7 @@ public class AssetEntryItemSelectorView
 		httpServletRequest.setAttribute(
 			AssetBrowserDisplayContext.class.getName(),
 			new AssetBrowserDisplayContext(
-				_assetHelper, httpServletRequest,
+				_assetHelper, httpServletRequest, portletURL,
 				(RenderRequest)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST),
 				(RenderResponse)httpServletRequest.getAttribute(

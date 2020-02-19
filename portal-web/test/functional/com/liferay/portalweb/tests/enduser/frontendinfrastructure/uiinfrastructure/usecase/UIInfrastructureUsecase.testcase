@@ -19,6 +19,16 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-95157."
+	@priority = "5"
+	test RefreshHomePage {
+	}
+
+	@description = "This is a use case for LPS-95157."
+	@priority = "5"
+	test RefreshWebContent {
+	}
+
 	@priority = "5"
 	test RightToLeftSmoke {
 		property portal.acceptance = "false";

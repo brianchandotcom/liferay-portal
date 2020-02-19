@@ -12,10 +12,9 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -54,13 +53,12 @@ export default function ItemSelector({
 						active={active}
 						onActiveChange={setActive}
 						trigger={
-							<ClayButton
+							<ClayButtonWithIcon
 								displayType="secondary"
 								onClick={() => setActive(true)}
 								small
-							>
-								<ClayIcon symbol="plus" />
-							</ClayButton>
+								symbol="plus"
+							/>
 						}
 					>
 						<ClayDropDown.ItemList>
@@ -91,7 +89,7 @@ export default function ItemSelector({
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
 				) : (
-					<ClayButton
+					<ClayButtonWithIcon
 						displayType="secondary"
 						onClick={() =>
 							openInfoItemSelector(
@@ -101,9 +99,8 @@ export default function ItemSelector({
 							)
 						}
 						small
-					>
-						<ClayIcon symbol="plus" />
-					</ClayButton>
+						symbol="plus"
+					/>
 				)}
 			</div>
 		</>

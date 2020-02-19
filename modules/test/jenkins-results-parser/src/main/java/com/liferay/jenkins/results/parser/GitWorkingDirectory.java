@@ -651,6 +651,27 @@ public class GitWorkingDirectory {
 					executionResult.getStandardError()));
 		}
 
+		if (JenkinsResultsParserUtil.isCINode() &&
+			(remoteGitRef instanceof RemoteGitBranch) &&
+			remoteURL.contains("github.com:liferay/")) {
+
+			LocalGitBranch liferayGitHubLocalGitBranch = createLocalGitBranch(
+				JenkinsResultsParserUtil.combine(
+					"temp-", remoteGitRef.getName()),
+				true, remoteGitRef.getSHA());
+
+			try {
+				GitHubDevSyncUtil.pushToAllRemotes(
+					true, liferayGitHubLocalGitBranch, remoteGitRef.getName(),
+					GitHubDevSyncUtil.getGitHubDevGitRemotes(this));
+			}
+			finally {
+				if (localGitBranch == null) {
+					deleteLocalGitBranch(liferayGitHubLocalGitBranch);
+				}
+			}
+		}
+
 		long duration = System.currentTimeMillis() - start;
 
 		System.out.println(

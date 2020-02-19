@@ -82,7 +82,6 @@
 		}
 
 		.clamp-horizontal .clamp-container {
-			-ms-transform: none;
 			transform: none;
 		}
 	}
@@ -98,7 +97,6 @@
 		}
 
 		.clamp-horizontal .clamp-container {
-			-ms-transform: none;
 			transform: none;
 		}
 	}
@@ -172,7 +170,6 @@
 		bottom: $checkbox-position;
 		left: $checkbox-position;
 
-		-ms-transform: none;
 		transform: none;
 	}
 
@@ -183,7 +180,6 @@
 		bottom: $checkbox-position;
 		right: $checkbox-position;
 
-		-ms-transform: none;
 		transform: none;
 	}
 
@@ -216,7 +212,6 @@
 		left: $checkbox-position;
 		top: $checkbox-position;
 
-		-ms-transform: none;
 		transform: none;
 	}
 
@@ -225,7 +220,6 @@
 		right: $checkbox-position;
 		top: $checkbox-position;
 
-		-ms-transform: none;
 		transform: none;
 	}
 }

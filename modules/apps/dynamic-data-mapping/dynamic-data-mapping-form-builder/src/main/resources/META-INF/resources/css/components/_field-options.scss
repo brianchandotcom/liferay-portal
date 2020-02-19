@@ -64,7 +64,7 @@ $c: '.ddm-field-options';
 	}
 
 	.ddm-options-drag {
-		cursor: -webkit-grab;
+		cursor: grab;
 		margin-bottom: 26px;
 
 		&.disabled {

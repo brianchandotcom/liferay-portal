@@ -1,8 +1,4 @@
 @mixin keyframes($name) {
-	@-webkit-keyframes #{$name} {
-		@content;
-	}
-
 	@keyframes #{$name} {
 		@content;
 	}
@@ -260,44 +256,20 @@ body > .lfr-menu-list ul,
 }
 
 .lfr-spa-loading-bar {
-	-webkit-transform: translateX(100%);
 	transform: translateX(100%);
-}
-
-@-webkit-keyframes shift-rightwards {
-	0% {
-		-webkit-transform: translateX(-100%);
-		transform: translateX(-100%);
-	}
-	40% {
-		-webkit-transform: translateX(0%);
-		transform: translateX(0%);
-	}
-	60% {
-		-webkit-transform: translateX(0%);
-		transform: translateX(0%);
-	}
-	100% {
-		-webkit-transform: translateX(100%);
-		transform: translateX(100%);
-	}
 }
 
 @keyframes shift-rightwards {
 	0% {
-		-webkit-transform: translateX(-100%);
 		transform: translateX(-100%);
 	}
 	40% {
-		-webkit-transform: translateX(0%);
 		transform: translateX(0%);
 	}
 	60% {
-		-webkit-transform: translateX(0%);
 		transform: translateX(0%);
 	}
 	100% {
-		-webkit-transform: translateX(100%);
 		transform: translateX(100%);
 	}
 }
@@ -310,11 +282,8 @@ body > .lfr-menu-list ul,
 }
 
 .portlet-boundary.yui3-dd-dragging {
-	-webkit-transform: scale(0.8);
 	transform: scale(0.8);
-	transition: -webkit-transform 0.3s ease;
 	transition: transform 0.3s ease;
-	transition: transform 0.3s ease, -webkit-transform 0.3s ease;
 
 	@media (prefers-reduced-motion: reduce) {
 		transition: none;
@@ -338,30 +307,6 @@ body > .lfr-menu-list ul,
 	}
 }
 
-@-webkit-keyframes lfr-drop-active {
-	0% {
-		background-color: #ebebeb;
-		border-color: #ddd;
-	}
-
-	50% {
-		background-color: #ddedde;
-		border-color: #7d7;
-		-webkit-transform: scale(1.1);
-		transform: scale(1.1);
-	}
-
-	75% {
-		background-color: #ddedde;
-		border-color: #7d7;
-	}
-
-	100% {
-		background-color: #ebebeb;
-		border-color: #ddd;
-	}
-}
-
 @keyframes lfr-drop-active {
 	0% {
 		background-color: #ebebeb;
@@ -371,7 +316,6 @@ body > .lfr-menu-list ul,
 	50% {
 		background-color: #ddedde;
 		border-color: #7d7;
-		-webkit-transform: scale(1.1);
 		transform: scale(1.1);
 	}
 
@@ -482,19 +426,16 @@ input.switch {
 
 		span:nth-of-type(1) {
 			box-shadow: 5px 4px 0 0 rgba(0, 0, 0, 0.08);
-			-webkit-transform: rotate(25deg);
 			transform: rotate(25deg);
 		}
 
 		span:nth-of-type(2) {
 			box-shadow: 0 6px 0 -2px rgba(0, 0, 0, 0.15);
-			-webkit-transform: scale(0.8);
 			transform: scale(0.8);
 		}
 
 		span:nth-of-type(3) {
 			box-shadow: -5px 4px 0 0 rgba(0, 0, 0, 0.08);
-			-webkit-transform: rotate(-25deg);
 			transform: rotate(-25deg);
 		}
 	}
@@ -502,17 +443,14 @@ input.switch {
 
 .drop-active .drop-here-info {
 	span:nth-of-type(1) {
-		-webkit-transform: rotate(-20deg);
 		transform: rotate(-20deg);
 	}
 
 	span:nth-of-type(2) {
-		-webkit-transform: scale(1);
 		transform: scale(1);
 	}
 
 	span:nth-of-type(3) {
-		-webkit-transform: rotate(15deg);
 		transform: rotate(15deg);
 	}
 }

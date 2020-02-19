@@ -89,7 +89,7 @@ export const removeField = (props, pages, fieldName) => {
 								fields: column.fields.filter(
 									nestedFieldName =>
 										fieldName !== nestedFieldName
-								)
+								),
 							})),
 							0
 					  )
@@ -100,13 +100,13 @@ export const removeField = (props, pages, fieldName) => {
 				return {
 					...field,
 					nestedFields,
-					rows
+					rows,
 				};
 			});
 
 	return visitor.mapColumns(column => ({
 		...column,
-		fields: filter(column.fields)
+		fields: filter(column.fields),
 	}));
 };
 
@@ -119,7 +119,7 @@ export const handleFieldDeleted = (props, state, {fieldName}) => {
 				rows: FormSupport.removeEmptyRows(
 					removeField(props, pages, fieldName),
 					pageIndex
-				)
+				),
 			};
 		}
 
@@ -129,7 +129,7 @@ export const handleFieldDeleted = (props, state, {fieldName}) => {
 	return {
 		focusedField: {},
 		pages: newPages,
-		rules: formatRules(state, newPages)
+		rules: formatRules(state, newPages),
 	};
 };
 

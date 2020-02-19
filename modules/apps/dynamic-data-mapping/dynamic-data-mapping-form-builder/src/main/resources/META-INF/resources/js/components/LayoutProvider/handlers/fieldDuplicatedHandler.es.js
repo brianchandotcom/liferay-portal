@@ -18,7 +18,7 @@ import {sub} from '../../../util/strings.es';
 import {getFieldLocalizedValue} from '../util/fields.es';
 import {
 	getSettingsContextProperty,
-	updateField
+	updateField,
 } from '../util/settingsContext.es';
 
 export const createDuplicatedField = (originalField, props) => {
@@ -50,7 +50,7 @@ export const getLabel = (originalField, editingLanguageId) => {
 			originalField.settingsContext.pages,
 			'label',
 			editingLanguageId
-		)
+		),
 	]);
 };
 
@@ -67,8 +67,8 @@ export const getValidation = (originalField, oldFieldName, newFieldName) => {
 			...validation,
 			expression: {
 				...validation.expression,
-				value: expression.value.replace(oldFieldName, newFieldName)
-			}
+				value: expression.value.replace(oldFieldName, newFieldName),
+			},
 		};
 	}
 
@@ -111,7 +111,7 @@ export const duplicateField = (
 					);
 
 					const newRow = FormSupport.implAddRow(12, [
-						duplicatedField.fieldName
+						duplicatedField.fieldName,
 					]);
 
 					pages = FormSupport.addRow(pages, rowIndex + 1, 0, newRow);
@@ -146,9 +146,9 @@ const handleFieldDuplicated = (props, state, event) => {
 
 	return {
 		focusedField: {
-			...duplicatedField
+			...duplicatedField,
 		},
-		pages: duplicateField(props, pages, originalField, duplicatedField)
+		pages: duplicateField(props, pages, originalField, duplicatedField),
 	};
 };
 

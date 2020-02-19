@@ -275,12 +275,12 @@ class LayoutProvider extends Component {
 			{
 				action: fieldName =>
 					this.dispatch('fieldDuplicated', {fieldName}),
-				label: Liferay.Language.get('duplicate')
+				label: Liferay.Language.get('duplicate'),
 			},
 			{
 				action: fieldName => this.dispatch('fieldDeleted', {fieldName}),
-				label: Liferay.Language.get('delete')
-			}
+				label: Liferay.Language.get('delete'),
+			},
 		];
 	}
 

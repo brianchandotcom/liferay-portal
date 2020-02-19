@@ -12,99 +12,77 @@
  * details.
  */
 
-import {FormSupport} from 'dynamic-data-mapping-form-renderer';
+import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import dom from 'metal-dom';
 
 import {createField} from '../../../util/fieldSupport.es';
 import {updateField} from '../util/settingsContext.es';
 
-const getContext = (context, nestedIndexes = []) => {
-	if (nestedIndexes.length) {
-		nestedIndexes.forEach((indexes, i) => {
-			const {columnIndex, pageIndex, rowIndex} = indexes;
-
-			let fields =
-				context[i > 0 ? 0 : pageIndex].rows[rowIndex].columns[
-					columnIndex
-				].fields;
-
-			if (context[0].nestedFields) {
-				fields = fields.map(field =>
-					context[0].nestedFields.find(
-						nestedField => nestedField.fieldName === field
-					)
-				);
-			}
-
-			context = fields;
-		});
-	}
-
-	return context;
-};
-
 const handleFieldAdded = (props, state, event) => {
-	const {indexes} = event;
+	const {data, indexes} = event;
 	const {pages} = state;
+	const {target} = data;
 
 	const newField = createField(props, event);
+	const parentFieldNode = dom.closest(target.parentElement, '.ddm-field');
 
-	if (!indexes.length || indexes.length === 1) {
-		const {columnIndex, pageIndex, rowIndex} = indexes.length
-			? indexes[0]
-			: indexes;
+	const {columnIndex, pageIndex, rowIndex} = indexes;
 
-		return {
-			focusedField: {
-				...newField,
-				columnIndex,
-				pageIndex,
-				rowIndex,
+	let newPages;
+
+	if (parentFieldNode) {
+		const parentFieldName = parentFieldNode.dataset.fieldName;
+
+		const visitor = new PagesVisitor(pages);
+
+		newPages = visitor.mapFields(
+			field => {
+				if (field.fieldName === parentFieldName) {
+					const nestedFields = field.nestedFields
+						? [...field.nestedFields, newField]
+						: [newField];
+
+					field = updateField(
+						props,
+						field,
+						'nestedFields',
+						nestedFields
+					);
+
+					const pages = FormSupport.addFieldToColumn(
+						[{rows: field.rows}],
+						pageIndex,
+						rowIndex,
+						columnIndex,
+						newField.fieldName
+					);
+
+					return updateField(props, field, 'rows', pages[0].rows);
+				}
+
+				return field;
 			},
-			pages: FormSupport.addFieldToColumn(
-				pages,
-				pageIndex,
-				rowIndex,
-				columnIndex,
-				newField
-			),
-			previousFocusedField: newField,
-		};
+			true,
+			true
+		);
 	}
 	else {
-		const currentContext = getContext(pages, indexes.slice(0, -1));
-
-		const {columnIndex, rowIndex} = indexes[indexes.length - 1];
-
-		let newContext = FormSupport.addFieldToColumn(
-			currentContext,
-			0,
+		newPages = FormSupport.addFieldToColumn(
+			pages,
+			pageIndex,
 			rowIndex,
 			columnIndex,
-			newField.fieldName
-		)[0];
-
-		newContext = updateField(props, newContext, 'nestedFields', [
-			...newContext.nestedFields,
-			newField,
-		]);
-
-		newContext = updateField(props, newContext, 'rows', newContext.rows);
-
-		currentContext[0].rows = newContext.rows;
-		currentContext[0].settingsContext = newContext.settingsContext;
-		currentContext[0].nestedFields = newContext.nestedFields;
-
-		return {
-			focusedField: {
-				...newField,
-				columnIndex,
-				pageIndes: 0,
-				rowIndex,
-			},
-			pages,
-			previousFocusedField: newField,
-		};
+			newField
+		);
 	}
+
+	return {
+		focusedField: {
+			...newField,
+		},
+		pages: newPages,
+		previousFocusedField: newField,
+	};
 };
 
 export default handleFieldAdded;

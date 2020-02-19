@@ -26,6 +26,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -101,11 +103,21 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 				portletDataContext.getScopeGroupId(),
 				assetRendererFactory.getPortletId())) {
 
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				layoutClassedModelUsage.getClassPK());
+			AssetRenderer assetRenderer = null;
 
-			if (assetRenderer.getStatus() ==
-					WorkflowConstants.STATUS_APPROVED) {
+			try {
+				assetRenderer = assetRendererFactory.getAssetRenderer(
+					layoutClassedModelUsage.getClassPK());
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException, portalException);
+				}
+			}
+
+			if ((assetRenderer != null) &&
+				(assetRenderer.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED)) {
 
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, layoutClassedModelUsage,
@@ -207,6 +219,9 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutClassedModelUsageStagedModelDataHandler.class);
 
 	@Reference
 	private Portal _portal;

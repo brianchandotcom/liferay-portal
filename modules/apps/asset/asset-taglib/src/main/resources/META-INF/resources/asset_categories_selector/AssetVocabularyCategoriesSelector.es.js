@@ -135,7 +135,7 @@ function AssetVocabulariesCategoriesSelector({
 		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
 		const url = sub(decodeURIComponent(portletURL), {
-			selectedCategories: selectedItems.map(item => item.value).join(),
+			selectedCategoryIds: selectedItems.map(item => item.value).join(),
 			singleSelect,
 			vocabularyIds: sourceItemsVocabularyIds.concat()
 		});

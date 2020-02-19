@@ -169,7 +169,10 @@ public class WorkflowInstanceEditDisplayContext
 			HtmlUtil.escape(
 				PortalUtil.getUserName(
 					workflowLog.getAuditUserId(), StringPool.BLANK)),
-			HtmlUtil.escape(workflowLog.getState())
+			HtmlUtil.escape(
+				LanguageUtil.get(
+					workflowInstanceRequestHelper.getRequest(),
+					workflowLog.getState()))
 		};
 	}
 
@@ -209,8 +212,14 @@ public class WorkflowInstanceEditDisplayContext
 	public Object getTransitionMessageArguments(WorkflowLog workflowLog) {
 		return new Object[] {
 			HtmlUtil.escape(_getActorName(workflowLog)),
-			HtmlUtil.escape(workflowLog.getPreviousState()),
-			HtmlUtil.escape(workflowLog.getState())
+			HtmlUtil.escape(
+				LanguageUtil.get(
+					workflowInstanceRequestHelper.getRequest(),
+					workflowLog.getPreviousState())),
+			HtmlUtil.escape(
+				LanguageUtil.get(
+					workflowInstanceRequestHelper.getRequest(),
+					workflowLog.getState()))
 		};
 	}
 

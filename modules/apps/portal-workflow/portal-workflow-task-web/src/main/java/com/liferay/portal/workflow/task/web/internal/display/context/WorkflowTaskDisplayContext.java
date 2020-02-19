@@ -477,7 +477,10 @@ public class WorkflowTaskDisplayContext {
 			HtmlUtil.escape(
 				PortalUtil.getUserName(
 					workflowLog.getAuditUserId(), StringPool.BLANK)),
-			HtmlUtil.escape(workflowLog.getState())
+			HtmlUtil.escape(
+				LanguageUtil.get(
+					_workflowTaskRequestHelper.getRequest(),
+					workflowLog.getState()))
 		};
 	}
 
@@ -523,7 +526,10 @@ public class WorkflowTaskDisplayContext {
 		return new Object[] {
 			HtmlUtil.escape(_getActorName(workflowLog)),
 			HtmlUtil.escape(workflowLog.getPreviousState()),
-			HtmlUtil.escape(workflowLog.getState())
+			HtmlUtil.escape(
+				LanguageUtil.get(
+					_workflowTaskRequestHelper.getRequest(),
+					workflowLog.getState()))
 		};
 	}
 

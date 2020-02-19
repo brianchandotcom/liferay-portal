@@ -1000,6 +1000,8 @@ components:
                     properties:
                         fragmentCollectionName:
                             type: string
+                        fragmentKey:
+                            type: string
                         fragmentName:
                             type: string
                     type: object

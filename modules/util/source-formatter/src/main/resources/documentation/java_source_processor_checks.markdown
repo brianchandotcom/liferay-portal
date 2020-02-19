@@ -21,6 +21,7 @@ ConstantNameCheck | Miscellaneous | |
 ConstructorMissingEmptyLineCheck | Miscellaneous | |
 ContractionsCheck | Miscellaneous | |
 CopyrightCheck | Miscellaneous | |
+CreationMenuBuilderCheck | Miscellaneous | |
 [DefaultComesLastCheck](https://checkstyle.sourceforge.io/config_coding.html#DefaultComesLast) | Miscellaneous | Check that the default is after all the cases in a switch statement. |
 DeprecatedUsageCheck | Miscellaneous | |
 EmptyCollectionCheck | Miscellaneous | |

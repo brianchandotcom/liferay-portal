@@ -49,6 +49,7 @@ ConstantNameCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 ConstructorMissingEmptyLineCheck | .java | |
 ContractionsCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 CopyrightCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+CreationMenuBuilderCheck | .java | |
 [DefaultComesLastCheck](https://checkstyle.sourceforge.io/config_coding.html#DefaultComesLast) | .java, .jsp, .jspf, .tag, .tpl or .vm | Check that the default is after all the cases in a switch statement. |
 DeprecatedUsageCheck | .java | |
 DockerfileEmptyLinesCheck | Dockerfile | |

@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormFieldOption {
+public class FormFieldOption implements Cloneable {
 
 	public Long getId() {
 		return id;
@@ -111,6 +111,11 @@ public class FormFieldOption {
 	}
 
 	protected String value;
+
+	@Override
+	public FormFieldOption clone() throws CloneNotSupportedException {
+		return (FormFieldOption)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

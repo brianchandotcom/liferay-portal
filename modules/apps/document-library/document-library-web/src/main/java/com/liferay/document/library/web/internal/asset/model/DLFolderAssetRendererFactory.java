@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  */
 @Component(
+	immediate = true,
 	property = "javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 	service = AssetRendererFactory.class
 )

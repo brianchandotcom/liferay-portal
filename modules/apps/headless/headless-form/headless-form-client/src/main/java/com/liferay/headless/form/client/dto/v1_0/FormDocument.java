@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormDocument {
+public class FormDocument implements Cloneable {
 
 	public String getContentUrl() {
 		return contentUrl;
@@ -214,6 +214,11 @@ public class FormDocument {
 	}
 
 	protected String title;
+
+	@Override
+	public FormDocument clone() throws CloneNotSupportedException {
+		return (FormDocument)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

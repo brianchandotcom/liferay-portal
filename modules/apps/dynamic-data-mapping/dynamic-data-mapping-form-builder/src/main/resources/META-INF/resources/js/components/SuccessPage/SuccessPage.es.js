@@ -21,9 +21,7 @@ import templates from './SuccessPage.soy';
 
 class SuccessPage extends Component {
 	prepareStateForRender(state) {
-		const {store} = this.context;
-		const {editingLanguageId} = store.props;
-		const {successPageSettings} = this;
+		const {editingLanguageId, successPageSettings} = this;
 		const {body, title} = successPageSettings;
 
 		return {
@@ -31,6 +29,15 @@ class SuccessPage extends Component {
 			body: (body && body[editingLanguageId]) || '',
 			title: (title && title[editingLanguageId]) || ''
 		};
+	}
+
+	shouldUpdate(changes) {
+		const {editingLanguageId} = changes;
+
+		return (
+			editingLanguageId &&
+			editingLanguageId.newVal !== editingLanguageId.prevVal
+		);
 	}
 
 	_handleSuccessPageUpdated(event) {
@@ -51,6 +58,8 @@ class SuccessPage extends Component {
 }
 
 SuccessPage.STATE = {
+	editingLanguageId: Config.string(),
+
 	/**
 	 * @instance
 	 * @memberof SuccessPage

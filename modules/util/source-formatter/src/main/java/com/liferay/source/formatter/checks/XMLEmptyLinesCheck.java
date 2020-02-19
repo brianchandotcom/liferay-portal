@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class XMLEmptyLinesCheck extends EmptyLinesCheck {
+public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {

@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JSPEmptyLinesCheck extends EmptyLinesCheck {
+public class JSPEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 	@Override
 	protected String doProcess(

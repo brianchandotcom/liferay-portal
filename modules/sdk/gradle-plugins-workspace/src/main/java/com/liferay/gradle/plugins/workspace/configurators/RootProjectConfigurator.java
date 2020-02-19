@@ -438,6 +438,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		File dockerDir = workspaceExtension.getDockerDir();
 
+		File deployDir = new File(dockerDir, "deploy");
 		File workDir = new File(dockerDir, "work");
 
 		String dockerPath = dockerDir.getAbsolutePath();
@@ -458,7 +459,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		Map<String, String> binds = new HashMap<>();
 
-		binds.put(dockerPath, "/mnt/liferay");
+		binds.put(deployDir.getAbsolutePath(), "/mnt/liferay/deploy");
 		binds.put(workPath, "/opt/liferay/work");
 
 		dockerCreateContainer.setBinds(binds);

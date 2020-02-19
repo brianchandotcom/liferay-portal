@@ -31,7 +31,13 @@ const _handleFieldEdited = function(properties) {
 	const {evaluable} = fieldInstance;
 	const evaluatorContext = this.getEvaluatorContext();
 
-	handleFieldEdited(evaluatorContext, properties)
+	const updateState = editedPages => {
+		this.setState({
+			pages: editedPages
+		});
+	};
+
+	handleFieldEdited(evaluatorContext, properties, updateState)
 		.then(evaluatedPages => {
 			if (fieldInstance.isDisposed()) {
 				return;

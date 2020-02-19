@@ -281,6 +281,15 @@ definition {
 			groupName = "Guest",
 			title = "Charlie");
 
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Navigator.openURL();
+
 		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(

@@ -1,0 +1,49 @@
+{namespace RichText}
+
+{template .render}
+	{@param name: string}
+	{@param? _handleOnDispatch: any}
+	{@param? displayErrors: bool}
+	{@param? errorMessage: string}
+	{@param? id: string}
+	{@param? label: string}
+	{@param? predefinedValue: string}
+	{@param? readOnly: bool}
+	{@param? repeatable: bool}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? tip: string}
+	{@param? valid: bool}
+	{@param? value: string}
+	{@param? visible: bool}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call RichTextAdapter.render}
+				{param events: ['dispatch': $_handleOnDispatch] /}
+				{param ref: $name /}
+				{param store: [
+					'data': $value ?: $predefinedValue,
+					'name': $name,
+					'readOnly': $readOnly,
+					'spritemap': $spritemap
+				] /}
+			{/call}
+		{/param}
+		{param displayErrors: $displayErrors /}
+		{param errorMessage: $errorMessage /}
+		{param id: $id /}
+		{param label: $label /}
+		{param name: $name /}
+		{param readOnly: $readOnly /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param valid: $valid /}
+		{param ref: 'fieldBase' /}
+		{param visible: $visible /}
+	{/call}
+{/template}

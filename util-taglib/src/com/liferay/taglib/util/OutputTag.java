@@ -42,8 +42,8 @@ public class OutputTag extends PositionTagSupport {
 		return outputData.getMergedDataSB(webKey);
 	}
 
-	public OutputTag(String stringBundlerKey) {
-		_webKey = stringBundlerKey;
+	public OutputTag(String webKey) {
+		_webKey = webKey;
 	}
 
 	@Override

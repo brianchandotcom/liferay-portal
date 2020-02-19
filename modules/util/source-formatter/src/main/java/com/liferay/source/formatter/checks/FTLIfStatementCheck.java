@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class FTLIfStatementCheck extends IfStatementCheck {
+public class FTLIfStatementCheck extends BaseIfStatementCheck {
 
 	@Override
 	protected String doProcess(

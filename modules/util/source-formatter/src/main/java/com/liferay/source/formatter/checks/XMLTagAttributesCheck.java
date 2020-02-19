@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Hugo Huijser
  */
-public class XMLTagAttributesCheck extends TagAttributesCheck {
+public class XMLTagAttributesCheck extends BaseTagAttributesCheck {
 
 	@Override
 	protected Tag doFormatLineBreaks(Tag tag, String absolutePath) {

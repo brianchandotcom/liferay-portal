@@ -22,6 +22,7 @@ export default function({context, props}) {
 	const {authorName, publishDate, title} = props;
 
 	const {
+		getAnalyticsReportsHistoricalReadsURL,
 		getAnalyticsReportsHistoricalViewsURL,
 		getAnalyticsReportsTotalReadsURL,
 		getAnalyticsReportsTotalViewsURL
@@ -29,6 +30,7 @@ export default function({context, props}) {
 
 	const api = APIService({
 		endpoints: {
+			getAnalyticsReportsHistoricalReadsURL,
 			getAnalyticsReportsHistoricalViewsURL,
 			getAnalyticsReportsTotalReadsURL,
 			getAnalyticsReportsTotalViewsURL
@@ -56,6 +58,10 @@ export default function({context, props}) {
 
 	function _handleHistoricalViews() {
 		return api.getHistoricalViews();
+	}
+
+	function _handleHistoricalReads() {
+		return api.getHistoricalReads();
 	}
 
 	return (
@@ -86,7 +92,7 @@ export default function({context, props}) {
 			/>
 			<hr />
 			<Chart
-				dataProviders={[_handleHistoricalViews]}
+				dataProviders={[_handleHistoricalViews, _handleHistoricalReads]}
 				languageTag={languageTag}
 			/>
 		</div>

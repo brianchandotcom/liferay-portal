@@ -54,10 +54,12 @@ public class BookmarksEntryAssetRenderer
 
 	public BookmarksEntryAssetRenderer(
 		BookmarksEntry entry,
-		ModelResourcePermission<BookmarksEntry> modelResourcePermission) {
+		ModelResourcePermission<BookmarksEntry>
+			bookmarksEntryModelResourcePermission) {
 
 		_entry = entry;
-		_bookmarksEntryModelResourcePermission = modelResourcePermission;
+		_bookmarksEntryModelResourcePermission =
+			bookmarksEntryModelResourcePermission;
 	}
 
 	@Override

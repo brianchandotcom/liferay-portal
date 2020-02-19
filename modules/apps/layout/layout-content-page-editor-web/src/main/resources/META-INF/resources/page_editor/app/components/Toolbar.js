@@ -148,6 +148,15 @@ function ToolbarBody() {
 		}
 	};
 
+	let draftButtonLabel = Liferay.Language.get('discard-draft');
+
+	if (pageType === PAGE_TYPES.conversion) {
+		draftButtonLabel = Liferay.Language.get('discard-conversion-draft');
+	}
+	else if (singleSegmentsExperienceMode) {
+		draftButtonLabel = Liferay.Language.get('discard-variant');
+	}
+
 	let publishButtonLabel = Liferay.Language.get('publish');
 
 	if (pageType === PAGE_TYPES.master) {
@@ -226,9 +235,7 @@ function ToolbarBody() {
 							small
 							type="submit"
 						>
-							{singleSegmentsExperienceMode
-								? Liferay.Language.get('discard-variant')
-								: Liferay.Language.get('discard-draft')}
+							{draftButtonLabel}
 						</ClayButton>
 					</form>
 				</li>

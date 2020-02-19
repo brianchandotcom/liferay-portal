@@ -15,6 +15,7 @@
 package com.liferay.depot.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -80,6 +82,10 @@ public class DepotEntryLocalServiceTest {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, group.getParentGroupId());
 		Assert.assertEquals(GroupConstants.TYPE_DEPOT, group.getType());
 		Assert.assertFalse(group.isSite());
+		Assert.assertTrue(
+			_userGroupRoleLocalService.hasUserGroupRole(
+				depotEntry.getUserId(), group.getGroupId(),
+				DepotRolesConstants.DEPOT_OWNER, true));
 	}
 
 	@Test(expected = DuplicateGroupException.class)
@@ -344,5 +350,8 @@ public class DepotEntryLocalServiceTest {
 
 	@Inject
 	private Language _languaje;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

@@ -131,7 +131,7 @@ definition {
 	@description = "This ensures that the background image of a fragment can be added."
 	@priority = "5"
 	test FragmentSmoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 

@@ -4,45 +4,45 @@
 			"key": "2020-01-27T00:00",
 			"previousKey": "2020-01-20T00:00",
 			"previousValue": 22.0,
-			"value": 32.0
+			"value": 32000.0
 		},
 		{
 			"key": "2020-01-28T00:00",
 			"previousKey": "2020-01-21T00:00",
 			"previousValue": 23.0,
-			"value": 33.0
+			"value": 160000.0
 		},
 		{
 			"key": "2020-01-29T00:00",
 			"previousKey": "2020-01-22T00:00",
 			"previousValue": 24.0,
-			"value": 34.0
+			"value": 34000.0
 		},
 		{
 			"key": "2020-01-30T00:00",
 			"previousKey": "2020-01-23T00:00",
 			"previousValue": 25.0,
-			"value": 33.0
+			"value": 33000.0
 		},
 		{
 			"key": "2020-01-31T00:00",
 			"previousKey": "2020-01-24T00:00",
 			"previousValue": 26.0,
-			"value": 32.0
+			"value": 32000.0
 		},
 		{
 			"key": "2020-02-01T00:00",
 			"previousKey": "2020-01-25T00:00",
 			"previousValue": 27.0,
-			"value": 31.0
+			"value": 31000.0
 		},
 		{
 			"key": "2020-02-02T00:00",
 			"previousKey": "2020-01-26T00:00",
 			"previousValue": 28.0,
-			"value": 30.0
+			"value": 5000.0
 		}
 	],
 	"previousValue": 175.0,
-	"value": 225.0
+	"value": 225000.0
 }

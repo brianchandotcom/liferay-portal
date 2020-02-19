@@ -23,7 +23,7 @@ XMLPortletPreferencesFileCheck | Miscellaneous | |
 XMLPoshiFileCheck | Miscellaneous | |
 XMLProjectElementCheck | Miscellaneous | |
 XMLResourceActionsFileCheck | Miscellaneous | |
-[XMLServiceEntityNameCheck](checks/xml_service_entity_name_check.markdown) | Miscellaneous | |
+[XMLServiceEntityNameCheck](checks/xml_service_entity_name_check.markdown#xmlserviceentitynamecheck) | Miscellaneous | |
 XMLServiceFileCheck | Miscellaneous | |
 XMLServiceReferenceCheck | Miscellaneous | |
 XMLSolrSchemaFileCheck | Miscellaneous | |

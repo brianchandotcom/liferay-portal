@@ -13,9 +13,11 @@
  */
 
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
+import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {ConfigContext} from '../../config/index';
@@ -63,6 +65,7 @@ export default function LinkPanel({item}) {
 	const {editableId, fragmentEntryLinkId} = item;
 
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const languageId = useSelector(state => state.languageId);
 	const segmentsExperienceId = useSelector(
 		state => state.segmentsExperienceId
 	);
@@ -89,13 +92,15 @@ export default function LinkPanel({item}) {
 			classNameId: editableConfig.classNameId,
 			classPK: editableConfig.classPK,
 			config,
-			fieldId: editableConfig.fieldId
+			fieldId: editableConfig.fieldId,
+			languageId
 		});
 	}, [
 		config,
 		editableConfig.classNameId,
 		editableConfig.classPK,
-		editableConfig.fieldId
+		editableConfig.fieldId,
+		languageId
 	]);
 
 	const updateRowConfig = useCallback(
@@ -140,7 +145,13 @@ export default function LinkPanel({item}) {
 
 	const [debounceUpdateRowConfig] = useDebounceCallback(updateRowConfig, 500);
 
-	const updateMappedHrefValue = ({classNameId, classPK, config, fieldId}) => {
+	const updateMappedHrefValue = ({
+		classNameId,
+		classPK,
+		config,
+		fieldId,
+		languageId
+	}) => {
 		if (!classNameId || !classPK || !fieldId) {
 			return;
 		}
@@ -150,6 +161,7 @@ export default function LinkPanel({item}) {
 			classPK,
 			config,
 			fieldId,
+			languageId,
 			onNetworkStatus: () => {}
 		}).then(response => {
 			const {fieldValue = ''} = response;
@@ -192,7 +204,8 @@ export default function LinkPanel({item}) {
 							classNameId: mappedItem.classNameId,
 							classPK: mappedItem.classPK,
 							config,
-							fieldId: mappedItem.fieldId
+							fieldId: mappedItem.fieldId,
+							languageId
 						});
 					}}
 				/>
@@ -237,3 +250,24 @@ export default function LinkPanel({item}) {
 		</>
 	);
 }
+
+LinkPanel.propTypes = {
+	item: getEditableItemPropTypes({
+		config: PropTypes.oneOfType([
+			PropTypes.shape({
+				href: PropTypes.string,
+				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS))
+			}),
+			PropTypes.shape({
+				classNameId: PropTypes.string,
+				classPK: PropTypes.string,
+				fieldId: PropTypes.string,
+				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS))
+			}),
+			PropTypes.shape({
+				mappedField: PropTypes.string,
+				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS))
+			})
+		])
+	})
+};

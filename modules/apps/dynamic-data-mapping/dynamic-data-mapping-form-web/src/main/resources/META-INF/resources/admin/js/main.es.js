@@ -168,7 +168,7 @@ class Form extends Component {
 				this._handleAddFieldButtonClicked.bind(this)
 			),
 			dom.on(
-				`#${namespace}ControlMenu *[title="Back"]`,
+				`#${namespace}controlMenu .sites-control-group span.lfr-portal-tooltip`,
 				'click',
 				this._handleBackButtonClicked
 			),
@@ -206,10 +206,16 @@ class Form extends Component {
 			if (
 				activePage > -1 &&
 				pages[activePage] &&
-				!pages[activePage].successPageSettings &&
-				!this._pageHasFields(pages, activePage)
+				!pages[activePage].successPageSettings
 			) {
-				this.openSidebar();
+				this.enableAddButton();
+
+				if (!this._pageHasFields(pages, activePage)) {
+					this.openSidebar();
+				}
+			}
+			else {
+				this.disableAddButton();
 			}
 		});
 
@@ -222,6 +228,8 @@ class Form extends Component {
 			) {
 				this.openSidebar();
 			}
+
+			this.enableAddButton();
 		});
 
 		store.on(
@@ -261,6 +269,12 @@ class Form extends Component {
 		this.submitForm = this.submitForm.bind(this);
 	}
 
+	disableAddButton() {
+		const addButton = document.querySelector('#addFieldButton');
+
+		addButton.setAttribute('disabled', true);
+	}
+
 	disposed() {
 		if (this._autoSave) {
 			this._autoSave.dispose();
@@ -277,6 +291,12 @@ class Form extends Component {
 		if (this._translationManagerHandles) {
 			this._translationManagerHandles.forEach(handle => handle.detach());
 		}
+	}
+
+	enableAddButton() {
+		const addButton = document.querySelector('#addFieldButton');
+
+		addButton.removeAttribute('disabled');
 	}
 
 	hideAddButton() {

@@ -473,9 +473,11 @@ public abstract class BaseUserAccountResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						userAccount1, entityField.getName(), "Aaa");
+						userAccount1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						userAccount2, entityField.getName(), "Bbb");
+						userAccount2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -741,9 +743,11 @@ public abstract class BaseUserAccountResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						userAccount1, entityField.getName(), "Aaa");
+						userAccount1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						userAccount2, entityField.getName(), "Bbb");
+						userAccount2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -972,9 +976,11 @@ public abstract class BaseUserAccountResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						userAccount1, entityField.getName(), "Aaa");
+						userAccount1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						userAccount2, entityField.getName(), "Bbb");
+						userAccount2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

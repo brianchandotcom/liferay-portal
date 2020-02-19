@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class InlineValue {
+public class InlineValue implements Cloneable {
 
 	public String getValue() {
 		return value;
@@ -71,6 +71,11 @@ public class InlineValue {
 	}
 
 	protected Map<String, String> value_i18n;
+
+	@Override
+	public InlineValue clone() throws CloneNotSupportedException {
+		return (InlineValue)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

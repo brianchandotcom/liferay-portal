@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WikiPageAttachment {
+public class WikiPageAttachment implements Cloneable {
 
 	public String getContentUrl() {
 		return contentUrl;
@@ -151,6 +151,11 @@ public class WikiPageAttachment {
 	}
 
 	protected String title;
+
+	@Override
+	public WikiPageAttachment clone() throws CloneNotSupportedException {
+		return (WikiPageAttachment)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

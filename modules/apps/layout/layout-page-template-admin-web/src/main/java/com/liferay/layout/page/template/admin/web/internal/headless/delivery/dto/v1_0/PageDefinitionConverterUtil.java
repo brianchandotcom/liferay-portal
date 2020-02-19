@@ -20,11 +20,15 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
+import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
 import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
+import com.liferay.headless.delivery.dto.v1_0.Settings;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
@@ -34,12 +38,20 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ColorScheme;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Rubén Pulido
@@ -59,6 +71,7 @@ public class PageDefinitionConverterUtil {
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
 					layout);
+				settings = _toSettings(layout);
 			}
 		};
 	}
@@ -103,8 +116,10 @@ public class PageDefinitionConverterUtil {
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			mainLayoutStructureItem);
 
-		pageElement.setPageElements(
-			mainPageElements.toArray(new PageElement[0]));
+		if (!mainPageElements.isEmpty()) {
+			pageElement.setPageElements(
+				mainPageElements.toArray(new PageElement[0]));
+		}
 
 		return pageElement;
 	}
@@ -150,7 +165,10 @@ public class PageDefinitionConverterUtil {
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			layoutStructureItem);
 
-		pageElement.setPageElements(pageElements.toArray(new PageElement[0]));
+		if (!pageElements.isEmpty()) {
+			pageElement.setPageElements(
+				pageElements.toArray(new PageElement[0]));
+		}
 
 		return pageElement;
 	}
@@ -287,5 +305,110 @@ public class PageDefinitionConverterUtil {
 
 		return null;
 	}
+
+	private static Settings _toSettings(
+		com.liferay.portal.kernel.model.Layout layout) {
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		return new Settings() {
+			{
+				setColorSchemeName(
+					() -> {
+						ColorScheme colorScheme = null;
+
+						try {
+							colorScheme = layout.getColorScheme();
+						}
+						catch (PortalException portalException) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(portalException, portalException);
+							}
+						}
+
+						if (colorScheme == null) {
+							return null;
+						}
+
+						return colorScheme.getName();
+					});
+				setCss(
+					() -> {
+						if (Validator.isNull(layout.getCss())) {
+							return null;
+						}
+
+						return layout.getCss();
+					});
+				setJavascript(
+					() -> {
+						for (Map.Entry<String, String> entry :
+								unicodeProperties.entrySet()) {
+
+							String key = entry.getKey();
+
+							if (key.equals("javascript")) {
+								return entry.getValue();
+							}
+						}
+
+						return null;
+					});
+				setMasterPage(
+					() -> {
+						LayoutPageTemplateEntry layoutPageTemplateEntry =
+							LayoutPageTemplateEntryLocalServiceUtil.
+								fetchLayoutPageTemplateEntryByPlid(
+									layout.getMasterLayoutPlid());
+
+						if (layoutPageTemplateEntry == null) {
+							return null;
+						}
+
+						return new MasterPage() {
+							{
+								name = layoutPageTemplateEntry.getName();
+							}
+						};
+					});
+				setThemeName(
+					() -> {
+						Theme theme = layout.getTheme();
+
+						if (theme == null) {
+							return null;
+						}
+
+						return theme.getName();
+					});
+				setThemeSettings(
+					() -> {
+						UnicodeProperties themeSettingsUnicodeProperties =
+							new UnicodeProperties();
+
+						for (Map.Entry<String, String> entry :
+								unicodeProperties.entrySet()) {
+
+							String key = entry.getKey();
+
+							if (key.startsWith("lfr-theme:")) {
+								themeSettingsUnicodeProperties.setProperty(
+									key, entry.getValue());
+							}
+						}
+
+						if (themeSettingsUnicodeProperties.isEmpty()) {
+							return null;
+						}
+
+						return themeSettingsUnicodeProperties;
+					});
+			}
+		};
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PageDefinitionConverterUtil.class);
 
 }

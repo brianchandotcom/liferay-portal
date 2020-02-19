@@ -83,7 +83,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 								sb.append("selectFormInstance('");
 								sb.append(formInstance.getFormInstanceId());
 								sb.append("','");
-								sb.append(HtmlUtil.escapeJS(formInstance.getName(locale)));
+								sb.append(HtmlUtil.escapeJS(HtmlUtil.escape(formInstance.getName(locale))));
 								sb.append("');");
 
 								String rowURL = sb.toString();

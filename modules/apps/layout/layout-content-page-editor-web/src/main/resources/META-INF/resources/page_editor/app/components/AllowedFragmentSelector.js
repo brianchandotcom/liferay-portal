@@ -18,66 +18,10 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import {ConfigContext} from '../config/index';
-import {useSelector} from '../store/index';
 import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
 
-const getSelectedNodeIds = (
-	allowNewFragmentEntries,
-	fragmentEntryKeys = [],
-	fragmentEntryKeysArray
-) => {
-	return allowNewFragmentEntries
-		? fragmentEntryKeysArray.filter(
-				fragmentEntryKey =>
-					!fragmentEntryKeys.includes(fragmentEntryKey)
-		  )
-		: fragmentEntryKeys;
-};
-
-const toNodes = collections => {
-	return [
-		{
-			children: collections.map(collection => {
-				const children = collection.fragmentEntries.map(
-					fragmentEntry => ({
-						id: fragmentEntry.fragmentEntryKey,
-						name: fragmentEntry.name
-					})
-				);
-
-				return {
-					children,
-					expanded: false,
-					id: collection.fragmentCollectionId,
-					name: collection.name
-				};
-			}),
-			expanded: true,
-			id: 'lfr-all-fragments-id',
-			name: Liferay.Language.get('all-fragments')
-		}
-	];
-};
-
-const toFragmentEntryKeysArray = collections => {
-	const fragmentEntryKeysArray = [];
-
-	collections.forEach(collection => {
-		collection.fragmentEntries.forEach(fragmentEntry =>
-			fragmentEntryKeysArray.push(fragmentEntry.fragmentEntryKey)
-		);
-
-		fragmentEntryKeysArray.push(collection.fragmentCollectionId);
-	});
-
-	fragmentEntryKeysArray.push('lfr-all-fragments-id');
-
-	return fragmentEntryKeysArray;
-};
-
-const AllowedFragmentSelector = ({onSelectedFragment}) => {
+const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 	const {fragments} = useContext(ConfigContext);
-	const layoutData = useSelector(state => state.layoutData);
 
 	const fragmentEntryKeysArray = useMemo(
 		() => toFragmentEntryKeysArray(fragments),
@@ -85,11 +29,11 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 	);
 
 	const initialAllowNewFragmentEntries =
-		layoutData.allowNewFragmentEntries == undefined
+		dropZoneConfig.allowNewFragmentEntries == undefined
 			? true
-			: layoutData.allowNewFragmentEntries;
+			: dropZoneConfig.allowNewFragmentEntries;
 
-	const initialFragmentEntryKeys = layoutData.fragmentEntryKeys || [];
+	const initialFragmentEntryKeys = dropZoneConfig.fragmentEntryKeys || [];
 
 	const [filter, setFilter] = useState('');
 
@@ -167,8 +111,66 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 };
 
 AllowedFragmentSelector.propTypes = {
+	dropZoneConfig: PropTypes.shape({
+		allowNewFragmentEntries: PropTypes.bool,
+		fragmentEntryKeys: PropTypes.array
+	}).isRequired,
 	onSelectedFragment: PropTypes.func.isRequired
 };
 
 export {AllowedFragmentSelector};
 export default AllowedFragmentSelector;
+
+const getSelectedNodeIds = (
+	allowNewFragmentEntries,
+	fragmentEntryKeys = [],
+	fragmentEntryKeysArray
+) => {
+	return allowNewFragmentEntries
+		? fragmentEntryKeysArray.filter(
+				fragmentEntryKey =>
+					!fragmentEntryKeys.includes(fragmentEntryKey)
+		  )
+		: fragmentEntryKeys;
+};
+
+const toNodes = collections => {
+	return [
+		{
+			children: collections.map(collection => {
+				const children = collection.fragmentEntries.map(
+					fragmentEntry => ({
+						id: fragmentEntry.fragmentEntryKey,
+						name: fragmentEntry.name
+					})
+				);
+
+				return {
+					children,
+					expanded: false,
+					id: collection.fragmentCollectionId,
+					name: collection.name
+				};
+			}),
+			expanded: true,
+			id: 'lfr-all-fragments-id',
+			name: Liferay.Language.get('all-fragments')
+		}
+	];
+};
+
+const toFragmentEntryKeysArray = collections => {
+	const fragmentEntryKeysArray = [];
+
+	collections.forEach(collection => {
+		collection.fragmentEntries.forEach(fragmentEntry =>
+			fragmentEntryKeysArray.push(fragmentEntry.fragmentEntryKey)
+		);
+
+		fragmentEntryKeysArray.push(collection.fragmentCollectionId);
+	});
+
+	fragmentEntryKeysArray.push('lfr-all-fragments-id');
+
+	return fragmentEntryKeysArray;
+};

@@ -23,7 +23,7 @@ body.open .site-navigation-management-bar {
 }
 
 .site-navigation-content {
-	top: $managementBarHeight + $managementBarMarginBottom;
+	padding-top: $managementBarHeight + $managementBarMarginBottom;
 }
 
 .site-navigation-management-bar {

@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class MasterPage {
+public class MasterPage implements Cloneable {
 
 	public String getName() {
 		return name;
@@ -46,6 +46,11 @@ public class MasterPage {
 	}
 
 	protected String name;
+
+	@Override
+	public MasterPage clone() throws CloneNotSupportedException {
+		return (MasterPage)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

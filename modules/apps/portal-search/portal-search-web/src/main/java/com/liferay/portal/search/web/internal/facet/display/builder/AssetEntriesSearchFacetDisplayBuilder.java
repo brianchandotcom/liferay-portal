@@ -17,15 +17,20 @@ package com.liferay.portal.search.web.internal.facet.display.builder;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.security.permission.comparator.ModelResourceComparator;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetTermDisplayContext;
+import com.liferay.portal.search.web.internal.type.facet.configuration.TypeFacetPortletInstanceConfiguration;
 
 import java.io.Serializable;
 
@@ -35,10 +40,25 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import javax.portlet.RenderRequest;
+
 /**
  * @author Lino Alves
  */
 public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
+
+	public AssetEntriesSearchFacetDisplayBuilder(RenderRequest renderRequest)
+		throws ConfigurationException {
+
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		_typeFacetPortletInstanceConfiguration =
+			portletDisplay.getPortletInstanceConfiguration(
+				TypeFacetPortletInstanceConfiguration.class);
+	}
 
 	public AssetEntriesSearchFacetDisplayContext build() {
 		List<AssetEntriesSearchFacetTermDisplayContext> termDisplayContexts =
@@ -48,6 +68,8 @@ public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
 			assetEntriesSearchFacetDisplayContext =
 				new AssetEntriesSearchFacetDisplayContext();
 
+		assetEntriesSearchFacetDisplayContext.setDisplayStyleGroupId(
+			getDisplayStyleGroupId());
 		assetEntriesSearchFacetDisplayContext.setNothingSelected(
 			isNothingSelected());
 		assetEntriesSearchFacetDisplayContext.setParameterName(_parameterName);
@@ -59,6 +81,9 @@ public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
 			ListUtil.isEmpty(termDisplayContexts));
 		assetEntriesSearchFacetDisplayContext.setTermDisplayContexts(
 			termDisplayContexts);
+		assetEntriesSearchFacetDisplayContext.
+			setTypeFacetPortletInstanceConfiguration(
+				_typeFacetPortletInstanceConfiguration);
 
 		return assetEntriesSearchFacetDisplayContext;
 	}
@@ -82,6 +107,10 @@ public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
 
 	public List<AssetEntriesSearchFacetTermDisplayContext>
 		buildTermDisplayContexts() {
+
+		if (_facet == null) {
+			return Collections.emptyList();
+		}
 
 		FacetCollector facetCollector = _facet.getFacetCollector();
 
@@ -191,6 +220,17 @@ public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
 		_parameterValues = paramValues;
 	}
 
+	protected long getDisplayStyleGroupId() {
+		long displayStyleGroupId =
+			_typeFacetPortletInstanceConfiguration.displayStyleGroupId();
+
+		if (displayStyleGroupId <= 0) {
+			displayStyleGroupId = _themeDisplay.getScopeGroupId();
+		}
+
+		return displayStyleGroupId;
+	}
+
 	protected String getFirstParameterValue() {
 		if (_parameterValues.isEmpty()) {
 			return StringPool.BLANK;
@@ -206,5 +246,8 @@ public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
 	private Locale _locale;
 	private String _parameterName;
 	private List<String> _parameterValues = Collections.emptyList();
+	private final ThemeDisplay _themeDisplay;
+	private final TypeFacetPortletInstanceConfiguration
+		_typeFacetPortletInstanceConfiguration;
 
 }

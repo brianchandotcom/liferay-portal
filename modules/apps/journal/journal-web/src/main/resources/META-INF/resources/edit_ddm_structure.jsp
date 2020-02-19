@@ -255,37 +255,40 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 		}
 	}
 
+	function <portlet:namespace />getInputLocalizedValues(field) {
+		var inputLocalized = Liferay.component('<portlet:namespace />' + field);
+		var translatedLanguages = inputLocalized
+			.get('translatedLanguages')
+			.values();
+		var localizedValues = {};
+
+		translatedLanguages.forEach(function(languageId) {
+			localizedValues[languageId] = inputLocalized.getValue(languageId);
+		});
+
+		return localizedValues;
+	}
+
 	function <portlet:namespace />saveDDMStructure() {
 		<c:choose>
 			<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
 				Liferay.componentReady(
 					'<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
 				).then(function(dataLayoutBuilder) {
-					var name =
-						document.<portlet:namespace />fm[
-							'<portlet:namespace />name_' + themeDisplay.getLanguageId()
-						].value;
-					var description =
-						document.<portlet:namespace />fm['<portlet:namespace />description']
-							.value;
+					var name = <portlet:namespace />getInputLocalizedValues('name');
+					var description = <portlet:namespace />getInputLocalizedValues(
+						'description'
+					);
 
 					dataLayoutBuilder
 						.save({
 							dataDefinition: {
-								description: {
-									value: description
-								},
-								name: {
-									value: name
-								}
+								description: description,
+								name: name
 							},
 							dataLayout: {
-								description: {
-									value: description
-								},
-								name: {
-									value: name
-								}
+								description: description,
+								name: name
 							}
 						})
 						.then(function(dataLayout) {

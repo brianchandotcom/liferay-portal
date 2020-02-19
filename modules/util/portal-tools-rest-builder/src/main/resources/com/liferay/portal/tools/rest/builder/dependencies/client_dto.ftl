@@ -20,7 +20,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ${schemaName} {
+public class ${schemaName} implements Cloneable {
 	<#assign enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema) />
 
 	<#list enumSchemas?keys as enumName>
@@ -102,6 +102,11 @@ public class ${schemaName} {
 
 		protected ${propertyType} ${propertyName};
 	</#list>
+
+	@Override
+	public ${schemaName} clone() throws CloneNotSupportedException {
+		return (${schemaName})super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

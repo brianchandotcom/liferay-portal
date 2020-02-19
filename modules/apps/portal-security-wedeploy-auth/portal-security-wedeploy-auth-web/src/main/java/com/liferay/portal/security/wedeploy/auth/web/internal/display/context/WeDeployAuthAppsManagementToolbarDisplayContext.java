@@ -16,7 +16,7 @@ package com.liferay.portal.security.wedeploy.auth.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -61,12 +61,13 @@ public class WeDeployAuthAppsManagementToolbarDisplayContext
 		editWeDeployAuthAppURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
 
-		return CreationMenuUtil.addPrimaryDropdownItem(
+		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(editWeDeployAuthAppURL);
 				dropdownItem.setLabel(
 					LanguageUtil.get(request, "add-wedeploy-app"));
-			});
+			}
+		).build();
 	}
 
 	@Override

@@ -332,10 +332,14 @@ definition {
 			userLastName = "userln1",
 			userScreenName = "usersn1");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = PropsUtil.get("email.address.3"));
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userScreenName = "usersn1");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

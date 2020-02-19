@@ -298,7 +298,8 @@ public class SitesImpl implements Sites {
 				targetLayout.getDescriptionMap(), targetLayout.getKeywordsMap(),
 				targetLayout.getRobotsMap(), layoutPrototypeLayout.getType(),
 				targetLayout.isHidden(), targetLayout.getFriendlyURLMap(),
-				layoutPrototypeLayout.isIconImage(), iconBytes, serviceContext);
+				layoutPrototypeLayout.isIconImage(), iconBytes,
+				layoutPrototypeLayout.getMasterLayoutPlid(), serviceContext);
 		}
 		finally {
 			if (originalLayoutPrototypeLinkEnabled == null) {

@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -30,9 +31,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -103,13 +104,13 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _eventName;
 	}
 
-	public String getSelectedCategories() {
+	public List<String> getSelectedCategories() {
 		if (_selectedCategories != null) {
 			return _selectedCategories;
 		}
 
-		_selectedCategories = ParamUtil.getString(
-			_httpServletRequest, "selectedCategories");
+		_selectedCategories = StringUtil.split(
+			ParamUtil.getString(_httpServletRequest, "selectedCategories"));
 
 		return _selectedCategories;
 	}
@@ -119,8 +120,10 @@ public class AssetCategoriesSelectorDisplayContext {
 			return _vocabularyIds;
 		}
 
-		_vocabularyIds = StringUtil.split(
-			ParamUtil.getString(_httpServletRequest, "vocabularyIds"), 0L);
+		List<String> vocabularyIds = StringUtil.split(
+			ParamUtil.getString(_httpServletRequest, "vocabularyIds"));
+
+		_vocabularyIds = GetterUtil.getLongValues(vocabularyIds);
 
 		return _vocabularyIds;
 	}
@@ -256,7 +259,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private String _selectedCategories;
+	private List<String> _selectedCategories;
 	private Boolean _singleSelect;
 	private long[] _vocabularyIds;
 

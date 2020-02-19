@@ -171,12 +171,6 @@ public class FinderCacheImplTest {
 	private FinderCache _activateFinderCache(MultiVMPool multiVMPool) {
 		FinderCacheImpl finderCacheImpl = new FinderCacheImpl();
 
-		EntityCacheImpl entityCacheImpl = new EntityCacheImpl();
-
-		entityCacheImpl.setMultiVMPool(multiVMPool);
-
-		finderCacheImpl.setEntityCache(entityCacheImpl);
-
 		finderCacheImpl.setMultiVMPool(multiVMPool);
 
 		finderCacheImpl.setProps(PropsTestUtil.setProps(_properties));

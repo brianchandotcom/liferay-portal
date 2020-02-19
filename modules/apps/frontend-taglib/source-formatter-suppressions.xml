@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="BuilderCheck" files="modules/apps/frontend-taglib/frontend-taglib/src/main/java/com/liferay/frontend/taglib/servlet/taglib/TranslationManagerTag\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/frontend-taglib/frontend-taglib/src/main/java/com/liferay/frontend/taglib/servlet/taglib/TranslationManagerTag\.java" />
 	</checkstyle>
 </suppressions>

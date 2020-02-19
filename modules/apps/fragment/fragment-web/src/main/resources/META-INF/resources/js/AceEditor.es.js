@@ -25,6 +25,10 @@ const FragmentAutocompleteProcessor = function(...args) {
 	FragmentAutocompleteProcessor.superclass.constructor.apply(this, args);
 };
 
+const MATCH_TAG = 'tag';
+const MATCH_TAGLIB = 'taglib';
+const MATCH_VARIABLE = 'variable';
+
 /**
  * Creates an Ace Editor component to use for code editing.
  */
@@ -39,6 +43,8 @@ class AceEditor extends Component {
 		this._getAutocompleteSuggestion = this._getAutocompleteSuggestion.bind(
 			this
 		);
+
+		this._getAutocompleteResults = this._getAutocompleteResults.bind(this);
 
 		this._handleDocumentChanged = this._handleDocumentChanged.bind(this);
 
@@ -114,13 +120,12 @@ class AceEditor extends Component {
 
 			{
 				getMatch: this._getAutocompleteMatch,
+				getResults: this._getAutocompleteResults,
 				getSuggestion: this._getAutocompleteSuggestion
 			}
 		);
 
-		const autocompleteProcessor = new FragmentAutocompleteProcessor({
-			directives: this.autocompleteTags.map(tag => tag.name)
-		});
+		const autocompleteProcessor = new FragmentAutocompleteProcessor({});
 
 		editor.plug(A.Plugin.AceAutoComplete, {
 			processor: autocompleteProcessor,
@@ -141,23 +146,73 @@ class AceEditor extends Component {
 	_getAutocompleteMatch(content) {
 		let match = null;
 		let matchContent = content;
-		let matchIndex = null;
 
-		if (matchContent.lastIndexOf('<') >= 0) {
-			matchIndex = matchContent.lastIndexOf('<');
-
-			matchContent = matchContent.substring(matchIndex);
+		if (
+			matchContent.indexOf('<') >= 0 ||
+			matchContent.indexOf('${') >= 0 ||
+			matchContent.indexOf('[@') >= 0
+		) {
+			matchContent = matchContent.trim();
 
 			if (/<lfr[\w]*[^<lfr]*$/.test(matchContent)) {
 				match = {
 					content: matchContent.substring(1),
-					start: matchIndex,
-					type: 0
+					type: MATCH_TAG
+				};
+			}
+			else if (/\[@[^\]]+$/.test(matchContent)) {
+				match = {
+					content: matchContent.substring(2),
+					type: MATCH_TAGLIB
+				};
+			}
+			else if (/\${[^}]+$/.test(matchContent)) {
+				match = {
+					content: matchContent.substring(2),
+					type: MATCH_VARIABLE
 				};
 			}
 		}
 
 		return match;
+	}
+
+	/**
+	 * Returns a list of available auto-complete suggestions for the given
+	 * match.
+	 *
+	 *
+	 * @param {object} match The match.
+	 * @param {function} callbackSuccess Success callback.
+	 * @param {function} callbackError Errir callback.
+	 * @private
+	 * @return {array} The list of available suggestions.
+	 */
+	_getAutocompleteResults(match, callbackSuccess, callbackError) {
+		let matchDirectives = null;
+
+		const regex = new RegExp(match.content || '', 'gi');
+
+		if (match.type === MATCH_TAG) {
+			matchDirectives = this.autocompleteTags.map(tag => tag.name);
+		}
+		else if (match.type === MATCH_TAGLIB) {
+			matchDirectives = this.freeMarkerTaglibs;
+		}
+		else if (match.type === MATCH_VARIABLE) {
+			matchDirectives = this.freeMarkerVariables;
+		}
+		else {
+			callbackError();
+		}
+
+		if (matchDirectives) {
+			matchDirectives = matchDirectives.filter(directive =>
+				regex.test(directive)
+			);
+
+			callbackSuccess(matchDirectives);
+		}
 	}
 
 	/**
@@ -170,11 +225,22 @@ class AceEditor extends Component {
 	 * @return {string} The suggested tag autocompletion.
 	 */
 	_getAutocompleteSuggestion(match, selectedSuggestion) {
-		const tag = this.autocompleteTags.find(
+		let result = this.autocompleteTags.find(
 			_tag => _tag.name === selectedSuggestion
 		);
 
-		return tag ? tag.content.substring(1) : '';
+		if (result) {
+			result = result.content.substring(1);
+		}
+
+		if (!result) {
+			result = [
+				...this.freeMarkerTaglibs,
+				...this.freeMarkerVariables
+			].find(variable => variable === selectedSuggestion);
+		}
+
+		return result || '';
 	}
 
 	/**
@@ -279,6 +345,27 @@ AceEditor.STATE = {
 			name: Config.string()
 		})
 	),
+
+	/**
+	 * List of FreeMarker tags for custom autocompletion in the HTML editor.
+	 *
+	 * @default []
+	 * @instance
+	 * @memberOf AceEditor
+	 * @type Array
+	 */
+	freeMarkerTaglibs: Config.arrayOf(Config.string()),
+
+	/**
+	 * List of FreeMarker variables for custom autocompletion in the HTML
+	 * editor.
+	 *
+	 * @default []
+	 * @instance
+	 * @memberOf AceEditor
+	 * @type Array
+	 */
+	freeMarkerVariables: Config.arrayOf(Config.string()),
 
 	/**
 	 * Initial content sent to the editor.

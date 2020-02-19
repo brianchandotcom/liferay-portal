@@ -1,0 +1,74 @@
+import com.bmuschko.gradle.docker.tasks.container.DockerLogsContainer
+
+import java.net.InetAddress
+
+buildscript {
+	dependencies {
+		classpath fileTree(dir: pluginClasspathDir, excludes: ["biz.aQute.bnd-3.5.0.jar", "com.liferay.gradle.util-1.0.33.jar"], include: "*.jar")
+	}
+}
+
+apply plugin: "com.liferay.workspace"
+
+gradle.liferayWorkspace {
+	String hostName = InetAddress.localHost.canonicalHostName.toLowerCase()
+
+	dockerContainerId = hostName + "startdockercontainerwithscript"
+	dockerImageId = hostName + "startdockercontainerwithscript"
+}
+
+gradle.projectsEvaluated {
+	Project rootProject = gradle.rootProject
+
+	rootProject.tasks.register("assertLog", DockerLogsContainer) {
+		dependsOn rootProject.tasks.startDockerContainer
+		finalizedBy rootProject.tasks.cleanDockerImage
+
+		follow = false
+		tailAll = true
+
+		targetContainerId {
+			gradle.liferayWorkspace.dockerContainerId
+		}
+
+		String expectedLine = "Hello World"
+		String unexpectedLine = "No such file or directory"
+
+		boolean expectedLineDetected = false
+		boolean unexpectedLineDetected = false
+
+		sink new PrintWriter(new StringWriter()) {
+			public void write(String line) {
+				if (line.contains(expectedLine)) {
+					expectedLineDetected = true
+				}
+
+				if (line.contains(unexpectedLine)) {
+					unexpectedLineDetected = true
+				}
+
+				rootProject.print line
+			}
+		}
+
+		doLast {
+			int retries = 0
+
+			while (!expectedLineDetected && (retries < 30)) {
+				Thread.sleep(100)
+
+				retries++
+
+				start()
+			}
+
+			if (!expectedLineDetected) {
+				throw new GradleException("The expected line " + expectedLine + " was not found in the log.")
+			}
+
+			if (unexpectedLineDetected) {
+				throw new GradleException("The unexpected line " + unexpectedLine + " was found in the log.")
+			}
+		}
+	}
+}

@@ -47,4 +47,12 @@ const isValidNumber = number => {
 
 const capitalize = str => str.replace(/^\w/, letter => letter.toUpperCase());
 
-export {capitalize, getFormattedPercentage, getPercentage, isValidNumber};
+const toUppercase = str => (str && str.length ? str.toUpperCase() : str);
+
+export {
+	capitalize,
+	getFormattedPercentage,
+	getPercentage,
+	isValidNumber,
+	toUppercase
+};

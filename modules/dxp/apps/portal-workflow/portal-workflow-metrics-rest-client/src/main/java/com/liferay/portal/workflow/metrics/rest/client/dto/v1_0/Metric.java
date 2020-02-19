@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Metric {
+public class Metric implements Cloneable {
 
 	public static enum Unit {
 
@@ -128,6 +128,11 @@ public class Metric {
 	}
 
 	protected Double value;
+
+	@Override
+	public Metric clone() throws CloneNotSupportedException {
+		return (Metric)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -25,7 +25,7 @@ public class Transition {
 		_name = name;
 		_sourceNode = sourceNode;
 		_targetNode = targetNode;
-		_default = defaultValue;
+		_defaultValue = defaultValue;
 	}
 
 	public String getName() {
@@ -45,14 +45,14 @@ public class Transition {
 	}
 
 	public boolean isDefault() {
-		return _default;
+		return _defaultValue;
 	}
 
 	public void setTimers(Timer timer) {
 		_timer = timer;
 	}
 
-	private final boolean _default;
+	private final boolean _defaultValue;
 	private final String _name;
 	private final Node _sourceNode;
 	private final Node _targetNode;

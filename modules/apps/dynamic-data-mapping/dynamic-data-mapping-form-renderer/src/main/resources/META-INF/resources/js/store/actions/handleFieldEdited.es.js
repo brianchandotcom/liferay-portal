@@ -15,7 +15,7 @@
 import {evaluate} from '../../util/evaluation.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
-export default (evaluatorContext, properties) => {
+export default (evaluatorContext, properties, updateState) => {
 	const {fieldInstance, value} = properties;
 	const {evaluable, fieldName} = fieldInstance;
 	const {editingLanguageId, pages} = evaluatorContext;
@@ -54,6 +54,8 @@ export default (evaluatorContext, properties) => {
 
 		return field;
 	});
+
+	updateState(editedPages);
 
 	let promise = Promise.resolve(editedPages);
 

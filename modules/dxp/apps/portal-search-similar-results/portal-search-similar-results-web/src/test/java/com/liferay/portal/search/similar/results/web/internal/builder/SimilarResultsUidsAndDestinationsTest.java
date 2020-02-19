@@ -30,8 +30,10 @@ import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.similar.results.web.internal.contributor.asset.publisher.AssetPublisherSimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.internal.contributor.blogs.BlogsSimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.internal.contributor.document.library.DocumentLibrarySimilarResultsContributor;
@@ -184,6 +186,8 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 		setUpDestinationClassName(className2);
 
+		setUpUIDFactory(expectedUID);
+
 		assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
 	}
@@ -238,6 +242,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 		setUpBlogsEntryLocalService(blogsEntry);
 		setUpInputGroupId(groupId);
 		setUpDestinationAssetRenderer(assetRenderer);
+		setUpUIDFactory(expectedUID);
 
 		assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
@@ -654,6 +659,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 		setUpDestinationAssetRenderer(assetRenderer);
 		setUpInputGroupId(groupId);
+		setUpUIDFactory(expectedUID);
 		setUpWikiNodeLocalService(wikiNode);
 		setUpWikiPageLocalService(wikiPage);
 
@@ -680,6 +686,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 			{
 				setAssetEntryLocalService(_assetEntryLocalService);
 				setHttpHelper(_httpHelper);
+				setUIDFactory(_uidFactory);
 			}
 		};
 	}
@@ -687,9 +694,9 @@ public class SimilarResultsUidsAndDestinationsTest {
 	protected SimilarResultsContributor createBlogsSimilarResultsContributor() {
 		return new BlogsSimilarResultsContributor() {
 			{
-				setAssetEntryLocalService(_assetEntryLocalService);
 				setBlogsEntryLocalService(_blogsEntryLocalService);
 				setHttpHelper(_httpHelper);
+				setUIDFactory(_uidFactory);
 			}
 		};
 	}
@@ -808,6 +815,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 			{
 				setAssetEntryLocalService(_assetEntryLocalService);
 				setHttpHelper(_httpHelper);
+				setUIDFactory(_uidFactory);
 				setWikiNodeLocalService(_wikiNodeLocalService);
 				setWikiPageLocalService(_wikiPageLocalService);
 			}
@@ -973,6 +981,14 @@ public class SimilarResultsUidsAndDestinationsTest {
 		);
 	}
 
+	protected void setUpUIDFactory(String uid) {
+		Mockito.when(
+			_uidFactory.getUID(Matchers.any(ClassedModel.class))
+		).thenReturn(
+			uid
+		);
+	}
+
 	protected void setUpWikiNodeLocalService(WikiNode wikiNode) {
 		Mockito.when(
 			_wikiNodeLocalService.fetchNode(
@@ -1042,6 +1058,9 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 	private SimilarResultsContributorsRegistry
 		_similarResultsContributorsRegistry;
+
+	@Mock
+	private UIDFactory _uidFactory;
 
 	@Mock
 	private WikiNodeLocalService _wikiNodeLocalService;

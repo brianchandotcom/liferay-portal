@@ -396,9 +396,11 @@ public abstract class BaseCommentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						comment1, entityField.getName(), "Aaa");
+						comment1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						comment2, entityField.getName(), "Bbb");
+						comment2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -807,9 +809,11 @@ public abstract class BaseCommentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						comment1, entityField.getName(), "Aaa");
+						comment1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						comment2, entityField.getName(), "Bbb");
+						comment2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1085,9 +1089,11 @@ public abstract class BaseCommentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						comment1, entityField.getName(), "Aaa");
+						comment1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						comment2, entityField.getName(), "Bbb");
+						comment2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1379,9 +1385,11 @@ public abstract class BaseCommentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						comment1, entityField.getName(), "Aaa");
+						comment1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						comment2, entityField.getName(), "Bbb");
+						comment2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

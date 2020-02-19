@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.wsdl.builder;
 
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,28 @@ import org.gradle.api.tasks.Input;
 public class GenerateOptions {
 
 	@Input
+	public String getDatabindingMethod() {
+		return GradleUtil.toString(_databindingMethod);
+	}
+
+	@Input
 	public Map<?, ?> getMappings() {
 		return _mappings;
+	}
+
+	@Input
+	public boolean isBackwordCompatible() {
+		return _backwordCompatible;
+	}
+
+	@Input
+	public boolean isFlattenFiles() {
+		return _flattenFiles;
+	}
+
+	@Input
+	public boolean isGenerateAll() {
+		return _generateAll;
 	}
 
 	@Input
@@ -59,6 +80,22 @@ public class GenerateOptions {
 		return this;
 	}
 
+	public void setBackwordCompatible(boolean backwordCompatible) {
+		_backwordCompatible = backwordCompatible;
+	}
+
+	public void setDatabindingMethod(Object databindingMethod) {
+		_databindingMethod = databindingMethod;
+	}
+
+	public void setFlattenFiles(boolean flattenFiles) {
+		_flattenFiles = flattenFiles;
+	}
+
+	public void setGenerateAll(boolean generateAll) {
+		_generateAll = generateAll;
+	}
+
 	public void setMappings(Map<?, ?> mappings) {
 		_mappings.clear();
 
@@ -79,6 +116,25 @@ public class GenerateOptions {
 
 	protected List<String> getArgs() {
 		List<String> args = new ArrayList<>();
+
+		if (isBackwordCompatible()) {
+			args.add("--backword-compatible");
+		}
+
+		String databindingMethod = getDatabindingMethod();
+
+		if (Validator.isNotNull(databindingMethod)) {
+			args.add("--databinding-method");
+			args.add(databindingMethod);
+		}
+
+		if (isFlattenFiles()) {
+			args.add("--flatten-files");
+		}
+
+		if (isGenerateAll()) {
+			args.add("--generate-all");
+		}
 
 		if (isNoWrapped()) {
 			args.add("--noWrapped");
@@ -108,6 +164,10 @@ public class GenerateOptions {
 		return args;
 	}
 
+	private boolean _backwordCompatible;
+	private Object _databindingMethod;
+	private boolean _flattenFiles;
+	private boolean _generateAll;
 	private final Map<Object, Object> _mappings = new TreeMap<>();
 	private boolean _noWrapped;
 	private boolean _serverSide;

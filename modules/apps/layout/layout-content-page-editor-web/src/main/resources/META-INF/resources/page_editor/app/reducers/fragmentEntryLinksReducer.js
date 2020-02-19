@@ -12,18 +12,31 @@
  * details.
  */
 
-import {TYPES} from '../actions/index';
+import {
+	ADD_FRAGMENT_ENTRY_LINK,
+	ADD_FRAGMENT_ENTRY_LINK_COMMENT,
+	DELETE_FRAGMENT_ENTRY_LINK_COMMENT,
+	EDIT_FRAGMENT_ENTRY_LINK_COMMENT,
+	UPDATE_EDITABLE_VALUES,
+	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
+	UPDATE_LAYOUT_DATA
+} from '../actions/types';
 
-export default function fragmentEntryLinksReducer(fragmentEntryLinks, action) {
+export const INITIAL_STATE = {};
+
+export default function fragmentEntryLinksReducer(
+	fragmentEntryLinks = INITIAL_STATE,
+	action
+) {
 	switch (action.type) {
-		case TYPES.ADD_FRAGMENT_ENTRY_LINK:
+		case ADD_FRAGMENT_ENTRY_LINK:
 			return {
 				...fragmentEntryLinks,
 				[action.fragmentEntryLink.fragmentEntryLinkId]:
 					action.fragmentEntryLink
 			};
 
-		case TYPES.ADD_FRAGMENT_ENTRY_LINK_COMMENT: {
+		case ADD_FRAGMENT_ENTRY_LINK_COMMENT: {
 			const fragmentEntryLink =
 				fragmentEntryLinks[action.fragmentEntryLinkId];
 
@@ -57,7 +70,7 @@ export default function fragmentEntryLinksReducer(fragmentEntryLinks, action) {
 			};
 		}
 
-		case TYPES.DELETE_FRAGMENT_ENTRY_LINK_COMMENT: {
+		case DELETE_FRAGMENT_ENTRY_LINK_COMMENT: {
 			const fragmentEntryLink =
 				fragmentEntryLinks[action.fragmentEntryLinkId];
 
@@ -94,7 +107,7 @@ export default function fragmentEntryLinksReducer(fragmentEntryLinks, action) {
 			};
 		}
 
-		case TYPES.EDIT_FRAGMENT_ENTRY_LINK_COMMENT: {
+		case EDIT_FRAGMENT_ENTRY_LINK_COMMENT: {
 			const fragmentEntryLink =
 				fragmentEntryLinks[action.fragmentEntryLinkId];
 
@@ -135,7 +148,7 @@ export default function fragmentEntryLinksReducer(fragmentEntryLinks, action) {
 			};
 		}
 
-		case TYPES.UPDATE_EDITABLE_VALUES:
+		case UPDATE_EDITABLE_VALUES:
 			return {
 				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
@@ -144,7 +157,16 @@ export default function fragmentEntryLinksReducer(fragmentEntryLinks, action) {
 				}
 			};
 
-		case TYPES.UPDATE_LAYOUT_DATA: {
+		case UPDATE_FRAGMENT_ENTRY_LINK_CONTENT:
+			return {
+				...fragmentEntryLinks,
+				[action.fragmentEntryLinkId]: {
+					...fragmentEntryLinks[action.fragmentEntryLinkId],
+					content: action.content
+				}
+			};
+
+		case UPDATE_LAYOUT_DATA: {
 			const nextFragmentEntryLinks = {...fragmentEntryLinks};
 
 			action.deletedFragmentEntryLinkIds.forEach(fragmentEntryLinkId => {
@@ -159,15 +181,6 @@ export default function fragmentEntryLinksReducer(fragmentEntryLinks, action) {
 
 			return nextFragmentEntryLinks;
 		}
-
-		case TYPES.UPDATE_FRAGMENT_ENTRY_LINK_CONTENT:
-			return {
-				...fragmentEntryLinks,
-				[action.fragmentEntryLinkId]: {
-					...fragmentEntryLinks[action.fragmentEntryLinkId],
-					content: action.content
-				}
-			};
 
 		default:
 			return fragmentEntryLinks;

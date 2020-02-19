@@ -445,9 +445,11 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						taxonomyCategory1, entityField.getName(), "Aaa");
+						taxonomyCategory1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						taxonomyCategory2, entityField.getName(), "Bbb");
+						taxonomyCategory2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -695,7 +697,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				postTaxonomyCategory.getId(), randomPatchTaxonomyCategory);
 
 		TaxonomyCategory expectedPatchTaxonomyCategory =
-			(TaxonomyCategory)BeanUtils.cloneBean(postTaxonomyCategory);
+			postTaxonomyCategory.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchTaxonomyCategory, randomPatchTaxonomyCategory);
@@ -991,9 +993,11 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						taxonomyCategory1, entityField.getName(), "Aaa");
+						taxonomyCategory1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						taxonomyCategory2, entityField.getName(), "Bbb");
+						taxonomyCategory2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

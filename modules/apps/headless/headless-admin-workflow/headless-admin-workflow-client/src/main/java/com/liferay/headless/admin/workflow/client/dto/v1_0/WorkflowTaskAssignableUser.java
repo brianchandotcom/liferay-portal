@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WorkflowTaskAssignableUser {
+public class WorkflowTaskAssignableUser implements Cloneable {
 
 	public Assignee[] getAssignableUsers() {
 		return assignableUsers;
@@ -69,6 +69,13 @@ public class WorkflowTaskAssignableUser {
 	}
 
 	protected Long workflowTaskId;
+
+	@Override
+	public WorkflowTaskAssignableUser clone()
+		throws CloneNotSupportedException {
+
+		return (WorkflowTaskAssignableUser)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

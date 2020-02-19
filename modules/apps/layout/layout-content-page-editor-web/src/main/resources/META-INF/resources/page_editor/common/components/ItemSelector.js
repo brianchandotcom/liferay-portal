@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
@@ -109,3 +110,11 @@ export default function ItemSelector({
 		</>
 	);
 }
+
+ItemSelector.propTypes = {
+	eventName: PropTypes.string,
+	itemSelectorURL: PropTypes.string,
+	label: PropTypes.string,
+	onItemSelect: PropTypes.func.isRequired,
+	selectedItemTitle: PropTypes.string
+};

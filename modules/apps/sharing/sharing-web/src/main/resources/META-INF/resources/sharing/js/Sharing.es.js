@@ -307,7 +307,7 @@ const Sharing = ({
 					<ClayCheckbox
 						checked={allowSharingChecked}
 						label={Liferay.Language.get(
-							'allow-the-document-to-be-shared-with-other-users'
+							'allow-the-item-to-be-shared-with-other-users'
 						)}
 						name={`${portletNamespace}shareable`}
 						onChange={() => setAllowSharingChecked(allow => !allow)}

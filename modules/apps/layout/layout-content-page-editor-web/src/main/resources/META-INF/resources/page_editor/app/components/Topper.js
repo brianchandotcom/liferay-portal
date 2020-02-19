@@ -15,8 +15,13 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useRef} from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../prop-types/index';
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
@@ -54,6 +59,10 @@ const TopperListItem = React.forwardRef(
 		</li>
 	)
 );
+
+TopperListItem.propTypes = {
+	expand: PropTypes.bool
+};
 
 export default function Topper({
 	acceptDrop,
@@ -275,6 +284,15 @@ export default function Topper({
 		</div>
 	);
 }
+
+Topper.propTypes = {
+	acceptDrop: PropTypes.arrayOf(
+		PropTypes.oneOf(Object.values(LAYOUT_DATA_ITEM_TYPES))
+	),
+	dropNestedAndSibling: PropTypes.bool,
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
 
 function isRemovable(item, layoutData) {
 	function hasDropZoneChildren(item, layoutData) {

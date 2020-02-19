@@ -54,16 +54,21 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.AttributeDefinition;
 import org.osgi.service.metatype.ObjectClassDefinition;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -103,6 +108,44 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		catch (Exception exception) {
 			throw new SearchException(exception);
 		}
+	}
+
+	public BundleTracker<Collection<ConfigurationModel>> initialize() {
+		Map<String, Collection<ConfigurationModel>> configurationModelsMap =
+			new ConcurrentHashMap<>();
+
+		Bundle[] bundles = _bundleContext.getBundles();
+
+		List<ConfigurationModel> configurationModelsList = new ArrayList<>();
+
+		for (Bundle bundle : bundles) {
+			if (bundle.getState() != Bundle.ACTIVE) {
+				continue;
+			}
+
+			Map<String, ConfigurationModel> configurationModels =
+				_configurationModelRetriever.getConfigurationModels(
+					bundle, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+
+			configurationModelsList.addAll(configurationModels.values());
+
+			configurationModelsMap.put(
+				bundle.getSymbolicName(), configurationModels.values());
+		}
+
+		reindex(configurationModelsList);
+
+		_commit();
+
+		BundleTracker<Collection<ConfigurationModel>> bundleTracker =
+			new BundleTracker<>(
+				_bundleContext, Bundle.ACTIVE,
+				new ConfigurationModelsBundleTrackerCustomizer(
+					configurationModelsMap));
+
+		bundleTracker.open();
+
+		return bundleTracker;
 	}
 
 	@Override
@@ -166,6 +209,8 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		setPermissionAware(false);
 		setSelectAllLocales(false);
 		setStagingAware(false);
+
+		_bundleContext = bundleContext;
 	}
 
 	@Override
@@ -358,6 +403,17 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		}
 	}
 
+	private void _commit() {
+		try {
+			_indexWriterHelper.commit(getSearchEngineId());
+		}
+		catch (SearchException searchException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to commit", searchException);
+			}
+		}
+	}
+
 	private List<String> _getLocalizedValues(
 		List<String> attributeDescriptions,
 		ResourceBundleLoader resourceBundleLoader, Locale locale) {
@@ -419,6 +475,8 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationModelIndexer.class);
 
+	private BundleContext _bundleContext;
+
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
@@ -452,6 +510,76 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		private final String _key;
 		private final String _name;
 		private final Map<Locale, String> _values = new HashMap<>();
+
+	}
+
+	private class ConfigurationModelsBundleTrackerCustomizer
+		implements BundleTrackerCustomizer<Collection<ConfigurationModel>> {
+
+		@Override
+		public Collection<ConfigurationModel> addingBundle(
+			Bundle bundle, BundleEvent bundleEvent) {
+
+			Collection<ConfigurationModel> configurationModels =
+				_configurationModelsMap.remove(bundle.getSymbolicName());
+
+			if (configurationModels != null) {
+				if (configurationModels.isEmpty()) {
+					return null;
+				}
+
+				return configurationModels;
+			}
+
+			Map<String, ConfigurationModel> configurationModelsMap =
+				_configurationModelRetriever.getConfigurationModels(
+					bundle, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+
+			if (configurationModelsMap.isEmpty()) {
+				return null;
+			}
+
+			reindex(configurationModelsMap.values());
+
+			_commit();
+
+			return configurationModelsMap.values();
+		}
+
+		@Override
+		public void modifiedBundle(
+			Bundle bundle, BundleEvent bundleEvent,
+			Collection<ConfigurationModel> configurationModels) {
+		}
+
+		@Override
+		public void removedBundle(
+			Bundle bundle, BundleEvent bundleEvent,
+			Collection<ConfigurationModel> configurationModels) {
+
+			for (ConfigurationModel configurationModel : configurationModels) {
+				try {
+					delete(configurationModel);
+				}
+				catch (SearchException searchException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to reindex models", searchException);
+					}
+				}
+			}
+
+			_commit();
+		}
+
+		private ConfigurationModelsBundleTrackerCustomizer(
+			Map<String, Collection<ConfigurationModel>>
+				configurationModelsMap) {
+
+			_configurationModelsMap = configurationModelsMap;
+		}
+
+		private final Map<String, Collection<ConfigurationModel>>
+			_configurationModelsMap;
 
 	}
 

@@ -16,15 +16,20 @@ package com.liferay.layout.page.template.util;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
+import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.UUID;
 
 /**
  * @author Rubén Pulido
@@ -58,11 +63,10 @@ public class LayoutDataConverter {
 			return data;
 		}
 
-		JSONObject itemsJSONObject = JSONFactoryUtil.createJSONObject();
-		JSONArray mainChildrenJSONArray = JSONFactoryUtil.createJSONArray();
+		LayoutStructure layoutStructure = new LayoutStructure();
 
-		UUID dropZoneUUID = null;
-		UUID mainUUID = UUID.randomUUID();
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
 
 		for (int i = 0; i < structureJSONArray.length(); i++) {
 			JSONObject inputRowJSONObject = structureJSONArray.getJSONObject(i);
@@ -73,25 +77,57 @@ public class LayoutDataConverter {
 			if (inputRowJSONObject.getInt("type") ==
 					FragmentConstants.TYPE_COMPONENT) {
 
-				UUID containerUUID = UUID.randomUUID();
+				ContainerLayoutStructureItem containerLayoutStructureItem =
+					(ContainerLayoutStructureItem)
+						layoutStructure.addContainerLayoutStructureItem(
+							rootLayoutStructureItem.getItemId(), i);
 
-				mainChildrenJSONArray.put(containerUUID);
+				JSONObject inputRowConfigJSONObject =
+					inputRowJSONObject.getJSONObject("config");
 
-				UUID rowUUID = UUID.randomUUID();
+				if (inputRowConfigJSONObject != null) {
+					containerLayoutStructureItem.setBackgroundColorCssClass(
+						inputRowConfigJSONObject.getString(
+							"backgroundColorCssClass"));
+					containerLayoutStructureItem.setBackgroundImageJSONObject(
+						_getBackgroundImageJSONObject(
+							inputRowConfigJSONObject));
+					containerLayoutStructureItem.setContainerType(
+						inputRowConfigJSONObject.getString(
+							"containerType", "fixed"));
+					containerLayoutStructureItem.setPaddingBottom(
+						inputRowConfigJSONObject.getInt("paddingVertical", 3));
+					containerLayoutStructureItem.setPaddingHorizontal(
+						inputRowConfigJSONObject.getInt(
+							"paddingHorizontal", 3));
+					containerLayoutStructureItem.setPaddingTop(
+						inputRowConfigJSONObject.getInt("paddingVertical", 3));
+				}
 
-				JSONArray rowChildrenJSONArray =
-					JSONFactoryUtil.createJSONArray();
+				RowLayoutStructureItem rowLayoutStructureItem =
+					(RowLayoutStructureItem)
+						layoutStructure.addRowLayoutStructureItem(
+							containerLayoutStructureItem.getItemId(), 0,
+							columnsJSONArray.length());
+
+				if (inputRowConfigJSONObject != null) {
+					boolean columnSpacing = inputRowConfigJSONObject.getBoolean(
+						"columnSpacing", true);
+
+					rowLayoutStructureItem.setGutters(columnSpacing);
+				}
 
 				for (int j = 0; j < columnsJSONArray.length(); j++) {
 					JSONObject inputColumnJSONObject =
 						columnsJSONArray.getJSONObject(j);
 
-					UUID columnUUID = UUID.randomUUID();
+					ColumnLayoutStructureItem columnLayoutStructureItem =
+						(ColumnLayoutStructureItem)
+							layoutStructure.addColumnLayoutStructureItem(
+								rowLayoutStructureItem.getItemId(), j);
 
-					rowChildrenJSONArray.put(columnUUID.toString());
-
-					JSONArray columnChildrenJSONArray =
-						JSONFactoryUtil.createJSONArray();
+					columnLayoutStructureItem.setSize(
+						inputColumnJSONObject.getInt("size"));
 
 					JSONArray fragmentEntryLinksJSONArray =
 						inputColumnJSONObject.getJSONArray(
@@ -100,170 +136,29 @@ public class LayoutDataConverter {
 					for (int k = 0; k < fragmentEntryLinksJSONArray.length();
 						 k++) {
 
-						String fragmentEntryLinkId =
-							fragmentEntryLinksJSONArray.getString(k);
-
-						UUID fragmentUUID = UUID.randomUUID();
-
-						columnChildrenJSONArray.put(fragmentUUID.toString());
-
-						JSONObject fragmentJSONObject = null;
-
-						if (fragmentEntryLinkId.equals(
-								LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
-
-							dropZoneUUID = fragmentUUID;
-
-							fragmentJSONObject = _getItemJSONObject(
-								JSONFactoryUtil.createJSONArray(),
-								JSONFactoryUtil.createJSONObject(),
-								dropZoneUUID.toString(), columnUUID.toString(),
-								LayoutDataItemTypeConstants.TYPE_DROP_ZONE);
-						}
-						else {
-							JSONObject fragmentConfigJSONObject = JSONUtil.put(
-								"fragmentEntryLinkId", fragmentEntryLinkId);
-
-							fragmentJSONObject = _getItemJSONObject(
-								JSONFactoryUtil.createJSONArray(),
-								fragmentConfigJSONObject,
-								fragmentUUID.toString(), columnUUID.toString(),
-								LayoutDataItemTypeConstants.TYPE_FRAGMENT);
-						}
-
-						itemsJSONObject.put(
-							fragmentUUID.toString(), fragmentJSONObject);
+						_addFragmentEntryLink(
+							fragmentEntryLinksJSONArray.getString(k),
+							inputDataJSONObject, layoutStructure,
+							columnLayoutStructureItem.getItemId(), k);
 					}
-
-					JSONObject columnConfigJSONObject = JSONUtil.put(
-						"size", inputColumnJSONObject.getInt("size"));
-
-					JSONObject columnJSONObject = _getItemJSONObject(
-						columnChildrenJSONArray, columnConfigJSONObject,
-						columnUUID.toString(), rowUUID.toString(),
-						LayoutDataItemTypeConstants.TYPE_COLUMN);
-
-					itemsJSONObject.put(
-						columnUUID.toString(), columnJSONObject);
 				}
-
-				JSONObject inputRowConfigJSONObject =
-					inputRowJSONObject.getJSONObject("config");
-
-				JSONObject rowConfigJSONObject = JSONUtil.put(
-					"gutters",
-					inputRowConfigJSONObject.getBoolean("columnSpacing")
-				).put(
-					"verticalAlign", "top"
-				);
-
-				JSONObject rowJSONObject = _getItemJSONObject(
-					rowChildrenJSONArray, rowConfigJSONObject,
-					rowUUID.toString(), containerUUID.toString(),
-					LayoutDataItemTypeConstants.TYPE_ROW);
-
-				itemsJSONObject.put(rowUUID.toString(), rowJSONObject);
-
-				JSONObject containerConfigJSONObject = JSONUtil.put(
-					"backgroundColorCssClass",
-					inputRowConfigJSONObject.getString(
-						"backgroundColorCssClass", null));
-
-				JSONObject backgroundImageJSONObject =
-					_getBackgroundImageJSONObject(inputRowConfigJSONObject);
-
-				if (backgroundImageJSONObject != null) {
-					containerConfigJSONObject.put(
-						"backgroundImage", backgroundImageJSONObject);
-				}
-
-				containerConfigJSONObject.put(
-					"paddingBottom",
-					inputRowConfigJSONObject.getInt("paddingVertical")
-				).put(
-					"paddingHorizontal",
-					inputRowConfigJSONObject.getInt("paddingHorizontal")
-				).put(
-					"paddingTop",
-					inputRowConfigJSONObject.getInt("paddingVertical")
-				).put(
-					"type",
-					inputRowConfigJSONObject.getString("containerType", "fluid")
-				);
-
-				JSONObject containerJSONObject = _getItemJSONObject(
-					JSONUtil.put(rowUUID.toString()), containerConfigJSONObject,
-					containerUUID.toString(), mainUUID.toString(),
-					LayoutDataItemTypeConstants.TYPE_CONTAINER);
-
-				itemsJSONObject.put(
-					containerUUID.toString(), containerJSONObject);
 			}
 			else {
-				UUID fragmentUUID = UUID.randomUUID();
-
-				mainChildrenJSONArray.put(fragmentUUID.toString());
-
 				JSONObject columnJSONObject = columnsJSONArray.getJSONObject(0);
 
 				JSONArray fragmentEntryLinkIdsJSONArray =
 					columnJSONObject.getJSONArray("fragmentEntryLinkIds");
 
-				String fragmentEntryLinkId =
-					fragmentEntryLinkIdsJSONArray.getString(0);
-
-				JSONObject fragmentJSONObject = null;
-
-				if (fragmentEntryLinkId.equals(
-						LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
-
-					dropZoneUUID = fragmentUUID;
-
-					fragmentJSONObject = _getItemJSONObject(
-						JSONFactoryUtil.createJSONArray(),
-						JSONFactoryUtil.createJSONObject(),
-						dropZoneUUID.toString(), mainUUID.toString(),
-						LayoutDataItemTypeConstants.TYPE_DROP_ZONE);
-				}
-				else {
-					JSONObject fragmentConfigJSONObject = JSONUtil.put(
-						"fragmentEntryLinkId", fragmentEntryLinkId);
-
-					fragmentJSONObject = _getItemJSONObject(
-						JSONFactoryUtil.createJSONArray(),
-						fragmentConfigJSONObject, fragmentUUID.toString(),
-						mainUUID.toString(),
-						LayoutDataItemTypeConstants.TYPE_FRAGMENT);
-				}
-
-				itemsJSONObject.put(
-					fragmentUUID.toString(), fragmentJSONObject);
+				_addFragmentEntryLink(
+					fragmentEntryLinkIdsJSONArray.getString(0),
+					inputDataJSONObject, layoutStructure,
+					rootLayoutStructureItem.getItemId(), i);
 			}
 		}
 
-		JSONObject mainJSONObject = _getItemJSONObject(
-			mainChildrenJSONArray, JSONFactoryUtil.createJSONObject(),
-			mainUUID.toString(), StringPool.BLANK,
-			LayoutDataItemTypeConstants.TYPE_ROOT);
+		JSONObject layoutStructureJSONObject = layoutStructure.toJSONObject();
 
-		itemsJSONObject.put(mainUUID.toString(), mainJSONObject);
-
-		JSONObject rootItemsJSONObject = JSONUtil.put(
-			"main", mainUUID.toString());
-
-		if (dropZoneUUID != null) {
-			rootItemsJSONObject.put("dropZone", dropZoneUUID.toString());
-		}
-
-		JSONObject outputDataJSONObject = JSONUtil.put(
-			"items", itemsJSONObject
-		).put(
-			"rootItems", rootItemsJSONObject
-		).put(
-			"version", LATEST_VERSION
-		);
-
-		return outputDataJSONObject.toJSONString();
+		return layoutStructureJSONObject.toString();
 	}
 
 	public static boolean isLatestVersion(JSONObject dataJSONObject) {
@@ -274,6 +169,35 @@ public class LayoutDataConverter {
 		}
 
 		return false;
+	}
+
+	private static void _addFragmentEntryLink(
+		String fragmentEntryLinkId, JSONObject inputDataJSONObject,
+		LayoutStructure layoutStructure, String parentItemId, int position) {
+
+		if (fragmentEntryLinkId.equals(
+				LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
+
+			DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+				(DropZoneLayoutStructureItem)
+					layoutStructure.addDropZoneLayoutStructureItem(
+						parentItemId, position);
+
+			dropZoneLayoutStructureItem.setAllowNewFragmentEntries(
+				inputDataJSONObject.getBoolean(
+					"allowNewFragmentEntries", true));
+
+			JSONArray fragmentEntryKeysJSONArray =
+				inputDataJSONObject.getJSONArray("fragmentEntryKeys");
+
+			dropZoneLayoutStructureItem.setFragmentEntryKeys(
+				JSONUtil.toStringList(fragmentEntryKeysJSONArray));
+
+			return;
+		}
+
+		layoutStructure.addFragmentLayoutStructureItem(
+			GetterUtil.getLong(fragmentEntryLinkId), parentItemId, position);
 	}
 
 	private static JSONObject _getBackgroundImageJSONObject(
@@ -291,23 +215,6 @@ public class LayoutDataConverter {
 		}
 
 		return JSONUtil.put("url", backgroundImage);
-	}
-
-	private static JSONObject _getItemJSONObject(
-		JSONArray childrenJSONArray, JSONObject configJSONObject, String itemId,
-		String parentId, String type) {
-
-		return JSONUtil.put(
-			"children", childrenJSONArray
-		).put(
-			"config", configJSONObject
-		).put(
-			"itemId", itemId
-		).put(
-			"parentId", parentId
-		).put(
-			"type", type
-		);
 	}
 
 }

@@ -33,6 +33,25 @@ definition {
 		}
 	}
 
+	macro configureApplication {
+		if ("${status}" == "Enabled") {
+			for (var applicationList : list "${applicationList}") {
+				Check(
+					checkboxName = "${applicationList}",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+		else if ("${status}" == "Disabled") {
+			for (var applicationList : list "${applicationList}") {
+				Uncheck(
+					checkboxName = "${applicationList}",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+
+		PortletEntry.save();
+	}
+
 	macro configureAutoTagging {
 		if ("${autoTagging}" == "Enabled") {
 			Check.checkToggleSwitch(
@@ -42,6 +61,60 @@ definition {
 		else if ("${autoTagging}" == "Disabled") {
 			Uncheck.uncheckToggleSwitch(
 				key_toggleSwitchLabel = "Enable Auto Tagging of Assets on This Repository",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		PortletEntry.save();
+	}
+
+	macro configureCurrentLanguages {
+		for (var language : list "English (United States),Arabic (Saudi Arabia),Catalan (Spain),Chinese (China),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain),Swedish (Sweden)") {
+			if ("${language}" != "${defaultDepotLanguage}") {
+				if (IsElementPresent(locator1 = "Checkbox#DEPOT_LANGUAGE_CHECKBOX_CHECKED", key_language = "${language}")) {
+					Click.clickNoMouseOverNoWaitForVisible(
+						key_language = "${language}",
+						locator1 = "Checkbox#DEPOT_LANGUAGE_CHECKBOX");
+				}
+			}
+		}
+
+		for (var currentLanguage : list "${currentLanguages}" ) {
+			if ("${currentLanguage}" != "${defaultDepotLanguage}") {
+				Click.clickNoMouseOverNoWaitForVisible(
+					key_language = "${currentLanguage}",
+					locator1 = "Checkbox#DEPOT_LANGUAGE_CHECKBOX");
+			}
+		}
+
+		Click(locator1 = "Button#DEPOT_LANGUAGES_MANAGEMENT_PANEL_SAVE");
+	}
+
+	macro configureDefaultLanguage {
+		Click(
+			key_language = "${defaultDepotLanguage}",
+			locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
+
+		Click.clickNoMouseOverNoWaitForVisible(
+			key_language = "${locale}",
+			locator1 = "Button#MAKE_DEFAULT");
+
+		Button.click(button = "Save");
+
+		AssertTextEquals.assertPartialText(
+			key_language = "${defaultDepotLanguage}",
+			locator1 = "LanguageConfiguration#DEPOT_DEFAULT_LANGUAGE",
+			value1 = "${defaultDepotLanguage}");
+	}
+
+	macro configureDirectoryIndexing {
+		if ("${directoryIndexing}" == "Enabled") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Enable Directory Indexing",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${directoryIndexing}" == "Disabled") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Enable Directory Indexing",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
@@ -220,6 +293,29 @@ definition {
 		}
 	}
 
+	macro viewApplication {
+		if (isSet(noApplication)) {
+			for (var applicationList : list "${applicationList}") {
+				AssertElementNotPresent(
+					key_portlet = "${applicationList}",
+					locator1 = "ProductMenu#PORTLET");
+			}
+		}
+		else {
+			for (var applicationList : list "${applicationList}") {
+				if (IsElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED")) {
+					Click.clickNoSPARefresh(locator1 = "ProductMenu#TOGGLE");
+				}
+
+				ProductMenuHelper.expandCategory(category = "Content &amp; Data");
+
+				AssertVisible(
+					key_portlet = "${applicationList}",
+					locator1 = "ProductMenu#PORTLET");
+			}
+		}
+	}
+
 	macro viewConnectedSite {
 		for (var siteName : list "${siteList}") {
 			AssertElementPresent(
@@ -235,16 +331,22 @@ definition {
 	}
 
 	macro viewCurrentLanguages {
-		AssertTextEquals(
-			key_title = "Available Languages",
-			locator1 = "Header#H4_SPECIFIC_TITLE",
-			value1 = "Available Languages");
-
 		for (var currentLanguage : list "${currentLanguages}") {
 			AssertTextEquals.assertPartialText(
-				locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
+				key_language = "${currentLanguage}",
+				locator1 = "LanguageConfiguration#DEPOT_AVAILABLE_LANGUAGES",
 				value1 = "${currentLanguage}");
 		}
+
+		Button.click(button = "Manage");
+
+		for (var currentLanguage : list "${currentLanguages}") {
+			AssertChecked.assertCheckedNotVisible(
+				key_language = "${currentLanguage}",
+				locator1 = "Checkbox#DEPOT_LANGUAGE_CHECKBOX");
+		}
+
+		Click(locator1 = "Icon#TIMES");
 	}
 
 	macro viewDefaultCP {
@@ -254,12 +356,23 @@ definition {
 	}
 
 	macro viewDefaultLanguage {
-		AssertTextEquals(
-			key_title = "Default Language",
-			locator1 = "Header#H4_SPECIFIC_TITLE",
-			value1 = "Default Language");
+		AssertTextEquals.assertPartialText(
+			key_language = "${defaultDepotLanguage}",
+			locator1 = "LanguageConfiguration#DEPOT_DEFAULT_LANGUAGE",
+			value1 = "${defaultDepotLanguage}");
 
-		PortalSettings.viewDefaultLanguageCP(defaultPortalLanguage = "${defaultDepotLanguage}");
+		Button.click(button = "Manage");
+
+		AssertTextEquals.assertPartialText(
+			key_language = "${defaultDepotLanguage}",
+			locator1 = "LanguageConfiguration#DEPOT_MANAGEMENT_PANEL_DEFAULT_LANGUAGE",
+			value1 = "${defaultDepotLanguage}");
+
+		AssertElementPresent(
+			key_language = "${defaultDepotLanguage}",
+			locator1 = "Checkbox#DEPOT_DEFAULT_LANGUAGE_CHECKBOX_DISABLED");
+
+		Click(locator1 = "Icon#TIMES");
 	}
 
 	macro viewDefaultLanguagesConfiguration {
@@ -271,27 +384,36 @@ definition {
 			key_languagesOption = "Define a custom default language and additional available languages for this repository.",
 			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
 
-		AssertTextEquals(
-			key_titleName = "Default Language",
-			locator1 = "LanguageConfiguration#DEPOT_MUTED_TITLE",
-			value1 = "Default Language");
-
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_language = "English (United States)",
-			locator1 = "LanguageConfiguration#DEPOT_MUTED_DEFAULT_LANGUAGE",
+			locator1 = "LanguageConfiguration#DEPOT_DEFAULT_LANGUAGE",
 			value1 = "English (United States)");
 
-		AssertTextEquals(
-			key_titleName = "Available Languages",
-			locator1 = "LanguageConfiguration#DEPOT_MUTED_TITLE",
-			value1 = "Available Languages");
-
-		AssertTextEquals(
-			key_languages = "English (United States), Arabic (Saudi Arabia), Catalan (Spain), Chinese (China), Dutch (Netherlands), Finnish (Finland), French (France), German (Germany), Hungarian (Hungary), Japanese (Japan), Portuguese (Brazil), Spanish (Spain), Swedish (Sweden)",
-			locator1 = "LanguageConfiguration#DEPOT_MUTED_AVAILABLE_LANGUAGES",
-			value1 = "English (United States), Arabic (Saudi Arabia), Catalan (Spain), Chinese (China), Dutch (Netherlands), Finnish (Finland), French (France), German (Germany), Hungarian (Hungary), Japanese (Japan), Portuguese (Brazil), Spanish (Spain), Swedish (Sweden)");
+		for (var language : list "English (United States),Arabic (Saudi Arabia),Catalan (Spain),Chinese (China),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain),Swedish (Sweden)") {
+			AssertTextEquals.assertPartialText(
+				key_language = "${language}",
+				locator1 = "LanguageConfiguration#DEPOT_AVAILABLE_LANGUAGES",
+				value1 = "${language}");
+		}
 
 		AssertElementPresent(locator1 = "Button#SAVE");
+	}
+
+	macro viewDocumentInFTP {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${depotName}");
+
+		if (isSet(dmFolderName)) {
+			Click(
+				key_dmDocumentName = "${dmFolderName}",
+				locator1 = "Link#DOCUMENT_IN_FTP");
+		}
+
+		AssertTextEquals(
+			key_dmDocumentName = "${dmDocumentTitle}",
+			locator1 = "Link#DOCUMENT_IN_FTP",
+			value1 = "${dmDocumentTitle}");
 	}
 
 	macro viewGeneralLanguageOptions {
@@ -346,6 +468,22 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_DEPOT",
 			value1 = "No sites are connected yet.");
+	}
+
+	macro viewNoDocumentInFTP {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${depotName}");
+
+		if (isSet(dmFolderName)) {
+			Click(
+				key_dmDocumentName = "${dmFolderName}",
+				locator1 = "Link#DOCUMENT_IN_FTP");
+		}
+
+		AssertElementNotPresent(
+			key_dmDocumentName = "${dmDocumentTitle}",
+			locator1 = "Link#DOCUMENT_IN_FTP");
 	}
 
 	macro viewSearchResult {

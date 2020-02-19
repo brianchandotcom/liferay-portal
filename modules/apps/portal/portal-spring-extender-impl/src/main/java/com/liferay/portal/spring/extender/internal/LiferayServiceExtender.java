@@ -177,8 +177,8 @@ public class LiferayServiceExtender
 						_extendeeBundle.getSymbolicName())));
 		}
 
-		private LiferayServiceExtension(Bundle bundle) {
-			_extendeeBundle = bundle;
+		private LiferayServiceExtension(Bundle extendeeBundle) {
+			_extendeeBundle = extendeeBundle;
 		}
 
 		private DefaultTransactionExecutor _getTransactionExecutor(

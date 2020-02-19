@@ -37,11 +37,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -80,67 +78,65 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class DuplicateItemMVCActionCommand extends BaseMVCActionCommand {
+public class DuplicateItemMVCActionCommand
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		try {
-			jsonObject = _addDuplicateFragmentEntryLinkToLayoutDataJSONObject(
+		JSONObject jsonObject =
+			_addDuplicateFragmentEntryLinkToLayoutDataJSONObject(
 				actionRequest, actionResponse);
 
-			SessionMessages.add(actionRequest, "fragmentEntryLinkDuplicated");
+		SessionMessages.add(actionRequest, "fragmentEntryLinkDuplicated");
+
+		return jsonObject;
+	}
+
+	@Override
+	protected JSONObject processException(
+		ActionRequest actionRequest, Exception exception) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String errorMessage = StringPool.BLANK;
+
+		if (exception instanceof NoSuchEntryLinkException) {
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(),
+				"the-section-could-not-be-duplicated-because-it-has-been-" +
+					"deleted");
 		}
-		catch (Exception exception) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		else if (exception instanceof NoninstanceablePortletException) {
+			NoninstanceablePortletException noninstanceablePortletException =
+				(NoninstanceablePortletException)exception;
 
-			String errorMessage = StringPool.BLANK;
+			Portlet portlet = _portletLocalService.getPortletById(
+				themeDisplay.getCompanyId(),
+				noninstanceablePortletException.getPortletId());
 
-			if (exception instanceof NoSuchEntryLinkException) {
-				errorMessage = LanguageUtil.get(
-					themeDisplay.getRequest(),
-					"the-section-could-not-be-duplicated-because-it-has-been-" +
-						"deleted");
-			}
-			else if (exception instanceof NoninstanceablePortletException) {
-				NoninstanceablePortletException
-					noninstanceablePortletException =
-						(NoninstanceablePortletException)exception;
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(actionRequest);
 
-				Portlet portlet = _portletLocalService.getPortletById(
-					themeDisplay.getCompanyId(),
-					noninstanceablePortletException.getPortletId());
+			HttpSession httpSession = httpServletRequest.getSession();
 
-				HttpServletRequest httpServletRequest =
-					_portal.getHttpServletRequest(actionRequest);
-
-				HttpSession httpSession = httpServletRequest.getSession();
-
-				errorMessage = LanguageUtil.format(
-					themeDisplay.getRequest(),
-					"the-layout-could-not-be-duplicated-because-it-contains-" +
-						"a-widget-x-that-can-only-appear-once-in-the-page",
-					_portal.getPortletTitle(
-						portlet, httpSession.getServletContext(),
-						themeDisplay.getLocale()));
-			}
-			else {
-				errorMessage = LanguageUtil.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred");
-			}
-
-			jsonObject.put("error", errorMessage);
+			errorMessage = LanguageUtil.format(
+				themeDisplay.getRequest(),
+				"the-layout-could-not-be-duplicated-because-it-contains-a-" +
+					"widget-x-that-can-only-appear-once-in-the-page",
+				_portal.getPortletTitle(
+					portlet, httpSession.getServletContext(),
+					themeDisplay.getLocale()));
+		}
+		else {
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(), "an-unexpected-error-occurred");
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		return JSONUtil.put("error", errorMessage);
 	}
 
 	private JSONObject _addDuplicateFragmentEntryLinkToLayoutDataJSONObject(

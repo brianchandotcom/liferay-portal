@@ -10,5 +10,8 @@ $collapseMarginBottom: $pageEditorSpacing * 2;
 		border-color: $collapseLineColor;
 		font-size: 0.75rem;
 		margin-bottom: $collapseMarginBottom;
+		padding-left: 0;
+		text-align: left;
+		width: 100%;
 	}
 }

@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -90,13 +90,14 @@ public class AssetBrowserManagementToolbarDisplayContext
 			return null;
 		}
 
-		return CreationMenuUtil.addPrimaryDropdownItem(
+		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(addButtonURL);
 				dropdownItem.setLabel(
 					LanguageUtil.format(
 						request, "add-x", _getAddButtonLabel(), false));
-			});
+			}
+		).build();
 	}
 
 	@Override

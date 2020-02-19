@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CustomValue {
+public class CustomValue implements Cloneable {
 
 	public Object getData() {
 		return data;
@@ -88,6 +88,11 @@ public class CustomValue {
 	}
 
 	protected Geo geo;
+
+	@Override
+	public CustomValue clone() throws CloneNotSupportedException {
+		return (CustomValue)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

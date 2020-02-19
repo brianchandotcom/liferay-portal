@@ -48,7 +48,7 @@ function getFormData({portletNamespace}, body) {
 export default function serviceFetch(
 	config,
 	url,
-	{body, method, ...options} = {body: {}},
+	{body = {}, method, ...options} = {body: {}},
 	onNetworkStatus,
 	{requestGenerateDraft = false} = {requestGenerateDraft: false}
 ) {

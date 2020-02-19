@@ -74,8 +74,8 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 			NodeExtension nodeExtension = GradleUtil.getExtension(
 				project, NodeExtension.class);
 
-			nodeExtension.setNodeVersion("8.10.0");
-			nodeExtension.setNpmVersion("5.7.1");
+			nodeExtension.setNodeVersion("8.15.0");
+			nodeExtension.setNpmVersion("6.4.1");
 		}
 	}
 

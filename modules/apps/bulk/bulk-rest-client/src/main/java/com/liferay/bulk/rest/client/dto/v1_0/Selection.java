@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Selection {
+public class Selection implements Cloneable {
 
 	public Long getSize() {
 		return size;
@@ -46,6 +46,11 @@ public class Selection {
 	}
 
 	protected Long size;
+
+	@Override
+	public Selection clone() throws CloneNotSupportedException {
+		return (Selection)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

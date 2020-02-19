@@ -15,7 +15,6 @@
 package com.liferay.layout.admin.web.internal.portlet;
 
 import com.liferay.application.list.GroupProvider;
-import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
@@ -24,6 +23,7 @@ import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfig
 import com.liferay.layout.admin.web.internal.configuration.LayoutEditorTypeConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
+import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminReactDisplayContext;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -187,22 +187,19 @@ public class GroupPagesPortlet extends MVCPortlet {
 			}
 
 			renderRequest.setAttribute(
-				ApplicationListWebKeys.GROUP_PROVIDER, _groupProvider);
-			renderRequest.setAttribute(
-				LayoutAdminWebKeys.LAYOUT_CONVERTER_REGISTRY,
-				_layoutConverterRegistry);
-			renderRequest.setAttribute(
-				LayoutAdminWebKeys.LAYOUT_COPY_HELPER, _layoutCopyHelper);
-			renderRequest.setAttribute(
-				LayoutEditorTypeConfiguration.class.getName(),
-				_layoutEditorTypeConfiguration);
-			renderRequest.setAttribute(
-				StagingGroupHelper.class.getName(), _stagingGroupHelper);
-
-			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT,
 				new LayoutsAdminDisplayContext(
-					_layoutConverterConfiguration,
+					_layoutConverterConfiguration, _layoutConverterRegistry,
+					_layoutCopyHelper, _layoutEditorTypeConfiguration,
+					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse),
+					_stagingGroupHelper));
+			renderRequest.setAttribute(
+				LayoutAdminWebKeys.
+					LAYOUT_PAGE_LAYOUT_ADMIN_REACT_DISPLAY_CONTEXT,
+				new LayoutsAdminReactDisplayContext(
+					_layoutConverterConfiguration, _layoutConverterRegistry,
+					_layoutCopyHelper, _layoutEditorTypeConfiguration,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
 					_stagingGroupHelper));

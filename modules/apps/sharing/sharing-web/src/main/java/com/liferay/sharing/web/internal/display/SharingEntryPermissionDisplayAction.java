@@ -26,15 +26,14 @@ import java.util.Objects;
 public enum SharingEntryPermissionDisplayAction {
 
 	COMMENTS(
-		"COMMENTS", "comment", "collaborators-can-comment-on-the-document",
+		"COMMENTS", "comment", "collaborators-can-comment-on-the-item",
 		"comment", SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.VIEW),
 	UPDATE(
-		"UPDATE", "update",
-		"collaborators-can-view-comment-update-the-document", "update",
-		SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.UPDATE,
+		"UPDATE", "update", "collaborators-can-view-comment-update-the-item",
+		"update", SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.UPDATE,
 		SharingEntryAction.VIEW),
 	VIEW(
-		"VIEW", "view", "collaborators-can-only-view-the-document", "view",
+		"VIEW", "view", "collaborators-can-only-view-the-item", "view",
 		SharingEntryAction.VIEW);
 
 	public static SharingEntryPermissionDisplayAction parseFromActionId(

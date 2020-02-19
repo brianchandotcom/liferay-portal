@@ -15,6 +15,10 @@
 import ClayButton from '@clayui/button';
 import React, {useContext, useEffect, useMemo} from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useSelector} from '../../store/index';
@@ -23,91 +27,100 @@ import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
 import {ResizingContext} from './RowWithControls';
 
-function ColumnWithControls({children, item, layoutData}, ref) {
-	const isActive = useIsActive();
-	const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
+const ColumnWithControls = React.forwardRef(
+	({children, item, layoutData}, ref) => {
+		const isActive = useIsActive();
+		const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
 
-	const parentItemIsActive = useMemo(
-		() =>
-			layoutData.items[item.parentId] ? isActive(item.parentId) : false,
-		[isActive, item, layoutData]
-	);
+		const parentItemIsActive = useMemo(
+			() =>
+				layoutData.items[item.parentId]
+					? isActive(item.parentId)
+					: false,
+			[isActive, item, layoutData]
+		);
 
-	const {onResizeEnd, onResizeStart, onResizing} = useContext(
-		ResizingContext
-	);
+		const {onResizeEnd, onResizeStart, onResizing} = useContext(
+			ResizingContext
+		);
 
-	const columnInfo = useMemo(() => getColumnInfo({item, layoutData}), [
-		item,
-		layoutData
-	]);
+		const columnInfo = useMemo(() => getColumnInfo({item, layoutData}), [
+			item,
+			layoutData
+		]);
 
-	const onWindowMouseMove = event => {
-		event.preventDefault();
+		const onWindowMouseMove = event => {
+			event.preventDefault();
 
-		onResizing(event, columnInfo);
-	};
+			onResizing(event, columnInfo);
+		};
 
-	const onWindowMouseUp = event => {
-		onResizeEnd(event);
+		const onWindowMouseUp = event => {
+			onResizeEnd(event);
 
-		window.removeEventListener('mouseup', onWindowMouseUp);
-		window.removeEventListener('mousemove', onWindowMouseMove);
-	};
-
-	const onResizeButtonMouseDown = event => {
-		onResizeStart(event);
-
-		window.addEventListener('mouseup', onWindowMouseUp);
-		window.addEventListener('mousemove', onWindowMouseMove);
-	};
-
-	useEffect(
-		() => () => {
 			window.removeEventListener('mouseup', onWindowMouseUp);
 			window.removeEventListener('mousemove', onWindowMouseMove);
-		},
+		};
 
-		// We just want to ensure that this listeners are removed if
-		// the component is unmounted before resizing has ended
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
-	);
+		const onResizeButtonMouseDown = event => {
+			onResizeStart(event);
 
-	const content = (
-		<Column className="page-editor__col" item={item} ref={ref}>
-			{parentItemIsActive && !columnInfo.isLastColumn ? (
-				<div>
-					{children}
-					<ClayButton
-						className="page-editor__col__resizer"
-						onMouseDown={onResizeButtonMouseDown}
-					/>
-				</div>
-			) : (
-				children
-			)}
-		</Column>
-	);
+			window.addEventListener('mouseup', onWindowMouseUp);
+			window.addEventListener('mousemove', onWindowMouseMove);
+		};
 
-	return showLayoutItemTopper ? (
-		<TopperEmpty
-			acceptDrop={[
-				LAYOUT_DATA_ITEM_TYPES.dropZone,
-				LAYOUT_DATA_ITEM_TYPES.fragment,
-				LAYOUT_DATA_ITEM_TYPES.row
-			]}
-			item={item}
-			layoutData={layoutData}
-		>
-			{() => content}
-		</TopperEmpty>
-	) : (
-		content
-	);
-}
+		useEffect(
+			() => () => {
+				window.removeEventListener('mouseup', onWindowMouseUp);
+				window.removeEventListener('mousemove', onWindowMouseMove);
+			},
 
-export default React.forwardRef(ColumnWithControls);
+			// We just want to ensure that this listeners are removed if
+			// the component is unmounted before resizing has ended
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			[]
+		);
+
+		const content = (
+			<Column className="page-editor__col" item={item} ref={ref}>
+				{parentItemIsActive && !columnInfo.isLastColumn ? (
+					<div>
+						{children}
+						<ClayButton
+							className="page-editor__col__resizer"
+							onMouseDown={onResizeButtonMouseDown}
+						/>
+					</div>
+				) : (
+					children
+				)}
+			</Column>
+		);
+
+		return showLayoutItemTopper ? (
+			<TopperEmpty
+				acceptDrop={[
+					LAYOUT_DATA_ITEM_TYPES.dropZone,
+					LAYOUT_DATA_ITEM_TYPES.fragment,
+					LAYOUT_DATA_ITEM_TYPES.row
+				]}
+				item={item}
+				layoutData={layoutData}
+			>
+				{() => content}
+			</TopperEmpty>
+		) : (
+			content
+		);
+	}
+);
+
+ColumnWithControls.propTypes = {
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
+
+export default ColumnWithControls;
 
 /**
  * Retrieves necessary data from the current and next column.

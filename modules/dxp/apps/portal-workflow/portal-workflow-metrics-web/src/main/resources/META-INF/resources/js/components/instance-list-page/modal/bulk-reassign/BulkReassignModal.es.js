@@ -144,9 +144,7 @@ const BulkReassignModal = () => {
 				})
 				.catch(() => {
 					setErrorToast(
-						Liferay.Language.get(
-							'your-connection-was-unexpectedly-lost'
-						)
+						Liferay.Language.get('your-request-has-failed')
 					);
 					setFetching(false);
 				});
@@ -186,12 +184,16 @@ const BulkReassignModal = () => {
 					onClose();
 
 					toaster.success(
-						sub(
-							Liferay.Language.get(
-								'x-tasks-have-been-reassigned'
-							),
-							[reassignedTasks.length]
-						)
+						reassignedTasks.length > 1
+							? sub(
+									Liferay.Language.get(
+										'x-tasks-have-been-reassigned'
+									),
+									[reassignedTasks.length]
+							  )
+							: Liferay.Language.get(
+									'this-task-has-been-reassigned'
+							  )
 					);
 
 					setSelectedItems([]);

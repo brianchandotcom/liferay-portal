@@ -18,25 +18,18 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -57,9 +50,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,19 +63,10 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/add_segments_experience"
 	},
-	service = {AopService.class, MVCActionCommand.class}
+	service = MVCActionCommand.class
 )
 public class AddSegmentsExperienceMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
-
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	protected JSONObject addSegmentsExperience(ActionRequest actionRequest)
 		throws PortalException {
@@ -147,36 +128,11 @@ public class AddSegmentsExperienceMVCActionCommand
 	}
 
 	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = addSegmentsExperience(actionRequest);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			HttpServletResponse httpServletResponse =
-				_portal.getHttpServletResponse(actionResponse);
-
-			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
-			jsonObject = JSONUtil.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
-		}
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		return addSegmentsExperience(actionRequest);
 	}
 
 	private SegmentsExperience _addSegmentsExperience(
@@ -339,9 +295,6 @@ public class AddSegmentsExperienceMVCActionCommand
 				"split", segmentsExperimentRel.getSplit()
 			));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddSegmentsExperienceMVCActionCommand.class);
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

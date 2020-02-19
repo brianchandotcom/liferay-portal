@@ -371,9 +371,11 @@ public abstract class BaseOrganizationResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						organization1, entityField.getName(), "Aaa");
+						organization1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						organization2, entityField.getName(), "Bbb");
+						organization2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -633,8 +635,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization patchOrganization = organizationResource.patchOrganization(
 			postOrganization.getId(), randomPatchOrganization);
 
-		Organization expectedPatchOrganization =
-			(Organization)BeanUtils.cloneBean(postOrganization);
+		Organization expectedPatchOrganization = postOrganization.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchOrganization, randomPatchOrganization);
@@ -906,9 +907,11 @@ public abstract class BaseOrganizationResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						organization1, entityField.getName(), "Aaa");
+						organization1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						organization2, entityField.getName(), "Bbb");
+						organization2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

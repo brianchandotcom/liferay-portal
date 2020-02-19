@@ -26,6 +26,6 @@ SharingConfiguration groupSharingConfiguration = (SharingConfiguration)request.g
 		cssClass="panel-group-flush"
 		label='<%= LanguageUtil.get(request, "sharing") %>'
 	>
-		<aui:input label="enabled" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= groupSharingConfiguration.isEnabled() %>" />
+		<aui:input helpMessage="asset-library-sharing-help" label="asset-library-sharing-enabled" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= groupSharingConfiguration.isEnabled() %>" />
 	</liferay-frontend:fieldset>
 </c:if>

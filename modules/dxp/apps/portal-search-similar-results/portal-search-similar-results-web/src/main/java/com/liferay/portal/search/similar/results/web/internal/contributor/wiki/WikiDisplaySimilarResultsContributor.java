@@ -15,6 +15,7 @@
 package com.liferay.portal.search.similar.results.web.internal.contributor.wiki;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.similar.results.web.internal.util.http.HttpHelper;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
@@ -53,26 +54,31 @@ public class WikiDisplaySimilarResultsContributor
 	}
 
 	@Reference(unbind = "-")
-	public void setAssetEntryLocalService(
+	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 
 		super.setAssetEntryLocalService(assetEntryLocalService);
 	}
 
 	@Reference(unbind = "-")
-	public void setHttpHelper(HttpHelper httpHelper) {
+	protected void setHttpHelper(HttpHelper httpHelper) {
 		_httpHelper = httpHelper;
 	}
 
 	@Reference(unbind = "-")
-	public void setWikiNodeLocalService(
+	protected void setUIDFactory(UIDFactory uidFactory) {
+		super.setUIDFactory(uidFactory);
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
 		WikiNodeLocalService wikiNodeLocalService) {
 
 		super.setWikiNodeLocalService(wikiNodeLocalService);
 	}
 
 	@Reference(unbind = "-")
-	public void setWikiPageLocalService(
+	protected void setWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
 
 		super.setWikiPageLocalService(wikiPageLocalService);

@@ -29,6 +29,9 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 			<li class="nav-item">
 				<button class="btn btn-secondary btn-sm mr-3" disabled type="submit">
 					<c:choose>
+						<c:when test="<%= contentPageEditorDisplayContext.isConversionDraft() %>">
+							<liferay-ui:message key="discard-conversion-draft" />
+						</c:when>
 						<c:when test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
 							<liferay-ui:message key="discard-variant" />
 						</c:when>

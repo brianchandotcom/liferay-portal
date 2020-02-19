@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContentStructure {
+public class ContentStructure implements Cloneable {
 
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -261,6 +261,11 @@ public class ContentStructure {
 	}
 
 	protected Long siteId;
+
+	@Override
+	public ContentStructure clone() throws CloneNotSupportedException {
+		return (ContentStructure)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

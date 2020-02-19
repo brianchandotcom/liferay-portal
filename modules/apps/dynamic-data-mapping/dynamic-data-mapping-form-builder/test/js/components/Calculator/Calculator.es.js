@@ -66,6 +66,13 @@ describe('Calculator', () => {
 		beforeEach(() => {
 			jest.useFakeTimers();
 
+			window.Liferay = {
+				...(window.Liferay || {}),
+				Browser: {
+					isIe: () => false
+				}
+			};
+
 			component = new Calculator(getBaseConfig());
 		});
 

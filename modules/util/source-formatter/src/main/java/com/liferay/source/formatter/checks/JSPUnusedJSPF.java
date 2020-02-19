@@ -24,7 +24,7 @@ import java.util.Set;
 /**
  * @author Hugo Huijser
  */
-public class JSPUnusedJSPF extends JSPTermsBaseCheck {
+public class JSPUnusedJSPF extends BaseJSPTermsCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {

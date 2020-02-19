@@ -2,8 +2,8 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="BuilderCheck" files="modules/core/portal-bootstrap/src/main/java/com/liferay/portal/bootstrap/ModuleFrameworkImpl\.java" />
-		<suppress checks="BuilderCheck" files="modules/core/registry-test/.*" />
+		<suppress checks="MapBuilderCheck" files="modules/core/portal-bootstrap/src/main/java/com/liferay/portal/bootstrap/ModuleFrameworkImpl\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/core/registry-test/.*" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDDefinitionKeysCheck" files="modules/core/portal-bootstrap/system.packages.extra.bnd" />

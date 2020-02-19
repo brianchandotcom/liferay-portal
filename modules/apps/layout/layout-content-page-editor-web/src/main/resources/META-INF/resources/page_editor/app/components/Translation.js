@@ -15,6 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
 import {updateLanguageId} from '../actions/index';
@@ -211,3 +212,16 @@ export default function Translation({
 		</ClayDropDown>
 	);
 }
+
+Translation.propTypes = {
+	availableLanguages: PropTypes.objectOf(
+		PropTypes.shape({
+			languageIcon: PropTypes.string.isRequired,
+			languageLabel: PropTypes.string.isRequired
+		})
+	).isRequired,
+	defaultLanguageId: PropTypes.string.isRequired,
+	dispatch: PropTypes.func.isRequired,
+	fragmentEntryLinks: PropTypes.object.isRequired,
+	languageId: PropTypes.string.isRequired
+};

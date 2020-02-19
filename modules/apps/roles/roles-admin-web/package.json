@@ -1,6 +1,12 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
+		"@clayui/button": "3.2.0",
+		"@clayui/icon": "3.0.3",
+		"@clayui/label": "3.0.3",
+		"frontend-js-react-web": "*",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
 	},
 	"name": "roles-admin-web",
 	"scripts": {

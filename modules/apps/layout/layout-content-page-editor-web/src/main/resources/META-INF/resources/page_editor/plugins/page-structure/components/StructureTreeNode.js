@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {
@@ -106,3 +107,11 @@ export default function StructureTreeNode({node}) {
 		</div>
 	);
 }
+
+StructureTreeNode.propTypes = {
+	node: PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
+		removable: PropTypes.bool
+	}).isRequired
+};

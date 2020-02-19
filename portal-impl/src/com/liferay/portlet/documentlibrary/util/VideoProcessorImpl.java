@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListene
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -336,8 +337,13 @@ public class VideoProcessorImpl
 						new LiferayVideoThumbnailProcessCallable(
 							ServerDetector.getServerId(),
 							PropsUtil.get(PropsKeys.LIFERAY_HOME),
-							Log4JUtil.getCustomLogSettings(), file,
-							thumbnailTempFile, THUMBNAIL_TYPE, height, width,
+							HashMapBuilder.putAll(
+								Log4JUtil.getCustomLogSettings()
+							).put(
+								PropsUtil.class.getName(), "WARN"
+							).build(),
+							file, thumbnailTempFile, THUMBNAIL_TYPE, height,
+							width,
 							PropsValues.
 								DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
 

@@ -15,3 +15,4 @@
 --%>
 
 <liferay-ui:error exception="<%= DataProviderInstanceURLException.class %>" message="url-must-not-be-a-local-network" />
+<liferay-ui:error exception="<%= DuplicateDataProviderInstanceInputParameterNameException.class %>" message="data-provider-input-parameter-names-must-be-unique" />

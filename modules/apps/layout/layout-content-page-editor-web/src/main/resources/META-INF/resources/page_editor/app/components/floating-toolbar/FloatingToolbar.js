@@ -16,17 +16,15 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {Align} from 'metal-position';
-import React, {
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-	useState
-} from 'react';
+import PropTypes from 'prop-types';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import debounceRAF from '../../../core/debounceRAF';
+import {
+	getEditableItemPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {EDITABLE_FLOATING_TOOLBAR_CLASSNAMES} from '../../config/constants/editableFloatingToolbarClassNames';
 import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../../config/constants/floatingToolbarConfigurations';
 import {useIsActive} from '../Controls';
@@ -42,7 +40,7 @@ export default function FloatingToolbar({
 	const panelRef = useRef(null);
 	const show = useIsActive()(item.itemId);
 	const toolbarRef = useRef(null);
-	const [wrapperScrollPosition, setWrapperScrollPosition] = useState(0);
+	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 	const [windowWidth, setWindowWidth] = useState(0);
 
 	const PanelComponent = useMemo(
@@ -94,26 +92,24 @@ export default function FloatingToolbar({
 	);
 
 	useEffect(() => {
-		const wrapper = document.getElementById('wrapper');
-
 		const handleWindowResize = debounceRAF(() => {
 			setWindowWidth(window.innerWidth);
 		});
 
-		const handleWrapperScroll = debounceRAF(() => {
-			setWrapperScrollPosition(wrapper.scrollTop);
+		const handleWindowScroll = debounceRAF(() => {
+			setWindowScrollPosition(window.scrollY);
 		});
 
 		window.addEventListener('resize', handleWindowResize);
-		wrapper.addEventListener('scroll', handleWrapperScroll);
+		window.addEventListener('scroll', handleWindowScroll);
 
 		return () => {
 			window.removeEventListener('resize', handleWindowResize);
-			wrapper.removeEventListener('scroll', handleWrapperScroll);
+			window.removeEventListener('scroll', handleWindowScroll);
 		};
 	}, []);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		alignElement(toolbarRef, itemRef, () => {
 			alignElement(panelRef, toolbarRef);
 		});
@@ -122,8 +118,8 @@ export default function FloatingToolbar({
 		itemRef,
 		panelId,
 		show,
-		windowWidth,
-		wrapperScrollPosition
+		windowScrollPosition,
+		windowWidth
 	]);
 
 	useEffect(() => {
@@ -137,7 +133,10 @@ export default function FloatingToolbar({
 		buttons.length > 0 && (
 			<div onClick={event => event.stopPropagation()}>
 				{createPortal(
-					<div className="p-2 position-fixed" ref={toolbarRef}>
+					<div
+						className="p-2 page-editor__floating-toolbar position-fixed"
+						ref={toolbarRef}
+					>
 						<div className="popover position-static">
 							<div className="p-2 popover-body">
 								{buttons.map(button => (
@@ -190,6 +189,23 @@ export default function FloatingToolbar({
 		)
 	);
 }
+
+FloatingToolbar.propTypes = {
+	buttons: PropTypes.arrayOf(
+		PropTypes.shape({
+			icon: PropTypes.string.isRequired,
+			id: PropTypes.string.isRequired,
+			panelId: PropTypes.string,
+			title: PropTypes.string.isRequired
+		})
+	),
+	item: PropTypes.oneOfType([
+		getEditableItemPropTypes(),
+		getLayoutDataItemPropTypes()
+	]),
+	itemRef: PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+	onButtonClick: PropTypes.func.isRequired
+};
 
 /**
  * @type {object}

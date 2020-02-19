@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaLambdaExpression extends JavaExpression {
+public class JavaLambdaExpression extends BaseJavaExpression {
 
 	public JavaLambdaExpression(
 		List<JavaLambdaParameter> javaLambdaParameters) {

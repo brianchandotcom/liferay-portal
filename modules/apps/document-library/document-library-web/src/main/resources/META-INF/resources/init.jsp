@@ -22,6 +22,7 @@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/comment" prefix="liferay-comment" %><%@
+taglib uri="http://liferay.com/tld/data-engine" prefix="liferay-data-engine" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/document-library" prefix="liferay-document-library" %><%@
 taglib uri="http://liferay.com/tld/dynamic-section" prefix="liferay-dynamic-section" %><%@
@@ -98,6 +99,7 @@ page import="com.liferay.document.library.kernel.util.VideoProcessorUtil" %><%@
 page import="com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException" %><%@
 page import="com.liferay.document.library.preview.exception.DLPreviewSizeException" %><%@
 page import="com.liferay.document.library.util.DLURLHelperUtil" %><%@
+page import="com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil" %><%@
 page import="com.liferay.document.library.web.internal.constants.DLWebKeys" %><%@
 page import="com.liferay.document.library.web.internal.dao.search.DLResultRowSplitter" %><%@
 page import="com.liferay.document.library.web.internal.dao.search.IGResultRowSplitter" %><%@
@@ -140,7 +142,6 @@ page import="com.liferay.dynamic.data.mapping.kernel.StorageFieldRequiredExcepti
 page import="com.liferay.dynamic.data.mapping.kernel.StructureDefinitionException" %><%@
 page import="com.liferay.dynamic.data.mapping.kernel.StructureDuplicateElementException" %><%@
 page import="com.liferay.dynamic.data.mapping.kernel.StructureNameException" %><%@
-page import="com.liferay.dynamic.data.mapping.model.DDMForm" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue" %><%@

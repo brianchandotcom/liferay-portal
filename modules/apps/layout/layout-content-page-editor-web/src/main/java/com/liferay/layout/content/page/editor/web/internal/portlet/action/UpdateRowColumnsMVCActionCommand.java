@@ -19,14 +19,8 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,10 +47,11 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateRowColumnsMVCActionCommand extends BaseMVCActionCommand {
+public class UpdateRowColumnsMVCActionCommand
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -72,56 +67,33 @@ public class UpdateRowColumnsMVCActionCommand extends BaseMVCActionCommand {
 
 		List<Long> deletedFragmentEntryLinkIds = new ArrayList<>();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject layoutDataJSONObject =
+			LayoutStructureUtil.updateLayoutPageTemplateData(
+				themeDisplay.getScopeGroupId(), segmentsExperienceId,
+				themeDisplay.getPlid(),
+				layoutStructure -> {
+					List<LayoutStructureItem> deletedLayoutStructureItems =
+						layoutStructure.updateRowColumnsLayoutStructureItem(
+							itemId, numberOfColumns);
 
-		try {
-			JSONObject layoutDataJSONObject =
-				LayoutStructureUtil.updateLayoutPageTemplateData(
-					themeDisplay.getScopeGroupId(), segmentsExperienceId,
-					themeDisplay.getPlid(),
-					layoutStructure -> {
-						List<LayoutStructureItem> deletedLayoutStructureItems =
-							layoutStructure.updateRowColumnsLayoutStructureItem(
-								itemId, numberOfColumns);
+					for (long fragmentEntryLinkId :
+							LayoutStructureUtil.getFragmentEntryLinkIds(
+								deletedLayoutStructureItems)) {
 
-						for (long fragmentEntryLinkId :
-								LayoutStructureUtil.getFragmentEntryLinkIds(
-									deletedLayoutStructureItems)) {
+						FragmentEntryLinkUtil.deleteFragmentEntryLink(
+							themeDisplay.getCompanyId(), fragmentEntryLinkId,
+							themeDisplay.getPlid(), _portletRegistry);
 
-							FragmentEntryLinkUtil.deleteFragmentEntryLink(
-								themeDisplay.getCompanyId(),
-								fragmentEntryLinkId, themeDisplay.getPlid(),
-								_portletRegistry);
+						deletedFragmentEntryLinkIds.add(fragmentEntryLinkId);
+					}
+				});
 
-							deletedFragmentEntryLinkIds.add(
-								fragmentEntryLinkId);
-						}
-					});
-
-			jsonObject = JSONUtil.put(
-				"deletedFragmentEntryLinkIds",
-				deletedFragmentEntryLinkIds.toArray()
-			).put(
-				"layoutData", layoutDataJSONObject
-			);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
-		}
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		return JSONUtil.put(
+			"deletedFragmentEntryLinkIds", deletedFragmentEntryLinkIds.toArray()
+		).put(
+			"layoutData", layoutDataJSONObject
+		);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateRowColumnsMVCActionCommand.class);
 
 	@Reference
 	private PortletRegistry _portletRegistry;

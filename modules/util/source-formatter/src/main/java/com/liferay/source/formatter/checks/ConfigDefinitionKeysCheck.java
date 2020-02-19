@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 /**
  * @author Peter Shin
  */
-public class ConfigDefinitionKeysCheck extends DefinitionKeysCheck {
+public class ConfigDefinitionKeysCheck extends BaseDefinitionKeysCheck {
 
 	@Override
 	protected String doProcess(

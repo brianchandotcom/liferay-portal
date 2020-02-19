@@ -388,9 +388,11 @@ public abstract class BaseWikiNodeResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						wikiNode1, entityField.getName(), "Aaa");
+						wikiNode1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						wikiNode2, entityField.getName(), "Bbb");
+						wikiNode2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

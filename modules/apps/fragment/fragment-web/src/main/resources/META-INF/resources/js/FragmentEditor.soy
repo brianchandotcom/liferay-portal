@@ -27,6 +27,8 @@
 		name: string
 	]>}
 	{@param? cacheable: bool}
+	{@param? freeMarkerTaglibs: list<string>}
+	{@param? freeMarkerVariables: list<string>}
 	{@param? _configuration: string}
 	{@param? _css: string}
 	{@param? _handleCacheableChanged: any}
@@ -151,6 +153,8 @@
 					{call com.liferay.fragment.web.SourceEditor.render}
 						{param autocompleteTags: $autocompleteTags /}
 						{param events: ['contentChanged': $_handleHTMLChanged] /}
+						{param freeMarkerTaglibs: $freeMarkerTaglibs /}
+						{param freeMarkerVariables: $freeMarkerVariables /}
 						{param initialContent: $initialHTML /}
 						{param readOnly: $readOnly /}
 						{param spritemap: $spritemap /}

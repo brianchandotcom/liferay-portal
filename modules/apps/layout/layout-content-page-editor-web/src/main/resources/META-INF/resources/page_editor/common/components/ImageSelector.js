@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
@@ -70,3 +71,10 @@ export function ImageSelector({
 		</>
 	);
 }
+
+ImageSelector.propTypes = {
+	imageTitle: PropTypes.string,
+	label: PropTypes.string,
+	onClearButtonPressed: PropTypes.func.isRequired,
+	onImageSelected: PropTypes.func.isRequired
+};

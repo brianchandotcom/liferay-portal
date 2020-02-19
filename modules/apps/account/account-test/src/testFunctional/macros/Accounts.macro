@@ -1,5 +1,35 @@
 definition {
 
+	macro addAssignee {
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(
+			key_accountName = "${accountName}",
+			key_assigneeType = "${assigneeType}",
+			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
+
+		Search.searchCP(searchTerm = "${assigneeName}");
+
+		Check(
+			key_tableEntry = "${assigneeName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.clickAssign();
+
+		Alert.viewSuccessMessage();
+
+		Refresh();
+
+		AssertTextEquals.assertPartialText(
+			key_tableEntry = "${assigneeName}",
+			locator1 = "LexiconTable#TABLE_ENTRY",
+			value1 = "${assigneeName}");
+	}
+
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
@@ -121,6 +151,10 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro gotoAssigneeTab {
+		Navigator.gotoNavItem(navItem = "${assigneeTab}");
+	}
+
 	macro inactiveAccount {
 		Search.searchCP(searchTerm = "${accountName}");
 
@@ -171,20 +205,6 @@ definition {
 			locator1 = "Account#DOMAIN_REMOVE_DOMAIN");
 	}
 
-	macro removeUser {
-		var key_userFirstName = "${userFirstName}";
-
-		Search.searchCP(searchTerm = "${userFirstName}");
-
-		ClickNoError(
-			locator1 = "Icon#REMOVE_USER",
-			value1 = "${userFirstName}");
-
-		AssertConfirm(value1 = "Are you sure you want to remove this user?");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro tearDownCP {
 		ProductMenu.gotoPortlet(
 			category = "Accounts",
@@ -200,6 +220,34 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro unassignAssignee {
+		var key_assigneeName = "${assigneeName}";
+
+		Search.searchCP(searchTerm = "${assigneeName}");
+
+		ClickNoError(
+			locator1 = "Icon#REMOVE_ASSIGNEE",
+			value1 = "${assigneeName}");
+
+		if ("${assigneeType}" == "Users") {
+			var assigneeType = "user";
+		}
+		else if ("${assigneeType}" == "Organizations") {
+			var assigneeType = "organization";
+		}
+
+		AssertConfirm(value1 = "Are you sure you want to remove this ${assigneeType}?");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro viewAssignee {
+		AssertTextEquals.assertPartialText(
+			key_tableEntry = "${assigneeName}",
+			locator1 = "LexiconTable#TABLE_ENTRY",
+			value1 = "${assigneeName}");
+	}
+
 	macro viewInactiveAccount {
 		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
@@ -208,6 +256,18 @@ definition {
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "${accountName}",
 			rowStatus = "INACTIVE");
+	}
+
+	macro viewNoAssignee {
+		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "${assigneeType}");
+
+		var assigneeType = StringUtil.lowerCase("${assigneeType}");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no ${assigneeType} associated with this account.");
 	}
 
 }

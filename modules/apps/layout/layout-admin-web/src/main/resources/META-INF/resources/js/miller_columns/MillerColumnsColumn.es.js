@@ -16,25 +16,26 @@ import React from 'react';
 
 import MillerColumnsColumnItem from './MillerColumnsColumnItem.es';
 
-const MillerColumnsColumn = ({index, items}) => {
-	return (
-		<ul className="col-11 col-lg-4 col-md-6 miller-columns-col show-quick-actions-on-hover">
-			{items.map(item => (
-				<MillerColumnsColumnItem
-					active={item.active}
-					checked={item.checked}
-					description={item.description}
-					draggable={index !== 0}
-					hasChild={item.hasChild}
-					key={item.url}
-					selectable={index !== 0}
-					state={item.state}
-					title={item.title}
-					url={item.url}
-				/>
-			))}
-		</ul>
-	);
-};
+const MillerColumnsColumn = ({items}) => (
+	<ul className="col-11 col-lg-4 col-md-6 miller-columns-col show-quick-actions-on-hover">
+		{items.map(item => (
+			<MillerColumnsColumnItem
+				actions={item.actions}
+				active={item.active}
+				bulkActions={item.bulkActions}
+				checked={item.checked}
+				description={item.description}
+				draggable={item.draggable}
+				hasChild={item.hasChild}
+				itemId={item.id}
+				key={item.url}
+				selectable={item.selectable}
+				states={item.states}
+				title={item.title}
+				url={item.url}
+			/>
+		))}
+	</ul>
+);
 
 export default MillerColumnsColumn;

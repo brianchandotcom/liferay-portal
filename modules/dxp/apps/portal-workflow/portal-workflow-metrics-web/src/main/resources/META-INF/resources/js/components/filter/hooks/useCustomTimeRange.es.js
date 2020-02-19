@@ -22,6 +22,7 @@ import {
 import {useFilter} from '../../../shared/hooks/useFilter.es';
 import {useRouter} from '../../../shared/hooks/useRouter.es';
 import {useRouterParams} from '../../../shared/hooks/useRouterParams.es';
+import {useSessionStorage} from '../../../shared/hooks/useStorage.es';
 import moment from '../../../shared/util/moment.es';
 import {
 	formatDateEnLocale,
@@ -29,78 +30,11 @@ import {
 	parseDateMomentEnLocale
 } from '../util/timeRangeUtil.es';
 
-const useCustomTimeRange = (filterKey, prefixKey = '', withoutRouteParams) => {
-	const [errors, setErrors] = useState(undefined);
-	const {filters} = useRouterParams();
-	const {dispatch, filterState, filterValues} = useFilter({
-		withoutRouteParams
-	});
+const getInitialDate = (timeRanges = [], timeRange, endDate) => {
+	const {dateEnd, dateStart} =
+		timeRanges.find(({id}) => id == timeRange) || {};
 
-	const dateEndKey = getCapitalizedFilterKey(prefixKey, 'dateEnd');
-	const dateStartKey = getCapitalizedFilterKey(prefixKey, 'dateStart');
-	const prefixedFilterKey = getCapitalizedFilterKey(prefixKey, filterKey);
-
-	const values = !withoutRouteParams ? filters : filterValues;
-
-	const [dateEnd, setDateEnd] = useState(
-		formatDateEnLocale(values[dateEndKey])
-	);
-	const [dateStart, setDateStart] = useState(
-		formatDateEnLocale(values[dateStartKey])
-	);
-
-	const routerProps = useRouter();
-
-	const applyCustomFilter = () => {
-		const {dateEnd: dateEndError, dateStart: dateStartError} = errors || {};
-
-		if (!dateEndError && !dateStartError) {
-			const newValue = {
-				[dateEndKey]: formatQueryDate(dateEnd, true),
-				[dateStartKey]: formatQueryDate(dateStart),
-				[prefixedFilterKey]: ['custom']
-			};
-
-			if (!withoutRouteParams) {
-				const query = parse(routerProps.location.search);
-
-				query.filters = {
-					...query.filters,
-					...newValue
-				};
-
-				replaceHistory(stringify(query), routerProps);
-			}
-			else {
-				dispatch({...filterState, ...newValue});
-			}
-		}
-	};
-
-	const validate = () => {
-		const dateEndMoment = parseDateMomentEnLocale(dateEnd);
-		const dateStartMoment = parseDateMomentEnLocale(dateStart);
-
-		const errors = {
-			...validateDate(dateEndMoment, dateStartMoment),
-			...validateEarlierDate(dateEndMoment, dateStartMoment),
-			...validateRangeConsistency(dateEndMoment, dateStartMoment)
-		};
-
-		setErrors(errors);
-
-		return errors;
-	};
-
-	return {
-		applyCustomFilter,
-		dateEnd,
-		dateStart,
-		errors,
-		setDateEnd,
-		setDateStart,
-		validate
-	};
+	return endDate ? dateEnd : dateStart;
 };
 
 const validateDate = (dateEndMoment, dateStartMoment) => {
@@ -182,5 +116,86 @@ const updateErrors = (errors, fieldName, message) => ({
 	...(errors || {}),
 	[fieldName]: message
 });
+
+const useCustomTimeRange = (filterKey, prefixKey = '', withoutRouteParams) => {
+	const [errors, setErrors] = useState(undefined);
+	const {filters} = useRouterParams();
+	const {dispatch, filterState, filterValues} = useFilter({
+		withoutRouteParams
+	});
+	const [storedTimeRanges = {}] = useSessionStorage('timeRanges');
+
+	const {items: timeRanges} = storedTimeRanges;
+
+	const dateEndKey = getCapitalizedFilterKey(prefixKey, 'dateEnd');
+	const dateStartKey = getCapitalizedFilterKey(prefixKey, 'dateStart');
+	const prefixedFilterKey = getCapitalizedFilterKey(prefixKey, filterKey);
+
+	const values = !withoutRouteParams ? filters : filterValues;
+
+	const timeRange = values[prefixedFilterKey] || [];
+	const initialDateEnd = getInitialDate(timeRanges, timeRange[0], true);
+	const initialDateStart = getInitialDate(timeRanges, timeRange[0]);
+
+	const [dateEnd, setDateEnd] = useState(
+		formatDateEnLocale(values[dateEndKey] || initialDateEnd)
+	);
+	const [dateStart, setDateStart] = useState(
+		formatDateEnLocale(values[dateStartKey] || initialDateStart)
+	);
+
+	const routerProps = useRouter();
+
+	const applyCustomFilter = () => {
+		const {dateEnd: dateEndError, dateStart: dateStartError} = errors || {};
+
+		if (!dateEndError && !dateStartError) {
+			const newValue = {
+				[dateEndKey]: formatQueryDate(dateEnd, true),
+				[dateStartKey]: formatQueryDate(dateStart),
+				[prefixedFilterKey]: ['custom']
+			};
+
+			if (!withoutRouteParams) {
+				const query = parse(routerProps.location.search);
+
+				query.filters = {
+					...query.filters,
+					...newValue
+				};
+
+				replaceHistory(stringify(query), routerProps);
+			}
+			else {
+				dispatch({...filterState, ...newValue});
+			}
+		}
+	};
+
+	const validate = () => {
+		const dateEndMoment = parseDateMomentEnLocale(dateEnd);
+		const dateStartMoment = parseDateMomentEnLocale(dateStart);
+
+		const errors = {
+			...validateDate(dateEndMoment, dateStartMoment),
+			...validateEarlierDate(dateEndMoment, dateStartMoment),
+			...validateRangeConsistency(dateEndMoment, dateStartMoment)
+		};
+
+		setErrors(errors);
+
+		return errors;
+	};
+
+	return {
+		applyCustomFilter,
+		dateEnd,
+		dateStart,
+		errors,
+		setDateEnd,
+		setDateStart,
+		validate
+	};
+};
 
 export {useCustomTimeRange};

@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class NavigationMenu {
+public class NavigationMenu implements Cloneable {
 
 	public Creator getCreator() {
 		return creator;
@@ -174,6 +174,11 @@ public class NavigationMenu {
 	}
 
 	protected Long siteId;
+
+	@Override
+	public NavigationMenu clone() throws CloneNotSupportedException {
+		return (NavigationMenu)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

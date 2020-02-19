@@ -17,6 +17,10 @@ import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import React, {useContext, useState} from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../config/index';
@@ -125,5 +129,10 @@ const ContainerWithControls = React.forwardRef(
 		);
 	}
 );
+
+ContainerWithControls.propTypes = {
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
 
 export default ContainerWithControls;

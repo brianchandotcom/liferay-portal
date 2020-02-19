@@ -709,9 +709,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						workflowTask1, entityField.getName(), "Aaa");
+						workflowTask1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						workflowTask2, entityField.getName(), "Bbb");
+						workflowTask2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class DocumentFolder {
+public class DocumentFolder implements Cloneable {
 
 	public static enum ViewableBy {
 
@@ -361,6 +361,11 @@ public class DocumentFolder {
 	}
 
 	protected ViewableBy viewableBy;
+
+	@Override
+	public DocumentFolder clone() throws CloneNotSupportedException {
+		return (DocumentFolder)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

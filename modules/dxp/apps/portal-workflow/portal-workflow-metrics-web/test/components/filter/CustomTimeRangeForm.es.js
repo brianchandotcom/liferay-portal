@@ -28,7 +28,7 @@ describe('The performance by assignee card component should', () => {
 			<MockRouter query={query}>{children}</MockRouter>
 		);
 
-		const renderResult = render(<CustomTimeRangeForm withRouteParams />, {
+		const renderResult = render(<CustomTimeRangeForm />, {
 			wrapper
 		});
 

@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WikiNode {
+public class WikiNode implements Cloneable {
 
 	public static enum ViewableBy {
 
@@ -296,6 +296,11 @@ public class WikiNode {
 	}
 
 	protected ViewableBy viewableBy;
+
+	@Override
+	public WikiNode clone() throws CloneNotSupportedException {
+		return (WikiNode)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

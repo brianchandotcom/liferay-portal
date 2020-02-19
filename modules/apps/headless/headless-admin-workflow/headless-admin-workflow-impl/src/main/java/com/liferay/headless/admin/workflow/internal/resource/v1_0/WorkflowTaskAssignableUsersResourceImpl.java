@@ -21,13 +21,14 @@ import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.AssigneeUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskAssignableUsersResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,8 +65,10 @@ public class WorkflowTaskAssignableUsersResourceImpl
 									contextUser.getCompanyId(), workflowTaskId);
 
 							if (commonAssignableUsers == null) {
-								commonAssignableUsers = new HashSet<>(
-									assignableUsers);
+								commonAssignableUsers = new TreeSet<>(
+									new UserFirstNameComparator(true));
+
+								commonAssignableUsers.addAll(assignableUsers);
 							}
 							else {
 								commonAssignableUsers.retainAll(

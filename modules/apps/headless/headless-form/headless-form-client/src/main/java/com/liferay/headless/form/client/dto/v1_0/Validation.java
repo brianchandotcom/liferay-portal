@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Validation {
+public class Validation implements Cloneable {
 
 	public String getErrorMessage() {
 		return errorMessage;
@@ -111,6 +111,11 @@ public class Validation {
 	}
 
 	protected Long id;
+
+	@Override
+	public Validation clone() throws CloneNotSupportedException {
+		return (Validation)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -10,10 +10,10 @@
  */
 
 import {fetch} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 
 function APIService({endpoints, namespace, page}) {
 	const {
+		getAnalyticsReportsHistoricalReadsURL,
 		getAnalyticsReportsHistoricalViewsURL,
 		getAnalyticsReportsTotalReadsURL,
 		getAnalyticsReportsTotalViewsURL
@@ -40,6 +40,16 @@ function APIService({endpoints, namespace, page}) {
 		});
 	}
 
+	function getHistoricalReads() {
+		const body = {plid};
+
+		return _fetchWithError(getAnalyticsReportsHistoricalReadsURL, {
+			body: _getFormDataRequest(body, namespace),
+			credentials: 'include',
+			method: 'POST'
+		});
+	}
+
 	function getHistoricalViews() {
 		const body = {plid};
 
@@ -51,18 +61,12 @@ function APIService({endpoints, namespace, page}) {
 	}
 
 	return {
+		getHistoricalReads,
 		getHistoricalViews,
 		getTotalReads,
 		getTotalViews
 	};
 }
-
-APIService.propTypes = {
-	endpoints: PropTypes.shape({
-		getAnalyticsReportsTotalViewsURL: PropTypes.string.isRequired
-	}),
-	namespace: PropTypes.string.isRequired
-};
 
 export default APIService;
 

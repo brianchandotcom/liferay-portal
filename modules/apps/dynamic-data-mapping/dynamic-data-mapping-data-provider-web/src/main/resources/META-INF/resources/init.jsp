@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.dynamic.data.mapping.data.provider.web.internal.display.context.DDMDataProviderDisplayContext" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.DataProviderInstanceURLException" %><%@
+page import="com.liferay.dynamic.data.mapping.exception.DuplicateDataProviderInstanceInputParameterNameException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.RequiredDataProviderInstanceException" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class TaxonomyCategory {
+public class TaxonomyCategory implements Cloneable {
 
 	public Long getTaxonomyCategoryId() {
 		return taxonomyCategoryId;
@@ -69,6 +69,11 @@ public class TaxonomyCategory {
 	}
 
 	protected String taxonomyCategoryName;
+
+	@Override
+	public TaxonomyCategory clone() throws CloneNotSupportedException {
+		return (TaxonomyCategory)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

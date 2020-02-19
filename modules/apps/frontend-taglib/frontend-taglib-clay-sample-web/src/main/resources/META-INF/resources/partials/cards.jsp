@@ -269,7 +269,7 @@
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			name="User Name"
 			subtitle="Latest Action"
-			userColorCssClass="danger"
+			userColorClass="danger"
 		/>
 	</div>
 

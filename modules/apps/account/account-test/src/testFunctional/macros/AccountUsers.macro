@@ -51,4 +51,36 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editUser {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${accountUser}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit User");
+
+		if (isSet(editScreenName)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+				value1 = "${editScreenName}");
+		}
+
+		if (isSet(editEmailAddress)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = "${editEmailAddress}");
+		}
+
+		if (isSet(editFirstName)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+				value1 = "${editFirstName}");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 }

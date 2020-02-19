@@ -332,8 +332,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting patchBlogPosting = blogPostingResource.patchBlogPosting(
 			postBlogPosting.getId(), randomPatchBlogPosting);
 
-		BlogPosting expectedPatchBlogPosting = (BlogPosting)BeanUtils.cloneBean(
-			postBlogPosting);
+		BlogPosting expectedPatchBlogPosting = postBlogPosting.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchBlogPosting, randomPatchBlogPosting);
@@ -596,9 +595,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						blogPosting1, entityField.getName(), "Aaa");
+						blogPosting1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						blogPosting2, entityField.getName(), "Bbb");
+						blogPosting2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

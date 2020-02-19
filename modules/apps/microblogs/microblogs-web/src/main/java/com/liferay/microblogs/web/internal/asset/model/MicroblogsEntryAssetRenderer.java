@@ -47,10 +47,12 @@ public class MicroblogsEntryAssetRenderer
 
 	public MicroblogsEntryAssetRenderer(
 		MicroblogsEntry entry,
-		ModelResourcePermission<MicroblogsEntry> modelResourcePermission) {
+		ModelResourcePermission<MicroblogsEntry>
+			microblogsEntryModelResourcePermission) {
 
 		_entry = entry;
-		_microblogsEntryModelResourcePermission = modelResourcePermission;
+		_microblogsEntryModelResourcePermission =
+			microblogsEntryModelResourcePermission;
 	}
 
 	@Override

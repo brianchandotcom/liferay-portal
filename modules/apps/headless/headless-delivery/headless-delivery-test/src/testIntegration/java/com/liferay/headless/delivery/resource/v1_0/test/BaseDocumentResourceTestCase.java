@@ -416,9 +416,11 @@ public abstract class BaseDocumentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						document1, entityField.getName(), "Aaa");
+						document1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						document2, entityField.getName(), "Bbb");
+						document2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -637,8 +639,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Document patchDocument = documentResource.patchDocument(
 			postDocument.getId(), randomPatchDocument, multipartFiles);
 
-		Document expectedPatchDocument = (Document)BeanUtils.cloneBean(
-			postDocument);
+		Document expectedPatchDocument = postDocument.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchDocument, randomPatchDocument);
@@ -898,9 +899,11 @@ public abstract class BaseDocumentResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						document1, entityField.getName(), "Aaa");
+						document1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						document2, entityField.getName(), "Bbb");
+						document2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

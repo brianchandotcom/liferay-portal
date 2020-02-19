@@ -394,10 +394,8 @@ public class DataLayoutTaglibUtil {
 	}
 
 	private String _resolveFieldTypeModule(String name) {
-		DDMFormFieldType ddmFormFieldType =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(name);
-
-		return _resolveModuleName(ddmFormFieldType.getModuleName());
+		return _resolveModuleName(
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(name));
 	}
 
 	private String _resolveFieldTypesModules() {
@@ -415,12 +413,16 @@ public class DataLayoutTaglibUtil {
 		);
 	}
 
-	private String _resolveModuleName(String moduleName) {
-		if (Validator.isNull(moduleName)) {
+	private String _resolveModuleName(DDMFormFieldType ddmFormFieldType) {
+		if (Validator.isNull(ddmFormFieldType.getModuleName())) {
 			return StringPool.BLANK;
 		}
 
-		return _npmResolver.resolveModuleName(moduleName);
+		if (ddmFormFieldType.isCustomDDMFormFieldType()) {
+			return ddmFormFieldType.getModuleName();
+		}
+
+		return _npmResolver.resolveModuleName(ddmFormFieldType.getModuleName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

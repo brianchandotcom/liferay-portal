@@ -158,6 +158,27 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 		return (SpiraRelease)parentSpiraArtifact;
 	}
 
+	public SpiraReleaseBuild getSpiraReleaseBuildByID(int releaseBuildID)
+		throws IOException {
+
+		List<SpiraReleaseBuild> spiraReleaseBuilds =
+			SpiraReleaseBuild.getSpiraReleaseBuilds(
+				getSpiraProject(), this,
+				new SearchParameter("BuildId", releaseBuildID));
+
+		if (spiraReleaseBuilds.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate release build id " + releaseBuildID);
+		}
+
+		if (spiraReleaseBuilds.isEmpty()) {
+			throw new RuntimeException(
+				"Missing release build id " + releaseBuildID);
+		}
+
+		return spiraReleaseBuilds.get(0);
+	}
+
 	protected static List<SpiraRelease> getSpiraReleases(
 			SpiraProject spiraProject, SearchParameter... searchParameters)
 		throws IOException {

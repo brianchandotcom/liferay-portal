@@ -99,6 +99,34 @@ public class Node {
 	protected Boolean initial;
 
 	@Schema
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	@JsonIgnore
+	public void setLabel(
+		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
+
+		try {
+			label = labelUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String label;
+
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -223,6 +251,20 @@ public class Node {
 			sb.append("\"initial\": ");
 
 			sb.append(initial);
+		}
+
+		if (label != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(label));
+
+			sb.append("\"");
 		}
 
 		if (name != null) {

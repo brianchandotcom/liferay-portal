@@ -16,7 +16,7 @@ package com.liferay.account.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -90,7 +90,7 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 	}
 
 	public CreationMenu getCreationMenu() {
-		return CreationMenuUtil.addPrimaryDropdownItem(
+		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(), "mvcPath",
@@ -99,7 +99,8 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 					ParamUtil.getString(request, "accountEntryId"));
 				dropdownItem.setLabel(
 					LanguageUtil.get(request, "add-account-role"));
-			});
+			}
+		).build();
 	}
 
 	@Override

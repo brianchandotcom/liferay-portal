@@ -13,8 +13,13 @@
  */
 
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 
@@ -49,5 +54,12 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 		</>
 	);
 });
+
+Row.propTypes = {
+	item: getLayoutDataItemPropTypes({
+		config: PropTypes.shape({gutters: PropTypes.bool})
+	}).isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
 
 export default Row;

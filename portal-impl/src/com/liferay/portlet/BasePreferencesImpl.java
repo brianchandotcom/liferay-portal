@@ -37,13 +37,13 @@ import javax.portlet.ValidatorException;
 public abstract class BasePreferencesImpl implements Serializable {
 
 	public BasePreferencesImpl(
-		long ownerId, int ownerType, String xml,
-		Map<String, Preference> preferences) {
+		long ownerId, int ownerType, String originalXML,
+		Map<String, Preference> originalPreferences) {
 
 		_ownerId = ownerId;
 		_ownerType = ownerType;
-		_originalXML = xml;
-		_originalPreferences = preferences;
+		_originalXML = originalXML;
+		_originalPreferences = originalPreferences;
 	}
 
 	public Map<String, String[]> getMap() {

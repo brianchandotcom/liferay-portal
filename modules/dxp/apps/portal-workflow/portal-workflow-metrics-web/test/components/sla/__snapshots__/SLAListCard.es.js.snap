@@ -156,8 +156,11 @@ exports[`Should remove a item 1`] = `
             className="container-fluid-1280"
           >
             <ListView
+              emptyActionButton={<ReloadButton />}
               emptyMessageText="sla-allows-to-define-and-measure-process-performance"
               emptyTitleText="no-slas-yet"
+              errorMessageClassName="small"
+              errorMessageText={false}
               fetching={false}
               loading={true}
             >
@@ -469,8 +472,11 @@ exports[`Should render toast with SLA saved message 1`] = `
             className="container-fluid-1280"
           >
             <ListView
+              emptyActionButton={<ReloadButton />}
               emptyMessageText="sla-allows-to-define-and-measure-process-performance"
               emptyTitleText="no-slas-yet"
+              errorMessageClassName="small"
+              errorMessageText={false}
               fetching={false}
               loading={true}
             >
@@ -654,8 +660,11 @@ exports[`Should render toast with SLA updated message 1`] = `
             className="container-fluid-1280"
           >
             <ListView
+              emptyActionButton={<ReloadButton />}
               emptyMessageText="sla-allows-to-define-and-measure-process-performance"
               emptyTitleText="no-slas-yet"
+              errorMessageClassName="small"
+              errorMessageText={false}
               fetching={false}
               loading={true}
             >
@@ -839,8 +848,11 @@ exports[`Should test props change 1`] = `
             className="container-fluid-1280"
           >
             <ListView
+              emptyActionButton={<ReloadButton />}
               emptyMessageText="sla-allows-to-define-and-measure-process-performance"
               emptyTitleText="no-slas-yet"
+              errorMessageClassName="small"
+              errorMessageText={false}
               fetching={false}
               loading={true}
             >

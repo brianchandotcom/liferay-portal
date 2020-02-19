@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentFieldBackgroundImage {
+public class FragmentFieldBackgroundImage implements Cloneable {
 
 	public FragmentImage getBackgroundImage() {
 		return backgroundImage;
@@ -49,6 +49,13 @@ public class FragmentFieldBackgroundImage {
 	}
 
 	protected FragmentImage backgroundImage;
+
+	@Override
+	public FragmentFieldBackgroundImage clone()
+		throws CloneNotSupportedException {
+
+		return (FragmentFieldBackgroundImage)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

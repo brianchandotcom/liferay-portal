@@ -14,6 +14,10 @@
 
 import React from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useSelector} from '../../store/index';
@@ -50,5 +54,10 @@ const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
 		content
 	);
 });
+
+DropZoneWithControls.propTypes = {
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
 
 export default DropZoneWithControls;

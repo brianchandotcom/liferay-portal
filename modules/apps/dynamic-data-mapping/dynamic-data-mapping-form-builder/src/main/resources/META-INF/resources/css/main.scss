@@ -36,6 +36,11 @@
 	border: 1px solid transparent;
 	cursor: -webkit-grab;
 	position: relative;
+
+	.input-group-inset-item-after .btn {
+		padding-bottom: 0.5rem;
+		padding-right: 0.18rem;
+	}
 }
 
 .ddm-target {

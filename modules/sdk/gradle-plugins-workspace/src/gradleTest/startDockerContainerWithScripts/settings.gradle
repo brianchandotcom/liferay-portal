@@ -1,0 +1,77 @@
+import com.bmuschko.gradle.docker.tasks.container.DockerLogsContainer
+
+import java.net.InetAddress
+
+buildscript {
+	dependencies {
+		classpath fileTree(dir: pluginClasspathDir, excludes: ["biz.aQute.bnd-3.5.0.jar", "com.liferay.gradle.util-1.0.33.jar"], include: "*.jar")
+	}
+}
+
+apply plugin: "com.liferay.workspace"
+
+gradle.liferayWorkspace {
+	String hostName = InetAddress.localHost.canonicalHostName.toLowerCase()
+
+	dockerContainerId = hostName + "startdockercontainerwithscripts"
+	dockerImageId = hostName + "startdockercontainerwithscripts"
+}
+
+gradle.projectsEvaluated {
+	Project rootProject = gradle.rootProject
+
+	rootProject.tasks.register("assertLog", DockerLogsContainer) {
+		dependsOn rootProject.tasks.startDockerContainer
+		finalizedBy rootProject.tasks.cleanDockerImage
+
+		follow = false
+		tailAll = true
+
+		targetContainerId {
+			gradle.liferayWorkspace.dockerContainerId
+		}
+
+		List<String> expectedLines = ["Common script", "Other script"]
+		List<String> unexpectedLines = ["Local script", "No such file or directory", "Permission denied"]
+
+		int expectedLinesDetected = 0
+		int unexpectedLinesDetected = 0
+
+		sink new PrintWriter(new StringWriter()) {
+			public void write(String line) {
+				if (expectedLines.findAll{line.contains(it)}.size() > 0) {
+					expectedLinesDetected++
+				}
+
+				if (unexpectedLines.findAll{line.contains(it)}.size() > 0) {
+					unexpectedLinesDetected++
+				}
+
+				rootProject.print line
+			}
+		}
+
+		doLast {
+			int retries = 0
+
+			while (expectedLinesDetected < 2 && (retries < 30)) {
+				Thread.sleep(100)
+
+				retries++
+
+				expectedLinesDetected = 0
+				unexpectedLinesDetected = 0
+
+				start()
+			}
+
+			if (expectedLinesDetected != 2) {
+				throw new GradleException("The expected lines " + expectedLines + " were not found in the log.")
+			}
+
+			if (unexpectedLinesDetected > 0) {
+				throw new GradleException("One of the unexpected lines " + unexpectedLines + " were found in the log.")
+			}
+		}
+	}
+}

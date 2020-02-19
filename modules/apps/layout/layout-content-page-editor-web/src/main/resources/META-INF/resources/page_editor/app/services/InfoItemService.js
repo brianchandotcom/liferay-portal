@@ -22,12 +22,14 @@ export default {
 	 * @param {string} options.classNameId Asset's className
 	 * @param {string} options.classPK Asset's classPK
 	 * @param {string} options.fieldId Field id
+	 * @param {string} options.languageId Language Id
 	 */
 	getAssetFieldValue({
 		classNameId,
 		classPK,
 		config,
 		fieldId,
+		languageId,
 		onNetworkStatus
 	}) {
 		const {getAssetFieldValueURL} = config;
@@ -39,7 +41,8 @@ export default {
 				body: {
 					classNameId,
 					classPK,
-					fieldId
+					fieldId,
+					languageId
 				}
 			},
 			onNetworkStatus
@@ -123,5 +126,16 @@ export default {
 			},
 			onNetworkStatus
 		);
+	},
+
+	/**
+	 * Get page contents
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 */
+	getPageContents({config, onNetworkStatus}) {
+		const {getPageContentsURL} = config;
+
+		return serviceFetch(config, getPageContentsURL, onNetworkStatus);
 	}
 };

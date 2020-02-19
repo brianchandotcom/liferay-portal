@@ -53,7 +53,7 @@ import org.dom4j.Element;
 /**
  * @author Hugo Huijser
  */
-public class JSPTagAttributesCheck extends TagAttributesCheck {
+public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 	@Override
 	public void setAllFileNames(List<String> allFileNames) {

@@ -1,0 +1,164 @@
+{
+	"items": {
+		"ROOT": {
+			"children": [
+				"ROOT-CONTAINER0",
+				"ROOT-CONTAINER1"
+			],
+			"config": {},
+			"itemId": "ROOT",
+			"parentId": "",
+			"type": "root"
+		},
+		"ROOT-CONTAINER0": {
+			"children": [
+				"ROOT-CONTAINER0-ROW0"
+			],
+			"config": {
+				"backgroundImage": {},
+				"paddingBottom": 3,
+				"paddingHorizontal": 3,
+				"paddingTop": 3,
+				"type": "fixed"
+			},
+			"itemId": "ROOT-CONTAINER0",
+			"parentId": "ROOT",
+			"type": "container"
+		},
+		"ROOT-CONTAINER0-ROW0": {
+			"children": [
+				"ROOT-CONTAINER0-ROW0-COLUMN0"
+			],
+			"config": {
+				"gutters": true,
+				"numberOfColumns": 1
+			},
+			"itemId": "ROOT-CONTAINER0-ROW0",
+			"parentId": "ROOT-CONTAINER0",
+			"type": "row"
+		},
+		"ROOT-CONTAINER0-ROW0-COLUMN0": {
+			"children": [
+				"ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT0",
+				"ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT1"
+			],
+			"config": {
+				"size": 12
+			},
+			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN0",
+			"parentId": "ROOT-CONTAINER0-ROW0",
+			"type": "column"
+		},
+		"ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT0": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "column-1:com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
+			},
+			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT0",
+			"parentId": "ROOT-CONTAINER0-ROW0-COLUMN0",
+			"type": "fragment"
+		},
+		"ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT1": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "column-1:com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
+			},
+			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT1",
+			"parentId": "ROOT-CONTAINER0-ROW0-COLUMN0",
+			"type": "fragment"
+		},
+		"ROOT-CONTAINER1": {
+			"children": [
+				"ROOT-CONTAINER1-ROW0"
+			],
+			"config": {
+				"backgroundImage": {},
+				"paddingBottom": 3,
+				"paddingHorizontal": 3,
+				"paddingTop": 3,
+				"type": "fixed"
+			},
+			"itemId": "ROOT-CONTAINER1",
+			"parentId": "ROOT",
+			"type": "container"
+		},
+		"ROOT-CONTAINER1-ROW0": {
+			"children": [
+				"ROOT-CONTAINER1-ROW0-COLUMN0",
+				"ROOT-CONTAINER1-ROW0-COLUMN1"
+			],
+			"config": {
+				"gutters": true,
+				"numberOfColumns": 2
+			},
+			"itemId": "ROOT-CONTAINER1-ROW0",
+			"parentId": "ROOT-CONTAINER1",
+			"type": "row"
+		},
+		"ROOT-CONTAINER1-ROW0-COLUMN0": {
+			"children": [
+				"ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT0",
+				"ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT1"
+			],
+			"config": {
+				"size": 8
+			},
+			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN0",
+			"parentId": "ROOT-CONTAINER1-ROW0",
+			"type": "column"
+		},
+		"ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT0": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "column-2:com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet"
+			},
+			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT0",
+			"parentId": "ROOT-CONTAINER1-ROW0-COLUMN0",
+			"type": "fragment"
+		},
+		"ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT1": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "column-2:com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
+			},
+			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT1",
+			"parentId": "ROOT-CONTAINER1-ROW0-COLUMN0",
+			"type": "fragment"
+		},
+		"ROOT-CONTAINER1-ROW0-COLUMN1": {
+			"children": [
+				"ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT0",
+				"ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT1"
+			],
+			"config": {
+				"size": 4
+			},
+			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN1",
+			"parentId": "ROOT-CONTAINER1-ROW0",
+			"type": "column"
+		},
+		"ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT0": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "column-3:com_liferay_hello_world_web_portlet_HelloWorldPortlet"
+			},
+			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT0",
+			"parentId": "ROOT-CONTAINER1-ROW0-COLUMN1",
+			"type": "fragment"
+		},
+		"ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT1": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "column-3:com_liferay_chart_sample_web_portlet_ChartSamplePortlet"
+			},
+			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT1",
+			"parentId": "ROOT-CONTAINER1-ROW0-COLUMN1",
+			"type": "fragment"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "ROOT"
+	},
+	"version": 1
+}

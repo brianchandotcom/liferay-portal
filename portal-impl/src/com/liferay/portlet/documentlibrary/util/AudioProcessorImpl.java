@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListene
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -354,8 +355,12 @@ public class AudioProcessorImpl
 					new LiferayAudioProcessCallable(
 						ServerDetector.getServerId(),
 						PropsUtil.get(PropsKeys.LIFERAY_HOME),
-						Log4JUtil.getCustomLogSettings(), srcFile, destFile,
-						containerType,
+						HashMapBuilder.putAll(
+							Log4JUtil.getCustomLogSettings()
+						).put(
+							PropsUtil.class.getName(), "WARN"
+						).build(),
+						srcFile, destFile, containerType,
 						PropsUtil.getProperties(
 							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
 

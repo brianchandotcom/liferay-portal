@@ -21,9 +21,9 @@ import java.io.Serializable;
  */
 public class Fact<T> implements Serializable {
 
-	public Fact(String identifier, T object) {
+	public Fact(String identifier, T factObject) {
 		_identifier = identifier;
-		_factObject = object;
+		_factObject = factObject;
 	}
 
 	public T getFactObject() {

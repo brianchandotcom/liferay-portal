@@ -354,12 +354,12 @@ definition {
 					locator1 = "RolesPermissions#${permissionDefinitionKeyChange}",
 					value1 = "Change");
 
-				var key_siteNameScope = "${siteNameScope}";
+				var key_card = "${siteNameScope}";
 
 				SelectFrame(locator1 = "RolesPermissionsSelectSite#SELECT_SITE_IFRAME");
 
 				AssertClick.assertPartialTextClickAt(
-					locator1 = "RolesPermissionsSelectSite#SCOPE_SITES_TABLE_NAME",
+					locator1 = "LexiconCard#CARD_TITLE",
 					value1 = "${siteNameScope}");
 
 				var key_siteNameScope = "${siteNameScope}";

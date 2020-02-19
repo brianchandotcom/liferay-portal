@@ -349,9 +349,11 @@ public abstract class BaseAssigneeUserResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						assigneeUser1, entityField.getName(), "Aaa");
+						assigneeUser1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						assigneeUser2, entityField.getName(), "Bbb");
+						assigneeUser2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

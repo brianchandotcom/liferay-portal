@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaClassCall extends JavaExpression {
+public class JavaClassCall extends BaseJavaExpression {
 
 	public JavaClassCall(
 		String className, List<JavaType> genericJavaTypes,

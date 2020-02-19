@@ -15,6 +15,7 @@
 package com.liferay.document.library.item.selector.web.internal;
 
 import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorWebKeys;
 import com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -30,6 +31,8 @@ import com.liferay.staging.StagingGroupHelper;
 
 import java.io.IOException;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -58,6 +61,11 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	@Override
 	public String[] getMimeTypes() {
 		return new String[0];
+	}
+
+	@Override
+	public List<String> getPortletIds() {
+		return _portletIds;
 	}
 
 	@Override
@@ -123,5 +131,8 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 	@Reference
 	protected StagingGroupHelper stagingGroupHelper;
+
+	private static final List<String> _portletIds = Arrays.asList(
+		DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, DLPortletKeys.DOCUMENT_LIBRARY);
 
 }

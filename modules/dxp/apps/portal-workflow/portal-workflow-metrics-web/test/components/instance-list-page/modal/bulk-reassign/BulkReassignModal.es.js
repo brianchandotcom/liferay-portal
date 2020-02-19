@@ -35,8 +35,7 @@ const {
 				name: 'Test Test'
 			},
 			id: 1,
-			name: 'Review',
-
+			label: 'Review',
 			objectReviewed: {assetTitle: 'Blog 1', assetType: 'Blog'},
 			workflowInstanceId: 1
 		},
@@ -46,7 +45,7 @@ const {
 				name: 'Test Test'
 			},
 			id: 2,
-			name: 'Update',
+			label: 'Update',
 			objectReviewed: {assetTitle: 'Blog 2', assetType: 'Blog'},
 			workflowInstanceId: 2
 		}
@@ -109,7 +108,6 @@ const clientMock = {
 		.mockResolvedValueOnce({data: {items: [items[0]], totalCount: 1}})
 		.mockRejectedValueOnce(new Error('request-failure'))
 		.mockResolvedValueOnce({data: {workflowTaskAssignableUsers}})
-		.mockResolvedValueOnce({data: {items, totalCount: items.length}})
 		.mockResolvedValueOnce({data: {items: [items[0]], totalCount: 1}})
 		.mockResolvedValue({data: {workflowTaskAssignableUsers}}),
 	patch: jest
@@ -275,9 +273,7 @@ describe('The BulkReassignModal component should', () => {
 		const alertError = getByTestId('alertError');
 		const nextBtn = getByTestId('nextButton');
 
-		expect(alertError).toHaveTextContent(
-			'your-connection-was-unexpectedly-lost'
-		);
+		expect(alertError).toHaveTextContent('your-request-has-failed');
 
 		expect(nextBtn).not.toBeDisabled();
 
@@ -406,7 +402,7 @@ describe('The BulkReassignModal component should', () => {
 		const alertToast = await getByTestId('alertToast');
 		const alertClose = alertToast.children[1];
 
-		expect(alertToast).toHaveTextContent('x-tasks-have-been-reassigned');
+		expect(alertToast).toHaveTextContent('this-task-has-been-reassigned');
 
 		fireEvent.click(alertClose);
 

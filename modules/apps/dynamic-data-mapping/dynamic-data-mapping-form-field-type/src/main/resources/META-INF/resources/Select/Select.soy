@@ -123,10 +123,13 @@
 											]/}
 											{param label: $option.label /}
 											{param spritemap: $spritemap /}
+											{param truncate: true /}
 										{/call}
 									</li>
 								{else}
-									<div class="option-selected">{$option.label}</div>
+									{call SingleSelectedOption.render}
+										{param label: $option.label /}
+									{/call}
 								{/if}
 							{/if}
 						{/foreach}

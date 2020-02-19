@@ -14,7 +14,10 @@
 
 import React, {useContext} from 'react';
 
+import {getEditableItemPropTypes} from '../../../prop-types/index';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {ConfigContext} from '../../config/index';
 import selectEditableValue from '../../selectors/selectEditableValue';
 import {useDispatch, useSelector} from '../../store/index';
@@ -30,20 +33,23 @@ export function MappingPanel({item}) {
 
 	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
 
+	const processoryKey =
+		editableType === EDITABLE_TYPES.backgroundImage
+			? BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+			: EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
+
 	const editableValue = selectEditableValue(
 		state,
 		fragmentEntryLinkId,
 		editableId,
-		EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+		processoryKey
 	);
 
 	const updateEditableValue = newEditableValue => {
 		const nextEditableValues = {
 			...fragmentEntryLink.editableValues,
-			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
-				...fragmentEntryLink.editableValues[
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-				],
+			[processoryKey]: {
+				...fragmentEntryLink.editableValues[processoryKey],
 				[editableId]: {
 					config: editableValue.config,
 					defaultValue: editableValue.defaultValue,
@@ -70,3 +76,7 @@ export function MappingPanel({item}) {
 		/>
 	);
 }
+
+MappingPanel.propTypes = {
+	item: getEditableItemPropTypes()
+};

@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormPage {
+public class FormPage implements Cloneable {
 
 	public FormField[] getFormFields() {
 		return formFields;
@@ -152,6 +152,11 @@ public class FormPage {
 	}
 
 	protected Map<String, String> text_i18n;
+
+	@Override
+	public FormPage clone() throws CloneNotSupportedException {
+		return (FormPage)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

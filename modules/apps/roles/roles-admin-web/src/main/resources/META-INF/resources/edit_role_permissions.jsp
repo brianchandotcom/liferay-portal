@@ -87,24 +87,6 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 </aui:container>
 
 <aui:script>
-	function <portlet:namespace />removeGroup(pos, target) {
-		var selectedGroupIds = document.<portlet:namespace />fm[
-			'<portlet:namespace />groupIds' + target
-		].value.split(',');
-		var selectedGroupNames = document.<portlet:namespace />fm[
-			'<portlet:namespace />groupNames' + target
-		].value.split('@@');
-
-		selectedGroupIds.splice(pos, 1);
-		selectedGroupNames.splice(pos, 1);
-
-		<portlet:namespace />updateGroups(
-			selectedGroupIds,
-			selectedGroupNames,
-			target
-		);
-	}
-
 	function <portlet:namespace />selectOrganization(
 		organizationId,
 		groupId,
@@ -113,44 +95,6 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		target
 	) {
 		<portlet:namespace />selectGroup(groupId, name, target);
-	}
-
-	function <portlet:namespace />updateGroups(
-		selectedGroupIds,
-		selectedGroupNames,
-		target
-	) {
-		document.<portlet:namespace />fm[
-			'<portlet:namespace />groupIds' + target
-		].value = selectedGroupIds.join(',');
-		document.<portlet:namespace />fm[
-			'<portlet:namespace />groupNames' + target
-		].value = selectedGroupNames.join('@@');
-
-		var nameEl = document.getElementById(
-			'<portlet:namespace />groupHTML' + target
-		);
-
-		var groupsHTML = '';
-
-		for (var i = 0; i < selectedGroupIds.length; i++) {
-			var name = selectedGroupNames[i];
-
-			groupsHTML +=
-				'<span class="lfr-token"><span class="lfr-token-text">' +
-				name +
-				'</span><a class="icon icon-remove lfr-token-close" href="javascript:<portlet:namespace />removeGroup(' +
-				i +
-				", '" +
-				target +
-				'\' );"></a></span>';
-		}
-
-		if (groupsHTML == '') {
-			groupsHTML = '<liferay-ui:message key="all-sites" />';
-		}
-
-		nameEl.innerHTML = groupsHTML;
 	}
 </aui:script>
 
@@ -400,40 +344,6 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			':checkbox'
 		);
 	}
-
-	Liferay.on('<portlet:namespace />selectGroup', function(event) {
-		var selectedGroupIds = [];
-
-		var selectedGroupIdsField =
-			document.<portlet:namespace />fm[
-				'<portlet:namespace />groupIds' + event.grouptarget
-			].value;
-
-		if (selectedGroupIdsField) {
-			selectedGroupIds = selectedGroupIdsField.split(',');
-		}
-
-		var selectedGroupNames = [];
-		var selectedGroupNamesField =
-			document.<portlet:namespace />fm[
-				'<portlet:namespace />groupNames' + event.grouptarget
-			].value;
-
-		if (selectedGroupNamesField) {
-			selectedGroupNames = selectedGroupNamesField.split('@@');
-		}
-
-		if (selectedGroupIds.indexOf(event.groupid) == -1) {
-			selectedGroupIds.push(event.groupid);
-			selectedGroupNames.push(event.groupdescriptivename);
-		}
-
-		<portlet:namespace />updateGroups(
-			selectedGroupIds,
-			selectedGroupNames,
-			event.grouptarget
-		);
-	});
 
 	A.on('domready', function(event) {
 		togglerDelegate = new A.TogglerDelegate({

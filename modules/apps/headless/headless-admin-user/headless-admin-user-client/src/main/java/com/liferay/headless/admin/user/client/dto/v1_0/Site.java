@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Site {
+public class Site implements Cloneable {
 
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -276,6 +276,11 @@ public class Site {
 	}
 
 	protected Site[] sites;
+
+	@Override
+	public Site clone() throws CloneNotSupportedException {
+		return (Site)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

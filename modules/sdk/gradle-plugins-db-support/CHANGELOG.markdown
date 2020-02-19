@@ -1,26 +1,9 @@
 # Liferay Gradle Plugins DB Support Change Log
 
-## 1.0.1 - 2017-03-02
-
-### Commits
-- [LPS-62970]: Add tasks to "build" group (fae0d79142)
-- [LPS-70677]: No need to look into the local Maven repository during testing
-(452be84220)
-- [LPS-70060]: Test plugins with Gradle 3.3 (09bed59a42)
-- [LPS-67688]: minor README edits (448366ef14)
-
-## 1.0.2 - 2017-03-09
-
-### Commits
-- [LPS-67573]: Enable semantic versioning check on CI (36750689a4)
-- [LPS-66709]: Update supported Gradle versions in READMEs (06e315582b)
-
-## 1.0.3 - 2017-08-29
+## 1.0.5 - 2018-11-19
 
 ### Dependencies
-- [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.29.
-- [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.28.
-- [LPS-72914]: Update the com.liferay.gradle.util dependency to version 1.0.27.
+- [LPS-87466]: Update the com.liferay.gradle.util dependency to version 1.0.33.
 
 ## 1.0.4 - 2018-11-16
 
@@ -46,7 +29,24 @@
 - [LPS-84094]: Update the com.liferay.gradle.util dependency to version 1.0.30.
 - [LPS-77425]: Update the com.liferay.gradle.util dependency to version 1.0.29.
 
-## 1.0.5 - 2018-11-19
+## 1.0.3 - 2017-08-29
 
 ### Dependencies
-- [LPS-87466]: Update the com.liferay.gradle.util dependency to version 1.0.33.
+- [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.29.
+- [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.28.
+- [LPS-72914]: Update the com.liferay.gradle.util dependency to version 1.0.27.
+
+## 1.0.2 - 2017-03-09
+
+### Commits
+- [LPS-67573]: Enable semantic versioning check on CI (36750689a4)
+- [LPS-66709]: Update supported Gradle versions in READMEs (06e315582b)
+
+## 1.0.1 - 2017-03-02
+
+### Commits
+- [LPS-62970]: Add tasks to "build" group (fae0d79142)
+- [LPS-70677]: No need to look into the local Maven repository during testing
+(452be84220)
+- [LPS-70060]: Test plugins with Gradle 3.3 (09bed59a42)
+- [LPS-67688]: minor README edits (448366ef14)

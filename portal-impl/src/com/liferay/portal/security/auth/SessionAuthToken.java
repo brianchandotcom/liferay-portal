@@ -251,7 +251,7 @@ public class SessionAuthToken implements AuthToken {
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 		}
 
-		if (session == null) {
+		if (Validator.isNull(sessionAuthenticationToken)) {
 			session = currentHttpServletRequest.getSession();
 
 			sessionAuthenticationToken = (String)session.getAttribute(tokenKey);

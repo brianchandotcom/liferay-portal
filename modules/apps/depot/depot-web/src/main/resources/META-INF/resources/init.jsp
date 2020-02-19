@@ -22,6 +22,7 @@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
+taglib uri="http://liferay.com/tld/staging" prefix="liferay-staging" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
@@ -39,6 +40,7 @@ page import="com.liferay.depot.web.internal.display.context.DepotAdminDetailsDis
 page import="com.liferay.depot.web.internal.display.context.DepotAdminDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminMembershipsDisplayContext" %><%@
+page import="com.liferay.depot.web.internal.display.context.DepotAdminRolesDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminSitesDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotApplicationDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.util.DepotLanguageUtil" %><%@
@@ -64,6 +66,7 @@ page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.roles.admin.kernel.util.RolesAdminUtil" %><%@
 page import="com.liferay.sharing.configuration.SharingConfiguration" %>
 
 <%@ page import="java.util.HashMap" %><%@

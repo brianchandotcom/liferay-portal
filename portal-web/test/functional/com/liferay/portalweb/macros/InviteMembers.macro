@@ -11,7 +11,7 @@ definition {
 	macro inviteMembers {
 		AssertClick(
 			locator1 = "Button#INVITE_MEMBERS",
-			value1 = "Invite members.");
+			value1 = "Invite Members");
 
 		SelectFrame(locator1 = "IFrame#INVITE_MEMBERS");
 

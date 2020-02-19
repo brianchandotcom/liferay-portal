@@ -13,8 +13,13 @@
  */
 
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {
+	BackgroundImagePropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../config/index';
@@ -98,5 +103,18 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 		</div>
 	);
 });
+
+Container.propTypes = {
+	item: getLayoutDataItemPropTypes({
+		config: PropTypes.shape({
+			backgroundColorCssClass: PropTypes.string,
+			backgroundImage: BackgroundImagePropTypes,
+			paddingBottom: PropTypes.number,
+			paddingHorizontal: PropTypes.number,
+			paddingTop: PropTypes.number,
+			type: PropTypes.oneOf(['fluid', 'fixed'])
+		})
+	}).isRequired
+};
 
 export default Container;

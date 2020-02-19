@@ -107,17 +107,17 @@ public class DayAndPosition implements Cloneable, Serializable {
 	/**
 	 * Constructs a DayAndPosition with the day of the week and day position.
 	 */
-	public DayAndPosition(int d, int p) {
-		if (!isValidDayOfWeek(d)) {
+	public DayAndPosition(int day, int position) {
+		if (!isValidDayOfWeek(day)) {
 			throw new IllegalArgumentException("Invalid day of week");
 		}
 
-		if (!isValidDayPosition(p)) {
+		if (!isValidDayPosition(position)) {
 			throw new IllegalArgumentException("Invalid day position");
 		}
 
-		_day = d;
-		_position = p;
+		_day = day;
+		_position = position;
 	}
 
 	/**

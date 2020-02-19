@@ -17,7 +17,7 @@ package com.liferay.source.formatter.checks;
 /**
  * @author Alan Huang
  */
-public class HTMLEmptyLinesCheck extends EmptyLinesCheck {
+public class HTMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 	@Override
 	protected String doProcess(

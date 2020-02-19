@@ -50,8 +50,6 @@ const AppContent = ({dataLayoutBuilder, setDataLayoutBuilder, ...props}) => {
 		<>
 			<DataLayoutBuilder
 				appContext={[state, dispatch]}
-				defaultLanguageId={themeDisplay.getLanguageId()}
-				editingLanguageId={themeDisplay.getLanguageId()}
 				onLoad={setDataLayoutBuilder}
 				{...parseProps(props)}
 			/>

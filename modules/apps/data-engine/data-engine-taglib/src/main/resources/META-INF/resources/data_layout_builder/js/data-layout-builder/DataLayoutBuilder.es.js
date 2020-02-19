@@ -30,13 +30,12 @@ class DataLayoutBuilder extends React.Component {
 
 		this.containerRef = React.createRef();
 		this.eventEmitter = new EventEmitter();
+		this.state = {};
 	}
 
 	componentDidMount() {
 		const {
 			dataLayoutBuilderId,
-			defaultLanguageId,
-			editingLanguageId,
 			fieldTypes,
 			localizable,
 			portletNamespace
@@ -62,8 +61,8 @@ class DataLayoutBuilder extends React.Component {
 				layoutProviderProps: {
 					...this.props,
 					context,
-					defaultLanguageId,
-					editingLanguageId,
+					defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+					editingLanguageId: themeDisplay.getDefaultLanguageId(),
 					initialPages: context.pages,
 					initialPaginationMode: context.paginationMode,
 					ref: 'layoutProvider'
@@ -73,33 +72,9 @@ class DataLayoutBuilder extends React.Component {
 		);
 
 		if (localizable) {
-			Liferay.componentReady('translationManager').then(
-				translationManager => {
-					this._translationManagerHandles = [
-						translationManager.on(
-							'availableLocales',
-							({newValue, previousValue}) => {
-								this.props.availableLanguageIds = [
-									...newValue.keys()
-								];
-
-								this.onAvailableLocalesRemoved({
-									newValue,
-									previousValue
-								});
-							}
-						),
-						translationManager.on('editingLocale', ({newValue}) => {
-							this.props.editingLanguageId = newValue;
-
-							this.formBuilderWithLayoutProvider.props.layoutProviderProps = {
-								...this.formBuilderWithLayoutProvider.props
-									.layoutProviderProps,
-								editingLanguageId: newValue
-							};
-						})
-					];
-				}
+			this._localeChangedHandler = Liferay.after(
+				'inputLocalized:localeChanged',
+				this._onLocaleChange.bind(this)
 			);
 		}
 	}
@@ -148,8 +123,8 @@ class DataLayoutBuilder extends React.Component {
 			formBuilderWithLayoutProvider.dispose();
 		}
 
-		if (this._translationManagerHandles) {
-			this._translationManagerHandles.forEach(handle => handle.detach());
+		if (this._localeChangedHandler) {
+			this._localeChangedHandler.detach();
 		}
 
 		Liferay.destroyComponent(dataLayoutBuilderId);
@@ -199,6 +174,10 @@ class DataLayoutBuilder extends React.Component {
 		const {
 			defaultLanguageId = themeDisplay.getDefaultLanguageId()
 		} = this.props;
+		const availableLanguageIds = this.state.availableLanguageIds ||
+			this.props.availableLanguageIds || [
+				themeDisplay.getDefaultLanguageId()
+			];
 		const fieldDefinitions = [];
 		const pagesVisitor = new PagesVisitor(pages);
 
@@ -210,7 +189,7 @@ class DataLayoutBuilder extends React.Component {
 
 		return {
 			definition: {
-				availableLanguageIds: this.getAvailableLanguageIds(),
+				availableLanguageIds,
 				dataDefinitionFields: fieldDefinitions,
 				defaultLanguageId
 			},
@@ -309,33 +288,6 @@ class DataLayoutBuilder extends React.Component {
 		};
 	}
 
-	getAvailableLanguageIds() {
-		const translationManager = Liferay.component('translationManager');
-
-		if (!translationManager) {
-			return [themeDisplay.getDefaultLanguageId()];
-		}
-
-		return [...translationManager.get('availableLocales').keys()];
-	}
-
-	onAvailableLocalesRemoved({newValue, previousValue}) {
-		const removedItems = new Map();
-
-		previousValue.forEach((value, key) => {
-			if (!newValue.has(key)) {
-				removedItems.set(key, value);
-			}
-		});
-
-		if (removedItems.size > 0) {
-			this.dispatch(
-				'languageIdDeleted',
-				removedItems.values().next().value
-			);
-		}
-	}
-
 	render() {
 		return (
 			<div className={'ddm-form-builder'} ref={this.containerRef}></div>
@@ -412,6 +364,25 @@ class DataLayoutBuilder extends React.Component {
 		}
 
 		return dataDefinitionField[propertyName];
+	}
+
+	_onLocaleChange(event) {
+		const selectedLanguageId = event.item.getAttribute('data-value');
+		let {availableLanguageIds = []} = this.props;
+
+		availableLanguageIds = [
+			...new Set([...availableLanguageIds, selectedLanguageId])
+		];
+
+		this.setState({
+			availableLanguageIds
+		});
+
+		this.formBuilderWithLayoutProvider.props.layoutProviderProps = {
+			...this.formBuilderWithLayoutProvider.props.layoutProviderProps,
+			availableLanguageIds,
+			editingLanguageId: selectedLanguageId
+		};
 	}
 
 	_setContext(context) {

@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_IN_FTP</td>
+	<td>//a[contains(.,'${key_dmDocumentName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOWNLOAD</td>
 	<td>//div[contains(@class,'btn-group-item')]/a[contains(@class,'btn-primary') and contains(.,'Download')]</td>
 	<td></td>

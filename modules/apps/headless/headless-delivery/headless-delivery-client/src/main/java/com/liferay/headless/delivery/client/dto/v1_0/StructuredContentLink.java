@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class StructuredContentLink {
+public class StructuredContentLink implements Cloneable {
 
 	public String getContentType() {
 		return contentType;
@@ -88,6 +88,11 @@ public class StructuredContentLink {
 	}
 
 	protected String title;
+
+	@Override
+	public StructuredContentLink clone() throws CloneNotSupportedException {
+		return (StructuredContentLink)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

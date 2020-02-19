@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class UserAccount {
+public class UserAccount implements Cloneable {
 
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -514,6 +514,11 @@ public class UserAccount {
 	}
 
 	protected UserAccountContactInformation userAccountContactInformation;
+
+	@Override
+	public UserAccount clone() throws CloneNotSupportedException {
+		return (UserAccount)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

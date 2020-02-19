@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Instance {
+public class Instance implements Cloneable {
 
 	public static enum SLAStatus {
 
@@ -377,6 +377,11 @@ public class Instance {
 	}
 
 	protected Transition[] transitions;
+
+	@Override
+	public Instance clone() throws CloneNotSupportedException {
+		return (Instance)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

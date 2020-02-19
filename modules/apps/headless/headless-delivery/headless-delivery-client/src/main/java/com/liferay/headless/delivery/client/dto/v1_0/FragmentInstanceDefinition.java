@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentInstanceDefinition {
+public class FragmentInstanceDefinition implements Cloneable {
 
 	public Fragment getFragment() {
 		return fragment;
@@ -93,6 +93,13 @@ public class FragmentInstanceDefinition {
 	}
 
 	protected FragmentField[] fragmentFields;
+
+	@Override
+	public FragmentInstanceDefinition clone()
+		throws CloneNotSupportedException {
+
+		return (FragmentInstanceDefinition)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Option {
+public class Option implements Cloneable {
 
 	public String getLabel() {
 		return label;
@@ -92,6 +92,11 @@ public class Option {
 	}
 
 	protected String value;
+
+	@Override
+	public Option clone() throws CloneNotSupportedException {
+		return (Option)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

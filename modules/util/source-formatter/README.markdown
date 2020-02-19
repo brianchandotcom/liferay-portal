@@ -1,39 +1,122 @@
 # Source Formatter
 
-### [All Checks](src/main/resources/documentation/all_checks.markdown)
+## Configuration
 
-## Categories:
-- [Bug Prevention](src/main/resources/documentation/bug_prevention_checks.markdown)
-- [Miscellaneous](src/main/resources/documentation/miscellaneous_checks.markdown)
-- [Naming Conventions](src/main/resources/documentation/naming_conventions_checks.markdown)
-- [Performance](src/main/resources/documentation/performance_checks.markdown)
-- [Styling](src/main/resources/documentation/styling_checks.markdown)
+### Configuration Files
 
-## File Extensions:
-- [.action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd](src/main/resources/documentation/xml_source_processor_checks.markdown)
-- [.bnd](src/main/resources/documentation/bnd_source_processor_checks.markdown)
-- [.bndrun](src/main/resources/documentation/bnd_run_source_processor_checks.markdown)
-- [.cfg or .config](src/main/resources/documentation/config_source_processor_checks.markdown)
-- [.cql](src/main/resources/documentation/cql_source_processor_checks.markdown)
-- [.css or .scss](src/main/resources/documentation/css_source_processor_checks.markdown)
-- [.dtd](src/main/resources/documentation/dtd_source_processor_checks.markdown)
-- [.ftl](src/main/resources/documentation/ftl_source_processor_checks.markdown)
-- [.function, .macro or .testcase](src/main/resources/documentation/poshi_source_processor_checks.markdown)
-- [.gradle](src/main/resources/documentation/gradle_source_processor_checks.markdown)
-- [.groovy](src/main/resources/documentation/groovy_source_processor_checks.markdown)
-- [.html](src/main/resources/documentation/html_source_processor_checks.markdown)
-- [.java](src/main/resources/documentation/java_source_processor_checks.markdown)
-- [.js or .jsx](src/main/resources/documentation/js_source_processor_checks.markdown)
-- [.json or .npmbridgerc](src/main/resources/documentation/json_source_processor_checks.markdown)
-- [.jsp, .jspf, .tag, .tpl or .vm](src/main/resources/documentation/jsp_source_processor_checks.markdown)
-- [.lfrbuild-*](src/main/resources/documentation/lfr_build_source_processor_checks.markdown)
-- [.markdown or .md](src/main/resources/documentation/markdown_source_processor_checks.markdown)
-- [.properties](src/main/resources/documentation/properties_source_processor_checks.markdown)
-- [.soy](src/main/resources/documentation/soy_source_processor_checks.markdown)
-- [.sql](src/main/resources/documentation/sql_source_processor_checks.markdown)
-- [.tld](src/main/resources/documentation/tld_source_processor_checks.markdown)
-- [.ts](src/main/resources/documentation/ts_source_processor_checks.markdown)
-- [.yaml or .yml](src/main/resources/documentation/yml_source_processor_checks.markdown)
-- [CODEOWNERS](src/main/resources/documentation/codeowners_source_processor_checks.markdown)
-- [Dockerfile](src/main/resources/documentation/dockerfile_source_processor_checks.markdown)
-- [packageinfo](src/main/resources/documentation/packageinfo_source_processor_checks.markdown)
+Checks are configured in the following files:
+- [checkstyle.xml](src/main/resources/checkstyle.xml)
+- [checkstyle-jsp.xml](src/main/resources/checkstyle-jsp.xml)
+- [sourcechecks.xml](src/main/resources/sourcechecks.xml)
+
+### Excluding Files or Directories
+
+1. Exclude a **single file** from **one specific check**
+
+   Use `checkstyle-suppressions.xml`:
+
+   ```
+   <suppressions>
+       <checkstyle>
+           <suppress checks="UnusedVariableCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/PortalUtil\.java" />
+       </checkstyle>
+       <source-check>
+           <suppress checks="JavaModuleIllegalImportsCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/PortalUtil\.java" />
+       </source-check>
+   </suppressions>
+   ```
+
+2. Exclude a **single file** from **all checks**
+
+   Use `source-formatter.properties#source.formatter.excludes`:
+
+   ```
+   source.formatter.excludes=portal-kernel/src/com/liferay/portal/kernel/util/PortalUtil.java
+   ```
+
+3. Exclude **all files in a directory** from **one specific check**
+
+   Use `checkstyle-suppressions.xml`:
+
+   ```
+   <suppressions>
+       <checkstyle>
+           <suppress checks="UnusedVariableCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/.*" />
+       </checkstyle>
+       <source-check>
+           <suppress checks="JavaModuleIllegalImportsCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/.*" />
+       </source-check>
+   </suppressions>
+   ```
+
+4. Exclude a **all files in a directory** from **all checks**
+
+   - Use `source-formatter.properties#source.formatter.excludes`:
+
+      ```
+      source.formatter.excludes=portal-kernel/src/com/liferay/portal/kernel/util/**
+      ```
+
+   - Add (empty) file `source_formatter.ignore` in the directory
+
+5. Exclude **all files in the project** from **one specific check**
+
+   - Use `checkstyle-suppressions.xml`:
+
+      ```
+      <suppressions>
+          <checkstyle>
+              <suppress checks="UnusedVariableCheck" />
+          </checkstyle>
+          <source-check>
+              <suppress checks="JavaModuleIllegalImportsCheck" />
+          </source-check>
+      </suppressions>
+      ```
+
+   - Use property `enabled` in `source-formatter.properties`:
+
+   ```
+   checkstyle.UnusedVariableCheck.enabled=false
+   source.check.JavaModuleIllegalImportsCheck.enabled=false
+   ```
+
+## Checks
+
+- ### [All Checks](src/main/resources/documentation/all_checks.markdown#all-checks)
+
+- ### By Category:
+   - [Bug Prevention](src/main/resources/documentation/bug_prevention_checks.markdown#bug-prevention-checks)
+   - [Miscellaneous](src/main/resources/documentation/miscellaneous_checks.markdown#miscellaneous-checks)
+   - [Naming Conventions](src/main/resources/documentation/naming_conventions_checks.markdown#naming-conventions-checks)
+   - [Performance](src/main/resources/documentation/performance_checks.markdown#performance-checks)
+   - [Styling](src/main/resources/documentation/styling_checks.markdown#styling-checks)
+
+- ### By File Extensions:
+   - [.action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd](src/main/resources/documentation/xml_source_processor_checks.markdown#checks-for-action-function-jrxml-macro-pom-testcase-toggle-wsdl-xml-or-xsd)
+   - [.bnd](src/main/resources/documentation/bnd_source_processor_checks.markdown#checks-for-bnd)
+   - [.bndrun](src/main/resources/documentation/bnd_run_source_processor_checks.markdown#checks-for-bndrun)
+   - [.cfg or .config](src/main/resources/documentation/config_source_processor_checks.markdown#checks-for-cfg-or-config)
+   - [.cql](src/main/resources/documentation/cql_source_processor_checks.markdown#checks-for-cql)
+   - [.css or .scss](src/main/resources/documentation/css_source_processor_checks.markdown#checks-for-css-or-scss)
+   - [.dtd](src/main/resources/documentation/dtd_source_processor_checks.markdown#checks-for-dtd)
+   - [.ftl](src/main/resources/documentation/ftl_source_processor_checks.markdown#checks-for-ftl)
+   - [.function, .macro or .testcase](src/main/resources/documentation/poshi_source_processor_checks.markdown#checks-for-function-macro-or-testcase)
+   - [.gradle](src/main/resources/documentation/gradle_source_processor_checks.markdown#checks-for-gradle)
+   - [.groovy](src/main/resources/documentation/groovy_source_processor_checks.markdown#checks-for-groovy)
+   - [.html](src/main/resources/documentation/html_source_processor_checks.markdown#checks-for-html)
+   - [.java](src/main/resources/documentation/java_source_processor_checks.markdown#checks-for-java)
+   - [.js or .jsx](src/main/resources/documentation/js_source_processor_checks.markdown#checks-for-js-or-jsx)
+   - [.json or .npmbridgerc](src/main/resources/documentation/json_source_processor_checks.markdown#checks-for-json-or-npmbridgerc)
+   - [.jsp, .jspf, .tag, .tpl or .vm](src/main/resources/documentation/jsp_source_processor_checks.markdown#checks-for-jsp-jspf-tag-tpl-or-vm)
+   - [.lfrbuild-*](src/main/resources/documentation/lfr_build_source_processor_checks.markdown#checks-for-lfrbuild)
+   - [.markdown or .md](src/main/resources/documentation/markdown_source_processor_checks.markdown#checks-for-markdown-or-md)
+   - [.properties](src/main/resources/documentation/properties_source_processor_checks.markdown#checks-for-properties)
+   - [.soy](src/main/resources/documentation/soy_source_processor_checks.markdown#checks-for-soy)
+   - [.sql](src/main/resources/documentation/sql_source_processor_checks.markdown#checks-for-sql)
+   - [.tld](src/main/resources/documentation/tld_source_processor_checks.markdown#checks-for-tld)
+   - [.ts](src/main/resources/documentation/ts_source_processor_checks.markdown#checks-for-ts)
+   - [.yaml or .yml](src/main/resources/documentation/yml_source_processor_checks.markdown#checks-for-yaml-or-yml)
+   - [CODEOWNERS](src/main/resources/documentation/codeowners_source_processor_checks.markdown#checks-for-codeowners)
+   - [Dockerfile](src/main/resources/documentation/dockerfile_source_processor_checks.markdown#checks-for-dockerfile)
+   - [packageinfo](src/main/resources/documentation/packageinfo_source_processor_checks.markdown#checks-for-packageinfo)

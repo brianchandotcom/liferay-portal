@@ -99,11 +99,11 @@ public final class AMAttribute<T, V> {
 	 *        value between {@link Long#MIN_VALUE} and {@link Long#MAX_VALUE}
 	 */
 	public AMAttribute(
-		String name, Function<String, V> converter,
+		String name, Function<String, V> converterFunction,
 		AMDistanceComparator<V> amDistanceComparator) {
 
 		_name = name;
-		_converterFunction = converter;
+		_converterFunction = converterFunction;
 		_amDistanceComparator = amDistanceComparator;
 	}
 

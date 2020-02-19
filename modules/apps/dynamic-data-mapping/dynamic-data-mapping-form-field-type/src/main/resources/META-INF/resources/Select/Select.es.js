@@ -20,6 +20,8 @@ import '../Text/Text.es';
 
 import './SelectRegister.soy';
 
+import './SingleSelectedOption.soy';
+
 import 'clay-dropdown';
 
 import 'clay-icon';

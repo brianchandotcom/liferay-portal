@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormFieldContext {
+public class FormFieldContext implements Cloneable {
 
 	public Boolean getEvaluable() {
 		return evaluable;
@@ -215,6 +215,11 @@ public class FormFieldContext {
 	}
 
 	protected Boolean visible;
+
+	@Override
+	public FormFieldContext clone() throws CloneNotSupportedException {
+		return (FormFieldContext)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

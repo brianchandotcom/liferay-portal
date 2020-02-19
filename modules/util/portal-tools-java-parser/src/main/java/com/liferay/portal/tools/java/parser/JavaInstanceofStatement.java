@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringBundler;
 /**
  * @author Hugo Huijser
  */
-public class JavaInstanceofStatement extends JavaExpression {
+public class JavaInstanceofStatement extends BaseJavaExpression {
 
 	public JavaInstanceofStatement(
 		JavaType classJavaType, JavaExpression valueJavaExpression) {

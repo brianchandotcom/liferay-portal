@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class BNDDefinitionKeysCheck extends DefinitionKeysCheck {
+public class BNDDefinitionKeysCheck extends BaseDefinitionKeysCheck {
 
 	@Override
 	protected String doProcess(

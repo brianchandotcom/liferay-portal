@@ -125,12 +125,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		assertValid(getUserAccount);
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetOrganizationUserAccountsPageWithSortString() {
-	}
-
 	@Override
 	@Test
 	public void testGetSiteUserAccountsPage() throws Exception {
@@ -156,12 +150,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			Arrays.asList(userAccount1, userAccount2),
 			(List<UserAccount>)page.getItems());
 		assertValid(page);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetSiteUserAccountsPageWithSortString() {
 	}
 
 	@Override

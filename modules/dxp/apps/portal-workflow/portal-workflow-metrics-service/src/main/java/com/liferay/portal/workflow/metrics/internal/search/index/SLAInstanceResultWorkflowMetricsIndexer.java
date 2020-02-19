@@ -20,11 +20,23 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.metrics.internal.messaging.WorkflowMetricsSLAProcessMessageListener;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAInstanceResult;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.sql.Timestamp;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,16 +87,30 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 				null);
 		document.addKeyword(
 			"instanceId", workflowMetricsSLAInstanceResult.getInstanceId());
-		document.addDateSortable(
-			"lastCheckDate",
-			Timestamp.valueOf(
-				workflowMetricsSLAInstanceResult.getLastCheckLocalDateTime()));
+
+		if (workflowMetricsSLAInstanceResult.getLastCheckLocalDateTime() !=
+				null) {
+
+			document.addDateSortable(
+				"lastCheckDate",
+				Timestamp.valueOf(
+					workflowMetricsSLAInstanceResult.
+						getLastCheckLocalDateTime()));
+		}
+
 		document.addKeyword(
 			"onTime", workflowMetricsSLAInstanceResult.isOnTime());
-		document.addDateSortable(
-			"overdueDate",
-			Timestamp.valueOf(
-				workflowMetricsSLAInstanceResult.getOverdueLocalDateTime()));
+
+		if (workflowMetricsSLAInstanceResult.getOverdueLocalDateTime() !=
+				null) {
+
+			document.addDateSortable(
+				"overdueDate",
+				Timestamp.valueOf(
+					workflowMetricsSLAInstanceResult.
+						getOverdueLocalDateTime()));
+		}
+
 		document.addKeyword(
 			"processId", workflowMetricsSLAInstanceResult.getProcessId());
 		document.addKeyword(
@@ -97,7 +123,9 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 		WorkflowMetricsSLAStatus workflowMetricsSLAStatus =
 			workflowMetricsSLAInstanceResult.getWorkflowMetricsSLAStatus();
 
-		document.addKeyword("status", workflowMetricsSLAStatus.name());
+		if (workflowMetricsSLAStatus != null) {
+			document.addKeyword("status", workflowMetricsSLAStatus.name());
+		}
 
 		return document;
 	}
@@ -114,6 +142,8 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 
 	@Override
 	public void reindex(long companyId) throws PortalException {
+		_creatDefaultDocuments(companyId);
+
 		if (workflowMetricsSLAProcessMessageListener == null) {
 			return;
 		}
@@ -129,6 +159,16 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 		workflowMetricsSLAProcessMessageListener.receive(message);
 	}
 
+	protected Document creatDefaultDocument(long companyId, long processId) {
+		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult =
+			new WorkflowMetricsSLAInstanceResult();
+
+		workflowMetricsSLAInstanceResult.setCompanyId(companyId);
+		workflowMetricsSLAInstanceResult.setProcessId(processId);
+
+		return createDocument(workflowMetricsSLAInstanceResult);
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
@@ -136,6 +176,68 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 	)
 	protected volatile WorkflowMetricsSLAProcessMessageListener
 		workflowMetricsSLAProcessMessageListener;
+
+	private void _creatDefaultDocuments(long companyId) {
+		if ((searchEngineAdapter == null) ||
+			!hasIndex("workflow-metrics-processes")) {
+
+			return;
+		}
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames("workflow-metrics-processes");
+
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		booleanQuery.addFilterQueryClauses(
+			queries.term("companyId", companyId),
+			queries.term("deleted", Boolean.FALSE));
+
+		searchSearchRequest.setQuery(booleanQuery);
+
+		searchSearchRequest.setSize(10000);
+
+		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
+			searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		if (searchHits.getTotalHits() == 0) {
+			return;
+		}
+
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		Stream.of(
+			searchHits.getSearchHits()
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).map(
+			document -> creatDefaultDocument(
+				companyId, document.getLong("processId"))
+		).map(
+			document -> new IndexDocumentRequest(getIndexName(), document) {
+				{
+					setType(getIndexType());
+				}
+			}
+		).forEach(
+			bulkDocumentRequest::addBulkableDocumentRequest
+		);
+
+		if (ListUtil.isNotEmpty(
+				bulkDocumentRequest.getBulkableDocumentRequests())) {
+
+			if (PortalRunMode.isTestMode()) {
+				bulkDocumentRequest.setRefresh(true);
+			}
+
+			searchEngineAdapter.execute(bulkDocumentRequest);
+		}
+	}
 
 	@Reference
 	private JSONFactory _jsonFactory;

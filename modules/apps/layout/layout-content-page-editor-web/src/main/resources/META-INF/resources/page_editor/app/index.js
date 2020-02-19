@@ -31,12 +31,11 @@ import {StoreContextProvider} from './store/index';
  * function that returns a component).
  */
 function Container({config, state}) {
+	const initialState = reducer(state, {type: 'INIT'});
+
 	return (
 		<ConfigContext.Provider value={config}>
-			<StoreContextProvider
-				initialState={[state, config]}
-				reducer={reducer}
-			>
+			<StoreContextProvider initialState={initialState} reducer={reducer}>
 				<ControlsProvider>
 					<App />
 				</ControlsProvider>

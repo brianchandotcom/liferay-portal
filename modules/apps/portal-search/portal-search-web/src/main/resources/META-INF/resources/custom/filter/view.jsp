@@ -49,7 +49,7 @@ CustomFilterDisplayContext customFilterDisplayContext = (CustomFilterDisplayCont
 			persistState="<%= true %>"
 			title="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getHeading()) %>"
 		>
-			<aui:form action="<%= customFilterDisplayContext.getSearchURL() %>" method="get" name="customFilterForm">
+			<aui:form action="<%= customFilterDisplayContext.getSearchURL() %>" method="get" name="customFilterFm">
 				<aui:input cssClass="custom-filter-value-input" data-qa-id="customFilterValueInput" disabled="<%= customFilterDisplayContext.isImmutable() %>" id="<%= renderResponse.getNamespace() + StringUtil.randomId() %>" label="" name="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName()) %>" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue()) %>" />
 
 				<clay:button
@@ -66,6 +66,6 @@ CustomFilterDisplayContext customFilterDisplayContext = (CustomFilterDisplayCont
 	</liferay-ui:panel-container>
 
 	<aui:script use="liferay-search-custom-filter">
-		new Liferay.Search.CustomFilter(A.one('#<portlet:namespace/>customFilterForm'));
+		new Liferay.Search.CustomFilter(A.one('#<portlet:namespace/>customFilterFm'));
 	</aui:script>
 </c:if>

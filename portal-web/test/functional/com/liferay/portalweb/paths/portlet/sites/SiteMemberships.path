@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>USER_GROUPS_TABLE_SITE_ROLES</td>
-	<td>//td[contains(@class,'lfr-site-roles-column') and contains(.,'${key_siteRoleName}')]</td>
+	<td>//td[contains(@class,'lfr-roles-column') and contains(.,'${key_siteRoleName}')]</td>
 	<td></td>
 </tr>
 </tbody>

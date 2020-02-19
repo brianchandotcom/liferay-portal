@@ -21,6 +21,8 @@
  */
 
 export const COMPATIBLE_TYPES = {
+	'background-image': ['ddm-image', 'image'],
+
 	html: [
 		'ddm-date',
 		'ddm-decimal',

@@ -13,6 +13,8 @@
  */
 
 import updateLayoutData from '../actions/updateLayoutData';
+import updatePageContents from '../actions/updatePageContents';
+import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 
 export default function updateItemConfig({
@@ -28,7 +30,20 @@ export default function updateItemConfig({
 			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId
-		}).then(layoutData => {
-			dispatch(updateLayoutData({layoutData}));
-		});
+		})
+			.then(layoutData => {
+				dispatch(updateLayoutData({layoutData}));
+			})
+			.then(() => {
+				InfoItemService.getPageContents({
+					config,
+					onNetworkStatus: dispatch
+				}).then(pageContents => {
+					dispatch(
+						updatePageContents({
+							pageContents
+						})
+					);
+				});
+			});
 }

@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Calendar {
+public class Calendar implements Cloneable {
 
 	public Boolean getDefaultCalendar() {
 		return defaultCalendar;
@@ -88,6 +88,11 @@ public class Calendar {
 	}
 
 	protected String title;
+
+	@Override
+	public Calendar clone() throws CloneNotSupportedException {
+		return (Calendar)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

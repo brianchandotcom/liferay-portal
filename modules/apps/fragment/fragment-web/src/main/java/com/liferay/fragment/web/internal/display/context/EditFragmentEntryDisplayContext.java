@@ -28,17 +28,26 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -113,6 +122,32 @@ public class EditFragmentEntryDisplayContext {
 				FragmentServiceConfiguration.class,
 				_themeDisplay.getCompanyId());
 
+		TemplateManager templateManager =
+			TemplateManagerUtil.getTemplateManager(
+				TemplateConstants.LANG_TYPE_FTL);
+
+		Template template = templateManager.getTemplate(
+			new StringTemplateResource(
+				TemplateConstants.LANG_TYPE_FTL,
+				TemplateConstants.LANG_TYPE_FTL),
+			true);
+
+		template.prepare(_httpServletRequest);
+
+		Map<String, Object> taglibMap = new HashMap<>();
+
+		templateManager.addTaglibSupport(
+			taglibMap, _httpServletRequest,
+			PortalUtil.getHttpServletResponse(_renderResponse));
+
+		List<String> freeMarkerTaglibs = new ArrayList<>();
+		List<String> freeMarkerVariables = new ArrayList<>();
+
+		freeMarkerTaglibs.addAll(taglibMap.keySet());
+		freeMarkerVariables.addAll(template.keySet());
+
+		freeMarkerVariables.add("configuration");
+
 		soyContext.put(
 			"allowedStatus", allowedStatusSoyContext
 		).put(
@@ -124,6 +159,10 @@ public class EditFragmentEntryDisplayContext {
 			"fragmentCollectionId", getFragmentCollectionId()
 		).put(
 			"fragmentEntryId", getFragmentEntryId()
+		).put(
+			"freeMarkerTaglibs", freeMarkerTaglibs
+		).put(
+			"freeMarkerVariables", freeMarkerVariables
 		).put(
 			"initialConfiguration", _getConfigurationContent()
 		).put(

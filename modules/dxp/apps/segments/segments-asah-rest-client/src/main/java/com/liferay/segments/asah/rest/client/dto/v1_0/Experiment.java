@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Experiment {
+public class Experiment implements Cloneable {
 
 	public Date getDateCreated() {
 		return dateCreated;
@@ -192,6 +192,11 @@ public class Experiment {
 	}
 
 	protected Long winnerVariantId;
+
+	@Override
+	public Experiment clone() throws CloneNotSupportedException {
+		return (Experiment)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

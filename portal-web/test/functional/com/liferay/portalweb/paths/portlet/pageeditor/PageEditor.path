@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME</td>
-	<td>//h1[contains(@class,'fragments-editor-sidebar-section')]//span[contains(.,'${key_fragmentName}')]</td>
+	<td>//h1[contains(@class,'page-editor__sidebar__panel-header')]//span[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -157,17 +157,17 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
-	<td>//button[normalize-space()='${key_collectionName}']</td>
+	<td>//*[normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED</td>
-	<td>//button[@aria-expanded='false'][normalize-space()='${key_collectionName}']</td>
+	<td>//a[contains(@class,'sheet-subtitle collapsed')]/*[normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED</td>
-	<td>//button[@aria-expanded='true'][normalize-space()='${key_collectionName}']</td>
+	<td>//a[@class='collapse-icon sheet-subtitle']/*[normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -182,7 +182,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_SECTION_TITLE</td>
-	<td>//div[contains(@class,'sidebar-section')]//h1</td>
+	<td>//div[contains(@class,'page-editor')]/div/h1</td>
 	<td></td>
 </tr>
 <tr>
@@ -202,7 +202,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_TAB_BUTTON</td>
-	<td>//button[contains(@title,'${key_tabName}')]</td>
+	<td>//div[contains(@class,'page-editor__sidebar__buttons')]//button[contains(@title,'${key_tabName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -374,7 +374,7 @@
 <!--SECTION_BUILDER-->
 <tr>
 	<td>SECTION_BUILDER_FRAGMENTS</td>
-	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'fragment-card') and contains(.,'${fragmentName}')]</td>
+	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'fragment-card') and contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -405,7 +405,7 @@
 <!--WIDGETS-->
 <tr>
 	<td>WIDGETS_APPLICATION_SEARCH_FIELD</td>
-	<td>//form[@role='search']//input[contains(@placeholder,'Search')]</td>
+	<td>//div[@role='search']//input[contains(@placeholder,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

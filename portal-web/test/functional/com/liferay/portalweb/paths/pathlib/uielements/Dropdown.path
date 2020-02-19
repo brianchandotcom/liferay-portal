@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ENTRIES</td>
-	<td>//a[contains(@class,'dropdown') and contains(.,'Entries')]</td>
+	<td>//a[contains(@class,'dropdown') and contains(.,'Entries')] | //button[contains(@class,'dropdown') and contains(.,'Entries')]</td>
 	<td></td>
 </tr>
 <tr>

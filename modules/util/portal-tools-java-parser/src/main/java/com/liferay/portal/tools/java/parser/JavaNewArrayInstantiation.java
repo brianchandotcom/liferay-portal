@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringBundler;
 /**
  * @author Hugo Huijser
  */
-public class JavaNewArrayInstantiation extends JavaExpression {
+public class JavaNewArrayInstantiation extends BaseJavaExpression {
 
 	public void setInitialJavaArray(JavaArray initialJavaArray) {
 		_initialJavaArray = initialJavaArray;

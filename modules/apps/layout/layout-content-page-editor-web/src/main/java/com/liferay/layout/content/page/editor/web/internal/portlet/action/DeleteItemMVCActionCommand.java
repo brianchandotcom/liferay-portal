@@ -25,20 +25,12 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLo
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -49,7 +41,6 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,19 +54,10 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/delete_item"
 	},
-	service = {AopService.class, MVCActionCommand.class}
+	service = MVCActionCommand.class
 )
 public class DeleteItemMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
-
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	protected JSONObject deleteItemJSONObject(
 			long companyId, long groupId, String itemId, long plid,
@@ -118,7 +100,7 @@ public class DeleteItemMVCActionCommand
 	}
 
 	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -130,26 +112,9 @@ public class DeleteItemMVCActionCommand
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		try {
-			jsonObject = deleteItemJSONObject(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				itemId, themeDisplay.getPlid(), segmentsExperienceId);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
-		}
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		return deleteItemJSONObject(
+			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), itemId,
+			themeDisplay.getPlid(), segmentsExperienceId);
 	}
 
 	private boolean _isFragmentEntryLinkInAnotherSegmentsExperience(
@@ -202,9 +167,6 @@ public class DeleteItemMVCActionCommand
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteItemMVCActionCommand.class);
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

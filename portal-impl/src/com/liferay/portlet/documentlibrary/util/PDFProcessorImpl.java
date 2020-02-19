@@ -686,9 +686,13 @@ public class PDFProcessorImpl
 				new LiferayPDFBoxProcessCallable(
 					ServerDetector.getServerId(),
 					PropsUtil.get(PropsKeys.LIFERAY_HOME),
-					Log4JUtil.getCustomLogSettings(), decryptedFile,
-					thumbnailFile, previewFiles, getThumbnailType(fileVersion),
-					getPreviewType(fileVersion),
+					HashMapBuilder.putAll(
+						Log4JUtil.getCustomLogSettings()
+					).put(
+						PropsUtil.class.getName(), "WARN"
+					).build(),
+					decryptedFile, thumbnailFile, previewFiles,
+					getThumbnailType(fileVersion), getPreviewType(fileVersion),
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,

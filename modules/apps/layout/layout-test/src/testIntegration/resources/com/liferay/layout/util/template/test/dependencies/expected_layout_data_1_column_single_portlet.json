@@ -1,0 +1,65 @@
+{
+	"items": {
+		"ROOT": {
+			"children": [
+				"ROOT-CONTAINER0"
+			],
+			"config": {},
+			"itemId": "ROOT",
+			"parentId": "",
+			"type": "root"
+		},
+		"ROOT-CONTAINER0": {
+			"children": [
+				"ROOT-CONTAINER0-ROW0"
+			],
+			"config": {
+				"backgroundImage": {},
+				"paddingBottom": 3,
+				"paddingHorizontal": 3,
+				"paddingTop": 3,
+				"type": "fixed"
+			},
+			"itemId": "ROOT-CONTAINER0",
+			"parentId": "ROOT",
+			"type": "container"
+		},
+		"ROOT-CONTAINER0-ROW0": {
+			"children": [
+				"ROOT-CONTAINER0-ROW0-COLUMN0"
+			],
+			"config": {
+				"gutters": true,
+				"numberOfColumns": 1
+			},
+			"itemId": "ROOT-CONTAINER0-ROW0",
+			"parentId": "ROOT-CONTAINER0",
+			"type": "row"
+		},
+		"ROOT-CONTAINER0-ROW0-COLUMN0": {
+			"children": [
+				"ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT0"
+			],
+			"config": {
+				"size": 12
+			},
+			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN0",
+			"parentId": "ROOT-CONTAINER0-ROW0",
+			"type": "column"
+		},
+		"ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT0": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "column-1:com_liferay_hello_world_web_portlet_HelloWorldPortlet"
+			},
+			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT0",
+			"parentId": "ROOT-CONTAINER0-ROW0-COLUMN0",
+			"type": "fragment"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "ROOT"
+	},
+	"version": 1
+}

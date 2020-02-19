@@ -18,6 +18,8 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
+import java.util.Objects;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -25,6 +27,29 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 
 	public RowLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RowLayoutStructureItem)) {
+			return false;
+		}
+
+		RowLayoutStructureItem rowLayoutStructureItem =
+			(RowLayoutStructureItem)obj;
+
+		if (!Objects.equals(_gutters, rowLayoutStructureItem._gutters) ||
+			!Objects.equals(
+				_numberOfColumns, rowLayoutStructureItem._numberOfColumns)) {
+
+			return false;
+		}
+
+		return super.equals(obj);
 	}
 
 	@Override

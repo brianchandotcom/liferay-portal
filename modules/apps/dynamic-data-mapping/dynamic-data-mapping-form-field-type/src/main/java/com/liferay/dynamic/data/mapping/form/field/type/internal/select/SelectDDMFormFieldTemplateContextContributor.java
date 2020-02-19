@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -150,12 +151,12 @@ public class SelectDDMFormFieldTemplateContextContributor
 
 			Map<String, String> optionMap = HashMapBuilder.put(
 				"label",
-				() -> {
-					LocalizedValue optionLabel =
-						ddmFormFieldOptions.getOptionLabels(optionValue);
-
-					return optionLabel.getString(locale);
-				}
+				() -> HtmlUtil.escape(
+					ddmFormFieldOptions.getOptionLabels(
+						optionValue
+					).getString(
+						locale
+					))
 			).put(
 				"value", optionValue
 			).build();

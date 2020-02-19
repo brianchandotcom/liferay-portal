@@ -52,13 +52,12 @@ import javax.ws.rs.core.MultivaluedMap;
 public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 	public AsahFaroBackendClientImpl(
-		JSONWebServiceClient jsonWebServiceClient,
-		String asahFaroBackendDataSourceId,
+		JSONWebServiceClient jsonWebServiceClient, String dataSourceId,
 		String asahFaroBackendSecuritySignature, String asahFaroBackendURL) {
 
 		_jsonWebServiceClient = jsonWebServiceClient;
 
-		_dataSourceId = asahFaroBackendDataSourceId;
+		_dataSourceId = dataSourceId;
 
 		_headers.put(
 			"OSB-Asah-Faro-Backend-Security-Signature",

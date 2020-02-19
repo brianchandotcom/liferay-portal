@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaArrayElement extends JavaExpression {
+public class JavaArrayElement extends BaseJavaExpression {
 
 	public JavaArrayElement(
 		JavaExpression arrayJavaExpression,

@@ -1,7 +1,7 @@
 Bundle-Description: Creates a Liferay JAX-RS module project.
 Bundle-Name: Liferay Project Templates REST
 Bundle-SymbolicName: com.liferay.project.templates.rest
-Bundle-Version: 1.0.74
+Bundle-Version: 1.0.75
 Liferay-Versions: [7,7.4)
 -removeheaders:\
 	Import-Package,\

@@ -463,9 +463,11 @@ public abstract class BaseContentStructureResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						contentStructure1, entityField.getName(), "Aaa");
+						contentStructure1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						contentStructure2, entityField.getName(), "Bbb");
+						contentStructure2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

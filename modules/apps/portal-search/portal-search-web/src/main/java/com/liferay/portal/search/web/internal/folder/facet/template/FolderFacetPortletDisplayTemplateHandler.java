@@ -81,7 +81,7 @@ public class FolderFacetPortletDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
-			"folder-search-facet-display-context",
+			"folder-facet-display-context",
 			FolderSearchFacetDisplayContext.class,
 			"folderSearchFacetDisplayContext");
 		templateVariableGroup.addVariable(

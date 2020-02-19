@@ -7,6 +7,8 @@
 }
 
 .page-editor__floating-toolbar {
+	z-index: 2;
+
 	&__button {
 		&--disabled {
 			cursor: not-allowed;

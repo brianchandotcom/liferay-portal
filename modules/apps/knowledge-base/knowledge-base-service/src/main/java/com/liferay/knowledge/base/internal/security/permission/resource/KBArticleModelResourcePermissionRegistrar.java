@@ -149,9 +149,11 @@ public class KBArticleModelResourcePermissionRegistrar {
 		}
 
 		private KBArticleDynamicInheritanceModelResourcePermissionLogic(
-			ModelResourcePermission<KBArticle> modelResourcePermission) {
+			ModelResourcePermission<KBArticle>
+				kbArticleModelResourcePermission) {
 
-			_kbArticleModelResourcePermission = modelResourcePermission;
+			_kbArticleModelResourcePermission =
+				kbArticleModelResourcePermission;
 		}
 
 		private final ModelResourcePermission<KBArticle>

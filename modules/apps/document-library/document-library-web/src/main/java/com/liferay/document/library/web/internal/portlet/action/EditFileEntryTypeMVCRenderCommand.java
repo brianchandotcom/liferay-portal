@@ -20,14 +20,12 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfiguration;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.DLEditFileEntryTypeDisplayContext;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -40,15 +38,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -78,8 +72,7 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 					DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT,
 				new DLEditFileEntryTypeDisplayContext(
 					_ddm, _ddmStorageLinkLocalService,
-					_ddmStructureLocalService,
-					_ffDocumentLibraryDDMEditorConfiguration, _language,
+					_ddmStructureLocalService, _language,
 					_portal.getLiferayPortletRequest(renderRequest)));
 
 			long fileEntryTypeId = ParamUtil.getLong(
@@ -116,14 +109,6 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
 		}
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffDocumentLibraryDDMEditorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFDocumentLibraryDDMEditorConfiguration.class, properties);
 	}
 
 	private DDMStructure _getDDMStructure(
@@ -181,9 +166,6 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DLFileEntryTypeService _dlFileEntryTypeService;
-
-	private volatile FFDocumentLibraryDDMEditorConfiguration
-		_ffDocumentLibraryDDMEditorConfiguration;
 
 	@Reference
 	private Language _language;

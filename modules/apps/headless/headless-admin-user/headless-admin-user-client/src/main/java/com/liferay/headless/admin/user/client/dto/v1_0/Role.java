@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Role {
+public class Role implements Cloneable {
 
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -237,6 +237,11 @@ public class Role {
 	}
 
 	protected String roleType;
+
+	@Override
+	public Role clone() throws CloneNotSupportedException {
+		return (Role)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -370,9 +370,11 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						dataDefinition1, entityField.getName(), "Aaa");
+						dataDefinition1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						dataDefinition2, entityField.getName(), "Bbb");
+						dataDefinition2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -855,9 +857,11 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						dataDefinition1, entityField.getName(), "Aaa");
+						dataDefinition1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						dataDefinition2, entityField.getName(), "Bbb");
+						dataDefinition2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

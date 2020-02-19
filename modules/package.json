@@ -45,6 +45,7 @@
 			"apps/frontend-theme-fjord/frontend-theme-fjord",
 			"apps/frontend-theme-porygon/frontend-theme-porygon",
 			"apps/frontend-theme-westeros-bank/frontend-theme-westeros-bank",
+			"apps/journal/journal-article-dynamic-data-mapping-form-field-type",
 			"apps/map/map-common",
 			"apps/map/map-google-maps",
 			"apps/map/map-openstreetmap",

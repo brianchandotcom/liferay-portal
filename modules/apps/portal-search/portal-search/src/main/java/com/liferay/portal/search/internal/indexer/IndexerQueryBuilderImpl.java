@@ -50,7 +50,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 		IndexerRegistry indexerRegistry,
 		ModelSearchSettings modelSearchSettings,
 		ModelKeywordQueryContributorsHolder modelKeywordQueryContributorsHolder,
-		Iterable<SearchContextContributor> modelSearchContextContributor,
+		Iterable<SearchContextContributor> modelSearchContextContributors,
 		KeywordQueryContributorsHolder keywordQueryContributorsHolder,
 		PreFilterContributorHelper preFilterContributorHelper,
 		Iterable<SearchContextContributor> searchContextContributors,
@@ -61,7 +61,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 		_modelSearchSettings = modelSearchSettings;
 		_modelKeywordQueryContributorsHolder =
 			modelKeywordQueryContributorsHolder;
-		_modelSearchContextContributors = modelSearchContextContributor;
+		_modelSearchContextContributors = modelSearchContextContributors;
 		_keywordQueryContributorsHolder = keywordQueryContributorsHolder;
 		_preFilterContributorHelper = preFilterContributorHelper;
 		_searchContextContributors = searchContextContributors;

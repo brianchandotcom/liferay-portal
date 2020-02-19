@@ -27,18 +27,22 @@ DLEditDDMStructureDisplayContext dlEditDDMStructureDisplayContext = new DLEditDD
 
 com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = dlEditDDMStructureDisplayContext.getDDMStructure();
 
+long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
+
 long groupId = BeanParamUtil.getLong(ddmStructure, request, "groupId", scopeGroupId);
+
+boolean localizeTitle = true;
+String title = LanguageUtil.format(request, "new-x", LanguageUtil.get(resourceBundle, "metadata-set"), false);
+
+if (ddmStructure != null) {
+	localizeTitle = false;
+	title = LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false);
+}
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false) : LanguageUtil.get(request, "new-structure"));
-
-DDMForm ddmForm = null;
-
-if (ddmStructure != null) {
-	ddmForm = ddmStructure.getDDMForm();
-}
+renderResponse.setTitle(title);
 %>
 
 <portlet:actionURL name="/document_library/ddm/add_ddm_structure" var="addDDMStructureURL" />
@@ -48,13 +52,10 @@ if (ddmStructure != null) {
 <div class="container-fluid-1280">
 	<aui:form action="<%= (ddmStructure == null) ? addDDMStructureURL : updateDDMStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="definition" type="hidden" />
 		<aui:input name="status" type="hidden" />
-
-		<c:if test="<%= ddmStructure != null %>">
-			<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructure.getStructureId() %>" />
-		</c:if>
 
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
 
@@ -112,24 +113,6 @@ if (ddmStructure != null) {
 		<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />
 		<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
 		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
-
-		<%
-		boolean localizeTitle = true;
-		String title = "new-structure";
-
-		if (ddmStructure != null) {
-			localizeTitle = false;
-			title = LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false);
-		}
-		else {
-			title = LanguageUtil.format(request, "new-x", LanguageUtil.get(resourceBundle, "metadata-set"), false);
-		}
-
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(redirect);
-
-		renderResponse.setTitle(title);
-		%>
 
 		<aui:model-context bean="<%= ddmStructure %>" model="<%= com.liferay.dynamic.data.mapping.model.DDMStructure.class %>" />
 
@@ -196,7 +179,22 @@ if (ddmStructure != null) {
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>
 
-				<liferay-util:include page="/document_library/ddm/ddm_form_builder.jsp" servletContext="<%= application %>" />
+				<c:choose>
+					<c:when test="<%= FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor() %>">
+						<liferay-data-engine:data-layout-builder
+							componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
+							contentType="document-library"
+							dataDefinitionId="<%= ddmStructureId %>"
+							dataLayoutInputId="dataLayout"
+							groupId="<%= groupId %>"
+							localizable="<%= true %>"
+							namespace="<%= renderResponse.getNamespace() %>"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-util:include page="/document_library/ddm/ddm_form_builder.jsp" servletContext="<%= application %>" />
+					</c:otherwise>
+				</c:choose>
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</aui:form>
@@ -265,10 +263,53 @@ if (ddmStructure != null) {
 	}
 
 	function <portlet:namespace />saveDDMStructure() {
-		Liferay.Util.postForm(document.<portlet:namespace />fm, {
-			data: {
-				definition: <portlet:namespace />formBuilder.getContentValue()
-			}
-		});
+		<c:choose>
+			<c:when test="<%= FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor() %>">
+				Liferay.componentReady(
+					'<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
+				).then(function(dataLayoutBuilder) {
+					var name =
+						document.<portlet:namespace />fm[
+							'<portlet:namespace />name_' + themeDisplay.getLanguageId()
+						].value;
+					var description =
+						document.<portlet:namespace />fm['<portlet:namespace />description']
+							.value;
+
+					dataLayoutBuilder
+						.save({
+							dataDefinition: {
+								description: {
+									value: description
+								},
+								name: {
+									value: name
+								}
+							},
+							dataLayout: {
+								description: {
+									value: description
+								},
+								name: {
+									value: name
+								}
+							}
+						})
+						.then(function(dataLayout) {
+							document.<portlet:namespace />fm[
+								'<portlet:namespace />ddmStructureId'
+							].value = dataLayout.id;
+							submitForm(document.<portlet:namespace />fm);
+						});
+				});
+			</c:when>
+			<c:otherwise>
+				Liferay.Util.postForm(document.<portlet:namespace />fm, {
+					data: {
+						definition: <portlet:namespace />formBuilder.getContentValue()
+					}
+				});
+			</c:otherwise>
+		</c:choose>
 	}
 </aui:script>

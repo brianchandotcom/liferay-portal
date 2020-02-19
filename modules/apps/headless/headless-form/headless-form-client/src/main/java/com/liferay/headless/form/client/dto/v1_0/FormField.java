@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormField {
+public class FormField implements Cloneable {
 
 	public Boolean getAutocomplete() {
 		return autocomplete;
@@ -635,6 +635,11 @@ public class FormField {
 	}
 
 	protected Validation validation;
+
+	@Override
+	public FormField clone() throws CloneNotSupportedException {
+		return (FormField)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

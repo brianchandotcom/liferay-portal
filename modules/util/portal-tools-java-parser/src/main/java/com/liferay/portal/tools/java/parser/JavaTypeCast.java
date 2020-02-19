@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaTypeCast extends JavaExpression {
+public class JavaTypeCast extends BaseJavaExpression {
 
 	public JavaTypeCast(
 		List<JavaType> javaTypes, JavaExpression valueJavaExpression) {
@@ -32,6 +32,15 @@ public class JavaTypeCast extends JavaExpression {
 
 	public JavaExpression getValueJavaExpression() {
 		return _valueJavaExpression;
+	}
+
+	@Override
+	public boolean hasSurroundingParentheses() {
+		if (getChainedJavaExpression() != null) {
+			return true;
+		}
+
+		return super.hasSurroundingParentheses();
 	}
 
 	@Override
@@ -66,15 +75,6 @@ public class JavaTypeCast extends JavaExpression {
 		}
 
 		return sb.toString();
-	}
-
-	@Override
-	protected boolean hasSurroundingParentheses() {
-		if (getChainedJavaExpression() != null) {
-			return true;
-		}
-
-		return super.hasSurroundingParentheses();
 	}
 
 	private final List<JavaType> _javaTypes;

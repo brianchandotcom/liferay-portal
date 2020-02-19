@@ -1,0 +1,23 @@
+{
+	"pageElement" : {
+		"pageElements" : [
+			{
+				"definition" : {
+					"fragment" : {
+						"fragmentCollectionName" : "My Fragment Collection",
+						"fragmentName" : "My Fragment"
+					},
+					"fragmentConfig" : {
+						"fieldOne" : 1,
+						"fieldThree" : "v2",
+						"fieldTwo" : "v1"
+					},
+					"fragmentFields" : []
+				},
+				"pageElements" : [],
+				"type" : "Fragment"
+			}
+		],
+		"type" : "Root"
+	}
+}

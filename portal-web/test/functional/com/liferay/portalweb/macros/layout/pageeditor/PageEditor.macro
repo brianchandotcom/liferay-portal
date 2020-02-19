@@ -67,7 +67,7 @@ definition {
 		PageEditor.expandFragmentCollection(collectionName = "Content Display");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
-			fragmentName = "${fragmentName}",
+			key_fragmentName = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
@@ -121,7 +121,7 @@ definition {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
-			fragmentName = "${fragmentName}",
+			key_fragmentName = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
@@ -810,6 +810,18 @@ definition {
 		AssertTextNotPresent(value1 = "${fragmentComment}");
 	}
 
+	macro searchFragmentViaSidebar {
+		Pause(locator1 = "10000");
+
+		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE", key_sidebarButton = "Fragments")) {
+			PageEditor.gotoTab(tabName = "Fragments");
+		}
+
+		Type(
+			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+			value1 = "${fragmentName}");
+	}
+
 	macro selectLayoutSectionImage {
 		Click(
 			key_position = "1",
@@ -857,7 +869,7 @@ definition {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 		DragAndDrop(
-			fragmentName = "${fragmentName}",
+			key_fragmentName = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
 			locator2 = "PageEditor#OUTSIDE_OF_DROP_ZONE",
 			value1 = "");

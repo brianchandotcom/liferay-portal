@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Hugo Huijser
@@ -62,6 +63,14 @@ public class HashMapBuilder<K, V> extends BaseMapBuilder {
 		return hashMapWrapper.put(keyUnsafeSupplier, value);
 	}
 
+	public static <K, V> HashMapWrapper<K, V> putAll(
+		Map<? extends K, ? extends V> inputMap) {
+
+		HashMapWrapper<K, V> hashMapWrapper = new HashMapWrapper<>();
+
+		return hashMapWrapper.putAll(inputMap);
+	}
+
 	public static final class HashMapWrapper<K, V>
 		extends BaseMapWrapper<K, V> {
 
@@ -105,6 +114,14 @@ public class HashMapBuilder<K, V> extends BaseMapBuilder {
 			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
 
 			doPut(keyUnsafeSupplier, value);
+
+			return this;
+		}
+
+		public HashMapWrapper<K, V> putAll(
+			Map<? extends K, ? extends V> inputMap) {
+
+			doPutAll(inputMap);
 
 			return this;
 		}

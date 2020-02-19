@@ -58,8 +58,8 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		this(dlFileEntry, dlFileEntry.isEscapedModel());
 	}
 
-	public LiferayFileEntry(DLFileEntry fileEntry, boolean escapedModel) {
-		_dlFileEntry = fileEntry;
+	public LiferayFileEntry(DLFileEntry dlFileEntry, boolean escapedModel) {
+		_dlFileEntry = dlFileEntry;
 		_escapedModel = escapedModel;
 	}
 

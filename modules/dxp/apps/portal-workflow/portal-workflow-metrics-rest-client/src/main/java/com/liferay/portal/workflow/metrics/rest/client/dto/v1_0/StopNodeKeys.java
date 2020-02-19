@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class StopNodeKeys {
+public class StopNodeKeys implements Cloneable {
 
 	public NodeKey[] getNodeKeys() {
 		return nodeKeys;
@@ -69,6 +69,11 @@ public class StopNodeKeys {
 	}
 
 	protected Integer status;
+
+	@Override
+	public StopNodeKeys clone() throws CloneNotSupportedException {
+		return (StopNodeKeys)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class TaxonomyVocabulary {
+public class TaxonomyVocabulary implements Cloneable {
 
 	public static enum ViewableBy {
 
@@ -365,6 +365,11 @@ public class TaxonomyVocabulary {
 	}
 
 	protected ViewableBy viewableBy;
+
+	@Override
+	public TaxonomyVocabulary clone() throws CloneNotSupportedException {
+		return (TaxonomyVocabulary)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

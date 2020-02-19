@@ -174,6 +174,7 @@ public abstract class BaseNodeResourceTestCase {
 
 		Node node = randomNode();
 
+		node.setLabel(regex);
 		node.setName(regex);
 		node.setType(regex);
 
@@ -183,6 +184,7 @@ public abstract class BaseNodeResourceTestCase {
 
 		node = NodeSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, node.getLabel());
 		Assert.assertEquals(regex, node.getName());
 		Assert.assertEquals(regex, node.getType());
 	}
@@ -328,6 +330,14 @@ public abstract class BaseNodeResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("label", additionalAssertFieldName)) {
+				if (node.getLabel() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (node.getName() == null) {
 					valid = false;
@@ -423,6 +433,14 @@ public abstract class BaseNodeResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("label", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(node1.getLabel(), node2.getLabel())) {
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(node1.getName(), node2.getName())) {
 					return false;
@@ -472,6 +490,16 @@ public abstract class BaseNodeResourceTestCase {
 			if (Objects.equals("initial", fieldName)) {
 				if (!Objects.deepEquals(
 						node.getInitial(), jsonObject.getBoolean("initial"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("label", fieldName)) {
+				if (!Objects.deepEquals(
+						node.getLabel(), jsonObject.getString("label"))) {
 
 					return false;
 				}
@@ -577,6 +605,14 @@ public abstract class BaseNodeResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("label")) {
+			sb.append("'");
+			sb.append(String.valueOf(node.getLabel()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
 			sb.append(String.valueOf(node.getName()));
@@ -624,6 +660,7 @@ public abstract class BaseNodeResourceTestCase {
 			{
 				id = RandomTestUtil.randomLong();
 				initial = RandomTestUtil.randomBoolean();
+				label = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 				terminal = RandomTestUtil.randomBoolean();
 				type = RandomTestUtil.randomString();

@@ -307,8 +307,9 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			httpResponse = proxiedHttpRequest.send();
 		}
 
-		DocumentContext documentContext = JsonPath.parse(
-			httpResponse.bodyText());
+		String responseBodyText = _removeUTFBOM(httpResponse.bodyText());
+
+		DocumentContext documentContext = JsonPath.parse(responseBodyText);
 
 		ddmDataProviderResponse = createDDMDataProviderResponse(
 			documentContext, ddmDataProviderRequest,
@@ -533,6 +534,16 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 	@Reference
 	protected UserLocalService userLocalService;
+
+	private String _removeUTFBOM(String bodyText) {
+		for (int i = 0; i < bodyText.length(); i++) {
+			if ((bodyText.charAt(i) == '[') || (bodyText.charAt(i) == '{')) {
+				return bodyText.substring(i);
+			}
+		}
+
+		return "";
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMRESTDataProvider.class);

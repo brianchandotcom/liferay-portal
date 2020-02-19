@@ -26,8 +26,12 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../config/index';
@@ -37,7 +41,7 @@ import duplicateItem from '../../thunks/duplicateItem';
 import {useSelectItem} from '../Controls';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
-import FragmentContent from './FragmentContent';
+import FragmentContent from '../fragment-content/FragmentContent';
 
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const config = useContext(ConfigContext);
@@ -65,29 +69,35 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 		}
 	};
 
-	const floatingToolbarButtons = [];
+	const floatingToolbarButtons = useMemo(() => {
+		const buttons = [];
 
-	const portletId = fragmentEntryLink.editableValues.portletId;
+		const portletId = fragmentEntryLink.editableValues.portletId;
 
-	const widget = portletId && getWidget(state.widgets, portletId);
+		const widget = portletId && getWidget(state.widgets, portletId);
 
-	if (!widget || widget.instanceable) {
-		floatingToolbarButtons.push(
-			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem
-		);
-	}
+		if (!widget || widget.instanceable) {
+			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem);
+		}
 
-	const configuration = fragmentEntryLink.configuration;
+		const configuration = fragmentEntryLink.configuration;
 
-	if (
-		configuration &&
-		Array.isArray(configuration.fieldSets) &&
-		configuration.fieldSets.length
-	) {
-		floatingToolbarButtons.push(
-			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
-		);
-	}
+		if (
+			configuration &&
+			Array.isArray(configuration.fieldSets) &&
+			configuration.fieldSets.length
+		) {
+			buttons.push(
+				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
+			);
+		}
+
+		return buttons;
+	}, [
+		fragmentEntryLink.configuration,
+		fragmentEntryLink.editableValues.portletId,
+		state.widgets
+	]);
 
 	const content = (
 		<>
@@ -99,7 +109,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 			/>
 
 			<FragmentContent
-				fragmentEntryLink={fragmentEntryLink}
+				fragmentEntryLinkId={fragmentEntryLink.fragmentEntryLinkId}
 				itemId={item.itemId}
 				ref={ref}
 			/>
@@ -145,5 +155,10 @@ function getWidget(widgets, portletId) {
 
 	return widget;
 }
+
+FragmentWithControls.propTypes = {
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
 
 export default FragmentWithControls;

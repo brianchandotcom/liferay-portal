@@ -298,8 +298,11 @@ exports[`Should cancel dialog through SLA List 1`] = `
             className="container-fluid-1280"
           >
             <ListView
+              emptyActionButton={<ReloadButton />}
               emptyMessageText="sla-allows-to-define-and-measure-process-performance"
               emptyTitleText="no-slas-yet"
+              errorMessageClassName="small"
+              errorMessageText={false}
               fetching={false}
               loading={true}
             >
@@ -483,8 +486,11 @@ exports[`Should cancel dialog through SLA List 2`] = `
             className="container-fluid-1280"
           >
             <ListView
+              emptyActionButton={<ReloadButton />}
               emptyMessageText="sla-allows-to-define-and-measure-process-performance"
               emptyTitleText="no-slas-yet"
+              errorMessageClassName="small"
+              errorMessageText={false}
               fetching={false}
               loading={true}
             >

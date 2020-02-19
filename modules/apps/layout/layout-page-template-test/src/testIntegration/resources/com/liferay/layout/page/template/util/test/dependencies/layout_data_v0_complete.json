@@ -10,8 +10,8 @@
 					"config": {
 					},
 					"fragmentEntryLinkIds": [
-						"fragmentEntryLinkId0",
-						"fragmentEntryLinkId1"
+						"0",
+						"1"
 					],
 					"size": "8"
 				},
@@ -20,8 +20,8 @@
 					"config": {
 					},
 					"fragmentEntryLinkIds": [
-						"fragmentEntryLinkId2",
-						"fragmentEntryLinkId3"
+						"2",
+						"3"
 					],
 					"size": "4"
 				}
@@ -47,8 +47,8 @@
 					"config": {
 					},
 					"fragmentEntryLinkIds": [
-						"fragmentEntryLinkId4",
-						"fragmentEntryLinkId5"
+						"4",
+						"5"
 					],
 					"size": "6"
 				},
@@ -57,8 +57,8 @@
 					"config": {
 					},
 					"fragmentEntryLinkIds": [
-						"fragmentEntryLinkId6",
-						"fragmentEntryLinkId7"
+						"6",
+						"7"
 					],
 					"size": "6"
 				}
@@ -118,7 +118,7 @@
 				{
 					"columnId": "6",
 					"fragmentEntryLinkIds": [
-						"fragmentEntryLinkId8"
+						"8"
 					],
 					"size": "12"
 				}

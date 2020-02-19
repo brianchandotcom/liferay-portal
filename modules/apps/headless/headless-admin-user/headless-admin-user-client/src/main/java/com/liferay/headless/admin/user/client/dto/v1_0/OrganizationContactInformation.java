@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class OrganizationContactInformation {
+public class OrganizationContactInformation implements Cloneable {
 
 	public EmailAddress[] getEmailAddresses() {
 		return emailAddresses;
@@ -113,6 +113,13 @@ public class OrganizationContactInformation {
 	}
 
 	protected WebUrl[] webUrls;
+
+	@Override
+	public OrganizationContactInformation clone()
+		throws CloneNotSupportedException {
+
+		return (OrganizationContactInformation)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -271,10 +271,16 @@ public class MessageBoardMessageResourceImpl
 					parentMBMessage.getSubject();
 		}
 
+		String encodingFormat = messageBoardMessage.getEncodingFormat();
+
+		if (encodingFormat == null) {
+			encodingFormat = MBMessageConstants.DEFAULT_FORMAT;
+		}
+
 		MBMessage mbMessage = _mbMessageService.addMessage(
 			messageBoardMessageId, headline,
-			messageBoardMessage.getArticleBody(),
-			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(),
+			messageBoardMessage.getArticleBody(), encodingFormat,
+			Collections.emptyList(),
 			GetterUtil.getBoolean(messageBoardMessage.getAnonymous()), 0.0,
 			false,
 			ServiceContextUtil.createServiceContext(

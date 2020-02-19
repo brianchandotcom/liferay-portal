@@ -234,6 +234,56 @@ definition {
 		MenuItem.clickNoError(menuItem = "Open Standalone App");
 	}
 
+	macro performCustomObjectCRUD {
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "Form View");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text",
+			tableViewName = "Table View");
+
+		App.add(
+			appTitle = "App",
+			deployOption = "Product Menu",
+			formViewName = "Form View",
+			tableViewName = "Table View");
+
+		AppBuilderAdmin.gotoBack();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Form Views");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Form View");
+		AppBuilderAdmin.editItem(itemName = "Form View");
+		FormViewBuilder.setName(formViewName = "Edited Form");
+		FormViewBuilder.save();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Form");
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Table View");
+		AppBuilderAdmin.editItem(itemName = "Table View");
+		TableViewBuilder.setName(tableViewName = "Edited Table");
+		TableViewBuilder.save();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Table");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.undeployApp(itemName = "App");
+
+		AppBuilderAdmin.gotoBack();
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
+	}
+
 	macro removeAllPermissionsFromRoles() {
 		for (var roleTitle : list "${roleList}") {
 
@@ -430,56 +480,6 @@ definition {
 	macro viewItem {
 		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
 		MenuItem.clickNoError(menuItem = "View");
-	}
-
-	macro performCustomObjectCRUD {
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		FormViewBuilder.addFormView(
-			fieldType = "Text",
-			formViewName = "Form View");
-
-		TableViewBuilder.addBasicTableView(
-			fieldType = "Text",
-			tableViewName = "Table View");
-
-		App.add(
-			appTitle = "App",
-			deployOption = "Product Menu",
-			formViewName = "Form View",
-			tableViewName = "Table View");
-
-		AppBuilderAdmin.gotoBack();
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Form Views");
-
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Form View");
-		AppBuilderAdmin.editItem(itemName = "Form View");
-		FormViewBuilder.setName(formViewName = "Edited Form");
-		FormViewBuilder.save();
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Form");
-
-		AppBuilderAdmin.switchTab(tabName = "Table Views");
-
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Table View");
-		AppBuilderAdmin.editItem(itemName = "Table View");
-		TableViewBuilder.setName(tableViewName = "Edited Table");
-		TableViewBuilder.save();
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Table");
-
-		AppBuilderAdmin.switchTab(tabName = "Apps");
-
-		AppBuilderAdmin.undeployApp(itemName = "App");
-
-		AppBuilderAdmin.gotoBack();
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
-		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
 	}
 
 }

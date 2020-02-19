@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.sharepoint.soap.repository.constants.SharepointWSConstants;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -35,18 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = RepositoryDefiner.class)
 public class SharepointWSRepositoryDefiner extends BaseRepositoryDefiner {
-
-	public SharepointWSRepositoryDefiner() {
-		RepositoryConfigurationBuilder repositoryConfigurationBuilder =
-			new RepositoryConfigurationBuilder(
-				_resourceBundleLoader,
-				SharepointWSConstants.SHAREPOINT_LIBRARY_NAME,
-				SharepointWSConstants.SHAREPOINT_LIBRARY_PATH,
-				SharepointWSConstants.SHAREPOINT_SERVER_VERSION,
-				SharepointWSConstants.SHAREPOINT_SITE_URL);
-
-		_repositoryConfiguration = repositoryConfigurationBuilder.build();
-	}
 
 	@Override
 	public String getClassName() {
@@ -82,10 +72,28 @@ public class SharepointWSRepositoryDefiner extends BaseRepositoryDefiner {
 		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
 	}
 
+	@Activate
+	protected void activate() {
+		RepositoryConfigurationBuilder repositoryConfigurationBuilder =
+			new RepositoryConfigurationBuilder(
+				_resourceBundleLoader,
+				SharepointWSConstants.SHAREPOINT_LIBRARY_NAME,
+				SharepointWSConstants.SHAREPOINT_LIBRARY_PATH,
+				SharepointWSConstants.SHAREPOINT_SERVER_VERSION,
+				SharepointWSConstants.SHAREPOINT_SITE_URL);
+
+		_repositoryConfiguration = repositoryConfigurationBuilder.build();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_repositoryConfiguration = null;
+	}
+
 	@Reference
 	private PortalCapabilityLocator _portalCapabilityLocator;
 
-	private final RepositoryConfiguration _repositoryConfiguration;
+	private RepositoryConfiguration _repositoryConfiguration;
 
 	@Reference(
 		target = "(repository.target.class.name=com.liferay.sharepoint.soap.repository.SharepointWSRepository)"

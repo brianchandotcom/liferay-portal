@@ -1406,7 +1406,6 @@ components:
                 encodingFormat:
                     description:
                         The message's media format (e.g., HTML, BBCode, etc.).
-                    readOnly: true
                     type: string
                 headline:
                     description:

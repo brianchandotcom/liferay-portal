@@ -12,360 +12,305 @@
  * details.
  */
 
-import '../FieldBase/FieldBase.es';
-
 import './TextRegister.soy';
 
-import 'clay-autocomplete';
+import ClayAutocomplete from '@clayui/autocomplete';
+import ClayDropDown from '@clayui/drop-down';
+import {ClayInput} from '@clayui/form';
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
-import Component from 'metal-component';
-import dom from 'metal-dom';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
-import templates from './Text.soy';
+import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
+import {connectStore} from '../util/connectStore.es';
+import templates from './TextAdapter.soy';
 
-class Text extends Component {
-	attached() {
-		const portalElement = dom.toElement('#clay_dropdown_portal');
+/**
+ * Uses the Sync Value to synchronize the updated initial value but only updates
+ * when the Field is disabled, this to cover cases of the Form Builder when the
+ * element is only in view but is being edited. Do not update the value when it
+ * is not disabled to avoid possible unnecessary renderings and blinks in the text.
+ */
+const useSyncValue = (initialValue, disabled) => {
+	const [value, setValue] = useState(initialValue);
 
-		if (portalElement) {
-			dom.addClasses(portalElement, 'show');
+	useEffect(() => {
+		if (value !== initialValue && disabled) {
+			setValue(initialValue);
 		}
-	}
+	}, [initialValue, value]);
 
-	dispatchEvent(event, name, value) {
-		this.emit(name, {
-			fieldInstance: this,
-			originalEvent: event,
-			value,
-		});
-	}
-
-	getAutocompleteOptions() {
-		const {options} = this;
-
-		if (!options) {
-			return [];
-		}
-
-		return options.map(option => {
-			return option.label;
-		});
-	}
-
-	prepareStateForRender(state) {
-		const {options} = this;
-
-		return {
-			...state,
-			options: this.getAutocompleteOptions(options),
-		};
-	}
-
-	shouldUpdate(changes) {
-		return Object.keys(changes || {}).some(key => {
-			if (key === 'events') {
-				return false;
-			}
-
-			if (
-				!Liferay.Util.isEqual(changes[key].newVal, changes[key].prevVal)
-			) {
-				return true;
-			}
-		});
-	}
-
-	_handleAutocompleteFieldChanged(event) {
-		const {value} = event.data;
-
-		this.setState(
-			{
-				value,
-			},
-			() => this.dispatchEvent(event, 'fieldEdited', value)
-		);
-	}
-
-	_handleAutocompleteFieldFocused(event) {
-		this.dispatchEvent('fieldFocused', event, event.target.inputValue);
-	}
-
-	_handleAutocompleteFilteredItemsChanged(filteredItemsReceived) {
-		const {filteredItems} = this;
-
-		if (filteredItemsReceived.newVal.length != filteredItems.length) {
-			this.setState({
-				filteredItems: filteredItemsReceived.newVal,
-			});
-		}
-	}
-
-	_handleAutocompleteSelected(event) {
-		const {value} = event.data.item;
-
-		this.setState(
-			{
-				filteredItems: [],
-				value,
-			},
-			() => {
-				this.dispatchEvent(event, 'fieldEdited', value);
-			}
-		);
-	}
-
-	_handleFieldBlurred(event) {
-		this.dispatchEvent(event, 'fieldBlurred', event.target.value);
-	}
-
-	_handleFieldChanged(event) {
-		const {target} = event;
-		let {value} = target;
-		const {fieldName} = this;
-
-		if (fieldName === 'name') {
-			value = normalizeFieldName(value);
-
-			target.value = value;
-		}
-
-		this.setState(
-			{
-				value,
-			},
-			() => this.dispatchEvent(event, 'fieldEdited', value)
-		);
-	}
-
-	_handleFieldFocused(event) {
-		this.dispatchEvent(event, 'fieldFocused', event.target.value);
-	}
-}
-
-Text.STATE = {
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	autocompleteEnabled: Config.bool(),
-
-	/**
-	 * @default 'string'
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	dataType: Config.string().value('string'),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof Text
-	 * @type {?(boolean|undefined)}
-	 */
-
-	displayErrors: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	displayStyle: Config.string().value('singleline'),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	errorMessage: Config.string(),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof Text
-	 * @type {?bool}
-	 */
-
-	evaluable: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	fieldName: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	filteredItems: Config.array()
-		.value([])
-		.internal(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	label: Config.string(),
-
-	/**
-	 * @default []
-	 * @instance
-	 * @memberof Text
-	 * @type {?(array|undefined)}
-	 */
-
-	localizedValue: Config.object().value({}),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	name: Config.string().required(),
-
-	/**
-	 * @default []
-	 * @memberof Text
-	 * @type {?array<object>}
-	.setter('_loadOptionsFn').
-	 */
-
-	options: Config.arrayOf(
-		Config.shapeOf({
-			active: Config.bool().value(false),
-			disabled: Config.bool().value(false),
-			id: Config.string(),
-			inline: Config.bool().value(false),
-			label: Config.string(),
-			name: Config.string(),
-			showLabel: Config.bool().value(true),
-			value: Config.string(),
-		})
-	).value([]),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	placeholder: Config.string().value(''),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	predefinedValue: Config.string().value(''),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof Text
-	 * @type {?bool}
-	 */
-
-	readOnly: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FieldBase
-	 * @type {?(bool|undefined)}
-	 */
-
-	repeatable: Config.bool(),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof Text
-	 * @type {?(bool|undefined)}
-	 */
-
-	required: Config.bool().value(false),
-
-	/**
-	 * @default true
-	 * @instance
-	 * @memberof Text
-	 * @type {?(bool|undefined)}
-	 */
-
-	showLabel: Config.bool().value(true),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	spritemap: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	tip: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FieldBase
-	 * @type {?(string|undefined)}
-	 */
-
-	tooltip: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	type: Config.string().value('text'),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Text
-	 * @type {?(string|undefined)}
-	 */
-
-	value: Config.string().value(''),
+	return [value, setValue];
 };
 
-Soy.register(Text, templates);
+const Text = ({
+	disabled,
+	fieldName,
+	id,
+	name,
+	onBlur,
+	onFocus,
+	onInput,
+	placeholder,
+	value: initialValue
+}) => {
+	const [value, setValue] = useSyncValue(initialValue, disabled);
 
-export default Text;
+	return (
+		<ClayInput
+			className="ddm-field-text"
+			disabled={disabled}
+			id={id}
+			name={name}
+			onBlur={onBlur}
+			onFocus={onFocus}
+			onInput={event => {
+				if (fieldName === 'name') {
+					event.target.value = normalizeFieldName(event.target.value);
+				}
+
+				setValue(event.target.value);
+				onInput(event);
+			}}
+			placeholder={placeholder}
+			type="text"
+			value={value}
+		/>
+	);
+};
+
+const Textarea = ({
+	disabled,
+	id,
+	name,
+	onBlur,
+	onFocus,
+	onInput,
+	placeholder,
+	value: initialValue
+}) => {
+	const [value, setValue] = useSyncValue(initialValue, disabled);
+
+	return (
+		<textarea
+			className="ddm-field-text form-control"
+			disabled={disabled}
+			id={id}
+			name={name}
+			onBlur={onBlur}
+			onFocus={onFocus}
+			onInput={event => {
+				setValue(event.target.value);
+				onInput(event);
+			}}
+			placeholder={placeholder}
+			type="text"
+			value={value}
+		/>
+	);
+};
+
+const Autocomplete = ({
+	disabled,
+	id,
+	name,
+	onBlur,
+	onFocus,
+	onInput,
+	options,
+	placeholder,
+	value: initialValue
+}) => {
+	const [value, setValue] = useSyncValue(initialValue, disabled);
+	const [visible, setVisible] = useState(false);
+	const inputRef = useRef(null);
+	const itemListRef = useRef(null);
+
+	const filteredItems = options.filter(item => item.match(value));
+
+	useEffect(() => {
+		if (filteredItems.length === 1 && filteredItems.includes(value)) {
+			setVisible(false);
+		}
+		else {
+			setVisible(!!value);
+		}
+	}, [filteredItems, value]);
+
+	const handleFocus = (event, direction) => {
+		const target = event.target;
+		const focusabledElements = event.currentTarget.querySelectorAll(
+			'button'
+		);
+		const targetIndex = [...focusabledElements].findIndex(
+			current => current === target
+		);
+
+		let nextElement;
+
+		if (direction) {
+			nextElement = focusabledElements[targetIndex - 1];
+		}
+		else {
+			nextElement = focusabledElements[targetIndex + 1];
+		}
+
+		if (nextElement) {
+			event.preventDefault();
+			event.stopPropagation();
+			nextElement.focus();
+		}
+		else if (targetIndex === 0 && direction) {
+			event.preventDefault();
+			event.stopPropagation();
+			inputRef.current.focus();
+		}
+	};
+
+	return (
+		<ClayAutocomplete>
+			<ClayAutocomplete.Input
+				disabled={disabled}
+				id={id}
+				name={name}
+				onBlur={onBlur}
+				onChange={event => {
+					setValue(event.target.value);
+					onInput(event);
+				}}
+				onFocus={onFocus}
+				onKeyDown={event => {
+					if (
+						(event.key === 'Tab' || event.key === 'ArrowDown') &&
+						!event.shiftKey &&
+						filteredItems.length > 0 &&
+						visible
+					) {
+						event.preventDefault();
+						event.stopPropagation();
+
+						const firstElement = itemListRef.current.querySelector(
+							'button'
+						);
+						firstElement.focus();
+					}
+				}}
+				placeholder={placeholder}
+				ref={inputRef}
+				value={value}
+			/>
+
+			<ClayAutocomplete.DropDown
+				active={visible && !disabled}
+				onSetActive={setVisible}
+			>
+				<ul
+					className="list-unstyled"
+					onKeyDown={event => {
+						switch (event.key) {
+							case 'ArrowDown':
+								handleFocus(event, false);
+								break;
+							case 'ArrowUp':
+								handleFocus(event, true);
+								break;
+							case 'Tab':
+								handleFocus(event, event.shiftKey);
+								break;
+							default:
+								break;
+						}
+					}}
+					ref={itemListRef}
+				>
+					{filteredItems.length === 0 && (
+						<ClayDropDown.Item className="disabled">
+							{Liferay.Language.get('no-results-were-found')}
+						</ClayDropDown.Item>
+					)}
+					{filteredItems.map(label => (
+						<ClayAutocomplete.Item
+							key={label}
+							match={value}
+							onClick={() => {
+								setValue(label);
+								onInput({target: {value: label}});
+							}}
+							value={label}
+						/>
+					))}
+				</ul>
+			</ClayAutocomplete.DropDown>
+		</ClayAutocomplete>
+	);
+};
+
+const DISPLAY_STYLE = {
+	autocomplete: Autocomplete,
+	multiline: Textarea,
+	singleline: Text
+};
+
+const TextProxy = connectStore(
+	({
+		autocompleteEnabled,
+		autocomplete,
+		displayStyle = 'singleline',
+		emit,
+		fieldName,
+		id,
+		name,
+		options = [],
+		placeholder,
+		predefinedValue = '',
+		readOnly,
+		value,
+		...otherProps
+	}) => {
+		const optionsMemo = useMemo(() => options.map(option => option.label), [
+			options
+		]);
+		const Component =
+			DISPLAY_STYLE[
+				autocomplete || autocompleteEnabled
+					? 'autocomplete'
+					: displayStyle
+			];
+
+		return (
+			<FieldBaseProxy
+				{...otherProps}
+				id={id}
+				name={name}
+				readOnly={readOnly}
+			>
+				<Component
+					disabled={readOnly}
+					fieldName={fieldName}
+					id={id}
+					name={name}
+					onBlur={event =>
+						emit('fieldBlurred', event, event.target.value)
+					}
+					onFocus={event =>
+						emit('fieldFocused', event, event.target.value)
+					}
+					onInput={event =>
+						emit('fieldEdited', event, event.target.value)
+					}
+					options={optionsMemo}
+					placeholder={placeholder}
+					value={value ? value : predefinedValue}
+				/>
+			</FieldBaseProxy>
+		);
+	}
+);
+
+const ReactTextAdapter = getConnectedReactComponentAdapter(
+	TextProxy,
+	templates
+);
+
+export {ReactTextAdapter};
+export default ReactTextAdapter;

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_LIST_ENTRY_TITLE_CARD</td>
+	<td>//div[contains(@class,'card-row')]//div[contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_LIST_ENTRY_TYPE</td>
 	<td>//li[contains(@class,'list-group-item')]//h6[contains(.,'${key_type}')]</td>
 	<td></td>

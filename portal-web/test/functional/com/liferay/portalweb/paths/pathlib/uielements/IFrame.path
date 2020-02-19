@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_LIST_DIALOG</td>
+	<td>//iframe[contains(@id,'selectAssetList_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIALOG</td>
 	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
 	<td></td>

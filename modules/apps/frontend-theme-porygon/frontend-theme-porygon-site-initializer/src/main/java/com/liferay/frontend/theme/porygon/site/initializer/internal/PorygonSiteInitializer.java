@@ -175,7 +175,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			_addJournalArticleDDMTemplates(ddmStructure, serviceContext);
 
 			_addDisplayPageEntry(
-				"Porygon Entry", entryFragmentEntries,
+				entryFragmentEntries, "Porygon Entry",
 				_PATH + "/page_templates", "porygon_entry.jpg", ddmStructure,
 				fileEntries, serviceContext);
 
@@ -264,7 +264,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addDisplayPageEntry(
-			String name, List<FragmentEntry> fragmentEntries,
+			List<FragmentEntry> fragmentEntries, String name,
 			String thumbnailPath, String thumbnailFileName,
 			DDMStructure ddmStructure, List<FileEntry> fileEntries,
 			ServiceContext serviceContext)

@@ -13,15 +13,12 @@
  */
 
 import {SWITCH_SIDEBAR_PANEL} from '../actions/types';
-import {config} from '../config/index';
 
 const DEFAULT_PANEL_ID = 'fragments';
 
 export const INITIAL_STATE = {
 	open: true,
-	panelId:
-		(config.panels && config.panels[0] && config.panels[0][0]) ||
-		DEFAULT_PANEL_ID
+	panelId: DEFAULT_PANEL_ID
 };
 
 export default function sidebarReducer(sidebarStatus = INITIAL_STATE, action) {

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -31,7 +31,7 @@ public class LinkedHashMapBuilderTest {
 
 	@Test
 	public void testLinkedHashMapBuilder() {
-		Map<String, Integer> map1 = new HashMap<>();
+		Map<String, Integer> map1 = new LinkedHashMap<>();
 
 		map1.put("One", 1);
 		map1.put("Three", 3);
@@ -65,7 +65,7 @@ public class LinkedHashMapBuilderTest {
 
 	@Test
 	public void testPutAll() {
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Integer> map = new LinkedHashMap<>();
 
 		map.put("One", 1);
 		map.put("Three", 3);
@@ -80,7 +80,7 @@ public class LinkedHashMapBuilderTest {
 
 	@Test
 	public void testPutAllAfterPut() {
-		Map<String, Integer> map1 = new HashMap<>();
+		Map<String, Integer> map1 = new LinkedHashMap<>();
 
 		map1.put("One", 1);
 		map1.put("Three", 3);
@@ -101,7 +101,7 @@ public class LinkedHashMapBuilderTest {
 	public void testUnsafeFunction() {
 		List<String> list = ListUtil.fromArray("hello  ", "  world");
 
-		Map<String, String> map1 = new HashMap<>();
+		Map<String, String> map1 = new LinkedHashMap<>();
 
 		for (String s : list) {
 			map1.put(s, StringUtil.trim(s.toLowerCase()));
@@ -122,7 +122,7 @@ public class LinkedHashMapBuilderTest {
 		_testUnsafeSupplierValue(false, 2);
 		_testUnsafeSupplierValue(true, 3);
 
-		Map<String, Integer> map1 = new HashMap<>();
+		Map<String, Integer> map1 = new LinkedHashMap<>();
 
 		String s1 = "Hello World";
 

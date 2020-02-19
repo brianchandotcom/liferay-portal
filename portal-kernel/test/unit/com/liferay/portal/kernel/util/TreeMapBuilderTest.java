@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
@@ -37,7 +37,7 @@ public class TreeMapBuilderTest {
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 
-		map = HashMapBuilder.<String, Object>put(
+		map = TreeMapBuilder.<String, Object>put(
 			"Hello", () -> null
 		).build();
 
@@ -46,7 +46,7 @@ public class TreeMapBuilderTest {
 
 	@Test
 	public void testPutAll() {
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Integer> map = new TreeMap<>();
 
 		map.put("One", 1);
 		map.put("Three", 3);
@@ -61,7 +61,7 @@ public class TreeMapBuilderTest {
 
 	@Test
 	public void testPutAllAfterPut() {
-		Map<String, Integer> map1 = new HashMap<>();
+		Map<String, Integer> map1 = new TreeMap<>();
 
 		map1.put("One", 1);
 		map1.put("Three", 3);
@@ -80,7 +80,7 @@ public class TreeMapBuilderTest {
 
 	@Test
 	public void testTreeMapBuilder() {
-		Map<String, Integer> map1 = new HashMap<>();
+		Map<String, Integer> map1 = new TreeMap<>();
 
 		map1.put("One", 1);
 		map1.put("Three", 3);
@@ -101,7 +101,7 @@ public class TreeMapBuilderTest {
 	public void testUnsafeFunction() {
 		List<String> list = ListUtil.fromArray("hello  ", "  world");
 
-		Map<String, String> map1 = new HashMap<>();
+		Map<String, String> map1 = new TreeMap<>();
 
 		for (String s : list) {
 			map1.put(s, StringUtil.trim(s.toLowerCase()));
@@ -122,7 +122,7 @@ public class TreeMapBuilderTest {
 		_testUnsafeSupplierValue(false, 2);
 		_testUnsafeSupplierValue(true, 3);
 
-		Map<String, Integer> map1 = new HashMap<>();
+		Map<String, Integer> map1 = new TreeMap<>();
 
 		String s1 = "Hello World";
 

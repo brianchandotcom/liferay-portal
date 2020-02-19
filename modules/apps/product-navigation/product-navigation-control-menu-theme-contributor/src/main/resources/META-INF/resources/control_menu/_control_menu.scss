@@ -172,7 +172,9 @@ a.control-menu-icon,
 
 .control-menu-nav-item-content {
 	display: flex;
-	flex: 1 1 0;
+	flex-basis: 0;
+	flex-grow: 1;
+	flex-shrink: 1;
 	min-width: 64px;
 	width: 0;
 

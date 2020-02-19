@@ -10,8 +10,8 @@
 <tbody>
 <!--RESULT_RANKINGS-->
 <tr>
-	<td>RESULT_RANKINGS_ACTIVE</td>
-	<td>//label[contains(.,'Active')]//span[contains(@class,'toggle-switch-handle')]</td>
+	<td>RESULT_RANKINGS_ACTIVE_TOGGLE_SWITCH</td>
+	<td>//input[@id="active-switch-input"]</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,11 +50,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESULT_RANKINGS_INACTIVE</td>
-	<td>//label[contains(.,'Inactive')]//span[contains(@class,'toggle-switch-handle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RESULT_RANKINGS_INACTIVE_RANKING</td>
 	<td>//tr[@data-qa-id='row'][.//descendant::td[contains(@class,'lfr-status-column') and contains(.,'Inactive')]]//a[normalize-space(text())='${key_query}']</td>
 	<td></td>
@@ -77,11 +72,6 @@
 <tr>
 	<td>RESULT_RANKINGS_RESULT_PINNED</td>
 	<td>//div[contains(@class,'active')]//li[contains(@class,'list-item-root') and contains(.,'${key_assetTitle}')]//div[contains(@class,'result-pin-icon-display')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESULT_RANKINGS_STATUS</td>
-	<td>//label[contains(@class,'toggle-switch')]//span[contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 <!--SYNONYMS-->

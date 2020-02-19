@@ -495,7 +495,7 @@ definition {
 
 		SearchTuning.configureAliases(addAlias = "apple");
 
-		SearchTuning.inActiveResultRanking();
+		Uncheck.uncheckToggleSwitch(locator1 = "SearchTuning#RESULT_RANKINGS_ACTIVE_TOGGLE_SWITCH");
 
 		Button.clickSave();
 
@@ -565,7 +565,7 @@ definition {
 			key_query = "Article",
 			locator1 = "SearchTuning#RESULT_RANKINGS_INACTIVE_RANKING");
 
-		SearchTuning.activeResultRanking();
+		Check.checkToggleSwitch(locator1 = "SearchTuning#RESULT_RANKINGS_ACTIVE_TOGGLE_SWITCH");
 
 		Button.clickSave();
 

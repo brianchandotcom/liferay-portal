@@ -154,7 +154,7 @@ const Languages = ({
 									}}
 									small
 								>
-									{Liferay.Language.get('manage')}
+									{Liferay.Language.get('edit')}
 								</ClayButton>
 							</ClayTable.Cell>
 						)}

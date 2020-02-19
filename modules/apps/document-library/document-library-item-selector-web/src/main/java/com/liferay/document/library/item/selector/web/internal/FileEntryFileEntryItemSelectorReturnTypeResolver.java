@@ -12,35 +12,37 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web.internal.resolver;
+package com.liferay.document.library.item.selector.web.internal;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
-import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Roberto Díaz
  */
 @Component(
 	property = "service.ranking:Integer=100",
 	service = ItemSelectorReturnTypeResolver.class
 )
-public class FileEntryInfoItemItemSelectorReturnTypeResolver
+public class FileEntryFileEntryItemSelectorReturnTypeResolver
 	implements ItemSelectorReturnTypeResolver
-		<InfoItemItemSelectorReturnType, FileEntry> {
+		<FileEntryItemSelectorReturnType, FileEntry> {
 
 	@Override
-	public Class<InfoItemItemSelectorReturnType>
+	public Class<FileEntryItemSelectorReturnType>
 		getItemSelectorReturnTypeClass() {
 
-		return InfoItemItemSelectorReturnType.class;
+		return FileEntryItemSelectorReturnType.class;
 	}
 
 	@Override
@@ -49,21 +51,44 @@ public class FileEntryInfoItemItemSelectorReturnTypeResolver
 	}
 
 	@Override
-	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay) {
+	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
+		throws Exception {
+
 		JSONObject fileEntryJSONObject = JSONUtil.put(
-			"className", FileEntry.class.getName()
+			"fileEntryId", fileEntry.getFileEntryId()
 		).put(
-			"classNameId", _portal.getClassNameId(FileEntry.class.getName())
-		).put(
-			"classPK", fileEntry.getFileEntryId()
+			"groupId", fileEntry.getGroupId()
 		).put(
 			"title", fileEntry.getTitle()
+		).put(
+			"type", "document"
+		);
+
+		String previewURL = null;
+
+		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
+			previewURL = _dlURLHelper.getImagePreviewURL(
+				fileEntry, fileEntry.getFileVersion(), themeDisplay,
+				StringPool.BLANK, false, false);
+		}
+		else {
+			previewURL = _portletFileRepository.getPortletFileEntryURL(
+				themeDisplay, fileEntry, "&imagePreview=1", false);
+		}
+
+		fileEntryJSONObject.put(
+			"url", previewURL
+		).put(
+			"uuid", fileEntry.getUuid()
 		);
 
 		return fileEntryJSONObject.toString();
 	}
 
 	@Reference
-	private Portal _portal;
+	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

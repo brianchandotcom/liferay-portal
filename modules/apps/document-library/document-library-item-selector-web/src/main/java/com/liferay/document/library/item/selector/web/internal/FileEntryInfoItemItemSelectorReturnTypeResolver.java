@@ -12,34 +12,35 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web.internal.resolver;
+package com.liferay.document.library.item.selector.web.internal;
 
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
-import com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType;
-import com.liferay.petra.string.StringPool;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pavel Savinov
+ * @author Eudaldo Alonso
  */
 @Component(
 	property = "service.ranking:Integer=100",
 	service = ItemSelectorReturnTypeResolver.class
 )
-public class FileEntryDownloadURLItemSelectorReturnTypeResolver
+public class FileEntryInfoItemItemSelectorReturnTypeResolver
 	implements ItemSelectorReturnTypeResolver
-		<DownloadURLItemSelectorReturnType, FileEntry> {
+		<InfoItemItemSelectorReturnType, FileEntry> {
 
 	@Override
-	public Class<DownloadURLItemSelectorReturnType>
+	public Class<InfoItemItemSelectorReturnType>
 		getItemSelectorReturnTypeClass() {
 
-		return DownloadURLItemSelectorReturnType.class;
+		return InfoItemItemSelectorReturnType.class;
 	}
 
 	@Override
@@ -48,15 +49,21 @@ public class FileEntryDownloadURLItemSelectorReturnTypeResolver
 	}
 
 	@Override
-	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
-		throws Exception {
+	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay) {
+		JSONObject fileEntryJSONObject = JSONUtil.put(
+			"className", FileEntry.class.getName()
+		).put(
+			"classNameId", _portal.getClassNameId(FileEntry.class.getName())
+		).put(
+			"classPK", fileEntry.getFileEntryId()
+		).put(
+			"title", fileEntry.getTitle()
+		);
 
-		return _dlURLHelper.getDownloadURL(
-			fileEntry, fileEntry.getFileVersion(), themeDisplay,
-			StringPool.BLANK, false, false);
+		return fileEntryJSONObject.toString();
 	}
 
 	@Reference
-	private DLURLHelper _dlURLHelper;
+	private Portal _portal;
 
 }

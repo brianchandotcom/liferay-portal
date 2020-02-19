@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.list.item.selector.web.internal.resolver;
+package com.liferay.asset.list.item.selector.web.internal;
 
 import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;

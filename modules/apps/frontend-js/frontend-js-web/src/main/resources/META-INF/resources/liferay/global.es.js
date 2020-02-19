@@ -49,7 +49,7 @@ import createResourceURL from './util/portlet_url/create_resource_url.es';
 import {getSessionValue, setSessionValue} from './util/session.es';
 import toCharCode from './util/to_char_code.es';
 
-Liferay = Liferay || {};
+Liferay = window.Liferay || {};
 
 Liferay.component = component;
 Liferay.componentReady = componentReady;

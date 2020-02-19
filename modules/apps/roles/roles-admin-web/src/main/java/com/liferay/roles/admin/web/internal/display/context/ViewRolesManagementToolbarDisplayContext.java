@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
@@ -207,16 +208,24 @@ public class ViewRolesManagementToolbarDisplayContext {
 		RoleSearchTerms roleSearchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
 
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		if (Validator.isNotNull(_currentRoleTypeContributor.getClassName())) {
+			params.put(
+				"classNameId",
+				PortalUtil.getClassNameId(
+					_currentRoleTypeContributor.getClassName()));
+		}
+
 		List<Role> results = RoleServiceUtil.search(
 			themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
-			new Integer[] {_currentRoleTypeContributor.getType()},
-			new LinkedHashMap<String, Object>(), roleSearch.getStart(),
-			roleSearch.getEnd(), roleSearch.getOrderByComparator());
+			new Integer[] {_currentRoleTypeContributor.getType()}, params,
+			roleSearch.getStart(), roleSearch.getEnd(),
+			roleSearch.getOrderByComparator());
 
 		int total = RoleServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
-			new Integer[] {_currentRoleTypeContributor.getType()},
-			new LinkedHashMap<String, Object>());
+			new Integer[] {_currentRoleTypeContributor.getType()}, params);
 
 		roleSearch.setResults(results);
 		roleSearch.setTotal(total);

@@ -21,7 +21,7 @@ import {FragmentsEditorShim} from './FragmentsEditorShim';
 
 export default function ColumnOverlayGrid({
 	columnSpacing,
-	highlightedColumn,
+	highlightedColumn = null,
 	rowRect
 }) {
 	return createPortal(
@@ -69,6 +69,6 @@ export default function ColumnOverlayGrid({
 
 ColumnOverlayGrid.propTypes = {
 	columnSpacing: PropTypes.bool.isRequired,
-	highlightedColumn: PropTypes.number.isRequired,
+	highlightedColumn: PropTypes.number,
 	rowRect: PropTypes.instanceOf(DOMRect).isRequired
 };

@@ -69,6 +69,8 @@ public class UpgradeKBArticle extends UpgradeProcess {
 			int spreadValue = 16 + n;
 
 			suffix = String.valueOf(counter + spreadValue);
+
+			urlTitle = urlTitle.substring(0, i + 1);
 		}
 
 		return urlTitle + suffix;

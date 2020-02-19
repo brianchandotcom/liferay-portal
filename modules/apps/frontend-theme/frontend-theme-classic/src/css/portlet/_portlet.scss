@@ -68,3 +68,17 @@
 		}
 	}
 }
+
+.portlet-dropzone {
+	box-shadow: 0 0 0 1px transparent inset;
+	transition: box-shadow 300ms ease-in-out;
+	will-change: box-shadow;
+
+	.yui3-dd-drop-active-valid & {
+		box-shadow: 0 0 0 1px rgba($primary-d2, 0.2) inset;
+	}
+
+	.yui3-dd-drop-over & {
+		box-shadow: 0 0 0 4px $primary-d2 inset;
+	}
+}

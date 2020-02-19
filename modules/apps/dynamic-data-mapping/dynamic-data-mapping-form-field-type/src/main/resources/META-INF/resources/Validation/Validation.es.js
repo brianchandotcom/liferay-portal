@@ -35,10 +35,6 @@ import VALIDATIONS from '../util/validations.es';
 import templates from './Validation.soy';
 
 class Validation extends Component {
-	created() {
-		this._enableValidation = false;
-	}
-
 	prepareStateForRender(state) {
 		const {defaultLanguageId, editingLanguageId} = this;
 		const parsedState = this._getStateFromValue(state.value);
@@ -49,6 +45,10 @@ class Validation extends Component {
 				validation: parsedState,
 			};
 		}
+
+		this._enableValidation = parsedState.enableValidation;
+		this._errorMessage = parsedState.errorMessage;
+		this._parameter = parsedState.parameter;
 
 		return {
 			...state,
@@ -159,6 +159,8 @@ class Validation extends Component {
 		let expression = {};
 		const {
 			_enableValidation: enableValidation,
+			_parameter,
+			_errorMessage,
 			editingLanguageId,
 			validation: {fieldName: name},
 		} = this;
@@ -166,11 +168,11 @@ class Validation extends Component {
 		let parameter = '';
 
 		if (this.refs.errorMessage) {
-			errorMessage = this.refs.errorMessage.value;
+			errorMessage = _errorMessage;
 		}
 
-		if (this.refs.parameter) {
-			parameter = this.refs.parameter.value;
+		if (this.refs.parameterText || this.refs.parameterNumeric) {
+			parameter = _parameter;
 		}
 
 		let selectedValidation = this._getSelectedValidation();
@@ -235,6 +237,16 @@ class Validation extends Component {
 		}
 
 		return validation;
+	}
+
+	_updateErrorMessageValue(event) {
+		this._errorMessage = event.value;
+		this._updateValue();
+	}
+
+	_updateParameterValue(event) {
+		this._parameter = event.value;
+		this._updateValue();
 	}
 
 	_updateCheckboxValue(event) {

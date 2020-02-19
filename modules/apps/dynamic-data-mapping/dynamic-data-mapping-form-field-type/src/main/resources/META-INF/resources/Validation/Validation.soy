@@ -4,11 +4,13 @@
 	{@param name: string}
 	{@param spritemap: string}
 	{@param? _updateCheckboxValue: any}
+	{@param? _updateParameterValue: any}
+	{@param? _updateErrorMessageValue: any}
 	{@param? _updateValue: any}
 	{@param? dataType: string}
-	{@param? id: string}
 	{@param? enableValidation: bool}
 	{@param? errorMessage: string}
+	{@param? id: string}
 	{@param? label: string}
 	{@param? localizationMode: bool}
 	{@param? parameter: string}
@@ -27,6 +29,8 @@
 
 	{call .content}
 		{param _updateCheckboxValue: $_updateCheckboxValue /}
+		{param _updateErrorMessageValue: $_updateErrorMessageValue /}
+		{param _updateParameterValue: $_updateParameterValue /}
 		{param _updateValue: $_updateValue /}
 		{param dataType: $dataType /}
 		{param enableValidation: $enableValidation /}
@@ -47,6 +51,8 @@
 {template .content}
 	{@param name: string}
 	{@param? _updateCheckboxValue: any}
+	{@param? _updateErrorMessageValue: any}
+	{@param? _updateParameterValue: any}
 	{@param? _updateValue: any}
 	{@param? dataType: string}
 	{@param? enableValidation: bool}
@@ -103,10 +109,10 @@
 		{/call}
 
 		{if $selectedValidation?.parameterMessage and $dataType == 'string'}
-			{call Text.render}
+			{call TextAdapter.render}
 				{param dataType: $dataType /}
 				{param events: [
-					'fieldEdited': $_updateValue
+					'fieldEdited': $_updateParameterValue
 				] /}
 				{param label kind="text"}
 					{msg desc=""}the-value{/msg}
@@ -114,7 +120,7 @@
 				{param name: $name + '_parameter' /}
 				{param placeholder: $selectedValidation?.parameterMessage /}
 				{param readOnly: $readOnly /}
-				{param ref: 'parameter' /}
+				{param ref: 'parameterText' /}
 				{param required: false /}
 				{param spritemap: $spritemap /}
 				{param value: $parameter /}
@@ -124,7 +130,7 @@
 			{call Numeric.render}
 				{param dataType: $dataType /}
 				{param events: [
-					'fieldEdited': $_updateValue
+					'fieldEdited': $_updateParameterValue
 				] /}
 				{param label kind="text"}
 					{msg desc=""}the-value{/msg}
@@ -132,7 +138,7 @@
 				{param name: $name + '_parameter' /}
 				{param placeholder: $selectedValidation?.parameterMessage /}
 				{param readOnly: $readOnly /}
-				{param ref: 'parameter' /}
+				{param ref: 'parameterNumeric' /}
 				{param required: false /}
 				{param spritemap: $spritemap /}
 				{param value: $parameter /}
@@ -141,10 +147,10 @@
 		{/if}
 
 		{if $enableValidation}
-			{call Text.render}
+			{call TextAdapter.render}
 				{param dataType: 'string' /}
 				{param events: [
-					'fieldEdited': $_updateValue
+					'fieldEdited': $_updateErrorMessageValue
 				] /}
 				{param label kind="text"}
 					{msg desc=""}show-error-message{/msg}

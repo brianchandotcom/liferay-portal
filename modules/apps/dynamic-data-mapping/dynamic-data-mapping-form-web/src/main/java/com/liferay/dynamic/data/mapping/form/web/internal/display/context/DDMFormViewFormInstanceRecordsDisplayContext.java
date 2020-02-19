@@ -32,7 +32,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -215,19 +215,15 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	public List<NavigationItem> getNavigationItems() {
 		DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(
-							HtmlUtil.extractText(
-								ddmFormInstance.getName(
-									_renderRequest.getLocale())));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(StringPool.BLANK);
+				navigationItem.setLabel(
+					HtmlUtil.extractText(
+						ddmFormInstance.getName(_renderRequest.getLocale())));
 			}
-		};
+		).build();
 	}
 
 	public String getOrderByCol() {

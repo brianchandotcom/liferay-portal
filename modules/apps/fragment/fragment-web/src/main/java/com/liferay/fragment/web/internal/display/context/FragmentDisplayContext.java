@@ -30,7 +30,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -444,29 +444,23 @@ public class FragmentDisplayContext {
 			return Collections.emptyList();
 		}
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(_getTabs1(), "fragments"));
-						navigationItem.setHref(
-							_getPortletURL(), "tabs1", "fragments");
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "fragments"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(_getTabs1(), "resources"));
-						navigationItem.setHref(
-							_getPortletURL(), "tabs1", "resources");
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "resources"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(
+					Objects.equals(_getTabs1(), "fragments"));
+				navigationItem.setHref(_getPortletURL(), "tabs1", "fragments");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "fragments"));
 			}
-		};
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(
+					Objects.equals(_getTabs1(), "resources"));
+				navigationItem.setHref(_getPortletURL(), "tabs1", "resources");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "resources"));
+			}
+		).build();
 	}
 
 	public String getOrderByType() {

@@ -15,7 +15,7 @@
 package com.liferay.staging.processes.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.List;
@@ -37,21 +37,16 @@ public class PublishTemplatesDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(
-							_renderResponse.createRenderURL(),
-							"mvcRenderCommandName",
-							"viewPublishConfigurations");
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "publish-templates"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"viewPublishConfigurations");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "publish-templates"));
 			}
-		};
+		).build();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

@@ -44,7 +44,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -318,18 +318,15 @@ public class DDLDisplayContext {
 	public List<NavigationItem> getNavigationItems() {
 		HttpServletRequest httpServletRequest = _ddlRequestHelper.getRequest();
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(
-							HtmlUtil.escape(
-								LanguageUtil.get(httpServletRequest, "lists")));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(StringPool.BLANK);
+				navigationItem.setLabel(
+					HtmlUtil.escape(
+						LanguageUtil.get(httpServletRequest, "lists")));
 			}
-		};
+		).build();
 	}
 
 	public String getOrderByCol() {

@@ -16,7 +16,7 @@ package com.liferay.site.my.sites.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -161,30 +161,24 @@ public class SiteMySitesDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(getTabs1(), "my-sites"));
-						navigationItem.setHref(
-							getPortletURL(), "tabs1", "my-sites");
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "my-sites"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(getTabs1(), "available-sites"));
-						navigationItem.setHref(
-							getPortletURL(), "tabs1", "available-sites");
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "available-sites"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(
+					Objects.equals(getTabs1(), "my-sites"));
+				navigationItem.setHref(getPortletURL(), "tabs1", "my-sites");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "my-sites"));
 			}
-		};
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(
+					Objects.equals(getTabs1(), "available-sites"));
+				navigationItem.setHref(
+					getPortletURL(), "tabs1", "available-sites");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "available-sites"));
+			}
+		).build();
 	}
 
 	public String getOrderByCol() {

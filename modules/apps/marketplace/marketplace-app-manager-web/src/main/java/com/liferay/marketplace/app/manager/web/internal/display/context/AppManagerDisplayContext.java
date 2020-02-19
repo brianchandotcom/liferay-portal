@@ -15,7 +15,7 @@
 package com.liferay.marketplace.app.manager.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -42,41 +42,32 @@ public class AppManagerDisplayContext {
 		String pluginType = ParamUtil.getString(
 			_httpServletRequest, "pluginType", "components");
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							pluginType.equals("components"));
-						navigationItem.setHref(_getViewModuleURL("components"));
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "components"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(pluginType.equals("portlets"));
-						navigationItem.setHref(_getViewModuleURL("portlets"));
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "portlets"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(pluginType.equals("components"));
+				navigationItem.setHref(_getViewModuleURL("components"));
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "components"));
 			}
-		};
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(pluginType.equals("portlets"));
+				navigationItem.setHref(_getViewModuleURL("portlets"));
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "portlets"));
+			}
+		).build();
 	}
 
 	public List<NavigationItem> getNavigationItems(String url, String label) {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(url);
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, label));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(url);
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, label));
 			}
-		};
+		).build();
 	}
 
 	private String _getViewModuleURL(String pluginType) {

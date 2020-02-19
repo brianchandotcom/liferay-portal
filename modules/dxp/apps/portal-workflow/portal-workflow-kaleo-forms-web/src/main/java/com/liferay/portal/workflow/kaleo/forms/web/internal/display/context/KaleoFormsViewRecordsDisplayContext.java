@@ -28,7 +28,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -258,19 +258,15 @@ public class KaleoFormsViewRecordsDisplayContext {
 	public List<NavigationItem> getNavigationItems() {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(
-							HtmlUtil.extractText(
-								_kaleoProcess.getName(
-									themeDisplay.getLocale())));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(StringPool.BLANK);
+				navigationItem.setLabel(
+					HtmlUtil.extractText(
+						_kaleoProcess.getName(themeDisplay.getLocale())));
 			}
-		};
+		).build();
 	}
 
 	public String getOrderByCol() {

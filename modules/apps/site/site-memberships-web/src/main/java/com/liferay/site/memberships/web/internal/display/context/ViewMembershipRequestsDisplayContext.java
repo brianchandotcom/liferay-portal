@@ -16,7 +16,7 @@ package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.membership.requests.kernel.util.comparator.MembershipRequestCreateDateComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -77,39 +77,29 @@ public class ViewMembershipRequestsDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(getTabs1(), "pending"));
-						navigationItem.setHref(
-							getPortletURL(), "tabs1", "pending");
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "pending"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(getTabs1(), "approved"));
-						navigationItem.setHref(
-							getPortletURL(), "tabs1", "approved");
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "approved"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(getTabs1(), "denied"));
-						navigationItem.setHref(
-							getPortletURL(), "tabs1", "denied");
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "denied"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(Objects.equals(getTabs1(), "pending"));
+				navigationItem.setHref(getPortletURL(), "tabs1", "pending");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "pending"));
 			}
-		};
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(
+					Objects.equals(getTabs1(), "approved"));
+				navigationItem.setHref(getPortletURL(), "tabs1", "approved");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "approved"));
+			}
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(Objects.equals(getTabs1(), "denied"));
+				navigationItem.setHref(getPortletURL(), "tabs1", "denied");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "denied"));
+			}
+		).build();
 	}
 
 	public String getOrderByCol() {

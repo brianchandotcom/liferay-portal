@@ -16,6 +16,7 @@ package com.liferay.password.policies.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -62,26 +63,21 @@ public class PasswordPolicyDisplayContext {
 		String tabs2 = ParamUtil.getString(
 			_httpServletRequest, "tabs2", "users");
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(tabs2.equals("users"));
-						navigationItem.setHref(portletURL, "tabs2", "users");
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "users"));
-					});
-				add(
-					navigationItem -> {
-						navigationItem.setActive(tabs2.equals("organizations"));
-						navigationItem.setHref(
-							portletURL, "tabs2", "organizations");
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "organizations"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(tabs2.equals("users"));
+				navigationItem.setHref(portletURL, "tabs2", "users");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "users"));
 			}
-		};
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(tabs2.equals("organizations"));
+				navigationItem.setHref(portletURL, "tabs2", "organizations");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "organizations"));
+			}
+		).build();
 	}
 
 	public List<NavigationItem> getEditPasswordPolicyNavigationItems()

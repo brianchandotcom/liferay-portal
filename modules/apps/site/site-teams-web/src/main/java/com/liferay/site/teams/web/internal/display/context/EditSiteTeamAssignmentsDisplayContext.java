@@ -15,7 +15,7 @@
 package com.liferay.site.teams.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
@@ -55,31 +55,24 @@ public class EditSiteTeamAssignmentsDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(getTabs1(), "users"));
-						navigationItem.setHref(
-							getEditTeamAssignmentsURL(), "tabs1", "users");
-						navigationItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "users"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(getTabs1(), "user-groups"));
-						navigationItem.setHref(
-							getEditTeamAssignmentsURL(), "tabs1",
-							"user-groups");
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								httpServletRequest, "user-groups"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(Objects.equals(getTabs1(), "users"));
+				navigationItem.setHref(
+					getEditTeamAssignmentsURL(), "tabs1", "users");
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "users"));
 			}
-		};
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(
+					Objects.equals(getTabs1(), "user-groups"));
+				navigationItem.setHref(
+					getEditTeamAssignmentsURL(), "tabs1", "user-groups");
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "user-groups"));
+			}
+		).build();
 	}
 
 	public String getTabs1() {

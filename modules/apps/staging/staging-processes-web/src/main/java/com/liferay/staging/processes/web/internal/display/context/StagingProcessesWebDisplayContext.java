@@ -15,7 +15,7 @@
 package com.liferay.staging.processes.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -38,37 +38,31 @@ public class StagingProcessesWebDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						String activeTab = ParamUtil.getString(
-							_httpServletRequest, "tabs1", "processes");
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				String activeTab = ParamUtil.getString(
+					_httpServletRequest, "tabs1", "processes");
 
-						navigationItem.setActive(activeTab.equals("processes"));
+				navigationItem.setActive(activeTab.equals("processes"));
 
-						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "tabs1",
-							"processes");
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "processes"));
-					});
-
-				add(
-					navigationItem -> {
-						String activeTab = ParamUtil.getString(
-							_httpServletRequest, "tabs1", "processes");
-
-						navigationItem.setActive(activeTab.equals("scheduled"));
-
-						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "tabs1",
-							"scheduled");
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "scheduled"));
-					});
+				navigationItem.setHref(
+					_renderResponse.createRenderURL(), "tabs1", "processes");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "processes"));
 			}
-		};
+		).add(
+			navigationItem -> {
+				String activeTab = ParamUtil.getString(
+					_httpServletRequest, "tabs1", "processes");
+
+				navigationItem.setActive(activeTab.equals("scheduled"));
+
+				navigationItem.setHref(
+					_renderResponse.createRenderURL(), "tabs1", "scheduled");
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "scheduled"));
+			}
+		).build();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

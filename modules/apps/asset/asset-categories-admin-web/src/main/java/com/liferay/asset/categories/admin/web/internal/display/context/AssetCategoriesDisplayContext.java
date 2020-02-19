@@ -34,7 +34,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -96,21 +96,17 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public List<NavigationItem> getAssetCategoriesNavigationItems() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/view_categories.jsp", "vocabularyId",
-							String.valueOf(getVocabularyId()));
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "categories"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(
+					_renderResponse.createRenderURL(), "mvcPath",
+					"/view_categories.jsp", "vocabularyId",
+					String.valueOf(getVocabularyId()));
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "categories"));
 			}
-		};
+		).build();
 	}
 
 	public String getAssetType(AssetVocabulary vocabulary)
@@ -185,19 +181,14 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public List<NavigationItem> getAssetVocabulariesNavigationItems() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(
-							_renderResponse.createRenderURL());
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "vocabularies"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(_renderResponse.createRenderURL());
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "vocabularies"));
 			}
-		};
+		).build();
 	}
 
 	public SearchContainer getCategoriesSearchContainer()

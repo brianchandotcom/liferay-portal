@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceModifiedD
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -174,19 +174,16 @@ public class DDMFormBrowserDisplayContext {
 		HttpServletRequest httpServletRequest =
 			_formWebRequestHelper.getRequest();
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/browser/view.jsp");
-						navigationItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "entries"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(
+					_renderResponse.createRenderURL(), "mvcPath",
+					"/browser/view.jsp");
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "entries"));
 			}
-		};
+		).build();
 	}
 
 	public String getOrderByCol() {

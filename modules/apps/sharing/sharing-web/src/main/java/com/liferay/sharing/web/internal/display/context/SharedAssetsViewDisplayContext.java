@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -143,42 +144,37 @@ public class SharedAssetsViewDisplayContext {
 	}
 
 	public NavigationItemList getNavigationItems() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(_isIncoming());
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(_isIncoming());
 
-						PortletURL sharedWithMeURL =
-							_liferayPortletResponse.createRenderURL();
+				PortletURL sharedWithMeURL =
+					_liferayPortletResponse.createRenderURL();
 
-						sharedWithMeURL.setParameter(
-							"incoming", Boolean.TRUE.toString());
+				sharedWithMeURL.setParameter(
+					"incoming", Boolean.TRUE.toString());
 
-						navigationItem.setHref(sharedWithMeURL);
+				navigationItem.setHref(sharedWithMeURL);
 
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "shared-with-me"));
-					});
-				add(
-					navigationItem -> {
-						navigationItem.setActive(!_isIncoming());
-
-						PortletURL sharedByMeURL =
-							_liferayPortletResponse.createRenderURL();
-
-						sharedByMeURL.setParameter(
-							"incoming", Boolean.FALSE.toString());
-
-						navigationItem.setHref(sharedByMeURL);
-
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "shared-by-me"));
-					});
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "shared-with-me"));
 			}
-		};
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(!_isIncoming());
+
+				PortletURL sharedByMeURL =
+					_liferayPortletResponse.createRenderURL();
+
+				sharedByMeURL.setParameter(
+					"incoming", Boolean.FALSE.toString());
+
+				navigationItem.setHref(sharedByMeURL);
+
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "shared-by-me"));
+			}
+		).build();
 	}
 
 	public PortletURL getSelectAssetTypeURL() {

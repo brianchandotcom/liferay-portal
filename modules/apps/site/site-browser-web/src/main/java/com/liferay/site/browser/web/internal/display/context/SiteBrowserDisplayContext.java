@@ -16,6 +16,7 @@ package com.liferay.site.browser.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -236,18 +237,15 @@ public class SiteBrowserDisplayContext {
 		String[] types = _getTypes();
 
 		if (types.length == 1) {
-			return new NavigationItemList() {
-				{
-					add(
-						navigationItem -> {
-							navigationItem.setActive(true);
-							navigationItem.setHref(
-								_liferayPortletResponse.createRenderURL());
-							navigationItem.setLabel(
-								LanguageUtil.get(_httpServletRequest, "sites"));
-						});
+			return NavigationItemListBuilder.add(
+				navigationItem -> {
+					navigationItem.setActive(true);
+					navigationItem.setHref(
+						_liferayPortletResponse.createRenderURL());
+					navigationItem.setLabel(
+						LanguageUtil.get(_httpServletRequest, "sites"));
 				}
-			};
+			).build();
 		}
 		else if (types.length > 1) {
 			return new NavigationItemList() {

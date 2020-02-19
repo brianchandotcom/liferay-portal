@@ -66,7 +66,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -432,17 +432,14 @@ public class DDMFormAdminDisplayContext {
 		HttpServletRequest httpServletRequest =
 			formAdminRequestHelper.getRequest();
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "builder"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(StringPool.BLANK);
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "builder"));
 			}
-		};
+		).build();
 	}
 
 	public String getFieldSetDefinitionURL() throws PortalException {
@@ -484,26 +481,22 @@ public class DDMFormAdminDisplayContext {
 		HttpServletRequest httpServletRequest =
 			formAdminRequestHelper.getRequest();
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.putData("action", "showForm");
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "form"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.putData("action", "showRules");
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "rules"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.putData("action", "showForm");
+				navigationItem.setActive(true);
+				navigationItem.setHref(StringPool.BLANK);
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "form"));
 			}
-		};
+		).add(
+			navigationItem -> {
+				navigationItem.putData("action", "showRules");
+				navigationItem.setHref(StringPool.BLANK);
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "rules"));
+			}
+		).build();
 	}
 
 	public String getFormDescription() throws PortalException {
@@ -672,35 +665,27 @@ public class DDMFormAdminDisplayContext {
 		String currentTab = ParamUtil.getString(
 			httpServletRequest, "currentTab", "forms");
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(currentTab.equals("forms"));
-						navigationItem.setHref(
-							renderResponse.createRenderURL(), "currentTab",
-							"forms");
-						navigationItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "forms"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							currentTab.equals("element-set"));
-						navigationItem.setHref(
-							renderResponse.createRenderURL(), "currentTab",
-							"element-set");
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								httpServletRequest, "element-sets"));
-					});
-
-				add(
-					navigationItem -> _populateDDMDataProviderNavigationItem(
-						navigationItem));
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(currentTab.equals("forms"));
+				navigationItem.setHref(
+					renderResponse.createRenderURL(), "currentTab", "forms");
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "forms"));
 			}
-		};
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(currentTab.equals("element-set"));
+				navigationItem.setHref(
+					renderResponse.createRenderURL(), "currentTab",
+					"element-set");
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "element-sets"));
+			}
+		).add(
+			navigationItem -> _populateDDMDataProviderNavigationItem(
+				navigationItem)
+		).build();
 	}
 
 	public String getOrderByCol() {

@@ -55,6 +55,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESULT_RANKINGS_RANKING_WITH_SPECIFIC_ALIAS</td>
+	<td>//tr[@data-qa-id='row'][.//descendant::td[contains(@class,'lfr-aliases-column') and contains(.,'${key_alias}')]]//a[normalize-space(text())='${key_query}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_RANKINGS_RESULT</td>
 	<td>//div[contains(@class,'active')]//li[contains(@class,'list-item-root') and contains(.,'${key_assetTitle}')]</td>
 	<td></td>

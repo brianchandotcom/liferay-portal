@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v2_0_2;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -56,23 +57,21 @@ public class UpgradeKBArticle extends UpgradeProcess {
 	}
 
 	private String _getUniqueUrlTitle(String urlTitle, int n) {
+		String suffix = _DEFAULT_SUFFIX;
+
 		Matcher matcher = _pattern.matcher(urlTitle);
 
-		if (!matcher.matches()) {
-			return urlTitle + _DEFAULT_SUFFIX;
+		int i = urlTitle.lastIndexOf(CharPool.DASH);
+
+		if (matcher.matches() && (i != -1)) {
+			int counter = GetterUtil.getInteger(urlTitle.substring(i + 1));
+
+			int spreadValue = 16 + n;
+
+			suffix = String.valueOf(counter + spreadValue);
 		}
 
-		int i = urlTitle.lastIndexOf('-');
-
-		if (i == -1) {
-			return urlTitle + _DEFAULT_SUFFIX;
-		}
-
-		int counter = GetterUtil.getInteger(urlTitle.substring(i + 1));
-
-		int spreadValue = 16 + n;
-
-		return urlTitle + (counter + spreadValue);
+		return urlTitle + suffix;
 	}
 
 	private boolean _renameConflictingFriendlyURL(

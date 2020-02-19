@@ -638,6 +638,8 @@ public class GitWorkingDirectory {
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 15, sb.toString());
 
+		long duration = System.currentTimeMillis() - start;
+
 		if (executionResult.getExitValue() != 0) {
 			System.out.println(executionResult.getStandardOut());
 
@@ -647,8 +649,18 @@ public class GitWorkingDirectory {
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to fetch remote branch ", remoteGitRefName, "\n",
+					"Unable to fetch remote git ref ", remoteGitRefName,
+					" after ",
+					JenkinsResultsParserUtil.toDurationString(duration), "\n",
 					executionResult.getStandardError()));
+		}
+
+		System.out.println(
+			"Fetch completed in " +
+				JenkinsResultsParserUtil.toDurationString(duration));
+
+		if (duration > (1000 * 60)) {
+			System.out.println(gitBranchesSHAReportStringBuilder.toString());
 		}
 
 		if (JenkinsResultsParserUtil.isCINode() &&
@@ -670,16 +682,6 @@ public class GitWorkingDirectory {
 					deleteLocalGitBranch(liferayGitHubLocalGitBranch);
 				}
 			}
-		}
-
-		long duration = System.currentTimeMillis() - start;
-
-		System.out.println(
-			"Fetch completed in " +
-				JenkinsResultsParserUtil.toDurationString(duration));
-
-		if (duration > (1000 * 60)) {
-			System.out.println(gitBranchesSHAReportStringBuilder.toString());
 		}
 
 		if (localSHAExists(remoteGitRefSHA) && (localGitBranch != null)) {
@@ -750,16 +752,17 @@ public class GitWorkingDirectory {
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 30, sb.toString());
 
+		long duration = System.currentTimeMillis() - start;
+
 		if (executionResult.getExitValue() != 0) {
 			System.out.println(gitBranchesSHAReportStringBuilder.toString());
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to fetch from remote url ", remoteURL, "\n",
+					"Unable to fetch remote url ", remoteURL, " after ",
+					JenkinsResultsParserUtil.toDurationString(duration), "\n",
 					executionResult.getStandardError()));
 		}
-
-		long duration = System.currentTimeMillis() - start;
 
 		System.out.println(
 			"Fetch completed in " +

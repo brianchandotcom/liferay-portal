@@ -793,13 +793,7 @@ information.
 					<property name="task.gradle.jvmargs" value="@{gradlejvmargs}" />
 				</then>
 				<elseif>
-					<isset property="env.GRADLE_OPTS" />
-					<then>
-						<property name="task.gradle.jvmargs" value="${env.GRADLE_OPTS}" />
-					</then>
-				</elseif>
-				<elseif>
-					<isset property="env.ANT_OPTS" />
+					<isset property="env.JENKINS_HOME" />
 					<then>
 						<property name="task.gradle.jvmargs" value="${env.ANT_OPTS}" />
 					</then>

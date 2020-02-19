@@ -78,7 +78,6 @@ public class ConcurrentHashMapBuilder<K, V> extends BaseMapBuilder {
 		return concurrentHashMapWrapper.putAll(inputMap);
 	}
 
-
 	public static final class ConcurrentHashMapWrapper<K, V>
 		extends BaseMapWrapper<K, V> {
 

@@ -140,6 +140,6 @@ public class UpgradeKBArticle extends UpgradeProcess {
 
 	private static final String _DEFAULT_SUFFIX = "-1";
 
-	private static final Pattern _pattern = Pattern.compile("-\\d+$");
+	private static final Pattern _pattern = Pattern.compile(".*-\\d+$");
 
 }

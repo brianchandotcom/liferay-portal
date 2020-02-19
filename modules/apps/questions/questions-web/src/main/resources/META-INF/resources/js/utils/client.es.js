@@ -86,6 +86,7 @@ export const createComment = (articleBody, messageBoardMessageId) =>
 	request(gql`
         mutation {
             createMessageBoardMessageMessageBoardMessage(messageBoardMessage: {articleBody: ${articleBody}, encodingFormat: "html", viewableBy: ANYONE}, parentMessageBoardMessageId: ${messageBoardMessageId}){
+            	actions
                 articleBody
                 creator {
                 	name

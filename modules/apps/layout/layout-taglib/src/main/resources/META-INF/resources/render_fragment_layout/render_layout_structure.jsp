@@ -33,25 +33,27 @@ for (String childrenItemId : childrenItemIds) {
 	LayoutStructureItem layoutStructureItem = layoutStructure.getLayoutStructureItem(childrenItemId);
 %>
 
-	<c:choose>
-		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
+<c:choose>
+	<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
 
-			<%
+		<%
 			ColumnLayoutStructureItem columnLayoutStructureItem = (ColumnLayoutStructureItem)layoutStructureItem;
 			%>
 
-			<div class="<%= (columnLayoutStructureItem.getSize() > 0) ? "col-md-" + columnLayoutStructureItem.getSize() : "col-md" %>">
+		<div
+			class="<%= (columnLayoutStructureItem.getSize() > 0) ? "col-md-" + columnLayoutStructureItem.getSize() : "col-md" %>">
 
-				<%
+			<%
 				request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 				%>
 
-				<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
-			</div>
-		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof ContainerLayoutStructureItem %>">
+			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp"
+				servletContext="<%= application %>" />
+		</div>
+	</c:when>
+	<c:when test="<%= layoutStructureItem instanceof ContainerLayoutStructureItem %>">
 
-			<%
+		<%
 			ContainerLayoutStructureItem containerLayoutStructureItem = (ContainerLayoutStructureItem)layoutStructureItem;
 
 			String backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(containerLayoutStructureItem.getBackgroundImageJSONObject());
@@ -79,28 +81,32 @@ for (String childrenItemId : childrenItemIds) {
 			}
 			%>
 
-			<div class="container-fluid <%= sb.toString() %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : "" %>">
-				<div class="px-0 <%= Objects.equals(containerLayoutStructureItem.getContainerType(), "fluid") ? "container-fluid" : "container" %>">
+		<div class="<%= sb.toString() %>"
+			style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : "" %>">
+			<div
+				class="<%= Objects.equals(containerLayoutStructureItem.getContainerType(), "fluid") ? "container-fluid" : "container" %>">
 
-					<%
+				<%
 					request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 					%>
 
-					<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
-				</div>
+				<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp"
+					servletContext="<%= application %>" />
 			</div>
-		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof DropZoneLayoutStructureItem %>">
+		</div>
+	</c:when>
+	<c:when test="<%= layoutStructureItem instanceof DropZoneLayoutStructureItem %>">
 
-			<%
+		<%
 			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 			%>
 
-			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof FragmentLayoutStructureItem %>">
+		<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp"
+			servletContext="<%= application %>" />
+	</c:when>
+	<c:when test="<%= layoutStructureItem instanceof FragmentLayoutStructureItem %>">
 
-			<%
+		<%
 			FragmentLayoutStructureItem fragmentLayoutStructureItem = (FragmentLayoutStructureItem)layoutStructureItem;
 
 			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
@@ -126,32 +132,34 @@ for (String childrenItemId : childrenItemIds) {
 			defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
 			%>
 
-			<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof RootLayoutStructureItem %>">
+		<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+	</c:when>
+	<c:when test="<%= layoutStructureItem instanceof RootLayoutStructureItem %>">
 
-			<%
+		<%
 			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 			%>
 
-			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof RowLayoutStructureItem %>">
+		<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp"
+			servletContext="<%= application %>" />
+	</c:when>
+	<c:when test="<%= layoutStructureItem instanceof RowLayoutStructureItem %>">
 
-			<%
+		<%
 			RowLayoutStructureItem rowLayoutStructureItem = (RowLayoutStructureItem)layoutStructureItem;
 			%>
 
-			<div class="row <%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>">
+		<div class="row <%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>">
 
-				<%
+			<%
 				request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 				%>
 
-				<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
-			</div>
-		</c:when>
-	</c:choose>
+			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp"
+				servletContext="<%= application %>" />
+		</div>
+	</c:when>
+</c:choose>
 
 <%
 }

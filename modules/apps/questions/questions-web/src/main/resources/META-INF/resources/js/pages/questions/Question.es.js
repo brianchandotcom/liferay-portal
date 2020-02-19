@@ -34,7 +34,7 @@ import {
 import lang from '../../utils/lang.es';
 import {
 	dateToBriefInternationalHuman,
-	getCKEditorConfig
+	getCKEditorConfig, onBeforeLoadCKEditor
 } from '../../utils/utils.es';
 
 export default ({
@@ -232,9 +232,7 @@ export default ({
 										<Editor
 											config={getCKEditorConfig()}
 											data={articleBody}
-											onBeforeLoad={CKEDITOR => {
-												CKEDITOR.disableAutoInline = true;
-											}}
+											onBeforeLoad={onBeforeLoadCKEditor}
 											onChange={event =>
 												setArticleBody(
 													event.editor.getData()

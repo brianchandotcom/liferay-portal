@@ -39,6 +39,12 @@ export function getCKEditorConfig() {
 	return config;
 }
 
+export function onBeforeLoadCKEditor(CKEditor) {
+	if (CKEditor) {
+		CKEditor.disableAutoInline = true;
+	}
+}
+
 export function dateToInternationalHuman(
 	ISOString,
 	localeKey = navigator.language

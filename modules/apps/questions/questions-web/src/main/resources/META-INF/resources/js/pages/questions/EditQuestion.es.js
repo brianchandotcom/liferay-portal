@@ -18,7 +18,7 @@ import React, {useEffect, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {getThreadContent, updateThread} from '../../utils/client.es';
-import {getCKEditorConfig} from '../../utils/utils.es';
+import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -79,9 +79,7 @@ export default withRouter(
 
 						<Editor
 							config={getCKEditorConfig()}
-							onBeforeLoad={CKEDITOR => {
-								CKEDITOR.disableAutoInline = true;
-							}}
+							onBeforeLoad={onBeforeLoadCKEditor}
 							onChange={event =>
 								setArticleBody(event.editor.getData())
 							}

@@ -19,7 +19,7 @@ import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import {createQuestion} from '../../utils/client.es';
-import {getCKEditorConfig} from '../../utils/utils.es';
+import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
 
 export default withRouter(({history}) => {
 	const context = useContext(AppContext);
@@ -65,9 +65,7 @@ export default withRouter(({history}) => {
 
 					<Editor
 						config={getCKEditorConfig()}
-						onBeforeLoad={CKEDITOR => {
-							CKEDITOR.disableAutoInline = true;
-						}}
+						onBeforeLoad={onBeforeLoadCKEditor}
 						onChange={event =>
 							setArticleBody(event.editor.getData())
 						}

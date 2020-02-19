@@ -42,7 +42,7 @@
 		"build": "liferay-npm-scripts webpack",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "liferay-npm-scripts test"
+		"test": "TZ=Etc/GMT liferay-npm-scripts test"
 	},
 	"version": "1.0.0"
 }

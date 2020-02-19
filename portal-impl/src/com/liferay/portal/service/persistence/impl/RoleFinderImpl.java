@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.RoleFinder;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,6 +45,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -877,6 +879,13 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 
 			String sql = CustomSQLUtil.get(COUNT_BY_C_N_D_T);
 
+			long classNameId = GetterUtil.getLong(
+				params.get("classNameId"),
+				ClassNameLocalServiceUtil.getClassNameId(Role.class));
+
+			sql = StringUtil.replace(
+				sql, "[$CLASS_NAME_ID$]", String.valueOf(classNameId));
+
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(Role_.name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
@@ -1023,6 +1032,13 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_N_D_T);
+
+			long classNameId = GetterUtil.getLong(
+				params.get("classNameId"),
+				ClassNameLocalServiceUtil.getClassNameId(Role.class));
+
+			sql = StringUtil.replace(
+				sql, "[$CLASS_NAME_ID$]", String.valueOf(classNameId));
 
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "LOWER(Role_.name)", StringPool.LIKE, false, names);
@@ -1226,6 +1242,10 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 		}
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			if (Objects.equals(entry.getKey(), "classNameId")) {
+				continue;
+			}
+
 			Object value = entry.getValue();
 
 			if (value instanceof Long) {

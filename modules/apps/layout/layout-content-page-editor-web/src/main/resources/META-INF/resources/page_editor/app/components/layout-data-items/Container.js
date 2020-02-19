@@ -93,7 +93,7 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 			}
 		>
 			<div
-				className={classNames('px-0', {
+				className={classNames({
 					container: type === 'fixed',
 					'container-fluid': type === 'fluid'
 				})}

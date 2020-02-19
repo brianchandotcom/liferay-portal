@@ -77,12 +77,9 @@ const ContainerWithControls = React.forwardRef(
 
 		const content = (
 			<Container
-				className={classNames(
-					'container-fluid page-editor__container',
-					{
-						empty: !item.children.length
-					}
-				)}
+				className={classNames('page-editor__container', {
+					empty: !item.children.length
+				})}
 				item={item}
 				ref={ref}
 			>

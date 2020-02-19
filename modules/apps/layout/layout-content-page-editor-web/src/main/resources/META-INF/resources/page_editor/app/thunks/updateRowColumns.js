@@ -23,7 +23,6 @@ export default function updateRowColumns({
 }) {
 	return dispatch =>
 		LayoutService.updateRowColumns({
-			config,
 			itemId,
 			numberOfColumns,
 			onNetworkStatus: dispatch,

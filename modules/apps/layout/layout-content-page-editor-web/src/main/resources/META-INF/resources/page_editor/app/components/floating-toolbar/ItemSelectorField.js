@@ -21,6 +21,7 @@ import ItemSelector from '../../../common/components/ItemSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {ConfigContext} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
+import {useDispatch} from '../../store/index';
 
 export const ItemSelectorField = ({field, onValueSelect, value}) => {
 	const {typeOptions = {}} = field;
@@ -70,6 +71,7 @@ ItemSelectorField.propTypes = {
 
 const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 	const config = useContext(ConfigContext);
+	const dispatch = useDispatch();
 	const [availableTemplates, setAvailableTemplates] = useState([]);
 	const isMounted = useIsMounted();
 
@@ -78,7 +80,7 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 			InfoItemService.getAvailableTemplates({
 				className: item.className,
 				classPK: item.classPK,
-				config
+				onNetworkStatus: dispatch
 			}).then(response => {
 				setAvailableTemplates(response);
 			});

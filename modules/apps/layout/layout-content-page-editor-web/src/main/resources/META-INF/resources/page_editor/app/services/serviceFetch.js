@@ -16,19 +16,19 @@ import {fetch} from 'frontend-js-web';
 
 import {updateNetwork} from '../actions/index';
 import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
+import {config} from '../config/index';
 
 /**
  * Returns a new FormData built from the given object.
- * @param {{ portletNamespace: string }} config Application configuration constants
  * @param {object} body
  * @return {FormData}
  * @review
  */
-function getFormData({portletNamespace}, body) {
+function getFormData(body) {
 	const formData = new FormData();
 
 	Object.entries(body).forEach(([key, value]) => {
-		formData.append(`${portletNamespace}${key}`, value);
+		formData.append(`${config.portletNamespace}${key}`, value);
 	});
 
 	return formData;
@@ -38,15 +38,15 @@ function getFormData({portletNamespace}, body) {
  * Performs a POST request to the given url and parses an expected object response.
  * If the response status is over 400, or there is any "error" or "exception"
  * properties on the response object, it rejects the promise with an Error object.
- * @param {object} config Application configuration constants
  * @param {string} url
  * @param {object} [body={}]
+ * @param {function} onNetworkStatus
+ * @param {{ requestGenerateDraft: boolean }} [options={requestGenerateDraft: false}]
  * @private
  * @return {Promise<object>}
  * @review
  */
 export default function serviceFetch(
-	config,
 	url,
 	{body = {}, method, ...options} = {body: {}},
 	onNetworkStatus,
@@ -63,7 +63,7 @@ export default function serviceFetch(
 
 	return fetch(url, {
 		...options,
-		body: getFormData(config, body),
+		body: getFormData(body),
 		method: method || 'POST'
 	})
 		.then(

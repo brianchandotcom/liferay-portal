@@ -12,31 +12,28 @@
  * details.
  */
 
+import {config} from '../config/index';
 import serviceFetch from './serviceFetch';
 
 export default {
 	/**
 	 * Get an asset's value
 	 * @param {object} options
-	 * @param {object} options.config Application config
 	 * @param {string} options.classNameId Asset's className
 	 * @param {string} options.classPK Asset's classPK
-	 * @param {string} options.fieldId Field id
-	 * @param {string} options.languageId Language Id
+	 * @param {string} options.fieldId
+	 * @param {string} [options.languageId]
+	 * @param {function} options.onNetworkStatus
 	 */
 	getAssetFieldValue({
 		classNameId,
 		classPK,
-		config,
 		fieldId,
 		languageId,
 		onNetworkStatus
 	}) {
-		const {getAssetFieldValueURL} = config;
-
 		return serviceFetch(
-			config,
-			getAssetFieldValueURL,
+			config.getAssetFieldValueURL,
 			{
 				body: {
 					classNameId,
@@ -52,21 +49,13 @@ export default {
 	/**
 	 * Get available asset mapping fields
 	 * @param {object} options
-	 * @param {object} options.config Application config
 	 * @param {string} options.classNameId Asset's className
 	 * @param {string} options.classPK Asset's classPK
+	 * @param {function} options.onNetworkStatus
 	 */
-	getAvailableAssetMappingFields({
-		classNameId,
-		classPK,
-		config,
-		onNetworkStatus
-	}) {
-		const {getAssetMappingFieldsURL} = config;
-
+	getAvailableAssetMappingFields({classNameId, classPK, onNetworkStatus}) {
 		return serviceFetch(
-			config,
-			getAssetMappingFieldsURL,
+			config.getAssetMappingFieldsURL,
 			{
 				body: {
 					classNameId,
@@ -80,21 +69,17 @@ export default {
 	/**
 	 * Get available structure mapping fields
 	 * @param {object} options
-	 * @param {object} options.config Application config
 	 * @param {string} options.classNameId Asset's className
 	 * @param {string} options.classTypeId Asset's classTypeId
+	 * @param {function} options.onNetworkStatus
 	 */
 	getAvailableStructureMappingFields({
 		classNameId,
 		classTypeId,
-		config,
 		onNetworkStatus
 	}) {
-		const {mappingFieldsURL} = config;
-
 		return serviceFetch(
-			config,
-			mappingFieldsURL,
+			config.mappingFieldsURL,
 			{
 				body: {
 					classNameId,
@@ -108,16 +93,13 @@ export default {
 	/**
 	 * Get available templates for an asset
 	 * @param {object} options
-	 * @param {object} options.config Application config
 	 * @param {string} options.className Asset's className
 	 * @param {string} options.classPK Asset's classPK
+	 * @param {function} options.onNetworkStatus
 	 */
-	getAvailableTemplates({className, classPK, config, onNetworkStatus}) {
-		const {getAvailableTemplatesURL} = config;
-
+	getAvailableTemplates({className, classPK, onNetworkStatus}) {
 		return serviceFetch(
-			config,
-			getAvailableTemplatesURL,
+			config.getAvailableTemplatesURL,
 			{
 				body: {
 					className,
@@ -131,11 +113,9 @@ export default {
 	/**
 	 * Get page contents
 	 * @param {object} options
-	 * @param {object} options.config Application config
+	 * @param {function} options.onNetworkStatus
 	 */
-	getPageContents({config, onNetworkStatus}) {
-		const {getPageContentsURL} = config;
-
-		return serviceFetch(config, getPageContentsURL, onNetworkStatus);
+	getPageContents({onNetworkStatus}) {
+		return serviceFetch(config.getPageContentsURL, {}, onNetworkStatus);
 	}
 };

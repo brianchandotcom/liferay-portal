@@ -105,7 +105,6 @@ function getMappingValue({classNameId, classPK, config, fieldId, languageId}) {
 	return InfoItemService.getAssetFieldValue({
 		classNameId,
 		classPK,
-		config,
 		fieldId,
 		languageId,
 		onNetworkStatus: () => {}

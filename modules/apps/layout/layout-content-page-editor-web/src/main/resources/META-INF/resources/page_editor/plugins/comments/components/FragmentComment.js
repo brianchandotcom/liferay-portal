@@ -79,7 +79,6 @@ export default function FragmentComment({
 		FragmentService.editComment({
 			body,
 			commentId,
-			config,
 			onNetworkStatus: dispatch,
 			resolved: !resolved
 		})

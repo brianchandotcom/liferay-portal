@@ -27,7 +27,6 @@ export default function editFragmentComment({
 		return FragmentService.editComment({
 			body,
 			commentId,
-			config,
 			onNetworkStatus: dispatch,
 			resolved
 		}).then(fragmentEntryLinkComment => {

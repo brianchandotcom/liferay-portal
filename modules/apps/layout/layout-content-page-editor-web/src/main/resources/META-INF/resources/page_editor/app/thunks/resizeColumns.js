@@ -19,7 +19,6 @@ export default function resizeColumns({config, layoutData, store}) {
 		const {segmentsExperienceId} = store;
 
 		return LayoutService.updateLayoutData({
-			config,
 			layoutData,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId

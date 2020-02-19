@@ -23,7 +23,6 @@ export default function deleteItem({config, itemId, store}) {
 		const {segmentsExperienceId} = store;
 
 		return LayoutService.deleteItem({
-			config,
 			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId
@@ -49,7 +48,6 @@ export default function deleteItem({config, itemId, store}) {
 			})
 			.then(() => {
 				InfoItemService.getPageContents({
-					config,
 					onNetworkStatus: dispatch
 				}).then(pageContents => {
 					dispatch(

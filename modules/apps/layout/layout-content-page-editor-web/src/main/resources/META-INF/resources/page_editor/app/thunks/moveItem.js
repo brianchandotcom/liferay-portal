@@ -26,7 +26,6 @@ export default function moveItem({
 		const {segmentsExperienceId} = store;
 
 		LayoutService.moveItem({
-			config,
 			itemId,
 			onNetworkStatus: dispatch,
 			parentItemId,

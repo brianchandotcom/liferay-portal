@@ -19,7 +19,6 @@ function getExperienceUsedPortletIds({body, config, dispatch}) {
 	const {getExperienceUsedPortletsURL} = config;
 
 	return serviceFetch(
-		config,
 		getExperienceUsedPortletsURL,
 		{
 			body: {
@@ -51,7 +50,6 @@ export default {
 		};
 
 		return serviceFetch(
-			config,
 			addSegmentsExperienceURL,
 			{body: payload},
 			dispatch
@@ -78,7 +76,6 @@ export default {
 		};
 
 		return serviceFetch(
-			config,
 			deleteSegmentsExperienceURL,
 			{body: payload},
 			dispatch
@@ -108,12 +105,7 @@ export default {
 	updateExperience({body, config, dispatch}) {
 		const {updateSegmentsExperienceURL} = config;
 
-		return serviceFetch(
-			config,
-			updateSegmentsExperienceURL,
-			{body},
-			dispatch
-		);
+		return serviceFetch(updateSegmentsExperienceURL, {body}, dispatch);
 	},
 
 	/**
@@ -135,7 +127,6 @@ export default {
 		};
 
 		return serviceFetch(
-			config,
 			updateSegmentsExperiencePriorityURL,
 			{body: payload},
 			dispatch

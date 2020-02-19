@@ -159,7 +159,6 @@ export default function LinkPanel({item}) {
 		InfoItemService.getAssetFieldValue({
 			classNameId,
 			classPK,
-			config,
 			fieldId,
 			languageId,
 			onNetworkStatus: () => {}

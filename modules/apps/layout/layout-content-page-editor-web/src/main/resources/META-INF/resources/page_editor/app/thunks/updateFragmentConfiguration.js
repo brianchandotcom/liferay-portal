@@ -35,14 +35,12 @@ export default function updateFragmentConfiguration({
 
 	return dispatch => {
 		return FragmentService.updateEditableValues({
-			config,
 			editableValues: nextEditableValues,
 			fragmentEntryLinkId,
 			onNetworkStatus: dispatch
 		})
 			.then(() => {
 				return FragmentService.renderFragmentEntryLinkContent({
-					config,
 					fragmentEntryLinkId,
 					onNetworkStatus: dispatch,
 					segmentsExperienceId

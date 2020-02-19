@@ -54,7 +54,6 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 			InfoItemService.getAssetFieldValue({
 				classNameId: backgroundImage.classNameId,
 				classPK: backgroundImage.classPK,
-				config,
 				fieldId: backgroundImage.fieldId,
 				onNetworkStatus: dispatch
 			}).then(response => {

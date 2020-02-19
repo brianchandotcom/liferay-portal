@@ -26,7 +26,6 @@ export default function addWidget({
 		const {segmentsExperienceId} = store;
 
 		WidgetService.addPortlet({
-			config,
 			onNetworkStatus: dispatch,
 			parentItemId,
 			portletId,

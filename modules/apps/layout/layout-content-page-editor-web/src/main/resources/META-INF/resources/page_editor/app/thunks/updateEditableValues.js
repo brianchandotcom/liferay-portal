@@ -25,7 +25,6 @@ export default function updateEditableValues({
 }) {
 	return dispatch => {
 		FragmentService.updateEditableValues({
-			config,
 			editableValues,
 			fragmentEntryLinkId,
 			onNetworkStatus: dispatch
@@ -41,7 +40,6 @@ export default function updateEditableValues({
 			})
 			.then(() => {
 				InfoItemService.getPageContents({
-					config,
 					onNetworkStatus: dispatch
 				}).then(pageContents => {
 					dispatch(

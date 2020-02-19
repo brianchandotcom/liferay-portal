@@ -25,7 +25,6 @@ export default function updateItemConfig({
 }) {
 	return dispatch =>
 		LayoutService.updateItemConfig({
-			config,
 			itemConfig,
 			itemId,
 			onNetworkStatus: dispatch,
@@ -36,7 +35,6 @@ export default function updateItemConfig({
 			})
 			.then(() => {
 				InfoItemService.getPageContents({
-					config,
 					onNetworkStatus: dispatch
 				}).then(pageContents => {
 					dispatch(

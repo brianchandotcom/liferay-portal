@@ -25,7 +25,6 @@ export default function duplicateItem({
 
 	return dispatch => {
 		FragmentService.duplicateItem({
-			config,
 			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId

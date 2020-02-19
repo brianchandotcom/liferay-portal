@@ -28,7 +28,6 @@ export default function addFragment({
 		const {segmentsExperienceId} = store;
 
 		FragmentService.addFragmentEntryLink({
-			config,
 			fragmentEntryKey,
 			groupId,
 			onNetworkStatus: dispatch,

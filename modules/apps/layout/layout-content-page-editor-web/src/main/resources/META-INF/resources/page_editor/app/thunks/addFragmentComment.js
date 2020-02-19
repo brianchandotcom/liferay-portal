@@ -17,14 +17,12 @@ import FragmentService from '../services/FragmentService';
 
 export default function addFragmentComment({
 	body,
-	config,
 	fragmentEntryLinkId,
 	parentCommentId
 }) {
 	return dispatch => {
 		return FragmentService.addComment({
 			body,
-			config,
 			fragmentEntryLinkId,
 			onNetworkStatus: dispatch,
 			parentCommentId

@@ -102,7 +102,7 @@ const Languages = ({
 					)}
 				</ClayTable.Cell>
 				{showActions && (
-					<ClayTable.Cell align="center">
+					<ClayTable.Cell align="right">
 						<ClayDropDown
 							active={active}
 							onActiveChange={setActive}

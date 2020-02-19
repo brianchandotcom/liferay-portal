@@ -13,12 +13,34 @@
  */
 
 import updateLayoutData from '../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updateLayoutData';
+import updatePageContents from '../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updatePageContents';
 import LayoutService from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/LayoutService';
 import updateItemConfig from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updateLayoutData',
 	() => jest.fn()
+);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updatePageContents',
+	() => jest.fn()
+);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService',
+	() => ({
+		getPageContents: jest.fn(() =>
+			Promise.resolve([
+				{
+					classPK: 'pk',
+					name: 'contents',
+					title: 'title',
+					usagesCount: 1
+				}
+			])
+		)
+	})
 );
 
 jest.mock(
@@ -49,7 +71,7 @@ describe('updateItemConfig', () => {
 		expect(LayoutService.updateItemConfig).toHaveBeenCalled();
 	});
 
-	it('dispatch updateLayoutData action when the promise if resolved', async () => {
+	it('dispatches updateLayoutData and updatePageContents actions', async () => {
 		LayoutService.updateItemConfig.mockImplementation(() =>
 			Promise.resolve({
 				items: {},
@@ -64,6 +86,17 @@ describe('updateItemConfig', () => {
 				items: {},
 				version: 1
 			}
+		});
+
+		expect(updatePageContents).toHaveBeenCalledWith({
+			pageContents: [
+				{
+					classPK: 'pk',
+					name: 'contents',
+					title: 'title',
+					usagesCount: 1
+				}
+			]
 		});
 	});
 });

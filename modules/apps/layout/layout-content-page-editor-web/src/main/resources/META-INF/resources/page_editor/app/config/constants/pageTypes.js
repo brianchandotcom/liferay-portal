@@ -14,6 +14,7 @@
 
 /**
  * Available page types
+ * @type {import('../../../types/PageTypes').PageTypes}
  */
 export const PAGE_TYPES = {
 	content: '0',

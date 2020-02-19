@@ -17,7 +17,6 @@ package com.liferay.portal.verify;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.VerifyThreadLocal;
@@ -32,24 +31,19 @@ import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
  */
 public class VerifyProcessUtil {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 * 				#verifyProcess()}
+	 */
+	@Deprecated
 	public static boolean verifyProcess(
 			boolean ranUpgradeProcess, boolean verified)
 		throws VerifyException {
 
-		int verifyFrequency = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VERIFY_FREQUENCY));
-
-		if ((verifyFrequency == VerifyProcess.ALWAYS) ||
-			((verifyFrequency == VerifyProcess.ONCE) && !verified) ||
-			ranUpgradeProcess) {
-
-			return _verifyProcess();
-		}
-
-		return false;
+		return verifyProcess();
 	}
 
-	private static boolean _verifyProcess() throws VerifyException {
+	public static boolean verifyProcess() throws VerifyException {
 		boolean ranVerifyProcess = false;
 
 		boolean tempIndexReadOnly = IndexWriterHelperUtil.isIndexReadOnly();

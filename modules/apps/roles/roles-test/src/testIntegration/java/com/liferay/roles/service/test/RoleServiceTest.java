@@ -17,16 +17,24 @@ package com.liferay.roles.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.security.permission.test.util.BasePermissionTestCase;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -84,6 +92,66 @@ public class RoleServiceTest extends BasePermissionTestCase {
 				new LinkedHashMap<>()));
 	}
 
+	@Test
+	public void testSearchWithClassNameId() throws Exception {
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		_className = _classNameLocalService.addClassName(
+			RandomTestUtil.randomString());
+
+		List<Role> expectedRoles = new ArrayList<>();
+
+		expectedRoles.add(
+			_roleService.addRole(
+				_className.getClassName(), RandomTestUtil.nextLong(),
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RoleConstants.TYPE_PROVIDER, null, null));
+		expectedRoles.add(
+			_roleService.addRole(
+				_className.getClassName(), RandomTestUtil.nextLong(),
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RoleConstants.TYPE_PROVIDER, null, null));
+		expectedRoles.add(
+			_roleService.addRole(
+				_className.getClassName(), RandomTestUtil.nextLong(),
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RoleConstants.TYPE_PROVIDER, null, null));
+
+		_roles.addAll(expectedRoles);
+
+		_roles.add(
+			_roleService.addRole(
+				Role.class.getName(), RandomTestUtil.nextLong(),
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RoleConstants.TYPE_PROVIDER, null, null));
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("classNameId", _className.getClassNameId());
+
+		Assert.assertEquals(
+			expectedRoles.size(),
+			_roleService.searchCount(
+				TestPropsValues.getCompanyId(), StringPool.BLANK,
+				new Integer[] {RoleConstants.TYPE_PROVIDER}, params));
+
+		List<Role> roles = _roleService.search(
+			group.getCompanyId(), StringPool.BLANK,
+			new Integer[] {RoleConstants.TYPE_PROVIDER}, params,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, new RoleNameComparator());
+
+		Assert.assertEquals(
+			ListUtil.sort(expectedRoles, new RoleNameComparator()), roles);
+	}
+
 	@Override
 	protected void doSetUp() throws Exception {
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
@@ -105,7 +173,16 @@ public class RoleServiceTest extends BasePermissionTestCase {
 	}
 
 	@DeleteAfterTestRun
+	private ClassName _className;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@DeleteAfterTestRun
 	private Role _role;
+
+	@DeleteAfterTestRun
+	private final List<Role> _roles = new ArrayList<>();
 
 	@Inject
 	private RoleService _roleService;

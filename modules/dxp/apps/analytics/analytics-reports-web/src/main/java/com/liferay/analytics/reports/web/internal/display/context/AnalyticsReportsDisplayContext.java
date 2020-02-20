@@ -16,6 +16,7 @@ package com.liferay.analytics.reports.web.internal.display.context;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
+import com.liferay.analytics.reports.web.internal.data.model.TimeSpan;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -152,29 +153,6 @@ public class AnalyticsReportsDisplayContext {
 
 	public String getLiferayAnalyticsURL(long companyId) {
 		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsURL");
-	}
-
-	public enum TimeSpan {
-
-		LAST_7_DAYS("last-7-days", 2), LAST_24_HOURS("last-24-hours", 1),
-		LAST_30_DAYS("last-30-days", 3);
-
-		public String getLabel() {
-			return _label;
-		}
-
-		public int getOrder() {
-			return _order;
-		}
-
-		private TimeSpan(String label, int order) {
-			_label = label;
-			_order = order;
-		}
-
-		private final String _label;
-		private final int _order;
-
 	}
 
 	protected Map<String, Object> getProps() {

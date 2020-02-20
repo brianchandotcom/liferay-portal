@@ -142,8 +142,7 @@ public class ElasticsearchConnectionManager
 		ElasticsearchConnection elasticsearchConnection) {
 
 		_elasticsearchConnections.put(
-			EmbeddedElasticsearchConnection.CONNECTION_ID,
-			elasticsearchConnection);
+			elasticsearchConnection.getConnectionId(), elasticsearchConnection);
 	}
 
 	public void setOperationMode(OperationMode operationMode) {
@@ -160,7 +159,7 @@ public class ElasticsearchConnectionManager
 		elasticsearchConnection.close();
 
 		_elasticsearchConnections.remove(
-			EmbeddedElasticsearchConnection.CONNECTION_ID);
+			elasticsearchConnection.getConnectionId());
 	}
 
 	@Activate
@@ -178,6 +177,14 @@ public class ElasticsearchConnectionManager
 			translate(_elasticsearchConfiguration.operationMode()));
 		LogUtil.setRestClientLoggerLevel(
 			_elasticsearchConfiguration.restClientLoggerLevel());
+
+		if (_operationMode == OperationMode.EMBEDDED) {
+			ElasticsearchConnection elasticsearchConnection =
+				_elasticsearchConnections.get(
+					String.valueOf(OperationMode.EMBEDDED));
+
+			elasticsearchConnection.connect();
+		}
 	}
 
 	protected synchronized void createCompanyIndexes() {
@@ -222,7 +229,7 @@ public class ElasticsearchConnectionManager
 
 		if (isOperationModeEmbedded()) {
 			return _elasticsearchConnections.get(
-				EmbeddedElasticsearchConnection.CONNECTION_ID);
+				String.valueOf(OperationMode.EMBEDDED));
 		}
 
 		if (preferLocalCluster && isCrossClusterReplicationEnabled()) {

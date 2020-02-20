@@ -221,7 +221,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 								name="title"
 							>
 								<a href="<%= HtmlUtil.escapeHREF(viewFolderURL.toString()) %>" title="<%= HtmlUtil.escapeAttribute(folder.getName()) %>">
-									<i class="icon-folder-open"></i>
+									<liferay-ui:icon
+										icon="folder"
+										markupView="lexicon"
+									/>
 
 									<span class="taglib-text">
 										<%= HtmlUtil.escape(folder.getName()) %>

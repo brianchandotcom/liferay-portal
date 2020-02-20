@@ -12,14 +12,14 @@
  * details.
  */
 
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import DndProvider from './DndProvider';
 import MillerColumnsColumn from './MillerColumnsColumn';
 
 const cache = {};
 
-const massageColumns = columns => {
+const getMassagedColumns = columns => {
 	const newColumns = [];
 	let newColumn;
 	let parent;
@@ -76,11 +76,9 @@ const MillerColumns = ({
 }) => {
 	const rowRef = useRef();
 
-	const massagedColumns = useMemo(() => massageColumns(initialColumns), [
-		initialColumns
-	]);
-
-	const [columns, setColumns] = useState(massagedColumns);
+	const [columns, setColumns] = useState(() =>
+		getMassagedColumns(initialColumns)
+	);
 
 	const columnsRef = useRef(columns);
 

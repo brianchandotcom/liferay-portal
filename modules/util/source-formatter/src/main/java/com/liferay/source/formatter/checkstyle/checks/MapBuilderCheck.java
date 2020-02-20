@@ -32,13 +32,14 @@ public class MapBuilderCheck extends BaseBuilderCheck {
 
 		return ListUtil.fromArray(
 			new BaseBuilderCheck.BuilderInformation(
-				"ConcurrentHashMap", "ConcurrentHashMapBuilder", "put"),
+				"ConcurrentHashMap", "ConcurrentHashMapBuilder", "put",
+				"putAll"),
 			new BaseBuilderCheck.BuilderInformation(
-				"HashMap", "HashMapBuilder", "put"),
+				"HashMap", "HashMapBuilder", "put", "putAll"),
 			new BaseBuilderCheck.BuilderInformation(
-				"LinkedHashMap", "LinkedHashMapBuilder", "put"),
+				"LinkedHashMap", "LinkedHashMapBuilder", "put", "putAll"),
 			new BaseBuilderCheck.BuilderInformation(
-				"TreeMap", "TreeMapBuilder", "put"));
+				"TreeMap", "TreeMapBuilder", "put", "putAll"));
 	}
 
 	protected boolean isSupportsNestedMethodCalls() {

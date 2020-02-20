@@ -73,8 +73,9 @@ public class UpgradeKBArticle extends UpgradeProcess {
 			urlTitle = urlTitle.substring(0, i);
 		}
 
-		if ((urlTitle.length() + suffix.length()) > 74) {
-			urlTitle = urlTitle.substring(0, 74 - suffix.length());
+		if ((urlTitle.length() + suffix.length()) > _MAX_URL_TITLE_LENGTH) {
+			urlTitle = urlTitle.substring(
+				0, _MAX_URL_TITLE_LENGTH - suffix.length());
 		}
 
 		return urlTitle + suffix;
@@ -145,6 +146,8 @@ public class UpgradeKBArticle extends UpgradeProcess {
 	}
 
 	private static final String _DEFAULT_SUFFIX = "-1";
+
+	private static final int _MAX_URL_TITLE_LENGTH = 74;
 
 	private static final Pattern _pattern = Pattern.compile(".*-\\d+$");
 

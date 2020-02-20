@@ -35,7 +35,36 @@ import org.elasticsearch.node.Node;
  */
 public class ElasticsearchServerUtil {
 
-	public static void addShutdownHook() throws Exception {
+	public static void shutdown() {
+		try {
+			_stopMethod.invoke(null);
+		}
+		catch (Exception exception) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn("Unable to invoke stop method", exception);
+			}
+
+			System.exit(ExitCodes.CODE_ERROR);
+		}
+
+		_shutdownCountDownLatch.countDown();
+	}
+
+	public static Node start(String[] arguments) throws Exception {
+		_mainMethod.invoke(null, new Object[] {arguments});
+
+		System.setSecurityManager(null);
+
+		_addShutdownHook();
+
+		return (Node)_nodeField.get(_instanceField.get(null));
+	}
+
+	public static void waitForShutdown() throws InterruptedException {
+		_shutdownCountDownLatch.await();
+	}
+
+	private static void _addShutdownHook() throws Exception {
 		synchronized (_hooksField.getDeclaringClass()) {
 			Map<Thread, Thread> hooks = (Map<Thread, Thread>)_hooksField.get(
 				null);
@@ -72,33 +101,6 @@ public class ElasticsearchServerUtil {
 
 			hooks.put(shutdownHook, shutdownHook);
 		}
-	}
-
-	public static void shutdown() {
-		try {
-			_stopMethod.invoke(null);
-		}
-		catch (Exception exception) {
-			if (_logger.isWarnEnabled()) {
-				_logger.warn("Unable to invoke stop method", exception);
-			}
-
-			System.exit(ExitCodes.CODE_ERROR);
-		}
-
-		_shutdownCountDownLatch.countDown();
-	}
-
-	public static Node start(String[] arguments) throws Exception {
-		_mainMethod.invoke(null, new Object[] {arguments});
-
-		System.setSecurityManager(null);
-
-		return (Node)_nodeField.get(_instanceField.get(null));
-	}
-
-	public static void waitForShutdown() throws InterruptedException {
-		_shutdownCountDownLatch.await();
 	}
 
 	private static final Logger _logger = LogManager.getLogger(

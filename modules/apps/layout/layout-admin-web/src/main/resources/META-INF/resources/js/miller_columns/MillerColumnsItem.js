@@ -22,7 +22,11 @@ import classNames from 'classnames';
 import React, {useMemo, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
-import {ACCEPTING_TYPES, DROP_ZONES} from './constants';
+import {
+	ACCEPTING_TYPES,
+	DROP_ZONES,
+	ITEM_HOVER_BORDER_LIMIT
+} from './constants';
 
 const ITEM_STATES_COLORS = {
 	'conversion-draft': 'info',
@@ -96,8 +100,9 @@ const MillerColumnsItem = ({
 
 		const clientOffset = monitor.getClientOffset();
 		const dropItemBoundingRect = ref.current.getBoundingClientRect();
-		const hoverTopLimit = 20;
-		const hoverBottomLimit = dropItemBoundingRect.height - hoverTopLimit;
+		const hoverTopLimit = ITEM_HOVER_BORDER_LIMIT;
+		const hoverBottomLimit =
+			dropItemBoundingRect.height - ITEM_HOVER_BORDER_LIMIT;
 		const hoverClientY = clientOffset.y - dropItemBoundingRect.top;
 
 		let dropZone = DROP_ZONES.ELEMENT;

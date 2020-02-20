@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.react.renderer;
 
-import com.liferay.portal.kernel.template.TemplateException;
-
 import java.io.IOException;
 import java.io.Writer;
 
@@ -31,6 +29,6 @@ public interface ReactRenderer {
 	public void renderReact(
 			ComponentDescriptor componentDescriptor, Map<String, Object> data,
 			HttpServletRequest httpServletRequest, Writer writer)
-		throws IOException, TemplateException;
+		throws IOException;
 
 }

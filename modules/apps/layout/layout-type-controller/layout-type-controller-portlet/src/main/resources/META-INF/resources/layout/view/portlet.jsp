@@ -50,6 +50,11 @@ HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttri
 
 	</c:when>
 	<c:otherwise>
+		<style type="text/css">
+			.master-layout-fragment .portlet-header {
+				display: none;
+			}
+		</style>
 
 		<%
 		PortletLayoutDisplayContext portletLayoutDisplayContext = new PortletLayoutDisplayContext(request);

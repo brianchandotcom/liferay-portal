@@ -114,28 +114,30 @@ for (String childrenItemId : childrenItemIds) {
 
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof FragmentLayoutStructureItem %>">
+			<div class="master-layout-fragment">
 
-			<%
-			FragmentLayoutStructureItem fragmentLayoutStructureItem = (FragmentLayoutStructureItem)layoutStructureItem;
+				<%
+				FragmentLayoutStructureItem fragmentLayoutStructureItem = (FragmentLayoutStructureItem)layoutStructureItem;
 
-			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
-				continue;
-			}
+				if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
+					continue;
+				}
 
-			FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentLayoutStructureItem.getFragmentEntryLinkId());
+				FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentLayoutStructureItem.getFragmentEntryLinkId());
 
-			if (fragmentEntryLink == null) {
-				continue;
-			}
+				if (fragmentEntryLink == null) {
+					continue;
+				}
 
-			FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
+				FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
 
-			DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
+				DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
 
-			defaultFragmentRendererContext.setLocale(locale);
-			%>
+				defaultFragmentRendererContext.setLocale(locale);
+				%>
 
-			<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+				<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+			</div>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof RootLayoutStructureItem %>">
 

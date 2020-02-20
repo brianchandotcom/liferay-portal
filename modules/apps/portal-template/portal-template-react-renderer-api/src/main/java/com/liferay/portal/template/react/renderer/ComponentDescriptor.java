@@ -67,9 +67,9 @@ public class ComponentDescriptor {
 		return _positionInLine;
 	}
 
-	private String _componentId;
+	private final String _componentId;
 	private final Set<String> _dependencies = new HashSet<>();
-	private String _module;
-	private boolean _positionInLine;
+	private final String _module;
+	private final boolean _positionInLine;
 
 }

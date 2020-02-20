@@ -22,20 +22,20 @@ public enum TimeSpan {
 	LAST_7_DAYS("last-7-days", 2), LAST_24_HOURS("last-24-hours", 1),
 	LAST_30_DAYS("last-30-days", 3);
 
-	public String getLabel() {
-		return _label;
+	public String getKey() {
+		return _key;
 	}
 
 	public int getOrder() {
 		return _order;
 	}
 
-	private TimeSpan(String label, int order) {
-		_label = label;
+	private TimeSpan(String key, int order) {
+		_key = key;
 		_order = order;
 	}
 
-	private final String _label;
+	private final String _key;
 	private final int _order;
 
 }

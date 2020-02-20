@@ -150,12 +150,14 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			_ctPreferencesLocalService.fetchCTPreferences(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId());
 
+		CTCollection ctCollection = null;
+
 		if (ctPreferences != null) {
 			ctCollectionId = ctPreferences.getCtCollectionId();
-		}
 
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctCollectionId);
+			ctCollection = _ctCollectionLocalService.fetchCTCollection(
+				ctCollectionId);
+		}
 
 		if (ctCollection == null) {
 			data.put("iconClass", "change-tracking-indicator-icon-production");

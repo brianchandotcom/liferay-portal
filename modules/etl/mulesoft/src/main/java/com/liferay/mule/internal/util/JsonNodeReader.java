@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mule.internal.json;
+package com.liferay.mule.internal.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -22,13 +22,14 @@ public class StringUtil {
 	public static String replace(String pattern, String... tplArgs) {
 		String replaced = pattern;
 
-		for (int i = 0; i < tplArgs.length;) {
+		for (int i = 0; i < tplArgs.length; i = i + 2) {
 			replaced = replaced.replace(tplArgs[i], tplArgs[i + 1]);
-
-			i = i + 2;
 		}
 
 		return replaced;
+	}
+
+	private StringUtil() {
 	}
 
 }

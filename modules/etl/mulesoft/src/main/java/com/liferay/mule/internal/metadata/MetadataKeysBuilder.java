@@ -17,8 +17,8 @@ package com.liferay.mule.internal.metadata;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
-import com.liferay.mule.internal.json.JsonNodeReader;
 import com.liferay.mule.internal.oas.OASConstants;
+import com.liferay.mule.internal.util.JsonNodeReader;
 
 import java.io.IOException;
 

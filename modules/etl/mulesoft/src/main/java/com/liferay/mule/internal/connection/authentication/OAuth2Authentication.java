@@ -16,8 +16,8 @@ package com.liferay.mule.internal.connection.authentication;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import com.liferay.mule.internal.json.JsonNodeReader;
 import com.liferay.mule.internal.oas.OASURLParser;
+import com.liferay.mule.internal.util.JsonNodeReader;
 
 import java.io.IOException;
 

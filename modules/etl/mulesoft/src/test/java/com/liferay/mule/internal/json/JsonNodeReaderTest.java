@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 
+import com.liferay.mule.internal.util.JsonNodeReader;
+
 import java.io.IOException;
 import java.io.InputStream;
 

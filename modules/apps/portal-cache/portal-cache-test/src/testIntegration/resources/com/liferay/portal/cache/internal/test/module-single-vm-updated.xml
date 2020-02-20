@@ -9,7 +9,7 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="2001"
-		name="test.cache.single.updated"
+		name="test.cache.single"
 		overflowToDisk="true"
 		timeToIdleSeconds="101"
 	>

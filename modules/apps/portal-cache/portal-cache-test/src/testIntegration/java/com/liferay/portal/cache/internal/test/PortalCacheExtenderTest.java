@@ -140,11 +140,11 @@ public class PortalCacheExtenderTest {
 		_bundle.start();
 
 		_assertCacheConfig(
-			PortalCacheManagerNames.MULTI_VM, false, 2001,
-			"test.cache.multi.updated", true, 101L);
+			PortalCacheManagerNames.MULTI_VM, false, 2001, "test.cache.multi",
+			true, 101L);
 		_assertCacheConfig(
-			PortalCacheManagerNames.SINGLE_VM, false, 2001,
-			"test.cache.single.updated", true, 101L);
+			PortalCacheManagerNames.SINGLE_VM, false, 2001, "test.cache.single",
+			true, 101L);
 	}
 
 	private void _assertCacheConfig(

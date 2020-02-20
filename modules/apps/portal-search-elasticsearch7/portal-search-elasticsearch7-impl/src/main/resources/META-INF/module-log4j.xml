@@ -9,4 +9,8 @@
 	<category name="com.liferay.portal.search.elasticsearch7.internal.connection.EmbeddedElasticsearchConnection">
 		<priority value="WARN" />
 	</category>
+
+	<category name="com.liferay.portal.search.elasticsearch7.internal.sidecar">
+		<priority value="INFO" />
+	</category>
 </log4j:configuration>

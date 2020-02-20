@@ -169,10 +169,10 @@ public class LayoutPageTemplatesImporterImpl
 				continue;
 			}
 
-			String[] path = StringUtil.split(
+			String[] pathParts = StringUtil.split(
 				zipEntry.getName(), CharPool.SLASH);
 
-			String pageTemplateCollectionKey = path[1];
+			String pageTemplateCollectionKey = pathParts[1];
 
 			String content = StringUtil.read(zipFile.getInputStream(zipEntry));
 
@@ -196,11 +196,11 @@ public class LayoutPageTemplatesImporterImpl
 				continue;
 			}
 
-			String[] path = StringUtil.split(
+			String[] pathParts = StringUtil.split(
 				zipEntry.getName(), CharPool.SLASH);
 
 			PageTemplateCollectionEntry pageTemplateCollectionEntry =
-				pageTemplateCollectionMap.get(path[1]);
+				pageTemplateCollectionMap.get(pathParts[1]);
 
 			if (pageTemplateCollectionEntry == null) {
 				continue;
@@ -212,7 +212,7 @@ public class LayoutPageTemplatesImporterImpl
 				content, PageTemplate.class);
 
 			pageTemplateCollectionEntry.addPageTemplateEntry(
-				path[2],
+				pathParts[2],
 				new PageTemplateEntry(
 					pageTemplate,
 					_getPageDefinition(zipEntry.getName(), zipFile)));
@@ -222,11 +222,12 @@ public class LayoutPageTemplatesImporterImpl
 	}
 
 	private boolean _isPageTemplateCollectionFile(String fileName) {
-		String[] path = StringUtil.split(fileName, CharPool.SLASH);
+		String[] pathParts = StringUtil.split(fileName, CharPool.SLASH);
 
-		if ((path.length == 3) && Objects.equals(path[0], _ROOT_FOLDER) &&
+		if ((pathParts.length == 3) &&
+			Objects.equals(pathParts[0], _ROOT_FOLDER) &&
 			Objects.equals(
-				path[2],
+				pathParts[2],
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_PAGE_TEMPLATE_COLLECTION)) {
 
@@ -237,11 +238,12 @@ public class LayoutPageTemplatesImporterImpl
 	}
 
 	private boolean _isPageTemplateFile(String fileName) {
-		String[] path = StringUtil.split(fileName, CharPool.SLASH);
+		String[] pathParts = StringUtil.split(fileName, CharPool.SLASH);
 
-		if ((path.length == 4) && Objects.equals(path[0], _ROOT_FOLDER) &&
+		if ((pathParts.length == 4) &&
+			Objects.equals(pathParts[0], _ROOT_FOLDER) &&
 			Objects.equals(
-				path[3],
+				pathParts[3],
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_PAGE_TEMPLATE)) {
 

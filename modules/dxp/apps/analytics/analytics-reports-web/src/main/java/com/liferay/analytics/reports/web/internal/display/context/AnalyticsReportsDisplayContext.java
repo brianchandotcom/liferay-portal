@@ -72,7 +72,7 @@ public class AnalyticsReportsDisplayContext {
 		_data = HashMapBuilder.<String, Object>put(
 			"context",
 			HashMapBuilder.<String, Object>put(
-				"defaultTimeSpan", TimeSpan.LAST_7_DAYS.getLabel()
+				"defaultTimeSpanKey", TimeSpan.LAST_7_DAYS.getKey()
 			).put(
 				"endpoints",
 				HashMapBuilder.<String, Object>put(
@@ -197,10 +197,10 @@ public class AnalyticsReportsDisplayContext {
 		).forEach(
 			timeSpan -> timeSpansJSONArray.put(
 				JSONUtil.put(
-					"label",
-					LanguageUtil.get(_httpServletRequest, timeSpan.getLabel())
+					"key", timeSpan.getKey()
 				).put(
-					"value", timeSpan.getLabel()
+					"label",
+					LanguageUtil.get(_httpServletRequest, timeSpan.getKey())
 				))
 		);
 

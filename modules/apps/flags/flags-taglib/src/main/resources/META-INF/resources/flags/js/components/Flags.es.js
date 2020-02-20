@@ -128,7 +128,7 @@ const Flags = ({
 			});
 	};
 
-	const {observer} = useModal({
+	const {observer, onClose} = useModal({
 		onClose: handleClickClose
 	});
 
@@ -159,7 +159,7 @@ const Flags = ({
 			{reportDialogOpen && (
 				<FlagsModal
 					companyName={companyName}
-					handleClose={handleClickClose}
+					handleClose={onClose}
 					handleInputChange={handleInputChange}
 					handleSubmit={handleSubmitReport}
 					isSending={isSending}

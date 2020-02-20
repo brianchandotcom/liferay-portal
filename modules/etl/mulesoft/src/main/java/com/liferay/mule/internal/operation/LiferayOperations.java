@@ -49,7 +49,6 @@ import org.mule.runtime.extension.api.annotation.param.Content;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.NullSafe;
 import org.mule.runtime.extension.api.annotation.param.Optional;
-import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.param.display.Summary;
@@ -76,7 +75,15 @@ public class LiferayOperations {
 			@DisplayName("Path Parameters") @NullSafe @Optional
 				Map<String, String> pathParams,
 			@DisplayName("Query Parameters") @NullSafe @Optional
-				MultiMap<String, String> queryParams)
+				MultiMap<String, String> queryParams,
+			@ConfigOverride @DisplayName("Connection Timeout") @Optional
+			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
+			@Summary("Socket connection timeout value")
+				int connectionTimeout,
+			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
+			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
+			@Summary("Time unit to be used in the timeout configurations")
+				TimeUnit connectionTimeoutTimeUnit)
 		throws IOException, TimeoutException {
 
 		logEndpointParams(Method.DELETE, endpoint, pathParams, queryParams);
@@ -106,7 +113,15 @@ public class LiferayOperations {
 			@DisplayName("Path Parameters") @NullSafe @Optional
 				Map<String, String> pathParams,
 			@DisplayName("Query Parameters") @NullSafe @Optional
-				MultiMap<String, String> queryParams)
+				MultiMap<String, String> queryParams,
+			@ConfigOverride @DisplayName("Connection Timeout") @Optional
+			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
+			@Summary("Socket connection timeout value")
+				int connectionTimeout,
+			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
+			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
+			@Summary("Time unit to be used in the timeout configurations")
+				TimeUnit connectionTimeoutTimeUnit)
 		throws Exception {
 
 		logEndpointParams(Method.GET, endpoint, pathParams, queryParams);
@@ -139,7 +154,15 @@ public class LiferayOperations {
 			@DisplayName("Path Parameters") @NullSafe @Optional
 				Map<String, String> pathParams,
 			@DisplayName("Query Parameters") @NullSafe @Optional
-				MultiMap<String, String> queryParams)
+				MultiMap<String, String> queryParams,
+			@ConfigOverride @DisplayName("Connection Timeout") @Optional
+			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
+			@Summary("Socket connection timeout value")
+				int connectionTimeout,
+			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
+			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
+			@Summary("Time unit to be used in the timeout configurations")
+				TimeUnit connectionTimeoutTimeUnit)
 		throws IOException, TimeoutException {
 
 		logEndpointParams(Method.PATCH, endpoint, pathParams, queryParams);
@@ -170,7 +193,15 @@ public class LiferayOperations {
 			@DisplayName("Path Parameters") @NullSafe @Optional
 				Map<String, String> pathParams,
 			@DisplayName("Query Parameters") @NullSafe @Optional
-				MultiMap<String, String> queryParams)
+				MultiMap<String, String> queryParams,
+			@ConfigOverride @DisplayName("Connection Timeout") @Optional
+			@Placement(order = 1, tab = Placement.ADVANCED_TAB)
+			@Summary("Socket connection timeout value")
+				int connectionTimeout,
+			@ConfigOverride @DisplayName("Connection Timeout Unit") @Optional
+			@Placement(order = 2, tab = Placement.ADVANCED_TAB)
+			@Summary("Time unit to be used in the timeout configurations")
+				TimeUnit connectionTimeoutTimeUnit)
 		throws IOException, TimeoutException {
 
 		logEndpointParams(Method.POST, endpoint, pathParams, queryParams);
@@ -201,22 +232,6 @@ public class LiferayOperations {
 
 	private static final Logger logger = LoggerFactory.getLogger(
 		LiferayOperations.class);
-
-	@ConfigOverride
-	@DisplayName("Connection Timeout")
-	@Optional
-	@Parameter
-	@Placement(order = 1, tab = Placement.ADVANCED_TAB)
-	@Summary("Socket connection timeout value")
-	private int connectionTimeout;
-
-	@ConfigOverride
-	@DisplayName("Connection Timeout Unit")
-	@Optional
-	@Parameter
-	@Placement(order = 2, tab = Placement.ADVANCED_TAB)
-	@Summary("Time unit to be used in the timeout configurations")
-	private TimeUnit connectionTimeoutTimeUnit;
 
 	private final LiferayResponseValidator liferayResponseValidator =
 		new LiferayResponseValidator();

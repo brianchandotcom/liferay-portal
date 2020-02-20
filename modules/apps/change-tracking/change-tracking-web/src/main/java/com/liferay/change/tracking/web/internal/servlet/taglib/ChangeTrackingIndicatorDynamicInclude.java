@@ -40,9 +40,9 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
-import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -54,8 +54,6 @@ import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,12 +83,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 
 		try {
-			PageContext pageContext = PageContextFactoryUtil.create(
-				httpServletRequest, httpServletResponse);
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			JspWriter jspWriter = pageContext.getOut();
-
-			jspWriter.write("<div class=\"change-tracking-indicator\">");
+			printWriter.write("<div class=\"change-tracking-indicator\">");
 
 			String componentId =
 				_portal.getPortletNamespace(CTPortletKeys.CHANGE_LISTS) +
@@ -99,15 +94,12 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				_npmResolver.resolveModuleName("change-tracking-web") +
 					"/dynamic_include/ChangeTrackingIndicator";
 
-			ComponentDescriptor componentDescriptor = new ComponentDescriptor(
-				module, componentId, null);
-
 			_reactRenderer.renderReact(
-				componentDescriptor,
+				new ComponentDescriptor(module, componentId),
 				_getReactData(httpServletRequest, themeDisplay),
-				httpServletRequest, jspWriter);
+				httpServletRequest, printWriter);
 
-			jspWriter.write("</div>");
+			printWriter.write("</div>");
 		}
 		catch (TemplateException templateException) {
 			throw new IOException(templateException);

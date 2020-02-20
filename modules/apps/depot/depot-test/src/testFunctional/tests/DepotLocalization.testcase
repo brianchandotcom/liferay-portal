@@ -69,7 +69,7 @@ definition {
 
 		Depot.viewDefaultLanguage(defaultDepotLanguage = "English (United States)");
 
-		Button.click(button = "Manage");
+		Button.click(button = "Edit");
 
 		Depot.configureCurrentLanguages(
 			currentLanguages = "English (United States),Spanish (Spain),Japanese (Japan)",

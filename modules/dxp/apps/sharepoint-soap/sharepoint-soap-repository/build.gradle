@@ -3,7 +3,7 @@ buildWSDL {
 
 	generateOptions {
 		backwordCompatible = true
-		databindingMethod = "xmlbeans"
+		databinding = "xmlbeans"
 		flattenFiles = true
 		generateAll = true
 		serverSide = true

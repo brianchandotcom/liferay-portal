@@ -62,7 +62,11 @@ public class UpgradeKBArticle extends UpgradeProcess {
 		int i = urlTitle.lastIndexOf(CharPool.DASH);
 
 		if (i != -1) {
-			Matcher matcher = _pattern.matcher(urlTitle);
+			Matcher matcher = _pattern.matcher(
+				urlTitle
+			).region(
+				i, urlTitle.length()
+			);
 
 			if (matcher.matches()) {
 				int counter = GetterUtil.getInteger(urlTitle.substring(i + 1));
@@ -151,6 +155,6 @@ public class UpgradeKBArticle extends UpgradeProcess {
 
 	private static final int _MAX_URL_TITLE_LENGTH = 74;
 
-	private static final Pattern _pattern = Pattern.compile(".*-\\d+$");
+	private static final Pattern _pattern = Pattern.compile("-\\d+$");
 
 }

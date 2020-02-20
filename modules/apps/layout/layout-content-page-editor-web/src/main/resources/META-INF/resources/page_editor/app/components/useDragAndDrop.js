@@ -289,17 +289,24 @@ function checkElevate({
 	let isElevate = false;
 
 	if (parent) {
-		const childIndex = parent.children.indexOf(siblingOrParent.itemId);
-
 		const difference = Math.min(
 			hoverBoundingRect.height * DISTANCE,
 			MAX_DIFFERENCE
 		);
 
-		if (childIndex === 0) {
+		const parentIsRow = parent.type === LAYOUT_DATA_ITEM_TYPES.row;
+
+		if (
+			!isElevate &&
+			(parentIsRow || isFirstItem(parent.children, siblingOrParent))
+		) {
 			isElevate = clientOffset.y < difference + hoverBoundingRect.top;
 		}
-		else if (childIndex === parent.children.length - 1) {
+
+		if (
+			!isElevate &&
+			(parentIsRow || isLastItem(parent.children, siblingOrParent))
+		) {
 			isElevate = clientOffset.y > hoverBoundingRect.bottom - difference;
 		}
 	}

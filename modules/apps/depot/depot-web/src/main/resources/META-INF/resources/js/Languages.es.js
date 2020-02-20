@@ -52,10 +52,6 @@ const Languages = ({
 
 	const [showModal, setShowModal] = useState(false);
 
-	const {observer, onClose} = useModal({
-		onClose: handleOnModalClose
-	});
-
 	const handleOnModalClose = () => {
 		setShowModal(false);
 	};
@@ -64,6 +60,10 @@ const Languages = ({
 		setCustomLocales(selectedLocales);
 		onClose();
 	};
+
+	const {observer, onClose} = useModal({
+		onClose: handleOnModalClose
+	});
 
 	const customLocalesInputRef = useRef();
 

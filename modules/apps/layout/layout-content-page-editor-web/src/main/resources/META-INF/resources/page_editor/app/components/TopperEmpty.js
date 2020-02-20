@@ -54,6 +54,9 @@ export default function TopperEmpty({children, item, layoutData}) {
 				'drag-over-bottom':
 					targetPosition === TARGET_POSITION.BOTTOM &&
 					dropTargetItemId === item.itemId,
+				'drag-over-middle':
+					targetPosition === TARGET_POSITION.MIDDLE &&
+					dropTargetItemId === item.itemId,
 				'drag-over-top':
 					targetPosition === TARGET_POSITION.TOP &&
 					dropTargetItemId === item.itemId,

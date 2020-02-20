@@ -81,8 +81,15 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 	// - LayoutData changed
 	// - Any editable content changed
 	useEffect(() => {
-		requestComputeRects();
-	}, [fragmentEntryLinks, layoutData, requestComputeRects]);
+		if (!editableProcessorUniqueId) {
+			requestComputeRects();
+		}
+	}, [
+		editableProcessorUniqueId,
+		fragmentEntryLinks,
+		layoutData,
+		requestComputeRects
+	]);
 
 	// - Any editable added or removed
 	useEffect(() => {

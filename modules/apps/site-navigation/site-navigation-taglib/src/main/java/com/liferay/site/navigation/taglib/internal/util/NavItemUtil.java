@@ -93,7 +93,10 @@ public class NavItemUtil {
 					siteNavigationMenuId, parentSiteNavigationMenuItemId);
 		}
 		catch (Exception exception) {
-			_log.warn("Unable to get site navigation menu items", exception);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get site navigation menu items", exception);
+			}
 		}
 
 		List<NavItem> navItems = new ArrayList<>(

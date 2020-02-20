@@ -136,7 +136,7 @@ public class JSONPackageJSONDependencyVersionCheck extends BaseFileCheck {
 			return _expectedDependencyVersionsMap;
 		}
 
-		_expectedDependencyVersionsMap = HashMapBuilder.<String, String>putAll(
+		_expectedDependencyVersionsMap = HashMapBuilder.putAll(
 			_getDependencyVersionsMap(
 				"modules/apps/frontend-js/frontend-js-metal-web/package.json",
 				absolutePath, "metal(-.*)?")

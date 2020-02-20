@@ -404,10 +404,9 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 				boolean fieldLocalized = GetterUtil.getBoolean(
 					fieldElement.attributeValue("localized"));
 
-				Map<String, String> fieldHints =
-					HashMapBuilder.<String, String>putAll(
-						defaultHints
-					).build();
+				Map<String, String> fieldHints = HashMapBuilder.putAll(
+					defaultHints
+				).build();
 
 				List<Element> fieldElements = fieldElement.elements(
 					"hint-collection");

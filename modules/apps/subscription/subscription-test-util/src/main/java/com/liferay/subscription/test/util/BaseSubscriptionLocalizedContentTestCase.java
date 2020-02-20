@@ -63,10 +63,9 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 	public void testSubscriptionLocalizedContentWhenAddingBaseModel()
 		throws Exception {
 
-		Map<Locale, String> previousLocalizedContents =
-			HashMapBuilder.<Locale, String>putAll(
-				localizedContents
-			).build();
+		Map<Locale, String> previousLocalizedContents = HashMapBuilder.putAll(
+			localizedContents
+		).build();
 
 		localizedContents.put(LocaleUtil.GERMANY, GERMAN_BODY);
 
@@ -91,10 +90,9 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 	public void testSubscriptionLocalizedContentWhenUpdatingBaseModel()
 		throws Exception {
 
-		Map<Locale, String> previousLocalizedContents =
-			HashMapBuilder.<Locale, String>putAll(
-				localizedContents
-			).build();
+		Map<Locale, String> previousLocalizedContents = HashMapBuilder.putAll(
+			localizedContents
+		).build();
 
 		localizedContents.put(LocaleUtil.SPAIN, SPANISH_BODY);
 

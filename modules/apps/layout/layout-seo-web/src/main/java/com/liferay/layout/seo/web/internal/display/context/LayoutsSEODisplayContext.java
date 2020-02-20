@@ -168,7 +168,7 @@ public class LayoutsSEODisplayContext {
 	}
 
 	public Map<Locale, String> getDefaultPageTitleMap() {
-		return HashMapBuilder.<Locale, String>putAll(
+		return HashMapBuilder.putAll(
 			_selLayout.getNameMap()
 		).putAll(
 			_selLayout.getTitleMap()

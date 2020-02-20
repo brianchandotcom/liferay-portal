@@ -136,6 +136,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 					<react:component
 						data="<%= data %>"
 						module="js/seo/PreviewSeo.es"
+						servletContext="<%= application %>"
 					/>
 				</div>
 			</div>

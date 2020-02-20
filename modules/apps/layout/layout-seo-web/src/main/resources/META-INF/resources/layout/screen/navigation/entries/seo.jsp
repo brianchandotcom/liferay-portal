@@ -213,4 +213,5 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 <liferay-frontend:component
 	module="js/seo/seo.es"
+	servletContext="<%= application %>"
 />

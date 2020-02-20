@@ -31,6 +31,12 @@
 			<type>java.lang.Long</type>
 		</attribute>
 		<attribute>
+			<name>enableSuccessPage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>groupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -50,6 +50,10 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		return _dataLayoutId;
 	}
 
+	public boolean getEnableSuccessPage() {
+		return _enableSuccessPage;
+	}
+
 	public java.lang.Long getGroupId() {
 		return _groupId;
 	}
@@ -84,6 +88,10 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 
 	public void setDataLayoutId(java.lang.Long dataLayoutId) {
 		_dataLayoutId = dataLayoutId;
+	}
+
+	public void setEnableSuccessPage(boolean enableSuccessPage) {
+		_enableSuccessPage = enableSuccessPage;
 	}
 
 	public void setGroupId(java.lang.Long groupId) {
@@ -121,6 +129,7 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		_contentType = null;
 		_dataDefinitionId = null;
 		_dataLayoutId = null;
+		_enableSuccessPage = true;
 		_groupId = null;
 		_localizable = false;
 		_namespace = null;
@@ -144,6 +153,7 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		setNamespacedAttribute(request, "contentType", _contentType);
 		setNamespacedAttribute(request, "dataDefinitionId", _dataDefinitionId);
 		setNamespacedAttribute(request, "dataLayoutId", _dataLayoutId);
+		setNamespacedAttribute(request, "enableSuccessPage", _enableSuccessPage);
 		setNamespacedAttribute(request, "groupId", _groupId);
 		setNamespacedAttribute(request, "localizable", _localizable);
 		setNamespacedAttribute(request, "namespace", _namespace);
@@ -163,6 +173,7 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 	private java.lang.String _contentType = null;
 	private java.lang.Long _dataDefinitionId = null;
 	private java.lang.Long _dataLayoutId = null;
+	private boolean _enableSuccessPage = true;
 	private java.lang.Long _groupId = null;
 	private boolean _localizable = false;
 	private java.lang.String _namespace = null;

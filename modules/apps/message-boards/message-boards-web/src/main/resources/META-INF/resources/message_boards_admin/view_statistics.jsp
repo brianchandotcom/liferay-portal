@@ -38,20 +38,23 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 		<div class="row">
 			<div class="col-md-4">
 				<div class="statistics-panel">
-					<small class="text-uppercase"><liferay-ui:message key="categories" /></small>
-					<p><%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %></p>
+					<clay:icon symbol="categories" />
+   					<small class="text-uppercase"><liferay-ui:message key="categories" /></small>
+					<p class="statistics-number"><%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %></p>
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="statistics-panel">
+					<clay:icon symbol="categories" />
 					<small class="text-uppercase"><liferay-ui:message key="posts" /></small>
-					<p><%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %></p>
+					<p class="statistics-number"><%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %></p>
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="statistics-panel">
+					<clay:icon symbol="users" />
 					<small class="text-uppercase"><liferay-ui:message key="participants" /></small>
-					<p><%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %></p>
+					<p class="statistics-number"><%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %></p>
 				</div>
 			</div>
 		</div>

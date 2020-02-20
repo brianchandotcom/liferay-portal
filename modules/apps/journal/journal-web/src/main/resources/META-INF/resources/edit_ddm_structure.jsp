@@ -186,6 +186,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 						dataDefinitionId="<%= ddmStructureId %>"
 						groupId="<%= groupId %>"
 						localizable="<%= true %>"
+						multiPage="<%= false %>"
 						namespace="<%= renderResponse.getNamespace() %>"
 					/>
 				</c:when>

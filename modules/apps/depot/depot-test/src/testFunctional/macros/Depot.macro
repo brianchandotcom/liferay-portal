@@ -165,12 +165,12 @@ definition {
 	macro configureSharing {
 		if ("${sharing}" == "Enabled") {
 			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Enabled",
+				key_toggleSwitchLabel = "Enable Sharing",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 		else if ("${sharing}" == "Disabled") {
 			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Enabled",
+				key_toggleSwitchLabel = "Enable Sharing",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 

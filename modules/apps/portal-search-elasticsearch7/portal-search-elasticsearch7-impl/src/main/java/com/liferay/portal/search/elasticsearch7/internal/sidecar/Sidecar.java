@@ -14,12 +14,12 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
-import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.concurrent.FutureListener;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.process.ProcessLog;
 import com.liferay.petra.string.StringBundler;
@@ -116,9 +116,19 @@ public class Sidecar {
 
 	public String getNetworkHostAddress() {
 		try {
-			return _addressNoticeableFuture.get();
+			String address = _addressNoticeableFuture.get();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Sidecar ", getNodeName(), " is at ", address));
+			}
+
+			return address;
 		}
 		catch (Exception exception) {
+			_processChannel.write(new StopSidecarProcessCallable());
+
 			throw new IllegalStateException(
 				"Unable to get network host address", exception);
 		}
@@ -138,45 +148,21 @@ public class Sidecar {
 				new SidecarMainProcessCallable(
 					_elasticsearchConfiguration.sidecarHeartbeatInterval(),
 					_getModifiedClasses(sidecarLibClassPath)));
-
-			NoticeableFuture<Serializable> noticeableFuture =
-				_processChannel.getProcessNoticeableFuture();
-
-			_restartFutureListener = new RestartFutureListener();
-
-			noticeableFuture.addFutureListener(_restartFutureListener);
-
-			_addressNoticeableFuture = new DefaultNoticeableFuture<>();
-
-			NoticeableFuture<String> startNoticeableFuture =
-				_processChannel.write(
-					new StartSidecarProcessCallable(_getSidecarArguments()));
-
-			startNoticeableFuture.addFutureListener(
-				future -> {
-					try {
-						String address = future.get();
-
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								StringBundler.concat(
-									"Started sidecar with name ", getNodeName(),
-									" at ", address));
-						}
-
-						_addressNoticeableFuture.set(address);
-					}
-					catch (Exception exception) {
-						_log.error(
-							"Unable to start elasticsearch server", exception);
-
-						_processChannel.write(new StopSidecarProcessCallable());
-					}
-				});
 		}
-		catch (Exception exception) {
-			_log.error("Unable to start sidecar process", exception);
+		catch (ProcessException processException) {
+			throw new RuntimeException(
+				"Unable to start sidecar process", processException);
 		}
+
+		NoticeableFuture<Serializable> noticeableFuture =
+			_processChannel.getProcessNoticeableFuture();
+
+		_restartFutureListener = new RestartFutureListener();
+
+		noticeableFuture.addFutureListener(_restartFutureListener);
+
+		_addressNoticeableFuture = _processChannel.write(
+			new StartSidecarProcessCallable(_getSidecarArguments()));
 	}
 
 	public void stop() {
@@ -604,7 +590,7 @@ public class Sidecar {
 
 	private static final Log _log = LogFactoryUtil.getLog(Sidecar.class);
 
-	private DefaultNoticeableFuture<String> _addressNoticeableFuture;
+	private NoticeableFuture<String> _addressNoticeableFuture;
 	private final ComponentContext _componentContext;
 	private final String _componentName;
 	private final Path _dataHome;

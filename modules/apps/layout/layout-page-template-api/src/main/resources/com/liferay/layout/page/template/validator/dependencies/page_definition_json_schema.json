@@ -146,6 +146,7 @@
 			"additionalProperties": false,
 			"properties": {
 				"fragment": {
+					"additionalProperties": false,
 					"properties": {
 						"fragmentCollectionName": {
 							"title": "The fragmentCollectionName Schema",

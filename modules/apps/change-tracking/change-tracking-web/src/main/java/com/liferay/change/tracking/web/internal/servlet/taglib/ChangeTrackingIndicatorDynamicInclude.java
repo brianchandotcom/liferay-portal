@@ -41,7 +41,7 @@ import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.Writer;
 
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -81,9 +81,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		PrintWriter printWriter = httpServletResponse.getWriter();
+		Writer writer = httpServletResponse.getWriter();
 
-		printWriter.write("<div class=\"change-tracking-indicator\">");
+		writer.write("<div class=\"change-tracking-indicator\">");
 
 		String componentId =
 			_portal.getPortletNamespace(CTPortletKeys.CHANGE_LISTS) +
@@ -95,9 +95,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(module, componentId),
 			_getReactData(httpServletRequest, themeDisplay), httpServletRequest,
-			printWriter);
+			writer);
 
-		printWriter.write("</div>");
+		writer.write("</div>");
 	}
 
 	@Override

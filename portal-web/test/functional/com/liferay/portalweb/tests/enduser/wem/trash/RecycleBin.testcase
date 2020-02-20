@@ -611,30 +611,13 @@ definition {
 
 		DMFolder.addCP(dmFolderName = "DM Folder Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder Name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description 1",
-			dmDocumentTitle = "DM Document Title 1");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder Name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description 2",
-			dmDocumentTitle = "DM Document Title 2");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder Name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description 3",
-			dmDocumentTitle = "DM Document Title 3");
-
+		for (var i : list "1,2,3") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description ${i}",
+				dmDocumentTitle = "DM Document Title ${i}",
+				folderName = "DM Folder Name",
+				groupName = "Site Name");
+		}
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMFolder.moveToRecycleBinCP(

@@ -1,17 +1,17 @@
-@import './AllowedFragments.scss';
 @import 'variables';
 
+@import './AllowedFragments';
 @import './DisabledArea';
 @import './DragPreview';
 @import './DropZone';
 @import './MasterLayout';
-@import './layout-data-items/ColumnOverlayGrid';
-@import './layout-data-items/FragmentsEditorShim';
 @import './PageEditor';
 @import './Sidebar';
 @import './Toolbar';
 @import './Topper';
 @import './Translation';
+@import './layout-data-items/ColumnOverlayGrid';
+@import './layout-data-items/FragmentsEditorShim';
 
 @import './floating-toolbar/FloatingToolbar';
 @import './floating-toolbar/SaveFragmentCompositionModal';

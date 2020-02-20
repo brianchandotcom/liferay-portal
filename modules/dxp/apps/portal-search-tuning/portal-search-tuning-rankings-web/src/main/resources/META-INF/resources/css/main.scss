@@ -4,9 +4,9 @@
 .result-rankings-root,
 .result-ranking-modal-root {
 	@import 'empty_state';
-	@import 'loading';
 	@import 'list';
 	@import 'list_item';
+	@import 'loading';
 	@import 'modal';
 	@import 'page';
 	@import 'page_toolbar';

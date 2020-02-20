@@ -60,6 +60,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 
 import java.io.Serializable;
@@ -353,6 +354,9 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 	@Reference
 	protected KaleoTaskLocalService kaleoTaskLocalService;
+
+	@Reference
+	protected KaleoTransitionLocalService kaleoTransitionLocalService;
 
 	@Reference
 	protected Queries queries;

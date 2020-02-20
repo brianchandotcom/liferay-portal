@@ -45,12 +45,17 @@ boolean showButtons = GroupPermissionUtil.contains(permissionChecker, layoutsAdm
 <%
 String companyLogoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId());
 
-boolean isDefaultLogo = selLayoutSet.getLogoId() == 0;
+boolean isDefaultLogo = false;
 
-if (!isDefaultLogo) {
-		LayoutSet guestGroupLayoutSet = layoutsAdminDisplayContext.getGuestGroupLayoutSet(company.getCompanyId());
+if (selLayoutSet.getLogoId() == 0) {
+	isDefaultLogo = true;
+}
+else {
+	LayoutSet guestGroupLayoutSet = layoutsAdminDisplayContext.getGuestGroupLayoutSet(company.getCompanyId());
 
-		isDefaultLogo = selLayoutSet.getLogoId() == guestGroupLayoutSet.getLogoId();
+	if (selLayoutSet.getLogoId() == guestGroupLayoutSet.getLogoId()) {
+		isDefaultLogo = true;
+	}
 }
 %>
 

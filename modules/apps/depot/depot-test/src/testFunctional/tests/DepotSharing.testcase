@@ -154,7 +154,7 @@ definition {
 			portlet = "Settings");
 
 		AssertNotChecked.assertNotCheckedNotVisible(
-			key_toggleSwitchLabel = "Enabled",
+			key_toggleSwitchLabel = "Enable Sharing",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		JSONDocument.addFile(

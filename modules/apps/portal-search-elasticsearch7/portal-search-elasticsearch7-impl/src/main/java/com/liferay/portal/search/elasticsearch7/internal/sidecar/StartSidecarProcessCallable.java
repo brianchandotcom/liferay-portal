@@ -34,15 +34,7 @@ public class StartSidecarProcessCallable implements ProcessCallable<String> {
 
 	@Override
 	public String call() throws ProcessException {
-		Node node;
-
-		try {
-			node = ElasticsearchServerUtil.start(_arguments);
-		}
-		catch (Exception exception) {
-			throw new ProcessException(
-				"Unable to start elasticsearch server", exception);
-		}
+		Node node = ElasticsearchServerUtil.start(_arguments);
 
 		Injector injector = node.injector();
 

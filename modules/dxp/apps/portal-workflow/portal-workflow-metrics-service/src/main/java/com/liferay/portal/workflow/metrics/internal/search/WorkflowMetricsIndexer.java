@@ -23,6 +23,7 @@ import com.liferay.portal.workflow.metrics.internal.search.index.InstanceWorkflo
 import com.liferay.portal.workflow.metrics.internal.search.index.NodeWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.ProcessWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.TokenWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.TransitionWorkflowMetricsIndexer;
 
 import java.util.Locale;
 
@@ -84,16 +85,19 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 		_nodeWorkflowMetricsIndexer.deleteIndex(companyId);
 		_processWorkflowMetricsIndexer.deleteIndex(companyId);
 		_tokenWorkflowMetricsIndexer.deleteIndex(companyId);
+		_transitionWorkflowMetricsIndexer.deleteIndex(companyId);
 
 		_instanceWorkflowMetricsIndexer.createIndex();
 		_nodeWorkflowMetricsIndexer.createIndex();
 		_processWorkflowMetricsIndexer.createIndex();
 		_tokenWorkflowMetricsIndexer.createIndex();
+		_transitionWorkflowMetricsIndexer.createIndex();
 
 		_instanceWorkflowMetricsIndexer.reindex(companyId);
 		_nodeWorkflowMetricsIndexer.reindex(companyId);
 		_processWorkflowMetricsIndexer.reindex(companyId);
 		_tokenWorkflowMetricsIndexer.reindex(companyId);
+		_transitionWorkflowMetricsIndexer.reindex(companyId);
 	}
 
 	@Reference
@@ -107,5 +111,8 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 
 	@Reference
 	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
+
+	@Reference
+	private TransitionWorkflowMetricsIndexer _transitionWorkflowMetricsIndexer;
 
 }

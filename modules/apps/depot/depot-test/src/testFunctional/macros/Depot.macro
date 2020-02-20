@@ -338,7 +338,7 @@ definition {
 				value1 = "${currentLanguage}");
 		}
 
-		Button.click(button = "Manage");
+		Button.click(button = "Edit");
 
 		for (var currentLanguage : list "${currentLanguages}") {
 			AssertChecked.assertCheckedNotVisible(
@@ -361,7 +361,7 @@ definition {
 			locator1 = "LanguageConfiguration#DEPOT_DEFAULT_LANGUAGE",
 			value1 = "${defaultDepotLanguage}");
 
-		Button.click(button = "Manage");
+		Button.click(button = "Edit");
 
 		AssertTextEquals.assertPartialText(
 			key_language = "${defaultDepotLanguage}",

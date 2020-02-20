@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Iván Zaera Avellón
  */
-@ExtendedObjectClassDefinition(category = "third-party")
+@ExtendedObjectClassDefinition(category = "third-party", generateUI = false)
 @Meta.OCD(
 	description = "frontend-js-aui-configuration-description",
 	id = "com.liferay.frontend.js.aui.web.internal.configuration.AuiConfiguration",

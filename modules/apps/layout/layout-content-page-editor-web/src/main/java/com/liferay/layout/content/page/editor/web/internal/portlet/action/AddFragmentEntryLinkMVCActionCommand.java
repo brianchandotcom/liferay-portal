@@ -68,38 +68,8 @@ import org.osgi.service.component.annotations.Reference;
 public class AddFragmentEntryLinkMVCActionCommand
 	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
-	@Override
-	protected JSONObject doTransactionalCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		JSONObject jsonObject = _processAddFragmentEntryLink(
-			actionRequest, actionResponse);
-
-		SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
-
-		return jsonObject;
-	}
-
-	@Override
-	protected JSONObject processException(
-		ActionRequest actionRequest, Exception exception) {
-
-		String errorMessage = "an-unexpected-error-occurred";
-
-		if (exception instanceof NoSuchEntryException) {
-			errorMessage =
-				"the-fragment-can-no-longer-be-added-because-it-has-been-" +
-					"deleted";
-		}
-
-		return JSONUtil.put(
-			"error",
-			LanguageUtil.get(
-				_portal.getHttpServletRequest(actionRequest), errorMessage));
-	}
-
-	private FragmentEntryLink _addFragmentEntryLink(ActionRequest actionRequest)
+	protected FragmentEntryLink addFragmentEntryLink(
+			ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -147,6 +117,37 @@ public class AddFragmentEntryLinkMVCActionCommand
 			fragmentEntryKey, serviceContext);
 	}
 
+	@Override
+	protected JSONObject doTransactionalCommand(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = _processAddFragmentEntryLink(
+			actionRequest, actionResponse);
+
+		SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
+
+		return jsonObject;
+	}
+
+	@Override
+	protected JSONObject processException(
+		ActionRequest actionRequest, Exception exception) {
+
+		String errorMessage = "an-unexpected-error-occurred";
+
+		if (exception instanceof NoSuchEntryException) {
+			errorMessage =
+				"the-fragment-can-no-longer-be-added-because-it-has-been-" +
+					"deleted";
+		}
+
+		return JSONUtil.put(
+			"error",
+			LanguageUtil.get(
+				_portal.getHttpServletRequest(actionRequest), errorMessage));
+	}
+
 	private JSONObject _addFragmentEntryLinkToLayoutDataJSONObject(
 			ActionRequest actionRequest, long fragmentEntryLinkId)
 		throws PortalException {
@@ -186,7 +187,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink = addFragmentEntryLink(
 			actionRequest);
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =

@@ -61,8 +61,7 @@ public class SybaseDBTest extends BaseDBTestCase {
 			method.invoke(
 				db, "create index 0 on Test (test[$COLUMN_LENGTH:200$]);"));
 
-		Assert.assertEquals(
-			"",
+		Assert.assertNull(
 			method.invoke(
 				db, "create index 0 on Test (test[$COLUMN_LENGTH:1251$]);"));
 	}

@@ -100,10 +100,13 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 			}
 
 			if (requiresGenerics && (genericTypes == null)) {
+				String methodName = matcher.group(7);
+
 				return StringUtil.replaceFirst(
-					content, "put(",
+					content, methodName + "(",
 					StringBundler.concat(
-						"<", keyTypeName, ", ", valueTypeName, ">put("),
+						"<", keyTypeName, ", ", valueTypeName, ">", methodName,
+						"("),
 					matcher.end(4));
 			}
 		}
@@ -219,7 +222,9 @@ public class JavaMapBuilderGenericsCheck extends BaseJavaTermCheck {
 	}
 
 	private static final Pattern _mapBuilderPattern = Pattern.compile(
-		"((return|(\\w+) =)\\s*)?\\s(ConcurrentHash|Hash|LinkedHash|Tree)" +
-			"MapBuilder\\.\\s*(<([<>\\[\\],\\s\\.\\w\\?]+)>)?\\s*put(All)?\\(");
+		StringBundler.concat(
+			"((return|(\\w+) =)\\s*)?\\s(ConcurrentHash|Hash|LinkedHash|Tree)",
+			"MapBuilder\\.\\s*(<([<>\\[\\],\\s\\.\\w\\?]+)>)?\\s*(put(All)?)",
+			"\\("));
 
 }

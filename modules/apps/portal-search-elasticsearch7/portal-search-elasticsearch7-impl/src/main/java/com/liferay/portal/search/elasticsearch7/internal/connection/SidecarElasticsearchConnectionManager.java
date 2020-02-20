@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
-import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -83,8 +82,8 @@ public class SidecarElasticsearchConnectionManager {
 					componentContext,
 					SidecarElasticsearchConnectionManager.class.getName(),
 					elasticsearchConfiguration, _clusterExecutor,
-					_clusterMasterExecutor, _file, _jsonFactory,
-					_processExecutor, _props);
+					_clusterMasterExecutor, _jsonFactory, _processExecutor,
+					_props);
 
 				_identifiableOSGiServiceserviceRegistration =
 					bundleContext.registerService(
@@ -99,8 +98,7 @@ public class SidecarElasticsearchConnectionManager {
 					new Sidecar(
 						componentContext,
 						SidecarElasticsearchConnectionManager.class.getName(),
-						elasticsearchConfiguration, _file, _processExecutor,
-						_props));
+						elasticsearchConfiguration, _processExecutor, _props));
 			}
 		}
 		else {
@@ -131,9 +129,6 @@ public class SidecarElasticsearchConnectionManager {
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
-
-	@Reference
-	private File _file;
 
 	private ServiceRegistration<IdentifiableOSGiService>
 		_identifiableOSGiServiceserviceRegistration;

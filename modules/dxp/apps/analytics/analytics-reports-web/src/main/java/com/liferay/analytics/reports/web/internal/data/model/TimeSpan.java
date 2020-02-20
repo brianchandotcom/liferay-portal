@@ -22,6 +22,10 @@ public enum TimeSpan {
 	LAST_7_DAYS("last-7-days", 2), LAST_24_HOURS("last-24-hours", 1),
 	LAST_30_DAYS("last-30-days", 3);
 
+	public static String defaultTimeSpanKey() {
+		return LAST_7_DAYS.getKey();
+	}
+
 	public String getKey() {
 		return _key;
 	}

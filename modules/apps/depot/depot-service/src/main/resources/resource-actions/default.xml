@@ -29,9 +29,13 @@
 		<weight>2</weight>
 		<permissions>
 			<supports>
+				<action-key>ASSIGN_MEMBERS</action-key>
+				<action-key>ASSIGN_USER_ROLES</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>VIEW_MEMBERS</action-key>
+				<action-key>VIEW_SITE_ADMINISTRATION</action-key>
 			</supports>
 		</permissions>
 	</model-resource>

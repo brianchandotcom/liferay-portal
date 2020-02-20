@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -54,6 +55,19 @@ public class RoleServiceTest extends BasePermissionTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@After
+	public void tearDown() throws Exception {
+		for (Role role : _roles) {
+			_roleService.deleteRole(role.getRoleId());
+		}
+
+		if (_className != null) {
+			_classNameLocalService.deleteClassName(_className);
+		}
+
+		super.tearDown();
+	}
 
 	@Test
 	public void testSearch() throws Exception {
@@ -172,7 +186,6 @@ public class RoleServiceTest extends BasePermissionTestCase {
 		return RoleConstants.USER;
 	}
 
-	@DeleteAfterTestRun
 	private ClassName _className;
 
 	@Inject
@@ -181,7 +194,6 @@ public class RoleServiceTest extends BasePermissionTestCase {
 	@DeleteAfterTestRun
 	private Role _role;
 
-	@DeleteAfterTestRun
 	private final List<Role> _roles = new ArrayList<>();
 
 	@Inject

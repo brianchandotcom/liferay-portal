@@ -62,14 +62,14 @@ const Layout = ({
 		);
 	}, [namespace, searchContainerId]);
 
-	const saveData = (sourceItem, parentItem, order) => {
+	const saveData = (sourceItemId, parentItemId, position) => {
 		const formData = new FormData();
 
-		formData.append(`${namespace}plid`, sourceItem.id);
-		formData.append(`${namespace}parentPlid`, parentItem.id);
+		formData.append(`${namespace}plid`, sourceItemId);
+		formData.append(`${namespace}parentPlid`, parentItemId);
 
-		if (order) {
-			formData.append(`${namespace}priority`, order);
+		if (position) {
+			formData.append(`${namespace}priority`, position);
 		}
 
 		fetch(moveItemURL, {
@@ -81,13 +81,15 @@ const Layout = ({
 	const updateBreadcrumbs = columns => {
 		const newBreadcrumbEntries = [breadcrumbEntries[0]];
 
-		for (let i = 1; i < columns.length; i++) {
-			const column = columns[i];
+		for (let i = 0; i < columns.length; i++) {
+			const item = columns[i].items.find(item => item.active);
 
-			newBreadcrumbEntries.push({
-				title: column.parent.title,
-				url: column.parent.url
-			});
+			if (item) {
+				newBreadcrumbEntries.push({
+					title: item.title,
+					url: item.url
+				});
+			}
 		}
 
 		setBreadcrumbEntries(newBreadcrumbEntries);

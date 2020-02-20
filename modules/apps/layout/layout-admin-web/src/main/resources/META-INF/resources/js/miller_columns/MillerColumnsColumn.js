@@ -33,9 +33,9 @@ const MillerColumnsColumn = ({
 
 		if (
 			parentItem &&
-			(sourceItem.columnId > parentItem.columnId ||
+			(sourceItem.columnIndex > parentItem.columnIndex ||
 				(parentItem.parentable &&
-					sourceItem.columnId <= parentItem.columnId &&
+					sourceItem.columnIndex <= parentItem.columnIndex &&
 					!sourceItem.active))
 		) {
 			isValid = true;
@@ -57,7 +57,7 @@ const MillerColumnsColumn = ({
 		}),
 		drop(sourceItem) {
 			if (canDrop) {
-				onItemDrop(sourceItem.id, parent.id, items.length);
+				onItemDrop(sourceItem.id, parent.id);
 			}
 		}
 	});
@@ -74,14 +74,13 @@ const MillerColumnsColumn = ({
 			)}
 			ref={ref}
 		>
-			{items.map((item, index) => (
+			{items.map(item => (
 				<MillerColumnsItem
 					actionHandlers={actionHandlers}
 					item={item}
 					key={item.url}
 					namespace={namespace}
 					onItemDrop={onItemDrop}
-					order={index}
 				/>
 			))}
 		</ul>

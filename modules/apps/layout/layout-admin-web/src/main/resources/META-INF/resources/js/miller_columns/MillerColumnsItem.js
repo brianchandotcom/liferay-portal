@@ -44,13 +44,13 @@ const MillerColumnsItem = ({
 		active,
 		bulkActions = [],
 		checked,
-		childrenItems = [],
-		columnId,
+		columnIndex,
 		description,
 		draggable,
 		hasChild,
 		id: itemId,
-		parent,
+		itemIndex,
+		parentId,
 		parentable,
 		selectable,
 		states = [],
@@ -59,8 +59,7 @@ const MillerColumnsItem = ({
 	},
 	actionHandlers = {},
 	namespace,
-	onItemDrop = noop,
-	order
+	onItemDrop = noop
 }) => {
 	const ref = useRef();
 
@@ -125,8 +124,8 @@ const MillerColumnsItem = ({
 		let isValid;
 
 		if (
-			(parent && columnId <= sourceItem.columnId) ||
-			(columnId > sourceItem.columnId && !sourceItem.active)
+			(parentId && columnIndex <= sourceItem.columnIndex) ||
+			(columnIndex > sourceItem.columnIndex && !sourceItem.active)
 		) {
 			if (
 				dropZone !== DROP_ZONES.ELEMENT ||
@@ -147,8 +146,9 @@ const MillerColumnsItem = ({
 		}),
 		item: {
 			active,
-			columnId,
+			columnIndex,
 			id: itemId,
+			parentId,
 			type: ACCEPTING_TYPES.ITEM
 		}
 	});
@@ -166,16 +166,19 @@ const MillerColumnsItem = ({
 		drop(sourceItem, monitor) {
 			if (monitor.canDrop()) {
 				if (dropZone === DROP_ZONES.ELEMENT) {
-					onItemDrop(sourceItem.id, itemId, childrenItems.length);
+					onItemDrop(sourceItem.id, itemId);
 				}
 				else {
-					let newOrder = order;
+					let newItemIndex = itemIndex;
 
-					if (dropZone === DROP_ZONES.BOTTOM) {
-						newOrder = order + 1;
+					if (
+						dropZone === DROP_ZONES.BOTTOM &&
+						sourceItem.parentId !== parentId
+					) {
+						newItemIndex = itemIndex + 1;
 					}
 
-					onItemDrop(sourceItem.id, parent.id, newOrder);
+					onItemDrop(sourceItem.id, parentId, newItemIndex);
 				}
 			}
 		},

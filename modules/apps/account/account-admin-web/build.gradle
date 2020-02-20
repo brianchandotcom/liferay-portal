@@ -25,6 +25,7 @@ dependencies {
 
 mergeLang {
 	setting("../../roles/roles-admin-web/src/main/resources/content") {
+		transformKey "access-in-site-administration", "access-in-site-administration"
 		transformKey "define-permissions", "define-permissions"
 		transformKey "key-field-help", "key-field-help"
 		transformKey "role-key", "role-key"

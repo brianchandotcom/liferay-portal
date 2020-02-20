@@ -44,14 +44,6 @@ public class StartSidecarProcessCallable implements ProcessCallable<String> {
 				"Unable to start elasticsearch server", exception);
 		}
 
-		try {
-			ElasticsearchServerUtil.addShutdownHook();
-		}
-		catch (Exception exception) {
-			throw new ProcessException(
-				"Unable to add shutdown hook", exception);
-		}
-
 		Injector injector = node.injector();
 
 		HttpServerTransport httpServerTransport = injector.getInstance(

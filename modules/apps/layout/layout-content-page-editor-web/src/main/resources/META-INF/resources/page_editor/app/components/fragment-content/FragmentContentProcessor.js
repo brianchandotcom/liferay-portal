@@ -137,10 +137,10 @@ export default function FragmentContentProcessor({
 		return () => {
 			processor.destroyEditor(editableElement, editableValue.config);
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		dispatch,
 		editableElement,
-		editableValues,
 		fragmentEntryLinkId,
 		languageId,
 		segmentsExperienceId,

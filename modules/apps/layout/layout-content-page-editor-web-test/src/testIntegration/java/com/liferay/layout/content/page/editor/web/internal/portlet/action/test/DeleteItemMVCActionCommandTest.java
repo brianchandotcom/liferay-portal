@@ -63,7 +63,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class DeleteItemReactMVCActionCommandTest {
+public class DeleteItemMVCActionCommandTest {
 
 	@ClassRule
 	@Rule
@@ -419,7 +419,7 @@ public class DeleteItemReactMVCActionCommandTest {
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
-	@Inject(filter = "mvc.command.name=/content_layout/delete_item_react")
+	@Inject(filter = "mvc.command.name=/content_layout/delete_item")
 	private MVCActionCommand _mvcActionCommand;
 
 	@Inject

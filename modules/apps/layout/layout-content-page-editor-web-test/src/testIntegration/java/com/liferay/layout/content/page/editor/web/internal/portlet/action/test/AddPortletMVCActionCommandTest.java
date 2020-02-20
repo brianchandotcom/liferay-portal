@@ -82,7 +82,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class AddPortletReactMVCActionCommandTest {
+public class AddPortletMVCActionCommandTest {
 
 	@ClassRule
 	@Rule
@@ -343,7 +343,7 @@ public class AddPortletReactMVCActionCommandTest {
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
-	@Inject(filter = "mvc.command.name=/content_layout/add_portlet_react")
+	@Inject(filter = "mvc.command.name=/content_layout/add_portlet")
 	private MVCActionCommand _mvcActionCommand;
 
 	@Inject

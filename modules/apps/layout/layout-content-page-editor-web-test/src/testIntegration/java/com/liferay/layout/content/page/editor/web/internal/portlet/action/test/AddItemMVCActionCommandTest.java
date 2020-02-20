@@ -64,7 +64,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class AddItemReactMVCActionCommandTest {
+public class AddItemMVCActionCommandTest {
 
 	@ClassRule
 	@Rule
@@ -219,7 +219,7 @@ public class AddItemReactMVCActionCommandTest {
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
-	@Inject(filter = "mvc.command.name=/content_layout/add_item_react")
+	@Inject(filter = "mvc.command.name=/content_layout/add_item")
 	private MVCActionCommand _mvcActionCommand;
 
 	@Inject

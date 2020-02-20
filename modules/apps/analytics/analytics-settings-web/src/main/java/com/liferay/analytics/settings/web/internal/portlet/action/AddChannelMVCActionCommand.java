@@ -75,24 +75,25 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 			Dictionary<String, Object> configurationProperties)
 		throws Exception {
 
-		String[] syncedGroupIds = ParamUtil.getStringValues(
+		String[] selectedGroupIds = ParamUtil.getStringValues(
 			actionRequest, "rowIds");
 
-		if (ArrayUtil.isEmpty(syncedGroupIds)) {
+		if (ArrayUtil.isEmpty(selectedGroupIds)) {
 			return;
 		}
 
 		Set<String> liferayAnalyticsGroupIds = _mergeSyncedGroupIds(
-			actionRequest, syncedGroupIds);
+			actionRequest, selectedGroupIds);
 
 		_updateCompanyPreferences(actionRequest, liferayAnalyticsGroupIds);
 
 		configurationProperties.put(
-			"syncedGroupIds", liferayAnalyticsGroupIds.toArray(new String[0]));
+			"selectedGroupIds",
+			liferayAnalyticsGroupIds.toArray(new String[0]));
 
 		_notifyAnalyticsCloud(
 			actionRequest, ParamUtil.getString(actionRequest, "channelType"),
-			liferayAnalyticsGroupIds, syncedGroupIds);
+			liferayAnalyticsGroupIds, selectedGroupIds);
 	}
 
 	private JSONObject _buildGroupJSONObject(
@@ -117,7 +118,7 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 	}
 
 	private Set<String> _mergeSyncedGroupIds(
-		ActionRequest actionRequest, String[] syncedGroupIds) {
+		ActionRequest actionRequest, String[] selectedGroupIds) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -127,14 +128,14 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 				themeDisplay.getCompanyId(), "liferayAnalyticsGroupIds",
 				StringPool.COMMA));
 
-		Collections.addAll(liferayAnalyticsGroupIds, syncedGroupIds);
+		Collections.addAll(liferayAnalyticsGroupIds, selectedGroupIds);
 
 		return liferayAnalyticsGroupIds;
 	}
 
 	private void _notifyAnalyticsCloud(
 			ActionRequest actionRequest, String channelType,
-			Set<String> liferayAnalyticsGroupIds, String[] syncedGroupIds)
+			Set<String> liferayAnalyticsGroupIds, String[] selectedGroupIds)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -176,7 +177,7 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 
 		// Create channels
 
-		Stream<String> stream = Arrays.stream(syncedGroupIds);
+		Stream<String> stream = Arrays.stream(selectedGroupIds);
 
 		List<Group> groups = stream.map(
 			Long::valueOf

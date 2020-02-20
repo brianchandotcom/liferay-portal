@@ -6328,7 +6328,14 @@ go</echo>
 	</target>
 
 	<target name="deploy-osgi-modules">
-		<get-testcase-property property.name="osgi.modules.includes" />
+		<if>
+			<not>
+				<isset property="skip.get.testcase.osgi.modules.includes" />
+			</not>
+			<then>
+				<get-testcase-property property.name="osgi.modules.includes" />
+			</then>
+		</if>
 
 		<if>
 			<isset property="osgi.modules.includes" />

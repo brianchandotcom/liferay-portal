@@ -97,7 +97,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
 
 		actionRequest.addParameter(
-			"fragmentKey", fragmentEntry.getFragmentEntryKey());
+			"fragmentEntryKey", fragmentEntry.getFragmentEntryKey());
 
 		FragmentEntryLink fragmentEntryLink = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addFragmentEntryLink",
@@ -145,7 +145,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
 
 		actionRequest.addParameter(
-			"fragmentKey", fragmentEntry.getFragmentEntryKey());
+			"fragmentEntryKey", fragmentEntry.getFragmentEntryKey());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addFragmentEntryLink",
@@ -168,7 +168,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
 
 		actionRequest.addParameter(
-			"fragmentKey", RandomTestUtil.randomString());
+			"fragmentEntryKey", RandomTestUtil.randomString());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addFragmentEntryLink",
@@ -200,11 +200,6 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		mockActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		mockActionRequest.addParameter(
-			"classNameId",
-			String.valueOf(PortalUtil.getClassNameId(Layout.class.getName())));
-		mockActionRequest.addParameter(
-			"classPK", String.valueOf(_layout.getPlid()));
 		mockActionRequest.addParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 

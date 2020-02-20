@@ -30,7 +30,7 @@ import withResizeableColumns from './withResizeableColumns.es';
  * @extends Component
  */
 
-class LayoutProviderWithFormBuilder extends Component {
+class FormBuilderWithLayoutProvider extends Component {
 	render() {
 		const {formBuilderProps, layoutProviderProps, multiPage} = this.props;
 
@@ -57,9 +57,9 @@ class LayoutProviderWithFormBuilder extends Component {
 	}
 }
 
-LayoutProviderWithFormBuilder.PROPS = {
+FormBuilderWithLayoutProvider.PROPS = {
 	formBuilderProps: Config.object(),
 	layoutProviderProps: Config.object()
 };
 
-export default LayoutProviderWithFormBuilder;
+export default FormBuilderWithLayoutProvider;

@@ -81,12 +81,14 @@ const Layout = ({
 	const updateBreadcrumbs = columns => {
 		const newBreadcrumbEntries = [breadcrumbEntries[0]];
 
-		columns.slice(1).forEach(column => {
+		for (let i = 1; i < columns.length; i++) {
+			const column = columns[i];
+
 			newBreadcrumbEntries.push({
 				title: column.parent.title,
 				url: column.parent.url
 			});
-		});
+		}
 
 		setBreadcrumbEntries(newBreadcrumbEntries);
 	};

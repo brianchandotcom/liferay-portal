@@ -297,7 +297,7 @@ definition {
 
 			FormFields.disableCheckbox(fieldName = "Autogenerate Structure Key");
 
-			PortletEntry.update();
+			PortletEntry.save();
 		}
 
 		task ("Add a structure with Text field") {

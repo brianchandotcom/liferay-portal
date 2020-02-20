@@ -16,8 +16,8 @@ import React from 'react';
 import {DragDropContext} from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 
-const DragAndDropHOC = props => {
-	return <>{props.children}</>;
+const DragAndDropHOC = ({children}) => {
+	return <>{children}</>;
 };
 
 export default DragDropContext(Backend)(DragAndDropHOC);

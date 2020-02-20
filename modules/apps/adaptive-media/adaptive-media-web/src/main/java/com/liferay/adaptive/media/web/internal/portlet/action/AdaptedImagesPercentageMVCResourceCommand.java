@@ -14,10 +14,17 @@
 
 package com.liferay.adaptive.media.web.internal.portlet.action;
 
+import com.liferay.adaptive.media.constants.AMOptimizeImagesBackgroundTaskConstants;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
+import com.liferay.adaptive.media.web.internal.background.task.OptimizeImagesSingleConfigurationBackgroundTaskExecutor;
 import com.liferay.adaptive.media.web.internal.constants.AMPortletKeys;
+
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -30,6 +37,10 @@ import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ambrín Chaudhary
@@ -63,12 +74,52 @@ public class AdaptedImagesPercentageMVCResourceCommand
 		int expectedEntriesCount =
 			_amImageEntryLocalService.getExpectedAMImageEntriesCount(companyId);
 
-		JSONObject jsonObject = JSONUtil.put(
-			"adaptedImages",
-			String.valueOf(Math.min(entriesCount, expectedEntriesCount))
-		).put(
-			"totalImages", String.valueOf(expectedEntriesCount)
-		);
+		List<BackgroundTask> optimizeImageSingleBackgroundTasks =
+			BackgroundTaskManagerUtil.getBackgroundTasks(
+				CompanyConstants.SYSTEM,
+				OptimizeImagesSingleConfigurationBackgroundTaskExecutor.
+					class.getName(),
+				BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+		boolean isTaskInProgress = false;
+
+		for (BackgroundTask backgroundTask :
+			optimizeImageSingleBackgroundTasks) {
+
+			Map<String, Serializable> taskContextMap =
+				backgroundTask.getTaskContextMap();
+
+			String configurationEntryUuid = (String)taskContextMap.get(
+				AMOptimizeImagesBackgroundTaskConstants.
+					CONFIGURATION_ENTRY_UUID);
+
+			if (configurationEntryUuid == entryUuid) {
+				isTaskInProgress = true;
+			}
+		}
+
+		JSONObject jsonObject = null;
+
+		int min = Math.min(entriesCount, expectedEntriesCount);
+
+		if (isTaskInProgress) {
+			jsonObject = JSONUtil.put(
+				"adaptedImages", String.valueOf(min)
+			).put(
+				"errors", 0
+			).put(
+				"totalImages", String.valueOf(expectedEntriesCount)
+			);
+		}
+		else {
+			jsonObject = JSONUtil.put(
+				"adaptedImages", String.valueOf(min)
+			).put(
+				"errors", String.valueOf(expectedEntriesCount - min)
+			).put(
+				"totalImages", String.valueOf(expectedEntriesCount)
+			);
+		}
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);

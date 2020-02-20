@@ -71,18 +71,30 @@ const AdaptiveMediaProgress = ({
 	const updateProgress = useCallback(() => {
 		fetch(percentageUrl)
 			.then(res => res.json())
-			.then(({adaptedImages, totalImages}) => {
+			.then(({adaptedImages, errors, totalImages}) => {
 				if (isMounted()) {
 					setPercentage(
-						Math.round((adaptedImages / totalImages) * 100) || 0
+						Math.round(
+							((parseInt(adaptedImages) + parseInt(errors)) /
+								parseInt(totalImages)) *
+								100
+						) || 0
 					);
 
 					setProgressBarTooltip(
-						tooltip ? tooltip : adaptedImages + '/' + totalImages
+						tooltip
+							? tooltip
+							: parseInt(adaptedImages) +
+									parseInt(errors) +
+									'/' +
+									totalImages
 					);
 				}
 
-				if (adaptedImages === totalImages) {
+				if (
+					parseInt(adaptedImages) + parseInt(errors) ===
+					parseInt(totalImages)
+				) {
 					if (isMounted()) {
 						setShowLoadingIndicator(false);
 					}

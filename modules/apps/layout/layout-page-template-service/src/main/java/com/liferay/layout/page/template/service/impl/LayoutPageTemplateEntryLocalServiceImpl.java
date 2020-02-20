@@ -890,6 +890,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			typeSettingsProperties.setProperty(
 				"lfr-theme:regular:show-header-search",
 				Boolean.FALSE.toString());
+			typeSettingsProperties.setProperty(
+				"lfr-theme:regular:wrap-widget-page-content",
+				Boolean.FALSE.toString());
 
 			typeSettings = typeSettingsProperties.toString();
 		}

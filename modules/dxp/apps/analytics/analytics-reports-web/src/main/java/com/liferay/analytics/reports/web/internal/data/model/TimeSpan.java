@@ -14,6 +14,10 @@
 
 package com.liferay.analytics.reports.web.internal.data.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
+
 /**
  * @author David Arques
  */
@@ -24,6 +28,20 @@ public enum TimeSpan {
 
 	public static String defaultTimeSpanKey() {
 		return LAST_7_DAYS.getKey();
+	}
+
+	public static TimeSpan of(String key) {
+		if (Validator.isNull(key)) {
+			throw new IllegalArgumentException("Time span key is null");
+		}
+
+		for (TimeSpan timeSpan : values()) {
+			if (Objects.equals(key, timeSpan.getKey())) {
+				return timeSpan;
+			}
+		}
+
+		throw new IllegalArgumentException("Invalid time span key " + key);
 	}
 
 	public String getKey() {

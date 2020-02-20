@@ -22,11 +22,13 @@ import classNames from 'classnames';
 import React, {useMemo, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
-import {
-	ACCEPTING_TYPES,
-	DROP_ZONES,
-	ITEM_HOVER_BORDER_LIMIT
-} from './constants';
+import {ACCEPTING_TYPES, ITEM_HOVER_BORDER_LIMIT} from './constants';
+
+const DROP_ZONES = {
+	BOTTOM: 'BOTTOM',
+	ELEMENT: 'ELEMENT',
+	TOP: 'TOP'
+};
 
 const ITEM_STATES_COLORS = {
 	'conversion-draft': 'info',

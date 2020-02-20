@@ -132,44 +132,12 @@ public class Sidecar {
 		String sidecarLibClassPath = _createClasspath(
 			_sidecarHome.resolve("lib"), path -> true);
 
-		Map<String, byte[]> modifiedClasses = new HashMap<>();
-
-		try {
-			ClassLoader classLoader = new URLClassLoader(
-				ClassPathUtil.getClassPathURLs(sidecarLibClassPath), null);
-
-			modifiedClasses.put(
-				_MODIFIED_CLASS_NAME_NATIVES,
-				_getModifiedClassBytes(
-					classLoader.loadClass(_MODIFIED_CLASS_NAME_NATIVES),
-					"definitelyRunningAsRoot",
-					methodVisitor -> {
-						methodVisitor.visitCode();
-						methodVisitor.visitInsn(Opcodes.ICONST_0);
-						methodVisitor.visitInsn(Opcodes.IRETURN);
-					}));
-
-			modifiedClasses.put(
-				_MODIFIED_CLASS_NAME_KEY_STORE_WRAPPER,
-				_getModifiedClassBytes(
-					classLoader.loadClass(
-						_MODIFIED_CLASS_NAME_KEY_STORE_WRAPPER),
-					"save",
-					methodVisitor -> {
-						methodVisitor.visitCode();
-						methodVisitor.visitInsn(Opcodes.RETURN);
-					}));
-		}
-		catch (Exception exception) {
-			_log.error("Unable to modify classes", exception);
-		}
-
 		try {
 			_processChannel = _processExecutor.execute(
 				_createProcessConfig(sidecarLibClassPath),
 				new SidecarMainProcessCallable(
 					_elasticsearchConfiguration.sidecarHeartbeatInterval(),
-					modifiedClasses));
+					_getModifiedClasses(sidecarLibClassPath)));
 
 			NoticeableFuture<Serializable> noticeableFuture =
 				_processChannel.getProcessNoticeableFuture();
@@ -514,6 +482,44 @@ public class Sidecar {
 
 			return classWriter.toByteArray();
 		}
+	}
+
+	private Map<String, byte[]> _getModifiedClasses(
+		String sidecarLibClassPath) {
+
+		Map<String, byte[]> modifiedClasses = new HashMap<>();
+
+		try {
+			ClassLoader classLoader = new URLClassLoader(
+				ClassPathUtil.getClassPathURLs(sidecarLibClassPath), null);
+
+			modifiedClasses.put(
+				_MODIFIED_CLASS_NAME_NATIVES,
+				_getModifiedClassBytes(
+					classLoader.loadClass(_MODIFIED_CLASS_NAME_NATIVES),
+					"definitelyRunningAsRoot",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.ICONST_0);
+						methodVisitor.visitInsn(Opcodes.IRETURN);
+					}));
+
+			modifiedClasses.put(
+				_MODIFIED_CLASS_NAME_KEY_STORE_WRAPPER,
+				_getModifiedClassBytes(
+					classLoader.loadClass(
+						_MODIFIED_CLASS_NAME_KEY_STORE_WRAPPER),
+					"save",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					}));
+		}
+		catch (Exception exception) {
+			_log.error("Unable to modify classes", exception);
+		}
+
+		return modifiedClasses;
 	}
 
 	private String[] _getSidecarArguments() {

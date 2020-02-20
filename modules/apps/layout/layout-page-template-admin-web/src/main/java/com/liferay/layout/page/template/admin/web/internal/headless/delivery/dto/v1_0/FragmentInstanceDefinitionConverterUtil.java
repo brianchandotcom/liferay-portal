@@ -77,6 +77,10 @@ public class FragmentInstanceDefinitionConverterUtil {
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
 				fragmentLayoutStructureItem.getFragmentEntryLinkId());
 
+		if (fragmentEntryLink == null) {
+			return null;
+		}
+
 		String rendererKey = fragmentEntryLink.getRendererKey();
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(

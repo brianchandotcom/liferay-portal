@@ -6,7 +6,14 @@ definition {
 
 		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
 
-		if (!(isSet(folderId))) {
+		if (isSet(folderName)) {
+			Variables.assertDefined(parameterList = "${folderName},${groupName}");
+
+			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+				name = "${folderName}",
+				groupName = "${groupName}");
+		}
+		else {
 			var folderId = "0";
 		}
 

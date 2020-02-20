@@ -1,0 +1,35 @@
+definition {
+
+	@summary = "Helper function to get the 'DM folderId' for the folder '${folderName}'"
+	macro _getFolderIdByFolderName {
+		Variables.assertDefined(parameterList = "${groupName},${name}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+
+		if (!(isSet(parentFolderId))) {
+			var parentFolderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlapp/get-folder \
+				-u test@liferay.com:test \
+				-d repositoryId=${repositoryId} \
+				-d parentFolderId=${parentFolderId} \
+				-d name=${name}
+		''';
+
+		var folderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${name}')]['folderId']");
+		var folderId = StringUtil.replace("${folderId}", "[&quot;", "");
+		var folderId = StringUtil.replace("${folderId}", "&quot;]", "");
+
+		if ("${folderId}" == "[]") {
+			fail("FAIL. Cannot find folder.");
+		}
+		else {
+			return "${folderId}";
+		}
+	}
+
+}

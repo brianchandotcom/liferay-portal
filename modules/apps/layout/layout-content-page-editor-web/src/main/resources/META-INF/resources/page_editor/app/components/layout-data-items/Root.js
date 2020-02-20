@@ -33,21 +33,11 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes
 } from '../../../prop-types/index';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import TopperEmpty from '../TopperEmpty';
 
 const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 	return (
-		<TopperEmpty
-			acceptDrop={[
-				LAYOUT_DATA_ITEM_TYPES.container,
-				LAYOUT_DATA_ITEM_TYPES.dropZone,
-				LAYOUT_DATA_ITEM_TYPES.fragment,
-				LAYOUT_DATA_ITEM_TYPES.row
-			]}
-			item={item}
-			layoutData={layoutData}
-		>
+		<TopperEmpty item={item} layoutData={layoutData}>
 			{({canDrop, isOver}) => (
 				<div className={classNames('page-editor__root')} ref={ref}>
 					{React.Children.count(children) ? (

@@ -64,13 +64,7 @@ TopperListItem.propTypes = {
 	expand: PropTypes.bool
 };
 
-export default function Topper({
-	acceptDrop,
-	children,
-	dropNestedAndSibling,
-	item,
-	layoutData
-}) {
+export default function Topper({children, item, layoutData}) {
 	const containerRef = useRef(null);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
@@ -86,9 +80,7 @@ export default function Topper({
 	} = useContext(DragDropManagerImpl);
 
 	const {canDrop, drag, drop, isDragging, isOver} = useDragAndDrop({
-		accept: acceptDrop,
 		containerRef,
-		dropNestedAndSibling,
 		item,
 		layoutData,
 		onDragEnd: data =>
@@ -176,7 +168,7 @@ export default function Topper({
 			onClick={event => {
 				event.stopPropagation();
 
-				if (!acceptDrop.length || isDragging) {
+				if (isDragging) {
 					return;
 				}
 
@@ -187,7 +179,7 @@ export default function Topper({
 			onMouseLeave={event => {
 				event.stopPropagation();
 
-				if (!acceptDrop.length || isDragging) {
+				if (isDragging) {
 					return;
 				}
 
@@ -198,7 +190,7 @@ export default function Topper({
 			onMouseOver={event => {
 				event.stopPropagation();
 
-				if (!acceptDrop.length || isDragging) {
+				if (isDragging) {
 					return;
 				}
 
@@ -281,10 +273,6 @@ export default function Topper({
 }
 
 Topper.propTypes = {
-	acceptDrop: PropTypes.arrayOf(
-		PropTypes.oneOf(Object.values(LAYOUT_DATA_ITEM_TYPES))
-	),
-	dropNestedAndSibling: PropTypes.bool,
 	item: getLayoutDataItemPropTypes().isRequired,
 	layoutData: LayoutDataPropTypes.isRequired
 };

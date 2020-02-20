@@ -19,7 +19,6 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes
 } from '../../../prop-types/index';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useSelector} from '../../store/index';
 import {useIsActive} from '../Controls';
@@ -98,15 +97,7 @@ const ColumnWithControls = React.forwardRef(
 		);
 
 		return showLayoutItemTopper ? (
-			<TopperEmpty
-				acceptDrop={[
-					LAYOUT_DATA_ITEM_TYPES.dropZone,
-					LAYOUT_DATA_ITEM_TYPES.fragment,
-					LAYOUT_DATA_ITEM_TYPES.row
-				]}
-				item={item}
-				layoutData={layoutData}
-			>
+			<TopperEmpty item={item} layoutData={layoutData}>
 				{() => content}
 			</TopperEmpty>
 		) : (

@@ -469,7 +469,7 @@ public class Sidecar {
 	private byte[] _getModifiedClassBytes(
 			Class<?> clazz, String methodName,
 			Consumer<MethodVisitor> methodVisitorConsumer)
-		throws Exception {
+		throws IOException {
 
 		try (InputStream inputStream = clazz.getResourceAsStream(
 				clazz.getSimpleName() + ".class")) {

@@ -894,9 +894,14 @@ definition {
 				value1 = "${pageName}");
 		}
 		else {
-			Navigator.gotoNavItem(navItem = "${pageType}");
+			if (IsElementNotPresent(key_navItem = "${pageType}", locator1 = "NavBar#NAV_ITEM_LINK")) {
+				LexiconCard.clickCard(card = "${pageName}");
+			}
+			else {
+				Navigator.gotoNavItem(navItem = "${pageType}");
 
-			LexiconCard.clickCard(card = "${pageName}");
+				LexiconCard.clickCard(card = "${pageName}");
+			}
 		}
 
 		if ("${pageType}" == "Public Pages") {

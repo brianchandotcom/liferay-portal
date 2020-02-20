@@ -33,7 +33,6 @@ import {
 	getLayoutDataItemPropTypes
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -113,14 +112,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	);
 
 	return showLayoutItemTopper ? (
-		<Topper
-			acceptDrop={[
-				LAYOUT_DATA_ITEM_TYPES.container,
-				LAYOUT_DATA_ITEM_TYPES.fragment
-			]}
-			item={item}
-			layoutData={layoutData}
-		>
+		<Topper item={item} layoutData={layoutData}>
 			{() => content}
 		</Topper>
 	) : (

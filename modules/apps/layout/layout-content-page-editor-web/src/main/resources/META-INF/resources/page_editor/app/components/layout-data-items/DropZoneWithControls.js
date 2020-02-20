@@ -18,7 +18,6 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes
 } from '../../../prop-types/index';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useSelector} from '../../store/index';
 import ManageAllowedFragmentButton from '../ManageAllowedFragmentButton';
@@ -42,12 +41,7 @@ const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	);
 
 	return showLayoutItemTopper ? (
-		<Topper
-			acceptDrop={[LAYOUT_DATA_ITEM_TYPES.fragment]}
-			active
-			item={item}
-			layoutData={layoutData}
-		>
+		<Topper active item={item} layoutData={layoutData}>
 			{() => content}
 		</Topper>
 	) : (

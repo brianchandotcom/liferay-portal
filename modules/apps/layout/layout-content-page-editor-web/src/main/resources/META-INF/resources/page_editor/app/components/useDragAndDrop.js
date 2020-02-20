@@ -17,8 +17,30 @@ import React, {useContext, useEffect, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+
+const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
+	[LAYOUT_DATA_ITEM_TYPES.root]: [
+		LAYOUT_DATA_ITEM_TYPES.dropZone,
+		LAYOUT_DATA_ITEM_TYPES.container,
+		LAYOUT_DATA_ITEM_TYPES.row,
+		LAYOUT_DATA_ITEM_TYPES.fragment
+	],
+	[LAYOUT_DATA_ITEM_TYPES.dropZone]: [],
+	[LAYOUT_DATA_ITEM_TYPES.container]: [
+		LAYOUT_DATA_ITEM_TYPES.dropZone,
+		LAYOUT_DATA_ITEM_TYPES.row,
+		LAYOUT_DATA_ITEM_TYPES.fragment
+	],
+	[LAYOUT_DATA_ITEM_TYPES.row]: [LAYOUT_DATA_ITEM_TYPES.column],
+	[LAYOUT_DATA_ITEM_TYPES.column]: [
+		LAYOUT_DATA_ITEM_TYPES.dropZone,
+		LAYOUT_DATA_ITEM_TYPES.container,
+		LAYOUT_DATA_ITEM_TYPES.row,
+		LAYOUT_DATA_ITEM_TYPES.fragment
+	],
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: []
+};
 
 export const TARGET_POSITION = {
 	BOTTOM: 0,
@@ -78,9 +100,7 @@ export const DragDropManager = ({children}) => {
 };
 
 export default function useDragAndDrop({
-	accept,
 	containerRef,
-	dropNestedAndSibling,
 	item,
 	layoutData,
 	onDragEnd
@@ -112,7 +132,8 @@ export default function useDragAndDrop({
 	});
 
 	const [dropOptions, drop] = useDrop({
-		accept,
+		accept: Object.values(LAYOUT_DATA_ITEM_TYPES),
+
 		collect(_monitor) {
 			return {
 				canDrop: _monitor.canDrop(),
@@ -123,7 +144,6 @@ export default function useDragAndDrop({
 			if (
 				!_monitor.didDrop() &&
 				checkRules(RULES_DROP_END, {
-					dropNestedAndSibling,
 					item: _item,
 					items: layoutData.items,
 					siblingOrParent: layoutData.items[dropTargetItemId],
@@ -131,7 +151,6 @@ export default function useDragAndDrop({
 				})
 			) {
 				const {parentId, position} = getParentItemIdAndPositon({
-					dropNestedAndSibling,
 					item: _item,
 					items: layoutData.items,
 					siblingOrParentId: dropTargetItemId,
@@ -182,7 +201,6 @@ export default function useDragAndDrop({
 
 			const result = checkRules(RULES, {
 				clientOffset,
-				dropNestedAndSibling,
 				hoverBoundingRect,
 				hoverClientY,
 				hoverMiddleY,
@@ -314,9 +332,8 @@ function checkElevate({
 	return parentIsNotRoot && isElevate;
 }
 
-function isValidMoveToMiddle({dropNestedAndSibling, item, siblingOrParent}) {
+function isValidMoveToMiddle({item, siblingOrParent}) {
 	return (
-		dropNestedAndSibling &&
 		!siblingOrParent.children.length &&
 		isNestingSupported(item.type, siblingOrParent.type)
 	);
@@ -408,7 +425,6 @@ function rootVoid(item) {
 }
 
 function getParentItemIdAndPositon({
-	dropNestedAndSibling,
 	item,
 	items,
 	siblingOrParentId,
@@ -417,9 +433,8 @@ function getParentItemIdAndPositon({
 	const siblingOrParent = items[siblingOrParentId];
 
 	if (
-		(!dropNestedAndSibling &&
-			isNestingSupported(item.type, siblingOrParent.type)) ||
-		(dropNestedAndSibling && targetPosition === TARGET_POSITION.MIDDLE)
+		isNestingSupported(item.type, siblingOrParent.type) ||
+		targetPosition === TARGET_POSITION.MIDDLE
 	) {
 		return {
 			parentId: siblingOrParentId,
@@ -451,5 +466,5 @@ function getParentItemIdAndPositon({
 }
 
 function isNestingSupported(itemType, parentType) {
-	return LAYOUT_DATA_ALLOWED_PARENT_TYPES[itemType].includes(parentType);
+	return LAYOUT_DATA_ALLOWED_CHILDREN_TYPES[parentType].includes(itemType);
 }

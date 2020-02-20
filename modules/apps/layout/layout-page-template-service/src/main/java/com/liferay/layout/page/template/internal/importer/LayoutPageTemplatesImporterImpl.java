@@ -267,12 +267,9 @@ public class LayoutPageTemplatesImporterImpl
 
 			PageTemplate pageTemplate = pageTemplateEntry.getPageTemplate();
 
-			String layoutPageTemplateEntryKey = entry.getKey();
-
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntry(
-						groupId, layoutPageTemplateEntryKey);
+					fetchLayoutPageTemplateEntry(groupId, entry.getKey());
 
 			if (layoutPageTemplateEntry == null) {
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(

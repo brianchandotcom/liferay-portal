@@ -114,21 +114,21 @@ const MillerColumns = ({
 			);
 		}
 
-		//Remove
+		// Remove
 		sourceItem.parent.child.splice(
 			sourceItem.parent.child.indexOf(sourceItem),
 			1
 		);
 		sourceItem.parent.hasChild = !!sourceItem.parent.child.length;
 
-		//Clean child and columns
+		// Clean child and columns
 		if (sourceItem.active && sourceItem.parent !== parentItem) {
 			newColumns.splice(sourceItem.columnId + 1, newColumns.length);
 		}
 		sourceItem.active =
 			sourceItem.active && sourceItem.parent === parentItem;
 
-		//Add
+		// Add
 		if (parentItem.active) {
 			sourceItem.parent = parentItem;
 			sourceItem.columnId = parentItem.columnId + 1;
@@ -136,7 +136,7 @@ const MillerColumns = ({
 			parentItem.hasChild = !!parentItem.child.length;
 		}
 
-		//Update
+		// Update
 		setColumns(newColumns);
 		onItemMove(sourceItem, parentItem, order);
 	};

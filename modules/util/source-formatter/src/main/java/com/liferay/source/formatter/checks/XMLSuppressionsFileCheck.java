@@ -14,10 +14,16 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+
+import java.io.File;
+
+import java.util.List;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -37,6 +43,10 @@ public class XMLSuppressionsFileCheck extends BaseFileCheck {
 			return content;
 		}
 
+		int x = absolutePath.lastIndexOf(CharPool.SLASH);
+
+		String fileLocation = absolutePath.substring(0, x + 1);
+
 		Document document = SourceUtil.readXML(content);
 
 		Element rootElement = document.getRootElement();
@@ -47,14 +57,97 @@ public class XMLSuppressionsFileCheck extends BaseFileCheck {
 		checkElementOrder(
 			fileName, rootElement, "suppress", null, suppressElementComparator);
 
+		Element checkstyleElement = rootElement.element("checkstyle");
+
 		checkElementOrder(
-			fileName, rootElement.element("checkstyle"), "suppress",
-			"checkstyle", suppressElementComparator);
+			fileName, checkstyleElement, "suppress", "checkstyle",
+			suppressElementComparator);
+
+		_checkFilesPropertyValue(
+			fileName, content, fileLocation, checkstyleElement);
+
+		Element sourceCheckElement = rootElement.element("source-check");
+
 		checkElementOrder(
-			fileName, rootElement.element("source-check"), "suppress",
-			"source-check", suppressElementComparator);
+			fileName, sourceCheckElement, "suppress", "source-check",
+			suppressElementComparator);
+
+		_checkFilesPropertyValue(
+			fileName, content, fileLocation, sourceCheckElement);
 
 		return content;
+	}
+
+	private void _addMessage(
+		String fileName, String content, String value, String expectedName,
+		String type) {
+
+		int x = content.indexOf("\"" + value + "\"");
+
+		if (x != -1) {
+			x = getLineNumber(content, x);
+		}
+
+		addMessage(
+			fileName,
+			StringBundler.concat(
+				"Incorrect value '", value, "'. Relative path to file (from ",
+				"location of suppressions file) expected for value of ",
+				"property 'files'. ", type, " '", expectedName,
+				"' does not exist."),
+			x);
+	}
+
+	private void _checkFilesPropertyValue(
+		String fileName, String content, String fileLocation, Element element) {
+
+		if (element == null) {
+			return;
+		}
+
+		for (Element suppressElement :
+				(List<Element>)element.elements("suppress")) {
+
+			String originalValue = suppressElement.attributeValue("files");
+
+			if (originalValue == null) {
+				continue;
+			}
+
+			String value = StringUtil.replace(originalValue, "\\.", ".");
+
+			int x = value.indexOf(CharPool.STAR);
+
+			if (x == -1) {
+				String expectedFileName = fileLocation + value;
+
+				File file = new File(expectedFileName);
+
+				if (!file.exists()) {
+					_addMessage(
+						fileName, content, originalValue, expectedFileName,
+						"File");
+				}
+
+				continue;
+			}
+
+			int y = value.lastIndexOf(CharPool.SLASH, x);
+
+			if (y == -1) {
+				continue;
+			}
+
+			String expectedFolderName = fileLocation + value.substring(0, y);
+
+			File file = new File(expectedFolderName);
+
+			if (!file.exists()) {
+				_addMessage(
+					fileName, content, originalValue, expectedFolderName,
+					"Folder");
+			}
+		}
 	}
 
 	private class SuppressElementComparator extends ElementComparator {

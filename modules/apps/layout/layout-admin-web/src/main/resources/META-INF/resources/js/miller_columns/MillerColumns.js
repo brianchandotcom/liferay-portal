@@ -27,27 +27,26 @@ const getMassagedColumns = columns => {
 	for (let i = 0; i < columns.length; i++) {
 		const columnItems = columns[i];
 
-		newColumn = {
-			items: [],
-			parent
-		};
-
 		let newParent;
 
-		columnItems.forEach(columnItem => {
-			const newColumnItem = {
-				...columnItem,
-				columnId: i,
-				parent
-			};
+		newColumn = {
+			items: columnItems.map(columnItem => {
+				const newColumnItem = {
+					...columnItem,
+					columnId: i,
+					parent
+				};
 
-			if (newColumnItem.active) {
-				newParent = newColumnItem;
-			}
+				if (newColumnItem.active) {
+					newParent = newColumnItem;
+				}
 
-			newColumn.items.push(newColumnItem);
-			cache[newColumnItem.id] = newColumnItem;
-		});
+				cache[newColumnItem.id] = newColumnItem;
+
+				return newColumnItem;
+			}),
+			parent
+		};
 
 		if (parent && parent.active) {
 			parent.child = newColumn.items;

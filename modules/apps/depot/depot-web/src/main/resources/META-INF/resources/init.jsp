@@ -73,7 +73,8 @@ page import="com.liferay.sharing.configuration.SharingConfiguration" %>
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.ActionRequest" %><%@
+page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

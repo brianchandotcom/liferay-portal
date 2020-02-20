@@ -22,6 +22,8 @@ DepotAdminMembershipsDisplayContext depotAdminMembershipsDisplayContext = (Depot
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-libraries");
 %>
 
+<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/depot/update_memberships" />
+
 <liferay-ui:error-marker
 	key="<%= WebKeys.ERROR_SECTION %>"
 	value="asset-libraries"

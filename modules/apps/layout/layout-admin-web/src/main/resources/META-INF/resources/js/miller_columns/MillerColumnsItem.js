@@ -39,26 +39,28 @@ const ITEM_STATES_COLORS = {
 const noop = () => {};
 
 const MillerColumnsItem = ({
+	item: {
+		actions = [],
+		active,
+		bulkActions = [],
+		checked,
+		childrenItems = [],
+		columnId,
+		description,
+		draggable,
+		hasChild,
+		id: itemId,
+		parent,
+		parentable,
+		selectable,
+		states = [],
+		title,
+		url
+	},
 	actionHandlers = {},
-	actions = [],
-	active,
-	bulkActions = '',
-	checked,
-	childrenItems = [],
-	description,
-	draggable,
-	hasChild,
-	itemId,
-	columnId,
 	namespace,
 	onItemDrop = noop,
-	order,
-	parent,
-	parentable,
-	selectable,
-	states = [],
-	title,
-	url
+	order
 }) => {
 	const ref = useRef();
 

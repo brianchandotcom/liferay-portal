@@ -77,26 +77,11 @@ const MillerColumnsColumn = ({
 			{items.map((item, index) => (
 				<MillerColumnsItem
 					actionHandlers={actionHandlers}
-					actions={item.actions}
-					active={item.active}
-					bulkActions={item.bulkActions}
-					checked={item.checked}
-					childrenItems={item.children}
-					columnId={item.columnId}
-					description={item.description}
-					draggable={item.draggable}
-					hasChild={item.hasChild}
-					itemId={item.id}
+					item={item}
 					key={item.url}
 					namespace={namespace}
 					onItemDrop={onItemDrop}
 					order={index}
-					parent={item.parent}
-					parentable={item.parentable}
-					selectable={item.selectable}
-					states={item.states}
-					title={item.title}
-					url={item.url}
 				/>
 			))}
 		</ul>

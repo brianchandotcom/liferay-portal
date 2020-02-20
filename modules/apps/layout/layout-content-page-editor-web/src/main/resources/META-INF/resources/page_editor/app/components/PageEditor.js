@@ -210,8 +210,7 @@ export default function PageEditor({withinMasterPage = false}) {
 				className={classNames('page-editor', {
 					'page-editor--with-sidebar': !withinMasterPage,
 					'page-editor--with-sidebar-open':
-						sidebarOpen && !withinMasterPage,
-					'pt-4': !withinMasterPage
+						sidebarOpen && !withinMasterPage
 				})}
 				id="page-editor"
 				onClick={onClick}

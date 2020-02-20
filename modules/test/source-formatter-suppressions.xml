@@ -2,15 +2,15 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="ConstantNameCheck" files="modules/test/jenkins-results-parser/src/main/java/com/liferay/jenkins/results/parser/AxisBuild\.java" />
-		<suppress checks="MethodNamingCheck" files="modules/test/maven-executor/src/main/java/com/liferay/maven/executor/MavenExecutor\.java" />
-		<suppress checks="ParsePrimitiveTypeCheck" files="modules/test/arquillian-extension-junit-bridge/src/main/java/com/liferay/arquillian/extension/junit/bridge/server/TestBundleActivator\.java" />
+		<suppress checks="ConstantNameCheck" files="jenkins-results-parser/src/main/java/com/liferay/jenkins/results/parser/AxisBuild\.java" />
+		<suppress checks="MethodNamingCheck" files="maven-executor/src/main/java/com/liferay/maven/executor/MavenExecutor\.java" />
+		<suppress checks="ParsePrimitiveTypeCheck" files="arquillian-extension-junit-bridge/src/main/java/com/liferay/arquillian/extension/junit/bridge/server/TestBundleActivator\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="BNDIncludeResourceCheck" files="modules/test/external-data-source-test/bnd.bnd" />
-		<suppress checks="JavaModuleTestCheck" files="modules/test/arquillian-extension-junit-bridge-test/src/testIntegration/java/com/liferay/arquillian/extension/junit/bridge/junit/test/item/.*" />
-		<suppress checks="JavaModuleTestCheck" files="modules/test/jenkins-results-parser/src/test/java/com/liferay/jenkins/results/parser/Test\.java" />
+		<suppress checks="BNDIncludeResourceCheck" files="external-data-source-test/bnd.bnd" />
+		<suppress checks="JavaModuleTestCheck" files="arquillian-extension-junit-bridge-test/src/testIntegration/java/com/liferay/arquillian/extension/junit/bridge/junit/test/item/.*" />
+		<suppress checks="JavaModuleTestCheck" files="jenkins-results-parser/src/test/java/com/liferay/jenkins/results/parser/Test\.java" />
 		<suppress checks="StringMethodsCheck" />
-		<suppress checks="XMLServiceFileCheck" files="modules/test/external-data-source-test-service/service\.xml" />
+		<suppress checks="XMLServiceFileCheck" files="external-data-source-test-service/service\.xml" />
 	</source-check>
 </suppressions>

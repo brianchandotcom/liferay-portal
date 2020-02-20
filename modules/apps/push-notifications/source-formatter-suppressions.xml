@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="StaticVariableNameCheck" files="modules/apps/push-notifications/push-notifications-api/src/main/java/com/liferay/push/notifications/util/comparator/PushNotificationsDevicePlatformComparator\.java" />
+		<suppress checks="StaticVariableNameCheck" files="push-notifications-api/src/main/java/com/liferay/push/notifications/util/comparator/PushNotificationsDevicePlatformComparator\.java" />
 	</checkstyle>
 </suppressions>

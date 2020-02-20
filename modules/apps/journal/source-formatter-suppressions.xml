@@ -2,9 +2,9 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="StaticVariableNameCheck" files="modules/apps/journal/journal-api/src/main/java/com/liferay/journal/configuration/JournalServiceConfigurationValues\.java" />
+		<suppress checks="StaticVariableNameCheck" files="journal-api/src/main/java/com/liferay/journal/configuration/JournalServiceConfigurationValues\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="modules/apps/journal/journal-service/src/main/java/com/liferay/journal/internal/upgrade/v1_1_0/UpgradeJournalArticleLocalizedValues\.java" />
+		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="journal-service/src/main/java/com/liferay/journal/internal/upgrade/v1_1_0/UpgradeJournalArticleLocalizedValues\.java" />
 	</source-check>
 </suppressions>

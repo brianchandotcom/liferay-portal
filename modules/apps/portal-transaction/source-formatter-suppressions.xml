@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="PersistenceCallCheck" files="modules/apps/portal-transaction/portal-transaction-test/src/testIntegration/java/com/liferay/portal/transaction/test/TransactionInvokerUtilTest\.java" />
+		<suppress checks="PersistenceCallCheck" files="portal-transaction-test/src/testIntegration/java/com/liferay/portal/transaction/test/TransactionInvokerUtilTest\.java" />
 	</checkstyle>
 </suppressions>

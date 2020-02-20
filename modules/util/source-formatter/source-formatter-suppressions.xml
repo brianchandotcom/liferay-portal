@@ -2,8 +2,8 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="ContractionsCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checkstyle/checks/ContractionsCheck\.java" />
-		<suppress checks="MethodNamingCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checkstyle/checks/MethodNamingCheck\.java" />
+		<suppress checks="ContractionsCheck" files="src/main/java/com/liferay/source/formatter/checkstyle/checks/ContractionsCheck\.java" />
+		<suppress checks="MethodNamingCheck" files="src/main/java/com/liferay/source/formatter/checkstyle/checks/MethodNamingCheck\.java" />
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/CombineLines\.java" />
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/DeserializationSecurity\.java" />
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/DuplicateMethods\.java" />
@@ -23,21 +23,21 @@
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/StaticFinalLog\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="CDNCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/CDNCheck\.java" />
-		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaDeprecatedKernelClassesCheck\.java" />
-		<suppress checks="JavaHibernateSQLCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaHibernateSQLCheck\.java" />
-		<suppress checks="JavaIllegalImportsCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaIllegalImportsCheck\.java" />
-		<suppress checks="JavaInterfaceCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaInterfaceCheck\.java" />
-		<suppress checks="JavaModuleIllegalImportsCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaModuleIllegalImportsCheck\.java" />
-		<suppress checks="JavaModuleServiceProxyFactoryCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaModuleServiceProxyFactoryCheck\.java" />
-		<suppress checks="JavaStopWatchCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaStopWatchCheck\.java" />
-		<suppress checks="JavaStylingCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/BaseStylingCheck\.java" />
-		<suppress checks="JavaStylingCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaStylingCheck\.java" />
-		<suppress checks="JavaVariableTypeCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/XMLSpringFileCheck\.java" />
-		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaUpgradeConnectionCheck\.java" />
-		<suppress checks="JavaXMLSecurityCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaXMLSecurityCheck\.java" />
-		<suppress checks="LanguageKeysCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JSPLanguageUtilCheck\.java" />
-		<suppress checks="PrimitiveWrapperInstantiationCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/PrimitiveWrapperInstantiationCheck\.java" />
-		<suppress checks="ResourceBundleCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/ResourceBundleCheck\.java" />
+		<suppress checks="CDNCheck" files="src/main/java/com/liferay/source/formatter/checks/CDNCheck\.java" />
+		<suppress checks="JavaDeprecatedKernelClassesCheck" files="src/main/java/com/liferay/source/formatter/checks/JavaDeprecatedKernelClassesCheck\.java" />
+		<suppress checks="JavaHibernateSQLCheck" files="src/main/java/com/liferay/source/formatter/checks/JavaHibernateSQLCheck\.java" />
+		<suppress checks="JavaIllegalImportsCheck" files="src/main/java/com/liferay/source/formatter/checks/JavaIllegalImportsCheck\.java" />
+		<suppress checks="JavaInterfaceCheck" files="src/main/java/com/liferay/source/formatter/checks/JavaInterfaceCheck\.java" />
+		<suppress checks="JavaModuleIllegalImportsCheck" files="src/main/java/com/liferay/source/formatter/checks/JavaModuleIllegalImportsCheck\.java" />
+		<suppress checks="JavaModuleServiceProxyFactoryCheck" files="src/main/java/com/liferay/source/formatter/checks/JavaModuleServiceProxyFactoryCheck\.java" />
+		<suppress checks="JavaStopWatchCheck" files="src/main/java/com/liferay/source/formatter/checks/JavaStopWatchCheck\.java" />
+		<suppress checks="JavaStylingCheck" files="src/main/java/com/liferay/source/formatter/checks/BaseStylingCheck\.java" />
+		<suppress checks="JavaStylingCheck" files="src/main/java/com/liferay/source/formatter/checks/JavaStylingCheck\.java" />
+		<suppress checks="JavaVariableTypeCheck" files="src/main/java/com/liferay/source/formatter/checks/XMLSpringFileCheck\.java" />
+		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="src/main/java/com/liferay/source/formatter/checks/JavaUpgradeConnectionCheck\.java" />
+		<suppress checks="JavaXMLSecurityCheck" files="src/main/java/com/liferay/source/formatter/checks/JavaXMLSecurityCheck\.java" />
+		<suppress checks="LanguageKeysCheck" files="src/main/java/com/liferay/source/formatter/checks/JSPLanguageUtilCheck\.java" />
+		<suppress checks="PrimitiveWrapperInstantiationCheck" files="src/main/java/com/liferay/source/formatter/checks/PrimitiveWrapperInstantiationCheck\.java" />
+		<suppress checks="ResourceBundleCheck" files="src/main/java/com/liferay/source/formatter/checks/ResourceBundleCheck\.java" />
 	</source-check>
 </suppressions>

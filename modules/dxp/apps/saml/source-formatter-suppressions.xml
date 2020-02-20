@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="ReferenceAnnotationCheck" files="modules/dxp/apps/saml/saml-opensaml-integration/src/main/java/com/liferay/saml/opensaml/integration/internal/servlet/profile/SingleLogoutProfileImpl\.java" />
+		<suppress checks="ReferenceAnnotationCheck" files="saml-opensaml-integration/src/main/java/com/liferay/saml/opensaml/integration/internal/servlet/profile/SingleLogoutProfileImpl\.java" />
 	</checkstyle>
 </suppressions>

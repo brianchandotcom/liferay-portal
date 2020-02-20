@@ -2,9 +2,9 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="PlusStatementCheck" files="modules/apps/wiki/wiki-engine-html/src/test/java/com/liferay/wiki/engine/html/processor/WikiPageRenameHTMLContentProcessorTest\.java" />
+		<suppress checks="PlusStatementCheck" files="wiki-engine-html/src/test/java/com/liferay/wiki/engine/html/processor/WikiPageRenameHTMLContentProcessorTest\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="XMLWhitespaceCheck" files="modules/apps/wiki/wiki-test/src/testIntegration/resources/com/liferay/wiki/service/test/dependencies/liferay_media_wiki\.xml" />
+		<suppress checks="XMLWhitespaceCheck" files="wiki-test/src/testIntegration/resources/com/liferay/wiki/service/test/dependencies/liferay_media_wiki\.xml" />
 	</source-check>
 </suppressions>

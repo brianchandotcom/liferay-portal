@@ -2,7 +2,7 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="CDNCheck" files="modules/third-party/org-gradle/org-gradle-resources-http/src/main/java/org/gradle/internal/resource/transport/http/LiferayHttpResourceAccessor\.java" />
-		<suppress checks="GradleDependencyArtifactsCheck" files="modules/third-party/.*" />
+		<suppress checks="CDNCheck" files="org-gradle/org-gradle-resources-http/src/main/java/org/gradle/internal/resource/transport/http/LiferayHttpResourceAccessor\.java" />
+		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
 	</source-check>
 </suppressions>

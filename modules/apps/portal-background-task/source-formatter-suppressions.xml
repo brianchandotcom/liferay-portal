@@ -2,9 +2,9 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="MapBuilderCheck" files="modules/apps/portal-background-task/portal-background-task-service/src/main/java/com/liferay/portal/background/task/internal/BackgroundTaskThreadLocalManagerImpl\.java" />
+		<suppress checks="MapBuilderCheck" files="portal-background-task-service/src/main/java/com/liferay/portal/background/task/internal/BackgroundTaskThreadLocalManagerImpl\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="XMLServiceEntityNameCheck" files="modules/apps/portal-background-task/portal-background-task-service/service\.xml" />
+		<suppress checks="XMLServiceEntityNameCheck" files="portal-background-task-service/service\.xml" />
 	</source-check>
 </suppressions>

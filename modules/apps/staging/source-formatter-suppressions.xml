@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="MapBuilderCheck" files="modules/apps/staging/staging-test/src/testIntegration/java/com/liferay/staging/test/StagingLocalizationTest\.java" />
+		<suppress checks="MapBuilderCheck" files="staging-test/src/testIntegration/java/com/liferay/staging/test/StagingLocalizationTest\.java" />
 	</checkstyle>
 </suppressions>

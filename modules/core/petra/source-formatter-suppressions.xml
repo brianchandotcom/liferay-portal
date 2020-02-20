@@ -2,30 +2,30 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="AppendCheck" files="modules/core/petra/petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
-		<suppress checks="ConcatCheck" files="modules/core/petra/petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
-		<suppress checks="EnumConstantOrderCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/ProcessLog\.java" />
-		<suppress checks="MethodNameCheck" files="modules/core/petra/petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />
-		<suppress checks="MissingDeprecatedCheck" files="modules/core/petra/petra-lang/src/main/java/com/liferay/petra/lang/ClassLoaderPool\.java" />
-		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/unsync/BoundaryCheckerUtil\.java" />
-		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/AsyncBrokerThreadLocal\.java" />
-		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/LocalProcessChannel\.java" />
-		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/LocalProcessLog\.java" />
-		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/RequestProcessCallable\.java" />
-		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/ResponseProcessCallable\.java" />
-		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/ResultProcessCallable\.java" />
-		<suppress checks="MissingModifierCheck" files="modules/core/petra/petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />
-		<suppress checks="StringBundlerNamingCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/unsync/UnsyncStringWriter\.java" />
-		<suppress checks="StringBundlerNamingCheck" files="modules/core/petra/petra-io/src/test/java/com/liferay/petra/io/unsync/UnsyncStringWriterTest\.java" />
+		<suppress checks="AppendCheck" files="petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
+		<suppress checks="ConcatCheck" files="petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
+		<suppress checks="EnumConstantOrderCheck" files="petra-process/src/main/java/com/liferay/petra/process/ProcessLog\.java" />
+		<suppress checks="MethodNameCheck" files="petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />
+		<suppress checks="MissingDeprecatedCheck" files="petra-lang/src/main/java/com/liferay/petra/lang/ClassLoaderPool\.java" />
+		<suppress checks="MissingModifierCheck" files="petra-io/src/main/java/com/liferay/petra/io/unsync/BoundaryCheckerUtil\.java" />
+		<suppress checks="MissingModifierCheck" files="petra-process/src/main/java/com/liferay/petra/process/local/AsyncBrokerThreadLocal\.java" />
+		<suppress checks="MissingModifierCheck" files="petra-process/src/main/java/com/liferay/petra/process/local/LocalProcessChannel\.java" />
+		<suppress checks="MissingModifierCheck" files="petra-process/src/main/java/com/liferay/petra/process/local/LocalProcessLog\.java" />
+		<suppress checks="MissingModifierCheck" files="petra-process/src/main/java/com/liferay/petra/process/local/RequestProcessCallable\.java" />
+		<suppress checks="MissingModifierCheck" files="petra-process/src/main/java/com/liferay/petra/process/local/ResponseProcessCallable\.java" />
+		<suppress checks="MissingModifierCheck" files="petra-process/src/main/java/com/liferay/petra/process/local/ResultProcessCallable\.java" />
+		<suppress checks="MissingModifierCheck" files="petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />
+		<suppress checks="StringBundlerNamingCheck" files="petra-io/src/main/java/com/liferay/petra/io/unsync/UnsyncStringWriter\.java" />
+		<suppress checks="StringBundlerNamingCheck" files="petra-io/src/test/java/com/liferay/petra/io/unsync/UnsyncStringWriterTest\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="JavaAnnotationDefaultAttributeCheck" files="modules/core/petra/petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />
-		<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/AnnotatedObjectInputStream\.java" />
-		<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/ClassLoaderObjectInputStream\.java" />
-		<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/ProtectedObjectInputStream\.java" />
-		<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/LocalProcessLauncher\.java" />
-		<suppress checks="JavaForLoopCheck" files="modules/core/petra/petra-string/src/main/java/com/liferay/petra/string/StringUtil\.java" />
-		<suppress checks="JavaStringBundlerConcatCheck" files="modules/core/petra/petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
-		<suppress checks="JavaStringBundlerInitialCapacityCheck" files="modules/core/petra/petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
+		<suppress checks="JavaAnnotationDefaultAttributeCheck" files="petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />
+		<suppress checks="JavaDeserializationSecurityCheck" files="petra-io/src/main/java/com/liferay/petra/io/AnnotatedObjectInputStream\.java" />
+		<suppress checks="JavaDeserializationSecurityCheck" files="petra-io/src/main/java/com/liferay/petra/io/ClassLoaderObjectInputStream\.java" />
+		<suppress checks="JavaDeserializationSecurityCheck" files="petra-io/src/main/java/com/liferay/petra/io/ProtectedObjectInputStream\.java" />
+		<suppress checks="JavaDeserializationSecurityCheck" files="petra-process/src/main/java/com/liferay/petra/process/local/LocalProcessLauncher\.java" />
+		<suppress checks="JavaForLoopCheck" files="petra-string/src/main/java/com/liferay/petra/string/StringUtil\.java" />
+		<suppress checks="JavaStringBundlerConcatCheck" files="petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
+		<suppress checks="JavaStringBundlerInitialCapacityCheck" files="petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
 	</source-check>
 </suppressions>

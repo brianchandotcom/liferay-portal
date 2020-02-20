@@ -2,13 +2,13 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="CamelCaseNameCheck" files="modules/apps/document-library/document-library-repository-cmis-impl/src/main/java/com/liferay/document/library/repository/cmis/internal/CMISRepository\.java" />
-		<suppress checks="PersistenceCallCheck" files="modules/apps/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFileEntryTypeFinderTest\.java" />
-		<suppress checks="PersistenceCallCheck" files="modules/apps/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFolderFinderTest\.java" />
-		<suppress checks="TestClassCheck" files="modules/apps/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/webdav/test/BaseWebDAVTestCase\.java" />
+		<suppress checks="CamelCaseNameCheck" files="document-library-repository-cmis-impl/src/main/java/com/liferay/document/library/repository/cmis/internal/CMISRepository\.java" />
+		<suppress checks="PersistenceCallCheck" files="document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFileEntryTypeFinderTest\.java" />
+		<suppress checks="PersistenceCallCheck" files="document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFolderFinderTest\.java" />
+		<suppress checks="TestClassCheck" files="document-library-test/src/testIntegration/java/com/liferay/document/library/webdav/test/BaseWebDAVTestCase\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="HTMLEmptyLinesCheck" files="modules/apps/document-library/document-library-asset-auto-tagger-opennlp-test/src/testIntegration/resources/com/liferay/document/library/asset/auto/tagger/opennlp/test/dependencies/Alice's Adventures in Wonderland, by Lewis Carroll\.html" />
-		<suppress checks="HTMLWhitespaceCheck" files="modules/apps/document-library/document-library-asset-auto-tagger-opennlp-test/src/testIntegration/resources/com/liferay/document/library/asset/auto/tagger/opennlp/test/dependencies/Alice's Adventures in Wonderland, by Lewis Carroll\.html" />
+		<suppress checks="HTMLEmptyLinesCheck" files="document-library-asset-auto-tagger-opennlp-test/src/testIntegration/resources/com/liferay/document/library/asset/auto/tagger/opennlp/test/dependencies/Alice's Adventures in Wonderland, by Lewis Carroll\.html" />
+		<suppress checks="HTMLWhitespaceCheck" files="document-library-asset-auto-tagger-opennlp-test/src/testIntegration/resources/com/liferay/document/library/asset/auto/tagger/opennlp/test/dependencies/Alice's Adventures in Wonderland, by Lewis Carroll\.html" />
 	</source-check>
 </suppressions>

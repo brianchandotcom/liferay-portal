@@ -5,6 +5,6 @@
 
 		<!-- Temporary suppressions for deprecated apps (LPS-100170) -->
 
-		<suppress checks="BNDSuiteCheck" files="modules/dxp/apps/documentum/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="apps/documentum/app\.bnd" />
 	</source-check>
 </suppressions>

@@ -12,6 +12,7 @@
  * details.
  */
 
+import {usePrevious} from 'frontend-js-react-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import DndProvider from './DndProvider';
@@ -79,7 +80,7 @@ const MillerColumns = ({
 		getMassagedColumns(initialColumns)
 	);
 
-	const columnsRef = useRef(columns);
+	const previousColumnsValue = usePrevious(columns);
 
 	useEffect(() => {
 		if (rowRef.current) {
@@ -88,11 +89,10 @@ const MillerColumns = ({
 	}, []);
 
 	useEffect(() => {
-		if (columns !== columnsRef.current) {
+		if (previousColumnsValue !== columns) {
 			onColumnsChange(columns);
-			columnsRef.current = columns;
 		}
-	}, [columns, onColumnsChange]);
+	}, [columns, onColumnsChange, previousColumnsValue]);
 
 	const getItem = itemId => {
 		return cache[itemId];

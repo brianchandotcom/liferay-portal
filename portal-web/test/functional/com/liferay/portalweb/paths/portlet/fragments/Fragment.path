@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>PAGE_EDITOR_FRAGMENT</td>
-	<td>//section[contains(@class,'fragment-entry-link')][${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
+	<td>//div[@class='page-editor__root page-editor__topper']/div[contains(@class,'page-editor__topper')][${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
 	<td></td>
 </tr>
 <tr>

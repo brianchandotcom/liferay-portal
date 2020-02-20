@@ -14,6 +14,11 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
@@ -56,6 +61,31 @@ public class LayoutStructureUtil {
 		}
 
 		return ArrayUtil.toLongArray(fragmentEntryLinkIds);
+	}
+
+	public static String getLayoutStructureItemJSON(
+			FragmentCollectionContributorTracker
+				fragmentCollectionContributorTracker,
+			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+			FragmentRendererTracker fragmentRendererTracker, long groupId,
+			String itemId, long plid, long segmentsExperienceId)
+		throws PortalException {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+					plid, true);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		PageElement pageElement = PageDefinitionConverterUtil.toPageElement(
+			fragmentCollectionContributorTracker,
+			fragmentEntryConfigurationParser, fragmentRendererTracker,
+			layoutStructure, layoutStructure.getLayoutStructureItem(itemId));
+
+		return pageElement.toString();
 	}
 
 	public static JSONObject updateLayoutPageTemplateData(

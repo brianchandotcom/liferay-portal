@@ -48,39 +48,35 @@ public class SidecarMainProcessCallable
 				return true;
 			});
 
-		try {
-			_loadModifiedClasses();
-		}
-		catch (Exception exception) {
-			throw new ProcessException(
-				"Unable to load modified classes", exception);
-		}
+		_loadModifiedClasses();
 
-		try {
-			ElasticsearchServerUtil.waitForShutdown();
-		}
-		catch (InterruptedException interruptedException) {
-			throw new ProcessException(
-				"Sidecar main thread is interrupted", interruptedException);
-		}
+		ElasticsearchServerUtil.waitForShutdown();
 
 		return null;
 	}
 
-	private void _loadModifiedClasses() throws Exception {
+	private void _loadModifiedClasses() throws ProcessException {
 		ClassLoader classLoader =
 			SidecarMainProcessCallable.class.getClassLoader();
 
-		Method defineClassMethod = ReflectionUtil.getDeclaredMethod(
-			ClassLoader.class, "defineClass", String.class, byte[].class,
-			int.class, int.class);
+		try {
+			Method defineClassMethod = ReflectionUtil.getDeclaredMethod(
+				ClassLoader.class, "defineClass", String.class, byte[].class,
+				int.class, int.class);
 
-		for (Map.Entry<String, byte[]> entry : _modifiedClasses.entrySet()) {
-			byte[] modifiedClassBytes = entry.getValue();
+			for (Map.Entry<String, byte[]> entry :
+					_modifiedClasses.entrySet()) {
 
-			defineClassMethod.invoke(
-				classLoader, entry.getKey(), modifiedClassBytes, 0,
-				modifiedClassBytes.length);
+				byte[] modifiedClassBytes = entry.getValue();
+
+				defineClassMethod.invoke(
+					classLoader, entry.getKey(), modifiedClassBytes, 0,
+					modifiedClassBytes.length);
+			}
+		}
+		catch (Exception exception) {
+			throw new ProcessException(
+				"Unable to load modified classes", exception);
 		}
 	}
 

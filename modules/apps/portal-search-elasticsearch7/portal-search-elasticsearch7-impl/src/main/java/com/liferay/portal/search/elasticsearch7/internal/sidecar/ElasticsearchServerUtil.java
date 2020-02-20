@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
+import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.reflect.ReflectionUtil;
 
 import java.lang.reflect.Field;
@@ -50,21 +51,34 @@ public class ElasticsearchServerUtil {
 		_shutdownCountDownLatch.countDown();
 	}
 
-	public static Node start(String[] arguments) throws Exception {
-		_mainMethod.invoke(null, new Object[] {arguments});
+	public static Node start(String[] arguments) throws ProcessException {
+		try {
+			_mainMethod.invoke(null, new Object[] {arguments});
 
-		System.setSecurityManager(null);
+			System.setSecurityManager(null);
 
-		_addShutdownHook();
+			_addShutdownHook();
 
-		return (Node)_nodeField.get(_instanceField.get(null));
+			return (Node)_nodeField.get(_instanceField.get(null));
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new ProcessException(
+				"Unable to start elasticsearch server",
+				reflectiveOperationException);
+		}
 	}
 
-	public static void waitForShutdown() throws InterruptedException {
-		_shutdownCountDownLatch.await();
+	public static void waitForShutdown() throws ProcessException {
+		try {
+			_shutdownCountDownLatch.await();
+		}
+		catch (InterruptedException interruptedException) {
+			throw new ProcessException(
+				"Sidecar main thread is interrupted", interruptedException);
+		}
 	}
 
-	private static void _addShutdownHook() throws Exception {
+	private static void _addShutdownHook() throws ReflectiveOperationException {
 		synchronized (_hooksField.getDeclaringClass()) {
 			Map<Thread, Thread> hooks = (Map<Thread, Thread>)_hooksField.get(
 				null);

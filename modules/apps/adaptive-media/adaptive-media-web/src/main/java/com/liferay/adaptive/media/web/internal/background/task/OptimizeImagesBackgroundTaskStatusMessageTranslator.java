@@ -52,6 +52,12 @@ public class OptimizeImagesBackgroundTaskStatusMessageTranslator
 		backgroundTaskStatus.setAttribute(
 			AMOptimizeImagesBackgroundTaskConstants.COUNT, count);
 
+		long errors = message.getLong(
+			AMOptimizeImagesBackgroundTaskConstants.ERRORS);
+
+		backgroundTaskStatus.setAttribute(
+			AMOptimizeImagesBackgroundTaskConstants.ERRORS, errors);
+
 		long total = message.getLong(
 			AMOptimizeImagesBackgroundTaskConstants.TOTAL);
 
@@ -60,8 +66,8 @@ public class OptimizeImagesBackgroundTaskStatusMessageTranslator
 
 		int percentage = 100;
 
-		if ((count != 0) && (total != 0)) {
-			percentage = (int)(count / total);
+		if (((count + errors) != 0) && (total != 0)) {
+			percentage = (int)(count + errors / total);
 		}
 
 		backgroundTaskStatus.setAttribute("percentage", percentage);

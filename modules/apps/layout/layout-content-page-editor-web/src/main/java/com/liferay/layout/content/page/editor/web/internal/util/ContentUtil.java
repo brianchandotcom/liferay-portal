@@ -27,6 +27,9 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
+import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,8 +79,7 @@ public class ContentUtil {
 	}
 
 	public static Set<InfoDisplayObjectProvider>
-			getLayoutMappedInfoDisplayObjectProviders(String layoutData)
-		throws PortalException {
+		getLayoutMappedInfoDisplayObjectProviders(String layoutData) {
 
 		return _getLayoutMappedInfoDisplayObjectProviders(
 			layoutData, new HashSet<>());
@@ -402,46 +404,39 @@ public class ContentUtil {
 	}
 
 	private static Set<InfoDisplayObjectProvider>
-			_getLayoutMappedInfoDisplayObjectProviders(
-				String layoutData, Set<Long> mappedClassPKs)
-		throws PortalException {
+		_getLayoutMappedInfoDisplayObjectProviders(
+			String layoutData, Set<Long> mappedClassPKs) {
 
-		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
-			layoutData);
-
-		JSONArray structureJSONArray = layoutDataJSONObject.getJSONArray(
-			"structure");
-
-		if (structureJSONArray == null) {
-			return Collections.emptySet();
-		}
+		LayoutStructure layoutStructure = LayoutStructure.of(layoutData);
 
 		Set<InfoDisplayObjectProvider> infoDisplayObjectProviders =
 			new HashSet<>();
 
-		Iterator<JSONObject> iteratorStructure = structureJSONArray.iterator();
+		for (LayoutStructureItem layoutStructureItem :
+				layoutStructure.getLayoutStructureItems()) {
 
-		iteratorStructure.forEachRemaining(
-			structureJSONObject -> {
-				JSONObject configJSONObject = structureJSONObject.getJSONObject(
-					"config");
+			if (!(layoutStructureItem instanceof
+					ContainerLayoutStructureItem)) {
 
-				if (configJSONObject != null) {
-					JSONObject backgroundImageJSONObject =
-						configJSONObject.getJSONObject("backgroundImage");
+				continue;
+			}
 
-					if (backgroundImageJSONObject != null) {
-						InfoDisplayObjectProvider infoDisplayObjectProvider =
-							_getInfoDisplayObjectProvider(
-								backgroundImageJSONObject, mappedClassPKs);
+			ContainerLayoutStructureItem containerLayoutStructureItem =
+				(ContainerLayoutStructureItem)layoutStructureItem;
 
-						if (infoDisplayObjectProvider != null) {
-							infoDisplayObjectProviders.add(
-								infoDisplayObjectProvider);
-						}
-					}
+			JSONObject backgroundImageJSONObject =
+				containerLayoutStructureItem.getBackgroundImageJSONObject();
+
+			if (backgroundImageJSONObject != null) {
+				InfoDisplayObjectProvider infoDisplayObjectProvider =
+					_getInfoDisplayObjectProvider(
+						backgroundImageJSONObject, mappedClassPKs);
+
+				if (infoDisplayObjectProvider != null) {
+					infoDisplayObjectProviders.add(infoDisplayObjectProvider);
 				}
-			});
+			}
+		}
 
 		return infoDisplayObjectProviders;
 	}

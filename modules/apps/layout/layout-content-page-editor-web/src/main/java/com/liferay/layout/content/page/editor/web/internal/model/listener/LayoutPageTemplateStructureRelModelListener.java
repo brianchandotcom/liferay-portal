@@ -22,7 +22,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -63,49 +62,44 @@ public class LayoutPageTemplateStructureRelModelListener
 			_portal.getClassNameId(LayoutPageTemplateStructure.class),
 			layoutPageTemplateStructure.getClassPK());
 
-		try {
-			Set<InfoDisplayObjectProvider> infoDisplayObjectProviders =
-				ContentUtil.getLayoutMappedInfoDisplayObjectProviders(
-					layoutPageTemplateStructureRel.getData());
+		Set<InfoDisplayObjectProvider> infoDisplayObjectProviders =
+			ContentUtil.getLayoutMappedInfoDisplayObjectProviders(
+				layoutPageTemplateStructureRel.getData());
 
-			for (InfoDisplayObjectProvider infoDisplayObjectProvider :
-					infoDisplayObjectProviders) {
+		for (InfoDisplayObjectProvider infoDisplayObjectProvider :
+				infoDisplayObjectProviders) {
 
-				LayoutClassedModelUsage layoutClassedModelUsage =
-					_layoutClassedModelUsageLocalService.
-						fetchLayoutClassedModelUsage(
-							infoDisplayObjectProvider.getClassNameId(),
-							infoDisplayObjectProvider.getClassPK(),
-							String.valueOf(
-								layoutPageTemplateStructure.
-									getLayoutPageTemplateStructureId()),
-							_portal.getClassNameId(
-								LayoutPageTemplateStructure.class),
-							layoutPageTemplateStructure.getClassPK());
+			LayoutClassedModelUsage layoutClassedModelUsage =
+				_layoutClassedModelUsageLocalService.
+					fetchLayoutClassedModelUsage(
+						infoDisplayObjectProvider.getClassNameId(),
+						infoDisplayObjectProvider.getClassPK(),
+						String.valueOf(
+							layoutPageTemplateStructure.
+								getLayoutPageTemplateStructureId()),
+						_portal.getClassNameId(
+							LayoutPageTemplateStructure.class),
+						layoutPageTemplateStructure.getClassPK());
 
-				if (layoutClassedModelUsage != null) {
-					continue;
-				}
-
-				ServiceContext serviceContext = Optional.ofNullable(
-					ServiceContextThreadLocal.getServiceContext()
-				).orElse(
-					new ServiceContext()
-				);
-
-				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-					layoutPageTemplateStructure.getGroupId(),
-					infoDisplayObjectProvider.getClassNameId(),
-					infoDisplayObjectProvider.getClassPK(),
-					String.valueOf(
-						layoutPageTemplateStructure.
-							getLayoutPageTemplateStructureId()),
-					_portal.getClassNameId(LayoutPageTemplateStructure.class),
-					layoutPageTemplateStructure.getClassPK(), serviceContext);
+			if (layoutClassedModelUsage != null) {
+				continue;
 			}
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
+
+			ServiceContext serviceContext = Optional.ofNullable(
+				ServiceContextThreadLocal.getServiceContext()
+			).orElse(
+				new ServiceContext()
+			);
+
+			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+				layoutPageTemplateStructure.getGroupId(),
+				infoDisplayObjectProvider.getClassNameId(),
+				infoDisplayObjectProvider.getClassPK(),
+				String.valueOf(
+					layoutPageTemplateStructure.
+						getLayoutPageTemplateStructureId()),
+				_portal.getClassNameId(LayoutPageTemplateStructure.class),
+				layoutPageTemplateStructure.getClassPK(), serviceContext);
 		}
 	}
 

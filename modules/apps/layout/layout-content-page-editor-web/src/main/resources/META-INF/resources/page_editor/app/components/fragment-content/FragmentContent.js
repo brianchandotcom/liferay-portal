@@ -24,7 +24,10 @@ import Processors from '../../processors/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useSelector} from '../../store/index';
 import UnsafeHTML from '../UnsafeHTML';
-import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
+import {
+	useEditableProcessorUniqueId,
+	useSetEditableProcessorUniqueId
+} from './EditableProcessorContext';
 import FragmentContentDecoration from './FragmentContentDecoration';
 import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
 import FragmentContentInteractionsFilter from './FragmentContentInteractionsFilter';
@@ -38,6 +41,7 @@ const FragmentContent = React.forwardRef(
 	({fragmentEntryLinkId, itemId}, ref) => {
 		const element = ref.current;
 		const isMounted = useIsMounted();
+		const editableProcessorUniqueId = useEditableProcessorUniqueId();
 		const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 
 		const [editableElements, setEditableElements] = useState([]);
@@ -76,49 +80,52 @@ const FragmentContent = React.forwardRef(
 				}
 			}, 50);
 
-			Array.from(
-				element.querySelectorAll('[data-lfr-background-image-id]')
-			).map(editable => {
-				resolveEditableValue(
-					editableValues,
-					editable.dataset.lfrBackgroundImageId,
-					BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-					languageId,
-					segmentsExperienceId
-				).then(([value, _editableConfig]) => {
-					const processor = Processors['background-image'];
-
-					processor.render(editable, value);
-					updateContent();
-				});
-			});
-
-			Array.from(element.querySelectorAll('lfr-editable')).forEach(
-				editable => {
-					editable.classList.add('page-editor__editable');
-
+			if (!editableProcessorUniqueId) {
+				Array.from(
+					element.querySelectorAll('[data-lfr-background-image-id]')
+				).map(editable => {
 					resolveEditableValue(
 						editableValues,
-						editable.getAttribute('id'),
-						EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+						editable.dataset.lfrBackgroundImageId,
+						BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 						languageId,
 						segmentsExperienceId
-					).then(([value, editableConfig]) => {
-						const processor =
-							Processors[editable.getAttribute('type')] ||
-							Processors.fallback;
+					).then(([value, _editableConfig]) => {
+						const processor = Processors['background-image'];
 
-						processor.render(editable, value, editableConfig);
+						processor.render(editable, value);
 						updateContent();
 					});
-				}
-			);
+				});
+
+				Array.from(element.querySelectorAll('lfr-editable')).forEach(
+					editable => {
+						editable.classList.add('page-editor__editable');
+
+						resolveEditableValue(
+							editableValues,
+							editable.getAttribute('id'),
+							EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+							languageId,
+							segmentsExperienceId
+						).then(([value, editableConfig]) => {
+							const processor =
+								Processors[editable.getAttribute('type')] ||
+								Processors.fallback;
+
+							processor.render(editable, value, editableConfig);
+							updateContent();
+						});
+					}
+				);
+			}
 
 			return () => {
 				element = null;
 			};
 		}, [
 			defaultContent,
+			editableProcessorUniqueId,
 			editableValues,
 			isMounted,
 			languageId,

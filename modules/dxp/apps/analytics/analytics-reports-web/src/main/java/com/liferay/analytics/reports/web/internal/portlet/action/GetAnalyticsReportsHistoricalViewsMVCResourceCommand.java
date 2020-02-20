@@ -15,6 +15,7 @@
 package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
+import com.liferay.analytics.reports.web.internal.data.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -58,10 +59,16 @@ public class GetAnalyticsReportsHistoricalViewsMVCResourceCommand
 		try {
 			long plid = ParamUtil.getLong(resourceRequest, "plid");
 
+			String timeSpanKey = ParamUtil.getString(
+				resourceRequest, "timeSpanKey", TimeSpan.defaultTimeSpanKey());
+
+			int timeSpanOffset = ParamUtil.getInteger(
+				resourceRequest, "timeSpanOffset", 0);
+
 			jsonObject.put(
 				"analyticsReportsHistoricalViews",
 				_analyticsReportsDataProvider.getHistoricalViewsJSONObject(
-					plid));
+					plid, TimeSpan.of(timeSpanKey), timeSpanOffset));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

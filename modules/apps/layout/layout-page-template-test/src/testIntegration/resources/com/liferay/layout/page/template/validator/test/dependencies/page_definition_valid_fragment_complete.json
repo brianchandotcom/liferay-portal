@@ -5,6 +5,7 @@
 				"definition" : {
 					"fragment" : {
 						"fragmentCollectionName" : "My Fragment Collection",
+						"fragmentKey" : "my-key",
 						"fragmentName" : "My Fragment"
 					},
 					"fragmentConfig" : {

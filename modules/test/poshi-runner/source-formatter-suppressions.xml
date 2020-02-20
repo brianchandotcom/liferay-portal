@@ -6,6 +6,7 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaModuleTestCheck" files="poshi-runner/src/main/java/com/liferay/poshi/runner/PoshiRunner\.java" />
+		<suppress checks="JavaModuleTestCheck" files="poshi-runner/src/main/java/com/liferay/poshi/runner/PoshiRunnerTestCase\.java" />
 		<suppress checks="JavaMultiPlusConcatCheck" files=".*" />
 		<suppress checks="JavaStylingCheck" files="poshi-runner/src/test/java/com/liferay/poshi/runner/pql/PQLEntityFactoryTest\.java" />
 		<suppress checks="JavaStylingCheck" files="poshi-runner/src/test/java/com/liferay/poshi/runner/pql/PQLQueryTest\.java" />

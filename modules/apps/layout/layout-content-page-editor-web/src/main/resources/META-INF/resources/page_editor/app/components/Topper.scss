@@ -48,6 +48,11 @@
 		transition: box-shadow ease $showDuration,
 			transform ease ($showDuration * 1.5), opacity ease $showDuration;
 		z-index: -1;
+
+		&--inset {
+			border-radius: 0 0 2px;
+			top: $borderWidth;
+		}
 	}
 
 	&.active > &__bar,

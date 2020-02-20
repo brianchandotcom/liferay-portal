@@ -35,11 +35,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.net.InetAddress;
 
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.Iterator;
@@ -233,9 +234,7 @@ public class ClusterableSidecar
 
 		Path statePath = nodePath.resolve(MetaDataStateFormat.STATE_DIR_NAME);
 
-		File stateFolder = statePath.toFile();
-
-		if (!stateFolder.exists()) {
+		if (Files.notExists(statePath)) {
 			return;
 		}
 
@@ -244,23 +243,33 @@ public class ClusterableSidecar
 		MetaDataStateFormat<Manifest> manifestMetaDataStateFormat =
 			Manifest.FORMAT;
 
-		File globalFile = null;
-		File manifestFile = null;
+		Path globalPath = null;
+		Path manifestPath = null;
 
-		for (File file : stateFolder.listFiles()) {
-			String fileName = file.getName();
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				statePath)) {
 
-			if (fileName.startsWith(metaDataMetaDataStateFormat.getPrefix())) {
-				globalFile = file;
-			}
-			else if (fileName.startsWith(
-						manifestMetaDataStateFormat.getPrefix())) {
+			Iterator<Path> iterator = directoryStream.iterator();
 
-				manifestFile = file;
+			while (iterator.hasNext()) {
+				Path path = iterator.next();
+
+				String fileName = String.valueOf(path.getFileName());
+
+				if (fileName.startsWith(
+						metaDataMetaDataStateFormat.getPrefix())) {
+
+					globalPath = path;
+				}
+				else if (fileName.startsWith(
+							manifestMetaDataStateFormat.getPrefix())) {
+
+					manifestPath = path;
+				}
 			}
 		}
 
-		if ((globalFile == null) || (manifestFile == null)) {
+		if ((globalPath == null) || (manifestPath == null)) {
 			return;
 		}
 
@@ -268,7 +277,7 @@ public class ClusterableSidecar
 			ClusterModule.getNamedXWriteables());
 
 		MetaData metaData = metaDataMetaDataStateFormat.read(
-			namedXContentRegistry, globalFile.toPath());
+			namedXContentRegistry, globalPath);
 
 		CoordinationMetaData coordinationMetaData =
 			metaData.coordinationMetaData();
@@ -284,7 +293,7 @@ public class ClusterableSidecar
 			coordinationMetaDataBuilder.build());
 
 		Manifest manifest = manifestMetaDataStateFormat.read(
-			namedXContentRegistry, manifestFile.toPath());
+			namedXContentRegistry, manifestPath);
 
 		manifestMetaDataStateFormat.write(
 			new Manifest(

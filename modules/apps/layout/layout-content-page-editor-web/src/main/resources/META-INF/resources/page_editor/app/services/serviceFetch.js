@@ -103,6 +103,20 @@ export default function serviceFetch(
 					return Promise.reject(body.error);
 				}
 			}
+			else {
+				onNetworkStatus(
+					updateNetwork({
+						error: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						status: SERVICE_NETWORK_STATUS_TYPES.error
+					})
+				);
+
+				return Promise.reject(
+					Liferay.Language.get('an-unexpected-error-occurred')
+				);
+			}
 
 			if (response.status >= 400) {
 				onNetworkStatus(

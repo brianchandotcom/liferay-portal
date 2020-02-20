@@ -1791,8 +1791,9 @@ public class PoshiRunnerValidation {
 	private static void _throwExceptions() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(String.valueOf(_exceptions.size()));
-		sb.append(" errors in POSHI\n\n\n");
+		sb.append("\n\n");
+		sb.append(_exceptions.size());
+		sb.append(" errors in POSHI\n\n");
 
 		for (Exception exception : _exceptions) {
 			sb.append(exception.getMessage());

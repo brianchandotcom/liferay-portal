@@ -37,9 +37,9 @@ public class PoshiScriptParserException extends Exception {
 		if (!_instances.isEmpty()) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("\n");
+			sb.append("\n\n");
 			sb.append(_instances.size());
-			sb.append(" errors in Poshi Script syntax\n\n\n");
+			sb.append(" errors in Poshi Script syntax\n\n");
 
 			for (Exception exception : _instances) {
 				sb.append(exception.getMessage());

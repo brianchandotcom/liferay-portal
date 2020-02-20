@@ -111,13 +111,13 @@ definition {
 
 		DepotNavigator.gotoLanguages(depotName = "Test Depot Name");
 
-		Click(
-			key_languagesOption = "Define a custom default language and additional available languages for this repository.",
+		Click.clickNoMouseOverNoWaitForVisible(
+			key_languagesOption = "Define a custom default language and additional active languages for this repository.",
 			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
 
-		PortalSettings.configureCurrentLanguagesCP(
-			currentPortalLanguages = "Spanish (Spain)",
-			defaultPortalLanguage = "Spanish (Spain)");
+		Depot.configureDefaultLanguage(
+			defaultDepotLanguage = "Spanish (Spain)",
+			locale = "es_ES");
 
 		DepotNavigator.openDepotAdmin();
 

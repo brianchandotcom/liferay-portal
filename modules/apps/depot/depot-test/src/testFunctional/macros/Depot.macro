@@ -86,7 +86,7 @@ definition {
 			}
 		}
 
-		Click(locator1 = "Button#DEPOT_LANGUAGES_MANAGEMENT_PANEL_SAVE");
+		Button.click(button = "Done");
 	}
 
 	macro configureDefaultLanguage {

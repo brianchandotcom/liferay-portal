@@ -219,15 +219,14 @@ public class PortalCacheExtenderTest {
 
 		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 
-		ObjectName objectName = new ObjectName(
-			StringBundler.concat(
-				"net.sf.ehcache:type=CacheConfiguration,CacheManager=",
-				cacheManagerName, ",name=t", cacheName));
-
 		Object object = null;
 
 		try {
-			object = mBeanServer.getObjectInstance(objectName);
+			object = mBeanServer.getObjectInstance(
+				new ObjectName(
+					StringBundler.concat(
+						"net.sf.ehcache:type=CacheConfiguration,CacheManager=",
+						cacheManagerName, ",name=", cacheName)));
 		}
 		catch (InstanceNotFoundException instanceNotFoundException) {
 		}
@@ -305,9 +304,8 @@ public class PortalCacheExtenderTest {
 
 		jarOutputStream.putNextEntry(new ZipEntry(outputPath));
 
-		Class<?> clazz = PortalCacheExtenderTest.class;
-
-		ClassLoader classLoader = clazz.getClassLoader();
+		ClassLoader classLoader =
+			PortalCacheExtenderTest.class.getClassLoader();
 
 		StreamUtil.transfer(
 			classLoader.getResourceAsStream(resourcePath), jarOutputStream,

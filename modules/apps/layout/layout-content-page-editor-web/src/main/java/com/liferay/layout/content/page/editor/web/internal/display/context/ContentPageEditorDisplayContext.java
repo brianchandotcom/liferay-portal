@@ -1075,11 +1075,12 @@ public class ContentPageEditorDisplayContext {
 					).putAll(
 						_getFragmentEntry(
 							fragmentEntryLink, fragmentEntry, content)
-					).put(
-						String.valueOf(
-							fragmentEntryLink.getFragmentEntryLinkId()),
-						fragmentEntryLinkMap
 					).build();
+
+				fragmentEntryLinksMap.put(
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+					fragmentEntryLinkMap);
+
 			}
 		}
 		finally {

@@ -41,6 +41,7 @@ import java.io.Serializable;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -129,7 +130,7 @@ public class Sidecar {
 		}
 
 		String sidecarLibClassPath = _createClasspath(
-			new File(_sidecarHome.toFile(), "lib"), null);
+			_sidecarHome.resolve("lib"), path -> true);
 
 		Map<String, byte[]> modifiedClasses = new HashMap<>();
 
@@ -300,26 +301,30 @@ public class Sidecar {
 		settingsBuilder.put("cluster.initial_master_nodes", getNodeName());
 	}
 
-	private String _createClasspath(File folder, String filter) {
-		File[] files = folder.listFiles();
+	private String _createClasspath(
+		Path folderPath, DirectoryStream.Filter<Path> filter) {
 
-		StringBundler sb = new StringBundler(2 * files.length - 1);
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				folderPath, filter)) {
 
-		for (File file : files) {
-			String path = file.getAbsolutePath();
+			StringBundler sb = new StringBundler();
 
-			if (Validator.isNotNull(filter) && !path.contains(filter)) {
-				continue;
-			}
+			directoryStream.forEach(
+				path -> {
+					sb.append(path);
+					sb.append(File.pathSeparator);
+				});
 
 			if (sb.index() > 0) {
-				sb.append(File.pathSeparator);
+				sb.setIndex(sb.index() - 1);
 			}
 
-			sb.append(path);
+			return sb.toString();
 		}
-
-		return sb.toString();
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to iterate folder: " + folderPath, ioException);
+		}
 	}
 
 	private ProcessConfig _createProcessConfig(String sidecarLibClassPath) {
@@ -335,7 +340,16 @@ public class Sidecar {
 		processConfigBuilder.setArguments(_getJVMArguments(bundleURL));
 
 		String bootstrapClasspath = _createClasspath(
-			new File(_props.get(PropsKeys.LIFERAY_LIB_GLOBAL_DIR)), "petra");
+			Paths.get(_props.get(PropsKeys.LIFERAY_LIB_GLOBAL_DIR)),
+			path -> {
+				String name = String.valueOf(path.getFileName());
+
+				if (name.contains("petra")) {
+					return true;
+				}
+
+				return false;
+			});
 
 		processConfigBuilder.setBootstrapClassPath(bootstrapClasspath);
 

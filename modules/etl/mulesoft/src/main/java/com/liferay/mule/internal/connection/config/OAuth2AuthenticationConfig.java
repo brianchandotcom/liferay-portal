@@ -26,31 +26,31 @@ import org.mule.runtime.extension.api.annotation.param.display.Placement;
 public class OAuth2AuthenticationConfig {
 
 	public String getConsumerKey() {
-		return _consumerKey;
+		return consumerKey;
 	}
 
 	public String getConsumerSecret() {
-		return _consumerSecret;
+		return consumerSecret;
 	}
 
 	public void setConsumerKey(String consumerKey) {
-		_consumerKey = consumerKey;
+		this.consumerKey = consumerKey;
 	}
 
 	public void setConsumerSecret(String consumerSecret) {
-		_consumerSecret = consumerSecret;
+		this.consumerSecret = consumerSecret;
 	}
 
 	@DisplayName("Consumer Key")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@Parameter
 	@Placement(order = 1)
-	private String _consumerKey;
+	private String consumerKey;
 
 	@DisplayName("Consumer Secret")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@Parameter
 	@Placement(order = 2)
-	private String _consumerSecret;
+	private String consumerSecret;
 
 }

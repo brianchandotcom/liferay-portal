@@ -39,13 +39,13 @@ public class DELETEEndpointOutputTypeResolver
 			MetadataContext metadataContext, String endpoint)
 		throws ConnectionException, MetadataResolvingException {
 
-		return _metadataTypeBuilder.buildMetadataType(
+		return metadataTypeBuilder.buildMetadataType(
 			metadataContext, endpoint, OASConstants.OPERATION_DELETE,
 			OASConstants.
 				PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
 	}
 
-	private final MetadataTypeBuilder _metadataTypeBuilder =
+	private final MetadataTypeBuilder metadataTypeBuilder =
 		new MetadataTypeBuilder();
 
 }

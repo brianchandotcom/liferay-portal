@@ -39,11 +39,11 @@ public class POSTEndpointTypeKeysResolver implements TypeKeysResolver {
 	public Set<MetadataKey> getKeys(MetadataContext metadataContext)
 		throws ConnectionException, MetadataResolvingException {
 
-		return _metadataKeysBuilder.buildMetadataKeys(
+		return metadataKeysBuilder.buildMetadataKeys(
 			metadataContext, OASConstants.OPERATION_POST);
 	}
 
-	private final MetadataKeysBuilder _metadataKeysBuilder =
+	private final MetadataKeysBuilder metadataKeysBuilder =
 		new MetadataKeysBuilder();
 
 }

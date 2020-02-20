@@ -26,7 +26,7 @@ public class OASURLParserTest {
 
 	@Test
 	public void testGetAuthorityWithScheme() throws MalformedURLException {
-		OASURLParser oasURLParser = new OASURLParser(_OPEN_API_URL);
+		OASURLParser oasURLParser = new OASURLParser(OPEN_API_URL);
 
 		Assert.assertEquals(
 			"http://localhost:8080", oasURLParser.getAuthorityWithScheme());
@@ -34,14 +34,14 @@ public class OASURLParserTest {
 
 	@Test
 	public void testGetHost() throws MalformedURLException {
-		OASURLParser oasURLParser = new OASURLParser(_OPEN_API_URL);
+		OASURLParser oasURLParser = new OASURLParser(OPEN_API_URL);
 
 		Assert.assertEquals("localhost", oasURLParser.getHost());
 	}
 
 	@Test
 	public void testGetJaxRSAppBase() throws MalformedURLException {
-		OASURLParser oasURLParser = new OASURLParser(_OPEN_API_URL);
+		OASURLParser oasURLParser = new OASURLParser(OPEN_API_URL);
 
 		Assert.assertEquals(
 			"headless-commerce-admin-catalog", oasURLParser.getJaxRSAppBase());
@@ -49,7 +49,7 @@ public class OASURLParserTest {
 
 	@Test
 	public void testGetPort() throws MalformedURLException {
-		OASURLParser oasURLParser = new OASURLParser(_OPEN_API_URL);
+		OASURLParser oasURLParser = new OASURLParser(OPEN_API_URL);
 
 		Assert.assertEquals("8080", oasURLParser.getPort());
 	}
@@ -65,14 +65,14 @@ public class OASURLParserTest {
 
 	@Test
 	public void testGetScheme() throws MalformedURLException {
-		OASURLParser oasURLParser = new OASURLParser(_OPEN_API_URL);
+		OASURLParser oasURLParser = new OASURLParser(OPEN_API_URL);
 
 		Assert.assertEquals("http", oasURLParser.getScheme());
 	}
 
 	@Test
 	public void testGetServerBaseURL() throws MalformedURLException {
-		OASURLParser oasURLParser = new OASURLParser(_OPEN_API_URL);
+		OASURLParser oasURLParser = new OASURLParser(OPEN_API_URL);
 
 		Assert.assertEquals(
 			"http://localhost:8080/o/headless-commerce-admin-catalog",
@@ -88,7 +88,7 @@ public class OASURLParserTest {
 				"/openapi.json");
 	}
 
-	private static final String _OPEN_API_URL =
+	private static final String OPEN_API_URL =
 		"http://localhost:8080/o/headless-commerce-admin-catalog/v1.0" +
 			"/openapi.json";
 

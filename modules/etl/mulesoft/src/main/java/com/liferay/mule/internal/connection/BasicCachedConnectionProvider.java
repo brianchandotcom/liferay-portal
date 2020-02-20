@@ -34,13 +34,13 @@ public class BasicCachedConnectionProvider
 	public LiferayConnection connect() throws ConnectionException {
 		return LiferayConnection.withBasicAuthentication(
 			httpService, openApiSpecPath,
-			_basicAuthenticationConfig.getUsername(),
-			_basicAuthenticationConfig.getPassword(),
+			basicAuthenticationConfig.getUsername(),
+			basicAuthenticationConfig.getPassword(),
 			liferayProxyConfig.getProxyConfig());
 	}
 
 	@ParameterGroup(name = "Connection config")
 	@Placement(order = 1)
-	private BasicAuthenticationConfig _basicAuthenticationConfig;
+	private BasicAuthenticationConfig basicAuthenticationConfig;
 
 }

@@ -42,12 +42,12 @@ public class OAuth2Authentication implements HttpAuthentication {
 			String openAPISpecPath)
 		throws MalformedURLException {
 
-		_httpClient = httpClient;
-		_oAuth2AccessTokenURI = getOAuth2AccessTokenURI(openAPISpecPath);
+		this.httpClient = httpClient;
+		oAuth2AccessTokenURI = getOAuth2AccessTokenURI(openAPISpecPath);
 
-		_queryParams.put("client_id", consumerKey);
-		_queryParams.put("client_secret", consumerSecret);
-		_queryParams.put("grant_type", "client_credentials");
+		queryParams.put("client_id", consumerKey);
+		queryParams.put("client_secret", consumerSecret);
+		queryParams.put("grant_type", "client_credentials");
 	}
 
 	@Override
@@ -70,15 +70,15 @@ public class OAuth2Authentication implements HttpAuthentication {
 
 		HttpRequestBuilder httpRequestBuilder = HttpRequest.builder();
 
-		HttpResponse httpResponse = _httpClient.send(
+		HttpResponse httpResponse = httpClient.send(
 			httpRequestBuilder.addHeader(
 				"Content-Type", "application/x-www-form-urlencoded"
 			).method(
 				HttpConstants.Method.POST
 			).queryParams(
-				_queryParams
+				queryParams
 			).uri(
-				_oAuth2AccessTokenURI
+				oAuth2AccessTokenURI
 			).build(),
 			10000, true, null);
 
@@ -105,13 +105,13 @@ public class OAuth2Authentication implements HttpAuthentication {
 
 		OASURLParser oasURLParser = new OASURLParser(openAPISpecPath);
 
-		return oasURLParser.getAuthorityWithScheme() + _OAUTH2_ENDPOINT;
+		return oasURLParser.getAuthorityWithScheme() + OAUTH2_ENDPOINT;
 	}
 
-	private static final String _OAUTH2_ENDPOINT = "/o/oauth2/token";
+	private static final String OAUTH2_ENDPOINT = "/o/oauth2/token";
 
-	private final HttpClient _httpClient;
-	private final String _oAuth2AccessTokenURI;
-	private final MultiMap<String, String> _queryParams = new MultiMap<>();
+	private final HttpClient httpClient;
+	private final String oAuth2AccessTokenURI;
+	private final MultiMap<String, String> queryParams = new MultiMap<>();
 
 }

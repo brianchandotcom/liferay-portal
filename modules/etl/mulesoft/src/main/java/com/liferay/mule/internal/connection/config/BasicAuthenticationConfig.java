@@ -27,31 +27,31 @@ import org.mule.runtime.extension.api.annotation.param.display.Placement;
 public class BasicAuthenticationConfig {
 
 	public String getPassword() {
-		return _password;
+		return password;
 	}
 
 	public String getUsername() {
-		return _username;
+		return username;
 	}
 
 	public void setPassword(String password) {
-		_password = password;
+		this.password = password;
 	}
 
 	public void setUsername(String username) {
-		_username = username;
+		this.username = username;
 	}
 
 	@DisplayName("Password")
 	@Parameter
 	@Password
 	@Placement(order = 2)
-	private String _password;
+	private String password;
 
 	@DisplayName("Username")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@Parameter
 	@Placement(order = 1)
-	private String _username;
+	private String username;
 
 }

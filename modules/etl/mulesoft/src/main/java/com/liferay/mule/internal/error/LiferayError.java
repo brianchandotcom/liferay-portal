@@ -35,7 +35,7 @@ public enum LiferayError implements ErrorTypeDefinition<LiferayError> {
 
 	public static LiferayError fromStatus(int status) {
 		for (LiferayError liferayError : values()) {
-			if (liferayError._status == status) {
+			if (liferayError.status == status) {
 				return liferayError;
 			}
 		}
@@ -46,15 +46,15 @@ public enum LiferayError implements ErrorTypeDefinition<LiferayError> {
 
 	@Override
 	public Optional<ErrorTypeDefinition<? extends Enum<?>>> getParent() {
-		return Optional.ofNullable(_parent);
+		return Optional.ofNullable(parent);
 	}
 
 	private LiferayError(ErrorTypeDefinition parent, int status) {
-		_parent = parent;
-		_status = status;
+		this.parent = parent;
+		this.status = status;
 	}
 
-	private final ErrorTypeDefinition _parent;
-	private int _status;
+	private final ErrorTypeDefinition parent;
+	private int status;
 
 }

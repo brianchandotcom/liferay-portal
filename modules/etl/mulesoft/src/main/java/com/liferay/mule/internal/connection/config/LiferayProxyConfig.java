@@ -30,11 +30,11 @@ public class LiferayProxyConfig {
 	public ProxyConfig getProxyConfig() {
 		ProxyConfigBuilder proxyConfigBuilder = ProxyConfig.builder();
 
-		if ((_proxyHost != null) && (_proxyPort != null)) {
-			proxyConfigBuilder.host(_proxyHost);
-			proxyConfigBuilder.password(_proxyPassword);
-			proxyConfigBuilder.port(_proxyPort);
-			proxyConfigBuilder.username(_proxyUsername);
+		if ((proxyHost != null) && (proxyPort != null)) {
+			proxyConfigBuilder.host(proxyHost);
+			proxyConfigBuilder.password(proxyPassword);
+			proxyConfigBuilder.port(proxyPort);
+			proxyConfigBuilder.username(proxyUsername);
 
 			return proxyConfigBuilder.build();
 		}
@@ -42,31 +42,31 @@ public class LiferayProxyConfig {
 		return null;
 	}
 
-	private static final String _PROXY_CONFIG = "Proxy Config";
+	private static final String PROXY_CONFIG = "Proxy Config";
 
 	@DisplayName("Host")
 	@Optional
 	@Parameter
-	@Placement(order = 1, tab = _PROXY_CONFIG)
-	private String _proxyHost;
+	@Placement(order = 1, tab = PROXY_CONFIG)
+	private String proxyHost;
 
 	@DisplayName("Password")
 	@Optional
 	@Parameter
 	@Password
-	@Placement(order = 4, tab = _PROXY_CONFIG)
-	private String _proxyPassword;
+	@Placement(order = 4, tab = PROXY_CONFIG)
+	private String proxyPassword;
 
 	@DisplayName("Port")
 	@Optional
 	@Parameter
-	@Placement(order = 2, tab = _PROXY_CONFIG)
-	private Integer _proxyPort;
+	@Placement(order = 2, tab = PROXY_CONFIG)
+	private Integer proxyPort;
 
 	@DisplayName("Username")
 	@Optional
 	@Parameter
-	@Placement(order = 3, tab = _PROXY_CONFIG)
-	private String _proxyUsername;
+	@Placement(order = 3, tab = PROXY_CONFIG)
+	private String proxyUsername;
 
 }

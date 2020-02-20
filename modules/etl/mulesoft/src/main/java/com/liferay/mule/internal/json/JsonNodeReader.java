@@ -49,7 +49,7 @@ public class JsonNodeReader {
 
 		HttpEntity httpEntity = httpResponse.getEntity();
 
-		return _objectMapper.readTree(httpEntity.getContent());
+		return objectMapper.readTree(httpEntity.getContent());
 	}
 
 	public JsonNode getDescendantJsonNode(JsonNode jsonNode, String path) {
@@ -78,6 +78,6 @@ public class JsonNodeReader {
 		return true;
 	}
 
-	private final ObjectMapper _objectMapper = new ObjectMapper();
+	private final ObjectMapper objectMapper = new ObjectMapper();
 
 }

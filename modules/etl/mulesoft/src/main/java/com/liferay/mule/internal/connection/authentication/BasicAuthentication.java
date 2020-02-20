@@ -24,13 +24,13 @@ import java.util.Base64;
 public class BasicAuthentication implements HttpAuthentication {
 
 	public BasicAuthentication(String username, String password) {
-		_username = username;
-		_password = password;
+		this.username = username;
+		this.password = password;
 	}
 
 	@Override
 	public String getAuthorizationHeader() {
-		String credentials = _username + ":" + _password;
+		String credentials = username + ":" + password;
 
 		Base64.Encoder encoder = Base64.getEncoder();
 
@@ -40,7 +40,7 @@ public class BasicAuthentication implements HttpAuthentication {
 		return "Basic " + base64Credentials;
 	}
 
-	private final String _password;
-	private final String _username;
+	private final String password;
+	private final String username;
 
 }

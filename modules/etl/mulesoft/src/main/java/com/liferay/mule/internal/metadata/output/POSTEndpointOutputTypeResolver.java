@@ -39,13 +39,13 @@ public class POSTEndpointOutputTypeResolver
 			MetadataContext metadataContext, String endpoint)
 		throws ConnectionException, MetadataResolvingException {
 
-		return _metadataTypeBuilder.buildMetadataType(
+		return metadataTypeBuilder.buildMetadataType(
 			metadataContext, endpoint, OASConstants.OPERATION_POST,
 			OASConstants.
 				PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
 	}
 
-	private final MetadataTypeBuilder _metadataTypeBuilder =
+	private final MetadataTypeBuilder metadataTypeBuilder =
 		new MetadataTypeBuilder();
 
 }

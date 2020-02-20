@@ -71,10 +71,10 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws IOException, TimeoutException {
 
-		return _httpClient.send(
+		return httpClient.send(
 			getHttpRequest(
 				HttpConstants.Method.DELETE,
-				_serverBaseURL + resolvePathParams(endpoint, pathParams),
+				serverBaseURL + resolvePathParams(endpoint, pathParams),
 				queryParams, null),
 			(int)connectionTimeout, true, null);
 	}
@@ -85,24 +85,24 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws IOException, TimeoutException {
 
-		return _httpClient.send(
+		return httpClient.send(
 			getHttpRequest(
 				HttpConstants.Method.GET,
-				_serverBaseURL + resolvePathParams(endpoint, pathParams),
+				serverBaseURL + resolvePathParams(endpoint, pathParams),
 				queryParams, null),
 			(int)connectionTimeout, true, null);
 	}
 
 	public HttpResponse getOpenAPISpec() throws IOException, TimeoutException {
-		return _httpClient.send(
+		return httpClient.send(
 			getHttpRequest(
-				HttpConstants.Method.GET, _openAPISpecPath, new MultiMap<>(),
+				HttpConstants.Method.GET, openAPISpecPath, new MultiMap<>(),
 				null),
 			10000, true, null);
 	}
 
 	public void invalidate() {
-		_httpClient.stop();
+		httpClient.stop();
 	}
 
 	public HttpResponse patch(
@@ -111,10 +111,10 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws IOException, TimeoutException {
 
-		return _httpClient.send(
+		return httpClient.send(
 			getHttpRequest(
 				HttpConstants.Method.PATCH,
-				_serverBaseURL + resolvePathParams(endpoint, pathParams),
+				serverBaseURL + resolvePathParams(endpoint, pathParams),
 				queryParams, inputStream),
 			(int)connectionTimeout, true, null);
 	}
@@ -125,10 +125,10 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws IOException, TimeoutException {
 
-		return _httpClient.send(
+		return httpClient.send(
 			getHttpRequest(
 				HttpConstants.Method.POST,
-				_serverBaseURL + resolvePathParams(endpoint, pathParams),
+				serverBaseURL + resolvePathParams(endpoint, pathParams),
 				queryParams, inputStream),
 			(int)connectionTimeout, true, null);
 	}
@@ -138,9 +138,9 @@ public final class LiferayConnection {
 			BasicAuthentication basicAuthentication, ProxyConfig proxyConfig)
 		throws ConnectionException {
 
-		_openAPISpecPath = openApiSpecPath;
-		_serverBaseURL = getServerBaseURL(openApiSpecPath);
-		_httpAuthentication = basicAuthentication;
+		openAPISpecPath = openApiSpecPath;
+		serverBaseURL = getServerBaseURL(openApiSpecPath);
+		httpAuthentication = basicAuthentication;
 
 		initHttpClient(httpService, proxyConfig);
 	}
@@ -150,14 +150,14 @@ public final class LiferayConnection {
 			String consumerSecret, ProxyConfig proxyConfig)
 		throws ConnectionException {
 
-		_openAPISpecPath = openApiSpecPath;
-		_serverBaseURL = getServerBaseURL(openApiSpecPath);
+		openAPISpecPath = openApiSpecPath;
+		serverBaseURL = getServerBaseURL(openApiSpecPath);
 
 		initHttpClient(httpService, proxyConfig);
 
 		try {
-			_httpAuthentication = new OAuth2Authentication(
-				consumerKey, consumerSecret, _httpClient, _openAPISpecPath);
+			httpAuthentication = new OAuth2Authentication(
+				consumerKey, consumerSecret, httpClient, openAPISpecPath);
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new ConnectionException(malformedURLException);
@@ -172,7 +172,7 @@ public final class LiferayConnection {
 		HttpRequestBuilder httpRequestBuilder = HttpRequest.builder();
 
 		httpRequestBuilder.addHeader(
-			"Authorization", _httpAuthentication.getAuthorizationHeader()
+			"Authorization", httpAuthentication.getAuthorizationHeader()
 		).addHeader(
 			"Content-Type", "application/json"
 		).method(
@@ -217,9 +217,9 @@ public final class LiferayConnection {
 
 		HttpClientFactory httpClientFactory = httpService.getClientFactory();
 
-		_httpClient = httpClientFactory.create(builder.build());
+		httpClient = httpClientFactory.create(builder.build());
 
-		_httpClient.start();
+		httpClient.start();
 	}
 
 	private String resolvePathParams(
@@ -233,9 +233,9 @@ public final class LiferayConnection {
 		return endpoint;
 	}
 
-	private final HttpAuthentication _httpAuthentication;
-	private HttpClient _httpClient;
-	private final String _openAPISpecPath;
-	private final String _serverBaseURL;
+	private final HttpAuthentication httpAuthentication;
+	private HttpClient httpClient;
+	private final String openAPISpecPath;
+	private final String serverBaseURL;
 
 }

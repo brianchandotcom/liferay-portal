@@ -53,17 +53,19 @@ public class MetadataKeysBuilder {
 				liferayConnectionOptional.get();
 
 			return getMetadataKeys(
-				_jsonNodeReader.fromHttpResponse(
+				jsonNodeReader.fromHttpResponse(
 					liferayConnection.getOpenAPISpec()),
 				operation);
 		}
 		catch (IOException ioException) {
 			throw new MetadataResolvingException(
-				ioException.getMessage(), FailureCode.NO_DYNAMIC_KEY_AVAILABLE);
+				ioException.getMessage(), FailureCode.NO_DYNAMIC_KEY_AVAILABLE,
+				ioException);
 		}
 		catch (TimeoutException timeoutException) {
 			throw new MetadataResolvingException(
-				timeoutException.getMessage(), FailureCode.CONNECTION_FAILURE);
+				timeoutException.getMessage(), FailureCode.CONNECTION_FAILURE,
+				timeoutException);
 		}
 	}
 
@@ -95,6 +97,6 @@ public class MetadataKeysBuilder {
 		return metadataKeys;
 	}
 
-	private final JsonNodeReader _jsonNodeReader = new JsonNodeReader();
+	private final JsonNodeReader jsonNodeReader = new JsonNodeReader();
 
 }

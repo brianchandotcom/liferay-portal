@@ -83,9 +83,9 @@ public class LiferayOperations {
 
 		HttpResponse httpResponse = connection.delete(
 			pathParams, queryParams, endpoint,
-			_connectionTimeoutTimeUnit.toMillis(_connectionTimeout));
+			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
 
-		_liferayResponseValidator.validate(httpResponse);
+		liferayResponseValidator.validate(httpResponse);
 
 		HttpEntity httpEntity = httpResponse.getEntity();
 
@@ -113,9 +113,9 @@ public class LiferayOperations {
 
 		HttpResponse httpResponse = connection.get(
 			pathParams, queryParams, endpoint,
-			_connectionTimeoutTimeUnit.toMillis(_connectionTimeout));
+			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
 
-		_liferayResponseValidator.validate(httpResponse);
+		liferayResponseValidator.validate(httpResponse);
 
 		HttpEntity httpEntity = httpResponse.getEntity();
 
@@ -146,9 +146,9 @@ public class LiferayOperations {
 
 		HttpResponse httpResponse = connection.patch(
 			inputStream, pathParams, queryParams, endpoint,
-			_connectionTimeoutTimeUnit.toMillis(_connectionTimeout));
+			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
 
-		_liferayResponseValidator.validate(httpResponse);
+		liferayResponseValidator.validate(httpResponse);
 
 		HttpEntity httpEntity = httpResponse.getEntity();
 
@@ -177,9 +177,9 @@ public class LiferayOperations {
 
 		HttpResponse httpResponse = connection.post(
 			inputStream, pathParams, queryParams, endpoint,
-			_connectionTimeoutTimeUnit.toMillis(_connectionTimeout));
+			connectionTimeoutTimeUnit.toMillis(connectionTimeout));
 
-		_liferayResponseValidator.validate(httpResponse);
+		liferayResponseValidator.validate(httpResponse);
 
 		HttpEntity httpEntity = httpResponse.getEntity();
 
@@ -193,13 +193,13 @@ public class LiferayOperations {
 		Method method, String endpoint, Map<String, String> pathParams,
 		Map<String, String> queryParams) {
 
-		_logger.debug(
+		logger.debug(
 			"Send {} request to endpoint {}, with path parameters {} and " +
 				"query parameters {}",
 			method, endpoint, pathParams, queryParams);
 	}
 
-	private static final Logger _logger = LoggerFactory.getLogger(
+	private static final Logger logger = LoggerFactory.getLogger(
 		LiferayOperations.class);
 
 	@ConfigOverride
@@ -208,7 +208,7 @@ public class LiferayOperations {
 	@Parameter
 	@Placement(order = 1, tab = Placement.ADVANCED_TAB)
 	@Summary("Socket connection timeout value")
-	private int _connectionTimeout;
+	private int connectionTimeout;
 
 	@ConfigOverride
 	@DisplayName("Connection Timeout Unit")
@@ -216,9 +216,9 @@ public class LiferayOperations {
 	@Parameter
 	@Placement(order = 2, tab = Placement.ADVANCED_TAB)
 	@Summary("Time unit to be used in the timeout configurations")
-	private TimeUnit _connectionTimeoutTimeUnit;
+	private TimeUnit connectionTimeoutTimeUnit;
 
-	private final LiferayResponseValidator _liferayResponseValidator =
+	private final LiferayResponseValidator liferayResponseValidator =
 		new LiferayResponseValidator();
 
 }

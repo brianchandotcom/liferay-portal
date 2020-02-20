@@ -35,22 +35,22 @@ public enum OASFormat {
 		OASFormat defaultOASFormat = null;
 
 		for (OASFormat oasFormat : values()) {
-			if (oasType != oasFormat._oasType) {
+			if (oasType != oasFormat.oasType) {
 				continue;
 			}
 
-			if ((openAPIFormatDefinition == null) && oasFormat._defaultFormat) {
+			if ((openAPIFormatDefinition == null) && oasFormat.defaultFormat) {
 				return oasFormat;
 			}
 
 			if ((openAPIFormatDefinition != null) &&
 				openAPIFormatDefinition.equals(
-					oasFormat._openAPIFormatDefinition)) {
+					oasFormat.openAPIFormatDefinition)) {
 
 				return oasFormat;
 			}
 
-			if (oasFormat._defaultFormat) {
+			if (oasFormat.defaultFormat) {
 				defaultOASFormat = oasFormat;
 			}
 		}
@@ -62,13 +62,13 @@ public enum OASFormat {
 		String openAPIFormatDefinition, OASType oasType,
 		boolean defaultFormat) {
 
-		_openAPIFormatDefinition = openAPIFormatDefinition;
-		_oasType = oasType;
-		_defaultFormat = defaultFormat;
+		this.defaultFormat = defaultFormat;
+		this.openAPIFormatDefinition = openAPIFormatDefinition;
+		this.oasType = oasType;
 	}
 
-	private final boolean _defaultFormat;
-	private final OASType _oasType;
-	private final String _openAPIFormatDefinition;
+	private final boolean defaultFormat;
+	private final OASType oasType;
+	private final String openAPIFormatDefinition;
 
 }

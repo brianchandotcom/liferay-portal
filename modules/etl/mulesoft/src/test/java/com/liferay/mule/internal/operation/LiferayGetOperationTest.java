@@ -29,7 +29,7 @@ public class LiferayGetOperationTest extends BaseLiferayOperationTestCase {
 	public void testGetOperation() throws Exception {
 		String payload = getPayload("test-get-products-flow");
 
-		Matcher matcher = _productPagePattern.matcher(payload);
+		Matcher matcher = productPagePattern.matcher(payload);
 
 		Assert.assertTrue(matcher.matches());
 	}
@@ -39,7 +39,7 @@ public class LiferayGetOperationTest extends BaseLiferayOperationTestCase {
 		return "test-get-operation.xml";
 	}
 
-	private static final Pattern _productPagePattern = Pattern.compile(
+	private static final Pattern productPagePattern = Pattern.compile(
 		"[\\s\\S]+\"items\"[\\s\\S]+\"active\"[\\s\\S]+\"catalogId\"[\\s\\S]+" +
 			"\"name\"[\\s\\S]+\"productType\"[\\s\\S]+\"lastPage\"[\\s\\S]+" +
 				"\"page\"[\\s\\S]+\"pageSize\"[\\s\\S]+\"totalCount\"" +

@@ -67,4 +67,7 @@ public class OASConstants {
 
 	public static final String TYPE = "type";
 
+	private OASConstants() {
+	}
+
 }

@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import classNames from 'classnames';
 import {useEventListener, useIsMounted} from 'frontend-js-react-web';
+import {closest} from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef} from 'react';
 
@@ -60,6 +61,7 @@ export default function PageEditor({withinMasterPage = false}) {
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const layoutData = useSelector(state => state.layoutData);
+	const pageEditorRef = useRef(null);
 	const selectItem = useSelectItem();
 	const sidebarOpen = useSelector(
 		state => state.sidebar.panelId && state.sidebar.open
@@ -85,6 +87,17 @@ export default function PageEditor({withinMasterPage = false}) {
 		}
 
 		return direction;
+	};
+
+	const preventLinkClick = event => {
+		const closestElement = closest(event.target, '[href]');
+
+		if (
+			closestElement &&
+			!closestElement.dataset.lfrPageEditorHrefEnabled
+		) {
+			event.preventDefault();
+		}
 	};
 
 	const onKeyUp = useCallback(
@@ -140,6 +153,20 @@ export default function PageEditor({withinMasterPage = false}) {
 		[activeItemId, dispatch, layoutData.items, store]
 	);
 
+	useEffect(() => {
+		const pageEditor = pageEditorRef.current;
+
+		if (pageEditor) {
+			pageEditor.addEventListener('click', preventLinkClick);
+		}
+
+		return () => {
+			if (pageEditor) {
+				pageEditor.removeEventListener('click', preventLinkClick);
+			}
+		};
+	}, [pageEditorRef]);
+
 	useEventListener('keyup', onKeyUp, false, document.body);
 
 	const isPageConversion = config.pageType === PAGE_TYPES.conversion;
@@ -188,6 +215,7 @@ export default function PageEditor({withinMasterPage = false}) {
 				})}
 				id="page-editor"
 				onClick={onClick}
+				ref={pageEditorRef}
 			>
 				<DragPreview />
 

@@ -12,7 +12,6 @@
  * details.
  */
 
-import {closest} from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 
@@ -63,17 +62,6 @@ export default function FragmentContentInteractionsFilter({
 		}
 	};
 
-	const preventLinkClick = event => {
-		const closestElement = closest(event.target, '[href]');
-
-		if (
-			closestElement &&
-			!closestElement.dataset.lfrPageEditorHrefEnabled
-		) {
-			event.preventDefault();
-		}
-	};
-
 	const selectEditable = event => {
 		const editableElement = getEditableElement(event.target);
 
@@ -112,13 +100,10 @@ export default function FragmentContentInteractionsFilter({
 		}
 	};
 
-	const props = {
-		onClickCapture: preventLinkClick
-	};
+	const props = {};
 
 	if (siblingIds.some(isActive)) {
 		props.onClickCapture = event => {
-			preventLinkClick(event);
 			selectEditable(event);
 		};
 

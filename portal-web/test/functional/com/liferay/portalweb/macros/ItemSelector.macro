@@ -21,13 +21,28 @@ definition {
 			locator1 = "TextInput#URL",
 			value1 = "${imageSourceURL}");
 
-		AssertElementPresent.pauseAssertVisible(
-			imageSourceURL = "${imageSourceURL}",
-			locator1 = "ItemSelector#URL_IMAGE_SOURCE");
+		AssertTextEquals(
+			locator1 = "TextInput#URL",
+			value1 = "${imageSourceURL}");
 
-		AssertClick(
-			locator1 = "Button#ADD",
-			value1 = "Add");
+		if (("${type}" == "Audio") || ("${type}" == "Video")) {
+			AssertElementPresent.pauseAssertVisible(
+				key_text = "Add",
+				locator1 = "Button#ANY_ENABLED");
+
+			AssertClick(
+				locator1 = "Button#ADD",
+				value1 = "Add");
+		}
+		else {
+			AssertElementPresent.pauseAssertVisible(locator1 = "ItemSelector#URL_IMAGE_SOURCE");
+
+			SelectFrameTop(value1 = "relative=top");
+
+			AssertClick(
+				locator1 = "Button#ADD",
+				value1 = "Add");
+		}
 
 		SelectFrameTop(value1 = "relative=top");
 	}

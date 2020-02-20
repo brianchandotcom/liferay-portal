@@ -76,6 +76,55 @@ public class PageDefinitionConverterUtil {
 		};
 	}
 
+	public static PageElement toPageElement(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentRendererTracker fragmentRendererTracker,
+		LayoutStructure layoutStructure,
+		LayoutStructureItem layoutStructureItem) {
+
+		List<PageElement> pageElements = new ArrayList<>();
+
+		List<String> childrenItemIds = layoutStructureItem.getChildrenItemIds();
+
+		for (String childItemId : childrenItemIds) {
+			LayoutStructureItem childLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childItemId);
+
+			List<String> grandChildrenItemIds =
+				childLayoutStructureItem.getChildrenItemIds();
+
+			if (grandChildrenItemIds.isEmpty()) {
+				pageElements.add(
+					_toPageElement(
+						fragmentCollectionContributorTracker,
+						fragmentEntryConfigurationParser,
+						fragmentRendererTracker, childLayoutStructureItem));
+			}
+			else {
+				pageElements.add(
+					toPageElement(
+						fragmentCollectionContributorTracker,
+						fragmentEntryConfigurationParser,
+						fragmentRendererTracker, layoutStructure,
+						childLayoutStructureItem));
+			}
+		}
+
+		PageElement pageElement = _toPageElement(
+			fragmentCollectionContributorTracker,
+			fragmentEntryConfigurationParser, fragmentRendererTracker,
+			layoutStructureItem);
+
+		if (!pageElements.isEmpty()) {
+			pageElement.setPageElements(
+				pageElements.toArray(new PageElement[0]));
+		}
+
+		return pageElement;
+	}
+
 	private static PageElement _toPageElement(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
@@ -104,7 +153,7 @@ public class PageDefinitionConverterUtil {
 				mainLayoutStructureItem.getChildrenItemIds()) {
 
 			mainPageElements.add(
-				_toPageElement(
+				toPageElement(
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
 					layoutStructure,
@@ -119,55 +168,6 @@ public class PageDefinitionConverterUtil {
 		if (!mainPageElements.isEmpty()) {
 			pageElement.setPageElements(
 				mainPageElements.toArray(new PageElement[0]));
-		}
-
-		return pageElement;
-	}
-
-	private static PageElement _toPageElement(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererTracker fragmentRendererTracker,
-		LayoutStructure layoutStructure,
-		LayoutStructureItem layoutStructureItem) {
-
-		List<PageElement> pageElements = new ArrayList<>();
-
-		List<String> childrenItemIds = layoutStructureItem.getChildrenItemIds();
-
-		for (String childItemId : childrenItemIds) {
-			LayoutStructureItem childLayoutStructureItem =
-				layoutStructure.getLayoutStructureItem(childItemId);
-
-			List<String> grandChildrenItemIds =
-				childLayoutStructureItem.getChildrenItemIds();
-
-			if (grandChildrenItemIds.isEmpty()) {
-				pageElements.add(
-					_toPageElement(
-						fragmentCollectionContributorTracker,
-						fragmentEntryConfigurationParser,
-						fragmentRendererTracker, childLayoutStructureItem));
-			}
-			else {
-				pageElements.add(
-					_toPageElement(
-						fragmentCollectionContributorTracker,
-						fragmentEntryConfigurationParser,
-						fragmentRendererTracker, layoutStructure,
-						childLayoutStructureItem));
-			}
-		}
-
-		PageElement pageElement = _toPageElement(
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			layoutStructureItem);
-
-		if (!pageElements.isEmpty()) {
-			pageElement.setPageElements(
-				pageElements.toArray(new PageElement[0]));
 		}
 
 		return pageElement;

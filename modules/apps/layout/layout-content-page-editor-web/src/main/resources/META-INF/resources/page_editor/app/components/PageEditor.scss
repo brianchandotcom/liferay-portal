@@ -75,6 +75,7 @@
 				width: 100%;
 				z-index: $portletTopperZIndex;
 			}
+
 			&.open > .portlet-topper {
 				opacity: 0;
 				transform: translateY(0);

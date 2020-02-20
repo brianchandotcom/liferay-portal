@@ -12,10 +12,12 @@
  * details.
  */
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import DndProvider from './DndProvider';
 import MillerColumnsColumn from './MillerColumnsColumn';
+
+const cache = {};
 
 const massageColumns = columns => {
 	const newColumns = [];
@@ -44,6 +46,7 @@ const massageColumns = columns => {
 			}
 
 			newColumn.items.push(newColumnItem);
+			cache[newColumnItem.id] = newColumnItem;
 		});
 
 		if (parent && parent.active) {
@@ -72,7 +75,11 @@ const MillerColumns = ({
 }) => {
 	const rowRef = useRef();
 
-	const [columns, setColumns] = useState(massageColumns(initialColumns));
+	const massagedColumns = useMemo(() => massageColumns(initialColumns), [
+		initialColumns
+	]);
+
+	const [columns, setColumns] = useState(massagedColumns);
 
 	useEffect(() => {
 		if (rowRef.current) {
@@ -80,30 +87,18 @@ const MillerColumns = ({
 		}
 	}, []);
 
-	const getItem = (columns = [], itemId) => {
-		let item;
-
-		for (let i = 0; i < columns.length; i++) {
-			const items = columns[i].items;
-
-			item = items.find(item => item.id == itemId);
-
-			if (item) {
-				break;
-			}
-		}
-
-		return item;
+	const getItem = itemId => {
+		return cache[itemId];
 	};
 
 	const onItemDrop = (sourceItemId, parentItemId, order) => {
 		const newColumns = [...columns];
 
-		const sourceItem = getItem(newColumns, sourceItemId);
+		const sourceItem = getItem(sourceItemId);
 
 		let parentItem;
 		if (parentItemId) {
-			parentItem = getItem(newColumns, parentItemId);
+			parentItem = getItem(parentItemId);
 		}
 		else {
 			parentItem = newColumns[newColumns.length - 2].find(

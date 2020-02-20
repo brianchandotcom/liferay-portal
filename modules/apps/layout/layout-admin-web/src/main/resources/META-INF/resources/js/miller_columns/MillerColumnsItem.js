@@ -38,7 +38,7 @@ const MillerColumnsItem = ({
 	active,
 	bulkActions = '',
 	checked,
-	child = [],
+	childrenItems = [],
 	description,
 	draggable,
 	hasChild,
@@ -157,7 +157,7 @@ const MillerColumnsItem = ({
 		drop(sourceItem, monitor) {
 			if (monitor.canDrop()) {
 				if (dropZone === DROP_ZONES.ELEMENT) {
-					onItemDrop(sourceItem.id, itemId, child.length);
+					onItemDrop(sourceItem.id, itemId, childrenItems.length);
 				}
 				else {
 					let newOrder = order;

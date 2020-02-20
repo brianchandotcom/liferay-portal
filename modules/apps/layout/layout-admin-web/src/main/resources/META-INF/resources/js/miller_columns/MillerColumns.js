@@ -49,7 +49,7 @@ const getMassagedColumns = columns => {
 		};
 
 		if (parent && parent.active) {
-			parent.child = newColumn.items;
+			parent.children = newColumn.items;
 		}
 
 		parent = newParent;
@@ -58,7 +58,7 @@ const getMassagedColumns = columns => {
 	}
 
 	if (parent && parent.active) {
-		parent.child = newColumn.items;
+		parent.children = newColumn.items;
 	}
 
 	return newColumns;
@@ -114,13 +114,13 @@ const MillerColumns = ({
 		}
 
 		// Remove
-		sourceItem.parent.child.splice(
-			sourceItem.parent.child.indexOf(sourceItem),
+		sourceItem.parent.children.splice(
+			sourceItem.parent.children.indexOf(sourceItem),
 			1
 		);
-		sourceItem.parent.hasChild = !!sourceItem.parent.child.length;
+		sourceItem.parent.hasChild = !!sourceItem.parent.children.length;
 
-		// Clean child and columns
+		// Clean children and columns
 		if (sourceItem.active && sourceItem.parent !== parentItem) {
 			newColumns.splice(sourceItem.columnId + 1, newColumns.length);
 		}
@@ -131,8 +131,8 @@ const MillerColumns = ({
 		if (parentItem.active) {
 			sourceItem.parent = parentItem;
 			sourceItem.columnId = parentItem.columnId + 1;
-			parentItem.child.splice(order, 0, sourceItem);
-			parentItem.hasChild = !!parentItem.child.length;
+			parentItem.children.splice(order, 0, sourceItem);
+			parentItem.hasChild = !!parentItem.children.length;
 		}
 
 		// Update

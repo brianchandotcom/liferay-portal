@@ -16,7 +16,10 @@ package com.liferay.layout.page.template.internal.importer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -24,17 +27,31 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImport
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
+import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -92,6 +109,79 @@ public class LayoutPageTemplatesImporterImpl
 					overwrite);
 			}
 		}
+	}
+
+	private LayoutStructureItem _getColumnLayoutStructureItem(
+		LayoutStructure layoutStructure, PageElement pageElement,
+		String parentId, int position) {
+
+		ColumnLayoutStructureItem columnLayoutStructureItem =
+			(ColumnLayoutStructureItem)
+				layoutStructure.addColumnLayoutStructureItem(
+					parentId, position);
+
+		Map<String, Object> definition =
+			(Map<String, Object>)pageElement.getDefinition();
+
+		if (definition.containsKey("size")) {
+			columnLayoutStructureItem.setSize((Integer)definition.get("size"));
+		}
+
+		return columnLayoutStructureItem;
+	}
+
+	private LayoutStructureItem _getContainerLayoutStructureItem(
+		LayoutStructure layoutStructure, PageElement pageElement,
+		String parentId, int position) {
+
+		ContainerLayoutStructureItem containerLayoutStructureItem =
+			(ContainerLayoutStructureItem)
+				layoutStructure.addContainerLayoutStructureItem(
+					parentId, position);
+
+		Map<String, Object> definition =
+			(Map<String, Object>)pageElement.getDefinition();
+
+		if (definition.containsKey("backgroundColorCssClass")) {
+			containerLayoutStructureItem.setBackgroundColorCssClass(
+				(String)definition.get("backgroundColorCssClass"));
+		}
+
+		if (definition.containsKey("layout")) {
+			Map<String, Object> layout = (Map<String, Object>)definition.get(
+				"layout");
+
+			if (layout.containsKey("paddingBottom")) {
+				containerLayoutStructureItem.setPaddingBottom(
+					(Integer)layout.get("paddingBottom"));
+			}
+
+			if (layout.containsKey("paddingHorizontal")) {
+				containerLayoutStructureItem.setPaddingHorizontal(
+					(Integer)layout.get("paddingHorizontal"));
+			}
+
+			if (layout.containsKey("paddingTop")) {
+				containerLayoutStructureItem.setPaddingTop(
+					(Integer)layout.get("paddingTop"));
+			}
+		}
+
+		if (definition.containsKey("backgroundImage")) {
+			Map<String, Object> backgroundImage =
+				(Map<String, Object>)definition.get("backgroundImage");
+
+			JSONObject jsonObject = JSONUtil.put(
+				"title", backgroundImage.get("title")
+			).put(
+				"url", backgroundImage.get("url")
+			);
+
+			containerLayoutStructureItem.setBackgroundImageJSONObject(
+				jsonObject);
+		}
+
+		return containerLayoutStructureItem;
 	}
 
 	private LayoutPageTemplateCollection _getLayoutPageTemplateCollection(
@@ -221,6 +311,30 @@ public class LayoutPageTemplatesImporterImpl
 		return pageTemplateCollectionMap;
 	}
 
+	private LayoutStructureItem _getRowLayoutStructureItem(
+		LayoutStructure layoutStructure, PageElement pageElement,
+		String parentId, int position) {
+
+		RowLayoutStructureItem rowLayoutStructureItem =
+			(RowLayoutStructureItem)layoutStructure.addLayoutStructureItem(
+				LayoutDataItemTypeConstants.TYPE_ROW, parentId, position);
+
+		Map<String, Object> definition =
+			(Map<String, Object>)pageElement.getDefinition();
+
+		if (definition.containsKey("numberOfColumns")) {
+			rowLayoutStructureItem.setNumberOfColumns(
+				(Integer)definition.get("numberOfColumns"));
+		}
+
+		if (definition.containsKey("gutters")) {
+			rowLayoutStructureItem.setGutters(
+				(Boolean)definition.get("gutters"));
+		}
+
+		return rowLayoutStructureItem;
+	}
+
 	private boolean _isPageTemplateCollectionFile(String fileName) {
 		String[] pathParts = StringUtil.split(fileName, CharPool.SLASH);
 
@@ -253,12 +367,82 @@ public class LayoutPageTemplatesImporterImpl
 		return false;
 	}
 
+	private void _processPageDefinition(
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			PageDefinition pageDefinition)
+		throws Exception {
+
+		PageElement pageElement = pageDefinition.getPageElement();
+
+		if (pageElement.getType() != PageElement.Type.ROOT) {
+			return;
+		}
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		if (pageElement.getPageElements() != null) {
+			int position = 0;
+
+			for (PageElement childPageElement : pageElement.getPageElements()) {
+				_processPageElement(
+					layoutStructure, childPageElement,
+					rootLayoutStructureItem.getItemId(), position);
+
+				position++;
+			}
+		}
+
+		_updateLayoutPageTemplateStructure(
+			layoutPageTemplateEntry, layoutStructure);
+
+		_updateLayouts(layoutPageTemplateEntry);
+	}
+
+	private void _processPageElement(
+		LayoutStructure layoutStructure, PageElement pageElement,
+		String parentId, int position) {
+
+		LayoutStructureItem layoutStructureItem = null;
+
+		if (pageElement.getType() == PageElement.Type.SECTION) {
+			layoutStructureItem = _getContainerLayoutStructureItem(
+				layoutStructure, pageElement, parentId, position);
+		}
+		else if (pageElement.getType() == PageElement.Type.ROW) {
+			layoutStructureItem = _getRowLayoutStructureItem(
+				layoutStructure, pageElement, parentId, position);
+		}
+		else if (pageElement.getType() == PageElement.Type.COLUMN) {
+			layoutStructureItem = _getColumnLayoutStructureItem(
+				layoutStructure, pageElement, parentId, position);
+		}
+
+		if ((layoutStructureItem == null) ||
+			(pageElement.getPageElements() == null)) {
+
+			return;
+		}
+
+		int childPosition = 0;
+
+		for (PageElement childPageElement : pageElement.getPageElements()) {
+			_processPageElement(
+				layoutStructure, childPageElement,
+				layoutStructureItem.getItemId(), childPosition);
+
+			childPosition++;
+		}
+	}
+
 	private void _processPageTemplateEntries(
 			long groupId,
 			LayoutPageTemplateCollection layoutPageTemplateCollection,
 			Map<String, PageTemplateEntry> pageTemplateEntryMap,
 			boolean overwrite)
-		throws PortalException {
+		throws Exception {
 
 		for (Map.Entry<String, PageTemplateEntry> entry :
 				pageTemplateEntryMap.entrySet()) {
@@ -272,21 +456,71 @@ public class LayoutPageTemplatesImporterImpl
 					fetchLayoutPageTemplateEntry(groupId, entry.getKey());
 
 			if (layoutPageTemplateEntry == null) {
-				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-					groupId,
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId(),
-					pageTemplate.getName(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-					WorkflowConstants.STATUS_APPROVED,
-					ServiceContextThreadLocal.getServiceContext());
+				layoutPageTemplateEntry =
+					_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+						groupId,
+						layoutPageTemplateCollection.
+							getLayoutPageTemplateCollectionId(),
+						pageTemplate.getName(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+						WorkflowConstants.STATUS_APPROVED,
+						ServiceContextThreadLocal.getServiceContext());
 			}
 			else if (overwrite) {
-				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-					pageTemplate.getName());
+				layoutPageTemplateEntry =
+					_layoutPageTemplateEntryService.
+						updateLayoutPageTemplateEntry(
+							layoutPageTemplateEntry.
+								getLayoutPageTemplateEntryId(),
+							pageTemplate.getName());
 			}
+
+			_processPageDefinition(
+				layoutPageTemplateEntry, pageTemplateEntry.getPageDefinition());
 		}
+	}
+
+	private void _updateLayoutPageTemplateStructure(
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			LayoutStructure layoutStructure)
+		throws PortalException {
+
+		long classNameId = _portal.getClassNameId(Layout.class.getName());
+
+		JSONObject jsonObject = layoutStructure.toJSONObject();
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layoutPageTemplateEntry.getGroupId(), classNameId,
+					layoutPageTemplateEntry.getPlid());
+
+		if (layoutPageTemplateStructure == null) {
+			_layoutPageTemplateStructureLocalService.
+				addLayoutPageTemplateStructure(
+					layoutPageTemplateEntry.getUserId(),
+					layoutPageTemplateEntry.getGroupId(), classNameId,
+					layoutPageTemplateEntry.getPlid(), jsonObject.toString(),
+					ServiceContextThreadLocal.getServiceContext());
+		}
+		else {
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructure(
+					layoutPageTemplateEntry.getGroupId(), classNameId,
+					layoutPageTemplateEntry.getPlid(), jsonObject.toString());
+		}
+	}
+
+	private void _updateLayouts(LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class.getName()), layout.getPlid());
+
+		_layoutCopyHelper.copyLayout(layout, draftLayout);
 	}
 
 	private static final String _ROOT_FOLDER = "page-templates";
@@ -295,6 +529,18 @@ public class LayoutPageTemplatesImporterImpl
 		LayoutPageTemplatesImporterImpl.class);
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateCollectionLocalService
@@ -310,6 +556,13 @@ public class LayoutPageTemplatesImporterImpl
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	private class PageTemplateCollectionEntry {
 

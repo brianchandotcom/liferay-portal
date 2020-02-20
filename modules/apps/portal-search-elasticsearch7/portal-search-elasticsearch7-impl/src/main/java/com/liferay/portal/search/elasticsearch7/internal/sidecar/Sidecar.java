@@ -91,10 +91,10 @@ public class Sidecar {
 
 		_pathLogs = new File(liferayHome, "logs");
 
-		File dataHome = new File(liferayHome, "data/elasticsearch7");
+		_dataHome = new File(liferayHome, "data/elasticsearch7");
 
-		_pathData = new File(dataHome, "indices");
-		_pathRepo = new File(dataHome, "repo");
+		_pathData = new File(_dataHome, "indices");
+		_pathRepo = new File(_dataHome, "repo");
 
 		_componentContext = componentContext;
 		_componentName = componentName;
@@ -182,8 +182,8 @@ public class Sidecar {
 						if (_log.isInfoEnabled()) {
 							_log.info(
 								StringBundler.concat(
-									"Started sidecar with name ",
-									_DEFAULT_NODE_NAME, " at ", address));
+									"Started sidecar with name ", getNodeName(),
+									" at ", address));
 						}
 
 						_addressNoticeableFuture.set(address);
@@ -218,6 +218,24 @@ public class Sidecar {
 		_processChannel.write(new StopSidecarProcessCallable());
 
 		_processChannel = null;
+	}
+
+	protected File getDataHome() {
+		return _dataHome;
+	}
+
+	protected String getNodeName() {
+		return _DEFAULT_NODE_NAME;
+	}
+
+	protected File getPathData() {
+		return _pathData;
+	}
+
+	protected void setClusterDiscoverySettings(
+		SettingsBuilder settingsBuilder) {
+
+		settingsBuilder.put("cluster.initial_master_nodes", getNodeName());
 	}
 
 	private String _createClasspath(File folder, String filter) {
@@ -429,7 +447,6 @@ public class Sidecar {
 			"bootstrap.memory_lock",
 			_elasticsearchConfiguration.bootstrapMlockAll());
 		settingsBuilder.put("bootstrap.system_call_filter", false);
-		settingsBuilder.put("cluster.initial_master_nodes", _DEFAULT_NODE_NAME);
 		settingsBuilder.put(
 			"cluster.routing.allocation.disk.threshold_enabled", false);
 		settingsBuilder.put(
@@ -449,7 +466,7 @@ public class Sidecar {
 				_elasticsearchConfiguration.httpCORSConfigurations());
 		}
 
-		settingsBuilder.put("node.name", _DEFAULT_NODE_NAME);
+		settingsBuilder.put("node.name", getNodeName());
 		settingsBuilder.put("node.data", true);
 		settingsBuilder.put("node.ingest", true);
 		settingsBuilder.put("node.master", true);
@@ -457,6 +474,8 @@ public class Sidecar {
 
 		settingsBuilder.loadFromSource(
 			_elasticsearchConfiguration.additionalConfigurations());
+
+		setClusterDiscoverySettings(settingsBuilder);
 
 		Settings settings = settingsBuilder.build();
 
@@ -505,6 +524,7 @@ public class Sidecar {
 	private DefaultNoticeableFuture<String> _addressNoticeableFuture;
 	private final ComponentContext _componentContext;
 	private final String _componentName;
+	private final File _dataHome;
 	private final ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final com.liferay.portal.kernel.util.File _file;
 	private final File _pathData;

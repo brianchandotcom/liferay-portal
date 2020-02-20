@@ -44,13 +44,6 @@
 				<required>false</required>
 			</attribute>
 			<attribute>
-				<name>multiPage</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-				<required>false</required>
-				<defaultValue>true</defaultValue>
-			</attribute>
-			<attribute>
 				<name>namespace</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -60,6 +53,13 @@
 				<name>scopes</name>
 				<inputType>java.util.Set</inputType>
 				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>singlePage</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<required>false</required>
+				<defaultValue>false</defaultValue>
 			</attribute>
 		</attributes>
 	</component>

@@ -38,8 +38,8 @@ class DataLayoutBuilder extends React.Component {
 			dataLayoutBuilderId,
 			fieldTypes,
 			localizable,
-			multiPage,
-			portletNamespace
+			portletNamespace,
+			singlePage
 		} = this.props;
 
 		const context = this._setContext(this.props.context);
@@ -68,7 +68,7 @@ class DataLayoutBuilder extends React.Component {
 					initialPaginationMode: context.paginationMode,
 					ref: 'layoutProvider'
 				},
-				multiPage
+				singlePage
 			},
 			this.containerRef.current
 		);

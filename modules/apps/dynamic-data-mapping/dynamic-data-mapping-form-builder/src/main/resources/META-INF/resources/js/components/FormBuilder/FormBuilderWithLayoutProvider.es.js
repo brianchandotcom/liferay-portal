@@ -32,7 +32,7 @@ import withResizeableColumns from './withResizeableColumns.es';
 
 class FormBuilderWithLayoutProvider extends Component {
 	render() {
-		const {formBuilderProps, layoutProviderProps, multiPage} = this.props;
+		const {formBuilderProps, layoutProviderProps, singlePage} = this.props;
 
 		const LProvider = LayoutProvider;
 
@@ -42,7 +42,7 @@ class FormBuilderWithLayoutProvider extends Component {
 			withResizeableColumns
 		];
 
-		if (multiPage) {
+		if (!singlePage) {
 			composeList.push(withMultiplePages);
 			composeList.push(withEditablePageHeader);
 		}

@@ -32,7 +32,7 @@ data.put("fieldTypes", fieldTypesJSONArray);
 data.put("fieldTypesModules", fieldTypesModules);
 data.put("groupId", groupId);
 data.put("localizable", localizable);
-data.put("multiPage", multiPage);
+data.put("singlePage", singlePage);
 data.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 %>
 

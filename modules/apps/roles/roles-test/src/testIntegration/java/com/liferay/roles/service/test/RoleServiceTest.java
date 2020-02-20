@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.security.permission.test.util.BasePermissionTestCase;
@@ -147,9 +148,10 @@ public class RoleServiceTest extends BasePermissionTestCase {
 				RandomTestUtil.randomLocaleStringMap(),
 				RoleConstants.TYPE_PROVIDER, null, null));
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("classNameId", _className.getClassNameId());
+		LinkedHashMap<String, Object> params =
+			LinkedHashMapBuilder.<String, Object>put(
+				"classNameId", _className.getClassNameId()
+			).build();
 
 		Assert.assertEquals(
 			expectedRoles.size(),

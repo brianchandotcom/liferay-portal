@@ -8,6 +8,12 @@
 		&.facet-term-selected {
 			font-weight: 600;
 		}
+
+		&.label.label-lg {
+			font-size: 12px;
+			line-height: 1;
+			padding: 5px 8px;
+		}
 	}
 
 	.facet-clear-btn {

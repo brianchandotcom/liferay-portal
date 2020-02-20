@@ -22,7 +22,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import {ConfigContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
+import configModule from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config';
 import serviceFetch from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import {
@@ -40,6 +40,11 @@ const MOCK_UPDATE_PRIORITY_URL = 'update-experience-priority-test-url';
 const MOCK_UPDATE_URL = 'update-experience-test-url';
 
 jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({config: {}})
+);
+
+jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
 	() => jest.fn(() => {})
 );
@@ -49,15 +54,17 @@ function renderExperienceToolbarSection(
 	mockConfig = {},
 	mockDispatch = () => {}
 ) {
+	Object.defineProperty(configModule, 'config', {
+		get: () => mockConfig
+	});
+
 	return render(
-		<ConfigContext.Provider value={mockConfig}>
-			<StoreAPIContextProvider
-				dispatch={mockDispatch}
-				getState={() => mockState}
-			>
-				<ExperienceToolbarSection selectId="test-select-id" />
-			</StoreAPIContextProvider>
-		</ConfigContext.Provider>,
+		<StoreAPIContextProvider
+			dispatch={mockDispatch}
+			getState={() => mockState}
+		>
+			<ExperienceToolbarSection selectId="test-select-id" />
+		</StoreAPIContextProvider>,
 		{
 			baseElement: document.body
 		}
@@ -223,7 +230,7 @@ describe('ExperienceToolbarSection', () => {
 	});
 
 	it('calls the backend to increase priority', async () => {
-		serviceFetch.mockImplementation((config, url, {body}) =>
+		serviceFetch.mockImplementation((url, {body}) =>
 			Promise.resolve({
 				priority: body.newPriority,
 				segmentsExperienceId: 'test-experience-id-02'
@@ -281,7 +288,6 @@ describe('ExperienceToolbarSection', () => {
 		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(1));
 
 		expect(serviceFetch).toHaveBeenCalledWith(
-			expect.objectContaining({}),
 			expect.stringContaining(MOCK_UPDATE_PRIORITY_URL),
 			expect.objectContaining({
 				body: expect.objectContaining({
@@ -300,7 +306,7 @@ describe('ExperienceToolbarSection', () => {
 	});
 
 	it('calls the backend to decrease priority', async () => {
-		serviceFetch.mockImplementation((config, url, {body}) =>
+		serviceFetch.mockImplementation((url, {body}) =>
 			Promise.resolve({
 				priority: body.newPriority,
 				segmentsExperienceId: 'test-experience-id-01'
@@ -358,7 +364,6 @@ describe('ExperienceToolbarSection', () => {
 		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(1));
 
 		expect(serviceFetch).toHaveBeenCalledWith(
-			expect.objectContaining({}),
 			expect.stringContaining(MOCK_UPDATE_PRIORITY_URL),
 			expect.objectContaining({
 				body: expect.objectContaining({
@@ -378,7 +383,7 @@ describe('ExperienceToolbarSection', () => {
 
 	it('calls the backend to create a new experience', async () => {
 		serviceFetch
-			.mockImplementationOnce((config, url, {body}) =>
+			.mockImplementationOnce((url, {body}) =>
 				Promise.resolve({
 					segmentsExperience: {
 						active: true,
@@ -436,7 +441,6 @@ describe('ExperienceToolbarSection', () => {
 		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(2));
 
 		expect(serviceFetch).toHaveBeenCalledWith(
-			expect.objectContaining({}),
 			expect.stringContaining(MOCK_CREATE_URL),
 			expect.objectContaining({
 				body: expect.objectContaining({
@@ -455,7 +459,7 @@ describe('ExperienceToolbarSection', () => {
 	});
 
 	it('calls the backend to update the experience', async () => {
-		serviceFetch.mockImplementation((config, url, {body}) =>
+		serviceFetch.mockImplementation((url, {body}) =>
 			Promise.resolve({
 				name: body.name,
 				segmentsEntryId: body.segmentsEntryId
@@ -518,7 +522,6 @@ describe('ExperienceToolbarSection', () => {
 		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(1));
 
 		expect(serviceFetch).toHaveBeenCalledWith(
-			expect.objectContaining({}),
 			expect.stringContaining(MOCK_UPDATE_URL),
 			expect.objectContaining({
 				body: expect.objectContaining({
@@ -668,7 +671,6 @@ describe('ExperienceToolbarSection', () => {
 		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(1));
 
 		expect(serviceFetch).toHaveBeenCalledWith(
-			expect.objectContaining({}),
 			expect.stringContaining(MOCK_DELETE_URL),
 			expect.objectContaining({
 				body: expect.objectContaining({

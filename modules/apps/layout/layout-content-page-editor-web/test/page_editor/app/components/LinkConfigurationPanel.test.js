@@ -25,7 +25,6 @@ import React from 'react';
 
 import LinkPanel from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/LinkPanel';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
-import {ConfigContext} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import serviceFetch from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import updateEditableValues from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues';
@@ -35,6 +34,11 @@ jest.useFakeTimers();
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
 	() => jest.fn(() => Promise.resolve({fieldValue: 'fieldValue'}))
+);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({config: {}})
 );
 
 jest.mock(
@@ -70,13 +74,15 @@ function renderLinkPanel(
 	dispatch = () => {}
 ) {
 	return render(
-		<ConfigContext.Provider value={{}}>
-			<StoreAPIContextProvider dispatch={dispatch} getState={() => state}>
-				<LinkPanel
-					item={{editableId: 'editable-id-0', fragmentEntryLinkId: 0}}
-				/>
-			</StoreAPIContextProvider>
-		</ConfigContext.Provider>,
+		<StoreAPIContextProvider dispatch={dispatch} getState={() => state}>
+			<LinkPanel
+				item={{
+					editableId: 'editable-id-0',
+					fragmentEntryLinkId: '0',
+					itemId: ''
+				}}
+			/>
+		</StoreAPIContextProvider>,
 		{
 			baseElement: document.body
 		}

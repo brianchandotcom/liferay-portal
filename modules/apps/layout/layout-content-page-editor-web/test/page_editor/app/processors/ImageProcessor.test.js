@@ -16,6 +16,11 @@ import ImageProcessor from '../../../../src/main/resources/META-INF/resources/pa
 import {openImageSelector} from '../../../../src/main/resources/META-INF/resources/page_editor/core/openImageSelector';
 
 jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({config: {}})
+);
+
+jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/core/openImageSelector',
 	() => ({
 		openImageSelector: jest.fn()
@@ -25,7 +30,7 @@ jest.mock(
 describe('ImageProcessor', () => {
 	describe('createEditor', () => {
 		it('calls changeCallback when an image is selected', () => {
-			openImageSelector.mockImplementation((element, changeCallback) =>
+			openImageSelector.mockImplementation(changeCallback =>
 				changeCallback({url: 'sample-image.jpg'})
 			);
 
@@ -36,7 +41,7 @@ describe('ImageProcessor', () => {
 		});
 
 		it('calls changeCallback with an empty string if the image url is not found', () => {
-			openImageSelector.mockImplementation((element, changeCallback) =>
+			openImageSelector.mockImplementation(changeCallback =>
 				changeCallback({thisIsNotAnImage: 'victor.profile'})
 			);
 
@@ -48,7 +53,7 @@ describe('ImageProcessor', () => {
 
 		it('calls destroyCallback if the selector is closed without choosing an image', () => {
 			openImageSelector.mockImplementation(
-				(element, changeCallback, destroyCallback) => destroyCallback()
+				(changeCallback, destroyCallback) => destroyCallback()
 			);
 
 			const destroyCallback = jest.fn();

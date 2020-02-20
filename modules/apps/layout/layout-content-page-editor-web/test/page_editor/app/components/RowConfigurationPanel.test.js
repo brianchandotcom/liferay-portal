@@ -17,24 +17,32 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {RowConfigurationPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/RowConfigurationPanel';
-import {ConfigContext} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 import updateItemConfig from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 import updateRowColumns from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns';
 
 const renderComponent = (dispatch = () => {}) =>
 	render(
-		<ConfigContext.Provider value={{}}>
-			<StoreAPIContextProvider
-				dispatch={dispatch}
-				getState={() => ({segmentsExperienceId: '0'})}
-			>
-				<RowConfigurationPanel
-					item={{config: {gutters: true}, itemId: '0'}}
-				/>
-			</StoreAPIContextProvider>
-		</ConfigContext.Provider>
+		<StoreAPIContextProvider
+			dispatch={dispatch}
+			getState={() => ({segmentsExperienceId: '0'})}
+		>
+			<RowConfigurationPanel
+				item={{
+					children: [],
+					config: {gutters: true},
+					itemId: '0',
+					parentId: '',
+					type: ''
+				}}
+			/>
+		</StoreAPIContextProvider>
 	);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({config: {}})
+);
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
@@ -62,7 +70,6 @@ describe('RowConfigurationPanel', () => {
 		});
 
 		expect(updateRowColumns).toHaveBeenCalledWith({
-			config: {},
 			itemId: '0',
 			numberOfColumns: 6,
 			segmentsExperienceId: 'segments-experience-id-0'
@@ -76,7 +83,6 @@ describe('RowConfigurationPanel', () => {
 		await fireEvent.click(input);
 
 		expect(updateItemConfig).toHaveBeenCalledWith({
-			config: {},
 			itemConfig: {gutters: false},
 			itemId: '0',
 			segmentsExperienceId: 'segments-experience-id-0'

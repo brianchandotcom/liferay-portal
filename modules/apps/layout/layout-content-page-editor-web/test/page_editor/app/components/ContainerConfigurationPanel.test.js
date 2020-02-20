@@ -17,20 +17,32 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {ContainerConfigurationPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/ContainerConfigurationPanel';
-import {ConfigContext} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config';
 import {CONTAINER_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/containerTypes';
 import {PADDING_OPTIONS} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/paddingOptions';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {
+			themeColorsCssClasses: []
+		}
+	})
+);
+
 const renderComponent = (dispatch = () => {}) =>
 	render(
-		<ConfigContext.Provider value={{themeColorsCssClasses: []}}>
-			<StoreAPIContextProvider dispatch={dispatch}>
-				<ContainerConfigurationPanel
-					item={{config: {type: CONTAINER_TYPES.fluid}}}
-				/>
-			</StoreAPIContextProvider>
-		</ConfigContext.Provider>
+		<StoreAPIContextProvider dispatch={dispatch}>
+			<ContainerConfigurationPanel
+				item={{
+					children: [],
+					config: {type: CONTAINER_TYPES.fluid},
+					itemId: '',
+					parentId: '',
+					type: ''
+				}}
+			/>
+		</StoreAPIContextProvider>
 	);
 
 jest.mock(

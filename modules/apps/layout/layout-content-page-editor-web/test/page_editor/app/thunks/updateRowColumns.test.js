@@ -17,6 +17,11 @@ import LayoutService from '../../../../src/main/resources/META-INF/resources/pag
 import updateRowColumns from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns';
 
 jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({config: {}})
+);
+
+jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updateLayoutData',
 	() => jest.fn()
 );
@@ -47,7 +52,6 @@ describe('updateRowColumns', () => {
 
 	const runThunk = () =>
 		updateRowColumns({
-			config: {},
 			itemId: '0',
 			numberOfColumns: 6,
 			segmentsExperienceId: '0'
@@ -58,7 +62,6 @@ describe('updateRowColumns', () => {
 
 		expect(LayoutService.updateRowColumns).toHaveBeenCalledWith(
 			expect.objectContaining({
-				config: {},
 				itemId: '0',
 				numberOfColumns: 6,
 				segmentsExperienceId: '0'

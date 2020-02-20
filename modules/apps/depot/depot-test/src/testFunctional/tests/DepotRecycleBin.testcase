@@ -31,16 +31,16 @@ definition {
 	test CheckExpiredEntries {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
 
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name");
+
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
 			portlet = "Documents and Media");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
@@ -93,16 +93,10 @@ definition {
 	@description = "This ensures that the document can be deleted after the recycle bin is disabled."
 	@priority = "5"
 	test DeleteDocumentAfterDisabling {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
+		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name");
 
 		DepotNavigator.openDepotAdmin();
 

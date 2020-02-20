@@ -91,8 +91,6 @@ export default function FragmentContentProcessor({
 		processor.createEditor(
 			editableElement,
 			value => {
-				processor.render(editableElement, value, editableValue.config);
-
 				let nextEditableValue = {
 					...editableValue
 				};

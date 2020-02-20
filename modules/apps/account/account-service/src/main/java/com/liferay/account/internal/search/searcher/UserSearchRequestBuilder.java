@@ -163,9 +163,9 @@ public class UserSearchRequestBuilder {
 				"street", _keywords
 			).put(
 				"zip", _keywords
+			).putAll(
+				_attributes
 			).build();
-
-		attributes.putAll(_attributes);
 
 		searchContext.setAttributes(attributes);
 

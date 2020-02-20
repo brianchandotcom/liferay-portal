@@ -127,12 +127,11 @@ public class FreeMarkerFragmentEntryProcessor
 			"configuration", configurationValuesJSONObject
 		).put(
 			"fragmentEntryLinkNamespace", fragmentEntryLink.getNamespace()
-		).build();
-
-		contextObjects.putAll(
+		).putAll(
 			_fragmentEntryConfigurationParser.getContextObjects(
 				configurationValuesJSONObject,
-				fragmentEntryLink.getConfiguration()));
+				fragmentEntryLink.getConfiguration())
+		).build();
 
 		templateManager.addContextObjects(template, contextObjects);
 
@@ -200,11 +199,10 @@ public class FreeMarkerFragmentEntryProcessor
 						"configuration", configurationDefaultValuesJSONObject
 					).put(
 						"fragmentEntryLinkNamespace", StringPool.BLANK
+					).putAll(
+						_fragmentEntryConfigurationParser.getContextObjects(
+							configurationDefaultValuesJSONObject, configuration)
 					).build();
-
-				contextObjects.putAll(
-					_fragmentEntryConfigurationParser.getContextObjects(
-						configurationDefaultValuesJSONObject, configuration));
 
 				templateManager.addContextObjects(template, contextObjects);
 

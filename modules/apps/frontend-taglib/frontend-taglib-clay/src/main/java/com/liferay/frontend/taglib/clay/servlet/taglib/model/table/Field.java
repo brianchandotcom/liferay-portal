@@ -79,13 +79,17 @@ public class Field {
 			"contentRenderer", _contentRenderer
 		).put(
 			"contentRendererMap", _contentRendererMap
+		).putAll(
+			_customProperties
+		).put(
+			"fieldName", _fieldName
+		).put(
+			"fieldsMap", _fieldsMap
+		).put(
+			"label", _label
+		).put(
+			"sortable", _sortable
 		).build();
-
-		map.putAll(_customProperties);
-		map.put("fieldName", _fieldName);
-		map.put("fieldsMap", _fieldsMap);
-		map.put("label", _label);
-		map.put("sortable", _sortable);
 
 		if (_sortingOrder != null) {
 			map.put("sortingOrder", _sortingOrder.getValue());

@@ -244,16 +244,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			Map<String, String[]> parameterMap, String type)
 		throws Exception {
 
-		Map<String, Boolean> exportPortletControlsMap = HashMapBuilder.put(
+		return HashMapBuilder.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
 			getExportPortletData(companyId, portletId, parameterMap)
-		).build();
-
-		exportPortletControlsMap.putAll(
+		).putAll(
 			getExportPortletSetupControlsMap(
-				companyId, portletId, parameterMap, type));
-
-		return exportPortletControlsMap;
+				companyId, portletId, parameterMap, type)
+		).build();
 	}
 
 	@Override
@@ -263,17 +260,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			ManifestSummary manifestSummary)
 		throws Exception {
 
-		Map<String, Boolean> importPortletControlsMap = HashMapBuilder.put(
+		return HashMapBuilder.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
 			getImportPortletData(
 				companyId, portletId, parameterMap, portletDataElement)
-		).build();
-
-		importPortletControlsMap.putAll(
+		).putAll(
 			getImportPortletSetupControlsMap(
-				companyId, portletId, parameterMap, manifestSummary));
-
-		return importPortletControlsMap;
+				companyId, portletId, parameterMap, manifestSummary)
+		).build();
 	}
 
 	@Override

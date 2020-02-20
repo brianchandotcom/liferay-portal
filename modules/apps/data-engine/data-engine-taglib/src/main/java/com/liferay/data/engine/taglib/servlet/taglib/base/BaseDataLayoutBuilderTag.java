@@ -58,16 +58,16 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		return _localizable;
 	}
 
-	public boolean getMultiPage() {
-		return _multiPage;
-	}
-
 	public java.lang.String getNamespace() {
 		return _namespace;
 	}
 
 	public java.util.Set getScopes() {
 		return _scopes;
+	}
+
+	public boolean getSinglePage() {
+		return _singlePage;
 	}
 
 	public void setComponentId(java.lang.String componentId) {
@@ -94,16 +94,16 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		_localizable = localizable;
 	}
 
-	public void setMultiPage(boolean multiPage) {
-		_multiPage = multiPage;
-	}
-
 	public void setNamespace(java.lang.String namespace) {
 		_namespace = namespace;
 	}
 
 	public void setScopes(java.util.Set scopes) {
 		_scopes = scopes;
+	}
+
+	public void setSinglePage(boolean singlePage) {
+		_singlePage = singlePage;
 	}
 
 	@Override
@@ -123,9 +123,9 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		_dataLayoutId = null;
 		_groupId = null;
 		_localizable = false;
-		_multiPage = true;
 		_namespace = null;
 		_scopes = null;
+		_singlePage = false;
 	}
 
 	@Override
@@ -146,9 +146,9 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		setNamespacedAttribute(request, "dataLayoutId", _dataLayoutId);
 		setNamespacedAttribute(request, "groupId", _groupId);
 		setNamespacedAttribute(request, "localizable", _localizable);
-		setNamespacedAttribute(request, "multiPage", _multiPage);
 		setNamespacedAttribute(request, "namespace", _namespace);
 		setNamespacedAttribute(request, "scopes", _scopes);
+		setNamespacedAttribute(request, "singlePage", _singlePage);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-data-engine:data-layout-builder:";
@@ -165,8 +165,8 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 	private java.lang.Long _dataLayoutId = null;
 	private java.lang.Long _groupId = null;
 	private boolean _localizable = false;
-	private boolean _multiPage = true;
 	private java.lang.String _namespace = null;
 	private java.util.Set _scopes = null;
+	private boolean _singlePage = false;
 
 }

@@ -71,6 +71,7 @@ const MillerColumns = ({
 	actionHandlers,
 	initialColumns = [],
 	namespace,
+	onColumnsChange = noop,
 	onItemMove = noop
 }) => {
 	const rowRef = useRef();
@@ -81,11 +82,20 @@ const MillerColumns = ({
 
 	const [columns, setColumns] = useState(massagedColumns);
 
+	const columnsRef = useRef(columns);
+
 	useEffect(() => {
 		if (rowRef.current) {
 			rowRef.current.scrollLeft = rowRef.current.scrollWidth;
 		}
 	}, []);
+
+	useEffect(() => {
+		if (columns !== columnsRef.current) {
+			onColumnsChange(columns);
+			columnsRef.current = columns;
+		}
+	}, [columns, onColumnsChange]);
 
 	const getItem = itemId => {
 		return cache[itemId];

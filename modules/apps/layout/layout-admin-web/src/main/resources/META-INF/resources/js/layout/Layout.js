@@ -13,14 +13,14 @@
  */
 
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import Breadcrumbs from '../breadcrumbs/Breadcrumbs';
 import MillerColumns from '../miller_columns/MillerColumns';
 import actionHandlers from './actionHandlers';
 
 const Layout = ({
-	breadcrumbEntries,
+	initialBreadcrumbEntries,
 	layoutColumns,
 	moveItemURL,
 	namespace,
@@ -28,6 +28,10 @@ const Layout = ({
 }) => {
 	const layoutRef = useRef();
 	const searchContainer = useRef();
+
+	const [breadcrumbEntries, setBreadcrumbEntries] = useState(
+		initialBreadcrumbEntries
+	);
 
 	useEffect(() => {
 		const A = new AUI();
@@ -74,6 +78,19 @@ const Layout = ({
 		});
 	};
 
+	const updateBreadcrumbs = columns => {
+		const newBreadcrumbEntries = [breadcrumbEntries[0]];
+
+		columns.slice(1).forEach(column => {
+			newBreadcrumbEntries.push({
+				title: column.parent.title,
+				url: column.parent.url
+			});
+		});
+
+		setBreadcrumbEntries(newBreadcrumbEntries);
+	};
+
 	return (
 		<div ref={layoutRef}>
 			<Breadcrumbs entries={breadcrumbEntries} />
@@ -81,6 +98,7 @@ const Layout = ({
 				actionHandlers={actionHandlers}
 				initialColumns={layoutColumns}
 				namespace={namespace}
+				onColumnsChange={updateBreadcrumbs}
 				onItemMove={saveData}
 			/>
 		</div>
@@ -93,7 +111,7 @@ export default function({
 }) {
 	return (
 		<Layout
-			breadcrumbEntries={breadcrumbEntries}
+			initialBreadcrumbEntries={breadcrumbEntries}
 			layoutColumns={layoutColumns}
 			moveItemURL={moveItemURL}
 			namespace={namespace}

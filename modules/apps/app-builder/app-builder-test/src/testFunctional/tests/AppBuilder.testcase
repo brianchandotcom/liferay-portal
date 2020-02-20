@@ -2007,6 +2007,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.togglePasswordChangeRequired(
+			enableChangeRequired = "true",
+			passwordPolicyName = "Default Password Policy",
+			passwordPolicyPanel = "Password Changes");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
@@ -2143,6 +2153,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.togglePasswordChangeRequired(
+			enableChangeRequired = "true",
+			passwordPolicyName = "Default Password Policy",
+			passwordPolicyPanel = "Password Changes");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
@@ -2183,7 +2203,7 @@ definition {
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
 
-		AppBuilderAdmin.addAllPermissionsFromRoles(roleList = "Portal Content Reviewer");
+		AppBuilderAdmin.addAllPermissionsFromRoles(roleList = "User");
 
 		JSONLayout.addPublicLayout(
 			groupName = "App Builder Site Name",
@@ -2211,6 +2231,38 @@ definition {
 			siteName = "App Builder Site Name");
 
 		for (var number : list "1,2") {
+
+			if ("${number}" == "2") {
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "test@liferay.com",
+					userLoginFullName = "Test Test");
+
+				ProductMenu.gotoPortlet(
+					category = "App Builder",
+					panel = "Control Panel",
+					portlet = "Custom Objects");
+
+				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
+
+				AppBuilderAdmin.removeAllPermissionsFromRoles(roleList = "User");
+
+				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
+
+				AppBuilderAdmin.addAllPermissionsFromRoles(roleList = "Portal Content Reviewer");
+
+				JSONRole.assignRoleToUser(
+					roleTitle = "Portal Content Reviewer",
+					userEmailAddress = "userea@liferay.com");
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "userea@liferay.com",
+					userLoginFullName = "userfn userln");
+
+				Navigator.gotoSitePage(
+					pageName = "App Builder Test Page",
+					siteName = "App Builder Site Name");
+			}
 
 			AppBuilderAdmin.add();
 
@@ -2246,11 +2298,6 @@ definition {
 			AppBuilderAdmin.validateItemNameOnTable(itemName = "Testing EDIT permission.");
 
 			AppBuilderAdmin.deleteEntry(itemName = "Testing EDIT permission.");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Portal Content Reviewer",
-				userEmailAddress = "userea@liferay.com");
-
 		}
 	}
 

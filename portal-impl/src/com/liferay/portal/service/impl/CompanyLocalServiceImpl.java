@@ -1227,6 +1227,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		final Company company = companyPersistence.findByPrimaryKey(companyId);
 
+		if (DBPartitionHelperUtil.removePartition(companyId)) {
+			return company;
+		}
+
 		preunregisterCompany(company);
 
 		companyPersistence.remove(company);

@@ -413,14 +413,6 @@ public class GitUtil {
 
 				process = JenkinsResultsParserUtil.executeBashCommands(
 					true, workingDirectory, timeout, modifiedCommands);
-
-				if (process.exitValue() != 0) {
-					throw new IOException(
-						"Bash command failed with exit value " +
-							process.exitValue());
-				}
-
-				break;
 			}
 			catch (IOException | TimeoutException exception) {
 				if (retries == maxRetries) {
@@ -430,18 +422,27 @@ public class GitUtil {
 						exception);
 				}
 
-				usedGitHubDevNodeHostnames.add(gitHubDevNodeHostname);
-
-				System.out.println(
-					"Unable to execute bash commands retrying... ");
-
 				exception.printStackTrace();
-
-				JenkinsResultsParserUtil.sleep(retryDelay);
 			}
 			finally {
-				if (process != null) {
-					_debugDNS(process);
+				try {
+					if ((process != null) && (process.exitValue() == 0)) {
+						break;
+					}
+
+					if (retries < maxRetries) {
+						usedGitHubDevNodeHostnames.add(gitHubDevNodeHostname);
+
+						System.out.println(
+							"Unable to execute bash commands retrying... ");
+
+						JenkinsResultsParserUtil.sleep(retryDelay);
+					}
+				}
+				finally {
+					if (process != null) {
+						_debugDNS(process);
+					}
 				}
 			}
 		}

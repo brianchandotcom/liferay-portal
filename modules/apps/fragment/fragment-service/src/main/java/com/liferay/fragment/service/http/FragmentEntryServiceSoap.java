@@ -640,14 +640,15 @@ public class FragmentEntryServiceSoap {
 	public static com.liferay.fragment.model.FragmentEntrySoap
 			updateFragmentEntry(
 				long fragmentEntryId, String name, String css, String html,
-				String js, String configuration, int status)
+				String js, boolean cacheable, String configuration,
+				long previewFileEntryId, int status)
 		throws RemoteException {
 
 		try {
 			com.liferay.fragment.model.FragmentEntry returnValue =
 				FragmentEntryServiceUtil.updateFragmentEntry(
-					fragmentEntryId, name, css, html, js, configuration,
-					status);
+					fragmentEntryId, name, css, html, js, cacheable,
+					configuration, previewFileEntryId, status);
 
 			return com.liferay.fragment.model.FragmentEntrySoap.toSoapModel(
 				returnValue);
@@ -662,15 +663,14 @@ public class FragmentEntryServiceSoap {
 	public static com.liferay.fragment.model.FragmentEntrySoap
 			updateFragmentEntry(
 				long fragmentEntryId, String name, String css, String html,
-				String js, boolean cacheable, String configuration,
-				long previewFileEntryId, int status)
+				String js, String configuration, int status)
 		throws RemoteException {
 
 		try {
 			com.liferay.fragment.model.FragmentEntry returnValue =
 				FragmentEntryServiceUtil.updateFragmentEntry(
-					fragmentEntryId, name, css, html, js, cacheable,
-					configuration, previewFileEntryId, status);
+					fragmentEntryId, name, css, html, js, configuration,
+					status);
 
 			return com.liferay.fragment.model.FragmentEntrySoap.toSoapModel(
 				returnValue);

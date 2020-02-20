@@ -103,10 +103,7 @@ export default function FragmentContentInteractionsFilter({
 	const props = {};
 
 	if (siblingIds.some(isActive)) {
-		props.onClickCapture = event => {
-			selectEditable(event);
-		};
-
+		props.onClickCapture = selectEditable;
 		props.onDoubleClickCapture = enableProcessor;
 		props.onMouseOverCapture = hoverEditable;
 	}

@@ -89,17 +89,6 @@ export default function PageEditor({withinMasterPage = false}) {
 		return direction;
 	};
 
-	const preventLinkClick = event => {
-		const closestElement = closest(event.target, '[href]');
-
-		if (
-			closestElement &&
-			!closestElement.dataset.lfrPageEditorHrefEnabled
-		) {
-			event.preventDefault();
-		}
-	};
-
 	const onKeyUp = useCallback(
 		event => {
 			event.preventDefault();
@@ -155,6 +144,17 @@ export default function PageEditor({withinMasterPage = false}) {
 
 	useEffect(() => {
 		const pageEditor = pageEditorRef.current;
+
+		const preventLinkClick = event => {
+			const closestElement = closest(event.target, '[href]');
+
+			if (
+				closestElement &&
+				!closestElement.dataset.lfrPageEditorHrefEnabled
+			) {
+				event.preventDefault();
+			}
+		};
 
 		if (pageEditor) {
 			pageEditor.addEventListener('click', preventLinkClick);

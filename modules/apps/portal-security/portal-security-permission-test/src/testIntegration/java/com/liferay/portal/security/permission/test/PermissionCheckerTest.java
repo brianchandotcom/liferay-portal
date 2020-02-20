@@ -203,6 +203,8 @@ public class PermissionCheckerTest {
 				String.valueOf(_user.getCompanyId()), _role.getRoleId(),
 				new String[] {_ADD_TEST_ACTION});
 
+			permissionChecker = _permissionCheckerFactory.create(_user);
+
 			try {
 				hasPermission = permissionChecker.hasPermission(
 					0, _NONSITE_ROOT_MODEL_RESOURCE_NAME,

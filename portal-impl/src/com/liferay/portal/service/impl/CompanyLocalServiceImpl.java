@@ -261,18 +261,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				name = PropsValues.COMPANY_DEFAULT_NAME;
 			}
 
-			String legalName = null;
-			String legalId = null;
-			String legalType = null;
-			String sicCode = null;
-			String tickerSymbol = null;
-			String industry = null;
-			String type = null;
-			String size = null;
-
 			updateAccount(
-				company, name, legalName, legalId, legalType, sicCode,
-				tickerSymbol, industry, type, size);
+				company, name, null, null, null, null, null, null, null, null);
 
 			// Company info
 

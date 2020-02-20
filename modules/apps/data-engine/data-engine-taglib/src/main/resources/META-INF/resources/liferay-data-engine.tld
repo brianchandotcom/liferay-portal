@@ -43,6 +43,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>multiPage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>namespace</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

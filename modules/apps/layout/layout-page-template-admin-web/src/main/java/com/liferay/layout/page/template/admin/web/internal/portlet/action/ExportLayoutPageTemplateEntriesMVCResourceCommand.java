@@ -51,9 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 	implements MVCResourceCommand {
 
-	@Override
-	public boolean serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+	public File getFile(ResourceRequest resourceRequest)
 		throws PortletException {
 
 		long[] exportLayoutPageTemplateEntryIds = null;
@@ -86,13 +84,25 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 				layoutPageTemplateEntries.add(layoutPageTemplateEntry);
 			}
 
-			File file = _exportUtil.exportPageTemplateDefinitions(
+			return _exportUtil.exportPageTemplateDefinitions(
 				layoutPageTemplateEntries);
+		}
+		catch (Exception exception) {
+			throw new PortletException(exception);
+		}
+	}
 
+	@Override
+	public boolean serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
+
+		try {
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
 				"page-templates-" + Time.getTimestamp() + ".zip",
-				new FileInputStream(file), ContentTypes.APPLICATION_ZIP);
+				new FileInputStream(getFile(resourceRequest)),
+				ContentTypes.APPLICATION_ZIP);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);

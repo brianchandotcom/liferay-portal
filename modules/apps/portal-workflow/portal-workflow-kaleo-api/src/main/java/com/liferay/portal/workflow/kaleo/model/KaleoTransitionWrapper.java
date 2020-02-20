@@ -233,6 +233,13 @@ public class KaleoTransitionWrapper
 		return model.getKaleoDefinitionVersionId();
 	}
 
+	@Override
+	public KaleoNode getKaleoNode()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getKaleoNode();
+	}
+
 	/**
 	 * Returns the kaleo node ID of this kaleo transition.
 	 *

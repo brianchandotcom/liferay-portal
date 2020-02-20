@@ -61,11 +61,6 @@ const RULES = {
 	[RULES_TYPE.VALID_MOVE]: isValidMoveToTargetPosition
 };
 
-const RULES_DROP_END = {
-	[RULES_TYPE.MIDDLE]: isValidMoveToMiddle,
-	[RULES_TYPE.VALID_MOVE]: isValidMoveToTargetPosition
-};
-
 const initialDragDrop = {
 	dropTargetItemId: null,
 	targetPosition: null
@@ -141,15 +136,7 @@ export default function useDragAndDrop({
 			};
 		},
 		drop(_item, _monitor) {
-			if (
-				!_monitor.didDrop() &&
-				checkRules(RULES_DROP_END, {
-					item: _item,
-					items: layoutData.items,
-					siblingOrParent: layoutData.items[dropTargetItemId],
-					targetPosition
-				})
-			) {
+			if (!_monitor.didDrop() && dropTargetItemId) {
 				const {parentId, position} = getParentItemIdAndPositon({
 					item: _item,
 					items: layoutData.items,
@@ -433,7 +420,7 @@ function getParentItemIdAndPositon({
 	const siblingOrParent = items[siblingOrParentId];
 
 	if (
-		isNestingSupported(item.type, siblingOrParent.type) ||
+		isNestingSupported(item.type, siblingOrParent.type) &&
 		targetPosition === TARGET_POSITION.MIDDLE
 	) {
 		return {

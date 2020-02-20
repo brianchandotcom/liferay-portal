@@ -414,6 +414,12 @@ public class GitUtil {
 				process = JenkinsResultsParserUtil.executeBashCommands(
 					true, workingDirectory, timeout, modifiedCommands);
 
+				if (process.exitValue() != 0) {
+					throw new IOException(
+						"Bash command failed with exit value " +
+							process.exitValue());
+				}
+
 				break;
 			}
 			catch (IOException | TimeoutException exception) {

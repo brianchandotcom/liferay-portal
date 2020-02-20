@@ -280,6 +280,37 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 		jar.from(compileTask.getOutputs());
 
+		GenerateOptions generateOptions = buildWSDLTask.getGenerateOptions();
+
+		if ((buildWSDLTask.getAxisVersion() == 2) &&
+			(generateOptions.getDatabinding() ==
+				GenerateOptions.Databinding.XMLBEANS)) {
+
+			TaskOutputs taskOutputs = generateTask.getOutputs();
+
+			FileCollection fileCollection = taskOutputs.getFiles();
+
+			final File dir = fileCollection.getSingleFile();
+
+			jar.from(
+				new Callable<File>() {
+
+					@Override
+					public File call() throws Exception {
+						return new File(dir, "schemaorg_apache_xmlbeans");
+					}
+
+				},
+				new Closure<Void>(project) {
+
+					@SuppressWarnings("unused")
+					public void doCall(CopySpec copySpec) {
+						copySpec.into("schemaorg_apache_xmlbeans");
+					}
+
+				});
+		}
+
 		if (buildWSDLTask.isIncludeSource()) {
 			jar.into(
 				"OSGI-OPT/src",

@@ -15,7 +15,6 @@
 package com.liferay.gradle.plugins.wsdl.builder;
 
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +29,8 @@ import org.gradle.api.tasks.Input;
 public class GenerateOptions {
 
 	@Input
-	public String getDatabindingMethod() {
-		return GradleUtil.toString(_databindingMethod);
+	public Databinding getDatabinding() {
+		return _databinding;
 	}
 
 	@Input
@@ -84,8 +83,8 @@ public class GenerateOptions {
 		_backwordCompatible = backwordCompatible;
 	}
 
-	public void setDatabindingMethod(Object databindingMethod) {
-		_databindingMethod = databindingMethod;
+	public void setDatabinding(Databinding databinding) {
+		_databinding = databinding;
 	}
 
 	public void setFlattenFiles(boolean flattenFiles) {
@@ -114,6 +113,12 @@ public class GenerateOptions {
 		_verbose = verbose;
 	}
 
+	public enum Databinding {
+
+		ADB, JIBX, NONE, XMLBEANS
+
+	}
+
 	protected List<String> getArgs() {
 		List<String> args = new ArrayList<>();
 
@@ -121,11 +126,14 @@ public class GenerateOptions {
 			args.add("--backword-compatible");
 		}
 
-		String databindingMethod = getDatabindingMethod();
+		Databinding databinding = getDatabinding();
 
-		if (Validator.isNotNull(databindingMethod)) {
+		if (databinding != null) {
 			args.add("--databinding-method");
-			args.add(databindingMethod);
+
+			String name = databinding.name();
+
+			args.add(name.toLowerCase());
 		}
 
 		if (isFlattenFiles()) {
@@ -165,7 +173,7 @@ public class GenerateOptions {
 	}
 
 	private boolean _backwordCompatible;
-	private Object _databindingMethod;
+	private Databinding _databinding;
 	private boolean _flattenFiles;
 	private boolean _generateAll;
 	private final Map<Object, Object> _mappings = new TreeMap<>();

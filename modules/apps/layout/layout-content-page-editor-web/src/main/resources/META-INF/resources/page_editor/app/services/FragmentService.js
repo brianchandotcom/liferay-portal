@@ -64,6 +64,44 @@ export default {
 	/**
 	 * Adds a new Fragment to the current layout
 	 * @param {object} options
+	 * @param {string} options.description Fragment composition description
+	 * @param {string} options.fragmentCollectionId Fragment collection ID
+	 * @param {string} options.itemId Item ID to create a composition from
+	 * @param {string} options.name Fragment composition name
+	 * @param {function} options.onNetworkStatus
+	 * @param {string} options.previewImageURL Fragment composition preview image url
+	 * @param {string} options.segmentsExperienceId Current segmentsExperienceId
+	 * @return {Promise<FragmentComposition>} Created FragmentComposition
+	 */
+	addFragmentComposition({
+		description,
+		fragmentCollectionId,
+		itemId,
+		name,
+		onNetworkStatus,
+		previewImageURL,
+		segmentsExperienceId
+	}) {
+		return serviceFetch(
+			config.addFragmentCompositionURL,
+			{
+				body: {
+					description,
+					fragmentCollectionId,
+					itemId,
+					name,
+					previewImageURL,
+					segmentsExperienceId
+				}
+			},
+			onNetworkStatus,
+			{requestGenerateDraft: true}
+		);
+	},
+
+	/**
+	 * Adds a new Fragment to the current layout
+	 * @param {object} options
 	 * @param {string} options.fragmentEntryKey Key of the Fragment
 	 * @param {string} options.groupId GroupId that wraps the Fragment
 	 * @param {function} options.onNetworkStatus

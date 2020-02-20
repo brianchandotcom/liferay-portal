@@ -307,6 +307,8 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			httpResponse = proxiedHttpRequest.send();
 		}
 
+		httpResponse.charset("utf-8");
+
 		String responseBodyText = _removeUTFBOM(httpResponse.bodyText());
 
 		DocumentContext documentContext = JsonPath.parse(responseBodyText);

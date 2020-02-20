@@ -62,7 +62,10 @@ public class BaseFieldAggregationTranslator {
 		T valuesSourceAggregationBuilder,
 		FieldAggregation baseFieldAggregation) {
 
-		valuesSourceAggregationBuilder.field(baseFieldAggregation.getField());
+		if (baseFieldAggregation.getField() != null) {
+			valuesSourceAggregationBuilder.field(
+				baseFieldAggregation.getField());
+		}
 	}
 
 	protected <T extends ValuesSourceAggregationBuilder> void setMissing(

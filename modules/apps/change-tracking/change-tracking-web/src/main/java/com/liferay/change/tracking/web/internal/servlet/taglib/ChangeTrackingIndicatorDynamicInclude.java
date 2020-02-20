@@ -200,7 +200,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				}
 			}
 			else {
-				checkoutURL.setParameter("ctCollectionId", String.valueOf(0L));
+				checkoutURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(CTConstants.CT_COLLECTION_ID_PRODUCTION));
 
 				jsonArray.put(
 					JSONUtil.put(

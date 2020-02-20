@@ -33,84 +33,64 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 %>
 
 <div class="container-fluid-1280">
-	<liferay-ui:panel-container
-		cssClass="statistics-panel"
-		extended="<%= false %>"
-		id="messageBoardsStatisticsPanelContainer"
-		markupView="lexicon"
-		persistState="<%= true %>"
-	>
-		<liferay-ui:panel
-			collapsible="<%= true %>"
-			cssClass="statistics-panel-content"
-			extended="<%= true %>"
-			id="messageBoardsGeneralStatisticsPanel"
-			markupView="lexicon"
-			persistState="<%= true %>"
-			title="general"
-		>
-			<dl>
-				<dt>
-					<liferay-ui:message key="categories" />:
-				</dt>
-				<dd>
-					<%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %>
-				</dd>
-				<dt>
-					<c:choose>
-						<c:when test="<%= MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId) == 1 %>">
-							<liferay-ui:message key="post" />:
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="posts" />:
-						</c:otherwise>
-					</c:choose>
-				</dt>
-				<dd>
-					<%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %>
-				</dd>
-				<dt>
-					<liferay-ui:message key="participants" />:
-				</dt>
-				<dd>
-					<%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %>
-				</dd>
-			</dl>
-		</liferay-ui:panel>
+	<div class="statistics-panel">
+		<h3><liferay-ui:message key="overview" /></h3>
 
-		<liferay-ui:panel
-			collapsible="<%= true %>"
-			cssClass="statistics-panel-content"
-			extended="<%= true %>"
-			id="messageBoardsTopPostersPanel"
-			markupView="lexicon"
-			persistState="<%= true %>"
-			title="top-posters"
-		>
-			<liferay-ui:search-container
+		<dl>
+			<dt>
+				<liferay-ui:message key="categories" />:
+			</dt>
+			<dd>
+				<%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %>
+			</dd>
+			<dt>
+				<c:choose>
+					<c:when test="<%= MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId) == 1 %>">
+						<liferay-ui:message key="post" />:
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="posts" />:
+					</c:otherwise>
+				</c:choose>
+			</dt>
+			<dd>
+				<%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %>
+			</dd>
+			<dt>
+				<liferay-ui:message key="participants" />:
+			</dt>
+			<dd>
+				<%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %>
+			</dd>
+		</dl>
+	</div>
+
+	<div class="statistics-panel">
+		<h3><liferay-ui:message key="top-posters" /></h3>
+
+		<liferay-ui:search-container
 				emptyResultsMessage="there-are-no-top-posters"
 				iteratorURL="<%= portletURL %>"
 				total="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId) %>"
+		>
+			<liferay-ui:search-container-results
+				results="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupId(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			/>
+
+			<liferay-ui:search-container-row
+				className="com.liferay.message.boards.model.MBStatsUser"
+				keyProperty="statsUserId"
+				modelVar="statsUser"
 			>
-				<liferay-ui:search-container-results
-					results="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupId(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+				<%@ include file="/message_boards/top_posters_user_display.jspf" %>
+			</liferay-ui:search-container-row>
 
-				<liferay-ui:search-container-row
-					className="com.liferay.message.boards.model.MBStatsUser"
-					keyProperty="statsUserId"
-					modelVar="statsUser"
-				>
-					<%@ include file="/message_boards/top_posters_user_display.jspf" %>
-				</liferay-ui:search-container-row>
-
-				<liferay-ui:search-iterator
-					displayStyle="descriptive"
-					markupView="lexicon"
-				/>
-			</liferay-ui:search-container>
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
+			<liferay-ui:search-iterator
+				displayStyle="descriptive"
+				markupView="lexicon"
+			/>
+		</liferay-ui:search-container>
+	</div>
 </div>
 
 <%

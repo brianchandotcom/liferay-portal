@@ -23,9 +23,7 @@ public class UpgradeCTPreferences extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("CTPreferences", "previousCtCollectionId")) {
-			runSQL("alter table CTPreferences add previousCtCollectionId LONG");
-		}
+		runSQL("alter table CTPreferences add previousCtCollectionId LONG");
 	}
 
 }

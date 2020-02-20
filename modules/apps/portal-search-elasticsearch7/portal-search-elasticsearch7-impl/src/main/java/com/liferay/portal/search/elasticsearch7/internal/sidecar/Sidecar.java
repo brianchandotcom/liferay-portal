@@ -41,10 +41,19 @@ import java.io.Serializable;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,37 +78,37 @@ public class Sidecar {
 	public Sidecar(
 		ComponentContext componentContext, String componentName,
 		ElasticsearchConfiguration elasticsearchConfiguration,
-		com.liferay.portal.kernel.util.File file,
 		ProcessExecutor processExecutor, Props props) {
 
-		String liferayHome = props.get(PropsKeys.LIFERAY_HOME);
+		Path liferayHome = Paths.get(props.get(PropsKeys.LIFERAY_HOME));
 
-		File sidecarHome = new File(
-			liferayHome, elasticsearchConfiguration.sidecarHome());
+		liferayHome = liferayHome.toAbsolutePath();
 
-		if (!sidecarHome.exists() || !sidecarHome.isDirectory()) {
-			sidecarHome = new File(elasticsearchConfiguration.sidecarHome());
+		Path sidecarHome = liferayHome.resolve(
+			elasticsearchConfiguration.sidecarHome());
 
-			if (!sidecarHome.exists() || !sidecarHome.isDirectory()) {
+		if (!Files.isDirectory(sidecarHome)) {
+			sidecarHome = Paths.get(elasticsearchConfiguration.sidecarHome());
+
+			if (!Files.isDirectory(sidecarHome)) {
 				throw new IllegalArgumentException(
 					"Sidecar home " + elasticsearchConfiguration.sidecarHome() +
 						" does not exist");
 			}
 		}
 
-		_sidecarHome = sidecarHome;
+		_sidecarHome = sidecarHome.toAbsolutePath();
 
-		_pathLogs = new File(liferayHome, "logs");
+		_pathLogs = liferayHome.resolve("logs");
 
-		_dataHome = new File(liferayHome, "data/elasticsearch7");
+		_dataHome = liferayHome.resolve("data/elasticsearch7");
 
-		_pathData = new File(_dataHome, "indices");
-		_pathRepo = new File(_dataHome, "repo");
+		_pathData = _dataHome.resolve("indices");
+		_pathRepo = _dataHome.resolve("repo");
 
 		_componentContext = componentContext;
 		_componentName = componentName;
 		_elasticsearchConfiguration = elasticsearchConfiguration;
-		_file = file;
 		_processExecutor = processExecutor;
 		_props = props;
 	}
@@ -120,7 +129,7 @@ public class Sidecar {
 		}
 
 		String sidecarLibClassPath = _createClasspath(
-			new File(_sidecarHome, "lib"), null);
+			new File(_sidecarHome.toFile(), "lib"), null);
 
 		Map<String, byte[]> modifiedClasses = new HashMap<>();
 
@@ -202,9 +211,7 @@ public class Sidecar {
 	}
 
 	public void stop() {
-		if (_sidecarTempDir != null) {
-			_file.deltree(_sidecarTempDir);
-		}
+		deleteDir(_sidecarTempDir);
 
 		if (_processChannel == null) {
 			return;
@@ -220,7 +227,62 @@ public class Sidecar {
 		_processChannel = null;
 	}
 
-	protected File getDataHome() {
+	protected void deleteDir(Path dirPath) {
+		if (dirPath == null) {
+			return;
+		}
+
+		try {
+			Files.walkFileTree(
+				dirPath,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult postVisitDirectory(
+							Path dir, IOException ioException)
+						throws IOException {
+
+						if (ioException != null) {
+							throw ioException;
+						}
+
+						Files.delete(dir);
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(
+							Path file, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						Files.delete(file);
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFileFailed(
+							Path file, IOException ioException)
+						throws IOException {
+
+						if (ioException instanceof NoSuchFileException) {
+							return FileVisitResult.CONTINUE;
+						}
+
+						throw ioException;
+					}
+
+				});
+		}
+		catch (IOException ioException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to delete dir: " + dirPath, ioException);
+			}
+		}
+	}
+
+	protected Path getDataHome() {
 		return _dataHome;
 	}
 
@@ -228,7 +290,7 @@ public class Sidecar {
 		return _DEFAULT_NODE_NAME;
 	}
 
-	protected File getPathData() {
+	protected Path getPathData() {
 		return _pathData;
 	}
 
@@ -334,34 +396,35 @@ public class Sidecar {
 		}
 
 		try {
-			_sidecarTempDir = _file.createTempFolder();
+			_sidecarTempDir = Files.createTempDirectory("sidecar");
 		}
 		catch (IOException ioException) {
 			throw new IllegalStateException(
 				"Unable to create temp folder", ioException);
 		}
 
-		File configFolder = new File(_sidecarTempDir, "config");
+		Path configFolder = _sidecarTempDir.resolve("config");
 
 		try {
-			_file.write(
-				new File(configFolder, "log4j2.properties"),
-				StringBundler.concat(
-					"logger.deprecation.name=org.elasticsearch.deprecation\n",
-					"logger.deprecation.level=error\n",
+			Files.createDirectories(configFolder);
+
+			Files.write(
+				configFolder.resolve("log4j2.properties"),
+				Arrays.asList(
+					"logger.deprecation.name=org.elasticsearch.deprecation",
+					"logger.deprecation.level=error",
 					ResourceUtil.getResourceAsString(
 						Sidecar.class, "/log4j2.properties")));
 		}
 		catch (IOException ioException) {
 			_log.error(
-				"Unable to copy log4j2.properties to " +
-					configFolder.getAbsolutePath(),
+				"Unable to copy log4j2.properties to " + configFolder,
 				ioException);
 		}
 
-		arguments.add("-Des.path.conf=" + configFolder.getAbsolutePath());
+		arguments.add("-Des.path.conf=" + configFolder);
 
-		arguments.add("-Des.path.home=" + _sidecarHome.getAbsolutePath());
+		arguments.add("-Des.path.home=" + _sidecarHome.toString());
 		arguments.add("-Des.networkaddress.cache.ttl=60");
 		arguments.add("-Des.networkaddress.cache.negative.ttl=10");
 
@@ -375,7 +438,7 @@ public class Sidecar {
 		arguments.add("-Dio.netty.recycler.maxCapacityPerThread=0");
 
 		arguments.add("-Dfile.encoding=UTF-8");
-		arguments.add("-Djava.io.tmpdir=" + _sidecarTempDir.getAbsolutePath());
+		arguments.add("-Djava.io.tmpdir=" + _sidecarTempDir);
 
 		URLClassLoader urlClassLoader = new URLClassLoader(
 			new URL[] {bundleURL});
@@ -453,9 +516,9 @@ public class Sidecar {
 			"cluster.name", _elasticsearchConfiguration.clusterName());
 		settingsBuilder.put(
 			"http.cors.enabled", _elasticsearchConfiguration.httpCORSEnabled());
-		settingsBuilder.put("path.data", _pathData.getAbsolutePath());
-		settingsBuilder.put("path.logs", _pathLogs.getAbsolutePath());
-		settingsBuilder.put("path.repo", _pathRepo.getAbsolutePath());
+		settingsBuilder.put("path.data", _pathData.toString());
+		settingsBuilder.put("path.logs", _pathLogs.toString());
+		settingsBuilder.put("path.repo", _pathRepo.toString());
 
 		if (_elasticsearchConfiguration.httpCORSEnabled()) {
 			settingsBuilder.put(
@@ -524,18 +587,17 @@ public class Sidecar {
 	private DefaultNoticeableFuture<String> _addressNoticeableFuture;
 	private final ComponentContext _componentContext;
 	private final String _componentName;
-	private final File _dataHome;
+	private final Path _dataHome;
 	private final ElasticsearchConfiguration _elasticsearchConfiguration;
-	private final com.liferay.portal.kernel.util.File _file;
-	private final File _pathData;
-	private final File _pathLogs;
-	private final File _pathRepo;
+	private final Path _pathData;
+	private final Path _pathLogs;
+	private final Path _pathRepo;
 	private ProcessChannel<Serializable> _processChannel;
 	private final ProcessExecutor _processExecutor;
 	private final Props _props;
 	private FutureListener<Serializable> _restartFutureListener;
-	private final File _sidecarHome;
-	private File _sidecarTempDir;
+	private final Path _sidecarHome;
+	private Path _sidecarTempDir;
 
 	private class RestartFutureListener
 		implements FutureListener<Serializable> {

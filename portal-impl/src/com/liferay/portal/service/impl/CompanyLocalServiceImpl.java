@@ -288,31 +288,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			// Demo settings
 
 			if (webId.equals("liferay.net")) {
-				company = companyPersistence.findByWebId(webId);
-
-				updateVirtualHostname(companyId, "demo.liferay.net");
-
-				updateSecurity(
-					companyId, CompanyConstants.AUTH_TYPE_EA, true, true, true,
-					true, false, true);
-
-				PortletPreferences preferences = PrefsPropsUtil.getPreferences(
-					companyId);
-
-				try {
-					preferences.setValue(
-						PropsKeys.ADMIN_EMAIL_FROM_NAME, "Liferay Demo");
-					preferences.setValue(
-						PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, "test@liferay.net");
-
-					preferences.store();
-				}
-				catch (IOException ioException) {
-					throw new SystemException(ioException);
-				}
-				catch (PortletException portletException) {
-					throw new SystemException(portletException);
-				}
+				_addDemoSettings(company);
 			}
 		}
 
@@ -1883,6 +1859,32 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		contactPersistence.update(defaultContact);
 
 		return defaultUser;
+	}
+
+	private void _addDemoSettings(Company company) throws PortalException {
+		updateVirtualHostname(company.getCompanyId(), "demo.liferay.net");
+
+		updateSecurity(
+			company.getCompanyId(), CompanyConstants.AUTH_TYPE_EA, true, true,
+			true, true, false, true);
+
+		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+			company.getCompanyId());
+
+		try {
+			preferences.setValue(
+				PropsKeys.ADMIN_EMAIL_FROM_NAME, "Liferay Demo");
+			preferences.setValue(
+				PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, "test@liferay.net");
+
+			preferences.store();
+		}
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
+		}
+		catch (PortletException portletException) {
+			throw new SystemException(portletException);
+		}
 	}
 
 	private void _clearCompanyCache(long companyId) {

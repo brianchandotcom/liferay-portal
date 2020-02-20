@@ -28,7 +28,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AssetDisplayPageConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
-	public boolean enableIncrementViewCounter();
+	@Meta.AD(
+		deflt = "false", name = "enable-view-count-increment", required = false
+	)
+	public boolean enableViewCountIncrement();
 
 }

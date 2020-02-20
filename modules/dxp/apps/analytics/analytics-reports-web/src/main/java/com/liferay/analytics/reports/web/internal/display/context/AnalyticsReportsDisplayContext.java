@@ -71,6 +71,8 @@ public class AnalyticsReportsDisplayContext {
 		_data = HashMapBuilder.<String, Object>put(
 			"context",
 			HashMapBuilder.<String, Object>put(
+				"defaultTimeSpan", TimeSpan.LAST_7_DAYS.getLabel()
+			).put(
 				"endpoints",
 				HashMapBuilder.<String, Object>put(
 					"getAnalyticsReportsHistoricalReadsURL",

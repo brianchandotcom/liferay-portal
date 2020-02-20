@@ -119,6 +119,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 				LAYOUT_DATA_ITEM_TYPES.fragment
 			]}
 			item={item}
+			itemRef={ref}
 			layoutData={layoutData}
 		>
 			{() => content}

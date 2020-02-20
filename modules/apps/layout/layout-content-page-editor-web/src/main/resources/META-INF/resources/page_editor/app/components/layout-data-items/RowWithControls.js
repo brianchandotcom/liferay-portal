@@ -234,6 +234,7 @@ const RowWithControls = React.forwardRef(
 					LAYOUT_DATA_ITEM_TYPES.row
 				]}
 				item={item}
+				itemRef={ref}
 				layoutData={layoutData}
 			>
 				{() => content}

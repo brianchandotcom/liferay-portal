@@ -114,6 +114,7 @@ const ContainerWithControls = React.forwardRef(
 				]}
 				dropNestedAndSibling
 				item={item}
+				itemRef={ref}
 				layoutData={layoutData}
 			>
 				{() => content}

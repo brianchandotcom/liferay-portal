@@ -46,6 +46,7 @@ const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
 			acceptDrop={[LAYOUT_DATA_ITEM_TYPES.fragment]}
 			active
 			item={item}
+			itemRef={ref}
 			layoutData={layoutData}
 		>
 			{() => content}

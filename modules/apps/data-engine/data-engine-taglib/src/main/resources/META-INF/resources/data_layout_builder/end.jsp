@@ -28,6 +28,12 @@ data.put("dataDefinitionId", dataDefinitionId);
 data.put("dataLayoutBuilderElementId", renderResponse.getNamespace() + "-data-layout-builder");
 data.put("dataLayoutBuilderId", componentId);
 data.put("dataLayoutId", dataLayoutId);
+
+Map<String, Object> succesPageSettings = new HashMap<>();
+
+succesPageSettings.put("enabled", enableSuccessPage);
+
+data.put("successPageSettings", succesPageSettings);
 data.put("fieldTypes", fieldTypesJSONArray);
 data.put("fieldTypesModules", fieldTypesModules);
 data.put("groupId", groupId);

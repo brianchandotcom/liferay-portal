@@ -57,7 +57,7 @@ List<ScopeSearchFacetTermDisplayContext> scopeSearchFacetTermDisplayContexts = s
 		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>" />
 	</c:when>
 	<c:otherwise>
-		<aui:form method="post" name="siteFacetFm">
+		<aui:form method="post" name="fm">
 			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>" />
 			<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterName() %>" />
 
@@ -138,6 +138,6 @@ List<ScopeSearchFacetTermDisplayContext> scopeSearchFacetTermDisplayContexts = s
 
 <aui:script use="liferay-search-facet-util">
 	Liferay.Search.FacetUtil.enableInputs(
-		document.querySelectorAll('#<portlet:namespace />siteFacetFm .facet-term')
+		document.querySelectorAll('#<portlet:namespace />fm .facet-term')
 	);
 </aui:script>

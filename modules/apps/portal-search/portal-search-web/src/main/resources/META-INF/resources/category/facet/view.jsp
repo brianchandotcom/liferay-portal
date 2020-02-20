@@ -57,7 +57,7 @@ List<AssetCategoriesSearchFacetTermDisplayContext> assetCategoriesSearchFacetTer
 		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetCategoriesSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getParameterValue() %>" />
 	</c:when>
 	<c:otherwise>
-		<aui:form method="post" name="categoryFacetFm">
+		<aui:form method="post" name="fm">
 			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetCategoriesSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getParameterValue() %>" />
 			<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getParameterName() %>" />
 
@@ -138,8 +138,6 @@ List<AssetCategoriesSearchFacetTermDisplayContext> assetCategoriesSearchFacetTer
 
 <aui:script use="liferay-search-facet-util">
 	Liferay.Search.FacetUtil.enableInputs(
-		document.querySelectorAll(
-			'#<portlet:namespace />categoryFacetFm .facet-term'
-		)
+		document.querySelectorAll('#<portlet:namespace />fm .facet-term')
 	);
 </aui:script>

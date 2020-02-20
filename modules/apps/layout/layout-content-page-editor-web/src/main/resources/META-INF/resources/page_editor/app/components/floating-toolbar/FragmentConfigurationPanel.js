@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import {
 	ConfigurationFieldPropTypes,

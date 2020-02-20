@@ -302,6 +302,10 @@ public class FinderCacheImpl
 			return;
 		}
 
+		_removeResult(finderPath, args);
+	}
+
+	private void _removeResult(FinderPath finderPath, Object[] args) {
 		Serializable cacheKey = finderPath.encodeCacheKey(args);
 
 		if (_isLocalCacheEnabled()) {

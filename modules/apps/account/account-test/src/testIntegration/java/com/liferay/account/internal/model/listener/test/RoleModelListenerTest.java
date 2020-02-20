@@ -14,6 +14,7 @@
 
 package com.liferay.account.internal.model.listener.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -61,6 +63,44 @@ public class RoleModelListenerTest {
 	@Before
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
+	}
+
+	@Test
+	public void testAddAccountScopedRole() throws Exception {
+		_role = _roleLocalService.addRole(
+			TestPropsValues.getUserId(), AccountRole.class.getName(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), RoleConstants.TYPE_PROVIDER,
+			null, null);
+
+		AccountRole accountRole =
+			_accountRoleLocalService.fetchAccountRoleByRoleId(
+				_role.getRoleId());
+
+		Assert.assertNotNull(accountRole);
+		Assert.assertEquals(_role.getRoleId(), accountRole.getRoleId());
+	}
+
+	@Test
+	public void testDeleteAccountScopedRoleDeletesAccountRole()
+		throws Exception {
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap());
+
+		Assert.assertNotNull(accountRole.getRole());
+
+		_roleLocalService.deleteRole(accountRole.getRole());
+
+		Assert.assertNull(
+			_accountRoleLocalService.fetchAccountRole(
+				accountRole.getAccountRoleId()));
 	}
 
 	@Test
@@ -154,6 +194,9 @@ public class RoleModelListenerTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private Role _role;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

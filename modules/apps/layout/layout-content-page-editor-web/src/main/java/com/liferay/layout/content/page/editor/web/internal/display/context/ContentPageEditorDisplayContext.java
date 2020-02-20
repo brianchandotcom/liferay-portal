@@ -189,6 +189,10 @@ public class ContentPageEditorDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			HashMapBuilder.<String, Object>put(
+				"addFragmentCompositionURL",
+				getFragmentEntryActionURL(
+					"/content_layout/add_fragment_composition")
+			).put(
 				"addFragmentEntryLinkCommentURL",
 				getFragmentEntryActionURL(
 					"/content_layout/add_fragment_entry_link_comment")

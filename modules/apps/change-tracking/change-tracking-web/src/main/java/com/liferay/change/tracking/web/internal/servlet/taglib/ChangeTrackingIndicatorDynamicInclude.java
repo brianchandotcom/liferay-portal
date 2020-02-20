@@ -157,16 +157,15 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
 
-		if (ctCollection != null) {
+		if (ctCollection == null) {
+			data.put("iconClass", "change-tracking-indicator-icon-production");
+			data.put("iconName", "simple-circle");
+			data.put("title", _language.get(resourceBundle, "production"));
+		}
+		else {
 			data.put("iconClass", "change-tracking-indicator-icon-change-list");
 			data.put("iconName", "radio-button");
 			data.put("title", ctCollection.getName());
-		}
-		else {
-			data.put("iconClass", "change-tracking-indicator-icon-production");
-			data.put("iconName", "simple-circle");
-
-			data.put("title", _language.get(resourceBundle, "production"));
 		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();

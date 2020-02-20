@@ -62,11 +62,9 @@ public class UpgradeKBArticle extends UpgradeProcess {
 		int i = urlTitle.lastIndexOf(CharPool.DASH);
 
 		if (i != -1) {
-			Matcher matcher = _pattern.matcher(
-				urlTitle
-			).region(
-				i, urlTitle.length()
-			);
+			Matcher matcher = _pattern.matcher(urlTitle);
+
+			matcher.region(i, urlTitle.length());
 
 			if (matcher.matches()) {
 				int counter = GetterUtil.getInteger(urlTitle.substring(i + 1));

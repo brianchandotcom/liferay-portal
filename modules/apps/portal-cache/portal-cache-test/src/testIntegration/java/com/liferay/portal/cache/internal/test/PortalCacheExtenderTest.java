@@ -66,15 +66,9 @@ public class PortalCacheExtenderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(PortalCacheExtenderTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_bundle = bundleContext.installBundle(
-			_BUNDLE_SYMBOLIC_NAME,
-			_createBundle("module-multi-vm.xml", "module-single-vm.xml"));
-
-		_bundle.start();
+		_bundle = _installBundle(
+			_BUNDLE_SYMBOLIC_NAME, "module-multi-vm.xml",
+			"module-single-vm.xml");
 	}
 
 	@After
@@ -95,7 +89,8 @@ public class PortalCacheExtenderTest {
 
 		_bundle.stop();
 
-		_bundle.update(_createBundle(null, "module-single-vm.xml"));
+		_bundle.update(
+			_createBundle(_BUNDLE_SYMBOLIC_NAME, null, "module-single-vm.xml"));
 
 		_bundle.start();
 
@@ -109,7 +104,8 @@ public class PortalCacheExtenderTest {
 
 		_bundle.stop();
 
-		_bundle.update(_createBundle("module-multi-vm.xml", null));
+		_bundle.update(
+			_createBundle(_BUNDLE_SYMBOLIC_NAME, "module-multi-vm.xml", null));
 
 		_bundle.start();
 
@@ -131,20 +127,27 @@ public class PortalCacheExtenderTest {
 			PortalCacheManagerNames.SINGLE_VM, false, 1001, "test.cache.single",
 			true, 51L);
 
-		_bundle.stop();
+		Bundle overridingBundle = null;
 
-		_bundle.update(
-			_createBundle(
-				"module-multi-vm-updated.xml", "module-single-vm-updated.xml"));
+		try {
+			overridingBundle = _installBundle(
+				_BUNDLE_SYMBOLIC_NAME.concat(".updated"),
+				"module-multi-vm-updated.xml", "module-single-vm-updated.xml");
 
-		_bundle.start();
+			_assertCacheConfig(
+				PortalCacheManagerNames.MULTI_VM, false, 2001,
+				"test.cache.multi", true, 101L);
+			_assertCacheConfig(
+				PortalCacheManagerNames.SINGLE_VM, false, 2001,
+				"test.cache.single", true, 101L);
+		}
+		finally {
+			if ((overridingBundle != null) &&
+				(overridingBundle.getState() != Bundle.UNINSTALLED)) {
 
-		_assertCacheConfig(
-			PortalCacheManagerNames.MULTI_VM, false, 2001, "test.cache.multi",
-			true, 101L);
-		_assertCacheConfig(
-			PortalCacheManagerNames.SINGLE_VM, false, 2001, "test.cache.single",
-			true, 101L);
+				overridingBundle.uninstall();
+			}
+		}
 	}
 
 	private void _assertCacheConfig(
@@ -174,7 +177,8 @@ public class PortalCacheExtenderTest {
 	}
 
 	private InputStream _createBundle(
-			String multiCacheConfigName, String singleCacheConfigName)
+			String bundleSymbolicName, String multiCacheConfigName,
+			String singleCacheConfigName)
 		throws IOException {
 
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
@@ -183,7 +187,7 @@ public class PortalCacheExtenderTest {
 			try (JarOutputStream jarOutputStream = new JarOutputStream(
 					unsyncByteArrayOutputStream)) {
 
-				_writeManifest(_BUNDLE_SYMBOLIC_NAME, "1.0.0", jarOutputStream);
+				_writeManifest(bundleSymbolicName, "1.0.0", jarOutputStream);
 
 				_writeClass(jarOutputStream);
 
@@ -229,6 +233,26 @@ public class PortalCacheExtenderTest {
 		}
 
 		return object;
+	}
+
+	private Bundle _installBundle(
+			String bundleSymbolicName, String multiCacheConfigName,
+			String singleCacheConfigName)
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(PortalCacheExtenderTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Bundle newBundle = bundleContext.installBundle(
+			bundleSymbolicName,
+			_createBundle(
+				bundleSymbolicName, multiCacheConfigName,
+				singleCacheConfigName));
+
+		newBundle.start();
+
+		return newBundle;
 	}
 
 	private void _writeClass(JarOutputStream jarOutputStream)

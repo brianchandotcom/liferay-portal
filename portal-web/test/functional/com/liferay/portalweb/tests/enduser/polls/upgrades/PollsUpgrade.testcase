@@ -5,7 +5,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Polls";
-	property testray.main.component.name = "Upgrades Forms and Workflow";
+	property testray.main.component.name = "Upgrades Forms";
 
 	setUp {
 		SignIn.signIn();

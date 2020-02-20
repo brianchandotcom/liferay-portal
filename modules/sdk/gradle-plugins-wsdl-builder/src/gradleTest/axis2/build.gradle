@@ -40,7 +40,7 @@ runGradleTest {
 
 	doLast {
 		String[] fileNames = [
-			"src/main/java/com/example/wsdl/HelloWorldService_wsdl/HelloWorld_BindingStub.java",
+			"src/main/java/com/example/wsdl/helloworldservice_wsdl/HelloWorld_BindingStub.java",
 			"src/main/java/schemaorg_apache_xmlbeans/attribute/http_3A_2F_2Fschemas_2Exmlsoap_2Eorg_2Fsoap_2Fencoding_2F/arrayType.xsb"
 		]
 

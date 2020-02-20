@@ -4,7 +4,7 @@ definition {
 	macro addFile {
 		var portalURL = JSONCompany.getPortalURL();
 
-		var repositoryId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
 
 		if (!(isSet(folderId))) {
 			var folderId = "0";

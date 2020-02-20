@@ -49,6 +49,10 @@ export default function getAlloyEditorProcessor(
 
 	return {
 		createEditor: (element, changeCallback, destroyCallback, event) => {
+			if (_editor) {
+				return;
+			}
+
 			const {editorConfig} = config.defaultEditorConfigurations[
 				editorConfigurationName
 			];

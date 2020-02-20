@@ -343,19 +343,20 @@ else {
 				</aui:fieldset>
 			</liferay-ui:panel>
 		</c:if>
+
 		<liferay-ui:panel
-				cssClass="mb-3"
-				defaultState="closed"
-				extended="<%= true %>"
-				id="dlFileEntryPermissionsPanel"
-				markupView="lexicon"
-				persistState="<%= true %>"
-				title="permissions"
-			>
-				<liferay-ui:input-permissions
-			modelName="<%= DLFileEntryConstants.getClassName() %>"
-		/>
-			</liferay-ui:panel>
+			cssClass="mb-3"
+			defaultState="closed"
+			extended="<%= true %>"
+			id="dlFileEntryPermissionsPanel"
+			markupView="lexicon"
+			persistState="<%= true %>"
+			title="permissions"
+		>
+			<liferay-ui:input-permissions
+				modelName="<%= DLFileEntryConstants.getClassName() %>"
+			/>
+		</liferay-ui:panel>
 	</liferay-ui:panel-container>
 
 	<span id="<portlet:namespace />selectedFileNameContainer"></span>

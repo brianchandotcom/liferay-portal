@@ -20,7 +20,7 @@ dependencyManagement {
 }
 
 runGradleTest {
-	dependsOn dependencyManagement
+	dependsOn "dependencyManagement"
 
 	doLast {
 		File txtFile = file("${buildDir}/test.txt")

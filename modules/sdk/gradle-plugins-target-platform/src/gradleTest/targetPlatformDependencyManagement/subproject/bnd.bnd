@@ -1,0 +1,4 @@
+Bundle-Activator: com.liferay.subproject.internal.activator.SubprojectBundleActivator
+Bundle-Name: Liferay Subproject
+Bundle-SymbolicName: com.liferay.subproject
+Bundle-Version: 1.0.0

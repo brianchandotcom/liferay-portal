@@ -18,6 +18,11 @@ import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationE
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -29,13 +34,16 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 import com.liferay.roles.admin.constants.RolesAdminWebKeys;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -46,6 +54,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pei-Jung Lan
@@ -99,36 +110,20 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		httpServletRequest.setAttribute(
-			RolesAdminWebKeys.CURRENT_ROLE_TYPE, _accountRoleTypeContributor);
-		httpServletRequest.setAttribute(
-			RolesAdminWebKeys.SHOW_NAV_TABS, Boolean.FALSE);
+		_setAttributes(httpServletRequest);
 
 		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(
 			httpServletRequest);
 
 		dynamicServletRequest.appendParameter("tabs1", "define-permissions");
 		dynamicServletRequest.appendParameter(Constants.CMD, Constants.VIEW);
-
-		PortletURL redirect = _portal.getControlPanelPortletURL(
-			httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		redirect.setParameter(
-			"mvcPath", "/account_entries_admin/edit_account_role.jsp");
-		redirect.setParameter(
-			"accountEntryId",
-			ParamUtil.getString(httpServletRequest, "accountEntryId"));
-
-		long accountRoleId = ParamUtil.getLong(
-			httpServletRequest, "accountRoleId");
+		dynamicServletRequest.appendParameter(
+			"redirect", _getRedirect(httpServletRequest));
+		dynamicServletRequest.appendParameter(
+			"backURL", _getBackURL(httpServletRequest));
 
 		AccountRole accountRole = _accountRoleLocalService.fetchAccountRole(
-			accountRoleId);
-
-		redirect.setParameter("accountRoleId", String.valueOf(accountRoleId));
-
-		dynamicServletRequest.appendParameter("redirect", redirect.toString());
+			ParamUtil.getLong(httpServletRequest, "accountRoleId"));
 
 		dynamicServletRequest.appendParameter(
 			"roleId", String.valueOf(accountRole.getRoleId()));
@@ -146,6 +141,85 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 			resourceBundle, _portal.getResourceBundle(locale));
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "_removePersonalMenuEntry"
+	)
+	private void _addPersonalMenuEntry(PersonalMenuEntry personalMenuEntry) {
+		_personalMenuEntries.add(personalMenuEntry);
+	}
+
+	private String _getBackURL(HttpServletRequest httpServletRequest) {
+		PortletURL backURL = _portal.getControlPanelPortletURL(
+			httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+			PortletRequest.RENDER_PHASE);
+
+		backURL.setParameter(
+			"mvcRenderCommandName", "/account_admin/edit_account_entry");
+		backURL.setParameter(
+			"screenNavigationCategoryKey",
+			AccountScreenNavigationEntryConstants.CATEGORY_KEY_ROLES);
+		backURL.setParameter(
+			"accountEntryId",
+			ParamUtil.getString(httpServletRequest, "accountEntryId"));
+
+		return backURL.toString();
+	}
+
+	private String _getRedirect(HttpServletRequest httpServletRequest) {
+		PortletURL redirect = _portal.getControlPanelPortletURL(
+			httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+			PortletRequest.RENDER_PHASE);
+
+		redirect.setParameter(
+			"mvcRenderCommandName",
+			"/account_admin/edit_account_role_permissions");
+		redirect.setParameter(
+			"screenNavigationCategoryKey",
+			AccountScreenNavigationEntryConstants.
+				CATEGORY_KEY_DEFINE_PERMISSIONS);
+		redirect.setParameter(
+			"accountEntryId",
+			ParamUtil.getString(httpServletRequest, "accountEntryId"));
+		redirect.setParameter(
+			"accountRoleId",
+			ParamUtil.getString(httpServletRequest, "accountRoleId"));
+
+		return redirect.toString();
+	}
+
+	private void _removePersonalMenuEntry(PersonalMenuEntry personalMenuEntry) {
+		_personalMenuEntries.remove(personalMenuEntry);
+	}
+
+	private void _setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
+		httpServletRequest.setAttribute(
+			RolesAdminWebKeys.CURRENT_ROLE_TYPE, _accountRoleTypeContributor);
+		httpServletRequest.setAttribute(
+			RolesAdminWebKeys.SHOW_NAV_TABS, Boolean.FALSE);
+
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY_HELPER, panelCategoryHelper);
+
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
+			_panelCategoryRegistry);
+
+		PersonalMenuEntryHelper personalMenuEntryHelper =
+			new PersonalMenuEntryHelper(_personalMenuEntries);
+
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PERSONAL_MENU_ENTRY_HELPER,
+			personalMenuEntryHelper);
+	}
+
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
 
@@ -154,6 +228,15 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private PanelAppRegistry _panelAppRegistry;
+
+	@Reference
+	private PanelCategoryRegistry _panelCategoryRegistry;
+
+	private final List<PersonalMenuEntry> _personalMenuEntries =
+		new CopyOnWriteArrayList<>();
 
 	@Reference
 	private Portal _portal;

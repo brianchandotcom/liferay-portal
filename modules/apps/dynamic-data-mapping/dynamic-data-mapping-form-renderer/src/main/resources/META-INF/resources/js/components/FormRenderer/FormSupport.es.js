@@ -90,9 +90,12 @@ export const addFieldToColumn = (
 	const numberOfRows = pages[pageIndex].rows.length;
 
 	if (rowIndex >= numberOfRows) {
-		pages = addRow(pages, numberOfRows, pageIndex);
+		const newRow = implAddRow(12, [field]);
+
+		return addRow(pages, numberOfRows, pageIndex, newRow);
 	}
-	else if (!isEmptyColumn(pages, pageIndex, rowIndex, columnIndex)) {
+
+	if (!isEmptyColumn(pages, pageIndex, rowIndex, columnIndex)) {
 		pages = addRow(pages, rowIndex, pageIndex);
 	}
 

@@ -581,6 +581,28 @@ class Sidebar extends Component {
 			const fieldType = fieldTypes.find(({name}) => {
 				return name === data.source.dataset.fieldTypeName;
 			});
+			let parentFieldName;
+			const parentFieldNode = dom.closest(
+				data.target.parentElement,
+				'.ddm-field'
+			);
+
+			if (parentFieldNode) {
+				parentFieldName = parentFieldNode.dataset.fieldName;
+			}
+
+			const payload = {
+				data: {
+					...data,
+					fieldName: data.target.dataset.fieldName,
+					parentFieldName,
+				},
+				fieldType: {
+					...fieldType,
+					editable: true,
+				},
+				indexes,
+			};
 
 			if (dom.closest(data.target, '.col-empty')) {
 				const addedToPlaceholder = dom.closest(
@@ -589,24 +611,12 @@ class Sidebar extends Component {
 				);
 
 				dispatch('fieldAdded', {
+					...payload,
 					addedToPlaceholder,
-					data,
-					fieldType: {
-						...fieldType,
-						editable: true,
-					},
-					indexes,
 				});
 			}
 			else {
-				dispatch('sectionAdded', {
-					data,
-					fieldType: {
-						...fieldType,
-						editable: true,
-					},
-					indexes,
-				});
+				dispatch('sectionAdded', payload);
 			}
 		}
 	}

@@ -13,26 +13,19 @@
  */
 
 import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
-import dom from 'metal-dom';
 
 import {createField} from '../../../util/fieldSupport.es';
 import {updateField} from '../util/settingsContext.es';
 
-const handleFieldAdded = (props, state, event) => {
-	const {data, indexes} = event;
-	const {pages} = state;
-	const {target} = data;
-
-	const newField = createField(props, event);
-	const parentFieldNode = dom.closest(target.parentElement, '.ddm-field');
-
+export const addField = (
+	props,
+	{indexes, newField, pages, parentFieldName}
+) => {
 	const {columnIndex, pageIndex, rowIndex} = indexes;
 
 	let newPages;
 
-	if (parentFieldNode) {
-		const parentFieldName = parentFieldNode.dataset.fieldName;
-
+	if (parentFieldName) {
 		const visitor = new PagesVisitor(pages);
 
 		newPages = visitor.mapFields(
@@ -83,6 +76,21 @@ const handleFieldAdded = (props, state, event) => {
 		pages: newPages,
 		previousFocusedField: newField,
 	};
+};
+
+const handleFieldAdded = (props, state, event) => {
+	const {data, indexes} = event;
+	const {pages} = state;
+	const {parentFieldName} = data;
+
+	const newField = createField(props, event);
+
+	return addField(props, {
+		indexes,
+		newField,
+		pages,
+		parentFieldName,
+	});
 };
 
 export default handleFieldAdded;

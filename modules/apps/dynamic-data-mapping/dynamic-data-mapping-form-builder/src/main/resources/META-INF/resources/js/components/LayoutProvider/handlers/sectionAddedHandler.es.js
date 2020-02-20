@@ -14,7 +14,6 @@
 
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-import dom from 'metal-dom';
 
 import {createField} from '../../../util/fieldSupport.es';
 import {updateField} from '../util/settingsContext.es';
@@ -141,21 +140,12 @@ const createSection = (props, event, nestedFields) => {
 
 export default (props, state, event) => {
 	const {data, indexes} = event;
-	const {target} = data;
-
-	const {fieldName} = target.dataset;
+	const {fieldName, parentFieldName} = data;
 	const {pages} = state;
 
 	const newField = event.newField || createField(props, event);
 	const existingField = FormSupport.findFieldByName(pages, fieldName);
 	const sectionField = createSection(props, event, [existingField, newField]);
-
-	const parentFieldNode = dom.closest(target.parentElement, '.ddm-field');
-	let parentFieldName;
-
-	if (parentFieldNode) {
-		parentFieldName = parentFieldNode.dataset.fieldName;
-	}
 
 	const visitor = new PagesVisitor(pages);
 

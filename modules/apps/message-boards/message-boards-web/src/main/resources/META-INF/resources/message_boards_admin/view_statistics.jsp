@@ -35,34 +35,26 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 <div class="container-fluid-1280">
 	<div class="statistics-panel">
 		<h3><liferay-ui:message key="overview" /></h3>
-
-		<dl>
-			<dt>
-				<liferay-ui:message key="categories" />:
-			</dt>
-			<dd>
-				<%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %>
-			</dd>
-			<dt>
-				<c:choose>
-					<c:when test="<%= MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId) == 1 %>">
-						<liferay-ui:message key="post" />:
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="posts" />:
-					</c:otherwise>
-				</c:choose>
-			</dt>
-			<dd>
-				<%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %>
-			</dd>
-			<dt>
-				<liferay-ui:message key="participants" />:
-			</dt>
-			<dd>
-				<%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %>
-			</dd>
-		</dl>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="statistics-panel">
+					<small class="text-uppercase"><liferay-ui:message key="categories" /></small>
+					<p><%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %></p>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="statistics-panel">
+					<small class="text-uppercase"><liferay-ui:message key="posts" /></small>
+					<p><%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %></p>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="statistics-panel">
+					<small class="text-uppercase"><liferay-ui:message key="participants" /></small>
+					<p><%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %></p>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="statistics-panel">

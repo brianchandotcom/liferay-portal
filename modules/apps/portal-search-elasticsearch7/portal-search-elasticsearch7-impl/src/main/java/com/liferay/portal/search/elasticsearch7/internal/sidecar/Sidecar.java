@@ -379,6 +379,9 @@ public class Sidecar {
 			Files.write(
 				configFolder.resolve("log4j2.properties"),
 				Arrays.asList(
+					"logger.bootstrapchecks.name=org.elasticsearch.bootstrap." +
+						"BootstrapChecks",
+					"logger.bootstrapchecks.level=error",
 					"logger.deprecation.name=org.elasticsearch.deprecation",
 					"logger.deprecation.level=error",
 					ResourceUtil.getResourceAsString(

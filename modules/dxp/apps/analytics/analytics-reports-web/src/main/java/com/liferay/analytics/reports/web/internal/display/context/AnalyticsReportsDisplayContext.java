@@ -72,7 +72,7 @@ public class AnalyticsReportsDisplayContext {
 		_data = HashMapBuilder.<String, Object>put(
 			"context",
 			HashMapBuilder.<String, Object>put(
-				"defaultTimeSpanKey", TimeSpan.LAST_7_DAYS.getKey()
+				"defaultTimeSpanKey", TimeSpan.defaultTimeSpanKey()
 			).put(
 				"endpoints",
 				HashMapBuilder.<String, Object>put(

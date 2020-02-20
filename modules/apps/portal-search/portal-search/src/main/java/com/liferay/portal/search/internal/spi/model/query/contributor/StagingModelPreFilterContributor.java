@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.spi.model.query.contributor;
 
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -44,12 +45,14 @@ public class StagingModelPreFilterContributor
 		if (!searchContext.isIncludeLiveGroups() &&
 			searchContext.isIncludeStagingGroups()) {
 
-			booleanFilter.addRequiredTerm(Field.STAGING_GROUP, true);
+			booleanFilter.addTerm(
+				Field.STAGING_GROUP, "true", BooleanClauseOccur.MUST);
 		}
 		else if (searchContext.isIncludeLiveGroups() &&
 				 !searchContext.isIncludeStagingGroups()) {
 
-			booleanFilter.addRequiredTerm(Field.STAGING_GROUP, false);
+			booleanFilter.addTerm(
+				Field.STAGING_GROUP, "true", BooleanClauseOccur.MUST_NOT);
 		}
 	}
 

@@ -419,19 +419,21 @@ function getParentItemIdAndPositon({
 }) {
 	const siblingOrParent = items[siblingOrParentId];
 
-	if (
-		isNestingSupported(item.type, siblingOrParent.type) &&
-		targetPosition === TARGET_POSITION.MIDDLE
-	) {
+	if (isNestingSupported(item.type, siblingOrParent.type)) {
 		return {
-			parentId: siblingOrParentId,
-			position: siblingOrParent.children.length
+			parentId: siblingOrParent.itemId,
+			position:
+				targetPosition !== TARGET_POSITION.TOP
+					? siblingOrParent.children.length
+					: 0
 		};
 	}
-	else {
-		const parent = items[siblingOrParent.parentId];
 
-		const siblingIndex = parent.children.indexOf(siblingOrParentId);
+	const parent = items[siblingOrParent.parentId];
+	const sibling = siblingOrParent;
+
+	if (parent) {
+		const siblingIndex = parent.children.indexOf(sibling.itemId);
 
 		let position =
 			targetPosition === TARGET_POSITION.TOP

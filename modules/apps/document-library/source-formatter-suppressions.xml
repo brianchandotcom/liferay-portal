@@ -7,8 +7,4 @@
 		<suppress checks="PersistenceCallCheck" files="document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFolderFinderTest\.java" />
 		<suppress checks="TestClassCheck" files="document-library-test/src/testIntegration/java/com/liferay/document/library/webdav/test/BaseWebDAVTestCase\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="HTMLEmptyLinesCheck" files="document-library-asset-auto-tagger-opennlp-test/src/testIntegration/resources/com/liferay/document/library/asset/auto/tagger/opennlp/test/dependencies/Alice's Adventures in Wonderland, by Lewis Carroll\.html" />
-		<suppress checks="HTMLWhitespaceCheck" files="document-library-asset-auto-tagger-opennlp-test/src/testIntegration/resources/com/liferay/document/library/asset/auto/tagger/opennlp/test/dependencies/Alice's Adventures in Wonderland, by Lewis Carroll\.html" />
-	</source-check>
 </suppressions>

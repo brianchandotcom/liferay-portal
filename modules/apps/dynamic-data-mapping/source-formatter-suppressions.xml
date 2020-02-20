@@ -14,6 +14,5 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaForLoopCheck" files="dynamic-data-mapping-form-values-query/src/main/java/com/liferay/dynamic/data/mapping/form/values/query/internal/model/DDMFormValuesFilterImpl\.java" />
-		<suppress checks="JavaUpgradeVersionCheck" files="src/main/java/com/liferay/dynamic/data/mapping/internal/upgrade/DDMServiceUpgrade.java" />
 	</source-check>
 </suppressions>

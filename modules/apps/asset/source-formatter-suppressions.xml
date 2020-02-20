@@ -7,6 +7,5 @@
 	<source-check>
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="asset-entry-rel-service/src/main/java/com/liferay/asset/entry/rel/internal/upgrade/v1_0_0/UpgradeAssetEntryAssetCategoryRel.java" />
 		<suppress checks="XMLServiceEntityNameCheck" files="asset-category-property-service/service\.xml" />
-		<suppress checks="XMLServiceEntityNameCheck" files="asset-tag-stats-service/service\.xml" />
 	</source-check>
 </suppressions>

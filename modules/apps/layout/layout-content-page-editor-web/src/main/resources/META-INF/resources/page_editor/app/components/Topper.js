@@ -114,6 +114,8 @@ export default function Topper({
 
 	const fragmentEntryLinks = store.fragmentEntryLinks;
 
+	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
+
 	const getName = (item, fragmentEntryLinks) => {
 		let name;
 
@@ -156,6 +158,18 @@ export default function Topper({
 			(hoveredItemId === item.itemId || (childIsActive && childIsHovered))
 		);
 	};
+
+	useEffect(() => {
+		const handleWindowScroll = () => {
+			setWindowScrollPosition(window.scrollY);
+		};
+
+		window.addEventListener('scroll', handleWindowScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleWindowScroll);
+		};
+	}, []);
 
 	return (
 		<div

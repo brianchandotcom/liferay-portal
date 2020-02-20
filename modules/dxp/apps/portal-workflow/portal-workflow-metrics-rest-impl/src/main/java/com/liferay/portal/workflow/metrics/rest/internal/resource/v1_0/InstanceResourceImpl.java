@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
@@ -72,6 +70,7 @@ import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatu
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -259,6 +258,36 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return booleanQuery.addMustQueryClauses(termsQuery);
 	}
 
+	private BooleanQuery _createBooleanQuery(long processId) {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", contextCompany.getCompanyId()),
+			_queries.term("deleted", Boolean.FALSE),
+			_queries.term("processId", processId));
+	}
+
+	private BooleanQuery _createBooleanQuery(long processId, long instanceId) {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
+
+		tokensBooleanQuery.addFilterQueryClauses(
+			_queries.term("_index", "workflow-metrics-tokens"));
+		tokensBooleanQuery.addMustQueryClauses(
+			_createTokenBooleanQuery(processId, instanceId));
+
+		BooleanQuery transitionsBooleanQuery = _queries.booleanQuery();
+
+		transitionsBooleanQuery.addFilterQueryClauses(
+			_queries.term("_index", "workflow-metrics-transitions"));
+		transitionsBooleanQuery.addMustQueryClauses(
+			_createBooleanQuery(processId));
+
+		return booleanQuery.addShouldQueryClauses(
+			tokensBooleanQuery, transitionsBooleanQuery);
+	}
+
 	private BooleanQuery _createBooleanQuery(
 		Long[] assigneeUserIds, long processId, String[] statuses) {
 
@@ -338,6 +367,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		}
 
 		return termsQuery;
+	}
+
+	private BooleanQuery _createCountFilterBooleanQuery() {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		return booleanQuery.addFilterQueryClauses(
+			_queries.term("_index", "workflow-metrics-tokens"));
 	}
 
 	private Instance _createInstance(Document document) {
@@ -425,6 +461,20 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					GetterUtil.getString(sourcesMap.get("status")));
 			}
 		};
+	}
+
+	private BooleanQuery _createTokenBooleanQuery(
+		long processId, long instanceId) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", contextCompany.getCompanyId()),
+			_queries.term("deleted", Boolean.FALSE),
+			_queries.term("instanceId", instanceId),
+			_queries.term("processId", processId));
 	}
 
 	private BooleanQuery _createTokensBooleanQuery(
@@ -597,6 +647,86 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			contextAcceptLanguage.getPreferredLocale(), name);
 	}
 
+	private List<String> _getNextTransitionNames(
+		long processId, long instanceId) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		TermsAggregation termsAggregation = _aggregations.terms("nodeId", null);
+
+		termsAggregation.setSize(100000);
+
+		termsAggregation.setScript(
+			_scripts.script(
+				"doc.containsKey('taskId') ? doc.taskId.value : doc." +
+					"sourceNodeId.value"));
+
+		FilterAggregation countFilterAggregation = _aggregations.filter(
+			"countFilter", _createCountFilterBooleanQuery());
+
+		countFilterAggregation.addChildrenAggregations(
+			_aggregations.valueCount("taskCount", "taskId"));
+
+		TermsAggregation nameTermsAggregation = _aggregations.terms(
+			"name", "name");
+
+		nameTermsAggregation.setSize(100000);
+
+		termsAggregation.addChildrenAggregations(
+			countFilterAggregation, nameTermsAggregation);
+
+		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
+			_aggregations.bucketSelector(
+				"bucketSelector", _scripts.script("params.taskCount > 0"));
+
+		bucketSelectorPipelineAggregation.addBucketPath(
+			"taskCount", "countFilter>taskCount.value");
+
+		termsAggregation.addPipelineAggregations(
+			bucketSelectorPipelineAggregation);
+
+		searchSearchRequest.addAggregation(termsAggregation);
+
+		searchSearchRequest.setIndexNames(
+			"workflow-metrics-tokens", "workflow-metrics-transitions");
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		searchSearchRequest.setQuery(
+			booleanQuery.addFilterQueryClauses(
+				_createBooleanQuery(processId, instanceId)));
+
+		return Stream.of(
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getAggregationResultsMap
+		).map(
+			aggregationResultsMap ->
+				(TermsAggregationResult)aggregationResultsMap.get("nodeId")
+		).map(
+			TermsAggregationResult::getBuckets
+		).flatMap(
+			Collection::stream
+		).map(
+			bucket -> Stream.of(
+				(TermsAggregationResult)bucket.getChildAggregationResult("name")
+			).map(
+				TermsAggregationResult::getBuckets
+			).flatMap(
+				Collection::stream
+			).map(
+				Bucket::getKey
+			).collect(
+				Collectors.toCollection(ArrayList::new)
+			)
+		).flatMap(
+			Collection::stream
+		).sorted(
+		).collect(
+			Collectors.toCollection(ArrayList::new)
+		);
+	}
+
 	private SearchSearchResponse _getSearchSearchResponse(
 		Long[] assigneeUserIds, Date dateEnd, Date dateStart, long processId,
 		String[] slaStatuses, String[] statuses, String[] taskKeys) {
@@ -766,7 +896,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			return;
 		}
 
-		instance.setTransitions(_toTransitions(instance.getId()));
+		instance.setTransitions(_toTransitions(instance));
 	}
 
 	private AssigneeUser _toAssigneeUser(long userId) {
@@ -858,21 +988,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return transition;
 	}
 
-	private Transition[] _toTransitions(long instanceId) {
-		try {
-			return transformToArray(
-				_workflowInstanceManager.getNextTransitionNames(
-					contextCompany.getCompanyId(), contextUser.getUserId(),
-					instanceId),
-				this::_toTransition, Transition.class);
-		}
-		catch (WorkflowException workflowException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(workflowException, workflowException);
-			}
-
-			return null;
-		}
+	private Transition[] _toTransitions(Instance instance) {
+		return transformToArray(
+			_getNextTransitionNames(instance.getProcessId(), instance.getId()),
+			this::_toTransition, Transition.class);
 	}
 
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
@@ -907,9 +1026,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Reference
 	private UserService _userService;
-
-	@Reference
-	private WorkflowInstanceManager _workflowInstanceManager;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService

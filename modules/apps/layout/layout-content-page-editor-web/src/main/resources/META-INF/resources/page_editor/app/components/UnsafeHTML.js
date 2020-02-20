@@ -35,10 +35,11 @@ export default class UnsafeHTML extends React.Component {
 		}
 	}
 
-	shouldComponentUpdate(nextProps) {
+	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			this.props.TagName !== nextProps.TagName ||
-			this.props.markup !== nextProps.markup
+			this.props.markup !== nextProps.markup ||
+			this.state.contentRef !== nextState.contentRef
 		);
 	}
 

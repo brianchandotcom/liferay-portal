@@ -38,6 +38,7 @@ import com.liferay.portal.fabric.repository.Repository;
 import com.liferay.portal.fabric.worker.FabricWorker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -131,8 +132,6 @@ public class NettyFabricWorkerExecutionChannelHandler
 		Channel channel,
 		NettyFabricWorkerConfig<Serializable> nettyFabricWorkerConfig) {
 
-		Map<Path, Path> mergedPaths = new HashMap<>();
-
 		ProcessConfig processConfig =
 			nettyFabricWorkerConfig.getProcessConfig();
 
@@ -144,8 +143,6 @@ public class NettyFabricWorkerExecutionChannelHandler
 			bootstrapPaths.put(Paths.get(pathHolder.toString()), null);
 		}
 
-		mergedPaths.putAll(bootstrapPaths);
-
 		final Map<Path, Path> runtimePaths = new LinkedHashMap<>();
 
 		for (PathHolder pathHolder :
@@ -154,12 +151,16 @@ public class NettyFabricWorkerExecutionChannelHandler
 			runtimePaths.put(Paths.get(pathHolder.toString()), null);
 		}
 
-		mergedPaths.putAll(runtimePaths);
-
 		final Map<Path, Path> inputPaths =
 			nettyFabricWorkerConfig.getInputPathMap();
 
-		mergedPaths.putAll(inputPaths);
+		Map<Path, Path> mergedPaths = HashMapBuilder.<Path, Path>putAll(
+			bootstrapPaths
+		).putAll(
+			runtimePaths
+		).putAll(
+			inputPaths
+		).build();
 
 		return new NoticeableFutureConverter<LoadedPaths, Map<Path, Path>>(
 			_repository.getFiles(channel, mergedPaths, false)) {

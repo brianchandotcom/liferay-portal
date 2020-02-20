@@ -30,10 +30,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryDDMFormValuesReader;
 import com.liferay.portlet.documentlibrary.asset.model.DLFileEntryClassTypeReader;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -95,11 +95,11 @@ public class FileEntryInfoDisplayContributor
 			FileEntry fileEntry, Locale locale)
 		throws PortalException {
 
-		Map<String, Object> infoDisplayFieldValues = new HashMap<>();
-
-		infoDisplayFieldValues.putAll(
-			_infoDisplayFieldProvider.getContributorInfoDisplayFieldsValues(
-				getClassName(), fileEntry, locale));
+		Map<String, Object> infoDisplayFieldValues =
+			HashMapBuilder.<String, Object>putAll(
+				_infoDisplayFieldProvider.getContributorInfoDisplayFieldsValues(
+					getClassName(), fileEntry, locale)
+			).build();
 
 		if (fileEntry.getModel() instanceof DLFileEntry) {
 			infoDisplayFieldValues.putAll(

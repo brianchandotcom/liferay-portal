@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
@@ -47,7 +48,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 
@@ -670,9 +670,10 @@ public class ResourceOpenAPIParser {
 		}
 
 		if ((response != null) && (response.getContent() != null)) {
-			Map<String, Content> sortedContents = new TreeMap<>();
-
-			sortedContents.putAll(response.getContent());
+			Map<String, Content> sortedContents =
+				TreeMapBuilder.<String, Content>putAll(
+					response.getContent()
+				).build();
 
 			if (sortedContents.isEmpty()) {
 				return void.class.getName();

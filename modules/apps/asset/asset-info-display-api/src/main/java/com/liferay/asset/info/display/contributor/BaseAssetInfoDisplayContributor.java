@@ -27,9 +27,9 @@ import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -188,21 +188,19 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 			AssetEntry assetEntry, T assetObject, Locale locale)
 		throws PortalException {
 
-		Map<String, Object> parameterMap = new HashMap<>();
-
-		parameterMap.putAll(
+		return HashMapBuilder.<String, Object>putAll(
 			AssetEntryInfoDisplayFieldProviderUtil.getInfoDisplayFields(
-				AssetEntry.class.getName(), assetEntry, locale));
-		parameterMap.putAll(
+				AssetEntry.class.getName(), assetEntry, locale)
+		).putAll(
 			AssetEntryInfoDisplayFieldProviderUtil.getInfoDisplayFields(
-				getClassName(), assetObject, locale));
-		parameterMap.putAll(getClassTypeValues(assetObject, locale));
-		parameterMap.putAll(
+				getClassName(), assetObject, locale)
+		).putAll(
+			getClassTypeValues(assetObject, locale)
+		).putAll(
 			ExpandoInfoDisplayFieldProviderUtil.
 				getExpandoInfoDisplayFieldsValues(
-					getClassName(), assetObject, locale));
-
-		return parameterMap;
+					getClassName(), assetObject, locale)
+		).build();
 	}
 
 }

@@ -136,26 +136,23 @@ public class JournalArticleInfoDisplayContributor
 			JournalArticle article, Locale locale)
 		throws PortalException {
 
-		Map<String, Object> infoDisplayFieldValues = new HashMap<>();
-
-		infoDisplayFieldValues.putAll(
+		return HashMapBuilder.<String, Object>putAll(
 			assetEntryInfoDisplayFieldProvider.
 				getAssetEntryInfoDisplayFieldsValues(
 					JournalArticle.class.getName(),
-					article.getResourcePrimKey(), locale));
-		infoDisplayFieldValues.putAll(
+					article.getResourcePrimKey(), locale)
+		).putAll(
 			infoDisplayFieldProvider.getContributorInfoDisplayFieldsValues(
-				JournalArticle.class.getName(), article, locale));
-		infoDisplayFieldValues.putAll(
-			_getClassTypeInfoDisplayFieldsValues(article, locale));
-		infoDisplayFieldValues.putAll(
+				JournalArticle.class.getName(), article, locale)
+		).putAll(
+			_getClassTypeInfoDisplayFieldsValues(article, locale)
+		).putAll(
 			expandoInfoDisplayFieldProvider.
 				getContributorExpandoInfoDisplayFieldsValues(
-					getClassName(), article, locale));
-		infoDisplayFieldValues.putAll(
-			_getDDMTemplateInfoDisplayFieldsValues(article, locale));
-
-		return infoDisplayFieldValues;
+					getClassName(), article, locale)
+		).putAll(
+			_getDDMTemplateInfoDisplayFieldsValues(article, locale)
+		).build();
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.Serializable;
@@ -86,11 +87,9 @@ public class JobState implements Cloneable, Serializable {
 		}
 
 		if (_triggerDates != null) {
-			Map<String, Date> triggerTimeInfomation = new HashMap<>();
-
-			triggerTimeInfomation.putAll(_triggerDates);
-
-			jobState._triggerDates = triggerTimeInfomation;
+			jobState._triggerDates = HashMapBuilder.<String, Date>putAll(
+				_triggerDates
+			).build();
 		}
 
 		return jobState;

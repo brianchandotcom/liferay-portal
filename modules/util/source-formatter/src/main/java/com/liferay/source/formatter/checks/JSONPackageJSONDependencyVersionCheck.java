@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -135,30 +136,29 @@ public class JSONPackageJSONDependencyVersionCheck extends BaseFileCheck {
 			return _expectedDependencyVersionsMap;
 		}
 
-		_expectedDependencyVersionsMap = new HashMap<>();
-
-		_expectedDependencyVersionsMap.putAll(
+		_expectedDependencyVersionsMap = HashMapBuilder.<String, String>putAll(
 			_getDependencyVersionsMap(
 				"modules/apps/frontend-js/frontend-js-metal-web/package.json",
-				absolutePath, "metal(-.*)?"));
-		_expectedDependencyVersionsMap.putAll(
+				absolutePath, "metal(-.*)?")
+		).putAll(
 			_getDependencyVersionsMap(
 				"modules/apps/frontend-js/frontend-js-react-web/package.json",
-				absolutePath, ".*"));
-		_expectedDependencyVersionsMap.putAll(
+				absolutePath, ".*")
+		).putAll(
 			_getDependencyVersionsMap(
 				"modules/apps/frontend-js/frontend-js-spa-web/package.json",
-				absolutePath, "senna"));
-		_expectedDependencyVersionsMap.putAll(
+				absolutePath, "senna")
+		).putAll(
 			_getDependencyVersionsMap(
 				"modules/apps/frontend-taglib/frontend-taglib-clay" +
 					"/package.json",
-				absolutePath, "clay-.*"));
-		_expectedDependencyVersionsMap.putAll(
+				absolutePath, "clay-.*")
+		).putAll(
 			_getDependencyVersionsMap(
 				"modules/apps/frontend-taglib/frontend-taglib-clay" +
 					"/package.json",
-				absolutePath, "@clayui/.*"));
+				absolutePath, "@clayui/.*")
+		).build();
 
 		String content = getModulesPropertiesContent(absolutePath);
 

@@ -17,6 +17,7 @@ package com.liferay.portal.json.transformer;
 import com.liferay.portal.json.JoddJSONContext;
 import com.liferay.portal.kernel.json.JSONContext;
 import com.liferay.portal.kernel.json.JSONTransformer;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,9 +34,10 @@ public class SortedHashMapJSONTransformer
 	@Override
 	public void transform(JSONContext jsonContext, Object map) {
 		if (map instanceof HashMap) {
-			TreeMap<Object, Object> treeMap = new TreeMap<>();
-
-			treeMap.putAll((HashMap<Object, Object>)map);
+			TreeMap<Object, Object> treeMap =
+				TreeMapBuilder.<Object, Object>putAll(
+					(HashMap<Object, Object>)map
+				).build();
 
 			map = treeMap;
 		}

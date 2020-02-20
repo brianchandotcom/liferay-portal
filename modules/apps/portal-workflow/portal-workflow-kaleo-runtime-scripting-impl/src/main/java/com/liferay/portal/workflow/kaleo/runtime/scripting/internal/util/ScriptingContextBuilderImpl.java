@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -26,7 +27,6 @@ import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -56,12 +56,14 @@ public class ScriptingContextBuilderImpl implements ScriptingContextBuilder {
 				kaleoInstance.getWorkflowContext());
 		}
 
-		Map<String, Object> inputObjects = new HashMap<>();
-
-		inputObjects.putAll(workflowContext);
-		inputObjects.put(
-			"kaleoInstanceToken", executionContext.getKaleoInstanceToken());
-		inputObjects.put("workflowContext", workflowContext);
+		Map<String, Object> inputObjects =
+			HashMapBuilder.<String, Object>putAll(
+				workflowContext
+			).put(
+				"kaleoInstanceToken", executionContext.getKaleoInstanceToken()
+			).put(
+				"workflowContext", workflowContext
+			).build();
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			executionContext.getKaleoTaskInstanceToken();

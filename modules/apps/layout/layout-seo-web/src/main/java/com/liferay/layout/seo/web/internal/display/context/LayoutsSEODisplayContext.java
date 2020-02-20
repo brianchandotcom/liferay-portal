@@ -48,12 +48,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -168,12 +168,11 @@ public class LayoutsSEODisplayContext {
 	}
 
 	public Map<Locale, String> getDefaultPageTitleMap() {
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.putAll(_selLayout.getNameMap());
-		titleMap.putAll(_selLayout.getTitleMap());
-
-		return titleMap;
+		return HashMapBuilder.<Locale, String>putAll(
+			_selLayout.getNameMap()
+		).putAll(
+			_selLayout.getTitleMap()
+		).build();
 	}
 
 	public PortletURL getEditOpenGraphURL() {

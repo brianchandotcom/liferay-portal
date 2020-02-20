@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -62,9 +63,10 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 	public void testSubscriptionLocalizedContentWhenAddingBaseModel()
 		throws Exception {
 
-		Map<Locale, String> previousLocalizedContents = new HashMap<>();
-
-		previousLocalizedContents.putAll(localizedContents);
+		Map<Locale, String> previousLocalizedContents =
+			HashMapBuilder.<Locale, String>putAll(
+				localizedContents
+			).build();
 
 		localizedContents.put(LocaleUtil.GERMANY, GERMAN_BODY);
 
@@ -89,9 +91,10 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 	public void testSubscriptionLocalizedContentWhenUpdatingBaseModel()
 		throws Exception {
 
-		Map<Locale, String> previousLocalizedContents = new HashMap<>();
-
-		previousLocalizedContents.putAll(localizedContents);
+		Map<Locale, String> previousLocalizedContents =
+			HashMapBuilder.<Locale, String>putAll(
+				localizedContents
+			).build();
 
 		localizedContents.put(LocaleUtil.SPAIN, SPANISH_BODY);
 

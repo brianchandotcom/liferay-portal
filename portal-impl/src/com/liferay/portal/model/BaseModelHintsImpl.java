@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.ModelHints;
 import com.liferay.portal.kernel.model.ModelHintsCallback;
 import com.liferay.portal.kernel.model.ModelHintsConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -403,9 +404,10 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 				boolean fieldLocalized = GetterUtil.getBoolean(
 					fieldElement.attributeValue("localized"));
 
-				Map<String, String> fieldHints = new HashMap<>();
-
-				fieldHints.putAll(defaultHints);
+				Map<String, String> fieldHints =
+					HashMapBuilder.<String, String>putAll(
+						defaultHints
+					).build();
 
 				List<Element> fieldElements = fieldElement.elements(
 					"hint-collection");

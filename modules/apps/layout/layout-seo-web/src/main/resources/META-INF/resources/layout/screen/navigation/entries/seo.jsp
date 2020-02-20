@@ -154,6 +154,11 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						/>
 					</div>
 				</div>
+
+				<liferay-frontend:component
+					module="js/seo/seo.es"
+					servletContext="<%= application %>"
+				/>
 			</c:if>
 
 			<aui:input name="robots" placeholder="robots" />
@@ -210,8 +215,3 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		</div>
 	</div>
 </aui:form>
-
-<liferay-frontend:component
-	module="js/seo/seo.es"
-	servletContext="<%= application %>"
-/>

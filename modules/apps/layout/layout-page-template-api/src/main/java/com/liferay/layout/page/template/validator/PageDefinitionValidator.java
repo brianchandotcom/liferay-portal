@@ -19,8 +19,6 @@ import com.liferay.petra.json.validator.JSONValidator;
 import com.liferay.petra.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.InputStream;
-
 /**
  * @author Rubén Pulido
  */
@@ -33,13 +31,11 @@ public class PageDefinitionValidator {
 			return;
 		}
 
-		InputStream pageDefinitionJSONSchemaInputStream =
-			PageDefinitionValidator.class.getResourceAsStream(
-				"dependencies/page_definition_json_schema.json");
-
 		try {
 			JSONValidator.validate(
-				pageDefinitionJSON, pageDefinitionJSONSchemaInputStream);
+				pageDefinitionJSON,
+				PageDefinitionValidator.class.getResourceAsStream(
+					"dependencies/page_definition_json_schema.json"));
 		}
 		catch (JSONValidatorException jsonValidatorException) {
 			throw new PageDefinitionValidatorException(

@@ -208,8 +208,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace %>editForm<%= index %>" style="display: none;">
 							<div class="editor-wrapper"></div>
 
-							<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= discussionComment.getBody() %>" />
-
 							<aui:button-row>
 								<aui:button cssClass="btn-comment btn-primary btn-sm" name='<%= randomNamespace + "editReplyButton" + index %>' onClick='<%= randomNamespace + "updateMessage(" + index + ");" %>' value="<%= commentTreeDisplayContext.getPublishButtonLabel(locale) %>" />
 
@@ -281,8 +279,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 					<div class="autofit-col autofit-col-expand">
 						<div class="editor-wrapper"></div>
-
-						<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
 
 						<aui:button-row>
 							<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id='<%= "postReplyButton" + index %>' onClick='<%= randomNamespace + "postReply(" + index + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />

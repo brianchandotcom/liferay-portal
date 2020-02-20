@@ -72,17 +72,15 @@ public class ClusterableSidecar
 		ComponentContext componentContext, String componentName,
 		ElasticsearchConfiguration elasticsearchConfiguration,
 		ClusterExecutor clusterExecutor,
-		ClusterMasterExecutor clusterMasterExecutor,
-		com.liferay.portal.kernel.util.File file, JSONFactory jsonFactory,
+		ClusterMasterExecutor clusterMasterExecutor, JSONFactory jsonFactory,
 		ProcessExecutor processExecutor, Props props) {
 
 		super(
-			componentContext, componentName, elasticsearchConfiguration, file,
+			componentContext, componentName, elasticsearchConfiguration,
 			processExecutor, props);
 
 		_clusterExecutor = clusterExecutor;
 		_clusterMasterExecutor = clusterMasterExecutor;
-		_file = file;
 		_jsonFactory = jsonFactory;
 
 		ClusterNode clusterNode = _clusterExecutor.getLocalClusterNode();
@@ -108,7 +106,7 @@ public class ClusterableSidecar
 			}
 		}
 		else {
-			_file.deltree(getDataHome());
+			deleteDir(getDataHome());
 		}
 
 		super.start();
@@ -231,9 +229,7 @@ public class ClusterableSidecar
 	}
 
 	private void _cleanUpClusterMetaData() throws Exception {
-		File pathData = getPathData();
-
-		Path nodePath = NodeEnvironment.resolveNodePath(pathData.toPath(), 0);
+		Path nodePath = NodeEnvironment.resolveNodePath(getPathData(), 0);
 
 		Path statePath = nodePath.resolve(MetaDataStateFormat.STATE_DIR_NAME);
 
@@ -319,7 +315,6 @@ public class ClusterableSidecar
 
 	private final ClusterExecutor _clusterExecutor;
 	private final ClusterMasterExecutor _clusterMasterExecutor;
-	private final com.liferay.portal.kernel.util.File _file;
 	private final JSONFactory _jsonFactory;
 	private final String _nodeName;
 	private RestClient _restClient;

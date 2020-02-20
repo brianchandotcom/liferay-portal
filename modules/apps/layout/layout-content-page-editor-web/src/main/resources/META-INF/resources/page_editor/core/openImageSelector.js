@@ -14,36 +14,41 @@
 
 import {ItemSelectorDialog} from 'frontend-js-web';
 
-export function openImageSelector(config, callback, destroyedCallback = null) {
-	const {imageSelectorURL, portletNamespace} = config;
+import {config} from '../app/config/index';
 
+export function openImageSelector(callback, destroyedCallback = null) {
 	const itemSelectorDialog = new ItemSelectorDialog({
-		eventName: `${portletNamespace}selectImage`,
+		eventName: `${config.portletNamespace}selectImage`,
 		singleSelect: true,
 		title: Liferay.Language.get('select'),
-		url: imageSelectorURL
+		url: config.imageSelectorURL
 	});
 
 	itemSelectorDialog.on('selectedItemChange', event => {
 		const selectedItem = event.selectedItem || {};
 
 		const {returnType, value} = selectedItem;
-		const selectedImage = {};
-
-		if (returnType === 'URL') {
-			selectedImage.title = value;
-			selectedImage.url = value;
-		}
 
 		if (returnType) {
-			const fileEntry = JSON.parse(value);
+			const selectedImage = {};
 
-			selectedImage.title = fileEntry.title;
-			selectedImage.url = fileEntry.url;
-		}
+			if (returnType === 'URL') {
+				selectedImage.title = value;
+				selectedImage.url = value;
+			}
+			else {
+				const fileEntry = JSON.parse(value);
 
-		if (selectedImage.url) {
+				selectedImage.title = fileEntry.title;
+				selectedImage.url = fileEntry.url;
+			}
+
 			callback(selectedImage);
+		}
+		else {
+			if (destroyedCallback) {
+				destroyedCallback();
+			}
 		}
 	});
 

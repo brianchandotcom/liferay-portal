@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class DataDefinitionField {
+public class DataDefinitionField implements Cloneable {
 
 	public static enum IndexType {
 
@@ -405,6 +405,11 @@ public class DataDefinitionField {
 	}
 
 	protected Boolean visible;
+
+	@Override
+	public DataDefinitionField clone() throws CloneNotSupportedException {
+		return (DataDefinitionField)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

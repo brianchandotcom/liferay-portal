@@ -187,10 +187,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 								definition1, definition2, "name");
 						}
 
-						String value1 = definition1Lines[1].trim();
-						String value2 = definition2Lines[1].trim();
-
-						return value1.compareTo(value2);
+						return 0;
 					}
 
 					if (trimmedDefinition1Line.startsWith("in:") ||

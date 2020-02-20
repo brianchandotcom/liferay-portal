@@ -67,6 +67,20 @@ public class FragmentSerDes {
 			sb.append("\"");
 		}
 
+		if (fragment.getFragmentKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fragment.getFragmentKey()));
+
+			sb.append("\"");
+		}
+
 		if (fragment.getFragmentName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -108,6 +122,13 @@ public class FragmentSerDes {
 				String.valueOf(fragment.getFragmentCollectionName()));
 		}
 
+		if (fragment.getFragmentKey() == null) {
+			map.put("fragmentKey", null);
+		}
+		else {
+			map.put("fragmentKey", String.valueOf(fragment.getFragmentKey()));
+		}
+
 		if (fragment.getFragmentName() == null) {
 			map.put("fragmentName", null);
 		}
@@ -139,6 +160,11 @@ public class FragmentSerDes {
 				if (jsonParserFieldValue != null) {
 					fragment.setFragmentCollectionName(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fragmentKey")) {
+				if (jsonParserFieldValue != null) {
+					fragment.setFragmentKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentName")) {

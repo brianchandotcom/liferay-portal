@@ -15,12 +15,17 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useRef} from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../prop-types/index';
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../config/index';
+import {config} from '../config/index';
 import selectShowLayoutItemRemoveButton from '../selectors/selectShowLayoutItemRemoveButton';
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
@@ -55,6 +60,10 @@ const TopperListItem = React.forwardRef(
 	)
 );
 
+TopperListItem.propTypes = {
+	expand: PropTypes.bool
+};
+
 export default function Topper({
 	acceptDrop,
 	children,
@@ -63,7 +72,6 @@ export default function Topper({
 	layoutData
 }) {
 	const containerRef = useRef(null);
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
 	const activeItemId = useActiveItemId();
@@ -87,7 +95,6 @@ export default function Topper({
 			dispatch(
 				moveItem({
 					...data,
-					config,
 					store
 				})
 			)
@@ -102,9 +109,7 @@ export default function Topper({
 
 	const childrenElement = children({canDrop, isOver});
 
-	const {sidebarPanels} = config;
-
-	const commentsPanelId = sidebarPanels.comments.sidebarPanelId;
+	const commentsPanelId = config.sidebarPanels.comments.sidebarPanelId;
 
 	const fragmentEntryLinks = store.fragmentEntryLinks;
 
@@ -250,7 +255,6 @@ export default function Topper({
 
 									dispatch(
 										deleteItem({
-											config,
 											itemId: item.itemId,
 											store
 										})
@@ -275,6 +279,15 @@ export default function Topper({
 		</div>
 	);
 }
+
+Topper.propTypes = {
+	acceptDrop: PropTypes.arrayOf(
+		PropTypes.oneOf(Object.values(LAYOUT_DATA_ITEM_TYPES))
+	),
+	dropNestedAndSibling: PropTypes.bool,
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
 
 function isRemovable(item, layoutData) {
 	function hasDropZoneChildren(item, layoutData) {

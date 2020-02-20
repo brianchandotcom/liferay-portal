@@ -73,6 +73,20 @@ public class NodeSerDes {
 			sb.append(node.getInitial());
 		}
 
+		if (node.getLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(node.getLabel()));
+
+			sb.append("\"");
+		}
+
 		if (node.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -143,6 +157,13 @@ public class NodeSerDes {
 			map.put("initial", String.valueOf(node.getInitial()));
 		}
 
+		if (node.getLabel() == null) {
+			map.put("label", null);
+		}
+		else {
+			map.put("label", String.valueOf(node.getLabel()));
+		}
+
 		if (node.getName() == null) {
 			map.put("name", null);
 		}
@@ -192,6 +213,11 @@ public class NodeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "initial")) {
 				if (jsonParserFieldValue != null) {
 					node.setInitial((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "label")) {
+				if (jsonParserFieldValue != null) {
+					node.setLabel((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

@@ -1,7 +1,7 @@
 Bundle-Description: Creates a Liferay MVC portlet as a module project.
 Bundle-Name: Liferay Project Templates MVC Portlet
 Bundle-SymbolicName: com.liferay.project.templates.mvc.portlet
-Bundle-Version: 1.0.72
+Bundle-Version: 1.0.73
 Liferay-Versions: [7,7.4)
 -removeheaders:\
 	Import-Package,\

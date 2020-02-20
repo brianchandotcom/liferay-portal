@@ -54,7 +54,7 @@ buildChangelogs {
 
 			File changelogDescriptionsFile = file("sdk/" + sdkProjectDir.name + "/CHANGELOG.descriptions")
 
-			changelogCommitsFile.getText("UTF-8").split("\n").reverse().each {
+			changelogCommitsFile.getText("UTF-8").split("\n").each {
 				String recordCommitLine ->
 
 				Matcher matcher = recordCommitLine =~ /(\d+\.\d+\.\d+):([a-f0-9]+\.\.[a-f0-9]+)/
@@ -129,7 +129,13 @@ buildChangelogs {
 				standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
 				exec {
-					commandLine "git", "--no-pager", "log", "--pretty=format:%H:%cd:%s", "--date=short", "-p", "${commitRange}", "--", "modules/sdk/" + sdkProjectDir.name + "/build.gradle"
+					List<String> commandLineArgs = ["git", "--no-pager", "log", "--pretty=format:%H:%cd:%s", "--date=short", "-p", "${commitRange}", "--", "modules/sdk/" + sdkProjectDir.name + "/build.gradle"]
+
+					if (sdkProjectDir.name == "gradle-plugins") {
+						commandLineArgs.add("modules/sdk/" + sdkProjectDir.name + "/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+					}
+
+					commandLine commandLineArgs
 					standardOutput = standardOutputByteArrayOutputStream
 					workingDir = projectDir.parentFile
 				}
@@ -145,23 +151,32 @@ buildChangelogs {
 						gitLogAttributes = getGitLogAttributes(gitLogLine)
 					}
 					else {
-						matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
+						matcher = gitLogLine =~ /^\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
 
-						if (matcher.find()) {
-							String dependencyName = matcher.group(1)
-							String dependencyVersion = matcher.group(2)
+						if (!matcher.find()) {
+							matcher = gitLogLine =~ /^\+([^ \t]+)=([0-9.]+)/
 
-							dependencies = dependencies + """\
-								|
-								|- [${gitLogAttributes["TICKET-NUMBER"]}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
+							if (!matcher.find()) {
+								return
+							}
 						}
+
+						String dependencyName = matcher.group(1)
+						String dependencyVersion = matcher.group(2)
+
+						dependencies = dependencies + """\
+							|
+							|- [${gitLogAttributes["TICKET-NUMBER"]}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
 					}
 				}
 
 				String descriptions = ""
 
 				if (changelogDescriptionsFile.exists()) {
-					matcher = changelogDescriptionsFile.text =~ /(?s)${version}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/
+
+					String escapedDotVersion = version.replace(".", "\\.")
+
+					matcher = changelogDescriptionsFile.text =~ /(?s)${escapedDotVersion}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/
 
 					if (matcher.find()) {
 						descriptions = "\n" + matcher.group(1).trim()

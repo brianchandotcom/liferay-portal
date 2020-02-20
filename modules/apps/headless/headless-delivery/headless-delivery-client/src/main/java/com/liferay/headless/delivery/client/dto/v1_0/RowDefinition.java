@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class RowDefinition {
+public class RowDefinition implements Cloneable {
 
 	public Boolean getGutters() {
 		return gutters;
@@ -69,6 +69,11 @@ public class RowDefinition {
 	}
 
 	protected Integer numberOfColumns;
+
+	@Override
+	public RowDefinition clone() throws CloneNotSupportedException {
+		return (RowDefinition)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

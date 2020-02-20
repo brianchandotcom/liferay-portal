@@ -164,7 +164,7 @@ public abstract class BaseFragmentCollectionContributor
 
 			Enumeration<URL> enumeration = _bundle.findEntries(
 				StringPool.BLANK,
-				FragmentExportImportConstants.FILE_NAME_FRAGMENT_CONFIG, true);
+				FragmentExportImportConstants.FILE_NAME_FRAGMENT, true);
 
 			_fragmentEntries = new HashMap<>();
 			_fragmentEntryNames = new HashMap<>();
@@ -223,7 +223,7 @@ public abstract class BaseFragmentCollectionContributor
 		String json = StreamUtil.toString(
 			clazz.getResourceAsStream(
 				"dependencies/" +
-					FragmentExportImportConstants.FILE_NAME_COLLECTION_CONFIG));
+					FragmentExportImportConstants.FILE_NAME_COLLECTION));
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 

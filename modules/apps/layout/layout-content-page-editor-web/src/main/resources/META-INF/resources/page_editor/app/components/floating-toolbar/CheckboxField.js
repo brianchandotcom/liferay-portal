@@ -13,7 +13,10 @@
  */
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React from 'react';
+
+import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export const CheckboxField = ({field, onValueSelect, value}) => (
 	<ClayForm.Group>
@@ -28,3 +31,9 @@ export const CheckboxField = ({field, onValueSelect, value}) => (
 		/>
 	</ClayForm.Group>
 );
+
+CheckboxField.propTypes = {
+	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
+	onValueSelect: PropTypes.func.isRequired,
+	value: PropTypes.string
+};

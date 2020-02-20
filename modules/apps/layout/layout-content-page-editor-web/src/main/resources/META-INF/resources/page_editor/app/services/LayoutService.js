@@ -12,32 +12,29 @@
  * details.
  */
 
+import {config} from '../config/index';
 import serviceFetch from './serviceFetch';
 
 export default {
 	/**
 	 * Adds an item to layoutData
 	 * @param {object} options
-	 * @param {object} options.config Application config
 	 * @param {string} options.itemType item type
+	 * @param {function} options.onNetworkStatus
 	 * @param {object} options.parentItemId Parent to be added to
 	 * @param {object} options.position Position to be added to
 	 * @param {object} options.segmentsExperienceId
 	 * @return {Promise<object>}
 	 */
 	addItem({
-		config,
 		itemType,
 		onNetworkStatus,
 		parentItemId,
 		position,
 		segmentsExperienceId
 	}) {
-		const {addItemURL} = config;
-
 		return layoutServiceFetch(
-			config,
-			addItemURL,
+			config.addItemURL,
 			{
 				body: {
 					itemType,
@@ -53,17 +50,14 @@ export default {
 	/**
 	 * Remove an item inside layoutData
 	 * @param {object} options
-	 * @param {object} options.config Application config
 	 * @param {object} options.itemId id of the item to be removed
+	 * @param {function} options.onNetworkStatus
 	 * @param {object} options.segmentsExperienceId
 	 * @return {Promise<object>}
 	 */
-	deleteItem({config, itemId, onNetworkStatus, segmentsExperienceId}) {
-		const {deleteItemURL} = config;
-
+	deleteItem({itemId, onNetworkStatus, segmentsExperienceId}) {
 		return layoutServiceFetch(
-			config,
-			deleteItemURL,
+			config.deleteItemURL,
 			{
 				body: {
 					itemId,
@@ -77,26 +71,22 @@ export default {
 	/**
 	 * Move an item inside layoutData
 	 * @param {object} options
-	 * @param {object} options.config Application config
 	 * @param {object} options.itemId id of the item to be moved
 	 * @param {object} options.parentItemId id of the target parent
 	 * @param {object} options.position position in the parent where the item is placed
 	 * @param {object} options.segmentsExperienceId
+	 * @param {function} options.onNetworkStatus
 	 * @return {Promise<object>}
 	 */
 	moveItem({
-		config,
 		itemId,
 		onNetworkStatus,
 		parentItemId,
 		position,
 		segmentsExperienceId
 	}) {
-		const {moveItemURL} = config;
-
 		return layoutServiceFetch(
-			config,
-			moveItemURL,
+			config.moveItemURL,
 			{
 				body: {
 					itemId,
@@ -112,24 +102,20 @@ export default {
 	/**
 	 * Updates a config into an item
 	 * @param {object} options
-	 * @param {object} options.config Application config
 	 * @param {object} options.itemConfig Updated item config
 	 * @param {string} options.itemId id of the item to be updated
 	 * @param {string} options.segmentsExperienceId Segments experience id
+	 * @param {function} options.onNetworkStatus
 	 * @return {Promise<void>}
 	 */
 	updateItemConfig({
-		config,
 		itemConfig,
 		itemId,
 		onNetworkStatus,
 		segmentsExperienceId
 	}) {
-		const {updateItemConfigURL} = config;
-
 		return layoutServiceFetch(
-			config,
-			updateItemConfigURL,
+			config.updateItemConfigURL,
 			{
 				body: {
 					itemConfig: JSON.stringify(itemConfig),
@@ -144,22 +130,14 @@ export default {
 	/**
 	 * Updates layout's layoutData
 	 * @param {object} options
-	 * @param {object} options.config Application config
 	 * @param {string} options.segmentsExperienceId Current segmentsExperienceId
 	 * @param {object} options.layoutData New layoutData
+	 * @param {function} options.onNetworkStatus
 	 * @return {Promise<void>}
 	 */
-	updateLayoutData({
-		config,
-		layoutData,
-		onNetworkStatus,
-		segmentsExperienceId
-	}) {
-		const {updateLayoutPageTemplateDataURL} = config;
-
+	updateLayoutData({layoutData, onNetworkStatus, segmentsExperienceId}) {
 		return layoutServiceFetch(
-			config,
-			updateLayoutPageTemplateDataURL,
+			config.updateLayoutPageTemplateDataURL,
 			{
 				body: {
 					data: JSON.stringify(layoutData),
@@ -173,24 +151,20 @@ export default {
 	/**
 	 * Updates the number of columns of a row
 	 * @param {object} options
-	 * @param {object} options.config Application config
 	 * @param {string} options.itemId id of the item to be updated
 	 * @param {number} options.numberOfColumns New number of columns
 	 * @param {string} options.segmentsExperienceId Segments experience id
+	 * @param {function} options.onNetworkStatus
 	 * @return {Promise<void>}
 	 */
 	updateRowColumns({
-		config,
 		itemId,
 		numberOfColumns,
 		onNetworkStatus,
 		segmentsExperienceId
 	}) {
-		const {updateRowColumnsURL} = config;
-
 		return layoutServiceFetch(
-			config,
-			updateRowColumnsURL,
+			config.updateRowColumnsURL,
 			{
 				body: {
 					itemId,
@@ -203,8 +177,8 @@ export default {
 	}
 };
 
-const layoutServiceFetch = (config, url, options, onNetworkStatus) => {
-	return serviceFetch(config, url, options, onNetworkStatus, {
+const layoutServiceFetch = (url, options, onNetworkStatus) => {
+	return serviceFetch(url, options, onNetworkStatus, {
 		requestGenerateDraft: true
 	});
 };

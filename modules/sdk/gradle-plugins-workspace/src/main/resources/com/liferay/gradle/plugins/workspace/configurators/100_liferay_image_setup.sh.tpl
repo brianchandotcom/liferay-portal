@@ -1,35 +1,41 @@
 #!/bin/bash
 
 function copy_configs {
-	echo "[LIFERAY] Copying /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT} files:"
-	echo ""
+	CONFIGS_DIR="/home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}"
 
-	tree --noreport /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}
+	if [ -n "$(ls -A ${CONFIGS_DIR}/* 2> /dev/null)" ]; then
+		echo "[LIFERAY] Copying ${CONFIGS_DIR} config files:"
+		echo ""
 
-	echo ""
-	echo "[LIFERAY] ... into ${LIFERAY_HOME}."
+		tree --noreport "${CONFIGS_DIR}"
 
-	cp -r /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/* ${LIFERAY_HOME}
+		echo ""
+		echo "[LIFERAY] ... into ${LIFERAY_HOME}."
 
-	echo ""
+		cp -R "${CONFIGS_DIR}"/* ${LIFERAY_HOME}
+
+		echo ""
+	fi
 }
 
 function copy_and_remove_scripts {
-	echo "[LIFERAY] Copying /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts files:"
-	echo ""
+	SCRIPTS_DIR="/home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts"
 
-	tree --noreport /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts
+	if [ -n "$(ls -A ${SCRIPTS_DIR}/* 2> /dev/null)" ]; then
+		echo "[LIFERAY] Copying ${SCRIPTS_DIR} script files:"
+		echo ""
 
-	echo ""
-	echo "[LIFERAY] ... into ${LIFERAY_MOUNT_DIR}/scripts"
+		tree --noreport "${SCRIPTS_DIR}"
 
-	mkdir -p ${LIFERAY_MOUNT_DIR}/scripts
+		echo ""
+		echo "[LIFERAY] ... into ${LIFERAY_MOUNT_DIR}/scripts"
 
-	cp -r /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts/* ${LIFERAY_MOUNT_DIR}/scripts
+		cp -R "${SCRIPTS_DIR}"/* ${LIFERAY_MOUNT_DIR}/scripts
 
-	rm -rf /home/liferay/configs/${LIFERAY_WORKSPACE_ENVIRONMENT}/scripts
+		rm -rf "${SCRIPTS_DIR}"
 
-	echo ""
+		echo ""
+	fi
 }
 
 function main {

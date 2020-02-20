@@ -96,6 +96,9 @@ public class ProjectTemplatesSpringPortletMVCTest
 			"gradle", _framework, _frameworkDependencies, _viewType,
 			_liferayVersion);
 
+		testNotContains(
+			gradleProjectDir, "src/main/webapp/WEB-INF/web.xml", "false");
+
 		testExists(
 			gradleProjectDir,
 			"src/main/webapp/WEB-INF/spring-context/portlet/Sample.xml");
@@ -111,6 +114,10 @@ public class ProjectTemplatesSpringPortletMVCTest
 			testContains(
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
 				"liferay-portlet-app_7_0_0.dtd");
+
+			testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/web.xml",
+				"version=\"3.0\" xmlns=\"http://java.sun.com/xml/ns/javaee");
 		}
 		else if (_liferayVersion.equals("7.1")) {
 			testContains(
@@ -120,6 +127,10 @@ public class ProjectTemplatesSpringPortletMVCTest
 			testContains(
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
 				"liferay-portlet-app_7_1_0.dtd");
+
+			testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/web.xml",
+				"version=\"3.1\" xmlns=\"http://xmlns.jcp.org/xml/ns/javaee\"");
 		}
 		else if (_liferayVersion.equals("7.2")) {
 			testContains(
@@ -129,20 +140,21 @@ public class ProjectTemplatesSpringPortletMVCTest
 			testContains(
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
 				"liferay-portlet-app_7_2_0.dtd");
+			testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/web.xml",
+				"version=\"3.1\" xmlns=\"http://xmlns.jcp.org/xml/ns/javaee\"");
 		}
 		else if (_liferayVersion.equals("7.3")) {
+			testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
+				"liferay-display_7_3_0.dtd");
 
-			// TODO: Un-comment after 7.3 DTDs are released.
-			// testContains(
-
-			//	gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
-			//	"liferay-display_7_3_0.dtd");
-
-			// TODO: Un-comment after 7.3 DTDs are released.
-			// testContains(
-
-			//	gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
-			//	"liferay-portlet-app_7_3_0.dtd");
+			testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
+				"liferay-portlet-app_7_3_0.dtd");
+			testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/web.xml",
+				"version=\"3.1\" xmlns=\"http://xmlns.jcp.org/xml/ns/javaee\"");
 		}
 
 		if (_viewType.equals("jsp")) {

@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentFieldHTML {
+public class FragmentFieldHTML implements Cloneable {
 
 	public Object getHtml() {
 		return html;
@@ -46,6 +46,11 @@ public class FragmentFieldHTML {
 	}
 
 	protected Object html;
+
+	@Override
+	public FragmentFieldHTML clone() throws CloneNotSupportedException {
+		return (FragmentFieldHTML)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

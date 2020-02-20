@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Status {
+public class Status implements Cloneable {
 
 	public Boolean getActionInProgress() {
 		return actionInProgress;
@@ -48,6 +48,11 @@ public class Status {
 	}
 
 	protected Boolean actionInProgress;
+
+	@Override
+	public Status clone() throws CloneNotSupportedException {
+		return (Status)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

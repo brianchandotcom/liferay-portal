@@ -21,6 +21,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -112,9 +113,21 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 
 		masterLayoutPageTemplateEntries.add(layoutPageTemplateEntry);
 
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		long scopeGroupId = _themeDisplay.getScopeGroupId();
+
+		if (scopeGroup.isLayoutPrototype()) {
+			LayoutPageTemplateEntry layoutPrototypeLayoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchFirstLayoutPageTemplateEntry(scopeGroup.getClassPK());
+
+			scopeGroupId = layoutPrototypeLayoutPageTemplateEntry.getGroupId();
+		}
+
 		masterLayoutPageTemplateEntries.addAll(
 			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-				_themeDisplay.getScopeGroupId(),
+				scopeGroupId,
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null));

@@ -17,7 +17,7 @@ package com.liferay.source.formatter.checks;
 /**
  * @author Hugo Huijser
  */
-public class FTLStylingCheck extends StylingCheck {
+public class FTLStylingCheck extends BaseStylingCheck {
 
 	@Override
 	protected String doProcess(

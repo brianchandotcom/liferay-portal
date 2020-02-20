@@ -1,0 +1,27 @@
+{
+	"allowNewFragmentEntries": false,
+	"config": {},
+	"fragmentEntryKeys": [
+		"fragmentEntry1",
+		"fragmentEntry2"
+	],
+	"nextColumnId": 0,
+	"nextRowId": 0,
+	"structure": [
+		{
+			"columns": [
+				{
+					"columnId": "0",
+					"config": {
+					},
+					"fragmentEntryLinkIds": [
+						"drop-zone"
+					],
+					"size": "12"
+				}
+			],
+			"rowId": "0",
+			"type": "1"
+		}
+	]
+}

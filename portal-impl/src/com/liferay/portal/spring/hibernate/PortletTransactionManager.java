@@ -279,12 +279,12 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 
 		private TransactionStatusWrapper(
 			TransactionStatus transactionStatus,
-			SessionFactory targetSessionFactory,
+			SessionFactory portletSessionFactory,
 			SessionHolder previousPortletSessionHolder,
 			Session portletSession) {
 
 			_transactionStatus = transactionStatus;
-			_portletSessionFactory = targetSessionFactory;
+			_portletSessionFactory = portletSessionFactory;
 			_previousPortletSessionHolder = previousPortletSessionHolder;
 			_portletSession = portletSession;
 		}

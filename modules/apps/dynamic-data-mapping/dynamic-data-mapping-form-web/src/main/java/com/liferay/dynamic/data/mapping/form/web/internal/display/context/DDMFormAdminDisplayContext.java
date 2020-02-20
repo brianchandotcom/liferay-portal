@@ -62,6 +62,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceModifiedD
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceNameComparator;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -144,8 +145,6 @@ public class DDMFormAdminDisplayContext {
 		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
 		NPMResolver npmResolver, Portal portal) {
 
-		this.renderRequest = renderRequest;
-		this.renderResponse = renderResponse;
 		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener =
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 		_ddmFormBuilderContextFactory = ddmFormBuilderContextFactory;
@@ -159,16 +158,19 @@ public class DDMFormAdminDisplayContext {
 		_ddmFormInstanceService = ddmFormInstanceService;
 		_ddmFormInstanceVersionLocalService =
 			ddmFormInstanceVersionLocalService;
-		this.ddmFormRenderer = ddmFormRenderer;
 		_ddmFormTemplateContextFactory = ddmFormTemplateContextFactory;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmFormWebConfiguration = ddmFormWebConfiguration;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmStructureService = ddmStructureService;
-		this.jsonFactory = jsonFactory;
 		_npmResolver = npmResolver;
 		_portal = portal;
+
+		this.renderRequest = renderRequest;
+		this.renderResponse = renderResponse;
+		this.ddmFormRenderer = ddmFormRenderer;
+		this.jsonFactory = jsonFactory;
 
 		formAdminRequestHelper = new DDMFormAdminRequestHelper(renderRequest);
 
@@ -235,8 +237,8 @@ public class DDMFormAdminDisplayContext {
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
 				HttpServletRequest httpServletRequest =
 					formAdminRequestHelper.getRequest();
 
@@ -244,21 +246,16 @@ public class DDMFormAdminDisplayContext {
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							renderResponse.createRenderURL(),
-							"mvcRenderCommandName", "/admin/edit_form_instance",
-							"redirect",
-							PortalUtil.getCurrentURL(httpServletRequest),
-							"groupId",
-							String.valueOf(themeDisplay.getScopeGroupId()));
+				dropdownItem.setHref(
+					renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/admin/edit_form_instance", "redirect",
+					PortalUtil.getCurrentURL(httpServletRequest), "groupId",
+					String.valueOf(themeDisplay.getScopeGroupId()));
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "new-form"));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "new-form"));
 			}
-		};
+		).build();
 	}
 
 	public String getCSVExport() {

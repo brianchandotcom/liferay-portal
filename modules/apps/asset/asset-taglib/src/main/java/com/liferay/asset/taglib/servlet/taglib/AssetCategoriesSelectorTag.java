@@ -279,7 +279,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 			portletURL.setParameter("eventName", getEventName());
 			portletURL.setParameter(
-				"selectedCategories", "{selectedCategories}");
+				"selectedCategoryIds", "{selectedCategoryIds}");
 			portletURL.setParameter("singleSelect", "{singleSelect}");
 			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
 

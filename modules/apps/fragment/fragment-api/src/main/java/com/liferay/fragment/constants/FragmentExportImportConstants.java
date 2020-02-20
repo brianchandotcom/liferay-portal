@@ -19,8 +19,8 @@ package com.liferay.fragment.constants;
  */
 public class FragmentExportImportConstants {
 
-	public static final String FILE_NAME_COLLECTION_CONFIG = "collection.json";
+	public static final String FILE_NAME_COLLECTION = "collection.json";
 
-	public static final String FILE_NAME_FRAGMENT_CONFIG = "fragment.json";
+	public static final String FILE_NAME_FRAGMENT = "fragment.json";
 
 }

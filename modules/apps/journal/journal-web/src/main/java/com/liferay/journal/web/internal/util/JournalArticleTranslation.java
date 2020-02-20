@@ -25,7 +25,7 @@ import java.util.Locale;
 public class JournalArticleTranslation {
 
 	public JournalArticleTranslation(boolean defaultLanguage, Locale locale) {
-		_default = defaultLanguage;
+		_defaultLanguage = defaultLanguage;
 		_locale = locale;
 	}
 
@@ -42,10 +42,10 @@ public class JournalArticleTranslation {
 	}
 
 	public boolean isDefault() {
-		return _default;
+		return _defaultLanguage;
 	}
 
-	private final boolean _default;
+	private final boolean _defaultLanguage;
 	private final Locale _locale;
 
 }

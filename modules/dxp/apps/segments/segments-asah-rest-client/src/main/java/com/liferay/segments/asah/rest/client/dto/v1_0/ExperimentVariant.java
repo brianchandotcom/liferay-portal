@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ExperimentVariant {
+public class ExperimentVariant implements Cloneable {
 
 	public String getId() {
 		return id;
@@ -67,6 +67,11 @@ public class ExperimentVariant {
 	}
 
 	protected Double trafficSplit;
+
+	@Override
+	public ExperimentVariant clone() throws CloneNotSupportedException {
+		return (ExperimentVariant)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

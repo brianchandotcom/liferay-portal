@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
  */
 public class ContentPageEditorActionKeys extends ActionKeys {
 
+	public static final String EDIT_SEGMENTS_ENTRY = "EDIT_SEGMENTS_ENTRY";
+
 	public static final String LOCKED_SEGMENTS_EXPERIMENT =
 		"LOCKED_SEGMENTS_EXPERIMENT";
 

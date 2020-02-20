@@ -21,8 +21,7 @@
  * @param {function} destroyCallback Function that should be called if
  *  the editor is destroyed for any internal reason. This function does NOT need
  *  to be called if the editor is destroyed with destroyEditor function.
- * @param {object} config Application configuration object.
- * @param {Event=} event that trigger the creation of the editor.
+ * @param {Event} event that trigger the creation of the editor.
  *  This is passed only in the case of alloy editor based editors.
  */
 function createEditor(element) {

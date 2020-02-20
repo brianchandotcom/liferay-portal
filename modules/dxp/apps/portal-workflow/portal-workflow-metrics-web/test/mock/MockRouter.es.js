@@ -39,6 +39,7 @@ const MockRouter = ({
 	children,
 	client,
 	initialPath = '/1/20/title%3Aasc',
+	isAmPm,
 	path = '/:page/:pageSize/:sort',
 	query = '?backPath=%2F',
 	withoutRouterProps
@@ -52,6 +53,7 @@ const MockRouter = ({
 			defaultDelta: 20,
 			deltaValues: [5, 10, 20, 30, 50, 75],
 			getClient: () => client,
+			isAmPm,
 			maxPages: 3,
 			namespace: 'workflow_',
 			setStatus,

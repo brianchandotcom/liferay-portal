@@ -50,19 +50,19 @@ public class Range {
 		_toAsString = null;
 	}
 
-	public Range(String from, String to) {
+	public Range(String fromAsString, String toAsString) {
 		_from = null;
-		_fromAsString = from;
+		_fromAsString = fromAsString;
 		_to = null;
-		_toAsString = to;
+		_toAsString = toAsString;
 	}
 
-	public Range(String key, String from, String to) {
+	public Range(String key, String fromAsString, String toAsString) {
 		_key = key;
 		_from = null;
-		_fromAsString = from;
+		_fromAsString = fromAsString;
 		_to = null;
-		_toAsString = to;
+		_toAsString = toAsString;
 	}
 
 	public Double getFrom() {

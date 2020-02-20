@@ -38,7 +38,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
+import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -77,7 +80,6 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,7 +93,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -104,9 +105,10 @@ import javax.servlet.http.HttpServletRequest;
 public class EditAssetListDisplayContext {
 
 	public EditAssetListDisplayContext(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		UnicodeProperties properties) {
+		ItemSelector itemSelector, PortletRequest portletRequest,
+		PortletResponse portletResponse, UnicodeProperties properties) {
 
+		_itemSelector = itemSelector;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_properties = properties;
@@ -580,17 +582,13 @@ public class EditAssetListDisplayContext {
 	}
 
 	public String getGroupItemSelectorURL() {
-		ItemSelector itemSelector =
-			(ItemSelector)_httpServletRequest.getAttribute(
-				AssetListWebKeys.ITEM_SELECTOR);
-
 		ItemSelectorCriterion itemSelectorCriterion =
-			new SiteItemSelectorCriterion();
+			new GroupItemSelectorCriterion();
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new GroupItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 			getSelectGroupEventName(), itemSelectorCriterion);
 
@@ -618,52 +616,14 @@ public class EditAssetListDisplayContext {
 				continue;
 			}
 
-			PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
-				_httpServletRequest, curRendererFactory.getClassName(),
-				PortletProvider.Action.BROWSE);
-
-			if (assetBrowserURL == null) {
-				continue;
-			}
-
-			assetBrowserURL.setParameter(
-				"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-			assetBrowserURL.setParameter(
-				"multipleSelection", String.valueOf(Boolean.TRUE));
-			assetBrowserURL.setParameter(
-				"selectedGroupIds",
-				String.valueOf(_themeDisplay.getScopeGroupId()));
-			assetBrowserURL.setParameter(
-				"typeSelection", curRendererFactory.getClassName());
-			assetBrowserURL.setParameter(
-				"showNonindexable", String.valueOf(Boolean.TRUE));
-			assetBrowserURL.setParameter(
-				"showScheduled", String.valueOf(Boolean.TRUE));
-			assetBrowserURL.setParameter(
-				"eventName", _portletResponse.getNamespace() + "selectAsset");
-			assetBrowserURL.setPortletMode(PortletMode.VIEW);
-			assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
 			if (!curRendererFactory.isSupportsClassTypes()) {
-				String type = curRendererFactory.getTypeName(
-					_themeDisplay.getLocale());
-
-				Map<String, Object> data = HashMapBuilder.<String, Object>put(
-					"destroyOnHide", true
-				).put(
-					"groupid", String.valueOf(_themeDisplay.getScopeGroupId())
-				).put(
-					"href", assetBrowserURL.toString()
-				).put(
-					"title",
-					HtmlUtil.escape(
-						LanguageUtil.format(
-							_httpServletRequest, "select-x", type, false))
-				).put(
-					"type", type
-				).build();
-
-				manualAddIconDataMap.put(type, data);
+				manualAddIconDataMap.put(
+					curRendererFactory.getTypeName(_themeDisplay.getLocale()),
+					_getDataMap(
+						curRendererFactory,
+						curRendererFactory.getTypeName(
+							_themeDisplay.getLocale()),
+						_DEFAULT_SUBTYPE_SELECTION_ID));
 
 				continue;
 			}
@@ -678,27 +638,11 @@ public class EditAssetListDisplayContext {
 					_themeDisplay.getLocale());
 
 			for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
-				assetBrowserURL.setParameter(
-					"subtypeSelectionId",
-					String.valueOf(assetAvailableClassType.getClassTypeId()));
-
-				String type = assetAvailableClassType.getName();
-
-				Map<String, Object> data = HashMapBuilder.<String, Object>put(
-					"destroyOnHide", true
-				).put(
-					"groupid", String.valueOf(_themeDisplay.getScopeGroupId())
-				).put(
-					"href", assetBrowserURL.toString()
-				).put(
-					"title",
-					LanguageUtil.format(
-						_httpServletRequest, "select-x", type, false)
-				).put(
-					"type", type
-				).build();
-
-				manualAddIconDataMap.put(type, data);
+				manualAddIconDataMap.put(
+					assetAvailableClassType.getName(),
+					_getDataMap(
+						curRendererFactory, assetAvailableClassType.getName(),
+						assetAvailableClassType.getClassTypeId()));
 			}
 		}
 
@@ -957,6 +901,10 @@ public class EditAssetListDisplayContext {
 		return null;
 	}
 
+	public UnicodeProperties getUnicodeProperties() {
+		return _properties;
+	}
+
 	public List<Long> getVocabularyIds() throws PortalException {
 		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
 			getReferencedModelsGroupIds());
@@ -1115,6 +1063,31 @@ public class EditAssetListDisplayContext {
 		return StringUtil.merge(filteredAssetTagNames);
 	}
 
+	private PortletURL _getAssetEntryItemSelectorPortletURL(
+		AssetRendererFactory<?> rendererFactory, long subtypeSelectionId) {
+
+		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
+			new AssetEntryItemSelectorCriterion();
+
+		assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new AssetEntryItemSelectorReturnType());
+		assetEntryItemSelectorCriterion.setGroupId(
+			_themeDisplay.getScopeGroupId());
+		assetEntryItemSelectorCriterion.setSelectedGroupIds(
+			new long[] {_themeDisplay.getScopeGroupId()});
+		assetEntryItemSelectorCriterion.setShowNonindexable(true);
+		assetEntryItemSelectorCriterion.setShowScheduled(true);
+		assetEntryItemSelectorCriterion.setSubtypeSelectionId(
+			subtypeSelectionId);
+		assetEntryItemSelectorCriterion.setTypeSelection(
+			rendererFactory.getClassName());
+
+		return _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+			_portletResponse.getNamespace() + "selectAsset",
+			assetEntryItemSelectorCriterion);
+	}
+
 	private Long[] _getClassTypeIds(
 		UnicodeProperties properties, String className,
 		Long[] availableClassTypeIds) {
@@ -1145,6 +1118,31 @@ public class EditAssetListDisplayContext {
 		return availableClassTypeIds;
 	}
 
+	private Map<String, Object> _getDataMap(
+		AssetRendererFactory<?> rendererFactory, String type,
+		long subtypeSelectionId) {
+
+		return HashMapBuilder.<String, Object>put(
+			"destroyOnHide", true
+		).put(
+			"groupid", String.valueOf(_themeDisplay.getScopeGroupId())
+		).put(
+			"href",
+			String.valueOf(
+				_getAssetEntryItemSelectorPortletURL(
+					rendererFactory, subtypeSelectionId))
+		).put(
+			"title",
+			HtmlUtil.escape(
+				LanguageUtil.format(
+					_httpServletRequest, "select-x", type, false))
+		).put(
+			"type", type
+		).build();
+	}
+
+	private static final long _DEFAULT_SUBTYPE_SELECTION_ID = 0;
+
 	private Boolean _anyAssetType;
 	private AssetListEntry _assetListEntry;
 	private Long _assetListEntryId;
@@ -1160,6 +1158,7 @@ public class EditAssetListDisplayContext {
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private String _orderByColumn1;
 	private String _orderByColumn2;
 	private String _orderByType1;

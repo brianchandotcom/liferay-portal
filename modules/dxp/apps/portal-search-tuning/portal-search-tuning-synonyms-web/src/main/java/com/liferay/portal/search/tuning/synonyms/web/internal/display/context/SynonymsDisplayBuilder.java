@@ -15,6 +15,7 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -230,21 +231,16 @@ public class SynonymsDisplayBuilder {
 	}
 
 	protected CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(),
-							"mvcRenderCommandName", "editSynonymSet",
-							"redirect",
-							_portal.getCurrentURL(_httpServletRequest));
-						dropdownItem.setLabel(
-							_language.get(
-								_httpServletRequest, "new-synonym-set"));
-					});
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"editSynonymSet", "redirect",
+					_portal.getCurrentURL(_httpServletRequest));
+				dropdownItem.setLabel(
+					_language.get(_httpServletRequest, "new-synonym-set"));
 			}
-		};
+		).build();
 	}
 
 	protected List<DropdownItem> getDropdownItems() {

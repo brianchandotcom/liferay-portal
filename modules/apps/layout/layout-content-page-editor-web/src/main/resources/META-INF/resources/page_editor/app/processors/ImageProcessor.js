@@ -23,11 +23,9 @@ import {openImageSelector} from '../../core/openImageSelector';
  * @param {function} destroyCallback Function that should be called if
  *  the editor is destroyed for any internal reason. This function does NOT need
  *  to be called if the editor is destroyed with destroyEditor function.
- * @param {object} config Application configuration object.
  */
-function createEditor(element, changeCallback, destroyCallback, config) {
+function createEditor(element, changeCallback, destroyCallback) {
 	openImageSelector(
-		config,
 		image => changeCallback(image && image.url ? image.url : ''),
 		destroyCallback
 	);

@@ -114,7 +114,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 		zipWriter.addEntry(
 			path + StringPool.SLASH +
-				FragmentExportImportConstants.FILE_NAME_FRAGMENT_CONFIG,
+				FragmentExportImportConstants.FILE_NAME_FRAGMENT,
 			jsonObject.toString());
 
 		zipWriter.addEntry(path + "/index.css", getCss());

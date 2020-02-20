@@ -16,8 +16,6 @@ package com.liferay.jenkins.results.parser.spira;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-import java.util.Calendar;
-
 import org.json.JSONObject;
 
 /**
@@ -53,11 +51,6 @@ public abstract class PathSpiraArtifact extends BaseSpiraArtifact {
 		return path.substring(
 			JenkinsResultsParserUtil.lastIndexOfRegex(path, "(?<!\\\\)\\/") +
 				1);
-	}
-
-	protected static String toDateString(Calendar calendar) {
-		return JenkinsResultsParserUtil.combine(
-			"/Date(", String.valueOf(calendar.getTimeInMillis()), ")/");
 	}
 
 	protected PathSpiraArtifact(JSONObject jsonObject) {

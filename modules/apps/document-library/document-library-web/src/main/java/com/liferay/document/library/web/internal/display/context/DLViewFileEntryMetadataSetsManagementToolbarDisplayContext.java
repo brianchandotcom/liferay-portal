@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -61,26 +62,23 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)liferayPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							liferayPortletResponse.createRenderURL(),
-							"mvcRenderCommandName",
-							"/document_library/ddm/edit_ddm_structure",
-							"redirect", themeDisplay.getURLCurrent(), "groupId",
-							String.valueOf(_dlRequestHelper.getScopeGroupId()));
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_dlRequestHelper.getRequest(), "add"));
-					});
+				dropdownItem.setHref(
+					liferayPortletResponse.createRenderURL(),
+					"mvcRenderCommandName",
+					"/document_library/ddm/edit_ddm_structure", "redirect",
+					themeDisplay.getURLCurrent(), "groupId",
+					String.valueOf(_dlRequestHelper.getScopeGroupId()));
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_dlRequestHelper.getRequest(), "add"));
 			}
-		};
+		).build();
 	}
 
 	@Override

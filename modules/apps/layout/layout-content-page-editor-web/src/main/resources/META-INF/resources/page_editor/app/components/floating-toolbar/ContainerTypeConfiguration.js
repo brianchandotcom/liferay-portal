@@ -13,6 +13,7 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import {CONTAINER_PADDING_IDENTIFIERS} from '../../config/constants/containerPaddingIdentifiers';
@@ -58,3 +59,8 @@ export const ContainerTypeConfiguration = ({containerType, onValueChange}) => (
 		/>
 	</ClayForm.Group>
 );
+
+ContainerTypeConfiguration.propTypes = {
+	containerType: PropTypes.string.isRequired,
+	onValueChange: PropTypes.func.isRequired
+};

@@ -21,19 +21,29 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeClosable;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.util.Date;
 import java.util.Locale;
+
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,8 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CTDisplayRendererRegistry {
 
 	public <T extends CTModel<T>> String getEditURL(
-			HttpServletRequest httpServletRequest, CTEntry ctEntry)
-		throws Exception {
+		HttpServletRequest httpServletRequest, CTEntry ctEntry) {
 
 		CTDisplayRenderer<T> ctDisplayRenderer =
 			_ctDisplayServiceTrackerMap.getService(
@@ -79,6 +88,43 @@ public class CTDisplayRendererRegistry {
 
 			return ctDisplayRenderer.getEditURL(httpServletRequest, ctModel);
 		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
+			return null;
+		}
+	}
+
+	public String getEntryTitle(
+		CTEntry ctEntry, HttpServletRequest httpServletRequest) {
+
+		String languageKey = "x-modified-a-x-x-ago";
+
+		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) {
+			languageKey = "x-added-a-x-x-ago";
+		}
+		else if (ctEntry.getChangeType() ==
+					CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+			languageKey = "x-deleted-a-x-x-ago";
+		}
+
+		Date modifiedDate = ctEntry.getModifiedDate();
+
+		String entryTitle = _language.format(
+			httpServletRequest, languageKey,
+			new Object[] {
+				ctEntry.getUserName(),
+				getTypeName(httpServletRequest.getLocale(), ctEntry),
+				_language.getTimeDescription(
+					httpServletRequest.getLocale(),
+					System.currentTimeMillis() - modifiedDate.getTime(), true)
+			},
+			false);
+
+		return _html.escape(entryTitle);
 	}
 
 	public <T extends CTModel<T>> String getTypeName(
@@ -144,6 +190,47 @@ public class CTDisplayRendererRegistry {
 		}
 
 		return name;
+	}
+
+	public <T extends CTModel<T>> String getViewURL(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, CTEntry ctEntry) {
+
+		CTService<T> ctService = _ctServiceServiceTrackerMap.getService(
+			ctEntry.getModelClassNameId());
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					ctEntry.getCtCollectionId())) {
+
+			T ctModel = ctService.updateWithUnsafeFunction(
+				ctPersistence -> ctPersistence.fetchByPrimaryKey(
+					ctEntry.getModelClassPK()));
+
+			if (ctModel == null) {
+				return null;
+			}
+
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+			portletURL.setParameter("mvcPath", "/change_lists/view_entry.jsp");
+			portletURL.setParameter(
+				"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+
+			try {
+				portletURL.setWindowState(LiferayWindowState.POP_UP);
+			}
+			catch (WindowStateException windowStateException) {
+				ReflectionUtil.throwException(windowStateException);
+			}
+
+			return StringBundler.concat(
+				"javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: ",
+				"true}, title: '",
+				getEntryTitle(
+					ctEntry, liferayPortletRequest.getHttpServletRequest()),
+				"', uri: '", portletURL.toString(), "'});");
+		}
 	}
 
 	public <T extends CTModel<T>> void renderCTEntry(
@@ -252,6 +339,12 @@ public class CTDisplayRendererRegistry {
 	private ServiceTrackerMap<Long, CTDisplayRenderer>
 		_ctDisplayServiceTrackerMap;
 	private ServiceTrackerMap<Long, CTService> _ctServiceServiceTrackerMap;
+
+	@Reference
+	private Html _html;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ResourceActions _resourceActions;

@@ -134,24 +134,24 @@ public final class LiferayConnection {
 	}
 
 	private LiferayConnection(
-			HttpService httpService, String openApiSpecPath,
-			BasicAuthentication basicAuthentication, ProxyConfig proxyConfig)
+			HttpService httpService, String openAPISpecPath,
+			BasicAuthentication httpAuthentication, ProxyConfig proxyConfig)
 		throws ConnectionException {
 
-		_openAPISpecPath = openApiSpecPath;
-		_serverBaseURL = _getServerBaseURL(openApiSpecPath);
-		_httpAuthentication = basicAuthentication;
+		_openAPISpecPath = openAPISpecPath;
+		_serverBaseURL = _getServerBaseURL(openAPISpecPath);
+		_httpAuthentication = httpAuthentication;
 
 		_initHttpClient(httpService, proxyConfig);
 	}
 
 	private LiferayConnection(
-			HttpService httpService, String openApiSpecPath, String consumerKey,
+			HttpService httpService, String openAPISpecPath, String consumerKey,
 			String consumerSecret, ProxyConfig proxyConfig)
 		throws ConnectionException {
 
-		_openAPISpecPath = openApiSpecPath;
-		_serverBaseURL = _getServerBaseURL(openApiSpecPath);
+		_openAPISpecPath = openAPISpecPath;
+		_serverBaseURL = _getServerBaseURL(openAPISpecPath);
 
 		_initHttpClient(httpService, proxyConfig);
 

@@ -55,9 +55,9 @@ public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		long ctEntryId = ParamUtil.getLong(renderRequest, "ctEntryId");
-
 		try {
+			long ctEntryId = ParamUtil.getLong(renderRequest, "ctEntryId");
+
 			CTEntry ctEntry = _ctEntryLocalService.getCTEntry(ctEntryId);
 
 			CTCollection ctCollection =

@@ -17,7 +17,7 @@ package com.liferay.source.formatter.checks;
 /**
  * @author Hugo Huijser
  */
-public class JavaLogParametersCheck extends LogParametersCheck {
+public class JavaLogParametersCheck extends BaseLogParametersCheck {
 
 	@Override
 	protected String doProcess(

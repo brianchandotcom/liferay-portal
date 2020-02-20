@@ -62,6 +62,27 @@ SourceEditor.STATE = {
 	),
 
 	/**
+	 * List of FreeMarker tags for custom autocompletion in the HTML editor.
+	 *
+	 * @default []
+	 * @instance
+	 * @memberOf SourceEditor
+	 * @type Array
+	 */
+	freeMarkerTaglibs: Config.arrayOf(Config.string()),
+
+	/**
+	 * List of FreeMarker variables for custom autocompletion in the HTML
+	 * editor.
+	 *
+	 * @default []
+	 * @instance
+	 * @memberOf SourceEditor
+	 * @type Array
+	 */
+	freeMarkerVariables: Config.arrayOf(Config.string()),
+
+	/**
 	 * Initial content sent to the editor.
 	 *
 	 * @default undefined

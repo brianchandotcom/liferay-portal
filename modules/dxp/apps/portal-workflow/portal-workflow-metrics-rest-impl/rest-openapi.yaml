@@ -149,6 +149,9 @@ components:
                     type: integer
                 initial:
                     type: boolean
+                label:
+                    readOnly: true
+                    type: string
                 name:
                     type: string
                 terminal:

@@ -47,11 +47,7 @@ export const getFilteredSettingsContext = settingsContext => {
 							};
 						}
 
-						return {
-							...field,
-							defaultLanguageId: themeDisplay.getLanguageId(),
-							editingLanguageId: themeDisplay.getLanguageId()
-						};
+						return field;
 					})
 			};
 		})
@@ -64,7 +60,7 @@ export default ({dispatchEvent, settingsContext}, container) => {
 			const {fieldName} = fieldInstance;
 
 			dispatchEvent('fieldBlurred', {
-				editingLanguageId: themeDisplay.getLanguageId(),
+				editingLanguageId: settingsContext.editingLanguageId,
 				propertyName: fieldName,
 				propertyValue: value
 			});
@@ -76,7 +72,7 @@ export default ({dispatchEvent, settingsContext}, container) => {
 			const {fieldName} = fieldInstance;
 
 			dispatchEvent('fieldEdited', {
-				editingLanguageId: themeDisplay.getLanguageId(),
+				editingLanguageId: settingsContext.editingLanguageId,
 				propertyName: fieldName,
 				propertyValue: value
 			});

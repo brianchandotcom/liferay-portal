@@ -17,14 +17,12 @@ import FragmentService from '../services/FragmentService';
 
 export default function deleteFragmentComment({
 	commentId,
-	config,
 	fragmentEntryLinkId,
 	parentCommentId
 }) {
 	return dispatch => {
 		return FragmentService.deleteComment({
 			commentId,
-			config,
 			onNetworkStatus: dispatch
 		}).then(() => {
 			dispatch(

@@ -107,9 +107,9 @@ public class KBFolderModelResourcePermissionRegistrar {
 		}
 
 		private KBFolderDynamicInheritanceModelResourcePermissionLogic(
-			ModelResourcePermission<KBFolder> modelResourcePermission) {
+			ModelResourcePermission<KBFolder> kbFolderModelResourcePermission) {
 
-			_kbFolderModelResourcePermission = modelResourcePermission;
+			_kbFolderModelResourcePermission = kbFolderModelResourcePermission;
 		}
 
 		private final ModelResourcePermission<KBFolder>

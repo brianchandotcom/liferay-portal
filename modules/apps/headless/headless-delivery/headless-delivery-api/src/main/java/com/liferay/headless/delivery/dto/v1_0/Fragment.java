@@ -74,6 +74,34 @@ public class Fragment {
 	protected String fragmentCollectionName;
 
 	@Schema
+	public String getFragmentKey() {
+		return fragmentKey;
+	}
+
+	public void setFragmentKey(String fragmentKey) {
+		this.fragmentKey = fragmentKey;
+	}
+
+	@JsonIgnore
+	public void setFragmentKey(
+		UnsafeSupplier<String, Exception> fragmentKeyUnsafeSupplier) {
+
+		try {
+			fragmentKey = fragmentKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String fragmentKey;
+
+	@Schema
 	public String getFragmentName() {
 		return fragmentName;
 	}
@@ -138,6 +166,20 @@ public class Fragment {
 			sb.append("\"");
 
 			sb.append(_escape(fragmentCollectionName));
+
+			sb.append("\"");
+		}
+
+		if (fragmentKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fragmentKey));
 
 			sb.append("\"");
 		}

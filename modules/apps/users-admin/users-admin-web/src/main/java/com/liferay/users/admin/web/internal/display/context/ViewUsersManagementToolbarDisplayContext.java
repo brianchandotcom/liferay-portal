@@ -15,6 +15,7 @@
 package com.liferay.users.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -132,18 +133,15 @@ public class ViewUsersManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(),
-							"mvcRenderCommandName", "/users_admin/edit_user");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "add-user"));
-					});
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/users_admin/edit_user");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "add-user"));
 			}
-		};
+		).build();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

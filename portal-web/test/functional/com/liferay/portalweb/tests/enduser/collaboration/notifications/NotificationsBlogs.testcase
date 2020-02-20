@@ -464,8 +464,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		AssertElementPresent.pauseAssertVisible(locator1 = "Comments#COMMENT_FIELD");
-
 		Comments.subscribePG();
 
 		Notifications.viewBadgeCount(notificationCount = "0");

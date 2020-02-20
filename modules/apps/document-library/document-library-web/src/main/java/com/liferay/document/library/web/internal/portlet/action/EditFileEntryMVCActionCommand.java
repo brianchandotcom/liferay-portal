@@ -43,7 +43,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
-import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfiguration;
+import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
@@ -158,9 +158,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected void activate(Map<String, Object> properties) {
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
-		_ffDocumentLibraryDDMEditorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFDocumentLibraryDDMEditorConfiguration.class, properties);
 	}
 
 	@Override
@@ -936,7 +933,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private void _setUpDDMFormValues(ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!_ffDocumentLibraryDDMEditorConfiguration.useDataEngineEditor()) {
+		if (!FFDocumentLibraryDDMEditorConfigurationUtil.
+				useDataEngineEditor()) {
+
 			return;
 		}
 
@@ -1050,22 +1049,31 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			FileEntry fileEntry = null;
 
-			if (cmd.equals(Constants.ADD) ||
-				cmd.equals(Constants.ADD_DYNAMIC)) {
+			if (cmd.equals(Constants.ADD)) {
 
 				// Add file entry
 
 				fileEntry = _dlAppService.addFileEntry(
 					repositoryId, folderId, sourceFileName, contentType, title,
 					description, changeLog, inputStream, size, serviceContext);
+			}
+			else if (cmd.equals(Constants.ADD_DYNAMIC)) {
 
-				if (cmd.equals(Constants.ADD_DYNAMIC)) {
-					JSONObject jsonObject = JSONUtil.put(
-						"fileEntryId", fileEntry.getFileEntryId());
+				// Add file entry
 
-					JSONPortletResponseUtil.writeJSON(
-						actionRequest, actionResponse, jsonObject);
-				}
+				String uniqueFileName = DLUtil.getUniqueFileName(
+					themeDisplay.getScopeGroupId(), folderId, title);
+
+				fileEntry = _dlAppService.addFileEntry(
+					repositoryId, folderId, uniqueFileName, contentType,
+					uniqueFileName, description, changeLog, inputStream, size,
+					serviceContext);
+
+				JSONObject jsonObject = JSONUtil.put(
+					"fileEntryId", fileEntry.getFileEntryId());
+
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse, jsonObject);
 			}
 			else if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
 
@@ -1133,9 +1141,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLValidator _dlValidator;
-
-	private FFDocumentLibraryDDMEditorConfiguration
-		_ffDocumentLibraryDDMEditorConfiguration;
 
 	@Reference
 	private Http _http;

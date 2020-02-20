@@ -33,7 +33,9 @@ public class NodeUtil {
 			{
 				id = document.getLong("nodeId");
 				initial = GetterUtil.getBoolean(document.getValue("initial"));
-				name = language.get(resourceBundle, document.getString("name"));
+				label = language.get(
+					resourceBundle, document.getString("name"));
+				name = document.getString("name");
 				terminal = GetterUtil.getBoolean(document.getValue("terminal"));
 				type = document.getString("type");
 			}

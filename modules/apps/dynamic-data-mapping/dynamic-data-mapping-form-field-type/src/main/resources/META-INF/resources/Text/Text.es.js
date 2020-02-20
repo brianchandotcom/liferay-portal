@@ -99,19 +99,25 @@ class Text extends Component {
 		}
 	}
 
-	_handleAutocompleteFieldChanged(event) {
-		const {value} = event.data;
+	_handleAutocompleteFieldChanged() {
+		cancelDebounce(this.debouncedUpdate);
+		this.debouncedUpdate(function(event) {
+			const {value} = event.data;
 
-		this.setState(
-			{
-				value
-			},
-			() => this.dispatchEvent(event, 'fieldEdited', value)
-		);
+			this.setState(
+				{
+					value
+				},
+				() => this.dispatchEvent(event, 'fieldEdited', value)
+			);
+		}, 300);
 	}
 
-	_handleAutocompleteFieldFocused(event) {
-		this.dispatchEvent('fieldFocused', event, event.target.inputValue);
+	_handleAutocompleteFieldFocused() {
+		cancelDebounce(this.debouncedUpdate);
+		this.debouncedUpdate(function(event) {
+			this.dispatchEvent('fieldFocused', event, event.target.inputValue);
+		}, 300);
 	}
 
 	_handleAutocompleteFilteredItemsChanged(filteredItemsReceived) {

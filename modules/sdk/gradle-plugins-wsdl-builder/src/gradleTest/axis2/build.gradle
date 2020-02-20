@@ -1,0 +1,53 @@
+apply plugin: "com.liferay.wsdl.builder"
+
+task runGradleTest
+
+buildWSDL {
+	axisVersion = 2
+	buildLibs = false
+
+	generateOptions {
+		backwordCompatible = true
+		databindingMethod = "xmlbeans"
+		flattenFiles = true
+		generateAll = true
+		serverSide = true
+	}
+}
+
+repositories {
+	File dir = rootProject.projectDir
+
+	while (dir != null) {
+		File tmpMavenRepositoryDir = new File(dir, ".m2-tmp")
+
+		if (tmpMavenRepositoryDir.exists()) {
+			maven {
+				url tmpMavenRepositoryDir
+			}
+		}
+
+		dir = dir.getParentFile();
+	}
+
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn buildWSDL
+
+	doLast {
+		String[] fileNames = [
+			"src/main/java/com/example/wsdl/HelloWorldService_wsdl/HelloWorld_BindingStub.java",
+			"src/main/java/schemaorg_apache_xmlbeans/attribute/http_3A_2F_2Fschemas_2Exmlsoap_2Eorg_2Fsoap_2Fencoding_2F/arrayType.xsb"
+		]
+
+		for (String fileName in fileNames) {
+			File generatedFile = file(fileName)
+
+			assert generatedFile.exists()
+		}
+	}
+}

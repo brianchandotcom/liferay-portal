@@ -2,15 +2,15 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="BuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/java/com/liferay/dynamic/data/mapping/form/field/type/internal/document/library/DocumentLibraryDDMFormFieldTemplateContextContributor\.java" />
-		<suppress checks="BuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/java/com/liferay/dynamic/data/mapping/form/field/type/internal/select/SelectDDMFormFieldTemplateContextContributor\.java" />
-		<suppress checks="BuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer/src/main/java/com/liferay/dynamic/data/mapping/form/renderer/internal/DDMFormFieldTemplateContextFactory\.java" />
-		<suppress checks="BuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer/src/main/java/com/liferay/dynamic/data/mapping/form/renderer/internal/DDMFormPagesTemplateContextFactory\.java" />
-		<suppress checks="BuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer/src/main/java/com/liferay/dynamic/data/mapping/form/renderer/internal/DDMFormTemplateContextFactoryImpl\.java" />
-		<suppress checks="BuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer/src/test/java/com/liferay/dynamic/data/mapping/form/renderer/internal/DDMFormFieldTemplateContextFactoryTest\.java" />
-		<suppress checks="BuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/notification/DDMFormEmailNotificationSender\.java" />
-		<suppress checks="BuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-test-util/src/main/java/com/liferay/dynamic/data/mapping/test/util/DDMStructureTestHelper\.java" />
-		<suppress checks="BuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-test/src/testIntegration/java/com/liferay/dynamic/data/mapping/service/test/BaseDDMServiceTestCase\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/java/com/liferay/dynamic/data/mapping/form/field/type/internal/document/library/DocumentLibraryDDMFormFieldTemplateContextContributor\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/java/com/liferay/dynamic/data/mapping/form/field/type/internal/select/SelectDDMFormFieldTemplateContextContributor\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer/src/main/java/com/liferay/dynamic/data/mapping/form/renderer/internal/DDMFormFieldTemplateContextFactory\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer/src/main/java/com/liferay/dynamic/data/mapping/form/renderer/internal/DDMFormPagesTemplateContextFactory\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer/src/main/java/com/liferay/dynamic/data/mapping/form/renderer/internal/DDMFormTemplateContextFactoryImpl\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer/src/test/java/com/liferay/dynamic/data/mapping/form/renderer/internal/DDMFormFieldTemplateContextFactoryTest\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/notification/DDMFormEmailNotificationSender\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-test-util/src/main/java/com/liferay/dynamic/data/mapping/test/util/DDMStructureTestHelper\.java" />
+		<suppress checks="MapBuilderCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-test/src/testIntegration/java/com/liferay/dynamic/data/mapping/service/test/BaseDDMServiceTestCase\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaForLoopCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-values-query/src/main/java/com/liferay/dynamic/data/mapping/form/values/query/internal/model/DDMFormValuesFilterImpl\.java" />

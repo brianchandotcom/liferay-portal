@@ -12,10 +12,10 @@
  * details.
  */
 
-import React, {useContext, useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 
 import togglePermissions from '../../../app/actions/togglePermission';
-import {ConfigContext} from '../../../app/config/index';
+import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import ExperienceSelector from './ExperienceSelector';
 
@@ -30,31 +30,29 @@ export default function ExperienceToolbarSection({selectId}) {
 		state => state.segmentsExperienceId
 	);
 
-	const {
-		availableSegmentsEntries,
-		defaultSegmentsEntryId,
-		editSegmentsEntryURL
-	} = useContext(ConfigContext);
-
 	const experiences = useMemo(
 		() =>
 			Object.values(availableSegmentsExperiences)
 				.sort((a, b) => b.priority - a.priority)
 				.map(experience => {
 					const segmentsEntryName =
-						availableSegmentsEntries[experience.segmentsEntryId]
-							.name;
+						config.availableSegmentsEntries[
+							experience.segmentsEntryId
+						].name;
 
 					return {
 						...experience,
 						segmentsEntryName
 					};
 				}),
-		[availableSegmentsExperiences, availableSegmentsEntries]
+		[availableSegmentsExperiences]
 	);
-	const segments = useMemo(() => Object.values(availableSegmentsEntries), [
-		availableSegmentsEntries
-	]).filter(segment => segment.segmentsEntryId !== defaultSegmentsEntryId);
+	const segments = useMemo(
+		() => Object.values(config.availableSegmentsEntries),
+		[]
+	).filter(
+		segment => segment.segmentsEntryId !== config.defaultSegmentsEntryId
+	);
 
 	const selectedExperience =
 		availableSegmentsExperiences[segmentsExperienceId];
@@ -75,7 +73,7 @@ export default function ExperienceToolbarSection({selectId}) {
 			</label>
 
 			<ExperienceSelector
-				editSegmentsEntryURL={editSegmentsEntryURL}
+				editSegmentsEntryURL={config.editSegmentsEntryURL}
 				experiences={experiences}
 				segments={segments}
 				selectedExperience={selectedExperience}

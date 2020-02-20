@@ -14,12 +14,10 @@
 
 package com.liferay.portal.search.similar.results.web.internal.contributor.blogs;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.similar.results.web.internal.util.http.HttpHelper;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
@@ -68,36 +66,7 @@ public class BlogsSimilarResultsContributor
 			return;
 		}
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			groupId, blogsEntry.getUuid());
-
-		if (assetEntry == null) {
-			return;
-		}
-
-		criteriaBuilder.uid(
-			Field.getUID(
-				assetEntry.getClassName(),
-				String.valueOf(blogsEntry.getEntryId())));
-	}
-
-	@Reference(unbind = "-")
-	public void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setBlogsEntryLocalService(
-		BlogsEntryLocalService blogsEntryLocalService) {
-
-		_blogsEntryLocalService = blogsEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setHttpHelper(HttpHelper httpHelper) {
-		_httpHelper = httpHelper;
+		criteriaBuilder.uid(_uidFactory.getUID(blogsEntry));
 	}
 
 	@Override
@@ -113,8 +82,25 @@ public class BlogsSimilarResultsContributor
 		destinationBuilder.replace(urlTitle, assetRenderer.getUrlTitle());
 	}
 
-	private AssetEntryLocalService _assetEntryLocalService;
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setHttpHelper(HttpHelper httpHelper) {
+		_httpHelper = httpHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUIDFactory(UIDFactory uidFactory) {
+		_uidFactory = uidFactory;
+	}
+
 	private BlogsEntryLocalService _blogsEntryLocalService;
 	private HttpHelper _httpHelper;
+	private UIDFactory _uidFactory;
 
 }

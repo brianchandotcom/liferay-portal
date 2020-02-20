@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaArrayDeclarator extends JavaExpression {
+public class JavaArrayDeclarator extends BaseJavaExpression {
 
 	public JavaArrayDeclarator(
 		String className, List<JavaExpression> dimensionValueJavaExpressions) {

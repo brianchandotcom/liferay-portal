@@ -47,6 +47,38 @@ definition {
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="&amp; property" content="&amp; content"''');
 	}
 
+	@description = "This ensures that the custom meta tag can be cleared."
+	@priority = "5"
+	test ClearCustomTag {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+
+		CustomMetaTags.addTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property");
+
+		CustomMetaTags.editTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property",
+			newCustomContent = "",
+			newCustomProperty = "");
+
+		Alert.viewSuccessMessage();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property" content="custom meta content",property="" content=""''');
+	}
+
 	@description = "This ensures that the custom meta tag can be edited."
 	@priority = "5"
 	test EditTag {
@@ -113,9 +145,9 @@ definition {
 		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom Tag 1 property" content="contenido de metaetiqueta personalizado"''');
 	}
 
-	@description = "This test covers LPS-107056. It ensures that fields require inputs when adding a custom meta tag."
+	@description = "This ensures that the custom meta tag can not be generated without property or content."
 	@priority = "5"
-	test ViewRequiredFields {
+	test ViewTagWithoutPropertyOrContent {
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -136,13 +168,25 @@ definition {
 			newCustomContent = "custom meta content edit",
 			newCustomProperty = "");
 
-		Alert.viewRequiredField();
+		Alert.viewSuccessMessage();
 
-		CustomMetaTags.changeLocale(locale = "ca-ES");
+		User.logoutPG();
 
-		Button.click(button = "Save");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
-		Alert.viewErrorMessage(errorMessage = "Error: No value is defined for field property.");
+		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property" content="custom meta content",property="" content="custom meta content edit"''');
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
 
 		CustomMetaTags.editTag(
 			customContent = "custom meta content edit",
@@ -150,29 +194,13 @@ definition {
 			newCustomContent = "",
 			newCustomProperty = "custom meta property edit");
 
-		Alert.viewRequiredField();
-
-		CustomMetaTags.changeLocale(locale = "ca-ES");
-
-		Type(
-			locator1 = "TextInput#CUSTOM_META_TAGS_CONTENT",
-			value1 = "custom meta content edit");
-
-		Button.click(button = "Save");
-
-		Alert.viewErrorMessage(errorMessage = "Error: No value is defined for field content.");
-
-		CustomMetaTags.editTag(
-			customContent = "custom meta content edit",
-			customProperty = "custom meta property edit",
-			newCustomContent = "custom meta content edit edit",
-			newCustomProperty = "custom meta property edit edit");
+		Alert.viewSuccessMessage();
 
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
-		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property edit edit" content="custom meta content edit edit"''');
+		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property edit" content=""''');
 	}
 
 	@description = "This ensures that the translated tag inherits the default property and content."

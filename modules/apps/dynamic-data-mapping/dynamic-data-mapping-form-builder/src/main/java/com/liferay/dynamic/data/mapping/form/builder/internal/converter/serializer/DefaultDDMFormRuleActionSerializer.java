@@ -28,7 +28,7 @@ public class DefaultDDMFormRuleActionSerializer
 	public DefaultDDMFormRuleActionSerializer(
 		DefaultDDMFormRuleAction defaultDDMFormRuleAction) {
 
-		_defaultDefaultDDMFormRuleAction = defaultDDMFormRuleAction;
+		_defaultDDMFormRuleAction = defaultDDMFormRuleAction;
 	}
 
 	@Override
@@ -36,11 +36,11 @@ public class DefaultDDMFormRuleActionSerializer
 		DDMFormRuleSerializerContext ddmFormRuleSerializerContext) {
 
 		String functionName = _actionBooleanFunctionNameMap.get(
-			_defaultDefaultDDMFormRuleAction.getAction());
+			_defaultDDMFormRuleAction.getAction());
 
 		return String.format(
 			_SET_BOOLEAN_PROPERTY_FORMAT, functionName,
-			_defaultDefaultDDMFormRuleAction.getTarget());
+			_defaultDDMFormRuleAction.getTarget());
 	}
 
 	private static final String _SET_BOOLEAN_PROPERTY_FORMAT = "%s('%s', true)";
@@ -56,6 +56,6 @@ public class DefaultDDMFormRuleActionSerializer
 			"show", "setVisible"
 		).build();
 
-	private final DefaultDDMFormRuleAction _defaultDefaultDDMFormRuleAction;
+	private final DefaultDDMFormRuleAction _defaultDDMFormRuleAction;
 
 }

@@ -12,13 +12,18 @@
  * details.
  */
 
-import {TYPES} from '../actions/index';
+import {ADD_MAPPED_INFO_ITEM} from '../actions/types';
 
-export default function mappingReducer(state, action) {
+export const INITIAL_STATE = [];
+
+export default function mappingReducer(
+	mappedInfoItems = INITIAL_STATE,
+	action
+) {
 	switch (action.type) {
-		case TYPES.ADD_MAPPED_INFO_ITEM:
+		case ADD_MAPPED_INFO_ITEM:
 			return [
-				...state,
+				...mappedInfoItems,
 				{
 					className: action.className,
 					classNameId: action.classNameId,
@@ -28,8 +33,6 @@ export default function mappingReducer(state, action) {
 			];
 
 		default:
-			break;
+			return mappedInfoItems;
 	}
-
-	return state;
 }

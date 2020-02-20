@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,20 +61,20 @@ public class DLViewFileEntryTypesDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.ADD_DOCUMENT_TYPE)) {
 
-			CreationMenu creationMenu = new CreationMenu();
+			return CreationMenuBuilder.addPrimaryDropdownItem(
+				dropdownItem -> {
+					PortletURL creationURL = renderResponse.createRenderURL();
 
-			PortletURL creationURL = renderResponse.createRenderURL();
+					creationURL.setParameter(
+						"mvcRenderCommandName",
+						"/document_library/edit_file_entry_type");
+					creationURL.setParameter(
+						"redirect",
+						PortalUtil.getCurrentURL(_httpServletRequest));
 
-			creationURL.setParameter(
-				"mvcRenderCommandName",
-				"/document_library/edit_file_entry_type");
-			creationURL.setParameter(
-				"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
-
-			creationMenu.addPrimaryDropdownItem(
-				dropdownItem -> dropdownItem.setHref(creationURL.toString()));
-
-			return creationMenu;
+					dropdownItem.setHref(creationURL.toString());
+				}
+			).build();
 		}
 
 		return null;

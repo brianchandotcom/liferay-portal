@@ -49,10 +49,13 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 		var cleanupAlloyEditorResources = function() {
 			if (!alloyEditorInstances && alloyEditorDisposeResources) {
 				window.AlloyEditor = undefined;
-				window.CKEDITOR = undefined;
 
 				alloyEditorInstances = 0;
 				alloyEditorDisposeResources = false;
+
+				if (!Object.keys(CKEDITOR.instances)) {
+					window.CKEDITOR = undefined;
+				}
 			}
 		};
 

@@ -858,6 +858,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
 		SelectFrameTop();

@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormSuccessPage {
+public class FormSuccessPage implements Cloneable {
 
 	public String getDescription() {
 		return description;
@@ -133,6 +133,11 @@ public class FormSuccessPage {
 	}
 
 	protected Long id;
+
+	@Override
+	public FormSuccessPage clone() throws CloneNotSupportedException {
+		return (FormSuccessPage)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

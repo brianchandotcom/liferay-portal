@@ -47,15 +47,17 @@ public class LiferayWriter
 	implements WriterWithFeedback<Result, IndexedRecord, IndexedRecord> {
 
 	public LiferayWriter(
-		LiferayWriteOperation writeOperation,
+		LiferayWriteOperation liferayWriteOperation,
 		LiferayOutputProperties liferayOutputProperties) {
 
-		_liferayWriteOperation = writeOperation;
+		_liferayWriteOperation = liferayWriteOperation;
+
 		_liferayOutputProperties = liferayOutputProperties;
 
-		_dieOnError = liferayOutputProperties.getDieOnError();
-		_endpointUrl = liferayOutputProperties.getEndpointUrl();
-		_liferaySink = writeOperation.getSink();
+		_dieOnError = _liferayOutputProperties.getDieOnError();
+		_endpointUrl = _liferayOutputProperties.getEndpointUrl();
+
+		_liferaySink = _liferayWriteOperation.getSink();
 		_result = new Result();
 		_successWrites = new ArrayList<>();
 

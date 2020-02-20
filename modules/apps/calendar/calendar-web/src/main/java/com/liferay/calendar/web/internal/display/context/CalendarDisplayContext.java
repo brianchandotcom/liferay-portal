@@ -31,6 +31,7 @@ import com.liferay.calendar.web.internal.search.CalendarResourceSearch;
 import com.liferay.calendar.web.internal.security.permission.resource.CalendarPermission;
 import com.liferay.calendar.web.internal.security.permission.resource.CalendarPortletPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -115,24 +116,21 @@ public class CalendarDisplayContext {
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
 				HttpServletRequest httpServletRequest =
 					PortalUtil.getHttpServletRequest(_renderRequest);
 
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_calendar_resource.jsp", "redirect",
-							PortalUtil.getCurrentURL(httpServletRequest));
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcPath",
+					"/edit_calendar_resource.jsp", "redirect",
+					PortalUtil.getCurrentURL(httpServletRequest));
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								httpServletRequest, "add-calendar-resource"));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						httpServletRequest, "add-calendar-resource"));
 			}
-		};
+		).build();
 	}
 
 	public Calendar getDefaultCalendar(

@@ -15,11 +15,14 @@
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../../config/index';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -31,7 +34,6 @@ import Container from './Container';
 
 const ContainerWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const config = useContext(ConfigContext);
 		const dispatch = useDispatch();
 		const isMounted = useIsMounted();
 		const [
@@ -56,7 +58,6 @@ const ContainerWithControls = React.forwardRef(
 			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
 				dispatch(
 					duplicateItem({
-						config,
 						itemId: item.itemId,
 						selectItem,
 						store: {segmentsExperienceId}
@@ -73,12 +74,9 @@ const ContainerWithControls = React.forwardRef(
 
 		const content = (
 			<Container
-				className={classNames(
-					'container-fluid page-editor__container',
-					{
-						empty: !item.children.length
-					}
-				)}
+				className={classNames('page-editor__container', {
+					empty: !item.children.length
+				})}
 				item={item}
 				ref={ref}
 			>
@@ -125,5 +123,10 @@ const ContainerWithControls = React.forwardRef(
 		);
 	}
 );
+
+ContainerWithControls.propTypes = {
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
 
 export default ContainerWithControls;

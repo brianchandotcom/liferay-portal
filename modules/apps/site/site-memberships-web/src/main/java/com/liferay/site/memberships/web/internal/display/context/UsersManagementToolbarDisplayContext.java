@@ -16,6 +16,7 @@ package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -211,29 +212,25 @@ public class UsersManagementToolbarDisplayContext
 			selectUsersURL.setParameter("mvcPath", "/select_users.jsp");
 			selectUsersURL.setWindowState(LiferayWindowState.POP_UP);
 
-			return new CreationMenu() {
-				{
-					addDropdownItem(
-						dropdownItem -> {
-							dropdownItem.putData("action", "selectUsers");
+			return CreationMenuBuilder.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.putData("action", "selectUsers");
 
-							ThemeDisplay themeDisplay =
-								(ThemeDisplay)request.getAttribute(
-									WebKeys.THEME_DISPLAY);
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)request.getAttribute(
+							WebKeys.THEME_DISPLAY);
 
-							dropdownItem.putData(
-								"groupTypeLabel",
-								GroupUtil.getGroupTypeLabel(
-									_usersDisplayContext.getGroupId(),
-									themeDisplay.getLocale()));
+					dropdownItem.putData(
+						"groupTypeLabel",
+						GroupUtil.getGroupTypeLabel(
+							_usersDisplayContext.getGroupId(),
+							themeDisplay.getLocale()));
 
-							dropdownItem.putData(
-								"selectUsersURL", selectUsersURL.toString());
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, "add"));
-						});
+					dropdownItem.putData(
+						"selectUsersURL", selectUsersURL.toString());
+					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 				}
-			};
+			).build();
 		}
 		catch (Exception exception) {
 			return null;

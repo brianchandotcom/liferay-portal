@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.RenderRequest;
@@ -103,15 +104,17 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _eventName;
 	}
 
-	public String getSelectedCategories() {
-		if (_selectedCategories != null) {
-			return _selectedCategories;
+	public List<String> getSelectedCategoryIds() {
+		if (_selectedCategoryIds != null) {
+			return _selectedCategoryIds;
 		}
 
-		_selectedCategories = ParamUtil.getString(
-			_httpServletRequest, "selectedCategories");
+		_selectedCategoryIds = Arrays.asList(
+			StringUtil.split(
+				ParamUtil.getString(
+					_httpServletRequest, "selectedCategoryIds")));
 
-		return _selectedCategories;
+		return _selectedCategoryIds;
 	}
 
 	public long[] getVocabularyIds() {
@@ -213,7 +216,7 @@ public class AssetCategoriesSelectorDisplayContext {
 				"nodePath", category.getPath(themeDisplay.getLocale(), true)
 			);
 
-			if (getSelectedCategories().contains(
+			if (getSelectedCategoryIds().contains(
 					String.valueOf(category.getCategoryId()))) {
 
 				jsonObject.put("selected", true);
@@ -256,7 +259,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private String _selectedCategories;
+	private List<String> _selectedCategoryIds;
 	private Boolean _singleSelect;
 	private long[] _vocabularyIds;
 

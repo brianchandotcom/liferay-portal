@@ -56,7 +56,7 @@ const EmptyState = ({emptyState, keywords = ''}) => {
 				)}
 
 				{description && (
-					<p className="taglib-empty-result-message-description">
+					<p className="empty-message-color taglib-empty-result-message-description">
 						{description}
 					</p>
 				)}

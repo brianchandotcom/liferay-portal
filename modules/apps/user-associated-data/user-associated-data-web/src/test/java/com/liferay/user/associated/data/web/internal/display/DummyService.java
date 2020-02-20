@@ -28,10 +28,10 @@ public class DummyService<T extends UserAssociatedEntity> {
 	public static final long DEFAULT_CONTAINER_ID = 0;
 
 	public DummyService(
-		long startingId,
+		long currentId,
 		Supplier<UserAssociatedEntity> userAssociatedEntitySupplier) {
 
-		_currentId = startingId;
+		_currentId = currentId;
 		_userAssociatedEntitySupplier = userAssociatedEntitySupplier;
 	}
 

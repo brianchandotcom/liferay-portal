@@ -69,7 +69,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Level;
@@ -343,7 +342,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				randomPatchKnowledgeBaseFolder);
 
 		KnowledgeBaseFolder expectedPatchKnowledgeBaseFolder =
-			(KnowledgeBaseFolder)BeanUtils.cloneBean(postKnowledgeBaseFolder);
+			postKnowledgeBaseFolder.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchKnowledgeBaseFolder, randomPatchKnowledgeBaseFolder);

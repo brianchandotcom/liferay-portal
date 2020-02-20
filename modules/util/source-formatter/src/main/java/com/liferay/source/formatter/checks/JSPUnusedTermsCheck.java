@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JSPUnusedTermsCheck extends JSPTermsBaseCheck {
+public class JSPUnusedTermsCheck extends BaseJSPTermsCheck {
 
 	@Override
 	protected String doProcess(

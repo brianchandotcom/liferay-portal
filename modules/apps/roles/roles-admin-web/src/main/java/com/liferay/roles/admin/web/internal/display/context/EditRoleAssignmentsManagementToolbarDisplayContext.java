@@ -15,6 +15,7 @@
 package com.liferay.roles.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -139,44 +140,37 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData("action", "addSegmentEntry");
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.putData("action", "addSegmentEntry");
 
-						PortletURL addSegmentEntryURL =
-							PortletProviderUtil.getPortletURL(
-								_renderRequest, SegmentsEntry.class.getName(),
-								PortletProvider.Action.EDIT);
+				PortletURL addSegmentEntryURL =
+					PortletProviderUtil.getPortletURL(
+						_renderRequest, SegmentsEntry.class.getName(),
+						PortletProvider.Action.EDIT);
 
-						addSegmentEntryURL.setParameter(
-							"redirect",
-							ParamUtil.getString(
-								_httpServletRequest, "redirect"));
+				addSegmentEntryURL.setParameter(
+					"redirect",
+					ParamUtil.getString(_httpServletRequest, "redirect"));
 
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)_httpServletRequest.getAttribute(
-								WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-						addSegmentEntryURL.setParameter(
-							"groupId",
-							String.valueOf(themeDisplay.getCompanyGroupId()));
+				addSegmentEntryURL.setParameter(
+					"groupId",
+					String.valueOf(themeDisplay.getCompanyGroupId()));
 
-						dropdownItem.putData(
-							"addSegmentEntryURL",
-							addSegmentEntryURL.toString());
+				dropdownItem.putData(
+					"addSegmentEntryURL", addSegmentEntryURL.toString());
 
-						dropdownItem.putData(
-							"sessionKey",
-							RolesAdminWebKeys.MODAL_SEGMENT_STATE);
+				dropdownItem.putData(
+					"sessionKey", RolesAdminWebKeys.MODAL_SEGMENT_STATE);
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "new-segment"));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "new-segment"));
 			}
-		};
+		).build();
 	}
 
 	public String getDefaultEventHandler() {

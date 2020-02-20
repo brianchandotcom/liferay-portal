@@ -28,13 +28,17 @@
 
 import {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useContext, useRef, useState} from 'react';
+import PropTypes from 'prop-types';
+import React, {useRef, useState} from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import updateColSize from '../../actions/updateColSize';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../../config/index';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -49,7 +53,6 @@ export const ResizingContext = React.createContext();
 
 const RowWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const config = useContext(ConfigContext);
 		const dispatch = useDispatch();
 		const {gutters} = {
 			...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
@@ -82,8 +85,6 @@ const RowWithControls = React.forwardRef(
 			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
 				dispatch(
 					duplicateItem({
-						config,
-						fragmentEntryLinkId: item.config.fragmentEntryLinkId,
 						itemId: item.itemId,
 						store: state
 					})
@@ -156,7 +157,6 @@ const RowWithControls = React.forwardRef(
 
 			dispatch(
 				resizeColumns({
-					config,
 					layoutData,
 					store: state
 				})
@@ -235,6 +235,13 @@ const RowWithControls = React.forwardRef(
 		);
 	}
 );
+
+RowWithControls.propTypes = {
+	item: getLayoutDataItemPropTypes({
+		config: PropTypes.shape({gutters: PropTypes.bool})
+	}).isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
 
 export default RowWithControls;
 

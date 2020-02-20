@@ -16,11 +16,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const MillerColumnsContext = React.createContext({
+	actionHandlers: {},
 	namespace: ''
 });
 
 MillerColumnsContext.Provider.propTypes = {
 	value: PropTypes.shape({
+		actionHandlers: PropTypes.object,
 		namespace: PropTypes.string
 	})
 };

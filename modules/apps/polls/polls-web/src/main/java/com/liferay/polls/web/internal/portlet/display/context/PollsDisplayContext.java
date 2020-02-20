@@ -15,6 +15,7 @@
 package com.liferay.polls.web.internal.portlet.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -77,22 +78,19 @@ public class PollsDisplayContext {
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
 				HttpServletRequest httpServletRequest =
 					_pollsRequestHelper.getRequest();
 
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/polls/edit_question.jsp", "redirect",
-							PortalUtil.getCurrentURL(httpServletRequest));
-						dropdownItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "add-poll"));
-					});
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcPath",
+					"/polls/edit_question.jsp", "redirect",
+					PortalUtil.getCurrentURL(httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add-poll"));
 			}
-		};
+		).build();
 	}
 
 	public String getDisplayStyle() {

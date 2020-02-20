@@ -164,14 +164,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 								<c:choose>
 									<c:when test="<%= changeListsDisplayContext.hasCTEntries(curCTCollection.getCtCollectionId()) %>">
 										<liferay-ui:icon
-											message="publish"
-											url="<%= changeListsDisplayContext.getPublishURL(curCTCollection.getCtCollectionId(), ctCollectionName) %>"
+											message="prepare-to-publish"
+											url="<%= changeListsDisplayContext.getConflictsURL(curCTCollection.getCtCollectionId()) %>"
 										/>
 									</c:when>
 									<c:otherwise>
 										<liferay-ui:icon
 											cssClass="disabled"
-											message="publish"
+											message="prepare-to-publish"
 											url="#"
 										/>
 									</c:otherwise>
@@ -372,14 +372,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 												<c:choose>
 													<c:when test="<%= changeListsDisplayContext.hasCTEntries(curCTCollection.getCtCollectionId()) %>">
 														<liferay-ui:icon
-															message="publish"
-															url="<%= changeListsDisplayContext.getPublishURL(curCTCollection.getCtCollectionId(), curCTCollection.getName()) %>"
+															message="prepare-to-publish"
+															url="<%= changeListsDisplayContext.getConflictsURL(curCTCollection.getCtCollectionId()) %>"
 														/>
 													</c:when>
 													<c:otherwise>
 														<liferay-ui:icon
 															cssClass="disabled"
-															message="publish"
+															message="prepare-to-publish"
 															url="#"
 														/>
 													</c:otherwise>

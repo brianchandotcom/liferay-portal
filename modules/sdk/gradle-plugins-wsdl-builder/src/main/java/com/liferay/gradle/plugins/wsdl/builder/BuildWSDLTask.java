@@ -37,6 +37,11 @@ public class BuildWSDLTask extends SourceTask {
 	}
 
 	@Input
+	public int getAxisVersion() {
+		return GradleUtil.toInteger(_axisVersion);
+	}
+
+	@Input
 	public File getDestinationDir() {
 		return GradleUtil.toFile(getProject(), _destinationDir);
 	}
@@ -61,6 +66,10 @@ public class BuildWSDLTask extends SourceTask {
 		return _includeWSDLs;
 	}
 
+	public void setAxisVersion(Object axisVersion) {
+		_axisVersion = axisVersion;
+	}
+
 	public void setBuildLibs(boolean buildLibs) {
 		_buildLibs = buildLibs;
 	}
@@ -77,6 +86,7 @@ public class BuildWSDLTask extends SourceTask {
 		_includeWSDLs = includeWSDLs;
 	}
 
+	private Object _axisVersion = 1;
 	private boolean _buildLibs = true;
 	private Object _destinationDir;
 	private final GenerateOptions _generateOptions = new GenerateOptions();

@@ -15,6 +15,7 @@
 package com.liferay.wiki.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
@@ -120,26 +121,23 @@ public class WikiNodesManagementToolbarDisplayContext {
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						PortletURL viewNodesURL =
-							_liferayPortletResponse.createRenderURL();
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				PortletURL viewNodesURL =
+					_liferayPortletResponse.createRenderURL();
 
-						viewNodesURL.setParameter(
-							"mvcRenderCommandName", "/wiki_admin/view");
+				viewNodesURL.setParameter(
+					"mvcRenderCommandName", "/wiki_admin/view");
 
-						dropdownItem.setHref(
-							_liferayPortletResponse.createRenderURL(),
-							"mvcRenderCommandName", "/wiki/edit_node",
-							"redirect", viewNodesURL.toString());
+				dropdownItem.setHref(
+					_liferayPortletResponse.createRenderURL(),
+					"mvcRenderCommandName", "/wiki/edit_node", "redirect",
+					viewNodesURL.toString());
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "add-wiki"));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "add-wiki"));
 			}
-		};
+		).build();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

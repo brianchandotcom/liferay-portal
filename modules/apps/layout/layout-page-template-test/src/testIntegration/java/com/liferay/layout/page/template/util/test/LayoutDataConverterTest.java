@@ -15,13 +15,16 @@
 package com.liferay.layout.page.template.util.test;
 
 import com.liferay.layout.page.template.util.LayoutDataConverter;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.FileImpl;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -44,194 +47,111 @@ public class LayoutDataConverterTest {
 		String actualLayoutData = LayoutDataConverter.convert(
 			_read("layout_data_v0_complete.json"));
 
-		JSONObject actualLayoutDataJSONObject =
-			JSONFactoryUtil.createJSONObject(actualLayoutData);
+		LayoutStructure actualLayoutStructure = LayoutStructure.of(
+			actualLayoutData);
 
-		JSONObject rootItemsJSONObject =
-			actualLayoutDataJSONObject.getJSONObject("rootItems");
+		LayoutStructureItem layoutStructureItem =
+			actualLayoutStructure.getMainLayoutStructureItem();
 
-		String mainUUID = rootItemsJSONObject.getString("main");
+		List<String> mainItemIds = layoutStructureItem.getChildrenItemIds();
 
-		JSONObject itemsJSONObject = actualLayoutDataJSONObject.getJSONObject(
-			"items");
+		LayoutStructureItem container0LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(mainItemIds.get(0));
+		LayoutStructureItem container1LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(mainItemIds.get(1));
+		LayoutStructureItem container2LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(mainItemIds.get(2));
+		LayoutStructureItem container3LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(mainItemIds.get(3));
 
-		JSONObject mainJSONObject = itemsJSONObject.getJSONObject(mainUUID);
+		List<String> container0ChildrenItemIds =
+			container0LayoutStructureItem.getChildrenItemIds();
+		List<String> container1ChildrenItemIds =
+			container1LayoutStructureItem.getChildrenItemIds();
+		List<String> container2ChildrenItemIds =
+			container2LayoutStructureItem.getChildrenItemIds();
+		List<String> container3ChildrenItemIds =
+			container3LayoutStructureItem.getChildrenItemIds();
 
-		JSONArray mainChildrenJSONArray = mainJSONObject.getJSONArray(
-			"children");
+		LayoutStructureItem row0LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(
+				container0ChildrenItemIds.get(0));
+		LayoutStructureItem row1LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(
+				container1ChildrenItemIds.get(0));
+		LayoutStructureItem row2LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(
+				container2ChildrenItemIds.get(0));
+		LayoutStructureItem row3LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(
+				container3ChildrenItemIds.get(0));
 
-		String container0UUID = mainChildrenJSONArray.getString(0);
-		String container1UUID = mainChildrenJSONArray.getString(1);
-		String container2UUID = mainChildrenJSONArray.getString(2);
-		String container3UUID = mainChildrenJSONArray.getString(3);
+		List<String> row0ChildrenItemIds =
+			row0LayoutStructureItem.getChildrenItemIds();
+		List<String> row1ChildrenItemIds =
+			row1LayoutStructureItem.getChildrenItemIds();
+		List<String> row2ChildrenItemIds =
+			row2LayoutStructureItem.getChildrenItemIds();
+		List<String> row3ChildrenItemIds =
+			row3LayoutStructureItem.getChildrenItemIds();
 
-		JSONObject container0JSONObject = itemsJSONObject.getJSONObject(
-			container0UUID);
-		JSONObject container1JSONObject = itemsJSONObject.getJSONObject(
-			container1UUID);
-		JSONObject container2JSONObject = itemsJSONObject.getJSONObject(
-			container2UUID);
-		JSONObject container3JSONObject = itemsJSONObject.getJSONObject(
-			container3UUID);
+		LayoutStructureItem row0Column0LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(
+				row0ChildrenItemIds.get(0));
+		LayoutStructureItem row0Column1LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(
+				row0ChildrenItemIds.get(1));
+		LayoutStructureItem row1Column0LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(
+				row1ChildrenItemIds.get(0));
+		LayoutStructureItem row1Column1LayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(
+				row1ChildrenItemIds.get(1));
 
-		JSONArray container0ChildrenJSONArray =
-			container0JSONObject.getJSONArray("children");
-		JSONArray container1ChildrenJSONArray =
-			container1JSONObject.getJSONArray("children");
-		JSONArray container2ChildrenJSONArray =
-			container2JSONObject.getJSONArray("children");
-		JSONArray container3ChildrenJSONArray =
-			container3JSONObject.getJSONArray("children");
+		List<String> row0Column0ChildrenItemIds =
+			row0Column0LayoutStructureItem.getChildrenItemIds();
+		List<String> row0Column1ChildrenItemIds =
+			row0Column1LayoutStructureItem.getChildrenItemIds();
+		List<String> row1Column0ChildrenItemIds =
+			row1Column0LayoutStructureItem.getChildrenItemIds();
+		List<String> row1Column1ChildrenItemIds =
+			row1Column1LayoutStructureItem.getChildrenItemIds();
 
-		String row0UUID = container0ChildrenJSONArray.getString(0);
-		String row1UUID = container1ChildrenJSONArray.getString(0);
-		String row2UUID = container2ChildrenJSONArray.getString(0);
-		String row3UUID = container3ChildrenJSONArray.getString(0);
+		String expectedLayoutData = StringUtil.replace(
+			_read("expected_layout_data_v1_complete.json"),
+			new String[] {
+				"MAIN-UUID", "CONTAINER0-UUID", "CONTAINER1-UUID",
+				"CONTAINER2-UUID", "CONTAINER3-UUID", "ROW0-UUID", "ROW1-UUID",
+				"ROW2-UUID", "ROW3-UUID", "ROW0-COLUMN0-UUID",
+				"ROW0-COLUMN1-UUID", "ROW1-COLUMN1-UUID", "ROW1-COLUMN0-UUID",
+				"ROW2-COLUMN0-UUID", "ROW3-COLUMN0-UUID", "FRAGMENT0-UUID",
+				"FRAGMENT1-UUID", "FRAGMENT2-UUID", "FRAGMENT3-UUID",
+				"FRAGMENT4-UUID", "FRAGMENT5-UUID", "FRAGMENT6-UUID",
+				"FRAGMENT7-UUID", "FRAGMENT8-UUID"
+			},
+			new String[] {
+				actualLayoutStructure.getMainItemId(), mainItemIds.get(0),
+				mainItemIds.get(1), mainItemIds.get(2), mainItemIds.get(3),
+				container0ChildrenItemIds.get(0),
+				container1ChildrenItemIds.get(0),
+				container2ChildrenItemIds.get(0),
+				container3ChildrenItemIds.get(0), row0ChildrenItemIds.get(0),
+				row0ChildrenItemIds.get(1), row1ChildrenItemIds.get(1),
+				row1ChildrenItemIds.get(0), row2ChildrenItemIds.get(0),
+				row3ChildrenItemIds.get(0), row0Column0ChildrenItemIds.get(0),
+				row0Column0ChildrenItemIds.get(1),
+				row0Column1ChildrenItemIds.get(0),
+				row0Column1ChildrenItemIds.get(1),
+				row1Column0ChildrenItemIds.get(0),
+				row1Column0ChildrenItemIds.get(1),
+				row1Column1ChildrenItemIds.get(0),
+				row1Column1ChildrenItemIds.get(1), mainItemIds.get(4)
+			});
 
-		JSONObject row0JSONObject = itemsJSONObject.getJSONObject(row0UUID);
-		JSONObject row1JSONObject = itemsJSONObject.getJSONObject(row1UUID);
-		JSONObject row2JSONObject = itemsJSONObject.getJSONObject(row2UUID);
-		JSONObject row3JSONObject = itemsJSONObject.getJSONObject(row3UUID);
+		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
+			expectedLayoutData);
 
-		JSONArray row0childrenJSONArray = row0JSONObject.getJSONArray(
-			"children");
-		JSONArray row1childrenJSONArray = row1JSONObject.getJSONArray(
-			"children");
-		JSONArray row2childrenJSONArray = row2JSONObject.getJSONArray(
-			"children");
-		JSONArray row3childrenJSONArray = row3JSONObject.getJSONArray(
-			"children");
-
-		String row0Column0UUID = row0childrenJSONArray.getString(0);
-		String row0Column1UUID = row0childrenJSONArray.getString(1);
-		String row1Column0UUID = row1childrenJSONArray.getString(0);
-		String row1Column1UUID = row1childrenJSONArray.getString(1);
-		String row2Column0UUID = row2childrenJSONArray.getString(0);
-		String row3Column0UUID = row3childrenJSONArray.getString(0);
-
-		JSONObject row0Column0JSONObject = itemsJSONObject.getJSONObject(
-			row0Column0UUID);
-		JSONObject row0Column1JSONObject = itemsJSONObject.getJSONObject(
-			row0Column1UUID);
-		JSONObject row1Column0JSONObject = itemsJSONObject.getJSONObject(
-			row1Column0UUID);
-		JSONObject row1Column1JSONObject = itemsJSONObject.getJSONObject(
-			row1Column1UUID);
-
-		JSONArray row0Column0ChildrenJSONArray =
-			row0Column0JSONObject.getJSONArray("children");
-		JSONArray row0Column1ChildrenJSONArray =
-			row0Column1JSONObject.getJSONArray("children");
-		JSONArray row1Column0ChildrenJSONArray =
-			row1Column0JSONObject.getJSONArray("children");
-		JSONArray row1Column1ChildrenJSONArray =
-			row1Column1JSONObject.getJSONArray("children");
-
-		String fragment0UUID = row0Column0ChildrenJSONArray.getString(0);
-		String fragment1UUID = row0Column0ChildrenJSONArray.getString(1);
-		String fragment2UUID = row0Column1ChildrenJSONArray.getString(0);
-		String fragment3UUID = row0Column1ChildrenJSONArray.getString(1);
-		String fragment4UUID = row1Column0ChildrenJSONArray.getString(0);
-		String fragment5UUID = row1Column0ChildrenJSONArray.getString(1);
-		String fragment6UUID = row1Column1ChildrenJSONArray.getString(0);
-		String fragment7UUID = row1Column1ChildrenJSONArray.getString(1);
-		String fragment8UUID = mainChildrenJSONArray.getString(4);
-
-		String expectedLayoutData = _read(
-			"expected_layout_data_v1_complete.json");
-
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "MAIN-UUID", mainUUID);
-
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "CONTAINER0-UUID", container0UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "CONTAINER1-UUID", container1UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "CONTAINER2-UUID", container2UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "CONTAINER3-UUID", container3UUID);
-
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "ROW0-UUID", row0UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "ROW1-UUID", row1UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "ROW2-UUID", row2UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "ROW3-UUID", row3UUID);
-
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "ROW0-COLUMN0-UUID", row0Column0UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "ROW0-COLUMN1-UUID", row0Column1UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "ROW1-COLUMN1-UUID", row1Column1UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "ROW1-COLUMN0-UUID", row1Column0UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "ROW2-COLUMN0-UUID", row2Column0UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "ROW3-COLUMN0-UUID", row3Column0UUID);
-
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "FRAGMENT0-UUID", fragment0UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "FRAGMENT1-UUID", fragment1UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "FRAGMENT2-UUID", fragment2UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "FRAGMENT3-UUID", fragment3UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "FRAGMENT4-UUID", fragment4UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "FRAGMENT5-UUID", fragment5UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "FRAGMENT6-UUID", fragment6UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "FRAGMENT7-UUID", fragment7UUID);
-		expectedLayoutData = StringUtil.replace(
-			expectedLayoutData, "FRAGMENT8-UUID", fragment8UUID);
-
-		JSONObject expectedLayoutDataJSONObject =
-			JSONFactoryUtil.createJSONObject(expectedLayoutData);
-
-		JSONObject expectedItemsJSONObject =
-			expectedLayoutDataJSONObject.getJSONObject("items");
-
-		JSONObject actualItemsJSONObject =
-			actualLayoutDataJSONObject.getJSONObject("items");
-
-		Assert.assertEquals(
-			expectedItemsJSONObject.keySet(), actualItemsJSONObject.keySet());
-
-		for (String key : expectedItemsJSONObject.keySet()) {
-			JSONObject expectedItemJSONObject =
-				expectedItemsJSONObject.getJSONObject(key);
-			JSONObject actualItemJSONObject =
-				actualItemsJSONObject.getJSONObject(key);
-
-			Assert.assertEquals(
-				expectedItemJSONObject.toJSONString(),
-				actualItemJSONObject.toJSONString());
-		}
-
-		Assert.assertEquals(
-			expectedLayoutDataJSONObject.keySet(),
-			actualLayoutDataJSONObject.keySet());
-
-		JSONObject expectedRootItemsJSONObject =
-			expectedLayoutDataJSONObject.getJSONObject("rootItems");
-		JSONObject actualRootItemsJSONObject =
-			actualLayoutDataJSONObject.getJSONObject("rootItems");
-
-		Assert.assertEquals(
-			expectedRootItemsJSONObject.toJSONString(),
-			actualRootItemsJSONObject.toJSONString());
-
-		Assert.assertEquals(
-			expectedLayoutDataJSONObject.getInt("version"),
-			actualLayoutDataJSONObject.getInt("version"));
+		Assert.assertEquals(expectedLayoutStructure, actualLayoutStructure);
 	}
 
 	@Test
@@ -239,23 +159,82 @@ public class LayoutDataConverterTest {
 		String actualLayoutData = LayoutDataConverter.convert(
 			_read("layout_data_v0_empty.json"));
 
-		JSONObject actualLayoutDataJSONObject =
-			JSONFactoryUtil.createJSONObject(actualLayoutData);
-
-		JSONObject rootItemsJSONObject =
-			actualLayoutDataJSONObject.getJSONObject("rootItems");
-
-		String mainUUID = rootItemsJSONObject.getString("main");
+		LayoutStructure actualLayoutStructure = LayoutStructure.of(
+			actualLayoutData);
 
 		String expectedLayoutData = StringUtil.replace(
-			_read("expected_layout_data_v1_empty.json"), "MAIN-UUID", mainUUID);
+			_read("expected_layout_data_v1_empty.json"), "MAIN-UUID",
+			actualLayoutStructure.getMainItemId());
 
-		JSONObject expectedLayoutDataJSONObject =
-			JSONFactoryUtil.createJSONObject(expectedLayoutData);
+		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
+			expectedLayoutData);
+
+		Assert.assertEquals(expectedLayoutStructure, actualLayoutStructure);
+	}
+
+	@Test
+	public void testDropZone() throws Exception {
+		String actualLayoutData = LayoutDataConverter.convert(
+			_read("layout_data_v0_drop_zone.json"));
+
+		LayoutStructure actualLayoutStructure = LayoutStructure.of(
+			actualLayoutData);
+
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+			(DropZoneLayoutStructureItem)
+				actualLayoutStructure.getDropZoneLayoutStructureItem();
+
+		Assert.assertFalse(
+			dropZoneLayoutStructureItem.isAllowNewFragmentEntries());
+
+		List<String> fragmentEntryKeys =
+			dropZoneLayoutStructureItem.getFragmentEntryKeys();
 
 		Assert.assertEquals(
-			expectedLayoutDataJSONObject.toJSONString(),
-			actualLayoutDataJSONObject.toJSONString());
+			fragmentEntryKeys.toString(), 2, fragmentEntryKeys.size());
+		Assert.assertEquals("fragmentEntry1", fragmentEntryKeys.get(0));
+		Assert.assertEquals("fragmentEntry2", fragmentEntryKeys.get(1));
+
+		LayoutStructureItem layoutStructureItem =
+			actualLayoutStructure.getMainLayoutStructureItem();
+
+		List<String> mainItemIds = layoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem containerLayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(mainItemIds.get(0));
+
+		List<String> containerChildrenItemIds =
+			containerLayoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem rowLayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(
+				containerChildrenItemIds.get(0));
+
+		List<String> rowChildrenItemIds =
+			rowLayoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem columnLayoutStructureItem =
+			actualLayoutStructure.getLayoutStructureItem(
+				rowChildrenItemIds.get(0));
+
+		String expectedLayoutData = StringUtil.replace(
+			_read("expected_layout_data_v1_drop_zone.json"),
+			new String[] {
+				"MAIN-UUID", "CONTAINER-UUID", "ROW-UUID", "COLUMN-UUID",
+				"DROP-ZONE-UUID"
+			},
+			new String[] {
+				actualLayoutStructure.getMainItemId(),
+				containerLayoutStructureItem.getItemId(),
+				rowLayoutStructureItem.getItemId(),
+				columnLayoutStructureItem.getItemId(),
+				dropZoneLayoutStructureItem.getItemId()
+			});
+
+		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
+			expectedLayoutData);
+
+		Assert.assertEquals(expectedLayoutStructure, actualLayoutStructure);
 	}
 
 	private String _read(String fileName) throws Exception {

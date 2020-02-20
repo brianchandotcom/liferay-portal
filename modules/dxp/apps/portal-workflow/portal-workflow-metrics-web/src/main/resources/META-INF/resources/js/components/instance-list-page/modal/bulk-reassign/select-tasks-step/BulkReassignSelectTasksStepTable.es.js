@@ -21,7 +21,7 @@ const Item = ({totalCount, ...task}) => {
 	const {
 		assigneePerson,
 		id,
-		name,
+		label,
 		objectReviewed: {assetTitle, assetType},
 		workflowInstanceId
 	} = task;
@@ -68,7 +68,7 @@ const Item = ({totalCount, ...task}) => {
 
 			<ClayTable.Cell>{`${assetType}: ${assetTitle}`}</ClayTable.Cell>
 
-			<ClayTable.Cell>{name}</ClayTable.Cell>
+			<ClayTable.Cell>{label}</ClayTable.Cell>
 
 			<ClayTable.Cell>
 				{assigneePerson

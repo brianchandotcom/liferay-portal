@@ -59,13 +59,6 @@ for (String childrenItemId : childrenItemIds) {
 				sb.append(containerLayoutStructureItem.getBackgroundColorCssClass());
 			}
 
-			if (Objects.equals(containerLayoutStructureItem.getContainerType(), "fluid")) {
-				sb.append(" container-fluid");
-			}
-			else {
-				sb.append(" container");
-			}
-
 			if (containerLayoutStructureItem.getPaddingBottom() != -1L) {
 				sb.append(" pb-");
 				sb.append(containerLayoutStructureItem.getPaddingBottom());
@@ -83,12 +76,14 @@ for (String childrenItemId : childrenItemIds) {
 			%>
 
 			<div class="<%= sb.toString() %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : "" %>">
+				<div class="<%= Objects.equals(containerLayoutStructureItem.getContainerType(), "fluid") ? "container-fluid" : "container" %>">
 
-				<%
-				request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-				%>
+					<%
+					request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+					%>
 
-				<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
+				</div>
 			</div>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof DropZoneLayoutStructureItem %>">

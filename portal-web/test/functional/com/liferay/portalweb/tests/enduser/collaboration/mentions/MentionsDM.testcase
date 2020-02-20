@@ -34,13 +34,13 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG(
+		User.loginPG(
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.loginPG();
 	}
 
 	tearDown {

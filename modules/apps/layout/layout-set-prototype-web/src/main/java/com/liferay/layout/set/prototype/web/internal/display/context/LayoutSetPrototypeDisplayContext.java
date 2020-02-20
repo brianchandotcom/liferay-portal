@@ -15,6 +15,7 @@
 package com.liferay.layout.set.prototype.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -109,17 +110,13 @@ public class LayoutSetPrototypeDisplayContext {
 		addLayoutSetPrototypeRenderURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
 
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							addLayoutSetPrototypeRenderURL.toString());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "add"));
-					});
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(addLayoutSetPrototypeRenderURL.toString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "add"));
 			}
-		};
+		).build();
 	}
 
 	public String getDisplayStyle() {

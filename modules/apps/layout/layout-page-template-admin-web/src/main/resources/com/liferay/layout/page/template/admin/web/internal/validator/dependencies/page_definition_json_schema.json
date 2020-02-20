@@ -1,0 +1,511 @@
+{
+	"$id": "http://example.com/root.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"additionalProperties": false,
+	"definitions": {
+		"ColumnDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"size": {
+					"maximum" : 12,
+					"minimum" : 1,
+					"title": "The size Schema",
+					"type": "integer"
+				}
+			},
+			"title": "The ColumnDefinition Schema",
+			"type": "object"
+		},
+		"FragmentField": {
+			"additionalProperties": false,
+			"oneOf": [
+				{
+					"$ref": "#/definitions/FragmentFieldBackgroundImage"
+				},
+				{
+					"$ref": "#/definitions/FragmentFieldCustom"
+				},
+				{
+					"$ref": "#/definitions/FragmentFieldHTML"
+				},
+				{
+					"$ref": "#/definitions/FragmentFieldImage"
+				},
+				{
+					"$ref": "#/definitions/FragmentFieldText"
+				}
+			],
+			"title": "The FragmentField Schema",
+			"type": "object"
+		},
+		"FragmentFieldBackgroundImage": {
+			"additionalProperties": false,
+			"properties": {
+				"backgroundImage": {
+					"$ref": "#/definitions/FragmentImage"
+				}
+			},
+			"title": "The FragmentFieldBackgroundImage Schema",
+			"type": "object"
+		},
+		"FragmentFieldCustom": {
+			"additionalProperties": false,
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"value": {
+					"type": "object"
+				}
+			},
+			"title": "The FragmentFieldCustom Schema",
+			"type": "object"
+		},
+		"FragmentFieldHTML": {
+			"additionalProperties": false,
+			"properties": {
+				"html": {
+					"additionalProperties": false,
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineValue"
+						},
+						{
+							"$ref": "#/definitions/MappedValue"
+						}
+					],
+					"type": "object"
+				}
+			},
+			"title": "The FragmentFieldHTML Schema",
+			"type": "object"
+		},
+		"FragmentFieldImage": {
+			"additionalProperties": false,
+			"properties": {
+				"fragmentImage": {
+					"$ref": "#/definitions/FragmentImage"
+				},
+				"fragmentLink": {
+					"$ref": "#/definitions/FragmentLink"
+				}
+			},
+			"title": "The FragmentFieldImage Schema",
+			"type": "object"
+		},
+		"FragmentFieldText": {
+			"additionalProperties": false,
+			"properties": {
+				"fragmentLink": {
+					"$ref": "#/definitions/FragmentLink"
+				},
+				"text": {
+					"additionalProperties": false,
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineValue"
+						},
+						{
+							"$ref": "#/definitions/MappedValue"
+						}
+					],
+					"type": "object"
+				}
+			},
+			"title": "The FragmentFieldText Schema",
+			"type": "object"
+		},
+		"FragmentImage": {
+			"additionalProperties": false,
+			"properties": {
+				"title": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineValue"
+						},
+						{
+							"$ref": "#/definitions/MappedValue"
+						}
+					]
+				},
+				"url": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineValue"
+						},
+						{
+							"$ref": "#/definitions/MappedValue"
+						}
+					]
+				}
+			},
+			"title": "The FragmentImage Schema",
+			"type": "object"
+		},
+		"FragmentInstanceDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"fragment": {
+					"properties": {
+						"fragmentCollectionName": {
+							"title": "The fragmentCollectionName Schema",
+							"type": "string"
+						},
+						"fragmentName": {
+							"title": "The fragmentName Schema",
+							"type": "string"
+						}
+					},
+					"title": "The fragment Schema",
+					"type": "object"
+				},
+				"fragmentConfig": {
+					"title": "The fragmentConfig Schema",
+					"type": "object"
+				},
+				"fragmentFields": {
+					"items": {
+						"$ref": "#/definitions/FragmentField"
+					},
+					"title": "The fragmentFields Schema",
+					"type": "array"
+				}
+			},
+			"title": "The FragmentInstanceDefinition Schema",
+			"type": "object"
+		},
+		"FragmentLink": {
+			"additionalProperties": false,
+			"properties": {
+				"target": {
+					"enum": [
+						"Blank",
+						"Self"
+					],
+					"title": "The target Schema",
+					"type": "string"
+				},
+				"value": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineLink"
+						},
+						{
+							"$ref": "#/definitions/MappedValue"
+						}
+					]
+				}
+			},
+			"title": "The FragmentLink Schema",
+			"type": "object"
+		},
+		"InlineLink": {
+			"additionalProperties": false,
+			"properties": {
+				"href": {
+					"title": "The href Schema",
+					"type": "string"
+				}
+			},
+			"title": "The InlineLink Schema",
+			"type": "object"
+		},
+		"InlineValue": {
+			"additionalProperties": false,
+			"properties": {
+				"value": {
+					"title": "The value Schema",
+					"type": "string"
+				},
+				"value_i18n": {
+					"additionalProperties": {
+						"type": "string"
+					},
+					"title": "The value_i18n Schema",
+					"type": "object"
+				}
+			},
+			"title": "The InlineValue Schema",
+			"type": "object"
+		},
+		"MappedValue": {
+			"additionalProperties": false,
+			"properties": {
+				"classNameId": {
+					"title": "The classNameId Schema",
+					"type": "integer"
+				},
+				"classPK": {
+					"title": "The classPK Schema",
+					"type": "integer"
+				},
+				"fieldId": {
+					"title": "The fieldId Schema",
+					"type": "string"
+				}
+			},
+			"title": "The MappedValue Schema",
+			"type": "object"
+		},
+		"PageElement": {
+			"additionalProperties": false,
+			"allOf": [
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "Column"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/ColumnDefinition"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "Fragment"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/FragmentInstanceDefinition"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "Row"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/RowDefinition"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "Root"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/RootDefinition"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "Section"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/SectionDefinition"
+							}
+						}
+					}
+				}
+			],
+			"properties": {
+				"definition": {
+					"title": "The definition Schema",
+					"type": "object"
+				},
+				"pageElements": {
+					"items": {
+						"$ref": "#/definitions/PageElement"
+					},
+					"title": "The pageElements Schema",
+					"type": "array"
+				},
+				"type": {
+					"enum": [
+						"Column",
+						"DropZone",
+						"Fragment",
+						"Root",
+						"Row",
+						"Section"
+					],
+					"title": "The type Schema",
+					"type": "string"
+				}
+			},
+			"required": [
+				"type"
+			],
+			"title": "The PageElement Schema",
+			"type": "object"
+		},
+		"RootDefinition": {
+			"additionalProperties": false,
+			"title": "The RootDefinition Schema",
+			"type": "object"
+		},
+		"RowDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"gutters": {
+					"title": "The gutters Schema",
+					"type": "boolean"
+				},
+				"numberOfColumns": {
+					"maximum" : 6,
+					"minimum" : 1,
+					"title": "The backgroundImage Schema",
+					"type": "integer"
+				}
+			},
+			"title": "The RowDefinition Schema",
+			"type": "object"
+		},
+		"SectionDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"backgroundColorCssClass": {
+					"title": "The backgroundColorCssClass Schema",
+					"type": "string"
+				},
+				"backgroundImage": {
+					"$ref": "#/definitions/FragmentImage",
+					"title": "The backgroundImage Schema",
+					"type": "object"
+				},
+				"layout": {
+					"additionalProperties": false,
+					"properties": {
+						"containerType": {
+							"enum": [
+								"Fixed",
+								"Fluid"
+							],
+							"title": "The containerType Schema",
+							"type": "string"
+						},
+						"paddingBottom": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The paddingBottom Schema",
+							"type": "integer"
+						},
+						"paddingHorizontal": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The paddingHorizontal Schema",
+							"type": "integer"
+						},
+						"paddingTop": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The paddingTop Schema",
+							"type": "integer"
+						}
+					},
+					"title": "The layout Schema",
+					"type": "object"
+				}
+			},
+			"title": "The SectionDefinition Schema",
+			"type": "object"
+		}
+	},
+	"properties": {
+		"pageElement": {
+			"$id": "#/properties/pageElement",
+			"$ref": "#/definitions/PageElement",
+			"title": "The pageElement Schema"
+		},
+		"settings": {
+			"additionalProperties": false,
+			"properties": {
+				"colorSchemeName": {
+					"title": "The colorSchemeName Schema",
+					"type": "string"
+				},
+				"css": {
+					"title": "The css Schema",
+					"type": "string"
+				},
+				"javascript": {
+					"title": "The javascript Schema",
+					"type": "string"
+				},
+				"masterPage": {
+					"additionalProperties": false,
+					"properties": {
+						"name": {
+							"title": "The name Schema",
+							"type": "string"
+						}
+					},
+					"title": "The masterPage Schema",
+					"type": "object"
+				},
+				"themeName": {
+					"title": "The themeName Schema",
+					"type": "string"
+				},
+				"themeSettings": {
+					"title": "The themeSettings Schema",
+					"type": "object"
+				}
+			},
+			"title": "The settings Schema",
+			"type": "object"
+		}
+	},
+	"required": [
+		"pageElement"
+	],
+	"title": "The PageDefinition Schema",
+	"type": "object"
+}

@@ -454,9 +454,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						messageBoardThread1, entityField.getName(), "Aaa");
+						messageBoardThread1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						messageBoardThread2, entityField.getName(), "Bbb");
+						messageBoardThread2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -702,9 +704,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						messageBoardThread1, entityField.getName(), "Aaa");
+						messageBoardThread1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						messageBoardThread2, entityField.getName(), "Bbb");
+						messageBoardThread2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -909,7 +913,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				postMessageBoardThread.getId(), randomPatchMessageBoardThread);
 
 		MessageBoardThread expectedPatchMessageBoardThread =
-			(MessageBoardThread)BeanUtils.cloneBean(postMessageBoardThread);
+			postMessageBoardThread.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchMessageBoardThread, randomPatchMessageBoardThread);
@@ -1268,9 +1272,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						messageBoardThread1, entityField.getName(), "Aaa");
+						messageBoardThread1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						messageBoardThread2, entityField.getName(), "Bbb");
+						messageBoardThread2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

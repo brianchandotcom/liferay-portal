@@ -23,6 +23,7 @@ import {
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT,
 	UPDATE_DATA_LAYOUT_NAME,
+	UPDATE_EDITING_LANGUAGE_ID,
 	UPDATE_FIELD_TYPES,
 	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD,
 	UPDATE_FOCUSED_FIELD,
@@ -46,6 +47,7 @@ const initialState = {
 		paginationMode: 'wizard'
 	},
 	dataLayoutId: 0,
+	editingLanguageId: themeDisplay.getLanguageId(),
 	fieldTypes: [],
 	focusedCustomObjectField: {},
 	focusedField: {}
@@ -285,6 +287,12 @@ const createReducer = dataLayoutBuilder => {
 					}
 				};
 			}
+			case UPDATE_EDITING_LANGUAGE_ID: {
+				return {
+					...state,
+					editingLanguageId: action.payload
+				};
+			}
 			case UPDATE_FIELD_TYPES: {
 				const {fieldTypes} = action.payload;
 
@@ -324,7 +332,13 @@ const createReducer = dataLayoutBuilder => {
 					return {
 						...state,
 						focusedCustomObjectField: {},
-						focusedField
+						focusedField: {
+							...focusedField,
+							settingsContext: {
+								...focusedField.settingsContext,
+								editingLanguageId: state.editingLanguageId
+							}
+						}
 					};
 				}
 

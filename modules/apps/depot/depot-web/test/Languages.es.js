@@ -80,13 +80,13 @@ describe('Languages', () => {
 		).not.toBeNull();
 	});
 
-	it('renders a "manage" button if custom option is checked', () => {
+	it('renders a "edit" button if custom option is checked', () => {
 		const {getByText} = renderLanguagesComponent({
 			...defaultProps,
 			inheritLocales: false
 		});
 
-		expect(getByText('manage'));
+		expect(getByText('edit'));
 	});
 
 	it('changes the default language', () => {
@@ -147,10 +147,10 @@ describe('Languages', () => {
 				inheritLocales: false
 			});
 
-			fireEvent.click(result.getByText('manage'));
+			fireEvent.click(result.getByText('edit'));
 		});
 
-		it('renders a modal when user clicks on Manage button', async () => {
+		it('renders a modal when user clicks on Edit button', async () => {
 			const title = await waitForElement(() =>
 				result.getByText('language-selection')
 			);
@@ -185,7 +185,7 @@ describe('Languages', () => {
 
 			fireEvent.click(checkboxes[0]);
 
-			fireEvent.click(result.getByText('save'));
+			fireEvent.click(result.getByText('done'));
 
 			const languagesList = await waitForElement(() =>
 				result.container.querySelectorAll('tbody > tr')
@@ -201,7 +201,7 @@ describe('Languages', () => {
 
 			fireEvent.click(checkboxes[2]);
 
-			fireEvent.click(result.getByText('save'));
+			fireEvent.click(result.getByText('done'));
 
 			const languagesList = await waitForElement(() =>
 				result.container.querySelectorAll('tbody > tr')

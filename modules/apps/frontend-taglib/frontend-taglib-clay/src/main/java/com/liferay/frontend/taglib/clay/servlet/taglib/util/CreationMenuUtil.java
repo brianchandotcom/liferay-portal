@@ -17,8 +17,10 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 import com.liferay.petra.function.UnsafeConsumer;
 
 /**
- * @author Hugo Huijser
+ * @author     Hugo Huijser
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link CreationMenuBuilder}
  */
+@Deprecated
 public class CreationMenuUtil {
 
 	public static CreationMenu addDropdownItem(

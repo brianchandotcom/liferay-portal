@@ -205,7 +205,9 @@ public class DataDefinitionResourceImpl
 			ddmFormFieldTypeName -> _getFieldTypeMetadataJSONObject(
 				contextAcceptLanguage, ddmFormFieldTypeName,
 				contextHttpServletRequest,
-				_getResourceBundle(contextAcceptLanguage.getPreferredLocale()))
+				_getResourceBundle(
+					ddmFormFieldTypeName,
+					contextAcceptLanguage.getPreferredLocale()))
 		).filter(
 			jsonObject -> !jsonObject.getBoolean("system")
 		).forEach(
@@ -648,9 +650,7 @@ public class DataDefinitionResourceImpl
 			MapUtil.getString(
 				ddmFormFieldTypeProperties, "ddm.form.field.type.icon")
 		).put(
-			"javaScriptModule",
-			_resolveModuleName(
-				GetterUtil.getString(ddmFormFieldType.getModuleName()))
+			"javaScriptModule", _resolveModuleName(ddmFormFieldType)
 		).put(
 			"label",
 			_translate(
@@ -694,10 +694,18 @@ public class DataDefinitionResourceImpl
 				String.class));
 	}
 
-	private ResourceBundle _getResourceBundle(Locale locale) {
+	private ResourceBundle _getResourceBundle(
+		String ddmFormFieldTypeName, Locale locale) {
+
+		DDMFormFieldType ddmFormFieldType =
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+				ddmFormFieldTypeName);
+
 		return new AggregateResourceBundle(
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass()),
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale, ddmFormFieldType.getClass()),
 			_portal.getResourceBundle(locale));
 	}
 
@@ -717,12 +725,16 @@ public class DataDefinitionResourceImpl
 			fieldName -> !ArrayUtil.contains(removedFieldNames, fieldName));
 	}
 
-	private String _resolveModuleName(String moduleName) {
-		if (Validator.isNull(moduleName)) {
+	private String _resolveModuleName(DDMFormFieldType ddmFormFieldType) {
+		if (Validator.isNull(ddmFormFieldType.getModuleName())) {
 			return StringPool.BLANK;
 		}
 
-		return _npmResolver.resolveModuleName(moduleName);
+		if (ddmFormFieldType.isCustomDDMFormFieldType()) {
+			return ddmFormFieldType.getModuleName();
+		}
+
+		return _npmResolver.resolveModuleName(ddmFormFieldType.getModuleName());
 	}
 
 	private void _setTypeDDMFormFieldValue(

@@ -27,6 +27,7 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebConstants;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -159,6 +160,19 @@ public class ChangeListsDisplayContext {
 		return soyContext;
 	}
 
+	public String getChangeTypeName(CTEntry ctEntry) {
+		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) {
+			return "added";
+		}
+		else if (ctEntry.getChangeType() ==
+					CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+			return "deleted";
+		}
+
+		return "modified";
+	}
+
 	public String getCheckoutURL(long ctCollectionId) {
 		PortletURL checkoutURL = PortletURLFactoryUtil.create(
 			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
@@ -172,10 +186,22 @@ public class ChangeListsDisplayContext {
 		return checkoutURL.toString();
 	}
 
-	public CreationMenu getCreationMenu() {
-		CreationMenu creationMenu = new CreationMenu();
+	public String getConflictsURL(long ctCollectionId) {
+		PortletURL checkConflictsURl = PortletURLFactoryUtil.create(
+			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
+			PortletRequest.RENDER_PHASE);
 
-		creationMenu.addDropdownItem(
+		checkConflictsURl.setParameter(
+			"mvcRenderCommandName", "/change_lists/view_conflicts");
+
+		checkConflictsURl.setParameter(
+			"ctCollectionId", String.valueOf(ctCollectionId));
+
+		return checkConflictsURl.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				PortletURL portletURL = PortletURLFactoryUtil.create(
 					_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
@@ -190,9 +216,8 @@ public class ChangeListsDisplayContext {
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "add-change-list"));
-			});
-
-		return creationMenu;
+			}
+		).build();
 	}
 
 	public long getCTCollectionAgeTime(CTCollection ctCollection) {
@@ -216,6 +241,10 @@ public class ChangeListsDisplayContext {
 		return ctEntriesStream.collect(
 			Collectors.groupingBy(
 				CTEntry::getChangeType, Collectors.counting()));
+	}
+
+	public CTDisplayRendererRegistry getCtDisplayRendererRegistry() {
+		return _ctDisplayRendererRegistry;
 	}
 
 	public String getDeleteURL(long ctCollectionId, String name) {
@@ -323,15 +352,7 @@ public class ChangeListsDisplayContext {
 			"ctCollectionId", String.valueOf(ctCollectionId));
 		publishURL.setParameter("name", name);
 
-		return StringBundler.concat(
-			"javascript:confirm('",
-			HtmlUtil.escapeJS(
-				LanguageUtil.format(
-					_httpServletRequest,
-					"are-you-sure-you-want-to-publish-x-change-list", name,
-					false)),
-			"') && Liferay.Util.navigate('",
-			HtmlUtil.escapeJS(publishURL.toString()), "')");
+		return publishURL.toString();
 	}
 
 	public SearchContainer<CTCollection> getSearchContainer() {
@@ -456,6 +477,8 @@ public class ChangeListsDisplayContext {
 			ctCollectionChangeTypeCounts.getOrDefault(
 				CTConstants.CT_CHANGE_TYPE_ADDITION, 0L)
 		).put(
+			"conflictsURL", getConflictsURL(_ctCollectionId)
+		).put(
 			"deleteURL", getDeleteURL(_ctCollectionId, ctCollection.getName())
 		).put(
 			"deletionCount",
@@ -469,8 +492,6 @@ public class ChangeListsDisplayContext {
 				CTConstants.CT_CHANGE_TYPE_MODIFICATION, 0L)
 		).put(
 			"name", ctCollection.getName()
-		).put(
-			"publishURL", getPublishURL(_ctCollectionId, ctCollection.getName())
 		);
 	}
 
@@ -520,14 +541,7 @@ public class ChangeListsDisplayContext {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				String changeTypeKey = "added";
-
-				if (ctEntry.getChangeType() == 1) {
-					changeTypeKey = "deleted";
-				}
-				else if (ctEntry.getChangeType() == 2) {
-					changeTypeKey = "modified";
-				}
+				String changeTypeKey = getChangeTypeName(ctEntry);
 
 				Format format = FastDateFormatFactoryUtil.getDateTime(
 					_themeDisplay.getLocale());

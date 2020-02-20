@@ -338,6 +338,27 @@ FragmentEditor.STATE = {
 	fragmentEntryId: Config.string().required(),
 
 	/**
+	 * List of FreeMarker tags for custom autocompletion in the HTML editor.
+	 *
+	 * @default []
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type Array
+	 */
+	freeMarkerTaglibs: Config.arrayOf(Config.string()),
+
+	/**
+	 * List of FreeMarker variables for custom autocompletion in the HTML
+	 * editor.
+	 *
+	 * @default []
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type Array
+	 */
+	freeMarkerVariables: Config.arrayOf(Config.string()),
+
+	/**
 	 * Fragment name.
 	 *
 	 * @default undefined

@@ -166,22 +166,6 @@ definition {
 	macro viewCP {
 		var key_assetName = "${assetName}";
 
-		if (IsElementPresent(locator1 = "RecycleBin#EMPTY_RECYCLE_BIN")) {
-			MouseOver(locator1 = "Icon#TOOLTIP");
-
-			var maxAgeField = "1 month";
-
-			if (isSet(customMaxAge)) {
-				var maxAgeField = "${customMaxAge}";
-			}
-
-			RecycleBin.viewRecycleBinMaxAge(maxAgeField = "${maxAgeField}");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#TOOLTIP",
-				value1 = "The Recycle Bin shows all assets removed by users. Assets can be restored or permanently deleted.");
-		}
-
 		LexiconTable.viewTableEntryTitleLink(tableEntry = "${assetName}");
 
 		LexiconTable.viewTableEntryText(
@@ -236,12 +220,6 @@ definition {
 		MenuItem.viewPresent(menuItem = "Restore");
 
 		MenuItem.viewPresent(menuItem = "Delete");
-	}
-
-	macro viewRecycleBinMaxAge {
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#TOOLTIP",
-			value1 = "Entries that have been in the Recycle Bin for more than ${maxAgeField} are automatically deleted.");
 	}
 
 }

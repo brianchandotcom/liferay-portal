@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaForStatement extends JavaLoopStatement {
+public class JavaForStatement extends BaseJavaLoopStatement {
 
 	public void setConditionJavaExpression(
 		JavaExpression conditionJavaExpression) {

@@ -15,8 +15,13 @@
 import ClayAlert from '@clayui/alert';
 import classNames from 'classnames';
 import {useEventListener, useIsMounted} from 'frontend-js-react-web';
-import React, {useCallback, useContext, useEffect, useRef} from 'react';
+import PropTypes from 'prop-types';
+import React, {useCallback, useEffect, useRef} from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../prop-types/index';
 import {
 	ARROW_DOWN_KEYCODE,
 	ARROW_UP_KEYCODE
@@ -24,11 +29,13 @@ import {
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {MOVE_ITEM_DIRECTIONS} from '../config/constants/moveItemDirections';
 import {PAGE_TYPES} from '../config/constants/pageTypes';
-import {ConfigContext} from '../config/index';
+import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
 import moveItem from '../thunks/moveItem';
 import {useActiveItemId, useIsActive, useSelectItem} from './Controls';
 import DragPreview from './DragPreview';
+import {EditableDecorationProvider} from './fragment-content/EditableDecorationContext';
+import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
 import {
 	ColumnWithControls,
 	ContainerWithControls,
@@ -50,17 +57,14 @@ const LAYOUT_DATA_ITEMS = {
 
 export default function PageEditor({withinMasterPage = false}) {
 	const activeItemId = useActiveItemId();
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const layoutData = useSelector(state => state.layoutData);
 	const selectItem = useSelectItem();
 	const sidebarOpen = useSelector(
-		state => state.sidebarPanelId && state.sidebarOpen
+		state => state.sidebar.panelId && state.sidebar.open
 	);
 	const store = useSelector(state => state);
-
-	const {layoutConversionWarningMessages, pageType} = config;
 
 	const mainItem = layoutData.items[layoutData.rootItems.main];
 
@@ -125,7 +129,6 @@ export default function PageEditor({withinMasterPage = false}) {
 
 				dispatch(
 					moveItem({
-						config,
 						itemId,
 						parentItemId: parentId,
 						position,
@@ -134,21 +137,48 @@ export default function PageEditor({withinMasterPage = false}) {
 				);
 			}
 		},
-		[activeItemId, config, dispatch, layoutData.items, store]
+		[activeItemId, dispatch, layoutData.items, store]
 	);
 
 	useEventListener('keyup', onKeyUp, false, document.body);
 
+	const isPageConversion = config.pageType === PAGE_TYPES.conversion;
+	const hasWarningMessages =
+		isPageConversion &&
+		config.layoutConversionWarningMessages &&
+		config.layoutConversionWarningMessages.length > 0;
+
 	return (
 		<>
-			{layoutConversionWarningMessages &&
-				layoutConversionWarningMessages.length &&
-				pageType === PAGE_TYPES.conversion && (
+			{isPageConversion && (
+				<div
+					className={classNames('page-editor__conversion-messages', {
+						'page-editor__conversion-messages--with-sidebar-open': sidebarOpen
+					})}
+				>
 					<ClayAlert
-						displayType="warning"
-						title={layoutConversionWarningMessages.join('<br>')}
+						displayType="info"
+						title={Liferay.Language.get(
+							'page-conversion-description'
+						)}
+						variant="stripe"
 					/>
-				)}
+
+					{hasWarningMessages && (
+						<ClayAlert displayType="warning" variant="stripe">
+							{config.layoutConversionWarningMessages.map(
+								message => (
+									<>
+										{message}
+										<br />
+									</>
+								)
+							)}
+						</ClayAlert>
+					)}
+				</div>
+			)}
+
 			<div
 				className={classNames('page-editor', {
 					'page-editor--with-sidebar': !withinMasterPage,
@@ -161,19 +191,67 @@ export default function PageEditor({withinMasterPage = false}) {
 			>
 				<DragPreview />
 
-				<DragDropManager>
-					<LayoutDataItem
-						fragmentEntryLinks={fragmentEntryLinks}
-						item={mainItem}
-						layoutData={layoutData}
-					/>
-				</DragDropManager>
+				<EditableProcessorContextProvider>
+					<EditableDecorationProvider>
+						<DragDropManager>
+							<LayoutDataItem
+								fragmentEntryLinks={fragmentEntryLinks}
+								item={mainItem}
+								layoutData={layoutData}
+							/>
+						</DragDropManager>
+					</EditableDecorationProvider>
+				</EditableProcessorContextProvider>
 			</div>
 		</>
 	);
 }
 
-function LayoutDataItem({fragmentEntryLinks, item, layoutData, ...otherProps}) {
+PageEditor.propTypes = {
+	withinMasterPage: PropTypes.bool
+};
+
+class LayoutDataItem extends React.PureComponent {
+	static getDerivedStateFromError(error) {
+		return {error};
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			error: null
+		};
+	}
+
+	render() {
+		return this.state.error ? (
+			<ClayAlert
+				displayType="danger"
+				title={Liferay.Language.get('error')}
+			>
+				{Liferay.Language.get(
+					'an-unexpected-error-occurred-while-rendering-this-item'
+				)}
+			</ClayAlert>
+		) : (
+			<LayoutDataItemContent {...this.props} />
+		);
+	}
+}
+
+LayoutDataItem.propTypes = {
+	fragmentEntryLinks: PropTypes.object.isRequired,
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};
+
+function LayoutDataItemContent({
+	fragmentEntryLinks,
+	item,
+	layoutData,
+	...otherProps
+}) {
 	const Component = LAYOUT_DATA_ITEMS[item.type];
 	const isActive = useIsActive()(item.itemId);
 	const isMounted = useIsMounted();
@@ -205,3 +283,9 @@ function LayoutDataItem({fragmentEntryLinks, item, layoutData, ...otherProps}) {
 		</Component>
 	);
 }
+
+LayoutDataItemContent.propTypes = {
+	fragmentEntryLinks: PropTypes.object.isRequired,
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};

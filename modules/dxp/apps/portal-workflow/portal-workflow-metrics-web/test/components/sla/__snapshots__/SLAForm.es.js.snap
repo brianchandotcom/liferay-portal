@@ -104,6 +104,7 @@ exports[`Should display error on alert when receive a server error after submit 
                     </label>
                   </FieldLabel>
                   <input
+                    autoFocus={true}
                     className="form-control"
                     defaultValue="New SLA"
                     id="sla_name"
@@ -691,6 +692,7 @@ exports[`Should display error on field when receive a server error after submit 
                     </label>
                   </FieldLabel>
                   <input
+                    autoFocus={true}
                     className="form-control"
                     defaultValue="Test"
                     id="sla_name"
@@ -1278,6 +1280,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                     </label>
                   </FieldLabel>
                   <input
+                    autoFocus={true}
                     className="form-control"
                     defaultValue="Total resolution time"
                     id="sla_name"
@@ -1859,6 +1862,7 @@ exports[`Should redirect to SLA list 1`] = `
                     </label>
                   </FieldLabel>
                   <input
+                    autoFocus={true}
                     className="form-control"
                     defaultValue="Total resolution time"
                     id="sla_name"
@@ -2449,6 +2453,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                     </label>
                   </FieldLabel>
                   <input
+                    autoFocus={true}
                     className="form-control"
                     defaultValue="Total resolution time"
                     id="sla_name"
@@ -3083,6 +3088,7 @@ exports[`Should render component 1`] = `
                         </label>
                       </FieldLabel>
                       <input
+                        autoFocus={true}
                         className="form-control"
                         defaultValue=""
                         id="sla_name"
@@ -3718,6 +3724,7 @@ exports[`Should render component in edit mode 1`] = `
                         </label>
                       </FieldLabel>
                       <input
+                        autoFocus={true}
                         className="form-control"
                         defaultValue=""
                         id="sla_name"
@@ -4397,6 +4404,7 @@ exports[`Should test handler erros 1`] = `
                     </label>
                   </FieldLabel>
                   <input
+                    autoFocus={true}
                     className="form-control"
                     id="sla_name"
                     maxLength={75}
@@ -4970,6 +4978,7 @@ exports[`Should test handler erros at start node keys 1`] = `
                     </label>
                   </FieldLabel>
                   <input
+                    autoFocus={true}
                     className="form-control"
                     id="sla_name"
                     maxLength={75}
@@ -5543,6 +5552,7 @@ exports[`Should test handler no array erros 1`] = `
                     </label>
                   </FieldLabel>
                   <input
+                    autoFocus={true}
                     className="form-control"
                     id="sla_name"
                     maxLength={75}
@@ -6116,6 +6126,7 @@ exports[`Should test load data callback 1`] = `
                     </label>
                   </FieldLabel>
                   <input
+                    autoFocus={true}
                     className="form-control"
                     id="sla_name"
                     maxLength={75}
@@ -6690,6 +6701,7 @@ exports[`Should update state after input changes 1`] = `
                     </label>
                   </FieldLabel>
                   <input
+                    autoFocus={true}
                     className="form-control"
                     id="sla_name"
                     maxLength={75}

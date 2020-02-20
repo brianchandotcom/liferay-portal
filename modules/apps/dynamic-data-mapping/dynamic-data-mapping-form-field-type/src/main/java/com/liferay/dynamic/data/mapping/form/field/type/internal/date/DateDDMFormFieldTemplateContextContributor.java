@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
+import java.time.DayOfWeek;
+import java.time.temporal.WeekFields;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -53,6 +56,8 @@ public class DateDDMFormFieldTemplateContextContributor
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		return HashMapBuilder.<String, Object>put(
+			"firstDayOfWeek", _getFirstDayOfWeek()
+		).put(
 			"months",
 			Arrays.asList(
 				CalendarUtil.getMonths(
@@ -73,6 +78,15 @@ public class DateDDMFormFieldTemplateContextContributor
 		).put(
 			"years", _getYears()
 		).build();
+	}
+
+	private int _getFirstDayOfWeek() {
+		WeekFields weekFields = WeekFields.of(
+			LocaleThreadLocal.getThemeDisplayLocale());
+
+		DayOfWeek dayOfWeek = weekFields.getFirstDayOfWeek();
+
+		return dayOfWeek.getValue() % 7;
 	}
 
 	private String _getPredefinedValue(

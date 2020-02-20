@@ -12,12 +12,16 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
+import {
+	BackgroundImagePropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {CONTAINER_TYPES} from '../../config/constants/containerTypes';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../../config/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
@@ -30,7 +34,6 @@ import {
 import {ContainerTypeConfiguration} from './ContainerTypeConfiguration';
 
 export const ContainerConfigurationPanel = ({item}) => {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(
 		selectPrefixedSegmentsExperienceId
@@ -46,7 +49,6 @@ export const ContainerConfigurationPanel = ({item}) => {
 	const handleConfigurationValueChanged = itemConfig => {
 		dispatch(
 			updateItemConfig({
-				config,
 				itemConfig,
 				itemId: item.itemId,
 				segmentsExperienceId
@@ -90,4 +92,15 @@ export const ContainerConfigurationPanel = ({item}) => {
 			/>
 		</>
 	);
+};
+
+ContainerConfigurationPanel.propTypes = {
+	item: getLayoutDataItemPropTypes({
+		config: PropTypes.shape({
+			backgroundImage: BackgroundImagePropTypes,
+			paddingBottom: PropTypes.number,
+			paddingHorizontal: PropTypes.number,
+			paddingTop: PropTypes.number
+		})
+	})
 };

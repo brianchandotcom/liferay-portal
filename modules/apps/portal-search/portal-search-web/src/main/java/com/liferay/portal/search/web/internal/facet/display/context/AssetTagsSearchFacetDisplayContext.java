@@ -14,12 +14,18 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
+import com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPortletInstanceConfiguration;
+
 import java.util.List;
 
 /**
  * @author André de Oliveira
  */
 public class AssetTagsSearchFacetDisplayContext {
+
+	public long getDisplayStyleGroupId() {
+		return _displayStyleGroupId;
+	}
 
 	public String getFacetLabel() {
 		return _facetLabel;
@@ -35,6 +41,12 @@ public class AssetTagsSearchFacetDisplayContext {
 
 	public List<String> getParameterValues() {
 		return _parameterValues;
+	}
+
+	public TagFacetPortletInstanceConfiguration
+		getTagFacetPortletInstanceConfiguration() {
+
+		return _tagFacetPortletInstanceConfiguration;
 	}
 
 	public List<AssetTagsSearchFacetTermDisplayContext>
@@ -57,6 +69,10 @@ public class AssetTagsSearchFacetDisplayContext {
 
 	public void setCloudWithCount(boolean cloudWithCount) {
 		_cloudWithCount = cloudWithCount;
+	}
+
+	public void setDisplayStyleGroupId(long displayStyleGroupId) {
+		_displayStyleGroupId = displayStyleGroupId;
 	}
 
 	public void setFacetLabel(String facetLabel) {
@@ -83,6 +99,14 @@ public class AssetTagsSearchFacetDisplayContext {
 		_renderNothing = renderNothing;
 	}
 
+	public void setTagFacetPortletInstanceConfiguration(
+		TagFacetPortletInstanceConfiguration
+			tagFacetPortletInstanceConfiguration) {
+
+		_tagFacetPortletInstanceConfiguration =
+			tagFacetPortletInstanceConfiguration;
+	}
+
 	public void setTermDisplayContexts(
 		List<AssetTagsSearchFacetTermDisplayContext>
 			assetTagsSearchFacetTermDisplayContexts) {
@@ -94,11 +118,14 @@ public class AssetTagsSearchFacetDisplayContext {
 	private List<AssetTagsSearchFacetTermDisplayContext>
 		_assetTagsSearchFacetTermDisplayContexts;
 	private boolean _cloudWithCount;
+	private long _displayStyleGroupId;
 	private String _facetLabel;
 	private boolean _nothingSelected;
 	private String _parameterName;
 	private String _parameterValue;
 	private List<String> _parameterValues;
 	private boolean _renderNothing;
+	private TagFacetPortletInstanceConfiguration
+		_tagFacetPortletInstanceConfiguration;
 
 }

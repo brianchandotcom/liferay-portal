@@ -13,8 +13,14 @@
  */
 
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useContext, useRef} from 'react';
 
+import {
+	LayoutDataPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../prop-types/index';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import useDragAndDrop, {
 	DragDropManagerImpl,
 	TARGET_POSITION
@@ -62,10 +68,18 @@ export default function TopperEmpty({acceptDrop, children, item, layoutData}) {
 				drop(node);
 
 				// Call the original ref, if any.
-				if (typeof child.props.ref === 'function') {
-					child.props.ref(node);
+				if (typeof child.ref === 'function') {
+					child.ref(node);
 				}
 			}
 		});
 	});
 }
+
+TopperEmpty.propTypes = {
+	acceptDrop: PropTypes.arrayOf(
+		PropTypes.oneOf(Object.values(LAYOUT_DATA_ITEM_TYPES))
+	),
+	item: getLayoutDataItemPropTypes().isRequired,
+	layoutData: LayoutDataPropTypes.isRequired
+};

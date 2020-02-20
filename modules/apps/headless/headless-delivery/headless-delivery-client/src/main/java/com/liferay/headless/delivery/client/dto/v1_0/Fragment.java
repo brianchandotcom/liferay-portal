@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Fragment {
+public class Fragment implements Cloneable {
 
 	public String getFragmentCollectionName() {
 		return fragmentCollectionName;
@@ -50,6 +50,27 @@ public class Fragment {
 
 	protected String fragmentCollectionName;
 
+	public String getFragmentKey() {
+		return fragmentKey;
+	}
+
+	public void setFragmentKey(String fragmentKey) {
+		this.fragmentKey = fragmentKey;
+	}
+
+	public void setFragmentKey(
+		UnsafeSupplier<String, Exception> fragmentKeyUnsafeSupplier) {
+
+		try {
+			fragmentKey = fragmentKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fragmentKey;
+
 	public String getFragmentName() {
 		return fragmentName;
 	}
@@ -70,6 +91,11 @@ public class Fragment {
 	}
 
 	protected String fragmentName;
+
+	@Override
+	public Fragment clone() throws CloneNotSupportedException {
+		return (Fragment)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

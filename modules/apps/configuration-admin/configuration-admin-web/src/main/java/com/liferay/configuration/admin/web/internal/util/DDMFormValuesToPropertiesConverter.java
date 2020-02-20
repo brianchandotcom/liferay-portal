@@ -53,10 +53,11 @@ public class DDMFormValuesToPropertiesConverter {
 		DDMForm ddmForm = ddmFormValues.getDDMForm();
 
 		_configurationModel = configurationModel;
-		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(false);
-		_ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
 		_jsonFactory = jsonFactory;
 		_locale = locale;
+
+		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(false);
+		_ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
 	}
 
 	public Dictionary<String, Object> getProperties() {

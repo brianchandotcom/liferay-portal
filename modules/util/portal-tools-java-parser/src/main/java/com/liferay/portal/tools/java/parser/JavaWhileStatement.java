@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringBundler;
 /**
  * @author Hugo Huijser
  */
-public class JavaWhileStatement extends JavaLoopStatement {
+public class JavaWhileStatement extends BaseJavaLoopStatement {
 
 	public JavaWhileStatement(JavaExpression conditionJavaExpression) {
 		_conditionJavaExpression = conditionJavaExpression;

@@ -14,6 +14,7 @@ import React from 'react';
 
 import Icon from '../../shared/components/Icon.es';
 import ListView from '../../shared/components/list/ListView.es';
+import ReloadButton from '../../shared/components/list/ReloadButton.es';
 import PaginationBar from '../../shared/components/pagination-bar/PaginationBar.es';
 import {ChildLink} from '../../shared/components/router/routerWrapper.es';
 import {openErrorToast, openSuccessToast} from '../../shared/util/toast.es';
@@ -32,6 +33,7 @@ class SLAListCard extends React.Component {
 			blockedSLACount: 0,
 			itemToRemove: null,
 			items: [],
+			requestError: false,
 			showConfirmDialog: false,
 			showSLAsUpdatingAlert: false,
 			totalCount: 0
@@ -48,6 +50,7 @@ class SLAListCard extends React.Component {
 
 	componentDidMount() {
 		this.loadBlockedSLA();
+		this.loadData();
 	}
 
 	componentWillMount() {
@@ -56,7 +59,9 @@ class SLAListCard extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.loadData(nextProps);
+		if (this.props !== nextProps) {
+			this.loadData(nextProps);
+		}
 	}
 
 	loadData(props = this.props) {
@@ -66,12 +71,7 @@ class SLAListCard extends React.Component {
 			page,
 			pageSize,
 			processId
-		}).then(({items, totalCount}) =>
-			this.setState({
-				items,
-				totalCount
-			})
-		);
+		});
 	}
 
 	loadBlockedSLA() {
@@ -139,17 +139,22 @@ class SLAListCard extends React.Component {
 	 */
 	requestData({page, pageSize, processId}) {
 		const {client} = this.context;
+		this.setState({requestError: false});
 
 		return client
 			.get(
 				`/processes/${processId}/slas?page=${page}&pageSize=${pageSize}`
 			)
-			.then(({data}) => {
+			.then(({data: {items, totalCount}}) => {
 				this.requestOriginType = REQUEST_ORIGIN_TYPE_FETCH;
-
-				return data;
+				this.setState({
+					items,
+					totalCount
+				});
 			})
-			.catch(openErrorToast);
+			.catch(() => {
+				this.setState({requestError: true});
+			});
 	}
 
 	render() {
@@ -158,6 +163,7 @@ class SLAListCard extends React.Component {
 			blockedSLACount = 0,
 			items = [],
 			itemToRemove,
+			requestError,
 			showConfirmDialog,
 			showSLAsUpdatingAlert,
 			totalCount
@@ -167,10 +173,12 @@ class SLAListCard extends React.Component {
 			'sla-allows-to-define-and-measure-process-performance'
 		);
 		const emptyTitleText = Liferay.Language.get('no-slas-yet');
-
+		const errorMessageText = Liferay.Language.get(
+			'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+		);
 		const fetching =
 			requestOriginType === REQUEST_ORIGIN_TYPE_FETCH && totalCount === 0;
-		const loading = !requestOriginType && totalCount === 0;
+		const loading = !requestError && !requestOriginType;
 
 		return (
 			<SLAListCardContext.Provider value={this.slaContextState}>
@@ -206,7 +214,7 @@ class SLAListCard extends React.Component {
 				)}
 
 				<div className="container-fluid-1280">
-					{!!blockedSLACount && (
+					{blockedSLACount > 0 && (
 						<div
 							className="alert alert-danger alert-dismissible"
 							role="alert"
@@ -267,8 +275,11 @@ class SLAListCard extends React.Component {
 					)}
 
 					<ListView
+						emptyActionButton={<ReloadButton />}
 						emptyMessageText={emptyMessageText}
 						emptyTitleText={emptyTitleText}
+						errorMessageClassName="small"
+						errorMessageText={requestError && errorMessageText}
 						fetching={fetching}
 						loading={loading}
 					>

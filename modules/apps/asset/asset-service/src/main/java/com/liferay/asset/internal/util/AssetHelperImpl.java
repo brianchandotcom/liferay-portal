@@ -33,6 +33,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -485,6 +486,18 @@ public class AssetHelperImpl implements AssetHelper {
 
 		return new BaseModelSearchResult<>(
 			getAssetEntries(hits), hits.getLength());
+	}
+
+	@Override
+	public long searchCount(
+			SearchContext searchContext, AssetEntryQuery assetEntryQuery)
+		throws Exception {
+
+		AssetSearcher assetSearcher = _getAssetSearcher(
+			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		return assetSearcher.searchCount(searchContext);
 	}
 
 	private AssetSearcher _getAssetSearcher(

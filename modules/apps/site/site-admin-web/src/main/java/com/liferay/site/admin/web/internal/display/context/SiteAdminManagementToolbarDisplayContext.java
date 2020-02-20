@@ -16,6 +16,7 @@ package com.liferay.site.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -125,16 +126,12 @@ public class SiteAdminManagementToolbarDisplayContext
 					"parentGroupId", String.valueOf(group.getGroupId()));
 			}
 
-			return new CreationMenu() {
-				{
-					addPrimaryDropdownItem(
-						dropdownItem -> {
-							dropdownItem.setHref(addSiteURL.toString());
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, "add"));
-						});
+			return CreationMenuBuilder.addPrimaryDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(addSiteURL.toString());
+					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 				}
-			};
+			).build();
 		}
 		catch (Exception exception) {
 		}

@@ -532,9 +532,9 @@ public class ComboServlet extends HttpServlet {
 
 	private static class FileContentBag implements Serializable {
 
-		public FileContentBag(byte[] fileContent, long lastModifiedTime) {
+		public FileContentBag(byte[] fileContent, long lastModified) {
 			_fileContent = fileContent;
-			_lastModified = lastModifiedTime;
+			_lastModified = lastModified;
 		}
 
 		private final byte[] _fileContent;

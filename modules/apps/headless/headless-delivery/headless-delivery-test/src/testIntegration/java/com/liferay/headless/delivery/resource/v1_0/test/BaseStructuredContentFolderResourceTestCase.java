@@ -444,9 +444,11 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						structuredContentFolder1, entityField.getName(), "Aaa");
+						structuredContentFolder1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						structuredContentFolder2, entityField.getName(), "Bbb");
+						structuredContentFolder2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -890,9 +892,11 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						structuredContentFolder1, entityField.getName(), "Aaa");
+						structuredContentFolder1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
 					BeanUtils.setProperty(
-						structuredContentFolder2, entityField.getName(), "Bbb");
+						structuredContentFolder2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}
@@ -1160,8 +1164,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				randomPatchStructuredContentFolder);
 
 		StructuredContentFolder expectedPatchStructuredContentFolder =
-			(StructuredContentFolder)BeanUtils.cloneBean(
-				postStructuredContentFolder);
+			postStructuredContentFolder.clone();
 
 		_beanUtilsBean.copyProperties(
 			expectedPatchStructuredContentFolder,

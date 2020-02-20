@@ -15,6 +15,7 @@
 package com.liferay.roles.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -90,25 +91,21 @@ public class ViewRolesManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
-		return new CreationMenu() {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_role.jsp", "redirect", getPortletURL(),
-							"tabs1", "details", "roleType",
-							String.valueOf(
-								_currentRoleTypeContributor.getType()));
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcPath",
+					"/edit_role.jsp", "redirect", getPortletURL(), "tabs1",
+					"details", "roleType",
+					String.valueOf(_currentRoleTypeContributor.getType()));
 
-						String label = _currentRoleTypeContributor.getTitle(
-							_renderRequest.getLocale());
+				String label = _currentRoleTypeContributor.getTitle(
+					_renderRequest.getLocale());
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, label));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, label));
 			}
-		};
+		).build();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

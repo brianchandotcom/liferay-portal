@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -121,23 +122,20 @@ public class KaleoFormsAdminDisplayContext {
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
 				HttpServletRequest httpServletRequest =
 					_kaleoFormsAdminRequestHelper.getRequest();
 
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/admin/edit_kaleo_process.jsp", "redirect",
-							PortalUtil.getCurrentURL(httpServletRequest));
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcPath",
+					"/admin/edit_kaleo_process.jsp", "redirect",
+					PortalUtil.getCurrentURL(httpServletRequest));
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "add"));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add"));
 			}
-		};
+		).build();
 	}
 
 	public DDMDisplay getDDMDisplay() {

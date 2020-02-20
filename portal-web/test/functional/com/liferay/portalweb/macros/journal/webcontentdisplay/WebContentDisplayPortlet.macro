@@ -19,9 +19,9 @@ definition {
 			var key_contentName = "${webContentTitle}";
 
 			AssertClick(
-				key_breadcrumbName = "Workspaces",
+				key_breadcrumbName = "Sites",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Workspaces");
+				value1 = "Sites");
 
 			AssertClick(
 				key_groupTab = "Repository",
@@ -303,7 +303,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertClick(
-			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE",
 			value1 = "${webContentTitle}");
 
 		SelectFrame(value1 = "relative=top");

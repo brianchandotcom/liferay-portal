@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JSPMissingTaglibsCheck extends JSPTermsBaseCheck {
+public class JSPMissingTaglibsCheck extends BaseJSPTermsCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {

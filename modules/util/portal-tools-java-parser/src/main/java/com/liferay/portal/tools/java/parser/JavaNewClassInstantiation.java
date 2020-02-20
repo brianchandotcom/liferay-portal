@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringBundler;
 /**
  * @author Hugo Huijser
  */
-public class JavaNewClassInstantiation extends JavaExpression {
+public class JavaNewClassInstantiation extends BaseJavaExpression {
 
 	public JavaNewClassInstantiation(JavaClassCall javaClassCall) {
 		_javaClassCall = javaClassCall;

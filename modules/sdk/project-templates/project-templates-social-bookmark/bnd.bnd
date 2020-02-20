@@ -1,7 +1,7 @@
 Bundle-Description: Creates a Liferay social bookmark module project that adds a new sharing platform.
 Bundle-Name: Liferay Project Templates Social Bookmark
 Bundle-SymbolicName: com.liferay.project.templates.social.bookmark
-Bundle-Version: 1.0.65
+Bundle-Version: 1.0.66
 Liferay-Versions: [7.1,7.2)
 -removeheaders:\
 	Import-Package,\

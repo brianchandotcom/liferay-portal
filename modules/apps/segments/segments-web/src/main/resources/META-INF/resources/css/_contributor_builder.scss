@@ -54,11 +54,11 @@
 	}
 
 	.criteria-builder-section-sidebar {
-		height: 100%;
+		height: calc(100% - 121px);
 		overflow: hidden;
-		position: absolute;
+		position: fixed;
 		right: 0;
-		top: 0;
+		top: 121px;
 		visibility: hidden;
 		width: 0;
 		z-index: 10;

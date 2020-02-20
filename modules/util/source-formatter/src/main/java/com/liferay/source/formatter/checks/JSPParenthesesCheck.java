@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JSPParenthesesCheck extends IfStatementCheck {
+public class JSPParenthesesCheck extends BaseIfStatementCheck {
 
 	@Override
 	protected String doProcess(

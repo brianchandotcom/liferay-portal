@@ -15,6 +15,7 @@
 package com.liferay.password.policies.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -87,19 +88,16 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
-		return new CreationMenu() {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_password_policy.jsp", "redirect",
-							_renderResponse.createRenderURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "add"));
-					});
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcPath",
+					"/edit_password_policy.jsp", "redirect",
+					_renderResponse.createRenderURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "add"));
 			}
-		};
+		).build();
 	}
 
 	public String getKeywords() {

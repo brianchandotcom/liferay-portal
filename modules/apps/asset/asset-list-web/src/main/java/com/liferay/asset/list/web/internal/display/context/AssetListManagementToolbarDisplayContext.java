@@ -21,6 +21,7 @@ import com.liferay.asset.list.web.internal.security.permission.resource.AssetLis
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -105,8 +106,8 @@ public class AssetListManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
 				PortletURL addManualAssetListEntryURL =
 					liferayPortletResponse.createActionURL();
 
@@ -117,23 +118,21 @@ public class AssetListManagementToolbarDisplayContext
 					"type",
 					String.valueOf(AssetListEntryTypeConstants.TYPE_MANUAL));
 
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData("action", "addAssetListEntry");
-						dropdownItem.putData(
-							"addAssetListEntryURL",
-							addManualAssetListEntryURL.toString());
-						dropdownItem.putData(
-							"title",
-							LanguageUtil.format(
-								request, "add-x-content-set",
-								AssetListEntryTypeConstants.TYPE_MANUAL_LABEL,
-								true));
-						dropdownItem.setHref("#");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "manual-selection"));
-					});
-
+				dropdownItem.putData("action", "addAssetListEntry");
+				dropdownItem.putData(
+					"addAssetListEntryURL",
+					addManualAssetListEntryURL.toString());
+				dropdownItem.putData(
+					"title",
+					LanguageUtil.format(
+						request, "add-x-content-set",
+						AssetListEntryTypeConstants.TYPE_MANUAL_LABEL, true));
+				dropdownItem.setHref("#");
+				dropdownItem.setLabel(
+					LanguageUtil.get(request, "manual-selection"));
+			}
+		).addPrimaryDropdownItem(
+			dropdownItem -> {
 				PortletURL addDynamicAssetListEntryURL =
 					liferayPortletResponse.createActionURL();
 
@@ -144,24 +143,20 @@ public class AssetListManagementToolbarDisplayContext
 					"type",
 					String.valueOf(AssetListEntryTypeConstants.TYPE_DYNAMIC));
 
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData("action", "addAssetListEntry");
-						dropdownItem.putData(
-							"addAssetListEntryURL",
-							addDynamicAssetListEntryURL.toString());
-						dropdownItem.putData(
-							"title",
-							LanguageUtil.format(
-								request, "add-x-content-set",
-								AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL,
-								true));
-						dropdownItem.setHref("#");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "dynamic-selection"));
-					});
+				dropdownItem.putData("action", "addAssetListEntry");
+				dropdownItem.putData(
+					"addAssetListEntryURL",
+					addDynamicAssetListEntryURL.toString());
+				dropdownItem.putData(
+					"title",
+					LanguageUtil.format(
+						request, "add-x-content-set",
+						AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL, true));
+				dropdownItem.setHref("#");
+				dropdownItem.setLabel(
+					LanguageUtil.get(request, "dynamic-selection"));
 			}
-		};
+		).build();
 	}
 
 	@Override

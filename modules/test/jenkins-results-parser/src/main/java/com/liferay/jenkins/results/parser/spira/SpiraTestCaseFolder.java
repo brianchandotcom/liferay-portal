@@ -152,7 +152,7 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 		return jsonObject.getInt("TestCaseFolderId");
 	}
 
-	public SpiraTestCaseFolder getParentTestCaseFolder() {
+	public SpiraTestCaseFolder getParentSpiraTestCaseFolder() {
 		PathSpiraArtifact parentSpiraArtifact = getParentSpiraArtifact();
 
 		if (parentSpiraArtifact == null) {

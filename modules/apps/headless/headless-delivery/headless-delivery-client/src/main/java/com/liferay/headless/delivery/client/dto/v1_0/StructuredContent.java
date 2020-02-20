@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class StructuredContent {
+public class StructuredContent implements Cloneable {
 
 	public static enum ViewableBy {
 
@@ -660,6 +660,11 @@ public class StructuredContent {
 	}
 
 	protected ViewableBy viewableBy;
+
+	@Override
+	public StructuredContent clone() throws CloneNotSupportedException {
+		return (StructuredContent)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

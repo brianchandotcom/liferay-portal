@@ -19,7 +19,6 @@ import lang from './lang.es';
 
 export function getCKEditorConfig() {
 	const config = {};
-	config.extraPlugins = 'bbcode';
 	config.toolbarGroups = [
 		{groups: ['basicstyles', 'cleanup'], name: 'basicstyles'},
 		{

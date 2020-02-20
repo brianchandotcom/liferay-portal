@@ -54,19 +54,16 @@ public class PoshiRunnerValidation {
 	public static void main(String[] args) throws Exception {
 		PoshiRunnerContext.readFiles();
 
-		Set<String> uniqueErrorPaths =
-			PoshiScriptParserException.getUniqueErrorPaths();
-
-		if (!uniqueErrorPaths.isEmpty()) {
-			throw new RuntimeException(
-				"Found " + uniqueErrorPaths.size() + " Poshi Script parsing " +
-					"errors");
-		}
+		PoshiScriptParserException.throwExceptions();
 
 		validate();
 	}
 
 	public static void validate() throws Exception {
+		System.out.print("Running Poshi validation...");
+
+		long start = System.currentTimeMillis();
+
 		for (String filePath : PoshiRunnerContext.getFilePaths()) {
 			if (OSDetector.isWindows()) {
 				filePath = StringUtil.replace(filePath, "/", "\\");
@@ -108,6 +105,9 @@ public class PoshiRunnerValidation {
 		if (!_exceptions.isEmpty()) {
 			_throwExceptions();
 		}
+
+		System.out.println(
+			" Completed in " + (System.currentTimeMillis() - start) + "ms.");
 	}
 
 	public static void validate(String testName) throws Exception {
@@ -1791,8 +1791,9 @@ public class PoshiRunnerValidation {
 	private static void _throwExceptions() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(String.valueOf(_exceptions.size()));
-		sb.append(" errors in POSHI\n\n\n");
+		sb.append("\n\n");
+		sb.append(_exceptions.size());
+		sb.append(" errors in POSHI\n\n");
 
 		for (Exception exception : _exceptions) {
 			sb.append(exception.getMessage());

@@ -1,0 +1,69 @@
+{
+	"items": {
+		"COLUMN-UUID": {
+			"children": [
+				"DROP-ZONE-UUID"
+			],
+			"config": {
+				"size": 12
+			},
+			"itemId": "COLUMN-UUID",
+			"parentId": "ROW-UUID",
+			"type": "column"
+		},
+		"CONTAINER-UUID": {
+			"children": [
+				"ROW-UUID"
+			],
+			"config": {
+				"backgroundImage": {},
+				"paddingBottom": 3,
+				"paddingHorizontal": 3,
+				"paddingTop": 3,
+				"type": "fixed"
+			},
+			"itemId": "CONTAINER-UUID",
+			"parentId": "MAIN-UUID",
+			"type": "container"
+		},
+		"DROP-ZONE-UUID": {
+			"children": [],
+			"config": {
+				"allowNewFragmentEntries": false,
+				"fragmentEntryKeys": [
+					"fragmentEntry1",
+					"fragmentEntry2"
+				]
+			},
+			"itemId": "DROP-ZONE-UUID",
+			"parentId": "COLUMN-UUID",
+			"type": "drop-zone"
+		},
+		"MAIN-UUID": {
+			"children": [
+				"CONTAINER-UUID"
+			],
+			"config": {},
+			"itemId": "MAIN-UUID",
+			"parentId": "",
+			"type": "root"
+		},
+		"ROW-UUID": {
+			"children": [
+				"COLUMN-UUID"
+			],
+			"config": {
+				"gutters": true,
+				"numberOfColumns": 1
+			},
+			"itemId": "ROW-UUID",
+			"parentId": "CONTAINER-UUID",
+			"type": "row"
+		}
+	},
+	"rootItems": {
+		"dropZone": "DROP-ZONE-UUID",
+		"main": "MAIN-UUID"
+	},
+	"version": 1
+}

@@ -35,6 +35,16 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "user2@liferay.com");
 
+			User.logoutPG();
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "user2@liferay.com");
+
+			User.logoutPG();
+
+			User.loginPG();
+
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",

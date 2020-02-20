@@ -313,8 +313,12 @@ public abstract class BaseTaskResourceTestCase {
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else {
-					BeanUtils.setProperty(task1, entityField.getName(), "Aaa");
-					BeanUtils.setProperty(task2, entityField.getName(), "Bbb");
+					BeanUtils.setProperty(
+						task1, entityField.getName(),
+						"Aaa" + RandomTestUtil.randomString());
+					BeanUtils.setProperty(
+						task2, entityField.getName(),
+						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
 	}

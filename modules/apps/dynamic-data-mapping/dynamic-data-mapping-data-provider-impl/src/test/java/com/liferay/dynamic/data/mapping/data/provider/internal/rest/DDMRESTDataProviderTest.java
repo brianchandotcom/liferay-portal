@@ -328,6 +328,105 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 	}
 
 	@Test
+	public void testDoGetDataWithBOM() throws Exception {
+		DDMDataProviderInstanceService ddmDataProviderInstanceService = mock(
+			DDMDataProviderInstanceService.class);
+
+		DDMDataProviderInstance ddmDataProviderInstance = mock(
+			DDMDataProviderInstance.class);
+
+		when(
+			ddmDataProviderInstanceService.fetchDataProviderInstance(1L)
+		).thenReturn(
+			ddmDataProviderInstance
+		);
+
+		DDMDataProviderInstanceSettings ddmDataProviderInstanceSettings = mock(
+			DDMDataProviderInstanceSettings.class);
+
+		String outputParameterId = StringUtil.randomString();
+
+		DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
+			_createSettingsWithOutputParameter(
+				outputParameterId, "output", false, ".output", "list");
+
+		when(
+			ddmDataProviderInstanceSettings.getSettings(
+				Matchers.any(DDMDataProviderInstance.class), Matchers.any())
+		).thenReturn(
+			ddmRESTDataProviderSettings
+		);
+
+		mockStatic(HttpRequest.class);
+
+		HttpRequest httpRequest = mock(HttpRequest.class);
+
+		HttpRequest spyHttpRequest = spy(httpRequest);
+
+		when(
+			HttpRequest.get(Matchers.anyString())
+		).thenReturn(
+			spyHttpRequest
+		);
+
+		HttpResponse httpResponse = mock(HttpResponse.class);
+
+		HttpResponse spyHttpResponse = spy(httpResponse);
+
+		when(
+			spyHttpRequest.send()
+		).thenReturn(
+			spyHttpResponse
+		);
+
+		when(
+			spyHttpResponse.bodyText()
+		).thenReturn(
+			"ï»¿[{output : \"value\"}]"
+		);
+
+		DDMDataProviderRequest.Builder builder =
+			DDMDataProviderRequest.Builder.newBuilder();
+
+		DDMDataProviderRequest ddmDataProviderRequest =
+			builder.withDDMDataProviderId(
+				"1"
+			).build();
+
+		_ddmRESTDataProvider.ddmDataProviderInstanceService =
+			ddmDataProviderInstanceService;
+		_ddmRESTDataProvider.ddmDataProviderInstanceSettings =
+			ddmDataProviderInstanceSettings;
+
+		MultiVMPool multiVMPool = mock(MultiVMPool.class);
+
+		PortalCache portalCache = mock(PortalCache.class);
+
+		PortalCache spyPortalCache = spy(portalCache);
+
+		when(
+			multiVMPool.getPortalCache(DDMRESTDataProvider.class.getName())
+		).thenReturn(
+			spyPortalCache
+		);
+
+		_ddmRESTDataProvider.setMultiVMPool(multiVMPool);
+
+		DDMDataProviderResponse ddmDataProviderResponse =
+			_ddmRESTDataProvider.doGetData(ddmDataProviderRequest);
+
+		Optional<List> outputOptional =
+			ddmDataProviderResponse.getOutputOptional(
+				outputParameterId, List.class);
+
+		Assert.assertTrue(outputOptional.isPresent());
+
+		List<String> output = outputOptional.get();
+
+		Assert.assertFalse(output.isEmpty());
+	}
+
+	@Test
 	public void testFetchDDMDataProviderInstanceNotFound1() throws Exception {
 		DDMDataProviderInstanceService ddmDataProviderInstanceService = mock(
 			DDMDataProviderInstanceService.class);

@@ -98,7 +98,10 @@ class Calculator extends Component {
 		return {
 			...state,
 			...this.getStateBasedOnExpression(expression),
-			expression: expression.replace(/[[\]]/g, '')
+			expression: expression.replace(/[[\]]/g, ''),
+			placeholder: Liferay.Browser.isIe()
+				? ''
+				: Liferay.Language.get('the-expression-will-be-displayed-here')
 		};
 	}
 

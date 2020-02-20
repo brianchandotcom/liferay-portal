@@ -44,11 +44,12 @@ public class UserGroupDisplayContext {
 	public UserGroupDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
+
 		_analyticsConfiguration =
 			(AnalyticsConfiguration)renderRequest.getAttribute(
 				AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 	}
 
 	public String getOrderByType() {

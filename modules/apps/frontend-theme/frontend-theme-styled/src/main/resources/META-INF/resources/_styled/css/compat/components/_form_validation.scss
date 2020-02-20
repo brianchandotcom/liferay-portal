@@ -6,8 +6,14 @@
 	margin-top: 5px;
 }
 
-.has-error .help-block {
-	color: $form-feedback-invalid-color;
+.has-error {
+	.cke {
+		border-color: $form-feedback-invalid-color;
+	}
+
+	.help-block {
+		color: $form-feedback-invalid-color;
+	}
 }
 
 .has-warning .help-block {

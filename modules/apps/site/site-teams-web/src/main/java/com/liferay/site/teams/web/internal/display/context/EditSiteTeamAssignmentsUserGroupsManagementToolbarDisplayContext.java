@@ -16,6 +16,7 @@ package com.liferay.site.teams.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -87,41 +88,42 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 	@Override
 	public CreationMenu getCreationMenu() {
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			return CreationMenuBuilder.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.putData("action", "selectUserGroup");
 
-			PortletURL selectUserGroupURL =
-				liferayPortletResponse.createRenderURL();
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)request.getAttribute(
+							WebKeys.THEME_DISPLAY);
 
-			selectUserGroupURL.setParameter(
-				"mvcPath", "/select_user_groups.jsp");
-			selectUserGroupURL.setParameter(
-				"redirect", themeDisplay.getURLCurrent());
-			selectUserGroupURL.setParameter(
-				"teamId",
-				String.valueOf(
-					_editSiteTeamAssignmentsUserGroupsDisplayContext.
-						getTeamId()));
-			selectUserGroupURL.setWindowState(LiferayWindowState.POP_UP);
+					PortletURL selectUserGroupURL =
+						liferayPortletResponse.createRenderURL();
 
-			String title = LanguageUtil.format(
-				request, "add-new-user-group-to-x",
-				_editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamName());
+					selectUserGroupURL.setParameter(
+						"mvcPath", "/select_user_groups.jsp");
+					selectUserGroupURL.setParameter(
+						"redirect", themeDisplay.getURLCurrent());
+					selectUserGroupURL.setParameter(
+						"teamId",
+						String.valueOf(
+							_editSiteTeamAssignmentsUserGroupsDisplayContext.
+								getTeamId()));
+					selectUserGroupURL.setWindowState(
+						LiferayWindowState.POP_UP);
 
-			return new CreationMenu() {
-				{
-					addDropdownItem(
-						dropdownItem -> {
-							dropdownItem.putData("action", "selectUserGroup");
-							dropdownItem.putData(
-								"selectUserGroupURL",
-								selectUserGroupURL.toString());
-							dropdownItem.putData("title", title);
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, "add"));
-						});
+					dropdownItem.putData(
+						"selectUserGroupURL", selectUserGroupURL.toString());
+
+					String title = LanguageUtil.format(
+						request, "add-new-user-group-to-x",
+						_editSiteTeamAssignmentsUserGroupsDisplayContext.
+							getTeamName());
+
+					dropdownItem.putData("title", title);
+
+					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 				}
-			};
+			).build();
 		}
 		catch (Exception exception) {
 			return null;

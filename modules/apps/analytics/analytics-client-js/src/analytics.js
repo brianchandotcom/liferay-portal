@@ -19,6 +19,7 @@ import uuidv1 from 'uuid/v1';
 import Client from './client';
 import middlewares from './middlewares/defaults';
 import defaultPlugins from './plugins/defaults';
+import {convertUTCDateToLocalDate} from './utils/date';
 import hash from './utils/hash';
 
 // Constants
@@ -568,13 +569,16 @@ class Analytics {
 	 * @return {object}
 	 */
 	_serialize(eventId, applicationId, properties, contextHash) {
-		const eventDate = new Date().toISOString();
+		const date = new Date();
+		const eventDate = date.toISOString();
+		const eventLocalDate = convertUTCDateToLocalDate(date).toISOString();
 
 		return {
 			applicationId,
 			contextHash,
 			eventDate,
 			eventId,
+			eventLocalDate,
 			properties
 		};
 	}

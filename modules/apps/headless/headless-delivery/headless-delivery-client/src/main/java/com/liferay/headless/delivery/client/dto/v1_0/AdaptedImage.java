@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AdaptedImage {
+public class AdaptedImage implements Cloneable {
 
 	public String getContentUrl() {
 		return contentUrl;
@@ -132,6 +132,11 @@ public class AdaptedImage {
 	}
 
 	protected Integer width;
+
+	@Override
+	public AdaptedImage clone() throws CloneNotSupportedException {
+		return (AdaptedImage)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -21,11 +21,16 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.sites.kernel.util.SitesUtil;
+
+import java.util.Arrays;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -50,14 +55,38 @@ public class MySitesItemSelectorViewDisplayContext
 
 		_groupSearchProvider = groupSearchProvider;
 		_portletRequest = getPortletRequest();
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		addBreadcrumbEntries();
 	}
 
 	@Override
 	public GroupSearch getGroupSearch() throws Exception {
-		return _groupSearchProvider.getGroupSearch(
+		GroupSearch groupSearch = _groupSearchProvider.getGroupSearch(
 			_portletRequest, getPortletURL());
+
+		GroupItemSelectorCriterion groupItemSelectorCriterion =
+			getGroupItemSelectorCriterion();
+
+		if (groupSearch.getStart() == 0) {
+			if (groupItemSelectorCriterion.isIncludeUserPersonalSite()) {
+				_prependGroup(
+					groupSearch,
+					GroupLocalServiceUtil.getGroup(
+						_themeDisplay.getCompanyId(),
+						GroupConstants.USER_PERSONAL_SITE));
+			}
+
+			if (groupItemSelectorCriterion.isIncludeFormsSite()) {
+				_prependGroup(
+					groupSearch,
+					GroupLocalServiceUtil.getGroup(
+						_themeDisplay.getCompanyId(), GroupConstants.FORMS));
+			}
+		}
+
+		return groupSearch;
 	}
 
 	@Override
@@ -106,10 +135,18 @@ public class MySitesItemSelectorViewDisplayContext
 		return null;
 	}
 
+	private void _prependGroup(GroupSearch groupSearch, Group group) {
+		groupSearch.setResults(
+			ListUtil.concat(Arrays.asList(group), groupSearch.getResults()));
+
+		groupSearch.setTotal(groupSearch.getTotal() + 1);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MySitesItemSelectorViewDisplayContext.class);
 
 	private final GroupSearchProvider _groupSearchProvider;
 	private final PortletRequest _portletRequest;
+	private final ThemeDisplay _themeDisplay;
 
 }

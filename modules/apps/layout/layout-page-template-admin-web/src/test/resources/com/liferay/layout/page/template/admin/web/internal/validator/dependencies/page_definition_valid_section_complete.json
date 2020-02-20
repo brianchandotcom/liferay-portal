@@ -1,0 +1,48 @@
+{
+	"pageElement" : {
+		"pageElements" : [
+			{
+				"definition" : {
+					"backgroundColorCssClass" : "danger",
+					"layout" : {
+						"containerType": "Fluid",
+						"paddingBottom" : 8,
+						"paddingHorizontal" : 8,
+						"paddingTop" : 4
+					}
+				},
+				"pageElements" : [],
+				"type" : "Section"
+			},
+			{
+				"definition" : {
+					"backgroundImage" : {
+						"title" : {
+							"value": "Liferay",
+							"value_i18n": {
+								"en_US" : "Liferay",
+								"es_ES" : "Liferay Spain User Group"
+							}
+						},
+						"url" : {
+							"value": "https://www.google.com/url?sa=i&source=imgres&cd=&cad=rja&uact=8&ved=2ahUKEwirs6PDlNjnAhVSQhoKHVh5AGQQjRx6BAgBEAQ&url=https%3A%2F%2Ftwitter.com%2Fliferay&psig=AOvVaw1ivDl0Mp5ceUuZl6sPbrIH&ust=1582014263995241",
+							"value_i18n": {
+								"en_US" : "https://www.google.com/url?sa=i&source=imgres&cd=&cad=rja&uact=8&ved=2ahUKEwirs6PDlNjnAhVSQhoKHVh5AGQQjRx6BAgBEAQ&url=https%3A%2F%2Ftwitter.com%2Fliferay&psig=AOvVaw1ivDl0Mp5ceUuZl6sPbrIH&ust=1582014263995241",
+								"es_ES" : "https://secure.meetupstatic.com/photos/event/2/5/4/8/600_475569544.jpeg"
+							}
+						}
+					},
+					"layout" : {
+						"containerType": "Fixed",
+						"paddingBottom" : 8,
+						"paddingHorizontal" : 6,
+						"paddingTop" : 0
+					}
+				},
+				"pageElements" : [],
+				"type" : "Section"
+			}
+		],
+		"type" : "Root"
+	}
+}

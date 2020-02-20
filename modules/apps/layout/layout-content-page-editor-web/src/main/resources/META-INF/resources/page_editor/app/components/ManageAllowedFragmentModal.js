@@ -15,15 +15,13 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
-import {ConfigContext} from '../config/index';
 import {useDispatch} from '../store/index';
 import updateItemConfig from '../thunks/updateItemConfig';
 import AllowedFragmentSelector from './AllowedFragmentSelector';
 
 const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 
 	const [allowNewFragmentEntries, setAllowNewFragmentEntries] = useState(
@@ -37,7 +35,6 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 
 		dispatch(
 			updateItemConfig({
-				config,
 				itemConfig: {
 					allowNewFragmentEntries,
 					fragmentEntryKeys: [...selectedFragments]
@@ -76,6 +73,7 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 					)}
 				</p>
 				<AllowedFragmentSelector
+					dropZoneConfig={item.config}
 					onSelectedFragment={onSelectedFragment}
 				/>
 			</ClayModal.Body>
@@ -109,6 +107,10 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 };
 
 ManageAllowedFragmentModal.propTypes = {
+	item: PropTypes.shape({
+		config: PropTypes.object.isRequired,
+		itemId: PropTypes.string.isRequired
+	}).isRequired,
 	observer: PropTypes.object.isRequired,
 	onClose: PropTypes.func.isRequired
 };

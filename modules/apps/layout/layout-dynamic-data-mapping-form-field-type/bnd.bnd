@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Layout Dynamic Data Mapping Form Field Type
+Bundle-SymbolicName: com.liferay.layout.dynamic.data.mapping.form.field.type
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	soy;\
+		type:String="LayoutLiferayFormField"
+Web-ContextPath: /layout-dynamic-data-mapping-form-field-type

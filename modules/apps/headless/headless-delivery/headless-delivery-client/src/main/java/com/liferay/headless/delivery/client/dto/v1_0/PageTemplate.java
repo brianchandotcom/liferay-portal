@@ -27,28 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageTemplate {
-
-	public String getCollectionName() {
-		return collectionName;
-	}
-
-	public void setCollectionName(String collectionName) {
-		this.collectionName = collectionName;
-	}
-
-	public void setCollectionName(
-		UnsafeSupplier<String, Exception> collectionNameUnsafeSupplier) {
-
-		try {
-			collectionName = collectionNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String collectionName;
+public class PageTemplate implements Cloneable {
 
 	public Creator getCreator() {
 		return creator;
@@ -194,6 +173,30 @@ public class PageTemplate {
 
 	protected PageDefinition pageDefinition;
 
+	public PageTemplateCollection getPageTemplateCollection() {
+		return pageTemplateCollection;
+	}
+
+	public void setPageTemplateCollection(
+		PageTemplateCollection pageTemplateCollection) {
+
+		this.pageTemplateCollection = pageTemplateCollection;
+	}
+
+	public void setPageTemplateCollection(
+		UnsafeSupplier<PageTemplateCollection, Exception>
+			pageTemplateCollectionUnsafeSupplier) {
+
+		try {
+			pageTemplateCollection = pageTemplateCollectionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected PageTemplateCollection pageTemplateCollection;
+
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
@@ -255,6 +258,11 @@ public class PageTemplate {
 	}
 
 	protected String uuid;
+
+	@Override
+	public PageTemplate clone() throws CloneNotSupportedException {
+		return (PageTemplate)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

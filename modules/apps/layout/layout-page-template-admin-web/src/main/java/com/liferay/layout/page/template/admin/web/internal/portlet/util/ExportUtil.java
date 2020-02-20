@@ -30,13 +30,13 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
-import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateCollectionConverterUtil;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateConverterUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -71,7 +71,8 @@ public class ExportUtil {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-		Map<Long, String> layoutPageTemplateCollectionKeyMap = new HashMap<>();
+		Map<Long, LayoutPageTemplateCollection>
+			layoutPageTemplateCollectionKeyMap = new HashMap<>();
 
 		try {
 			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
@@ -114,7 +115,8 @@ public class ExportUtil {
 	}
 
 	private void _populateLayoutPageTemplateCollectionKeyMap(
-			Map<Long, String> layoutPageTemplateCollectionKeyMap,
+			Map<Long, LayoutPageTemplateCollection>
+				layoutPageTemplateCollectionKeyMap,
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
 
@@ -127,35 +129,29 @@ public class ExportUtil {
 			return;
 		}
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				getLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
-
 		layoutPageTemplateCollectionKeyMap.put(
 			layoutPageTemplateCollectionId,
-			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey());
+			_layoutPageTemplateCollectionLocalService.
+				getLayoutPageTemplateCollection(
+					layoutPageTemplateCollectionId));
 	}
 
 	private void _populateZipWriter(
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
-			Map<Long, String> layoutPageTemplateCollectionKeyMap,
+			Map<Long, LayoutPageTemplateCollection>
+				layoutPageTemplateCollectionKeyMap,
 			ZipWriter zipWriter)
 		throws Exception {
 
-		PageTemplate pageTemplate = PageTemplateConverterUtil.toPageTemplate(
-			layoutPageTemplateEntry);
-
-		String layoutPageTemplateCollectionKey =
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			layoutPageTemplateCollectionKeyMap.get(
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
 
-		StringBundler sb = new StringBundler(3);
+		String layoutPageTemplateCollectionKey =
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey();
 
-		sb.append(_ROOT_FOLDER + StringPool.SLASH);
-		sb.append(layoutPageTemplateCollectionKey + StringPool.SLASH);
-		sb.append(layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
-
-		String path = sb.toString();
+		String layoutPageTemplateCollectionPath =
+			_ROOT_FOLDER + StringPool.SLASH + layoutPageTemplateCollectionKey;
 
 		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
 
@@ -165,8 +161,23 @@ public class ExportUtil {
 		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
 
 		zipWriter.addEntry(
-			path + "/page-template.json",
-			objectWriter.writeValueAsString(pageTemplate));
+			layoutPageTemplateCollectionPath + StringPool.SLASH +
+				LayoutPageTemplateExportImportConstants.
+					FILE_NAME_PAGE_TEMPLATE_COLLECTION,
+			objectWriter.writeValueAsString(
+				PageTemplateCollectionConverterUtil.toPageTemplateCollection(
+					layoutPageTemplateCollection)));
+
+		String layoutPageTemplateEntryPath =
+			layoutPageTemplateCollectionPath + StringPool.SLASH +
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
+
+		zipWriter.addEntry(
+			layoutPageTemplateEntryPath + StringPool.SLASH +
+				LayoutPageTemplateExportImportConstants.FILE_NAME_PAGE_TEMPLATE,
+			objectWriter.writeValueAsString(
+				PageTemplateConverterUtil.toPageTemplate(
+					layoutPageTemplateEntry)));
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -179,7 +190,7 @@ public class ExportUtil {
 					layout);
 
 			zipWriter.addEntry(
-				path + "/page-definition.json",
+				layoutPageTemplateEntryPath + "/page-definition.json",
 				objectWriter.writeValueAsString(pageDefinition));
 		}
 
@@ -188,7 +199,8 @@ public class ExportUtil {
 
 		if (previewFileEntry != null) {
 			zipWriter.addEntry(
-				path + "/thumbnail." + previewFileEntry.getExtension(),
+				layoutPageTemplateEntryPath + "/thumbnail." +
+					previewFileEntry.getExtension(),
 				previewFileEntry.getContentStream());
 		}
 	}

@@ -13,11 +13,15 @@
  */
 
 import classNames from 'classnames';
-import React, {useContext, useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
+import React, {useEffect, useState} from 'react';
 
+import {
+	BackgroundImagePropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch} from '../../store/index';
 
@@ -36,7 +40,6 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 		...item.config
 	};
 
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 
 	const [backgroundImageValue, setBackgroundImageValue] = useState('');
@@ -49,7 +52,6 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 			InfoItemService.getAssetFieldValue({
 				classNameId: backgroundImage.classNameId,
 				classPK: backgroundImage.classPK,
-				config,
 				fieldId: backgroundImage.fieldId,
 				onNetworkStatus: dispatch
 			}).then(response => {
@@ -63,7 +65,7 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 		else {
 			setBackgroundImageValue('');
 		}
-	}, [backgroundImage, backgroundImageValue, config, dispatch, item]);
+	}, [backgroundImage, backgroundImageValue, dispatch, item]);
 
 	return (
 		<div
@@ -88,7 +90,7 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 			}
 		>
 			<div
-				className={classNames('px-0', {
+				className={classNames({
 					container: type === 'fixed',
 					'container-fluid': type === 'fluid'
 				})}
@@ -98,5 +100,18 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 		</div>
 	);
 });
+
+Container.propTypes = {
+	item: getLayoutDataItemPropTypes({
+		config: PropTypes.shape({
+			backgroundColorCssClass: PropTypes.string,
+			backgroundImage: BackgroundImagePropTypes,
+			paddingBottom: PropTypes.number,
+			paddingHorizontal: PropTypes.number,
+			paddingTop: PropTypes.number,
+			type: PropTypes.oneOf(['fluid', 'fixed'])
+		})
+	}).isRequired
+};
 
 export default Container;

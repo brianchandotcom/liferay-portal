@@ -12,13 +12,13 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
-import React, {useContext, useState} from 'react';
+import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 
-import {ConfigContext} from '../../app/config/index';
+import {config} from '../../app/config/index';
 import {useSelector} from '../../app/store/index';
 import {openInfoItemSelector} from '../../core/openInfoItemSelector';
 
@@ -29,12 +29,10 @@ export default function ItemSelector({
 	onItemSelect,
 	selectedItemTitle
 }) {
-	const {infoItemSelectorURL, portletNamespace} = useContext(ConfigContext);
-
 	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
 	const [active, setActive] = useState(false);
 
-	const defaultEventName = `${portletNamespace}selectInfoItem`;
+	const defaultEventName = `${config.portletNamespace}selectInfoItem`;
 
 	return (
 		<>
@@ -42,7 +40,7 @@ export default function ItemSelector({
 
 			<div className="d-flex">
 				<ClayInput
-					className="mr-2"
+					className="mr-2 page-editor__item-selector__content-input"
 					id="itemSelectorInput"
 					readOnly
 					sizing="sm"
@@ -55,13 +53,12 @@ export default function ItemSelector({
 						active={active}
 						onActiveChange={setActive}
 						trigger={
-							<ClayButton
+							<ClayButtonWithIcon
 								displayType="secondary"
 								onClick={() => setActive(true)}
 								small
-							>
-								<ClayIcon symbol="plus" />
-							</ClayButton>
+								symbol="plus"
+							/>
 						}
 					>
 						<ClayDropDown.ItemList>
@@ -82,7 +79,8 @@ export default function ItemSelector({
 									openInfoItemSelector(
 										onItemSelect,
 										eventName || defaultEventName,
-										itemSelectorURL || infoItemSelectorURL
+										itemSelectorURL ||
+											config.infoItemSelectorURL
 									)
 								}
 							>
@@ -91,21 +89,28 @@ export default function ItemSelector({
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
 				) : (
-					<ClayButton
+					<ClayButtonWithIcon
 						displayType="secondary"
 						onClick={() =>
 							openInfoItemSelector(
 								onItemSelect,
 								eventName || defaultEventName,
-								itemSelectorURL || infoItemSelectorURL
+								itemSelectorURL || config.infoItemSelectorURL
 							)
 						}
 						small
-					>
-						<ClayIcon symbol="plus" />
-					</ClayButton>
+						symbol="plus"
+					/>
 				)}
 			</div>
 		</>
 	);
 }
+
+ItemSelector.propTypes = {
+	eventName: PropTypes.string,
+	itemSelectorURL: PropTypes.string,
+	label: PropTypes.string,
+	onItemSelect: PropTypes.func.isRequired,
+	selectedItemTitle: PropTypes.string
+};

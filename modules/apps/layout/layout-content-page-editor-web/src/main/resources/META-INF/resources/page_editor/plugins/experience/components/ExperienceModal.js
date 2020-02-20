@@ -20,9 +20,9 @@ import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import {ConfigContext} from '../../../app/config/index';
+import {config} from '../../../app/config/index';
 import Button from '../../../common/components/Button';
 
 const ExperienceModal = ({
@@ -38,7 +38,6 @@ const ExperienceModal = ({
 	segmentId,
 	segments = []
 }) => {
-	const {portletNamespace} = useContext(ConfigContext);
 	const [selectedSegmentId, setSelectedSegmentId] = useState(
 		segmentId !== undefined
 			? segmentId
@@ -114,8 +113,8 @@ const ExperienceModal = ({
 		});
 	};
 
-	const nameInputId = portletNamespace + 'segmentsExperienceName';
-	const segmentSelectId = portletNamespace + 'segmentsExperienceSegment';
+	const nameInputId = `${config.portletNamespace}segmentsExperienceName`;
+	const segmentSelectId = `${config.portletNamespace}segmentsExperienceSegment`;
 
 	const nameGroupClassName = classNames('my-2', {
 		'has-error': requiredNameError

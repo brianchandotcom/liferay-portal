@@ -46,6 +46,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureModifiedDateCom
 import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -144,8 +145,8 @@ public class DDMFormAdminFieldSetDisplayContext
 			return null;
 		}
 
-		return new CreationMenu() {
-			{
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
 				HttpServletRequest httpServletRequest =
 					PortalUtil.getHttpServletRequest(renderRequest);
 
@@ -153,22 +154,16 @@ public class DDMFormAdminFieldSetDisplayContext
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							renderResponse.createRenderURL(),
-							"mvcRenderCommandName", "/admin/edit_element_set",
-							"redirect",
-							PortalUtil.getCurrentURL(httpServletRequest),
-							"groupId",
-							String.valueOf(themeDisplay.getScopeGroupId()));
+				dropdownItem.setHref(
+					renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/admin/edit_element_set", "redirect",
+					PortalUtil.getCurrentURL(httpServletRequest), "groupId",
+					String.valueOf(themeDisplay.getScopeGroupId()));
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								httpServletRequest, "new-element-set"));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "new-element-set"));
 			}
-		};
+		).build();
 	}
 
 	@Override

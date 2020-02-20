@@ -15,9 +15,7 @@
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
-import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 
 /**
  * @author Rubén Pulido
@@ -30,22 +28,6 @@ public class PageTemplateConverterUtil {
 		return new PageTemplate() {
 			{
 				name = layoutPageTemplateEntry.getName();
-
-				setCollectionName(
-					() -> {
-						LayoutPageTemplateCollection
-							layoutPageTemplateCollection =
-								LayoutPageTemplateCollectionServiceUtil.
-									fetchLayoutPageTemplateCollection(
-										layoutPageTemplateEntry.
-											getLayoutPageTemplateCollectionId());
-
-						if (layoutPageTemplateCollection == null) {
-							return null;
-						}
-
-						return layoutPageTemplateCollection.getName();
-					});
 			}
 		};
 	}

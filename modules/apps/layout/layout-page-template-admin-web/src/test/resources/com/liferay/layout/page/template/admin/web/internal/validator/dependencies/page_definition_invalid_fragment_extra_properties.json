@@ -1,0 +1,13 @@
+{
+	"pageElement" : {
+		"pageElements" : [
+			{
+				"definition" : {
+					"extra" : "value"
+				},
+				"type" : "Fragment"
+			}
+		],
+		"type" : "Root"
+	}
+}

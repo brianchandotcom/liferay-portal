@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JSPLineBreakCheck extends LineBreakCheck {
+public class JSPLineBreakCheck extends BaseLineBreakCheck {
 
 	@Override
 	protected String doProcess(

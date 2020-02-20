@@ -21,6 +21,7 @@ import com.liferay.poshi.runner.util.Validator;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,16 +33,33 @@ public class PoshiScriptParserException extends Exception {
 	public static final String TRANSLATION_LOSS_MESSAGE =
 		"Poshi Script syntax is not preserved in translation";
 
-	public static Set<String> getUniqueErrorPaths() {
-		return _uniqueErrorPaths;
+	public static void throwExceptions() throws Exception {
+		if (!_poshiScriptParserExceptions.isEmpty()) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("\n\n");
+			sb.append(_poshiScriptParserExceptions.size());
+			sb.append(" errors in Poshi Script syntax\n\n");
+
+			for (Exception exception : _poshiScriptParserExceptions) {
+				sb.append(exception.getMessage());
+				sb.append("\n\n");
+			}
+
+			System.out.println(sb.toString());
+
+			throw new Exception();
+		}
 	}
 
 	public PoshiScriptParserException(String msg) {
 		super(msg);
+
+		_poshiScriptParserExceptions.add(this);
 	}
 
 	public PoshiScriptParserException(String msg, PoshiNode poshiNode) {
-		super(msg);
+		this(msg);
 
 		setErrorLineNumber(poshiNode.getPoshiScriptLineNumber());
 
@@ -55,11 +73,7 @@ public class PoshiScriptParserException extends Exception {
 	public PoshiScriptParserException(
 		String msg, String poshiScript, PoshiNode parentPoshiNode) {
 
-		super(msg);
-
-		URL url = parentPoshiNode.getURL();
-
-		setFilePath(url.getPath());
+		this(msg);
 
 		setPoshiNode(parentPoshiNode);
 
@@ -81,6 +95,10 @@ public class PoshiScriptParserException extends Exception {
 		setErrorLineNumber(
 			startingLineNumber +
 				StringUtil.count(parentPoshiScript, "\n", index));
+
+		URL url = parentPoshiNode.getURL();
+
+		setFilePath(url.getPath());
 	}
 
 	public int getErrorLineNumber() {
@@ -181,8 +199,6 @@ public class PoshiScriptParserException extends Exception {
 
 	public void setFilePath(String filePath) {
 		_filePath = filePath;
-
-		_uniqueErrorPaths.add(filePath + ":" + getErrorLineNumber());
 	}
 
 	public void setPoshiNode(PoshiNode poshiNode) {
@@ -193,7 +209,9 @@ public class PoshiScriptParserException extends Exception {
 
 	private static final int _ERROR_SNIPPET_PREFIX_SIZE = 10;
 
-	private static Set<String> _uniqueErrorPaths = new HashSet<>();
+	private static final Set<PoshiScriptParserException>
+		_poshiScriptParserExceptions = Collections.synchronizedSet(
+			new HashSet<>());
 
 	private int _errorLineNumber;
 	private String _filePath = "Unknown file";

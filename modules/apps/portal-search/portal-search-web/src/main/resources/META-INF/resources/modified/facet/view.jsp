@@ -53,7 +53,7 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 			persistState="<%= true %>"
 			title="last-modified"
 		>
-			<aui:form method="get" name="modifiedFacetForm">
+			<aui:form method="get" name="modifiedFacetFm">
 				<aui:input autocomplete="off" name="inputFacetName" type="hidden" value="modified" />
 				<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= modifiedFacetDisplayContext.getParameterName() %>" />
 
@@ -141,7 +141,7 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 
 	<aui:script use="liferay-search-modified-facet">
 		new Liferay.Search.ModifiedFacetFilter({
-			form: A.one('#<portlet:namespace/>modifiedFacetForm'),
+			form: A.one('#<portlet:namespace/>modifiedFacetFm'),
 			fromInputDatePicker: Liferay.component(
 				'<portlet:namespace />fromInputDatePicker'
 			),

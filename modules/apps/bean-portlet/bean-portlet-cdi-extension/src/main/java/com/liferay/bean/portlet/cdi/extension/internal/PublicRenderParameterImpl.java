@@ -22,13 +22,13 @@ import javax.xml.namespace.QName;
 public class PublicRenderParameterImpl implements PublicRenderParameter {
 
 	public PublicRenderParameterImpl(String identifier, QName qName) {
-		_identifer = identifier;
+		_identifier = identifier;
 		_qName = qName;
 	}
 
 	@Override
 	public String getIdentifier() {
-		return _identifer;
+		return _identifier;
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class PublicRenderParameterImpl implements PublicRenderParameter {
 		return _qName;
 	}
 
-	private final String _identifer;
+	private final String _identifier;
 	private final QName _qName;
 
 }

@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+
+<wsdl:definitions targetNamespace="http://microsoft.com/webservices/SharePoint/QueryService" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="urn:Microsoft.Search" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:tns="http://microsoft.com/webservices/SharePoint/QueryService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+	<wsdl:documentation>Microsoft SharePoint Foundation 2010 Search Query Web Service</wsdl:documentation>
+	<wsdl:types>
+		<s:schema elementFormDefault="qualified" targetNamespace="urn:Microsoft.Search">
+			<s:element name="Query">
+				<s:complexType>
+					<s:sequence>
+						<s:element maxOccurs="1" minOccurs="0" name="queryXml" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="QueryResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element maxOccurs="1" minOccurs="0" name="QueryResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="Registration">
+				<s:complexType>
+					<s:sequence>
+						<s:element maxOccurs="1" minOccurs="0" name="registrationXml" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="RegistrationResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element maxOccurs="1" minOccurs="0" name="RegistrationResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="Status">
+				<s:complexType/>
+			</s:element>
+			<s:element name="StatusResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element maxOccurs="1" minOccurs="0" name="StatusResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+		</s:schema>
+		<s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/webservices/SharePoint/QueryService">
+			<s:element name="QueryEx">
+				<s:complexType>
+					<s:sequence>
+						<s:element maxOccurs="1" minOccurs="0" name="queryXml" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="QueryExResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element maxOccurs="1" minOccurs="0" name="QueryExResult">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="s:schema" />
+									<s:any/>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+		</s:schema>
+	</wsdl:types>
+	<wsdl:message name="QuerySoapIn">
+		<wsdl:part element="s0:Query" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="QuerySoapOut">
+		<wsdl:part element="s0:QueryResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="QueryExSoapIn">
+		<wsdl:part element="tns:QueryEx" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="QueryExSoapOut">
+		<wsdl:part element="tns:QueryExResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="RegistrationSoapIn">
+		<wsdl:part element="s0:Registration" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="RegistrationSoapOut">
+		<wsdl:part element="s0:RegistrationResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="StatusSoapIn">
+		<wsdl:part element="s0:Status" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="StatusSoapOut">
+		<wsdl:part element="s0:StatusResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:portType name="QueryServiceSoap">
+		<wsdl:operation name="Query">
+			<wsdl:input message="tns:QuerySoapIn" />
+			<wsdl:output message="tns:QuerySoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="QueryEx">
+			<wsdl:input message="tns:QueryExSoapIn" />
+			<wsdl:output message="tns:QueryExSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="Registration">
+			<wsdl:input message="tns:RegistrationSoapIn" />
+			<wsdl:output message="tns:RegistrationSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="Status">
+			<wsdl:input message="tns:StatusSoapIn" />
+			<wsdl:output message="tns:StatusSoapOut" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="QueryServiceSoap" type="tns:QueryServiceSoap">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="Query">
+			<soap:operation soapAction="urn:Microsoft.Search/Query" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="QueryEx">
+			<soap:operation soapAction="http://microsoft.com/webservices/SharePoint/QueryService/QueryEx" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Registration">
+			<soap:operation soapAction="urn:Microsoft.Search/Registration" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Status">
+			<soap:operation soapAction="urn:Microsoft.Search/Status" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="QueryServiceSoap12" type="tns:QueryServiceSoap">
+		<soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="Query">
+			<soap12:operation soapAction="urn:Microsoft.Search/Query" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="QueryEx">
+			<soap12:operation soapAction="http://microsoft.com/webservices/SharePoint/QueryService/QueryEx" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Registration">
+			<soap12:operation soapAction="urn:Microsoft.Search/Registration" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Status">
+			<soap12:operation soapAction="urn:Microsoft.Search/Status" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="QueryService">
+		<wsdl:documentation>Microsoft SharePoint Foundation 2010 Search Query Web Service</wsdl:documentation>
+		<wsdl:port binding="tns:QueryServiceSoap" name="QueryServiceSoap">
+			<soap:address location="http://liferay-20jf4ic/_vti_bin/spsearch.asmx" />
+		</wsdl:port>
+		<wsdl:port binding="tns:QueryServiceSoap12" name="QueryServiceSoap12">
+			<soap12:address location="http://liferay-20jf4ic/_vti_bin/spsearch.asmx" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

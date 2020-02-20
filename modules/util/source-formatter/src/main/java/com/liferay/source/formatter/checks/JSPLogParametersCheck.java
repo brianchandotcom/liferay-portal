@@ -19,7 +19,7 @@ import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 /**
  * @author Hugo Huijser
  */
-public class JSPLogParametersCheck extends LogParametersCheck {
+public class JSPLogParametersCheck extends BaseLogParametersCheck {
 
 	@Override
 	protected String doProcess(

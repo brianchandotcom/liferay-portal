@@ -675,6 +675,76 @@ public interface AssetListEntryAssetEntryRelPersistence
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
+	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @return the matching asset list entry asset entry rels
+	 */
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S(
+		long assetListEntryId, long[] segmentsEntryIds);
+
+	/**
+	 * Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @return the range of matching asset list entry asset entry rels
+	 */
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S(
+		long assetListEntryId, long[] segmentsEntryIds, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset list entry asset entry rels
+	 */
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S(
+		long assetListEntryId, long[] segmentsEntryIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset list entry asset entry rels
+	 */
+	public java.util.List<AssetListEntryAssetEntryRel> findByA_S(
+		long assetListEntryId, long[] segmentsEntryIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean useFinderCache);
+
+	/**
 	 * Removes all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; from the database.
 	 *
 	 * @param assetListEntryId the asset list entry ID
@@ -690,6 +760,15 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @return the number of matching asset list entry asset entry rels
 	 */
 	public int countByA_S(long assetListEntryId, long segmentsEntryId);
+
+	/**
+	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @return the number of matching asset list entry asset entry rels
+	 */
+	public int countByA_S(long assetListEntryId, long[] segmentsEntryIds);
 
 	/**
 	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or throws a <code>NoSuchEntryAssetEntryRelException</code> if it could not be found.

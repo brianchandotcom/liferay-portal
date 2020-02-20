@@ -126,7 +126,7 @@ public interface PoshiNode<A extends Node, B extends PoshiNode<A, B>>
 		return parentPoshiNode.getURL();
 	}
 
-	public default boolean isValidPoshiXML() {
+	public default boolean isValidPoshiXML() throws PoshiScriptParserException {
 		PoshiNode parentPoshiNode = (PoshiNode)getParent();
 
 		return parentPoshiNode.isValidPoshiXML();

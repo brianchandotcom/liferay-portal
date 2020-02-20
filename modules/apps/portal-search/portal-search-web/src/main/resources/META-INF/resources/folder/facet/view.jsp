@@ -57,7 +57,7 @@ List<FolderSearchFacetTermDisplayContext> folderSearchFacetTermDisplayContexts =
 		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(folderSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= folderSearchFacetDisplayContext.getParameterValue() %>" />
 	</c:when>
 	<c:otherwise>
-		<aui:form method="post" name="folderFacetForm">
+		<aui:form method="post" name="folderFacetFm">
 			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(folderSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= folderSearchFacetDisplayContext.getParameterValue() %>" />
 			<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= folderSearchFacetDisplayContext.getParameterName() %>" />
 
@@ -139,8 +139,6 @@ List<FolderSearchFacetTermDisplayContext> folderSearchFacetTermDisplayContexts =
 
 <aui:script use="liferay-search-facet-util">
 	Liferay.Search.FacetUtil.enableInputs(
-		document.querySelectorAll(
-			'#<portlet:namespace />folderFacetForm .facet-term'
-		)
+		document.querySelectorAll('#<portlet:namespace />folderFacetFm .facet-term')
 	);
 </aui:script>

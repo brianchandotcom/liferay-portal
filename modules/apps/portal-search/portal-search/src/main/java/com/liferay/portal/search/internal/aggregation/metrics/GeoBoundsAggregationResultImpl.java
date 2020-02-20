@@ -30,7 +30,7 @@ public class GeoBoundsAggregationResultImpl
 
 		super(name);
 
-		_topLeftGeolocationPoint = topLeftGeoLocationPoint;
+		_topLeftGeoLocationPoint = topLeftGeoLocationPoint;
 		_bottomRightGeoLocationPoint = bottomRightGeoLocationPoint;
 	}
 
@@ -41,7 +41,7 @@ public class GeoBoundsAggregationResultImpl
 
 	@Override
 	public GeoLocationPoint getTopLeft() {
-		return _topLeftGeolocationPoint;
+		return _topLeftGeoLocationPoint;
 	}
 
 	@Override
@@ -51,10 +51,10 @@ public class GeoBoundsAggregationResultImpl
 
 	@Override
 	public void setTopLeft(GeoLocationPoint geoLocationPoint) {
-		_topLeftGeolocationPoint = geoLocationPoint;
+		_topLeftGeoLocationPoint = geoLocationPoint;
 	}
 
 	private GeoLocationPoint _bottomRightGeoLocationPoint;
-	private GeoLocationPoint _topLeftGeolocationPoint;
+	private GeoLocationPoint _topLeftGeoLocationPoint;
 
 }

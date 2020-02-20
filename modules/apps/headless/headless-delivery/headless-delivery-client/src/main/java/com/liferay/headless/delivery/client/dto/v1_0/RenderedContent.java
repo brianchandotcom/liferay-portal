@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class RenderedContent {
+public class RenderedContent implements Cloneable {
 
 	public String getRenderedContentURL() {
 		return renderedContentURL;
@@ -92,6 +92,11 @@ public class RenderedContent {
 	}
 
 	protected Map<String, String> templateName_i18n;
+
+	@Override
+	public RenderedContent clone() throws CloneNotSupportedException {
+		return (RenderedContent)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

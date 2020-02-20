@@ -37,6 +37,51 @@ definition {
 		AppBuilderAdmin.continueNewCustomObject();
 	}
 
+	macro addOrRemovePermissionFromRoles {
+		for (var roleTitle : list "${roleList}") {
+			var key_roleTitle = "${roleTitle}";
+
+			if ("${permission}" == "ADD") {
+
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+				}
+			}
+			else if ("${permission}" == "DELETE") {
+
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+				}
+			}
+			else if ("${permission}" == "UPDATE") {
+
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+				}
+			}
+			else if ("${permission}" == "VIEW") {
+
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
+				}
+			}
+		}
+
+		Button.clickSave();
+	}
+
 	macro assertNewButtonIsVisible {
 		AssertTextEquals(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
@@ -57,12 +102,6 @@ definition {
 
 	macro clearSearch {
 		Click(locator1 = "AppBuilder#CLEAR_SEARCH");
-	}
-
-	macro clickApp {
-		Click(
-			key_itemName = "${appName}",
-			locator1 = "AppBuilder#APP_NAME");
 	}
 
 	macro continueNewCustomObject {
@@ -195,6 +234,56 @@ definition {
 		MenuItem.clickNoError(menuItem = "Open Standalone App");
 	}
 
+	macro performCustomObjectCRUD {
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "Form View");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text",
+			tableViewName = "Table View");
+
+		App.add(
+			appTitle = "App",
+			deployOption = "Product Menu",
+			formViewName = "Form View",
+			tableViewName = "Table View");
+
+		AppBuilderAdmin.gotoBack();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Form Views");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Form View");
+		AppBuilderAdmin.editItem(itemName = "Form View");
+		FormViewBuilder.setName(formViewName = "Edited Form");
+		FormViewBuilder.save();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Form");
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Table View");
+		AppBuilderAdmin.editItem(itemName = "Table View");
+		TableViewBuilder.setName(tableViewName = "Edited Table");
+		TableViewBuilder.save();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Table");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.undeployApp(itemName = "App");
+
+		AppBuilderAdmin.gotoBack();
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
+	}
+
 	macro removeAllPermissionsFromRoles() {
 		for (var roleTitle : list "${roleList}") {
 
@@ -231,6 +320,13 @@ definition {
 	}
 
 	macro teardownAppBuilder {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
 		while (IsElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON")) {
 			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
 

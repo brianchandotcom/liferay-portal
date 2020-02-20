@@ -15,7 +15,9 @@
 package com.liferay.account.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.account.rest.dto.v1_0.Account;
+import com.liferay.account.rest.dto.v1_0.AccountUser;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
+import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -44,6 +46,14 @@ public class Mutation {
 
 		_accountResourceComponentServiceObjects =
 			accountResourceComponentServiceObjects;
+	}
+
+	public static void setAccountUserResourceComponentServiceObjects(
+		ComponentServiceObjects<AccountUserResource>
+			accountUserResourceComponentServiceObjects) {
+
+		_accountUserResourceComponentServiceObjects =
+			accountUserResourceComponentServiceObjects;
 	}
 
 	@GraphQLField(description = "Creates a new account")
@@ -97,6 +107,21 @@ public class Mutation {
 			accountResource -> accountResource.putAccount(accountId, account));
 	}
 
+	@GraphQLField(
+		description = "Creates a user and assigns them to the account"
+	)
+	public AccountUser createAccountUser(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountUser") AccountUser accountUser)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountUserResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountUserResource -> accountUserResource.postAccountUser(
+				accountId, accountUser));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -146,8 +171,22 @@ public class Mutation {
 		accountResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(
+			AccountUserResource accountUserResource)
+		throws Exception {
+
+		accountUserResource.setContextAcceptLanguage(_acceptLanguage);
+		accountUserResource.setContextCompany(_company);
+		accountUserResource.setContextHttpServletRequest(_httpServletRequest);
+		accountUserResource.setContextHttpServletResponse(_httpServletResponse);
+		accountUserResource.setContextUriInfo(_uriInfo);
+		accountUserResource.setContextUser(_user);
+	}
+
 	private static ComponentServiceObjects<AccountResource>
 		_accountResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AccountUserResource>
+		_accountUserResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

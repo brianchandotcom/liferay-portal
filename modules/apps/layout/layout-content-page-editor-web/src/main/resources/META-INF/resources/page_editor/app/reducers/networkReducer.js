@@ -12,18 +12,23 @@
  * details.
  */
 
-import {TYPES} from '../actions/index';
+import {UPDATE_NETWORK} from '../actions/types';
+import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 
-export default function networkReducer(state, action) {
+export const INITIAL_STATE = {
+	error: null,
+	lastFetch: null,
+	status: SERVICE_NETWORK_STATUS_TYPES.draftSaved
+};
+
+export default function networkReducer(networkStatus = INITIAL_STATE, action) {
 	switch (action.type) {
-		case TYPES.UPDATE_NETWORK:
+		case UPDATE_NETWORK:
 			return {
-				...state,
+				...networkStatus,
 				...action.network
 			};
 		default:
-			break;
+			return networkStatus;
 	}
-
-	return state;
 }

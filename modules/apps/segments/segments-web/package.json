@@ -1,11 +1,11 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.1.0",
+		"@clayui/alert": "3.2.0",
 		"@clayui/badge": "3.0.0",
-		"@clayui/button": "3.1.0",
-		"@clayui/form": "3.3.0",
-		"@clayui/icon": "3.0.2",
-		"@clayui/link": "3.0.2",
+		"@clayui/button": "3.2.0",
+		"@clayui/form": "3.5.0",
+		"@clayui/icon": "3.0.3",
+		"@clayui/link": "3.0.3",
 		"@clayui/loading-indicator": "3.0.0",
 		"classnames": "2.2.6",
 		"date-fns": "^1.30.1",

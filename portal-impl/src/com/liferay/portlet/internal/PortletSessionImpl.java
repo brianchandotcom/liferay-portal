@@ -375,8 +375,10 @@ public class PortletSessionImpl implements LiferayPortletSession {
 
 			Class<?> clazz = value.getClass();
 
-			if (!PortalClassLoaderUtil.isPortalClassLoader(
-					clazz.getClassLoader())) {
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			if ((classLoader != null) &&
+				!PortalClassLoaderUtil.isPortalClassLoader(classLoader)) {
 
 				value = new LazySerializableObjectWrapper((Serializable)value);
 			}

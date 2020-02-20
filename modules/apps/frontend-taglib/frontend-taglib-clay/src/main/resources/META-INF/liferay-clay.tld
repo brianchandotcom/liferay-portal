@@ -2374,7 +2374,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>userColorCssClass</name>
+			<name>userColorClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

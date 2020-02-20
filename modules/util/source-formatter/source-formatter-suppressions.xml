@@ -31,8 +31,8 @@
 		<suppress checks="JavaModuleIllegalImportsCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaModuleIllegalImportsCheck\.java" />
 		<suppress checks="JavaModuleServiceProxyFactoryCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaModuleServiceProxyFactoryCheck\.java" />
 		<suppress checks="JavaStopWatchCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaStopWatchCheck\.java" />
+		<suppress checks="JavaStylingCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/BaseStylingCheck\.java" />
 		<suppress checks="JavaStylingCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaStylingCheck\.java" />
-		<suppress checks="JavaStylingCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/StylingCheck\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/XMLSpringFileCheck\.java" />
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaUpgradeConnectionCheck\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/JavaXMLSecurityCheck\.java" />

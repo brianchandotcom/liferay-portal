@@ -1,10 +1,10 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.1.0",
-		"@clayui/data-provider": "3.0.5",
-		"@clayui/form": "3.3.0",
-		"@clayui/icon": "3.0.2",
-		"@clayui/multi-select": "3.3.0",
+		"@clayui/button": "3.2.0",
+		"@clayui/data-provider": "3.0.7",
+		"@clayui/form": "3.5.0",
+		"@clayui/icon": "3.0.3",
+		"@clayui/multi-select": "3.4.1",
 		"classnames": "2.2.6",
 		"frontend-js-react-web": "*",
 		"metal-dom": "2.16.8",

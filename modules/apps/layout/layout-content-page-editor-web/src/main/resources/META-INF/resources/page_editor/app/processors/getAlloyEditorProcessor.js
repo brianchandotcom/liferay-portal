@@ -14,6 +14,8 @@
 
 import {debounce} from 'frontend-js-web';
 
+import {config} from '../config/index';
+
 const KEY_ENTER = 13;
 
 const defaultGetEditorWrapper = element => {
@@ -46,22 +48,14 @@ export default function getAlloyEditorProcessor(
 	let _element;
 
 	return {
-		createEditor: (
-			element,
-			changeCallback,
-			destroyCallback,
-			config,
-			event
-		) => {
-			const {portletNamespace} = config;
-
+		createEditor: (element, changeCallback, destroyCallback, event) => {
 			const {editorConfig} = config.defaultEditorConfigurations[
 				editorConfigurationName
 			];
 
 			_element = element;
 
-			const editorName = `${portletNamespace}FragmentEntryLinkEditable_${element.id}`;
+			const editorName = `${config.portletNamespace}FragmentEntryLinkEditable_${element.id}`;
 			_editor = AlloyEditor.editable(getEditorWrapper(element), {
 				...editorConfig,
 

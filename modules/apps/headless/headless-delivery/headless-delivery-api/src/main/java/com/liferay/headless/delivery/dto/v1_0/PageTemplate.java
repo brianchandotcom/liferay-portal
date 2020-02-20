@@ -51,34 +51,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PageTemplate {
 
 	@Schema
-	public String getCollectionName() {
-		return collectionName;
-	}
-
-	public void setCollectionName(String collectionName) {
-		this.collectionName = collectionName;
-	}
-
-	@JsonIgnore
-	public void setCollectionName(
-		UnsafeSupplier<String, Exception> collectionNameUnsafeSupplier) {
-
-		try {
-			collectionName = collectionNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String collectionName;
-
-	@Schema
 	@Valid
 	public Creator getCreator() {
 		return creator;
@@ -273,6 +245,38 @@ public class PageTemplate {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageDefinition pageDefinition;
 
+	@Schema
+	@Valid
+	public PageTemplateCollection getPageTemplateCollection() {
+		return pageTemplateCollection;
+	}
+
+	public void setPageTemplateCollection(
+		PageTemplateCollection pageTemplateCollection) {
+
+		this.pageTemplateCollection = pageTemplateCollection;
+	}
+
+	@JsonIgnore
+	public void setPageTemplateCollection(
+		UnsafeSupplier<PageTemplateCollection, Exception>
+			pageTemplateCollectionUnsafeSupplier) {
+
+		try {
+			pageTemplateCollection = pageTemplateCollectionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected PageTemplateCollection pageTemplateCollection;
+
 	@Schema(description = "The categories associated with this page template.")
 	@Valid
 	public TaxonomyCategory[] getTaxonomyCategories() {
@@ -393,20 +397,6 @@ public class PageTemplate {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (collectionName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"collectionName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(collectionName));
-
-			sb.append("\"");
-		}
-
 		if (creator != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -501,6 +491,16 @@ public class PageTemplate {
 			sb.append("\"pageDefinition\": ");
 
 			sb.append(String.valueOf(pageDefinition));
+		}
+
+		if (pageTemplateCollection != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pageTemplateCollection\": ");
+
+			sb.append(String.valueOf(pageTemplateCollection));
 		}
 
 		if (taxonomyCategories != null) {

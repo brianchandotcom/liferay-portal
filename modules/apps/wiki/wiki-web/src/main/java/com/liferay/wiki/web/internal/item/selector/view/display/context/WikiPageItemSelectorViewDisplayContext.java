@@ -22,7 +22,7 @@ import com.liferay.wiki.item.selector.criterion.WikiPageItemSelectorCriterion;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.web.internal.item.selector.resolver.WikiPageItemSelectorReturnTypeResolver;
+import com.liferay.wiki.web.internal.item.selector.WikiPageItemSelectorReturnTypeResolver;
 import com.liferay.wiki.web.internal.item.selector.view.WikiPageItemSelectorView;
 
 import java.util.Locale;
@@ -39,14 +39,14 @@ public class WikiPageItemSelectorViewDisplayContext {
 
 	public WikiPageItemSelectorViewDisplayContext(
 		WikiPageItemSelectorCriterion wikiPageItemSelectorCriterion,
-		WikiPageItemSelectorView wikiAttachmentItemSelectorView,
+		WikiPageItemSelectorView wikiPageItemSelectorView,
 		WikiNodeLocalService wikiNodeLocalService,
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
 		_wikiPageItemSelectorCriterion = wikiPageItemSelectorCriterion;
-		_wikiPageItemSelectorView = wikiAttachmentItemSelectorView;
+		_wikiPageItemSelectorView = wikiPageItemSelectorView;
 		_wikiNodeLocalService = wikiNodeLocalService;
 		_itemSelectorReturnTypeResolverHandler =
 			itemSelectorReturnTypeResolverHandler;

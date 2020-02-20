@@ -1,13 +1,21 @@
 # Liferay Gradle Plugins Dependency Local Copy Change Log
 
-## 1.0.1 - 2018-08-01
+## 1.0.4 - 2019-11-19
 
 ### Commits
-- [LPS-84027]: Detached configurations are not affected by the Spring plugin
-(5da82d5d97)
+- [LPS-100515]: Check .m2-tmp repository (7e54299419)
+- [LPS-100515]: The task name must not contain a colon or forward slash
+(202125c648)
+- [LPS-85609]: Simplify gradleTest (a8b0feff31)
+- [LPS-85609]: Use Gradle 4.10.2 (9aa90f8961)
 
-### Description
-- [LPS-84027]: Fix compatibility with the [Gradle Dependency Management] plugin.
+### Dependencies
+- [LPS-96247]: Update the com.liferay.gradle.util dependency to version 1.0.34.
+
+## 1.0.3 - 2018-11-19
+
+### Dependencies
+- [LPS-87466]: Update the com.liferay.gradle.util dependency to version 1.0.33.
 
 ## 1.0.2 - 2018-11-16
 
@@ -24,19 +32,11 @@
 - [LPS-84094]: Update the com.liferay.gradle.util dependency to version 1.0.31.
 - [LPS-84094]: Update the com.liferay.gradle.util dependency to version 1.0.30.
 
-## 1.0.3 - 2018-11-19
-
-### Dependencies
-- [LPS-87466]: Update the com.liferay.gradle.util dependency to version 1.0.33.
-
-## 1.0.4 - 2019-11-19
+## 1.0.1 - 2018-08-01
 
 ### Commits
-- [LPS-100515]: Check .m2-tmp repository (7e54299419)
-- [LPS-100515]: The task name must not contain a colon or forward slash
-(202125c648)
-- [LPS-85609]: Simplify gradleTest (a8b0feff31)
-- [LPS-85609]: Use Gradle 4.10.2 (9aa90f8961)
+- [LPS-84027]: Detached configurations are not affected by the Spring plugin
+(5da82d5d97)
 
-### Dependencies
-- [LPS-96247]: Update the com.liferay.gradle.util dependency to version 1.0.34.
+### Description
+- [LPS-84027]: Fix compatibility with the [Gradle Dependency Management] plugin.

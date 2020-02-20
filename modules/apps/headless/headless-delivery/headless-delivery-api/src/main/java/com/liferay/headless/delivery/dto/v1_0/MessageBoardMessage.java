@@ -353,7 +353,7 @@ public class MessageBoardMessage {
 	@GraphQLField(
 		description = "The message's media format (e.g., HTML, BBCode, etc.)."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String encodingFormat;
 
 	@Schema(description = "The message's main title.")

@@ -25,6 +25,7 @@ definition {
 		property data.archive.type = "data-archive-googledrive";
 		property portal.version = "7.2.10.1";
 		property test.name.skip.portal.instance = "GoogleDriveUpgrade#ViewGoogleDriveArchive72101";
+		property test.run.environment = "EE";
 
 		Upgrade.viewAndEditGoogleDriveDocuments();
 

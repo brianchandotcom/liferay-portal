@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaEmptyLinesCheck extends EmptyLinesCheck {
+public class JavaEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 	@Override
 	protected String doProcess(

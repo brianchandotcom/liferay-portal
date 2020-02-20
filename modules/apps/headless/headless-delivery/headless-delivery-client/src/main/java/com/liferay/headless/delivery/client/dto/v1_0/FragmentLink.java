@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentLink {
+public class FragmentLink implements Cloneable {
 
 	public static enum Target {
 
@@ -108,6 +108,11 @@ public class FragmentLink {
 	}
 
 	protected Object value;
+
+	@Override
+	public FragmentLink clone() throws CloneNotSupportedException {
+		return (FragmentLink)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

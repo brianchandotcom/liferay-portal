@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getTimezoneOffsetHour} from '../utils/date';
+
 /**
  * Generates a local helper function to fetch information from DOM elements
  * @param {string} selector A CSS selector query string
@@ -37,6 +39,7 @@ function meta(request) {
 		keywords: getAttribute('meta[name="keywords"]', 'content'),
 		languageId: navigator.language,
 		referrer: document.referrer,
+		timezoneOffset: getTimezoneOffsetHour(),
 		title: getAttribute('title', 'textContent'),
 		url: location.href,
 		userAgent: navigator.userAgent,

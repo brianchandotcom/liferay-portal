@@ -29,6 +29,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException" %><%@
+page import="com.liferay.dynamic.data.mapping.exception.StorageException" %><%@
 page import="com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException" %><%@
 page import="com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormDisplayContext" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMFormInstance" %><%@

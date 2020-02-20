@@ -25,7 +25,7 @@ import java.util.List;
  * @author Hugo Huijser
  */
 public class JavaAnnotation
-	extends JavaExpression implements Comparable<JavaAnnotation> {
+	extends BaseJavaExpression implements Comparable<JavaAnnotation> {
 
 	public JavaAnnotation(String name) {
 		_name = new JavaSimpleValue(name);

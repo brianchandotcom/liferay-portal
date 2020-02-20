@@ -30,11 +30,11 @@ public class NettyFabricWorkerProcessCallableExecutor
 	implements JMXProxyUtil.ProcessCallableExecutor {
 
 	public NettyFabricWorkerProcessCallableExecutor(
-		Channel channel, long fabricWorkerId, long rpcRelayTime) {
+		Channel channel, long fabricWorkerId, long rpcRelayTimeout) {
 
 		_channel = channel;
 		_fabricWorkerId = fabricWorkerId;
-		_rpcRelayTimeout = rpcRelayTime;
+		_rpcRelayTimeout = rpcRelayTimeout;
 	}
 
 	@Override

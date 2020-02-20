@@ -14,6 +14,7 @@
 
 package com.liferay.layout.util.structure;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -29,6 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -176,11 +178,6 @@ public class LayoutStructure {
 
 		_updateLayoutStructure(rowLayoutStructureItem, newPosition);
 
-		for (int i = 0; i < numberOfColumns; i++) {
-			_addColumnLayoutStructureItem(
-				rowLayoutStructureItem.getItemId(), i, 4);
-		}
-
 		rowLayoutStructureItem.setNumberOfColumns(numberOfColumns);
 
 		return rowLayoutStructureItem;
@@ -236,6 +233,28 @@ public class LayoutStructure {
 			itemId, layoutStructureItem.getParentItemId(), position);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutStructure)) {
+			return false;
+		}
+
+		LayoutStructure layoutStructure = (LayoutStructure)obj;
+
+		if (Objects.equals(_mainItemId, layoutStructure._mainItemId) &&
+			Objects.equals(
+				_layoutStructureItems, layoutStructure._layoutStructureItems)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public LayoutStructureItem getDropZoneLayoutStructureItem() {
 		for (LayoutStructureItem layoutStructureItem :
 				getLayoutStructureItems()) {
@@ -262,6 +281,11 @@ public class LayoutStructure {
 
 	public LayoutStructureItem getMainLayoutStructureItem() {
 		return _layoutStructureItems.get(_mainItemId);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getMainItemId());
 	}
 
 	public LayoutStructureItem moveLayoutStructureItem(
@@ -299,6 +323,10 @@ public class LayoutStructure {
 		return layoutStructureItem;
 	}
 
+	public void setMainItemId(String mainItemId) {
+		_mainItemId = mainItemId;
+	}
+
 	public JSONObject toJSONObject() {
 		String dropZoneItemId = StringPool.BLANK;
 		JSONObject layoutStructureItemsJSONObject =
@@ -329,6 +357,13 @@ public class LayoutStructure {
 		).put(
 			"version", 1
 		);
+	}
+
+	@Override
+	public String toString() {
+		JSONObject jsonObject = toJSONObject();
+
+		return jsonObject.toJSONString();
 	}
 
 	public LayoutStructureItem updateItemConfig(

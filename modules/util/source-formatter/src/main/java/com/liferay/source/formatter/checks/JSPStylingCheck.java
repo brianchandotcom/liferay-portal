@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JSPStylingCheck extends StylingCheck {
+public class JSPStylingCheck extends BaseStylingCheck {
 
 	@Override
 	protected String doProcess(

@@ -17,7 +17,7 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.wiki;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaBuilder;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaHelper;
@@ -74,28 +74,8 @@ public abstract class BaseWikiSimilarResultsContributor
 		criteriaBuilder.type(
 			assetEntry.getClassName()
 		).uid(
-			Field.getUID(
-				assetEntry.getClassName(),
-				String.valueOf(assetEntry.getClassPK()))
+			_uidFactory.getUID(wikiPage)
 		);
-	}
-
-	public void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	public void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
-	public void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
 	}
 
 	@Override
@@ -103,11 +83,10 @@ public abstract class BaseWikiSimilarResultsContributor
 		DestinationBuilder destinationBuilder,
 		DestinationHelper destinationHelper) {
 
+		String className = destinationHelper.getClassName();
 		String nodeName = (String)destinationHelper.getRouteParameter(
 			"nodeName");
 		String title = (String)destinationHelper.getRouteParameter("title");
-
-		String className = destinationHelper.getClassName();
 
 		if (className.equals(WikiPage.class.getName())) {
 			AssetRenderer<?> assetRenderer =
@@ -125,7 +104,30 @@ public abstract class BaseWikiSimilarResultsContributor
 		}
 	}
 
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	protected void setUIDFactory(UIDFactory uidFactory) {
+		_uidFactory = uidFactory;
+	}
+
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
 	private AssetEntryLocalService _assetEntryLocalService;
+	private UIDFactory _uidFactory;
 	private WikiNodeLocalService _wikiNodeLocalService;
 	private WikiPageLocalService _wikiPageLocalService;
 

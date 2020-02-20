@@ -110,3 +110,23 @@
 		font-weight: normal;
 	}
 }
+
+.custom-time-select {
+	top: 40px;
+
+	.popover-body {
+		max-height: 7rem;
+		padding: 0;
+		width: 6.5rem;
+
+		li {
+			cursor: pointer;
+			padding: 0.2rem;
+			text-align: center;
+
+			&:hover {
+				background: #f1f2f5;
+			}
+		}
+	}
+}

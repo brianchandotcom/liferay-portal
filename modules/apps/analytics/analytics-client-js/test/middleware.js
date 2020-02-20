@@ -99,6 +99,7 @@ describe('Analytics MiddleWare Integration', () => {
 					keywords: expect.anything(),
 					languageId: expect.anything(),
 					referrer: expect.anything(),
+					timezoneOffset: expect.anything(),
 					title: expect.anything(),
 					url: expect.anything(),
 					userAgent: expect.anything()

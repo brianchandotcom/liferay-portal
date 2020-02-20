@@ -754,7 +754,7 @@ information.
 		<attribute default="${basedir}" name="dir" />
 		<attribute default="true" name="failonerror" />
 		<attribute default="true" name="forcedcacheenabled" />
-		<attribute default="" name="gradleopts" />
+		<attribute default="" name="gradlejvmargs" />
 		<attribute default="" name="outputproperty" />
 		<attribute default="" name="refreshdependencies" />
 		<attribute default="true" name="setupbinariescache" />
@@ -783,25 +783,19 @@ information.
 				</then>
 			</if>
 
-			<local name="task.gradle.opts" />
+			<local name="task.gradle.jvmargs" />
 
 			<if>
 				<not>
-					<equals arg1="@{gradleopts}" arg2="" />
+					<equals arg1="@{gradlejvmargs}" arg2="" />
 				</not>
 				<then>
-					<property name="task.gradle.opts" value="@{gradleopts}" />
+					<property name="task.gradle.jvmargs" value="@{gradlejvmargs}" />
 				</then>
 				<elseif>
-					<isset property="env.GRADLE_OPTS" />
+					<isset property="env.JENKINS_HOME" />
 					<then>
-						<property name="task.gradle.opts" value="${env.GRADLE_OPTS}" />
-					</then>
-				</elseif>
-				<elseif>
-					<isset property="env.ANT_OPTS" />
-					<then>
-						<property name="task.gradle.opts" value="${env.ANT_OPTS}" />
+						<property name="task.gradle.jvmargs" value="${env.ANT_OPTS}" />
 					</then>
 				</elseif>
 			</if>
@@ -838,15 +832,14 @@ information.
 						<arg if:true="@{stacktrace}" value="--stacktrace" />
 						<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 						<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
-						<arg if:set="env.JENKINS_HOME" value="-Dgradle.build.scan.enabled=true" />
 						<arg value="-Dliferay.home=${liferay.home}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+						<arg if:set="task.gradle.jvmargs" value="-Dorg.gradle.jvmargs=${task.gradle.jvmargs}" />
 						<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 						<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 						<arg value="tasks" />
 						<arg value="--all" />
-						<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
 						<redirector errorproperty="tasks.error" outputproperty="tasks.output" unless:blank="tasks.output" />
 					</exec>
 
@@ -951,14 +944,13 @@ information.
 								<arg if:true="@{stacktrace}" value="--stacktrace" />
 								<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 								<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
-								<arg if:set="env.JENKINS_HOME" value="-Dgradle.build.scan.enabled=true" />
 								<arg value="-Dliferay.home=${liferay.home}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+								<arg if:set="task.gradle.jvmargs" value="-Dorg.gradle.jvmargs=${task.gradle.jvmargs}" />
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 								<arg line="@{task}" />
-								<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
 								<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
 							</exec>
 						</try>
@@ -988,14 +980,13 @@ information.
 									<arg if:true="@{stacktrace}" value="--stacktrace" />
 									<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 									<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
-									<arg if:set="env.JENKINS_HOME" value="-Dgradle.build.scan.enabled=true" />
 									<arg value="-Dliferay.home=${liferay.home}" />
 									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+									<arg if:set="task.gradle.jvmargs" value="-Dorg.gradle.jvmargs=${task.gradle.jvmargs}" />
 									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 									<arg line="@{task}" />
-									<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
 									<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
 								</exec>
 							</echoxml>

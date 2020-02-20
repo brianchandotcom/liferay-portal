@@ -126,6 +126,7 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
@@ -2801,6 +2802,28 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, portalToolName + ".ignore.local", true)) {
 
 			return;
+		}
+
+		if (portalToolName.startsWith("com.liferay.portal.tools.") &&
+			portalToolName.endsWith(".builder")) {
+
+			int length = portalToolName.length();
+
+			String taskNameSuffix = portalToolName.substring(25, length - 8);
+
+			String buildTaskName = "build" + taskNameSuffix;
+
+			Gradle gradle = project.getGradle();
+
+			StartParameter startParameter = gradle.getStartParameter();
+
+			List<String> taskNames = startParameter.getTaskNames();
+
+			Stream<String> taskNamesStream = taskNames.stream();
+
+			if (!taskNamesStream.anyMatch(buildTaskName::equalsIgnoreCase)) {
+				return;
+			}
 		}
 
 		String portalRootDirValue = System.getProperty("portal.root.dir");

@@ -12,9 +12,9 @@
  * details.
  */
 
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
-import {ConfigContext} from '../../../app/config/index';
+import {config} from '../../../app/config/index';
 import Collapse from '../../../common/components/Collapse';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
@@ -23,13 +23,12 @@ import FragmentCard from './FragmentCard';
 import LayoutElements from './LayoutElements';
 
 export default function FragmentsSidebar() {
-	const {fragments} = useContext(ConfigContext);
 	const [searchValue, setSearchValue] = useState('');
 
 	const filtererdFragments = useMemo(() => {
 		const searchValueLowerCase = searchValue.toLowerCase();
 
-		return fragments
+		return config.fragments
 			.map(fragmentCollection => {
 				return {
 					...fragmentCollection,
@@ -44,7 +43,7 @@ export default function FragmentsSidebar() {
 			.filter(fragmentCollection => {
 				return fragmentCollection.fragmentEntries.length > 0;
 			});
-	}, [searchValue, fragments]);
+	}, [searchValue]);
 
 	return (
 		<>

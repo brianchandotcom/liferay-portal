@@ -37,15 +37,6 @@ describe('AutoSave', () => {
 	let form;
 	let stateSyncronizer;
 
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
-		if (form) {
-			dom.exitDocument(form);
-		}
-	});
-
 	beforeEach(() => {
 		jest.useFakeTimers();
 		fetch.resetMocks();
@@ -70,6 +61,20 @@ describe('AutoSave', () => {
 			stateSyncronizer,
 			url: URL
 		});
+
+		Object.defineProperty(window, 'location', {
+			value: {reload: jest.fn()},
+			writable: true
+		});
+	});
+
+	afterEach(() => {
+		if (component) {
+			component.dispose();
+		}
+		if (form) {
+			dom.exitDocument(form);
+		}
 	});
 
 	it('calls the saveIfNeeded function every given interval', () => {
@@ -124,28 +129,22 @@ describe('AutoSave', () => {
 	});
 
 	it('reloads the page when session has expired', () => {
-		const reloadMock = jest.spyOn(window.location, 'reload');
-
-		reloadMock.mockImplementation(() => null);
+		window.location.reload.mockImplementation(() => null);
 
 		fetch.mockReject({status: 401});
 
 		return component.save().catch(() => {
-			expect(reloadMock).toHaveBeenCalledTimes(1);
-			reloadMock.mockRestore();
+			expect(window.location.reload).toHaveBeenCalledTimes(1);
 		});
 	});
 
 	it('does not reload the page when request failed for other reasons', () => {
-		const reloadMock = jest.spyOn(window.location, 'reload');
-
-		reloadMock.mockImplementation(() => null);
+		window.location.reload.mockImplementation(() => null);
 
 		fetch.mockReject({status: 500});
 
 		return component.save().catch(() => {
-			expect(reloadMock).not.toHaveBeenCalled();
-			reloadMock.mockRestore();
+			expect(window.location.reload).not.toHaveBeenCalled();
 		});
 	});
 

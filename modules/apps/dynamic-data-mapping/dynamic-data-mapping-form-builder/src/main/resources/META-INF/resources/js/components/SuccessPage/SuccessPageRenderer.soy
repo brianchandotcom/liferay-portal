@@ -12,6 +12,7 @@
 	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
 	{@param? editable: bool}
+	{@param? editingLanguageId: string}
 	{@param? empty: bool}
 	{@param? page: ?}
 	{@param? paginationMode: ?}
@@ -30,6 +31,7 @@
 		{/if}
 
 		{call SuccessPage.render}
+			{param editingLanguageId: $editingLanguageId /}
 			{param successPageSettings: $page?.successPageSettings /}
 		{/call}
 

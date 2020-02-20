@@ -14,9 +14,9 @@
 
 import {EventHandler} from 'metal-events';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
-import {ConfigContext} from '../../app/config/index';
+import {config} from '../../app/config/index';
 
 export default function Editor({
 	autoFocus = false,
@@ -26,12 +26,8 @@ export default function Editor({
 	onChange,
 	placeholder
 }) {
-	const {defaultEditorConfigurations, portletNamespace} = useContext(
-		ConfigContext
-	);
-
 	const editorConfig =
-		defaultEditorConfigurations[configurationName].editorConfig;
+		config.defaultEditorConfigurations[configurationName].editorConfig;
 
 	const [editor, setEditor] = useState(null);
 
@@ -111,13 +107,16 @@ export default function Editor({
 	}, [autoFocus, editorConfig]);
 
 	return (
-		<div className="alloy-editor-container" id={`${portletNamespace}${id}`}>
+		<div
+			className="alloy-editor-container"
+			id={`${config.portletNamespace}${id}`}
+		>
 			<div
 				className="alloy-editor alloy-editor-placeholder form-control form-control-sm page-editor__editor"
 				contentEditable={false}
 				data-placeholder={placeholder}
 				data-required={false}
-				id={`${portletNamespace}${id}`}
+				id={`${config.portletNamespace}${id}`}
 				name={id}
 				ref={wrapperRef}
 			/>

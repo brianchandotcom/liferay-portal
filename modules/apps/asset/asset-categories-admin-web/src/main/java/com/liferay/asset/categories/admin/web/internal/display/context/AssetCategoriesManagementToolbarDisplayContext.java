@@ -17,7 +17,7 @@ package com.liferay.asset.categories.admin.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -109,7 +109,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		return CreationMenuUtil.addPrimaryDropdownItem(
+		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				PortletURL addCategoryURL =
 					liferayPortletResponse.createRenderURL();
@@ -137,7 +137,8 @@ public class AssetCategoriesManagementToolbarDisplayContext
 				}
 
 				dropdownItem.setLabel(LanguageUtil.get(request, label));
-			});
+			}
+		).build();
 	}
 
 	@Override

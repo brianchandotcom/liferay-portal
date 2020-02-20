@@ -39,6 +39,7 @@ page import="com.liferay.asset.kernel.model.ClassTypeReader" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryServiceUtil" %><%@
 page import="com.liferay.asset.list.constants.AssetListEntryTypeConstants" %><%@
 page import="com.liferay.asset.list.constants.AssetListFormConstants" %><%@
+page import="com.liferay.asset.list.constants.AssetListWebKeys" %><%@
 page import="com.liferay.asset.list.model.AssetListEntry" %><%@
 page import="com.liferay.asset.list.model.AssetListEntryAssetEntryRel" %><%@
 page import="com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel" %><%@
@@ -101,15 +102,6 @@ page import="java.util.Set" %>
 <portlet:defineObjects />
 
 <%
-AssetListDisplayContext assetListDisplayContext = new AssetListDisplayContext(renderRequest, renderResponse);
-
-UnicodeProperties properties = new UnicodeProperties();
-
-AssetListEntry curAssetListEntry = assetListDisplayContext.getAssetListEntry();
-
-if (curAssetListEntry != null) {
-	properties.load(curAssetListEntry.getTypeSettings(assetListDisplayContext.getSegmentsEntryId()));
-}
-
-EditAssetListDisplayContext editAssetListDisplayContext = new EditAssetListDisplayContext(renderRequest, renderResponse, properties);
+AssetListDisplayContext assetListDisplayContext = (AssetListDisplayContext)request.getAttribute(AssetListWebKeys.ASSET_LIST_DISPLAY_CONTEXT);
+EditAssetListDisplayContext editAssetListDisplayContext = (EditAssetListDisplayContext)request.getAttribute(AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT);
 %>

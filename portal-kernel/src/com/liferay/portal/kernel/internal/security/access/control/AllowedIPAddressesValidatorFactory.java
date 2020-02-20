@@ -122,10 +122,10 @@ public final class AllowedIPAddressesValidatorFactory {
 		}
 
 		private BaseAllowedIPAddressesValidator(
-				InetAddress inetAddress, String[] ipAddressAndNetmask)
+				InetAddress allowedIpAddress, String[] ipAddressAndNetmask)
 			throws UnknownHostException {
 
-			_allowedIpAddress = inetAddress;
+			_allowedIpAddress = allowedIpAddress;
 
 			_allowedIpAddressBytes = _allowedIpAddress.getAddress();
 

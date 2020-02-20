@@ -16,7 +16,6 @@ import updateLayoutData from '../actions/updateLayoutData';
 import LayoutService from '../services/LayoutService';
 
 export default function addItem({
-	config,
 	itemType,
 	parentItemId,
 	position,
@@ -27,7 +26,6 @@ export default function addItem({
 		const {segmentsExperienceId} = store;
 
 		LayoutService.addItem({
-			config,
 			itemType,
 			onNetworkStatus: dispatch,
 			parentItemId,

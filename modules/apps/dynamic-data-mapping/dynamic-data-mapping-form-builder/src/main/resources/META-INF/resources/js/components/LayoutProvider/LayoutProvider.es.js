@@ -22,7 +22,7 @@ import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
 import {pageStructure, ruleStructure} from '../../util/config.es';
-import {getFieldProperties} from '../../util/fieldSupport.es';
+import {getFieldProperties, localizeField} from '../../util/fieldSupport.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 import handleColumnResized from './handlers/columnResizedHandler.es';
 import handleFieldAdded from './handlers/fieldAddedHandler.es';
@@ -133,45 +133,14 @@ class LayoutProvider extends Component {
 		const {defaultLanguageId, editingLanguageId} = this.props;
 		const settingsVisitor = new PagesVisitor(pages);
 
-		return settingsVisitor.mapFields(field => {
-			let value = field.value;
-
-			if (field.localizable && field.localizedValue) {
-				let localizedValue = field.localizedValue[editingLanguageId];
-
-				if (localizedValue === undefined) {
-					localizedValue = field.localizedValue[defaultLanguageId];
-				}
-
-				if (localizedValue !== undefined) {
-					value = localizedValue;
-				}
-			}
-			else if (
-				field.dataType === 'ddm-options' &&
-				value[editingLanguageId] === undefined
-			) {
-				value = {
-					...value,
-					[editingLanguageId]: value[defaultLanguageId]
-				};
-			}
-
-			return {
-				...field,
-				defaultLanguageId,
-				editingLanguageId,
-				localizedValue: {
-					...(field.localizedValue || {}),
-					[editingLanguageId]: value
-				},
-				value
-			};
-		});
+		return settingsVisitor.mapFields(field =>
+			localizeField(field, defaultLanguageId, editingLanguageId)
+		);
 	}
 
 	getPages() {
 		const {defaultLanguageId, editingLanguageId} = this.props;
+		const {availableLanguageIds = [editingLanguageId]} = this.props;
 		const {focusedField} = this.state;
 		let {pages} = this.state;
 
@@ -190,7 +159,7 @@ class LayoutProvider extends Component {
 				selected: focusedField.fieldName === field.fieldName,
 				settingsContext: {
 					...settingsContext,
-					availableLanguageIds: [editingLanguageId],
+					availableLanguageIds,
 					defaultLanguageId,
 					pages: this.getLocalizedPages(settingsContext.pages)
 				}
@@ -366,7 +335,7 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFieldClicked(event) {
-		this.setState(handleFieldClicked(this.state, event));
+		this.setState(handleFieldClicked(this.props, this.state, event));
 	}
 
 	_handleFieldDeleted(event) {

@@ -17,7 +17,7 @@ package com.liferay.blogs.web.internal.display.context;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsImagesFileEntryPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -64,18 +64,15 @@ public class BlogImagesManagementToolbarDisplayContext {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "deleteImages");
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteImages");
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+				dropdownItem.setQuickAction(true);
 			}
-		};
+		).build();
 	}
 
 	public List<String> getAvailableActions(FileEntry fileEntry)
@@ -118,17 +115,13 @@ public class BlogImagesManagementToolbarDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "order-by"));
-					});
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "order-by"));
 			}
-		};
+		).build();
 	}
 
 	public String getOrderByCol() {
@@ -214,29 +207,24 @@ public class BlogImagesManagementToolbarDisplayContext {
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "title"));
-						dropdownItem.setHref(
-							_getCurrentSortingURL(), "orderByCol", "title");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "title"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "size"));
-						dropdownItem.setHref(
-							_getCurrentSortingURL(), "orderByCol", "size");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "size"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(getOrderByCol(), "title"));
+				dropdownItem.setHref(
+					_getCurrentSortingURL(), "orderByCol", "title");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "title"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(Objects.equals(getOrderByCol(), "size"));
+				dropdownItem.setHref(
+					_getCurrentSortingURL(), "orderByCol", "size");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "size"));
+			}
+		).build();
 	}
 
 	private final PortletURL _currentURLObj;

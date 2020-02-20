@@ -4,6 +4,9 @@
 			"dynamic-data-mapping-form-renderer": {
 				"/": ">=5.0.0"
 			},
+			"frontend-editor-ckeditor-web": {
+				"/": ">=4.0.0"
+			},
 			"map-openstreetmap": {
 				"/": ">=5.0.0"
 			},

@@ -10,6 +10,16 @@
 <tbody>
 <!--RESULT_RANKINGS-->
 <tr>
+	<td>RESULT_RANKINGS_ACTIVE_TOGGLE_SWITCH</td>
+	<td>//input[@id="active-switch-input"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_RANKINGS_ACTIVE_RANKING</td>
+	<td>//tr[@data-qa-id='row'][.//descendant::td[contains(@class,'lfr-status-column') and contains(.,'Active')]]//a[normalize-space(text())='${key_query}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_RANKINGS_ALIAS_FIELD</td>
 	<td>//div[contains(@class,'form-group') and contains(.,'Alias')]//input[contains(@class,'form-control-inset')]</td>
 	<td></td>
@@ -37,6 +47,16 @@
 <tr>
 	<td>RESULT_RANKINGS_ENTRY</td>
 	<td>//tr[@data-qa-id='row']//td[contains(@class,'query-column') and contains(.,'${key_query}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_RANKINGS_INACTIVE_RANKING</td>
+	<td>//tr[@data-qa-id='row'][.//descendant::td[contains(@class,'lfr-status-column') and contains(.,'Inactive')]]//a[normalize-space(text())='${key_query}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_RANKINGS_RANKING_WITH_SPECIFIC_ALIAS</td>
+	<td>//tr[@data-qa-id='row'][.//descendant::td[contains(@class,'lfr-aliases-column') and contains(.,'${key_alias}')]]//a[normalize-space(text())='${key_query}']</td>
 	<td></td>
 </tr>
 <tr>

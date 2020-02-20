@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADD_ASSIGNEE_TO_ACCOUNT</td>
+	<td>//iframe[@title='Assign ${key_assigneeType} to ${key_accountName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION</td>
 	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'portlet_configuration')]</td>
 	<td></td>

@@ -15,17 +15,11 @@
 import {updateLayoutData} from '../actions/index';
 import FragmentService from '../services/FragmentService';
 
-export default function duplicateItem({
-	config,
-	itemId,
-	store,
-	selectItem = () => {}
-}) {
+export default function duplicateItem({itemId, store, selectItem = () => {}}) {
 	const {segmentsExperienceId} = store;
 
 	return dispatch => {
 		FragmentService.duplicateItem({
-			config,
 			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId
@@ -33,7 +27,7 @@ export default function duplicateItem({
 			({duplicatedFragmentEntryLinks, duplicatedItemId, layoutData}) => {
 				dispatch(
 					updateLayoutData({
-						duplicatedFragmentEntryLinks,
+						addedFragmentEntryLinks: duplicatedFragmentEntryLinks,
 						layoutData
 					})
 				);

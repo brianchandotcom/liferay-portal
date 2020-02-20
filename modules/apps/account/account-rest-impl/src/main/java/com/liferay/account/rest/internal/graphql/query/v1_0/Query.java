@@ -15,7 +15,9 @@
 package com.liferay.account.rest.internal.graphql.query.v1_0;
 
 import com.liferay.account.rest.dto.v1_0.Account;
+import com.liferay.account.rest.dto.v1_0.AccountUser;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
+import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -51,6 +54,14 @@ public class Query {
 
 		_accountResourceComponentServiceObjects =
 			accountResourceComponentServiceObjects;
+	}
+
+	public static void setAccountUserResourceComponentServiceObjects(
+		ComponentServiceObjects<AccountUserResource>
+			accountUserResourceComponentServiceObjects) {
+
+		_accountUserResourceComponentServiceObjects =
+			accountUserResourceComponentServiceObjects;
 	}
 
 	/**
@@ -95,6 +106,65 @@ public class Query {
 			accountResource -> accountResource.getAccount(accountId));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountUsers(accountId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Gets the users assigned to an account")
+	public AccountUserPage accountUsers(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountUserResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountUserResource -> new AccountUserPage(
+				accountUserResource.getAccountUsersPage(
+					accountId, search,
+					_filterBiFunction.apply(accountUserResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(accountUserResource, sortsString))));
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetAccountUsersPageTypeExtension {
+
+		public GetAccountUsersPageTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(description = "Gets the users assigned to an account")
+		public AccountUserPage users(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountUserResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountUserResource -> new AccountUserPage(
+					accountUserResource.getAccountUsersPage(
+						_account.getId(), search,
+						_filterBiFunction.apply(
+							accountUserResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							accountUserResource, sortsString))));
+		}
+
+		private Account _account;
+
+	}
+
 	@GraphQLName("AccountPage")
 	public class AccountPage {
 
@@ -112,6 +182,38 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Account> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("AccountUserPage")
+	public class AccountUserPage {
+
+		public AccountUserPage(Page accountUserPage) {
+			actions = accountUserPage.getActions();
+			items = accountUserPage.getItems();
+			lastPage = accountUserPage.getLastPage();
+			page = accountUserPage.getPage();
+			pageSize = accountUserPage.getPageSize();
+			totalCount = accountUserPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<AccountUser> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -157,8 +259,22 @@ public class Query {
 		accountResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(
+			AccountUserResource accountUserResource)
+		throws Exception {
+
+		accountUserResource.setContextAcceptLanguage(_acceptLanguage);
+		accountUserResource.setContextCompany(_company);
+		accountUserResource.setContextHttpServletRequest(_httpServletRequest);
+		accountUserResource.setContextHttpServletResponse(_httpServletResponse);
+		accountUserResource.setContextUriInfo(_uriInfo);
+		accountUserResource.setContextUser(_user);
+	}
+
 	private static ComponentServiceObjects<AccountResource>
 		_accountResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AccountUserResource>
+		_accountUserResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private BiFunction<Object, String, Filter> _filterBiFunction;

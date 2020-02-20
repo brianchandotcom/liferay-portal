@@ -480,6 +480,154 @@ definition {
 			value1 = "There are no entries.");
 	}
 
+	test EnableAndDisableResultRankings {
+		property test.name.skip.portal.instance = "SearchTuningES7#EnableAndDisableResultRankings";
+
+		var content = "Article Article Article Article";
+
+		for (var count : list "1,2,3,4") {
+			JSONWebcontent.addWebContent(
+				content = "${content}",
+				groupName = "Guest",
+				title = "Article ${count}");
+
+			var content = StringUtil.replaceFirst("${content}", "Article ", "");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
+
+		SearchTuning.addResultRanking(searchQuery = "Article");
+
+		SearchTuning.pinResult(assetTitle = "Article 4");
+
+		SearchTuning.configureAliases(addAlias = "apple");
+
+		Uncheck.uncheckToggleSwitch(locator1 = "SearchTuning#RESULT_RANKINGS_ACTIVE_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		AssertElementPresent(
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_INACTIVE_RANKING");
+
+		SearchTuning.addResultRanking(searchQuery = "Article");
+
+		SearchTuning.configureAliases(addAlias = "orange");
+
+		SearchTuning.pinResult(assetTitle = "Article 3");
+
+		SearchTuning.hideResult(assetTitle = "Article 2");
+
+		Button.clickSave();
+
+		Click(
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_INACTIVE_RANKING");
+
+		AssertElementPresent(
+			key_assetTitle = "Article 4",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
+
+		AssertElementNotPresent(
+			key_assetTitle = "Article 3",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
+
+		// Workaround LPS-107009
+
+		/*for (var assetTitle : list "Article 1,Article 2,Article 3") {
+			AssertElementPresent(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
+		}*/
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Article");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 3,Article 1,Article 4");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Article 2",
+			searchAssetType = "Web Content Article");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "orange");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Article 3",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1/Web Content Article,Article 2/Web Content Article,Article 4/Web Content Article");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
+
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
+
+		Click(
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_INACTIVE_RANKING");
+
+		Check.checkToggleSwitch(locator1 = "SearchTuning#RESULT_RANKINGS_ACTIVE_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases must be unique across all rankings. The following ones already exist");
+
+		Navigator.gotoBack();
+
+		Click(
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_ACTIVE_RANKING");
+
+		Uncheck.uncheckToggleSwitch(locator1 = "SearchTuning#RESULT_RANKINGS_ACTIVE_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		Click(
+			key_alias = "apple",
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RANKING_WITH_SPECIFIC_ALIAS");
+
+		Check.checkToggleSwitch(locator1 = "SearchTuning#RESULT_RANKINGS_ACTIVE_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Article");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 4,Article 1,Article 2,Article 3");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Article 4",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1/Web Content Article,Article 2/Web Content Article,Article 3/Web Content Article");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "orange");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "orange");
+	}
+
 	test PinAndHideResultsWithAliases {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SearchTuningES7#PinAndHideResultsWithAliases";

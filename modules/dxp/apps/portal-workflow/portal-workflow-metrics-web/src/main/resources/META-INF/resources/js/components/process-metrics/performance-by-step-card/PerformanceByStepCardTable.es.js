@@ -31,7 +31,9 @@ const Item = ({
 
 	return (
 		<tr>
-			<td data-testid="stepName">{name}</td>
+			<td className="table-cell-expand" data-testid="stepName">
+				{name}
+			</td>
 
 			<td className="text-right" data-testid="slaBreached">
 				{isValidNumber(breachedInstanceCount)

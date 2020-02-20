@@ -12,10 +12,12 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React from 'react';
 
+import {getEditableItemPropTypes} from '../../../prop-types/index';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
-import {ConfigContext} from '../../config/index';
+import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import selectEditableValue from '../../selectors/selectEditableValue';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
@@ -24,26 +26,28 @@ import MappingSelector from './MappingSelector';
 export function MappingPanel({item}) {
 	const {editableId, editableType, fragmentEntryLinkId} = item;
 
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const state = useSelector(state => state);
 
 	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
 
+	const processoryKey =
+		editableType === EDITABLE_TYPES.backgroundImage
+			? BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+			: EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
+
 	const editableValue = selectEditableValue(
 		state,
 		fragmentEntryLinkId,
 		editableId,
-		EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+		processoryKey
 	);
 
 	const updateEditableValue = newEditableValue => {
 		const nextEditableValues = {
 			...fragmentEntryLink.editableValues,
-			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
-				...fragmentEntryLink.editableValues[
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-				],
+			[processoryKey]: {
+				...fragmentEntryLink.editableValues[processoryKey],
 				[editableId]: {
 					config: editableValue.config,
 					defaultValue: editableValue.defaultValue,
@@ -54,7 +58,6 @@ export function MappingPanel({item}) {
 
 		dispatch(
 			updateEditableValues({
-				config,
 				editableValues: nextEditableValues,
 				fragmentEntryLinkId,
 				segmentsExperienceId: state.segmentsExperienceId
@@ -70,3 +73,7 @@ export function MappingPanel({item}) {
 		/>
 	);
 }
+
+MappingPanel.propTypes = {
+	item: getEditableItemPropTypes()
+};

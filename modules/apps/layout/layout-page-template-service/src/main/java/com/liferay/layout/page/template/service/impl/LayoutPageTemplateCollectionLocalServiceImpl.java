@@ -223,11 +223,10 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	private String _generateLayoutPageTemplateCollectionKey(
 		long groupId, String name) {
 
-		String layoutPageTemplateCollectionKey = StringUtil.toLowerCase(
-			name.trim());
-
-		layoutPageTemplateCollectionKey = StringUtil.replace(
-			layoutPageTemplateCollectionKey, CharPool.SPACE, CharPool.DASH);
+		String layoutPageTemplateCollectionKey = StringUtil.replace(
+			StringUtil.toLowerCase(name.trim()),
+			new char[] {CharPool.FORWARD_SLASH, CharPool.SPACE},
+			new char[] {CharPool.DASH, CharPool.DASH});
 
 		String curLayoutPageTemplateCollectionKey =
 			layoutPageTemplateCollectionKey;

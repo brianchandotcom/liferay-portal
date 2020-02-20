@@ -30,25 +30,6 @@ export default class PageStructure {
 		this.title = panel.label;
 	}
 
-	activate() {
-		const reducer = (state, action) => {
-			const nextState = state;
-
-			switch (action.type) {
-				default:
-					break;
-			}
-
-			return nextState;
-		};
-
-		this.dispatch(this.Actions.loadReducer(reducer, PageStructure.name));
-	}
-
-	deactivate() {
-		this.dispatch(this.Actions.unloadReducer(PageStructure.name));
-	}
-
 	renderSidebar() {
 		const {Component} = this;
 

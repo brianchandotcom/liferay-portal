@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class DataLayout {
+public class DataLayout implements Cloneable {
 
 	public String getContentType() {
 		return contentType;
@@ -281,6 +281,11 @@ public class DataLayout {
 	}
 
 	protected Long userId;
+
+	@Override
+	public DataLayout clone() throws CloneNotSupportedException {
+		return (DataLayout)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

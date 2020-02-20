@@ -12,13 +12,12 @@
  * details.
  */
 
-import React from 'react';
-
 const DEFAULT_CONFIG = {
 	toolbarId: 'pageEditorToolbar'
 };
 
-export const ConfigContext = React.createContext(DEFAULT_CONFIG);
+/** @type {import('../../types/config').Config} */
+export let config = null;
 
 /**
  * Extracts the immutable parts from the server data.
@@ -26,8 +25,8 @@ export const ConfigContext = React.createContext(DEFAULT_CONFIG);
  * Unlike data in the store, this config does not change over the lifetime of
  * the app, so we can safely store is as a variable.
  */
-export function getConfig(config) {
-	const {pluginsRootPath, portletNamespace, sidebarPanels} = config;
+export function initializeConfig(backendConfig) {
+	const {pluginsRootPath, portletNamespace, sidebarPanels} = backendConfig;
 	const toolbarId = `${portletNamespace}${DEFAULT_CONFIG.toolbarId}`;
 
 	// Special items requiring augmentation, creation, or transformation.
@@ -40,11 +39,13 @@ export function getConfig(config) {
 		toolbarPlugins: getToolbarPlugins(pluginsRootPath, toolbarId)
 	};
 
-	return {
+	config = {
 		...DEFAULT_CONFIG,
-		...config,
+		...backendConfig,
 		...syntheticItems
 	};
+
+	return config;
 }
 
 /**

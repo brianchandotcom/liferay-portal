@@ -13,23 +13,21 @@
  */
 
 import ClayForm from '@clayui/form';
-import React, {useContext} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import ItemSelector from '../../../common/components/ItemSelector';
-import {ConfigContext} from '../../config/index';
+import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {config} from '../../config/index';
 
 export const ItemCollectionSelectorField = ({field, onValueSelect, value}) => {
-	const config = useContext(ConfigContext);
-
-	const {infoListSelectorURL, portletNamespace} = config;
-
-	const eventName = `${portletNamespace}selectInfoList`;
+	const eventName = `${config.portletNamespace}selectInfoList`;
 
 	return (
 		<ClayForm.Group small>
 			<ItemSelector
 				eventName={eventName}
-				itemSelectorURL={infoListSelectorURL}
+				itemSelectorURL={config.infoListSelectorURL}
 				label={field.label}
 				onItemSelect={item => {
 					onValueSelect(field.name, {
@@ -43,4 +41,10 @@ export const ItemCollectionSelectorField = ({field, onValueSelect, value}) => {
 			/>
 		</ClayForm.Group>
 	);
+};
+
+ItemCollectionSelectorField.propTypes = {
+	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
+	onValueSelect: PropTypes.func.isRequired,
+	value: PropTypes.string
 };

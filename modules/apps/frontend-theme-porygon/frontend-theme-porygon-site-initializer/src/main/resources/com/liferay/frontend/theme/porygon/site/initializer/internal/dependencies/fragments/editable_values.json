@@ -1,22 +1,20 @@
 {
-	"0": {
-		"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
-			"porygon_detail_content": {
-				"defaultValue": "Content",
-				"mappedField": "content"
-			},
-			"porygon_detail_content_subtitle": {
-				"defaultValue": "Subtitle",
-				"mappedField": "subTitle"
-			},
-			"porygon_detail_content_title": {
-				"defaultValue": "Title",
-				"mappedField": "title"
-			},
-			"porygon_detail_header": {
-				"defaultValue": "$content_16.jpg$",
-				"mappedField": "coverImage"
-			}
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"porygon_detail_content": {
+			"defaultValue": "Content",
+			"mappedField": "content"
+		},
+		"porygon_detail_content_subtitle": {
+			"defaultValue": "Subtitle",
+			"mappedField": "subTitle"
+		},
+		"porygon_detail_content_title": {
+			"defaultValue": "Title",
+			"mappedField": "title"
+		},
+		"porygon_detail_header": {
+			"defaultValue": "$content_16.jpg$",
+			"mappedField": "coverImage"
 		}
 	}
 }

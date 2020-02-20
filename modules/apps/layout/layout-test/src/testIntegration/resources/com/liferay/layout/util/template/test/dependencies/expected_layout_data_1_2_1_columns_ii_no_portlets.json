@@ -1,0 +1,138 @@
+{
+	"items": {
+		"ROOT": {
+			"children": [
+				"ROOT-CONTAINER0",
+				"ROOT-CONTAINER1",
+				"ROOT-CONTAINER2"
+			],
+			"config": {},
+			"itemId": "ROOT",
+			"parentId": "",
+			"type": "root"
+		},
+		"ROOT-CONTAINER0": {
+			"children": [
+				"ROOT-CONTAINER0-ROW0"
+			],
+			"config": {
+				"backgroundImage": {},
+				"paddingBottom": 3,
+				"paddingHorizontal": 3,
+				"paddingTop": 3,
+				"type": "fixed"
+			},
+			"itemId": "ROOT-CONTAINER0",
+			"parentId": "ROOT",
+			"type": "container"
+		},
+		"ROOT-CONTAINER0-ROW0": {
+			"children": [
+				"ROOT-CONTAINER0-ROW0-COLUMN0"
+			],
+			"config": {
+				"gutters": true,
+				"numberOfColumns": 1
+			},
+			"itemId": "ROOT-CONTAINER0-ROW0",
+			"parentId": "ROOT-CONTAINER0",
+			"type": "row"
+		},
+		"ROOT-CONTAINER0-ROW0-COLUMN0": {
+			"children": [],
+			"config": {
+				"size": 12
+			},
+			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN0",
+			"parentId": "ROOT-CONTAINER0-ROW0",
+			"type": "column"
+		},
+		"ROOT-CONTAINER1": {
+			"children": [
+				"ROOT-CONTAINER1-ROW0"
+			],
+			"config": {
+				"backgroundImage": {},
+				"paddingBottom": 3,
+				"paddingHorizontal": 3,
+				"paddingTop": 3,
+				"type": "fixed"
+			},
+			"itemId": "ROOT-CONTAINER1",
+			"parentId": "ROOT",
+			"type": "container"
+		},
+		"ROOT-CONTAINER1-ROW0": {
+			"children": [
+				"ROOT-CONTAINER1-ROW0-COLUMN0",
+				"ROOT-CONTAINER1-ROW0-COLUMN1"
+			],
+			"config": {
+				"gutters": true,
+				"numberOfColumns": 2
+			},
+			"itemId": "ROOT-CONTAINER1-ROW0",
+			"parentId": "ROOT-CONTAINER1",
+			"type": "row"
+		},
+		"ROOT-CONTAINER1-ROW0-COLUMN0": {
+			"children": [],
+			"config": {
+				"size": 8
+			},
+			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN0",
+			"parentId": "ROOT-CONTAINER1-ROW0",
+			"type": "column"
+		},
+		"ROOT-CONTAINER1-ROW0-COLUMN1": {
+			"children": [],
+			"config": {
+				"size": 4
+			},
+			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN1",
+			"parentId": "ROOT-CONTAINER1-ROW0",
+			"type": "column"
+		},
+		"ROOT-CONTAINER2": {
+			"children": [
+				"ROOT-CONTAINER2-ROW0"
+			],
+			"config": {
+				"backgroundImage": {},
+				"paddingBottom": 3,
+				"paddingHorizontal": 3,
+				"paddingTop": 3,
+				"type": "fixed"
+			},
+			"itemId": "ROOT-CONTAINER2",
+			"parentId": "ROOT",
+			"type": "container"
+		},
+		"ROOT-CONTAINER2-ROW0": {
+			"children": [
+				"ROOT-CONTAINER2-ROW0-COLUMN0"
+			],
+			"config": {
+				"gutters": true,
+				"numberOfColumns": 1
+			},
+			"itemId": "ROOT-CONTAINER2-ROW0",
+			"parentId": "ROOT-CONTAINER2",
+			"type": "row"
+		},
+		"ROOT-CONTAINER2-ROW0-COLUMN0": {
+			"children": [],
+			"config": {
+				"size": 12
+			},
+			"itemId": "ROOT-CONTAINER2-ROW0-COLUMN0",
+			"parentId": "ROOT-CONTAINER2-ROW0",
+			"type": "column"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "ROOT"
+	},
+	"version": 1
+}

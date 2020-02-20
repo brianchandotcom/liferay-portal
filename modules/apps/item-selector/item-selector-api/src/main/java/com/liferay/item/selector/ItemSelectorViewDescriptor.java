@@ -64,7 +64,7 @@ public interface ItemSelectorViewDescriptor<T> {
 
 		/**
 		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-		 * #getSubtitle(Locale)}
+		 *             #getSubtitle(Locale)}
 		 */
 		@Deprecated
 		public default String getSubtitle() {

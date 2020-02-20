@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WikiPage {
+public class WikiPage implements Cloneable {
 
 	public static enum ViewableBy {
 
@@ -511,6 +511,11 @@ public class WikiPage {
 	}
 
 	protected ViewableBy viewableBy;
+
+	@Override
+	public WikiPage clone() throws CloneNotSupportedException {
+		return (WikiPage)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

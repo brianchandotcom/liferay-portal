@@ -74,17 +74,19 @@ public class DDMFormInstanceRecordStagingModelListener
 					ExportImportClassedModelUtil.getClassName(
 						ddmFormInstanceRecord));
 
-			int[] exportableStatuses =
-				stagedModelDataHandler.getExportableStatuses();
+			if (stagedModelDataHandler != null) {
+				int[] exportableStatuses =
+					stagedModelDataHandler.getExportableStatuses();
 
-			DDMFormInstanceRecordVersion formInstanceRecordVersion =
-				ddmFormInstanceRecord.getFormInstanceRecordVersion();
+				DDMFormInstanceRecordVersion formInstanceRecordVersion =
+					ddmFormInstanceRecord.getFormInstanceRecordVersion();
 
-			if (!ArrayUtil.contains(
-					exportableStatuses,
-					formInstanceRecordVersion.getStatus())) {
+				if (ArrayUtil.contains(
+						exportableStatuses,
+						formInstanceRecordVersion.getStatus())) {
 
-				return true;
+					return false;
+				}
 			}
 		}
 		catch (PortalException portalException) {
@@ -93,7 +95,7 @@ public class DDMFormInstanceRecordStagingModelListener
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

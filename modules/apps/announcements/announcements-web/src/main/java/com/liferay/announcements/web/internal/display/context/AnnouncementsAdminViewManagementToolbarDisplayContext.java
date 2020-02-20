@@ -16,7 +16,7 @@ package com.liferay.announcements.web.internal.display.context;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -110,7 +110,7 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		return CreationMenuUtil.addDropdownItem(
+		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				PortletURL addEntryURL =
 					_liferayPortletResponse.createRenderURL();
@@ -143,7 +143,8 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, label));
-			});
+			}
+		).build();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

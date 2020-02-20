@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContentDocument {
+public class ContentDocument implements Cloneable {
 
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
@@ -216,6 +216,11 @@ public class ContentDocument {
 	}
 
 	protected String title;
+
+	@Override
+	public ContentDocument clone() throws CloneNotSupportedException {
+		return (ContentDocument)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

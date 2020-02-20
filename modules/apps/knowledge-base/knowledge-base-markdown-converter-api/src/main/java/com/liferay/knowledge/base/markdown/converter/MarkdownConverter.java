@@ -21,6 +21,6 @@ import java.io.IOException;
  */
 public interface MarkdownConverter {
 
-	public abstract String convert(String markdown) throws IOException;
+	public String convert(String markdown) throws IOException;
 
 }

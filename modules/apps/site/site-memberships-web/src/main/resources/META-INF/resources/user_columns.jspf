@@ -40,7 +40,7 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 		<liferay-ui:search-container-column-text>
 			<clay:user-card
 				userCard="<%= new UsersUserCard(user2, !selectUsers, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-				userColorCssClass='<%= "user-icon " + LexiconUtil.getUserColorCssClass(user2) %>'
+				userColorClass='<%= "user-icon " + LexiconUtil.getUserColorCssClass(user2) %>'
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>

@@ -10,6 +10,7 @@
  */
 
 import ClayManagementToolbar from '@clayui/management-toolbar';
+import {usePrevious} from 'frontend-js-react-web';
 import React, {useCallback, useContext, useEffect, useMemo} from 'react';
 
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
@@ -39,6 +40,7 @@ const Header = ({
 		setSelectAll,
 		setSelectedItems
 	} = useContext(InstanceListContext);
+	const previousCount = usePrevious(totalCount);
 	const {bulkModal, setBulkModal, setSingleModal} = useContext(ModalContext);
 
 	const kebabItems = [
@@ -90,7 +92,11 @@ const Header = ({
 	]);
 
 	useEffect(() => {
-		if (selectAll && remainingItems.length > 0) {
+		if (
+			selectAll &&
+			remainingItems.length > 0 &&
+			previousCount === totalCount
+		) {
 			setSelectedItems(
 				items.filter(
 					item => item.status !== processStatusConstants.completed
@@ -99,6 +105,11 @@ const Header = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [items]);
+
+	useEffect(() => {
+		setSelectAll(totalCount > 0 && totalCount === selectedItems.length);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [totalCount]);
 
 	const handleClear = () => {
 		setSelectedItems([]);

@@ -113,4 +113,8 @@ public interface AssetHelper {
 			int start, int end)
 		throws Exception;
 
+	public long searchCount(
+			SearchContext searchContext, AssetEntryQuery assetEntryQuery)
+		throws Exception;
+
 }

@@ -127,7 +127,9 @@
 	{/let}
 
 	{if $displayStyle == 'multiline'}
-		<textarea {$attributes}>{$inputValue}</textarea>
+		<div class="input-group">
+			<textarea {$attributes}>{$inputValue}</textarea>
+		</div>
 	{elseif ($displayStyle == 'singleline' and $readOnly) or not($autocompleteEnabled)}
 		<input {$attributes}>
 	{elseif $autocompleteEnabled and isNonnull($options)}

@@ -83,11 +83,9 @@ public class DefinitionPoshiElement extends PoshiElement {
 	}
 
 	@Override
-	public boolean isValidPoshiXML() {
+	public boolean isValidPoshiXML() throws PoshiScriptParserException {
 		if (_validPoshiXML == null) {
 			_validPoshiXML = false;
-
-			PoshiNodeFactory.setValidatePoshiScript(false);
 
 			URL url = getURL();
 
@@ -101,8 +99,6 @@ public class DefinitionPoshiElement extends PoshiElement {
 			if (Dom4JUtil.elementsEqual(poshiNode, generatedPoshiNode)) {
 				_validPoshiXML = true;
 			}
-
-			PoshiNodeFactory.setValidatePoshiScript(true);
 		}
 
 		return _validPoshiXML;

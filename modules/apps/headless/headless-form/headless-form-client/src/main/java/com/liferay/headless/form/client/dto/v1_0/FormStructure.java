@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormStructure {
+public class FormStructure implements Cloneable {
 
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -280,6 +280,11 @@ public class FormStructure {
 	}
 
 	protected Long siteId;
+
+	@Override
+	public FormStructure clone() throws CloneNotSupportedException {
+		return (FormStructure)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentFieldText {
+public class FragmentFieldText implements Cloneable {
 
 	public FragmentLink getFragmentLink() {
 		return fragmentLink;
@@ -67,6 +67,11 @@ public class FragmentFieldText {
 	}
 
 	protected Object text;
+
+	@Override
+	public FragmentFieldText clone() throws CloneNotSupportedException {
+		return (FragmentFieldText)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

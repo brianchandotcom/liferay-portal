@@ -56,9 +56,10 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetBrowserDisplayContext {
 
 	public AssetBrowserDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
-		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -174,8 +175,13 @@ public class AssetBrowserDisplayContext {
 		}
 
 		_eventName = ParamUtil.getString(
-			_httpServletRequest, "eventName",
-			_renderResponse.getNamespace() + "selectAsset");
+			_httpServletRequest, "itemSelectedEventName");
+
+		if (Validator.isNull(_eventName)) {
+			_eventName = ParamUtil.getString(
+				_httpServletRequest, "eventName",
+				_renderResponse.getNamespace() + "selectAsset");
+		}
 
 		return _eventName;
 	}

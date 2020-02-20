@@ -76,13 +76,13 @@ public class AxisExtender {
 			ServiceRegistration<Filter> authVerifierFilterServiceRegistration,
 			ServiceRegistration<Servlet> axisServletServiceRegistration,
 			ServiceRegistration<ServletContextHelper>
-				bundleServletContextServiceRegistration) {
+				bundleServletContextHelperServiceRegistration) {
 
 			_authVerifierFilterServiceRegistration =
 				authVerifierFilterServiceRegistration;
 			_axisServletServiceRegistration = axisServletServiceRegistration;
 			_bundleServletContextHelperServiceRegistration =
-				bundleServletContextServiceRegistration;
+				bundleServletContextHelperServiceRegistration;
 		}
 
 		public ServiceRegistration<Filter>

@@ -14,11 +14,13 @@
 
 import ClayForm from '@clayui/form';
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useContext, useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
+import React, {useEffect, useState} from 'react';
 
 import ItemSelector from '../../../common/components/ItemSelector';
-import {ConfigContext} from '../../config/index';
+import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import InfoItemService from '../../services/InfoItemService';
+import {useDispatch} from '../../store/index';
 
 export const ItemSelectorField = ({field, onValueSelect, value}) => {
 	const {typeOptions = {}} = field;
@@ -55,8 +57,19 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 	);
 };
 
+ItemSelectorField.propTypes = {
+	field: PropTypes.shape({
+		...ConfigurationFieldPropTypes,
+		typeOptions: PropTypes.shape({
+			enableSelectTemplate: PropTypes.bool
+		})
+	}),
+	onValueSelect: PropTypes.func.isRequired,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+};
+
 const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
-	const config = useContext(ConfigContext);
+	const dispatch = useDispatch();
 	const [availableTemplates, setAvailableTemplates] = useState([]);
 	const isMounted = useIsMounted();
 
@@ -65,12 +78,12 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 			InfoItemService.getAvailableTemplates({
 				className: item.className,
 				classPK: item.classPK,
-				config
+				onNetworkStatus: dispatch
 			}).then(response => {
 				setAvailableTemplates(response);
 			});
 		}
-	}, [config, isMounted, item.className, item.classPK]);
+	}, [dispatch, isMounted, item.className, item.classPK]);
 
 	return (
 		<>
@@ -140,4 +153,13 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 			</ClayForm.Group>
 		</>
 	);
+};
+
+TemplateSelector.propTypes = {
+	item: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
+	onTemplateSelect: PropTypes.func.isRequired,
+	selectedTemplate: PropTypes.shape({
+		infoItemRendererKey: PropTypes.string,
+		templateKey: PropTypes.string
+	})
 };

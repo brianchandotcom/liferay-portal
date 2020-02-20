@@ -14,12 +14,14 @@
 
 package com.liferay.layout.util.structure;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -77,6 +79,29 @@ public abstract class LayoutStructureItem {
 		_childrenItemIds.remove(itemId);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutStructureItem)) {
+			return false;
+		}
+
+		LayoutStructureItem layoutStructureItem = (LayoutStructureItem)obj;
+
+		if (Objects.equals(
+				_childrenItemIds, layoutStructureItem._childrenItemIds) &&
+			Objects.equals(_itemId, layoutStructureItem._itemId) &&
+			Objects.equals(_parentItemId, layoutStructureItem._parentItemId)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public List<String> getChildrenItemIds() {
 		return _childrenItemIds;
 	}
@@ -91,6 +116,11 @@ public abstract class LayoutStructureItem {
 
 	public String getParentItemId() {
 		return _parentItemId;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getItemId());
 	}
 
 	public void setChildrenItemIds(List<String> childrenItemIds) {
@@ -117,6 +147,13 @@ public abstract class LayoutStructureItem {
 		).put(
 			"type", getItemType()
 		);
+	}
+
+	@Override
+	public String toString() {
+		JSONObject jsonObject = toJSONObject();
+
+		return jsonObject.toJSONString();
 	}
 
 	public abstract void updateItemConfig(JSONObject itemConfigJSONObject);

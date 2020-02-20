@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -106,17 +107,14 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							liferayPortletResponse.createRenderURL(), "mvcPath",
-							"/edit_layout_prototype.jsp");
-						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
-					});
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					liferayPortletResponse.createRenderURL(), "mvcPath",
+					"/edit_layout_prototype.jsp");
+				dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 			}
-		};
+		).build();
 	}
 
 	@Override

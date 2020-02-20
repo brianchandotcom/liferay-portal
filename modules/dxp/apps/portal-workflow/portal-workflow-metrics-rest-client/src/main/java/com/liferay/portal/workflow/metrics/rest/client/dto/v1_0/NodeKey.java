@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class NodeKey {
+public class NodeKey implements Cloneable {
 
 	public String getExecutionType() {
 		return executionType;
@@ -67,6 +67,11 @@ public class NodeKey {
 	}
 
 	protected String id;
+
+	@Override
+	public NodeKey clone() throws CloneNotSupportedException {
+		return (NodeKey)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

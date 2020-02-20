@@ -52,15 +52,15 @@ const Languages = ({
 
 	const [showModal, setShowModal] = useState(false);
 
-	const handleOnCloseModal = () => {
+	const {observer, onClose} = useModal({
+		onClose: handleOnModalClose
+	});
+
+	const handleOnModalClose = () => {
 		setShowModal(false);
 	};
 
-	const {observer, onClose} = useModal({
-		onClose: handleOnCloseModal
-	});
-
-	const handleOnSaveModal = selectedLocales => {
+	const handleOnModalDone = selectedLocales => {
 		setCustomLocales(selectedLocales);
 		onClose();
 	};
@@ -102,7 +102,7 @@ const Languages = ({
 					)}
 				</ClayTable.Cell>
 				{showActions && (
-					<ClayTable.Cell align="center">
+					<ClayTable.Cell align="right">
 						<ClayDropDown
 							active={active}
 							onActiveChange={setActive}
@@ -142,7 +142,7 @@ const Languages = ({
 				<ClayTable.Head>
 					<ClayTable.Row>
 						<ClayTable.Cell expanded headingCell headingTitle>
-							{Liferay.Language.get('language')}
+							{Liferay.Language.get('active-language')}
 						</ClayTable.Cell>
 
 						{showActions && (
@@ -154,7 +154,7 @@ const Languages = ({
 									}}
 									small
 								>
-									{Liferay.Language.get('manage')}
+									{Liferay.Language.get('edit')}
 								</ClayButton>
 							</ClayTable.Cell>
 						)}
@@ -193,7 +193,7 @@ const Languages = ({
 
 				<ClayRadio
 					label={Liferay.Language.get(
-						'define-a-custom-default-language-and-additional-available-languages-for-this-repository'
+						'define-a-custom-default-language-and-additional-active-languages-for-this-repository'
 					)}
 					value={false}
 				/>
@@ -235,7 +235,7 @@ const Languages = ({
 					customLocales={customLocales}
 					observer={observer}
 					onModalClose={onClose}
-					onModalSave={handleOnSaveModal}
+					onModalDone={handleOnModalDone}
 				/>
 			)}
 

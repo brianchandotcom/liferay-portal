@@ -35,7 +35,7 @@ public class JournalFolderNameConstraintResolver
 
 	@Override
 	public String getConflictDescriptionKey() {
-		return "folder-name";
+		return "duplicate-folder-name";
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class JournalFolderNameConstraintResolver
 
 	@Override
 	public String getResolutionDescriptionKey() {
-		return "rename-the-change-list-folder";
+		return "rename-the-folder-in-the-publication";
 	}
 
 	@Override

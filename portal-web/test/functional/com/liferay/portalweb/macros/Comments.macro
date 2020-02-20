@@ -127,6 +127,8 @@ definition {
 	}
 
 	macro subscribePG {
+		AssertElementPresent.pauseAssertVisible(locator1 = "Comments#COMMENT_FIELD");
+
 		AssertClick(
 			locator1 = "Button#SUBSCRIBE",
 			value1 = "Subscribe");

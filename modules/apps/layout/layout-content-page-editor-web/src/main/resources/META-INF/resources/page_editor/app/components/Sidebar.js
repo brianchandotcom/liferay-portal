@@ -25,13 +25,13 @@ import useLoad from '../../core/hooks/useLoad';
 import usePlugins from '../../core/hooks/usePlugins';
 import useStateSafe from '../../core/hooks/useStateSafe';
 import * as Actions from '../actions/index';
-import {ConfigContext} from '../config/index';
+import {config} from '../config/index';
 import selectAvailablePanels from '../selectors/selectAvailablePanels';
 import selectAvailableSidebarPanels from '../selectors/selectAvailableSidebarPanels';
 import {useDispatch, useSelector} from '../store/index';
 import {useSelectItem} from './Controls';
 
-const {Suspense, useCallback, useContext, useEffect} = React;
+const {Suspense, useCallback, useEffect} = React;
 
 /**
  * Failure to preload is a non-critical failure, so we'll use this to swallow
@@ -40,7 +40,6 @@ const {Suspense, useCallback, useContext, useEffect} = React;
 const swallow = [value => value, _error => undefined];
 
 export default function Sidebar() {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
 	const [hasError, setHasError] = useStateSafe(false);
@@ -53,7 +52,8 @@ export default function Sidebar() {
 	const sidebarPanels = useSelector(
 		selectAvailableSidebarPanels(config.sidebarPanels)
 	);
-	const {sidebarOpen, sidebarPanelId} = store;
+	const sidebarOpen = store.sidebar.open;
+	const sidebarPanelId = store.sidebar.panelId;
 
 	const panel = sidebarPanels[sidebarPanelId];
 	const promise = panel
@@ -202,7 +202,10 @@ export default function Sidebar() {
 								return (
 									<a
 										className={classNames({active})}
+										data-tooltip-align="left"
 										href={url}
+										key={panel.sidebarPanelId}
+										title={label}
 									>
 										<ClayIcon symbol={icon} />
 									</a>
@@ -216,31 +219,19 @@ export default function Sidebar() {
 								).then(...swallow);
 
 							return (
-								<>
-									{isLink ? (
-										<a
-											className={classNames({active})}
-											href={url}
-										>
-											<ClayIcon symbol={icon} />
-										</a>
-									) : (
-										<ClayButtonWithIcon
-											aria-pressed={active}
-											className={classNames({active})}
-											data-tooltip-align="left"
-											displayType="unstyled"
-											id={panel.sidebarPanelId}
-											key={panel.sidebarPanelId}
-											onClick={() => handleClick(panel)}
-											onFocus={prefetch}
-											onMouseEnter={prefetch}
-											symbol={icon}
-											title={label}
-										/>
-									)}
-									);
-								</>
+								<ClayButtonWithIcon
+									aria-pressed={active}
+									className={classNames({active})}
+									data-tooltip-align="left"
+									displayType="unstyled"
+									id={panel.sidebarPanelId}
+									key={panel.sidebarPanelId}
+									onClick={() => handleClick(panel)}
+									onFocus={prefetch}
+									onMouseEnter={prefetch}
+									symbol={icon}
+									title={label}
+								/>
 							);
 						});
 

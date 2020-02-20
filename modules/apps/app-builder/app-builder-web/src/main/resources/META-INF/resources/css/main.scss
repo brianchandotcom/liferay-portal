@@ -142,3 +142,9 @@ body.open .app-builder-upper-toolbar {
 	border: 1px solid #e7e7ed;
 	box-shadow: none;
 }
+
+.taglib-empty-result-message-description {
+	&.empty-message-color {
+		color: #6b6c7e;
+	}
+}

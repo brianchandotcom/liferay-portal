@@ -14,11 +14,14 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import React, {useContext} from 'react';
+import PropTypes from 'prop-types';
 
+import {
+	ConfigurationFieldPropTypes,
+	getLayoutDataItemPropTypes
+} from '../../../prop-types/index';
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../../config/constants/fragmentConfigurationFieldTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
-import {ConfigContext} from '../../config/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateFragmentConfiguration from '../../thunks/updateFragmentConfiguration';
@@ -48,8 +51,14 @@ const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
 	);
 };
 
+FieldSet.propTypes = {
+	configurationValues: PropTypes.object,
+	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),
+	label: PropTypes.string,
+	onValueSelect: PropTypes.func.isRequired
+};
+
 export const FragmentConfigurationPanel = ({item}) => {
-	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 
 	const fragmentEntryLink = useSelector(
@@ -74,7 +83,6 @@ export const FragmentConfigurationPanel = ({item}) => {
 	const onRestoreButtonClick = () => {
 		dispatch(
 			updateFragmentConfiguration({
-				config,
 				configurationValues: defaultConfigurationValues,
 				fragmentEntryLink,
 				segmentsExperienceId
@@ -90,7 +98,6 @@ export const FragmentConfigurationPanel = ({item}) => {
 
 		dispatch(
 			updateFragmentConfiguration({
-				config,
 				configurationValues: nextConfigurationValues,
 				fragmentEntryLink,
 				segmentsExperienceId
@@ -116,6 +123,14 @@ export const FragmentConfigurationPanel = ({item}) => {
 	);
 };
 
+FragmentConfigurationPanel.propTypes = {
+	item: getLayoutDataItemPropTypes({
+		config: PropTypes.shape({
+			fragmentEntryLinkId: PropTypes.string.isRequired
+		}).isRequired
+	})
+};
+
 const RestoreButton = ({onRestoreButtonClick}) => (
 	<ClayButton
 		borderless
@@ -128,3 +143,7 @@ const RestoreButton = ({onRestoreButtonClick}) => (
 		<span className="ml-2">{Liferay.Language.get('restore-values')}</span>
 	</ClayButton>
 );
+
+RestoreButton.propTypes = {
+	onRestoreButtonClick: PropTypes.func.isRequired
+};

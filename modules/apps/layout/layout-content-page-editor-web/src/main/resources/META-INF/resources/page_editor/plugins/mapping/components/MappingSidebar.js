@@ -12,15 +12,13 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {ConfigContext} from '../../../app/config/index';
+import {config} from '../../../app/config/index';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 
 export default function MappingSidebar() {
-	const {selectedMappingTypes} = useContext(ConfigContext);
-
 	return (
 		<>
 			<SidebarPanelHeader>
@@ -39,17 +37,17 @@ export default function MappingSidebar() {
 						{Liferay.Language.get('content-type')}:
 					</p>
 					<p className="mb-0 small">
-						{selectedMappingTypes.type.label}
+						{config.selectedMappingTypes.type.label}
 					</p>
 				</div>
 
-				{selectedMappingTypes.subtype && (
+				{config.selectedMappingTypes.subtype && (
 					<div className="d-flex flex-column">
 						<p className="list-group-title">
 							{Liferay.Language.get('subtype')}:
 						</p>
 						<p className="small">
-							{selectedMappingTypes.subtype.label}
+							{config.selectedMappingTypes.subtype.label}
 						</p>
 					</div>
 				)}

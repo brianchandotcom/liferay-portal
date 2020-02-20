@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -81,6 +82,18 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 						LayoutStructureItem layoutStructureItem =
 							layoutStructure.addRowLayoutStructureItem(
 								parentItemId, position, _DEFAULT_ROW_COLUMNS);
+
+						for (int i = 0; i < _DEFAULT_ROW_COLUMNS; i++) {
+							ColumnLayoutStructureItem
+								columnLayoutStructureItem =
+									(ColumnLayoutStructureItem)
+										layoutStructure.
+											addColumnLayoutStructureItem(
+												layoutStructureItem.getItemId(),
+												i);
+
+							columnLayoutStructureItem.setSize(4);
+						}
 
 						jsonObject.put(
 							"addedItemId", layoutStructureItem.getItemId());

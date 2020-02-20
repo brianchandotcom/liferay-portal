@@ -302,6 +302,11 @@ if (portletTitleBasedNavigation) {
 
 			<c:if test="<%= curParentMessage == null %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+					<liferay-asset:asset-categories-selector
+						className="<%= MBMessage.class.getName() %>"
+						classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
+					/>
+
 					<liferay-asset:asset-tags-selector
 						className="<%= MBMessage.class.getName() %>"
 						classPK="<%= (message != null) ? message.getMessageId() : 0 %>"

@@ -53,7 +53,7 @@ List<CustomFacetTermDisplayContext> customFacetTermDisplayContexts = customFacet
 		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(customFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= customFacetDisplayContext.getParameterValue() %>" />
 	</c:when>
 	<c:otherwise>
-		<aui:form method="post" name="customFacetForm">
+		<aui:form method="post" name="customFacetFm">
 			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(customFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= customFacetDisplayContext.getParameterValue() %>" />
 			<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= customFacetDisplayContext.getParameterName() %>" />
 
@@ -125,7 +125,7 @@ List<CustomFacetTermDisplayContext> customFacetTermDisplayContexts = customFacet
 
 <aui:script use="liferay-search-facet-util">
 	var facetTerms = document.querySelectorAll(
-		'#<portlet:namespace />customFacetForm .facet-term'
+		'#<portlet:namespace />customFacetFm .facet-term'
 	);
 
 	facetTerms.forEach(function(term) {

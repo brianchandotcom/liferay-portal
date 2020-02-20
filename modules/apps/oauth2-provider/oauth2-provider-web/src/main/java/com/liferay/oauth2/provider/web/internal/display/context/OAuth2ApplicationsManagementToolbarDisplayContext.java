@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
@@ -77,9 +78,7 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 	}
 
 	public CreationMenu getCreationMenu() {
-		CreationMenu creationMenu = new CreationMenu();
-
-		creationMenu.addPrimaryDropdownItem(
+		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
@@ -88,9 +87,8 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest, "add-o-auth2-application"));
-			});
-
-		return creationMenu;
+			}
+		).build();
 	}
 
 	public String getDisplayStyle() {

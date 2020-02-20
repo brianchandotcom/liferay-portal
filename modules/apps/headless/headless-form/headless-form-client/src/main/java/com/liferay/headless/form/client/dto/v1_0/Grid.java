@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Grid {
+public class Grid implements Cloneable {
 
 	public FormFieldOption[] getColumns() {
 		return columns;
@@ -88,6 +88,11 @@ public class Grid {
 	}
 
 	protected FormFieldOption[] rows;
+
+	@Override
+	public Grid clone() throws CloneNotSupportedException {
+		return (Grid)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -219,13 +219,12 @@ definition {
 	}
 
 	macro uploadFile {
+		var key_navTab = "${navTab}";
 		var key_uploadFileName = "${uploadFileName}";
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		if (IsElementPresent(locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB")) {
-			var key_navTab = "${navTab}";
-
 			AssertClick(
 				locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
 				value1 = "${navTab}");
@@ -238,6 +237,10 @@ definition {
 			value1 = "${uploadFileName}");
 
 		Pause(locator1 = "3000");
+
+		AssertElementPresent.assertVisible(
+			locator1 = "ItemSelector#ADD_BUTTON",
+			value1 = "Add");
 
 		AssertClick(
 			locator1 = "ItemSelector#ADD_BUTTON",

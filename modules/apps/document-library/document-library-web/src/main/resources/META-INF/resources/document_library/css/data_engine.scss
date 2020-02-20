@@ -1,0 +1,16 @@
+.data-layout-builder-sidebar-content {
+	overflow: hidden;
+	position: relative;
+
+	.data-layout-builder-sidebar {
+		border-bottom: 1px solid #e1e0e8;
+		border-top: 1px solid #e1e0e8;
+		position: absolute;
+		top: 0;
+
+		.sidebar .sidebar-body {
+			height: calc(100% - 56px);
+			overflow: auto;
+		}
+	}
+}

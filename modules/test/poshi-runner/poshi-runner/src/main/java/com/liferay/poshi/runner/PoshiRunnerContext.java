@@ -21,6 +21,7 @@ import com.google.common.collect.Multimap;
 import com.liferay.poshi.runner.pql.PQLEntity;
 import com.liferay.poshi.runner.pql.PQLEntityFactory;
 import com.liferay.poshi.runner.prose.PoshiProseMatcher;
+import com.liferay.poshi.runner.script.PoshiScriptParserException;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.MathUtil;
@@ -328,7 +329,14 @@ public class PoshiRunnerContext {
 	}
 
 	public static void readFiles() throws Exception {
+		System.out.print("Reading Poshi files...");
+
+		long start = System.currentTimeMillis();
+
 		readFiles(PoshiRunnerContext.POSHI_TEST_FILE_INCLUDES);
+
+		System.out.println(
+			" Completed in " + (System.currentTimeMillis() - start) + "ms.");
 	}
 
 	public static void readFiles(String[] testFileIncludes) throws Exception {
@@ -1715,7 +1723,11 @@ public class PoshiRunnerContext {
 				}
 			}
 			catch (Exception exception) {
-				exception.printStackTrace();
+				System.out.println("Unable to read: " + filePath);
+
+				if (!(exception instanceof PoshiScriptParserException)) {
+					System.out.println(exception.getMessage());
+				}
 			}
 
 			return _url;

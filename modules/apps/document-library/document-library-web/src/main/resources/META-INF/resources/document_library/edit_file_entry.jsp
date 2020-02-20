@@ -370,9 +370,7 @@ renderResponse.setTitle(headerTitle);
 								try {
 									boolean localizable = true;
 
-									List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-									for (DDMStructure ddmStructure : ddmStructures) {
+									for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
 										com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
 
 										try {
@@ -388,19 +386,15 @@ renderResponse.setTitle(headerTitle);
 											<div class="hide">
 										</c:if>
 
-										<%
-										FFDocumentLibraryDDMEditorConfiguration ffDocumentLibraryDDMEditorConfiguration = (FFDocumentLibraryDDMEditorConfiguration)request.getAttribute(FFDocumentLibraryDDMEditorConfiguration.class.getName());
-										%>
-
 										<c:choose>
-											<c:when test="<%= ffDocumentLibraryDDMEditorConfiguration.useDataEngineEditor() %>">
+											<c:when test="<%= FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor() %>">
 
 												<%
 												DDMFormValuesToMapConverter ddmFormValuesToMapConverter = (DDMFormValuesToMapConverter)request.getAttribute(DDMFormValuesToMapConverter.class.getName());
 												%>
 
 												<liferay-data-engine:data-layout-renderer
-													containerId="reportId"
+													containerId='<%= "reportId_" + ddmStructure.getStructureId() %>'
 													dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 													dataRecordValues="<%= ddmFormValuesToMapConverter.convert(ddmFormValues, DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId())) %>"
 													namespace="<%= renderResponse.getNamespace() %>"

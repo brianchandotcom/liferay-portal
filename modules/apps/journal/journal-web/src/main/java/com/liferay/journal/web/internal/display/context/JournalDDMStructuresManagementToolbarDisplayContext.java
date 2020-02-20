@@ -17,6 +17,7 @@ package com.liferay.journal.web.internal.display.context;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -108,21 +109,19 @@ public class JournalDDMStructuresManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							liferayPortletResponse.createRenderURL(), "mvcPath",
-							"/edit_ddm_structure.jsp", "redirect",
-							themeDisplay.getURLCurrent());
-						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
-					});
+				dropdownItem.setHref(
+					liferayPortletResponse.createRenderURL(), "mvcPath",
+					"/edit_ddm_structure.jsp", "redirect",
+					themeDisplay.getURLCurrent());
+
+				dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 			}
-		};
+		).build();
 	}
 
 	@Override

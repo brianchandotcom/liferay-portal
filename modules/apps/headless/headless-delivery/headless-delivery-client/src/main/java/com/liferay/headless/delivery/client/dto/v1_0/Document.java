@@ -28,7 +28,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Document {
+public class Document implements Cloneable {
 
 	public static enum ViewableBy {
 
@@ -511,6 +511,11 @@ public class Document {
 	}
 
 	protected ViewableBy viewableBy;
+
+	@Override
+	public Document clone() throws CloneNotSupportedException {
+		return (Document)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

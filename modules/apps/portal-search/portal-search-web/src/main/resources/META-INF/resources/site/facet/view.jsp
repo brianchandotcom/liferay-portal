@@ -52,7 +52,7 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = (ScopeSearchFace
 				persistState="<%= true %>"
 				title="site"
 			>
-				<aui:form method="post" name="siteFacetForm">
+				<aui:form method="post" name="siteFacetFm">
 					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterValue() %>" />
 					<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= scopeSearchFacetDisplayContext.getParameterName() %>" />
 

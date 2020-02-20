@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SiteBrief {
+public class SiteBrief implements Cloneable {
 
 	public Long getId() {
 		return id;
@@ -88,6 +88,11 @@ public class SiteBrief {
 	}
 
 	protected Map<String, String> name_i18n;
+
+	@Override
+	public SiteBrief clone() throws CloneNotSupportedException {
+		return (SiteBrief)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

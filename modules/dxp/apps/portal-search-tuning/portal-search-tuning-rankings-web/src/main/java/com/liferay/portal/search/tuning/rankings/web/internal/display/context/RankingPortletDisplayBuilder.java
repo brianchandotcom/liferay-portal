@@ -15,6 +15,7 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -160,21 +161,16 @@ public class RankingPortletDisplayBuilder {
 	}
 
 	protected CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(),
-							"mvcRenderCommandName", "addResultsRankingEntry",
-							"redirect",
-							PortalUtil.getCurrentURL(_httpServletRequest));
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "new-ranking"));
-					});
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"addResultsRankingEntry", "redirect",
+					PortalUtil.getCurrentURL(_httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "new-ranking"));
 			}
-		};
+		).build();
 	}
 
 	protected String getDisplayStyle() {

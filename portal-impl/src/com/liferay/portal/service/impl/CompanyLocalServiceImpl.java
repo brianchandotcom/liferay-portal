@@ -233,8 +233,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Company
 
-		Date now = new Date();
-
 		Company company = companyPersistence.fetchByWebId(webId);
 
 		if (company == null) {
@@ -351,65 +349,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				}
 			}
 			else {
-				long userId = counterLocalService.increment();
-
-				defaultUser = userPersistence.create(userId);
-
-				defaultUser.setCompanyId(companyId);
-				defaultUser.setDefaultUser(true);
-				defaultUser.setContactId(counterLocalService.increment());
-				defaultUser.setPassword("password");
-				defaultUser.setScreenName(
-					String.valueOf(defaultUser.getUserId()));
-				defaultUser.setEmailAddress("default@" + company.getMx());
-				defaultUser.setLanguageId(
-					LocaleUtil.toLanguageId(companyDefaultLocale));
-
-				if (Validator.isNotNull(
-						PropsValues.COMPANY_DEFAULT_TIME_ZONE)) {
-
-					defaultUser.setTimeZoneId(
-						PropsValues.COMPANY_DEFAULT_TIME_ZONE);
-				}
-				else {
-					TimeZone timeZone = TimeZoneUtil.getDefault();
-
-					defaultUser.setTimeZoneId(timeZone.getID());
-				}
-
-				String greeting = LanguageUtil.format(
-					defaultUser.getLocale(), "welcome", null, false);
-
-				defaultUser.setGreeting(greeting + StringPool.EXCLAMATION);
-
-				defaultUser.setLoginDate(now);
-				defaultUser.setFailedLoginAttempts(0);
-				defaultUser.setAgreedToTermsOfUse(true);
-				defaultUser.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-				defaultUser = userPersistence.update(defaultUser);
-
-				// Contact
-
-				Contact defaultContact = contactPersistence.create(
-					defaultUser.getContactId());
-
-				defaultContact.setCompanyId(defaultUser.getCompanyId());
-				defaultContact.setUserId(defaultUser.getUserId());
-				defaultContact.setUserName(StringPool.BLANK);
-				defaultContact.setClassName(User.class.getName());
-				defaultContact.setClassPK(defaultUser.getUserId());
-				defaultContact.setAccountId(company.getAccountId());
-				defaultContact.setParentContactId(
-					ContactConstants.DEFAULT_PARENT_CONTACT_ID);
-				defaultContact.setEmailAddress(defaultUser.getEmailAddress());
-				defaultContact.setFirstName(StringPool.BLANK);
-				defaultContact.setMiddleName(StringPool.BLANK);
-				defaultContact.setLastName(StringPool.BLANK);
-				defaultContact.setMale(true);
-				defaultContact.setBirthday(now);
-
-				contactPersistence.update(defaultContact);
+				defaultUser = _addDefaultUser(company);
 			}
 
 			// System roles
@@ -1879,6 +1819,70 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		private ActionableDynamicQuery _actionableDynamicQuery;
 
+	}
+
+	private User _addDefaultUser(Company company) {
+		Date now = new Date();
+
+		User defaultUser = userPersistence.create(
+			counterLocalService.increment());
+
+		defaultUser.setCompanyId(company.getCompanyId());
+		defaultUser.setDefaultUser(true);
+		defaultUser.setContactId(counterLocalService.increment());
+		defaultUser.setPassword("password");
+		defaultUser.setScreenName(String.valueOf(defaultUser.getUserId()));
+		defaultUser.setEmailAddress("default@" + company.getMx());
+		defaultUser.setLanguageId(
+			LocaleUtil.toLanguageId(
+				LocaleUtil.fromLanguageId(PropsValues.COMPANY_DEFAULT_LOCALE)));
+
+		if (Validator.isNotNull(PropsValues.COMPANY_DEFAULT_TIME_ZONE)) {
+			defaultUser.setTimeZoneId(PropsValues.COMPANY_DEFAULT_TIME_ZONE);
+		}
+		else {
+			TimeZone timeZone = TimeZoneUtil.getDefault();
+
+			defaultUser.setTimeZoneId(timeZone.getID());
+		}
+
+		String greeting = LanguageUtil.format(
+			defaultUser.getLocale(), "welcome", null, false);
+
+		defaultUser.setGreeting(greeting + StringPool.EXCLAMATION);
+
+		defaultUser.setLoginDate(now);
+		defaultUser.setFailedLoginAttempts(0);
+		defaultUser.setAgreedToTermsOfUse(true);
+		defaultUser.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		userLocalService.preAddDefaultUser(defaultUser);
+
+		defaultUser = userPersistence.update(defaultUser);
+
+		// Contact
+
+		Contact defaultContact = contactPersistence.create(
+			defaultUser.getContactId());
+
+		defaultContact.setCompanyId(defaultUser.getCompanyId());
+		defaultContact.setUserId(defaultUser.getUserId());
+		defaultContact.setUserName(StringPool.BLANK);
+		defaultContact.setClassName(User.class.getName());
+		defaultContact.setClassPK(defaultUser.getUserId());
+		defaultContact.setAccountId(company.getAccountId());
+		defaultContact.setParentContactId(
+			ContactConstants.DEFAULT_PARENT_CONTACT_ID);
+		defaultContact.setEmailAddress(defaultUser.getEmailAddress());
+		defaultContact.setFirstName(StringPool.BLANK);
+		defaultContact.setMiddleName(StringPool.BLANK);
+		defaultContact.setLastName(StringPool.BLANK);
+		defaultContact.setMale(true);
+		defaultContact.setBirthday(now);
+
+		contactPersistence.update(defaultContact);
+
+		return defaultUser;
 	}
 
 	private void _clearCompanyCache(long companyId) {

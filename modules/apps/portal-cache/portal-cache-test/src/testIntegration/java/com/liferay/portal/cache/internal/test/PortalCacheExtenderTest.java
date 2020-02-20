@@ -85,23 +85,12 @@ public class PortalCacheExtenderTest {
 	}
 
 	@Test
-	public void testAddModuleMultiVMConfig() throws Exception {
+	public void testAddAndRemoveConfig() throws Exception {
 		_assertCacheConfig(
 			PortalCacheManagerNames.MULTI_VM, false, 1001, "test.cache.multi",
 			true, 51L);
-	}
-
-	@Test
-	public void testAddModuleSingleVMConfig() throws Exception {
 		_assertCacheConfig(
 			PortalCacheManagerNames.SINGLE_VM, false, 1001, "test.cache.single",
-			true, 51L);
-	}
-
-	@Test
-	public void testRemoveMultiVMConfig() throws Exception {
-		_assertCacheConfig(
-			PortalCacheManagerNames.MULTI_VM, false, 1001, "test.cache.multi",
 			true, 51L);
 
 		_bundle.stop();
@@ -110,14 +99,10 @@ public class PortalCacheExtenderTest {
 
 		_bundle.start();
 
-		Object object = _fetchMBeanObject(
-			PortalCacheManagerNames.MULTI_VM, "test.cache.multi");
+		Assert.assertNull(
+			_fetchMBeanObject(
+				PortalCacheManagerNames.MULTI_VM, "test.cache.multi"));
 
-		Assert.assertNull(object);
-	}
-
-	@Test
-	public void testRemoveSingleVMConfig() throws Exception {
 		_assertCacheConfig(
 			PortalCacheManagerNames.SINGLE_VM, false, 1001, "test.cache.single",
 			true, 51L);
@@ -128,14 +113,24 @@ public class PortalCacheExtenderTest {
 
 		_bundle.start();
 
-		Object object = _fetchMBeanObject(
-			PortalCacheManagerNames.SINGLE_VM, "test.cache.single");
+		Assert.assertNull(
+			_fetchMBeanObject(
+				PortalCacheManagerNames.SINGLE_VM, "test.cache.single"));
 
-		Assert.assertNull(object);
+		_assertCacheConfig(
+			PortalCacheManagerNames.MULTI_VM, false, 1001, "test.cache.multi",
+			true, 51L);
 	}
 
 	@Test
-	public void testUpdateModuleMultiVMConfig() throws Exception {
+	public void testUpdateConfig() throws Exception {
+		_assertCacheConfig(
+			PortalCacheManagerNames.MULTI_VM, false, 1001, "test.cache.multi",
+			true, 51L);
+		_assertCacheConfig(
+			PortalCacheManagerNames.SINGLE_VM, false, 1001, "test.cache.single",
+			true, 51L);
+
 		_bundle.stop();
 
 		_bundle.update(
@@ -147,18 +142,6 @@ public class PortalCacheExtenderTest {
 		_assertCacheConfig(
 			PortalCacheManagerNames.MULTI_VM, false, 2001,
 			"test.cache.multi.updated", true, 101L);
-	}
-
-	@Test
-	public void testUpdateModuleSingleVMConfig() throws Exception {
-		_bundle.stop();
-
-		_bundle.update(
-			_createBundle(
-				"module-multi-vm-updated.xml", "module-single-vm-updated.xml"));
-
-		_bundle.start();
-
 		_assertCacheConfig(
 			PortalCacheManagerNames.SINGLE_VM, false, 2001,
 			"test.cache.single.updated", true, 101L);

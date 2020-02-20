@@ -154,7 +154,7 @@ const withMultiplePages = ChildComponent => {
 				});
 			}
 
-			if (!successPageSettings.enabled) {
+			if (successPageSettings.enabled) {
 				pageSettingsItems.push({
 					label: Liferay.Language.get('add-success-page'),
 					settingsItem: 'add-success-page',

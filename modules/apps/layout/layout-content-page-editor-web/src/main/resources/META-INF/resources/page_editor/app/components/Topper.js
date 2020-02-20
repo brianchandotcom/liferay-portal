@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext, useMemo, useRef} from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -42,6 +42,8 @@ import useDragAndDrop, {
 	DragDropManagerImpl,
 	TARGET_POSITION
 } from './useDragAndDrop';
+
+const TOPPER_BAR_HEIGHT = 24;
 
 const TopperListItem = React.forwardRef(
 	({children, className, expand, ...props}, ref) => (
@@ -114,6 +116,7 @@ export default function Topper({
 
 	const fragmentEntryLinks = store.fragmentEntryLinks;
 
+	const [isInset, setIsInset] = useState(false);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 
 	const getName = (item, fragmentEntryLinks) => {
@@ -171,6 +174,32 @@ export default function Topper({
 		};
 	}, []);
 
+	useEffect(() => {
+		if (itemRef && itemRef.current) {
+			const itemTop =
+				itemRef.current.getBoundingClientRect().y - TOPPER_BAR_HEIGHT;
+			const controlMenuHeight = document
+				.getElementById('ControlMenu')
+				.getBoundingClientRect().height;
+			const managementToolbarHeight = document
+				.querySelector('.page-editor__toolbar')
+				.getBoundingClientRect().height;
+			const pageEditorTop = document
+				.getElementById('page-editor')
+				.getBoundingClientRect().y;
+
+			if (
+				itemTop < pageEditorTop ||
+				itemTop < controlMenuHeight + managementToolbarHeight
+			) {
+				setIsInset(true);
+			}
+			else {
+				setIsInset(false);
+			}
+		}
+	}, [itemRef, layoutData, windowScrollPosition]);
+
 	return (
 		<div
 			className={classNames({
@@ -221,7 +250,11 @@ export default function Topper({
 			}}
 			ref={containerRef}
 		>
-			<div className="page-editor__topper__bar tbar">
+			<div
+				className={classNames('page-editor__topper__bar', 'tbar', {
+					'page-editor__topper__bar--inset': isInset
+				})}
+			>
 				<ul className="tbar-nav">
 					<TopperListItem
 						className="page-editor__topper__drag-handler"

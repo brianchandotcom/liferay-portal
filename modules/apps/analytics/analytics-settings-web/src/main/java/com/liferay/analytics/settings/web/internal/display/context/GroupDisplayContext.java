@@ -213,8 +213,8 @@ public class GroupDisplayContext {
 	}
 
 	private Set<String> _getDisabledGroupIds() {
-		if (!MapUtil.isEmpty(_channelNames)) {
-			Collections.emptySet();
+		if (MapUtil.isEmpty(_channelNames)) {
+			return Collections.emptySet();
 		}
 
 		return _channelNames.keySet();

@@ -29,7 +29,7 @@
 import {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -79,6 +79,7 @@ const RowWithControls = React.forwardRef(
 		const rowRef = useRef(null);
 		const rowRect = getRect(rowRef.current);
 		const [highlightedColumn, setHighLightedColumn] = useState(null);
+		const [resizeFinished, setResizeFinished] = useState(false);
 		const [showOverlay, setShowOverlay] = useState(false);
 
 		const handleButtonClick = id => {
@@ -154,14 +155,21 @@ const RowWithControls = React.forwardRef(
 		const onResizeEnd = () => {
 			setHighLightedColumn(null);
 			setShowOverlay(false);
-
-			dispatch(
-				resizeColumns({
-					layoutData,
-					store: state
-				})
-			);
+			setResizeFinished(true);
 		};
+
+		useEffect(() => {
+			if (resizeFinished) {
+				setResizeFinished(false);
+
+				dispatch(
+					resizeColumns({
+						layoutData,
+						store: state
+					})
+				);
+			}
+		}, [layoutData, state, dispatch, resizeFinished]);
 
 		const content = (
 			<Row

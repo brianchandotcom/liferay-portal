@@ -59,18 +59,20 @@ public class UpgradeKBArticle extends UpgradeProcess {
 	private String _getUniqueUrlTitle(String urlTitle, int n) {
 		String suffix = _DEFAULT_SUFFIX;
 
-		Matcher matcher = _pattern.matcher(urlTitle);
-
 		int i = urlTitle.lastIndexOf(CharPool.DASH);
 
-		if (matcher.matches() && (i != -1)) {
-			int counter = GetterUtil.getInteger(urlTitle.substring(i + 1));
+		if (i != -1) {
+			Matcher matcher = _pattern.matcher(urlTitle);
 
-			int spreadValue = 16 + n;
+			if (matcher.matches()) {
+				int counter = GetterUtil.getInteger(urlTitle.substring(i + 1));
 
-			suffix = CharPool.DASH + String.valueOf(counter + spreadValue);
+				int spreadValue = 16 + n;
 
-			urlTitle = urlTitle.substring(0, i);
+				suffix = CharPool.DASH + String.valueOf(counter + spreadValue);
+
+				urlTitle = urlTitle.substring(0, i);
+			}
 		}
 
 		if ((urlTitle.length() + suffix.length()) > _MAX_URL_TITLE_LENGTH) {

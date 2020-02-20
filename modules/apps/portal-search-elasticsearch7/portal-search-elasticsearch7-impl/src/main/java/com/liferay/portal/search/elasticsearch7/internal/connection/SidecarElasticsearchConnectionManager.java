@@ -17,13 +17,18 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.sidecar.ClusterableSidecar;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.Sidecar;
 
 import org.osgi.framework.BundleContext;
@@ -45,6 +50,8 @@ public class SidecarElasticsearchConnectionManager {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
+		BundleContext bundleContext = componentContext.getBundleContext();
+
 		ElasticsearchConfiguration elasticsearchConfiguration =
 			ConfigurableUtil.createConfigurable(
 				ElasticsearchConfiguration.class,
@@ -71,19 +78,35 @@ public class SidecarElasticsearchConnectionManager {
 				_log.warn(sb.toString());
 			}
 
-			elasticsearchConnection = new SidecarElasticsearchConnection(
-				new Sidecar(
+			if (_clusterExecutor.isEnabled()) {
+				ClusterableSidecar clusterableSidecar = new ClusterableSidecar(
 					componentContext,
 					SidecarElasticsearchConnectionManager.class.getName(),
-					elasticsearchConfiguration, _file, _processExecutor,
-					_props));
+					elasticsearchConfiguration, _clusterExecutor,
+					_clusterMasterExecutor, _file, _jsonFactory,
+					_processExecutor, _props);
+
+				_identifiableOSGiServiceserviceRegistration =
+					bundleContext.registerService(
+						IdentifiableOSGiService.class, clusterableSidecar,
+						null);
+
+				elasticsearchConnection = new SidecarElasticsearchConnection(
+					clusterableSidecar);
+			}
+			else {
+				elasticsearchConnection = new SidecarElasticsearchConnection(
+					new Sidecar(
+						componentContext,
+						SidecarElasticsearchConnectionManager.class.getName(),
+						elasticsearchConfiguration, _file, _processExecutor,
+						_props));
+			}
 		}
 		else {
 			elasticsearchConnection = ProxyFactory.newDummyInstance(
 				ElasticsearchConnection.class);
 		}
-
-		BundleContext bundleContext = componentContext.getBundleContext();
 
 		_serviceRegistration = bundleContext.registerService(
 			ElasticsearchConnection.class, elasticsearchConnection,
@@ -94,13 +117,29 @@ public class SidecarElasticsearchConnectionManager {
 	@Deactivate
 	protected void deactivate() {
 		_serviceRegistration.unregister();
+
+		if (_identifiableOSGiServiceserviceRegistration != null) {
+			_identifiableOSGiServiceserviceRegistration.unregister();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SidecarElasticsearchConnectionManager.class);
 
 	@Reference
+	private ClusterExecutor _clusterExecutor;
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
+
+	@Reference
 	private File _file;
+
+	private ServiceRegistration<IdentifiableOSGiService>
+		_identifiableOSGiServiceserviceRegistration;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ProcessExecutor _processExecutor;

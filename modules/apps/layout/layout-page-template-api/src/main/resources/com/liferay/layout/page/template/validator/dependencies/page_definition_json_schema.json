@@ -151,6 +151,10 @@
 							"title": "The fragmentCollectionName Schema",
 							"type": "string"
 						},
+						"fragmentKey": {
+							"title": "The fragmentKey Schema",
+							"type": "string"
+						},
 						"fragmentName": {
 							"title": "The fragmentName Schema",
 							"type": "string"

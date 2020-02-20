@@ -64,7 +64,7 @@ TopperListItem.propTypes = {
 	expand: PropTypes.bool
 };
 
-export default function Topper({children, item, layoutData}) {
+export default function Topper({children, item, itemRef, layoutData}) {
 	const containerRef = useRef(null);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);

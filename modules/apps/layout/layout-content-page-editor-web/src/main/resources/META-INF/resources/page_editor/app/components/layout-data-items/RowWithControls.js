@@ -227,7 +227,7 @@ const RowWithControls = React.forwardRef(
 		);
 
 		return showLayoutItemTopper ? (
-			<Topper item={item} layoutData={layoutData}>
+			<Topper item={item} itemRef={ref} layoutData={layoutData}>
 				{() => content}
 			</Topper>
 		) : (

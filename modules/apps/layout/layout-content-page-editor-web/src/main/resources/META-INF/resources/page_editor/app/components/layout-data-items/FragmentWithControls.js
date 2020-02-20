@@ -112,7 +112,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	);
 
 	return showLayoutItemTopper ? (
-		<Topper item={item} layoutData={layoutData}>
+		<Topper item={item} itemRef={ref} layoutData={layoutData}>
 			{() => content}
 		</Topper>
 	) : (

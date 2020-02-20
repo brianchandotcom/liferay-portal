@@ -343,13 +343,20 @@ else {
 				</aui:fieldset>
 			</liferay-ui:panel>
 		</c:if>
-	</liferay-ui:panel-container>
-
-	<aui:field-wrapper cssClass="upload-multiple-file-permissions" label="permissions">
-		<liferay-ui:input-permissions
+		<liferay-ui:panel
+				cssClass="mb-3"
+				defaultState="closed"
+				extended="<%= true %>"
+				id="dlFileEntryPermissionsPanel"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="permissions"
+			>
+				<liferay-ui:input-permissions
 			modelName="<%= DLFileEntryConstants.getClassName() %>"
 		/>
-	</aui:field-wrapper>
+			</liferay-ui:panel>
+	</liferay-ui:panel-container>
 
 	<span id="<portlet:namespace />selectedFileNameContainer"></span>
 

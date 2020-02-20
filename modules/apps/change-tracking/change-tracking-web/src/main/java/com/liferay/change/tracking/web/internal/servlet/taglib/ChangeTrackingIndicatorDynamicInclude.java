@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
@@ -82,28 +81,23 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		try {
-			PrintWriter printWriter = httpServletResponse.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-			printWriter.write("<div class=\"change-tracking-indicator\">");
+		printWriter.write("<div class=\"change-tracking-indicator\">");
 
-			String componentId =
-				_portal.getPortletNamespace(CTPortletKeys.CHANGE_LISTS) +
-					"IndicatorComponent";
-			String module =
-				_npmResolver.resolveModuleName("change-tracking-web") +
-					"/dynamic_include/ChangeTrackingIndicator";
+		String componentId =
+			_portal.getPortletNamespace(CTPortletKeys.CHANGE_LISTS) +
+				"IndicatorComponent";
+		String module =
+			_npmResolver.resolveModuleName("change-tracking-web") +
+				"/dynamic_include/ChangeTrackingIndicator";
 
-			_reactRenderer.renderReact(
-				new ComponentDescriptor(module, componentId),
-				_getReactData(httpServletRequest, themeDisplay),
-				httpServletRequest, printWriter);
+		_reactRenderer.renderReact(
+			new ComponentDescriptor(module, componentId),
+			_getReactData(httpServletRequest, themeDisplay), httpServletRequest,
+			printWriter);
 
-			printWriter.write("</div>");
-		}
-		catch (TemplateException templateException) {
-			throw new IOException(templateException);
-		}
+		printWriter.write("</div>");
 	}
 
 	@Override

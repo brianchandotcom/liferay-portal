@@ -9,7 +9,8 @@ exports[`Field Paragraph has a key 1`] = `
 `;
 
 exports[`Field Paragraph has a label 1`] = `
-<div class="form-group" data-field-name="textField"><label>label </label>
+<div class="form-group" data-field-name="textField">
+  <p class="ddm-label">label </p>
   <div class="form-group liferay-ddm-form-field-paragraph" data-fieldname="textField">
     <div class="liferay-ddm-form-field-paragraph-text"></div>
   </div>
@@ -65,7 +66,8 @@ exports[`Field Paragraph is readOnly 1`] = `
 `;
 
 exports[`Field Paragraph renders Label if showLabel is true 1`] = `
-<div class="form-group" data-field-name="textField"><label>text </label>
+<div class="form-group" data-field-name="textField">
+  <p class="ddm-label">text </p>
   <div class="form-group liferay-ddm-form-field-paragraph" data-fieldname="textField">
     <div class="liferay-ddm-form-field-paragraph-text"></div>
   </div>

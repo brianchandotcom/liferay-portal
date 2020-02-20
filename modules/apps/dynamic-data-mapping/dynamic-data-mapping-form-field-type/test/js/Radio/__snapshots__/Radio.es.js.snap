@@ -10,7 +10,8 @@ exports[`Field Radio has a helptext 1`] = `
 `;
 
 exports[`Field Radio has a label 1`] = `
-<div class="form-group" data-field-name="radioField"><label>label </label>
+<div class="form-group" data-field-name="radioField">
+  <p class="ddm-label">label </p>
   <div class="ddm-radio">
     <div class="custom-control custom-radio"><label><input class="custom-control-input" name="radioField" ref="input" type="radio" role="radio"><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
     <div class="custom-control custom-radio"><label><input class="custom-control-input" name="radioField" ref="input" type="radio" role="radio"><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
@@ -73,7 +74,8 @@ exports[`Field Radio is not required 1`] = `
 `;
 
 exports[`Field Radio renders Label if showLabel is true 1`] = `
-<div class="form-group" data-field-name="radioField"><label>text </label>
+<div class="form-group" data-field-name="radioField">
+  <p class="ddm-label">text </p>
   <div class="ddm-radio">
     <div class="custom-control custom-radio"><label><input class="custom-control-input" name="radioField" ref="input" type="radio" role="radio"><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
     <div class="custom-control custom-radio"><label><input class="custom-control-input" name="radioField" ref="input" type="radio" role="radio"><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>

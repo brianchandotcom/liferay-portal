@@ -1,19 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Field Text has a helptext 1`] = `<div class="form-group" data-field-name="textField"><input class="ddm-field-text form-control" name="textField" type="text" value=""><span class="form-text">Type something</span></div>`;
+exports[`Field Text has a helptext 1`] = `<div class="form-group" data-field-name="textField"><input aria-label="text" class="ddm-field-text form-control" name="textField" type="text" value=""><span class="form-text">Type something</span></div>`;
 
-exports[`Field Text has a label 1`] = `<div class="form-group" data-field-name="textField"><label>label </label><input class="ddm-field-text form-control" name="textField" type="text" value=""></div>`;
+exports[`Field Text has a label 1`] = `
+<div class="form-group" data-field-name="textField">
+  <p class="ddm-label">label </p><input aria-label="text" class="ddm-field-text form-control" name="textField" type="text" value="">
+</div>
+`;
 
-exports[`Field Text has a placeholder 1`] = `<div class="form-group" data-field-name="textField"><input class="ddm-field-text form-control" name="textField" type="text" placeholder="Placeholder" value=""></div>`;
+exports[`Field Text has a placeholder 1`] = `<div class="form-group" data-field-name="textField"><input aria-label="text" class="ddm-field-text form-control" name="textField" type="text" placeholder="Placeholder" value=""></div>`;
 
-exports[`Field Text has a spritemap 1`] = `<div class="form-group" data-field-name="textField"><input class="ddm-field-text form-control" name="textField" type="text" value=""></div>`;
+exports[`Field Text has a spritemap 1`] = `<div class="form-group" data-field-name="textField"><input aria-label="text" class="ddm-field-text form-control" name="textField" type="text" value=""></div>`;
 
-exports[`Field Text has a value 1`] = `<div class="form-group" data-field-name="textField"><input class="ddm-field-text form-control" name="textField" type="text" value="value"></div>`;
+exports[`Field Text has a value 1`] = `<div class="form-group" data-field-name="textField"><input aria-label="text" class="ddm-field-text form-control" name="textField" type="text" value="value"></div>`;
 
-exports[`Field Text has an id 1`] = `<div class="form-group" data-field-name="textField"><input class="ddm-field-text form-control" name="textField" type="text" id="ID" value=""></div>`;
+exports[`Field Text has an id 1`] = `<div class="form-group" data-field-name="textField"><input aria-label="text" class="ddm-field-text form-control" name="textField" type="text" id="ID" value=""></div>`;
 
-exports[`Field Text is not readOnly 1`] = `<div class="form-group" data-field-name="textField"><input class="ddm-field-text form-control" name="textField" type="text" value=""></div>`;
+exports[`Field Text is not readOnly 1`] = `<div class="form-group" data-field-name="textField"><input aria-label="text" class="ddm-field-text form-control" name="textField" type="text" value=""></div>`;
 
-exports[`Field Text is not required 1`] = `<div class="form-group" data-field-name="textField"><input class="ddm-field-text form-control" name="textField" type="text" value=""></div>`;
+exports[`Field Text is not required 1`] = `<div class="form-group" data-field-name="textField"><input aria-label="text" class="ddm-field-text form-control" name="textField" type="text" value=""></div>`;
 
-exports[`Field Text renders Label if showLabel is true 1`] = `<div class="form-group" data-field-name="textField"><label>text </label><input class="ddm-field-text form-control" name="textField" type="text" value=""></div>`;
+exports[`Field Text renders Label if showLabel is true 1`] = `
+<div class="form-group" data-field-name="textField">
+  <p class="ddm-label">text </p><input aria-label="text" class="ddm-field-text form-control" name="textField" type="text" value="">
+</div>
+`;

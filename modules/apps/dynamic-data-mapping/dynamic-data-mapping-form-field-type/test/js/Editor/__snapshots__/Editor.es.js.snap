@@ -21,7 +21,8 @@ exports[`Field Editor has a key 1`] = `
 `;
 
 exports[`Field Editor has a label 1`] = `
-<div class="form-group" data-field-name="textField"><label>label </label>
+<div class="form-group" data-field-name="textField">
+  <p class="ddm-label">label </p>
   <div class="field-type-editor form-control input-group-container">
     <div class="alloy-editor-container input-group" id="textFieldContainer">
       <div class="alloy-editor alloy-editor-placeholder" contenteditable="false" id="textFieldEditorContainer" name="textFieldEditor"></div>
@@ -91,7 +92,8 @@ exports[`Field Editor is readOnly 1`] = `
 `;
 
 exports[`Field Editor renders Label if showLabel is true 1`] = `
-<div class="form-group" data-field-name="textField"><label>text </label>
+<div class="form-group" data-field-name="textField">
+  <p class="ddm-label">text </p>
   <div class="field-type-editor form-control input-group-container">
     <div class="alloy-editor-container input-group" id="textFieldContainer">
       <div class="alloy-editor alloy-editor-placeholder" contenteditable="false" id="textFieldEditorContainer" name="textFieldEditor"></div>

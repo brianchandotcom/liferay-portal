@@ -9,7 +9,7 @@ exports[`Options shows the options 1`] = `
         </svg></span>
       <div class="ddm-option-entry">
         <div class="form-group" data-field-name="option0">
-          <div class="form-group" data-field-name="keyValueLabeloption0"><input class="ddm-field-text form-control" name="keyValueLabeloption0" type="text" placeholder="enter-an-option" value=""></div>
+          <div class="form-group" data-field-name="keyValueLabeloption0"><input aria-label="text" class="ddm-field-text form-control" name="keyValueLabeloption0" type="text" placeholder="enter-an-option" value=""></div>
           <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
         </div>
       </div>

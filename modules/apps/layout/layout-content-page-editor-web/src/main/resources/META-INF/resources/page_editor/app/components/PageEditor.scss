@@ -22,8 +22,10 @@
 			left: 12px;
 			width: calc(100% - 24px);
 		}
-		&__resizer {
+
+		&__resizer.btn.btn-primary {
 			border-radius: 50%;
+			cursor: col-resize;
 			height: 16px;
 			left: 100%;
 			padding: 0;
@@ -32,14 +34,13 @@
 			transform: translate(-50%, -50%);
 			width: 16px;
 			z-index: 1;
+
 			html.rtl & {
 				transform: translate(50%, -50%);
 			}
 		}
-		&__resizer:not(:disabled):not(.disabled) {
-			cursor: col-resize;
-		}
 	}
+
 	&__container,
 	&__container > .container,
 	&__container > .container-fluid,

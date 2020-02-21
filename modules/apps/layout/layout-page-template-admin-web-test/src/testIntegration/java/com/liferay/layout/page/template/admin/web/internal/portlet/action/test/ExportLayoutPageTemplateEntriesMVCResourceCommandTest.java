@@ -229,6 +229,12 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 				StringUtil.read(zipFile.getInputStream(zipEntry)),
 				"expected_page_template.json");
 		}
+
+		if (_isPageTemplateThumbnailFile(zipEntry.getName())) {
+			Assert.assertArrayEquals(
+				FileUtil.getBytes(getClass(), "dependencies/thumbnail.png"),
+				FileUtil.getBytes(zipFile.getInputStream(zipEntry)));
+		}
 	}
 
 	@DeleteAfterTestRun

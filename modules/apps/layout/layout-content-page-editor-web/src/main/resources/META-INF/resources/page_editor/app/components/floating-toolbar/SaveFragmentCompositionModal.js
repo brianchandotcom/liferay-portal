@@ -62,9 +62,9 @@ const SaveFragmentCompositionModal = ({
 				previewImageURL: thumbnail.url,
 				store
 			})
-		);
-
-		onClose();
+		).then(() => {
+			onClose();
+		});
 	};
 
 	const handleThumbnailSelected = image => {

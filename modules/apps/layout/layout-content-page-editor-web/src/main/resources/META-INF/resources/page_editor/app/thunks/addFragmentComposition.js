@@ -26,7 +26,7 @@ export default function addFragment({
 	return dispatch => {
 		const {segmentsExperienceId} = store;
 
-		FragmentService.addFragmentComposition({
+		return FragmentService.addFragmentComposition({
 			description,
 			fragmentCollectionId,
 			itemId,

@@ -51,7 +51,6 @@ import java.util.Locale;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -93,7 +92,6 @@ public class AssetTagNamesMultiLanguageSearchTest {
 		_fileEntrySearchFixture.tearDown();
 	}
 
-	@Ignore
 	@Test
 	public void testChineseTags() throws Exception {
 		Locale locale = LocaleUtil.CHINA;
@@ -121,7 +119,6 @@ public class AssetTagNamesMultiLanguageSearchTest {
 		assertSearch(tag, locale);
 	}
 
-	@Ignore
 	@Test
 	public void testEnglishTags() throws Exception {
 		Locale locale = LocaleUtil.US;
@@ -149,7 +146,6 @@ public class AssetTagNamesMultiLanguageSearchTest {
 		assertSearch(tag, locale);
 	}
 
-	@Ignore
 	@Test
 	public void testJapaneseTags() throws Exception {
 		Locale locale = LocaleUtil.JAPAN;

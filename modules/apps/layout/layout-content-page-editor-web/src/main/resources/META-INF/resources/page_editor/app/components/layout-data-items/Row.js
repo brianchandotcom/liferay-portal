@@ -14,7 +14,7 @@
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -22,21 +22,18 @@ import {
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {useSelector} from '../../store/index';
 
 const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
-	const {gutters} = {
-		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.row],
-		...item.config
-	};
-	const parent = layoutData.items[item.parentId];
-
 	const rowContent = (
 		<div
 			className={classNames(className, 'row', {
 				empty: !item.children.some(
 					childId => layoutData.items[childId].children.length
 				),
-				'no-gutters': !gutters
+				'no-gutters': !(typeof item.config.gutters === 'boolean'
+					? item.config.gutters
+					: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[item.type])
 			})}
 			ref={ref}
 		>
@@ -44,14 +41,24 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 		</div>
 	);
 
-	return (
-		<>
-			{!parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
-				<div className="container-fluid p-0">{rowContent}</div>
-			) : (
-				rowContent
-			)}
-		</>
+	const masterLayoutData = useSelector(state => state.masterLayoutData);
+
+	const masterParent = useMemo(() => {
+		const dropZone =
+			masterLayoutData &&
+			masterLayoutData.items[masterLayoutData.rootItems.dropZone];
+
+		return dropZone ? getItemParent(dropZone, masterLayoutData) : undefined;
+	}, [masterLayoutData]);
+
+	const shouldAddContainer = useSelector(
+		state => !getItemParent(item, state.layoutData) && !masterParent
+	);
+
+	return shouldAddContainer ? (
+		<div className="container-fluid p-0">{rowContent}</div>
+	) : (
+		rowContent
 	);
 });
 
@@ -61,5 +68,13 @@ Row.propTypes = {
 	}).isRequired,
 	layoutData: LayoutDataPropTypes.isRequired
 };
+
+function getItemParent(item, itemLayoutData) {
+	const parent = itemLayoutData.items[item.parentId];
+
+	return parent && parent.type === LAYOUT_DATA_ITEM_TYPES.root
+		? getItemParent(parent, itemLayoutData)
+		: parent;
+}
 
 export default Row;

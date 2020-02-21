@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -135,13 +136,11 @@ public class ChannelDisplayContext {
 	}
 
 	private String _getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
+		if (_keywords == null) {
+			_keywords = ParamUtil.getString(_renderRequest, "keywords");
 		}
 
-		_keywords = ParamUtil.getString(_renderRequest, "keywords");
-
-		return _keywords;
+		return HtmlUtil.escapeURL(_keywords);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

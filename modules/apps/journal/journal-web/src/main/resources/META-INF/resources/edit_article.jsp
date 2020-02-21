@@ -245,10 +245,15 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					<c:choose>
 						<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
 							<liferay-data-engine:data-layout-renderer
-								containerId="reportId"
+								containerId='<%= renderResponse.getNamespace() + "dataEngineLayoutRenderer" %>'
 								dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 								dataRecordValues="<%= journalEditArticleDisplayContext.getValues(ddmStructure) %>"
 								namespace="<%= renderResponse.getNamespace() %>"
+							/>
+							<liferay-frontend:component
+								componentId='<%= renderResponse.getNamespace() + "dataEngineLayoutRendererLanguageProxy" %>'
+								module="js/dataEngineLayoutRendererLanguageProxy.es"
+								servletContext="<%= application %>"
 							/>
 						</c:when>
 						<c:otherwise>

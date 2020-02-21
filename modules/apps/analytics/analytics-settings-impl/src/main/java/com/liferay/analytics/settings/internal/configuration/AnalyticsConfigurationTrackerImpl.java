@@ -137,8 +137,8 @@ public class AnalyticsConfigurationTrackerImpl
 			return configuration.getProperties();
 		}
 		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
+			if (_log.isInfoEnabled()) {
+				_log.info(
 					"Unable to get configuration for company " + companyId);
 			}
 

@@ -92,8 +92,6 @@ definition {
 
 	macro editOptionsRow {
 
-		AppBuilderAdmin.waitForSaveButton();
-
 		var key_rowNumber = "${rowNumber}";
 
 		Type(

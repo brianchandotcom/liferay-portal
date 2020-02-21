@@ -74,7 +74,10 @@ public class ChildSitesItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		GroupItemSelectorCriterion groupItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
 		Group siteGroup = themeDisplay.getSiteGroup();
 
 		if (siteGroup.isLayoutPrototype()) {

@@ -73,7 +73,10 @@ public class LayoutScopesItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		SiteItemSelectorCriterion siteItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
 		Layout layout = themeDisplay.getLayout();
 
 		int groupsCount = _groupLocalService.getGroupsCount(

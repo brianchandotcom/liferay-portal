@@ -87,7 +87,8 @@ public class DepotItemSelectorView
 
 	@Override
 	public boolean isVisible(
-		GroupItemSelectorCriterion groupItemSelectorCriterion) {
+		GroupItemSelectorCriterion groupItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
 
 		if (!_depotSupportChecker.isEnabled()) {
 			return false;
@@ -104,11 +105,6 @@ public class DepotItemSelectorView
 		}
 
 		return _depotPanelAppController.isShow(portletId);
-	}
-
-	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
-		return _depotSupportChecker.isEnabled();
 	}
 
 	@Override

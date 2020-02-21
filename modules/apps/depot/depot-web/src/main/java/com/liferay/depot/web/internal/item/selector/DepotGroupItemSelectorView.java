@@ -84,7 +84,10 @@ public class DepotGroupItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		DepotGroupItemSelectorCriterion depotGroupItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
 		return true;
 	}
 

@@ -71,7 +71,10 @@ public class RoleItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		RoleItemSelectorCriterion roleItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
 		return true;
 	}
 

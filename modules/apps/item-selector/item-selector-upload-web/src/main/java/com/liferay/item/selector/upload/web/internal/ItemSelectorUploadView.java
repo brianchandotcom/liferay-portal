@@ -74,7 +74,10 @@ public class ItemSelectorUploadView
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		UploadItemSelectorCriterion uploadItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
 		return true;
 	}
 

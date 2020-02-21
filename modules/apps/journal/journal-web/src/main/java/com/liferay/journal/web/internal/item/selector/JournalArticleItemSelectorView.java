@@ -96,7 +96,10 @@ public class JournalArticleItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
 		return true;
 	}
 

@@ -77,7 +77,11 @@ public class SiteNavigationMenuItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		SiteNavigationMenuItemSelectorCriterion
+			siteNavigationMenuItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
 		return true;
 	}
 

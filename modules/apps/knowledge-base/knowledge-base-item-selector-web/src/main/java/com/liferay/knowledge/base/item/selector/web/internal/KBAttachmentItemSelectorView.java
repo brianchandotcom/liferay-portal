@@ -78,7 +78,10 @@ public class KBAttachmentItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		KBAttachmentItemSelectorCriterion kbAttachmentItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
 		return true;
 	}
 

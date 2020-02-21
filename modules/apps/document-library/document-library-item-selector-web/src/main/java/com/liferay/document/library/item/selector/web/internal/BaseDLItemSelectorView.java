@@ -81,7 +81,9 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		T itemSelectorCriterion, ThemeDisplay themeDisplay) {
+
 		return true;
 	}
 

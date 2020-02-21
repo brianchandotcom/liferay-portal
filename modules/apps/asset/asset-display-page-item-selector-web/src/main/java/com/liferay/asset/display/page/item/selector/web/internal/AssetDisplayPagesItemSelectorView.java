@@ -73,7 +73,10 @@ public class AssetDisplayPagesItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		AssetDisplayPageSelectorCriterion assetDisplayPageSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
 		return true;
 	}
 

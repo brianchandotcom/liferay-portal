@@ -76,7 +76,10 @@ public class WikiAttachmentItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
 		return true;
 	}
 

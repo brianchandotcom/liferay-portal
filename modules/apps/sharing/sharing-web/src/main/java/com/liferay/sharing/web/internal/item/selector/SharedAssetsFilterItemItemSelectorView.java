@@ -70,7 +70,11 @@ public class SharedAssetsFilterItemItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
+	public boolean isVisible(
+		SharedAssetsFilterItemItemSelectorCriterion
+			sharedAssetsFilterItemItemSelectorCriterion,
+		ThemeDisplay themeDisplay) {
+
 		return true;
 	}
 

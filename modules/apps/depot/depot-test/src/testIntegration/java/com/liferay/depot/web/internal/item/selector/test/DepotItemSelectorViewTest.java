@@ -22,7 +22,6 @@ import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCrite
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -48,8 +47,7 @@ public class DepotItemSelectorViewTest {
 
 	@Test
 	public void testIsVisible() {
-		Assert.assertTrue(
-			_depotItemSelectorView.isVisible(null, null));
+		Assert.assertTrue(_depotItemSelectorView.isVisible(null, null));
 	}
 
 	@Test

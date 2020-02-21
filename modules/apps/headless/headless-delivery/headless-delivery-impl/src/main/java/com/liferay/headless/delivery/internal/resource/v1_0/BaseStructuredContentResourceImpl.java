@@ -14,8 +14,6 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
-import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
@@ -33,6 +31,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -85,9 +85,8 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseStructuredContentResourceImpl
-	implements StructuredContentResource,
-			   BatchEngineTaskItemDelegate<StructuredContent>,
-			   EntityModelResource {
+	implements StructuredContentResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<StructuredContent> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -203,17 +202,18 @@ public abstract class BaseStructuredContentResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.postImportTask(
+			vulcanBatchImportTaskResource.postImportTask(
 				StructuredContent.class.getName(), callbackURL, null, object)
 		).build();
 	}
@@ -446,17 +446,18 @@ public abstract class BaseStructuredContentResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.postImportTask(
+			vulcanBatchImportTaskResource.postImportTask(
 				StructuredContent.class.getName(), callbackURL, null, object)
 		).build();
 	}
@@ -505,17 +506,18 @@ public abstract class BaseStructuredContentResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.deleteImportTask(
+			vulcanBatchImportTaskResource.deleteImportTask(
 				StructuredContent.class.getName(), callbackURL, object)
 		).build();
 	}
@@ -722,17 +724,18 @@ public abstract class BaseStructuredContentResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.putImportTask(
+			vulcanBatchImportTaskResource.putImportTask(
 				StructuredContent.class.getName(), callbackURL, object)
 		).build();
 	}
@@ -1059,20 +1062,14 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	public com.liferay.batch.engine.pagination.Page<StructuredContent> read(
-			Filter filter,
-			com.liferay.batch.engine.pagination.Pagination pagination,
-			Sort[] sorts, Map<String, Serializable> parameters, String search)
+	public Page<StructuredContent> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		Page<StructuredContent> page = getSiteStructuredContentsPage(
+		return getSiteStructuredContentsPage(
 			(Long)parameters.get("siteId"), (Boolean)parameters.get("flatten"),
-			search, filter,
-			Pagination.of(pagination.getPage(), pagination.getPageSize()),
-			sorts);
-
-		return com.liferay.batch.engine.pagination.Page.of(
-			page.getItems(), pagination, page.getTotalCount());
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -1207,7 +1204,7 @@ public abstract class BaseStructuredContentResourceImpl
 	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
-	protected ImportTaskResource importTaskResource;
+	protected VulcanBatchImportTaskResource vulcanBatchImportTaskResource;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;

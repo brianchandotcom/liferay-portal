@@ -14,8 +14,6 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
-import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -73,9 +73,8 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseContentStructureResourceImpl
-	implements ContentStructureResource,
-			   BatchEngineTaskItemDelegate<ContentStructure>,
-			   EntityModelResource {
+	implements ContentStructureResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<ContentStructure> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -163,19 +162,13 @@ public abstract class BaseContentStructureResourceImpl
 	}
 
 	@Override
-	public com.liferay.batch.engine.pagination.Page<ContentStructure> read(
-			Filter filter,
-			com.liferay.batch.engine.pagination.Pagination pagination,
-			Sort[] sorts, Map<String, Serializable> parameters, String search)
+	public Page<ContentStructure> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		Page<ContentStructure> page = getSiteContentStructuresPage(
-			(Long)parameters.get("siteId"), search, filter,
-			Pagination.of(pagination.getPage(), pagination.getPageSize()),
-			sorts);
-
-		return com.liferay.batch.engine.pagination.Page.of(
-			page.getItems(), pagination, page.getTotalCount());
+		return getSiteContentStructuresPage(
+			(Long)parameters.get("siteId"), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -303,7 +296,7 @@ public abstract class BaseContentStructureResourceImpl
 	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
-	protected ImportTaskResource importTaskResource;
+	protected VulcanBatchImportTaskResource vulcanBatchImportTaskResource;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;

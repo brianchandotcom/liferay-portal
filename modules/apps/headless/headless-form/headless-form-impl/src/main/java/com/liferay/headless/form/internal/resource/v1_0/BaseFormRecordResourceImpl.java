@@ -14,8 +14,6 @@
 
 package com.liferay.headless.form.internal.resource.v1_0;
 
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
-import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -76,8 +76,8 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseFormRecordResourceImpl
-	implements FormRecordResource, BatchEngineTaskItemDelegate<FormRecord>,
-			   EntityModelResource {
+	implements FormRecordResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<FormRecord> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -143,17 +143,18 @@ public abstract class BaseFormRecordResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.putImportTask(
+			vulcanBatchImportTaskResource.putImportTask(
 				FormRecord.class.getName(), callbackURL, object)
 		).build();
 	}
@@ -227,17 +228,18 @@ public abstract class BaseFormRecordResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.postImportTask(
+			vulcanBatchImportTaskResource.postImportTask(
 				FormRecord.class.getName(), callbackURL, null, object)
 		).build();
 	}
@@ -296,18 +298,13 @@ public abstract class BaseFormRecordResourceImpl
 	}
 
 	@Override
-	public com.liferay.batch.engine.pagination.Page<FormRecord> read(
-			Filter filter,
-			com.liferay.batch.engine.pagination.Pagination pagination,
-			Sort[] sorts, Map<String, Serializable> parameters, String search)
+	public Page<FormRecord> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		Page<FormRecord> page = getFormFormRecordsPage(
-			(Long)parameters.get("formId"),
-			Pagination.of(pagination.getPage(), pagination.getPageSize()));
-
-		return com.liferay.batch.engine.pagination.Page.of(
-			page.getItems(), pagination, page.getTotalCount());
+		return getFormFormRecordsPage(
+			(Long)parameters.get("formId"), pagination);
 	}
 
 	@Override
@@ -441,7 +438,7 @@ public abstract class BaseFormRecordResourceImpl
 	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
-	protected ImportTaskResource importTaskResource;
+	protected VulcanBatchImportTaskResource vulcanBatchImportTaskResource;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;

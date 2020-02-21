@@ -14,8 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
-import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -27,6 +25,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -64,8 +64,8 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseTimeRangeResourceImpl
-	implements TimeRangeResource, BatchEngineTaskItemDelegate<TimeRange>,
-			   EntityModelResource {
+	implements TimeRangeResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<TimeRange> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -112,16 +112,12 @@ public abstract class BaseTimeRangeResourceImpl
 	}
 
 	@Override
-	public com.liferay.batch.engine.pagination.Page<TimeRange> read(
-			Filter filter,
-			com.liferay.batch.engine.pagination.Pagination pagination,
-			Sort[] sorts, Map<String, Serializable> parameters, String search)
+	public Page<TimeRange> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		Page<TimeRange> page = getTimeRangesPage();
-
-		return com.liferay.batch.engine.pagination.Page.of(
-			page.getItems(), pagination, page.getTotalCount());
+		return getTimeRangesPage();
 	}
 
 	@Override
@@ -248,7 +244,7 @@ public abstract class BaseTimeRangeResourceImpl
 	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
-	protected ImportTaskResource importTaskResource;
+	protected VulcanBatchImportTaskResource vulcanBatchImportTaskResource;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;

@@ -14,8 +14,6 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
-import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -72,9 +72,8 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseContentSetElementResourceImpl
-	implements ContentSetElementResource,
-			   BatchEngineTaskItemDelegate<ContentSetElement>,
-			   EntityModelResource {
+	implements ContentSetElementResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<ContentSetElement> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -199,10 +198,9 @@ public abstract class BaseContentSetElementResourceImpl
 	}
 
 	@Override
-	public com.liferay.batch.engine.pagination.Page<ContentSetElement> read(
-			Filter filter,
-			com.liferay.batch.engine.pagination.Pagination pagination,
-			Sort[] sorts, Map<String, Serializable> parameters, String search)
+	public Page<ContentSetElement> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
 		return null;
@@ -333,7 +331,7 @@ public abstract class BaseContentSetElementResourceImpl
 	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
-	protected ImportTaskResource importTaskResource;
+	protected VulcanBatchImportTaskResource vulcanBatchImportTaskResource;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;

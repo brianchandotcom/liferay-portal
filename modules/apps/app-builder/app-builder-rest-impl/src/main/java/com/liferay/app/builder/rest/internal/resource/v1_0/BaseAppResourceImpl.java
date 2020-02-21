@@ -16,8 +16,6 @@ package com.liferay.app.builder.rest.internal.resource.v1_0;
 
 import com.liferay.app.builder.rest.dto.v1_0.App;
 import com.liferay.app.builder.rest.resource.v1_0.AppResource;
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
-import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -77,8 +77,8 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseAppResourceImpl
-	implements AppResource, BatchEngineTaskItemDelegate<App>,
-			   EntityModelResource {
+	implements AppResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<App> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -116,17 +116,18 @@ public abstract class BaseAppResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.deleteImportTask(
+			vulcanBatchImportTaskResource.deleteImportTask(
 				App.class.getName(), callbackURL, object)
 		).build();
 	}
@@ -189,17 +190,18 @@ public abstract class BaseAppResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.putImportTask(
+			vulcanBatchImportTaskResource.putImportTask(
 				App.class.getName(), callbackURL, object)
 		).build();
 	}
@@ -346,19 +348,14 @@ public abstract class BaseAppResourceImpl
 	}
 
 	@Override
-	public com.liferay.batch.engine.pagination.Page<App> read(
-			Filter filter,
-			com.liferay.batch.engine.pagination.Pagination pagination,
-			Sort[] sorts, Map<String, Serializable> parameters, String search)
+	public Page<App> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		Page<App> page = getSiteAppsPage(
+		return getSiteAppsPage(
 			(Long)parameters.get("siteId"), (String)parameters.get("keywords"),
-			Pagination.of(pagination.getPage(), pagination.getPageSize()),
-			sorts);
-
-		return com.liferay.batch.engine.pagination.Page.of(
-			page.getItems(), pagination, page.getTotalCount());
+			pagination, sorts);
 	}
 
 	@Override
@@ -491,7 +488,7 @@ public abstract class BaseAppResourceImpl
 	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
-	protected ImportTaskResource importTaskResource;
+	protected VulcanBatchImportTaskResource vulcanBatchImportTaskResource;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;

@@ -14,8 +14,6 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
-import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -78,8 +78,8 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseWikiPageResourceImpl
-	implements WikiPageResource, BatchEngineTaskItemDelegate<WikiPage>,
-			   EntityModelResource {
+	implements WikiPageResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<WikiPage> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -164,17 +164,18 @@ public abstract class BaseWikiPageResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.postImportTask(
+			vulcanBatchImportTaskResource.postImportTask(
 				WikiPage.class.getName(), callbackURL, null, object)
 		).build();
 	}
@@ -269,17 +270,18 @@ public abstract class BaseWikiPageResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.deleteImportTask(
+			vulcanBatchImportTaskResource.deleteImportTask(
 				WikiPage.class.getName(), callbackURL, object)
 		).build();
 	}
@@ -352,17 +354,18 @@ public abstract class BaseWikiPageResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.putImportTask(
+			vulcanBatchImportTaskResource.putImportTask(
 				WikiPage.class.getName(), callbackURL, object)
 		).build();
 	}
@@ -445,19 +448,14 @@ public abstract class BaseWikiPageResourceImpl
 	}
 
 	@Override
-	public com.liferay.batch.engine.pagination.Page<WikiPage> read(
-			Filter filter,
-			com.liferay.batch.engine.pagination.Pagination pagination,
-			Sort[] sorts, Map<String, Serializable> parameters, String search)
+	public Page<WikiPage> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		Page<WikiPage> page = getWikiNodeWikiPagesPage(
-			(Long)parameters.get("wikiNodeId"), search, filter,
-			Pagination.of(pagination.getPage(), pagination.getPageSize()),
+		return getWikiNodeWikiPagesPage(
+			(Long)parameters.get("wikiNodeId"), search, filter, pagination,
 			sorts);
-
-		return com.liferay.batch.engine.pagination.Page.of(
-			page.getItems(), pagination, page.getTotalCount());
 	}
 
 	@Override
@@ -590,7 +588,7 @@ public abstract class BaseWikiPageResourceImpl
 	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
-	protected ImportTaskResource importTaskResource;
+	protected VulcanBatchImportTaskResource vulcanBatchImportTaskResource;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;

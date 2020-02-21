@@ -14,10 +14,8 @@
 
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
-import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -77,8 +77,8 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v2.0")
 public abstract class BaseDataLayoutResourceImpl
-	implements DataLayoutResource, BatchEngineTaskItemDelegate<DataLayout>,
-			   EntityModelResource {
+	implements DataLayoutResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<DataLayout> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -157,17 +157,18 @@ public abstract class BaseDataLayoutResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.postImportTask(
+			vulcanBatchImportTaskResource.postImportTask(
 				DataLayout.class.getName(), callbackURL, null, object)
 		).build();
 	}
@@ -211,17 +212,18 @@ public abstract class BaseDataLayoutResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.deleteImportTask(
+			vulcanBatchImportTaskResource.deleteImportTask(
 				DataLayout.class.getName(), callbackURL, object)
 		).build();
 	}
@@ -290,17 +292,18 @@ public abstract class BaseDataLayoutResourceImpl
 			Object object)
 		throws Exception {
 
-		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-		importTaskResource.setContextCompany(contextCompany);
-		importTaskResource.setContextHttpServletRequest(
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
 			contextHttpServletRequest);
-		importTaskResource.setContextUriInfo(contextUriInfo);
-		importTaskResource.setContextUser(contextUser);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.entity(
-			importTaskResource.putImportTask(
+			vulcanBatchImportTaskResource.putImportTask(
 				DataLayout.class.getName(), callbackURL, object)
 		).build();
 	}
@@ -376,20 +379,14 @@ public abstract class BaseDataLayoutResourceImpl
 	}
 
 	@Override
-	public com.liferay.batch.engine.pagination.Page<DataLayout> read(
-			Filter filter,
-			com.liferay.batch.engine.pagination.Pagination pagination,
-			Sort[] sorts, Map<String, Serializable> parameters, String search)
+	public Page<DataLayout> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		Page<DataLayout> page = getDataDefinitionDataLayoutsPage(
+		return getDataDefinitionDataLayoutsPage(
 			(Long)parameters.get("dataDefinitionId"),
-			(String)parameters.get("keywords"),
-			Pagination.of(pagination.getPage(), pagination.getPageSize()),
-			sorts);
-
-		return com.liferay.batch.engine.pagination.Page.of(
-			page.getItems(), pagination, page.getTotalCount());
+			(String)parameters.get("keywords"), pagination, sorts);
 	}
 
 	@Override
@@ -523,7 +520,7 @@ public abstract class BaseDataLayoutResourceImpl
 	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
-	protected ImportTaskResource importTaskResource;
+	protected VulcanBatchImportTaskResource vulcanBatchImportTaskResource;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;

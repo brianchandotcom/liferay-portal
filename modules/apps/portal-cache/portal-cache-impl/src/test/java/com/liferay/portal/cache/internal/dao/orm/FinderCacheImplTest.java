@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
@@ -35,8 +35,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -146,21 +144,26 @@ public class FinderCacheImplTest {
 		FinderCache finderCache = _activateFinderCache(
 			_notSerializedMultiVMPool);
 
-		List<Serializable> values = new ArrayList<>();
+		Map<Serializable, TestBaseModel> map =
+			HashMapBuilder.<Serializable, TestBaseModel>put(
+				"a", new TestBaseModel("a")
+			).put(
+				"b", new TestBaseModel("b")
+			).build();
 
-		values.add("a");
-		values.add("b");
+		List<TestBaseModel> values = new ArrayList<>(map.values());
 
 		finderCache.putResult(_finderPath, _KEY1, values, true);
 
 		Object result = finderCache.getResult(
-			_finderPath, _KEY1, new TestBasePersistence(new HashSet<>(values)));
+			_finderPath, _KEY1, new TestBasePersistence(map));
 
 		Assert.assertEquals(values, result);
 
-		values.add("c");
+		map.put("c", new TestBaseModel("c"));
 
-		finderCache.putResult(_finderPath, _KEY1, values, true);
+		finderCache.putResult(
+			_finderPath, _KEY1, new ArrayList<>(map.values()), true);
 
 		result = finderCache.getResult(
 			_finderPath, _KEY1, new TestBasePersistence(null));
@@ -216,30 +219,84 @@ public class FinderCacheImplTest {
 
 	private FinderPath _finderPath;
 
-	private static class TestBasePersistence<T extends BaseModel<T>>
-		extends BasePersistenceImpl<T> {
+	private static class TestBaseModel extends BaseModelImpl<TestBaseModel> {
 
 		@Override
-		public Map<Serializable, T> fetchByPrimaryKeys(
+		public Object clone() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public int compareTo(TestBaseModel testBaseModel) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Class<?> getModelClass() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public String getModelClassName() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Serializable getPrimaryKeyObj() {
+			return _primaryKey;
+		}
+
+		@Override
+		public boolean isEntityCacheEnabled() {
+			return true;
+		}
+
+		@Override
+		public boolean isFinderCacheEnabled() {
+			return true;
+		}
+
+		@Override
+		public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public String toXmlString() {
+			throw new UnsupportedOperationException();
+		}
+
+		private TestBaseModel(Serializable primaryKey) {
+			_primaryKey = primaryKey;
+		}
+
+		private final Serializable _primaryKey;
+
+	}
+
+	private static class TestBasePersistence
+		extends BasePersistenceImpl<TestBaseModel> {
+
+		@Override
+		public TestBaseModel fetchByPrimaryKey(Serializable serializable) {
+			return _map.get(serializable);
+		}
+
+		@Override
+		public Map<Serializable, TestBaseModel> fetchByPrimaryKeys(
 			Set<Serializable> primaryKeys) {
 
-			Assert.assertNotNull(_keys);
-			Assert.assertEquals(_keys, primaryKeys);
+			Assert.assertNotNull(_map);
+			Assert.assertEquals(_map.keySet(), primaryKeys);
 
-			Map map = new HashMap();
-
-			for (Object key : _keys) {
-				map.put(key, key);
-			}
-
-			return map;
+			return _map;
 		}
 
-		private TestBasePersistence(Set<?> keys) {
-			_keys = keys;
+		private TestBasePersistence(Map<Serializable, TestBaseModel> map) {
+			_map = map;
 		}
 
-		private final Set<?> _keys;
+		private final Map<Serializable, TestBaseModel> _map;
 
 	}
 

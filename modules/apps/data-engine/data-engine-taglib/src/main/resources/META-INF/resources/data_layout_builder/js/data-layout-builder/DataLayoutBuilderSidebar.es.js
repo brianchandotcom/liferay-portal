@@ -31,6 +31,7 @@ import {
 } from '../actions.es';
 import Button from '../components/button/Button.es';
 import FieldTypeList from '../components/field-types/FieldTypeList.es';
+import FieldSets from '../components/fieldsets/Fieldsets.es';
 import Sidebar from '../components/sidebar/Sidebar.es';
 import {useSidebarContent} from '../hooks/index.es';
 import isClickOutside from '../utils/clickOutside.es';
@@ -41,6 +42,7 @@ import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 
 const DefaultSidebarBody = ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+	const [activeTabIndex, setActiveTabIndex] = useState(0);
 
 	const onDoubleClick = ({name}) => {
 		const {activePage, pages} = dataLayoutBuilder.getStore();
@@ -69,15 +71,23 @@ const DefaultSidebarBody = ({keywords}) => {
 	return (
 		<>
 			<Sidebar.Tab
-				tabs={[{active: true, label: Liferay.Language.get('fields')}]}
+				activeIndex={activeTabIndex}
+				onSelectedTabChanged={setActiveTabIndex}
+				tabs={[
+					{label: Liferay.Language.get('fields')},
+					{label: Liferay.Language.get('fieldsets')}
+				]}
 			/>
 
 			<Sidebar.TabContent>
-				<FieldTypeList
-					fieldTypes={fieldTypes}
-					keywords={keywords}
-					onDoubleClick={onDoubleClick}
-				/>
+				{activeTabIndex === 0 && (
+					<FieldTypeList
+						fieldTypes={fieldTypes}
+						keywords={keywords}
+						onDoubleClick={onDoubleClick}
+					/>
+				)}
+				{activeTabIndex === 1 && <FieldSets />}
 			</Sidebar.TabContent>
 		</>
 	);

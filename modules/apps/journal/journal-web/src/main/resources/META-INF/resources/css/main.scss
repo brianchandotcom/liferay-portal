@@ -2,9 +2,6 @@ $toolbarDesktopHeight: 64px;
 $toolbarHeight: 110px;
 $toolbarZIndex: 971;
 
-$controlMenuDesktopHeight: 56px;
-$controlMenuHeight: 49px;
-
 $productMenuTransitionDuration: 0.5s;
 $productMenuWidth: 320px;
 
@@ -77,7 +74,6 @@ $productMenuWidth: 320px;
 			left: 0;
 			min-height: 3.5rem;
 			position: fixed;
-			top: $controlMenuHeight;
 			transition: left ease $productMenuTransitionDuration,
 				width ease $productMenuTransitionDuration;
 			width: 100%;
@@ -148,7 +144,6 @@ $productMenuWidth: 320px;
 
 			@media (min-width: 768px) {
 				min-height: $toolbarDesktopHeight;
-				top: $controlMenuDesktopHeight;
 
 				> .container-fluid > .tbar-nav {
 					> .tbar-item:first-child {
@@ -183,9 +178,7 @@ $productMenuWidth: 320px;
 					> .sheet {
 						border: none;
 						border-radius: 0;
-						min-height: calc(
-							100vh - #{$controlMenuHeight + $toolbarHeight}
-						);
+						min-height: calc(100vh - #{$toolbarHeight});
 					}
 				}
 			}
@@ -198,19 +191,16 @@ $productMenuWidth: 320px;
 		.edit-article-sidebar {
 			border-left: 1px #e7e7ed solid;
 			box-shadow: none;
-			height: calc(
-				100vh - #{$controlMenuHeight + $toolbarHeight}
-			) !important;
+			height: 95%;
 			overflow-y: scroll;
-			top: $controlMenuHeight + $toolbarHeight !important;
+			padding-top: $toolbarHeight !important;
+			position: fixed;
+			top: auto;
 			width: 100%;
 			z-index: 1;
 
 			@media (min-width: 768px) {
-				height: calc(
-					100vh - #{$controlMenuDesktopHeight + $toolbarDesktopHeight}
-				) !important;
-				top: $controlMenuDesktopHeight + $toolbarDesktopHeight !important;
+				padding-top: $toolbarDesktopHeight !important;
 				width: $productMenuWidth;
 			}
 

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,7 +139,7 @@ public class GroupDisplayContext {
 	}
 
 	private void _fetchChannelNames(List<Group> groups) {
-		_channelNames = Collections.emptyMap();
+		_channelNames = new HashMap<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

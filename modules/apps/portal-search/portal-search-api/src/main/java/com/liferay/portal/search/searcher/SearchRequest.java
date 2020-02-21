@@ -41,6 +41,8 @@ public interface SearchRequest {
 
 	public List<ComplexQueryPart> getComplexQueryParts();
 
+	public String getConnectionId();
+
 	public List<String> getEntryClassNames();
 
 	public List<String> getExcludeContributors();

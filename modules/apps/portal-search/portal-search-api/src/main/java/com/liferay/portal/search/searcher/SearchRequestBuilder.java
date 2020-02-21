@@ -70,6 +70,8 @@ public interface SearchRequestBuilder {
 	 */
 	public SearchRequest build();
 
+	public SearchRequestBuilder connectionId(String connectionId);
+
 	public SearchRequestBuilder emptySearchEnabled(boolean emptySearchEnabled);
 
 	public SearchRequestBuilder entryClassNames(String... entryClassNames);

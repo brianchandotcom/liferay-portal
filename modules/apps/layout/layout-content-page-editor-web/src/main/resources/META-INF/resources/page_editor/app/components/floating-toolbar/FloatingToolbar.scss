@@ -7,7 +7,12 @@
 }
 
 .page-editor__floating-toolbar {
+	transition: opacity ease 0.3s;
 	z-index: 2;
+
+	&--hidden {
+		opacity: 0;
+	}
 
 	&__button {
 		&--disabled {

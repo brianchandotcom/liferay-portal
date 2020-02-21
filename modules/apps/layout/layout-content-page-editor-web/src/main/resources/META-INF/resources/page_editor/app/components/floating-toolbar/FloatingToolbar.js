@@ -41,6 +41,7 @@ export default function FloatingToolbar({
 	const show = useIsActive()(item.itemId);
 	const hoverItem = useHoverItem();
 	const toolbarRef = useRef(null);
+	const [hidden, setHidden] = useState(false);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 	const [windowWidth, setWindowWidth] = useState(0);
 
@@ -124,6 +125,88 @@ export default function FloatingToolbar({
 	]);
 
 	useEffect(() => {
+		const sidebarElement = document.querySelector(
+			'.page-editor__sidebar__content'
+		);
+
+		const handleTransitionEnd = event => {
+			if (event.target === sidebarElement) {
+				alignElement(toolbarRef, itemRef, () => {
+					alignElement(panelRef, toolbarRef);
+				});
+				setHidden(false);
+			}
+		};
+
+		const handleTransitionStart = event => {
+			if (event.target === sidebarElement) {
+				setHidden(true);
+			}
+		};
+
+		sidebarElement.addEventListener('transitionend', handleTransitionEnd);
+		sidebarElement.addEventListener(
+			'transitionstart',
+			handleTransitionStart
+		);
+
+		return () => {
+			sidebarElement.removeEventListener(
+				'transitionend',
+				handleTransitionEnd
+			);
+
+			sidebarElement.removeEventListener(
+				'transitionstart',
+				handleTransitionStart
+			);
+		};
+	}, [alignElement, item, itemRef]);
+
+	useEffect(() => {
+		const sideNavigation = Liferay.SideNavigation.instance(
+			document.querySelector('.product-menu-toggle')
+		);
+
+		const handleTransitionEnd = () => {
+			alignElement(toolbarRef, itemRef, () => {
+				alignElement(panelRef, toolbarRef);
+			});
+			setHidden(false);
+		};
+
+		const handleTransitionStart = () => {
+			setHidden(true);
+		};
+
+		let sideNavigationListeners = [];
+
+		if (sideNavigation) {
+			sideNavigationListeners = [
+				sideNavigation.on('open.lexicon.sidenav', handleTransitionEnd),
+				sideNavigation.on(
+					'openStart.lexicon.sidenav',
+					handleTransitionStart
+				),
+				sideNavigation.on(
+					'closed.lexicon.sidenav',
+					handleTransitionEnd
+				),
+				sideNavigation.on(
+					'closedStart.lexicon.sidenav',
+					handleTransitionStart
+				)
+			];
+		}
+
+		return () => {
+			sideNavigationListeners.forEach(listener =>
+				listener.removeListener()
+			);
+		};
+	}, [alignElement, itemRef]);
+
+	useEffect(() => {
 		if (panelId && !show) {
 			setPanelId(null);
 		}
@@ -135,7 +218,14 @@ export default function FloatingToolbar({
 			<div onClick={event => event.stopPropagation()}>
 				{createPortal(
 					<div
-						className="p-2 page-editor__floating-toolbar position-fixed"
+						className={classNames(
+							'p-2',
+							'page-editor__floating-toolbar',
+							'position-fixed',
+							{
+								'page-editor__floating-toolbar--hidden': hidden
+							}
+						)}
 						onMouseOver={event => {
 							event.stopPropagation();
 							hoverItem(null);

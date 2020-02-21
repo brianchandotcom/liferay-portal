@@ -455,7 +455,14 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				formId,
 				options
 			) {
-				if (!window['<%= namespace %>' + options.name]) {
+				var element = window['<%= namespace %>' + options.name];
+				var editorWrapper;
+
+				if (element) {
+					editorWrapper = element.querySelector('#' + formId + ' .editor-wrapper');
+				}
+
+				if (!element || (editorWrapper && editorWrapper.childNodes.length === 0)) {
 
 					<%
 					String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));

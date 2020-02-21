@@ -14,7 +14,7 @@
 
 package com.liferay.analytics.reports.web.internal.data.provider;
 
-import com.liferay.analytics.reports.web.internal.data.model.TimeSpan;
+import com.liferay.analytics.reports.web.internal.data.model.TimeRange;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 public class AnalyticsReportsDataProvider {
 
 	public JSONObject getHistoricalReadsJSONObject(
-			long plid, TimeSpan timeSpan, int timeSpanOffset)
+			long plid, TimeRange timeRange)
 		throws PortalException {
 
 		try {
@@ -45,7 +45,7 @@ public class AnalyticsReportsDataProvider {
 	}
 
 	public JSONObject getHistoricalViewsJSONObject(
-			long plid, TimeSpan timeSpan, int timeSpanOffset)
+			long plid, TimeRange timeRange)
 		throws PortalException {
 
 		try {

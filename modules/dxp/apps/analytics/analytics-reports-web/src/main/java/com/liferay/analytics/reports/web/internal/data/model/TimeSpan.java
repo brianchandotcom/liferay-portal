@@ -52,6 +52,14 @@ public enum TimeSpan {
 		return _key;
 	}
 
+	public TimeRange toTimeRange(int timeSpanOffset) {
+		if (timeSpanOffset < 0) {
+			throw new IllegalArgumentException("Time span offset is negative");
+		}
+
+		return TimeRange.of(this, timeSpanOffset);
+	}
+
 	private TimeSpan(String key, int days) {
 		_key = key;
 		_days = days;

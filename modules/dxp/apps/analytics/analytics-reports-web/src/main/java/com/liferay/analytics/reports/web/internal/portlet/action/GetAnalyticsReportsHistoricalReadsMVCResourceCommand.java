@@ -62,13 +62,15 @@ public class GetAnalyticsReportsHistoricalReadsMVCResourceCommand
 			String timeSpanKey = ParamUtil.getString(
 				resourceRequest, "timeSpanKey", TimeSpan.defaultTimeSpanKey());
 
+			TimeSpan timeSpan = TimeSpan.of(timeSpanKey);
+
 			int timeSpanOffset = ParamUtil.getInteger(
 				resourceRequest, "timeSpanOffset", 0);
 
 			jsonObject.put(
 				"analyticsReportsHistoricalReads",
 				_analyticsReportsDataProvider.getHistoricalReadsJSONObject(
-					plid, TimeSpan.of(timeSpanKey), timeSpanOffset));
+					plid, timeSpan.toTimeRange(timeSpanOffset)));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

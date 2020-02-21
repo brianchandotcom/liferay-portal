@@ -41,6 +41,10 @@ public interface BatchEngineTaskItemDelegate<T> {
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception;
 
+	public default Class<T> getDTOType() {
+		return null;
+	}
+
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception;
 

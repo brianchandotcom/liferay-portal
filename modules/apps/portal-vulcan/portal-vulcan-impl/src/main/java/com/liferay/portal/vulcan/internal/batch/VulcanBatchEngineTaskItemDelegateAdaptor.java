@@ -26,6 +26,9 @@ import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
 
 import java.io.Serializable;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +63,17 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 	}
 
 	@Override
+	public Class<T> getDTOType() {
+		Class<? extends VulcanBatchEngineTaskItemDelegate> clazz =
+			_vulcanBatchEngineTaskItemDelegate.getClass();
+
+		Class<?> superclass = clazz.getSuperclass();
+
+		return _getItemClassFromGenericInterfaces(
+			superclass.getGenericInterfaces());
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -73,8 +87,14 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return _vulcanBatchEngineTaskItemDelegate.read(
-			filter, pagination, sorts, parameters, search);
+		com.liferay.portal.vulcan.pagination.Page<T> page =
+			_vulcanBatchEngineTaskItemDelegate.read(
+				filter,
+				com.liferay.portal.vulcan.pagination.Pagination.of(
+					pagination.getPage(), pagination.getPageSize()),
+				sorts, parameters, search);
+
+		return Page.of(page.getItems(), pagination, page.getTotalCount());
 	}
 
 	@Override
@@ -98,6 +118,30 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 		throws Exception {
 
 		_vulcanBatchEngineTaskItemDelegate.update(items, parameters);
+	}
+
+	private Class<T> _getItemClassFromGenericInterfaces(
+		Type[] genericInterfaceTypes) {
+
+		for (Type genericInterfaceType : genericInterfaceTypes) {
+			if (genericInterfaceType instanceof ParameterizedType) {
+				ParameterizedType parameterizedType =
+					(ParameterizedType)genericInterfaceType;
+
+				if (parameterizedType.getRawType() !=
+						VulcanBatchEngineTaskItemDelegate.class) {
+
+					continue;
+				}
+
+				Type[] genericTypes =
+					parameterizedType.getActualTypeArguments();
+
+				return (Class<T>)genericTypes[0];
+			}
+		}
+
+		return null;
 	}
 
 	private final VulcanBatchEngineTaskItemDelegate<T>

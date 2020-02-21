@@ -52,7 +52,7 @@ describe('The SingleUpdateDueDateModal component should', () => {
 
 	beforeAll(() => {
 		const renderResult = render(
-			<MockRouter client={clientMock}>
+			<MockRouter client={clientMock} isAmPm>
 				<SingleUpdateDueDateModal />
 			</MockRouter>,
 			{
@@ -86,14 +86,14 @@ describe('The SingleUpdateDueDateModal component should', () => {
 		const timeInput = getByTestId('timeInput');
 
 		expect(dateInput.value).toBe('02/01/2020');
-		expect(timeInput.value).toBe('10:00');
+		expect(timeInput.value).toBe('10:00 AM');
 		expect(commentInput.value).toBe('');
 
 		expect(cancelBtn).not.toHaveAttribute('disabled');
 		expect(doneBtn).toHaveAttribute('disabled');
 
 		const newDate = '01/01';
-		const newTime = '12:00 PM';
+		const newTime = '12:00';
 
 		fireEvent.change(dateInput, {target: {value: newDate}});
 		fireEvent.change(timeInput, {target: {value: newTime}});
@@ -104,7 +104,7 @@ describe('The SingleUpdateDueDateModal component should', () => {
 		expect(doneBtn).toHaveAttribute('disabled');
 
 		fireEvent.change(dateInput, {target: {value: `${newDate}/2020`}});
-		fireEvent.change(timeInput, {target: {value: '10:00'}});
+		fireEvent.change(timeInput, {target: {value: '10:00 PM'}});
 
 		expect(dateInput.parentNode).not.toHaveClass('has-error');
 		expect(timeInput.parentNode).not.toHaveClass('has-error');

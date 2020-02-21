@@ -24,23 +24,30 @@ import java.time.LocalDateTime;
  */
 public class TimeRange {
 
-	public static final TimeRange LAST_7_DAYS = new TimeRange(
-		false, TimeSpan.LAST_7_DAYS, 0);
-
-	public static final TimeRange LAST_24_HOURS = new TimeRange(
-		true, TimeSpan.LAST_24_HOURS, 0) {
-
-		@Override
-		public LocalDateTime getStartLocalDateTime() {
-			LocalDateTime localDateTime = getEndLocalDateTime();
-
-			return localDateTime.minusHours(23);
+	public static TimeRange of(TimeSpan timeSpan, int timeSpanOffset) {
+		if (timeSpan == null) {
+			throw new IllegalArgumentException("Time span is null");
 		}
 
-	};
+		if (timeSpanOffset < 0) {
+			throw new IllegalArgumentException("Time span offset is negative");
+		}
 
-	public static final TimeRange LAST_30_DAYS = new TimeRange(
-		false, TimeSpan.LAST_30_DAYS, 0);
+		if (timeSpan.equals(TimeSpan.LAST_24_HOURS)) {
+			return new TimeRange(true, timeSpan, timeSpanOffset) {
+
+				@Override
+				public LocalDateTime getStartLocalDateTime() {
+					LocalDateTime localDateTime = getEndLocalDateTime();
+
+					return localDateTime.minusHours(23);
+				}
+
+			};
+		}
+
+		return new TimeRange(false, timeSpan, timeSpanOffset);
+	}
 
 	public LocalDate getEndLocalDate() {
 		LocalDateTime localDateTime = LocalDateTime.now(_clock);

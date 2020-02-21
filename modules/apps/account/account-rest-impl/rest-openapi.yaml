@@ -29,6 +29,35 @@ components:
                 status:
                     type: integer
             type: object
+        AccountRole:
+            # @review
+            description:
+                A role that belongs to an account
+            properties:
+                accountId:
+                    # @review
+                    description:
+                        The primary key of the account that owns this role.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                description:
+                    type: string
+                displayName:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                roleId:
+                    # @review
+                    description:
+                        The primary key of the underlying system role.
+                    format: int64
+                    readOnly: true
+                    type: integer
         AccountUser:
             # @review
             description:
@@ -243,6 +272,85 @@ paths:
                     description:
                         "Account successfully replaced"
             tags: ["Account"]
+    "/accounts/{accountId}/roles":
+        get:
+            # @review
+            description:
+                Gets the account's roles
+            operationId: getAccountRolesPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: keywords
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountRole"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AccountRole"
+                                type: array
+                    # @review
+                    description:
+                        ""
+            tags: ["AccountRole"]
+        post:
+            # @review
+            description:
+                Adds a role for the account
+            operationId: postAccountRole
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/AccountRole"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/AccountRole"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AccountRole"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AccountRole"
+                    # @review
+                    description:
+                        ""
+            tags: ["AccountRole"]
     "/accounts/{accountId}/users":
         get:
             # @review

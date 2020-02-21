@@ -35,6 +35,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -235,20 +236,23 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 					});
 				setName(
 					() -> {
-						if (layout == null) {
-							String preferredLanguageId =
-								contextAcceptLanguage.getPreferredLanguageId();
-							String defaultLanguageId = LocaleUtil.toLanguageId(
-								LocaleUtil.getDefault());
+						String preferredLanguageId =
+							contextAcceptLanguage.getPreferredLanguageId();
+						String defaultLanguageId = LocaleUtil.toLanguageId(
+							LocaleUtil.getDefault());
 
-							return typeSettingsProperties.getProperty(
+						String nameProperty =
+							typeSettingsProperties.getProperty(
 								"name_" + preferredLanguageId,
 								typeSettingsProperties.getProperty(
 									"name_" + defaultLanguageId));
+
+						if (nameProperty == null) {
+							nameProperty = layout.getName(
+								contextAcceptLanguage.getPreferredLocale());
 						}
 
-						return layout.getName(
-							contextAcceptLanguage.getPreferredLocale());
+						return nameProperty;
 					});
 				setName_i18n(
 					() -> {

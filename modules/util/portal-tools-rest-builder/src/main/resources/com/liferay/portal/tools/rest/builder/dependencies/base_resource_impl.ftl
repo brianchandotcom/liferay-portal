@@ -6,8 +6,6 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
-import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -24,6 +22,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -87,7 +87,7 @@ import javax.ws.rs.core.UriInfo;
 @Path("/${openAPIYAML.info.version}")
 public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Resource
 	<#if configYAML.generateBatch>
-		, BatchEngineTaskItemDelegate<${schemaName}>, EntityModelResource
+		, EntityModelResource, VulcanBatchEngineTaskItemDelegate<${schemaName}>
 	</#if>
 	{
 
@@ -129,40 +129,40 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				return false;
 			<#elseif configYAML.generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch")>
-				importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-				importTaskResource.setContextCompany(contextCompany);
-				importTaskResource.setContextHttpServletRequest(contextHttpServletRequest);
-				importTaskResource.setContextUriInfo(contextUriInfo);
-				importTaskResource.setContextUser(contextUser);
+				vulcanBatchImportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
+				vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+				vulcanBatchImportTaskResource.setContextHttpServletRequest(contextHttpServletRequest);
+				vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+				vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 				Response.ResponseBuilder responseBuilder = Response.accepted();
 
 				return responseBuilder.entity(
-					importTaskResource.deleteImportTask(${schemaName}.class.getName(), callbackURL, object)
+					vulcanBatchImportTaskResource.deleteImportTask(${schemaName}.class.getName(), callbackURL, object)
 				).build();
 			<#elseif configYAML.generateBatch && stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "Batch")>
-				importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-				importTaskResource.setContextCompany(contextCompany);
-				importTaskResource.setContextHttpServletRequest(contextHttpServletRequest);
-				importTaskResource.setContextUriInfo(contextUriInfo);
-				importTaskResource.setContextUser(contextUser);
+				vulcanBatchImportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
+				vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+				vulcanBatchImportTaskResource.setContextHttpServletRequest(contextHttpServletRequest);
+				vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+				vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 				Response.ResponseBuilder responseBuilder = Response.accepted();
 
 				return responseBuilder.entity(
-					importTaskResource.postImportTask(${schemaName}.class.getName(), callbackURL, null, object)
+					vulcanBatchImportTaskResource.postImportTask(${schemaName}.class.getName(), callbackURL, null, object)
 				).build();
 			<#elseif configYAML.generateBatch && stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "Batch")>
-				importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
-				importTaskResource.setContextCompany(contextCompany);
-				importTaskResource.setContextHttpServletRequest(contextHttpServletRequest);
-				importTaskResource.setContextUriInfo(contextUriInfo);
-				importTaskResource.setContextUser(contextUser);
+				vulcanBatchImportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
+				vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+				vulcanBatchImportTaskResource.setContextHttpServletRequest(contextHttpServletRequest);
+				vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+				vulcanBatchImportTaskResource.setContextUser(contextUser);
 
 				Response.ResponseBuilder responseBuilder = Response.accepted();
 
 				return responseBuilder.entity(
-					importTaskResource.putImportTask(${schemaName}.class.getName(), callbackURL, object)
+					vulcanBatchImportTaskResource.putImportTask(${schemaName}.class.getName(), callbackURL, object)
 				).build();
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "PermissionsPage")>
 				<#assign generateGetPermissionCheckerMethods = true />
@@ -294,14 +294,12 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 		}
 
 		@Override
-		public com.liferay.batch.engine.pagination.Page<${schemaName}> read(Filter filter, com.liferay.batch.engine.pagination.Pagination pagination, Sort[] sorts, Map<String, Serializable> parameters, String search) throws Exception {
+		public Page<${schemaName}> read(Filter filter, Pagination pagination, Sort[] sorts, Map<String, Serializable> parameters, String search) throws Exception {
 			<#if getBatchJavaMethodSignature??>
-				Page<${schemaName}> page = get${getBatchJavaMethodSignature.parentSchemaName!}${schemaName}sPage(
+				return get${getBatchJavaMethodSignature.parentSchemaName!}${schemaName}sPage(
 					<#list getBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if stringUtil.equals(javaMethodParameter.parameterName, "filter") || stringUtil.equals(javaMethodParameter.parameterName, "search") || stringUtil.equals(javaMethodParameter.parameterName, "sorts") || stringUtil.equals(javaMethodParameter.parameterName, "user")>
+						<#if stringUtil.equals(javaMethodParameter.parameterName, "filter") || stringUtil.equals(javaMethodParameter.parameterName, "pagination") || stringUtil.equals(javaMethodParameter.parameterName, "search") || stringUtil.equals(javaMethodParameter.parameterName, "sorts") || stringUtil.equals(javaMethodParameter.parameterName, "user")>
 							${javaMethodParameter.parameterName}
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-							Pagination.of(pagination.getPage(), pagination.getPageSize())
 						<#else>
 							<#if javaMethodParameter.parameterType?contains("java.lang.Boolean")>
 								(Boolean
@@ -322,7 +320,6 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 						<#sep>, </#sep>
 					</#list>
 					);
-				return com.liferay.batch.engine.pagination.Page.of(page.getItems(), pagination, page.getTotalCount());
 			<#else>
 				return null;
 			</#if>
@@ -449,7 +446,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	protected HttpServletResponse contextHttpServletResponse;
 
 	<#if configYAML.generateBatch>
-		protected ImportTaskResource importTaskResource;
+		protected VulcanBatchImportTaskResource vulcanBatchImportTaskResource;
 	</#if>
 
 	protected ResourceActionLocalService resourceActionLocalService;

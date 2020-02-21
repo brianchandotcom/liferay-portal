@@ -17,7 +17,6 @@ package com.liferay.portal.vulcan.internal.jaxrs.feature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 
-import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.ContextContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.LogContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.NestedFieldsContainerRequestFilter;
@@ -130,9 +130,10 @@ public class VulcanFeature implements Feature {
 		featureContext.register(new CompanyContextProvider(_portal));
 		featureContext.register(
 			new ContextContainerRequestFilter(
-				_groupLocalService, _importTaskResource, _language, _portal,
-				_resourceActionLocalService, _resourcePermissionLocalService,
-				_roleLocalService, _getScopeChecker()));
+				_groupLocalService, _vulcanBatchImportTaskResource, _language,
+				_portal, _resourceActionLocalService,
+				_resourcePermissionLocalService, _roleLocalService,
+				_getScopeChecker()));
 		featureContext.register(
 			new FilterContextProvider(
 				_expressionConvert, _filterParserProvider, _language, _portal));
@@ -190,9 +191,6 @@ public class VulcanFeature implements Feature {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private ImportTaskResource _importTaskResource;
-
-	@Reference
 	private Language _language;
 
 	private NestedFieldsWriterInterceptor _nestedFieldsWriterInterceptor;
@@ -211,5 +209,8 @@ public class VulcanFeature implements Feature {
 
 	@Reference
 	private SortParserProvider _sortParserProvider;
+
+	@Reference
+	private VulcanBatchImportTaskResource _vulcanBatchImportTaskResource;
 
 }

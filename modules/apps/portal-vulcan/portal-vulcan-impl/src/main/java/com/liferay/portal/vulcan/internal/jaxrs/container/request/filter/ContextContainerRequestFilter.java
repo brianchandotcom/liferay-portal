@@ -14,7 +14,6 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter;
 
-import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 
@@ -53,13 +53,14 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 	public ContextContainerRequestFilter(
 		GroupLocalService groupLocalService,
-		ImportTaskResource importTaskResource, Language language, Portal portal,
+		VulcanBatchImportTaskResource vulcanBatchImportTaskResource,
+		Language language, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, Object scopeChecker) {
 
 		_groupLocalService = groupLocalService;
-		_importTaskResource = importTaskResource;
+		_vulcanBatchImportTaskResource = vulcanBatchImportTaskResource;
 		_language = language;
 		_portal = portal;
 		_resourceActionLocalService = resourceActionLocalService;
@@ -144,10 +145,12 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 				field.set(
 					instance, message.getContextualProperty("HTTP.RESPONSE"));
 			}
-			else if (fieldClass.isAssignableFrom(ImportTaskResource.class)) {
+			else if (fieldClass.isAssignableFrom(
+						VulcanBatchImportTaskResource.class)) {
+
 				field.setAccessible(true);
 
-				field.set(instance, _importTaskResource);
+				field.set(instance, _vulcanBatchImportTaskResource);
 			}
 			else if (fieldClass.isAssignableFrom(
 						ResourceActionLocalService.class)) {
@@ -182,7 +185,6 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 	}
 
 	private final GroupLocalService _groupLocalService;
-	private final ImportTaskResource _importTaskResource;
 	private final Language _language;
 	private final Portal _portal;
 	private final ResourceActionLocalService _resourceActionLocalService;
@@ -190,5 +192,6 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;
 	private final Object _scopeChecker;
+	private final VulcanBatchImportTaskResource _vulcanBatchImportTaskResource;
 
 }

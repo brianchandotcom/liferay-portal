@@ -75,11 +75,6 @@ TagFacetPortletPreferences tagFacetPortletPreferences = new TagFacetPortletPrefe
 			>
 				<aui:input label="tag-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= tagFacetPortletPreferences.getParameterName() %>" />
 
-				<aui:select label="display-style" name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_DISPLAY_STYLE) %>">
-					<aui:option label="cloud" selected="<%= tagFacetPortletPreferences.isDisplayStyleCloud() %>" />
-					<aui:option label="list" selected="<%= tagFacetPortletPreferences.isDisplayStyleList() %>" />
-				</aui:select>
-
 				<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= tagFacetPortletPreferences.getMaxTerms() %>" />
 
 				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= tagFacetPortletPreferences.getFrequencyThreshold() %>" />

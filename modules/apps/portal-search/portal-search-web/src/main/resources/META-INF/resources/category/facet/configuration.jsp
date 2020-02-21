@@ -75,11 +75,6 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 			>
 				<aui:input label="category-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= categoryFacetPortletPreferences.getParameterName() %>" />
 
-				<aui:select label="display-style" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_DISPLAY_STYLE) %>">
-					<aui:option label="cloud" selected="<%= categoryFacetPortletPreferences.isDisplayStyleCloud() %>" />
-					<aui:option label="list" selected="<%= categoryFacetPortletPreferences.isDisplayStyleList() %>" />
-				</aui:select>
-
 				<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= categoryFacetPortletPreferences.getMaxTerms() %>" />
 
 				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= categoryFacetPortletPreferences.getFrequencyThreshold() %>" />

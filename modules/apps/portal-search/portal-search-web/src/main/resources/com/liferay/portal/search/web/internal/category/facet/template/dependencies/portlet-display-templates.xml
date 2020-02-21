@@ -2,6 +2,14 @@
 
 <root>
 	<template>
+		<template-key>category-facet-cloud-ftl</template-key>
+		<name>portlet-display-template-name-cloud-layout</name>
+		<description>portlet-display-template-description-cloud</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portal/search/web/internal/category/facet/template/dependencies/portlet_display_template_cloud.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+	<template>
 		<template-key>category-facet-compact-ftl</template-key>
 		<name>portlet-display-template-name-compact-layout</name>
 		<description>portlet-display-template-description-compact</description>

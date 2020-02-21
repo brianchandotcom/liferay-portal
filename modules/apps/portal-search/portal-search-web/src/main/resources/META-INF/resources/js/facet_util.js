@@ -111,17 +111,11 @@ AUI.add(
 			removeURLParameters(key, parameterArray) {
 				key = encodeURIComponent(key);
 
-				var newParameters = parameterArray.filter(item => {
+				return parameterArray.filter(item => {
 					var itemSplit = item.split('=');
 
-					if (itemSplit && itemSplit[0] === key) {
-						return false;
-					}
-
-					return true;
+					return !(itemSplit && itemSplit[0] === key);
 				});
-
-				return newParameters;
 			},
 
 			selectTerms(form, selections) {
@@ -156,13 +150,23 @@ AUI.add(
 				return address + '?' + queryString;
 			},
 
-			setURLParameters(key, values, parameterArray) {
+			setURLParameters(key, selections, parameterArray) {
 				var newParameters = FacetUtil.removeURLParameters(
 					key,
 					parameterArray
 				);
 
-				values.forEach(item => {
+				newParameters = FacetUtil.removeURLParameters(
+					key + 'From',
+					newParameters
+				);
+
+				newParameters = FacetUtil.removeURLParameters(
+					key + 'To',
+					newParameters
+				);
+
+				selections.forEach(item => {
 					newParameters = FacetUtil.addURLParameter(
 						key,
 						item,
@@ -176,11 +180,7 @@ AUI.add(
 			updateQueryString(key, selections, queryString) {
 				var search = queryString;
 
-				var hasQuestionMark = false;
-
-				if (search[0] === '?') {
-					hasQuestionMark = true;
-				}
+				var hasQuestionMark = search[0] === '?';
 
 				if (hasQuestionMark) {
 					search = search.substr(1);

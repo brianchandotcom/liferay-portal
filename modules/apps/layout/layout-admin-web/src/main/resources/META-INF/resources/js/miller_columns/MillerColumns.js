@@ -81,15 +81,16 @@ const MillerColumns = ({
 				};
 			}
 
+			const column = columns[item.columnIndex];
+
 			if (
-				columns[item.columnIndex].items[item.itemIndex] &&
-				columns[item.columnIndex].items[item.itemIndex].itemIndex >
-					item.itemIndex
+				column.items[item.itemIndex] &&
+				column.items[item.itemIndex].itemIndex > item.itemIndex
 			) {
-				columns[item.columnIndex].items.splice(item.itemIndex, 0, item);
+				column.items.splice(item.itemIndex, 0, item);
 			}
 			else {
-				columns[item.columnIndex].items.push(item);
+				column.items.push(item);
 			}
 		}
 

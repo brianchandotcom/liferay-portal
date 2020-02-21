@@ -14,10 +14,9 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
+import com.liferay.account.admin.web.internal.util.AccountRoleRequestHelper;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.roles.admin.constants.RolesAdminWebKeys;
-import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -45,15 +44,12 @@ public class EditAccountRolePermissionsMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		renderRequest.setAttribute(
-			RolesAdminWebKeys.CURRENT_ROLE_TYPE, _accountRoleTypeContributor);
-		renderRequest.setAttribute(
-			RolesAdminWebKeys.SHOW_NAV_TABS, Boolean.FALSE);
+		_accountRoleRequestHelper.setRequestAttributes(renderRequest);
 
 		return "/account_entries_admin/edit_account_role.jsp";
 	}
 
-	@Reference(target = "(component.name=*.AccountRoleTypeContributor)")
-	private RoleTypeContributor _accountRoleTypeContributor;
+	@Reference
+	private AccountRoleRequestHelper _accountRoleRequestHelper;
 
 }

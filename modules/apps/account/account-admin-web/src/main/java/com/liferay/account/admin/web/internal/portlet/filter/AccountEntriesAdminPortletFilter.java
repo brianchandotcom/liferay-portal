@@ -14,9 +14,14 @@
 
 package com.liferay.account.admin.web.internal.portlet.filter;
 
+import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
+import com.liferay.account.admin.web.internal.util.AccountRoleRequestHelper;
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.model.AccountRole;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,6 +33,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -40,6 +47,7 @@ import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -92,6 +100,52 @@ public class AccountEntriesAdminPortletFilter
 			(mvcPath.startsWith("/edit_role") ||
 			 mvcPath.equals("/view_resources.jsp"))) {
 
+			if (mvcPath.equals("/edit_role_permissions.jsp")) {
+				renderRequest.removeAttribute("mvcPath");
+
+				PortletURL portletURL = _portal.getControlPanelPortletURL(
+					renderRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+					PortletRequest.RENDER_PHASE);
+
+				portletURL.setParameter(
+					"mvcRenderCommandName",
+					"/account_admin/edit_account_role_permissions");
+				portletURL.setParameter(
+					"screenNavigationCategoryKey",
+					AccountScreenNavigationEntryConstants.
+						CATEGORY_KEY_DEFINE_PERMISSIONS);
+				portletURL.setParameter(
+					"backURL", ParamUtil.getString(renderRequest, "backURL"));
+
+				long roleId = ParamUtil.getLong(renderRequest, "roleId");
+
+				AccountRole accountRole =
+					_accountRoleLocalService.fetchAccountRoleByRoleId(roleId);
+
+				if (accountRole != null) {
+					portletURL.setParameter(
+						"accountEntryId",
+						String.valueOf(accountRole.getAccountEntryId()));
+					portletURL.setParameter(
+						"accountRoleId",
+						String.valueOf(accountRole.getAccountRoleId()));
+				}
+
+				portletURL.setParameter(
+					"cur", ParamUtil.getString(renderRequest, "cur"));
+				portletURL.setParameter(
+					"delta", ParamUtil.getString(renderRequest, "delta"));
+				portletURL.setParameter(
+					"resetCur", ParamUtil.getString(renderRequest, "resetCur"));
+
+				HttpServletResponse httpServletResponse =
+					_portal.getHttpServletResponse(renderResponse);
+
+				httpServletResponse.sendRedirect(portletURL.toString());
+
+				return;
+			}
+
 			_jspRenderer.renderJSP(
 				_servletContext, _portal.getHttpServletRequest(renderRequest),
 				_portal.getHttpServletResponse(renderResponse), mvcPath);
@@ -128,7 +182,18 @@ public class AccountEntriesAdminPortletFilter
 	}
 
 	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
+	private AccountRoleRequestHelper _accountRoleRequestHelper;
+
+	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(component.name=com.liferay.account.admin.web.internal.portlet.action.EditAccountRolePermissionsMVCRenderCommand)"
+	)
+	private MVCRenderCommand _mvcRenderCommand;
 
 	@Reference
 	private Portal _portal;

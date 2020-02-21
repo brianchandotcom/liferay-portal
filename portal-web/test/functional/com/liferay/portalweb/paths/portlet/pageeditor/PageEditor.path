@@ -223,12 +223,12 @@
 <!--CONTENT_PAGE-->
 <tr>
 	<td>CONTENT_PAGE_DISABLED_HEADER</td>
-	<td>//header[@class='lfr-edit-mode__disabled-area']</td>
+	<td>//header[contains(@class,'disabled-area')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PAGE_DISABLED_FOOTER</td>
-	<td>//footer[@class='lfr-edit-mode__disabled-area']</td>
+	<td>//footer[contains(@class,'disabled-area')]</td>
 	<td></td>
 </tr>
 <tr>

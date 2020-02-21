@@ -28,7 +28,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.cache.CacheField;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -86,8 +86,13 @@ public class DDMFormInstanceImpl extends DDMFormInstanceBaseImpl {
 			DDMFormInstanceFactory.create(
 				DDMFormInstanceSettings.class, getSettingsDDMFormValues());
 
-		return GetterUtil.getString(
-			ddmFormInstanceSettings.storageType(), StorageType.JSON.toString());
+		String storageType = ddmFormInstanceSettings.storageType();
+
+		if (Validator.isNotNull(storageType)) {
+			return storageType;
+		}
+
+		return StorageType.JSON.toString();
 	}
 
 	@Override

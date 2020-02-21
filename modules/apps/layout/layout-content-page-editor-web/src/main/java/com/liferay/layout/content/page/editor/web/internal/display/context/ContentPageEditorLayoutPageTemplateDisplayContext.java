@@ -76,7 +76,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		configContext.put(
 			"mappingFieldsURL",
-			getFragmentEntryActionURL("/content_layout/get_mapping_fields"));
+			getResourceURL("/content_layout/get_mapping_fields"));
 		configContext.put("selectedMappingTypes", _getSelectedMappingTypes());
 
 		return editorContext;

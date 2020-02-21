@@ -1017,7 +1017,7 @@ components:
         FragmentLink:
             properties:
                 target:
-                    enum: [Blank, Self]
+                    enum: [Blank, Parent, Self, Top]
                     type: string
                 value:
                     oneOf:

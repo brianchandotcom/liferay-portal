@@ -83,20 +83,21 @@
 		font-size: 0.875rem;
 	}
 
-	.taglib-empty-result-message-header + .taglib-empty-result-message-title,
-	.taglib-empty-search-result-message-header
-		+ .taglib-empty-result-message-title {
-		font-size: 1.25rem;
-		font-weight: bold;
-		margin-top: 0;
-		text-align: center;
-	}
+	.taglib-empty-result-message-header,
+	.taglib-empty-search-result-message-header,
+	.taglib-empty-state,
+	.taglib-success-state,
+	.taglib-search-state {
+		& + .taglib-empty-result-message-title {
+			font-size: 1.25rem;
+			font-weight: bold;
+			text-align: center;
+		}
 
-	.taglib-empty-result-message-header
-		~ .taglib-empty-result-message-description,
-	.taglib-empty-search-result-message-header
-		~ .taglib-empty-result-message-description {
-		font-size: 1rem;
-		text-align: center;
+		& ~ .taglib-empty-result-message-description,
+		& ~ .taglib-empty-result-message-actions {
+			font-size: 1rem;
+			text-align: center;
+		}
 	}
 }

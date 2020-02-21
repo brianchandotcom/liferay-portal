@@ -120,16 +120,17 @@ const MillerColumnsItem = ({
 		return dropZone;
 	};
 
-	const isValidTarget = (dropZone, sourceItem, targetItemId) => {
+	const isValidTarget = (dropZone, source, targetId) => {
 		let isValid;
 
 		if (
-			(parentId && columnIndex <= sourceItem.columnIndex) ||
-			(columnIndex > sourceItem.columnIndex && !sourceItem.active)
+			(parentId && columnIndex <= source.columnIndex) ||
+			(columnIndex > source.columnIndex && !source.active)
 		) {
 			if (
 				dropZone !== DROP_ZONES.ELEMENT ||
-				(targetItemId !== sourceItem.id &&
+				(targetId !== source.id &&
+					targetId !== source.parentId &&
 					dropZone === DROP_ZONES.ELEMENT &&
 					parentable)
 			) {
@@ -155,34 +156,34 @@ const MillerColumnsItem = ({
 
 	const [{isOver}, drop] = useDrop({
 		accept: ACCEPTING_TYPES.ITEM,
-		canDrop(sourceItem, monitor) {
+		canDrop(source, monitor) {
 			const dropZone = getDropZone(monitor);
 
-			return isValidTarget(dropZone, sourceItem, itemId);
+			return isValidTarget(dropZone, source, itemId);
 		},
 		collect: monitor => ({
 			isOver: !!monitor.isOver()
 		}),
-		drop(sourceItem, monitor) {
+		drop(source, monitor) {
 			if (monitor.canDrop()) {
 				if (dropZone === DROP_ZONES.ELEMENT) {
-					onItemDrop(sourceItem.id, itemId);
+					onItemDrop(source.id, itemId);
 				}
 				else {
-					let newItemIndex = itemIndex;
+					let newIndex = itemIndex;
 
 					if (
 						dropZone === DROP_ZONES.BOTTOM &&
-						sourceItem.parentId !== parentId
+						source.parentId !== parentId
 					) {
-						newItemIndex = itemIndex + 1;
+						newIndex = itemIndex + 1;
 					}
 
-					onItemDrop(sourceItem.id, parentId, newItemIndex);
+					onItemDrop(source.id, parentId, newIndex);
 				}
 			}
 		},
-		hover(sourceItem, monitor) {
+		hover(source, monitor) {
 			let dropZone;
 
 			if (isOver && monitor.canDrop()) {

@@ -79,8 +79,10 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	 * @param  themeDisplay the current page {@link ThemeDisplay}
 	 * @return <code>true</code> if the view is visible
 	 */
-	public default boolean isVisible(T itemSelectorCriterion) {
-		return true;
+	public default boolean isVisible(
+		T itemSelectorCriterion, ThemeDisplay themeDisplay) {
+
+		return isVisible(themeDisplay);
 	}
 
 	/**
@@ -95,7 +97,9 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	 *
 	 * @param  themeDisplay the current page {@link ThemeDisplay}
 	 * @return <code>true</code> if the view is visible
+	 * @deprecated As of Athanasius (7.3.x)
 	 */
+	@Deprecated
 	public boolean isVisible(ThemeDisplay themeDisplay);
 
 	/**

@@ -253,7 +253,15 @@ public class MessageBoardThreadResourceImpl
 			Long siteId, MessageBoardThread messageBoardThread)
 		throws Exception {
 
-		return _addMessageBoardThread(siteId, 0L, messageBoardThread);
+		long messageBoardSectionId = 0L;
+
+		if (messageBoardThread.getMessageBoardSectionId() != null) {
+			messageBoardSectionId =
+				messageBoardThread.getMessageBoardSectionId();
+		}
+
+		return _addMessageBoardThread(
+			siteId, messageBoardSectionId, messageBoardThread);
 	}
 
 	@Override
@@ -533,6 +541,7 @@ public class MessageBoardThreadResourceImpl
 					_assetTagLocalService.getTags(
 						MBMessage.class.getName(), mbMessage.getMessageId()),
 					AssetTag.NAME_ACCESSOR);
+				messageBoardSectionId = mbMessage.getCategoryId();
 				numberOfMessageBoardAttachments =
 					mbMessage.getAttachmentsFileEntriesCount();
 				numberOfMessageBoardMessages =

@@ -11,6 +11,7 @@
 		<suppress checks="BNDBundleInformationCheck" files="gradle-plugins-workspace/src/gradleTest/.*" />
 		<suppress checks="BNDBundleInformationCheck" files="project-templates/project-templates-npm-vuejs-portlet/bnd\.bnd" />
 		<suppress checks="BNDWebContextPathCheck" files="gradle-plugins-workspace/src/gradleTest/targetPlatformDefault/modules/foo-rule/bnd.bnd" />
+		<suppress checks="CopyrightCheck" files="ant-bnd/src/main/java/com/liferay/ant/bnd/metatype/MetatypePlugin\.java" />
 		<suppress checks="GradleProvidedDependenciesCheck" files="gradle-plugins-workspace/src/gradleTest/providedModules/build\.gradle" />
 		<suppress checks="JavaDeprecatedJavadocCheck" files=".*" />
 		<suppress checks="JavaDiamondOperatorCheck" files="ant-beanshell/.*" />
@@ -33,6 +34,7 @@
 		<suppress checks="JavaXMLSecurityCheck" files="gradle-plugins-tlddoc-builder/src/main/java/com/liferay/gradle/plugins/tlddoc/builder/internal/util/TLDUtil\.java" />
 		<suppress checks="JSONValidationCheck" files="project-templates/.*" />
 		<suppress checks="StringMethodsCheck" files="gradle-plugins-baseline/src/main/java/com/liferay/gradle/plugins/baseline/Baseline\.java" />
+		<suppress checks="StringMethodsCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/LiferayOSGiDefaultsPlugin\.java" />
 		<suppress checks="XMLServiceFileCheck" files="gradle-plugins-db-support/src/gradleTest/cleanServiceBuilder/service\.xml" />
 	</source-check>
 </suppressions>

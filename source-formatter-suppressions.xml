@@ -12,9 +12,6 @@
 		<suppress checks="ConstantNameCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
 		<suppress checks="ConstantNameCheck" files="portal-test/src/com/liferay/portal/kernel/test/rule/CodeCoverageAssertor\.java" />
 		<suppress checks="EnumConstantOrderCheck" files="portal-kernel/src/com/liferay/portal/kernel/process/ProcessLog\.java" />
-		<suppress checks="FactoryCheck" files="modules/apps/portal-search/portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/PermissionFilterFacetedSearcherTest\.java" />
-		<suppress checks="FactoryCheck" files="modules/apps/portal-search/portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/SearchPermissionCheckerFacetedSearcherTest\.java" />
-		<suppress checks="FactoryCheck" files="modules/apps/sync/sync-service/src/main/java/com/liferay/sync/internal/util/SyncHelperImpl\.java" />
 		<suppress checks="FactoryCheck" files="portal-kernel/src/com/liferay/portal/kernel/service/ServiceContext\.java" />
 		<suppress checks="FactoryCheck" files="portal-kernel/src/com/liferay/portal/kernel/service/ServiceContextFactory\.java" />
 		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/DayAndPosition\.java" />
@@ -58,7 +55,6 @@
 		<suppress checks="MissingModifierCheck" files="portal-kernel/src/com/liferay/portal/kernel/process/local/LocalProcessLog\.java" />
 		<suppress checks="MissingModifierCheck" files="portal-kernel/src/com/liferay/portal/kernel/process/local/ResultProcessCallable\.java" />
 		<suppress checks="MissingModifierCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
-		<suppress checks="PersistenceCallCheck" files="modules/apps/portal/portal-upgrade-test/src/testIntegration/java/com/liferay/portal/upgrade/test/BaseBuildAutoUpgradeTestCase\.java" />
 		<suppress checks="StaticVariableNameCheck" files="portal-impl/src/com/liferay/portal/language/LanguageResources\.java" />
 		<suppress checks="StaticVariableNameCheck" files="portal-impl/src/com/liferay/portal/util/PropsValues\.java" />
 		<suppress checks="StaticVariableNameCheck" files="portal-impl/test/unit/com/liferay/portal/bean/ConstantsBeanFactoryImplTest\.java" />
@@ -72,7 +68,6 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="CDNCheck" files="test\.properties" />
-		<suppress checks="CopyrightCheck" files="modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/metatype/MetatypePlugin\.java" />
 		<suppress checks="JavaAbstractMethodCheck" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
 		<suppress checks="JavaCleanUpMethodVariablesCheck" files="util-taglib/src/com/liferay/taglib/util/IncludeTag\.java" />
 		<suppress checks="JavaDeserializationSecurityCheck" files="portal-impl/src/com/liferay/portal/bean/BeanPropertiesImpl\.java" />
@@ -119,11 +114,8 @@
 		<suppress checks="PropertiesWhitespaceCheck" files="sql/lportal\.properties" />
 		<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ClassResourceBundleLoader\.java" />
 		<suppress checks="ResourceBundleCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ResourceBundleUtil\.java" />
-		<suppress checks="StringMethodsCheck" files="modules/sdk/gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/LiferayOSGiDefaultsPlugin\.java" />
 		<suppress checks="StringMethodsCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/StringUtil\.java" />
 		<suppress checks="StringMethodsCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringUtilTest\.java" />
-		<suppress checks="TLDElementOrderCheck" files="modules/apps/portal/portal-spring-extender-impl/src/main/resources/META-INF/spring-form\.tld" />
-		<suppress checks="TLDElementOrderCheck" files="modules/apps/portal/portal-spring-extender-impl/src/main/resources/META-INF/spring\.tld" />
 		<suppress checks="XMLBuildFileCheck" files="build\.xml" />
 		<suppress checks="XMLIndentationCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Calendar\.macro" />
 		<suppress checks="XMLIndentationCheck" files="tools/jalopy\.xml" />
@@ -143,7 +135,6 @@
 
 		<suppress checks="GradleDependencyVersionCheck" files="modules/sdk/.*" />
 		<suppress checks="GradleDependencyVersionCheck" files="modules/util/.*" />
-		<suppress checks="JavaProviderTypeAnnotationCheck" files="modules/private/.*" />
 
 		<!-- Temporary suppressions for project-templates (Chema) -->
 

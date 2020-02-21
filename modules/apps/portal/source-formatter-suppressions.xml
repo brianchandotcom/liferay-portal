@@ -3,10 +3,13 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="PersistenceCallCheck" files="portal-dao-test/src/testIntegration/java/com/liferay/portal/dao/orm/hibernate/test/SuspendedSessionConnectionTest\.java" />
+		<suppress checks="PersistenceCallCheck" files="portal-upgrade-test/src/testIntegration/java/com/liferay/portal/upgrade/test/BaseBuildAutoUpgradeTestCase\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-upgrade-api/src/main/java/com/liferay/portal/upgrade/release/BaseUpgradeServiceModuleRelease.java" />
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-upgrade-api/src/main/java/com/liferay/portal/upgrade/release/BaseUpgradeWebModuleRelease.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-monitoring/src/main/java/com/liferay/portal/monitoring/internal/MonitoringGateKeeper\.java" />
+		<suppress checks="TLDElementOrderCheck" files="portal-spring-extender-impl/src/main/resources/META-INF/spring-form\.tld" />
+		<suppress checks="TLDElementOrderCheck" files="portal-spring-extender-impl/src/main/resources/META-INF/spring\.tld" />
 	</source-check>
 </suppressions>

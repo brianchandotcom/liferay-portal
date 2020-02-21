@@ -3,6 +3,8 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="CamelCaseNameCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/SearchEngineInitializer\.java" />
+		<suppress checks="FactoryCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/PermissionFilterFacetedSearcherTest\.java" />
+		<suppress checks="FactoryCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/SearchPermissionCheckerFacetedSearcherTest\.java" />
 		<suppress checks="MapBuilderCheck" files="portal-search-admin-web/src/main/java/com/liferay/portal/search/admin/web/internal/display/context/FieldMappingsDisplayBuilder\.java" />
 	</checkstyle>
 </suppressions>

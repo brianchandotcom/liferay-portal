@@ -137,7 +137,7 @@ public class DepotGroupItemSelectorView
 
 		@Override
 		public String getIcon() {
-			return "repositories";
+			return "books";
 		}
 
 		@Override

@@ -122,7 +122,7 @@ public class GroupItemSelectorProviderImplTest {
 
 	@Test
 	public void testGetIcon() {
-		Assert.assertEquals("repository", _groupItemSelectorProvider.getIcon());
+		Assert.assertEquals("books", _groupItemSelectorProvider.getIcon());
 	}
 
 	@Test

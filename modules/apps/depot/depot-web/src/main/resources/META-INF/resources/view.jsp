@@ -57,7 +57,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 						<c:when test="<%= depotAdminDisplayContext.isDisplayStyleDescriptive() %>">
 							<liferay-ui:search-container-column-text>
 								<liferay-ui:search-container-column-icon
-									icon="repository"
+									icon="boks"
 									toggleRowChecker="<%= true %>"
 								/>
 							</liferay-ui:search-container-column-text>

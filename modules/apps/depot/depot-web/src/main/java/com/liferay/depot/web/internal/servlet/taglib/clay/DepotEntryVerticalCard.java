@@ -82,7 +82,7 @@ public class DepotEntryVerticalCard
 
 	@Override
 	public String getIcon() {
-		return "repository";
+		return "books";
 	}
 
 	@Override

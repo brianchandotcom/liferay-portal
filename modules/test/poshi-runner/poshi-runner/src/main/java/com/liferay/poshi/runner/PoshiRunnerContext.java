@@ -1749,10 +1749,6 @@ public class PoshiRunnerContext {
 			return _url;
 		}
 
-		public URL getURL() {
-			return _url;
-		}
-
 		private PoshiFileCallable(URL url, String namespace) {
 			_url = url;
 			_namespace = namespace;

@@ -312,6 +312,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			"/layout_page_template/export_layout_page_template_entry");
 
 		return dropdownItem -> {
+			dropdownItem.setDisabled(_layoutPageTemplateEntry.isDraft());
 			dropdownItem.setHref(exportLayoutPageTemplateURL);
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export"));

@@ -18,6 +18,9 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * @author Alejandro Tardín
  */
@@ -36,8 +39,35 @@ public class ItemSelectorKeyUtil {
 	}
 
 	private static String _getKey(Class<?> clazz, String suffix) {
-		return StringUtil.lowerCase(
-			StringUtil.removeSubstring(clazz.getSimpleName(), suffix));
+		return _itemSelectorKeysMap.computeIfAbsent(
+			clazz.getName(),
+			className -> {
+				String itemSelectorKey = StringUtil.lowerCase(
+					StringUtil.removeSubstring(clazz.getSimpleName(), suffix));
+
+				if (!_itemSelectorKeysMap.containsValue(itemSelectorKey)) {
+					return itemSelectorKey;
+				}
+
+				int tries = 1;
+
+				while (_itemSelectorKeysMap.containsValue(
+							itemSelectorKey + tries)) {
+
+					if (tries >= _MAXIMUM_TRIES) {
+						return className;
+					}
+
+					tries++;
+				}
+
+				return itemSelectorKey + tries;
+			});
 	}
+
+	private static final int _MAXIMUM_TRIES = 50;
+
+	private static final Map<String, String> _itemSelectorKeysMap =
+		new ConcurrentHashMap<>();
 
 }

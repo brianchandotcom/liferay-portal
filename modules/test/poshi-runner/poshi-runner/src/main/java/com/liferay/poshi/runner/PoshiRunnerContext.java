@@ -1708,9 +1708,8 @@ public class PoshiRunnerContext {
 
 			String namespacedFileName = _namespace + "." + fileName;
 
-			if (PoshiRunnerContext._filePaths.containsKey(namespacedFileName)) {
-				String duplicateFilePath = PoshiRunnerContext._filePaths.get(
-					namespacedFileName);
+			if (_filePaths.containsKey(namespacedFileName)) {
+				String duplicateFilePath = _filePaths.get(namespacedFileName);
 
 				System.out.println(
 					"WARNING: Duplicate file name '" + fileName +
@@ -1725,8 +1724,7 @@ public class PoshiRunnerContext {
 				_storeRootElement(rootElement, filePath, _namespace);
 
 				if (rootElement.attributeValue("override") == null) {
-					PoshiRunnerContext._filePaths.put(
-						_namespace + "." + fileName, filePath);
+					_filePaths.put(_namespace + "." + fileName, filePath);
 
 					if (fileName.endsWith(".function")) {
 						_functionFileNames.add(

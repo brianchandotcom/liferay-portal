@@ -238,19 +238,19 @@ public class ContentPageEditorDisplayContext {
 				"fragments", _getFragmentCollections(false, true)
 			).put(
 				"getAssetFieldValueURL",
-				_getResourceURL("/content_layout/get_asset_field_value")
+				getResourceURL("/content_layout/get_asset_field_value")
 			).put(
 				"getAssetMappingFieldsURL",
-				_getResourceURL("/content_layout/get_asset_mapping_fields")
+				getResourceURL("/content_layout/get_asset_mapping_fields")
 			).put(
 				"getAvailableTemplatesURL",
-				_getResourceURL("/content_layout/get_available_templates")
+				getResourceURL("/content_layout/get_available_templates")
 			).put(
 				"getExperienceUsedPortletsURL",
-				_getResourceURL("/content_layout/get_experience_used_portlets")
+				getResourceURL("/content_layout/get_experience_used_portlets")
 			).put(
 				"getPageContentsURL",
-				_getResourceURL("/content_layout/get_page_contents")
+				getResourceURL("/content_layout/get_page_contents")
 			).put(
 				"imageSelectorURL", _getItemSelectorURL()
 			).put(
@@ -293,7 +293,7 @@ public class ContentPageEditorDisplayContext {
 				"redirectURL", _getRedirect()
 			).put(
 				"renderFragmentEntryURL",
-				_getResourceURL("/content_layout/get_fragment_entry_link")
+				getResourceURL("/content_layout/get_fragment_entry_link")
 			).put(
 				"sidebarPanels", getSidebarPanels()
 			).put(
@@ -427,6 +427,14 @@ public class ContentPageEditorDisplayContext {
 			httpServletRequest, "groupId", themeDisplay.getScopeGroupId());
 
 		return _groupId;
+	}
+
+	protected String getResourceURL(String resourceID) {
+		ResourceURL resourceURL = _renderResponse.createResourceURL();
+
+		resourceURL.setResourceID(resourceID);
+
+		return resourceURL.toString();
 	}
 
 	protected long getSegmentsExperienceId() {
@@ -1415,14 +1423,6 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return _redirect;
-	}
-
-	private String _getResourceURL(String resourceID) {
-		ResourceURL resourceURL = _renderResponse.createResourceURL();
-
-		resourceURL.setResourceID(resourceID);
-
-		return resourceURL.toString();
 	}
 
 	private String[] _getThemeColorsCssClasses() {

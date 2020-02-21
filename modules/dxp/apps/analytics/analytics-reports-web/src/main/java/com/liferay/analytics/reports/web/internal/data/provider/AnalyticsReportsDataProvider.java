@@ -16,12 +16,16 @@ package com.liferay.analytics.reports.web.internal.data.provider;
 
 import com.liferay.analytics.reports.web.internal.data.model.TimeRange;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import java.util.Collection;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,26 +39,14 @@ public class AnalyticsReportsDataProvider {
 			long plid, TimeRange timeRange)
 		throws PortalException {
 
-		try {
-			return JSONFactoryUtil.createJSONObject(
-				_read("analytics-reports-historical-reads.json"));
-		}
-		catch (IOException ioException) {
-			throw new PortalException(ioException);
-		}
+		return _getHistoricalJSONObject(timeRange.getIntervals());
 	}
 
 	public JSONObject getHistoricalViewsJSONObject(
 			long plid, TimeRange timeRange)
 		throws PortalException {
 
-		try {
-			return JSONFactoryUtil.createJSONObject(
-				_read("analytics-reports-historical-views.json"));
-		}
-		catch (IOException ioException) {
-			throw new PortalException(ioException);
-		}
+		return _getHistoricalJSONObject(timeRange.getIntervals());
 	}
 
 	public Long getTotalReads(long plid) {
@@ -65,13 +57,37 @@ public class AnalyticsReportsDataProvider {
 		return 187427L;
 	}
 
-	private String _read(String fileName) throws IOException {
-		Class<?> clazz = getClass();
+	private JSONObject _getHistoricalJSONObject(
+		Collection<LocalDateTime> intervals) {
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
+		JSONArray intervalsJSONArray = JSONFactoryUtil.createJSONArray();
+		int totalValue = 0;
 
-		return StringUtil.read(inputStream);
+		for (LocalDateTime interval : intervals) {
+			int value = _getRandomInt();
+
+			intervalsJSONArray.put(
+				JSONUtil.put(
+					"key",
+					DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(interval)
+				).put(
+					"value", value
+				));
+
+			totalValue = totalValue + value;
+		}
+
+		return JSONUtil.put(
+			"histogram", intervalsJSONArray
+		).put(
+			"value", totalValue
+		);
+	}
+
+	private int _getRandomInt() {
+		ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+
+		return threadLocalRandom.nextInt(0, 200 + 1);
 	}
 
 }

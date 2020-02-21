@@ -1,10 +1,29 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/CombineLines\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/DeserializationSecurity\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/DuplicateMethods\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/ExceptionVariableNameForExceptionMapper\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/IncorrectClose\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/IncorrectImports2\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/IncorrectVariableNames3\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/IncorrectWhitespace\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/InefficientStringMethods\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/JavaTermDividers\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/LPS28266\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/MissingEmptyLines\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/NullVariable\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/SecureRandomNumberGeneration\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/SortJavaTerms1\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/SortMethodsWithAnnotatedParameters\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/StaticFinalLog\.java" />
+	</checkstyle>
 	<source-check>
-		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator1/bnd\.bnd" />
-		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator2/bnd\.bnd" />
-		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator3/bnd\.bnd" />
-		<suppress checks="JavaOSGiReferenceCheck" files="source/formatter/dependencies/.*" />
+		<suppress checks="BNDBundleInformationCheck" files="com/liferay/source/formatter/dependencies/IncorrectBundleActivator1/bnd\.bnd" />
+		<suppress checks="BNDBundleInformationCheck" files="com/liferay/source/formatter/dependencies/IncorrectBundleActivator2/bnd\.bnd" />
+		<suppress checks="BNDBundleInformationCheck" files="com/liferay/source/formatter/dependencies/IncorrectBundleActivator3/bnd\.bnd" />
+		<suppress checks="JavaOSGiReferenceCheck" files="com/liferay/source/formatter/dependencies/.*" />
 	</source-check>
 </suppressions>

@@ -15,6 +15,8 @@
 package com.liferay.depot.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
@@ -36,6 +38,12 @@ public class DepotJournalArticleAssetRendererFactory
 	extends AssetRendererFactoryWrapper<FileEntry> {
 
 	@Override
+	public ClassTypeReader getClassTypeReader() {
+		return new DepotClassTypeReader(
+			super.getClassTypeReader(), _depotEntryLocalService);
+	}
+
+	@Override
 	protected AssetRendererFactory<FileEntry> getAssetRendererFactory() {
 		return _assetRendererFactory;
 	}
@@ -44,5 +52,8 @@ public class DepotJournalArticleAssetRendererFactory
 		target = "(&(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")(!(component.name=com.liferay.depot.web.internal.asset.model.DepotJournalArticleAssetRendererFactory)))"
 	)
 	private AssetRendererFactory<FileEntry> _assetRendererFactory;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 }

@@ -25,10 +25,10 @@ import java.time.LocalDateTime;
 public class TimeRange {
 
 	public static final TimeRange LAST_7_DAYS = new TimeRange(
-		false, "last-7-days", 7);
+		false, TimeSpan.LAST_7_DAYS);
 
 	public static final TimeRange LAST_24_HOURS = new TimeRange(
-		true, "last-24-hours", 0) {
+		true, TimeSpan.LAST_24_HOURS) {
 
 		@Override
 		public LocalDateTime getStartLocalDateTime() {
@@ -40,7 +40,7 @@ public class TimeRange {
 	};
 
 	public static final TimeRange LAST_30_DAYS = new TimeRange(
-		false, "last-30-days", 30);
+		false, TimeSpan.LAST_30_DAYS);
 
 	public LocalDate getEndLocalDate() {
 		LocalDateTime localDateTime = LocalDateTime.now(_clock);
@@ -71,18 +71,10 @@ public class TimeRange {
 		return localDateTime;
 	}
 
-	public String getKey() {
-		return _key;
-	}
-
-	public int getRangeKey() {
-		return _rangeKey;
-	}
-
 	public LocalDate getStartLocalDate() {
 		LocalDate localDate = getEndLocalDate();
 
-		return localDate.minusDays(getRangeKey() - 1);
+		return localDate.minusDays(_timeSpan.getDays() - 1);
 	}
 
 	public LocalDateTime getStartLocalDateTime() {
@@ -93,28 +85,21 @@ public class TimeRange {
 		localDateTime = localDateTime.withNano(0);
 		localDateTime = localDateTime.withSecond(0);
 
-		return localDateTime.minusDays(getRangeKey() - 1);
+		return localDateTime.minusDays(_timeSpan.getDays() - 1);
 	}
 
-	private TimeRange(boolean includeToday, String key, int rangeKey) {
+	public TimeSpan getTimeSpan() {
+		return _timeSpan;
+	}
+
+	private TimeRange(boolean includeToday, TimeSpan timeSpan) {
 		_clock = Clock.systemUTC();
 		_includeToday = includeToday;
-		_key = key;
-		_rangeKey = rangeKey;
-	}
-
-	private TimeRange(
-		Clock clock, boolean includeToday, String key, int rangeKey) {
-
-		_clock = clock;
-		_includeToday = includeToday;
-		_key = key;
-		_rangeKey = rangeKey;
+		_timeSpan = timeSpan;
 	}
 
 	private final Clock _clock;
 	private final boolean _includeToday;
-	private final String _key;
-	private final int _rangeKey;
+	private final TimeSpan _timeSpan;
 
 }

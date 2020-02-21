@@ -65,7 +65,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 					<aui:button-row>
 						<portlet:renderURL var="addNewChannelURL">
-							<portlet:param name="mvcRenderCommandName" value="/analytics_settings/add_new_channel" />
+							<portlet:param name="mvcRenderCommandName" value="/analytics_settings/add_channel" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:renderURL>
 

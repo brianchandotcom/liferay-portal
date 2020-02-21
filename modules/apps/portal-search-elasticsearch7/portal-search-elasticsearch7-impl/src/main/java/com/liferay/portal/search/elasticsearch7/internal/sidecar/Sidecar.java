@@ -115,23 +115,25 @@ public class Sidecar {
 	}
 
 	public String getNetworkHostAddress() {
-		try {
-			String address = _addressNoticeableFuture.get();
+		if (_address == null) {
+			try {
+				_address = _addressNoticeableFuture.get();
 
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Sidecar ", getNodeName(), " is at ", address));
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Sidecar ", getNodeName(), " is at ", _address));
+				}
 			}
+			catch (Exception exception) {
+				_processChannel.write(new StopSidecarProcessCallable());
 
-			return address;
+				throw new IllegalStateException(
+					"Unable to get network host address", exception);
+			}
 		}
-		catch (Exception exception) {
-			_processChannel.write(new StopSidecarProcessCallable());
 
-			throw new IllegalStateException(
-				"Unable to get network host address", exception);
-		}
+		return _address;
 	}
 
 	public void start() {
@@ -593,6 +595,7 @@ public class Sidecar {
 
 	private static final Log _log = LogFactoryUtil.getLog(Sidecar.class);
 
+	private String _address;
 	private NoticeableFuture<String> _addressNoticeableFuture;
 	private final ComponentContext _componentContext;
 	private final String _componentName;

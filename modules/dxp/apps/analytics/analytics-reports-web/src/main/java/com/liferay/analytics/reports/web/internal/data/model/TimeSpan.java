@@ -23,8 +23,8 @@ import java.util.Objects;
  */
 public enum TimeSpan {
 
-	LAST_7_DAYS("last-7-days", 2), LAST_24_HOURS("last-24-hours", 1),
-	LAST_30_DAYS("last-30-days", 3);
+	LAST_7_DAYS("last-7-days", 7), LAST_24_HOURS("last-24-hours", 0),
+	LAST_30_DAYS("last-30-days", 30);
 
 	public static String defaultTimeSpanKey() {
 		return LAST_7_DAYS.getKey();
@@ -44,20 +44,20 @@ public enum TimeSpan {
 		throw new IllegalArgumentException("Invalid time span key " + key);
 	}
 
+	public int getDays() {
+		return _days;
+	}
+
 	public String getKey() {
 		return _key;
 	}
 
-	public int getOrder() {
-		return _order;
-	}
-
-	private TimeSpan(String key, int order) {
+	private TimeSpan(String key, int days) {
 		_key = key;
-		_order = order;
+		_days = days;
 	}
 
+	private final int _days;
 	private final String _key;
-	private final int _order;
 
 }

@@ -12,6 +12,7 @@
 import {
 	defaultDateFormat,
 	formatDate,
+	getLocaleDateFormat,
 	isValidDate,
 } from '../../../shared/util/date.es';
 import moment from '../../../shared/util/moment.es';
@@ -20,24 +21,20 @@ const convertQueryDate = (date = '', format = 'L') => {
 	return moment.utc(decodeURIComponent(date), null, 'en').format(format);
 };
 
-const formatDateTime = (date, isEndDate) => {
-	let utcDate = parseDateMoment(date);
+const formatDateTime = (date, format = 'L', isEndDate) => {
+	let dateTime = parseDateMoment(date, format);
 
-	if (isEndDate) {
-		utcDate = utcDate
-			.hours(23)
-			.minutes(59)
-			.seconds(59);
-	}
-	else {
-		utcDate = utcDate.hours(0);
-	}
+	dateTime = isEndDate ? dateTime.endOf('day') : dateTime.startOf('day');
 
-	return utcDate.format(defaultDateFormat);
+	return dateTime.format(defaultDateFormat);
 };
 
 const formatDescriptionDate = date => {
-	return formatDate(decodeURIComponent(date), 'll', defaultDateFormat);
+	return formatDate(
+		decodeURIComponent(date),
+		getLocaleDateFormat('ll'),
+		defaultDateFormat
+	);
 };
 
 const formatTimeRange = (timeRange, isAmPm) => {

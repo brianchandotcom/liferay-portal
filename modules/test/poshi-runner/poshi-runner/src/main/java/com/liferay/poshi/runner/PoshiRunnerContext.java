@@ -1426,8 +1426,6 @@ public class PoshiRunnerContext {
 	private static void _storeRootElements(List<URL> urls, String namespace)
 		throws Exception {
 
-		Map<String, String> filePaths = new HashMap<>();
-
 		List<PoshiFileCallable> dependencyPoshiFileCallables =
 			new ArrayList<>();
 		List<PoshiFileCallable> macroPoshiFileCallables = new ArrayList<>();
@@ -1438,20 +1436,20 @@ public class PoshiRunnerContext {
 
 			if (fileName.contains(".macro")) {
 				macroPoshiFileCallables.add(
-					new PoshiFileCallable(url, filePaths, namespace));
+					new PoshiFileCallable(url, namespace));
 
 				continue;
 			}
 
 			if (fileName.contains(".testcase") || fileName.contains(".prose")) {
 				testPoshiFileCallables.add(
-					new PoshiFileCallable(url, filePaths, namespace));
+					new PoshiFileCallable(url, namespace));
 
 				continue;
 			}
 
 			dependencyPoshiFileCallables.add(
-				new PoshiFileCallable(url, filePaths, namespace));
+				new PoshiFileCallable(url, namespace));
 		}
 
 		ExecutorService executorService = Executors.newFixedThreadPool(16);
@@ -1693,14 +1691,17 @@ public class PoshiRunnerContext {
 			String fileName = PoshiRunnerGetterUtil.getFileNameFromFilePath(
 				filePath);
 
-			if (_filePaths.containsKey(fileName)) {
+			String namespacedFileName = _namespace + "." + fileName;
+
+			if (PoshiRunnerContext._filePaths.containsKey(namespacedFileName)) {
+				String duplicateFilePath = PoshiRunnerContext._filePaths.get(
+					namespacedFileName);
+
 				System.out.println(
 					"WARNING: Duplicate file name '" + fileName +
 						"' found within the namespace '" + _namespace + "':\n" +
-							filePath + "\n" + _filePaths.get(fileName) + "\n");
+							filePath + "\n" + duplicateFilePath + "\n");
 			}
-
-			_filePaths.put(fileName, filePath);
 
 			try {
 				Element rootElement =
@@ -1733,15 +1734,15 @@ public class PoshiRunnerContext {
 			return _url;
 		}
 
-		private PoshiFileCallable(
-			URL url, Map<String, String> filePaths, String namespace) {
+		public URL getURL() {
+			return _url;
+		}
 
+		private PoshiFileCallable(URL url, String namespace) {
 			_url = url;
-			_filePaths = filePaths;
 			_namespace = namespace;
 		}
 
-		private final Map<String, String> _filePaths;
 		private final String _namespace;
 		private final URL _url;
 

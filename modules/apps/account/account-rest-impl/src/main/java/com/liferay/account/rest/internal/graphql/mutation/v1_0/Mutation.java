@@ -15,8 +15,10 @@
 package com.liferay.account.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.account.rest.dto.v1_0.Account;
+import com.liferay.account.rest.dto.v1_0.AccountRole;
 import com.liferay.account.rest.dto.v1_0.AccountUser;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
+import com.liferay.account.rest.resource.v1_0.AccountRoleResource;
 import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -47,6 +49,14 @@ public class Mutation {
 
 		_accountResourceComponentServiceObjects =
 			accountResourceComponentServiceObjects;
+	}
+
+	public static void setAccountRoleResourceComponentServiceObjects(
+		ComponentServiceObjects<AccountRoleResource>
+			accountRoleResourceComponentServiceObjects) {
+
+		_accountRoleResourceComponentServiceObjects =
+			accountRoleResourceComponentServiceObjects;
 	}
 
 	public static void setAccountUserResourceComponentServiceObjects(
@@ -147,6 +157,19 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField(description = "Adds a role for the account")
+	public AccountRole createAccountRole(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountRole") AccountRole accountRole)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountRoleResource -> accountRoleResource.postAccountRole(
+				accountId, accountRole));
+	}
+
 	@GraphQLField(
 		description = "Creates a user and assigns them to the account"
 	)
@@ -212,6 +235,18 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			AccountRoleResource accountRoleResource)
+		throws Exception {
+
+		accountRoleResource.setContextAcceptLanguage(_acceptLanguage);
+		accountRoleResource.setContextCompany(_company);
+		accountRoleResource.setContextHttpServletRequest(_httpServletRequest);
+		accountRoleResource.setContextHttpServletResponse(_httpServletResponse);
+		accountRoleResource.setContextUriInfo(_uriInfo);
+		accountRoleResource.setContextUser(_user);
+	}
+
+	private void _populateResourceContext(
 			AccountUserResource accountUserResource)
 		throws Exception {
 
@@ -225,6 +260,8 @@ public class Mutation {
 
 	private static ComponentServiceObjects<AccountResource>
 		_accountResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AccountRoleResource>
+		_accountRoleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AccountUserResource>
 		_accountUserResourceComponentServiceObjects;
 

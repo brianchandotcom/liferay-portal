@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
@@ -63,7 +64,7 @@ public class XMLSuppressionsFileCheck extends BaseFileCheck {
 			fileName, checkstyleElement, "suppress", "checkstyle",
 			suppressElementComparator);
 
-		_checkFilesPropertyValue(
+		content = _formatFilesPropertyValue(
 			fileName, content, fileLocation, checkstyleElement);
 
 		Element sourceCheckElement = rootElement.element("source-check");
@@ -72,7 +73,7 @@ public class XMLSuppressionsFileCheck extends BaseFileCheck {
 			fileName, sourceCheckElement, "suppress", "source-check",
 			suppressElementComparator);
 
-		_checkFilesPropertyValue(
+		content = _formatFilesPropertyValue(
 			fileName, content, fileLocation, sourceCheckElement);
 
 		return content;
@@ -98,11 +99,11 @@ public class XMLSuppressionsFileCheck extends BaseFileCheck {
 			x);
 	}
 
-	private void _checkFilesPropertyValue(
+	private String _formatFilesPropertyValue(
 		String fileName, String content, String fileLocation, Element element) {
 
 		if (element == null) {
-			return;
+			return content;
 		}
 
 		for (Element suppressElement :
@@ -124,6 +125,15 @@ public class XMLSuppressionsFileCheck extends BaseFileCheck {
 				File file = new File(expectedFileName);
 
 				if (!file.exists()) {
+					String relativeValue = _getRelativeValue(
+						originalValue, fileLocation);
+
+					if (relativeValue != null) {
+						return StringUtil.replace(
+							content, "\"" + originalValue + "\"",
+							"\"" + relativeValue + "\"");
+					}
+
 					_addMessage(
 						fileName, content, originalValue, expectedFileName,
 						"File");
@@ -138,15 +148,90 @@ public class XMLSuppressionsFileCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String expectedFolderName = fileLocation + value.substring(0, y);
+			String directoryValue = value.substring(0, y + 1);
+
+			String expectedFolderName = fileLocation + directoryValue;
 
 			File file = new File(expectedFolderName);
 
 			if (!file.exists()) {
+				String relativeValue = _getRelativeValue(
+					originalValue, fileLocation, directoryValue);
+
+				if (relativeValue != null) {
+					return StringUtil.replace(
+						content, "\"" + originalValue + "\"",
+						"\"" + relativeValue + "\"");
+				}
+
 				_addMessage(
 					fileName, content, originalValue, expectedFolderName,
-					"Folder");
+					"Directory");
 			}
+		}
+
+		return content;
+	}
+
+	private String _getRelativeValue(
+		String originalvalue, String fileLocation) {
+
+		int x = -1;
+
+		while (true) {
+			x = originalvalue.indexOf(CharPool.SLASH, x + 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			String s = originalvalue.substring(0, x + 1);
+
+			if (!fileLocation.endsWith(s)) {
+				continue;
+			}
+
+			String relativeValue = originalvalue.substring(x + 1);
+
+			File file = new File(
+				fileLocation + StringUtil.replace(relativeValue, "\\.", "."));
+
+			if (file.exists()) {
+				return relativeValue;
+			}
+		}
+	}
+
+	private String _getRelativeValue(
+		String originalValue, String fileLocation, String directoryValue) {
+
+		int x = -1;
+
+		while (true) {
+			x = directoryValue.indexOf(CharPool.SLASH, x + 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			String s = directoryValue.substring(0, x + 1);
+
+			if (!fileLocation.endsWith(s)) {
+				continue;
+			}
+
+			String relativeValue = directoryValue.substring(x + 1);
+
+			if (Validator.isNotNull(relativeValue)) {
+				File file = new File(fileLocation + relativeValue);
+
+				if (!file.exists()) {
+					continue;
+				}
+			}
+
+			return StringUtil.replaceFirst(
+				originalValue, directoryValue, relativeValue);
 		}
 	}
 

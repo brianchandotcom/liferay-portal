@@ -263,18 +263,6 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 						return null;
 					});
-				setParentNavigationMenuId(
-					() -> {
-						long parentSiteNavigationMenuItemId =
-							siteNavigationMenuItem.
-								getParentSiteNavigationMenuItemId();
-
-						if (parentSiteNavigationMenuItemId == 0L) {
-							return null;
-						}
-
-						return parentSiteNavigationMenuItemId;
-					});
 			}
 		};
 	}

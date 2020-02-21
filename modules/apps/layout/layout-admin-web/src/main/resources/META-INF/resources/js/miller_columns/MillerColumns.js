@@ -64,7 +64,7 @@ const MillerColumns = ({
 	onColumnsChange = noop,
 	onItemMove = noop
 }) => {
-	const rowRef = useRef();
+	const ref = useRef();
 
 	const [items, setItems] = useState(() => getItemsMap(initialColumns));
 
@@ -116,8 +116,8 @@ const MillerColumns = ({
 	}, [columns, onColumnsChange, previousColumnsValue]);
 
 	useEffect(() => {
-		if (rowRef.current) {
-			rowRef.current.scrollLeft = rowRef.current.scrollWidth;
+		if (ref.current) {
+			ref.current.scrollLeft = ref.current.scrollWidth;
 		}
 	}, []);
 
@@ -275,7 +275,7 @@ const MillerColumns = ({
 
 	return (
 		<DndProvider>
-			<div className="bg-white miller-columns-row" ref={rowRef}>
+			<div className="bg-white miller-columns-row" ref={ref}>
 				{columns.map((column, index) => (
 					<MillerColumnsColumn
 						actionHandlers={actionHandlers}

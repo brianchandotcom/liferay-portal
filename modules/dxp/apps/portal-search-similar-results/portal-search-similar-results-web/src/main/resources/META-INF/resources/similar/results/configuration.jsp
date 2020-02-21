@@ -77,23 +77,44 @@ SimilarResultsPortletPreferences similarResultsPortletPreferences = new SimilarR
 			>
 				<aui:input helpMessage="fields-help" label="fields" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_FIELDS) %>" type="text" value="<%= similarResultsPortletPreferences.getFields() %>" />
 
-				<aui:input helpMessage="max-query-terms-help" label="max-query-terms" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MAX_QUERY_TERMS) %>" type="text" value="<%= similarResultsPortletPreferences.getMaxQueryTerms() %>" />
+				<aui:input helpMessage="max-query-terms-help" label="max-query-terms" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MAX_QUERY_TERMS) %>" type="number" value="<%= similarResultsPortletPreferences.getMaxQueryTerms() %>">
+					<aui:validator name="digits" />
+					<aui:validator name="min">1</aui:validator>
+				</aui:input>
 
-				<aui:input helpMessage="min-term-freq-help" label="min-term-freq" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MIN_TERM_FREQUENCY) %>" type="text" value="<%= similarResultsPortletPreferences.getMinTermFrequency() %>" />
+				<aui:input helpMessage="min-term-freq-help" label="min-term-freq" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MIN_TERM_FREQUENCY) %>" type="number" value="<%= similarResultsPortletPreferences.getMinTermFrequency() %>">
+					<aui:validator name="digits" />
+					<aui:validator name="min">1</aui:validator>
+				</aui:input>
 
-				<aui:input helpMessage="min-doc-freq-help" label="min-doc-freq" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MIN_DOC_FREQUENCY) %>" type="text" value="<%= similarResultsPortletPreferences.getMinDocFrequency() %>" />
+				<aui:input helpMessage="min-doc-freq-help" label="min-doc-freq" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MIN_DOC_FREQUENCY) %>" type="number" value="<%= similarResultsPortletPreferences.getMinDocFrequency() %>">
+					<aui:validator name="digits" />
+					<aui:validator name="min">1</aui:validator>
+				</aui:input>
 
-				<aui:input helpMessage="max-doc-freq-help" label="max-doc-freq" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MAX_DOC_FREQUENCY) %>" type="text" value="<%= similarResultsPortletPreferences.getMaxDocFrequency() %>" />
+				<aui:input helpMessage="max-doc-freq-help" label="max-doc-freq" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MAX_DOC_FREQUENCY) %>" type="number" value="<%= similarResultsPortletPreferences.getMaxDocFrequency() %>">
+					<aui:validator name="digits" />
+					<aui:validator name="min">1</aui:validator>
+				</aui:input>
 
-				<aui:input helpMessage="min-word-length-help" label="min-word-length" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MIN_WORD_LENGTH) %>" type="text" value="<%= similarResultsPortletPreferences.getMinWordLength() %>" />
+				<aui:input helpMessage="min-word-length-help" label="min-word-length" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MIN_WORD_LENGTH) %>" type="number" value="<%= similarResultsPortletPreferences.getMinWordLength() %>">
+					<aui:validator name="digits" />
+					<aui:validator name="min">0</aui:validator>
+				</aui:input>
 
-				<aui:input helpMessage="max-word-length-help" label="max-word-length" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MAX_WORD_LENGTH) %>" type="text" value="<%= similarResultsPortletPreferences.getMaxWordLength() %>" />
+				<aui:input helpMessage="max-word-length-help" label="max-word-length" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MAX_WORD_LENGTH) %>" type="number" value="<%= similarResultsPortletPreferences.getMaxWordLength() %>">
+					<aui:validator name="digits" />
+					<aui:validator name="min">1</aui:validator>
+				</aui:input>
 
 				<aui:input helpMessage="stop-words-help" label="stop-words" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_STOP_WORDS) %>" type="text" value="<%= similarResultsPortletPreferences.getStopWords() %>" />
 
 				<aui:input helpMessage="min-should-match-help" label="min-should-match" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MIN_SHOULD_MATCH) %>" type="text" value="<%= similarResultsPortletPreferences.getMinShouldMatch() %>" />
 
-				<aui:input helpMessage="term-boost-help" label="term-boost" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_TERM_BOOST) %>" type="text" value="<%= similarResultsPortletPreferences.getTermBoost() %>" />
+				<aui:input helpMessage="term-boost-help" label="term-boost" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_TERM_BOOST) %>" type="text" value="<%= similarResultsPortletPreferences.getTermBoost() %>">
+					<aui:validator name="number" />
+					<aui:validator name="min">1</aui:validator>
+				</aui:input>
 
 				<aui:input helpMessage="federated-search-key-help" label="federated-search-key" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>" type="text" value="<%= similarResultsPortletPreferences.getFederatedSearchKey() %>" />
 			</liferay-frontend:fieldset>

@@ -14,7 +14,7 @@
 
 import {ClayModalProvider} from '@clayui/modal';
 import React from 'react';
-import {DragDropContext as dragDropContext} from 'react-dnd';
+import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
@@ -23,8 +23,8 @@ import {ToastContextProvider} from './components/toast/ToastContext.es';
 import ListCustomObjects from './pages/custom-object/ListCustomObjects.es';
 import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
 
-export default dragDropContext(HTML5Backend)(props => {
-	return (
+export default props => (
+	<DndProvider backend={HTML5Backend}>
 		<AppContextProvider {...props}>
 			<ToastContextProvider>
 				<ClayModalProvider>
@@ -47,5 +47,5 @@ export default dragDropContext(HTML5Backend)(props => {
 				</ClayModalProvider>
 			</ToastContextProvider>
 		</AppContextProvider>
-	);
-});
+	</DndProvider>
+);

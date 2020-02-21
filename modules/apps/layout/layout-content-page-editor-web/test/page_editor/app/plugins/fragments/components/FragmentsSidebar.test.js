@@ -15,7 +15,7 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import {DragDropContextProvider} from 'react-dnd';
+import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
@@ -56,11 +56,11 @@ jest.mock(
 
 const renderFragmentsSidebar = () =>
 	render(
-		<DragDropContextProvider backend={HTML5Backend}>
+		<DndProvider backend={HTML5Backend}>
 			<StoreAPIContextProvider>
 				<FragmentsSidebar />
 			</StoreAPIContextProvider>
-		</DragDropContextProvider>
+		</DndProvider>
 	);
 
 describe('FragmentsSidebar', () => {

@@ -12,7 +12,13 @@
  * details.
  */
 
-import {DragDropContext} from 'react-dnd';
+import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-export default DragDropContext(HTML5Backend);
+export default function withDragAndDropContext(Component) {
+	return props => (
+		<DndProvider backend={HTML5Backend}>
+			<Component {...props} />
+		</DndProvider>
+	);
+}

@@ -14,6 +14,8 @@
 
 import {ClayModalProvider} from '@clayui/modal';
 import React, {useContext, useEffect, useState} from 'react';
+import {DndProvider} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import AppContext from './AppContext.es';
 import AppContextProvider from './AppContextProvider.es';
@@ -21,7 +23,6 @@ import DataLayoutBuilder from './data-layout-builder/DataLayoutBuilder.es';
 import DataLayoutBuilderContextProvider from './data-layout-builder/DataLayoutBuilderContextProvider.es';
 import DataLayoutBuilderSidebar from './data-layout-builder/DataLayoutBuilderSidebar.es';
 import DataLayoutBuilderDragAndDrop from './drag-and-drop/DataLayoutBuilderDragAndDrop.es';
-import withDragAndDropContext from './drag-and-drop/withDragAndDropContext.es';
 
 const parseProps = ({
 	dataDefinitionId,
@@ -69,7 +70,7 @@ const AppContent = ({dataLayoutBuilder, setDataLayoutBuilder, ...props}) => {
 	);
 };
 
-const App = withDragAndDropContext(props => {
+const App = props => {
 	const {dataDefinitionId, dataLayoutId, fieldTypesModules} = parseProps(
 		props
 	);
@@ -84,23 +85,25 @@ const App = withDragAndDropContext(props => {
 	}, [fieldTypesModules]);
 
 	return (
-		<ClayModalProvider>
-			{loaded && (
-				<AppContextProvider
-					dataDefinitionId={dataDefinitionId}
-					dataLayoutBuilder={dataLayoutBuilder}
-					dataLayoutId={dataLayoutId}
-				>
-					<AppContent
+		<DndProvider backend={HTML5Backend}>
+			<ClayModalProvider>
+				{loaded && (
+					<AppContextProvider
+						dataDefinitionId={dataDefinitionId}
 						dataLayoutBuilder={dataLayoutBuilder}
-						setDataLayoutBuilder={setDataLayoutBuilder}
-						{...props}
-					/>
-				</AppContextProvider>
-			)}
-		</ClayModalProvider>
+						dataLayoutId={dataLayoutId}
+					>
+						<AppContent
+							dataLayoutBuilder={dataLayoutBuilder}
+							setDataLayoutBuilder={setDataLayoutBuilder}
+							{...props}
+						/>
+					</AppContextProvider>
+				)}
+			</ClayModalProvider>
+		</DndProvider>
 	);
-});
+};
 
 export default function(props) {
 	return <App {...props} />;

@@ -17,7 +17,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {DragDropContext as dragDropContext} from 'react-dnd';
+import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import {
@@ -111,157 +111,163 @@ class ContributorBuilder extends React.Component {
 		});
 
 		return (
-			<div className={rootClasses}>
-				<div className="criteria-builder-section-sidebar">
-					<CriteriaSidebar
-						onTitleClicked={this._handleCriteriaEdit}
-						propertyGroups={propertyGroups}
-						propertyKey={editingId}
-					/>
-				</div>
+			<DndProvider backend={HTML5Backend}>
+				<div className={rootClasses}>
+					<div className="criteria-builder-section-sidebar">
+						<CriteriaSidebar
+							onTitleClicked={this._handleCriteriaEdit}
+							propertyGroups={propertyGroups}
+							propertyKey={editingId}
+						/>
+					</div>
 
-				<div className="criteria-builder-section-main">
-					<div className="contributor-container">
-						<div className="container-fluid container-fluid-max-xl">
-							<div className="content-wrapper">
-								<div className="sheet">
-									<div className="d-flex flex-wrap justify-content-between mb-4">
-										<h2 className="mb-2 sheet-title">
-											{Liferay.Language.get('conditions')}
-										</h2>
+					<div className="criteria-builder-section-main">
+						<div className="contributor-container">
+							<div className="container-fluid container-fluid-max-xl">
+								<div className="content-wrapper">
+									<div className="sheet">
+										<div className="d-flex flex-wrap justify-content-between mb-4">
+											<h2 className="mb-2 sheet-title">
+												{Liferay.Language.get(
+													'conditions'
+												)}
+											</h2>
 
-										<div className="criterion-string">
-											<div className="btn-group">
-												<div className="btn-group-item inline-item">
-													{membersCountLoading && (
-														<ClayLoadingIndicator
-															className="mr-4"
-															small
-														/>
-													)}
-
-													{!membersCountLoading && (
-														<span className="mr-4">
-															{Liferay.Language.get(
-																'conditions-match'
-															)}
-															<b className="ml-2 text-dark">
-																{getPluralMessage(
-																	Liferay.Language.get(
-																		'x-member'
-																	),
-																	Liferay.Language.get(
-																		'x-members'
-																	),
-																	membersCount
-																)}
-															</b>
-														</span>
-													)}
-
-													<ClayButton
-														displayType="secondary"
-														onClick={
-															onPreviewMembers
-														}
-														small
-														type="button"
-													>
-														{Liferay.Language.get(
-															'view-members'
+											<div className="criterion-string">
+												<div className="btn-group">
+													<div className="btn-group-item inline-item">
+														{membersCountLoading && (
+															<ClayLoadingIndicator
+																className="mr-4"
+																small
+															/>
 														)}
-													</ClayButton>
+
+														{!membersCountLoading && (
+															<span className="mr-4">
+																{Liferay.Language.get(
+																	'conditions-match'
+																)}
+																<b className="ml-2 text-dark">
+																	{getPluralMessage(
+																		Liferay.Language.get(
+																			'x-member'
+																		),
+																		Liferay.Language.get(
+																			'x-members'
+																		),
+																		membersCount
+																	)}
+																</b>
+															</span>
+														)}
+
+														<ClayButton
+															displayType="secondary"
+															onClick={
+																onPreviewMembers
+															}
+															small
+															type="button"
+														>
+															{Liferay.Language.get(
+																'view-members'
+															)}
+														</ClayButton>
+													</div>
 												</div>
 											</div>
 										</div>
+
+										{emptyContributors &&
+											(editingId === undefined ||
+												!editing) && (
+												<EmptyPlaceholder />
+											)}
+
+										{contributors
+											.filter(criteria => {
+												const editingCriteria =
+													editingId ===
+														criteria.propertyKey &&
+													editing;
+												const emptyCriteriaQuery =
+													criteria.query === '';
+
+												return (
+													editingCriteria ||
+													!emptyCriteriaQuery
+												);
+											})
+											.map((criteria, i) => {
+												return (
+													<React.Fragment key={i}>
+														{i !== 0 && (
+															<>
+																<Conjunction
+																	className="mb-4 ml-0 mt-4"
+																	conjunctionName={
+																		criteria.conjunctionId
+																	}
+																	editing={
+																		editing
+																	}
+																	onSelect={
+																		onConjunctionChange
+																	}
+																	supportedConjunctions={
+																		supportedConjunctions
+																	}
+																/>
+															</>
+														)}
+
+														<CriteriaBuilder
+															criteria={
+																criteria.criteriaMap
+															}
+															editing={editing}
+															emptyContributors={
+																emptyContributors
+															}
+															entityName={
+																criteria.entityName
+															}
+															modelLabel={
+																criteria.modelLabel
+															}
+															onChange={
+																this
+																	._handleCriteriaChange
+															}
+															propertyKey={
+																criteria.propertyKey
+															}
+															supportedConjunctions={
+																supportedConjunctions
+															}
+															supportedOperators={
+																supportedOperators
+															}
+															supportedProperties={
+																criteria.properties
+															}
+															supportedPropertyTypes={
+																supportedPropertyTypes
+															}
+														/>
+													</React.Fragment>
+												);
+											})}
 									</div>
-
-									{emptyContributors &&
-										(editingId === undefined ||
-											!editing) && <EmptyPlaceholder />}
-
-									{contributors
-										.filter(criteria => {
-											const editingCriteria =
-												editingId ===
-													criteria.propertyKey &&
-												editing;
-											const emptyCriteriaQuery =
-												criteria.query === '';
-
-											return (
-												editingCriteria ||
-												!emptyCriteriaQuery
-											);
-										})
-										.map((criteria, i) => {
-											return (
-												<React.Fragment key={i}>
-													{i !== 0 && (
-														<>
-															<Conjunction
-																className="mb-4 ml-0 mt-4"
-																conjunctionName={
-																	criteria.conjunctionId
-																}
-																editing={
-																	editing
-																}
-																onSelect={
-																	onConjunctionChange
-																}
-																supportedConjunctions={
-																	supportedConjunctions
-																}
-															/>
-														</>
-													)}
-
-													<CriteriaBuilder
-														criteria={
-															criteria.criteriaMap
-														}
-														editing={editing}
-														emptyContributors={
-															emptyContributors
-														}
-														entityName={
-															criteria.entityName
-														}
-														modelLabel={
-															criteria.modelLabel
-														}
-														onChange={
-															this
-																._handleCriteriaChange
-														}
-														propertyKey={
-															criteria.propertyKey
-														}
-														supportedConjunctions={
-															supportedConjunctions
-														}
-														supportedOperators={
-															supportedOperators
-														}
-														supportedProperties={
-															criteria.properties
-														}
-														supportedPropertyTypes={
-															supportedPropertyTypes
-														}
-													/>
-												</React.Fragment>
-											);
-										})}
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</DndProvider>
 		);
 	}
 }
 
-export default dragDropContext(HTML5Backend)(ContributorBuilder);
+export default ContributorBuilder;

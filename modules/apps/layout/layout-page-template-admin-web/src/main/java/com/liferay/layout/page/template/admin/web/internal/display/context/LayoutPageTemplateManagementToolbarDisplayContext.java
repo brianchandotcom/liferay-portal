@@ -111,7 +111,8 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 		}
 
 		if (ExportImportLayoutPageTemplateConfigurationUtil.enabled() &&
-			(layoutPageTemplateEntry.getLayoutPrototypeId() == 0)) {
+			(layoutPageTemplateEntry.getLayoutPrototypeId() == 0) &&
+			!layoutPageTemplateEntry.isDraft()) {
 
 			availableActions.add("exportLayoutPageTemplateEntries");
 		}

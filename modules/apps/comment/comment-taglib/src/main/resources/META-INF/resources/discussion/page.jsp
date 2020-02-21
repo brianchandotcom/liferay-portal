@@ -132,8 +132,8 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 													configKey="commentEditor"
 													contents=""
 													editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'
-													name='<%= "postReplyBody0" %>'
-													onChangeMethod='<%= "0ReplyOnChange" %>'
+													name="postReplyBody0"
+													onChangeMethod="0ReplyOnChange"
 													placeholder="type-your-comment-here"
 													showSource="<%= false %>"
 													skipEditorLoading="<%= skipEditorLoading %>"
@@ -142,7 +142,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 												<aui:input name="postReplyBody0" type="hidden" />
 
 												<aui:button-row>
-													<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id='<%= "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+													<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id="postReplyButton0" onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 												</aui:button-row>
 											</div>
 										</div>

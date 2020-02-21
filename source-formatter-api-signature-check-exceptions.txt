@@ -110,6 +110,7 @@ com.liferay.exportimport.kernel.staging.StagingUtil#setRecentLayoutSetBranchId(H
 com.liferay.item.selector.ItemSelector#getItemSelectorRendering(RequestBackedPortletURLFactory,Map<String, String[]>,ThemeDisplay)
 com.liferay.item.selector.ItemSelectorReturnTypeResolver#getValue(S,ThemeDisplay)
 com.liferay.item.selector.ItemSelectorView#isVisible(ThemeDisplay)
+com.liferay.item.selector.ItemSelectorView#isVisible(T,ThemeDisplay)
 com.liferay.item.selector.test.ItemSelectorReturnTypeResolverHandlerTest#getValue(String,ThemeDisplay)
 com.liferay.journal.content.asset.addon.entry.comments.internal.CommentsContentMetadataAssetAddonEntry#isCommentsRatingsSelected(HttpServletRequest)
 com.liferay.journal.internal.transformer.JournalTransformer#transform(ThemeDisplay,Map<String, Object>,Map<String, String>,String,String,Document,PortletRequestModel,String,String,boolean)

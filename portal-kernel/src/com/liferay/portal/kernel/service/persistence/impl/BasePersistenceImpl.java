@@ -275,17 +275,17 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		try {
 			session = openSession();
 
-			Query q = session.createQuery(sql);
+			Query query = session.createQuery(sql);
 
 			if (_modelPKType == ModelPKType.STRING) {
-				QueryPos queryPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
 				for (Serializable primaryKey : uncachedPrimaryKeys) {
 					queryPos.add(primaryKey);
 				}
 			}
 
-			for (T model : (List<T>)q.list()) {
+			for (T model : (List<T>)query.list()) {
 				map.put(model.getPrimaryKeyObj(), model);
 
 				cacheResult(model);

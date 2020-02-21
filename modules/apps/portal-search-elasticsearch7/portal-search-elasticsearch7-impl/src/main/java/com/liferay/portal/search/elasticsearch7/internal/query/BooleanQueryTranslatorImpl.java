@@ -73,8 +73,8 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 		List<Query> queryClauses, QueryVisitor<QueryBuilder> queryVisitor,
 		QueryBuilderConsumer queryBuilderConsumer) {
 
-		for (Query queryClause : queryClauses) {
-			QueryBuilder queryBuilder = queryClause.accept(queryVisitor);
+		for (Query query : queryClauses) {
+			QueryBuilder queryBuilder = query.accept(queryVisitor);
 
 			queryBuilderConsumer.accept(queryBuilder);
 		}

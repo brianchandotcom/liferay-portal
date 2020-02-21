@@ -25,10 +25,10 @@ import java.time.LocalDateTime;
 public class TimeRange {
 
 	public static final TimeRange LAST_7_DAYS = new TimeRange(
-		false, TimeSpan.LAST_7_DAYS);
+		false, TimeSpan.LAST_7_DAYS, 0);
 
 	public static final TimeRange LAST_24_HOURS = new TimeRange(
-		true, TimeSpan.LAST_24_HOURS) {
+		true, TimeSpan.LAST_24_HOURS, 0) {
 
 		@Override
 		public LocalDateTime getStartLocalDateTime() {
@@ -40,7 +40,7 @@ public class TimeRange {
 	};
 
 	public static final TimeRange LAST_30_DAYS = new TimeRange(
-		false, TimeSpan.LAST_30_DAYS);
+		false, TimeSpan.LAST_30_DAYS, 0);
 
 	public LocalDate getEndLocalDate() {
 		LocalDateTime localDateTime = LocalDateTime.now(_clock);
@@ -48,6 +48,8 @@ public class TimeRange {
 		if (!_includeToday) {
 			localDateTime = localDateTime.minusDays(1);
 		}
+
+		localDateTime = localDateTime.minusDays(_getOffsetDays());
 
 		return localDateTime.toLocalDate();
 	}
@@ -68,7 +70,7 @@ public class TimeRange {
 			localDateTime = localDateTime.withSecond(59);
 		}
 
-		return localDateTime;
+		return localDateTime.minusDays(_getOffsetDays());
 	}
 
 	public LocalDate getStartLocalDate() {
@@ -92,14 +94,34 @@ public class TimeRange {
 		return _timeSpan;
 	}
 
-	private TimeRange(boolean includeToday, TimeSpan timeSpan) {
+	public int getTimeSpanOffset() {
+		return _timeSpanOffset;
+	}
+
+	private TimeRange(
+		boolean includeToday, TimeSpan timeSpan, int timeSpanOffset) {
+
 		_clock = Clock.systemUTC();
 		_includeToday = includeToday;
 		_timeSpan = timeSpan;
+		_timeSpanOffset = timeSpanOffset;
+	}
+
+	private int _getOffsetDays() {
+		if (_timeSpanOffset == 0) {
+			return 0;
+		}
+
+		if (_timeSpan.getDays() == 0) {
+			return _timeSpanOffset;
+		}
+
+		return (_timeSpan.getDays() * _timeSpanOffset) - 1;
 	}
 
 	private final Clock _clock;
 	private final boolean _includeToday;
 	private final TimeSpan _timeSpan;
+	private final int _timeSpanOffset;
 
 }

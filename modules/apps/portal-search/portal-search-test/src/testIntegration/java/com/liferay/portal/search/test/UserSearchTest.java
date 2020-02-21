@@ -95,12 +95,13 @@ public class UserSearchTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_groupAdminUser));
 
-		String keywords = "";
-		int status = 0;
 		LinkedHashMap<String, Object> userParams =
 			LinkedHashMapBuilder.<String, Object>put(
 				Field.GROUP_ID, Long.valueOf(_groupAdminUser.getGroupIds()[0])
 			).build();
+
+		String keywords = "";
+		int status = 0;
 		int start = 0;
 		int end = 20;
 

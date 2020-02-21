@@ -20,11 +20,18 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.engine.ConnectionInformation;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.web.internal.low.level.search.options.constants.LowLevelSearchOptionsPortletKeys;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wade Cao
@@ -49,7 +56,31 @@ public class LowLevelSearchOptionsConfigurationAction
 			return "/error.jsp";
 		}
 
+		ConfigurationDisplayContext configurationDisplayContext =
+			new ConfigurationDisplayContext();
+
+		LinkedList<String> connectionIds = new LinkedList<>();
+
+		List<ConnectionInformation> connectionInformationList =
+			searchEngineInformation.getConnectionInformationList();
+
+		if (connectionInformationList != null) {
+			for (ConnectionInformation connectionInformation :
+					connectionInformationList) {
+
+				connectionIds.add(connectionInformation.getConnectionId());
+			}
+		}
+
+		configurationDisplayContext.setConnectionIds(connectionIds);
+
+		httpServletRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, configurationDisplayContext);
+
 		return "/low/level/search/options/configuration.jsp";
 	}
+
+	@Reference
+	protected SearchEngineInformation searchEngineInformation;
 
 }

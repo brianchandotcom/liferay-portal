@@ -21,6 +21,8 @@ import java.util.Optional;
  */
 public interface LowLevelSearchOptionsPortletPreferences {
 
+	public static final String PREFERENCE_KEY_CONNECTION_ID = "connectionId";
+
 	public static final String PREFERENCE_KEY_CONTRIBUTORS_TO_EXCLUDE =
 		"contributorsToExclude";
 
@@ -34,6 +36,10 @@ public interface LowLevelSearchOptionsPortletPreferences {
 		"fieldsToReturn";
 
 	public static final String PREFERENCE_KEY_INDEXES = "indexes";
+
+	public Optional<String> getConnectionIdOptional();
+
+	public String getConnectionIdString();
 
 	public Optional<String> getContributorsToExcludeOptional();
 

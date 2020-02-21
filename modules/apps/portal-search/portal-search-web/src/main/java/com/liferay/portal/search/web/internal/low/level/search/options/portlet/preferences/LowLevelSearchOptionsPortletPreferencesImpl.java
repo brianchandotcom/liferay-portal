@@ -36,6 +36,18 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
+	public Optional<String> getConnectionIdOptional() {
+		return _portletPreferencesHelper.getString(
+			LowLevelSearchOptionsPortletPreferences.
+				PREFERENCE_KEY_CONNECTION_ID);
+	}
+
+	@Override
+	public String getConnectionIdString() {
+		return getConnectionIdOptional().orElse(StringPool.BLANK);
+	}
+
+	@Override
 	public Optional<String> getContributorsToExcludeOptional() {
 		return _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.

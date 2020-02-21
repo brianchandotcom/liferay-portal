@@ -50,7 +50,12 @@ public class LowLevelSearchOptionsPortletSharedSearchContributor
 				lowLevelSearchOptionsPortletPreferences.
 					getFederatedSearchKeyOptional());
 
-		searchRequestBuilder.excludeContributors(
+		searchRequestBuilder.connectionId(
+			lowLevelSearchOptionsPortletPreferences.getConnectionIdOptional(
+			).orElse(
+				null
+			)
+		).excludeContributors(
 			SearchStringUtil.splitAndUnquote(
 				lowLevelSearchOptionsPortletPreferences.
 					getContributorsToExcludeOptional())

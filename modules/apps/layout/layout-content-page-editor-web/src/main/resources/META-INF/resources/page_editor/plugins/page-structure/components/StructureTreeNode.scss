@@ -21,5 +21,9 @@
 			color: $pageStructureBlackColor;
 			font-weight: 600;
 		}
+
+		&:disabled {
+			color: $pageStructureBlackColor;
+		}
 	}
 }

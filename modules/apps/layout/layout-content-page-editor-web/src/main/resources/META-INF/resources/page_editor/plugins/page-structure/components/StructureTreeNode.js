@@ -28,7 +28,7 @@ import selectShowLayoutItemRemoveButton from '../../../app/selectors/selectShowL
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 
-const NameButton = ({id, name}) => {
+const NameButton = ({disabled, id, name}) => {
 	const isSelected = useIsSelected();
 
 	return (
@@ -41,6 +41,7 @@ const NameButton = ({id, name}) => {
 					)
 				}
 			)}
+			disabled={disabled}
 			displayType="unstyled"
 		>
 			{name || Liferay.Language.get('element')}
@@ -96,7 +97,11 @@ export default function StructureTreeNode({node}) {
 				hoverItem(node.id);
 			}}
 		>
-			<NameButton id={node.id} name={node.name} />
+			<NameButton
+				disabled={node.disabled}
+				id={node.id}
+				name={node.name}
+			/>
 			{showLayoutItemRemoveButton &&
 				node.removable &&
 				(isHovered(node.id) || isSelected(node.id)) && (

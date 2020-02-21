@@ -36,60 +36,56 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 <div class="main-content-body">
 	<h3><liferay-ui:message key="statistics" /></h3>
 
-	<liferay-ui:panel-container
-		cssClass="statistics-panel"
-		extended="<%= false %>"
-		id="messageBoardsStatisticsPanelContainer"
-		markupView="lexicon"
-		persistState="<%= true %>"
-	>
-		<liferay-ui:panel
-			collapsible="<%= true %>"
-			cssClass="statistics-panel-content"
-			extended="<%= true %>"
-			id="messageBoardsGeneralStatisticsPanel"
-			markupView="lexicon"
-			persistState="<%= true %>"
-			title="general"
-		>
-			<dl>
-				<dt>
-					<liferay-ui:message key="categories" />:
-				</dt>
-				<dd>
-					<%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %>
-				</dd>
-				<dt>
-					<c:choose>
-						<c:when test="<%= MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId) == 1 %>">
-							<liferay-ui:message key="post" />:
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="posts" />:
-						</c:otherwise>
-					</c:choose>
-				</dt>
-				<dd>
-					<%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %>
-				</dd>
-				<dt>
-					<liferay-ui:message key="participants" />:
-				</dt>
-				<dd>
-					<%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %>
-				</dd>
-			</dl>
-		</liferay-ui:panel>
+	<div class="statistics-panel">
+		<h3><liferay-ui:message key="overview" /></h3>
 
-		<liferay-ui:panel
-			collapsible="<%= true %>"
-			cssClass="statistics-panel-content"
-			extended="<%= true %>"
-			id="messageBoardsTopPostersPanel"
-			markupView="lexicon"
-			persistState="<%= true %>"
-			title="top-posters"
-		>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="overview-container statistics-panel">
+					<div class="sticker sticker-categories sticker-user-icon">
+						<clay:icon
+							symbol="categories"
+						/>
+					</div>
+
+					<small class="text-uppercase"><liferay-ui:message key="categories" /></small>
+
+					<p class="statistics-number"><%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %></p>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="overview-container statistics-panel">
+					<div class="sticker sticker-posts sticker-user-icon">
+						<clay:icon
+							symbol="message-boards"
+						/>
+					</div>
+
+					<small class="text-uppercase"><liferay-ui:message key="posts" /></small>
+
+					<p class="statistics-number"><%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %></p>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="overview-container statistics-panel">
+					<div class="sticker sticker-participants sticker-user-icon">
+						<clay:icon
+							symbol="users"
+						/>
+					</div>
+
+					<small class="text-uppercase"><liferay-ui:message key="participants" /></small>
+
+					<p class="statistics-number"><%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="statistics-panel">
+		<h3><liferay-ui:message key="top-posters" /></h3>
 			<liferay-ui:search-container
 				emptyResultsMessage="there-are-no-top-posters"
 				iteratorURL="<%= portletURL %>"
@@ -112,8 +108,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 					markupView="lexicon"
 				/>
 			</liferay-ui:search-container>
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
+	</div>
 </div>
 
 <%

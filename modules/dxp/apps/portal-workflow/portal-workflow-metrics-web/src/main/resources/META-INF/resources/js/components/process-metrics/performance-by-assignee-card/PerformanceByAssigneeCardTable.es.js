@@ -14,7 +14,7 @@ import React from 'react';
 import UserAvatar from '../../../shared/components/user-avatar/UserAvatar.es';
 import {formatDuration} from '../../../shared/util/duration.es';
 
-const Item = ({durationTaskAvg, image, name, taskCount}) => {
+const Item = ({durationTaskAvg, id, image, name, taskCount}) => {
 	const formattedDuration = formatDuration(durationTaskAvg);
 
 	return (
@@ -25,7 +25,7 @@ const Item = ({durationTaskAvg, image, name, taskCount}) => {
 			>
 				<UserAvatar className="mr-3" image={image} />
 
-				<span data-testid="assigneeName">{name}</span>
+				<span data-testid="assigneeName">{name || id}</span>
 			</td>
 
 			<td className="border-0 text-right">

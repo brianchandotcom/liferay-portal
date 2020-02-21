@@ -40,6 +40,10 @@ public class VariableNameCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (detailAST.findFirstToken(TokenTypes.ELLIPSIS) != null) {
+			return;
+		}
+
 		DetailAST modifiersDetailAST = detailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
 

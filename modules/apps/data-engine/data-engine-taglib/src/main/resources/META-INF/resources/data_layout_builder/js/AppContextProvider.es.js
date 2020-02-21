@@ -18,12 +18,14 @@ import AppContext, {createReducer, initialState} from './AppContext.es';
 import {
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT,
+	UPDATE_FIELDSETS,
 	UPDATE_IDS,
 } from './actions.es';
 import {getItem} from './utils/client.es';
 
 export default ({
 	children,
+	contentType,
 	dataDefinitionId,
 	dataLayoutBuilder,
 	dataLayoutId,
@@ -65,6 +67,19 @@ export default ({
 			);
 		}
 	}, [dataDefinitionId, dispatch]);
+
+	useEffect(() => {
+		if (contentType) {
+			getItem(
+				`/o/data-engine/v2.0/data-definitions/by-content-type/${contentType}`
+			).then(({items}) =>
+				dispatch({
+					payload: {fieldsets: items},
+					type: UPDATE_FIELDSETS
+				})
+			);
+		}
+	}, [contentType, dispatch]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

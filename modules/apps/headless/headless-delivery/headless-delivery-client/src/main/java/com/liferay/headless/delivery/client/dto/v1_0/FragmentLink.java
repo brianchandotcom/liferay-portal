@@ -30,7 +30,7 @@ public class FragmentLink implements Cloneable {
 
 	public static enum Target {
 
-		BLANK("Blank"), SELF("Self");
+		BLANK("Blank"), PARENT("Parent"), SELF("Self"), TOP("Top");
 
 		public static Target create(String value) {
 			for (Target target : values()) {

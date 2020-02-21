@@ -51,7 +51,7 @@ public class FragmentLink {
 	@GraphQLName("Target")
 	public static enum Target {
 
-		BLANK("Blank"), SELF("Self");
+		BLANK("Blank"), PARENT("Parent"), SELF("Self"), TOP("Top");
 
 		@JsonCreator
 		public static Target create(String value) {

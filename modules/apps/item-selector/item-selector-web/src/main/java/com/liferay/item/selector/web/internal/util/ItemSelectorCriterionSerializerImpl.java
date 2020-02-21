@@ -119,16 +119,27 @@ public class ItemSelectorCriterionSerializerImpl
 		Class<? extends ItemSelectorReturnType> itemSelectorReturnTypeClass =
 			itemSelectorReturnType.getClass();
 
+		addItemSelectorReturnType(
+			itemSelectorReturnTypeClass.getName(), itemSelectorReturnType);
+
+		addItemSelectorReturnType(
+			ItemSelectorKeyUtil.getItemSelectorReturnTypeKey(
+				itemSelectorReturnTypeClass),
+			itemSelectorReturnType);
+	}
+
+	protected void addItemSelectorReturnType(
+		String key, ItemSelectorReturnType itemSelectorReturnType) {
+
 		List<ItemSelectorReturnType> itemSelectorReturnTypes =
-			_itemSelectorReturnTypes.get(itemSelectorReturnTypeClass.getName());
+			_itemSelectorReturnTypes.get(key);
 
 		if (itemSelectorReturnTypes == null) {
 			itemSelectorReturnTypes = new CopyOnWriteArrayList<>();
 
 			List<ItemSelectorReturnType> previousItemSelectorReturnTypes =
 				_itemSelectorReturnTypes.putIfAbsent(
-					itemSelectorReturnTypeClass.getName(),
-					itemSelectorReturnTypes);
+					key, itemSelectorReturnTypes);
 
 			if (previousItemSelectorReturnTypes != null) {
 				itemSelectorReturnTypes = previousItemSelectorReturnTypes;
@@ -186,11 +197,9 @@ public class ItemSelectorCriterionSerializerImpl
 			for (ItemSelectorReturnType itemSelectorReturnType :
 					desiredItemSelectorReturnTypes) {
 
-				Class<? extends ItemSelectorReturnType>
-					itemSelectorReturnTypeClass =
-						itemSelectorReturnType.getClass();
-
-				sb.append(itemSelectorReturnTypeClass.getName());
+				sb.append(
+					ItemSelectorKeyUtil.getItemSelectorReturnTypeKey(
+						itemSelectorReturnType.getClass()));
 
 				sb.append(StringPool.COMMA);
 			}
@@ -309,6 +318,12 @@ public class ItemSelectorCriterionSerializerImpl
 					List<ItemSelectorReturnType> itemSelectorReturnTypes =
 						_itemSelectorReturnTypes.get(
 							supportedItemSelectorReturnTypeClass.getName());
+
+					itemSelectorReturnTypes.remove(0);
+
+					itemSelectorReturnTypes = _itemSelectorReturnTypes.get(
+						ItemSelectorKeyUtil.getItemSelectorReturnTypeKey(
+							supportedItemSelectorReturnTypeClass));
 
 					itemSelectorReturnTypes.remove(0);
 				}

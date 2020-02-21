@@ -24,6 +24,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.ItemSelectorViewRendererCustomizer;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
+import com.liferay.item.selector.web.internal.util.ItemSelectorKeyUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -305,9 +306,9 @@ public class ItemSelectorImpl implements ItemSelector {
 		for (ItemSelectorCriterion itemSelectorCriterion :
 				itemSelectorCriteria) {
 
-			Class<?> clazz = itemSelectorCriterion.getClass();
-
-			sb.append(clazz.getName());
+			sb.append(
+				ItemSelectorKeyUtil.getItemSelectorCriterionKey(
+					itemSelectorCriterion.getClass()));
 
 			sb.append(StringPool.COMMA);
 		}
@@ -407,6 +408,11 @@ public class ItemSelectorImpl implements ItemSelector {
 		_itemSelectionCriterionHandlers.put(
 			itemSelectorCriterionClass.getName(),
 			(ItemSelectorCriterionHandler)itemSelectionCriterionHandler);
+
+		_itemSelectionCriterionHandlers.put(
+			ItemSelectorKeyUtil.getItemSelectorCriterionKey(
+				itemSelectorCriterionClass),
+			(ItemSelectorCriterionHandler)itemSelectionCriterionHandler);
 	}
 
 	@Reference(unbind = "-")
@@ -426,6 +432,10 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		_itemSelectionCriterionHandlers.remove(
 			itemSelectorCriterionClass.getName());
+
+		_itemSelectionCriterionHandlers.remove(
+			ItemSelectorKeyUtil.getItemSelectorCriterionKey(
+				itemSelectorCriterionClass));
 	}
 
 	private ItemSelectorViewRenderer _applyCustomizations(

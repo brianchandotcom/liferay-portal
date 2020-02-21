@@ -76,10 +76,8 @@ public class DepotItemSelectorViewTest {
 	@Test
 	public void testIsVisibleWithDepotDisabled() throws Exception {
 		DepotTestUtil.withDepotDisabled(
-			() -> {
-				Assert.assertFalse(
-					_depotItemSelectorView.isVisible(null, null));
-			});
+			() -> Assert.assertFalse(
+				_depotItemSelectorView.isVisible(null, null)));
 	}
 
 	@Inject(filter = "component.name=*.DepotItemSelectorView")

@@ -74,10 +74,11 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	 * configuration, etc.
 	 * </p>
 	 *
-	 * @param  itemSelectorCriterion the item selector criterion that was used to
-	 *         render this view
+	 * @param  itemSelectorCriterion the item selector criterion that was used
+	 *         to render this view
 	 * @param  themeDisplay the current page {@link ThemeDisplay}
 	 * @return <code>true</code> if the view is visible
+	 * @review
 	 */
 	public default boolean isVisible(
 		T itemSelectorCriterion, ThemeDisplay themeDisplay) {

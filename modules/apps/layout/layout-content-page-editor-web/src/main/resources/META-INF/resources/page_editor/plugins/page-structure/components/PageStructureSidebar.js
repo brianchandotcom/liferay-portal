@@ -13,21 +13,27 @@
  */
 
 import {Treeview} from 'frontend-js-components-web';
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {useActiveItemId} from '../../../app/components/Controls';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../../../app/config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {PAGE_TYPES} from '../../../app/config/constants/pageTypes';
+import {ConfigContext} from '../../../app/config/index';
 import {useSelector} from '../../../app/store/index';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import StructureTreeNode from './StructureTreeNode';
 
 export default function PageStructureSidebar() {
 	const activeItemId = useActiveItemId();
+	const {pageType} = useContext(ConfigContext);
 
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const layoutData = useSelector(state => state.layoutData);
+	const masterLayoutData = useSelector(state => state.masterLayoutData);
+
+	const isMasterPage = pageType === PAGE_TYPES.master;
 
 	const getName = (item, fragmentEntryLinks) => {
 		let name;
@@ -53,6 +59,8 @@ export default function PageStructureSidebar() {
 
 	const visit = (item, items) => {
 		const children = [];
+		const itemInMasterLayout =
+			masterLayoutData && Object.keys(data.items).includes(item.itemId);
 
 		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 			const fragmentChildren =
@@ -64,6 +72,7 @@ export default function PageStructureSidebar() {
 
 				children.push({
 					children: [],
+					disabled: !isMasterPage && itemInMasterLayout,
 					expanded: childId === activeItemId,
 					id: childId,
 					name: editableId,
@@ -75,27 +84,38 @@ export default function PageStructureSidebar() {
 			item.children.forEach(childId => {
 				const childItem = items[childId];
 
-				const child = visit(childItem, items);
+				if (
+					!isMasterPage &&
+					childItem.type === LAYOUT_DATA_ITEM_TYPES.dropZone
+				) {
+					const dropZoneChildren = visit(
+						layoutData.items[layoutData.rootItems.main],
+						layoutData.items
+					).children;
 
-				children.push(child);
+					children.push(...dropZoneChildren);
+				}
+				else {
+					const child = visit(childItem, items);
+
+					children.push(child);
+				}
 			});
 		}
-
 		const node = {
 			children,
+			disabled: !isMasterPage && itemInMasterLayout,
 			expanded: item.itemId === activeItemId,
 			id: item.itemId,
 			name: getName(item, fragmentEntryLinks),
-			removable: isRemovable(item, layoutData)
+			removable: !itemInMasterLayout && isRemovable(item, layoutData)
 		};
 
 		return node;
 	};
 
-	const nodes = visit(
-		layoutData.items[layoutData.rootItems.main],
-		layoutData.items
-	).children;
+	const data = masterLayoutData || layoutData;
+	const nodes = visit(data.items[data.rootItems.main], data.items).children;
 
 	return (
 		<>

@@ -146,13 +146,13 @@ for (String childrenItemId : childrenItemIds) {
 			boolean includeContainer = false;
 
 			if (parentLayoutStructureItem instanceof RootLayoutStructureItem) {
-				LayoutStructureItem rootParentLayoutStructureItem = layoutStructure.getLayoutStructureItem(parentLayoutStructureItem.getItemId());
+				LayoutStructureItem rootParentLayoutStructureItem = layoutStructure.getLayoutStructureItem(parentLayoutStructureItem.getParentItemId());
 
 				if (rootParentLayoutStructureItem == null) {
 					includeContainer = true;
 				}
 				else if (rootParentLayoutStructureItem instanceof DropZoneLayoutStructureItem) {
-					LayoutStructureItem dropZoneParentLayoutStructureItem = layoutStructure.getLayoutStructureItem(rootParentLayoutStructureItem.getItemId());
+					LayoutStructureItem dropZoneParentLayoutStructureItem = layoutStructure.getLayoutStructureItem(rootParentLayoutStructureItem.getParentItemId());
 
 					if (dropZoneParentLayoutStructureItem instanceof RootLayoutStructureItem) {
 						includeContainer = true;

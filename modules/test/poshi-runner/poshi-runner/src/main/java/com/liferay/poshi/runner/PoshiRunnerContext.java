@@ -60,8 +60,8 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -365,6 +365,24 @@ public class PoshiRunnerContext {
 
 		return _namespacedClassCommandNamePropertiesMap.get(
 			testCaseNamespacedClassCommandName);
+	}
+
+	private static void _executePoshiFileCallables(
+			String poshiFileType, List<PoshiFileCallable> poshiFileCallables,
+			int threadPoolSize)
+		throws Exception {
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			threadPoolSize);
+
+		executorService.invokeAll(poshiFileCallables);
+
+		executorService.shutdown();
+
+		if (!executorService.awaitTermination(1, TimeUnit.MINUTES)) {
+			throw new TimeoutException(
+				"Timed out while loading " + poshiFileType + " Poshi files");
+		}
 	}
 
 	private static List<String> _executePQLQuery(String query)
@@ -1453,31 +1471,17 @@ public class PoshiRunnerContext {
 				new PoshiFileCallable(url, namespace));
 		}
 
-		ExecutorService executorService = Executors.newFixedThreadPool(
+		_executePoshiFileCallables(
+			"dependency", dependencyPoshiFileCallables,
 			PropsValues.POSHI_FILE_READ_THREAD_POOL);
 
-		List<Future<URL>> futures = executorService.invokeAll(
-			dependencyPoshiFileCallables);
+		_executePoshiFileCallables(
+			"macro", macroPoshiFileCallables,
+			PropsValues.POSHI_FILE_READ_THREAD_POOL);
 
-		for (Future<URL> future : futures) {
-			future.get();
-		}
-
-		futures = executorService.invokeAll(macroPoshiFileCallables);
-
-		for (Future<URL> future : futures) {
-			future.get();
-		}
-
-		futures = executorService.invokeAll(testPoshiFileCallables);
-
-		for (Future<URL> future : futures) {
-			future.get();
-		}
-
-		executorService.shutdown();
-
-		executorService.awaitTermination(60, TimeUnit.SECONDS);
+		_executePoshiFileCallables(
+			"test", testPoshiFileCallables,
+			PropsValues.POSHI_FILE_READ_THREAD_POOL);
 	}
 
 	private static void _writeTestCaseMethodNamesProperties() throws Exception {

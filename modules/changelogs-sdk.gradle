@@ -98,6 +98,7 @@ buildChangelogs {
 					return ["SHA" : sha, "TICKET-NUMBER" : ticketNumber.replaceAll(".*?([A-Z]+-\\d+.*)", "\$1"), "COMMIT-MESSAGE" : commitMessage]
 				}
 
+				String commit = ""
 				String commits = ""
 
 				gitLogOutput.eachLine {
@@ -117,13 +118,14 @@ buildChangelogs {
 							!commitMessage.matches("Revert \".* SF\"") &&
 							!commitMessage.startsWith("Semver")) {
 
-							commits = commits + """\
-								|
-								|- [${gitLogAttributes["TICKET-NUMBER"]}]: ${commitMessage} (${sha.substring(0, 10)})""".stripMargin()
+							commit = "- [" + gitLogAttributes["TICKET-NUMBER"] + "]: " + commitMessage + " (" + sha.substring(0, 10) + ")"
+
+							commits = commits + "\n" + _formatLongLine(commit)
 						}
 					}
 				}
 
+				String dependency = ""
 				String dependencies = ""
 
 				standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
@@ -164,9 +166,9 @@ buildChangelogs {
 						String dependencyName = matcher.group(1)
 						String dependencyVersion = matcher.group(2)
 
-						dependencies = dependencies + """\
-							|
-							|- [${gitLogAttributes["TICKET-NUMBER"]}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
+						dependency = "- [" + gitLogAttributes["TICKET-NUMBER"] + "]: Update the " + dependencyName + " dependency to version " + dependencyVersion + "."
+
+						dependencies = dependencies + "\n" + _formatLongLine(dependency)
 					}
 				}
 
@@ -179,7 +181,7 @@ buildChangelogs {
 					matcher = changelogDescriptionsFile.text =~ /(?s)${escapedDotVersion}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/
 
 					if (matcher.find()) {
-						descriptions = "\n" + matcher.group(1).trim()
+						descriptions = "\n" + _formatLongLine(matcher.group(1).trim())
 					}
 				}
 
@@ -232,7 +234,7 @@ buildChangelogs {
 
 			File changelogMarkdownFile = file("sdk/" + sdkProjectDir.name + "/CHANGELOG.markdown")
 
-			changelogMarkdownFile.text = text.replace("  ", " ").replaceAll(/(?=.{81,})(.{1,81})(?:[ \t])/, "\$1\n")
+			changelogMarkdownFile.text = text
 
 			logger.lifecycle "Updated '{}'", changelogMarkdownFile
 		}
@@ -353,6 +355,20 @@ recordCommits {
 			} join "\n"
 
 			logger.lifecycle "Updated '{}'", changelogCommitsFile
+		}
+	}
+}
+private String _formatLongLine(String line) {
+
+	line = line.replaceAll("[ \t]{2,}", " ")
+
+	if (line.length() <= 80) {
+		return line
+	}
+
+	for (int x = 80; x > 0; x--) {
+		if (line[x].matches("[ \t]")) {
+			return line.substring(0, x) + "\n" + _formatLongLine(line.substring(x + 1))
 		}
 	}
 }

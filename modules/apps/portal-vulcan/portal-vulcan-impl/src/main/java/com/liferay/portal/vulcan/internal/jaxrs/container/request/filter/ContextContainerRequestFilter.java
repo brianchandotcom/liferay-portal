@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 
@@ -51,12 +52,15 @@ import org.apache.cxf.phase.PhaseInterceptorChain;
 public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 	public ContextContainerRequestFilter(
-		GroupLocalService groupLocalService, Language language, Portal portal,
+		GroupLocalService groupLocalService,
+		VulcanBatchImportTaskResource vulcanBatchImportTaskResource,
+		Language language, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, Object scopeChecker) {
 
 		_groupLocalService = groupLocalService;
+		_vulcanBatchImportTaskResource = vulcanBatchImportTaskResource;
 		_language = language;
 		_portal = portal;
 		_resourceActionLocalService = resourceActionLocalService;
@@ -142,6 +146,13 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 					instance, message.getContextualProperty("HTTP.RESPONSE"));
 			}
 			else if (fieldClass.isAssignableFrom(
+						VulcanBatchImportTaskResource.class)) {
+
+				field.setAccessible(true);
+
+				field.set(instance, _vulcanBatchImportTaskResource);
+			}
+			else if (fieldClass.isAssignableFrom(
 						ResourceActionLocalService.class)) {
 
 				field.setAccessible(true);
@@ -181,5 +192,6 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;
 	private final Object _scopeChecker;
+	private final VulcanBatchImportTaskResource _vulcanBatchImportTaskResource;
 
 }

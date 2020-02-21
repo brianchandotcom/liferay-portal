@@ -25,6 +25,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -50,11 +51,21 @@ public interface DataLayoutResource {
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception;
 
+	public Response postDataDefinitionDataLayoutBatch(
+			Long dataDefinitionId, String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteDataLayout(Long dataLayoutId) throws Exception;
+
+	public Response deleteDataLayoutBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public DataLayout getDataLayout(Long dataLayoutId) throws Exception;
 
 	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
+		throws Exception;
+
+	public Response putDataLayoutBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public DataLayout getSiteDataLayoutByContentTypeByDataLayoutKey(

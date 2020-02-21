@@ -185,16 +185,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		Assert.assertEquals(regex, taxonomyCategory.getTaxonomyCategoryName());
 	}
 
-	@Test
-	public void testPatchTaxonomyCategoryBatch() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutTaxonomyCategoryBatch() throws Exception {
-		Assert.assertTrue(false);
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {

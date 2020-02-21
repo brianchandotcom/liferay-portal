@@ -20,13 +20,19 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.http.VulcanBatchImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -36,8 +42,11 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
+import java.io.Serializable;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Generated;
@@ -57,6 +66,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -65,7 +77,9 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v2.0")
-public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
+public abstract class BaseDataRecordResourceImpl
+	implements DataRecordResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<DataRecord> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -120,6 +134,47 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 		throws Exception {
 
 		return new DataRecord();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-records/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/data-definitions/{dataDefinitionId}/data-records/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecord")})
+	public Response postDataDefinitionDataRecordBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
+				Long dataDefinitionId,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchImportTaskResource.postImportTask(
+				DataRecord.class.getName(), callbackURL, null, object)
+		).build();
 	}
 
 	/**
@@ -182,6 +237,49 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/data-records/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path(
+		"/data-record-collections/{dataRecordCollectionId}/data-records/batch"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecord")})
+	public Response postDataRecordCollectionDataRecordBatch(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchImportTaskResource.postImportTask(
+				DataRecord.class.getName(), callbackURL, null, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/data-records/export'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -229,6 +327,42 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/data-engine/v2.0/data-records/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes("application/json")
+	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/data-records/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecord")})
+	public Response deleteDataRecordBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchImportTaskResource.deleteImportTask(
+				DataRecord.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-records/{dataRecordId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -268,6 +402,130 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 		throws Exception {
 
 		return new DataRecord();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-records/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/data-records/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataRecord")})
+	public Response putDataRecordBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchImportTaskResource.putImportTask(
+				DataRecord.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	@Override
+	@SuppressWarnings("PMD.UnusedLocalVariable")
+	public void create(
+			java.util.Collection<DataRecord> dataRecords,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (DataRecord dataRecord : dataRecords) {
+			postDataDefinitionDataRecord(
+				Long.valueOf((String)parameters.get("dataDefinitionId")),
+				dataRecord);
+		}
+	}
+
+	@Override
+	public void delete(
+			java.util.Collection<DataRecord> dataRecords,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (DataRecord dataRecord : dataRecords) {
+			deleteDataRecord(dataRecord.getId());
+		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
+		throws Exception {
+
+		return getEntityModel(
+			new MultivaluedHashMap<String, Object>(multivaluedMap));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
+	public Page<DataRecord> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
+		throws Exception {
+
+		return getDataDefinitionDataRecordsPage(
+			(Long)parameters.get("dataDefinitionId"),
+			(Long)parameters.get("dataListViewId"),
+			(String)parameters.get("keywords"), pagination, sorts);
+	}
+
+	@Override
+	public void setLanguageId(String languageId) {
+		this.contextAcceptLanguage = new AcceptLanguage() {
+
+			@Override
+			public List<Locale> getLocales() {
+				return null;
+			}
+
+			@Override
+			public String getPreferredLanguageId() {
+				return languageId;
+			}
+
+			@Override
+			public Locale getPreferredLocale() {
+				return LocaleUtil.fromLanguageId(languageId);
+			}
+
+		};
+	}
+
+	@Override
+	public void update(
+			java.util.Collection<DataRecord> dataRecords,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (DataRecord dataRecord : dataRecords) {
+			putDataRecord(
+				dataRecord.getId() != null ? dataRecord.getId() :
+				(Long)parameters.get("dataRecordId"),
+				dataRecord);
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -365,6 +623,7 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
+	protected VulcanBatchImportTaskResource vulcanBatchImportTaskResource;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;

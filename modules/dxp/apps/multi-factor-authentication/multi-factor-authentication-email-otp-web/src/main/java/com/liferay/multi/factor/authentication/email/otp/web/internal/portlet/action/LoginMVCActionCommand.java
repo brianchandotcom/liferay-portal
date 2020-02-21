@@ -53,6 +53,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.ActionURL;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderURL;
 import javax.portlet.WindowState;
 import javax.portlet.filter.ActionRequestWrapper;
 
@@ -183,7 +184,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private LiferayPortletURL _getLiferayPortletURL(
-		HttpServletRequest httpServletRequest, String redirectURL) {
+		HttpServletRequest httpServletRequest, String redirectURL,
+		String returnToFullPageURL) {
 
 		httpServletRequest = _portal.getOriginalServletRequest(
 			httpServletRequest);
@@ -208,6 +210,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		liferayPortletURL.setParameter(
 			"mvcRenderCommandName", "/mfa_email_otp_verify/verify");
 		liferayPortletURL.setParameter("redirect", redirectURL);
+
+		liferayPortletURL.setParameter(
+			"returnToFullPageURL", returnToFullPageURL);
 
 		return liferayPortletURL;
 	}
@@ -239,8 +244,18 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(actionRequest));
 
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		RenderURL returnToFullPageRenderURL =
+			liferayPortletResponse.createRenderURL();
+
+		if (Validator.isNotNull(redirect)) {
+			returnToFullPageRenderURL.setParameter("redirect", redirect);
+		}
+
 		LiferayPortletURL liferayPortletURL = _getLiferayPortletURL(
-			httpServletRequest, actionURL.toString());
+			httpServletRequest, actionURL.toString(),
+			returnToFullPageRenderURL.toString());
 
 		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 

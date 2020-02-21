@@ -19,6 +19,7 @@ import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -63,9 +64,21 @@ const SaveFragmentCompositionModal = ({
 				previewImageURL: thumbnail.url,
 				store
 			})
-		).then(() => {
-			onClose();
-		});
+		)
+			.then(() => {
+				onClose();
+			})
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+
+				setLoading(false);
+			});
 	};
 
 	const handleThumbnailSelected = image => {

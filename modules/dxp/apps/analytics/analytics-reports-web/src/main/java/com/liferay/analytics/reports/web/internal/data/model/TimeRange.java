@@ -18,6 +18,9 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Adolfo Pérez
  * @author David Arques
@@ -78,6 +81,29 @@ public class TimeRange {
 		}
 
 		return localDateTime.minusDays(_getOffsetDays());
+	}
+
+	public List<LocalDateTime> getIntervals() {
+		List<LocalDateTime> intervals = new ArrayList<>();
+
+		LocalDateTime interval = getStartLocalDateTime();
+
+		if (_timeSpan.equals(TimeSpan.LAST_24_HOURS)) {
+			for (int i = 0; i < 24; i++) {
+				intervals.add(interval);
+
+				interval = interval.plusHours(1);
+			}
+		}
+		else {
+			for (int i = 0; i < _timeSpan.getDays(); i++) {
+				intervals.add(interval);
+
+				interval = interval.plusDays(1);
+			}
+		}
+
+		return intervals;
 	}
 
 	public LocalDate getStartLocalDate() {

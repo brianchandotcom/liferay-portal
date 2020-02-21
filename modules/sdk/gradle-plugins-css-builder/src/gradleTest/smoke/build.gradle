@@ -20,7 +20,7 @@ runGradleTest {
 	dependsOn classes
 
 	doLast {
-		File dir = file("src/main/resources/css/.sass-cache")
+		File dir = file("build/resources/main/css/.sass-cache")
 
 		Pattern pattern = ~/@import\s+url\s*\(\s*['"]?(.+\.css\?t=\d+)['"]?\s*\)\s*;/
 

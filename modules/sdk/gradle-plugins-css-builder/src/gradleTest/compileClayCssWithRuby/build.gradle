@@ -56,7 +56,7 @@ runGradleTest {
 	dependsOn buildCSS
 
 	doLast {
-		File dir = file("src/main/resources/css/.sass-cache")
+		File dir = file("build/resources/main/css/.sass-cache")
 
 		for (String fileName in ["main.css", "main_rtl.css"]) {
 			File generatedFile = new File(dir, fileName)

@@ -33,8 +33,8 @@
 - [LPS-84621]: Get the file name from the schema location (a225f5d265)
 - [LPS-84621]: Cache nested xsd scan results. (ff437ef4e8)
 - [LPS-84621]: Rename (9cc344c3c1)
-- [LPS-84621]: This trim is unnecessary, the regex split is eating up all spaces.
-(5338da25fe)
+- [LPS-84621]: This trim is unnecessary, the regex split is eating up all
+spaces. (5338da25fe)
 - [LPS-84621]: Trim on the output rather than input, less garbage. (25c7035594)
 - [LPS-84621]: Avoid duplicated null checking. (77b2b5dc24)
 - [LPS-84621]: DocumentBuilder.parse(File) is incapable of returning null.

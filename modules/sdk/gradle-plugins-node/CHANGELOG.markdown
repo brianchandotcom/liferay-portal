@@ -117,15 +117,13 @@ changed (c0d952fb13)
 - [LPS-0]: SF. Space character correction for build scripts & READMEs
 (9dd5d12c9a)
 - [LPS-88909]: Revert "LPS-88909 Disable cache (see
-https://github.com/liferay/liferay-portal/commit/fd8763c#diff-082f1d3a132d6a95e4d04c1b3ee8ccedR155)"
-(c0cc8d0404)
+null
 
 ## 4.6.16 - 2019-05-24
 
 ### Commits
 - [LPS-88909]: Disable cache (see
-https://github.com/liferay/liferay-portal/commit/fd8763c#diff-082f1d3a132d6a95e4d04c1b3ee8ccedR155)
-(21e1e8f960)
+null
 
 ## 4.6.15 - 2019-05-06
 
@@ -291,8 +289,7 @@ to see if task is uptodate (e4ad8d8111)
 
 ### Description
 - [LPS-87465]: Add the property `production` to all tasks that extend
-`ExecuteNodeTask`. If `true`,
-[`devDependencies`](https://docs.npmjs.com/files/package.json#devdependencies)
+`ExecuteNodeTask`. If `true`, [`devDependencies`](https://docs.npmjs.com/files/package.json#devdependencies)
 are not installed when running `npm install` without any arguments and sets
 `NODE_ENV=production` for lifecycle scripts.
 
@@ -1019,9 +1016,9 @@ following conditions are met:
 ## 1.0.6 - 2015-09-17
 
 ### Commits
-- [LPS-58655]: Add option to set the bugs URL in the package.json file, otherwise
-it will incorrectly point to https://github.com/liferay/liferay-portal/issues
-(2629048392)
+- [LPS-58655]: Add option to set the bugs URL in the package.json file,
+otherwise it will incorrectly point to
+https://github.com/liferay/liferay-portal/issues (2629048392)
 - [LPS-58655]: Fix passing credentials to NPM (3e26375845)
 
 ## 1.0.5 - 2015-09-15

@@ -137,8 +137,8 @@
 ## 2.1.48 - 2019-04-10
 
 ### Dependencies
-- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.node dependency to version
-4.6.10.
+- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.node dependency to
+version 4.6.10.
 
 ## 2.1.47 - 2019-04-03
 
@@ -753,8 +753,8 @@ smoke test (5e09917e31)
 ## 1.0.6 - 2015-09-02
 
 ### Commits
-- [LPS-51081]: For args, support both null values (we don't set the arg) or empty
-strings (we pass the empty string) (b9fd0979cd)
+- [LPS-51081]: For args, support both null values (we don't set the arg) or
+empty strings (we pass the empty string) (b9fd0979cd)
 
 ## 1.0.5 - 2015-08-31
 

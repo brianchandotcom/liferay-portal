@@ -58,8 +58,8 @@ dependencies (78d2606f6b)
 - [LPS-105889]: add test case to make sure that configurations with
 defaultDependencies are not broken (c67cf08b21)
 - [LPS-105889]: remove deprecation since this is not needed again (062bc3de66)
-- [LPS-105889]: add back whitelist of configurations to apply platform dependency
-(ee749e80fb)
+- [LPS-105889]: add back whitelist of configurations to apply platform
+dependency (ee749e80fb)
 - [LPS-102243]: Partial revert (b5ee7e9c16)
 - [LPS-102243]: Remove portal-test-integration and all references to it from
 build and classpath (c2efa6c7f2)
@@ -84,8 +84,8 @@ build and classpath (c2efa6c7f2)
 - [LPS-105889]: Remove unnecessary test (d1049fbb60)
 - [LPS-105889]: Use published BOMs instead (f1d6547ec5)
 - [LPS-105889]: remove eclipse warnings (8c93363308)
-- [LPS-105889]: update targetPlatformIDE configuration to use gradle5 BOM support
-(f21c5bcc03)
+- [LPS-105889]: update targetPlatformIDE configuration to use gradle5 BOM
+support (f21c5bcc03)
 - [LPS-105889]: use native gradle 5 BOM support instead of spring
 dependency-management-plugin (4283a850ef)
 

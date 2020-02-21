@@ -169,8 +169,8 @@ with proxy settings and a mirror URL.
 - [LPS-67986]: If the prepared Mojo class contains fields with fully qualified
 class names, Maven generates wrong plugin descriptors with dollar signs instead
 of dots (8bb6279ab9)
-- [LPS-67658]: Convert gradle-plugins-maven-plugin-builder sample into smoke test
-(992e5aa2a8)
+- [LPS-67658]: Convert gradle-plugins-maven-plugin-builder sample into smoke
+test (992e5aa2a8)
 - [LPS-67658]: Configure GradleTest in gradle-plugins-maven-plugin-builder
 (b0c3e170cd)
 - [LPS-67658]: Need "compileOnly" to keep dependencies out of "compile"
@@ -215,8 +215,8 @@ descriptors are now delimited by dots instead of dollar signs (e.g.,
 - [LPS-63200]: Add methods to add/replace multiple repositories (ea26c873b6)
 - [LPS-63200]: Return task instance on "appender" method to allow chaining
 (81dfe18f73)
-- [LPS-63200]: Add Gradle input annotation, so the task won't still be considered
-up-to-date with that map changes (4d11ce4d69)
+- [LPS-63200]: Add Gradle input annotation, so the task won't still be
+considered up-to-date with that map changes (4d11ce4d69)
 - [LPS-63200]: Let people use a callable/closure as repo URL (f4a7fe474c)
 - [LPS-63200]: Rename, let's call the variables like the pom.xml elements
 (685c5130ce)

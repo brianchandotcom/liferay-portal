@@ -1,5 +1,31 @@
 # Liferay Gradle Plugins Change Log
 
+## 4.5.36 - 2020-02-19
+
+### Dependencies
+- [LPS-105380]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.489.
+- [LPS-105380]: Update the com.liferay.source.formatter dependency to version
+1.0.961.
+
+## 4.5.35 - 2020-02-18
+
+### Dependencies
+- [LPS-108912]: Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.0.69.
+- [LPS-108912]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.69.
+
+## 4.5.33 - 2020-02-18
+
+### Dependencies
+- [LPS-108380]: Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.0.68.
+- [LPS-108380]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.68.
+- [LPS-108455]: Update the com.liferay.gradle.plugins.wsdl.builder dependency to
+version 2.1.0.
+
 ## 4.5.32 - 2020-02-11
 
 ### Dependencies
@@ -11,8 +37,8 @@ version 1.0.67.
 ## 4.5.31 - 2020-02-11
 
 ### Dependencies
-- [LPS-108328]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.488.
+- [LPS-108328]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.488.
 - [LPS-108328]: Update the com.liferay.source.formatter dependency to version
 1.0.960.
 
@@ -29,8 +55,8 @@ version 1.0.66.
 ### Dependencies
 - [LPS-108386]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.16.
-- [LPS-108386]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.328.
+- [LPS-108386]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.328.
 
 ## 4.5.28 - 2020-02-10
 
@@ -43,14 +69,14 @@ version 1.0.328.
 ### Dependencies
 - [LPS-108386]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.15.
-- [LPS-108386]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.327.
+- [LPS-108386]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.327.
 
 ## 4.5.26 - 2020-02-06
 
 ### Dependencies
-- [LPS-107918]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.487.
+- [LPS-107918]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.487.
 - [LPS-107918]: Update the com.liferay.source.formatter dependency to version
 1.0.959.
 
@@ -95,8 +121,8 @@ version 1.0.62.
 ## 4.5.21 - 2020-01-28
 
 ### Dependencies
-- [LPS-104679]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.486.
+- [LPS-104679]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.486.
 - [LPS-104679]: Update the com.liferay.source.formatter dependency to version
 1.0.958.
 
@@ -121,8 +147,8 @@ version 1.0.60.
 ### Dependencies
 - [LPS-100525]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.14.
-- [LPS-100525]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.326.
+- [LPS-100525]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.326.
 
 ## 4.5.17 - 2020-01-23
 
@@ -173,10 +199,10 @@ version 1.0.54.
 version 1.0.54.
 - [LPS-105380]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.13.
-- [LPS-105380]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.325.
-- [LPS-107321]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.485.
+- [LPS-105380]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.325.
+- [LPS-107321]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.485.
 - [LPS-107321]: Update the com.liferay.source.formatter dependency to version
 1.0.957.
 
@@ -206,8 +232,8 @@ version 1.0.51.
 - [LPS-105380]: Rename exception variables (b3173da81b)
 
 ### Dependencies
-- [LPS-105380]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.484.
+- [LPS-105380]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.484.
 - [LPS-105380]: Update the com.liferay.source.formatter dependency to version
 1.0.956.
 
@@ -230,16 +256,16 @@ version 3.0.13.
 ## 4.5.5 - 2020-01-15
 
 ### Dependencies
-- [LPS-104435]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.483.
+- [LPS-104435]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.483.
 - [LPS-104435]: Update the com.liferay.source.formatter dependency to version
 1.0.955.
 
 ## 4.5.4 - 2020-01-11
 
 ### Dependencies
-- [LPS-104435]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.482.
+- [LPS-104435]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.482.
 - [LPS-104435]: Update the com.liferay.source.formatter dependency to version
 1.0.954.
 
@@ -266,22 +292,22 @@ dependency to version 2.3.481.
 version 1.0.953.
 - [LPS-106662]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.12.
-- [LPS-106662]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.324.
+- [LPS-106662]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.324.
 
 ## 4.5.1 - 2020-01-07
 
 ### Dependencies
 - [LPS-106666]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.11.
-- [LPS-106666]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.323.
+- [LPS-106666]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.323.
 
 ## 4.5.0 - 2020-01-07
 
 ### Dependencies
-- [LPS-102243]: Update the com.liferay.gradle.plugins.test.integration dependency
-to version 3.0.1.
+- [LPS-102243]: Update the com.liferay.gradle.plugins.test.integration
+dependency to version 3.0.1.
 
 ## 4.4.115 - 2020-01-07
 
@@ -292,16 +318,16 @@ to version 3.0.1.
 build and classpath (c2efa6c7f2)
 
 ### Dependencies
-- [LPS-102243]: Update the com.liferay.gradle.plugins.test.integration dependency
-to version 3.0.0.
-- [LPS-102243]: Update the com.liferay.gradle.plugins.test.integration dependency
-to version 3.0.1.
+- [LPS-102243]: Update the com.liferay.gradle.plugins.test.integration
+dependency to version 3.0.0.
+- [LPS-102243]: Update the com.liferay.gradle.plugins.test.integration
+dependency to version 3.0.1.
 
 ## 4.4.114 - 2020-01-06
 
 ### Dependencies
-- [LPS-105380]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.480.
+- [LPS-105380]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.480.
 - [LPS-105380]: Update the com.liferay.source.formatter dependency to version
 1.0.952.
 
@@ -310,22 +336,22 @@ to version 2.3.480.
 ### Dependencies
 - [LPS-106522]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.10.
-- [LPS-106522]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.322.
+- [LPS-106522]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.322.
 
 ## 4.4.111 - 2020-01-03
 
 ### Dependencies
 - [LPS-106333]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.9.
-- [LPS-106333]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.321.
+- [LPS-106333]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.321.
 
 ## 4.4.110 - 2019-12-24
 
 ### Dependencies
-- [LPS-105380]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.479.
+- [LPS-105380]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.479.
 - [LPS-105380]: Update the com.liferay.source.formatter dependency to version
 1.0.951.
 
@@ -344,8 +370,8 @@ version 1.0.49.
 dependency to version 1.0.30.
 - [LPS-106226]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.35.
-- [LPS-105380]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.478.
+- [LPS-105380]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.478.
 - [LPS-105380]: Update the com.liferay.source.formatter dependency to version
 1.0.950.
 
@@ -360,8 +386,8 @@ dependency to version 1.0.48.
 ## 4.4.106 - 2019-12-20
 
 ### Dependencies
-- [LPS-106079]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.477.
+- [LPS-106079]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.477.
 - [LPS-106079]: Update the com.liferay.source.formatter dependency to version
 1.0.949.
 - [LPS-106226]: Update the com.liferay.gradle.plugins.javadoc.formatter
@@ -374,8 +400,8 @@ dependency to version 1.0.29.
 ### Dependencies
 - [LPS-103464]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.8.
-- [LPS-103464]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.320.
+- [LPS-103464]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.320.
 
 ## 4.4.104 - 2019-12-19
 
@@ -427,8 +453,8 @@ version 1.0.44.
 ### Dependencies
 - [LRQA-54214]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.7.
-- [LRQA-54214]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.319.
+- [LRQA-54214]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.319.
 
 ## 4.4.97 - 2019-12-10
 
@@ -449,8 +475,8 @@ version 1.0.43.
 ## 4.4.95 - 2019-12-09
 
 ### Dependencies
-- [LPS-105290 LPS-105237]: Update the com.liferay.gradle.plugins.source.formatter
-dependency to version 2.3.476.
+- [LPS-105290 LPS-105237]: Update the
+com.liferay.gradle.plugins.source.formatter dependency to version 2.3.476.
 - [LPS-105290 LPS-105237]: Update the com.liferay.source.formatter dependency to
 version 1.0.948.
 - [LPS-105237]: Update the com.liferay.gradle.plugins.rest.builder dependency to
@@ -472,8 +498,8 @@ dependency to version 1.0.41.
 - [LPS-100515]: Fix eclipse task (a4fa3e3ead)
 
 ### Dependencies
-- [LPS-103252]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.475.
+- [LPS-103252]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.475.
 - [LPS-103252]: Update the com.liferay.source.formatter dependency to version
 1.0.947.
 
@@ -497,8 +523,8 @@ version 1.0.40.
 - [LPS-100515]: The TaskInternal#execute method has been deprecated (f7456febdb)
 
 ### Dependencies
-- [LPS-104679]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.474.
+- [LPS-104679]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.474.
 - [LPS-104679]: Update the com.liferay.source.formatter dependency to version
 1.0.946.
 - [LPS-100515]: Update the com.liferay.gradle.plugins.xsd.builder dependency to
@@ -519,16 +545,16 @@ version 1.0.38.
 version 1.0.39.
 - [LPS-104539]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.5.
-- [LPS-104539]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.318.
+- [LPS-104539]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.318.
 
 ## 4.4.89 - 2019-11-25
 
 ### Dependencies
 - [LPS-104861]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.4.
-- [LPS-104861]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.317.
+- [LPS-104861]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.317.
 
 ## 4.4.88 - 2019-11-25
 
@@ -552,24 +578,24 @@ to version 2.3.472.
 ## 4.4.85 - 2019-11-20
 
 ### Dependencies
-- [LPS-103252]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.471.
+- [LPS-103252]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.471.
 - [LPS-103252]: Update the com.liferay.source.formatter dependency to version
 1.0.943.
-- [LPS-104606]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.470.
+- [LPS-104606]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.470.
 - [LPS-104606]: Update the com.liferay.source.formatter dependency to version
 1.0.942.
 - [COMMERCE-1067]: Update the com.liferay.gradle.plugins.rest.builder dependency
 to version 1.0.37.
-- [COMMERCE-1067]: Update the com.liferay.portal.tools.rest.builder dependency to
-version 1.0.38.
+- [COMMERCE-1067]: Update the com.liferay.portal.tools.rest.builder dependency
+to version 1.0.38.
 
 ## 4.4.84 - 2019-11-19
 
 ### Dependencies
-- [LPS-104435]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.469.
+- [LPS-104435]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.469.
 - [LPS-104435]: Update the com.liferay.source.formatter dependency to version
 1.0.941.
 - [LPS-104679]: Update the com.liferay.source.formatter dependency to version
@@ -580,14 +606,14 @@ to version 2.3.469.
 ### Dependencies
 - [LPS-104540]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.3.
-- [LPS-104540]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.316.
+- [LPS-104540]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.316.
 
 ## 4.4.82 - 2019-11-14
 
 ### Dependencies
-- [LPS-104606]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.466.
+- [LPS-104606]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.466.
 - [LPS-104606]: Update the com.liferay.source.formatter dependency to version
 1.0.939.
 
@@ -597,8 +623,8 @@ to version 2.3.466.
 - [LPS-102655 | LPS-103339]: Run `ant format-javadoc` (ee2d87705f)
 
 ### Dependencies
-- [LPS-104435]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.465.
+- [LPS-104435]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.465.
 - [LPS-104435]: Update the com.liferay.source.formatter dependency to version
 1.0.938.
 
@@ -607,8 +633,8 @@ to version 2.3.465.
 ### Dependencies
 - [LPS-104129]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.2.
-- [LPS-104129]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.315.
+- [LPS-104129]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.315.
 
 ## 4.4.79 - 2019-11-11
 
@@ -623,8 +649,8 @@ version 1.0.37.
 ### Dependencies
 - [LPS-101574]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 3.0.1.
-- [LPS-101574]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.314.
+- [LPS-101574]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.314.
 
 ## 4.4.77 - 2019-11-07
 
@@ -637,8 +663,8 @@ to version 3.0.0.
 ## 4.4.76 - 2019-11-07
 
 ### Dependencies
-- [LPS-102481]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.464.
+- [LPS-102481]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.464.
 - [LPS-102481]: Update the com.liferay.source.formatter dependency to version
 1.0.937.
 
@@ -653,8 +679,8 @@ to version 2.3.464.
 - [LPS-103252]: regen (f509144a7d)
 
 ### Dependencies
-- [LPS-103252]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.463.
+- [LPS-103252]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.463.
 - [LPS-103252]: Update the com.liferay.source.formatter dependency to version
 1.0.936.
 
@@ -668,8 +694,8 @@ to version 2.3.463.
 - [LPS-103547]: Move logic to ServiceBuilderDefaultsPlugin (50c24bd102)
 
 ### Dependencies
-- [LPS-103466]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.462.
+- [LPS-103466]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.462.
 - [LPS-103466]: Update the com.liferay.source.formatter dependency to version
 1.0.935.
 
@@ -690,8 +716,8 @@ version 1.0.36.
 ## 4.4.70 - 2019-11-04
 
 ### Dependencies
-- [LPS-103872]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.461.
+- [LPS-103872]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.461.
 - [LPS-103872]: Update the com.liferay.source.formatter dependency to version
 1.0.934.
 
@@ -724,8 +750,8 @@ version 1.0.33.
 ## 4.4.66 - 2019-11-01
 
 ### Dependencies
-- [LPS-103252]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.460.
+- [LPS-103252]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.460.
 - [LPS-103252]: Update the com.liferay.source.formatter dependency to version
 1.0.933.
 
@@ -737,8 +763,8 @@ version 3.0.2.
 - [LPS-103169]: Update the com.liferay.css.builder dependency to version 3.0.2.
 - [LPS-103995]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.68.
-- [LPS-103995]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.313.
+- [LPS-103995]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.313.
 
 ## 4.4.64 - 2019-10-30
 
@@ -746,24 +772,24 @@ version 1.0.313.
 - [LPS-103466]: revert (e4f42e7a25)
 
 ### Dependencies
-- [LPS-103466]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.459.
+- [LPS-103466]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.459.
 - [LPS-103466]: Update the com.liferay.source.formatter dependency to version
 1.0.932.
 
 ## 4.4.63 - 2019-10-30
 
 ### Dependencies
-- [LPS-103466]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.458.
+- [LPS-103466]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.458.
 - [LPS-103466]: Update the com.liferay.source.formatter dependency to version
 1.0.931.
 
 ## 4.4.61 - 2019-10-29
 
 ### Dependencies
-- [LPS-103843]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.457.
+- [LPS-103843]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.457.
 - [LPS-103843]: Update the com.liferay.source.formatter dependency to version
 1.0.930.
 
@@ -776,8 +802,8 @@ version 1.0.30.
 version 1.0.32.
 - [LPS-101788]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.67.
-- [LPS-101788]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.312.
+- [LPS-101788]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.312.
 
 ## 4.4.59 - 2019-10-28
 
@@ -794,8 +820,8 @@ version 1.0.31.
 execution is disabled (6a7ef0fa59)
 
 ### Dependencies
-- [LPS-103580]: Update the com.liferay.gradle.plugins.js.transpiler dependency to
-version 2.4.48.
+- [LPS-103580]: Update the com.liferay.gradle.plugins.js.transpiler dependency
+to version 2.4.48.
 - [LPS-103580]: Update the com.liferay.gradle.plugins.js.module.config.generator
 dependency to version 2.1.69.
 - [LPS-103580]: Update the com.liferay.gradle.plugins.gulp dependency to version
@@ -804,8 +830,8 @@ dependency to version 2.1.69.
 ## 4.4.57 - 2019-10-23
 
 ### Dependencies
-- [LPS-103170]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.456.
+- [LPS-103170]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.456.
 - [LPS-103170]: Update the com.liferay.source.formatter dependency to version
 1.0.929.
 
@@ -824,12 +850,12 @@ dependency to version 1.0.10.
 2.0.69.
 - [LPS-102367]: Update the com.liferay.gradle.plugins.js.module.config.generator
 dependency to version 2.1.68.
-- [LPS-102367]: Update the com.liferay.gradle.plugins.js.transpiler dependency to
-version 2.4.47.
+- [LPS-102367]: Update the com.liferay.gradle.plugins.js.transpiler dependency
+to version 2.4.47.
 - [LPS-102481]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.66.
-- [LPS-102481]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.311.
+- [LPS-102481]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.311.
 - [LPS-98640]: Update the com.liferay.gradle.plugins.rest.builder dependency to
 version 1.0.28.
 - [LPS-98640]: Update the com.liferay.portal.tools.rest.builder dependency to
@@ -842,28 +868,28 @@ to version 2.3.455.
 ## 4.4.53 - 2019-10-21
 
 ### Dependencies
-- [LPS-103461]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.454.
+- [LPS-103461]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.454.
 - [LPS-103461]: Update the com.liferay.source.formatter dependency to version
 1.0.927.
-- [LPS-103461]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.453.
+- [LPS-103461]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.453.
 - [LPS-103461]: Update the com.liferay.source.formatter dependency to version
 1.0.926.
 
 ## 4.4.52 - 2019-10-21
 
 ### Dependencies
-- [LPS-102481]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.452.
+- [LPS-102481]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.452.
 - [LPS-102481]: Update the com.liferay.source.formatter dependency to version
 1.0.925.
 
 ## 4.4.51 - 2019-10-21
 
 ### Dependencies
-- [LPS-103170]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.451.
+- [LPS-103170]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.451.
 - [LPS-103170]: Update the com.liferay.source.formatter dependency to version
 1.0.924.
 
@@ -877,8 +903,8 @@ because gradle configs will affect all branches (86f6ecb254)
 ### Dependencies
 - [LPS-102481]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.65.
-- [LPS-102481]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.310.
+- [LPS-102481]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.310.
 
 ## 4.4.49 - 2019-10-16
 
@@ -893,14 +919,14 @@ not exist (855a6f2a02)
 2.0.68.
 - [LPS-102367]: Update the com.liferay.gradle.plugins.js.module.config.generator
 dependency to version 2.1.67.
-- [LPS-102367]: Update the com.liferay.gradle.plugins.js.transpiler dependency to
-version 2.4.46.
+- [LPS-102367]: Update the com.liferay.gradle.plugins.js.transpiler dependency
+to version 2.4.46.
 
 ## 4.4.48 - 2019-10-15
 
 ### Dependencies
-- [LPS-100969]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.450.
+- [LPS-100969]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.450.
 - [LPS-100969]: Update the com.liferay.source.formatter dependency to version
 1.0.923.
 
@@ -909,8 +935,8 @@ to version 2.3.450.
 ### Dependencies
 - [LPS-103068]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.64.
-- [LPS-103068]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.309.
+- [LPS-103068]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.309.
 
 ## 4.4.45 - 2019-10-14
 
@@ -954,8 +980,8 @@ version 1.0.29.
 ### Dependencies
 - [LPS-102817]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.63.
-- [LPS-102817]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.308.
+- [LPS-102817]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.308.
 
 ## 4.4.40 - 2019-10-08
 
@@ -970,14 +996,14 @@ to version 2.3.448.
 ### Dependencies
 - [LPS-100436]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.62.
-- [LPS-100436]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.307.
+- [LPS-100436]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.307.
 
 ## 4.4.38 - 2019-10-03
 
 ### Dependencies
-- [LPS-101108]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.447.
+- [LPS-101108]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.447.
 - [LPS-101108]: Update the com.liferay.source.formatter dependency to version
 1.0.920.
 
@@ -1076,8 +1102,8 @@ to version 2.3.443.
 ### Dependencies
 - [LPS-101470]: Update the com.liferay.gradle.plugins.js.module.config.generator
 dependency to version 2.1.66.
-- [LPS-101470]: Update the com.liferay.gradle.plugins.js.transpiler dependency to
-version 2.4.45.
+- [LPS-101470]: Update the com.liferay.gradle.plugins.js.transpiler dependency
+to version 2.4.45.
 - [LPS-101470]: Update the com.liferay.gradle.plugins.gulp dependency to version
 2.0.67.
 
@@ -1094,8 +1120,8 @@ to version 2.3.442.
 ### Dependencies
 - [LPS-101470]: Update the com.liferay.gradle.plugins.js.module.config.generator
 dependency to version 2.1.65.
-- [LPS-101470]: Update the com.liferay.gradle.plugins.js.transpiler dependency to
-version 2.4.44.
+- [LPS-101470]: Update the com.liferay.gradle.plugins.js.transpiler dependency
+to version 2.4.44.
 
 ## 4.4.23 - 2019-09-17
 
@@ -1109,8 +1135,8 @@ version 2.4.44.
 version 1.0.23.
 - [LPS-100427]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.25.
-- [LRQA-52072]: Update the com.liferay.gradle.plugins.js.transpiler dependency to
-version 2.4.43.
+- [LRQA-52072]: Update the com.liferay.gradle.plugins.js.transpiler dependency
+to version 2.4.43.
 - [LRQA-52072]: Update the com.liferay.gradle.plugins.js.module.config.generator
 dependency to version 2.1.64.
 - [LRQA-52072]: Update the com.liferay.gradle.plugins.gulp dependency to version
@@ -1125,14 +1151,14 @@ to version 2.3.441.
 ### Dependencies
 - [LPS-101574]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.60.
-- [LPS-101574]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.305.
+- [LPS-101574]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.305.
 
 ## 4.4.19 - 2019-09-13
 
 ### Dependencies
-- [LPS-101549]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.440.
+- [LPS-101549]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.440.
 - [LPS-101549]: Update the com.liferay.source.formatter dependency to version
 1.0.913.
 
@@ -1141,14 +1167,14 @@ to version 2.3.440.
 ### Dependencies
 - [LPS-101214]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.59.
-- [LPS-101214]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.304.
+- [LPS-101214]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.304.
 
 ## 4.4.17 - 2019-09-11
 
 ### Dependencies
-- [LPS-101089]: Update the com.liferay.gradle.plugins.source.formatter dependency
-to version 2.3.439.
+- [LPS-101089]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.439.
 - [LPS-101089]: Update the com.liferay.source.formatter dependency to version
 1.0.912.
 
@@ -1157,16 +1183,16 @@ to version 2.3.439.
 ### Dependencies
 - [LPS-101208]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.58.
-- [LPS-101208]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.303.
+- [LPS-101208]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.303.
 
 ## 4.4.14 - 2019-09-05
 
 ### Dependencies
 - [LPS-101089]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.57.
-- [LPS-101089]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.302.
+- [LPS-101089]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.302.
 - [LPS-89415]: Update the com.liferay.gradle.plugins.rest.builder dependency to
 version 1.0.22.
 - [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
@@ -1227,8 +1253,8 @@ to version 2.3.435.
 ### Dependencies
 - [LPS-100596]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.54.
-- [LPS-100596]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.299.
+- [LPS-100596]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.299.
 
 ## 4.4.6 - 2019-08-28
 
@@ -1237,8 +1263,8 @@ version 1.0.299.
 2.0.65.
 - [LPS-100163]: Update the com.liferay.gradle.plugins.js.module.config.generator
 dependency to version 2.1.63.
-- [LPS-100163]: Update the com.liferay.gradle.plugins.js.transpiler dependency to
-version 2.4.42.
+- [LPS-100163]: Update the com.liferay.gradle.plugins.js.transpiler dependency
+to version 2.4.42.
 
 ## 4.4.5 - 2019-08-27
 
@@ -1250,8 +1276,8 @@ version 2.4.42.
 ### Dependencies
 - [LPS-100352]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.53.
-- [LPS-100352]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.298.
+- [LPS-100352]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.298.
 
 ## 4.4.3 - 2019-08-27
 
@@ -1259,8 +1285,8 @@ version 1.0.298.
 - [LPS-100448]: Auto-SF (0ff1cd4057)
 
 ### Dependencies
-- [LPS-100491]: Update the com.liferay.gradle.plugins.test.integration dependency
-to version 3.0.0.
+- [LPS-100491]: Update the com.liferay.gradle.plugins.test.integration
+dependency to version 3.0.0.
 - [LPS-84119]: Update the com.liferay.gradle.plugins.source.formatter dependency
 to version 2.3.434.
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version
@@ -1269,8 +1295,8 @@ to version 2.3.434.
 ## 4.4.2 - 2019-08-24
 
 ### Dependencies
-- [LPS-100168]: Update the com.liferay.gradle.plugins.js.transpiler dependency to
-version 2.4.41.
+- [LPS-100168]: Update the com.liferay.gradle.plugins.js.transpiler dependency
+to version 2.4.41.
 - [LPS-100168]: Update the com.liferay.gradle.plugins.js.module.config.generator
 dependency to version 2.1.62.
 - [LPS-100168]: Update the com.liferay.gradle.plugins.gulp dependency to version
@@ -1309,8 +1335,8 @@ to version 2.2.52.
 ## 4.3.2 - 2019-08-22
 
 ### Dependencies
-- [LRDOCS-6300]: Update the com.liferay.gradle.plugins.service.builder dependency
-to version 2.2.51.
+- [LRDOCS-6300]: Update the com.liferay.gradle.plugins.service.builder
+dependency to version 2.2.51.
 - [LRDOCS-6300]: Update the com.liferay.portal.tools.service.builder dependency
 to version 1.0.297.
 
@@ -1329,8 +1355,8 @@ to version 2.3.433.
 2.0.63.
 - [LPS-100168]: Update the com.liferay.gradle.plugins.js.module.config.generator
 dependency to version 2.1.61.
-- [LPS-100168]: Update the com.liferay.gradle.plugins.js.transpiler dependency to
-version 2.4.40.
+- [LPS-100168]: Update the com.liferay.gradle.plugins.js.transpiler dependency
+to version 2.4.40.
 
 ## 4.2.4 - 2019-08-21
 
@@ -1350,8 +1376,8 @@ to version 2.3.432.
 ### Dependencies
 - [LPS-100077]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 2.2.50.
-- [LPS-100077]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.296.
+- [LPS-100077]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.296.
 
 ## 4.2.1 - 2019-08-20
 
@@ -1398,8 +1424,8 @@ version 2.4.39.
 ## 4.1.9 - 2019-08-17
 
 ### Commits
-- [LPS-99774]: Revert "LPS-99774 Set environment variable to test for npmRunTest"
-(d8d2e56e84)
+- [LPS-99774]: Revert "LPS-99774 Set environment variable to test for
+npmRunTest" (d8d2e56e84)
 
 ## 4.1.8 - 2019-08-15
 
@@ -1436,8 +1462,8 @@ version 2.4.38.
 - [LPS-99740]: Set environment variable (701d7920e1)
 - [LPS-98879 LPS-96095]: auto SF for servlet-api (032b53ca5e)
 - [LPS-90052]: [$USER_PASSWORD$] token no longer available (0859fcc133)
-- [LPS-90049]: Remove "Allow users to request forgotten passwords" option from IU
-(385d17395c)
+- [LPS-90049]: Remove "Allow users to request forgotten passwords" option from
+IU (385d17395c)
 
 ### Dependencies
 - [LPS-99740]: Update the com.liferay.gradle.plugins.gulp dependency to version
@@ -1677,8 +1703,8 @@ to version 2.3.408.
 to version 2.3.407.
 - [LPS-93507]: Update the com.liferay.source.formatter dependency to version
 1.0.879.
-- [LPS-97516]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.28.
+- [LPS-97516]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.28.
 - [LPS-97516]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.33.
 
@@ -2145,8 +2171,8 @@ version 1.0.846.
 - [LPS-94948]: Revert "LPS-94948 Use interface FileCollection" (2e407bf192)
 - [LPS-94948]: Revert "LPS-94948 Update exception message" (b2c58f7eae)
 - [LPS-94948]: Revert "LPS-94948 Rename" (8047f1f6b8)
-- [LPS-84119]: SF, use Objects.equals instead of calling equals on literal string
-(4ef3dd1d93)
+- [LPS-84119]: SF, use Objects.equals instead of calling equals on literal
+string (4ef3dd1d93)
 
 ## 3.13.194 - 2019-05-09
 
@@ -2238,8 +2264,8 @@ version 2.4.32.
 dependency to version 2.1.52.
 - [LPS-91967]: Update the com.liferay.gradle.plugins.js.transpiler dependency to
 version 2.4.31.
-- [LPS-95096]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.27.
+- [LPS-95096]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.27.
 - [LPS-95096]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.32.
 
@@ -2455,10 +2481,11 @@ to version 2.3.350.
 ## 3.13.162 - 2019-04-10
 
 ### Dependencies
-- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.gulp dependency to version
-2.0.49.
-- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.js.module.config.generator
-dependency to version 2.1.48.
+- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.gulp dependency to
+version 2.0.49.
+- [LRDOCS-6412]: Update the
+com.liferay.gradle.plugins.js.module.config.generator dependency to version
+2.1.48.
 - [LRDOCS-6412]: Update the com.liferay.gradle.plugins.js.transpiler dependency
 to version 2.4.27.
 
@@ -2558,8 +2585,8 @@ to version 2.3.345.
 - [LPS-91967]: Skip node_modules_cache directory (43a618c849)
 
 ### Dependencies
-- [LPS-91967]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.26.
+- [LPS-91967]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.26.
 - [LPS-91967]: Update the com.liferay.gradle.plugins.source.formatter dependency
 to version 2.3.344.
 - [LPS-91967]: Update the com.liferay.javadoc.formatter dependency to version
@@ -2966,8 +2993,8 @@ version 1.0.271.
 ## 3.13.102 - 2019-02-14
 
 ### Dependencies
-- [LRDOCS-6300]: Update the com.liferay.gradle.plugins.service.builder dependency
-to version 2.2.22.
+- [LRDOCS-6300]: Update the com.liferay.gradle.plugins.service.builder
+dependency to version 2.2.22.
 - [LRDOCS-6300]: Update the com.liferay.portal.tools.service.builder dependency
 to version 1.0.270.
 
@@ -3603,8 +3630,8 @@ version 1.0.249.
 ## 3.13.25 - 2018-11-29
 
 ### Dependencies
-- [LPS-87936]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.25.
+- [LPS-87936]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.25.
 - [LPS-87936]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.30.
 
@@ -3685,8 +3712,8 @@ version 2.2.6.
 version 1.0.5.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.jasper.jspc dependency to
 version 2.0.5.
-- [LPS-87466]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.24.
+- [LPS-87466]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.24.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.lang.builder dependency to
 version 3.0.4.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.service.builder dependency
@@ -3699,8 +3726,8 @@ to version 2.3.284.
 to version 2.4.2.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.tld.formatter dependency to
 version 1.0.9.
-- [LPS-87466]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency to
-version 1.3.3.
+- [LPS-87466]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency
+to version 1.3.3.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.upgrade.table.builder
 dependency to version 2.0.3.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.wsdd.builder dependency to
@@ -3739,8 +3766,8 @@ version 2.2.5.
 version 1.0.4.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.jasper.jspc dependency to
 version 2.0.4.
-- [LPS-87466]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.23.
+- [LPS-87466]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.23.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.lang.builder dependency to
 version 3.0.3.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.service.builder dependency
@@ -3753,8 +3780,8 @@ to version 2.3.283.
 to version 2.4.1.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.tld.formatter dependency to
 version 1.0.8.
-- [LPS-87466]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency to
-version 1.3.2.
+- [LPS-87466]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency
+to version 1.3.2.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.upgrade.table.builder
 dependency to version 2.0.2.
 - [LPS-87466]: Update the com.liferay.gradle.plugins.wsdd.builder dependency to
@@ -3974,8 +4001,8 @@ files.
 ## 3.12.161 - 2018-10-12
 
 ### Commits
-- [LPS-86371]: Set upToDate to false if the node_modules directory does not exist
-(c1a374c250)
+- [LPS-86371]: Set upToDate to false if the node_modules directory does not
+exist (c1a374c250)
 - [LPS-84119]: SF, declare when used (b1efafe540)
 
 ### Description
@@ -4308,8 +4335,8 @@ to version 2.3.244.
 ## 3.12.119 - 2018-08-30
 
 ### Dependencies
-- [LPS-84621]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency to
-version 1.3.1.
+- [LPS-84621]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency
+to version 1.3.1.
 - [LPS-84756]: Update the com.liferay.gradle.plugins.source.formatter dependency
 to version 2.3.243.
 - [LPS-84756]: Update the com.liferay.source.formatter dependency to version
@@ -4739,8 +4766,8 @@ to version 2.3.203.
 ## 3.12.67 - 2018-07-05
 
 ### Dependencies
-- [LPS-83220]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.22.
+- [LPS-83220]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.22.
 - [LPS-83220]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.29.
 - [LPS-82343]: Update the com.liferay.gradle.plugins.lang.builder dependency to
@@ -4750,8 +4777,8 @@ version 3.0.1.
 ## 3.12.66 - 2018-07-04
 
 ### Dependencies
-- [LPS-82828]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.21.
+- [LPS-82828]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.21.
 - [LPS-82828]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.28.
 
@@ -5155,8 +5182,8 @@ version 1.0.221.
 ## 3.12.21 - 2018-05-29
 
 ### Commits
-- [LPS-81635]: Add JavaPortlet portable java contract instruction to bnd defaults
-(add JavaServlet for good measure) (ed0b12a578)
+- [LPS-81635]: Add JavaPortlet portable java contract instruction to bnd
+defaults (add JavaServlet for good measure) (ed0b12a578)
 
 ### Dependencies
 - [LPS-81106]: Update the com.liferay.gradle.plugins.service.builder dependency
@@ -6242,8 +6269,8 @@ version 1.0.3.
 2.0.25.
 - [LPS-77425]: Update the com.liferay.gradle.plugins.jasper.jspc dependency to
 version 2.0.3.
-- [LPS-77425]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.20.
+- [LPS-77425]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.20.
 - [LPS-77425]: Update the com.liferay.gradle.plugins.js.module.config.generator
 dependency to version 2.1.26.
 - [LPS-77425]: Update the com.liferay.gradle.plugins.js.transpiler dependency to
@@ -6260,8 +6287,8 @@ to version 2.3.97.
 to version 2.2.0.
 - [LPS-77425]: Update the com.liferay.gradle.plugins.tld.formatter dependency to
 version 1.0.7.
-- [LPS-77425]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency to
-version 1.3.0.
+- [LPS-77425]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency
+to version 1.3.0.
 - [LPS-77425]: Update the com.liferay.gradle.plugins.upgrade.table.builder
 dependency to version 2.0.1.
 - [LPS-77425]: Update the com.liferay.gradle.plugins.wsdd.builder dependency to
@@ -6788,29 +6815,22 @@ to version 2.3.56.
 1.0.527.
 
 ### Description
-- [LPS-72868]: Automatically exclude the
-[`EI_EXPOSE_REP`](http://findbugs.sourceforge.net/bugDescriptions.html#EI_EXPOSE_REP),
+- [LPS-72868]: Automatically exclude the [`EI_EXPOSE_REP`](http://findbugs.sourceforge.net/bugDescriptions.html#EI_EXPOSE_REP),
 [`EI_EXPOSE_REP2`](http://findbugs.sourceforge.net/bugDescriptions.html#EI_EXPOSE_REP2),
 [`EQ_UNUSUAL`](http://findbugs.sourceforge.net/bugDescriptions.html#EQ_UNUSUAL),
 [`MS_MUTABLE_COLLECTION`](http://findbugs.sourceforge.net/bugDescriptions.html#MS_MUTABLE_COLLECTION),
-and
-[`RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE`](http://findbugs.sourceforge.net/bugDescriptions.html#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE)
+and [`RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE`](http://findbugs.sourceforge.net/bugDescriptions.html#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE)
 FindBugs warnings for the `ModelImpl` classes autogenerated by
 [Liferay Portal Tools Service Builder].
-- [LPS-72868]: Automatically exclude the
-[`EI_EXPOSE_REP`](http://findbugs.sourceforge.net/bugDescriptions.html#EI_EXPOSE_REP)
-and
-[`EI_EXPOSE_REP2`](http://findbugs.sourceforge.net/bugDescriptions.html#EI_EXPOSE_REP2)
+- [LPS-72868]: Automatically exclude the [`EI_EXPOSE_REP`](http://findbugs.sourceforge.net/bugDescriptions.html#EI_EXPOSE_REP)
+and [`EI_EXPOSE_REP2`](http://findbugs.sourceforge.net/bugDescriptions.html#EI_EXPOSE_REP2)
 FindBugs warnings for the `Soap` classes autogenerated by
 [Liferay Portal Tools Service Builder].
-- [LPS-72868]: Automatically exclude the
-[`EI_EXPOSE_REP`](http://findbugs.sourceforge.net/bugDescriptions.html#EI_EXPOSE_REP)
-and
-[`MS_PKGPROTECT`](http://findbugs.sourceforge.net/bugDescriptions.html#MS_PKGPROTECT)
+- [LPS-72868]: Automatically exclude the [`EI_EXPOSE_REP`](http://findbugs.sourceforge.net/bugDescriptions.html#EI_EXPOSE_REP)
+and [`MS_PKGPROTECT`](http://findbugs.sourceforge.net/bugDescriptions.html#MS_PKGPROTECT)
 FindBugs warnings for `*Comparator`, `*Searcher`, and `*StagedModelDataHandler`
 classes.
-- [LPS-72868]: Automatically exclude the
-[`ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD`](http://findbugs.sourceforge.net/bugDescriptions.html#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD)
+- [LPS-72868]: Automatically exclude the [`ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD`](http://findbugs.sourceforge.net/bugDescriptions.html#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD)
 FindBugs warning for `*Permission` and `ServletContextUtil` classes.
 
 ## 3.5.76 - 2017-12-26
@@ -6887,8 +6907,8 @@ to version 2.3.51.
 - [LPS-76475]: Replace usage of deprecated methods (e58f3e6aa0)
 
 ### Dependencies
-- [LPS-76018]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.20.
+- [LPS-76018]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.20.
 - [LPS-76018]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.26.
 - [LPS-76475]: Update the com.liferay.gradle.plugins.css.builder dependency to
@@ -6898,8 +6918,8 @@ version 2.2.0.
 to version 2.3.50.
 - [LPS-76601]: Update the com.liferay.source.formatter dependency to version
 1.0.521.
-- [LPS-76568]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.19.
+- [LPS-76568]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.19.
 - [LPS-76568]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.25.
 
@@ -6954,8 +6974,8 @@ version 1.0.10.
 ## 3.5.64 - 2017-12-12
 
 ### Dependencies
-- [LPS-76018]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.18.
+- [LPS-76018]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.18.
 - [LPS-76018]: Update the com.liferay.gradle.plugins.service.builder dependency
 to version 1.0.62.
 - [LPS-76018]: Update the com.liferay.gradle.plugins.source.formatter dependency
@@ -7282,8 +7302,8 @@ to version 2.3.18.
 ## 3.5.28 - 2017-11-03
 
 ### Dependencies
-- [LPS-75247]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.17.
+- [LPS-75247]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.17.
 - [LPS-75247]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.23.
 
@@ -7604,8 +7624,8 @@ to version 2.1.2.
 to version 1.0.52.
 - [LPS-74824]: Update the com.liferay.portal.tools.service.builder dependency to
 version 1.0.168.
-- [LPS-74503]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.16.
+- [LPS-74503]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.16.
 - [LPS-74503]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.22.
 - [LPS-71117]: Update the com.liferay.gradle.plugins.test.integration dependency
@@ -7901,8 +7921,7 @@ to version 2.1.1.
 
 ### Description
 - [LPS-74345]: Add the Liferay IDE project nature to Eclipse files.
-- [LPS-74345]: Automatically apply the
-[`Eclipse`](https://docs.gradle.org/current/userguide/eclipse_plugin.html)
+- [LPS-74345]: Automatically apply the [`Eclipse`](https://docs.gradle.org/current/userguide/eclipse_plugin.html)
 plugin to OSGi projects.
 
 ## 3.4.38 - 2017-08-24
@@ -8095,8 +8114,8 @@ to version 2.0.44.
 1.0.433.
 - [LPS-73124]: Update the com.liferay.portal.tools.db.support dependency to
 version 1.0.5.
-- [LPS-73855]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.15.
+- [LPS-73855]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.15.
 - [LPS-73855]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.21.
 
@@ -8138,8 +8157,8 @@ version 1.0.160.
 - [LPS-73353]: Sort (b2b77fe39b)
 - [LPS-73353]: Since it's a file, rename property to "File" (ba15397c9d)
 - [LPS-73353]: Update build.gradle (6843bbd9f5)
-- [LPS-73353]: Add jacoco support for tomcat setup (gradle), jacoco agent must be
-the first java agent (fc2689517f)
+- [LPS-73353]: Add jacoco support for tomcat setup (gradle), jacoco agent must
+be the first java agent (fc2689517f)
 
 ### Dependencies
 - [LPS-73353]: Update the com.liferay.gradle.plugins.test.integration dependency
@@ -8465,8 +8484,7 @@ to version 2.0.13.
 1.0.403.
 
 ### Description
-- [LPS-72868]: Automatically exclude the
-[`CN_IDIOM_NO_SUPER_CALL`](http://findbugs.sourceforge.net/bugDescriptions.html#CN_IDIOM_NO_SUPER_CALL)
+- [LPS-72868]: Automatically exclude the [`CN_IDIOM_NO_SUPER_CALL`](http://findbugs.sourceforge.net/bugDescriptions.html#CN_IDIOM_NO_SUPER_CALL)
 FindBugs warning for the `ModelImpl` and `Wrapper` classes autogenerated by
 [Liferay Portal Tools Service Builder].
 
@@ -8777,10 +8795,10 @@ to version 1.0.114.
 - [LPS-71375]: Update the com.liferay.gradle.plugins.lang.builder dependency to
 version 2.0.0.
 - [LPS-71375]: Update the com.liferay.lang.builder dependency to version 1.0.12.
-- [LPS-71591]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency to
-version 1.3.0.
-- [LPS-71591]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency to
-version 1.2.1.
+- [LPS-71591]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency
+to version 1.3.0.
+- [LPS-71591]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency
+to version 1.2.1.
 
 ### Description
 - [LPS-71375]: Add the ability to configure the `translateSubscriptionKey`
@@ -9032,8 +9050,8 @@ version 1.0.5.
 to version 1.0.94.
 - [LPS-62970]: Update the com.liferay.gradle.plugins.lang.builder dependency to
 version 1.0.6.
-- [LPS-62970]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.14.
+- [LPS-62970]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.14.
 - [LPS-62970]: Update the com.liferay.gradle.plugins.db.support dependency to
 version 1.0.1.
 
@@ -9065,8 +9083,8 @@ version 1.0.7.
 ## 3.2.10 - 2017-02-28
 
 ### Commits
-- [LPS-70941]: Make showing documentation by automatically launching the markdown
-file when running SF configurable (ad37297cb9)
+- [LPS-70941]: Make showing documentation by automatically launching the
+markdown file when running SF configurable (ad37297cb9)
 
 ### Dependencies
 - [LPS-70941]: Update the com.liferay.gradle.plugins.source.formatter dependency
@@ -9609,8 +9627,8 @@ version 2.3.1.
 dependency to version 2.1.2.
 - [LPS-69445]: Update the com.liferay.gradle.plugins.gulp dependency to version
 2.0.4.
-- [LPS-69271]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.13.
+- [LPS-69271]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.13.
 - [LPS-69271]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.18.
 
@@ -9628,8 +9646,8 @@ to version 1.0.53.
 ## 3.0.41 - 2016-11-24
 
 ### Dependencies
-- [LPS-69271]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.12.
+- [LPS-69271]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.12.
 - [LPS-69271]: Update the com.liferay.gradle.plugins.source.formatter dependency
 to version 1.0.52.
 - [LPS-69271]: Update the com.liferay.javadoc.formatter dependency to version
@@ -9902,8 +9920,8 @@ to version 1.0.31.
 - [LPS-68666]: Always use Gradle util methods (44a796ab73)
 
 ### Dependencies
-- [LPS-68666]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency to
-version 1.2.0.
+- [LPS-68666]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency
+to version 1.2.0.
 
 ## 3.0.9 - 2016-10-12
 
@@ -10089,8 +10107,7 @@ to version 1.0.22.
 1.0.284.
 
 ### Description
-- [LPS-66906]: Add the ability to configure the
-[`sass-binary-path`](https://github.com/sass/node-sass#binary-configuration-parameters)
+- [LPS-66906]: Add the ability to configure the [`sass-binary-path`](https://github.com/sass/node-sass#binary-configuration-parameters)
 argument in the `npmInstall` task by setting the project property
 `nodejs.npm.sass.binary.site`.
 
@@ -10485,8 +10502,8 @@ dependency to version 1.0.28.
 ### Dependencies
 - [LPS-67503]: Update the com.liferay.gradle.plugins.cache dependency to version
 1.0.12.
-- [LPS-60243]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.11.
+- [LPS-60243]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.11.
 - [LPS-56564]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.15.
 
@@ -10663,8 +10680,8 @@ version 1.0.121.
 - [LPS-67039]: Add support for Plugin<ProjectInternal> (3dac480490)
 
 ### Dependencies
-- [LPS-66853]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.10.
+- [LPS-66853]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.10.
 - [LPS-66853]: Update the com.liferay.gradle.plugins.source.formatter dependency
 to version 1.0.16.
 - [LPS-66853]: Update the com.liferay.javadoc.formatter dependency to version
@@ -10763,8 +10780,8 @@ dependency to version 1.0.3.
 ## 1.0.371 - 2016-06-30
 
 ### Dependencies
-- [LPS-66941]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.9.
+- [LPS-66941]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.9.
 - [LPS-66941]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.13.
 
@@ -10833,8 +10850,8 @@ dependency to version 1.0.2.
 version 1.0.14.
 - [LPS-65749]: Update the com.liferay.gradle.plugins.jasper.jspc dependency to
 version 1.0.9.
-- [LPS-65749]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.8.
+- [LPS-65749]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.8.
 - [LPS-65749]: Update the com.liferay.gradle.plugins.lang.builder dependency to
 version 1.0.5.
 - [LPS-65749]: Update the com.liferay.gradle.plugins.service.builder dependency
@@ -10853,8 +10870,8 @@ dependency to version 1.0.5.
 version 1.0.5.
 - [LPS-65749]: Update the com.liferay.gradle.plugins.wsdl.builder dependency to
 version 1.0.9.
-- [LPS-65749]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency to
-version 1.0.3.
+- [LPS-65749]: Update the com.liferay.gradle.plugins.tlddoc.builder dependency
+to version 1.0.3.
 - [LPS-65749]: Update the com.liferay.gradle.plugins.test.integration dependency
 to version 1.0.6.
 - [LPS-65749]: Update the com.liferay.gradle.plugins.patcher dependency to
@@ -12018,8 +12035,8 @@ dependency to version 1.0.1.
 ## 1.0.217 - 2016-03-19
 
 ### Commits
-- [LPS-63943]: change log commit should be ignored and reside only in the release
-branch (a61780ae68)
+- [LPS-63943]: change log commit should be ignored and reside only in the
+release branch (a61780ae68)
 
 ## 1.0.216 - 2016-03-19
 
@@ -12730,8 +12747,8 @@ dependency to version 1.0.19.
 ## 1.0.120 - 2016-02-03
 
 ### Commits
-- [LPS-62108]: Sync WildFly version with d7efcf611b608c921da8173910d43d61bffce361
-(22a47d76ea)
+- [LPS-62108]: Sync WildFly version with
+d7efcf611b608c921da8173910d43d61bffce361 (22a47d76ea)
 - [LPS-58259]: Sync Websphere version with
 6fbf0e3b788be8528cc87ce4980ad9fb20f7fa3e (36a2796b7c)
 - [LPS-58177]: Sync Weblogic version with
@@ -12976,8 +12993,8 @@ version 1.0.72.
 ## 1.0.94 - 2016-01-21
 
 ### Dependencies
-- [LPS-62412]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.7.
+- [LPS-62412]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.7.
 - [LPS-62412]: Update the com.liferay.gradle.plugins.source.formatter dependency
 to version 1.0.9.
 
@@ -12988,8 +13005,8 @@ to version 1.0.9.
 (1b0e1275bc)
 
 ### Dependencies
-- [LPS-62137]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.6.
+- [LPS-62137]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.6.
 - [LPS-62137]: Update the com.liferay.javadoc.formatter dependency to version
 1.0.10.
 
@@ -13024,8 +13041,8 @@ DirectDeployTask (30fe72e35d)
 (1fbb4ba364)
 - [LPS-56872]: Delegate the addition of dependencies to each app server
 (39fb240e58)
-- [LPS-56872]: Check the object type instead of String comparison to identify the
-app server (7a9b170b79)
+- [LPS-56872]: Check the object type instead of String comparison to identify
+the app server (7a9b170b79)
 - [LPS-56872]: Add JOnAS to the application servers model (d98aa3283d)
 - [LPS-56872]: Expose project field to sub classes (83b66307bb)
 - [LPS-56872]: Jar files contains version in their names (cf237c813e)
@@ -13161,8 +13178,9 @@ version 1.0.17.
 ## 1.0.70 - 2016-01-11
 
 ### Commits
-- [LPS-60972]: For gradle-plugins-whip, we must set the version in its extension,
-otherwise it will always download the "latest.release" of Whip (aac27cc204)
+- [LPS-60972]: For gradle-plugins-whip, we must set the version in its
+extension, otherwise it will always download the "latest.release" of Whip
+(aac27cc204)
 - [LPS-60972]: Extract util method (8e1a692540)
 
 ## 1.0.68 - 2016-01-11
@@ -13404,8 +13422,7 @@ jars to the same configuration, because "Cannot change dependencies of
 configuration after it has been resolved". They're both executed at
 "afterEvaluate", but the code in gradle-plugins will happen first. Instead, we
 can safely ask javadoc.inputs.sourceFiles (see
-https://github.com/gradle/gradle/blob/REL_2.8/subprojects/plugins/src/main/groovy/org/gradle/api/plugins/JavaPlugin.java#L96)
-(39b998e8d6)
+null
 
 ## 1.0.46 - 2015-12-11
 
@@ -13471,14 +13488,14 @@ to version 1.0.8.
 ## 1.0.40 - 2015-11-25
 
 ### Commits
-- [LPS-60776]: Race condition in gradle build when executing directdeployTask for
-WABs (0d09374ae3)
+- [LPS-60776]: Race condition in gradle build when executing directdeployTask
+for WABs (0d09374ae3)
 
 ## 1.0.39 - 2015-11-19
 
 ### Dependencies
-- [LPS-60243]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.5.
+- [LPS-60243]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.5.
 
 ## 1.0.38 - 2015-11-18
 
@@ -13500,8 +13517,8 @@ version 1.0.3.
 ### Commits
 - [LPS-59475]: Simplify by configuring through a callable instead of an
 "afterEvaluate" block (6cbecc5f8b)
-- [LPS-59475]: Enable callables and closures as parameters for DirectDeploy tasks
-(f2dcef9629)
+- [LPS-59475]: Enable callables and closures as parameters for DirectDeploy
+tasks (f2dcef9629)
 
 ## 1.0.35 - 2015-11-16
 
@@ -13519,8 +13536,8 @@ gradle-plugins-xsd-builder is not applied (3badb84251)
 - [LPS-60463]: These are already the default values (3d0265ea5a)
 
 ### Dependencies
-- [LPS-60463]: Update the com.liferay.gradle.plugins.javadoc.formatter dependency
-to version 1.0.3.
+- [LPS-60463]: Update the com.liferay.gradle.plugins.javadoc.formatter
+dependency to version 1.0.3.
 - [LPS-60463]: Update the com.liferay.gradle.plugins.lang.builder dependency to
 version 1.0.1.
 - [LPS-60463]: Update the com.liferay.gradle.plugins.patcher dependency to
@@ -13730,7 +13747,8 @@ version 1.0.10.
 - [LPS-58278]: Add option to NOT delete the liferay.home dir before starting
 Tomcat for integration tests (c320d38011)
 - [LPS-58116]: Reverted commits 19d368a1ee9e5cb2b7469364d870b17dd1cf282a
-8318599c68d5a96efa2fdd15d6a40590a637b9e1 15468bedf3b069a086e0d7efe29ac088fd220676
+8318599c68d5a96efa2fdd15d6a40590a637b9e1
+15468bedf3b069a086e0d7efe29ac088fd220676
 c392d51dc323a1e40ffa910dae5b91fca14f2f54 since they cause portlets with ADT to
 break (navigation menu portlet breaks from the beginning) (c6d2e43961)
 - [LPS-58116]: Restore part of 1.0.9 to maintain compatibility with

@@ -111,8 +111,8 @@
 
 ### Commits
 - [LPS-82343]: Remove import (dac8b5668a)
-- [LPS-82343]: Remove functionality to warn for duplicate keys since SF is taking
-care of that now (looks like nobody was using that anyway) (188e2a041f)
+- [LPS-82343]: Remove functionality to warn for duplicate keys since SF is
+taking care of that now (looks like nobody was using that anyway) (188e2a041f)
 
 ## 2.2.2 - 2018-06-11
 

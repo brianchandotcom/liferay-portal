@@ -6,62 +6,62 @@
 - [LPS-108328]: Allow hotfix patterns (9c332ad565)
 
 ### Dependencies
-- [LPS-108386]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.328.
+- [LPS-108386]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.328.
 
 ## 3.0.15 - 2020-02-10
 
 ### Dependencies
-- [LPS-108386]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.327.
+- [LPS-108386]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.327.
 
 ## 3.0.14 - 2020-01-23
 
 ### Dependencies
-- [LPS-100525]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.326.
+- [LPS-100525]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.326.
 
 ## 3.0.13 - 2020-01-20
 
 ### Dependencies
-- [LPS-105380]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.325.
+- [LPS-105380]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.325.
 
 ## 3.0.12 - 2020-01-07
 
 ### Dependencies
-- [LPS-106662]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.324.
+- [LPS-106662]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.324.
 
 ## 3.0.11 - 2020-01-07
 
 ### Dependencies
-- [LPS-106666]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.323.
+- [LPS-106666]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.323.
 
 ## 3.0.10 - 2020-01-06
 
 ### Dependencies
-- [LPS-106522]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.322.
+- [LPS-106522]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.322.
 
 ## 3.0.9 - 2020-01-03
 
 ### Dependencies
-- [LPS-106333]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.321.
+- [LPS-106333]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.321.
 
 ## 3.0.8 - 2019-12-19
 
 ### Dependencies
-- [LPS-103464]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.320.
+- [LPS-103464]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.320.
 
 ## 3.0.7 - 2019-12-11
 
 ### Dependencies
-- [LRQA-54214]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.319.
+- [LRQA-54214]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.319.
 
 ## 3.0.6 - 2019-12-10
 
@@ -74,32 +74,32 @@ version 1.0.319.
 ## 3.0.5 - 2019-11-26
 
 ### Dependencies
-- [LPS-104539]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.318.
+- [LPS-104539]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.318.
 
 ## 3.0.4 - 2019-11-25
 
 ### Dependencies
-- [LPS-104861]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.317.
+- [LPS-104861]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.317.
 
 ## 3.0.3 - 2019-11-15
 
 ### Dependencies
-- [LPS-104540]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.316.
+- [LPS-104540]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.316.
 
 ## 3.0.2 - 2019-11-11
 
 ### Dependencies
-- [LPS-104129]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.315.
+- [LPS-104129]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.315.
 
 ## 3.0.1 - 2019-11-07
 
 ### Dependencies
-- [LPS-101574]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.314.
+- [LPS-101574]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.314.
 
 ## 3.0.0 - 2019-11-07
 
@@ -114,38 +114,38 @@ version 1.0.314.
 ## 2.2.68 - 2019-10-31
 
 ### Dependencies
-- [LPS-103995]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.313.
+- [LPS-103995]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.313.
 
 ## 2.2.67 - 2019-10-29
 
 ### Dependencies
-- [LPS-101788]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.312.
+- [LPS-101788]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.312.
 
 ## 2.2.66 - 2019-10-21
 
 ### Dependencies
-- [LPS-102481]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.311.
+- [LPS-102481]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.311.
 
 ## 2.2.65 - 2019-10-20
 
 ### Dependencies
-- [LPS-102481]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.310.
+- [LPS-102481]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.310.
 
 ## 2.2.64 - 2019-10-14
 
 ### Dependencies
-- [LPS-103068]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.309.
+- [LPS-103068]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.309.
 
 ## 2.2.63 - 2019-10-08
 
 ### Dependencies
-- [LPS-102817]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.308.
+- [LPS-102817]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.308.
 
 ## 2.2.62 - 2019-10-03
 
@@ -153,8 +153,8 @@ version 1.0.308.
 - [LPS-102700]: Fix bnd error (include literal dot) (d65985bae3)
 
 ### Dependencies
-- [LPS-100436]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.307.
+- [LPS-100436]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.307.
 
 ## 2.2.61 - 2019-09-23
 
@@ -165,26 +165,26 @@ version 1.0.306.
 ## 2.2.60 - 2019-09-16
 
 ### Dependencies
-- [LPS-101574]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.305.
+- [LPS-101574]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.305.
 
 ## 2.2.59 - 2019-09-12
 
 ### Dependencies
-- [LPS-101214]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.304.
+- [LPS-101214]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.304.
 
 ## 2.2.58 - 2019-09-06
 
 ### Dependencies
-- [LPS-101208]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.303.
+- [LPS-101208]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.303.
 
 ## 2.2.57 - 2019-09-05
 
 ### Dependencies
-- [LPS-101089]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.302.
+- [LPS-101089]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.302.
 
 ## 2.2.56 - 2019-08-30
 
@@ -201,14 +201,14 @@ version 1.0.300.
 ## 2.2.54 - 2019-08-29
 
 ### Dependencies
-- [LPS-100596]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.299.
+- [LPS-100596]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.299.
 
 ## 2.2.53 - 2019-08-27
 
 ### Dependencies
-- [LPS-100352]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.298.
+- [LPS-100352]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.298.
 
 ## 2.2.51 - 2019-08-22
 
@@ -219,8 +219,8 @@ to version 1.0.297.
 ## 2.2.50 - 2019-08-20
 
 ### Dependencies
-- [LPS-100077]: Update the com.liferay.portal.tools.service.builder dependency to
-version 1.0.296.
+- [LPS-100077]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.296.
 
 ## 2.2.49 - 2019-08-15
 
@@ -928,8 +928,8 @@ version 1.0.187.
 
 ### Commits
 - [LRDOCS-5050]: Use Gradle code highlighting (e1625a7b56)
-- [LRDOCS-5050]: Describe steps to use custom SB plugin when "Gradle Plugins" and
-"Gradle Plugins Workspace" plugins are applied (2c0e53b603)
+- [LRDOCS-5050]: Describe steps to use custom SB plugin when "Gradle Plugins"
+and "Gradle Plugins Workspace" plugins are applied (2c0e53b603)
 
 ### Dependencies
 - [LPS-74544]: Update the com.liferay.portal.tools.service.builder dependency to
@@ -997,12 +997,12 @@ property is no longer available.
 
 ### Commits
 - [LPS-76626]: Baseline. (05b58d4838)
-- [LPS-76626]: Replace boolean toggle with upper bound, this should be set to the
-lowest max of the supported databases. So for example if only mysql (max length
-64) and postgres (max length 63) are supported it should be set to 63. Update
-exception message to provide more information. Add hidden attribute for more fine
-grain control. This needs to be configurable in case Oracle 12.1 isn't the
-database that should be limiting the length. (b766c2a283)
+- [LPS-76626]: Replace boolean toggle with upper bound, this should be set to
+the lowest max of the supported databases. So for example if only mysql (max
+length 64) and postgres (max length 63) are supported it should be set to 63.
+Update exception message to provide more information. Add hidden attribute for
+more fine grain control. This needs to be configurable in case Oracle 12.1 isn't
+the database that should be limiting the length. (b766c2a283)
 
 ## 1.0.65 - 2018-01-08
 

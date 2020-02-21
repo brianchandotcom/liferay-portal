@@ -140,8 +140,8 @@
 ## 2.4.27 - 2019-04-10
 
 ### Dependencies
-- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.node dependency to version
-4.6.10.
+- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.node dependency to
+version 4.6.10.
 
 ## 2.4.26 - 2019-04-03
 
@@ -882,8 +882,8 @@ metal-cli (261aa5a6cb)
 ## 1.0.6 - 2015-08-25
 
 ### Commits
-- [LPS-51081]: Update "gradle-plugins-js-transpiler" to use "gradle-plugins-node"
-(7c701ce12e)
+- [LPS-51081]: Update "gradle-plugins-js-transpiler" to use
+"gradle-plugins-node" (7c701ce12e)
 - [LPS-51081]: Ivy cache (3148254a3c)
 
 ### Dependencies

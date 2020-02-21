@@ -145,8 +145,8 @@
 - [LPS-91967]: Configure jsdoc plugin for Yarn (acdaf9778a)
 
 ### Dependencies
-- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.node dependency to version
-4.6.10.
+- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.node dependency to
+version 4.6.10.
 
 ## 2.0.23 - 2019-04-03
 

@@ -127,8 +127,8 @@ Gradle scripts (d6992be0e0)
 ## 1.0.15 - 2015-07-28
 
 ### Commits
-- [LPS-51081]: The "isUpToDate" method should just return false if the files/dirs
-do not exist (812aaf9d5d)
+- [LPS-51081]: The "isUpToDate" method should just return false if the
+files/dirs do not exist (812aaf9d5d)
 
 ## 1.0.14 - 2015-07-23
 

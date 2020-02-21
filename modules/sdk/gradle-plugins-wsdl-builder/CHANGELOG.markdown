@@ -1,5 +1,11 @@
 # Liferay Gradle Plugins WSDL Builder Change Log
 
+## 2.0.5 - 2020-02-18
+
+### Commits
+- [LPS-108455]: Gradle test (24f74f888f)
+- [LPS-108455]: Axis 2 support (e7d2ef7aa8)
+
 ## 2.0.4 - 2019-11-27
 
 ### Commits

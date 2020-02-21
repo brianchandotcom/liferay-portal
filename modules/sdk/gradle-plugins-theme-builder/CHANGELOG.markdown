@@ -176,6 +176,6 @@ the WAR file.
 - [LPS-66396]: Run "buildCSS" on "buildTheme" output dir (ccae82ab64)
 - [LPS-66396]: fix war tasks to include outputDir and also move css files from
 .sass-cache (d9b2f00a12)
-- [LPS-66396]: switch defaults for outputDir and diffsDir so that generated files
-aren't mixed in with source files (fb7f330f69)
+- [LPS-66396]: switch defaults for outputDir and diffsDir so that generated
+files aren't mixed in with source files (fb7f330f69)
 - [LPS-66396]: Edit gradle-plugins-theme-builder README (0ec11c2c12)

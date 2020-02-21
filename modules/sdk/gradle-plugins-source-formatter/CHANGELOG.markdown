@@ -1,5 +1,14 @@
 # Liferay Gradle Plugins Source Formatter Change Log
 
+## 2.3.489 - 2020-02-19
+
+### Commits
+- [LPS-108328]: Revert "LPS-108328 Allow hotfix patterns" (e75ccbcf8d)
+
+### Dependencies
+- [LPS-105380]: Update the com.liferay.source.formatter dependency to version
+1.0.961.
+
 ## 2.3.488 - 2020-02-11
 
 ### Commits
@@ -3738,8 +3747,8 @@ default (24ae92076e)
 ## 1.0.92 - 2017-02-28
 
 ### Commits
-- [LPS-70941]: Make showing documentation by automatically launching the markdown
-file when running SF configurable (ad37297cb9)
+- [LPS-70941]: Make showing documentation by automatically launching the
+markdown file when running SF configurable (ad37297cb9)
 
 ### Dependencies
 - [LPS-70941]: Update the com.liferay.source.formatter dependency to version

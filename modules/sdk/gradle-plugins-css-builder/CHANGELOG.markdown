@@ -183,8 +183,8 @@ plugin (3ce24fd407)
 - [LPS-66709]: Fix readme (851e97dc76)
 - [LPS-74126]: Remove unnecessary whitespace (e9993f4aa5)
 - [LPS-74126]: Ran "ant format-source" (a6c3802988)
-- [LPS-74126]: Hugo SF, please fix, original was right, but auto SF is forcing me
-to do this (93c3c73c9f)
+- [LPS-74126]: Hugo SF, please fix, original was right, but auto SF is forcing
+me to do this (93c3c73c9f)
 - [LPS-74126]: Test RTL (6537a70b00)
 - [LPS-74126]: Test with different quote styles (1ed44369e7)
 

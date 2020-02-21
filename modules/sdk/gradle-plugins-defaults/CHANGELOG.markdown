@@ -1,5 +1,39 @@
 # Liferay Gradle Plugins Defaults Change Log
 
+## 6.1.172 - 2020-02-19
+
+### Dependencies
+- [LPS-105380]: Update the com.liferay.gradle.plugins dependency to version
+4.5.36.
+
+## 6.1.171 - 2020-02-18
+
+### Dependencies
+- [LPS-108912]: Update the com.liferay.gradle.plugins dependency to version
+4.5.35.
+
+## 6.1.170 - 2020-02-18
+
+### Commits
+- [LPS-108911]: Swap portal tools only when needed (e7581288c7)
+
+## 6.1.169 - 2020-02-18
+
+### Dependencies
+- [LPS-108380]: Update the com.liferay.gradle.plugins dependency to version
+4.5.34.
+
+## 6.1.168 - 2020-02-18
+
+### Dependencies
+- [LPS-108455]: Update the com.liferay.gradle.plugins dependency to version
+4.5.33.
+
+## 6.1.167 - 2020-02-14
+
+### Commits
+- [LPS-107993]: Use Node.js 8.15.0 for 7.1.x (525f252bb8)
+
 ## 6.1.166 - 2020-02-11
 
 ### Dependencies
@@ -734,8 +768,8 @@ version 2.2.16.
 ### Dependencies
 - [LPS-103580]: Update the com.liferay.gradle.plugins dependency to version
 4.4.58.
-- [LPS-103580]: Update the com.liferay.gradle.plugins.jsdoc dependency to version
-2.0.46.
+- [LPS-103580]: Update the com.liferay.gradle.plugins.jsdoc dependency to
+version 2.0.46.
 
 ## 6.1.60 - 2019-10-23
 
@@ -763,8 +797,8 @@ version 2.2.16.
 ### Dependencies
 - [LPS-102367]: Update the com.liferay.gradle.plugins dependency to version
 4.4.55.
-- [LPS-102367]: Update the com.liferay.gradle.plugins.jsdoc dependency to version
-2.0.45.
+- [LPS-102367]: Update the com.liferay.gradle.plugins.jsdoc dependency to
+version 2.0.45.
 
 ## 6.1.57 - 2019-10-21
 
@@ -793,8 +827,8 @@ version 2.2.16.
 ## 6.1.53 - 2019-10-20
 
 ### Commits
-- [LPS-102481]: Fix DXP references. We still need to fix build-test-batch.xml and
-build-app.xml (a3a7e4c89e)
+- [LPS-102481]: Fix DXP references. We still need to fix build-test-batch.xml
+and build-app.xml (a3a7e4c89e)
 
 ### Dependencies
 - [LPS-102481]: Update the com.liferay.gradle.plugins dependency to version
@@ -809,8 +843,8 @@ not exist (855a6f2a02)
 ### Dependencies
 - [LPS-102367]: Update the com.liferay.gradle.plugins dependency to version
 4.4.49.
-- [LPS-102367]: Update the com.liferay.gradle.plugins.jsdoc dependency to version
-2.0.44.
+- [LPS-102367]: Update the com.liferay.gradle.plugins.jsdoc dependency to
+version 2.0.44.
 
 ## 6.1.51 - 2019-10-16
 
@@ -987,8 +1021,8 @@ version 4.4.27.
 ### Dependencies
 - [LPS-101470]: Update the com.liferay.gradle.plugins dependency to version
 4.4.26.
-- [LPS-101470]: Update the com.liferay.gradle.plugins.jsdoc dependency to version
-2.0.43.
+- [LPS-101470]: Update the com.liferay.gradle.plugins.jsdoc dependency to
+version 2.0.43.
 
 ## 6.1.25 - 2019-09-18
 
@@ -1005,8 +1039,8 @@ instruction (0f4ccb4691)
 ### Dependencies
 - [LPS-101470]: Update the com.liferay.gradle.plugins dependency to version
 4.4.24.
-- [LPS-101470]: Update the com.liferay.gradle.plugins.jsdoc dependency to version
-2.0.42.
+- [LPS-101470]: Update the com.liferay.gradle.plugins.jsdoc dependency to
+version 2.0.42.
 
 ## 6.1.23 - 2019-09-17
 
@@ -1035,8 +1069,8 @@ version 2.1.6.
 ### Dependencies
 - [LRQA-52072]: Update the com.liferay.gradle.plugins dependency to version
 4.4.21.
-- [LRQA-52072]: Update the com.liferay.gradle.plugins.jsdoc dependency to version
-2.0.41.
+- [LRQA-52072]: Update the com.liferay.gradle.plugins.jsdoc dependency to
+version 2.0.41.
 
 ## 6.1.19 - 2019-09-16
 
@@ -1159,8 +1193,8 @@ license.report.override.properties.file (6d72865907)
 ### Dependencies
 - [LPS-97670 LPS-100163]: Update the com.liferay.gradle.plugins dependency to
 version 4.4.6.
-- [LPS-100163]: Update the com.liferay.gradle.plugins.jsdoc dependency to version
-2.0.40.
+- [LPS-100163]: Update the com.liferay.gradle.plugins.jsdoc dependency to
+version 2.0.40.
 
 ## 6.0.30 - 2019-08-27
 
@@ -1194,8 +1228,8 @@ version 4.4.6.
 ### Dependencies
 - [LPS-100168]: Update the com.liferay.gradle.plugins dependency to version
 4.4.2.
-- [LPS-100168]: Update the com.liferay.gradle.plugins.jsdoc dependency to version
-2.0.39.
+- [LPS-100168]: Update the com.liferay.gradle.plugins.jsdoc dependency to
+version 2.0.39.
 
 ## 6.0.25 - 2019-08-23
 
@@ -1237,8 +1271,8 @@ version 4.4.6.
 ### Dependencies
 - [LPS-100168]: Update the com.liferay.gradle.plugins dependency to version
 4.3.0.
-- [LPS-100168]: Update the com.liferay.gradle.plugins.jsdoc dependency to version
-2.0.38.
+- [LPS-100168]: Update the com.liferay.gradle.plugins.jsdoc dependency to
+version 2.0.38.
 
 ## 6.0.19 - 2019-08-21
 
@@ -1265,8 +1299,8 @@ version 4.4.6.
 - [LPS-99895]: SF and Rebase (a8d297a5a5)
 - [LPS-99895]: use a new property name to be more descriptive (156c27bcb8)
 - [LPS-99895]: Use correct property name (ac83a1003a)
-- [LPS-99895]: Change jsp.precompile.enabled property in Portal to jsp.precompile
-(ccb74fe8f4)
+- [LPS-99895]: Change jsp.precompile.enabled property in Portal to
+jsp.precompile (ccb74fe8f4)
 - [LPS-99668]: FS (dc807507ce)
 - [LPS-99668]: generateJSPJava should not run if jsp.precompile.enabled is false
 (0e91177658)
@@ -1295,8 +1329,8 @@ version 4.4.6.
 ## 6.0.13 - 2019-08-17
 
 ### Commits
-- [LPS-99774]: Revert "LPS-99774 Set environment variable to test for npmRunTest"
-(d8d2e56e84)
+- [LPS-99774]: Revert "LPS-99774 Set environment variable to test for
+npmRunTest" (d8d2e56e84)
 
 ### Dependencies
 - [LPS-99774]: Update the com.liferay.gradle.plugins dependency to version
@@ -1350,8 +1384,8 @@ version 4.4.6.
 ## 6.0.6 - 2019-08-09
 
 ### Commits
-- [LPS-98937]: fix dependency substitution for exportimport taglib name exception
-(b3e4719c4b)
+- [LPS-98937]: fix dependency substitution for exportimport taglib name
+exception (b3e4719c4b)
 
 ## 6.0.5 - 2019-08-09
 
@@ -2450,8 +2484,8 @@ has OSGi 5 included." (ab794a9aff)
 
 ### Commits
 - [LPS-92016]: Reorder class path to fix compile for tests. Only saw this issue
-because test requires at least OSGi 6 and portal/lib/bnd.jar has OSGi 5 included.
-(40a48bd3fc)
+because test requires at least OSGi 6 and portal/lib/bnd.jar has OSGi 5
+included. (40a48bd3fc)
 
 ## 5.5.244 - 2019-03-14
 
@@ -4051,8 +4085,8 @@ manifest header for the deployed JAR does not contain a period.
 ## 5.5.27 - 2018-08-30
 
 ### Commits
-- [LPS-84621]: Revert "LPS-84621 Temporarily disable validateSchema tasks for CI"
-(179e9e552a)
+- [LPS-84621]: Revert "LPS-84621 Temporarily disable validateSchema tasks for
+CI" (179e9e552a)
 - [LPS-84094]: Move reusable logic to gradle-util (7388cfa774)
 
 ### Dependencies
@@ -4077,8 +4111,7 @@ used inside `build.gradle` files.
 - [LPS-84887]: Update Maven SCM property default values in
 `config-maven.gradle`:
 	- `scm.connection` = `scm:git:git@github.com:liferay/liferay-portal.git`
-	- `scm.developerConnection` =
-`scm:git:git@github.com:liferay/liferay-portal.git`
+	- `scm.developerConnection` = `scm:git:git@github.com:liferay/liferay-portal.git`
 	- `scm.url` = `http://github.com/liferay/liferay-portal`
 
 ## 5.5.25 - 2018-08-28
@@ -4271,8 +4304,8 @@ directory when it has a `compile*` dependency with the version `default`.
 ## 5.5.2 - 2018-08-02
 
 ### Commits
-- [LPS-84055]: The printDependentArtifact should print the project directory when
-it has a dependency with version 'default' (791984afc2)
+- [LPS-84055]: The printDependentArtifact should print the project directory
+when it has a dependency with version 'default' (791984afc2)
 
 ### Dependencies
 - [LPS-84055]: Update the com.liferay.gradle.plugins dependency to version
@@ -5831,8 +5864,8 @@ install` when not on Jenkins.
 ## 5.3.24 - 2018-03-09
 
 ### Commits
-- [LPS-77425]: Exclude "arquillian-extension-junit-bridge" from marker file check
-(054a7b3a88)
+- [LPS-77425]: Exclude "arquillian-extension-junit-bridge" from marker file
+check (054a7b3a88)
 
 ### Description
 - [LPS-77524]: Allow a `testIntegrationCompile` dependency from a project with
@@ -6116,8 +6149,7 @@ since it has been moved into [Liferay Gradle Plugins Baseline].
 ### Commits
 - [LPS-77423]: Not needed anymore (610d4364ac)
 - [LPS-73070]: Revert "LPS-73070 Copy
-https://github.com/liferay/liferay-portal/commit/61e14073037885b35461ab01cb3eace31a161342
-inside plugin" (f56f6f91f8)
+null
 
 ### Dependencies
 - [LPS-77423]: Update the com.liferay.gradle.plugins dependency to version
@@ -6260,8 +6292,8 @@ inside plugin" (f56f6f91f8)
 - [LPS-76644]: Update the plugin-publish-plugin dependency to version 0.9.9.
 
 ### Description
-- [LPS-76644]: Automatically configure the [Plugin Publishing Plugin]
-(https://plugins.gradle.org/docs/publish-plugin) when applied.
+- [LPS-76644]: Automatically configure the [Plugin Publishing Plugin](https://plugins.gradle.org/docs/publish-plugin)
+when applied.
 
 ## 5.2.32 - 2018-01-02
 
@@ -6550,8 +6582,7 @@ Gradle plugin to properly configure the portal compatibility OSGi modules.
 
 ### Commits
 - [LPS-73070]: Copy
-https://github.com/liferay/liferay-portal/commit/61e14073037885b35461ab01cb3eace31a161342
-inside plugin (b9cf2dfff6)
+null
 
 ### Dependencies
 - [LPS-75965]: Update the com.liferay.gradle.plugins dependency to version
@@ -6595,8 +6626,7 @@ dependency to version 1.0.1.
 - [LPS-75359]: Exclude unfetchable EasyConf dependencies (a1c6f7e4ac)
 
 ### Description
-- [LPS-75359]: Automatically exclude unfetchable
-[EasyConf](http://easyconf.sourceforge.net/)
+- [LPS-75359]: Automatically exclude unfetchable [EasyConf](http://easyconf.sourceforge.net/)
 transitive dependencies.
 - [LPS-75359]: Force specific versions of EasyConf transitive dependencies in
 the `testCompileClasspath` and `testRuntime` configurations:
@@ -7200,9 +7230,8 @@ ensure it matches the project version.
 3.4.39.
 
 ### Description
-- [LPS-74345]: The [`Eclipse`]
-(https://docs.gradle.org/current/userguide/eclipse_plugin.html) plugin is no
-longer applied to OSGi projects.
+- [LPS-74345]: The [`Eclipse`](https://docs.gradle.org/current/userguide/eclipse_plugin.html)
+plugin is no longer applied to OSGi projects.
 
 ## 5.0.25 - 2017-08-24
 
@@ -7420,8 +7449,7 @@ attribute in Ivy `<dependency>` elements.
 - [LPS-73655]: Add support for "exclude" elements in ivy.xml (ebe3d6a716)
 
 ### Description
-- [LPS-73655]: Add support in `CopyIvyDependenciesTask` for Ivy
-[`<exclude>`](http://ant.apache.org/ivy/history/latest-milestone/ivyfile/exclude.html)
+- [LPS-73655]: Add support in `CopyIvyDependenciesTask` for Ivy [`<exclude>`](http://ant.apache.org/ivy/history/latest-milestone/ivyfile/exclude.html)
 elements.
 
 ## 4.1.4 - 2017-07-26
@@ -7912,8 +7940,7 @@ version 1.1.7.
 - [LRDOCS-3643]: Use portal styles for app's TLD docs (07d9e52b9e)
 
 ### Description
-- [LRDOCS-3643]: Apply the [Liferay stylesheet]
-(https://github.com/liferay/liferay-portal/blob/master/tools/styles/dtddoc.css)
+- [LRDOCS-3643]: Apply the [Liferay stylesheet](https://github.com/liferay/liferay-portal/blob/master/tools/styles/dtddoc.css)
 file (if found) to the tag library documentation generated by the `appTLDDoc`
 task.
 
@@ -7960,8 +7987,7 @@ version 1.1.5.
 ### Description
 - [LPS-68813]: Execute `findSecurityBugs` with the `check` task.
 - [LPS-68813]: Make the `findSecurityBugs` task visible in `gradle task`.
-- [LPS-67039]: Embed and use [Liferay's PMD rule set
-file](https://github.com/liferay/liferay-plugins/blob/master/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml).
+- [LPS-67039]: Embed and use [Liferay's PMD rule set file](https://github.com/liferay/liferay-plugins/blob/master/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml).
 
 ## 3.6.7 - 2017-04-25
 
@@ -8068,8 +8094,7 @@ version in external files to the latest snapshot.
 
 ### Commits
 - [LPS-71795]: Generalize
-https://github.com/liferay/liferay-portal/commit/494bde999167d0c786519918b7a70bc5f76e93c3
-for all "findbugs*" tasks (5c38e9bcdc)
+null
 
 ### Dependencies
 - [LPS-71826]: Update the com.liferay.gradle.plugins dependency to version
@@ -8090,9 +8115,9 @@ for all "findbugs*" tasks (5c38e9bcdc)
 3.2.37.
 
 ### Description
-- [LPS-71795]: Fix the [Gradle issue]
-(https://github.com/gradle/gradle/issues/1094) that occurs when executing the
-`findbugsMain` task on OSGi modules that include resource files.
+- [LPS-71795]: Fix the [Gradle issue](https://github.com/gradle/gradle/issues/1094)
+that occurs when executing the `findbugsMain` task on OSGi modules that include
+resource files.
 
 ## 3.5.15 - 2017-04-06
 
@@ -9092,10 +9117,10 @@ version 1.1.0.
 (31613ff28a)
 - [LPS-68813]: Update FindSecurityBugs version with "updateFileVersions" task
 (333143501d)
-- [LPS-68813]: Only *-web modules has unzipped-jar, from other modules we need to
-take classes dir (57478a9dfd)
-- [LPS-68813]: Also output and include derived summaries to avoid computing again
-(2869bc12cf)
+- [LPS-68813]: Only *-web modules has unzipped-jar, from other modules we need
+to take classes dir (57478a9dfd)
+- [LPS-68813]: Also output and include derived summaries to avoid computing
+again (2869bc12cf)
 - [LPS-68813]: Always include liferay-config/liferay.txt (1b104d322b)
 - [LPS-68813]: Filter only security category (ac1c59612e)
 - [LPS-68813]: Add "FindSecurityBugs" task (59884c383a)
@@ -9474,8 +9499,7 @@ latest published version of the private app.
 3.0.5.
 
 ### Description
-- [LRDOCS-2594]: Apply the [Liferay stylesheet]
-(https://github.com/liferay/liferay-portal/blob/master/tools/styles/javadoc.css)
+- [LRDOCS-2594]: Apply the [Liferay stylesheet](https://github.com/liferay/liferay-portal/blob/master/tools/styles/javadoc.css)
 file, if found, to the API documentation generated by the `appJavadoc` and
 `javadoc` tasks.
 
@@ -9593,9 +9617,8 @@ by the `appJavadoc` task.
 2.0.48.
 
 ### Description
-- [LPS-68402]: Set the [`org.apache.maven.offline`]
-(https://github.com/shrinkwrap/resolver#system-properties) system property to
-`true` for the `testIntegration` task.
+- [LPS-68402]: Set the [`org.apache.maven.offline`](https://github.com/shrinkwrap/resolver#system-properties)
+system property to `true` for the `testIntegration` task.
 
 ## 1.2.38 - 2016-10-01
 
@@ -9682,9 +9705,8 @@ include the projects containing a `.lfrbuild-portal-pre` marker file.
 2.0.40.
 
 ### Description
-- [LPS-66906]: Override the [`sass-binary-path`]
-(https://github.com/sass/node-sass#binary-configuration-parameters) argument in
-the `npmInstall` task with the value of the project property
+- [LPS-66906]: Override the [`sass-binary-path`](https://github.com/sass/node-sass#binary-configuration-parameters)
+argument in the `npmInstall` task with the value of the project property
 `nodejs.npm.ci.sass.binary.site` when on Jenkins.
 
 ## 1.2.28 - 2016-09-22
@@ -9799,6 +9821,7 @@ directory instead of the root project directory. Doing this lets submodules like
 ### Description
 - [LPS-67863]: Allow dependency versions to be overridden in the
 `.version-override-${project.name}.properties` file:
+
 		[artifact group]-[artifact name]=[new version]
 
 ## 1.2.15 - 2016-09-08
@@ -9936,8 +9959,7 @@ project to be overridden by creating a
 `.version-overrides-${project.name}.properties` file in the parent directory of
 the `.gitrepo` file with the following values:
 	- `Bundle-Version=[new bundle version]`
-	- `com.liferay.foo.bar=[new packageinfo version for com.liferay.foo.bar
-package]`
+	- `com.liferay.foo.bar=[new packageinfo version for com.liferay.foo.bar package]`
 - [LPS-67863]: Execute the following actions when running `gradlew baseline
 -PsyncRelease` on an OSGi project:
 	1. Bump up the `Bundle-Version` and `packageinfo` versions based on the same

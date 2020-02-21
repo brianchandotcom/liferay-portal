@@ -125,8 +125,8 @@
 ## 2.0.49 - 2019-04-10
 
 ### Dependencies
-- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.node dependency to version
-4.6.10.
+- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.node dependency to
+version 4.6.10.
 
 ## 2.0.48 - 2019-04-03
 

@@ -76,8 +76,8 @@ builder projects in workspace (480c676309)
 - [LPS-103937]: update tests (27fd76e257)
 - [LPS-103937]: normalize task name (cea69e9b5f)
 - [LPS-103937]: only configure task if they exist (a7bd6fd725)
-- [LPS-103937]: throw build exception if we don't have at least one config folder
-other than common and docker (6e782baaa2)
+- [LPS-103937]: throw build exception if we don't have at least one config
+folder other than common and docker (6e782baaa2)
 - [LPS-104354]: remove circular dependency on :initBundle and :plugins-sdk:war
 (60bb83782d)
 - [LPS-103937]: add missing import (fda7b5952c)
@@ -109,10 +109,10 @@ field for container id (36645a9e70)
 - [LPS-103937]: improve stopDockerContainer task to use new configurable
 container id (b44b34ed3c)
 - [LPS-103937]: buildDockerImage task improvements (3c48ce221f)
-- [LPS-103937]: adopt new script extension points when creating child images from
-base liferay (15c6d2128b)
-- [LPS-103937]: refactor :dockerDeploy to copy all the configs into docker output
-folder (0195b75cd9)
+- [LPS-103937]: adopt new script extension points when creating child images
+from base liferay (15c6d2128b)
+- [LPS-103937]: refactor :dockerDeploy to copy all the configs into docker
+output folder (0195b75cd9)
 - [LPS-103937]: reorganize adding docker related tasks in single method
 (ad888f9509)
 - [LPS-103937]: add new sensible defaults docker image id and container name
@@ -464,8 +464,8 @@ version 2.2.12.
 - [LPS-95279]: Add line breaks because the order matters (866efb6211)
 - [LPS-95279]: fix gradle-plugin-workspace tests with latest TP changes
 (7106aa2034)
-- [LPS-95279]: change the order that we apply these to fix up some version issues
-(7af9a77f0b)
+- [LPS-95279]: change the order that we apply these to fix up some version
+issues (7af9a77f0b)
 - [LPS-95279]: more resolve task work (9a86b91941)
 - [LPS-95279]: refactor targetPlatformIDE extension, remove includedGroups and
 add indexSources (9b296b8d83)
@@ -746,8 +746,8 @@ logic for gradle and maven (7989765c5b)
 ### Dependencies
 - [LRQA-46662]: Update the com.liferay.gradle.plugins.target.platform dependency
 to version 1.1.11.
-- [LRQA-46662]: Update the com.liferay.gradle.plugins.theme.builder dependency to
-version 2.0.6.
+- [LRQA-46662]: Update the com.liferay.gradle.plugins.theme.builder dependency
+to version 2.0.6.
 - [LPS-90380]: Update the com.liferay.gradle.plugins dependency to version
 3.13.106.
 - [LPS-84119]: Update the com.liferay.gradle.plugins dependency to version

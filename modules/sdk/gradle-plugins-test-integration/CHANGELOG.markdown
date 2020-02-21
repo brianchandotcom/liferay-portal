@@ -191,8 +191,8 @@ a file already exists in the `osgi/test` directory before copying it from the
 ## 2.0.1 - 2017-07-24
 
 ### Commits
-- [LPS-73353]: Add jacoco support for tomcat setup (gradle), jacoco agent must be
-the first java agent (fc2689517f)
+- [LPS-73353]: Add jacoco support for tomcat setup (gradle), jacoco agent must
+be the first java agent (fc2689517f)
 
 ### Dependencies
 - [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.29.

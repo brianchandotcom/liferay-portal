@@ -260,8 +260,8 @@
 ### Commits
 - [LPS-60243]: Moving 128359510a405c5f96972c5a506075dd1baed431 to the Gradle
 plugin (fbfa05681b)
-- [LPS-60243]: Refactor to accept closures as arguments and add input annotations
-(3cb4254569)
+- [LPS-60243]: Refactor to accept closures as arguments and add input
+annotations (3cb4254569)
 - [LPS-60243]: Allow custom classpath (bbb02f4bae)
 - [LPS-60243]: Allow custom main class (339cb02d1c)
 - [LPS-60243]: projectDir is already the default value of workingDir

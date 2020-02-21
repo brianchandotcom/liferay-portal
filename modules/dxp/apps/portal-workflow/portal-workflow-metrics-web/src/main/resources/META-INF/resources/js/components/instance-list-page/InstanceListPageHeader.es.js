@@ -135,14 +135,14 @@ const Header = ({
 		() => selectedFilters.find(filter => filter.key === 'statuses'),
 		[selectedFilters]
 	);
-	const {name} = statusesFilterItem ? statusesFilterItem.items[0] : {};
+	const {key} = statusesFilterItem ? statusesFilterItem.items[0] : {};
 	const completedStatusSelected = useMemo(
 		() =>
 			selectedFilters.length > 0 && statusesFilterItem
-				? name === processStatusConstants.completed
+				? key === processStatusConstants.completed
 				: false,
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[name]
+		[key]
 	);
 
 	const selectedFilterItems = useMemo(

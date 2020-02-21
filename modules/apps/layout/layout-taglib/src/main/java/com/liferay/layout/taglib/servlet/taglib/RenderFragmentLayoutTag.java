@@ -242,6 +242,13 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		dropZoneLayoutStructureItem.addChildrenItem(
 			layoutStructure.getMainItemId());
 
+		LayoutStructureItem rootStructureItem =
+			masterLayoutStructure.getLayoutStructureItem(
+				layoutStructure.getMainItemId());
+
+		rootStructureItem.setParentItemId(
+			dropZoneLayoutStructureItem.getItemId());
+
 		return masterLayoutStructure;
 	}
 

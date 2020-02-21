@@ -60,7 +60,7 @@ definition {
 	macro setGroupId {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var groupId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
 
 		return "${groupId}";
 	}

@@ -9,17 +9,18 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {ChildLink} from '../../shared/components/router/routerWrapper.es';
 import {sub} from '../../shared/util/lang.es';
 import {openErrorToast} from '../../shared/util/toast.es';
 import {AppContext} from '../AppContext.es';
-import AlertMessage from './AlertMessage.es';
 
 const SLAInfo = ({processId}) => {
 	const {client, defaultDelta} = useContext(AppContext);
 	const [blockedSLACount, setBlockedSLACount] = useState(0);
+	const [showDismisible, setShowDismisible] = useState(true);
 	const [slaCount, setSlaCount] = useState(null);
 
 	const getSLACount = useCallback(
@@ -57,29 +58,31 @@ const SLAInfo = ({processId}) => {
 
 	return (
 		<>
-			{blockedSLACount !== 0 && (
-				<AlertMessage className="mb-0" iconName="exclamation-full">
-					<>
-						{`${sub(blockedSLAText, [
-							blockedSLACount,
-						])} ${Liferay.Language.get(
-							'fix-the-sla-configuration-to-resume-accurate-reporting'
-						)} `}
+			{blockedSLACount !== 0 && showDismisible && (
+				<ClayAlert
+					className="mb-0"
+					displayType="warning"
+					onClose={() => setShowDismisible(false)}
+					title={Liferay.Language.get('warning')}
+				>
+					{`${sub(blockedSLAText, [
+						blockedSLACount
+					])} ${Liferay.Language.get(
+						'fix-the-sla-configuration-to-resume-accurate-reporting'
+					)} `}
 
-						<ChildLink to={`/slas/${processId}/${defaultDelta}/1`}>
-							<strong>
-								{Liferay.Language.get('set-up-slas')}
-							</strong>
-						</ChildLink>
-					</>
-				</AlertMessage>
+					<ChildLink to={`/slas/${processId}/${defaultDelta}/1`}>
+						<strong>{Liferay.Language.get('set-up-slas')}</strong>
+					</ChildLink>
+				</ClayAlert>
 			)}
 
-			{slaCount === 0 && (
-				<AlertMessage
+			{slaCount === 0 && showDismisible && (
+				<ClayAlert
 					className="mb-0"
-					iconName="warning-full"
-					type="warning"
+					displayType="warning"
+					onClose={() => setShowDismisible(false)}
+					title={Liferay.Language.get('warning')}
 				>
 					<>
 						{`${Liferay.Language.get(
@@ -92,7 +95,7 @@ const SLAInfo = ({processId}) => {
 							</strong>
 						</ChildLink>
 					</>
-				</AlertMessage>
+				</ClayAlert>
 			)}
 		</>
 	);

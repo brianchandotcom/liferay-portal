@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -113,7 +114,9 @@ public class AssetEntryItemSelectorView
 			(HttpServletRequest)servletRequest,
 			HashMapBuilder.put(
 				"groupId",
-				_toStringArray(assetEntryItemSelectorCriterion.getGroupId())
+				_toStringArray(
+					_getGroupId(
+						assetEntryItemSelectorCriterion, servletRequest))
 			).put(
 				"multipleSelection", _toStringArray(true)
 			).put(
@@ -139,6 +142,22 @@ public class AssetEntryItemSelectorView
 				_toStringArray(
 					assetEntryItemSelectorCriterion.getTypeSelection())
 			).build());
+	}
+
+	private long _getGroupId(
+		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion,
+		ServletRequest servletRequest) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)servletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (assetEntryItemSelectorCriterion.getGroupId() ==
+				themeDisplay.getRefererGroupId()) {
+
+			return themeDisplay.getScopeGroupId();
+		}
+
+		return assetEntryItemSelectorCriterion.getGroupId();
 	}
 
 	private <T> String[] _toStringArray(T value) {

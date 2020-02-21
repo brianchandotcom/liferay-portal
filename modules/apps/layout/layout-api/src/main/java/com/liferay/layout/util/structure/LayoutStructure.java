@@ -157,26 +157,10 @@ public class LayoutStructure {
 	public LayoutStructureItem addRowLayoutStructureItem(
 		String parentItemId, int position, int numberOfColumns) {
 
-		LayoutStructureItem parentLayoutStructureItem =
-			_layoutStructureItems.get(parentItemId);
-
-		int newPosition = position;
-
-		if (parentLayoutStructureItem instanceof RootLayoutStructureItem) {
-			ContainerLayoutStructureItem containerLayoutStructureItem =
-				new ContainerLayoutStructureItem(parentItemId);
-
-			_updateLayoutStructure(containerLayoutStructureItem, position);
-
-			parentItemId = containerLayoutStructureItem.getItemId();
-
-			newPosition = 0;
-		}
-
 		RowLayoutStructureItem rowLayoutStructureItem =
 			new RowLayoutStructureItem(parentItemId);
 
-		_updateLayoutStructure(rowLayoutStructureItem, newPosition);
+		_updateLayoutStructure(rowLayoutStructureItem, position);
 
 		rowLayoutStructureItem.setNumberOfColumns(numberOfColumns);
 
@@ -302,23 +286,9 @@ public class LayoutStructure {
 		LayoutStructureItem newParentLayoutStructureItem =
 			_layoutStructureItems.get(parentItemId);
 
-		if (!(layoutStructureItem instanceof RowLayoutStructureItem) ||
-			!(newParentLayoutStructureItem instanceof
-				RootLayoutStructureItem)) {
+		newParentLayoutStructureItem.addChildrenItem(position, itemId);
 
-			newParentLayoutStructureItem.addChildrenItem(position, itemId);
-
-			layoutStructureItem.setParentItemId(parentItemId);
-
-			return layoutStructureItem;
-		}
-
-		ContainerLayoutStructureItem containerLayoutStructureItem =
-			new ContainerLayoutStructureItem(parentItemId);
-
-		containerLayoutStructureItem.addChildrenItem(itemId);
-
-		_updateLayoutStructure(containerLayoutStructureItem, position);
+		layoutStructureItem.setParentItemId(parentItemId);
 
 		return layoutStructureItem;
 	}

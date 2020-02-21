@@ -95,6 +95,7 @@ const ContainerWithControls = React.forwardRef(
 				{openSaveFragmentCompositionModal && (
 					<SaveFragmentCompositionModal
 						errorMessage={''}
+						itemId={item.itemId}
 						observer={observer}
 						onClose={onClose}
 						onErrorDismiss={() => true}

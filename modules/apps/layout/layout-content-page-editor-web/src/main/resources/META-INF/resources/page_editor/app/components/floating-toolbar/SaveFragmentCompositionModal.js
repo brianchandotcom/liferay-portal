@@ -22,25 +22,56 @@ import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {useDispatch, useSelector} from '../../../app/store/index';
 import Button from '../../../common/components/Button';
 import {openImageSelector} from '../../../core/openImageSelector';
 import {config} from '../../config/index';
+import addFragmentComposition from '../../thunks/addFragmentComposition';
 
 const SaveFragmentCompositionModal = ({
 	errorMessage,
+	itemId,
 	observer,
 	onClose,
 	onErrorDismiss
 }) => {
-	const [fragmentCollectionId, setFragmentCollectionId] = useState(-1);
+	const dispatch = useDispatch();
+	const store = useSelector(state => state);
+
+	const [name, setName] = useState('');
+	const [description, setDescription] = useState('');
+	const [fragmentCollectionId, setFragmentCollectionId] = useState(
+		config.collections.length > 0
+			? config.collections[0].fragmentCollectionId
+			: -1
+	);
 
 	const [thumbnail, setThumbnail] = useState({});
+
+	const handleSubmit = event => {
+		event.preventDefault();
+
+		setLoading(true);
+
+		dispatch(
+			addFragmentComposition({
+				description,
+				fragmentCollectionId,
+				itemId,
+				name,
+				previewImageURL: thumbnail.url,
+				store
+			})
+		);
+
+		onClose();
+	};
 
 	const handleThumbnailSelected = image => {
 		setThumbnail(image);
 	};
 
-	const [loading] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const nameInputId = `${config.portletNamespace}fragmentCompositionName`;
 	const descriptionInputId = `${config.portletNamespace}fragmentCompositionDescription`;
@@ -79,9 +110,11 @@ const SaveFragmentCompositionModal = ({
 						<ClayInput
 							autoFocus
 							id={nameInputId}
+							onChange={event => setName(event.target.value)}
 							placeholder={Liferay.Language.get('name')}
 							required
 							type="text"
+							value={name}
 						/>
 					</ClayForm.Group>
 
@@ -126,11 +159,14 @@ const SaveFragmentCompositionModal = ({
 						</label>
 
 						<ClayInput
-							autoFocus
 							component="textarea"
 							id={descriptionInputId}
+							onChange={event =>
+								setDescription(event.target.value)
+							}
 							placeholder={Liferay.Language.get('description')}
 							type="text"
+							value={description}
 						/>
 					</ClayForm.Group>
 
@@ -242,6 +278,7 @@ const SaveFragmentCompositionModal = ({
 							disabled={loading}
 							displayType="primary"
 							loading={loading}
+							onClick={handleSubmit}
 						>
 							{Liferay.Language.get('save')}
 						</Button>
@@ -254,6 +291,7 @@ const SaveFragmentCompositionModal = ({
 
 SaveFragmentCompositionModal.propTypes = {
 	errorMessage: PropTypes.string,
+	itemId: PropTypes.string,
 	observer: PropTypes.object.isRequired,
 	onClose: PropTypes.func.isRequired,
 	onErrorDismiss: PropTypes.func.isRequired

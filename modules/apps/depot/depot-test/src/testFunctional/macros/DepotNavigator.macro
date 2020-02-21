@@ -27,7 +27,7 @@ definition {
 
 		AssertTextNotEquals(
 			locator1 = "ControlMenu#HEADING",
-			value1 = "Repositories");
+			value1 = "Asset Libraries");
 
 		if (IsElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED")) {
 			Click.clickNoSPARefresh(locator1 = "ProductMenu#TOGGLE");
@@ -80,7 +80,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		Navigator.gotoNavItem(navItem = "Repositories");
+		Navigator.gotoNavItem(navItem = "Asset Libraries");
 
 		SiteSelector.selectSite(site = "${depotName}");
 	}

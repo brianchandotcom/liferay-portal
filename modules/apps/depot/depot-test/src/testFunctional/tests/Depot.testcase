@@ -481,9 +481,9 @@ definition {
 		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
-			category = "Repositories",
+			category = "Asset Libraries",
 			panel = "Control Panel",
-			portlet = "Repositories");
+			portlet = "Asset Libraries");
 
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",

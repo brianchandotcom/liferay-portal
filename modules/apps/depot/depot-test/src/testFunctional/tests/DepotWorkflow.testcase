@@ -78,7 +78,7 @@ definition {
 
 		ItemSelector.changeWorkspaces(
 			navTab = "Documents and Media",
-			workspacesType = "Repository");
+			workspacesType = "Asset Library");
 
 		LexiconCard.clickCard(card = "Test Depot Name");
 

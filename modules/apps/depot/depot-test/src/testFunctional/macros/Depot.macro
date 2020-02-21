@@ -15,7 +15,7 @@ definition {
 				value1 = "Please enter a unique name.");
 		}
 		else {
-			Alert.viewSuccessMessageText(successMessage = "Repository was added.");
+			Alert.viewSuccessMessageText(successMessage = "Asset Library was added.");
 
 			AssertTextEquals(
 				locator1 = "ControlMenu#HEADING",
@@ -55,12 +55,12 @@ definition {
 	macro configureAutoTagging {
 		if ("${autoTagging}" == "Enabled") {
 			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Enable Auto Tagging of Assets on This Repository",
+				key_toggleSwitchLabel = "Enable Auto Tagging of Assets on This Asset Library",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 		else if ("${autoTagging}" == "Disabled") {
 			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Enable Auto Tagging of Assets on This Repository",
+				key_toggleSwitchLabel = "Enable Auto Tagging of Assets on This Asset Library",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
@@ -352,7 +352,7 @@ definition {
 	macro viewDefaultCP {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No repositories were found.");
+			value1 = "No asset libraries were found.");
 	}
 
 	macro viewDefaultLanguage {

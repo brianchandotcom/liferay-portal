@@ -103,7 +103,7 @@ definition {
 			value1 = "My Sites");
 
 		AssertElementNotPresent(
-			key_navItem = "Repositories",
+			key_navItem = "Asset Libraries",
 			locator1 = "NavBar#NAV_ITEM_LINK");
 	}
 

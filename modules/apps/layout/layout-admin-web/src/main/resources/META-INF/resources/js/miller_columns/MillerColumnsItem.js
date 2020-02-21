@@ -172,10 +172,7 @@ const MillerColumnsItem = ({
 				else {
 					let newIndex = itemIndex;
 
-					if (
-						dropZone === DROP_ZONES.BOTTOM &&
-						source.parentId !== parentId
-					) {
+					if (dropZone === DROP_ZONES.BOTTOM) {
 						newIndex = itemIndex + 1;
 					}
 

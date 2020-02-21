@@ -24,16 +24,15 @@ const getItemsMap = columns => {
 	let parentId;
 
 	columns.forEach((column, columnIndex) => {
-		const childrenIds = [];
+		let childrenCount = 0;
 		let newParentId;
 
-		column.forEach((item, itemIndex) => {
-			childrenIds.push(item.id);
+		column.forEach(item => {
+			childrenCount++;
 
 			map.set(item.id, {
 				...item,
 				columnIndex,
-				itemIndex,
 				parentId
 			});
 
@@ -42,10 +41,10 @@ const getItemsMap = columns => {
 			}
 		});
 
-		if (parentId && !!childrenIds.length) {
+		if (parentId) {
 			map.set(parentId, {
 				...map.get(parentId),
-				childrenIds
+				childrenCount
 			});
 		}
 
@@ -83,15 +82,7 @@ const MillerColumns = ({
 
 			const column = columns[item.columnIndex];
 
-			if (
-				column.items[item.itemIndex] &&
-				column.items[item.itemIndex].itemIndex > item.itemIndex
-			) {
-				column.items.splice(item.itemIndex, 0, item);
-			}
-			else {
-				column.items.push(item);
-			}
+			column.items.push(item);
 		}
 
 		// Add empty column in the end if last column has an active item
@@ -122,156 +113,100 @@ const MillerColumns = ({
 		}
 	}, []);
 
-	const onItemDrop = (sourceId, parentId, newIndex) => {
-		const newItems = new Map(items);
+	const onItemDrop = (sourceId, newParentId, newIndex) => {
+		const newItems = new Map();
 
-		const newSource = {...newItems.get(sourceId)};
-		const newParent = {...newItems.get(parentId)};
-
-		// Exit if source is being move to the same position.
-		if (
-			newSource.itemIndex === newIndex &&
-			newSource.parentId === parentId
-		) {
-			return;
-		}
-
-		// If it wasn't before, now new parent obviously will have children.
-		newParent.hasChild = true;
-		newItems.set(parentId, newParent);
+		const source = items.get(sourceId);
+		const parent = items.get(newParentId);
 
 		// If no newIndex is provided set it as the last of the siblings.
-		// If new parent doen't have childrenIds (is not active) we don't have to
-		// worry about this
-		if (typeof newIndex !== 'number' && newParent.childrenIds) {
-			newIndex = newParent.childrenIds.length;
-
-			// If source has been moved on the same column adjust the
-			// newIndex.
-			if (newSource.parentId === parentId) {
-				newIndex--;
-			}
+		if (typeof newIndex !== 'number') {
+			newIndex = parent.childrenCount || 0;
 		}
 
-		// If source has been moved to other column we remove its id from
-		// its previous parent child ids list and update all its indexes.
-		if (newSource.parentId !== parentId) {
-			const newPreviousSourceParent = {
-				...newItems.get(newSource.parentId)
-			};
+		const newSource = {
+			...source,
+			active: newParentId === source.parentId && source.active,
+			columnIndex: parent.columnIndex + 1,
+			parentId: newParentId
+		};
 
-			// Remove source id from previous parent child list.
-			newPreviousSourceParent.childrenIds.splice(
-				newPreviousSourceParent.childrenIds.indexOf(sourceId),
-				1
-			);
+		let prevColumnIndex;
+		let itemIndex = 0;
 
-			// Update previous source parent child indexes.
-			newPreviousSourceParent.childrenIds.forEach(childId => {
-				const newChild = {...newItems.get(childId)};
+		// eslint-disable-next-line no-for-of-loops/no-for-of-loops, no-unused-vars
+		for (let item of items.values()) {
+			const columnIndex = item.columnIndex;
 
-				if (newChild.itemIndex > newSource.itemIndex) {
-					newChild.itemIndex = newChild.itemIndex - 1;
-					newItems.set(childId, newChild);
+			if (item.columnIndex > prevColumnIndex) {
+				// Exit if source was active but not anymore and we are on the
+				// next column to where source used to live to avoid saving its
+				// children (which must not be shown anymore)
+				if (
+					source.active &&
+					!newSource.active &&
+					columnIndex > newSource.columnIndex + 1
+				) {
+					break;
 				}
-			});
 
-			newPreviousSourceParent.hasChild = !!newPreviousSourceParent
-				.childrenIds.length;
+				// Reset itemIndex counter on each column
+				itemIndex = 0;
+			}
 
-			newItems.set(newSource.parentId, newPreviousSourceParent);
+			// Skip the source item iteration
+			if (item.id === sourceId) {
+				itemIndex++;
+				prevColumnIndex = item.columnIndex;
+				continue;
+			}
 
-			// If source was active mark it as inactive and remove all children
-			// recursively (will no longer be visible).
-			if (newSource.active) {
-				newSource.active = false;
+			if (item.id === newParentId) {
+				let newChildrenCount = item.childrenCount;
 
-				const deleteChildren = childrenIds => {
-					if (childrenIds) {
-						childrenIds.forEach(childId => {
-							const childrenItem = newItems.get(childId);
-							deleteChildren(childrenItem.childrenIds);
-							newItems.delete(childId);
-						});
-					}
+				if (newParentId !== source.parentId) {
+					newChildrenCount++;
+				}
+
+				item = {
+					...item,
+					childrenCount: newChildrenCount,
+					hasChild: true
 				};
+			}
+			else if (item.id === source.parentId) {
+				const newChildrenCount = item.childrenCount - 1;
 
-				deleteChildren(newSource.childrenIds);
+				item = {
+					...item,
+					childrenCount: newChildrenCount,
+					hasChild: newChildrenCount > 0
+				};
 			}
 
-			// If newParent is active we add source id to new parent child
-			// ids list.
-			if (newParent.active) {
-				if (newParent.childrenIds) {
-					newParent.childrenIds.push(sourceId);
-				}
-				else {
-					newParent.childrenIds = [sourceId];
-				}
-				newItems.set(parentId, newParent);
+			if (
+				itemIndex === newIndex &&
+				columnIndex === newSource.columnIndex &&
+				parent.active
+			) {
+				newItems.set(newSource.id, newSource);
 			}
+
+			newItems.set(item.id, {...item});
+
+			itemIndex++;
+			prevColumnIndex = item.columnIndex;
 		}
 
-		// Update new source siblings indexes.
-		if (newParent.childrenIds) {
-			// They have to be more than 1 to have to worry about sorting.
-			if (newParent.childrenIds.length > 1) {
-				newParent.childrenIds.forEach(childId => {
-					if (childId !== sourceId) {
-						const newChild = {...newItems.get(childId)};
-
-						let newChildIndex = newChild.itemIndex;
-
-						if (newSource.parentId !== parentId) {
-							if (newChild.itemIndex >= newIndex) {
-								newChildIndex++;
-							}
-						}
-						else {
-							// If it's been moved down.
-							if (newSource.itemIndex < newIndex) {
-								if (
-									newChild.itemIndex <= newIndex &&
-									newChild.itemIndex > newSource.itemIndex
-								) {
-									newChildIndex--;
-								}
-							}
-							// If it's been moved up.
-							else if (newSource.itemIndex > newIndex) {
-								if (
-									newChild.itemIndex >= newIndex &&
-									newChild.itemIndex < newSource.itemIndex
-								) {
-									newChildIndex++;
-								}
-							}
-						}
-
-						// Update child item only if position changed.
-						if (newChild.itemIndex !== newChildIndex) {
-							newChild.itemIndex = newChildIndex;
-							newItems.set(childId, newChild);
-						}
-					}
-				});
-			}
+		// If source parent is active (children are visible) set (again or not)
+		// the newSource in the map in case it's being placed as the last
+		// element (so won't reach that position in the loop).
+		if (parent.active) {
+			newItems.set(newSource.id, newSource);
 		}
 
-		// Update only source if it's going to be seen, if not, delete it.
-		if (newParent.active) {
-			newSource.columnIndex = newParent.columnIndex + 1;
-			newSource.itemIndex = newIndex;
-			newSource.parentId = parentId;
-			newItems.set(sourceId, newSource);
-		}
-		else {
-			newItems.delete(sourceId);
-		}
-
-		// Save
 		setItems(newItems);
-		onItemMove(sourceId, parentId, newIndex);
+		onItemMove(sourceId, newParentId, newIndex);
 	};
 
 	return (

@@ -74,10 +74,10 @@ const MillerColumnsColumn = ({
 			)}
 			ref={ref}
 		>
-			{items.map(item => (
+			{items.map((item, index) => (
 				<MillerColumnsItem
 					actionHandlers={actionHandlers}
-					item={item}
+					item={{...item, itemIndex: index}}
 					key={item.url}
 					namespace={namespace}
 					onItemDrop={onItemDrop}

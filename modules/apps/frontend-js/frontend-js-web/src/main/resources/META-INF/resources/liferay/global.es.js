@@ -34,6 +34,7 @@ import {
 	showLayoutPane,
 	toggleLayoutDetails
 } from './layout_exporter.es';
+import {showTab} from './portal/tabs.es';
 import portlet from './portlet/portlet.es';
 import SideNavigation from './side_navigation.es';
 import getCountries from './util/address/get_countries.es';
@@ -79,6 +80,12 @@ Liferay.LayoutExporter = {
 	proposeLayout,
 	publishToLive,
 	selected: showLayoutPane
+};
+
+Liferay.Portal = Liferay.Portal || {};
+
+Liferay.Portal.Tabs = {
+	show: showTab
 };
 
 Liferay.SideNavigation = SideNavigation;

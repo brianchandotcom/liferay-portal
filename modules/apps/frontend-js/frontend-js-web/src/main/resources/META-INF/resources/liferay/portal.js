@@ -13,93 +13,11 @@
  */
 
 (function(A, Liferay) {
-	var Tabs = Liferay.namespace('Portal.Tabs');
 	var ToolTip = Liferay.namespace('Portal.ToolTip');
 
 	var BODY_CONTENT = 'bodyContent';
 
 	var TRIGGER = 'trigger';
-
-	Liferay.Portal.Tabs._show = function(event) {
-		var names = event.names;
-		var namespace = event.namespace;
-
-		var selectedIndex = event.selectedIndex;
-
-		var tabItem = event.tabItem;
-		var tabLink = tabItem.one('a');
-		var tabSection = event.tabSection;
-
-		if (tabItem) {
-			var previousTabItem = tabItem.siblings().one('.active');
-
-			if (previousTabItem) {
-				previousTabItem.removeClass('active');
-			}
-
-			tabLink.addClass('active');
-		}
-
-		if (tabSection) {
-			tabSection.show();
-		}
-
-		var tabTitle = A.one('#' + event.namespace + 'dropdownTitle');
-
-		if (tabTitle) {
-			tabTitle.html(tabLink.text());
-		}
-
-		names.splice(selectedIndex, 1);
-
-		var el;
-
-		for (var i = 0; i < names.length; i++) {
-			el = A.one(
-				'#' +
-					namespace +
-					Liferay.Util.toCharCode(names[i]) +
-					'TabsSection'
-			);
-
-			if (el) {
-				el.hide();
-			}
-		}
-	};
-
-	Liferay.provide(
-		Tabs,
-		'show',
-		function(namespace, names, id, callback) {
-			var namespacedId = namespace + Liferay.Util.toCharCode(id);
-
-			var tab = A.one('#' + namespacedId + 'TabsId');
-			var tabSection = A.one('#' + namespacedId + 'TabsSection');
-
-			if (tab && tabSection) {
-				var details = {
-					id,
-					names,
-					namespace,
-					selectedIndex: names.indexOf(id),
-					tabItem: tab,
-					tabSection
-				};
-
-				if (callback && A.Lang.isFunction(callback)) {
-					callback.call(this, namespace, names, id, details);
-				}
-
-				Liferay.fire('showTab', details);
-			}
-		},
-		['aui-base']
-	);
-
-	Liferay.publish('showTab', {
-		defaultFn: Liferay.Portal.Tabs._show
-	});
 
 	ToolTip._getText = function(id) {
 		var node = A.one('#' + id);

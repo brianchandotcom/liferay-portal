@@ -257,6 +257,14 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 								_getLocalizedNamesFromProperties(
 									typeSettingsProperties);
 
+							if (localizedNames.isEmpty() && (layout != null)) {
+								localizedNames = Collections.singletonMap(
+									contextAcceptLanguage.getPreferredLocale(),
+									layout.getName(
+										contextAcceptLanguage.
+											getPreferredLocale()));
+							}
+
 							return LocalizedMapUtil.getLocalizedMap(
 								true, localizedNames);
 						}

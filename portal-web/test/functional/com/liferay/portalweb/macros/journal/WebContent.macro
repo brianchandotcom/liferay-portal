@@ -416,8 +416,9 @@ definition {
 		if ("${allowMultipleCategories}" == "false") {
 			Button.clickPublish();
 		}
-
-		PortletEntry.publish();
+		else {
+			PortletEntry.publish();
+		}
 	}
 
 	macro addWithPriorityCP {

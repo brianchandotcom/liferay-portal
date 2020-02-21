@@ -76,6 +76,9 @@ public class PropsValues {
 
 	public static final String PORTAL_URL = PropsUtil.get("portal.url");
 
+	public static final int POSHI_FILE_READ_THREAD_POOL = GetterUtil.getInteger(
+		PropsUtil.get("poshi.file.read.thread.pool"));
+
 	public static final String PRINT_JAVA_PROCESS_ON_FAIL = PropsUtil.get(
 		"print.java.process.on.fail");
 

@@ -1453,7 +1453,8 @@ public class PoshiRunnerContext {
 				new PoshiFileCallable(url, namespace));
 		}
 
-		ExecutorService executorService = Executors.newFixedThreadPool(16);
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			PropsValues.POSHI_FILE_READ_THREAD_POOL);
 
 		List<Future<URL>> futures = executorService.invokeAll(
 			dependencyPoshiFileCallables);

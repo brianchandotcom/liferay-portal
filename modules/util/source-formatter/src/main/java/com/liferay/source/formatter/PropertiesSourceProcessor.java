@@ -25,7 +25,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws IOException {
-		return getFileNames(new String[] {"**/docroot/dtd/**"}, getIncludes());
+		return getFileNames(
+			new String[] {"**/docroot/dtd/**", "**/lportal.properties"},
+			getIncludes());
 	}
 
 	@Override

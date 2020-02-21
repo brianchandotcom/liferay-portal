@@ -215,7 +215,6 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						siteNavigationMenuItem.getUserId()));
 				dateCreated = siteNavigationMenuItem.getCreateDate();
 				dateModified = siteNavigationMenuItem.getModifiedDate();
-				id = siteNavigationMenuItem.getSiteNavigationMenuId();
 				navigationMenuItems = transformToArray(
 					siteNavigationMenuItemsMap.getOrDefault(
 						siteNavigationMenuItem.getSiteNavigationMenuItemId(),

@@ -185,7 +185,9 @@
 				"target": {
 					"enum": [
 						"Blank",
-						"Self"
+						"Parent",
+						"Self",
+						"Top"
 					],
 					"title": "The target Schema",
 					"type": "string"

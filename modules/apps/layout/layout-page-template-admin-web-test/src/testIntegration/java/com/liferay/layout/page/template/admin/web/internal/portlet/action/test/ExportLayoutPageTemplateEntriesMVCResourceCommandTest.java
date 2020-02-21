@@ -147,7 +147,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 				_validateZipEntry(zipEntry, zipFile);
 			}
 
-			Assert.assertEquals(3, zipFile.size());
+			Assert.assertEquals(4, zipFile.size());
 		}
 	}
 

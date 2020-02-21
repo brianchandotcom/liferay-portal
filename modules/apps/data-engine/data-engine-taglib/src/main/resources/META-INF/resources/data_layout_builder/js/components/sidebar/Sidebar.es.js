@@ -133,23 +133,46 @@ const SidebarSearchInput = ({closeable, onSearch, onToggle}) => (
 	</SidebarHeader>
 );
 
-const SidebarTab = ({tabs}) => {
+const SidebarTabs = ({children, initialSelectedTab, tabs}) => {
+	const [selectedTab, setSelectedTab] = useState(initialSelectedTab);
+
+	return (
+		<>
+			<SidebarTab
+				onSelectedTabChanged
+				onTabClick={setSelectedTab}
+				selectedTab={selectedTab}
+				tabs={tabs}
+			/>
+
+			<SidebarTabContent>
+				{React.Children.toArray(children).filter(
+					child => child.props.name === selectedTab
+				)}
+			</SidebarTabContent>
+		</>
+	);
+};
+
+const SidebarTab = ({onTabClick, selectedTab, tabs}) => {
 	return (
 		<nav className="component-tbar tbar">
 			<div className="container-fluid">
 				<ul className="nav nav-underline" role="tablist">
-					{tabs.map(({active, label, onClick}, index) => (
+					{tabs.map(({label, name}, index) => (
 						<li className="nav-item" key={index}>
 							<a
-								className={classNames('nav-link', {active})}
+								className={classNames('nav-link', {
+									active: selectedTab
+										? name === selectedTab
+										: index === 0
+								})}
 								data-senna-off
 								href=""
 								onClick={event => {
 									event.preventDefault();
 
-									if (onClick) {
-										onClick(index);
-									}
+									onTabClick(name);
 								}}
 								role="tab"
 							>
@@ -178,6 +201,7 @@ Sidebar.Footer = SidebarFooter;
 Sidebar.Header = SidebarHeader;
 Sidebar.SearchInput = SidebarSearchInput;
 Sidebar.Tab = SidebarTab;
+Sidebar.Tabs = SidebarTabs;
 Sidebar.TabContent = SidebarTabContent;
 
 export default Sidebar;
@@ -188,5 +212,6 @@ export {
 	SidebarHeader,
 	SidebarSearchInput,
 	SidebarTab,
+	SidebarTabs,
 	SidebarTabContent,
 };

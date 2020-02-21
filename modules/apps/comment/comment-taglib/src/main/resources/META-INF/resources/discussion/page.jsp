@@ -62,7 +62,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				<input name="contentURL" type="hidden" value="<%= contentURL %>" />
 
 				<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
-				<aui:input id="<%= randomNamespace + Constants.CMD %>" name="<%= Constants.CMD %>" type="hidden" />
+				<aui:input id="<%= Constants.CMD %>" name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= discussionTaglibHelper.getRedirect() %>" />
 				<aui:input name="assetEntryVisible" type="hidden" value="<%= discussionTaglibHelper.isAssetEntryVisible() %>" />
 				<aui:input name="className" type="hidden" value="<%= discussionTaglibHelper.getClassName() %>" />

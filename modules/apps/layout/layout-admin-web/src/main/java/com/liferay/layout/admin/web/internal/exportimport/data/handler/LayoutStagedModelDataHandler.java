@@ -848,7 +848,6 @@ public class LayoutStagedModelDataHandler
 
 		importedLayout.setLayoutPrototypeLinkEnabled(
 			layout.isLayoutPrototypeLinkEnabled());
-		importedLayout.setStatus(layout.getStatus());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			layout);
@@ -862,7 +861,7 @@ public class LayoutStagedModelDataHandler
 
 		importTheme(portletDataContext, layout, importedLayout);
 
-		_layoutLocalService.updateLayout(importedLayout);
+		importedLayout = _layoutLocalService.updateLayout(importedLayout);
 
 		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||
@@ -882,6 +881,10 @@ public class LayoutStagedModelDataHandler
 		importLayoutSEOEntries(portletDataContext, layout);
 
 		importLayoutClassedModelUsages(portletDataContext, layout);
+
+		importedLayout.setStatus(layout.getStatus());
+
+		importedLayout = _layoutLocalService.updateLayout(importedLayout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
 	}

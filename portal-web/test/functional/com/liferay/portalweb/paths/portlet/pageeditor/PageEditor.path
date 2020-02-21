@@ -52,7 +52,7 @@
 <!--FRAGMENT_SIDEBAR-->
 <tr>
 	<td>FRAGMENT_SIDEBAR</td>
-	<td>//div[contains(@class,'page-editor-sidebar-content')]</td>
+	<td>//div[contains(@class,'page-editor__sidebar__buttons')]</td>
 	<td></td>
 </tr>
 <tr>

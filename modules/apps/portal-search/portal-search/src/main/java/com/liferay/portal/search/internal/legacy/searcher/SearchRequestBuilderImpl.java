@@ -155,6 +155,15 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	}
 
 	@Override
+	public SearchRequestBuilder connectionId(String connectionId) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setConnectionId(
+				connectionId));
+
+		return this;
+	}
+
+	@Override
 	public SearchRequestBuilder emptySearchEnabled(boolean allowEmptySearches) {
 		withSearchRequestImpl(
 			searchRequestImpl -> searchRequestImpl.setEmptySearchEnabled(

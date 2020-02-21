@@ -56,6 +56,7 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	public SearchRequestImpl(SearchRequestImpl searchRequestImpl) {
 		_aggregationsMap.putAll(searchRequestImpl._aggregationsMap);
 		_basicFacetSelection = searchRequestImpl._basicFacetSelection;
+		_connectionId = searchRequestImpl._connectionId;
 		_complexQueryParts.addAll(searchRequestImpl._complexQueryParts);
 		_emptySearchEnabled = searchRequestImpl._emptySearchEnabled;
 		_excludeContributors.addAll(searchRequestImpl._excludeContributors);
@@ -132,6 +133,11 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	@Override
 	public List<ComplexQueryPart> getComplexQueryParts() {
 		return Collections.unmodifiableList(_complexQueryParts);
+	}
+
+	@Override
+	public String getConnectionId() {
+		return _connectionId;
 	}
 
 	@Override
@@ -284,6 +290,10 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 			Boolean.valueOf(basicFacetSelection));
 	}
 
+	public void setConnectionId(String connectionId) {
+		_connectionId = connectionId;
+	}
+
 	public void setEmptySearchEnabled(boolean emptySearchEnabled) {
 		_emptySearchEnabled = emptySearchEnabled;
 
@@ -398,6 +408,7 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		new LinkedHashMap<>();
 	private boolean _basicFacetSelection;
 	private final List<ComplexQueryPart> _complexQueryParts = new ArrayList<>();
+	private String _connectionId;
 	private boolean _emptySearchEnabled;
 	private final List<String> _excludeContributors = new ArrayList<>();
 	private boolean _explain;

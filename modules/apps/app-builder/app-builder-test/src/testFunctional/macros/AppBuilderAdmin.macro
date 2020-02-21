@@ -493,8 +493,15 @@ definition {
 	}
 
 	macro waitForSaveButton {
-		while (IsVisible(locator1 = "AppBuilder#SAVE_BUTTON")) {
+		while (IsNotVisible(locator1 = "AppBuilder#SAVE_BUTTON")) {
 			Pause(locator1 = "10000");
 		}
+	}
+
+	macro addEntry {
+
+		AppBuilderAdmin.add();
+		AppBuilderAdmin.waitForSaveButton();
+
 	}
 }

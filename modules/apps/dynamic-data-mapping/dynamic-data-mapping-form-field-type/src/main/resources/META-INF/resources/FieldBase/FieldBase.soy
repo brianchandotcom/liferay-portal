@@ -10,6 +10,11 @@
 	{@param? id: string}
 	{@param? tip: string}
 	{@param? label: string}
+	{@param? localizedValue: list<[
+		languageId: string,
+		name: string,
+		value: ?
+	]>}
 	{@param? readOnly: bool}
 	{@param? required: bool}
 	{@param? repeatable: bool}
@@ -95,6 +100,14 @@
 		{/if}
 
 		{$contentRenderer}
+
+		{if $localizedValue and length($localizedValue) > 0}
+			{foreach $language in $localizedValue}
+				{if $language.value != ''}
+					<input type="hidden" name="{$language.name}" value="{$language.value}" />
+				{/if}
+			{/foreach}
+		{/if}
 
 		{if $tip}
 			<span class="form-text">{$tip}</span>

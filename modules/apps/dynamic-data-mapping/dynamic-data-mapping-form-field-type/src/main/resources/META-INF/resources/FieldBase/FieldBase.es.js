@@ -22,6 +22,7 @@ import {Config} from 'metal-state';
 
 import withDispatch from '../util/withDispatch.es';
 import templates from './FieldBase.soy';
+import withLocale from './withLocale.es';
 import withRepetitionControls from './withRepetitionControls.es';
 
 class FieldBase extends Component {
@@ -126,7 +127,11 @@ FieldBase.STATE = {
 	tooltip: Config.string(),
 };
 
-const composed = compose(withDispatch, withRepetitionControls)(FieldBase);
+const composed = compose(
+	withDispatch,
+	withRepetitionControls,
+	withLocale
+)(FieldBase);
 
 Soy.register(composed, templates);
 

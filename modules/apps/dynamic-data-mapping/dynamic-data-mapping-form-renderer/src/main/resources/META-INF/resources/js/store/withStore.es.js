@@ -153,6 +153,31 @@ export default Component => {
 			return evaluate(null, this.getEvaluatorContext());
 		}
 
+		willReceiveState(changes) {
+			const {editingLanguageId} = changes;
+
+			if (editingLanguageId) {
+				const visitor = new PagesVisitor(this.pages);
+
+				const newPages = visitor.mapFields(
+					({localizedValue, name}) => ({
+						name: name.replace(
+							editingLanguageId.prevVal,
+							editingLanguageId.newVal
+						),
+						value:
+							localizedValue &&
+							localizedValue[editingLanguageId.newVal]
+								? localizedValue[editingLanguageId.newVal]
+								: null
+					}),
+					true
+				);
+
+				this.pages = newPages;
+			}
+		}
+
 		validate() {
 			return this.evaluate().then(evaluatedPages => {
 				let validForm = true;

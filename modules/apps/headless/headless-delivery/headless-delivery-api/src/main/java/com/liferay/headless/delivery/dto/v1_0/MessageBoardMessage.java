@@ -438,6 +438,34 @@ public class MessageBoardMessage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@Schema
+	public Long getMessageBoardSectionId() {
+		return messageBoardSectionId;
+	}
+
+	public void setMessageBoardSectionId(Long messageBoardSectionId) {
+		this.messageBoardSectionId = messageBoardSectionId;
+	}
+
+	@JsonIgnore
+	public void setMessageBoardSectionId(
+		UnsafeSupplier<Long, Exception> messageBoardSectionIdUnsafeSupplier) {
+
+		try {
+			messageBoardSectionId = messageBoardSectionIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long messageBoardSectionId;
+
 	@Schema(
 		description = "The ID of the Message Board Thread to which this message is scoped."
 	)
@@ -920,6 +948,16 @@ public class MessageBoardMessage {
 			}
 
 			sb.append("]");
+		}
+
+		if (messageBoardSectionId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"messageBoardSectionId\": ");
+
+			sb.append(messageBoardSectionId);
 		}
 
 		if (messageBoardThreadId != null) {

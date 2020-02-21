@@ -1826,6 +1826,16 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"messageBoardSectionId", additionalAssertFieldName)) {
+
+				if (messageBoardMessage.getMessageBoardSectionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"messageBoardThreadId", additionalAssertFieldName)) {
 
 				if (messageBoardMessage.getMessageBoardThreadId() == null) {
@@ -2172,6 +2182,19 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"messageBoardSectionId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						messageBoardMessage1.getMessageBoardSectionId(),
+						messageBoardMessage2.getMessageBoardSectionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"messageBoardThreadId", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
@@ -2434,6 +2457,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("messageBoardSectionId", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage.getMessageBoardSectionId(),
+						jsonObject.getLong("messageBoardSectionId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("messageBoardThreadId", fieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardMessage.getMessageBoardThreadId(),
@@ -2686,6 +2720,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("messageBoardSectionId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("messageBoardThreadId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2762,6 +2801,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				encodingFormat = RandomTestUtil.randomString();
 				headline = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				messageBoardSectionId = RandomTestUtil.randomLong();
 				messageBoardThreadId = RandomTestUtil.randomLong();
 				numberOfMessageBoardAttachments = RandomTestUtil.randomInt();
 				numberOfMessageBoardMessages = RandomTestUtil.randomInt();

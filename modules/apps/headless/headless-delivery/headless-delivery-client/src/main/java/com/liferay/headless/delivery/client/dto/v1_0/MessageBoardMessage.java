@@ -313,6 +313,27 @@ public class MessageBoardMessage implements Cloneable {
 
 	protected String[] keywords;
 
+	public Long getMessageBoardSectionId() {
+		return messageBoardSectionId;
+	}
+
+	public void setMessageBoardSectionId(Long messageBoardSectionId) {
+		this.messageBoardSectionId = messageBoardSectionId;
+	}
+
+	public void setMessageBoardSectionId(
+		UnsafeSupplier<Long, Exception> messageBoardSectionIdUnsafeSupplier) {
+
+		try {
+			messageBoardSectionId = messageBoardSectionIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long messageBoardSectionId;
+
 	public Long getMessageBoardThreadId() {
 		return messageBoardThreadId;
 	}

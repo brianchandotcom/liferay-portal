@@ -1594,6 +1594,26 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"messageBoardSectionId", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = messageBoardThread.getMessageBoardSectionId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals(
 					"numberOfMessageBoardAttachments",
 					additionalAssertFieldName)) {
 
@@ -1936,6 +1956,16 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"messageBoardSectionId", additionalAssertFieldName)) {
+
+				if (messageBoardThread.getMessageBoardSectionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"numberOfMessageBoardAttachments",
 					additionalAssertFieldName)) {
 
@@ -2265,6 +2295,19 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"messageBoardSectionId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						messageBoardThread1.getMessageBoardSectionId(),
+						messageBoardThread2.getMessageBoardSectionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"numberOfMessageBoardAttachments",
 					additionalAssertFieldName)) {
 
@@ -2503,6 +2546,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			if (Objects.equals("id", fieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardThread.getId(), jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("messageBoardSectionId", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardThread.getMessageBoardSectionId(),
+						jsonObject.getLong("messageBoardSectionId"))) {
 
 					return false;
 				}
@@ -2756,6 +2810,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("messageBoardSectionId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("numberOfMessageBoardAttachments")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2834,6 +2893,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				encodingFormat = RandomTestUtil.randomString();
 				headline = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				messageBoardSectionId = RandomTestUtil.randomLong();
 				numberOfMessageBoardAttachments = RandomTestUtil.randomInt();
 				numberOfMessageBoardMessages = RandomTestUtil.randomInt();
 				showAsQuestion = RandomTestUtil.randomBoolean();

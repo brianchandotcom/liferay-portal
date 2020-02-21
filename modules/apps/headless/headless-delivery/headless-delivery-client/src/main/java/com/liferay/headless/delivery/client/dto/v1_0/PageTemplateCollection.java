@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageTemplateCollection {
+public class PageTemplateCollection implements Cloneable {
 
 	public Creator getCreator() {
 		return creator;
@@ -169,6 +169,11 @@ public class PageTemplateCollection {
 	}
 
 	protected String uuid;
+
+	@Override
+	public PageTemplateCollection clone() throws CloneNotSupportedException {
+		return (PageTemplateCollection)super.clone();
+	}
 
 	@Override
 	public boolean equals(Object object) {

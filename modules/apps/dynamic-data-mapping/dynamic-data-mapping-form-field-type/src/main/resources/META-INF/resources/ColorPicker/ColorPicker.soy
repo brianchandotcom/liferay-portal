@@ -7,6 +7,7 @@
 	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? label: string}
+	{@param? localizedValue: ?}
 	{@param? predefinedValue: string}
 	{@param? readOnly: bool}
 	{@param? repeatable: bool}
@@ -37,15 +38,16 @@
 		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
+		{param localizedValue: $localizedValue /}
 		{param name: $name /}
 		{param readOnly: $readOnly /}
+		{param ref: 'fieldBase' /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
 		{param showLabel: $showLabel /}
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
 		{param valid: $valid /}
-		{param ref: 'fieldBase' /}
 		{param visible: $visible /}
 	{/call}
 {/template}

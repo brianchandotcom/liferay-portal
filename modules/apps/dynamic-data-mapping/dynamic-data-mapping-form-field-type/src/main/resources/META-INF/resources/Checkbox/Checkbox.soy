@@ -7,6 +7,7 @@
 	{@param? handleInputChangeEvent: any}
 	{@param? id: string}
 	{@param? label: string}
+	{@param? localizedValue: ?}
 	{@param? readOnly: bool}
 	{@param? repeatable: bool}
 	{@param? required: bool}
@@ -14,9 +15,9 @@
 	{@param? showLabel: bool}
 	{@param? spritemap: string}
 	{@param? tip: string}
+	{@param? valid: bool}
 	{@param? value: ?}
 	{@param? visible: bool}
-	{@param? valid: bool}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
@@ -36,6 +37,7 @@
 		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
+		{param localizedValue: $localizedValue /}
 		{param name: $name /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}

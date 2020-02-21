@@ -329,6 +329,15 @@ Select.STATE = {
 	label: Config.string(),
 
 	/**
+	 * @default {}
+	 * @instance
+	 * @memberof Select
+	 * @type {?(object|undefined)}
+	 */
+
+	localizedValue: Config.object().value({}),
+
+	/**
 	 * @default undefined
 	 * @memberof Select
 	 * @type {?(string|undefined)}

@@ -201,6 +201,15 @@ Numeric.STATE = {
 	label: Config.string(),
 
 	/**
+	 * @default {}
+	 * @instance
+	 * @memberof Numeric
+	 * @type {?(object|undefined)}
+	 */
+
+	localizedValue: Config.object().value({}),
+
+	/**
 	 * @default undefined
 	 * @instance
 	 * @memberof Numeric

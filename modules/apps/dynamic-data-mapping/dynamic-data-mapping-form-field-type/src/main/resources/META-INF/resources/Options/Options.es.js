@@ -525,6 +525,15 @@ Options.STATE = {
 	label: Config.string(),
 
 	/**
+	 * @default {}
+	 * @instance
+	 * @memberof Options
+	 * @type {?(object|undefined)}
+	 */
+
+	localizedValue: Config.object().value({}),
+
+	/**
 	 * @default enter-an-option
 	 * @instance
 	 * @memberof Options

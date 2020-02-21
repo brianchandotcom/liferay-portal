@@ -795,12 +795,27 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		for (var siteName : list "Test Site Name,Site Name,Global") {
+		for (var siteName : list "Test Site Name,Site Name") {
 			JSONWebcontent.addWebContent(
 				content = "${siteName} WC Content",
 				groupName = "${siteName}",
 				title = "${siteName} WC Title");
 		}
+
+		SitePages.openPagesAdmin(siteURLKey = "global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Global WC Content",
+			webContentTitle = "Global WC Title");
+
+		PortletEntry.publish();
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page",

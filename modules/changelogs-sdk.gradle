@@ -181,7 +181,7 @@ buildChangelogs {
 					matcher = changelogDescriptionsFile.text =~ /(?s)${escapedDotVersion}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/
 
 					if (matcher.find()) {
-						descriptions = "\n" + _formatLongLine(matcher.group(1).trim())
+						descriptions = "\n" + matcher.group(1).trim()
 					}
 				}
 

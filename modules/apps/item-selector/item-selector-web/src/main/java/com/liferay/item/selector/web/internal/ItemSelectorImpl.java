@@ -176,8 +176,8 @@ public class ItemSelectorImpl implements ItemSelector {
 			for (ItemSelectorView<ItemSelectorCriterion> itemSelectorView :
 					itemSelectorViews) {
 
-				if (!itemSelectorView.isVisible(itemSelectorCriterion) ||
-					!itemSelectorView.isVisible(themeDisplay)) {
+				if (!itemSelectorView.isVisible(
+						itemSelectorCriterion, themeDisplay)) {
 
 					continue;
 				}

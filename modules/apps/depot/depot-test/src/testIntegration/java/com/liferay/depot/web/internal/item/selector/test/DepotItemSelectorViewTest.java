@@ -49,8 +49,7 @@ public class DepotItemSelectorViewTest {
 	@Test
 	public void testIsVisible() {
 		Assert.assertTrue(
-			_depotItemSelectorView.isVisible((GroupItemSelectorCriterion)null));
-		Assert.assertTrue(_depotItemSelectorView.isVisible((ThemeDisplay)null));
+			_depotItemSelectorView.isVisible(null, null));
 	}
 
 	@Test
@@ -61,7 +60,7 @@ public class DepotItemSelectorViewTest {
 		groupItemSelectorCriterion.setPortletId(RandomTestUtil.randomString());
 
 		Assert.assertFalse(
-			_depotItemSelectorView.isVisible(groupItemSelectorCriterion));
+			_depotItemSelectorView.isVisible(groupItemSelectorCriterion, null));
 	}
 
 	@Test
@@ -73,7 +72,7 @@ public class DepotItemSelectorViewTest {
 			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
 
 		Assert.assertTrue(
-			_depotItemSelectorView.isVisible(groupItemSelectorCriterion));
+			_depotItemSelectorView.isVisible(groupItemSelectorCriterion, null));
 	}
 
 	@Test
@@ -81,10 +80,7 @@ public class DepotItemSelectorViewTest {
 		DepotTestUtil.withDepotDisabled(
 			() -> {
 				Assert.assertFalse(
-					_depotItemSelectorView.isVisible(
-						(GroupItemSelectorCriterion)null));
-				Assert.assertFalse(
-					_depotItemSelectorView.isVisible((ThemeDisplay)null));
+					_depotItemSelectorView.isVisible(null, null));
 			});
 	}
 

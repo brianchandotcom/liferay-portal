@@ -23,11 +23,15 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.comparator.RoleDescriptionComparator;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.util.Collections;
 import java.util.Objects;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,7 +44,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/account-role.properties",
 	scope = ServiceScope.PROTOTYPE, service = AccountRoleResource.class
 )
-public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
+public class AccountRoleResourceImpl
+	extends BaseAccountRoleResourceImpl implements EntityModelResource {
 
 	@Override
 	public Page<AccountRole> getAccountRolesPage(
@@ -57,6 +62,13 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 			transform(
 				baseModelSearchResult.getBaseModels(), this::_toAccountRole),
 			pagination, baseModelSearchResult.getLength());
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
 	}
 
 	@Override
@@ -117,5 +129,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	private final EntityModel _entityModel = Collections::emptyMap;
 
 }

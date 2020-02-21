@@ -423,6 +423,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		baseSearchRequest.setStatsRequests(searchRequest.getStatsRequests());
 
 		setAggregations(baseSearchRequest, searchRequest);
+		setConnectionId(baseSearchRequest, searchRequest);
 		setIndexNames(baseSearchRequest, searchRequest, searchContext);
 		setLegacyQuery(baseSearchRequest, query);
 		setLegacyPostFilter(baseSearchRequest, query);
@@ -438,6 +439,12 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		for (Aggregation aggregation : map.values()) {
 			baseSearchRequest.addAggregation(aggregation);
 		}
+	}
+
+	protected void setConnectionId(
+		BaseSearchRequest baseSearchRequest, SearchRequest searchRequest) {
+
+		baseSearchRequest.setConnectionId(searchRequest.getConnectionId());
 	}
 
 	@Reference(unbind = "-")

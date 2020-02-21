@@ -13,27 +13,26 @@
  */
 
 import {Treeview} from 'frontend-js-components-web';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import {useActiveItemId} from '../../../app/components/Controls';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../../../app/config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {PAGE_TYPES} from '../../../app/config/constants/pageTypes';
-import {ConfigContext} from '../../../app/config/index';
+import {config} from '../../../app/config/index';
 import {useSelector} from '../../../app/store/index';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import StructureTreeNode from './StructureTreeNode';
 
 export default function PageStructureSidebar() {
 	const activeItemId = useActiveItemId();
-	const {pageType} = useContext(ConfigContext);
 
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const layoutData = useSelector(state => state.layoutData);
 	const masterLayoutData = useSelector(state => state.masterLayoutData);
 
-	const isMasterPage = pageType === PAGE_TYPES.master;
+	const isMasterPage = config.pageType === PAGE_TYPES.master;
 
 	const getName = (item, fragmentEntryLinks) => {
 		let name;

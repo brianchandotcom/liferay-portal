@@ -286,4 +286,9 @@ public interface AccountEntryUserRelLocalService
 	public AccountEntryUserRel updateAccountEntryUserRel(
 		AccountEntryUserRel accountEntryUserRel);
 
+	public void updateAccountEntryUserRels(
+			long[] addAccountEntryIds, long[] deleteAccountEntryIds,
+			long accountUserId)
+		throws PortalException;
+
 }

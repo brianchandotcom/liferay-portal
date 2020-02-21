@@ -655,45 +655,7 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		WebContent.viewCategorizationCategoryCP(
-			categoryNameList = "Category Name 1",
-			webContentTitle = "Web Content Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		WebContent.viewCategorizationCategoryNotVisibleCP(
-			categoryName = "Category Name 2",
-			webContentTitle = "Web Content Title");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Vocabulary.editCP(
-			allowMultipleCategories = "true",
-			vocabularyName = "Vocabulary Name");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithMultipleCategories(
-			categoryNameList = "Category Name 1,Category Name 2",
-			vocabularyName = "Vocabulary Name",
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title Multiple Categories");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Multiple Categories");
-
-		WebContent.viewCategorizationCategoryCP(
-			categoryNameList = "Category Name 1,Category Name 2",
-			webContentTitle = "Web Content Title Multiple Categories");
+		Alert.viewErrorMessage(errorMessage = "You cannot select more than one category for Vocabulary Name.");
 	}
 
 	@priority = "3"

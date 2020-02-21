@@ -223,6 +223,15 @@ DocumentLibrary.STATE = {
 	label: Config.string(),
 
 	/**
+	 * @default {}
+	 * @instance
+	 * @memberof DocumentLibrary
+	 * @type {?(object|undefined)}
+	 */
+
+	localizedValue: Config.object().value({}),
+
+	/**
 	 * @default undefined
 	 * @memberof DocumentLibrary
 	 * @type {?(string|undefined)}

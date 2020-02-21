@@ -62,6 +62,15 @@ Paragraph.STATE = {
 	label: Config.string().value(''),
 
 	/**
+	 * @default {}
+	 * @instance
+	 * @memberof Paragraph
+	 * @type {?(object|undefined)}
+	 */
+
+	localizedValue: Config.object().value({}),
+
+	/**
 	 * @default undefined
 	 * @instance
 	 * @memberof Paragraph

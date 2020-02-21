@@ -121,6 +121,15 @@ Radio.STATE = {
 	label: Config.string(),
 
 	/**
+	 * @default {}
+	 * @instance
+	 * @memberof Radio
+	 * @type {?(object|undefined)}
+	 */
+
+	localizedValue: Config.object().value({}),
+
+	/**
 	 * @default undefined
 	 * @instance
 	 * @memberof Radio

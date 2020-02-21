@@ -576,6 +576,15 @@ DatePicker.STATE = {
 	label: Config.string(),
 
 	/**
+	 * @default {}
+	 * @instance
+	 * @memberof DatePicker
+	 * @type {?(object|undefined)}
+	 */
+
+	localizedValue: Config.object().value({}),
+
+	/**
 	 * The names of the months.
 	 * @default January...
 	 * @instance

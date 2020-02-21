@@ -97,6 +97,15 @@ Grid.STATE = {
 	label: Config.string(),
 
 	/**
+	 * @default {}
+	 * @instance
+	 * @memberof Grid
+	 * @type {?(object|undefined)}
+	 */
+
+	localizedValue: Config.object().value({}),
+
+	/**
 	 * @default false
 	 * @memberof Grid
 	 * @type {?bool}

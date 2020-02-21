@@ -274,6 +274,15 @@ Text.STATE = {
 	label: Config.string(),
 
 	/**
+	 * @default []
+	 * @instance
+	 * @memberof Text
+	 * @type {?(array|undefined)}
+	 */
+
+	localizedValue: Config.object().value({}),
+
+	/**
 	 * @default undefined
 	 * @instance
 	 * @memberof Text

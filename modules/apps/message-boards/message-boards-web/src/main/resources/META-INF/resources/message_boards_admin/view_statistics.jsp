@@ -35,32 +35,46 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 <div class="container-fluid-1280">
 	<div class="statistics-panel">
 		<h3><liferay-ui:message key="overview" /></h3>
+
 		<div class="row">
 			<div class="col-md-4">
 				<div class="overview-container statistics-panel">
 					<div class="sticker sticker-categories sticker-user-icon">
-						<clay:icon symbol="categories" />
+						<clay:icon
+							symbol="categories"
+						/>
 					</div>
 
-   					<small class="text-uppercase"><liferay-ui:message key="categories" /></small>
+					<small class="text-uppercase"><liferay-ui:message key="categories" /></small>
+
 					<p class="statistics-number"><%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %></p>
 				</div>
 			</div>
+
 			<div class="col-md-4">
 				<div class="overview-container statistics-panel">
 					<div class="sticker sticker-posts sticker-user-icon">
-						<clay:icon symbol="message-boards" />
+						<clay:icon
+							symbol="message-boards"
+						/>
 					</div>
+
 					<small class="text-uppercase"><liferay-ui:message key="posts" /></small>
+
 					<p class="statistics-number"><%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %></p>
 				</div>
 			</div>
+
 			<div class="col-md-4">
 				<div class="overview-container statistics-panel">
 					<div class="sticker sticker-participants sticker-user-icon">
-						<clay:icon symbol="users" />
+						<clay:icon
+							symbol="users"
+						/>
 					</div>
+
 					<small class="text-uppercase"><liferay-ui:message key="participants" /></small>
+
 					<p class="statistics-number"><%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %></p>
 				</div>
 			</div>
@@ -71,9 +85,9 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 		<h3><liferay-ui:message key="top-posters" /></h3>
 
 		<liferay-ui:search-container
-				emptyResultsMessage="there-are-no-top-posters"
-				iteratorURL="<%= portletURL %>"
-				total="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId) %>"
+			emptyResultsMessage="there-are-no-top-posters"
+			iteratorURL="<%= portletURL %>"
+			total="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId) %>"
 		>
 			<liferay-ui:search-container-results
 				results="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupId(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"

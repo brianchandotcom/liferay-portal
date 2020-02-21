@@ -387,6 +387,10 @@ public class ResourceHelper {
 		FilterAggregationResult filterAggregationResult =
 			(FilterAggregationResult)bucket.getChildAggregationResult("onTime");
 
+		if (filterAggregationResult == null) {
+			return 0L;
+		}
+
 		ScriptedMetricAggregationResult scriptedMetricAggregationResult =
 			(ScriptedMetricAggregationResult)
 				filterAggregationResult.getChildAggregationResult("taskCount");
@@ -411,6 +415,10 @@ public class ResourceHelper {
 		FilterAggregationResult filterAggregationResult =
 			(FilterAggregationResult)bucket.getChildAggregationResult(
 				"overdue");
+
+		if (filterAggregationResult == null) {
+			return 0L;
+		}
 
 		ScriptedMetricAggregationResult scriptedMetricAggregationResult =
 			(ScriptedMetricAggregationResult)

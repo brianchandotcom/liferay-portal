@@ -17,9 +17,6 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -67,7 +64,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -360,15 +356,7 @@ public class AssigneeUserResourceImpl
 		).flatMap(
 			Collection::stream
 		).map(
-			bucket -> {
-				AssigneeUser assigneeUser = _toAssigneeUser(bucket);
-
-				_populateAssigneeUserWithSLAMetrics(assigneeUser, bucket);
-				_setDurationTaskAvg(assigneeUser, bucket);
-				_setTaskCount(assigneeUser, bucket);
-
-				return assigneeUser;
-			}
+			this::_toAssigneeUser
 		).collect(
 			Collectors.toList()
 		);
@@ -406,11 +394,10 @@ public class AssigneeUserResourceImpl
 			Collection::stream
 		).map(
 			this::_toAssigneeUser
-		).filter(
-			Objects::nonNull
 		).sorted(
 			Comparator.comparing(
-				AssigneeUser::getName, String::compareToIgnoreCase)
+				AssigneeUser::getName,
+				Comparator.nullsLast(String::compareToIgnoreCase))
 		).collect(
 			Collectors.toList()
 		);
@@ -445,6 +432,39 @@ public class AssigneeUserResourceImpl
 		).orElseGet(
 			() -> 0L
 		);
+	}
+
+	private long _getDurationTaskAvg(Bucket bucket) {
+		FilterAggregationResult filterAggregationResult =
+			(FilterAggregationResult)bucket.getChildAggregationResult(
+				"countFilter");
+
+		if (filterAggregationResult == null) {
+			return 0L;
+		}
+
+		AvgAggregationResult avgAggregationResult =
+			(AvgAggregationResult)
+				filterAggregationResult.getChildAggregationResult(
+					"durationTaskAvg");
+
+		return GetterUtil.getLong(avgAggregationResult.getValue());
+	}
+
+	private long _getTaskCount(Bucket bucket) {
+		FilterAggregationResult filterAggregationResult =
+			(FilterAggregationResult)bucket.getChildAggregationResult(
+				"countFilter");
+
+		if (filterAggregationResult == null) {
+			return 0L;
+		}
+
+		ValueCountAggregationResult valueCountAggregationResult =
+			(ValueCountAggregationResult)
+				filterAggregationResult.getChildAggregationResult("taskCount");
+
+		return GetterUtil.getLong(valueCountAggregationResult.getValue());
 	}
 
 	private Set<Long> _getUserIds(String keywords, Long[] roleIds) {
@@ -522,82 +542,25 @@ public class AssigneeUserResourceImpl
 		return false;
 	}
 
-	private void _populateAssigneeUserWithSLAMetrics(
-		AssigneeUser assigneeUser, Bucket bucket) {
-
-		_setOnTimeTaskCount(assigneeUser, bucket);
-		_setOverdueTaskCount(assigneeUser, bucket);
-	}
-
-	private void _setDurationTaskAvg(AssigneeUser assigneeUser, Bucket bucket) {
-		if (bucket == null) {
-			return;
-		}
-
-		FilterAggregationResult filterAggregationResult =
-			(FilterAggregationResult)bucket.getChildAggregationResult(
-				"countFilter");
-
-		AvgAggregationResult avgAggregationResult =
-			(AvgAggregationResult)
-				filterAggregationResult.getChildAggregationResult(
-					"durationTaskAvg");
-
-		assigneeUser.setDurationTaskAvg(
-			GetterUtil.getLong(avgAggregationResult.getValue()));
-	}
-
-	private void _setOnTimeTaskCount(AssigneeUser assigneeUser, Bucket bucket) {
-		if (bucket == null) {
-			return;
-		}
-
-		assigneeUser.setOnTimeTaskCount(
-			_resourceHelper.getOnTimeTaskCount(bucket));
-	}
-
-	private void _setOverdueTaskCount(
-		AssigneeUser assigneeUser, Bucket bucket) {
-
-		if (bucket == null) {
-			return;
-		}
-
-		assigneeUser.setOverdueTaskCount(
-			_resourceHelper.getOverdueTaskCount(bucket));
-	}
-
-	private void _setTaskCount(AssigneeUser assigneeUser, Bucket bucket) {
-		if (bucket == null) {
-			return;
-		}
-
-		FilterAggregationResult filterAggregationResult =
-			(FilterAggregationResult)bucket.getChildAggregationResult(
-				"countFilter");
-
-		ValueCountAggregationResult valueCountAggregationResult =
-			(ValueCountAggregationResult)
-				filterAggregationResult.getChildAggregationResult("taskCount");
-
-		assigneeUser.setTaskCount(
-			GetterUtil.getLong(valueCountAggregationResult.getValue()));
-	}
-
 	private AssigneeUser _toAssigneeUser(Bucket bucket) {
-		try {
-			User user = _userLocalService.getUserById(
-				GetterUtil.getLong(bucket.getKey()));
+		long userId = GetterUtil.getLong(bucket.getKey());
 
-			return new AssigneeUser() {
-				{
-					durationTaskAvg = 0L;
-					id = user.getUserId();
+		User user = _userLocalService.fetchUser(userId);
+
+		return new AssigneeUser() {
+			{
+				durationTaskAvg = _getDurationTaskAvg(bucket);
+				id = userId;
+
+				if (user != null) {
 					name = user.getFullName();
-					onTimeTaskCount = 0L;
-					overdueTaskCount = 0L;
-					taskCount = 0L;
+				}
 
+				onTimeTaskCount = _resourceHelper.getOnTimeTaskCount(bucket);
+				overdueTaskCount = _resourceHelper.getOverdueTaskCount(bucket);
+				taskCount = _getTaskCount(bucket);
+
+				if (user != null) {
 					setImage(
 						() -> {
 							if (user.getPortraitId() == 0) {
@@ -613,15 +576,8 @@ public class AssigneeUserResourceImpl
 							return user.getPortraitURL(themeDisplay);
 						});
 				}
-			};
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
 			}
-
-			return null;
-		}
+		};
 	}
 
 	private FieldSort _toFieldSort(Sort[] sorts) {
@@ -656,9 +612,6 @@ public class AssigneeUserResourceImpl
 
 		return fieldSort;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssigneeUserResourceImpl.class);
 
 	private static final EntityModel _entityModel =
 		new AssigneeUserEntityModel();

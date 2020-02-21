@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
@@ -238,16 +239,19 @@ public class AccountRoleLocalServiceImpl
 
 		roleDynamicQuery.add(RestrictionsFactoryUtil.in("roleId", roleIds));
 
-		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+		if (Validator.isNotNull(keywords)) {
+			Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
-		disjunction.add(
-			RestrictionsFactoryUtil.ilike(
-				"name", StringUtil.quote(keywords, StringPool.PERCENT)));
-		disjunction.add(
-			RestrictionsFactoryUtil.ilike(
-				"description", StringUtil.quote(keywords, StringPool.PERCENT)));
+			disjunction.add(
+				RestrictionsFactoryUtil.ilike(
+					"name", StringUtil.quote(keywords, StringPool.PERCENT)));
+			disjunction.add(
+				RestrictionsFactoryUtil.ilike(
+					"description",
+					StringUtil.quote(keywords, StringPool.PERCENT)));
 
-		roleDynamicQuery.add(disjunction);
+			roleDynamicQuery.add(disjunction);
+		}
 
 		if (obc != null) {
 			Order order;

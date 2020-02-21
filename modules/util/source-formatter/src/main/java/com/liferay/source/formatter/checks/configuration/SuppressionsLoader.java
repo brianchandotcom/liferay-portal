@@ -103,9 +103,11 @@ public class SuppressionsLoader {
 				absolutePath, suppressElements, _CHECKSTYLE_ATTRIBUTE_NAME);
 		}
 
+		String suppressionsFileLocation = _getFileLocation(absolutePath);
+
 		for (Element suppressElement : suppressElements) {
 			sourceFormatterSuppressions.addSuppression(
-				CheckType.CHECKSTYLE,
+				CheckType.CHECKSTYLE, suppressionsFileLocation,
 				suppressElement.attributeValue(_CHECK_ATTRIBUTE_NAME),
 				suppressElement.attributeValue(_FILE_REGEX_ATTRIBUTE_NAME));
 		}
@@ -134,17 +136,10 @@ public class SuppressionsLoader {
 		String suppressionsFileLocation = _getFileLocation(absolutePath);
 
 		for (Element suppressElement : suppressElements) {
-			String fileNameRegex = suppressElement.attributeValue(
-				_FILE_REGEX_ATTRIBUTE_NAME);
-
-			if (fileNameRegex == null) {
-				fileNameRegex = ".*";
-			}
-
 			sourceFormatterSuppressions.addSuppression(
-				CheckType.SOURCE_CHECK,
+				CheckType.SOURCE_CHECK, suppressionsFileLocation,
 				suppressElement.attributeValue(_CHECK_ATTRIBUTE_NAME),
-				suppressionsFileLocation + fileNameRegex);
+				suppressElement.attributeValue(_FILE_REGEX_ATTRIBUTE_NAME));
 		}
 
 		return sourceFormatterSuppressions;

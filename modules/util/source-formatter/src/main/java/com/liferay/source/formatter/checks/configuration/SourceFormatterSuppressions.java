@@ -30,7 +30,14 @@ import java.util.Map;
 public class SourceFormatterSuppressions {
 
 	public void addSuppression(
-		CheckType checkType, String checkName, String fileNameRegex) {
+		CheckType checkType, String suppressionsFileLocation, String checkName,
+		String fileNameRegex) {
+
+		if (fileNameRegex == null) {
+			fileNameRegex = ".*";
+		}
+
+		fileNameRegex = suppressionsFileLocation + fileNameRegex;
 
 		if (checkType.equals(CheckType.SOURCE_CHECK)) {
 			_addSourceCheckSuppression(checkName, fileNameRegex);

@@ -22,7 +22,6 @@ import com.liferay.organizations.item.selector.web.internal.constants.Organizati
 import com.liferay.organizations.item.selector.web.internal.display.context.OrganizationItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
@@ -71,14 +70,6 @@ public class OrganizationItemSelectorView
 	public String getTitle(Locale locale) {
 		return _language.get(
 			_portal.getResourceBundle(locale), "organizations");
-	}
-
-	@Override
-	public boolean isVisible(
-		OrganizationItemSelectorCriterion organizationItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

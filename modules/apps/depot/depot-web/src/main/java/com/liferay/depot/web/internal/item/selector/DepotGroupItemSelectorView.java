@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
@@ -81,14 +80,6 @@ public class DepotGroupItemSelectorView
 	public String getTitle(Locale locale) {
 		return ResourceBundleUtil.getString(
 			_portal.getResourceBundle(locale), "repositories");
-	}
-
-	@Override
-	public boolean isVisible(
-		DepotGroupItemSelectorCriterion depotGroupItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

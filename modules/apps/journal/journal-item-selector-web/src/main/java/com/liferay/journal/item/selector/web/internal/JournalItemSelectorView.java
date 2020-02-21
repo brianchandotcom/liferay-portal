@@ -25,7 +25,6 @@ import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import com.liferay.journal.item.selector.web.internal.constants.JournalItemSelectorWebKeys;
 import com.liferay.journal.item.selector.web.internal.display.context.JournalItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
@@ -78,14 +77,6 @@ public class JournalItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return _language.get(locale, "web-content-images");
-	}
-
-	@Override
-	public boolean isVisible(
-		JournalItemSelectorCriterion journalItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

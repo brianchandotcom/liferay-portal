@@ -23,7 +23,6 @@ import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
@@ -78,13 +77,6 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, "documents-and-media");
-	}
-
-	@Override
-	public boolean isVisible(
-		T itemSelectorCriterion, ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

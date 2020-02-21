@@ -16,7 +16,6 @@ package com.liferay.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,14 +48,6 @@ public class FlickrItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return FlickrItemSelectorView.class.getName();
-	}
-
-	@Override
-	public boolean isVisible(
-		FlickrItemSelectorCriterion flickrItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

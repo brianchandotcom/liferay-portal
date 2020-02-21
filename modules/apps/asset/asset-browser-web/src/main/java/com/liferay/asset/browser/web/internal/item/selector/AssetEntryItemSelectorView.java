@@ -25,7 +25,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 
@@ -71,14 +70,6 @@ public class AssetEntryItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return _language.get(locale, "select-asset");
-	}
-
-	@Override
-	public boolean isVisible(
-		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

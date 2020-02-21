@@ -22,7 +22,6 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.upload.web.internal.display.context.ItemSelectorUploadViewDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
@@ -71,14 +70,6 @@ public class ItemSelectorUploadView
 	@Override
 	public String getTitle(Locale locale) {
 		return LanguageUtil.get(locale, "upload-image");
-	}
-
-	@Override
-	public boolean isVisible(
-		UploadItemSelectorCriterion uploadItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

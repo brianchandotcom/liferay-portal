@@ -93,14 +93,6 @@ public class BlogsEntryItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(
-		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
-	}
-
-	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,

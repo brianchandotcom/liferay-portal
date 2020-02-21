@@ -17,7 +17,6 @@ package com.liferay.site.navigation.item.selector.web.internal;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemItemSelectorCriterion;
 import com.liferay.site.navigation.item.selector.web.internal.constants.SiteNavigationItemSelectorWebKeys;
@@ -76,15 +75,6 @@ public class SiteNavigationMenuItemItemSelectorView
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, "navigation-menu-items");
-	}
-
-	@Override
-	public boolean isVisible(
-		SiteNavigationMenuItemItemSelectorCriterion
-			siteNavigationMenuItemItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

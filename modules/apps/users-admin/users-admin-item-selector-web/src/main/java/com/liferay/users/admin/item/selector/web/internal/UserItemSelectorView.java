@@ -19,7 +19,6 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 import com.liferay.users.admin.item.selector.web.internal.constants.UserItemSelectorViewConstants;
@@ -68,14 +67,6 @@ public class UserItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return _language.get(_portal.getResourceBundle(locale), "users");
-	}
-
-	@Override
-	public boolean isVisible(
-		UserItemSelectorCriterion userItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

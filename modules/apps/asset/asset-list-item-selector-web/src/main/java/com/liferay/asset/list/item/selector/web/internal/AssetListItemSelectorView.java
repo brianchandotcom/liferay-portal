@@ -85,14 +85,6 @@ public class AssetListItemSelectorView
 	}
 
 	@Override
-	public boolean isVisible(
-		InfoListItemSelectorCriterion infoListItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
-	}
-
-	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			InfoListItemSelectorCriterion itemSelectorCriterion,

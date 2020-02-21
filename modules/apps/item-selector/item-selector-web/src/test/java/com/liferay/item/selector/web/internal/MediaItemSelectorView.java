@@ -16,7 +16,6 @@ package com.liferay.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,14 +48,6 @@ public class MediaItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return MediaItemSelectorView.class.getName();
-	}
-
-	@Override
-	public boolean isVisible(
-		MediaItemSelectorCriterion mediaItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

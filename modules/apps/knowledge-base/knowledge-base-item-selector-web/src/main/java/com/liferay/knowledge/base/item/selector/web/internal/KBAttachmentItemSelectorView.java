@@ -22,7 +22,6 @@ import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion;
 import com.liferay.knowledge.base.item.selector.web.internal.constants.KBItemSelectorWebKeys;
 import com.liferay.knowledge.base.item.selector.web.internal.display.context.KBAttachmentItemSelectorViewDisplayContext;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -75,14 +74,6 @@ public class KBAttachmentItemSelectorView
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, "article-attachments");
-	}
-
-	@Override
-	public boolean isVisible(
-		KBAttachmentItemSelectorCriterion kbAttachmentItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

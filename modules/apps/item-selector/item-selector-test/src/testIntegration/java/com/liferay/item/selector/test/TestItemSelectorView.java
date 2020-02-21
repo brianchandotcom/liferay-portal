@@ -17,7 +17,6 @@ package com.liferay.item.selector.test;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -50,14 +49,6 @@ public class TestItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return "Test View";
-	}
-
-	@Override
-	public boolean isVisible(
-		TestItemSelectorCriterion testItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	public void renderHTML(

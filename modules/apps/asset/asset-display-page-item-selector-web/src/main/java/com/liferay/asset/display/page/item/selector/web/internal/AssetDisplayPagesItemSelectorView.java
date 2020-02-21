@@ -22,7 +22,6 @@ import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
@@ -70,14 +69,6 @@ public class AssetDisplayPagesItemSelectorView
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, "display-page-templates");
-	}
-
-	@Override
-	public boolean isVisible(
-		AssetDisplayPageSelectorCriterion assetDisplayPageSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

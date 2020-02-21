@@ -17,7 +17,6 @@ package com.liferay.wiki.web.internal.item.selector.view;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.wiki.item.selector.WikiPageTitleItemSelectorReturnType;
@@ -78,14 +77,6 @@ public class WikiPageItemSelectorView
 			locale, WikiPageItemSelectorView.class);
 
 		return ResourceBundleUtil.getString(resourceBundle, "wiki-pages");
-	}
-
-	@Override
-	public boolean isVisible(
-		WikiPageItemSelectorCriterion wikiPageItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

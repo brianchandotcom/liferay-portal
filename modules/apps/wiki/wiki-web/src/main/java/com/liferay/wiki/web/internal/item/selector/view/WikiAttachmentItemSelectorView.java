@@ -19,7 +19,6 @@ import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.wiki.item.selector.constants.WikiItemSelectorViewConstants;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.web.internal.item.selector.constants.WikiItemSelectorWebKeys;
@@ -73,14 +72,6 @@ public class WikiAttachmentItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return _language.get(locale, "page-attachments");
-	}
-
-	@Override
-	public boolean isVisible(
-		WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return true;
 	}
 
 	@Override

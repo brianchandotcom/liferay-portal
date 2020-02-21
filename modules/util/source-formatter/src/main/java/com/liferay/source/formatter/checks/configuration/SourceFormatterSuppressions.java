@@ -37,7 +37,11 @@ public class SourceFormatterSuppressions {
 			fileNameRegex = ".*";
 		}
 
-		fileNameRegex = suppressionsFileLocation + fileNameRegex;
+		if (!suppressionsFileLocation.endsWith(
+				"/test/resources/com/liferay/source/formatter/")) {
+
+			fileNameRegex = suppressionsFileLocation + fileNameRegex;
+		}
 
 		if (checkType.equals(CheckType.SOURCE_CHECK)) {
 			_addSourceCheckSuppression(checkName, fileNameRegex);

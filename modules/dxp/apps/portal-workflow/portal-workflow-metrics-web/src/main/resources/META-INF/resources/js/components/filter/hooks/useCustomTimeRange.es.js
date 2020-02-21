@@ -14,6 +14,7 @@ import {useState} from 'react';
 import {getCapitalizedFilterKey} from '../../../shared/components/filter/util/filterUtil.es';
 import {useFilter} from '../../../shared/hooks/useFilter.es';
 import {useRouterParams} from '../../../shared/hooks/useRouterParams.es';
+import {getLocaleDateFormat} from '../../../shared/util/date.es';
 import moment from '../../../shared/util/moment.es';
 import {
 	convertQueryDate,
@@ -110,15 +111,16 @@ const useCustomTimeRange = (prefixKey = '', withoutRouteParams) => {
 	});
 
 	const dateEndKey = getCapitalizedFilterKey(prefixKey, 'dateEnd');
+	const dateFormat = getLocaleDateFormat();
 	const dateStartKey = getCapitalizedFilterKey(prefixKey, 'dateStart');
 
 	const values = !withoutRouteParams ? filters : filterValues;
 
 	const [dateEnd, setDateEnd] = useState(
-		convertQueryDate(values[dateEndKey])
+		convertQueryDate(values[dateEndKey], dateFormat)
 	);
 	const [dateStart, setDateStart] = useState(
-		convertQueryDate(values[dateStartKey])
+		convertQueryDate(values[dateStartKey], dateFormat)
 	);
 
 	const applyCustomFilter = handleApply => {
@@ -126,16 +128,16 @@ const useCustomTimeRange = (prefixKey = '', withoutRouteParams) => {
 
 		if (!dateEndError && !dateStartError) {
 			handleApply({
-				dateEnd: formatDateTime(dateEnd, true),
-				dateStart: formatDateTime(dateStart),
+				dateEnd: formatDateTime(dateEnd, dateFormat, true),
+				dateStart: formatDateTime(dateStart, dateFormat),
 				key: 'custom',
 			});
 		}
 	};
 
 	const validate = () => {
-		const dateEndMoment = parseDateMoment(dateEnd);
-		const dateStartMoment = parseDateMoment(dateStart);
+		const dateEndMoment = parseDateMoment(dateEnd, dateFormat);
+		const dateStartMoment = parseDateMoment(dateStart, dateFormat);
 
 		const errors = {
 			...validateDate(dateEndMoment, dateStartMoment),
@@ -151,6 +153,7 @@ const useCustomTimeRange = (prefixKey = '', withoutRouteParams) => {
 	return {
 		applyCustomFilter,
 		dateEnd,
+		dateFormat,
 		dateStart,
 		errors,
 		setDateEnd,

@@ -18,6 +18,7 @@ import {
 	handleClickOutside,
 	removeClickOutsideListener,
 } from '../../shared/components/filter/util/filterEvents.es';
+import {getMaskByDateFormat} from '../../shared/util/date.es';
 import {sub} from '../../shared/util/lang.es';
 import {useCustomTimeRange} from './hooks/useCustomTimeRange.es';
 
@@ -31,6 +32,7 @@ const CustomTimeRangeForm = ({
 	const {
 		applyCustomFilter,
 		dateEnd,
+		dateFormat,
 		dateStart,
 		errors = {},
 		setDateEnd,
@@ -39,7 +41,7 @@ const CustomTimeRangeForm = ({
 	} = useCustomTimeRange(prefixKey, withoutRouteParams);
 	const wrapperRef = useRef();
 
-	const dateFormat = 'MM/DD/YYYY';
+	const dateMask = getMaskByDateFormat(dateFormat);
 
 	const activeCustomFilter = () => {
 		items.forEach(item => {
@@ -68,8 +70,6 @@ const CustomTimeRangeForm = ({
 			setFormVisible(false);
 		}
 	};
-
-	const dateMask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
 
 	useEffect(() => {
 		const onClickOutside = handleClickOutside(() => {

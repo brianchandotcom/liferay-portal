@@ -18,6 +18,8 @@ import Icon from '../../../../shared/components/Icon.es';
 import {
 	defaultDateFormat,
 	formatDate,
+	getLocaleDateFormat,
+	getMaskByDateFormat,
 	isValidDate,
 } from '../../../../shared/util/date.es';
 import {toUppercase} from '../../../../shared/util/util.es';
@@ -28,9 +30,10 @@ const UpdateDueDateStep = ({dueDate = new Date()}) => {
 	const {isAmPm} = useContext(AppContext);
 	const {setUpdateDueDate, updateDueDate} = useContext(ModalContext);
 
-	const dateFormat = 'MM/DD/YYYY';
-	const dateMask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
-	const timeFormat = useMemo(() => (isAmPm ? 'h:mm a' : 'H:mm'), [isAmPm]);
+	const dateFormat = getLocaleDateFormat();
+	const timeFormat = getLocaleDateFormat('LT');
+
+	const dateMask = getMaskByDateFormat(dateFormat);
 
 	const [invalidDate, setInvalidDate] = useState(false);
 	const [comment, setComment] = useState('');

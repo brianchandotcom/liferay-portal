@@ -179,6 +179,19 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 		return false;
 	}
 
+	private boolean _isPageTemplateThumbnailFile(String fileName) {
+		String[] pathParts = StringUtil.split(fileName, CharPool.SLASH);
+
+		if ((pathParts.length == 4) &&
+			Objects.equals(pathParts[0], "page-templates") &&
+			Objects.equals(pathParts[3], "thumbnail.png")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));

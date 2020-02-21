@@ -67,15 +67,9 @@ public class BatchEngineTaskMethodRegistryImpl
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext)
-		throws InvalidSyntaxException {
-
-		Filter filter = bundleContext.createFilter(
-			"(|(batch.engine.task.item.delegate=true)(objectClass=" +
-				BatchEngineTaskItemDelegate.class.getName() + "))");
-
+	protected void activate(BundleContext bundleContext) {
 		_serviceTracker = new ServiceTracker<>(
-			bundleContext, filter,
+			bundleContext, BatchEngineTaskItemDelegate.class.getName(),
 			new BatchEngineTaskMethodServiceTrackerCustomizer(bundleContext));
 
 		_serviceTracker.open();

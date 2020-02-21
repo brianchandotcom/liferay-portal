@@ -18,6 +18,8 @@ import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.VulcanBatchEngineTaskItemDelegate;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -33,9 +35,14 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class VulcanBatchEngineTaskItemDelegateAdaptorFactory {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		Filter filter = bundleContext.createFilter(
+			"(batch.engine.task.item.delegate=true)");
+
 		_serviceTracker = new ServiceTracker<>(
-			bundleContext, VulcanBatchEngineTaskItemDelegate.class,
+			bundleContext, filter,
 			new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
 				bundleContext));
 

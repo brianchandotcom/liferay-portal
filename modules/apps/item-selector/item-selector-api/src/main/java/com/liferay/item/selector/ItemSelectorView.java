@@ -100,7 +100,9 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public boolean isVisible(ThemeDisplay themeDisplay);
+	public default boolean isVisible(ThemeDisplay themeDisplay) {
+		return true;
+	}
 
 	/**
 	 * Renders the HTML code for the item selector view.

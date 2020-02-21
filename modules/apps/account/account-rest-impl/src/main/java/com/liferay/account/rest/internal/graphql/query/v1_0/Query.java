@@ -15,8 +15,10 @@
 package com.liferay.account.rest.internal.graphql.query.v1_0;
 
 import com.liferay.account.rest.dto.v1_0.Account;
+import com.liferay.account.rest.dto.v1_0.AccountRole;
 import com.liferay.account.rest.dto.v1_0.AccountUser;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
+import com.liferay.account.rest.resource.v1_0.AccountRoleResource;
 import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -54,6 +56,14 @@ public class Query {
 
 		_accountResourceComponentServiceObjects =
 			accountResourceComponentServiceObjects;
+	}
+
+	public static void setAccountRoleResourceComponentServiceObjects(
+		ComponentServiceObjects<AccountRoleResource>
+			accountRoleResourceComponentServiceObjects) {
+
+		_accountRoleResourceComponentServiceObjects =
+			accountRoleResourceComponentServiceObjects;
 	}
 
 	public static void setAccountUserResourceComponentServiceObjects(
@@ -104,6 +114,29 @@ public class Query {
 			_accountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			accountResource -> accountResource.getAccount(accountId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountRoles(accountId: ___, keywords: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Gets the account's roles")
+	public AccountRolePage accountRoles(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountRoleResource -> new AccountRolePage(
+				accountRoleResource.getAccountRolesPage(
+					accountId, keywords, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(accountRoleResource, sortsString))));
 	}
 
 	/**
@@ -165,6 +198,56 @@ public class Query {
 
 	}
 
+	@GraphQLTypeExtension(AccountRole.class)
+	public class GetAccountTypeExtension {
+
+		public GetAccountTypeExtension(AccountRole accountRole) {
+			_accountRole = accountRole;
+		}
+
+		@GraphQLField(description = "")
+		public Account account() throws Exception {
+			return _applyComponentServiceObjects(
+				_accountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountResource -> accountResource.getAccount(
+					_accountRole.getAccountId()));
+		}
+
+		private AccountRole _accountRole;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetAccountRolesPageTypeExtension {
+
+		public GetAccountRolesPageTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(description = "Gets the account's roles")
+		public AccountRolePage roles(
+				@GraphQLName("keywords") String keywords,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountRoleResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountRoleResource -> new AccountRolePage(
+					accountRoleResource.getAccountRolesPage(
+						_account.getId(), keywords,
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							accountRoleResource, sortsString))));
+		}
+
+		private Account _account;
+
+	}
+
 	@GraphQLName("AccountPage")
 	public class AccountPage {
 
@@ -182,6 +265,38 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Account> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("AccountRolePage")
+	public class AccountRolePage {
+
+		public AccountRolePage(Page accountRolePage) {
+			actions = accountRolePage.getActions();
+			items = accountRolePage.getItems();
+			lastPage = accountRolePage.getLastPage();
+			page = accountRolePage.getPage();
+			pageSize = accountRolePage.getPageSize();
+			totalCount = accountRolePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<AccountRole> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -260,6 +375,18 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			AccountRoleResource accountRoleResource)
+		throws Exception {
+
+		accountRoleResource.setContextAcceptLanguage(_acceptLanguage);
+		accountRoleResource.setContextCompany(_company);
+		accountRoleResource.setContextHttpServletRequest(_httpServletRequest);
+		accountRoleResource.setContextHttpServletResponse(_httpServletResponse);
+		accountRoleResource.setContextUriInfo(_uriInfo);
+		accountRoleResource.setContextUser(_user);
+	}
+
+	private void _populateResourceContext(
 			AccountUserResource accountUserResource)
 		throws Exception {
 
@@ -273,6 +400,8 @@ public class Query {
 
 	private static ComponentServiceObjects<AccountResource>
 		_accountResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AccountRoleResource>
+		_accountRoleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AccountUserResource>
 		_accountUserResourceComponentServiceObjects;
 

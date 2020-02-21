@@ -349,6 +349,15 @@ public class AccountEntryUserRelLocalServiceUtil {
 		return getService().updateAccountEntryUserRel(accountEntryUserRel);
 	}
 
+	public static void updateAccountEntryUserRels(
+			long[] addAccountEntryIds, long[] deleteAccountEntryIds,
+			long accountUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().updateAccountEntryUserRels(
+			addAccountEntryIds, deleteAccountEntryIds, accountUserId);
+	}
+
 	public static AccountEntryUserRelLocalService getService() {
 		return _serviceTracker.getService();
 	}

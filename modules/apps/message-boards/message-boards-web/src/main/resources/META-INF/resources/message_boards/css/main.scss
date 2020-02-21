@@ -215,14 +215,47 @@
 	.statistics-panel {
 		background-color: #FFF;
 		border-radius: 4px;
-		border: 1px solid #E7E7ED;
+		border: 1px solid #e7e7ed;
 		box-sizing: border-box;
 		margin-top: 1.5rem;
 		padding: 1.5rem;
 
+		&.overview-container {
+			padding: 1rem;
+		}
+
+		small {
+			font-weight: 600;
+		}
+
 		.statistics-number {
 			font-size: 2.5rem;
 			margin-bottom: 0;
+		}
+
+		.sticker {
+			margin-right: 0.5rem;
+		}
+
+		.sticker-categories {
+			background-color: $primary-l3;
+			border: 1px solid $primary-l3;
+			box-shadow: none;
+			color: $primary-l1;
+		}
+
+		.sticker-posts {
+			background-color: $success-l2;
+			border: 1px solid $success-l2;
+			box-shadow: none;
+			color: $success-l1;
+		}
+
+		.sticker-participants {
+			background-color: $danger-l2;
+			border: 1px solid $danger-l2;
+			box-shadow: none;
+			color: $danger-l1;
 		}
 	}
 

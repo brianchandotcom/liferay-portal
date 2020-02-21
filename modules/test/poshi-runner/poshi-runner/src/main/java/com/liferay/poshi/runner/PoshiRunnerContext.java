@@ -60,6 +60,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1454,11 +1455,24 @@ public class PoshiRunnerContext {
 
 		ExecutorService executorService = Executors.newFixedThreadPool(16);
 
-		executorService.invokeAll(dependencyPoshiFileCallables);
+		List<Future<URL>> futures = executorService.invokeAll(
+			dependencyPoshiFileCallables);
 
-		executorService.invokeAll(macroPoshiFileCallables);
+		for (Future<URL> future : futures) {
+			future.get();
+		}
 
-		executorService.invokeAll(testPoshiFileCallables);
+		futures = executorService.invokeAll(macroPoshiFileCallables);
+
+		for (Future<URL> future : futures) {
+			future.get();
+		}
+
+		futures = executorService.invokeAll(testPoshiFileCallables);
+
+		for (Future<URL> future : futures) {
+			future.get();
+		}
 
 		executorService.shutdown();
 

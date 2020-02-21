@@ -853,12 +853,6 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<echo>${curl.output.follower.liferay.index}</echo>
 
-		<exec executable="curl" outputproperty="curl.output.follower.result.rankings.index">
-			<arg line="-X PUT &quot;localhost:9202/liferay-search-tuning-rankings/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-search-tuning-rankings&quot;}&apos;" />
-		</exec>
-
-		<echo>${curl.output.follower.result.rankings.index}</echo>
-
 		<exec executable="curl" outputproperty="curl.output.follower.synonyms.index">
 			<arg line="-X PUT &quot;localhost:9202/liferay-search-tuning-synonyms-liferay-${companyId}/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-search-tuning-synonyms-liferay-${companyId}&quot;}&apos;" />
 		</exec>
@@ -874,7 +868,6 @@ xpack.monitoring.collection.enabled: true</echo>
 		<if>
 			<and>
 				<contains string="${curl.output.follower.indices}" substring="liferay-${companyId}" />
-				<contains string="${curl.output.follower.indices}" substring="liferay-search-tuning-rankings" />
 				<contains string="${curl.output.follower.indices}" substring="liferay-search-tuning-synonyms-liferay-${companyId}" />
 			</and>
 			<then>

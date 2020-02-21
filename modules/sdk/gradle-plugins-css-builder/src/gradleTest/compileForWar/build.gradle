@@ -1,0 +1,41 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+apply plugin: "com.liferay.css.builder"
+apply plugin: "war"
+
+task runGradleTest
+
+buildCSS {
+	excludes "**/excluded.scss"
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn war
+
+	doLast {
+		File dir = file("build/tmp/prepareBuildCSSForWar/css/.sass-cache")
+
+		Pattern pattern = ~/@import\s+url\s*\(\s*['"]?(.+\.css\?t=\d+)['"]?\s*\)\s*;/
+
+		for (String fileName in ["main.css", "main_rtl.css"]) {
+			File generatedFile = new File(dir, fileName)
+
+			assert generatedFile.exists()
+
+			Matcher matcher = generatedFile.text =~ pattern
+
+			assert matcher.count == 3
+		}
+
+		File excludedFile = new File(dir, "excluded.css")
+
+		assert !excludedFile.exists()
+	}
+}

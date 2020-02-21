@@ -34,7 +34,7 @@ public class GroupUtil {
 		String groupTypeLabel = "site";
 
 		if (group.getType() == GroupConstants.TYPE_DEPOT) {
-			groupTypeLabel = "repository";
+			groupTypeLabel = "asset-library";
 		}
 
 		return LanguageUtil.get(_getResourceBundle(locale), groupTypeLabel);

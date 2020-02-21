@@ -44,19 +44,16 @@ definition {
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
+
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
 			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
 
 		Check(
 			key_webContentTitle = "WC WebContent Title",
@@ -134,13 +131,10 @@ definition {
 			key_category = "Recycle Bin",
 			locator1 = "ProductMenu#CATEGORY_COLLAPSED");
 
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -227,19 +221,10 @@ definition {
 	@description = "This ensures that the web content can be restored from recycle bin."
 	@priority = "5"
 	test RestoreWebContent {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",

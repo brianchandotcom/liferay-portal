@@ -618,6 +618,7 @@ definition {
 				folderName = "DM Folder Name",
 				groupName = "Site Name");
 		}
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMFolder.moveToRecycleBinCP(

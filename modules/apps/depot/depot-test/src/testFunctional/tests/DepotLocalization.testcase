@@ -85,19 +85,10 @@ definition {
 
 		Depot.viewGeneralLanguageOptions(currentLanguageList = "en_US,ja_JP,es_ES");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 

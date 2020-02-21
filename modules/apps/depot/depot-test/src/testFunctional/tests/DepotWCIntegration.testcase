@@ -40,39 +40,19 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Web Content Display");
 
-		DepotNavigator.openDepotAdmin();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Depot 1",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title 1");
 
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Depot 1",
-			webContentTitle = "WC WebContent Title 1");
-
-		PortletEntry.publish();
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name 2");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name 2",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Depot 2",
-			webContentTitle = "WC WebContent Title 2");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Depot 2",
+			groupName = "Test Depot Name 2",
+			title = "WC WebContent Title 2");
 
 		for (var depotName : list "Test Depot Name,Test Depot Name 2") {
 			DepotNavigator.openDepotAdmin();
@@ -115,19 +95,10 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Page Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC Depot WebContent");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -196,19 +167,10 @@ definition {
 	@description = "This ensures that a depot web content can be selected through the fragment in a content page on a connected site."
 	@priority = "5"
 	test SelectFromFragmentInContentPage {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Depot",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -242,19 +204,10 @@ definition {
 	@description = "This ensures that a depot web content can be selected through the fragment in a display page template on a connected site."
 	@priority = "5"
 	test SelectFromFragmentInDisplayPageTemplate {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Depot",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -302,19 +255,10 @@ definition {
 	@description = "This ensures that a depot web content can be selected through WCD on a connected site."
 	@priority = "5"
 	test SelectFromWCD {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Depot",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -348,19 +292,10 @@ definition {
 	@description = "This ensures that a depot web content can be selected through WCD in a content page on a connected site."
 	@priority = "4"
 	test SelectFromWidgetInContentPage {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Depot",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -391,19 +326,10 @@ definition {
 	@description = "This ensures that a depot web content can be selected through WCD in a display page template on a connected site."
 	@priority = "4"
 	test SelectFromWidgetInDisplayPageTemplate {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Depot",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -441,19 +367,10 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Web Content Display");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Depot",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

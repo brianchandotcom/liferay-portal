@@ -153,7 +153,7 @@ buildChangelogs {
 						gitLogAttributes = getGitLogAttributes(gitLogLine)
 					}
 					else {
-						matcher = gitLogLine =~ /^\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
+						matcher = gitLogLine =~ /^\+\s*.+ group: .*, name: \"(.+)", version: \"(.*)\"/
 
 						if (!matcher.find()) {
 							matcher = gitLogLine =~ /^\+([^ \t]+)=([0-9.]+)/

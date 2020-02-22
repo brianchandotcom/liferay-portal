@@ -20,6 +20,7 @@ import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -92,12 +93,23 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 	private AccountRole _addAccountRole(long userId, String roleName)
 		throws PortalException {
 
-		return _accountRoleLocalService.addAccountRole(
-			userId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, roleName,
+		AccountRole accountRole = _accountRoleLocalService.createAccountRole(
+			_counterLocalService.increment());
+
+		Role role = _roleLocalService.addRole(
+			userId, AccountRole.class.getName(), accountRole.getAccountRoleId(),
+			roleName,
 			HashMapBuilder.put(
 				LocaleThreadLocal.getDefaultLocale(), roleName
 			).build(),
-			null);
+			null, RoleConstants.TYPE_ACCOUNT, null, null);
+
+		accountRole.setCompanyId(role.getCompanyId());
+		accountRole.setAccountEntryId(
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
+		accountRole.setRoleId(role.getRoleId());
+
+		return _accountRoleLocalService.addAccountRole(accountRole);
 	}
 
 	private void _addResourcePermissions(
@@ -153,6 +165,9 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
+	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

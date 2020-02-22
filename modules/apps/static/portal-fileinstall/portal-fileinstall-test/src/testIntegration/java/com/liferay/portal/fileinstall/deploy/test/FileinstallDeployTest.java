@@ -246,7 +246,6 @@ public class FileinstallDeployTest {
 				}
 			}
 
-			System.out.println(bundle.getBundleId());
 			Assert.assertNotNull(bundle);
 
 			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
@@ -256,7 +255,6 @@ public class FileinstallDeployTest {
 
 			updateCountDownLatch.await();
 
-			System.out.println(bundle.getBundleId());
 			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 			Assert.assertEquals(updateVersion, bundle.getVersion());
 

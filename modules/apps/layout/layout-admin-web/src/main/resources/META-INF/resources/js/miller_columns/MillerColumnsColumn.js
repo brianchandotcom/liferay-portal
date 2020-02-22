@@ -36,6 +36,7 @@ const MillerColumnsColumn = ({
 	items = [],
 	namespace,
 	onItemDrop,
+	onItemStayHover,
 	parent
 }) => {
 	const ref = useRef();
@@ -78,6 +79,7 @@ const MillerColumnsColumn = ({
 					key={item.url}
 					namespace={namespace}
 					onItemDrop={onItemDrop}
+					onItemStayHover={onItemStayHover}
 				/>
 			))}
 		</ul>

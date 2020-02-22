@@ -126,3 +126,9 @@ installation (48f775db44)
 - [LPS-51081]: Update the com.liferay.gradle.util dependency to version 1.0.13.
 - [LPS-51081]: Update the com.liferay.gradle.util dependency to version 1.0.12.
 - [LPS-51081]: Update the com.liferay.gradle.util dependency to version 1.0.11.
+- [LPS-51081]: Update the org.gradle.gradle-base-services dependency to version
+2.4.
+- [LPS-51081]: Update the org.gradle.gradle-base-services-groovy dependency to
+version 2.4.
+- [LPS-51081]: Update the org.gradle.gradle-core dependency to version 2.4.
+- [LPS-51081]: Update the groovy-all dependency to version 2.3.10.

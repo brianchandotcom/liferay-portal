@@ -15,6 +15,10 @@
 (60d3a950d6)
 - [LPS-77425]: Increment all major versions (d25f48516a)
 
+### Dependencies
+- [LPS-98801 LPS-96095]: Update the ant dependency to version 1.9.14.
+- [LPS-75049]: Update the ant dependency to version 1.9.4.
+
 ## 1.0.1 - 2017-08-01
 
 ### Commits

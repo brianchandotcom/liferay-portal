@@ -147,6 +147,15 @@ installation (48f775db44)
 - [LPS-51081]: Module scripts use Gradle (and not Ant) to unzip files, so the
 plugin should do the same (8b6c7d9dfa)
 
+### Dependencies
+- [LPS-51081]: Update the org.gradle.gradle-base-services dependency to version
+2.4.
+- [LPS-51081]: Update the org.gradle.gradle-base-services-groovy dependency to
+version 2.4.
+- [LPS-51081]: Update the org.gradle.gradle-core dependency to version 2.4.
+- [LPS-51081]: Update the org.gradle.gradle-plugins dependency to version 2.4.
+- [LPS-51081]: Update the groovy-all dependency to version 2.3.10.
+
 ## 1.0.11 - 2015-07-01
 
 ### Commits

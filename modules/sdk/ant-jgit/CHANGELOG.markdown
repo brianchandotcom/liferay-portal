@@ -19,6 +19,9 @@
 - [LPS-63943]: Remove old "antJGit" code and check if the project is a leaf
 (9f689ec1cc)
 
+### Dependencies
+- [LRQA-28693]: Update the ant dependency to version 1.9.4.
+
 ## 1.0.9 - 2016-03-09
 
 ### Commits
@@ -50,6 +53,7 @@ as changed (184aa0c03b)
 - [LPS-51081]: Ran "ant reset-gradle init-gradle" (9ab363b842)
 
 ### Dependencies
+- [LPS-51081]: Update the ant dependency to version 1.9.4.
 - [LPS-51081]: Update the org.eclipse.jgit dependency to version
 4.0.0.201505050340-m2.
 - [LPS-51081]: Update the slf4j-log4j12 dependency to version 1.7.2.

@@ -15,7 +15,10 @@
 - [LPS-55691]: Deploy directly to lib/development (7a5801f7a3)
 
 ### Dependencies
+- [LPS-75049]: Update the ant dependency to version 1.9.4.
+- [LRQA-28693]: Update the ant dependency to version 1.9.4.
 - [LPS-55691]: Update the bsh dependency to version 2.0b4.
+- [LPS-55691]: Update the ant dependency to version 1.9.4.
 
 ## 1.0.3 - 2015-11-16
 

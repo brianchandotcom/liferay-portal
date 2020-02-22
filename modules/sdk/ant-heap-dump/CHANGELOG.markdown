@@ -45,6 +45,7 @@ default.
 - []: Update the com.liferay.portal.kernel dependency to version 2.51.0.
 - [LPS-75121]: Update the com.liferay.portal.kernel dependency to version
 default.
+- [LRQA-28693]: Update the ant dependency to version 1.9.4.
 - []: Update the com.liferay.portal.kernel dependency to version 2.0.0.
 - [LPS-64182]: Update the com.liferay.portal.kernel dependency to version
 default.
@@ -70,3 +71,6 @@ will be easier to add extra files ("osgi.runtime.dependencies") as "from"
 - [LPS-51081]: Ran "ant reset-gradle init-gradle" (9ab363b842)
 - [LPS-56101]: Copy to lib/development, as test script needs to access it.
 (936f613747)
+
+### Dependencies
+- [LPS-51081]: Update the ant dependency to version 1.9.4.

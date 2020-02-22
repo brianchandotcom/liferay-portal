@@ -48,6 +48,9 @@ previous version of the code (daf6c5c8c5)
 - [LPS-98198]: I think this is more accurate (4ab7b5b5f8)
 - [LPS-98198]: Remove unused packageinfo files (2b55a617d0)
 
+### Dependencies
+- [LPS-98801 LPS-96095]: Update the ant dependency to version 1.9.14.
+
 ## 3.0.8 - 2019-07-12
 
 ### Commits
@@ -188,6 +191,7 @@ match (655c6843bf)
 
 ### Dependencies
 - [LPS-75049]: Update the com.liferay.portal.impl dependency to version default.
+- [LPS-75049]: Update the ant dependency to version 1.9.4.
 
 ## 2.0.50 - 2018-04-03
 
@@ -370,6 +374,9 @@ the same tag lig requirements (6fb16379e2)
 - [LPS-69470]: Add option to force a calculated Bundle-Version (c66e7c24db)
 - [LRQA-28693]: These are only used from Ant, so the dependency is "provided"
 (91dbbd33d4)
+
+### Dependencies
+- [LRQA-28693]: Update the ant dependency to version 1.9.4.
 
 ## 2.0.30 - 2016-10-20
 
@@ -629,6 +636,7 @@ will be easier to add extra files ("osgi.runtime.dependencies") as "from"
 
 ### Dependencies
 - [LPS-51081]: Update the biz.aQute.bnd dependency to version 2.4.1.
+- [LPS-51081]: Update the ant dependency to version 1.9.4.
 
 ## 1.0.10 - 2015-06-08
 

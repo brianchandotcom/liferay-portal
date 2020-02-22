@@ -3971,6 +3971,7 @@ version 1.0.243.
 to version 2.1.59.
 - [LPS-85849]: Update the com.liferay.portal.tools.service.builder dependency to
 version 1.0.242.
+- [LPS-83790]: Update the 7z-gradle-plugin dependency to version 1.0.1.
 - [LPS-83790]: Update the commons-compress dependency to version 1.12.
 
 ## 3.12.164 - 2018-10-15

@@ -13,6 +13,9 @@
 - [LPS-84119]: Add line breaks (b8db59dbc4)
 - [LPS-98801 LPS-96095]: auto SF for ant (bf3c0ef390)
 
+### Dependencies
+- [LPS-98801 LPS-96095]: Update the ant dependency to version 1.9.14.
+
 ## 1.2.6 - 2018-11-02
 
 ### Commits
@@ -39,6 +42,9 @@ message (f4c053b484)
 - [LRQA-40056]: this is a case where "return" is uglier than "else" (7d33bdaee5)
 - [LRQA-40056]: Don't replace the "/" (00cf812532)
 - [LRQA-40056]: Replace nested ${<property>} instances (4fd801ef7a)
+
+### Dependencies
+- [LPS-75049]: Update the ant dependency to version 1.9.4.
 
 ## 1.2.2 - 2018-04-03
 

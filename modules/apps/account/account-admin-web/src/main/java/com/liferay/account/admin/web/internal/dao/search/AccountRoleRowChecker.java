@@ -15,8 +15,9 @@
 package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountRoleDisplay;
-import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 
 import javax.portlet.PortletResponse;
 
@@ -33,7 +34,9 @@ public class AccountRoleRowChecker extends EmptyOnClickRowChecker {
 	public boolean isDisabled(Object obj) {
 		AccountRoleDisplay accountRoleDisplay = (AccountRoleDisplay)obj;
 
-		if (AccountRoleConstants.isRequiredRole(accountRoleDisplay.getRole())) {
+		Role role = accountRoleDisplay.getRole();
+
+		if (role.getType() == RoleConstants.TYPE_ACCOUNT) {
 			return true;
 		}
 

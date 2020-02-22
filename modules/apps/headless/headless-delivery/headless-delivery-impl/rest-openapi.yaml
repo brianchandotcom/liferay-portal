@@ -1647,6 +1647,17 @@ components:
                 subscribed:
                     readOnly: true
                     type: boolean
+                taxonomyCategories:
+                    items:
+                        $ref: "#/components/schemas/TaxonomyCategory"
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
                 threadType:
                     description:
                         The thread's type.

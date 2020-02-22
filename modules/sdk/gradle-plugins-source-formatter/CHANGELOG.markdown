@@ -1,5 +1,11 @@
 # Liferay Gradle Plugins Source Formatter Change Log
 
+## 2.3.490 - 2020-02-21
+
+### Dependencies
+- [LPS-105380]: Update the com.liferay.source.formatter dependency to version
+1.0.962.
+
 ## 2.3.489 - 2020-02-19
 
 ### Commits

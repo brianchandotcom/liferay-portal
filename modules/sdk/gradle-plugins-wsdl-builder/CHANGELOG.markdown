@@ -1,5 +1,12 @@
 # Liferay Gradle Plugins WSDL Builder Change Log
 
+## 2.1.1 - 2020-02-20
+
+### Commits
+- [LPS-108455]: Gradle test (ddaa14cac9)
+- [LPS-108455]: Update jar for XMLBeans data binding (be7139d864)
+- [LPS-108455]: Fix Gradle test (464e2feb90)
+
 ## 2.0.5 - 2020-02-18
 
 ### Commits

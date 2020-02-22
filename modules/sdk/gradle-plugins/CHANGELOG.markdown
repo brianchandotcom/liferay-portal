@@ -1,5 +1,27 @@
 # Liferay Gradle Plugins Change Log
 
+## 4.5.39 - 2020-02-21
+
+### Dependencies
+- [LPS-105380]: Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 2.3.490.
+- [LPS-105380]: Update the com.liferay.source.formatter dependency to version
+1.0.962.
+
+## 4.5.38 - 2020-02-21
+
+### Dependencies
+- [LPS-106123]: Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.0.70.
+- [LPS-106123]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.70.
+
+## 4.5.37 - 2020-02-20
+
+### Dependencies
+- [LPS-108456]: Update the com.liferay.gradle.plugins.wsdl.builder dependency to
+version 3.0.0.
+
 ## 4.5.36 - 2020-02-19
 
 ### Dependencies

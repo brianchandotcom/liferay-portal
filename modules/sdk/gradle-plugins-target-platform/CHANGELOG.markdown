@@ -1,5 +1,17 @@
 # Liferay Gradle Plugins Target Platform Change Log
 
+## 2.1.1 - 2020-02-20
+
+### Commits
+- [LPS-107155]: normalize test files (730329504d)
+- [LPS-107155]: update test in order to ensure it works with subprojects
+(0f2a56e61a)
+- [LPS-107155]: ensure task are never up2date (8523616643)
+- [LPS-107155]: add dependencyManagement task to only root project (e121b130c8)
+- [LPS-105380]: Rename var/parameter in constructor in order to match
+(480529fe98)
+- [LPS-107155]: Buy space (2d7c2bad92)
+
 ## 2.1.0 - 2020-01-27
 
 ### Commits

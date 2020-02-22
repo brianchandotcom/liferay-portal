@@ -1,5 +1,23 @@
 # Liferay Gradle Plugins Defaults Change Log
 
+## 6.1.175 - 2020-02-21
+
+### Dependencies
+- [LPS-105380]: Update the com.liferay.gradle.plugins dependency to version
+4.5.39.
+
+## 6.1.174 - 2020-02-21
+
+### Dependencies
+- [LPS-106123]: Update the com.liferay.gradle.plugins dependency to version
+4.5.38.
+
+## 6.1.173 - 2020-02-20
+
+### Dependencies
+- [LPS-108456]: Update the com.liferay.gradle.plugins dependency to version
+4.5.37.
+
 ## 6.1.172 - 2020-02-19
 
 ### Dependencies

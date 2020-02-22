@@ -1,5 +1,11 @@
 # Liferay Gradle Plugins REST Builder Change Log
 
+## 1.0.70 - 2020-02-21
+
+### Dependencies
+- [LPS-106123]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.70.
+
 ## 1.0.69 - 2020-02-18
 
 ### Dependencies

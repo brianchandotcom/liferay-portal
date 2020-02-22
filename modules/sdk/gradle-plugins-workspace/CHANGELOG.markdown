@@ -1,5 +1,38 @@
 # Liferay Gradle Plugins Workspace Change Log
 
+## 2.2.6 - 2020-02-20
+
+### Commits
+- [LPS-107862]: Remove unneeded line break (40f02b83f2)
+- [LPS-107862]: Add missing parentheses (9622947741)
+- [LPS-107862]: Explicitly define the type (9fec024d90)
+- [LPS-107862]: Remove unneeded line break (502e8c9b9a)
+- [LPS-107862]: only mount the deploy folder instead of all work dir
+(c118252060)
+- [LPS-107862]: fix container ids and logs (735352db0d)
+- [LPS-107862]: test multiple script and assert that "other" is executed and not
+"local" (6b3d9e52fd)
+- [LPS-107862]: assert we don't have errors with 'cp' command in scripts
+(df6c79e7cf)
+- [LPS-107862]: rename (fe26d64a2f)
+- [LPS-107862]: whitespace (cbafa2a18c)
+- [LPS-107862]: move closer to where used (9af735cff2)
+- [LPS-107862]: we don't need these files (0fd3bf6160)
+- [LPS-107862]: Clean up tests (ee3a317cfc)
+- [LPS-107862]: Implement requested changes (4cb4faeb57)
+- [LPS-107862]: Remove unnecessary change (e8f9860abc)
+- [LPS-107862]: Update tests (10adb8c421)
+- [LPS-107862]: Add Tests (7cb4459a17)
+- [LPS-107862]: simplify (4115795991)
+- [LPS-107862]: rename var (0ab7050bb7)
+- [LPS-107862]: Refactor to simplify code (1b8eddd213)
+- [LPS-107862]: Only copy over script files if they exist (2e39e59887)
+- [LPS-105380]: Manually spotted and fixed (19bc5e04c0)
+
+### Dependencies
+- [LPS-107155]: Update the com.liferay.gradle.plugins.target.platform dependency
+to version 2.1.1.
+
 ## 2.2.5 - 2020-02-10
 
 ### Commits

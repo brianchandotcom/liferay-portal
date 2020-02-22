@@ -62,7 +62,8 @@ const MillerColumns = ({
 	initialColumns = [],
 	namespace,
 	onColumnsChange = noop,
-	onItemMove = noop
+	onItemMove = noop,
+	onItemStayHover
 }) => {
 	const ref = useRef();
 
@@ -101,6 +102,13 @@ const MillerColumns = ({
 	}, [items]);
 
 	const previousColumnsValue = usePrevious(columns);
+	const previousInitialColumnsValue = usePrevious(initialColumns);
+
+	useEffect(() => {
+		if (previousInitialColumnsValue !== initialColumns) {
+			setItems(getItemsMap(initialColumns));
+		}
+	}, [initialColumns, previousInitialColumnsValue]);
 
 	useEffect(() => {
 		if (previousColumnsValue !== columns) {
@@ -220,6 +228,7 @@ const MillerColumns = ({
 						key={index}
 						namespace={namespace}
 						onItemDrop={onItemDrop}
+						onItemStayHover={onItemStayHover}
 						parent={column.parent}
 					/>
 				))}

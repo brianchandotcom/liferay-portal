@@ -30,6 +30,8 @@ const DROP_ZONES = {
 	TOP: 'TOP'
 };
 
+const ITEM_HOVER_TIMEOUT = 500;
+
 const ITEM_STATES_COLORS = {
 	'conversion-draft': 'info',
 	draft: 'secondary',
@@ -102,9 +104,11 @@ const MillerColumnsItem = ({
 	},
 	actionHandlers = {},
 	namespace,
-	onItemDrop = noop
+	onItemDrop = noop,
+	onItemStayHover = noop
 }) => {
 	const ref = useRef();
+	const timeoutRef = useRef();
 
 	const [dropdownActionsActive, setDropdownActionsActive] = useState();
 	const [dropZone, setDropZone] = useState();
@@ -197,6 +201,21 @@ const MillerColumnsItem = ({
 	useEffect(() => {
 		drag(drop(ref));
 	}, [drag, drop]);
+
+	useEffect(() => {
+		if (!active && dropZone === DROP_ZONES.ELEMENT && !timeoutRef.current) {
+			timeoutRef.current = setTimeout(() => {
+				onItemStayHover(itemId);
+			}, ITEM_HOVER_TIMEOUT);
+		}
+		else if (
+			!isOver ||
+			(dropZone !== DROP_ZONES.ELEMENT && timeoutRef.current)
+		) {
+			clearTimeout(timeoutRef.current);
+			timeoutRef.current = null;
+		}
+	}, [active, dropZone, isOver, itemId, onItemStayHover]);
 
 	return (
 		<li

@@ -20,8 +20,9 @@ import MillerColumns from '../miller_columns/MillerColumns';
 import actionHandlers from './actionHandlers';
 
 const Layout = ({
+	getItemChildrenURL,
 	initialBreadcrumbEntries,
-	layoutColumns,
+	initialLayoutColumns,
 	moveItemURL,
 	namespace,
 	searchContainerId
@@ -32,6 +33,7 @@ const Layout = ({
 	const [breadcrumbEntries, setBreadcrumbEntries] = useState(
 		initialBreadcrumbEntries
 	);
+	const [layoutColumns, setLayoutColumns] = useState(initialLayoutColumns);
 
 	useEffect(() => {
 		const A = new AUI();
@@ -61,6 +63,50 @@ const Layout = ({
 			}
 		);
 	}, [namespace, searchContainerId]);
+
+	const getItemChildren = parentId => {
+		const formData = new FormData();
+
+		formData.append(`${namespace}plid`, parentId);
+
+		fetch(getItemChildrenURL, {
+			body: formData,
+			method: 'POST'
+		})
+			.then(response => response.json())
+			.then(({children}) => {
+				const newLayoutColumns = [];
+
+				for (let i = 0; i < layoutColumns.length; i++) {
+					const column = layoutColumns[i];
+					const newColumn = [];
+
+					let parent;
+
+					for (let j = 0; j < column.length; j++) {
+						const newItem = {...column[j]};
+
+						if (!parent && newItem.id === parentId) {
+							parent = newItem;
+						}
+
+						newColumn.push(newItem);
+					}
+
+					newLayoutColumns.push(newColumn);
+
+					if (parent) {
+						const oldParent = newColumn.find(item => item.active);
+						oldParent.active = false;
+						parent.active = true;
+						newLayoutColumns.push(children);
+						break;
+					}
+				}
+
+				setLayoutColumns(newLayoutColumns);
+			});
+	};
 
 	const saveData = (sourceItemId, parentItemId, position) => {
 		const formData = new FormData();
@@ -104,6 +150,7 @@ const Layout = ({
 				namespace={namespace}
 				onColumnsChange={updateBreadcrumbs}
 				onItemMove={saveData}
+				onItemStayHover={getItemChildren}
 			/>
 		</div>
 	);
@@ -111,12 +158,19 @@ const Layout = ({
 
 export default function({
 	context: {namespace},
-	props: {breadcrumbEntries, layoutColumns, moveItemURL, searchContainerId}
+	props: {
+		breadcrumbEntries,
+		getItemChildrenURL,
+		layoutColumns,
+		moveItemURL,
+		searchContainerId
+	}
 }) {
 	return (
 		<Layout
+			getItemChildrenURL={getItemChildrenURL}
 			initialBreadcrumbEntries={breadcrumbEntries}
-			layoutColumns={layoutColumns}
+			initialLayoutColumns={layoutColumns}
 			moveItemURL={moveItemURL}
 			namespace={namespace}
 			searchContainerId={searchContainerId}

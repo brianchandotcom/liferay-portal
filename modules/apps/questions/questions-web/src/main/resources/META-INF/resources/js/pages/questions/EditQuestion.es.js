@@ -13,6 +13,7 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useEffect, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
@@ -36,7 +37,9 @@ export default withRouter(
 				({articleBody, headline, tags}) => {
 					setArticleBody(articleBody);
 					setHeadline(headline);
-					setTags(tags.toString());
+					if (tags) {
+						setTags(tags.toString());
+					}
 				}
 			);
 		}, [questionId]);
@@ -54,6 +57,10 @@ export default withRouter(
 					<ClayForm.Group className="form-group-sm">
 						<label htmlFor="basicInput">
 							{Liferay.Language.get('title')}
+
+							<span className="reference-mark">
+								<ClayIcon symbol="asterisk" />
+							</span>
 						</label>
 						<ClayInput
 							onChange={event => setHeadline(event.target.value)}
@@ -75,6 +82,10 @@ export default withRouter(
 					<ClayForm.Group className="form-group-sm">
 						<label htmlFor="basicInput">
 							{Liferay.Language.get('body')}
+
+							<span className="reference-mark">
+								<ClayIcon symbol="asterisk" />
+							</span>
 						</label>
 
 						<Editor

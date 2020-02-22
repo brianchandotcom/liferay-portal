@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
@@ -228,6 +229,9 @@ export default ({
 											{Liferay.Language.get(
 												'your-answer'
 											)}
+											<span className="reference-mark">
+												<ClayIcon symbol="asterisk" />
+											</span>
 										</label>
 
 										<Editor

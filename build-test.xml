@@ -234,6 +234,12 @@ module.framework.properties.osgi.console=11312</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="delete-default-elasticsearch-connection-config">
+		<sequential>
+			<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default.config" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="generate-gulp-user-config-json">
 		<attribute name="portlet.name" />
 
@@ -1809,19 +1815,6 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-elasticsearch-configuration">
-		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">logExceptionsOnly="false"</echo>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">logExceptionsOnly="false"</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-elasticsearch-connection-config">
-		<sequential>
-			<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default.config" />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-gecko-driver">
 		<sequential>
 			<stop-gecko-driver />
@@ -2044,6 +2037,13 @@ jdbc.default.password=${database.password}</echo>
 
 			<delete file="${basedir}/${patching.tool.latest.txt}" />
 			<delete file="${basedir}/${patching.tool.name}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-portal-elasticsearch-osgi-configuration">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">logExceptionsOnly="false"</echo>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">logExceptionsOnly="false"</echo>
 		</sequential>
 	</macrodef>
 
@@ -7693,7 +7693,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			</then>
 		</if>
 
-		<prepare-elasticsearch-configuration />
+		<prepare-portal-elasticsearch-osgi-configuration />
 	</target>
 
 	<target name="prepare-patching-tool">
@@ -12120,7 +12120,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			</and>
 			<then>
-				<prepare-elasticsearch-connection-config />
+				<delete-default-elasticsearch-connection-config />
 			</then>
 		</if>
 

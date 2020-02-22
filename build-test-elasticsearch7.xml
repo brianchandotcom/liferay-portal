@@ -143,7 +143,7 @@ xpack.security.sessionTimeout: 600000</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-portal-elasticsearch-osgi-properties">
+	<macrodef name="configure-portal-remote-elasticsearch-osgi-properties">
 		<sequential>
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}operationMode="REMOTE"
 remoteClusterConnectionId="remote"</echo>
@@ -911,7 +911,7 @@ xpack.monitoring.collection.enabled: true</echo>
 			</then>
 		</if>
 
-		<configure-portal-elasticsearch-osgi-properties />
+		<configure-portal-remote-elasticsearch-osgi-properties />
 
 		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 

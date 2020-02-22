@@ -948,7 +948,7 @@ app.server.type=@{app.server.type}]]></echo>
 				</then>
 			</if>
 
-			<prepare-elasticsearch-configuration />
+			<prepare-portal-elasticsearch-osgi-configuration />
 
 			<lstopwatch action="start" name="prepare-test-build-dist.bundles.@{app.server.type}.compile-test" />
 

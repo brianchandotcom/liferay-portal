@@ -90,8 +90,6 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				).put(
 					DBType.POSTGRESQL,
 					"ERROR: column \"unknown\" does not exist"
-				).put(
-					DBType.SYBASE, "Invalid column name 'Unknown'."
 				).build());
 		}
 	}

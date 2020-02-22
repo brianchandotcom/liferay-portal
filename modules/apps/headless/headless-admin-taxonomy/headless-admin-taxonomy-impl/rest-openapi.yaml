@@ -466,6 +466,40 @@ paths:
                     description:
                         ""
             tags: ["Keyword"]
+    "/sites/{siteId}/keywords/ranked":
+        get:
+            operationId: getKeywordsRankedPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Keyword"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Keyword"
+                                type: array
+                    description:
+                        ""
+            tags: ["Keyword"]
     "/sites/{siteId}/taxonomy-vocabularies":
         get:
             description:

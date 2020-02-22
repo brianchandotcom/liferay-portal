@@ -142,6 +142,8 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 					DBType.POSTGRESQL,
 					"ERROR: relation \"unknown\" does not exist"
 				).put(
+					DBType.SQLSERVER, "Invalid object name 'Unknown'"
+				).put(
 					DBType.SYBASE, "Unknown not found."
 				).build());
 		}
@@ -184,6 +186,8 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				).put(
 					DBType.POSTGRESQL,
 					"ERROR: relation \"unknown\" does not exist"
+				).put(
+					DBType.SQLSERVER, "Invalid object name 'Unknown'"
 				).put(
 					DBType.SYBASE, "Unknown not found."
 				).build());

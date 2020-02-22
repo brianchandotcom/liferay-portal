@@ -1088,7 +1088,6 @@ public class ContentPageEditorDisplayContext {
 				fragmentEntryLinksMap.put(
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 					fragmentEntryLinkMap);
-
 			}
 		}
 		finally {

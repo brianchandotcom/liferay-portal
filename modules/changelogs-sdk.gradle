@@ -366,8 +366,18 @@ private String _formatLongLine(String line) {
 		return line
 	}
 
-	for (int x = 80; x > 0; x--) {
-		if (line[x].matches("[ \t]")) {
+	int x = line.indexOf(" ")
+
+	if (x == -1) {
+		return line
+	}
+
+	if (x > 80) {
+		return line.substring(0, x) + "\n" + _formatLongLine(line.substring(x + 1))
+	}
+
+	for (x = 80; x > 0; x--) {
+		if (line[x] == " ") {
 			return line.substring(0, x) + "\n" + _formatLongLine(line.substring(x + 1))
 		}
 	}

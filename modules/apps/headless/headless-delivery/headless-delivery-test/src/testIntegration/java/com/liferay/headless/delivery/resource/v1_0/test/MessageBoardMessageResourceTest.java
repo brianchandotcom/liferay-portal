@@ -94,6 +94,16 @@ public class MessageBoardMessageResourceTest
 	}
 
 	@Override
+	protected MessageBoardMessage randomMessageBoardMessage() throws Exception {
+		MessageBoardMessage messageBoardMessage =
+			super.randomMessageBoardMessage();
+
+		messageBoardMessage.setMessageBoardSectionId((Long)null);
+
+		return messageBoardMessage;
+	}
+
+	@Override
 	protected MessageBoardMessage
 			testDeleteMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {

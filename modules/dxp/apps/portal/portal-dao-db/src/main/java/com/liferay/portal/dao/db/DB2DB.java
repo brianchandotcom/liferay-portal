@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -33,9 +32,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -51,7 +48,7 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
-	public String buildSQL(String template) throws IOException {
+	public String buildSQL(String template) throws IOException, SQLException {
 		template = replaceTemplate(template);
 
 		template = reword(template);
@@ -102,8 +99,6 @@ public class DB2DB extends BaseDB {
 	@Override
 	public void runSQL(Connection con, String[] templates)
 		throws IOException, SQLException {
-
-		templates = splitAlterColumnType(templates);
 
 		super.runSQL(con, templates);
 
@@ -224,7 +219,7 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
-	protected String reword(String data) throws IOException {
+	protected String reword(String data) throws IOException, SQLException {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
 
@@ -244,27 +239,30 @@ public class DB2DB extends BaseDB {
 				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
 					String[] template = buildColumnTypeTokens(line);
 
+					line = StringUtil.replace(
+						"alter table @table@ alter column @old-column@ set " +
+							"data type @type@;",
+						REWORD_TEMPLATE, template);
+
 					String nullable = template[template.length - 1];
 
-					if (Validator.isBlank(nullable)) {
-						line = StringUtil.replace(
-							"alter table @table@ alter column @old-column@ " +
-								"set data type @type@;",
-							REWORD_TEMPLATE, template);
-					}
-					else {
+					if (!Validator.isBlank(nullable)) {
+						String nullableAlter;
+
 						if (nullable.equals("not null")) {
-							line = StringUtil.replace(
+							nullableAlter = StringUtil.replace(
 								"alter table @table@ alter column " +
 									"@old-column@ set not null;",
 								REWORD_TEMPLATE, template);
 						}
 						else {
-							line = StringUtil.replace(
+							nullableAlter = StringUtil.replace(
 								"alter table @table@ alter column " +
 									"@old-column@ drop not null;",
 								REWORD_TEMPLATE, template);
 						}
+
+						runSQL(nullableAlter);
 					}
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
@@ -287,30 +285,6 @@ public class DB2DB extends BaseDB {
 
 			return sb.toString();
 		}
-	}
-
-	protected String[] splitAlterColumnType(String[] templates) {
-		List<String> newTemplates = new ArrayList<>();
-
-		for (String template : templates) {
-			newTemplates.add(template);
-
-			template = StringUtil.trim(template);
-
-			if (template.startsWith(ALTER_COLUMN_TYPE)) {
-				int index = template.indexOf(" not null");
-
-				if (index == -1) {
-					index = template.indexOf(" null");
-				}
-
-				if (index != -1) {
-					newTemplates.add(template.substring(0, index));
-				}
-			}
-		}
-
-		return ArrayUtil.toStringArray(newTemplates);
 	}
 
 	private String _removeNull(String content) {

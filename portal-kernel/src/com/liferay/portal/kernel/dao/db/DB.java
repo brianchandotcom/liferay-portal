@@ -63,7 +63,7 @@ public interface DB {
 			String sqlDir, String databaseName, int population)
 		throws IOException;
 
-	public String buildSQL(String template) throws IOException;
+	public String buildSQL(String template) throws IOException, SQLException;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement

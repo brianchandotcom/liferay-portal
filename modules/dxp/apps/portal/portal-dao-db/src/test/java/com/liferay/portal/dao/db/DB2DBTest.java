@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 
 import java.io.IOException;
 
+import java.sql.SQLException;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,7 +31,7 @@ import org.junit.Test;
 public class DB2DBTest extends BaseDBTestCase {
 
 	@Test
-	public void testRewordAlterColumnType() throws IOException {
+	public void testRewordAlterColumnType() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName set data type " +
 				"varchar(75);\n",
@@ -37,7 +39,7 @@ public class DB2DBTest extends BaseDBTestCase {
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeNoSemicolon() throws IOException {
+	public void testRewordAlterColumnTypeNoSemicolon() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName set data type " +
 				"varchar(75);\n",
@@ -45,29 +47,48 @@ public class DB2DBTest extends BaseDBTestCase {
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeNotNull() throws IOException {
+	public void testRewordAlterColumnTypeNotNull() throws Exception {
+		_nullableAlter =
+			"alter table DLFolder alter column userName set not null;";
+
 		Assert.assertEquals(
-			"alter table DLFolder alter column userName set not null;\n",
+			"alter table DLFolder alter column userName set data type " +
+				"varchar(75);\n",
 			buildSQL(
 				"alter_column_type DLFolder userName VARCHAR(75) not null;"));
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeNull() throws IOException {
+	public void testRewordAlterColumnTypeNull() throws Exception {
+		_nullableAlter =
+			"alter table DLFolder alter column userName drop not null;";
+
 		Assert.assertEquals(
-			"alter table DLFolder alter column userName drop not null;\n",
+			"alter table DLFolder alter column userName set data type " +
+				"varchar(75);\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
 	}
 
 	@Test
-	public void testRewordRenameTable() throws IOException {
+	public void testRewordRenameTable() throws Exception {
 		Assert.assertEquals(
 			"alter table a to b;\n", buildSQL(RENAME_TABLE_QUERY));
 	}
 
 	@Override
 	protected DB getDB() {
-		return new DB2DB(0, 0);
+		return new DB2DB(0, 0) {
+
+			@Override
+			public void runSQL(String template)
+				throws IOException, SQLException {
+
+				Assert.assertEquals(_nullableAlter, template);
+			}
+
+		};
 	}
+
+	private String _nullableAlter;
 
 }

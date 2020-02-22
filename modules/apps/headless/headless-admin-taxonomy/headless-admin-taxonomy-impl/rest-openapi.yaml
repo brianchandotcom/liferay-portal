@@ -312,6 +312,39 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/keywords/ranked":
+        get:
+            operationId: getKeywordsRankedPage
+            parameters:
+                - in: query
+                  name: siteId
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Keyword"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Keyword"
+                                type: array
+                    description:
+                        ""
+            tags: ["Keyword"]
     "/keywords/{keywordId}":
         delete:
             description:

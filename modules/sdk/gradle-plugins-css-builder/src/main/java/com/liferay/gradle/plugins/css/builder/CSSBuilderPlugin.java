@@ -243,34 +243,6 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		buildCSSTask.setClasspath(classpath);
 	}
 
-	private void _configureTaskProcessResourcesForJavaPlugin(
-		BuildCSSTask buildCSSTask, final Sync copyCSSTask) {
-
-		final Project project = buildCSSTask.getProject();
-
-		ProcessResources processResourcesTask =
-			(ProcessResources)GradleUtil.getTask(
-				project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-
-		processResourcesTask.dependsOn(buildCSSTask);
-
-		processResourcesTask.from(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					File resourcesDir = _getResourcesDir(project);
-
-					if (!resourcesDir.exists()) {
-						return null;
-					}
-
-					return copyCSSTask.getDestinationDir();
-				}
-
-			});
-	}
-
 	private void _configureTaskBuildCSSImportFile(
 		BuildCSSTask buildCSSTask,
 		final Configuration portalCommonCSSConfiguration) {
@@ -323,6 +295,34 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 					}
 
 					return dir;
+				}
+
+			});
+	}
+
+	private void _configureTaskProcessResourcesForJavaPlugin(
+		BuildCSSTask buildCSSTask, final Sync copyCSSTask) {
+
+		final Project project = buildCSSTask.getProject();
+
+		ProcessResources processResourcesTask =
+			(ProcessResources)GradleUtil.getTask(
+				project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		processResourcesTask.dependsOn(buildCSSTask);
+
+		processResourcesTask.from(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					File resourcesDir = _getResourcesDir(project);
+
+					if (!resourcesDir.exists()) {
+						return null;
+					}
+
+					return copyCSSTask.getDestinationDir();
 				}
 
 			});

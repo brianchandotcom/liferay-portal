@@ -16,11 +16,18 @@ package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.KeywordEntityModel;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionList;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
@@ -35,8 +42,12 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portlet.asset.model.impl.AssetTagImpl;
+
+import java.sql.Timestamp;
 
 import java.util.Collections;
+import java.util.Date;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -67,6 +78,31 @@ public class KeywordResourceImpl
 	@Override
 	public Keyword getKeyword(Long keywordId) throws Exception {
 		return _toKeyword(_assetTagService.getTag(keywordId));
+	}
+
+	@Override
+	public Page<Keyword> getKeywordsRankedPage(
+		Long siteId, Pagination pagination) {
+
+		DynamicQuery dynamicQuery = _assetTagLocalService.dynamicQuery();
+
+		dynamicQuery.setProjection(_getProjectionList(), true);
+
+		if (siteId != null) {
+			dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", siteId));
+		}
+
+		dynamicQuery.setLimit(
+			pagination.getStartPosition(), pagination.getEndPosition());
+
+		dynamicQuery.addOrder(OrderFactoryUtil.desc("count"));
+
+		return Page.of(
+			transform(
+				transform(
+					_assetTagLocalService.dynamicQuery(dynamicQuery),
+					this::_toAssetTag),
+				this::_toKeyword));
 	}
 
 	@Override
@@ -107,6 +143,49 @@ public class KeywordResourceImpl
 
 		return _toKeyword(
 			_assetTagService.updateTag(keywordId, keyword.getName(), null));
+	}
+
+	private ProjectionList _getProjectionList() {
+		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
+
+		projectionList.add(
+			ProjectionFactoryUtil.alias(
+				ProjectionFactoryUtil.sqlProjection(
+					"(select count(entryId) AS count from " +
+						"AssetEntries_AssetTags where tagId = this_.tagId " +
+							"group by tagId) AS count",
+					new String[] {"count"}, new Type[] {Type.INTEGER}),
+				"count"));
+		projectionList.add(ProjectionFactoryUtil.property("companyId"));
+		projectionList.add(ProjectionFactoryUtil.property("createDate"));
+		projectionList.add(ProjectionFactoryUtil.property("groupId"));
+		projectionList.add(ProjectionFactoryUtil.property("modifiedDate"));
+		projectionList.add(ProjectionFactoryUtil.property("name"));
+		projectionList.add(ProjectionFactoryUtil.property("tagId"));
+		projectionList.add(ProjectionFactoryUtil.property("userId"));
+
+		return projectionList;
+	}
+
+	private Date _timestampToDate(Object object) {
+		Timestamp timestamp = (Timestamp)object;
+
+		return new Date(timestamp.getTime());
+	}
+
+	private AssetTag _toAssetTag(Object[] assetTags) {
+		return new AssetTagImpl() {
+			{
+				setAssetCount((int)assetTags[0]);
+				setCompanyId((long)assetTags[1]);
+				setCreateDate(_timestampToDate(assetTags[2]));
+				setGroupId((long)assetTags[3]);
+				setTagId((long)assetTags[4]);
+				setModifiedDate(_timestampToDate(assetTags[5]));
+				setName((String)assetTags[6]);
+				setUserId((long)assetTags[7]);
+			}
+		};
 	}
 
 	private Keyword _toKeyword(AssetTag assetTag) {
@@ -153,6 +232,9 @@ public class KeywordResourceImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private AssetTagService _assetTagService;

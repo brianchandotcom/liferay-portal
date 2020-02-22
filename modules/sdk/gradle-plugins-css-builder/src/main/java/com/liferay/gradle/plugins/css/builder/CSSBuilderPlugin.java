@@ -56,9 +56,6 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 	public static final String PORTAL_COMMON_CSS_CONFIGURATION_NAME =
 		"portalCommonCSS";
 
-	public static final String PREPARE_BUILD_CSS_FOR_WAR_TASK_NAME =
-		"prepareBuildCSSForWar";
-
 	@Override
 	public void apply(Project project) {
 		Configuration cssBuilderConfiguration = _addConfigurationCSSBuilder(
@@ -66,10 +63,37 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		Configuration portalCommonCSSConfiguration =
 			_addConfigurationPortalCommonCSS(project);
 
-		BuildCSSTask buildCSSTask = _addTaskBuildCSS(project);
+		Sync copyCSSTask = _addTaskCopyCSS(project);
+
+		BuildCSSTask buildCSSTask = _addTaskBuildCSS(project, copyCSSTask);
 
 		_configureTasksBuildCSS(
 			project, cssBuilderConfiguration, portalCommonCSSConfiguration);
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			JavaPlugin.class,
+			new Action<JavaPlugin>() {
+
+				@Override
+				public void execute(JavaPlugin javaPlugin) {
+					_configureTaskProcessResourcesForJavaPlugin(
+						buildCSSTask, copyCSSTask);
+				}
+
+			});
+
+		pluginContainer.withType(
+			WarPlugin.class,
+			new Action<WarPlugin>() {
+
+				@Override
+				public void execute(WarPlugin warPlugin) {
+					_configureTaskWarForWarPlugin(buildCSSTask, copyCSSTask);
+				}
+
+			});
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -144,36 +168,26 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 			"font-awesome", "latest.release", false);
 	}
 
-	private BuildCSSTask _addTaskBuildCSS(Project project) {
+	private BuildCSSTask _addTaskBuildCSS(
+		Project project, final Sync copyCSSTask) {
+
 		final BuildCSSTask buildCSSTask = GradleUtil.addTask(
 			project, BUILD_CSS_TASK_NAME, BuildCSSTask.class);
 
+		buildCSSTask.dependsOn(copyCSSTask);
+
+		buildCSSTask.setBaseDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return copyCSSTask.getDestinationDir();
+				}
+
+			});
+
 		buildCSSTask.setDescription("Build CSS files.");
 		buildCSSTask.setGroup(BasePlugin.BUILD_GROUP);
-
-		PluginContainer pluginContainer = project.getPlugins();
-
-		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
-
-				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					_configureTaskBuildCSSForJavaPlugin(buildCSSTask);
-				}
-
-			});
-
-		pluginContainer.withType(
-			WarPlugin.class,
-			new Action<WarPlugin>() {
-
-				@Override
-				public void execute(WarPlugin warPlugin) {
-					_configureTaskBuildCSSForWarPlugin(buildCSSTask);
-				}
-
-			});
 
 		return buildCSSTask;
 	}
@@ -223,89 +237,38 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		return copyCSSTask;
 	}
 
-	private Sync _addTaskPrepareBuildCSSForWarTask(
-		final BuildCSSTask buildCSSTask) {
-
-		Sync sync = GradleUtil.addTask(
-			buildCSSTask.getProject(), PREPARE_BUILD_CSS_FOR_WAR_TASK_NAME,
-			Sync.class);
-
-		sync.from(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return _getWebAppDir(buildCSSTask.getProject());
-				}
-
-			});
-
-		sync.include("**/*.scss", "**/*.css");
-
-		sync.into(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return sync.getTemporaryDir();
-				}
-
-			});
-
-		sync.setDescription(
-			"Copies all the sass and css files to a temporary directory.");
-
-		return sync;
-	}
-
 	private void _configureTaskBuildCSSClasspath(
 		BuildCSSTask buildCSSTask, FileCollection classpath) {
 
 		buildCSSTask.setClasspath(classpath);
 	}
 
-	private void _configureTaskBuildCSSForJavaPlugin(
-		BuildCSSTask buildCSSTask) {
+	private void _configureTaskProcessResourcesForJavaPlugin(
+		BuildCSSTask buildCSSTask, final Sync copyCSSTask) {
 
-		final ProcessResources processResourcesTask =
+		final Project project = buildCSSTask.getProject();
+
+		ProcessResources processResourcesTask =
 			(ProcessResources)GradleUtil.getTask(
-				buildCSSTask.getProject(),
-				JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+				project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 
-		buildCSSTask.dependsOn(processResourcesTask);
+		processResourcesTask.dependsOn(buildCSSTask);
 
-		buildCSSTask.setBaseDir(
+		processResourcesTask.from(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					return processResourcesTask.getDestinationDir();
+					File resourcesDir = _getResourcesDir(project);
+
+					if (!resourcesDir.exists()) {
+						return null;
+					}
+
+					return copyCSSTask.getDestinationDir();
 				}
 
 			});
-
-		processResourcesTask.finalizedBy(buildCSSTask);
-	}
-
-	private void _configureTaskBuildCSSForWarPlugin(
-		final BuildCSSTask buildCSSTask) {
-
-		final Sync prepareBuildCSSTask = _addTaskPrepareBuildCSSForWarTask(
-			buildCSSTask);
-
-		buildCSSTask.dependsOn(prepareBuildCSSTask);
-
-		buildCSSTask.setBaseDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return prepareBuildCSSTask.getDestinationDir();
-				}
-
-			});
-
-		_configureTaskWar(buildCSSTask, prepareBuildCSSTask);
 	}
 
 	private void _configureTaskBuildCSSImportFile(
@@ -386,8 +349,8 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskWar(
-		final BuildCSSTask buildCSSTask, final Sync sync) {
+	private void _configureTaskWarForWarPlugin(
+		final BuildCSSTask buildCSSTask, final Sync copyCSSTask) {
 
 		War war = (War)GradleUtil.getTask(
 			buildCSSTask.getProject(), WarPlugin.WAR_TASK_NAME);
@@ -425,7 +388,7 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return sync.getDestinationDir();
+					return copyCSSTask.getDestinationDir();
 				}
 
 			});

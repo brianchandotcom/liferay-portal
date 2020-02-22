@@ -25,24 +25,6 @@ xpack.security.transport.ssl.verification_mode: certificate</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-elasticsearch7-ltr-test-properties">
-		<sequential>
-			<var name="elasticsearch.version" unset="true" />
-			<var name="elasticsearch.ltr-linear-regression-model.zip.name" unset="true" />
-			<var name="elasticsearch.ltr-linear-regression-model.zip.url" unset="true" />
-			<var name="elasticsearch.ltr.url" unset="true" />
-			<var name="elasticsearch.ltr.version" unset="true" />
-			<var name="elasticsearch.ltr.zip.nam" unset="true" />
-
-			<property name="elasticsearch.version" value="7.5.1" />
-			<property name="elasticsearch.ltr.version" value="1.1.2" />
-			<property name="elasticsearch.ltr-linear-regression-model.zip.name" value="ltr-linear-regression-model.zip" />
-			<property name="elasticsearch.ltr-linear-regression-model.zip.url" value="http://files.liferay.com/private/apps/elastic/elasticsearch/${elasticsearch.ltr-linear-regression-model.zip.name}" />
-			<property name="elasticsearch.ltr.zip.name" value="ltr-${elasticsearch.ltr.version}-es${elasticsearch.version}.zip" />
-			<property name="elasticsearch.ltr.url" value="http://es-learn-to-rank.labs.o19s.com/${elasticsearch.ltr.zip.name}" />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="configure-elasticsearch7-test-properties">
 		<sequential>
 			<var name="elastic.kibana.dir" unset="true" />
@@ -89,7 +71,7 @@ xpack.security.transport.ssl.verification_mode: certificate</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-elasticsearch75-test-properties">
+	<macrodef name="configure-elasticsearch75-ltr-test-properties">
 		<sequential>
 			<var name="elasticsearch.version" unset="true" />
 			<var name="elasticsearch.dir" unset="true" />
@@ -124,6 +106,11 @@ xpack.security.transport.ssl.verification_mode: certificate</echo>
 			<property name="elasticsearch.tar.url.linux" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.tar.name.linux}" />
 			<property name="elasticsearch.tar.url.mac" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.tar.name.mac}" />
 			<property name="elasticsearch.zip.url.windows" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.zip.name.windows}" />
+			<property name="elasticsearch.ltr.version" value="1.1.2" />
+			<property name="elasticsearch.ltr-linear-regression-model.zip.name" value="ltr-linear-regression-model.zip" />
+			<property name="elasticsearch.ltr-linear-regression-model.zip.url" value="http://files.liferay.com/private/apps/elastic/elasticsearch/${elasticsearch.ltr-linear-regression-model.zip.name}" />
+			<property name="elasticsearch.ltr.zip.name" value="ltr-${elasticsearch.ltr.version}-es${elasticsearch.version}.zip" />
+			<property name="elasticsearch.ltr.url" value="http://es-learn-to-rank.labs.o19s.com/${elasticsearch.ltr.zip.name}" />
 		</sequential>
 	</macrodef>
 
@@ -761,9 +748,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	</target>
 
 	<target name="add-ltr-linear-regression-model">
-		<configure-elasticsearch75-test-properties />
-
-		<configure-elasticsearch7-ltr-test-properties />
+		<configure-elasticsearch75-ltr-test-properties />
 
 		<unzip-ltr-linear-regression-model />
 
@@ -872,7 +857,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		<if>
 			<equals arg1="${remote.elasticsearch.ltr.enabled}" arg2="true" />
 			<then>
-				<configure-elasticsearch75-test-properties />
+				<configure-elasticsearch75-ltr-test-properties />
 			</then>
 			<else>
 				<configure-elasticsearch7-test-properties />
@@ -886,8 +871,6 @@ xpack.monitoring.collection.enabled: true</echo>
 		<if>
 			<equals arg1="${remote.elasticsearch.ltr.enabled}" arg2="true" />
 			<then>
-				<configure-elasticsearch7-ltr-test-properties />
-
 				<prepare-elasticsearch-ltr />
 
 				<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}path.repo: ${liferay.home}/data/elasticsearch7/repo</echo>

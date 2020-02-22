@@ -47,6 +47,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 /**
@@ -68,6 +69,18 @@ public class LayoutsAdminReactDisplayContext
 			layoutConverterConfiguration, layoutConverterRegistry,
 			layoutCopyHelper, layoutEditorTypeConfiguration,
 			liferayPortletRequest, liferayPortletResponse, stagingGroupHelper);
+
+		_liferayPortletResponse = liferayPortletResponse;
+	}
+
+	@Override
+	public String getLayoutChildrenURL() {
+		PortletURL itemChildrenURL = _liferayPortletResponse.createActionURL();
+
+		itemChildrenURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/react/get_layout_children");
+
+		return itemChildrenURL.toString();
 	}
 
 	@Override
@@ -509,5 +522,7 @@ public class LayoutsAdminReactDisplayContext
 
 		return jsonArray;
 	}
+
+	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

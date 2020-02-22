@@ -2015,6 +2015,26 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"taxonomyCategories", additionalAssertFieldName)) {
+
+				if (messageBoardThread.getTaxonomyCategories() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"taxonomyCategoryIds", additionalAssertFieldName)) {
+
+				if (messageBoardThread.getTaxonomyCategoryIds() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("threadType", additionalAssertFieldName)) {
 				if (messageBoardThread.getThreadType() == null) {
 					valid = false;
@@ -2364,6 +2384,32 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardThread1.getSubscribed(),
 						messageBoardThread2.getSubscribed())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"taxonomyCategories", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						messageBoardThread1.getTaxonomyCategories(),
+						messageBoardThread2.getTaxonomyCategories())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"taxonomyCategoryIds", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						messageBoardThread1.getTaxonomyCategoryIds(),
+						messageBoardThread2.getTaxonomyCategoryIds())) {
 
 					return false;
 				}
@@ -2841,6 +2887,16 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		if (entityFieldName.equals("subscribed")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taxonomyCategories")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taxonomyCategoryIds")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

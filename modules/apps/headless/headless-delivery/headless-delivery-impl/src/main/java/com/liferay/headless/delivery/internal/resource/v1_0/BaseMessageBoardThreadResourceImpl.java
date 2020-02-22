@@ -123,7 +123,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/message-board-threads' -d $'{"articleBody": ___, "customFields": ___, "encodingFormat": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "showAsQuestion": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/message-board-threads' -d $'{"articleBody": ___, "customFields": ___, "encodingFormat": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "showAsQuestion": ___, "taxonomyCategoryIds": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -310,7 +310,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}' -d $'{"articleBody": ___, "customFields": ___, "encodingFormat": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "showAsQuestion": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}' -d $'{"articleBody": ___, "customFields": ___, "encodingFormat": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "showAsQuestion": ___, "taxonomyCategoryIds": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -400,6 +400,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getSubscribed());
 		}
 
+		if (messageBoardThread.getTaxonomyCategoryIds() != null) {
+			existingMessageBoardThread.setTaxonomyCategoryIds(
+				messageBoardThread.getTaxonomyCategoryIds());
+		}
+
 		if (messageBoardThread.getThreadType() != null) {
 			existingMessageBoardThread.setThreadType(
 				messageBoardThread.getThreadType());
@@ -424,7 +429,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}' -d $'{"articleBody": ___, "customFields": ___, "encodingFormat": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "showAsQuestion": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}' -d $'{"articleBody": ___, "customFields": ___, "encodingFormat": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "showAsQuestion": ___, "taxonomyCategoryIds": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -667,7 +672,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-threads' -d $'{"articleBody": ___, "customFields": ___, "encodingFormat": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "showAsQuestion": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-threads' -d $'{"articleBody": ___, "customFields": ___, "encodingFormat": ___, "headline": ___, "keywords": ___, "messageBoardSectionId": ___, "showAsQuestion": ___, "taxonomyCategoryIds": ___, "threadType": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})

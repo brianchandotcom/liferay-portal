@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
+import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -308,6 +309,56 @@ public class MessageBoardThreadSerDes {
 			sb.append(messageBoardThread.getSubscribed());
 		}
 
+		if (messageBoardThread.getTaxonomyCategories() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategories\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < messageBoardThread.getTaxonomyCategories().length; i++) {
+
+				sb.append(
+					String.valueOf(
+						messageBoardThread.getTaxonomyCategories()[i]));
+
+				if ((i + 1) <
+						messageBoardThread.getTaxonomyCategories().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (messageBoardThread.getTaxonomyCategoryIds() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryIds\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < messageBoardThread.getTaxonomyCategoryIds().length; i++) {
+
+				sb.append(messageBoardThread.getTaxonomyCategoryIds()[i]);
+
+				if ((i + 1) <
+						messageBoardThread.getTaxonomyCategoryIds().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (messageBoardThread.getThreadType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -516,6 +567,24 @@ public class MessageBoardThreadSerDes {
 				String.valueOf(messageBoardThread.getSubscribed()));
 		}
 
+		if (messageBoardThread.getTaxonomyCategories() == null) {
+			map.put("taxonomyCategories", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategories",
+				String.valueOf(messageBoardThread.getTaxonomyCategories()));
+		}
+
+		if (messageBoardThread.getTaxonomyCategoryIds() == null) {
+			map.put("taxonomyCategoryIds", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryIds",
+				String.valueOf(messageBoardThread.getTaxonomyCategoryIds()));
+		}
+
 		if (messageBoardThread.getThreadType() == null) {
 			map.put("threadType", null);
 		}
@@ -690,6 +759,29 @@ public class MessageBoardThreadSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setSubscribed(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategories")) {
+
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setTaxonomyCategories(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> TaxonomyCategorySerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new TaxonomyCategory[size]
+						));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryIds")) {
+
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setTaxonomyCategoryIds(
+						toLongs((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "threadType")) {

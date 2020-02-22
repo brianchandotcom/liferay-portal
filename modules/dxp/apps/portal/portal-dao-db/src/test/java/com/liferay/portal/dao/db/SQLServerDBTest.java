@@ -17,8 +17,6 @@ package com.liferay.portal.dao.db;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 
-import java.io.IOException;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,21 +27,21 @@ import org.junit.Test;
 public class SQLServerDBTest extends BaseDBTestCase {
 
 	@Test
-	public void testRewordAlterColumnType() throws IOException {
+	public void testRewordAlterColumnType() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName nvarchar(75);\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75);"));
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeNoSemicolon() throws IOException {
+	public void testRewordAlterColumnTypeNoSemicolon() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName nvarchar(75);\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75)"));
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeNotNull() throws IOException {
+	public void testRewordAlterColumnTypeNotNull() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName nvarchar(75) not " +
 				"null;\n",
@@ -52,14 +50,14 @@ public class SQLServerDBTest extends BaseDBTestCase {
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeNull() throws IOException {
+	public void testRewordAlterColumnTypeNull() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName nvarchar(75) null;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
 	}
 
 	@Test
-	public void testRewordRenameTable() throws IOException {
+	public void testRewordRenameTable() throws Exception {
 		Assert.assertEquals(
 			"exec sp_rename 'a', 'b';\n", buildSQL(RENAME_TABLE_QUERY));
 	}

@@ -33,6 +33,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.sql.SQLException;
+
 import java.util.Map;
 
 /**
@@ -167,7 +169,7 @@ public class DBBuilder {
 	}
 
 	private void _buildSQLFile(String sqlDir, String fileName)
-		throws IOException {
+		throws IOException, SQLException {
 
 		if (!FileUtil.exists(
 				StringBundler.concat(sqlDir, "/", fileName, ".sql"))) {
@@ -179,7 +181,7 @@ public class DBBuilder {
 	}
 
 	private void _buildSQLFiles(String sqlDir, String regex)
-		throws IOException {
+		throws IOException, SQLException {
 
 		try (DirectoryStream<Path> paths = Files.newDirectoryStream(
 				Paths.get(sqlDir), regex)) {
@@ -196,7 +198,7 @@ public class DBBuilder {
 	}
 
 	private void _generateSQLFile(String sqlDir, String fileName)
-		throws IOException {
+		throws IOException, SQLException {
 
 		for (DBType dbType : _dbTypes) {
 			DB db = DBManagerUtil.getDB(dbType, null);

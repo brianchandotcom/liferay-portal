@@ -17,8 +17,6 @@ package com.liferay.portal.dao.db;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 
-import java.io.IOException;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,7 +27,7 @@ import org.junit.Test;
 public class PostgreSQLDBTest extends BaseDBTestCase {
 
 	@Test
-	public void testRewordAlterColumnType() throws IOException {
+	public void testRewordAlterColumnType() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter userName type varchar(75) using " +
 				"userName::varchar(75);\n",
@@ -37,7 +35,7 @@ public class PostgreSQLDBTest extends BaseDBTestCase {
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeNoSemicolon() throws IOException {
+	public void testRewordAlterColumnTypeNoSemicolon() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter userName type varchar(75) using " +
 				"userName::varchar(75);\n",
@@ -45,7 +43,7 @@ public class PostgreSQLDBTest extends BaseDBTestCase {
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeNotNull() throws IOException {
+	public void testRewordAlterColumnTypeNotNull() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter userName type varchar(75) using " +
 				"userName::varchar(75);alter table DLFolder alter column " +
@@ -55,7 +53,7 @@ public class PostgreSQLDBTest extends BaseDBTestCase {
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeNull() throws IOException {
+	public void testRewordAlterColumnTypeNull() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter userName type varchar(75) using " +
 				"userName::varchar(75);alter table DLFolder alter column " +
@@ -64,7 +62,7 @@ public class PostgreSQLDBTest extends BaseDBTestCase {
 	}
 
 	@Test
-	public void testRewordRenameTable() throws IOException {
+	public void testRewordRenameTable() throws Exception {
 		Assert.assertEquals(
 			"alter table a rename to b;\n", buildSQL(RENAME_TABLE_QUERY));
 	}

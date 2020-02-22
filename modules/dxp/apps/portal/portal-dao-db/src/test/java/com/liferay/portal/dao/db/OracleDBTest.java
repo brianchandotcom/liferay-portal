@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 
-import java.io.IOException;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,21 +39,21 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class OracleDBTest extends BaseDBTestCase {
 
 	@Test
-	public void testRewordAlterColumnType() throws IOException {
+	public void testRewordAlterColumnType() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder modify userName VARCHAR2(75 CHAR);\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75);"));
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeLowerCase() throws IOException {
+	public void testRewordAlterColumnTypeLowerCase() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder modify userName VARCHAR2(75 CHAR);\n",
 			buildSQL("alter_column_type DLFolder userName varchar(75);"));
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeNoSemicolon() throws IOException {
+	public void testRewordAlterColumnTypeNoSemicolon() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder modify userName VARCHAR2(75 CHAR);\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75)"));
@@ -101,7 +99,7 @@ public class OracleDBTest extends BaseDBTestCase {
 	}
 
 	@Test
-	public void testRewordAlterColumnTypeString() throws IOException {
+	public void testRewordAlterColumnTypeString() throws Exception {
 		Assert.assertEquals(
 			"alter table BlogsEntry modify description VARCHAR2(4000 CHAR);\n",
 			buildSQL("alter_column_type BlogsEntry description STRING;"));

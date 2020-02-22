@@ -125,8 +125,6 @@ public class FileinstallDeployTest {
 			_CONFIGURATION_PID.concat(".cfg"));
 
 		try {
-			Files.createFile(path);
-
 			String content = StringBundler.concat(
 				_TEST_KEY, StringPool.EQUAL, _TEST_VALUE_1);
 
@@ -174,9 +172,7 @@ public class FileinstallDeployTest {
 		finally {
 			serviceRegistration.unregister();
 
-			if (Files.exists(path)) {
-				Files.delete(path);
-			}
+			Files.deleteIfExists(path);
 		}
 	}
 
@@ -184,8 +180,6 @@ public class FileinstallDeployTest {
 	public void testDeployAndDelete() throws Exception {
 		Path path = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_MODULES_DIR, _TEST_JAR_NAME);
-
-		Files.createFile(path);
 
 		CountDownLatch installCountDownLatch = new CountDownLatch(1);
 
@@ -267,9 +261,7 @@ public class FileinstallDeployTest {
 		finally {
 			_bundleContext.removeBundleListener(bundleListener);
 
-			if (Files.exists(path)) {
-				Files.delete(path);
-			}
+			Files.deleteIfExists(path);
 		}
 	}
 

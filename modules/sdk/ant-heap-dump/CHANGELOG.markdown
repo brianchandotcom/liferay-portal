@@ -14,6 +14,8 @@
 
 ### Dependencies
 - [LPS-75938]: Update the com.liferay.petra.process dependency to version 1.0.0.
+- [LPS-75938]: Update the com.liferay.portal.kernel dependency to version
+default.
 
 ## 1.0.2 - 2017-10-12
 
@@ -41,10 +43,16 @@
 
 ### Dependencies
 - []: Update the com.liferay.portal.kernel dependency to version 2.51.0.
+- [LPS-75121]: Update the com.liferay.portal.kernel dependency to version
+default.
 - []: Update the com.liferay.portal.kernel dependency to version 2.0.0.
+- [LPS-64182]: Update the com.liferay.portal.kernel dependency to version
+default.
 - []: Update the com.liferay.portal.kernel dependency to version 1.0.3.
 - [LPS-63499]: Update the com.liferay.portal.kernel dependency to version 1.0.2.
 - []: Update the com.liferay.portal.kernel dependency to version 1.0.1.
+- [LPS-63797]: Update the com.liferay.portal.kernel dependency to version
+default.
 
 ## 1.0.1 - 2015-11-16
 

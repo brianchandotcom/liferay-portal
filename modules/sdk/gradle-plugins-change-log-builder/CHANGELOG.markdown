@@ -76,6 +76,8 @@ repositories and later cause OOM (f68000470e)
 
 ### Dependencies
 - [LPS-77425]: Update the com.liferay.gradle.util dependency to version 1.0.29.
+- [LPS-77425]: Update the org.eclipse.jgit dependency to version
+4.1.1.201511131810-r.
 - [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.29.
 - [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.28.
 - [LPS-72914]: Update the com.liferay.gradle.util dependency to version 1.0.27.

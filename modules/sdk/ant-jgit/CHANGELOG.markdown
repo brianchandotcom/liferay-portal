@@ -50,6 +50,8 @@ as changed (184aa0c03b)
 - [LPS-51081]: Ran "ant reset-gradle init-gradle" (9ab363b842)
 
 ### Dependencies
+- [LPS-51081]: Update the org.eclipse.jgit dependency to version
+4.0.0.201505050340-m2.
 - [LPS-51081]: Update the slf4j-log4j12 dependency to version 1.7.2.
 
 ## 1.0.5 - 2015-06-07

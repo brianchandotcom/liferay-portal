@@ -14,6 +14,9 @@
 (1b0e1275bc)
 - [LPS-55691]: Deploy directly to lib/development (7a5801f7a3)
 
+### Dependencies
+- [LPS-55691]: Update the bsh dependency to version 2.0b4.
+
 ## 1.0.3 - 2015-11-16
 
 ### Commits

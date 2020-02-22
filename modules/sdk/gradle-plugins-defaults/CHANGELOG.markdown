@@ -1566,6 +1566,9 @@ version 2.2.14.
 - [LPS-97670]: Update Gradle License Report plugin to the latest version
 (655f5e4196)
 
+### Dependencies
+- [LPS-97670]: Update the gradle-license-report dependency to version 1.8.
+
 ## 5.6.5 - 2019-07-08
 
 ### Commits
@@ -5142,6 +5145,10 @@ Spring Boot projects according to Liferay defaults.
 - [LPS-80944]: Expose plugin with id 'com.liferay.spring.boot.defaults'
 (cfa290c557)
 - [LPS-80944]: Add plugin (4ce673082a)
+
+### Dependencies
+- [LPS-80944]: Update the spring-boot-gradle-plugin dependency to version
+1.5.7.RELEASE.
 
 ## 5.3.121 - 2018-05-15
 

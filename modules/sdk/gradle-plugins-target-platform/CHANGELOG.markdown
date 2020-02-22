@@ -44,7 +44,9 @@ dependencies (78d2606f6b)
 - [LPS-105380]: Rename exception variables (b3173da81b)
 
 ### Dependencies
+- [LPS-107155]: Update the json dependency to version 20180813.
 - [LPS-107155]: Update the fastjson dependency to version 1.2.62.
+- [LPS-107155]: Update the commons-io dependency to version 2.6.
 - [LPS-107155]: Update the dom4j dependency to version 2.1.1.
 
 ## 2.0.8 - 2020-01-10
@@ -201,6 +203,10 @@ add indexSources (9b296b8d83)
 - [LPS-91342]: regen (334a31a0b6)
 - [LPS-91342]: regen (a492452b39)
 
+### Dependencies
+- [LPS-93873]: Update the dependency-management-plugin dependency to version
+1.0.7.RELEASE.
+
 ### Description
 - [LPS-93873]: Update the `dependency-management-plugin` to `1.0.7.RELEASE`.
 
@@ -341,6 +347,8 @@ and unit tests) (045479bf7c)
 
 ### Dependencies
 - [LPS-77425]: Update the com.liferay.gradle.util dependency to version 1.0.29.
+- [LPS-77425]: Update the dependency-management-plugin dependency to version
+1.0.4.RELEASE.
 
 ### Description
 - [LPS-77343]: Add the ability to use a manually generated bndrun file in a

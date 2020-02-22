@@ -3971,6 +3971,7 @@ version 1.0.243.
 to version 2.1.59.
 - [LPS-85849]: Update the com.liferay.portal.tools.service.builder dependency to
 version 1.0.242.
+- [LPS-83790]: Update the commons-compress dependency to version 1.12.
 
 ## 3.12.164 - 2018-10-15
 
@@ -13204,6 +13205,7 @@ extension, otherwise it will always download the "latest.release" of Whip
 
 ### Dependencies
 - [LPS-61748]: Update the com.liferay.ant.bnd dependency to version 2.0.5.
+- [LPS-61748]: Update the gradle-bundle-plugin dependency to version 0.8.
 
 ## 1.0.65 - 2016-01-07
 
@@ -13240,6 +13242,7 @@ to use Ant here (d156a15467)
 
 ### Dependencies
 - [LPS-61748]: Update the biz.aQute.bndlib dependency to version 3.1.0.
+- [LPS-61748]: Update the gradle-bundle-plugin dependency to version 0.8.
 
 ## 1.0.60 - 2016-01-04
 

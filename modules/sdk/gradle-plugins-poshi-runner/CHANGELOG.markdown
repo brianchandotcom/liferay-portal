@@ -128,6 +128,8 @@ repositories.
 
 ### Dependencies
 - [LPS-77425]: Update the com.liferay.gradle.util dependency to version 1.0.29.
+- [LPS-77425]: Update the org.eclipse.jgit dependency to version
+4.10.0.201712302008-r.
 
 ## 2.2.1 - 2018-03-07
 
@@ -186,6 +188,10 @@ plugin.
 - [LPS-77359]: Enforce semantic versioning (9fa19de1bf)
 - [LPS-67573]: Make methods private to reduce API surface (57a1832e9c)
 
+### Dependencies
+- [LPS-77359]: Update the org.eclipse.jgit dependency to version
+4.10.0.201712302008-r.
+
 ## 1.0.12 - 2017-10-02
 
 ### Commits
@@ -197,6 +203,8 @@ plugin.
 - [LPS-67658]: These plugins must work with Gradle 2.5+ (5b963e363d)
 
 ### Dependencies
+- [LPS-75039]: Update the com\.liferay\.gradle\.plugins\.poshi\.runner
+dependency to version (\d.+)"/, "../../../portal-web/build-test.gradle.
 - [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.29.
 - [LPS-73584]: Update the com.liferay.gradle.util dependency to version 1.0.28.
 - [LPS-72914]: Update the com.liferay.gradle.util dependency to version 1.0.27.

@@ -186,6 +186,9 @@ match (655c6843bf)
 - [LPS-82534]: The regex is actually wrong. (acaece1321)
 - [LPS-79679]: Fix incorrect naming (6d14ee950f)
 
+### Dependencies
+- [LPS-75049]: Update the com.liferay.portal.impl dependency to version default.
+
 ## 2.0.50 - 2018-04-03
 
 ### Commits
@@ -295,6 +298,9 @@ are moved packages (30a4d749c1)
 ### Commits
 - [LPS-73481]: Ant-bnd semantic versioning: take all dtds from portal-impl
 (f2ad592d3d)
+
+### Dependencies
+- [LPS-73481]: Update the com.liferay.portal.impl dependency to version default.
 
 ## 2.0.37 - 2017-04-28
 
@@ -454,6 +460,9 @@ duplicate method (4efb27ede0)
 - [LPS-65283]: Resolve using embedded DTD if found (eef966e178)
 - [LPS-65283]: Embed the liferay-social DTDs (cb94c10e82)
 - [LPS-61099]: Delete build.xml in modules (c9a7e1d370)
+
+### Dependencies
+- [LPS-65283]: Update the com.liferay.portal.impl dependency to version default.
 
 ## 2.0.19 - 2016-03-29
 

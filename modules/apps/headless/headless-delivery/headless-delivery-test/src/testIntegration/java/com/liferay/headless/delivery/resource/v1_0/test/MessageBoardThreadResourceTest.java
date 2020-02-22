@@ -106,6 +106,7 @@ public class MessageBoardThreadResourceTest
 		MessageBoardThread messageBoardThread =
 			super.randomMessageBoardThread();
 
+		messageBoardThread.setMessageBoardSectionId((Long)null);
 		messageBoardThread.setThreadType("Urgent");
 
 		return messageBoardThread;

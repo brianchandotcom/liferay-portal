@@ -31,6 +31,18 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGetKeywordsRankedPage() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetKeywordsRankedPageWithPagination() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLDeleteKeyword() {
 	}
 

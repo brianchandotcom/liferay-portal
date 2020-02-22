@@ -376,9 +376,7 @@ private String _formatLongLine(String line) {
 		return line.substring(0, x) + "\n" + _formatLongLine(line.substring(x + 1))
 	}
 
-	for (x = 80; x > 0; x--) {
-		if (line[x] == " ") {
-			return line.substring(0, x) + "\n" + _formatLongLine(line.substring(x + 1))
-		}
-	}
+	x = line.lastIndexOf(" ", 80)
+
+	return line.substring(0, x) + "\n" + _formatLongLine(line.substring(x + 1))
 }

@@ -362,21 +362,27 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(FileCopyDetails fileCopyDetails) {
-					String dirName = buildCSSTask.getOutputDirName();
-
-					dirName = dirName.replace('\\', '/');
-
-					if (dirName.charAt(0) != '/') {
-						dirName = '/' + dirName;
-					}
-
-					if (dirName.charAt(dirName.length() - 1) != '/') {
-						dirName = dirName + '/';
-					}
+					String outputDirName = _normalizeDirName(
+						buildCSSTask.getOutputDirName());
 
 					String path = fileCopyDetails.getPath();
 
-					fileCopyDetails.setPath(path.replace(dirName, "/"));
+					fileCopyDetails.setPath(
+						path.replace('/' + outputDirName + '/', "/"));
+				}
+
+				private String _normalizeDirName(String dirName) {
+					String name = dirName.replace('\\', '/');
+
+					if (name.charAt(0) == '/') {
+						name = name.substring(1);
+					}
+
+					if (name.charAt(name.length() - 1) == '/') {
+						name = name.substring(0, name.length() - 1);
+					}
+
+					return name;
 				}
 
 			});

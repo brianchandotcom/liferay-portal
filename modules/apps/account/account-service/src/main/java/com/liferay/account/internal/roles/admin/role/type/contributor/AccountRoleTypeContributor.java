@@ -75,7 +75,7 @@ public class AccountRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public int getType() {
-		return RoleConstants.TYPE_PROVIDER;
+		return RoleConstants.TYPE_ACCOUNT;
 	}
 
 	@Override

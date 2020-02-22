@@ -1,0 +1,120 @@
+.ie {
+	.portlet-navigation {
+		width: 100%;
+	}
+
+	.portlet-wiki {
+		.child-pages h3 {
+			margin-bottom: 0.2em;
+		}
+
+		.syntax-help h4 {
+			margin-bottom: 0.3em;
+		}
+	}
+}
+
+.ie6 {
+	.portlet-quick-note {
+		textarea {
+			height: expression(this.height < 100 ? '100px': this.height);
+		}
+	}
+}
+
+.ie6,
+.ie7 {
+	.lfr-code table tr td.line-numbers {
+		display: none;
+	}
+}
+
+.ie9 {
+    .card {
+        .clamp-horizontal .clamp-container {
+			-ms-transform: none;
+		}
+    }
+
+	.checkbox-bottom-left input[type='checkbox'],
+	.checkbox-bottom-left label > input[type='checkbox'],
+	.checkbox-bottom-right input[type='checkbox'],
+	.checkbox-bottom-right label > input[type='checkbox'],
+	.checkbox-top-left label > input[type='checkbox'],
+	.checkbox-top-right label > input[type='checkbox'],
+	.radio-bottom-left input[type='radio'],
+	.radio-bottom-left label > input[type='radio'],
+	.radio-bottom-right input[type='radio'],
+	.radio-bottom-right label > input[type='radio'],
+	.radio-top-left label > input[type='radio'],
+	.radio-top-right label > input[type='radio'] {
+		-ms-transform: none;
+	}
+
+	.checkbox-middle-left input[type='checkbox'],
+	.checkbox-middle-left label > input[type='checkbox'],
+	.checkbox-middle-right input[type='checkbox'],
+	.checkbox-middle-right label > input[type='checkbox'],
+	.radio-middle-left input[type='radio'],
+	.radio-middle-left label > input[type='radio'],
+	.radio-middle-right input[type='radio'],
+	.radio-middle-right label > input[type='radio'] {
+		-ms-transform: translateY(-50%);
+	}
+
+    .lfr-asset-type-column,
+    .lfr-author-column,
+    .lfr-city-column,
+    .lfr-country-column,
+    .lfr-email-address-column,
+    .lfr-job-title-column,
+    .lfr-region-column,
+    .lfr-removed-by-column,
+    .lfr-replier-column,
+    .lfr-scope-column,
+    .lfr-screen-name-column,
+    .lfr-type-column,
+    .lfr-user-column,
+    .lfr-users-column,
+    .list-group-item-content,
+    .list-group-item-field {
+        word-break: break-all \9;
+	}
+
+	@include media-breakpoint-down(md) {
+		.responsive-table-horizontal thead {
+			float: none;
+		}
+	}
+}
+
+.edge,
+.ie11 {
+	.table-list {
+		border-collapse: separate;
+		border-spacing: 0;
+	}
+}
+
+:-ms-input-placeholder {
+	color: #6b6c7e !important;
+}
+
+:-ms-input-placeholder.form-builder-page-header-title,
+:-ms-input-placeholder.form-builder-page-header-description,
+.form-builder-page-header-description:-ms-input-placeholder,
+.form-builder-page-header-title:-ms-input-placeholder {
+	color: #6b6c7d !important;
+}
+
+.form-control-inline {
+	&:-ms-input-placeholder {
+		color: #a7a9bc;
+		font-style: italic;
+	}
+
+	&::-ms-input-placeholder {
+		color: #a7a9bc;
+		font-style: italic;
+	}
+}

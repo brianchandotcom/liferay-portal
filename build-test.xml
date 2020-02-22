@@ -4698,6 +4698,40 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="stop-remote-search-engine">
+		<sequential>
+			<get-testcase-property property.name="osgi.app.includes" />
+			<get-testcase-property property.name="remote.elasticsearch.enabled" />
+
+			<if>
+				<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
+				<then>
+					<if>
+						<contains string="${osgi.app.includes}" substring="portal-search-elasticsearch7" />
+						<then>
+							<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
+						</then>
+						<else>
+							<ant antfile="build-test-elasticsearch6.xml" target="stop-elasticsearch" />
+						</else>
+					</if>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="solr.enabled" />
+
+			<if>
+				<or>
+					<contains string="${env.CI_TEST_SUITE}" substring="solr" />
+					<equals arg1="${solr.enabled}" arg2="true" />
+				</or>
+				<then>
+					<ant antfile="build-test-solr.xml" target="stop-solr-core" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="uninstall-patches">
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
 
@@ -12436,45 +12470,7 @@ url=${short.hostname}:8080</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="portal.suite.search.engine" />
-		<get-testcase-property property.name="remote.elasticsearch.enabled" />
-
-		<if>
-			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
-			<then>
-				<if>
-					<contains string="${portal.suite.search.engine}" substring="elasticsearch7" />
-					<then>
-						<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
-					</then>
-					<else>
-						<ant antfile="build-test-elasticsearch6.xml" target="stop-elasticsearch" />
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="solr.enabled" />
-
-		<if>
-			<equals arg1="${solr.enabled}" arg2="true" />
-			<then>
-				<ant antfile="build-test-solr.xml" target="stop-solr-core" />
-			</then>
-			<elseif>
-				<isset property="env.CI_TEST_SUITE" />
-				<then>
-					<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
-
-					<if>
-						<equals arg1="${suite.search.engine}" arg2="solr" />
-						<then>
-							<ant antfile="build-test-solr.xml" target="stop-solr-core" />
-						</then>
-					</if>
-				</then>
-			</elseif>
-		</if>
+		<stop-remote-search-engine />
 
 		<antcall target="clean-up-web-xml" />
 	</target>

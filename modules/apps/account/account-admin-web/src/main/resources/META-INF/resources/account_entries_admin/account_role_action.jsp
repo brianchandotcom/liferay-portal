@@ -22,6 +22,8 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 AccountRoleDisplay accountRoleDisplay = (AccountRoleDisplay)row.getObject();
+
+Role role = accountRoleDisplay.getRole();
 %>
 
 <liferay-ui:icon-menu
@@ -31,7 +33,7 @@ AccountRoleDisplay accountRoleDisplay = (AccountRoleDisplay)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= !AccountRoleConstants.isRequiredRole(accountRoleDisplay.getRole()) %>">
+	<c:if test="<%= role.getType() != RoleConstants.TYPE_ACCOUNT %>">
 		<portlet:renderURL var="editAccountRoleURL">
 			<portlet:param name="mvcPath" value="/account_entries_admin/edit_account_role.jsp" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />

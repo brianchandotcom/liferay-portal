@@ -117,13 +117,15 @@ changed (c0d952fb13)
 - [LPS-0]: SF. Space character correction for build scripts & READMEs
 (9dd5d12c9a)
 - [LPS-88909]: Revert "LPS-88909 Disable cache (see
-null
+https://github.com/liferay/liferay-portal/commit/fd8763c#diff-082f1d3a132d6a95e4d04c1b3ee8ccedR155)"
+(c0cc8d0404)
 
 ## 4.6.16 - 2019-05-24
 
 ### Commits
 - [LPS-88909]: Disable cache (see
-null
+https://github.com/liferay/liferay-portal/commit/fd8763c#diff-082f1d3a132d6a95e4d04c1b3ee8ccedR155)
+(21e1e8f960)
 
 ## 4.6.15 - 2019-05-06
 

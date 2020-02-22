@@ -6149,7 +6149,8 @@ since it has been moved into [Liferay Gradle Plugins Baseline].
 ### Commits
 - [LPS-77423]: Not needed anymore (610d4364ac)
 - [LPS-73070]: Revert "LPS-73070 Copy
-null
+https://github.com/liferay/liferay-portal/commit/61e14073037885b35461ab01cb3eace31a161342
+inside plugin" (f56f6f91f8)
 
 ### Dependencies
 - [LPS-77423]: Update the com.liferay.gradle.plugins dependency to version
@@ -6582,7 +6583,8 @@ Gradle plugin to properly configure the portal compatibility OSGi modules.
 
 ### Commits
 - [LPS-73070]: Copy
-null
+https://github.com/liferay/liferay-portal/commit/61e14073037885b35461ab01cb3eace31a161342
+inside plugin (b9cf2dfff6)
 
 ### Dependencies
 - [LPS-75965]: Update the com.liferay.gradle.plugins dependency to version
@@ -8094,7 +8096,8 @@ version in external files to the latest snapshot.
 
 ### Commits
 - [LPS-71795]: Generalize
-null
+https://github.com/liferay/liferay-portal/commit/494bde999167d0c786519918b7a70bc5f76e93c3
+for all "findbugs*" tasks (5c38e9bcdc)
 
 ### Dependencies
 - [LPS-71826]: Update the com.liferay.gradle.plugins dependency to version

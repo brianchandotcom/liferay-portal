@@ -13422,7 +13422,8 @@ jars to the same configuration, because "Cannot change dependencies of
 configuration after it has been resolved". They're both executed at
 "afterEvaluate", but the code in gradle-plugins will happen first. Instead, we
 can safely ask javadoc.inputs.sourceFiles (see
-null
+https://github.com/gradle/gradle/blob/REL_2.8/subprojects/plugins/src/main/groovy/org/gradle/api/plugins/JavaPlugin.java#L96)
+(39b998e8d6)
 
 ## 1.0.46 - 2015-12-11
 

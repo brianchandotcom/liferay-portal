@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
@@ -24,12 +25,14 @@ import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.message.boards.constants.MBMessageConstants;
@@ -71,6 +74,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
@@ -285,7 +289,7 @@ public class MessageBoardThreadResourceImpl
 					mbThread.getGroupId(), messageBoardThread.getThreadType()),
 				false,
 				ServiceContextUtil.createServiceContext(
-					null,
+					messageBoardThread.getTaxonomyCategoryIds(),
 					Optional.ofNullable(
 						messageBoardThread.getKeywords()
 					).orElse(
@@ -347,7 +351,8 @@ public class MessageBoardThreadResourceImpl
 			Collections.emptyList(), false,
 			_toPriority(siteId, messageBoardThread.getThreadType()), false,
 			ServiceContextUtil.createServiceContext(
-				null, messageBoardThread.getKeywords(),
+				messageBoardThread.getTaxonomyCategoryIds(),
+				messageBoardThread.getKeywords(),
 				_getExpandoBridgeAttributes(messageBoardThread), siteId,
 				messageBoardThread.getViewableByAsString()));
 
@@ -564,6 +569,14 @@ public class MessageBoardThreadResourceImpl
 				subscribed = _subscriptionLocalService.isSubscribed(
 					mbMessage.getCompanyId(), contextUser.getUserId(),
 					MBThread.class.getName(), mbMessage.getThreadId());
+				taxonomyCategories = TransformUtil.transformToArray(
+					_assetCategoryLocalService.getCategories(
+						MBMessage.class.getName(), mbThread.getRootMessageId()),
+					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						assetCategory,
+						contextAcceptLanguage.getPreferredLocale()),
+					TaxonomyCategory.class);
 				threadType = _toThreadType(
 					mbThread.getGroupId(), mbThread.getPriority());
 				viewCount = mbThread.getViewCount();
@@ -642,6 +655,9 @@ public class MessageBoardThreadResourceImpl
 			mbThread.setQuestion(showAsQuestion);
 		}
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

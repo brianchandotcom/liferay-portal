@@ -20,12 +20,19 @@ runGradleTest {
 	dependsOn war
 
 	doLast {
-		File dir = file("build/tmp/prepareBuildCSSForWar/css/.sass-cache")
+		File tempDir = new File(temporaryDir, war.archiveFileName.get())
+
+		copy {
+			from zipTree(war.archiveFile)
+			into tempDir
+		}
+
+		File cssDir = new File(tempDir, "css")
 
 		Pattern pattern = ~/@import\s+url\s*\(\s*['"]?(.+\.css\?t=\d+)['"]?\s*\)\s*;/
 
 		for (String fileName in ["main.css", "main_rtl.css"]) {
-			File generatedFile = new File(dir, fileName)
+			File generatedFile = new File(cssDir, fileName)
 
 			assert generatedFile.exists()
 
@@ -34,7 +41,7 @@ runGradleTest {
 			assert matcher.count == 3
 		}
 
-		File excludedFile = new File(dir, "excluded.css")
+		File excludedFile = new File(cssDir, "excluded.css")
 
 		assert !excludedFile.exists()
 	}

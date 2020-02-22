@@ -666,6 +666,105 @@ public abstract class BaseKeywordResourceTestCase {
 					JSONFactoryUtil.serialize(keyword))));
 	}
 
+	@Test
+	public void testGetKeywordsRankedPage() throws Exception {
+		Page<Keyword> page = keywordResource.getKeywordsRankedPage(
+			testGetKeywordsRankedPage_getSiteId(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long siteId = testGetKeywordsRankedPage_getSiteId();
+		Long irrelevantSiteId = testGetKeywordsRankedPage_getIrrelevantSiteId();
+
+		if ((irrelevantSiteId != null)) {
+			Keyword irrelevantKeyword = testGetKeywordsRankedPage_addKeyword(
+				irrelevantSiteId, randomIrrelevantKeyword());
+
+			page = keywordResource.getKeywordsRankedPage(
+				irrelevantSiteId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantKeyword),
+				(List<Keyword>)page.getItems());
+			assertValid(page);
+		}
+
+		Keyword keyword1 = testGetKeywordsRankedPage_addKeyword(
+			siteId, randomKeyword());
+
+		Keyword keyword2 = testGetKeywordsRankedPage_addKeyword(
+			siteId, randomKeyword());
+
+		page = keywordResource.getKeywordsRankedPage(
+			siteId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(keyword1, keyword2), (List<Keyword>)page.getItems());
+		assertValid(page);
+
+		keywordResource.deleteKeyword(keyword1.getId());
+
+		keywordResource.deleteKeyword(keyword2.getId());
+	}
+
+	@Test
+	public void testGetKeywordsRankedPageWithPagination() throws Exception {
+		Long siteId = testGetKeywordsRankedPage_getSiteId();
+
+		Keyword keyword1 = testGetKeywordsRankedPage_addKeyword(
+			siteId, randomKeyword());
+
+		Keyword keyword2 = testGetKeywordsRankedPage_addKeyword(
+			siteId, randomKeyword());
+
+		Keyword keyword3 = testGetKeywordsRankedPage_addKeyword(
+			siteId, randomKeyword());
+
+		Page<Keyword> page1 = keywordResource.getKeywordsRankedPage(
+			siteId, Pagination.of(1, 2));
+
+		List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
+
+		Assert.assertEquals(keywords1.toString(), 2, keywords1.size());
+
+		Page<Keyword> page2 = keywordResource.getKeywordsRankedPage(
+			siteId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Keyword> keywords2 = (List<Keyword>)page2.getItems();
+
+		Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
+
+		Page<Keyword> page3 = keywordResource.getKeywordsRankedPage(
+			siteId, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(keyword1, keyword2, keyword3),
+			(List<Keyword>)page3.getItems());
+	}
+
+	protected Keyword testGetKeywordsRankedPage_addKeyword(
+			Long siteId, Keyword keyword)
+		throws Exception {
+
+		return keywordResource.postSiteKeyword(siteId, keyword);
+	}
+
+	protected Long testGetKeywordsRankedPage_getSiteId() throws Exception {
+		return testGroup.getGroupId();
+	}
+
+	protected Long testGetKeywordsRankedPage_getIrrelevantSiteId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
 	protected Keyword testGraphQLKeyword_addKeyword() throws Exception {
 		return testGraphQLKeyword_addKeyword(randomKeyword());
 	}

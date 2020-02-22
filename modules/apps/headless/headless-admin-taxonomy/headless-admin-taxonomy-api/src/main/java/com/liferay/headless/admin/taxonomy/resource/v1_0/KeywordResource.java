@@ -67,6 +67,10 @@ public interface KeywordResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
+	public Page<Keyword> getKeywordsRankedPage(
+			Long siteId, Pagination pagination)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

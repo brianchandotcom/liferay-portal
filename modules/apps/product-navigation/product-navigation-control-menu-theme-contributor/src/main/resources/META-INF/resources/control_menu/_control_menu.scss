@@ -178,10 +178,6 @@ a.control-menu-icon,
 	min-width: 64px;
 	width: 0;
 
-	.ie & {
-		width: auto;
-	}
-
 	.clamp-container {
 		overflow: hidden;
 		text-overflow: ellipsis;

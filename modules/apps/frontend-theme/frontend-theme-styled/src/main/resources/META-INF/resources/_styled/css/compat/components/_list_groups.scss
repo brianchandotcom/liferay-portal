@@ -80,7 +80,6 @@
 		text-align: center;
 		vertical-align: top;
 		width: 1%;
-		word-break: break-all \9; // IE9
 		word-wrap: break-word;
 
 		> .checkbox,
@@ -97,12 +96,10 @@
 		padding: $table-cell-padding;
 		position: relative;
 		vertical-align: top;
-		word-break: break-all \9; // IE9
 		word-wrap: break-word;
 
 		&.clamp-horizontal {
 			.clamp-container {
-				-ms-transform: none;
 				transform: none;
 			}
 		}

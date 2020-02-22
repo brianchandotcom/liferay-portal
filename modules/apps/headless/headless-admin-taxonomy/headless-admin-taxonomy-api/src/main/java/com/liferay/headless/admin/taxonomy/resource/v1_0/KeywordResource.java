@@ -43,6 +43,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface KeywordResource {
 
+	public Page<Keyword> getKeywordsRankedPage(
+			Long siteId, Pagination pagination)
+		throws Exception;
+
 	public void deleteKeyword(Long keywordId) throws Exception;
 
 	public Response deleteKeywordBatch(String callbackURL, Object object)

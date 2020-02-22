@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -49,6 +50,10 @@ public class RoleModelListener extends BaseModelListener<Role> {
 				role.getClassNameId(),
 				_portal.getClassNameId(AccountRole.class))) {
 
+			return;
+		}
+
+		if (!Objects.equals(role.getType(), RoleConstants.TYPE_ACCOUNT)) {
 			return;
 		}
 

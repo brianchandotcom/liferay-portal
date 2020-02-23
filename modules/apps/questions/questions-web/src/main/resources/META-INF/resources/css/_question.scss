@@ -50,3 +50,13 @@
 		align-self: flex-end;
 	}
 }
+
+.btn-secondary.question-subscribed,
+.btn-secondary.question-subscribed:hover {
+	background-color: $primary-l3;
+}
+
+.question-bell-subscribed,
+.question-bell-subscribed:hover {
+	color: $primary;
+}

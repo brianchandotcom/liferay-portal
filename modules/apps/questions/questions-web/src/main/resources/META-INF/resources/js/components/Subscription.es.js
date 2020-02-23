@@ -12,7 +12,9 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import classnames from 'classnames';
 import React from 'react';
 
 import {subscribe, unsubscribe} from '../utils/client.es';
@@ -30,9 +32,18 @@ export default ({onSubscription, question}) => {
 	};
 
 	return (
-		<ClayIcon
+		<ClayButton
+			className={classnames('btn', 'btn-secondary', {
+				'question-subscribed': question.subscribed
+			})}
 			onClick={changeSubscription}
-			symbol={question.subscribed ? 'bell-off' : 'bell-on'}
-		/>
+		>
+			<ClayIcon
+				className={classnames({
+					'question-bell-subscribed': question.subscribed
+				})}
+				symbol="bell-on"
+			/>
+		</ClayButton>
 	);
 };

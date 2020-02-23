@@ -17,11 +17,14 @@ package com.liferay.gradle.plugins.jasper.jspc;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
+
+import java.lang.reflect.Method;
+
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,8 +34,6 @@ import java.util.Map;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.OutputDirectory;
@@ -43,53 +44,19 @@ import org.gradle.api.tasks.SkipWhenEmpty;
  */
 public class CompileJSPTask extends JavaExec {
 
-	public CompileJSPTask() {
-		setMain("com.liferay.jasper.jspc.JspC");
-	}
-
 	@Override
 	public void exec() {
-		setArgs(_getCompleteArgs());
-
+		FileCollection classpath = getClasspath();
 		FileCollection jspCClasspath = getJspCClasspath();
 
-		if (jspCClasspath != null) {
-			String jspClasspath = jspCClasspath.getAsPath();
-
-			setStandardInput(new ByteArrayInputStream(jspClasspath.getBytes()));
-		}
-
-		OutputStream taskErrorOutput = getErrorOutput();
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
 		try {
-			setErrorOutput(byteArrayOutputStream);
-
-			super.exec();
-
-			String output = byteArrayOutputStream.toString();
-
-			if (output.contains("JasperException")) {
-				_logger.error(output);
-
-				throw new GradleException("Unable to compile JSPs");
-			}
-			else if (_logger.isInfoEnabled()) {
-				_logger.info(output);
-			}
+			_runWithClassPath(
+				classpath.getAsPath() + File.pathSeparator +
+					jspCClasspath.getAsPath(),
+				_getCompleteArgs());
 		}
-		finally {
-			try {
-				byteArrayOutputStream.writeTo(taskErrorOutput);
-			}
-			catch (IOException ioException) {
-				throw new GradleException(
-					ioException.getMessage(), ioException);
-			}
-
-			setErrorOutput(taskErrorOutput);
+		catch (Exception exception) {
+			throw new GradleException(exception.getMessage(), exception);
 		}
 	}
 
@@ -145,21 +112,62 @@ public class CompileJSPTask extends JavaExec {
 		_webAppDir = webAppDir;
 	}
 
-	private List<String> _getCompleteArgs() {
-		List<String> completeArgs = new ArrayList<>(getArgs());
+	private static void _runWithClassPath(String classpath, String[] args)
+		throws Exception {
 
-		completeArgs.add("-d");
-		completeArgs.add(
-			FileUtil.relativize(getDestinationDir(), getWorkingDir()));
+		classpath =
+			System.getProperty("java.class.path") + File.pathSeparator +
+				classpath;
 
-		completeArgs.add("-webapp");
-		completeArgs.add(FileUtil.getAbsolutePath(getWebAppDir()));
+		String[] files = classpath.split(File.pathSeparator);
 
-		return completeArgs;
+		URL[] urls = new URL[files.length];
+
+		for (int i = 0; i < files.length; i++) {
+			File file = new File(files[i]);
+
+			URI uri = file.toURI();
+
+			urls[i] = uri.toURL();
+		}
+
+		ClassLoader classLoader = new URLClassLoader(urls, null);
+
+		Class<?> jspCClass = classLoader.loadClass("org.apache.jasper.JspC");
+
+		Object jspC = jspCClass.newInstance();
+
+		Method setArgsMethod = jspCClass.getMethod("setArgs", String[].class);
+
+		setArgsMethod.invoke(jspC, new Object[] {args});
+
+		Method setClassPathMethod = jspCClass.getMethod(
+			"setClassPath", String.class);
+
+		setClassPathMethod.invoke(jspC, classpath);
+
+		Method executeMethod = jspCClass.getMethod("execute");
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(classLoader);
+
+		try {
+			executeMethod.invoke(jspC);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
-	private static final Logger _logger = Logging.getLogger(
-		CompileJSPTask.class);
+	private String[] _getCompleteArgs() {
+		return new String[] {
+			"-d", FileUtil.getAbsolutePath(getDestinationDir()),
+			"-webapp", FileUtil.getAbsolutePath(getWebAppDir())
+		};
+	}
 
 	private Object _destinationDir;
 	private FileCollection _jspCClasspath;

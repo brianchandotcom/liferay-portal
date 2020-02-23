@@ -151,16 +151,17 @@ export default ({
 								</div>
 								<div>
 									<ClayButton.Group spaced={true}>
-										<Subscription
-											onSubscription={subscribed =>
-												setQuestion({
-													...question,
-													subscribed
-												})
-											}
-											question={question}
-										/>
-
+										{question.actions.subscribe && (
+											<Subscription
+												onSubscription={subscribed =>
+													setQuestion({
+														...question,
+														subscribed
+													})
+												}
+												question={question}
+											/>
+										)}
 										{question.actions.replace && (
 											<ClayButton className="btn btn-secondary">
 												<Link

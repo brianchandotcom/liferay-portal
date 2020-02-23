@@ -29,20 +29,22 @@ const MillerColumnsColumn = ({
 	const ref = useRef();
 
 	const isValidTarget = (sourceItem, parentItem) => {
-		let isValid;
-
-		if (
-			parentItem &&
-			(sourceItem.columnIndex > parentItem.columnIndex ||
-				(parentItem.parentable &&
-					sourceItem.columnIndex <= parentItem.columnIndex &&
-					!sourceItem.active))
-		) {
-			isValid = true;
-		}
-
-		return isValid;
-	};
+        let isValid;
+    
+        if (
+            parentItem &&
+            (sourceItem.columnIndex > parentItem.columnIndex + 1 ||
+                (sourceItem.columnIndex === parentItem.columnIndex + 1 &&
+                    sourceItem.itemIndex < parentItem.childrenCount - 1) ||
+                (parentItem.parentable &&
+                    sourceItem.columnIndex <= parentItem.columnIndex &&
+                    !sourceItem.active))
+        ) {
+            isValid = true;
+        }
+    
+        return isValid;
+    };
 
 	const [{canDrop}, drop] = useDrop({
 		accept: ACCEPTING_TYPES.ITEM,

@@ -122,22 +122,29 @@ const MillerColumnsItem = ({
 
 	const isValidTarget = (dropZone, source, targetId) => {
 		let isValid;
-
+	
 		if (
-			(parentId && columnIndex <= source.columnIndex) ||
-			(columnIndex > source.columnIndex && !source.active)
+			source.id !== targetId &&
+			((parentId && columnIndex <= source.columnIndex) ||
+				(columnIndex > source.columnIndex && !source.active))
 		) {
 			if (
-				dropZone !== DROP_ZONES.ELEMENT ||
-				(targetId !== source.id &&
+				(dropZone === DROP_ZONES.TOP &&
+					(columnIndex !== source.columnIndex ||
+						itemIndex < source.itemIndex ||
+							itemIndex > source.itemIndex + 1)) ||
+				(dropZone === DROP_ZONES.BOTTOM &&
+					(columnIndex !== source.columnIndex ||
+						itemIndex > source.itemIndex ||
+							itemIndex < source.itemIndex - 1)) ||
+				(dropZone === DROP_ZONES.ELEMENT &&
 					targetId !== source.parentId &&
-					dropZone === DROP_ZONES.ELEMENT &&
 					parentable)
 			) {
 				isValid = true;
 			}
 		}
-
+	
 		return isValid;
 	};
 
@@ -149,6 +156,7 @@ const MillerColumnsItem = ({
 			active,
 			columnIndex,
 			id: itemId,
+			itemIndex,
 			parentId,
 			type: ACCEPTING_TYPES.ITEM
 		}

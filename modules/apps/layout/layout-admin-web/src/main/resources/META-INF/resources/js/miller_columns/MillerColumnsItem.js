@@ -19,7 +19,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
 import {ACCEPTING_TYPES, ITEM_HOVER_BORDER_LIMIT} from './constants';
@@ -191,7 +191,9 @@ const MillerColumnsItem = ({
 		}
 	});
 
-	drag(drop(ref));
+	useEffect(() => {
+		drag(drop(ref));
+	}, [drag, drop]);
 
 	return (
 		<li

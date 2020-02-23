@@ -13,7 +13,7 @@
  */
 
 import classNames from 'classnames';
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useDrop} from 'react-dnd';
 
 import MillerColumnsItem from './MillerColumnsItem';
@@ -62,7 +62,9 @@ const MillerColumnsColumn = ({
 		}
 	});
 
-	drop(ref);
+	useEffect(() => {
+		drop(ref);
+	}, [drop]);
 
 	return (
 		<ul

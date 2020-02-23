@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.layout.page.template.admin.web.internal.configuration.util.ExportImportLayoutPageTemplateConfigurationUtil;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.admin.web.internal.util.LayoutPageTemplatePortletUtil;
@@ -89,6 +90,21 @@ public class LayoutPageTemplateDisplayContext {
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "delete"));
+						});
+				}
+
+				if (ExportImportLayoutPageTemplateConfigurationUtil.enabled() &&
+					LayoutPageTemplateCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						getLayoutPageTemplateCollectionId(),
+						ActionKeys.UPDATE)) {
+
+					add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "importEntries");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "import"));
 						});
 				}
 			}

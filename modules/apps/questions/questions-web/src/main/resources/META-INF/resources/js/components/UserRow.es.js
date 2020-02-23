@@ -12,15 +12,27 @@
  * details.
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 
-export default ({creator}) => (
-	<div className="text-right">
-		<p className="mb-0">
-			<small>{Liferay.Language.get('answered-by')}</small>
-		</p>
-		<p>
-			<strong>{creator.name}</strong>
-		</p>
-	</div>
-);
+import UserPopover from './UserPopover.es';
+
+export default ({creator}) => {
+	const [showPopover, setShowPopover] = useState(false);
+
+	return (
+		<div
+			className="text-right"
+			onMouseLeave={() => setShowPopover(false)}
+			onMouseOver={() => setShowPopover(true)}
+		>
+			<p className="mb-0">
+				<small>{Liferay.Language.get('answered-by')}</small>
+			</p>
+			<p>
+				<strong>{creator.name}</strong>
+			</p>
+
+			<UserPopover creator={creator} show={showPopover} />
+		</div>
+	);
+};

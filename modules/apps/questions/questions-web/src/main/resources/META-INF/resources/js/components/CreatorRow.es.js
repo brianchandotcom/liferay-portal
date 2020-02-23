@@ -13,35 +13,44 @@
  */
 
 import classnames from 'classnames';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {timeDifference} from '../utils/utils.es';
 import UserIcon from './UserIcon.es';
+import UserPopover from './UserPopover.es';
 
-export default ({question: {creator, dateCreated}}) => (
-	<div
-		className={classnames(
-			'autofit-padded',
-			'autofit-row',
-			'autofit-row-center',
-			'question-author-badge'
-		)}
-	>
-		<div className="autofit-col">
-			<UserIcon
-				fullName={creator.name}
-				portraitURL={creator.image}
-				size="sm"
-				userId={String(creator.id)}
-			/>
+export default ({question: {creator, dateCreated}}) => {
+	const [showPopover, setShowPopover] = useState(false);
+
+	return (
+		<div
+			className={classnames(
+				'autofit-padded',
+				'autofit-row',
+				'autofit-row-center',
+				'question-author-badge'
+			)}
+			onMouseLeave={() => setShowPopover(false)}
+			onMouseOver={() => setShowPopover(true)}
+		>
+			<div className="autofit-col">
+				<UserIcon
+					fullName={creator.name}
+					portraitURL={creator.image}
+					size="sm"
+					userId={String(creator.id)}
+				/>
+			</div>
+			<div className="autofit-col">
+				<p className="mb-0">
+					<small>{timeDifference(dateCreated)}</small>
+				</p>
+				<p className="mb-0">
+					<strong>{creator.name}</strong>
+				</p>
+			</div>
+
+			<UserPopover creator={creator} show={showPopover} />
 		</div>
-		<div className="autofit-col">
-			<p className="mb-0">
-				<small>{timeDifference(dateCreated)}</small>
-			</p>
-			<p className="mb-0">
-				<strong>{creator.name}</strong>
-			</p>
-		</div>
-	</div>
-);
+	);
+};

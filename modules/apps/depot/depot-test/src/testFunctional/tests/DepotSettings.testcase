@@ -123,7 +123,7 @@ definition {
 		DepotNavigator.gotoLanguages(depotName = "Test Depot Name");
 
 		Click.clickNoMouseOverNoWaitForVisible(
-			key_languagesOption = "Define a custom default language and additional active languages for this repository.",
+			key_languagesOption = "Define a custom default language and additional active languages for this asset library.",
 			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
 
 		Depot.configureDefaultLanguage(

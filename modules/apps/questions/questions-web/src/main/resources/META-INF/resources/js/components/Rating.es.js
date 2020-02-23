@@ -63,11 +63,11 @@ export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 
 	return (
 		<div className="autofit-col text-center">
-			<ClayIcon onClick={() => voteChange(1)} symbol="caret-top" />
+			<ClayIcon onClick={() => voteChange(1)} symbol="caret-top" className={userRating === 1 ? 'questions-my-rating': ''}/>
 
 			<span>{rating || 0}</span>
 
-			<ClayIcon onClick={() => voteChange(-1)} symbol="caret-bottom" />
+			<ClayIcon onClick={() => voteChange(-1)} symbol="caret-bottom" className={userRating === -1 ? 'questions-my-rating': ''}/>
 		</div>
 	);
 };

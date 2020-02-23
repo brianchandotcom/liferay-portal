@@ -20,31 +20,30 @@ import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
 
-export default withRouter(({history}) => {
+export default withRouter(({history, location}) => {
 	const navigate = href => {
-		history.push('/' + href);
-		setActive(href);
+		history.push(href);
 	};
 
 	const context = useContext(AppContext);
 
-	const [active, setActive] = useState('questions');
+	const isActive = value => location.pathname.includes('/' + value);
 
 	return (
 		<div className="autofit-padded autofit-row navigation-bar">
 			<div className="autofit-col autofit-col-expand">
 				<ClayNavigationBar triggerLabel="Questions">
 					<ClayNavigationBar.Item
-						active={active === 'questions'}
-						onClick={() => navigate('questions')}
+						active={isActive('questions')}
+						onClick={() => navigate('/questions')}
 					>
 						<ClayLink className="nav-link" displayType="unstyled">
 							{Liferay.Language.get('questions')}
 						</ClayLink>
 					</ClayNavigationBar.Item>
 					<ClayNavigationBar.Item
-						active={active === 'tags'}
-						onClick={() => navigate('tags')}
+						active={isActive('tags')}
+						onClick={() => navigate('/tags')}
 					>
 						<ClayLink className="nav-link" displayType="unstyled">
 							{Liferay.Language.get('tags')}
@@ -56,7 +55,7 @@ export default withRouter(({history}) => {
 				{context.canCreateThread && (
 					<ClayButton
 						displayType="primary"
-						onClick={() => navigate('questions/new')}
+						onClick={() => navigate('/questions/new')}
 					>
 						{Liferay.Language.get('ask-question')}
 					</ClayButton>

@@ -13,6 +13,7 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import React, {useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -45,6 +46,9 @@ export default withRouter(
 					<ClayForm.Group className="form-group-sm">
 						<label htmlFor="basicInput">
 							{Liferay.Language.get('answer')}
+							<span className="reference-mark">
+								<ClayIcon symbol="asterisk" />
+							</span>
 						</label>
 						<ClayInput
 							onChange={event =>

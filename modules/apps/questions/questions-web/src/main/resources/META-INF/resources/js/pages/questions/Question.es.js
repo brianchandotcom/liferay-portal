@@ -87,7 +87,7 @@ export default ({
 				answer => answer.showAsAnswer && answer.id !== answerId
 			);
 
-			if (answer !== null) {
+			if (answer) {
 				markAsAnswerMessageBoardMessage(answer.id, false).then(() => {
 					setAnswers([
 						...answers.map(otherAnswer => {

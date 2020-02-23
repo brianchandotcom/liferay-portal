@@ -139,7 +139,7 @@
 </tr>
 <tr>
 	<td>FORM_BUILDER_FIELD</td>
-	<td>//div[contains(@class,'form-builder-field')]</td>
+	<td>//div[contains(@class,'form-builder-drop-zone')]</td>
 	<td></td>
 </tr>
 <tr>

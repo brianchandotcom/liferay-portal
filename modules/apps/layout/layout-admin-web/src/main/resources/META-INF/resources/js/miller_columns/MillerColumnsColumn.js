@@ -19,6 +19,18 @@ import {useDrop} from 'react-dnd';
 import MillerColumnsItem from './MillerColumnsItem';
 import {ACCEPTING_TYPES} from './constants';
 
+const isValidTarget = (source, parent) => {
+	return !!(
+		parent &&
+		(source.columnIndex > parent.columnIndex + 1 ||
+			(source.columnIndex === parent.columnIndex + 1 &&
+				source.itemIndex < parent.childrenCount - 1) ||
+			(parent.parentable &&
+				source.columnIndex <= parent.columnIndex &&
+				!source.active))
+	);
+};
+
 const MillerColumnsColumn = ({
 	actionHandlers,
 	items = [],
@@ -28,38 +40,19 @@ const MillerColumnsColumn = ({
 }) => {
 	const ref = useRef();
 
-	const isValidTarget = (sourceItem, parentItem) => {
-        let isValid;
-    
-        if (
-            parentItem &&
-            (sourceItem.columnIndex > parentItem.columnIndex + 1 ||
-                (sourceItem.columnIndex === parentItem.columnIndex + 1 &&
-                    sourceItem.itemIndex < parentItem.childrenCount - 1) ||
-                (parentItem.parentable &&
-                    sourceItem.columnIndex <= parentItem.columnIndex &&
-                    !sourceItem.active))
-        ) {
-            isValid = true;
-        }
-    
-        return isValid;
-    };
-
 	const [{canDrop}, drop] = useDrop({
 		accept: ACCEPTING_TYPES.ITEM,
-		canDrop(sourceItem, monitor) {
+		canDrop(source, monitor) {
 			return (
-				monitor.isOver({shallow: true}) &&
-				isValidTarget(sourceItem, parent)
+				monitor.isOver({shallow: true}) && isValidTarget(source, parent)
 			);
 		},
 		collect: monitor => ({
 			canDrop: !!monitor.canDrop()
 		}),
-		drop(sourceItem) {
+		drop(source) {
 			if (canDrop) {
-				onItemDrop(sourceItem.id, parent.id);
+				onItemDrop(source.id, parent.id);
 			}
 		}
 	});

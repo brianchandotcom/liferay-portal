@@ -36,6 +36,49 @@ const ITEM_STATES_COLORS = {
 	pending: 'info'
 };
 
+const isValidTarget = (source, target, dropZone) => {
+	return !!(
+		source.id !== target.id &&
+		((target.parentId && target.columnIndex <= source.columnIndex) ||
+			(target.columnIndex > source.columnIndex && !source.active)) &&
+		((dropZone === DROP_ZONES.TOP &&
+			(target.columnIndex !== source.columnIndex ||
+				target.itemIndex < source.itemIndex ||
+				target.itemIndex > source.itemIndex + 1)) ||
+			(dropZone === DROP_ZONES.BOTTOM &&
+				(target.columnIndex !== source.columnIndex ||
+					target.itemIndex > source.itemIndex ||
+					target.itemIndex < source.itemIndex - 1)) ||
+			(dropZone === DROP_ZONES.ELEMENT &&
+				target.id !== source.parentId &&
+				target.parentable))
+	);
+};
+
+const getDropZone = (ref, monitor) => {
+	if (!ref.current) {
+		return;
+	}
+
+	const clientOffset = monitor.getClientOffset();
+	const dropItemBoundingRect = ref.current.getBoundingClientRect();
+	const hoverTopLimit = ITEM_HOVER_BORDER_LIMIT;
+	const hoverBottomLimit =
+		dropItemBoundingRect.height - ITEM_HOVER_BORDER_LIMIT;
+	const hoverClientY = clientOffset.y - dropItemBoundingRect.top;
+
+	let dropZone = DROP_ZONES.ELEMENT;
+
+	if (hoverClientY < hoverTopLimit) {
+		dropZone = DROP_ZONES.TOP;
+	}
+	else if (hoverClientY > hoverBottomLimit) {
+		dropZone = DROP_ZONES.BOTTOM;
+	}
+
+	return dropZone;
+};
+
 const noop = () => {};
 
 const MillerColumnsItem = ({
@@ -96,58 +139,6 @@ const MillerColumnsItem = ({
 		return quickActions;
 	}, [actions, actionHandlers]);
 
-	const getDropZone = monitor => {
-		if (!ref.current) {
-			return;
-		}
-
-		const clientOffset = monitor.getClientOffset();
-		const dropItemBoundingRect = ref.current.getBoundingClientRect();
-		const hoverTopLimit = ITEM_HOVER_BORDER_LIMIT;
-		const hoverBottomLimit =
-			dropItemBoundingRect.height - ITEM_HOVER_BORDER_LIMIT;
-		const hoverClientY = clientOffset.y - dropItemBoundingRect.top;
-
-		let dropZone = DROP_ZONES.ELEMENT;
-
-		if (hoverClientY < hoverTopLimit) {
-			dropZone = DROP_ZONES.TOP;
-		}
-		else if (hoverClientY > hoverBottomLimit) {
-			dropZone = DROP_ZONES.BOTTOM;
-		}
-
-		return dropZone;
-	};
-
-	const isValidTarget = (dropZone, source, targetId) => {
-		let isValid;
-	
-		if (
-			source.id !== targetId &&
-			((parentId && columnIndex <= source.columnIndex) ||
-				(columnIndex > source.columnIndex && !source.active))
-		) {
-			if (
-				(dropZone === DROP_ZONES.TOP &&
-					(columnIndex !== source.columnIndex ||
-						itemIndex < source.itemIndex ||
-							itemIndex > source.itemIndex + 1)) ||
-				(dropZone === DROP_ZONES.BOTTOM &&
-					(columnIndex !== source.columnIndex ||
-						itemIndex > source.itemIndex ||
-							itemIndex < source.itemIndex - 1)) ||
-				(dropZone === DROP_ZONES.ELEMENT &&
-					targetId !== source.parentId &&
-					parentable)
-			) {
-				isValid = true;
-			}
-		}
-	
-		return isValid;
-	};
-
 	const [{isDragging}, drag] = useDrag({
 		collect: monitor => ({
 			isDragging: !!monitor.isDragging()
@@ -165,9 +156,13 @@ const MillerColumnsItem = ({
 	const [{isOver}, drop] = useDrop({
 		accept: ACCEPTING_TYPES.ITEM,
 		canDrop(source, monitor) {
-			const dropZone = getDropZone(monitor);
+			const dropZone = getDropZone(ref, monitor);
 
-			return isValidTarget(dropZone, source, itemId);
+			return isValidTarget(
+				source,
+				{columnIndex, id: itemId, itemIndex, parentId, parentable},
+				dropZone
+			);
 		},
 		collect: monitor => ({
 			isOver: !!monitor.isOver()
@@ -192,7 +187,7 @@ const MillerColumnsItem = ({
 			let dropZone;
 
 			if (isOver && monitor.canDrop()) {
-				dropZone = getDropZone(monitor);
+				dropZone = getDropZone(ref, monitor);
 			}
 
 			setDropZone(dropZone);

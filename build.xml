@@ -114,6 +114,15 @@ message.
 
 		<property name="gradle.execute.silent" value="true" />
 
+		<if>
+			<equals arg1="${org.gradle.daemon}" arg2="true" />
+			<then>
+				<gradle-execute dir="." forcedcacheenabled="false" task="">
+					<arg value="--stop" />
+				</gradle-execute>
+			</then>
+		</if>
+
 		<antcall target="clean" />
 		<antcall target="compile" />
 		<antcall target="deploy" />

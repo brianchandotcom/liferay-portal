@@ -41,6 +41,7 @@ import {
 } from '../../utils/utils.es';
 
 export default ({
+	location: key,
 	match: {
 		params: {questionId}
 	}
@@ -54,7 +55,7 @@ export default ({
 
 	useEffect(() => {
 		loadThread();
-	}, [loadThread]);
+	}, [key, loadThread]);
 
 	const loadThread = useCallback(
 		() =>

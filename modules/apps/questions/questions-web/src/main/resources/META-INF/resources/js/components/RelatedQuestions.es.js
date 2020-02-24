@@ -17,6 +17,9 @@ import {Link} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
 import {getRelatedThreads} from '../utils/client.es';
+import QuestionBadge from "./QuestionsBadge.es";
+import UserIcon from "./UserIcon.es";
+import {dateToInternationalHuman} from "../utils/utils.es";
 
 export default ({question}) => {
 	const [relatedQuestions, setRelatedQuestions] = useState([]);
@@ -34,31 +37,61 @@ export default ({question}) => {
 		}
 	}, [question, context.siteKey]);
 
+
 	return (
 		<>
+			<h3>Related Questions</h3>
+			<hr/>
+
 			{!!relatedQuestions.length && (
-				<>
-					<h3>Related Questions</h3>
-					<hr />
+				<div className="autofit-row autofit-padded">
+
 					{relatedQuestions.map(relatedQuestion => (
-						<ul key={relatedQuestion.id}>
-							<li>
-								<Link to={'/questions/' + relatedQuestion.id}>
-									[
-									{(relatedQuestion.aggregateRating &&
-										relatedQuestion.aggregateRating
-											.ratingCount *
-											(relatedQuestion.aggregateRating
-												.ratingAverage *
-												2 -
-												1)) ||
-										0}
-									] {relatedQuestion.headline}
+						<div className="autofit-col" key={relatedQuestion.id}>
+
+							<div className="autofit-row">
+								<div className="autofit-col autofit-col-expand">
+									{relatedQuestion.messageBoardSection &&
+									 relatedQuestion.messageBoardSection.title}
+								</div>
+								<div>
+									<QuestionBadge
+										symbol="caret-top"
+										value={
+											relatedQuestion.aggregateRating &&
+											relatedQuestion.aggregateRating.ratingCount
+										}
+									/>
+								</div>
+							</div>
+							<h2 className="question-headline">
+								<Link
+									to={'/questions/' +
+										relatedQuestion.id}>{relatedQuestion.headline}
 								</Link>
-							</li>
-						</ul>
+							</h2>
+							<div>
+								<UserIcon
+									fullName={relatedQuestion.creator.name}
+									portraitURL={relatedQuestion.creator.image}
+									size="sm"
+									userId={String(relatedQuestion.creator.id)}
+								/>
+								<span>
+									<strong>
+										{relatedQuestion.creator.name}
+									</strong>
+								</span>
+								<span>
+									{' - ' +
+									 dateToInternationalHuman(
+										 relatedQuestion.dateModified
+									 )}
+								</span>
+							</div>
+						</div>
 					))}
-				</>
+				</div>
 			)}
 		</>
 	);

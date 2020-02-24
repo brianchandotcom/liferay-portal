@@ -394,8 +394,16 @@ export const getRelatedThreads = (search = '', siteKey) =>
                         ratingCount
                         ratingValue
                     }
+                    creator {
+                    	id
+                    	name
+                	} 
+                    dateModified
                     headline
                     id 
+					messageBoardSection {
+						title
+				  	}
                 } 
                 page 
                 pageSize 

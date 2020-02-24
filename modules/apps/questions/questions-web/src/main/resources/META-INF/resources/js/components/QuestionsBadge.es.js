@@ -15,11 +15,10 @@
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-export default ({className, symbol, value}) => {
-	return (
+export default ({className, symbol, value}) =>
+	(
 		<span className={`question-badge ${className}`}>
-			<ClayIcon symbol={symbol} />
+			<ClayIcon symbol={symbol}/>
 			<small>{value || 0}</small>
 		</span>
 	);
-};

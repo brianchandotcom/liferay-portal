@@ -12,7 +12,7 @@
  * details.
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from './AppContext.es';
@@ -25,18 +25,25 @@ import Questions from './pages/questions/Questions.es';
 import Tags from './pages/tags/Tags.es';
 
 export default props => {
+
+	const [search, setSearch] = useState('');
+
+	const searchChange = value => {
+		setSearch(value);
+	};
+
 	return (
 		<AppContextProvider {...props}>
 			<Router>
 				<div>
-					<NavigationBar />
+					<NavigationBar searchChange={searchChange} />
 
 					<Switch>
 						<Route
 							exact
 							path="/"
 							render={props => (
-								<Questions {...props} search={''} tag={''} />
+								<Questions {...props} search={search} tag={''} />
 							)}
 						/>
 						<Route
@@ -48,7 +55,7 @@ export default props => {
 							render={props => (
 								<Questions
 									{...props}
-									search={''}
+									search={search}
 									tag={props.match.params.tag}
 								/>
 							)}
@@ -67,7 +74,13 @@ export default props => {
 							exact
 							path="/questions/:questionId/edit"
 						/>
-						<Route component={Questions} exact path="/questions" />
+						<Route
+							exact
+							path="/questions"
+							render={props => (
+								<Questions {...props} search={search} tag={''} />
+							)}
+						/>
 						<Route
 							component={NewQuestion}
 							exact

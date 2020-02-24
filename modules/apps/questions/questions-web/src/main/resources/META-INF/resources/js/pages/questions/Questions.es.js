@@ -26,10 +26,10 @@ import {getThreads} from '../../utils/client.es';
 import {dateToInternationalHuman} from '../../utils/utils.es';
 
 export default ({
-	location,
 	match: {
 		params: {creatorId, tag}
-	}
+	},
+	search
 }) => {
 	const context = useContext(AppContext);
 
@@ -37,10 +37,6 @@ export default ({
 	const [page, setPage] = useState(1);
 	const [pageSize] = useState(5);
 	const [questions, setQuestions] = useState([]);
-
-	const urlSearchParams = new URLSearchParams(location.search);
-
-	const search = urlSearchParams.get('search');
 
 	useEffect(() => {
 		getThreads({

@@ -277,7 +277,7 @@ export default function Chart({
 
 					<div className="d-flex ml-2">
 						<ClayButtonWithIcon
-							ariaLabel={Liferay.Language.get('previous-period')}
+							aria-label={Liferay.Language.get('previous-period')}
 							className="mr-1"
 							displayType="secondary"
 							onClick={handlePreviousTimeSpanClick}
@@ -379,9 +379,9 @@ export default function Chart({
 
 Chart.propTypes = {
 	dataProviders: PropTypes.arrayOf(PropTypes.func).isRequired,
-	defaultTimeSpanKey: PropTypes.string.isRequired,
+	defaultTimeSpanOption: PropTypes.string.isRequired,
 	languageTag: PropTypes.string.isRequired,
-	timeSpans: PropTypes.arrayOf(
+	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string.isRequired,
 			label: PropTypes.string.isRequired,

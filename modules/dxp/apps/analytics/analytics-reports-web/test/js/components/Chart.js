@@ -121,15 +121,43 @@ const viewsDataProvider = jest.fn(() =>
 	})
 );
 
+const mockedTimeSpanOptions = [
+	{
+		key: 'last-30-days',
+		label: 'Last 30 days'
+	},
+	{
+		key: 'last-7-days',
+		label: 'Last 7 days'
+	},
+	{
+		key: 'last-24-hours',
+		label: 'Last 24 hours'
+	}
+];
+
 describe('Chart', () => {
-	afterEach(cleanup);
+	afterEach(() => {
+		jest.clearAllMocks();
+		cleanup();
+	});
 
 	it('displays total views and date range title', async () => {
 		const {getByText} = render(
-			<Chart dataProviders={[viewsDataProvider]} languageTag={'en-EN'} />
+			<Chart
+				dataProviders={[viewsDataProvider]}
+				defaultTimeSpanOption={'last-7-days'}
+				languageTag={'en-EN'}
+				timeSpanOptions={mockedTimeSpanOptions}
+			/>
 		);
 
 		await wait(() => expect(viewsDataProvider).toHaveBeenCalledTimes(1));
+
+		expect(viewsDataProvider).toHaveBeenCalledWith({
+			timeSpanKey: 'last-7-days',
+			timeSpanOffset: 0
+		});
 
 		expect(getByText('225')).toBeInTheDocument();
 
@@ -140,11 +168,24 @@ describe('Chart', () => {
 		const {getByText} = render(
 			<Chart
 				dataProviders={[viewsDataProvider, readsDataProvider]}
+				defaultTimeSpanOption={'last-7-days'}
 				languageTag={'en-EN'}
+				timeSpanOptions={mockedTimeSpanOptions}
 			/>
 		);
 
-		await wait(() => expect(viewsDataProvider).toHaveBeenCalledTimes(2));
+		await wait(() => expect(viewsDataProvider).toHaveBeenCalledTimes(1));
+		await wait(() => expect(readsDataProvider).toHaveBeenCalledTimes(1));
+
+		expect(viewsDataProvider).toHaveBeenCalledWith({
+			timeSpanKey: 'last-7-days',
+			timeSpanOffset: 0
+		});
+
+		expect(readsDataProvider).toHaveBeenCalledWith({
+			timeSpanKey: 'last-7-days',
+			timeSpanOffset: 0
+		});
 
 		expect(getByText('225')).toBeInTheDocument();
 		expect(getByText('226')).toBeInTheDocument();

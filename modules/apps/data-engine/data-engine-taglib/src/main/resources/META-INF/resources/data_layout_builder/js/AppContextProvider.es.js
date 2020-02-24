@@ -16,6 +16,7 @@ import React, {useEffect, useReducer} from 'react';
 
 import AppContext, {createReducer, initialState} from './AppContext.es';
 import {
+	UPDATE_CONFIG,
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT,
 	UPDATE_FIELDSETS,
@@ -25,6 +26,7 @@ import {getItem} from './utils/client.es';
 
 export default ({
 	children,
+	config,
 	contentType,
 	dataDefinitionId,
 	dataLayoutBuilder,
@@ -33,6 +35,17 @@ export default ({
 }) => {
 	const reducer = createReducer(dataLayoutBuilder);
 	const [state, dispatch] = useReducer(reducer, initialState);
+
+	useEffect(
+		() =>
+			dispatch({
+				payload: {
+					config
+				},
+				type: UPDATE_CONFIG
+			}),
+		[config, dispatch]
+	);
 
 	useEffect(() => {
 		dispatch({

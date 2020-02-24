@@ -98,7 +98,6 @@ buildChangelogs {
 					return ["SHA" : sha, "TICKET-NUMBER" : ticketNumber.replaceAll(".*?([A-Z]+-\\d+.*)", "\$1"), "COMMIT-MESSAGE" : commitMessage]
 				}
 
-				String commit = ""
 				String commits = ""
 
 				gitLogOutput.eachLine {
@@ -118,14 +117,11 @@ buildChangelogs {
 							!commitMessage.matches("Revert \".* SF\"") &&
 							!commitMessage.startsWith("Semver")) {
 
-							commit = "- [" + gitLogAttributes["TICKET-NUMBER"] + "]: " + commitMessage + " (" + sha.substring(0, 10) + ")"
-
-							commits = commits + "\n" + _formatLongLine(commit)
+							commits = commits + "\n" + _format("- [" + gitLogAttributes["TICKET-NUMBER"] + "]: " + commitMessage + " (" + sha.substring(0, 10) + ")")
 						}
 					}
 				}
 
-				String dependency = ""
 				String dependencies = ""
 
 				standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
@@ -166,9 +162,7 @@ buildChangelogs {
 						String dependencyName = matcher.group(1)
 						String dependencyVersion = matcher.group(2)
 
-						dependency = "- [" + gitLogAttributes["TICKET-NUMBER"] + "]: Update the " + dependencyName + " dependency to version " + dependencyVersion + "."
-
-						dependencies = dependencies + "\n" + _formatLongLine(dependency)
+						dependencies = dependencies + "\n" + _format("- [" + gitLogAttributes["TICKET-NUMBER"] + "]: Update the " + dependencyName + " dependency to version " + dependencyVersion + ".")
 					}
 				}
 
@@ -358,25 +352,25 @@ recordCommits {
 		}
 	}
 }
-private String _formatLongLine(String line) {
 
-	line = line.replaceAll("[ \t]{2,}", " ")
+private String _format(String line) {
+	String formattedLine = line.replaceAll("[ \t]{2,}", " ")
 
-	if (line.length() <= 80) {
-		return line
+	if (formattedLine.length() <= 80) {
+		return formattedLine
 	}
 
-	int x = line.indexOf(" ")
+	int x = formattedLine.indexOf(" ")
 
 	if (x == -1) {
-		return line
+		return formattedLine
 	}
 
 	if (x > 80) {
-		return line.substring(0, x) + "\n" + _formatLongLine(line.substring(x + 1))
+		return formattedLine.substring(0, x) + "\n" + _format(formattedLine.substring(x + 1))
 	}
 
-	x = line.lastIndexOf(" ", 80)
+	x = formattedLine.lastIndexOf(" ", 80)
 
-	return line.substring(0, x) + "\n" + _formatLongLine(line.substring(x + 1))
+	return formattedLine.substring(0, x) + "\n" + _format(formattedLine.substring(x + 1))
 }

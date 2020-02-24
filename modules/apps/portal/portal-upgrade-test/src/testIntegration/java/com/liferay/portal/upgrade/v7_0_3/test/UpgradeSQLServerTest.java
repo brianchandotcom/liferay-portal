@@ -50,7 +50,7 @@ public class UpgradeSQLServerTest extends BaseUpgradeDBColumnSizeTestCase {
 	@Override
 	protected String getCreateTestTableSQL() {
 		return "create table TestTable (testTableId int not null primary " +
-			"key, testValue varchar(2000) null)";
+			"key, testValue nvarchar(2000) null)";
 	}
 
 	@Override

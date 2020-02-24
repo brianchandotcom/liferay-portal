@@ -41,12 +41,10 @@ public class RowLayoutStructureItemHelper implements LayoutStructureItemHelper {
 		Map<String, Object> definition =
 			(Map<String, Object>)pageElement.getDefinition();
 
-		if (definition.containsKey("numberOfColumns")) {
+		if (definition != null) {
 			rowLayoutStructureItem.setNumberOfColumns(
 				(Integer)definition.get("numberOfColumns"));
-		}
 
-		if (definition.containsKey("gutters")) {
 			rowLayoutStructureItem.setGutters(
 				(Boolean)definition.get("gutters"));
 		}

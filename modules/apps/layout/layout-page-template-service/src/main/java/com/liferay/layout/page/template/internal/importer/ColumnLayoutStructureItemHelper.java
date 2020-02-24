@@ -42,7 +42,7 @@ public class ColumnLayoutStructureItemHelper
 		Map<String, Object> definition =
 			(Map<String, Object>)pageElement.getDefinition();
 
-		if (definition.containsKey("size")) {
+		if (definition != null) {
 			columnLayoutStructureItem.setSize((Integer)definition.get("size"));
 		}
 

@@ -24,7 +24,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "assets")
 @Meta.OCD(
 	id = "com.liferay.asset.display.page.configuration.AssetDisplayPageConfiguration",
-	localization = "content/Language", name = "display-page-template"
+	localization = "content/Language",
+	name = "asset-display-page-configuration-name"
 )
 public interface AssetDisplayPageConfiguration {
 

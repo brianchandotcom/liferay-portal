@@ -161,14 +161,16 @@ const SidebarTab = ({onTabClick, selectedTab, tabs}) => {
 				<ul className="nav nav-underline" role="tablist">
 					{tabs.map(({label, name}, index) => (
 						<li className="nav-item" key={index}>
-							<a
-								className={classNames('nav-link', {
-									active: selectedTab
-										? name === selectedTab
-										: index === 0
-								})}
+							<button
+								className={classNames(
+									'btn btn-unstyled nav-link',
+									{
+										active: selectedTab
+											? name === selectedTab
+											: index === 0
+									}
+								)}
 								data-senna-off
-								href=""
 								onClick={event => {
 									event.preventDefault();
 
@@ -177,7 +179,7 @@ const SidebarTab = ({onTabClick, selectedTab, tabs}) => {
 								role="tab"
 							>
 								{label}
-							</a>
+							</button>
 						</li>
 					))}
 				</ul>

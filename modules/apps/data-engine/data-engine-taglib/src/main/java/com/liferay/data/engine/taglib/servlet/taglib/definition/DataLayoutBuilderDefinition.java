@@ -19,6 +19,10 @@ package com.liferay.data.engine.taglib.servlet.taglib.definition;
  */
 public interface DataLayoutBuilderDefinition {
 
+	public default String[] getDisabledProperties() {
+		return new String[0];
+	}
+
 	public default String[] getUnimplementedProperties() {
 		return new String[] {
 			"fieldNamespace", "indexType", "localizable", "readOnly", "type",

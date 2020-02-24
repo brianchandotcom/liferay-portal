@@ -1129,22 +1129,15 @@ definition {
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-			if (isSet(currentSite)) {
-				AssertElementNotPresent(locator1 = "APConfigurationSites#SITES_TABLE_NAME");
+			AssertTextEquals(
+				locator1 = "APConfigurationSites#SITES_TABLE_NAME",
+				value1 = "${liferaySiteName} (Opens New Window)");
 
-				AssertElementNotPresent(locator1 = "APConfigurationSites#SITES_TABLE_TYPE");
-			}
-			else {
-				AssertTextEquals(
-					locator1 = "APConfigurationSites#SITES_TABLE_NAME",
-					value1 = "${liferaySiteName} (Opens New Window)");
+			AssertTextEquals(
+				locator1 = "APConfigurationSites#SITES_TABLE_TYPE",
+				value1 = "${liferaySiteType}");
 
-				AssertTextEquals(
-					locator1 = "APConfigurationSites#SITES_TABLE_TYPE",
-					value1 = "${liferaySiteType}");
-
-				AssertElementPresent(locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK");
-			}
+			AssertElementPresent(locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK");
 		}
 		else if ("${contentSharingAcrossSitesEnabled}" == "false") {
 			AssertTextEquals(

@@ -180,6 +180,16 @@ public class PageDefinitionValidatorTest {
 	}
 
 	@Test
+	public void testValidatePageDefinitionValidFragmentFieldBackgroundImageComplete()
+		throws Exception {
+
+		PageDefinitionValidator.validatePageDefinition(
+			_read(
+				"page_definition_valid_fragment_field_background_image_" +
+					"complete.json"));
+	}
+
+	@Test
 	public void testValidatePageDefinitionValidFragmentFieldImageComplete()
 		throws Exception {
 

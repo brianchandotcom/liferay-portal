@@ -96,13 +96,13 @@ public int countBy${entityFinder.name}(
 		try {
 			session = openSession();
 
-			Query q = session.createQuery(sql);
+			Query query = session.createQuery(sql);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos qPos = QueryPos.getInstance(query);
 
 			<@finderQPos />
 
-			count = (Long)q.uniqueResult();
+			count = (Long)query.uniqueResult();
 
 			<#if entity.isChangeTrackingEnabled()>
 				if (productionMode) {
@@ -250,15 +250,15 @@ public int countBy${entityFinder.name}(
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
 				<#if bindParameter(entityColumns)>
-					QueryPos qPos = QueryPos.getInstance(q);
+					QueryPos qPos = QueryPos.getInstance(query);
 				</#if>
 
 				<@finderQPos _arrayable=true />
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				<#if entity.isChangeTrackingEnabled()>
 					if (productionMode) {
@@ -496,15 +496,15 @@ public int countBy${entityFinder.name}(
 		try {
 			session = openSession();
 
-			Query q = session.createQuery(sql);
+			Query query = session.createQuery(sql);
 
 			<#if bindParameter(entityColumns)>
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos qPos = QueryPos.getInstance(query);
 			</#if>
 
 			<@finderQPos _arrayable=true />
 
-			count = (Long)q.uniqueResult();
+			count = (Long)query.uniqueResult();
 		}
 		catch (Exception exception) {
 			throw processException(exception);
@@ -575,13 +575,13 @@ public int countBy${entityFinder.name}(
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos qPos = QueryPos.getInstance(query);
 
 				<@finderQPos />
 
-				Long count = (Long)q.uniqueResult();
+				Long count = (Long)query.uniqueResult();
 
 				return count.intValue();
 			}
@@ -742,15 +742,15 @@ public int countBy${entityFinder.name}(
 				try {
 					session = openSession();
 
-					Query q = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
 					<#if bindParameter(entityColumns)>
-						QueryPos qPos = QueryPos.getInstance(q);
+						QueryPos qPos = QueryPos.getInstance(query);
 					</#if>
 
 					<@finderQPos _arrayable=true />
 
-					Long count = (Long)q.uniqueResult();
+					Long count = (Long)query.uniqueResult();
 
 					return count.intValue();
 				}

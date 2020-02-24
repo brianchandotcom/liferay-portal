@@ -284,13 +284,13 @@ that may or may not be enforced with a unique index at the database level. Case
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos qPos = QueryPos.getInstance(query);
 
 				<@finderQPos />
 
-				list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+				list = (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -565,12 +565,12 @@ that may or may not be enforced with a unique index at the database level. Case
 
 			String sql = sb.toString();
 
-			Query q = session.createQuery(sql);
+			Query query = session.createQuery(sql);
 
-			q.setFirstResult(0);
-			q.setMaxResults(2);
+			query.setFirstResult(0);
+			query.setMaxResults(2);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos qPos = QueryPos.getInstance(query);
 
 			<@finderQPos />
 
@@ -580,7 +580,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				}
 			}
 
-			List<${entity.name}> list = q.list();
+			List<${entity.name}> list = query.list();
 
 			if (list.size() == 2) {
 				return list.get(1);
@@ -708,13 +708,13 @@ that may or may not be enforced with a unique index at the database level. Case
 				try {
 					session = openSession();
 
-					Query q = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-					QueryPos qPos = QueryPos.getInstance(q);
+					QueryPos qPos = QueryPos.getInstance(query);
 
 					<@finderQPos />
 
-					return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+					return (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
 				}
 				catch (Exception exception) {
 					throw processException(exception);
@@ -895,12 +895,12 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
 
-					Query q = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-					q.setFirstResult(0);
-					q.setMaxResults(2);
+					query.setFirstResult(0);
+					query.setMaxResults(2);
 
-					QueryPos qPos = QueryPos.getInstance(q);
+					QueryPos qPos = QueryPos.getInstance(query);
 
 					<@finderQPos />
 
@@ -910,7 +910,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						}
 					}
 
-					List<${entity.name}> list = q.list();
+					List<${entity.name}> list = query.list();
 
 					if (list.size() == 2) {
 						return list.get(1);
@@ -1248,15 +1248,15 @@ that may or may not be enforced with a unique index at the database level. Case
 					try {
 						session = openSession();
 
-						Query q = session.createQuery(sql);
+						Query query = session.createQuery(sql);
 
 						<#if bindParameter(entityColumns)>
-							QueryPos qPos = QueryPos.getInstance(q);
+							QueryPos qPos = QueryPos.getInstance(query);
 						</#if>
 
 						<@finderQPos _arrayable=true />
 
-						return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+						return (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
 					}
 					catch (Exception exception) {
 						throw processException(exception);
@@ -1688,15 +1688,15 @@ that may or may not be enforced with a unique index at the database level. Case
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
 				<#if bindParameter(entityColumns)>
-					QueryPos qPos = QueryPos.getInstance(q);
+					QueryPos qPos = QueryPos.getInstance(query);
 				</#if>
 
 				<@finderQPos _arrayable=true />
 
-				list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+				list = (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2123,15 +2123,15 @@ that may or may not be enforced with a unique index at the database level. Case
 		try {
 			session = openSession();
 
-			Query q = session.createQuery(sql);
+			Query query = session.createQuery(sql);
 
 			<#if bindParameter(entityColumns)>
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos qPos = QueryPos.getInstance(query);
 			</#if>
 
 			<@finderQPos _arrayable=true />
 
-			list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+			list = (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
 		}
 		catch (Exception exception) {
 			throw processException(exception);
@@ -2329,13 +2329,13 @@ that may or may not be enforced with a unique index at the database level. Case
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos qPos = QueryPos.getInstance(query);
 
 				<@finderQPos />
 
-				List<${entity.name}> list = q.list();
+				List<${entity.name}> list = query.list();
 
 				if (list.isEmpty()) {
 					if (${useCache}) {

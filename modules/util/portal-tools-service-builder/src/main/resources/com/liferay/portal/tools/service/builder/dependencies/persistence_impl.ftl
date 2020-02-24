@@ -1126,17 +1126,17 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				try {
 					session = openSession();
 
-					Query q = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
 					<#if stringUtil.equals(entity.PKClassName, "String")>
-						QueryPos qPos = QueryPos.getInstance(q);
+						QueryPos qPos = QueryPos.getInstance(query);
 
 						for (Serializable primaryKey : uncachedPrimaryKeys) {
 							qPos.add((String)primaryKey);
 						}
 					</#if>
 
-					for (${entity.name} ${entity.varName} : (List<${entity.name}>)q.list()) {
+					for (${entity.name} ${entity.varName} : (List<${entity.name}>)query.list()) {
 						map.put(${entity.varName}.getPrimaryKeyObj(), ${entity.varName});
 
 						cacheResult(${entity.varName});
@@ -1209,9 +1209,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				for (${entity.name} ${entity.varName} : (List<${entity.name}>)q.list()) {
+				for (${entity.name} ${entity.varName} : (List<${entity.name}>)query.list()) {
 					map.put(${entity.varName}.getPrimaryKeyObj(), ${entity.varName});
 
 					cacheResult(${entity.varName});
@@ -1334,9 +1334,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+				list = (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1395,9 +1395,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(_SQL_COUNT_${entity.alias?upper_case});
+				Query query = session.createQuery(_SQL_COUNT_${entity.alias?upper_case});
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				<#if entity.isChangeTrackingEnabled()>
 					if (productionMode) {

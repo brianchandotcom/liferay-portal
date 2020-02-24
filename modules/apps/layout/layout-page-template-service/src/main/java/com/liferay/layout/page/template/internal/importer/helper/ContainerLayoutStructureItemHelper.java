@@ -41,28 +41,28 @@ public class ContainerLayoutStructureItemHelper
 				layoutStructure.addContainerLayoutStructureItem(
 					parentId, position);
 
-		Map<String, Object> definition =
+		Map<String, Object> definitionMap =
 			(Map<String, Object>)pageElement.getDefinition();
 
-		if (definition != null) {
+		if (definitionMap != null) {
 			containerLayoutStructureItem.setBackgroundColorCssClass(
-				(String)definition.get("backgroundColorCssClass"));
+				(String)definitionMap.get("backgroundColorCssClass"));
 
-			Map<String, Object> backgroundImage =
-				(Map<String, Object>)definition.get("backgroundImage");
+			Map<String, Object> backgroundImageMap =
+				(Map<String, Object>)definitionMap.get("backgroundImage");
 
-			if (backgroundImage != null) {
+			if (backgroundImageMap != null) {
 				JSONObject jsonObject = JSONUtil.put(
-					"title", backgroundImage.get("title")
+					"title", backgroundImageMap.get("title")
 				).put(
-					"url", backgroundImage.get("url")
+					"url", backgroundImageMap.get("url")
 				);
 
 				containerLayoutStructureItem.setBackgroundImageJSONObject(
 					jsonObject);
 			}
 
-			Map<String, Object> layout = (Map<String, Object>)definition.get(
+			Map<String, Object> layout = (Map<String, Object>)definitionMap.get(
 				"layout");
 
 			if (layout != null) {

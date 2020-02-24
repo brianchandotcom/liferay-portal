@@ -38,15 +38,15 @@ public class RowLayoutStructureItemHelper implements LayoutStructureItemHelper {
 			(RowLayoutStructureItem)layoutStructure.addLayoutStructureItem(
 				LayoutDataItemTypeConstants.TYPE_ROW, parentId, position);
 
-		Map<String, Object> definition =
+		Map<String, Object> definitionMap =
 			(Map<String, Object>)pageElement.getDefinition();
 
-		if (definition != null) {
+		if (definitionMap != null) {
 			rowLayoutStructureItem.setNumberOfColumns(
-				(Integer)definition.get("numberOfColumns"));
+				(Integer)definitionMap.get("numberOfColumns"));
 
 			rowLayoutStructureItem.setGutters(
-				(Boolean)definition.get("gutters"));
+				(Boolean)definitionMap.get("gutters"));
 		}
 
 		return rowLayoutStructureItem;

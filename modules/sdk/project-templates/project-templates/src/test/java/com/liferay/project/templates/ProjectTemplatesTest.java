@@ -3225,6 +3225,45 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	public void testSassCompilerWorkspace() throws Exception {
+		File nativeSassWorkspaceDir = buildWorkspace(temporaryFolder, "7.3.0");
+
+		File nativeSassModulesDir = new File(nativeSassWorkspaceDir, "modules");
+
+		File nativeSassProjectDir = buildTemplateWithGradle(nativeSassModulesDir, "mvc-portlet", "foo-portlet");
+
+		Optional<String> nativeSassResult = executeGradle(
+			nativeSassModulesDir, true, _gradleDistribution, ":modules:foo-portlet" +
+			GRADLE_TASK_PATH_BUILD);
+
+		String nativeSassOutput = nativeSassResult.toString();
+
+		Assert.assertTrue(nativeSassOutput, nativeSassOutput.contains("Using native Sass compiler"));
+
+		File rubySassWorkspaceDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "rubySassWorkspace");
+
+		writeGradlePropertiesInWorkspace(rubySassWorkspaceDir, "sass.compiler.class.name=ruby");
+
+		File rubySassModulesDir = new File(rubySassWorkspaceDir, "modules");
+
+		File rubySassProjectDir = buildTemplateWithGradle(rubySassModulesDir, "mvc-portlet", "foo-portlet");
+
+		Optional<String> rubySassResult = executeGradle(
+			rubySassModulesDir, true, _gradleDistribution, ":modules:foo-portlet" +
+			GRADLE_TASK_PATH_BUILD);
+
+		String rubySassOutput = rubySassResult.toString();
+
+		Assert.assertTrue(rubySassOutput, rubySassOutput.contains("Using Ruby Sass compiler"));
+
+		File nativeSassOutputFile = testExists(nativeSassProjectDir, "build/libs/foo.portlet-1.0.0.jar");
+		File rubySassOutputFile = testExists(rubySassProjectDir, "build/libs/foo.portlet-1.0.0.jar");
+
+		testBundlesDiff(nativeSassOutputFile, rubySassOutputFile);
+	}
+
+	@Test
 	public void testBuildTemplateWorkspaceWithPortlet() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "withportlet");

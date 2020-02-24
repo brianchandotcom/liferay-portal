@@ -31,6 +31,7 @@ import difflib.Patch;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -52,6 +53,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -498,6 +500,76 @@ public interface BaseProjectTemplatesTestCase {
 		return gradlePropertiesFile;
 	}
 
+	public default File writeGradlePropertiesInWorkspace(
+			File workspaceDir, String gradleProperties)
+		throws IOException {
+
+		File gradlePropertiesFile = new File(workspaceDir, "gradle.properties");
+
+		gradleProperties = System.lineSeparator() + gradleProperties;
+
+		Files.write(
+			gradlePropertiesFile.toPath(),
+			gradleProperties.getBytes(),
+			StandardOpenOption.APPEND);
+
+		return gradlePropertiesFile;
+	}
+
+	public default File getWorkspaceDir(File dir) {
+		File gradleParent = findParentFile(
+			dir, new String[] {SETTINGS_GRADLE_FILE_NAME, GRADLE_PROPERTIES_FILE_NAME}, true);
+
+		if ((gradleParent != null) && gradleParent.exists()) {
+			return gradleParent;
+		}
+
+		FilenameFilter gradleFilter =
+			(file, name) -> SETTINGS_GRADLE_FILE_NAME.equals(name) || GRADLE_PROPERTIES_FILE_NAME.equals(name);
+
+		File[] matches = dir.listFiles(gradleFilter);
+
+		if (Objects.nonNull(matches) && (matches.length > 0)) {
+			return dir;
+		}
+
+		return null;
+	}
+
+	public static final String BUILD_GRADLE_FILE_NAME = "build.gradle";
+
+	public static final String GRADLE_PROPERTIES_FILE_NAME = "gradle.properties";
+
+	public static final String SETTINGS_GRADLE_FILE_NAME = "settings.gradle";
+
+	public static File findParentFile(File dir, String[] fileNames, boolean checkParents) {
+		if (dir == null) {
+			return null;
+		}
+		else if (Objects.equals(".", dir.toString()) || !dir.isAbsolute()) {
+			try {
+				dir = dir.getCanonicalFile();
+			}
+			catch (Exception e) {
+				dir = dir.getAbsoluteFile();
+			}
+		}
+
+		for (String fileName : fileNames) {
+			File file = new File(dir, fileName);
+
+			if (file.exists()) {
+				return dir;
+			}
+		}
+
+		if (checkParents) {
+			return findParentFile(dir.getParentFile(), fileNames, checkParents);
+		}
+
+		return null;
+	}
+
 	public default Optional<String> executeGradle(
 			File projectDir, boolean debug, boolean buildAndFail,
 			URI gradleDistribution, String... taskPaths)
@@ -509,9 +581,12 @@ public interface BaseProjectTemplatesTestCase {
 		String projectPath = projectDir.getPath();
 
 		if (projectPath.contains("workspace")) {
-			File buildFile = new File(projectDir, "build.gradle");
 
-			Path buildFilePath = buildFile.toPath();
+			File workspaceDir = getWorkspaceDir(projectDir);
+
+			File workspaceBuildFile = new File(workspaceDir, "build.gradle");
+
+			Path buildFilePath = workspaceBuildFile.toPath();
 
 			String content = FileUtil.read(buildFilePath);
 

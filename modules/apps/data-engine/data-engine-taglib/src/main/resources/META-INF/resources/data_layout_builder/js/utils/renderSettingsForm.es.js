@@ -18,6 +18,11 @@ import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es'
 export const getFilteredSettingsContext = ({config, settingsContext}) => {
 	const visitor = new PagesVisitor(settingsContext.pages);
 
+	const unsupportedProperties = [
+		...config.unimplementedProperties,
+		...config.disabledProperties
+	];
+
 	return {
 		...settingsContext,
 		pages: visitor.mapColumns(column => {
@@ -26,9 +31,7 @@ export const getFilteredSettingsContext = ({config, settingsContext}) => {
 				fields: column.fields
 					.filter(
 						({fieldName}) =>
-							config.unimplementedProperties.indexOf(
-								fieldName
-							) === -1
+							unsupportedProperties.indexOf(fieldName) === -1
 					)
 					.map(field => {
 						if (field.fieldName === 'dataSourceType') {

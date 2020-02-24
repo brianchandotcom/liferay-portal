@@ -1278,7 +1278,7 @@ definition {
 		}
 	}
 
-	@Description ="This is for LPS-101409. Validate if select a required category when entering the page name based on a page template."
+	@Description ="This is for LPS-101409. Validate if select a required category when entering the page name based on a page template. Also add a step to check adding page with category successfully via json."
 	@priority ="5"
 	test SelectRequiredCategoryWhenEnterPageNameWithWidgetPageTemplate {
 		property testray.component.names = "Categories";
@@ -1293,7 +1293,7 @@ definition {
 		}
 
 		task ("Add a category") {
-			JSONCategory.addCategory(
+			var categoryId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
@@ -1324,6 +1324,29 @@ definition {
 
 			AssertVisible(
 				key_itemName = "Test Widget Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
+		}
+
+		task ("Add a page with category via json addLayout") {
+
+			JSONLayout.addPublicLayout(
+				assetCategoryIds = "${categoryId}",
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2");
+		}
+
+		task ("Navigate to the Pages Administration") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				panel = "Site Administration",
+				portlet = "Pages");
+		}
+
+		task ("Assert the page added") {
+			SitePages.togglePrivacy(privacy = "Public Pages");
+
+			AssertVisible(
+				key_itemName = "Test Page Name 2",
 				locator1 = "SitePages#LIST_GROUP_ITEM");
 		}
 	}

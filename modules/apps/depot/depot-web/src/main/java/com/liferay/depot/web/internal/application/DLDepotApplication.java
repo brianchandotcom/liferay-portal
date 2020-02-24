@@ -16,6 +16,11 @@ package com.liferay.depot.web.internal.application;
 
 import com.liferay.depot.application.DepotApplication;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,6 +29,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = DepotApplication.class)
 public class DLDepotApplication implements DepotApplication {
+
+	@Override
+	public List<String> getClassNames() {
+		return Arrays.asList(
+			DLFileEntry.class.getName(), FileEntry.class.getName());
+	}
 
 	@Override
 	public String getPortletId() {

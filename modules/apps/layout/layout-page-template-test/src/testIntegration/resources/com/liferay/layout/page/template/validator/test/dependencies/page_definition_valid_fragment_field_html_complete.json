@@ -1,0 +1,29 @@
+{
+	"pageElement" : {
+		"pageElements" : [
+			{
+				"definition" : {
+					"fragment" : {
+						"fragmentKey" : "my-key"
+					},
+					"fragmentFields" : [
+						{
+							"id" : "element-html",
+							"value": {
+								"html": {
+									"value_i18n": {
+										"en_US" : "\n\t\t<h1>\n\t\t\tMy HTML Example\n\t\t</h1>\n\n\t\t<p>\n\t\t\tMy paragraph is a <strong>self-contained</strong> unit of a discourse in writing dealing with a particular point or <em>idea</em>.\n\t\t</p>\n\t",
+										"es_ES" : "\n\t\t<h1>\n\t\t\tMy HTML Example ES\n\t\t</h1>\n\n\t\t<p>\n\t\t\tMy paragraph is a <strong>self-contained</strong> unit of a discourse in writing dealing with a particular point or <em>idea</em>.\n\t\t</p>\n\t"
+									}
+								}
+							}
+						}
+					]
+				},
+				"pageElements" : [],
+				"type" : "Fragment"
+			}
+		],
+		"type" : "Root"
+	}
+}

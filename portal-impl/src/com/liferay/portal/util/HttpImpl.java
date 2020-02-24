@@ -1892,16 +1892,17 @@ public class HttpImpl implements Http {
 		}
 	}
 
-	private URI _getURI(String url) throws URISyntaxException {
+	private URI _getURI(String uriString) throws URISyntaxException {
 		Map<String, URI> uriMap = _uriMap.get();
-		url = url.trim();
 
-		URI uri = uriMap.get(url);
+		uriString = uriString.trim();
+
+		URI uri = uriMap.get(uriString);
 
 		if (uri == null) {
-			uri = new URI(url);
+			uri = new URI(uriString);
 
-			uriMap.put(url, uri);
+			uriMap.put(uriString, uri);
 		}
 
 		return uri;

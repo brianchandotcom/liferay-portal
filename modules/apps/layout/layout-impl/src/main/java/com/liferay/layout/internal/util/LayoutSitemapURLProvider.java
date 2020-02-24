@@ -57,6 +57,10 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layoutUuid, layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 
+		if (layout.isTypeAssetDisplay()) {
+			return;
+		}
+
 		visitLayout(element, layout, themeDisplay);
 	}
 
@@ -94,6 +98,10 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	protected void visitLayout(
 			Element element, Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException {
+
+		if (layout.isTypeAssetDisplay()) {
+			return;
+		}
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();

@@ -64,7 +64,7 @@ export default function PageStructureSidebar() {
 		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 			const fragmentChildren =
 				fragmentEntryLinks[item.config.fragmentEntryLinkId]
-					.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
+					.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] || {};
 
 			Object.keys(fragmentChildren).forEach(editableId => {
 				const childId = `${item.config.fragmentEntryLinkId}-${editableId}`;

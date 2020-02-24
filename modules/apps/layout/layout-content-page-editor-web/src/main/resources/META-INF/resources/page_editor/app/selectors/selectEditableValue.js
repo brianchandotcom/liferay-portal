@@ -20,11 +20,13 @@ export default function selectEditableValue(
 	editableId,
 	processorType = EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 ) {
+	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
+
 	return (
-		(state.fragmentEntryLinks[fragmentEntryLinkId] &&
-			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues[
-				processorType
-			][editableId]) ||
+		(fragmentEntryLink &&
+			fragmentEntryLink.editableValues &&
+			fragmentEntryLink.editableValues[processorType] &&
+			fragmentEntryLink.editableValues[processorType][editableId]) ||
 		{}
 	);
 }

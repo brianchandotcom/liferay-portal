@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jürgen Kappler
+ * @author Pavel Savinov
  */
 @Component(
 	immediate = true,

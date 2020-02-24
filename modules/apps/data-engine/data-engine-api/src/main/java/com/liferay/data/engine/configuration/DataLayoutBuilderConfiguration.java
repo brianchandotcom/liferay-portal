@@ -18,4 +18,12 @@ package com.liferay.data.engine.configuration;
  * @author Eudaldo Alonso
  */
 public interface DataLayoutBuilderConfiguration {
+
+	public default String[] getUnimplementedProperties() {
+		return new String[] {
+			"fieldNamespace", "indexType", "localizable", "readOnly", "type",
+			"validation", "visibilityExpression"
+		};
+	}
+
 }

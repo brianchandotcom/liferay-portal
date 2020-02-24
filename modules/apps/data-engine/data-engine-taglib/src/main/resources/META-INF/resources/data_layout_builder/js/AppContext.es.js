@@ -39,15 +39,7 @@ const AppContext = createContext();
 
 const initialState = {
 	config: {
-		unimplementedProperties: [
-			'fieldNamespace',
-			'indexType',
-			'localizable',
-			'readOnly',
-			'type',
-			'validation',
-			'visibilityExpression'
-		]
+		unimplementedProperties: []
 	},
 	dataDefinition: {
 		dataDefinitionFields: [],

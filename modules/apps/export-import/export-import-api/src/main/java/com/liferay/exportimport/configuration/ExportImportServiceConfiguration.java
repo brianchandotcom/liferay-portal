@@ -55,6 +55,12 @@ public interface ExportImportServiceConfiguration {
 	public boolean validateLayoutReferences();
 
 	@Meta.AD(
+		deflt = "true", description = "validate-missing-references-help",
+		name = "validate-missing-references", required = false
+	)
+	public boolean validateMissingReferences();
+
+	@Meta.AD(
 		deflt = "true", description = "staging-delete-temp-lar-on-failure-help",
 		name = "staging-delete-temp-lar-on-failure", required = false
 	)

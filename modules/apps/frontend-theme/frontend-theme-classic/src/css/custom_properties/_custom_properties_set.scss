@@ -177,7 +177,7 @@
 	border-color: transparent;
 }
 
-.btn:not(.btn-monospaced) {
+.btn:not(.btn-monospaced):not(.btn-unstyled) {
 	@include button-size(
 		var(--btn-padding-y),
 		var(--btn-padding-x),
@@ -187,7 +187,7 @@
 	);
 }
 
-.btn-lg:not(.btn-monospaced) {
+.btn-lg:not(.btn-monospaced):not(.btn-unstyled) {
 	@include button-size(
 		var(--btn-padding-y-lg),
 		var(--btn-padding-x-lg),
@@ -197,7 +197,7 @@
 	);
 }
 
-.btn-sm:not(.btn-monospaced) {
+.btn-sm:not(.btn-monospaced):not(.btn-unstyled) {
 	@include button-size(
 		var(--btn-padding-y-sm),
 		var(--btn-padding-x-sm),

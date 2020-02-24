@@ -34,17 +34,12 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
-import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
-import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -109,79 +104,6 @@ public class LayoutPageTemplatesImporterImpl
 					overwrite);
 			}
 		}
-	}
-
-	private LayoutStructureItem _getColumnLayoutStructureItem(
-		LayoutStructure layoutStructure, PageElement pageElement,
-		String parentId, int position) {
-
-		ColumnLayoutStructureItem columnLayoutStructureItem =
-			(ColumnLayoutStructureItem)
-				layoutStructure.addColumnLayoutStructureItem(
-					parentId, position);
-
-		Map<String, Object> definition =
-			(Map<String, Object>)pageElement.getDefinition();
-
-		if (definition.containsKey("size")) {
-			columnLayoutStructureItem.setSize((Integer)definition.get("size"));
-		}
-
-		return columnLayoutStructureItem;
-	}
-
-	private LayoutStructureItem _getContainerLayoutStructureItem(
-		LayoutStructure layoutStructure, PageElement pageElement,
-		String parentId, int position) {
-
-		ContainerLayoutStructureItem containerLayoutStructureItem =
-			(ContainerLayoutStructureItem)
-				layoutStructure.addContainerLayoutStructureItem(
-					parentId, position);
-
-		Map<String, Object> definition =
-			(Map<String, Object>)pageElement.getDefinition();
-
-		if (definition.containsKey("backgroundColorCssClass")) {
-			containerLayoutStructureItem.setBackgroundColorCssClass(
-				(String)definition.get("backgroundColorCssClass"));
-		}
-
-		if (definition.containsKey("layout")) {
-			Map<String, Object> layout = (Map<String, Object>)definition.get(
-				"layout");
-
-			if (layout.containsKey("paddingBottom")) {
-				containerLayoutStructureItem.setPaddingBottom(
-					(Integer)layout.get("paddingBottom"));
-			}
-
-			if (layout.containsKey("paddingHorizontal")) {
-				containerLayoutStructureItem.setPaddingHorizontal(
-					(Integer)layout.get("paddingHorizontal"));
-			}
-
-			if (layout.containsKey("paddingTop")) {
-				containerLayoutStructureItem.setPaddingTop(
-					(Integer)layout.get("paddingTop"));
-			}
-		}
-
-		if (definition.containsKey("backgroundImage")) {
-			Map<String, Object> backgroundImage =
-				(Map<String, Object>)definition.get("backgroundImage");
-
-			JSONObject jsonObject = JSONUtil.put(
-				"title", backgroundImage.get("title")
-			).put(
-				"url", backgroundImage.get("url")
-			);
-
-			containerLayoutStructureItem.setBackgroundImageJSONObject(
-				jsonObject);
-		}
-
-		return containerLayoutStructureItem;
 	}
 
 	private LayoutPageTemplateCollection _getLayoutPageTemplateCollection(
@@ -311,30 +233,6 @@ public class LayoutPageTemplatesImporterImpl
 		return pageTemplateCollectionMap;
 	}
 
-	private LayoutStructureItem _getRowLayoutStructureItem(
-		LayoutStructure layoutStructure, PageElement pageElement,
-		String parentId, int position) {
-
-		RowLayoutStructureItem rowLayoutStructureItem =
-			(RowLayoutStructureItem)layoutStructure.addLayoutStructureItem(
-				LayoutDataItemTypeConstants.TYPE_ROW, parentId, position);
-
-		Map<String, Object> definition =
-			(Map<String, Object>)pageElement.getDefinition();
-
-		if (definition.containsKey("numberOfColumns")) {
-			rowLayoutStructureItem.setNumberOfColumns(
-				(Integer)definition.get("numberOfColumns"));
-		}
-
-		if (definition.containsKey("gutters")) {
-			rowLayoutStructureItem.setGutters(
-				(Boolean)definition.get("gutters"));
-		}
-
-		return rowLayoutStructureItem;
-	}
-
 	private boolean _isPageTemplateCollectionFile(String fileName) {
 		String[] pathParts = StringUtil.split(fileName, CharPool.SLASH);
 
@@ -388,7 +286,7 @@ public class LayoutPageTemplatesImporterImpl
 
 			for (PageElement childPageElement : pageElement.getPageElements()) {
 				_processPageElement(
-					layoutStructure, childPageElement,
+					layoutPageTemplateEntry, layoutStructure, childPageElement,
 					rootLayoutStructureItem.getItemId(), position);
 
 				position++;
@@ -402,23 +300,25 @@ public class LayoutPageTemplatesImporterImpl
 	}
 
 	private void _processPageElement(
+		LayoutPageTemplateEntry layoutPageTemplateEntry,
 		LayoutStructure layoutStructure, PageElement pageElement,
 		String parentId, int position) {
 
-		LayoutStructureItem layoutStructureItem = null;
+		LayoutStructureItemHelperFactory layoutStructureItemHelperFactory =
+			LayoutStructureItemHelperFactory.getInstance();
 
-		if (pageElement.getType() == PageElement.Type.SECTION) {
-			layoutStructureItem = _getContainerLayoutStructureItem(
-				layoutStructure, pageElement, parentId, position);
+		LayoutStructureItemHelper layoutStructureItemHelper =
+			layoutStructureItemHelperFactory.getLayoutStructureItemHelper(
+				pageElement.getType());
+
+		if (layoutStructureItemHelper == null) {
+			return;
 		}
-		else if (pageElement.getType() == PageElement.Type.ROW) {
-			layoutStructureItem = _getRowLayoutStructureItem(
-				layoutStructure, pageElement, parentId, position);
-		}
-		else if (pageElement.getType() == PageElement.Type.COLUMN) {
-			layoutStructureItem = _getColumnLayoutStructureItem(
-				layoutStructure, pageElement, parentId, position);
-		}
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructureItemHelper.getLayoutStructureItem(
+				layoutPageTemplateEntry, layoutStructure, pageElement, parentId,
+				position);
 
 		if ((layoutStructureItem == null) ||
 			(pageElement.getPageElements() == null)) {
@@ -430,7 +330,7 @@ public class LayoutPageTemplatesImporterImpl
 
 		for (PageElement childPageElement : pageElement.getPageElements()) {
 			_processPageElement(
-				layoutStructure, childPageElement,
+				layoutPageTemplateEntry, layoutStructure, childPageElement,
 				layoutStructureItem.getItemId(), childPosition);
 
 			childPosition++;

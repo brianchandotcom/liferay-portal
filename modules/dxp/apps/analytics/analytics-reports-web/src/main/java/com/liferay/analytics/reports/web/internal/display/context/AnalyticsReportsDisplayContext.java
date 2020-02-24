@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -162,29 +161,25 @@ public class AnalyticsReportsDisplayContext {
 				_analyticsReportsInfoItemObject)
 		).put(
 			"publishDate",
-			FastDateFormatFactoryUtil.getSimpleDateFormat(
-				"MMMM dd, yyyy", _themeDisplay.getLocale()
-			).format(
-				_getPublishDate()
-			)
+			() -> {
+				Date publishDate = _analyticsReportsInfoItem.getPublishDate(
+					_analyticsReportsInfoItemObject);
+
+				Layout layout = _themeDisplay.getLayout();
+
+				if (DateUtil.compareTo(publishDate, layout.getPublishDate()) >
+						0) {
+
+					return publishDate;
+				}
+
+				return layout.getPublishDate();
+			}
 		).put(
 			"title",
 			_analyticsReportsInfoItem.getTitle(
 				_analyticsReportsInfoItemObject, _themeDisplay.getLocale())
 		).build();
-	}
-
-	private Date _getPublishDate() {
-		Date publishDate = _analyticsReportsInfoItem.getPublishDate(
-			_analyticsReportsInfoItemObject);
-
-		Layout layout = _themeDisplay.getLayout();
-
-		if (DateUtil.compareTo(publishDate, layout.getPublishDate()) > 0) {
-			return publishDate;
-		}
-
-		return layout.getPublishDate();
 	}
 
 	private JSONArray _getTimeSpansJSONArray() {

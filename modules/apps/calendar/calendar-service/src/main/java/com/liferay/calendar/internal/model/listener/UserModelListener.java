@@ -18,6 +18,7 @@ import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -54,6 +55,10 @@ public class UserModelListener extends BaseModelListener<User> {
 			String name = calendarResource.getName(LocaleUtil.getSiteDefault());
 
 			if (Objects.equals(name, user.getFullName())) {
+				return;
+			}
+
+			if (user.isDefaultUser() && name.equals(GroupConstants.GUEST)) {
 				return;
 			}
 

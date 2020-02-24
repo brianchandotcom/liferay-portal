@@ -24,6 +24,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
+import com.liferay.layout.page.template.exception.PageDefinitionValidatorException;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -33,6 +34,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.validator.PageDefinitionValidator;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -143,7 +145,7 @@ public class LayoutPageTemplatesImporterImpl
 		return layoutPageTemplateCollection;
 	}
 
-	private PageDefinition _getPageDefinition(String fileName, ZipFile zipFile)
+	private String _getPageDefinitionJSON(String fileName, ZipFile zipFile)
 		throws IOException {
 
 		String path = fileName.substring(
@@ -158,9 +160,7 @@ public class LayoutPageTemplatesImporterImpl
 			return null;
 		}
 
-		String content = StringUtil.read(zipFile.getInputStream(zipEntry));
-
-		return _objectMapper.readValue(content, PageDefinition.class);
+		return StringUtil.read(zipFile.getInputStream(zipEntry));
 	}
 
 	private Map<String, PageTemplateCollectionEntry>
@@ -223,11 +223,29 @@ public class LayoutPageTemplatesImporterImpl
 			PageTemplate pageTemplate = _objectMapper.readValue(
 				content, PageTemplate.class);
 
-			pageTemplateCollectionEntry.addPageTemplateEntry(
-				pathParts[2],
-				new PageTemplateEntry(
-					pageTemplate,
-					_getPageDefinition(zipEntry.getName(), zipFile)));
+			try {
+				String pageDefinitionJSON = _getPageDefinitionJSON(
+					zipEntry.getName(), zipFile);
+
+				PageDefinitionValidator.validatePageDefinition(
+					pageDefinitionJSON);
+
+				PageDefinition pageDefinition = _objectMapper.readValue(
+					pageDefinitionJSON, PageDefinition.class);
+
+				pageTemplateCollectionEntry.addPageTemplateEntry(
+					pathParts[2],
+					new PageTemplateEntry(pageTemplate, pageDefinition));
+			}
+			catch (PageDefinitionValidatorException
+						pageDefinitionValidatorException) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Invalid page definition for: " +
+							pageTemplate.getName());
+				}
+			}
 		}
 
 		return pageTemplateCollectionMap;

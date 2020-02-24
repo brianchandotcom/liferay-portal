@@ -12,6 +12,22 @@
  * details.
  */
 
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayProgressBar from '@clayui/progress-bar';
 import {useIsMounted, useTimeout} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
@@ -39,11 +55,19 @@ const AdaptiveMediaProgress = ({
 		autoStartProgress
 	);
 	const [percentage, setPercentage] = useState(
-		(adaptedImages / totalImages) * 100 || 0
+		Math.ceil((adaptedImages / totalImages) * 100) || 0
 	);
 	const [progressBarTooltip, setProgressBarTooltip] = useState(
 		adaptedImages + '/' + totalImages
 	);
+
+	const [imagesFailed, setImagesFailed] = useState(0);
+
+	const retry = () => {
+		setImagesFailed(0);
+
+		startProgress();
+	};
 
 	const startProgress = useCallback(
 		backgroundTaskUrl => {
@@ -72,29 +96,23 @@ const AdaptiveMediaProgress = ({
 		fetch(percentageUrl)
 			.then(res => res.json())
 			.then(({adaptedImages, errors, totalImages}) => {
+				adaptedImages = parseInt(adaptedImages, 10);
+				errors = parseInt(errors, 10);
+				totalImages = parseInt(totalImages, 10);
+
 				if (isMounted()) {
+					setImagesFailed(errors);
+
 					setPercentage(
-						Math.round(
-							((parseInt(adaptedImages) + parseInt(errors)) /
-								parseInt(totalImages)) *
-								100
-						) || 0
+						Math.ceil((adaptedImages / totalImages) * 100) || 0
 					);
 
 					setProgressBarTooltip(
-						tooltip
-							? tooltip
-							: parseInt(adaptedImages) +
-									parseInt(errors) +
-									'/' +
-									totalImages
+						tooltip ? tooltip : adaptedImages + '/' + totalImages
 					);
 				}
 
-				if (
-					parseInt(adaptedImages) + parseInt(errors) ===
-					parseInt(totalImages)
-				) {
+				if (adaptedImages + errors === totalImages) {
 					if (isMounted()) {
 						setShowLoadingIndicator(false);
 					}
@@ -137,7 +155,23 @@ const AdaptiveMediaProgress = ({
 		);
 	}
 
-	return (
+	return imagesFailed > 0 ? (
+		<div className="progress-error-container">
+			<span className="text-danger">
+				<ClayIcon symbol="exclamation-circle" />
+				<span>Error: {imagesFailed} images have failed. </span>
+			</span>
+
+			<ClayButton
+				className="text-danger"
+				displayType="link"
+				onClick={retry}
+				small
+			>
+				Retry
+			</ClayButton>
+		</div>
+	) : (
 		<>
 			<div
 				className={`progress-container ${disabled ? 'disabled' : ''}`}

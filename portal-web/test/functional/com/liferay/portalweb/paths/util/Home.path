@@ -99,11 +99,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_WRAPPER</td>
-	<td>//div[contains(@id,'wrapper')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_NAME_LOGO</td>
 	<td>//a[contains(@title,'Go to')]/img</td>
 	<td></td>

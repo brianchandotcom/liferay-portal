@@ -335,7 +335,7 @@ public class LayoutPageTemplatesImporterImpl
 		}
 
 		LayoutStructureItem layoutStructureItem =
-			layoutStructureItemHelper.getLayoutStructureItem(
+			layoutStructureItemHelper.addLayoutStructureItem(
 				layoutPageTemplateEntry, layoutStructure, pageElement, parentId,
 				position);
 

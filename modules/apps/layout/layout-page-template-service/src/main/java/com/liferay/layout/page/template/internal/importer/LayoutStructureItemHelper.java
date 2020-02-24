@@ -24,7 +24,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
  */
 public interface LayoutStructureItemHelper {
 
-	public LayoutStructureItem getLayoutStructureItem(
+	public LayoutStructureItem addLayoutStructureItem(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
 		LayoutStructure layoutStructure, PageElement pageElement,
 		String parentId, int position);

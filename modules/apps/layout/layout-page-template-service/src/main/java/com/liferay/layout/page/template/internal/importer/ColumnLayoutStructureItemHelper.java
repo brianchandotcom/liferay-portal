@@ -29,7 +29,7 @@ public class ColumnLayoutStructureItemHelper
 	implements LayoutStructureItemHelper {
 
 	@Override
-	public LayoutStructureItem getLayoutStructureItem(
+	public LayoutStructureItem addLayoutStructureItem(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
 		LayoutStructure layoutStructure, PageElement pageElement,
 		String parentId, int position) {

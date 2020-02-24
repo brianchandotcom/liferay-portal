@@ -17,7 +17,6 @@
 			"type": "object"
 		},
 		"FragmentField": {
-			"additionalProperties": false,
 			"oneOf": [
 				{
 					"$ref": "#/definitions/FragmentFieldBackgroundImage"
@@ -65,7 +64,6 @@
 			"additionalProperties": false,
 			"properties": {
 				"html": {
-					"additionalProperties": false,
 					"oneOf": [
 						{
 							"$ref": "#/definitions/InlineValue"
@@ -100,7 +98,6 @@
 					"$ref": "#/definitions/FragmentLink"
 				},
 				"text": {
-					"additionalProperties": false,
 					"oneOf": [
 						{
 							"$ref": "#/definitions/InlineValue"

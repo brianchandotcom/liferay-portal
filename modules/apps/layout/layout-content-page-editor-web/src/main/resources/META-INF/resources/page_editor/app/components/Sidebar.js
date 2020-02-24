@@ -92,27 +92,25 @@ export default function Sidebar() {
 	);
 
 	useEffect(() => {
-		const productMenuOpen = document.querySelector('.product-menu-open');
 		const sideNavigation = Liferay.SideNavigation.instance(
 			document.querySelector('.product-menu-toggle')
 		);
 
-		const onCloseSidebar = () => {
+		const onHandleSidebar = open => {
 			dispatch(
 				Actions.switchSidebarPanel({
-					sidebarOpen: false,
-					sidebarPanelId: null
+					sidebarOpen: open
 				})
 			);
 		};
 
-		if (productMenuOpen && sidebarOpen) {
-			onCloseSidebar();
+		if (!sideNavigation.visible()) {
+			onHandleSidebar(true);
 		}
 
 		const sideNavigationListener = sideNavigation.on(
 			'openStart.lexicon.sidenav',
-			onCloseSidebar
+			() => onHandleSidebar(false)
 		);
 
 		return () => {

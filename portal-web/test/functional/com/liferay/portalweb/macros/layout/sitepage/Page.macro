@@ -1013,7 +1013,7 @@ definition {
 		);
 
 		AssertCssValue(
-			locator1 = "Home#SITE_WRAPPER",
+			locator1 = "//body",
 			locator2 = "padding-right",
 			value1 = "${sideNavWidth}");
 	}

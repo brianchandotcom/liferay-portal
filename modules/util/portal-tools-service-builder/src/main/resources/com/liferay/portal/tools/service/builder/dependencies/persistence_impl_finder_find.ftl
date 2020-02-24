@@ -773,20 +773,20 @@ that may or may not be enforced with a unique index at the database level. Case
 				try {
 					session = openSession();
 
-					SQLQuery q = session.createSynchronizedSQLQuery(sql);
+					SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
 					if (getDB().isSupportsInlineDistinct()) {
-						q.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
+						sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
 					}
 					else {
-						q.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
+						sqlQuery.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
 					}
 
-					QueryPos qPos = QueryPos.getInstance(q);
+					QueryPos qPos = QueryPos.getInstance(sqlQuery);
 
 					<@finderQPos />
 
-					return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+					return (List<${entity.name}>)QueryUtil.list(sqlQuery, getDialect(), start, end);
 				}
 				catch (Exception exception) {
 					throw processException(exception);
@@ -1019,19 +1019,19 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
 
-					SQLQuery q = session.createSynchronizedSQLQuery(sql);
+					SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-					q.setFirstResult(0);
-					q.setMaxResults(2);
+					sqlQuery.setFirstResult(0);
+					sqlQuery.setMaxResults(2);
 
 					if (getDB().isSupportsInlineDistinct()) {
-						q.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
+						sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
 					}
 					else {
-						q.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
+						sqlQuery.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
 					}
 
-					QueryPos qPos = QueryPos.getInstance(q);
+					QueryPos qPos = QueryPos.getInstance(sqlQuery);
 
 					<@finderQPos />
 
@@ -1041,7 +1041,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						}
 					}
 
-					List<${entity.name}> list = q.list();
+					List<${entity.name}> list = sqlQuery.list();
 
 					if (list.size() == 2) {
 						return list.get(1);
@@ -1316,22 +1316,22 @@ that may or may not be enforced with a unique index at the database level. Case
 					try {
 						session = openSession();
 
-						SQLQuery q = session.createSynchronizedSQLQuery(sql);
+						SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
 						if (getDB().isSupportsInlineDistinct()) {
-							q.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
+							sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
 						}
 						else {
-							q.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
+							sqlQuery.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
 						}
 
 						<#if bindParameter(entityColumns)>
-							QueryPos qPos = QueryPos.getInstance(q);
+							QueryPos qPos = QueryPos.getInstance(sqlQuery);
 						</#if>
 
 						<@finderQPos _arrayable=true />
 
-						return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+						return (List<${entity.name}>)QueryUtil.list(sqlQuery, getDialect(), start, end);
 					}
 					catch (Exception exception) {
 						throw processException(exception);

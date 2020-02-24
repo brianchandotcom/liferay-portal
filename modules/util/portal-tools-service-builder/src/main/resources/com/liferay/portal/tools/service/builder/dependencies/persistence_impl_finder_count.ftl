@@ -609,15 +609,15 @@ public int countBy${entityFinder.name}(
 			try {
 				session = openSession();
 
-				SQLQuery q = session.createSynchronizedSQLQuery(sql);
+				SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-				q.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+				sqlQuery.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos qPos = QueryPos.getInstance(sqlQuery);
 
 				<@finderQPos />
 
-				Long count = (Long)q.uniqueResult();
+				Long count = (Long)sqlQuery.uniqueResult();
 
 				return count.intValue();
 			}
@@ -786,17 +786,17 @@ public int countBy${entityFinder.name}(
 				try {
 					session = openSession();
 
-					SQLQuery q = session.createSynchronizedSQLQuery(sql);
+					SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-					q.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+					sqlQuery.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
 					<#if bindParameter(entityColumns)>
-						QueryPos qPos = QueryPos.getInstance(q);
+						QueryPos qPos = QueryPos.getInstance(sqlQuery);
 					</#if>
 
 					<@finderQPos _arrayable=true />
 
-					Long count = (Long)q.uniqueResult();
+					Long count = (Long)sqlQuery.uniqueResult();
 
 					return count.intValue();
 				}

@@ -1499,9 +1499,11 @@ definition {
 	macro viewCategorizationCategoryNotVisibleCP {
 		Panel.expandPanel(panel = "Metadata");
 
-		AssertElementNotPresent(
-			key_categoryName = "${categoryName}",
-			locator1 = "AssetCategorization#CATEGORY");
+		for (var categoryName : list "${categoryNameList}") {
+			AssertElementNotPresent(
+				key_categoryName = "${categoryName}",
+				locator1 = "AssetCategorization#CATEGORY");
+		}
 	}
 
 	macro viewCategorizationVocabularyCP {

@@ -12,21 +12,21 @@
  * details.
  */
 
-package com.liferay.layout.page.template.internal.importer;
+package com.liferay.layout.page.template.internal.importer.helper;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.layout.util.structure.RowLayoutStructureItem;
 
 import java.util.Map;
 
 /**
  * @author Jürgen Kappler
  */
-public class RowLayoutStructureItemHelper implements LayoutStructureItemHelper {
+public class ColumnLayoutStructureItemHelper
+	implements LayoutStructureItemHelper {
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
@@ -34,22 +34,19 @@ public class RowLayoutStructureItemHelper implements LayoutStructureItemHelper {
 		LayoutStructure layoutStructure, PageElement pageElement,
 		String parentId, int position) {
 
-		RowLayoutStructureItem rowLayoutStructureItem =
-			(RowLayoutStructureItem)layoutStructure.addLayoutStructureItem(
-				LayoutDataItemTypeConstants.TYPE_ROW, parentId, position);
+		ColumnLayoutStructureItem columnLayoutStructureItem =
+			(ColumnLayoutStructureItem)
+				layoutStructure.addColumnLayoutStructureItem(
+					parentId, position);
 
 		Map<String, Object> definition =
 			(Map<String, Object>)pageElement.getDefinition();
 
 		if (definition != null) {
-			rowLayoutStructureItem.setNumberOfColumns(
-				(Integer)definition.get("numberOfColumns"));
-
-			rowLayoutStructureItem.setGutters(
-				(Boolean)definition.get("gutters"));
+			columnLayoutStructureItem.setSize((Integer)definition.get("size"));
 		}
 
-		return rowLayoutStructureItem;
+		return columnLayoutStructureItem;
 	}
 
 }

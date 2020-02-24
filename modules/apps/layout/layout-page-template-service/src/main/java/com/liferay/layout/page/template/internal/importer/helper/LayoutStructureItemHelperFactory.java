@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.internal.importer;
+package com.liferay.layout.page.template.internal.importer.helper;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 

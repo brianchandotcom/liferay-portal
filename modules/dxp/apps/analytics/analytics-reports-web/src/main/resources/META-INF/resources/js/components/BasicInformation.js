@@ -32,14 +32,20 @@ function Author({authorName}) {
 	);
 }
 
-function BasicInformation({authorName, publishDate, title}) {
+function BasicInformation({authorName, languageTag, publishDate, title}) {
+	const formattedPublishDate = Intl.DateTimeFormat(languageTag, {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	}).format(publishDate);
+
 	return (
 		<div>
 			<h3 className="h4 mb-2">{title}</h3>
 			<span className="text-secondary">
 				{Liferay.Util.sub(
 					Liferay.Language.get('published-on-x'),
-					publishDate
+					formattedPublishDate
 				)}
 			</span>
 			<Author authorName={authorName} />
@@ -53,7 +59,7 @@ Author.propTypes = {
 
 BasicInformation.propTypes = {
 	authorName: PropTypes.string.isRequired,
-	publishDate: PropTypes.string.isRequired,
+	publishDate: PropTypes.number.isRequired,
 	title: PropTypes.string.isRequired,
 };
 

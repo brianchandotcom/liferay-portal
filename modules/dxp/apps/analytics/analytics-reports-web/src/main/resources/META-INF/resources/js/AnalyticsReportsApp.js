@@ -68,6 +68,7 @@ export default function({context, props}) {
 		<div className="p-3">
 			<BasicInformation
 				authorName={authorName}
+				languageTag={languageTag}
 				publishDate={publishDate}
 				title={title}
 			/>

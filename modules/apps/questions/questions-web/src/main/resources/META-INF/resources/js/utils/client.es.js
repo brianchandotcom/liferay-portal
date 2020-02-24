@@ -352,7 +352,7 @@ export const getThreads = ({
         }`);
 };
 
-export const getRankedThreads = (dateModified, page = 1, pageSize = 30, sort) =>
+export const getRankedThreads = (dateModified, page = 1, pageSize = 30, sort = '') =>
 	request(gql`
         query {
           messageBoardThreadsRanked(dateModified: ${dateModified.toISOString()}, page: ${page}, pageSize: ${pageSize}, sort: ${sort}){

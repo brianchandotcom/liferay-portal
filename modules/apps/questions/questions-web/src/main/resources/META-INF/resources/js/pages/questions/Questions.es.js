@@ -13,6 +13,7 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayButton from '@clayui/button';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
@@ -22,15 +23,15 @@ import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import QuestionBadge from '../../components/QuestionsBadge.es';
 import TagList from '../../components/TagList.es';
 import UserIcon from '../../components/UserIcon.es';
-import {getThreads} from '../../utils/client.es';
+import {getRankedThreads, getThreads} from '../../utils/client.es';
 import {dateToInternationalHuman} from '../../utils/utils.es';
 
 export default ({
-	match: {
-		params: {creatorId, tag}
-	},
-	search
-}) => {
+					match: {
+						params: {creatorId, tag}
+					},
+					search
+				}) => {
 	const context = useContext(AppContext);
 
 	const [loading, setLoading] = useState(true);
@@ -39,27 +40,75 @@ export default ({
 	const [questions, setQuestions] = useState([]);
 
 	useEffect(() => {
-		getThreads({
-			creatorId,
-			page,
-			pageSize,
-			search,
-			siteKey: context.siteKey,
-			tag
-		})
+		renderQuestions(loadThreads());
+	}, [creatorId, page, pageSize, search, context.siteKey, tag]);
+
+	const renderQuestions = questions => {
+		questions
 			.then(data => setQuestions(data))
 			.then(() => setLoading(false));
-	}, [creatorId, page, pageSize, search, context.siteKey, tag]);
+	};
+
+	const loadThreads = sort => getThreads({
+		creatorId,
+		page,
+		pageSize,
+		search,
+		sort,
+		siteKey: context.siteKey,
+		tag
+	});
 
 	const hasValidAnswer = question =>
 		question.messageBoardMessages.items.filter(
 			message => message.showAsAnswer
 		).length > 0;
 
+	const filterBy = type => {
+		if (type === 'edited') {
+			renderQuestions(loadThreads());
+		}
+		else if (type === 'week') {
+			const date = new Date();
+			date.setDate(date.getDate() - 7);
+
+			renderQuestions(getRankedThreads(date, page, pageSize));
+		}
+		else if (type === 'month') {
+			const date = new Date();
+			date.setDate(date.getDate() - 31);
+
+			renderQuestions(getRankedThreads(date, page, pageSize));
+		}
+		else {
+			renderQuestions(loadThreads('dateCreated:desc'));
+		}
+	};
+
 	return (
 		<section>
+
+			<ClayButton.Group>
+				<ClayButton displayType="secondary"
+							onClick={() => filterBy('created')}>
+					{Liferay.Language.get('latest-created')}
+				</ClayButton>
+				<ClayButton displayType="secondary"
+							onClick={() => filterBy('edited')}>
+					{Liferay.Language.get('latest-edited')}
+				</ClayButton>
+				<ClayButton displayType="secondary"
+							onClick={() => filterBy('week')}>
+					{Liferay.Language.get('week')}
+				</ClayButton>
+				<ClayButton displayType="secondary"
+							onClick={() => filterBy('month')}>
+					{Liferay.Language.get('month')}
+				</ClayButton>
+			</ClayButton.Group>
+
 			{loading ? (
-				<ClayLoadingIndicator />
+				<ClayLoadingIndicator/>
 			) : (
 				questions.items &&
 				questions.items.map(question => (
@@ -79,8 +128,8 @@ export default ({
 									<QuestionBadge
 										symbol="caret-top"
 										value={
-											question.aggregateRating &&
-											question.aggregateRating.ratingCount
+				question.aggregateRating &&
+				question.aggregateRating.ratingCount
 										}
 									/>
 
@@ -116,7 +165,8 @@ export default ({
 							</div>
 						</div>
 
-						<div className="autofit-padded autofit-row autofit-row-center">
+						<div
+							className="autofit-padded autofit-row autofit-row-center">
 							<div className="autofit-col autofit-col-expand">
 								<div>
 									<UserIcon
@@ -139,14 +189,14 @@ export default ({
 									</span>
 									<span>
 										{' - ' +
-											dateToInternationalHuman(
-												question.dateModified
-											)}
+										 dateToInternationalHuman(
+											 question.dateModified
+										 )}
 									</span>
 								</div>
 							</div>
 							<div>
-								<TagList tags={question.keywords} />
+								<TagList tags={question.keywords}/>
 							</div>
 						</div>
 					</div>
@@ -154,16 +204,16 @@ export default ({
 			)}
 
 			{!!questions.totalCount &&
-				questions.totalCount > questions.pageSize && (
-					<ClayPaginationWithBasicItems
-						activePage={page}
-						ellipsisBuffer={2}
-						onPageChange={setPage}
-						totalPages={Math.ceil(
-							questions.totalCount / questions.pageSize
-						)}
-					/>
-				)}
+			 questions.totalCount > questions.pageSize && (
+				 <ClayPaginationWithBasicItems
+					 activePage={page}
+					 ellipsisBuffer={2}
+					 onPageChange={setPage}
+					 totalPages={Math.ceil(
+						 questions.totalCount / questions.pageSize
+					 )}
+				 />
+			 )}
 		</section>
 	);
 };

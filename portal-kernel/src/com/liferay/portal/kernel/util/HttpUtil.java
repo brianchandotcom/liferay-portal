@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.util.Map;
@@ -146,6 +147,10 @@ public class HttpUtil {
 
 	public static String getRequestURL(HttpServletRequest httpServletRequest) {
 		return getHttp().getRequestURL(httpServletRequest);
+	}
+
+	public static URI getURI(String uriString) {
+		return getHttp().getURI(uriString);
 	}
 
 	public static boolean hasDomain(String url) {

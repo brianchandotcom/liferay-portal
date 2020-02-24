@@ -15,7 +15,7 @@
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {getThreadContent, updateThread} from '../../utils/client.es';
@@ -32,7 +32,7 @@ export default withRouter(
 		const [headline, setHeadline] = useState('');
 		const [tags, setTags] = useState('');
 
-		useEffect(() => {
+		const loadThread = () =>
 			getThreadContent(questionId).then(
 				({articleBody, headline, tags}) => {
 					setArticleBody(articleBody);
@@ -42,7 +42,6 @@ export default withRouter(
 					}
 				}
 			);
-		}, [questionId]);
 
 		const submit = () =>
 			updateThread(articleBody, headline, tags, questionId).then(() =>
@@ -88,8 +87,6 @@ export default withRouter(
 							</span>
 						</label>
 
-						{articleBody}
-
 						<Editor
 							config={getCKEditorConfig()}
 							data={articleBody}
@@ -97,6 +94,7 @@ export default withRouter(
 							onChange={event =>
 								setArticleBody(event.editor.getData())
 							}
+							onInstanceReady={loadThread}
 							required
 						/>
 

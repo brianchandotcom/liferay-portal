@@ -48,7 +48,11 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 			averageTime += requestStatistics.getAverageTime();
 		}
 
-		return averageTime / companyStatisticsSet.size();
+		if (!companyStatisticsSet.isEmpty()) {
+			return averageTime / companyStatisticsSet.size();
+		}
+
+		return averageTime;
 	}
 
 	@Override

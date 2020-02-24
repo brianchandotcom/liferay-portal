@@ -654,8 +654,6 @@ definition {
 			vocabularyName = "Vocabulary Name",
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
-
-		Alert.viewErrorMessage(errorMessage = "You cannot select more than one category for Vocabulary Name.");
 	}
 
 	@priority = "3"

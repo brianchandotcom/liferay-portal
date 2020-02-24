@@ -286,7 +286,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(query);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
 				<@finderQPos />
 
@@ -570,13 +570,13 @@ that may or may not be enforced with a unique index at the database level. Case
 			query.setFirstResult(0);
 			query.setMaxResults(2);
 
-			QueryPos qPos = QueryPos.getInstance(query);
+			QueryPos queryPos = QueryPos.getInstance(query);
 
 			<@finderQPos />
 
 			if (orderByComparator != null) {
 				for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(${entity.varName})) {
-					qPos.add(orderByConditionValue);
+					queryPos.add(orderByConditionValue);
 				}
 			}
 
@@ -710,7 +710,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					Query query = session.createQuery(sql);
 
-					QueryPos qPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
 					<@finderQPos />
 
@@ -782,7 +782,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						sqlQuery.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
 					}
 
-					QueryPos qPos = QueryPos.getInstance(sqlQuery);
+					QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 					<@finderQPos />
 
@@ -900,13 +900,13 @@ that may or may not be enforced with a unique index at the database level. Case
 					query.setFirstResult(0);
 					query.setMaxResults(2);
 
-					QueryPos qPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
 					<@finderQPos />
 
 					if (orderByComparator != null) {
 						for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(${entity.varName})) {
-							qPos.add(orderByConditionValue);
+							queryPos.add(orderByConditionValue);
 						}
 					}
 
@@ -1031,13 +1031,13 @@ that may or may not be enforced with a unique index at the database level. Case
 						sqlQuery.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
 					}
 
-					QueryPos qPos = QueryPos.getInstance(sqlQuery);
+					QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 					<@finderQPos />
 
 					if (orderByComparator != null) {
 						for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(${entity.varName})) {
-							qPos.add(orderByConditionValue);
+							queryPos.add(orderByConditionValue);
 						}
 					}
 
@@ -1251,7 +1251,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						Query query = session.createQuery(sql);
 
 						<#if bindParameter(entityColumns)>
-							QueryPos qPos = QueryPos.getInstance(query);
+							QueryPos queryPos = QueryPos.getInstance(query);
 						</#if>
 
 						<@finderQPos _arrayable=true />
@@ -1326,7 +1326,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						}
 
 						<#if bindParameter(entityColumns)>
-							QueryPos qPos = QueryPos.getInstance(sqlQuery);
+							QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 						</#if>
 
 						<@finderQPos _arrayable=true />
@@ -1691,7 +1691,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				Query query = session.createQuery(sql);
 
 				<#if bindParameter(entityColumns)>
-					QueryPos qPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 				</#if>
 
 				<@finderQPos _arrayable=true />
@@ -2126,7 +2126,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			Query query = session.createQuery(sql);
 
 			<#if bindParameter(entityColumns)>
-				QueryPos qPos = QueryPos.getInstance(query);
+				QueryPos queryPos = QueryPos.getInstance(query);
 			</#if>
 
 			<@finderQPos _arrayable=true />
@@ -2331,7 +2331,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(query);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
 				<@finderQPos />
 

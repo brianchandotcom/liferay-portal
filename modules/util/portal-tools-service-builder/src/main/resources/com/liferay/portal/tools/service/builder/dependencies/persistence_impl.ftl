@@ -1129,10 +1129,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					Query query = session.createQuery(sql);
 
 					<#if stringUtil.equals(entity.PKClassName, "String")>
-						QueryPos qPos = QueryPos.getInstance(query);
+						QueryPos queryPos = QueryPos.getInstance(query);
 
 						for (Serializable primaryKey : uncachedPrimaryKeys) {
-							qPos.add((String)primaryKey);
+							queryPos.add((String)primaryKey);
 						}
 					</#if>
 
@@ -2056,9 +2056,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				sqlQuery.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
-				QueryPos qPos = QueryPos.getInstance(sqlQuery);
+				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-				qPos.add(${scopeEntityColumn.name});
+				queryPos.add(${scopeEntityColumn.name});
 
 				return (Long)sqlQuery.uniqueResult();
 			}
@@ -2073,10 +2073,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		protected long rebuildTree(Session session, SQLQuery selectSQLQuery, SQLQuery updateSQLQuery, long ${scopeEntityColumn.name}, long parent${pkEntityColumn.methodName}, long left${pkEntityColumn.methodName}) {
 			long right${pkEntityColumn.methodName} = left${pkEntityColumn.methodName} + 1;
 
-			QueryPos qPos = QueryPos.getInstance(selectSQLQuery);
+			QueryPos queryPos = QueryPos.getInstance(selectSQLQuery);
 
-			qPos.add(${scopeEntityColumn.name});
-			qPos.add(parent${pkEntityColumn.methodName});
+			queryPos.add(${scopeEntityColumn.name});
+			queryPos.add(parent${pkEntityColumn.methodName});
 
 			List<Long> ${pkEntityColumn.names} = selectSQLQuery.list();
 
@@ -2085,11 +2085,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 
 			if (parent${pkEntityColumn.methodName} > 0) {
-				qPos = QueryPos.getInstance(updateSQLQuery);
+				queryPos = QueryPos.getInstance(updateSQLQuery);
 
-				qPos.add(left${pkEntityColumn.methodName});
-				qPos.add(right${pkEntityColumn.methodName});
-				qPos.add(parent${pkEntityColumn.methodName});
+				queryPos.add(left${pkEntityColumn.methodName});
+				queryPos.add(right${pkEntityColumn.methodName});
+				queryPos.add(parent${pkEntityColumn.methodName});
 
 				updateSQLQuery.executeUpdate();
 			}
@@ -2521,16 +2521,16 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if stringUtil.equals(entityColumn.type, "String")>
 				for (String ${entityColumn.name} : ${entityColumn.names}) {
 					if (${entityColumn.name} != null && !${entityColumn.name}.isEmpty()) {
-						qPos.add(${entityColumn.name});
+						queryPos.add(${entityColumn.name});
 					}
 				}
 			</#if>
 		<#elseif entityColumn.isPrimitiveType()>
-			qPos.add(${entityColumn.name}${serviceBuilder.getPrimitiveObjValue("${entityColumn.type}")});
+			queryPos.add(${entityColumn.name}${serviceBuilder.getPrimitiveObjValue("${entityColumn.type}")});
 
 		<#else>
 			if (bind${entityColumn.methodName}) {
-				qPos.add(
+				queryPos.add(
 					<#if stringUtil.equals(entityColumn.type, "Date")>
 						new Timestamp(${entityColumn.name}.getTime())
 					<#elseif stringUtil.equals(entityColumn.type, "String") && !entityColumn.isCaseSensitive()>

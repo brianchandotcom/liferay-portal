@@ -98,7 +98,7 @@ public int countBy${entityFinder.name}(
 
 			Query query = session.createQuery(sql);
 
-			QueryPos qPos = QueryPos.getInstance(query);
+			QueryPos queryPos = QueryPos.getInstance(query);
 
 			<@finderQPos />
 
@@ -253,7 +253,7 @@ public int countBy${entityFinder.name}(
 				Query query = session.createQuery(sql);
 
 				<#if bindParameter(entityColumns)>
-					QueryPos qPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 				</#if>
 
 				<@finderQPos _arrayable=true />
@@ -499,7 +499,7 @@ public int countBy${entityFinder.name}(
 			Query query = session.createQuery(sql);
 
 			<#if bindParameter(entityColumns)>
-				QueryPos qPos = QueryPos.getInstance(query);
+				QueryPos queryPos = QueryPos.getInstance(query);
 			</#if>
 
 			<@finderQPos _arrayable=true />
@@ -577,7 +577,7 @@ public int countBy${entityFinder.name}(
 
 				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(query);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
 				<@finderQPos />
 
@@ -613,7 +613,7 @@ public int countBy${entityFinder.name}(
 
 				sqlQuery.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
-				QueryPos qPos = QueryPos.getInstance(sqlQuery);
+				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 				<@finderQPos />
 
@@ -745,7 +745,7 @@ public int countBy${entityFinder.name}(
 					Query query = session.createQuery(sql);
 
 					<#if bindParameter(entityColumns)>
-						QueryPos qPos = QueryPos.getInstance(query);
+						QueryPos queryPos = QueryPos.getInstance(query);
 					</#if>
 
 					<@finderQPos _arrayable=true />
@@ -791,7 +791,7 @@ public int countBy${entityFinder.name}(
 					sqlQuery.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
 					<#if bindParameter(entityColumns)>
-						QueryPos qPos = QueryPos.getInstance(sqlQuery);
+						QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 					</#if>
 
 					<@finderQPos _arrayable=true />

@@ -105,6 +105,20 @@ public class PageDefinitionValidatorTest {
 	}
 
 	@Test
+	public void testValidatePageDefinitionInvalidRowExtraProperties()
+		throws Exception {
+
+		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expectMessage(
+			new StringStartsWith(
+				"/pageElement/pageElements/0/pageElements/0/definition: " +
+					"extraneous key [extra] is not permitted"));
+
+		PageDefinitionValidator.validatePageDefinition(
+			_read("page_definition_invalid_row_extra_properties.json"));
+	}
+
+	@Test
 	public void testValidatePageDefinitionInvalidSectionExtraProperties()
 		throws Exception {
 

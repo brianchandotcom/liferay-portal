@@ -147,8 +147,12 @@ public class DataLayoutTaglibUtil {
 		}
 
 		return JSONUtil.put(
+			"disabledProperties",
+			dataLayoutBuilderDefinition.getDisabledProperties()
+		).put(
 			"unimplementedProperties",
-			dataLayoutBuilderDefinition.getUnimplementedProperties());
+			dataLayoutBuilderDefinition.getUnimplementedProperties()
+		);
 	}
 
 	public static JSONObject getDataLayoutJSONObject(

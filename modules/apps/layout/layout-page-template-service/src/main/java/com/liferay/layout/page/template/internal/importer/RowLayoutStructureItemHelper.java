@@ -16,17 +16,42 @@ package com.liferay.layout.page.template.internal.importer;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RowLayoutStructureItem;
+
+import java.util.Map;
 
 /**
  * @author Jürgen Kappler
  */
-public interface LayoutStructureItemHelper {
+public class RowLayoutStructureItemHelper implements LayoutStructureItemHelper {
 
+	@Override
 	public LayoutStructureItem getLayoutStructureItem(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
 		LayoutStructure layoutStructure, PageElement pageElement,
-		String parentId, int position);
+		String parentId, int position) {
+
+		RowLayoutStructureItem rowLayoutStructureItem =
+			(RowLayoutStructureItem)layoutStructure.addLayoutStructureItem(
+				LayoutDataItemTypeConstants.TYPE_ROW, parentId, position);
+
+		Map<String, Object> definition =
+			(Map<String, Object>)pageElement.getDefinition();
+
+		if (definition.containsKey("numberOfColumns")) {
+			rowLayoutStructureItem.setNumberOfColumns(
+				(Integer)definition.get("numberOfColumns"));
+		}
+
+		if (definition.containsKey("gutters")) {
+			rowLayoutStructureItem.setGutters(
+				(Boolean)definition.get("gutters"));
+		}
+
+		return rowLayoutStructureItem;
+	}
 
 }

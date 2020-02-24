@@ -55,7 +55,7 @@
 	if (dismissible) {
 	%>
 
-		<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" data-dismiss="alert" type="button">
+		<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" data-dismiss="liferay-alert" type="button">
 			<svg aria-hidden="true" class="icon-monospaced lexicon-icon lexicon-icon-times">
 				<use xlink:href="<%= themeDisplayPath %>/lexicon/icons.svg#times" />
 			</svg>

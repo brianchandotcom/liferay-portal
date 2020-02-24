@@ -57,7 +57,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 			</c:otherwise>
 		</c:choose>
 
-		<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" data-dismiss="alert" type="button">
+		<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" data-dismiss="liferay-alert" type="button">
 			<aui:icon image="times" markupView="lexicon" />
 		</button>
 	</div>

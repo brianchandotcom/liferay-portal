@@ -28,7 +28,7 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 <c:choose>
 	<c:when test="<%= embed %>">
 		<div class="alert alert-dismissible alert-<%= alertStyle %>" role="alert">
-			<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" data-dismiss="alert" type="button">
+			<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" data-dismiss="liferay-alert" type="button">
 				<aui:icon image="times" markupView="lexicon" />
 
 				<span class="sr-only"><%= LanguageUtil.get(request, "close") %></span>

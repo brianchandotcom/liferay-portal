@@ -310,8 +310,8 @@ public class MasterLayoutActionDropdownItemsProvider {
 					"do-you-want-to-replace-x-for-x-as-the-default-master-" +
 						"page-for-widget-pages",
 					new String[] {
-						_layoutPageTemplateEntry.getName(),
-						defaultLayoutPageTemplateEntry.getName()
+						defaultLayoutPageTemplateEntry.getName(),
+						_layoutPageTemplateEntry.getName()
 					}));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "mark-as-default"));
@@ -362,7 +362,7 @@ public class MasterLayoutActionDropdownItemsProvider {
 					_httpServletRequest,
 					"do-you-want-to-replace-x-for-x-as-the-default-master-" +
 						"page-for-widget-pages",
-					new String[] {_layoutPageTemplateEntry.getName(), name}));
+					new String[] {name, _layoutPageTemplateEntry.getName()}));
 
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "mark-as-default"));

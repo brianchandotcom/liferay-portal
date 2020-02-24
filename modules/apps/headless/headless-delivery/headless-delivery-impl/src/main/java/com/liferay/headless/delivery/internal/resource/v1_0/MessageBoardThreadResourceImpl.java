@@ -73,6 +73,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
@@ -368,6 +369,20 @@ public class MessageBoardThreadResourceImpl
 			"get", addAction("VIEW", mbMessage, "getMessageBoardThread")
 		).put(
 			"replace", addAction("UPDATE", mbMessage, "putMessageBoardThread")
+		).put(
+			"reply-to-thread",
+			ActionUtil.addAction(
+				"REPLY_TO_MESSAGE", MessageBoardMessageResourceImpl.class,
+				mbMessage.getMessageId(),
+				"postMessageBoardThreadMessageBoardMessage",
+				"com.liferay.message.boards", contextScopeChecker,
+				mbMessage.getGroupId(), contextUriInfo)
+		).put(
+			"subscribe",
+			addAction("UPDATE", mbMessage, "putMessageBoardThreadSubscribe")
+		).put(
+			"unsubscribe",
+			addAction("UPDATE", mbMessage, "putMessageBoardThreadUnsubscribe")
 		).build();
 	}
 

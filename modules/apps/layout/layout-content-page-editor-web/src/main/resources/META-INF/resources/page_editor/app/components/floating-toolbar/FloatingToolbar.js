@@ -274,7 +274,14 @@ export default function FloatingToolbar({
 							)}
 							ref={panelRef}
 						>
-							<div className="p-3 popover popover-scrollable position-static">
+							<div
+								className={classNames(
+									'p-3 popover popover-scrollable position-static',
+									{
+										'page-editor__floating-toolbar--hidden': hidden
+									}
+								)}
+							>
 								<PanelComponent item={item} />
 							</div>
 						</div>,

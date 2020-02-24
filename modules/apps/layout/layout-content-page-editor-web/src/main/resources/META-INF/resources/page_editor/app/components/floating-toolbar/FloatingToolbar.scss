@@ -59,6 +59,7 @@
 		& > .popover {
 			max-height: 250px;
 			min-width: $floatingToolbarPanelMinWidth;
+			transition: opacity ease 0.3s;
 
 			&.popover-scrollable {
 				overflow: auto;

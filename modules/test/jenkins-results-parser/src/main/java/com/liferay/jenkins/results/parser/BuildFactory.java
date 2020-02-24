@@ -52,6 +52,10 @@ public class BuildFactory {
 			return new FreestyleBatchBuild(url, (TopLevelBuild)parentBuild);
 		}
 
+		if (url.contains("test-portal-environment-controller")) {
+			return new DefaultTopLevelBuild(url, (TopLevelBuild)parentBuild);
+		}
+
 		for (String batchToken : _TOKENS_BATCH) {
 			if (url.contains(batchToken)) {
 				return new BatchBuild(url, (TopLevelBuild)parentBuild);

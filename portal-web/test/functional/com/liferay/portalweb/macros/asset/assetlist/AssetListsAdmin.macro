@@ -79,7 +79,7 @@ definition {
 	}
 
 	macro addTagsFilter {
-		if (isSet(aqueryAndOperator)) {
+		if (isSet(queryAndOperator)) {
 			Select(
 				locator1 = "APConfiguration#FILTER_QUERY_AND_OPERATOR",
 				value1 = "${queryAndOperator}");

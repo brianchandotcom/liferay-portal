@@ -343,20 +343,20 @@ that may or may not be enforced with a unique index at the database level. Case
 			return ${entity.varName};
 		}
 
-		StringBundler msg = new StringBundler(${(entityColumns?size * 2) + 2});
+		StringBundler sb = new StringBundler(${(entityColumns?size * 2) + 2});
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		<#list entityColumns as entityColumn>
-			msg.append("<#if entityColumn_index != 0>, </#if>${entityColumn.name}${entityColumn.comparator}");
-			msg.append(${entityColumn.name});
+			sb.append("<#if entityColumn_index != 0>, </#if>${entityColumn.name}${entityColumn.comparator}");
+			sb.append(${entityColumn.name});
 
 			<#if !entityColumn_has_next>
-				msg.append("}");
+				sb.append("}");
 			</#if>
 		</#list>
 
-		throw new ${noSuchEntity}Exception(msg.toString());
+		throw new ${noSuchEntity}Exception(sb.toString());
 	}
 
 	/**
@@ -421,20 +421,20 @@ that may or may not be enforced with a unique index at the database level. Case
 			return ${entity.varName};
 		}
 
-		StringBundler msg = new StringBundler(${(entityColumns?size * 2) + 2});
+		StringBundler sb = new StringBundler(${(entityColumns?size * 2) + 2});
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		<#list entityColumns as entityColumn>
-			msg.append("<#if entityColumn_index != 0>, </#if>${entityColumn.name}${entityColumn.comparator}");
-			msg.append(${entityColumn.name});
+			sb.append("<#if entityColumn_index != 0>, </#if>${entityColumn.name}${entityColumn.comparator}");
+			sb.append(${entityColumn.name});
 
 			<#if !entityColumn_has_next>
-				msg.append("}");
+				sb.append("}");
 			</#if>
 		</#list>
 
-		throw new ${noSuchEntity}Exception(msg.toString());
+		throw new ${noSuchEntity}Exception(sb.toString());
 	}
 
 	/**
@@ -2186,24 +2186,24 @@ that may or may not be enforced with a unique index at the database level. Case
 		);
 
 		if ( ${entity.varName} == null) {
-			StringBundler msg = new StringBundler(${(entityColumns?size * 2) + 2});
+			StringBundler sb = new StringBundler(${(entityColumns?size * 2) + 2});
 
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			<#list entityColumns as entityColumn>
-				msg.append("<#if entityColumn_index != 0>, </#if>${entityColumn.name}${entityColumn.comparator}");
-				msg.append(${entityColumn.name});
+				sb.append("<#if entityColumn_index != 0>, </#if>${entityColumn.name}${entityColumn.comparator}");
+				sb.append(${entityColumn.name});
 
 				<#if !entityColumn_has_next>
-					msg.append("}");
+					sb.append("}");
 				</#if>
 			</#list>
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
+				_log.debug(sb.toString());
 			}
 
-			throw new ${noSuchEntity}Exception(msg.toString());
+			throw new ${noSuchEntity}Exception(sb.toString());
 		}
 
 		return ${entity.varName};

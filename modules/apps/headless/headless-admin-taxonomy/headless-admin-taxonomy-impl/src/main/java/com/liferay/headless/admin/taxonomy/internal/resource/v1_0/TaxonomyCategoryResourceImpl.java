@@ -59,10 +59,11 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
 import java.sql.Timestamp;
 
-import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -208,14 +209,15 @@ public class TaxonomyCategoryResourceImpl
 			LocalizedMapUtil.patch(
 				assetCategory.getDescriptionMap(),
 				contextAcceptLanguage.getPreferredLocale(),
-				taxonomyCategory.getDescription()));
+				taxonomyCategory.getDescription(),
+				taxonomyCategory.getDescription_i18n()));
 		assetCategory.setExternalReferenceCode(
 			taxonomyCategory.getExternalReferenceCode());
 		assetCategory.setTitleMap(
 			LocalizedMapUtil.patch(
 				assetCategory.getTitleMap(),
 				contextAcceptLanguage.getPreferredLocale(),
-				taxonomyCategory.getName()));
+				taxonomyCategory.getName(), taxonomyCategory.getName_i18n()));
 
 		AssetCategoryPermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
@@ -260,20 +262,22 @@ public class TaxonomyCategoryResourceImpl
 
 		AssetCategory assetCategory = _getAssetCategory(taxonomyCategoryId);
 
+		_validateResourceLanguageInRequest(
+			false, assetCategory.getDefaultLanguageId(), taxonomyCategory);
+
 		assetCategory.setDescriptionMap(
-			LocalizedMapUtil.merge(
-				assetCategory.getDescriptionMap(),
-				new AbstractMap.SimpleEntry<>(
-					contextAcceptLanguage.getPreferredLocale(),
-					taxonomyCategory.getDescription())));
+			LocalizedMapUtil.getLocaleMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				taxonomyCategory.getDescription(),
+				taxonomyCategory.getDescription_i18n(),
+				assetCategory.getTitleMap()));
 		assetCategory.setExternalReferenceCode(
 			taxonomyCategory.getExternalReferenceCode());
 		assetCategory.setTitleMap(
-			LocalizedMapUtil.merge(
-				assetCategory.getTitleMap(),
-				new AbstractMap.SimpleEntry<>(
-					contextAcceptLanguage.getPreferredLocale(),
-					taxonomyCategory.getName())));
+			LocalizedMapUtil.getLocaleMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				taxonomyCategory.getName(), taxonomyCategory.getName_i18n(),
+				assetCategory.getTitleMap()));
 
 		AssetCategoryPermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
@@ -288,25 +292,17 @@ public class TaxonomyCategoryResourceImpl
 			long taxonomyCategoryId, long taxonomyVocabularyId)
 		throws Exception {
 
-		if (!LocaleUtil.equals(
-				LocaleUtil.fromLanguageId(languageId),
-				contextAcceptLanguage.getPreferredLocale())) {
-
-			String w3cLanguageId = LocaleUtil.toW3cLanguageId(languageId);
-
-			throw new BadRequestException(
-				"Taxonomy categories can only be created with the default " +
-					"language " + w3cLanguageId);
-		}
+		_validateResourceLanguageInRequest(true, languageId, taxonomyCategory);
 
 		AssetCategory assetCategory = _assetCategoryService.addCategory(
 			groupId, taxonomyCategoryId,
-			Collections.singletonMap(
+			LocalizedMapUtil.getLocaleMap(
 				contextAcceptLanguage.getPreferredLocale(),
-				taxonomyCategory.getName()),
-			Collections.singletonMap(
+				taxonomyCategory.getName(), taxonomyCategory.getName_i18n()),
+			LocalizedMapUtil.getLocaleMap(
 				contextAcceptLanguage.getPreferredLocale(),
-				taxonomyCategory.getDescription()),
+				taxonomyCategory.getDescription(),
+				taxonomyCategory.getDescription_i18n()),
 			taxonomyVocabularyId, null,
 			ServiceContextUtil.createServiceContext(
 				groupId, taxonomyCategory.getViewableByAsString()));
@@ -418,6 +414,32 @@ public class TaxonomyCategoryResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			assetCategory);
+	}
+
+	private void _validateResourceLanguageInRequest(
+		boolean creation, String languageId,
+		TaxonomyCategory taxonomyCategory) {
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(languageId);
+
+		if (LocaleUtil.equals(
+				defaultLocale, contextAcceptLanguage.getPreferredLocale())) {
+
+			return;
+		}
+
+		Map<String, String> localizedNames = taxonomyCategory.getName_i18n();
+
+		if ((creation && (localizedNames == null)) ||
+			(!creation && (localizedNames != null) &&
+			 !localizedNames.containsKey(defaultLocale.toLanguageTag()))) {
+
+			String w3cLanguageId = LocaleUtil.toW3cLanguageId(defaultLocale);
+
+			throw new BadRequestException(
+				"Taxonomy categories must include the default language " +
+					w3cLanguageId);
+		}
 	}
 
 	private static final EntityModel _entityModel = new CategoryEntityModel();

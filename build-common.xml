@@ -795,7 +795,9 @@ information.
 				<elseif>
 					<isset property="env.JENKINS_HOME" />
 					<then>
-						<property name="task.gradle.jvmargs" value="${env.ANT_OPTS}" />
+						<antelope:stringutil property="task.gradle.jvmargs" string="${env.ANT_OPTS}">
+							<antelope:replace regex="&quot;" replacement="" />
+						</antelope:stringutil>
 					</then>
 				</elseif>
 			</if>

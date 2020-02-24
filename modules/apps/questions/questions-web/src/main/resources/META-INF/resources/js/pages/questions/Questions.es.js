@@ -12,6 +12,7 @@
  * details.
  */
 
+import classnames from 'classnames';
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
@@ -38,6 +39,7 @@ export default ({
 	const [page, setPage] = useState(1);
 	const [pageSize] = useState(5);
 	const [questions, setQuestions] = useState([]);
+	const [activeFilter, setActiveFilter] = useState('modified');
 
 	useEffect(() => {
 		renderQuestions(loadThreads());
@@ -69,22 +71,26 @@ export default ({
 		).length > 0;
 
 	const filterBy = type => {
-		if (type === 'edited') {
+		if (type === 'modified') {
+			setActiveFilter('modified');
 			renderQuestions(loadThreads());
 		}
 		else if (type === 'week') {
+			setActiveFilter('week');
 			const date = new Date();
 			date.setDate(date.getDate() - 7);
 
 			renderQuestions(getRankedThreads(date, page, pageSize));
 		}
 		else if (type === 'month') {
+			setActiveFilter('month');
 			const date = new Date();
 			date.setDate(date.getDate() - 31);
 
 			renderQuestions(getRankedThreads(date, page, pageSize));
 		}
 		else {
+			setActiveFilter('created');
 			renderQuestions(loadThreads('dateCreated:desc'));
 		}
 	};
@@ -93,25 +99,33 @@ export default ({
 		<section className="c-mt-5 c-mx-auto col-xl-10">
 			<ClayButton.Group>
 				<ClayButton
-					displayType="secondary"
+					className={classnames('secondary', {
+						'btn-secondary': activeFilter !== 'created'
+					})}
 					onClick={() => filterBy('created')}
 				>
 					{Liferay.Language.get('latest-created')}
 				</ClayButton>
 				<ClayButton
-					displayType="secondary"
-					onClick={() => filterBy('edited')}
+					className={classnames('secondary', {
+						'btn-secondary': activeFilter !== 'modified'
+					})}
+					onClick={() => filterBy('modified')}
 				>
 					{Liferay.Language.get('latest-edited')}
 				</ClayButton>
 				<ClayButton
-					displayType="secondary"
+					className={classnames('secondary', {
+						'btn-secondary': activeFilter !== 'week'
+					})}
 					onClick={() => filterBy('week')}
 				>
 					{Liferay.Language.get('week')}
 				</ClayButton>
 				<ClayButton
-					displayType="secondary"
+					className={classnames('secondary', {
+						'btn-secondary': activeFilter !== 'month'
+					})}
 					onClick={() => filterBy('month')}
 				>
 					{Liferay.Language.get('month')}

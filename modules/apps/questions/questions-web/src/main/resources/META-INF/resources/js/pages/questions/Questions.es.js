@@ -24,7 +24,7 @@ import QuestionBadge from '../../components/QuestionsBadge.es';
 import TagList from '../../components/TagList.es';
 import UserIcon from '../../components/UserIcon.es';
 import {getRankedThreads, getThreads} from '../../utils/client.es';
-import {dateToInternationalHuman} from '../../utils/utils.es';
+import {dateToInternationalHuman, normalizeRating} from '../../utils/utils.es';
 
 export default ({
 	match: {
@@ -136,11 +136,9 @@ export default ({
 								<ul className="question-list">
 									<li>
 										<QuestionBadge
-											symbol="caret-top"
+											symbol={normalizeRating(question.aggregateRating) < 0 ? 'caret-bottom' : 'caret-top'}
 											value={
-												question.aggregateRating &&
-												question.aggregateRating
-													.ratingCount
+												normalizeRating(question.aggregateRating)
 											}
 										/>
 									</li>

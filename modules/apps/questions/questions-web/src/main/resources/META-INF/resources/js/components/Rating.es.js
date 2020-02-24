@@ -16,6 +16,7 @@ import ClayIcon from '@clayui/icon';
 import React, {useEffect, useState} from 'react';
 
 import {createVoteMessage, createVoteThread} from '../utils/client.es';
+import {normalize, normalizeRating} from "../utils/utils.es";
 
 export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 	const [userRating, setUserRating] = useState(0);
@@ -23,17 +24,13 @@ export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 
 	useEffect(() => {
 		setRating(
-			aggregateRating &&
-				aggregateRating.ratingCount *
-					normalize(aggregateRating.ratingAverage)
+			normalizeRating(aggregateRating)
 		);
 	}, [aggregateRating]);
 
 	useEffect(() => {
 		setUserRating(myRating === null ? 0 : normalize(myRating));
 	}, [myRating]);
-
-	const normalize = x => x * 2 - 1;
 
 	const voteChange = value => {
 		if (userRating === value) {

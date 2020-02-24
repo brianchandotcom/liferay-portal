@@ -124,3 +124,13 @@ export function useDebounceCallback(callback, milliseconds) {
 
 	return [callbackRef.current, () => cancelDebounce(callbackRef.current)];
 }
+
+export function normalizeRating(aggregateRating) {
+	return aggregateRating &&
+		   aggregateRating.ratingCount *
+		   normalize(aggregateRating.ratingAverage);
+}
+
+export function normalize(ratingValue) {
+	return ratingValue * 2 - 1;
+}

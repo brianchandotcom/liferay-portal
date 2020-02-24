@@ -17,7 +17,7 @@ import {Link} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
 import {getRelatedThreads} from '../utils/client.es';
-import {dateToInternationalHuman} from '../utils/utils.es';
+import {dateToInternationalHuman, normalizeRating} from '../utils/utils.es';
 import QuestionBadge from './QuestionsBadge.es';
 import UserIcon from './UserIcon.es';
 
@@ -54,11 +54,9 @@ export default ({question}) => {
 								</div>
 								<div>
 									<QuestionBadge
-										symbol="caret-top"
+										symbol={normalizeRating(question.aggregateRating) < 0 ? 'caret-bottom' : 'caret-top'}
 										value={
-											relatedQuestion.aggregateRating &&
-											relatedQuestion.aggregateRating
-												.ratingCount
+											normalizeRating(relatedQuestion.aggregateRating)
 										}
 									/>
 								</div>

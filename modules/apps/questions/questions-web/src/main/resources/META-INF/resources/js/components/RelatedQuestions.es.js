@@ -17,9 +17,9 @@ import {Link} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
 import {getRelatedThreads} from '../utils/client.es';
-import QuestionBadge from "./QuestionsBadge.es";
-import UserIcon from "./UserIcon.es";
-import {dateToInternationalHuman} from "../utils/utils.es";
+import {dateToInternationalHuman} from '../utils/utils.es';
+import QuestionBadge from './QuestionsBadge.es';
+import UserIcon from './UserIcon.es';
 
 export default ({question}) => {
 	const [relatedQuestions, setRelatedQuestions] = useState([]);
@@ -37,37 +37,35 @@ export default ({question}) => {
 		}
 	}, [question, context.siteKey]);
 
-
 	return (
 		<>
 			<h3>Related Questions</h3>
-			<hr/>
+			<hr />
 
 			{!!relatedQuestions.length && (
-				<div className="autofit-row autofit-padded">
-
+				<div className="autofit-padded autofit-row">
 					{relatedQuestions.map(relatedQuestion => (
 						<div className="autofit-col" key={relatedQuestion.id}>
-
 							<div className="autofit-row">
 								<div className="autofit-col autofit-col-expand">
 									{relatedQuestion.messageBoardSection &&
-									 relatedQuestion.messageBoardSection.title}
+										relatedQuestion.messageBoardSection
+											.title}
 								</div>
 								<div>
 									<QuestionBadge
 										symbol="caret-top"
 										value={
 											relatedQuestion.aggregateRating &&
-											relatedQuestion.aggregateRating.ratingCount
+											relatedQuestion.aggregateRating
+												.ratingCount
 										}
 									/>
 								</div>
 							</div>
 							<h2 className="question-headline">
-								<Link
-									to={'/questions/' +
-										relatedQuestion.id}>{relatedQuestion.headline}
+								<Link to={'/questions/' + relatedQuestion.id}>
+									{relatedQuestion.headline}
 								</Link>
 							</h2>
 							<div>
@@ -84,9 +82,9 @@ export default ({question}) => {
 								</span>
 								<span>
 									{' - ' +
-									 dateToInternationalHuman(
-										 relatedQuestion.dateModified
-									 )}
+										dateToInternationalHuman(
+											relatedQuestion.dateModified
+										)}
 								</span>
 							</div>
 						</div>

@@ -14,20 +14,20 @@
 
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useState} from 'react';
 import {withRouter} from 'react-router-dom';
-import {Editor} from 'frontend-editor-ckeditor-web';
 
 import {getMessage, updateMessage} from '../../utils/client.es';
-import {getCKEditorConfig, onBeforeLoadCKEditor} from "../../utils/utils.es";
+import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
 
 export default withRouter(
 	({
-		 history,
-		 match: {
-			 params: {answerId}
-		 }
-	 }) => {
+		history,
+		match: {
+			params: {answerId}
+		}
+	}) => {
 		const [articleBody, setArticleBody] = useState('');
 
 		const loadMessage = () =>
@@ -48,7 +48,7 @@ export default withRouter(
 						<label htmlFor="basicInput">
 							{Liferay.Language.get('answer')}
 							<span className="reference-mark">
-								<ClayIcon symbol="asterisk"/>
+								<ClayIcon symbol="asterisk" />
 							</span>
 						</label>
 						<Editor
@@ -56,9 +56,7 @@ export default withRouter(
 							data={articleBody}
 							onBeforeLoad={onBeforeLoadCKEditor}
 							onChange={event =>
-								setArticleBody(
-									event.editor.getData()
-								)
+								setArticleBody(event.editor.getData())
 							}
 							onInstanceReady={loadMessage}
 							required

@@ -138,7 +138,17 @@ public class DataLayoutTaglibUtil {
 	}
 
 	public static JSONObject getDataLayoutConfigJSONObject(String contentType) {
-		return null;
+		DataLayoutBuilderConfiguration dataLayoutBuilderConfiguration =
+			_dataLayoutBuilderConfigurations.get(contentType);
+
+		if (dataLayoutBuilderConfiguration == null) {
+			dataLayoutBuilderConfiguration =
+				_dataLayoutBuilderConfigurations.get("default");
+		}
+
+		return JSONUtil.put(
+			"unimplementedProperties",
+			dataLayoutBuilderConfiguration.getUnimplementedProperties());
 	}
 
 	public static JSONObject getDataLayoutJSONObject(

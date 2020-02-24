@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -234,13 +234,13 @@ public class UserGroupsDisplayContext {
 				});
 		}
 
-		int userGroupsCount = UserGroupLocalServiceUtil.searchCount(
+		int userGroupsCount = UserGroupServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 			userGroupParams);
 
 		userGroupSearch.setTotal(userGroupsCount);
 
-		List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(
+		List<UserGroup> userGroups = UserGroupServiceUtil.search(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 			userGroupParams, userGroupSearch.getStart(),
 			userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());

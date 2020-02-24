@@ -1059,11 +1059,10 @@ public class HttpImpl implements Http {
 		if (Validator.isNotNull(protocol)) {
 			url = url.trim();
 
-			String protocolDelimiter = url.substring(
-				protocol.length(),
-				protocol.length() + PROTOCOL_DELIMITER.length());
+			if (url.regionMatches(
+					protocol.length(), PROTOCOL_DELIMITER, 0,
+					PROTOCOL_DELIMITER.length())) {
 
-			if (protocolDelimiter.equals(PROTOCOL_DELIMITER)) {
 				return url.substring(
 					protocol.length() + PROTOCOL_DELIMITER.length());
 			}

@@ -44,43 +44,37 @@ public class ContainerLayoutStructureItemHelper
 		Map<String, Object> definition =
 			(Map<String, Object>)pageElement.getDefinition();
 
-		if (definition.containsKey("backgroundColorCssClass")) {
+		if (definition != null) {
 			containerLayoutStructureItem.setBackgroundColorCssClass(
 				(String)definition.get("backgroundColorCssClass"));
-		}
 
-		if (definition.containsKey("layout")) {
-			Map<String, Object> layout = (Map<String, Object>)definition.get(
-				"layout");
-
-			if (layout.containsKey("paddingBottom")) {
-				containerLayoutStructureItem.setPaddingBottom(
-					(Integer)layout.get("paddingBottom"));
-			}
-
-			if (layout.containsKey("paddingHorizontal")) {
-				containerLayoutStructureItem.setPaddingHorizontal(
-					(Integer)layout.get("paddingHorizontal"));
-			}
-
-			if (layout.containsKey("paddingTop")) {
-				containerLayoutStructureItem.setPaddingTop(
-					(Integer)layout.get("paddingTop"));
-			}
-		}
-
-		if (definition.containsKey("backgroundImage")) {
 			Map<String, Object> backgroundImage =
 				(Map<String, Object>)definition.get("backgroundImage");
 
-			JSONObject jsonObject = JSONUtil.put(
-				"title", backgroundImage.get("title")
-			).put(
-				"url", backgroundImage.get("url")
-			);
+			if (backgroundImage != null) {
+				JSONObject jsonObject = JSONUtil.put(
+					"title", backgroundImage.get("title")
+				).put(
+					"url", backgroundImage.get("url")
+				);
 
-			containerLayoutStructureItem.setBackgroundImageJSONObject(
-				jsonObject);
+				containerLayoutStructureItem.setBackgroundImageJSONObject(
+					jsonObject);
+			}
+
+			Map<String, Object> layout = (Map<String, Object>)definition.get(
+				"layout");
+
+			if (layout != null) {
+				containerLayoutStructureItem.setPaddingBottom(
+					(Integer)layout.get("paddingBottom"));
+
+				containerLayoutStructureItem.setPaddingHorizontal(
+					(Integer)layout.get("paddingHorizontal"));
+
+				containerLayoutStructureItem.setPaddingTop(
+					(Integer)layout.get("paddingTop"));
+			}
 		}
 
 		return containerLayoutStructureItem;

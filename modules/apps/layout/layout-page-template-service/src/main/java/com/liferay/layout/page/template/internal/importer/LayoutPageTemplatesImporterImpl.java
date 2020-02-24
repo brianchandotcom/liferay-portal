@@ -270,26 +270,29 @@ public class LayoutPageTemplatesImporterImpl
 			PageDefinition pageDefinition)
 		throws Exception {
 
-		PageElement pageElement = pageDefinition.getPageElement();
-
-		if (pageElement.getType() != PageElement.Type.ROOT) {
-			return;
-		}
-
 		LayoutStructure layoutStructure = new LayoutStructure();
 
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
-		if (pageElement.getPageElements() != null) {
-			int position = 0;
+		if (pageDefinition != null) {
+			PageElement pageElement = pageDefinition.getPageElement();
 
-			for (PageElement childPageElement : pageElement.getPageElements()) {
-				_processPageElement(
-					layoutPageTemplateEntry, layoutStructure, childPageElement,
-					rootLayoutStructureItem.getItemId(), position);
+			if ((pageElement.getType() == PageElement.Type.ROOT) &&
+				(pageElement.getPageElements() != null)) {
 
-				position++;
+				int position = 0;
+
+				for (PageElement childPageElement :
+						pageElement.getPageElements()) {
+
+					_processPageElement(
+						layoutPageTemplateEntry, layoutStructure,
+						childPageElement, rootLayoutStructureItem.getItemId(),
+						position);
+
+					position++;
+				}
 			}
 		}
 

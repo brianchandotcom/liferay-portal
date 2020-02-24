@@ -12,41 +12,21 @@
  * details.
  */
 
-package com.liferay.layout.page.template.internal.importer;
+package com.liferay.layout.page.template.internal.importer.helper;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-
-import java.util.Map;
 
 /**
  * @author Jürgen Kappler
  */
-public class ColumnLayoutStructureItemHelper
-	implements LayoutStructureItemHelper {
+public interface LayoutStructureItemHelper {
 
-	@Override
 	public LayoutStructureItem addLayoutStructureItem(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
 		LayoutStructure layoutStructure, PageElement pageElement,
-		String parentId, int position) {
-
-		ColumnLayoutStructureItem columnLayoutStructureItem =
-			(ColumnLayoutStructureItem)
-				layoutStructure.addColumnLayoutStructureItem(
-					parentId, position);
-
-		Map<String, Object> definition =
-			(Map<String, Object>)pageElement.getDefinition();
-
-		if (definition != null) {
-			columnLayoutStructureItem.setSize((Integer)definition.get("size"));
-		}
-
-		return columnLayoutStructureItem;
-	}
+		String parentId, int position);
 
 }

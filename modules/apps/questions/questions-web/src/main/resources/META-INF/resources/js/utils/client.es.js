@@ -387,7 +387,7 @@ export const getRankedThreads = (dateModified, page = 1, pageSize = 30, sort) =>
 export const getRelatedThreads = (search = '', siteKey) =>
 	request(gql`
         query {
-            messageBoardThreads(page: 1, pageSize: 10, flatten: true, search: ${search}, siteKey: ${siteKey}){
+            messageBoardThreads(page: 1, pageSize: 4, flatten: true, search: ${search}, siteKey: ${siteKey}){
                 items {
                     aggregateRating {
                         ratingAverage

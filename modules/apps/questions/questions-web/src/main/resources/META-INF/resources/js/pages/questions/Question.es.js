@@ -268,8 +268,6 @@ export default ({
 					</div>
 				</div>
 			)}
-			<h3>Related Questions</h3>
-			<hr/>
 			{question && question.id && (
 				<RelatedQuestions question={question}/>
 			)}

@@ -19,20 +19,28 @@ export default ({question}) => {
 
 	return (
 		<>
-			{relatedQuestions.map(relatedQuestion => (
-				<ul key={relatedQuestion.id}>
-					<li>
-						<Link
-							to={"/questions/" +
-								relatedQuestion.id}>[{(relatedQuestion.aggregateRating &&
-													   relatedQuestion.aggregateRating.ratingCount *
-													   (relatedQuestion.aggregateRating.ratingAverage *
-														2 - 1)) ||
-													  0}] {relatedQuestion.headline}</Link>
-					</li>
-				</ul>
-			))
-			}
+			{!!relatedQuestions.length && (
+				<>
+					<h3>Related Questions</h3>
+					<hr/>
+					{
+						relatedQuestions.map(relatedQuestion => (
+							<ul key={relatedQuestion.id}>
+								<li>
+									<Link
+										to={"/questions/" +
+											relatedQuestion.id}>
+										[{(relatedQuestion.aggregateRating &&
+										   relatedQuestion.aggregateRating.ratingCount *
+										   (relatedQuestion.aggregateRating.ratingAverage *
+											2 - 1)) ||
+										  0}] {relatedQuestion.headline}</Link>
+								</li>
+							</ul>
+						))
+					}
+				</>
+			)}
 		</>
 	);
 };

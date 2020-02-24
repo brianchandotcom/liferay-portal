@@ -25,12 +25,9 @@ import {useDebounceCallback} from '../utils/utils.es';
 export default withRouter(({history, location, searchChange}) => {
 	const context = useContext(AppContext);
 
-	const [debounceCallback] = useDebounceCallback(
-		value => {
-			searchChange(value);
-		},
-		500
-	);
+	const [debounceCallback] = useDebounceCallback(value => {
+		searchChange(value);
+	}, 500);
 
 	const navigate = href => {
 		history.push(href);
@@ -39,7 +36,7 @@ export default withRouter(({history, location, searchChange}) => {
 	const isActive = value => location.pathname.includes('/' + value);
 
 	return (
-		<div className="autofit-padded autofit-row navigation-bar">
+		<div className="autofit-padded-no-gutters autofit-row autofit-row-center">
 			<div className="autofit-col autofit-col-expand">
 				<ClayNavigationBar triggerLabel="Questions">
 					<ClayNavigationBar.Item
@@ -50,6 +47,7 @@ export default withRouter(({history, location, searchChange}) => {
 							{Liferay.Language.get('questions')}
 						</ClayLink>
 					</ClayNavigationBar.Item>
+
 					<ClayNavigationBar.Item
 						active={isActive('tags')}
 						onClick={() => navigate('/tags')}
@@ -60,6 +58,7 @@ export default withRouter(({history, location, searchChange}) => {
 					</ClayNavigationBar.Item>
 				</ClayNavigationBar>
 			</div>
+
 			<div className="autofit-col">
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
@@ -71,10 +70,7 @@ export default withRouter(({history, location, searchChange}) => {
 							placeholder={Liferay.Language.get('search')}
 							type="text"
 						/>
-						<ClayInput.GroupInsetItem
-							after
-							tag="span"
-						>
+						<ClayInput.GroupInsetItem after tag="span">
 							<ClayButtonWithIcon
 								displayType="unstyled"
 								symbol="search"

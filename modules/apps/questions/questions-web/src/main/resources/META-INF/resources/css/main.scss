@@ -1,6 +1,7 @@
 @import 'atlas-variables';
 @import 'pages';
 
-.navigation-bar {
-	margin-bottom: 1rem;
+.stretched-link-layer {
+	position: relative;
+	z-index: 2;
 }

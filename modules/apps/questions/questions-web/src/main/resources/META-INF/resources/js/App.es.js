@@ -25,7 +25,6 @@ import Questions from './pages/questions/Questions.es';
 import Tags from './pages/tags/Tags.es';
 
 export default props => {
-
 	const [search, setSearch] = useState('');
 
 	const searchChange = value => {
@@ -43,7 +42,11 @@ export default props => {
 							exact
 							path="/"
 							render={props => (
-								<Questions {...props} search={search} tag={''} />
+								<Questions
+									{...props}
+									search={search}
+									tag={''}
+								/>
 							)}
 						/>
 						<Route
@@ -78,7 +81,11 @@ export default props => {
 							exact
 							path="/questions"
 							render={props => (
-								<Questions {...props} search={search} tag={''} />
+								<Questions
+									{...props}
+									search={search}
+									tag={''}
+								/>
 							)}
 						/>
 						<Route

@@ -12,10 +12,10 @@
  * details.
  */
 
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
@@ -27,11 +27,11 @@ import {getRankedThreads, getThreads} from '../../utils/client.es';
 import {dateToInternationalHuman} from '../../utils/utils.es';
 
 export default ({
-					match: {
-						params: {creatorId, tag}
-					},
-					search
-				}) => {
+	match: {
+		params: {creatorId, tag}
+	},
+	search
+}) => {
 	const context = useContext(AppContext);
 
 	const [loading, setLoading] = useState(true);
@@ -41,7 +41,7 @@ export default ({
 
 	useEffect(() => {
 		renderQuestions(loadThreads());
-	}, [creatorId, page, pageSize, search, context.siteKey, tag]);
+	}, [creatorId, page, pageSize, search, context.siteKey, tag, loadThreads]);
 
 	const renderQuestions = questions => {
 		questions
@@ -49,15 +49,19 @@ export default ({
 			.then(() => setLoading(false));
 	};
 
-	const loadThreads = sort => getThreads({
-		creatorId,
-		page,
-		pageSize,
-		search,
-		sort,
-		siteKey: context.siteKey,
-		tag
-	});
+	const loadThreads = useCallback(
+		sort =>
+			getThreads({
+				creatorId,
+				page,
+				pageSize,
+				search,
+				siteKey: context.siteKey,
+				sort,
+				tag
+			}),
+		[context.siteKey, creatorId, page, pageSize, search, tag]
+	);
 
 	const hasValidAnswer = question =>
 		question.messageBoardMessages.items.filter(
@@ -86,117 +90,136 @@ export default ({
 	};
 
 	return (
-		<section>
-
+		<section className="c-mt-5 c-mx-auto col-xl-10">
 			<ClayButton.Group>
-				<ClayButton displayType="secondary"
-							onClick={() => filterBy('created')}>
+				<ClayButton
+					displayType="secondary"
+					onClick={() => filterBy('created')}
+				>
 					{Liferay.Language.get('latest-created')}
 				</ClayButton>
-				<ClayButton displayType="secondary"
-							onClick={() => filterBy('edited')}>
+				<ClayButton
+					displayType="secondary"
+					onClick={() => filterBy('edited')}
+				>
 					{Liferay.Language.get('latest-edited')}
 				</ClayButton>
-				<ClayButton displayType="secondary"
-							onClick={() => filterBy('week')}>
+				<ClayButton
+					displayType="secondary"
+					onClick={() => filterBy('week')}
+				>
 					{Liferay.Language.get('week')}
 				</ClayButton>
-				<ClayButton displayType="secondary"
-							onClick={() => filterBy('month')}>
+				<ClayButton
+					displayType="secondary"
+					onClick={() => filterBy('month')}
+				>
 					{Liferay.Language.get('month')}
 				</ClayButton>
 			</ClayButton.Group>
 
 			{loading ? (
-				<ClayLoadingIndicator/>
+				<ClayLoadingIndicator />
 			) : (
 				questions.items &&
 				questions.items.map(question => (
-					<div className={'question-row'} key={question.id}>
-						<div className="autofit-padded autofit-row">
+					<div
+						className={'c-mt-4 c-p-3 question-row'}
+						key={question.id}
+					>
+						<div className="autofit-padded-no-gutter autofit-row">
 							<div className="autofit-col autofit-col-expand">
-								<div className="autofit-section">
-									<h2>
-										<Link to={'/questions/' + question.id}>
-											{question.headline}
-										</Link>
-									</h2>
-								</div>
+								{/* {question.category} */}
 							</div>
+
 							<div className="autofit-col">
-								<p>
-									<QuestionBadge
-										symbol="caret-top"
-										value={
-				question.aggregateRating &&
-				question.aggregateRating.ratingCount
-										}
-									/>
-
-									<QuestionBadge
-										symbol="view"
-										value={question.viewCount}
-									/>
-
-									<QuestionBadge
-										className={
-											hasValidAnswer(question)
-												? 'question-accepted-badge'
-												: ''
-										}
-										symbol={
-											hasValidAnswer(question)
-												? 'check-circle-full'
-												: 'message'
-										}
-										value={
-											question.messageBoardMessages.items
-												.length
-										}
-									/>
-								</p>
-							</div>
-						</div>
-						<div className="autofit-padded autofit-row">
-							<div className="autofit-col autofit-col-expand">
-								<p className="text-truncate">
-									<ArticleBodyRenderer {...question} />
-								</p>
-							</div>
-						</div>
-
-						<div
-							className="autofit-padded autofit-row autofit-row-center">
-							<div className="autofit-col autofit-col-expand">
-								<div>
-									<UserIcon
-										fullName={question.creator.name}
-										portraitURL={question.creator.image}
-										size="sm"
-										userId={String(question.creator.id)}
-									/>
-									<span>
-										<Link
-											to={
-												'/questions/creator/' +
-												question.creator.id
+								<ul className="question-list">
+									<li>
+										<QuestionBadge
+											symbol="caret-top"
+											value={
+												question.aggregateRating &&
+												question.aggregateRating
+													.ratingCount
 											}
-										>
-											<strong>
-												{' ' + question.creator.name}
-											</strong>
-										</Link>
-									</span>
-									<span>
-										{' - ' +
-										 dateToInternationalHuman(
-											 question.dateModified
-										 )}
+										/>
+									</li>
+
+									<li>
+										<QuestionBadge
+											symbol="view"
+											value={question.viewCount}
+										/>
+									</li>
+
+									<li>
+										<QuestionBadge
+											className={
+												hasValidAnswer(question)
+													? 'question-badge-success'
+													: ''
+											}
+											symbol={
+												hasValidAnswer(question)
+													? 'check-circle-full'
+													: 'message'
+											}
+											value={
+												question.messageBoardMessages
+													.items.length
+											}
+										/>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+						<Link
+							className="question-title stretched-link"
+							to={'/questions/' + question.id}
+						>
+							<h2 className="c-mb-0 stretched-link-layer">
+								{question.headline}
+							</h2>
+						</Link>
+
+						<p className="c-mb-0 c-mt-3 stretched-link-layer text-truncate">
+							<ArticleBodyRenderer {...question} />
+						</p>
+
+						<div className="autofit-padded-no-gutters autofit-row autofit-row-center c-mt-3">
+							<div className="autofit-col autofit-col-expand">
+								<div className="autofit-row autofit-row-center">
+									<Link
+										className="question-user stretched-link-layer"
+										to={
+											'/questions/creator/' +
+											question.creator.id
+										}
+									>
+										<UserIcon
+											fullName={question.creator.name}
+											portraitURL={question.creator.image}
+											size="sm"
+											userId={String(question.creator.id)}
+										/>
+
+										<strong className="c-ml-2">
+											{question.creator.name}
+										</strong>
+									</Link>
+
+									<span className="c-ml-2 stretched-link-layer">
+										{'- ' +
+											dateToInternationalHuman(
+												question.dateModified
+											)}
 									</span>
 								</div>
 							</div>
-							<div>
-								<TagList tags={question.keywords}/>
+
+							<div className="autofit-col">
+								<TagList tags={question.keywords} />
 							</div>
 						</div>
 					</div>
@@ -204,16 +227,16 @@ export default ({
 			)}
 
 			{!!questions.totalCount &&
-			 questions.totalCount > questions.pageSize && (
-				 <ClayPaginationWithBasicItems
-					 activePage={page}
-					 ellipsisBuffer={2}
-					 onPageChange={setPage}
-					 totalPages={Math.ceil(
-						 questions.totalCount / questions.pageSize
-					 )}
-				 />
-			 )}
+				questions.totalCount > questions.pageSize && (
+					<ClayPaginationWithBasicItems
+						activePage={page}
+						ellipsisBuffer={2}
+						onPageChange={setPage}
+						totalPages={Math.ceil(
+							questions.totalCount / questions.pageSize
+						)}
+					/>
+				)}
 		</section>
 	);
 };

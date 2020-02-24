@@ -1,29 +1,47 @@
-.question-accepted-badge {
-	background: $success-l2;
-
-	& svg {
-		color: $success;
-	}
-
-	& small {
-		color: $success;
-	}
-}
-
-.question-badge {
-	padding: 0.5rem;
-
-	& small {
-		padding-left: 0.5rem;
-		padding-right: 0.5rem;
-	}
-}
-
 .question-row {
-	padding-bottom: 1rem;
-	padding-top: 1rem;
+	color: $secondary;
+	position: relative;
 
-	&:hover {
-		background: $light-l1;
+	.question-title {
+		color: $dark;
+
+		&:after {
+			background-color: $light-l1;
+			border-radius: 0.25rem;
+			opacity: 0;
+			transition: opacity 300ms ease-in-out;
+			will-change: opacity;
+		}
+
+		&:hover,
+		&:focus {
+			text-decoration: none;
+
+			&:after {
+				opacity: 1;
+			}
+		}
+	}
+
+	.question-list {
+		display: flex;
+		flex-direction: row;
+		list-style: none;
+		margin-bottom: 0;
+		padding-left: 0;
+	}
+
+	.question-badge {
+		border-radius: 0.25rem;
+		padding: 0.75rem 1rem;
+
+		&.question-badge-success {
+			background-color: $success-l2;
+			color: $success;
+		}
+	}
+
+	.question-user {
+		color: $dark;
 	}
 }

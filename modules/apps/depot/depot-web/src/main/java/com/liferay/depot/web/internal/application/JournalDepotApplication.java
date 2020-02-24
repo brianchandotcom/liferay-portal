@@ -16,6 +16,10 @@ package com.liferay.depot.web.internal.application;
 
 import com.liferay.depot.application.DepotApplication;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalArticle;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,6 +28,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = DepotApplication.class)
 public class JournalDepotApplication implements DepotApplication {
+
+	@Override
+	public List<String> getClassNames() {
+		return Arrays.asList(JournalArticle.class.getName());
+	}
 
 	@Override
 	public String getPortletId() {

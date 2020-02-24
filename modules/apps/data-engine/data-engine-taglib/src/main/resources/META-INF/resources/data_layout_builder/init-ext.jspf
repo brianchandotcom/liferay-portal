@@ -37,6 +37,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%
 String[] availableLanguageIds = (String[])request.getAttribute("liferay-data-engine:data-layout-builder:availableLanguageIds");
+JSONObject configJSONObject = (JSONObject)request.getAttribute("liferay-data-engine:data-layout-builder:config");
 JSONObject dataLayoutJSONObject = (JSONObject)request.getAttribute("liferay-data-engine:data-layout-builder:dataLayout");
 JSONArray fieldTypesJSONArray = (JSONArray)request.getAttribute("liferay-data-engine:data-layout-builder:fieldTypes");
 String fieldTypesModules = (String)request.getAttribute("liferay-data-engine:data-layout-builder:fieldTypesModules");

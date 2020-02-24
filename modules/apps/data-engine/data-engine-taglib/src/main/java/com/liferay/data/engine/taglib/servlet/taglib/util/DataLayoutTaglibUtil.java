@@ -137,6 +137,10 @@ public class DataLayoutTaglibUtil {
 		return 0L;
 	}
 
+	public static JSONObject getDataLayoutConfigJSONObject(String contentType) {
+		return null;
+	}
+
 	public static JSONObject getDataLayoutJSONObject(
 		Set<Locale> availableLocales, Long dataDefinitionId, Long dataLayoutId,
 		HttpServletRequest httpServletRequest,

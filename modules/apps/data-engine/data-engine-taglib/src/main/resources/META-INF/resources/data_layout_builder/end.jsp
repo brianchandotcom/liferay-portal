@@ -22,6 +22,7 @@
 Map<String, Object> data = new HashMap<>();
 
 data.put("availableLanguageIds", availableLanguageIds);
+data.put("config", configJSONObject);
 data.put("contentType", contentType);
 data.put("context", dataLayoutJSONObject);
 data.put("dataDefinitionId", dataDefinitionId);

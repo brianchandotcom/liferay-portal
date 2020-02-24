@@ -15,17 +15,7 @@
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
 
-const UNIMPLEMENTED_PROPERTIES = [
-	'fieldNamespace',
-	'indexType',
-	'localizable',
-	'readOnly',
-	'type',
-	'validation',
-	'visibilityExpression',
-];
-
-export const getFilteredSettingsContext = settingsContext => {
+export const getFilteredSettingsContext = ({config, settingsContext}) => {
 	const visitor = new PagesVisitor(settingsContext.pages);
 
 	return {
@@ -36,7 +26,9 @@ export const getFilteredSettingsContext = settingsContext => {
 				fields: column.fields
 					.filter(
 						({fieldName}) =>
-							UNIMPLEMENTED_PROPERTIES.indexOf(fieldName) === -1
+							config.unimplementedProperties.indexOf(
+								fieldName
+							) === -1
 					)
 					.map(field => {
 						if (field.fieldName === 'dataSourceType') {

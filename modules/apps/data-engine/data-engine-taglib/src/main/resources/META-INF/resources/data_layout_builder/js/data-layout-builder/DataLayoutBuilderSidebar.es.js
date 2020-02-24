@@ -99,9 +99,10 @@ const SettingsSidebarBody = () => {
 		: fieldSettingsContext;
 
 	useEffect(() => {
-		const filteredSettingsContext = getFilteredSettingsContext(
+		const filteredSettingsContext = getFilteredSettingsContext({
+			config: state.config,
 			settingsContext
-		);
+		});
 
 		if (form === null || form.isDisposed()) {
 			const dispatchEvent = (type, payload) => {
@@ -165,6 +166,7 @@ const SettingsSidebarBody = () => {
 		formRef,
 		hasFocusedCustomObjectField,
 		settingsContext,
+		state.config,
 	]);
 
 	useEffect(() => {

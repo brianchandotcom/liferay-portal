@@ -47,7 +47,10 @@ function ToolbarBody() {
 	useEffect(() => {
 		const mainItemId = layoutData.rootItems.main;
 		const mainItem = layoutData.items[mainItemId];
-		setEnableDiscard(mainItem.children.length > 0);
+
+		const isConversionPage = config.pageType === PAGE_TYPES.conversion;
+
+		setEnableDiscard(isConversionPage || mainItem.children.length > 0);
 	}, [layoutData]);
 
 	const loading = useRef(() => {

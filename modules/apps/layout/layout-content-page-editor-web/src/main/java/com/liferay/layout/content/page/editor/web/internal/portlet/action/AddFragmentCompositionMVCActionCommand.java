@@ -27,7 +27,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -35,8 +34,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -44,7 +41,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -60,7 +56,6 @@ import java.net.URL;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,91 +69,14 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/add_fragment_composition"
 	},
-	service = {AopService.class, MVCActionCommand.class}
+	service = MVCActionCommand.class
 )
 public class AddFragmentCompositionMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public boolean processAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		JSONObject jsonObject = _processAddFragmentComposition(actionRequest);
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
-	}
-
-	private FileEntry _addPreviewImage(
-			long fragmentCompositionId, String url,
-			ServiceContext serviceContext, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		byte[] bytes = {};
-
-		try {
-			if (url.startsWith("data:image/")) {
-				String[] urlParts = url.split(";base64,");
-
-				bytes = Base64.decode(urlParts[1]);
-			}
-			else if (Validator.isUrl(url, true)) {
-				if (StringUtil.startsWith(url, StringPool.SLASH)) {
-					url = _portal.getPortalURL(themeDisplay) + url;
-				}
-
-				URL imageURL = new URL(url);
-
-				bytes = FileUtil.getBytes(imageURL.openStream());
-			}
-
-			Repository repository =
-				PortletFileRepositoryUtil.fetchPortletRepository(
-					themeDisplay.getScopeGroupId(),
-					FragmentPortletKeys.FRAGMENT);
-
-			if (repository == null) {
-				serviceContext.setAddGroupPermissions(true);
-				serviceContext.setAddGuestPermissions(true);
-
-				repository = PortletFileRepositoryUtil.addPortletRepository(
-					themeDisplay.getScopeGroupId(),
-					FragmentPortletKeys.FRAGMENT, serviceContext);
-			}
-
-			return _portletFileRepository.addPortletFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				FragmentComposition.class.getName(), fragmentCompositionId,
-				FragmentPortletKeys.FRAGMENT, repository.getDlFolderId(), bytes,
-				fragmentCompositionId + "_preview",
-				MimeTypesUtil.getContentType(url), false);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
-			}
-
-			throw new StorageFieldValueException(
-				LanguageUtil.format(
-					themeDisplay.getRequest(), "the-file-x-cannot-be-saved",
-					url));
-		}
-	}
-
-	private JSONObject _processAddFragmentComposition(
-			ActionRequest actionRequest)
 		throws Exception {
 
 		long fragmentCollectionId = ParamUtil.getLong(
@@ -220,6 +138,62 @@ public class AddFragmentCompositionMVCActionCommand
 		return JSONUtil.put(
 			"fragmentCompositionKey",
 			fragmentComposition.getFragmentCompositionKey());
+	}
+
+	private FileEntry _addPreviewImage(
+			long fragmentCompositionId, String url,
+			ServiceContext serviceContext, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		byte[] bytes = {};
+
+		try {
+			if (url.startsWith("data:image/")) {
+				String[] urlParts = url.split(";base64,");
+
+				bytes = Base64.decode(urlParts[1]);
+			}
+			else if (Validator.isUrl(url, true)) {
+				if (StringUtil.startsWith(url, StringPool.SLASH)) {
+					url = _portal.getPortalURL(themeDisplay) + url;
+				}
+
+				URL imageURL = new URL(url);
+
+				bytes = FileUtil.getBytes(imageURL.openStream());
+			}
+
+			Repository repository =
+				PortletFileRepositoryUtil.fetchPortletRepository(
+					themeDisplay.getScopeGroupId(),
+					FragmentPortletKeys.FRAGMENT);
+
+			if (repository == null) {
+				serviceContext.setAddGroupPermissions(true);
+				serviceContext.setAddGuestPermissions(true);
+
+				repository = PortletFileRepositoryUtil.addPortletRepository(
+					themeDisplay.getScopeGroupId(),
+					FragmentPortletKeys.FRAGMENT, serviceContext);
+			}
+
+			return _portletFileRepository.addPortletFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				FragmentComposition.class.getName(), fragmentCompositionId,
+				FragmentPortletKeys.FRAGMENT, repository.getDlFolderId(), bytes,
+				fragmentCompositionId + "_preview",
+				MimeTypesUtil.getContentType(url), false);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
+			throw new StorageFieldValueException(
+				LanguageUtil.format(
+					themeDisplay.getRequest(), "the-file-x-cannot-be-saved",
+					url));
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

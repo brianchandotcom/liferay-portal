@@ -1916,7 +1916,7 @@ definition {
 
 	@priority = "5"
 	test StagingMultipleDM {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -1973,7 +1973,7 @@ definition {
 
 	@priority = "5"
 	test StagingOnlyApprovedPublishToLive {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(

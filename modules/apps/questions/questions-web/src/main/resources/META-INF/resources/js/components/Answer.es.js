@@ -96,7 +96,7 @@ export default ({answer, answerChange, deleteAnswer}) => {
 						<ClayButton.Group spaced={true}>
 							{answer.actions['reply-to-message'] && (
 								<ClayButton
-									displayType="unstyled"
+									displayType="link"
 									onClick={() => setShowNewComment(true)}
 								>
 									{Liferay.Language.get('reply')}
@@ -104,7 +104,7 @@ export default ({answer, answerChange, deleteAnswer}) => {
 							)}
 							{answer.actions.delete && (
 								<ClayButton
-									displayType="unstyled"
+									displayType="link"
 									onClick={_deleteAnswer}
 								>
 									{Liferay.Language.get('delete')}
@@ -113,7 +113,7 @@ export default ({answer, answerChange, deleteAnswer}) => {
 							{answer.actions.replace && (
 								<>
 									<ClayButton
-										displayType="unstyled"
+										displayType="link"
 										onClick={_answerChange}
 									>
 										{Liferay.Language.get(

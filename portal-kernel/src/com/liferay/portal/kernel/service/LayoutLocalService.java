@@ -725,6 +725,22 @@ public interface LayoutLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
+	 * Returns all the layouts that match the type and belong to the group,
+	 * including the ones marked as System.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param type the type of the layouts (optiona.lly {@link
+	 LayoutConstants#TYPE_PORTLET})
+	 * @return the matching layouts, or an empty list if no matches were
+	 found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Layout> getAllLayouts(
+			long groupId, boolean privateLayout, String type)
+		throws PortalException;
+
+	/**
 	 * Returns the primary key of the default layout for the group.
 	 *
 	 * @param groupId the primary key of the group

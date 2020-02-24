@@ -23,6 +23,11 @@ import PageStructureSidebar from '../../../../../../src/main/resources/META-INF/
 
 import '@testing-library/jest-dom/extend-expect';
 
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({config: {pageType: 'content'}})
+);
+
 const fragmentEntryLinks = {
 	'001': {
 		content: {

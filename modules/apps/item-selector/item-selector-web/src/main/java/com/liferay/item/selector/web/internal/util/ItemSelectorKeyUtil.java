@@ -16,10 +16,13 @@ package com.liferay.item.selector.web.internal.util;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Alejandro Tardín
@@ -39,33 +42,26 @@ public class ItemSelectorKeyUtil {
 	}
 
 	private static String _getKey(Class<?> clazz, String suffix) {
-		return _itemSelectorKeysMap.computeIfAbsent(
-			clazz.getName(),
-			className -> {
-				String itemSelectorKey = StringUtil.lowerCase(
-					StringUtil.removeSubstring(clazz.getSimpleName(), suffix));
+		String key = _itemSelectorKeysMap.get(clazz.getName());
 
-				if (!_itemSelectorKeysMap.containsValue(itemSelectorKey)) {
-					return itemSelectorKey;
-				}
+		if (key == null) {
+			key = StringBundler.concat(
+				StringUtil.lowerCase(
+					StringUtil.removeSubstring(clazz.getSimpleName(), suffix)),
+				StringPool.UNDERLINE, _ATOMIC_INTEGER.incrementAndGet());
 
-				int tries = 1;
+			String oldKey = _itemSelectorKeysMap.putIfAbsent(
+				clazz.getName(), key);
 
-				while (_itemSelectorKeysMap.containsValue(
-							itemSelectorKey + tries)) {
+			if (oldKey != null) {
+				key = oldKey;
+			}
+		}
 
-					if (tries >= _MAXIMUM_TRIES) {
-						return className;
-					}
-
-					tries++;
-				}
-
-				return itemSelectorKey + tries;
-			});
+		return key;
 	}
 
-	private static final int _MAXIMUM_TRIES = 50;
+	private static final AtomicInteger _ATOMIC_INTEGER = new AtomicInteger();
 
 	private static final Map<String, String> _itemSelectorKeysMap =
 		new ConcurrentHashMap<>();

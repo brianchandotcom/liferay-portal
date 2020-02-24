@@ -107,6 +107,8 @@ else {
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
+Set<Locale> availableLocales = null;
+
 String headerTitle = LanguageUtil.get(request, "new-document");
 
 if (fileVersion != null) {
@@ -418,6 +420,10 @@ renderResponse.setTitle(headerTitle);
 										</c:if>
 
 							<%
+										if (localizable) {
+											availableLocales = ddmStructure.getDDMForm().getAvailableLocales();
+										}
+
 										localizable = false;
 									}
 								}
@@ -478,6 +484,7 @@ renderResponse.setTitle(headerTitle);
 					>
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 							<liferay-expando:custom-attribute-list
+								availableLocales="<%= availableLocales %>"
 								className="<%= DLFileEntryConstants.getClassName() %>"
 								classPK="<%= fileVersionId %>"
 								editable="<%= true %>"

@@ -38,7 +38,9 @@ page import="com.liferay.portal.kernel.uuid.PortalUUIDUtil" %><%@
 page import="com.liferay.portal.util.RepositoryUtil" %>
 
 <%@ page import="java.util.Collections" %><%@
-page import="java.util.Objects" %>
+page import="java.util.Locale" %><%@
+page import="java.util.Objects" %><%@
+page import="java.util.Set" %>
 
 <%
 DLRequestHelper dlRequestHelper = new DLRequestHelper(request);

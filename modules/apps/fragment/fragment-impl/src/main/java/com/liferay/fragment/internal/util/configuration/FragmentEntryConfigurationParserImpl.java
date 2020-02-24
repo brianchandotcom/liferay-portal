@@ -366,28 +366,50 @@ public class FragmentEntryConfigurationParserImpl
 
 		String type = fieldJSONObject.getString("type");
 
-		if (!Objects.equals(type, "select")) {
+		if (!Objects.equals(type, "select") && !Objects.equals(type, "text")) {
 			return;
 		}
 
 		JSONObject typeOptionsJSONObject = fieldJSONObject.getJSONObject(
 			"typeOptions");
 
-		JSONArray validValuesJSONArray = typeOptionsJSONObject.getJSONArray(
-			"validValues");
+		if (typeOptionsJSONObject == null) {
+			return;
+		}
 
-		Iterator<JSONObject> validValuesIterator =
-			validValuesJSONArray.iterator();
+		if (Objects.equals(type, "select")) {
+			JSONArray validValuesJSONArray = typeOptionsJSONObject.getJSONArray(
+				"validValues");
 
-		validValuesIterator.forEachRemaining(
-			validValueJSONObject -> {
-				String value = validValueJSONObject.getString("value");
+			Iterator<JSONObject> validValuesIterator =
+				validValuesJSONArray.iterator();
 
-				String label = validValueJSONObject.getString("label", value);
+			validValuesIterator.forEachRemaining(
+				validValueJSONObject -> {
+					String value = validValueJSONObject.getString("value");
 
-				validValueJSONObject.put(
-					"label", LanguageUtil.get(resourceBundle, label, label));
-			});
+					String label = validValueJSONObject.getString(
+						"label", value);
+
+					validValueJSONObject.put(
+						"label",
+						LanguageUtil.get(resourceBundle, label, label));
+				});
+		}
+		else {
+			JSONObject validationJSONObject =
+				typeOptionsJSONObject.getJSONObject("validation");
+
+			if (validationJSONObject.has("errorMessage")) {
+				String errorMessage = validationJSONObject.getString(
+					"errorMessage");
+
+				validationJSONObject.put(
+					"errorMessage",
+					LanguageUtil.get(
+						resourceBundle, errorMessage, errorMessage));
+			}
+		}
 	}
 
 	private Object _getContextObject(String type, String value) {

@@ -77,7 +77,6 @@ export default withRouter(({history}) => {
 							setArticleBody(event.editor.getData())
 						}
 						required
-						value={articleBody}
 					/>
 
 					<ClayForm.FeedbackGroup>

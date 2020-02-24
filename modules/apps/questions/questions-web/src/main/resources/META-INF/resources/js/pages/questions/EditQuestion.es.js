@@ -95,7 +95,7 @@ export default withRouter(
 								setArticleBody(event.editor.getData())
 							}
 							required
-							value={articleBody}
+							data={articleBody}
 						/>
 
 						<ClayForm.FeedbackGroup>

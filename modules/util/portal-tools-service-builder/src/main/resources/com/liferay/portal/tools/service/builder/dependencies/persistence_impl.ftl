@@ -2022,13 +2022,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						session.flush();
 					}
 
-					SQLQuery selectQuery = session.createSQLQuery("SELECT ${pkEntityColumn.DBName} FROM ${entity.table} WHERE ${scopeEntityColumn.DBName} = ? AND parent${pkEntityColumn.methodName} = ? ORDER BY ${pkEntityColumn.DBName} ASC");
+					SQLQuery selectSQLQuery = session.createSQLQuery("SELECT ${pkEntityColumn.DBName} FROM ${entity.table} WHERE ${scopeEntityColumn.DBName} = ? AND parent${pkEntityColumn.methodName} = ? ORDER BY ${pkEntityColumn.DBName} ASC");
 
-					selectQuery.addScalar("${pkEntityColumn.name}", com.liferay.portal.kernel.dao.orm.Type.LONG);
+					selectSQLQuery.addScalar("${pkEntityColumn.name}", com.liferay.portal.kernel.dao.orm.Type.LONG);
 
 					SQLQuery updateQuery = session.createSQLQuery("UPDATE ${entity.table} SET left${pkEntityColumn.methodName} = ?, right${pkEntityColumn.methodName} = ? WHERE ${pkEntityColumn.DBName} = ?");
 
-					rebuildTree(session, selectQuery, updateQuery, ${scopeEntityColumn.name}, 0, 0);
+					rebuildTree(session, selectSQLQuery, updateQuery, ${scopeEntityColumn.name}, 0, 0);
 				}
 				catch (Exception exception) {
 					throw processException(exception);
@@ -2070,18 +2070,18 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 		}
 
-		protected long rebuildTree(Session session, SQLQuery selectQuery, SQLQuery updateQuery, long ${scopeEntityColumn.name}, long parent${pkEntityColumn.methodName}, long left${pkEntityColumn.methodName}) {
+		protected long rebuildTree(Session session, SQLQuery selectSQLQuery, SQLQuery updateQuery, long ${scopeEntityColumn.name}, long parent${pkEntityColumn.methodName}, long left${pkEntityColumn.methodName}) {
 			long right${pkEntityColumn.methodName} = left${pkEntityColumn.methodName} + 1;
 
-			QueryPos qPos = QueryPos.getInstance(selectQuery);
+			QueryPos qPos = QueryPos.getInstance(selectSQLQuery);
 
 			qPos.add(${scopeEntityColumn.name});
 			qPos.add(parent${pkEntityColumn.methodName});
 
-			List<Long> ${pkEntityColumn.names} = selectQuery.list();
+			List<Long> ${pkEntityColumn.names} = selectSQLQuery.list();
 
 			for (long ${pkEntityColumn.name} : ${pkEntityColumn.names}) {
-				right${pkEntityColumn.methodName} = rebuildTree(session, selectQuery, updateQuery, ${scopeEntityColumn.name}, ${pkEntityColumn.name}, right${pkEntityColumn.methodName});
+				right${pkEntityColumn.methodName} = rebuildTree(session, selectSQLQuery, updateQuery, ${scopeEntityColumn.name}, ${pkEntityColumn.name}, right${pkEntityColumn.methodName});
 			}
 
 			if (parent${pkEntityColumn.methodName} > 0) {

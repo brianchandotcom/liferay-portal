@@ -264,7 +264,7 @@ public class SitemapImpl implements Sitemap {
 				continue;
 			}
 
-			List<Layout> layouts = _layoutLocalService.getLayouts(
+			List<Layout> layouts = _layoutLocalService.getAllLayouts(
 				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 				entry.getKey());
 

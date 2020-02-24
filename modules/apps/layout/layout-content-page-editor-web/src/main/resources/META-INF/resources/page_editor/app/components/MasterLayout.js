@@ -206,7 +206,13 @@ const FragmentContent = React.memo(function FragmentContent({
 		};
 	}, [defaultContent, content, isMounted, editableValues, languageId]);
 
-	return <UnsafeHTML contentRef={ref} markup={content} />;
+	return (
+		<UnsafeHTML
+			className="page-editor__fragment-content page-editor__fragment-content--master"
+			contentRef={ref}
+			markup={content}
+		/>
+	);
 });
 
 FragmentContent.propTypes = {

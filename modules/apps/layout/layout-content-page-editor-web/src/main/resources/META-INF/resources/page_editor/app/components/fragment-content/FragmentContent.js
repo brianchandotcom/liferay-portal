@@ -148,7 +148,7 @@ const FragmentContent = React.forwardRef(
 					itemId={itemId}
 				>
 					<UnsafeHTML
-						className="page-editor__fragment"
+						className="page-editor__fragment-content"
 						contentRef={ref}
 						markup={content}
 						onRender={updateEditableElements}

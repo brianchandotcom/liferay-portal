@@ -203,7 +203,7 @@ definition {
 		if (isSet(maximumDocumentFrequency)) {
 			Type(
 				key_fieldLabel = "Maximum Document Frequency",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = "${maximumDocumentFrequency}");
 		}
 
@@ -217,21 +217,21 @@ definition {
 		if (isSet(maximumQueryTerms)) {
 			Type(
 				key_fieldLabel = "Maximum Query Terms",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = "${maximumQueryTerms}");
 		}
 
 		if (isSet(maximumWordLength)) {
 			Type(
 				key_fieldLabel = "Maximum Word Length",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = "${maximumWordLength}");
 		}
 
 		if (isSet(minimumDocumentFrequency)) {
 			Type(
 				key_fieldLabel = "Minimum Document Frequency",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = "${minimumDocumentFrequency}");
 		}
 
@@ -245,14 +245,14 @@ definition {
 		if (isSet(minimumTermFrequency)) {
 			Type(
 				key_fieldLabel = "Minimum Term Frequency",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = "${minimumTermFrequency}");
 		}
 
 		if (isSet(minimumWordLength)) {
 			Type(
 				key_fieldLabel = "Minimum Word Length",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 				value1 = "${minimumWordLength}");
 		}
 

@@ -111,8 +111,7 @@ SimilarResultsPortletPreferences similarResultsPortletPreferences = new SimilarR
 
 				<aui:input helpMessage="min-should-match-help" label="min-should-match" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MIN_SHOULD_MATCH) %>" type="text" value="<%= similarResultsPortletPreferences.getMinShouldMatch() %>" />
 
-				<aui:input helpMessage="term-boost-help" label="term-boost" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_TERM_BOOST) %>" type="text" value="<%= similarResultsPortletPreferences.getTermBoost() %>">
-					<aui:validator name="number" />
+				<aui:input helpMessage="term-boost-help" label="term-boost" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_TERM_BOOST) %>" type="number" value="<%= similarResultsPortletPreferences.getTermBoost() %>">
 					<aui:validator name="min">1</aui:validator>
 				</aui:input>
 

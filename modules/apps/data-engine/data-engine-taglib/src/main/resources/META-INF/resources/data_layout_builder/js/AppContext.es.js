@@ -20,6 +20,7 @@ import {
 	DELETE_DATA_DEFINITION_FIELD,
 	DELETE_DATA_LAYOUT_FIELD,
 	EDIT_CUSTOM_OBJECT_FIELD,
+	UPDATE_CONFIG,
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT,
 	UPDATE_DATA_LAYOUT_NAME,
@@ -37,6 +38,17 @@ import generateDataDefinitionFieldName from './utils/generateDataDefinitionField
 const AppContext = createContext();
 
 const initialState = {
+	config: {
+		unimplementedProperties: [
+			'fieldNamespace',
+			'indexType',
+			'localizable',
+			'readOnly',
+			'type',
+			'validation',
+			'visibilityExpression'
+		]
+	},
 	dataDefinition: {
 		dataDefinitionFields: [],
 		name: {},
@@ -355,6 +367,14 @@ const createReducer = dataLayoutBuilder => {
 				return {
 					...state,
 					focusedField: {},
+				};
+			}
+			case UPDATE_CONFIG: {
+				const {config} = action.payload;
+
+				return {
+					...state,
+					config: config || state.config
 				};
 			}
 			case UPDATE_IDS: {

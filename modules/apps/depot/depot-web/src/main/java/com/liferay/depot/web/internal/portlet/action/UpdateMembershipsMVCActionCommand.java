@@ -91,17 +91,10 @@ public class UpdateMembershipsMVCActionCommand extends BaseMVCActionCommand {
 				user.getJobTitle(), groupIds, user.getOrganizationIds(), null,
 				null, user.getUserGroupIds(), serviceContext);
 		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchUserException ||
-				exception instanceof PrincipalException) {
+		catch (NoSuchUserException | PrincipalException exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
 
-				SessionErrors.add(actionRequest, exception.getClass());
-
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-			}
-			else {
-				throw exception;
-			}
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}
 	}
 
@@ -112,8 +105,7 @@ public class UpdateMembershipsMVCActionCommand extends BaseMVCActionCommand {
 			Arrays::stream
 		).orElseGet(
 			LongStream::empty
-		).mapToObj(
-			Long::valueOf
+		).boxed(
 		).collect(
 			Collectors.toSet()
 		);

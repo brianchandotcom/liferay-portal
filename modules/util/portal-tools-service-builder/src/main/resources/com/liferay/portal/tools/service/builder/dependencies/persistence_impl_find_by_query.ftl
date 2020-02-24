@@ -1,19 +1,19 @@
-StringBundler query = null;
+StringBundler sb = null;
 
 if (orderByComparator != null) {
-	query = new StringBundler(${entityColumns?size + 2} + (orderByComparator.getOrderByFields().length * 2));
+	sb = new StringBundler(${entityColumns?size + 2} + (orderByComparator.getOrderByFields().length * 2));
 }
 else {
-	query = new StringBundler(${entityColumns?size + 2});
+	sb = new StringBundler(${entityColumns?size + 2});
 }
 
-query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+sb.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE);
 
 <#include "persistence_impl_finder_cols.ftl">
 
 if (orderByComparator != null) {
-	appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+	appendOrderByComparator(sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 }
 else {
-	query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+	sb.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
 }

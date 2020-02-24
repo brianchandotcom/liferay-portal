@@ -89,7 +89,7 @@ public int countBy${entityFinder.name}(
 	if (count == null) {
 		<#include "persistence_impl_count_by_query.ftl">
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
 		Session session = null;
 
@@ -243,7 +243,7 @@ public int countBy${entityFinder.name}(
 		if (count == null) {
 			<#include "persistence_impl_count_by_arrayable_query.ftl">
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
@@ -489,7 +489,7 @@ public int countBy${entityFinder.name}(
 
 		<#include "persistence_impl_count_by_arrayable_query.ftl">
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
 		Session session = null;
 
@@ -568,7 +568,7 @@ public int countBy${entityFinder.name}(
 		<#if entity.isPermissionedModel()>
 			<#include "persistence_impl_count_by_query.ftl">
 
-			String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
+			String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
 
 			Session session = null;
 
@@ -592,9 +592,9 @@ public int countBy${entityFinder.name}(
 				closeSession(session);
 			}
 		<#else>
-			StringBundler query = new StringBundler(${entityColumns?size + 1});
+			StringBundler sb = new StringBundler(${entityColumns?size + 1});
 
-			query.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
+			sb.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
 
 			<#assign sqlQuery = true />
 
@@ -602,7 +602,7 @@ public int countBy${entityFinder.name}(
 
 			<#assign sqlQuery = false />
 
-			String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
+			String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
 
 			Session session = null;
 
@@ -727,7 +727,7 @@ public int countBy${entityFinder.name}(
 			<#if entity.isPermissionedModel()>
 				<#include "persistence_impl_count_by_arrayable_query.ftl">
 
-				String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN
+				String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN
 
 				<#if entityFinder.hasEntityColumn("groupId")>,
 					<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
@@ -761,9 +761,9 @@ public int countBy${entityFinder.name}(
 					closeSession(session);
 				}
 			<#else>
-				StringBundler query = new StringBundler();
+				StringBundler sb = new StringBundler();
 
-				query.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
+				sb.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
 
 				<#assign sqlQuery = true />
 
@@ -771,7 +771,7 @@ public int countBy${entityFinder.name}(
 
 				<#assign sqlQuery = false />
 
-				String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
+				String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
 
 				<#if entityFinder.hasEntityColumn("groupId")>,
 					<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>

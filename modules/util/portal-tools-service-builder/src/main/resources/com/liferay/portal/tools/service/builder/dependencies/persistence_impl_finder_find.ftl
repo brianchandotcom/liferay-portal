@@ -277,7 +277,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		if (list == null) {
 			<#include "persistence_impl_find_by_query.ftl">
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
@@ -563,7 +563,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 			<#include "persistence_impl_get_by_prev_and_next_query.ftl">
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Query q = session.createQuery(sql);
 
@@ -701,7 +701,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			<#if entity.isPermissionedModel()>
 				<#include "persistence_impl_find_by_query.ftl">
 
-				String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
+				String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
 
 				Session session = null;
 
@@ -723,20 +723,20 @@ that may or may not be enforced with a unique index at the database level. Case
 					closeSession(session);
 				}
 			<#else>
-				StringBundler query = null;
+				StringBundler sb = null;
 
 				if (orderByComparator != null) {
-					query = new StringBundler(${entityColumns?size + 2} + (orderByComparator.getOrderByFields().length * 2));
+					sb = new StringBundler(${entityColumns?size + 2} + (orderByComparator.getOrderByFields().length * 2));
 				}
 				else {
-					query = new StringBundler(${entityColumns?size + 3});
+					sb = new StringBundler(${entityColumns?size + 3});
 				}
 
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+					sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
 				}
 				else {
-					query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+					sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
 				}
 
 				<#assign sqlQuery = true />
@@ -746,27 +746,27 @@ that may or may not be enforced with a unique index at the database level. Case
 				<#assign sqlQuery = false />
 
 				if (!getDB().isSupportsInlineDistinct()) {
-					query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+					sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
 				}
 
 				if (orderByComparator != null) {
 					if (getDB().isSupportsInlineDistinct()) {
-						appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+						appendOrderByComparator(sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
 					}
 					else {
-						appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+						appendOrderByComparator(sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
 					}
 				}
 				else {
 					if (getDB().isSupportsInlineDistinct()) {
-						query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+						sb.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
 					}
 					else {
-						query.append(${entity.name}ModelImpl.ORDER_BY_SQL);
+						sb.append(${entity.name}ModelImpl.ORDER_BY_SQL);
 					}
 				}
 
-				String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
+				String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
 
 				Session session = null;
 
@@ -893,7 +893,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				<#if entity.isPermissionedModel()>
 					<#include "persistence_impl_get_by_prev_and_next_query.ftl">
 
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
 
 					Query q = session.createQuery(sql);
 
@@ -919,20 +919,20 @@ that may or may not be enforced with a unique index at the database level. Case
 						return null;
 					}
 				<#else>
-					StringBundler query = null;
+					StringBundler sb = null;
 
 					if (orderByComparator != null) {
-						query = new StringBundler(${entityColumns?size + 4} + (orderByComparator.getOrderByConditionFields().length * 3) + (orderByComparator.getOrderByFields().length * 3));
+						sb = new StringBundler(${entityColumns?size + 4} + (orderByComparator.getOrderByConditionFields().length * 3) + (orderByComparator.getOrderByFields().length * 3));
 					}
 					else {
-						query = new StringBundler(${entityColumns?size + 3});
+						sb = new StringBundler(${entityColumns?size + 3});
 					}
 
 					if (getDB().isSupportsInlineDistinct()) {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
 					}
 					else {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
 					}
 
 					<#assign sqlQuery = true />
@@ -942,82 +942,82 @@ that may or may not be enforced with a unique index at the database level. Case
 					<#assign sqlQuery = false />
 
 					if (!getDB().isSupportsInlineDistinct()) {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
 					}
 
 					if (orderByComparator != null) {
 						String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
 
 						if (orderByConditionFields.length > 0) {
-							query.append(WHERE_AND);
+							sb.append(WHERE_AND);
 						}
 
 						for (int i = 0; i < orderByConditionFields.length; i++) {
 							if (getDB().isSupportsInlineDistinct()) {
-								query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i], true));
+								sb.append(getColumnName(_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i], true));
 							}
 							else {
-								query.append(getColumnName(_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i], true));
+								sb.append(getColumnName(_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i], true));
 							}
 
 							if ((i + 1) < orderByConditionFields.length) {
 								if (orderByComparator.isAscending() ^ previous) {
-									query.append(WHERE_GREATER_THAN_HAS_NEXT);
+									sb.append(WHERE_GREATER_THAN_HAS_NEXT);
 								}
 								else {
-									query.append(WHERE_LESSER_THAN_HAS_NEXT);
+									sb.append(WHERE_LESSER_THAN_HAS_NEXT);
 								}
 							}
 							else {
 								if (orderByComparator.isAscending() ^ previous) {
-									query.append(WHERE_GREATER_THAN);
+									sb.append(WHERE_GREATER_THAN);
 								}
 								else {
-									query.append(WHERE_LESSER_THAN);
+									sb.append(WHERE_LESSER_THAN);
 								}
 							}
 						}
 
-						query.append(ORDER_BY_CLAUSE);
+						sb.append(ORDER_BY_CLAUSE);
 
 						String[] orderByFields = orderByComparator.getOrderByFields();
 
 						for (int i = 0; i < orderByFields.length; i++) {
 							if (getDB().isSupportsInlineDistinct()) {
-								query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+								sb.append(getColumnName(_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
 							}
 							else {
-								query.append(getColumnName(_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+								sb.append(getColumnName(_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
 							}
 
 							if ((i + 1) < orderByFields.length) {
 								if (orderByComparator.isAscending() ^ previous) {
-									query.append(ORDER_BY_ASC_HAS_NEXT);
+									sb.append(ORDER_BY_ASC_HAS_NEXT);
 								}
 								else {
-									query.append(ORDER_BY_DESC_HAS_NEXT);
+									sb.append(ORDER_BY_DESC_HAS_NEXT);
 								}
 							}
 							else {
 								if (orderByComparator.isAscending() ^ previous) {
-									query.append(ORDER_BY_ASC);
+									sb.append(ORDER_BY_ASC);
 								}
 								else {
-									query.append(ORDER_BY_DESC);
+									sb.append(ORDER_BY_DESC);
 								}
 							}
 						}
 					}
 					else {
 						if (getDB().isSupportsInlineDistinct()) {
-							query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+							sb.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
 						}
 						else {
-							query.append(${entity.name}ModelImpl.ORDER_BY_SQL);
+							sb.append(${entity.name}ModelImpl.ORDER_BY_SQL);
 						}
 					}
 
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
 
 					SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -1233,7 +1233,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				<#if entity.isPermissionedModel()>
 					<#include "persistence_impl_find_by_arrayable_query.ftl">
 
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN
 
 					<#if entityFinder.hasEntityColumn("groupId")>,
 						<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
@@ -1265,13 +1265,13 @@ that may or may not be enforced with a unique index at the database level. Case
 						closeSession(session);
 					}
 				<#else>
-					StringBundler query = new StringBundler();
+					StringBundler sb = new StringBundler();
 
 					if (getDB().isSupportsInlineDistinct()) {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
 					}
 					else {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
 					}
 
 					<#assign sqlQuery = true />
@@ -1281,27 +1281,27 @@ that may or may not be enforced with a unique index at the database level. Case
 					<#assign sqlQuery = false />
 
 					if (!getDB().isSupportsInlineDistinct()) {
-						query.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
 					}
 
 					if (orderByComparator != null) {
 						if (getDB().isSupportsInlineDistinct()) {
-							appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+							appendOrderByComparator(sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
 						}
 						else {
-							appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+							appendOrderByComparator(sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
 						}
 					}
 					else {
 						if (getDB().isSupportsInlineDistinct()) {
-							query.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+							sb.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
 						}
 						else {
-							query.append(${entity.name}ModelImpl.ORDER_BY_SQL);
+							sb.append(${entity.name}ModelImpl.ORDER_BY_SQL);
 						}
 					}
 
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
 
 					<#if entityFinder.hasEntityColumn("groupId")>,
 						<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
@@ -1681,7 +1681,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		if (list == null) {
 			<#include "persistence_impl_find_by_arrayable_query.ftl">
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
@@ -2116,7 +2116,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 		<#include "persistence_impl_find_by_arrayable_query.ftl">
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
 		Session session = null;
 
@@ -2316,13 +2316,13 @@ that may or may not be enforced with a unique index at the database level. Case
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(${entityColumns?size + 2});
+			StringBundler sb = new StringBundler(${entityColumns?size + 2});
 
-			query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+			sb.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE);
 
 			<#include "persistence_impl_finder_cols.ftl">
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 

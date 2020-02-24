@@ -1097,29 +1097,29 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					return map;
 				}
 
-				StringBundler query = new StringBundler(uncachedPrimaryKeys.size() * 2 + 1);
+				StringBundler sb = new StringBundler(uncachedPrimaryKeys.size() * 2 + 1);
 
-				query.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN);
+				sb.append(_SQL_SELECT_${entity.alias?upper_case}_WHERE_PKS_IN);
 
 				<#if stringUtil.equals(entity.PKClassName, "String")>
 					for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
-						query.append("?");
+						sb.append("?");
 
-						query.append(",");
+						sb.append(",");
 					}
 				<#else>
 					for (Serializable primaryKey : uncachedPrimaryKeys) {
-						query.append((${entity.PKClassName})primaryKey);
+						sb.append((${entity.PKClassName})primaryKey);
 
-						query.append(",");
+						sb.append(",");
 					}
 				</#if>
 
-				query.setIndex(query.index() - 1);
+				sb.setIndex(sb.index() - 1);
 
-				query.append(")");
+				sb.append(")");
 
-				String sql = query.toString();
+				String sql = sb.toString();
 
 				Session session = null;
 
@@ -1185,24 +1185,24 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				return map;
 			}
 
-			StringBundler query = new StringBundler(primaryKeys.size() * 2 + 1);
+			StringBundler sb = new StringBundler(primaryKeys.size() * 2 + 1);
 
-			query.append(getSelectSQL());
-			query.append(" WHERE ");
-			query.append(getPKDBName());
-			query.append(" IN (");
+			sb.append(getSelectSQL());
+			sb.append(" WHERE ");
+			sb.append(getPKDBName());
+			sb.append(" IN (");
 
 			for (Serializable primaryKey : primaryKeys) {
-				query.append((${entity.PKClassName})primaryKey);
+				sb.append((${entity.PKClassName})primaryKey);
 
-				query.append(",");
+				sb.append(",");
 			}
 
-			query.setIndex(query.index() - 1);
+			sb.setIndex(sb.index() - 1);
 
-			query.append(")");
+			sb.append(")");
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
@@ -1311,17 +1311,17 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 
 		if (list == null) {
-			StringBundler query = null;
+			StringBundler sb = null;
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 + (orderByComparator.getOrderByFields().length * 2));
+				sb = new StringBundler(2 + (orderByComparator.getOrderByFields().length * 2));
 
-				query.append(_SQL_SELECT_${entity.alias?upper_case});
+				sb.append(_SQL_SELECT_${entity.alias?upper_case});
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
-				sql = query.toString();
+				sql = sb.toString();
 			}
 			else {
 				sql = _SQL_SELECT_${entity.alias?upper_case};

@@ -78,8 +78,10 @@ public class DepotGroupItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return ResourceBundleUtil.getString(
-			_portal.getResourceBundle(locale), "repositories");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return ResourceBundleUtil.getString(resourceBundle, "asset-libraries");
 	}
 
 	@Override

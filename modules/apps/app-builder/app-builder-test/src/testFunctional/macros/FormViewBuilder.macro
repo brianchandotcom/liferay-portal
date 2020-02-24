@@ -244,6 +244,12 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
+	macro validateFieldLabelRequired {
+		AssertElementPresent(
+			fieldLabel = "${fieldLabel}",
+			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
+	}
+
 	macro validateFormMultipleSelectionField {
 		var key_fieldType = "${fieldLabel}";
 

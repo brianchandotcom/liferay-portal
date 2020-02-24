@@ -2006,6 +2006,7 @@ definition {
 		FormViewBuilder.setFieldLabel(fieldLabel = "Full name");
 		FormViewBuilder.setFieldRequired();
 		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Nickname");
@@ -2029,6 +2030,7 @@ definition {
 		FormViewBuilder.setFieldLabel(fieldLabel = "Date of birth");
 		FormViewBuilder.setFieldRequired();
 		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies");

@@ -26,6 +26,7 @@ import {getThreads} from '../../utils/client.es';
 import {dateToInternationalHuman} from '../../utils/utils.es';
 
 export default ({
+	location,
 	match: {
 		params: {creatorId, tag}
 	}
@@ -37,17 +38,22 @@ export default ({
 	const [pageSize] = useState(5);
 	const [questions, setQuestions] = useState([]);
 
+	const urlSearchParams = new URLSearchParams(location.search);
+
+	const search = urlSearchParams.get('search');
+
 	useEffect(() => {
 		getThreads({
 			creatorId,
 			page,
 			pageSize,
+			search,
 			siteKey: context.siteKey,
 			tag
 		})
 			.then(data => setQuestions(data))
 			.then(() => setLoading(false));
-	}, [creatorId, page, pageSize, context.siteKey, tag]);
+	}, [creatorId, page, pageSize, search, context.siteKey, tag]);
 
 	const hasValidAnswer = question =>
 		question.messageBoardMessages.items.filter(

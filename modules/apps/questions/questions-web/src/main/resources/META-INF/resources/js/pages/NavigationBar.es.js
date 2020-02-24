@@ -12,22 +12,31 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayInput} from '@clayui/form';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
 
 export default withRouter(({history, location}) => {
+	const [search, setSearch] = useState();
+
+	const context = useContext(AppContext);
+
 	const navigate = href => {
 		history.push(href);
 	};
 
-	const context = useContext(AppContext);
-
 	const isActive = value => location.pathname.includes('/' + value);
+
+	const onKeyDownHandler = event => {
+		if (event.keyCode === 13) {
+			navigate('/questions?search=' + search);
+		}
+	};
 
 	return (
 		<div className="autofit-padded autofit-row navigation-bar">
@@ -50,6 +59,38 @@ export default withRouter(({history, location}) => {
 						</ClayLink>
 					</ClayNavigationBar.Item>
 				</ClayNavigationBar>
+			</div>
+			<div className="autofit-col">
+				<form
+					onKeyDown={onKeyDownHandler}
+					onSubmit={e => e.preventDefault()}
+				>
+					<ClayInput.Group>
+						<ClayInput.GroupItem>
+							<ClayInput
+								className="form-control input-group-inset input-group-inset-after"
+								onChange={event =>
+									setSearch(event.target.value)
+								}
+								placeholder={Liferay.Language.get('search')}
+								type="text"
+							/>
+							<ClayInput.GroupInsetItem
+								after
+								onClick={() =>
+									navigate('/questions?search=' + search)
+								}
+								tag="span"
+							>
+								<ClayButtonWithIcon
+									displayType="unstyled"
+									symbol="search"
+									type="submit"
+								/>
+							</ClayInput.GroupInsetItem>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</form>
 			</div>
 			<div className="autofit-col">
 				{context.canCreateThread && (

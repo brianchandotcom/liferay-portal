@@ -35,7 +35,9 @@ export default props => {
 						<Route
 							exact
 							path="/"
-							render={props => <Questions {...props} tag={''} />}
+							render={props => (
+								<Questions {...props} search={''} tag={''} />
+							)}
 						/>
 						<Route
 							component={EditAnswer}
@@ -46,6 +48,7 @@ export default props => {
 							render={props => (
 								<Questions
 									{...props}
+									search={''}
 									tag={props.match.params.tag}
 								/>
 							)}
@@ -55,7 +58,7 @@ export default props => {
 							render={props => (
 								<Questions
 									{...props}
-									tag={props.match.params.creatorId}
+									creatorId={props.match.params.creatorId}
 								/>
 							)}
 						/>

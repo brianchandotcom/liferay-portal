@@ -856,11 +856,26 @@ definition {
 
 		SelectFrameTop();
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#ASSET_LIST_DIALOG");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		if (isSet(depotName)) {
+			AssertClick(
+				key_breadcrumbName = "Sites",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Sites");
 
-		Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+			AssertClick(
+				key_groupTab = "Asset Library",
+				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+				value1 = "Asset Library");
+
+			LexiconCard.clickCard(card = "${depotName}");
+
+			Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE_CARD");
+		}
+		else {
+			Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+		}
 
 		SelectFrameTop();
 

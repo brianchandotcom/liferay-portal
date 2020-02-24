@@ -78,6 +78,28 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addTagsFilter {
+		if (isSet(aqueryAndOperator)) {
+			Select(
+				locator1 = "APConfiguration#FILTER_QUERY_AND_OPERATOR",
+				value1 = "${queryAndOperator}");
+		}
+
+		if (isSet(queryContains)) {
+			Select(
+				locator1 = "APConfiguration#FILTER_QUERY_CONTAINS",
+				value1 = "${queryContains}");
+		}
+
+		Select(
+			locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT",
+			value1 = "Tags");
+
+		AssetCategorization.selectTag(tagNameList = "${tagNameList}");
+
+		PortletEntry.save();
+	}
+
 	macro configureAssetEntryType {
 		Panel.expandPanel(panel = "Source");
 

@@ -2026,9 +2026,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					selectSQLQuery.addScalar("${pkEntityColumn.name}", com.liferay.portal.kernel.dao.orm.Type.LONG);
 
-					SQLQuery updateQuery = session.createSQLQuery("UPDATE ${entity.table} SET left${pkEntityColumn.methodName} = ?, right${pkEntityColumn.methodName} = ? WHERE ${pkEntityColumn.DBName} = ?");
+					SQLQuery updateSQLQuery = session.createSQLQuery("UPDATE ${entity.table} SET left${pkEntityColumn.methodName} = ?, right${pkEntityColumn.methodName} = ? WHERE ${pkEntityColumn.DBName} = ?");
 
-					rebuildTree(session, selectSQLQuery, updateQuery, ${scopeEntityColumn.name}, 0, 0);
+					rebuildTree(session, selectSQLQuery, updateSQLQuery, ${scopeEntityColumn.name}, 0, 0);
 				}
 				catch (Exception exception) {
 					throw processException(exception);
@@ -2070,7 +2070,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 		}
 
-		protected long rebuildTree(Session session, SQLQuery selectSQLQuery, SQLQuery updateQuery, long ${scopeEntityColumn.name}, long parent${pkEntityColumn.methodName}, long left${pkEntityColumn.methodName}) {
+		protected long rebuildTree(Session session, SQLQuery selectSQLQuery, SQLQuery updateSQLQuery, long ${scopeEntityColumn.name}, long parent${pkEntityColumn.methodName}, long left${pkEntityColumn.methodName}) {
 			long right${pkEntityColumn.methodName} = left${pkEntityColumn.methodName} + 1;
 
 			QueryPos qPos = QueryPos.getInstance(selectSQLQuery);
@@ -2081,17 +2081,17 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			List<Long> ${pkEntityColumn.names} = selectSQLQuery.list();
 
 			for (long ${pkEntityColumn.name} : ${pkEntityColumn.names}) {
-				right${pkEntityColumn.methodName} = rebuildTree(session, selectSQLQuery, updateQuery, ${scopeEntityColumn.name}, ${pkEntityColumn.name}, right${pkEntityColumn.methodName});
+				right${pkEntityColumn.methodName} = rebuildTree(session, selectSQLQuery, updateSQLQuery, ${scopeEntityColumn.name}, ${pkEntityColumn.name}, right${pkEntityColumn.methodName});
 			}
 
 			if (parent${pkEntityColumn.methodName} > 0) {
-				qPos = QueryPos.getInstance(updateQuery);
+				qPos = QueryPos.getInstance(updateSQLQuery);
 
 				qPos.add(left${pkEntityColumn.methodName});
 				qPos.add(right${pkEntityColumn.methodName});
 				qPos.add(parent${pkEntityColumn.methodName});
 
-				updateQuery.executeUpdate();
+				updateSQLQuery.executeUpdate();
 			}
 
 			return right${pkEntityColumn.methodName} + 1;

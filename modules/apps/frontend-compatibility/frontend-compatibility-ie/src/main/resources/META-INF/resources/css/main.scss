@@ -118,3 +118,21 @@
 		font-style: italic;
 	}
 }
+
+.control-menu-container.has-control-menu-fixed {
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	transition: all 0.5s ease;
+
+	@at-root {
+		.ie .product-menu-open & {
+			left: 320px;
+		}
+
+		.ie .open-admin-panel & {
+			right: 320px;
+		}
+	}
+}

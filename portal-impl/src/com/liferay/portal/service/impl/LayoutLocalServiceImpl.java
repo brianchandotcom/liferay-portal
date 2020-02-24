@@ -1175,6 +1175,79 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns all the layouts that match the type and belong to the group,
+	 * including the ones marked as System.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  type the type of the layouts (optiona.lly {@link
+	 *         LayoutConstants#TYPE_PORTLET})
+	 * @return the matching layouts, or an empty list if no matches were
+	 *         found
+	 */
+	@Override
+	public List<Layout> getAllLayouts(
+			long groupId, boolean privateLayout, String type)
+		throws PortalException {
+
+		DynamicQuery dynamicQuery = layoutLocalService.dynamicQuery();
+
+		Property classNameIdProperty =
+			PropertyFactoryUtil.forName("classNameId");
+
+		dynamicQuery.add(classNameIdProperty.eq(new Long(0)));
+
+		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
+
+		dynamicQuery.add(groupIdProperty.eq(groupId));
+
+		Property privateLayoutProperty =
+			PropertyFactoryUtil.forName("privateLayout");
+
+		dynamicQuery.add(privateLayoutProperty.eq(privateLayout));
+
+		Property typeProperty = PropertyFactoryUtil.forName("type");
+
+		dynamicQuery.add(typeProperty.eq(type));
+
+		List<Layout> layouts = layoutLocalService.dynamicQuery(dynamicQuery);
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		if (!group.isUser()) {
+			return layouts;
+		}
+
+		Set<Long> checkedPlids = new HashSet<>();
+
+		Queue<Long> checkParentLayoutIds = new ArrayDeque<>();
+
+		checkParentLayoutIds.add(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+			groupId, privateLayout);
+
+		while (!checkParentLayoutIds.isEmpty()) {
+			long parentLayoutId = checkParentLayoutIds.poll();
+
+			List<Layout> userGroupLayouts = _addUserGroupLayouts(
+				group, layoutSet, Collections.emptyList(), parentLayoutId);
+
+			for (Layout userGroupLayout : userGroupLayouts) {
+				long userGroupPlid = userGroupLayout.getPlid();
+
+				if (checkedPlids.add(userGroupPlid)) {
+					layouts.add(userGroupLayout);
+
+					checkParentLayoutIds.add(userGroupLayout.getLayoutId());
+				}
+			}
+		}
+
+		return layouts;
+	}
+
+	/**
 	 * Returns the primary key of the default layout for the group.
 	 *
 	 * @param  groupId the primary key of the group

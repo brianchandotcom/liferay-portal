@@ -30,11 +30,11 @@
 }
 
 .ie9 {
-    .card {
-        .clamp-horizontal .clamp-container {
+	.card {
+		.clamp-horizontal .clamp-container {
 			-ms-transform: none;
 		}
-    }
+	}
 
 	.checkbox-bottom-left input[type='checkbox'],
 	.checkbox-bottom-left label > input[type='checkbox'],
@@ -62,23 +62,23 @@
 		-ms-transform: translateY(-50%);
 	}
 
-    .lfr-asset-type-column,
-    .lfr-author-column,
-    .lfr-city-column,
-    .lfr-country-column,
-    .lfr-email-address-column,
-    .lfr-job-title-column,
-    .lfr-region-column,
-    .lfr-removed-by-column,
-    .lfr-replier-column,
-    .lfr-scope-column,
-    .lfr-screen-name-column,
-    .lfr-type-column,
-    .lfr-user-column,
-    .lfr-users-column,
-    .list-group-item-content,
-    .list-group-item-field {
-        word-break: break-all \9;
+	.lfr-asset-type-column,
+	.lfr-author-column,
+	.lfr-city-column,
+	.lfr-country-column,
+	.lfr-email-address-column,
+	.lfr-job-title-column,
+	.lfr-region-column,
+	.lfr-removed-by-column,
+	.lfr-replier-column,
+	.lfr-scope-column,
+	.lfr-screen-name-column,
+	.lfr-type-column,
+	.lfr-user-column,
+	.lfr-users-column,
+	.list-group-item-content,
+	.list-group-item-field {
+		word-break: break-all \9;
 	}
 
 	@include media-breakpoint-down(md) {

@@ -16,12 +16,18 @@ package com.liferay.depot.application;
 
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * @author Alejandro Tardín
  */
 public interface DepotApplication {
+
+	public default List<String> getClassNames() {
+		return Collections.emptyList();
+	}
 
 	public default String getLabel(Locale locale) {
 		return PortalUtil.getPortletTitle(getPortletId(), locale);

@@ -173,7 +173,21 @@
 				},
 				"fragmentFields": {
 					"items": {
-						"$ref": "#/definitions/FragmentField"
+						"additionalProperties": false,
+						"properties": {
+							"id": {
+								"title": "The id Schema",
+								"type": "string"
+							},
+							"value": {
+								"$ref": "#/definitions/FragmentField"
+							}
+						},
+						"required": [
+							"id",
+							"value"
+						],
+						"type": "object"
 					},
 					"title": "The fragmentFields Schema",
 					"type": "array"

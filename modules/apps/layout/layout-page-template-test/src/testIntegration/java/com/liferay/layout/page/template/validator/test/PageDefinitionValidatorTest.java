@@ -119,6 +119,22 @@ public class PageDefinitionValidatorTest {
 	}
 
 	@Test
+	public void testValidatePageDefinitionInvalidSectionBackgroundExtraProperties()
+		throws Exception {
+
+		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expectMessage(
+			new StringStartsWith(
+				"/pageElement/pageElements/0/definition/backgroundImage: " +
+					"extraneous key [extra] is not permitted"));
+
+		PageDefinitionValidator.validatePageDefinition(
+			_read(
+				"page_definition_invalid_section_background_image_extra_" +
+					"properties.json"));
+	}
+
+	@Test
 	public void testValidatePageDefinitionInvalidSectionExtraProperties()
 		throws Exception {
 

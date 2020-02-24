@@ -266,6 +266,48 @@ definition {
 		Staging.publishCustomPublication();
 	}
 
+	@description = "This is a use case for LPS-95589."
+	@priority = "4"
+	test ExportDMWithDeletedDocumentLink {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Documents and Media",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Type Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			documentsAndMediaField = "DM Document Title");
+
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LAR.exportPortlet(larFileName = "DocumentsandMedia_portlet.lar");
+
+		AssertConsoleTextNotPresent(value1 = "NoSuchFileEntryException");
+	}
+
 	@description = "This is a use case for LPS-96391."
 	@priority = "5"
 	test ExportImportContentPageWithWCDOnFragment {

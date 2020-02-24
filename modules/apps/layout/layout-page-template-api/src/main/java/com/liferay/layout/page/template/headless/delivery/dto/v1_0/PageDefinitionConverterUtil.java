@@ -144,8 +144,7 @@ public class PageDefinitionConverterUtil {
 			layoutPageTemplateStructure.getData(0L));
 
 		LayoutStructureItem mainLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				layoutStructure.getMainItemId());
+			layoutStructure.getMainLayoutStructureItem();
 
 		List<PageElement> mainPageElements = new ArrayList<>();
 

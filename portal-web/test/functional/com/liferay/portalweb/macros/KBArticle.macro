@@ -1003,6 +1003,10 @@ definition {
 	}
 
 	macro setScopeCP {
+		if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
+			Click(locator1 = "ProductMenu#TOGGLE");
+		}
+
 		Click(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SCOPE_COG");
 
 		AssertClick.assertPartialTextClickAt(

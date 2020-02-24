@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.taglib.servlet.taglib.util;
 
+import com.liferay.data.engine.configuration.DataLayoutBuilderConfiguration;
 import com.liferay.data.engine.renderer.DataLayoutRenderer;
 import com.liferay.data.engine.renderer.DataLayoutRendererContext;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
@@ -62,6 +63,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -77,6 +79,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -87,6 +90,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Gabriel Albuquerque
@@ -178,9 +184,43 @@ public class DataLayoutTaglibUtil {
 		_dataLayoutTaglibUtil = this;
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addDataLayoutBuilderConfiguration(
+		DataLayoutBuilderConfiguration dataLayoutBuilderConfiguration,
+		Map<String, Object> properties) {
+
+		String ddmFormContentType = GetterUtil.getString(
+			properties.get("ddm.form.content.type"));
+
+		if (Validator.isNull(ddmFormContentType)) {
+			return;
+		}
+
+		_dataLayoutBuilderConfigurations.put(
+			ddmFormContentType, dataLayoutBuilderConfiguration);
+	}
+
 	@Deactivate
 	protected void deactivate() {
 		_dataLayoutTaglibUtil = null;
+	}
+
+	protected void removeDataLayoutBuilderConfiguration(
+		DataLayoutBuilderConfiguration dataLayoutBuilderConfiguration,
+		Map<String, Object> properties) {
+
+		String ddmFormContentType = GetterUtil.getString(
+			properties.get("ddm.form.content.type"));
+
+		if (Validator.isNull(ddmFormContentType)) {
+			return;
+		}
+
+		_dataLayoutBuilderConfigurations.remove(ddmFormContentType);
 	}
 
 	private Set<Locale> _getAvailableLocales(
@@ -428,6 +468,8 @@ public class DataLayoutTaglibUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLayoutTaglibUtil.class);
 
+	private static final Map<String, DataLayoutBuilderConfiguration>
+		_dataLayoutBuilderConfigurations = new ConcurrentHashMap<>();
 	private static DataLayoutTaglibUtil _dataLayoutTaglibUtil;
 
 	@Reference

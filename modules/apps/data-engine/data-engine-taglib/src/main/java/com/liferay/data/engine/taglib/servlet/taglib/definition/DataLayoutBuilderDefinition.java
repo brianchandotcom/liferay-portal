@@ -18,4 +18,12 @@ package com.liferay.data.engine.taglib.servlet.taglib.definition;
  * @author Eudaldo Alonso
  */
 public interface DataLayoutBuilderDefinition {
+
+	public default String[] getUnimplementedProperties() {
+		return new String[] {
+			"fieldNamespace", "indexType", "localizable", "readOnly", "type",
+			"validation", "visibilityExpression"
+		};
+	}
+
 }

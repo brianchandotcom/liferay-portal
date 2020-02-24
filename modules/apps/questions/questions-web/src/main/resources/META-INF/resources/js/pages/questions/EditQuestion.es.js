@@ -88,14 +88,16 @@ export default withRouter(
 							</span>
 						</label>
 
+						{articleBody}
+
 						<Editor
 							config={getCKEditorConfig()}
+							data={articleBody}
 							onBeforeLoad={onBeforeLoadCKEditor}
 							onChange={event =>
 								setArticleBody(event.editor.getData())
 							}
 							required
-							data={articleBody}
 						/>
 
 						<ClayForm.FeedbackGroup>

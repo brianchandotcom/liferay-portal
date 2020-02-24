@@ -25,9 +25,9 @@ import Answer from '../../components/Answer.es';
 import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import CreatorRow from '../../components/CreatorRow.es';
 import Rating from '../../components/Rating.es';
+import RelatedQuestions from '../../components/RelatedQuestions.es';
 import Subscription from '../../components/Subscription.es';
 import TagList from '../../components/TagList.es';
-import RelatedQuestions from '../../components/RelatedQuestions.es';
 import {
 	createAnswer,
 	getThread,
@@ -41,10 +41,10 @@ import {
 } from '../../utils/utils.es';
 
 export default ({
-					match: {
-						params: {questionId}
-					}
-				}) => {
+	match: {
+		params: {questionId}
+	}
+}) => {
 	const context = useContext(AppContext);
 
 	const [answers, setAnswers] = useState([]);
@@ -113,8 +113,8 @@ export default ({
 							aggregateRating={question.aggregateRating}
 							entityId={question.id}
 							myRating={
-			 question.myRating &&
-			 question.myRating.ratingValue
+								question.myRating &&
+								question.myRating.ratingValue
 							}
 							type={'Thread'}
 						/>
@@ -167,8 +167,7 @@ export default ({
 											<Link
 												to={`/questions/${questionId}/edit`}
 											>
-												<ClayButton
-													className="btn btn-secondary">
+												<ClayButton className="btn btn-secondary">
 													{Liferay.Language.get(
 														'edit'
 													)}
@@ -182,7 +181,7 @@ export default ({
 								<ArticleBodyRenderer {...question} />
 							</div>
 
-							<TagList tags={question.keywords}/>
+							<TagList tags={question.keywords} />
 						</div>
 
 						<div
@@ -190,10 +189,10 @@ export default ({
 							style={{alignItems: 'center'}}
 						>
 							<div className="autofit-col-expand">
-								<hr/>
+								<hr />
 							</div>
 							<div>
-								<CreatorRow question={question}/>
+								<CreatorRow question={question} />
 							</div>
 						</div>
 
@@ -211,16 +210,16 @@ export default ({
 						))}
 
 						{!!answers.totalCount &&
-						 answers.totalCount > answers.pageSize && (
-							 <ClayPaginationWithBasicItems
-								 activePage={page}
-								 ellipsisBuffer={2}
-								 onPageChange={setPage}
-								 totalPages={Math.ceil(
-									 answers.totalCount / answers.pageSize
-								 )}
-							 />
-						 )}
+							answers.totalCount > answers.pageSize && (
+								<ClayPaginationWithBasicItems
+									activePage={page}
+									ellipsisBuffer={2}
+									onPageChange={setPage}
+									totalPages={Math.ceil(
+										answers.totalCount / answers.pageSize
+									)}
+								/>
+							)}
 
 						{context.canCreateThread && (
 							<>
@@ -231,7 +230,7 @@ export default ({
 												'your-answer'
 											)}
 											<span className="reference-mark">
-												<ClayIcon symbol="asterisk"/>
+												<ClayIcon symbol="asterisk" />
 											</span>
 										</label>
 
@@ -269,7 +268,7 @@ export default ({
 				</div>
 			)}
 			{question && question.id && (
-				<RelatedQuestions question={question}/>
+				<RelatedQuestions question={question} />
 			)}
 		</section>
 	);

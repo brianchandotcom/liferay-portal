@@ -39,11 +39,12 @@ public class ColumnLayoutStructureItemHelper
 				layoutStructure.addColumnLayoutStructureItem(
 					parentId, position);
 
-		Map<String, Object> definition =
+		Map<String, Object> definitionMap =
 			(Map<String, Object>)pageElement.getDefinition();
 
-		if (definition != null) {
-			columnLayoutStructureItem.setSize((Integer)definition.get("size"));
+		if (definitionMap != null) {
+			columnLayoutStructureItem.setSize(
+				(Integer)definitionMap.get("size"));
 		}
 
 		return columnLayoutStructureItem;

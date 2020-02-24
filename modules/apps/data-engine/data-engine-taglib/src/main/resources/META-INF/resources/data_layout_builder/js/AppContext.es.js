@@ -39,6 +39,7 @@ const AppContext = createContext();
 
 const initialState = {
 	config: {
+		disabledProperties: [],
 		unimplementedProperties: []
 	},
 	dataDefinition: {

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import java.util.Optional;
+
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
@@ -54,7 +56,7 @@ public class SiteParamConverterProvider
 		}
 
 		throw new NotFoundException(
-			"Unable to get a valid site with ID " + siteId);
+			"Unable to get a valid site with ID " + parameter);
 	}
 
 	@Override
@@ -77,7 +79,13 @@ public class SiteParamConverterProvider
 					GetterUtil.getLong(siteId));
 			}
 
-			Group liveGroup = group.getLiveGroup();
+			Group liveGroup = Optional.ofNullable(
+				group
+			).map(
+				Group::getLiveGroup
+			).orElse(
+				null
+			);
 
 			if (((group != null) && group.isSite()) ||
 				((liveGroup != null) && liveGroup.isSite())) {

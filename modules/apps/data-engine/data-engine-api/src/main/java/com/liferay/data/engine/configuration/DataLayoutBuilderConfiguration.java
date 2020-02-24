@@ -19,6 +19,10 @@ package com.liferay.data.engine.configuration;
  */
 public interface DataLayoutBuilderConfiguration {
 
+	public default String[] getDisabledProperties() {
+		return new String[0];
+	}
+
 	public default String[] getUnimplementedProperties() {
 		return new String[] {
 			"fieldNamespace", "indexType", "localizable", "readOnly", "type",

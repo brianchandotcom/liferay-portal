@@ -14,8 +14,9 @@
 
 import {usePrevious} from 'frontend-js-react-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {DndProvider} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
-import DndProvider from './DndProvider';
 import MillerColumnsColumn from './MillerColumnsColumn';
 
 const getItemsMap = columns => {
@@ -210,7 +211,7 @@ const MillerColumns = ({
 	};
 
 	return (
-		<DndProvider>
+		<DndProvider backend={HTML5Backend}>
 			<div className="bg-white miller-columns-row" ref={ref}>
 				{columns.map((column, index) => (
 					<MillerColumnsColumn

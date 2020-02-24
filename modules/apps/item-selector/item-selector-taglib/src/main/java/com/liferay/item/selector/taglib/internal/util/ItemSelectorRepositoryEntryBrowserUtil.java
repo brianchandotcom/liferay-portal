@@ -201,7 +201,9 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 			"showGroupSelector", Boolean.TRUE.toString());
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			httpServletRequest, "sites", viewGroupSelectorURL.toString());
+			httpServletRequest,
+			LanguageUtil.get(httpServletRequest, "sites-and-libraries"),
+			viewGroupSelectorURL.toString());
 	}
 
 	private static void _addPortletBreadcrumbEntry(

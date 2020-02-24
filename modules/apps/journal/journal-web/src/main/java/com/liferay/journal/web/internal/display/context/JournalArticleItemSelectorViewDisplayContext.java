@@ -524,7 +524,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(
-			LanguageUtil.get(_httpServletRequest, "sites"));
+			LanguageUtil.get(_httpServletRequest, "sites-and-libraries"));
 
 		PortletURL portletURL = getPortletURL();
 

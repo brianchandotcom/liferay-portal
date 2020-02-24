@@ -173,7 +173,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 
 	@Override
 	protected String getFilterNavigationDropdownItemsLabel() {
-		return LanguageUtil.get(request, "sites");
+		return LanguageUtil.get(request, "sites-and-libraries");
 	}
 
 	@Override

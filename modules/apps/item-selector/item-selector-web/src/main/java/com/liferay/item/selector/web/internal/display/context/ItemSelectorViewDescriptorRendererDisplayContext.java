@@ -134,7 +134,7 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(
-			LanguageUtil.get(_httpServletRequest, "sites"));
+			LanguageUtil.get(_httpServletRequest, "sites-and-libraries"));
 		breadcrumbEntry.setURL(viewGroupSelectorURL.toString());
 
 		return breadcrumbEntry;

@@ -204,7 +204,8 @@ public class AssetBrowserDisplayContext {
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()
 		throws PortalException, PortletException {
 
-		return Arrays.asList(_getSiteBreadcrumb(), _getHomeBreadcrumb());
+		return Arrays.asList(
+			_getSiteAndLibraryBreadcrumb(), _getHomeBreadcrumb());
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
@@ -447,11 +448,13 @@ public class AssetBrowserDisplayContext {
 		return listable;
 	}
 
-	private BreadcrumbEntry _getSiteBreadcrumb() throws PortletException {
+	private BreadcrumbEntry _getSiteAndLibraryBreadcrumb()
+		throws PortletException {
+
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(
-			LanguageUtil.get(_httpServletRequest, "sites"));
+			LanguageUtil.get(_httpServletRequest, "sites-and-libraries"));
 
 		PortletURL portletURL = PortletURLUtil.clone(
 			_portletURL, PortalUtil.getLiferayPortletResponse(_renderResponse));

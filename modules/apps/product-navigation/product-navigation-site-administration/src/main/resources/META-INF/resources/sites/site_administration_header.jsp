@@ -93,7 +93,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 			label="<%= false %>"
 			linkCssClass="icon-monospaced"
 			markupView="lexicon"
-			message="go-to-other-site"
+			message="go-to-other-site-or-library"
 			url="javascript:;"
 		/>
 	</div>

@@ -1,0 +1,43 @@
+{
+	"pageElement" : {
+		"pageElements" : [
+			{
+				"definition" : {
+					"fragment" : {
+						"fragmentKey" : "my-key"
+					},
+					"fragmentFields" : [
+						{
+							"id" : "image-square",
+							"value": {
+								"fragmentImage": {
+									"title" : {
+										"value_i18n": {
+											"en_US" : "Hello Liferay!",
+											"es_ES" : "Hola Liferay!"
+										}
+									},
+									"url" : {
+										"value_i18n": {
+											"en_US" : "http://www.liferay.com/logo_en.png",
+											"es_ES" : "http://www.liferay.com/logo_es.png"
+										}
+									}
+								},
+								"fragmentLink": {
+									"target": "Blank",
+									"value": {
+										"href": "http://www.liferay.com"
+									}
+								}
+							}
+						}
+					]
+				},
+				"pageElements" : [],
+				"type" : "Fragment"
+			}
+		],
+		"type" : "Root"
+	}
+}

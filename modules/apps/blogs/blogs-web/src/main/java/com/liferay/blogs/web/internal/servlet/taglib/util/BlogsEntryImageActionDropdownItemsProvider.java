@@ -61,17 +61,19 @@ public class BlogsEntryImageActionDropdownItemsProvider {
 			return null;
 		}
 
-		PortletURL portletURL = (PortletURL)_httpServletRequest.getAttribute(
-			"view_images.jsp-portletURL");
-
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
+				PortletURL portletURL =
+					(PortletURL)_httpServletRequest.getAttribute(
+						"view_images.jsp-portletURL");
+
 				dropdownItem.setHref(
 					_renderResponse.createActionURL(),
 					ActionRequest.ACTION_NAME, "/blogs/edit_image",
 					Constants.CMD, Constants.DELETE, "redirect",
 					portletURL.toString(), "fileEntryId",
 					_fileEntry.getFileEntryId());
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));
 			}

@@ -316,12 +316,14 @@ public class DDLDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		HttpServletRequest httpServletRequest = _ddlRequestHelper.getRequest();
-
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
 				navigationItem.setHref(StringPool.BLANK);
+
+				HttpServletRequest httpServletRequest =
+					_ddlRequestHelper.getRequest();
+
 				navigationItem.setLabel(
 					HtmlUtil.escape(
 						LanguageUtil.get(httpServletRequest, "lists")));

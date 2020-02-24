@@ -102,15 +102,14 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	public List<DropdownItem> getActionItemsDropdownItems() {
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(_renderRequest);
-
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteRecords");
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					LanguageUtil.get(
+						PortalUtil.getHttpServletRequest(_renderRequest),
+						"delete"));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
@@ -213,12 +212,13 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		DDMFormInstance ddmFormInstance = getDDMFormInstance();
-
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
 				navigationItem.setHref(StringPool.BLANK);
+
+				DDMFormInstance ddmFormInstance = getDDMFormInstance();
+
 				navigationItem.setLabel(
 					HtmlUtil.extractText(
 						ddmFormInstance.getName(_renderRequest.getLocale())));
@@ -410,9 +410,6 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(_renderRequest);
-
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(true);
@@ -420,7 +417,9 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 				dropdownItem.setHref(getPortletURL(), "navigation", "all");
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "all"));
+					LanguageUtil.get(
+						PortalUtil.getHttpServletRequest(_renderRequest),
+						"all"));
 			}
 		).build();
 	}

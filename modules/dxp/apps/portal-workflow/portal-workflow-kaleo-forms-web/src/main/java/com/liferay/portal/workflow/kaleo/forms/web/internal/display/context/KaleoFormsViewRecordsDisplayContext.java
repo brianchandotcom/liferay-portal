@@ -256,12 +256,13 @@ public class KaleoFormsViewRecordsDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
 				navigationItem.setHref(StringPool.BLANK);
+
+				ThemeDisplay themeDisplay = getThemeDisplay();
+
 				navigationItem.setLabel(
 					HtmlUtil.extractText(
 						_kaleoProcess.getName(themeDisplay.getLocale())));

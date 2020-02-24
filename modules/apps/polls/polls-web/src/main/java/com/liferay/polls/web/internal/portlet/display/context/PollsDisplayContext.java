@@ -119,14 +119,16 @@ public class PollsDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
 				navigationItem.setHref(StringPool.BLANK);
+
+				ThemeDisplay themeDisplay = getThemeDisplay();
+
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
 				navigationItem.setLabel(portletDisplay.getPortletDisplayName());
 			}
 		).build();

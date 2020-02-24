@@ -327,9 +327,6 @@ public class UsersManagementToolbarDisplayContext
 
 	@Override
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(Objects.equals(getNavigation(), "all"));
@@ -349,8 +346,13 @@ public class UsersManagementToolbarDisplayContext
 				viewRoleURL.setParameter("mvcPath", "/view.jsp");
 				viewRoleURL.setParameter("tabs1", "users");
 				viewRoleURL.setParameter("navigation", "roles");
+
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 				viewRoleURL.setParameter(
 					"redirect", themeDisplay.getURLCurrent());
+
 				viewRoleURL.setParameter(
 					"groupId",
 					String.valueOf(_usersDisplayContext.getGroupId()));

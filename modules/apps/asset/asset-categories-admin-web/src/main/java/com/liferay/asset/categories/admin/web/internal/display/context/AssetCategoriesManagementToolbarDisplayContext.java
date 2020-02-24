@@ -154,9 +154,6 @@ public class AssetCategoriesManagementToolbarDisplayContext
 			return null;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return LabelItemListBuilder.add(
 			labelItem -> {
 				PortletURL removeLabelURL = PortletURLUtil.clone(
@@ -168,6 +165,9 @@ public class AssetCategoriesManagementToolbarDisplayContext
 				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
 				labelItem.setCloseable(true);
+
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 				labelItem.setLabel(category.getTitle(themeDisplay.getLocale()));
 			}

@@ -429,13 +429,14 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public List<NavigationItem> getElementSetBuilderNavigationItems() {
-		HttpServletRequest httpServletRequest =
-			formAdminRequestHelper.getRequest();
-
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
 				navigationItem.setHref(StringPool.BLANK);
+
+				HttpServletRequest httpServletRequest =
+					formAdminRequestHelper.getRequest();
+
 				navigationItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "builder"));
 			}

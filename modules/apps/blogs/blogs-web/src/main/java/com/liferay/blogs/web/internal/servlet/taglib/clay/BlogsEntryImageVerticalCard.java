@@ -107,12 +107,14 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 			return Collections.emptyList();
 		}
 
-		WorkflowCapability workflowCapability =
-			_fileEntry.getRepositoryCapability(WorkflowCapability.class);
-
 		return LabelItemListBuilder.add(
-			labelItem -> labelItem.setStatus(
-				workflowCapability.getStatus(_fileEntry))
+			labelItem -> {
+				WorkflowCapability workflowCapability =
+					_fileEntry.getRepositoryCapability(
+						WorkflowCapability.class);
+
+				labelItem.setStatus(workflowCapability.getStatus(_fileEntry));
+			}
 		).build();
 	}
 

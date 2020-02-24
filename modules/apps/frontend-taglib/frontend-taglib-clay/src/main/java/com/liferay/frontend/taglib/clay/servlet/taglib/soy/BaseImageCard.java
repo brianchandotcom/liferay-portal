@@ -55,10 +55,12 @@ public abstract class BaseImageCard
 			return Collections.emptyList();
 		}
 
-		WorkflowedModel workflowedModel = (WorkflowedModel)baseModel;
-
 		return LabelItemListBuilder.add(
-			labelItem -> labelItem.setStatus(workflowedModel.getStatus())
+			labelItem -> {
+				WorkflowedModel workflowedModel = (WorkflowedModel)baseModel;
+
+				labelItem.setStatus(workflowedModel.getStatus());
+			}
 		).build();
 	}
 

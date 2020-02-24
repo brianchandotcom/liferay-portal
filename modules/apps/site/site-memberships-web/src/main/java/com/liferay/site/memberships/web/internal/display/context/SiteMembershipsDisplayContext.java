@@ -77,14 +77,16 @@ public class SiteMembershipsDisplayContext {
 	}
 
 	public List<NavigationItem> getInfoPanelNavigationItems() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				navigationItem.setHref(themeDisplay.getURLCurrent());
+
 				navigationItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "details"));
 			}

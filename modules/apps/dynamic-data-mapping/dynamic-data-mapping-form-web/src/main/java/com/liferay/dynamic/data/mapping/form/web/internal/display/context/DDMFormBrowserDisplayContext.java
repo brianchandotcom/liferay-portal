@@ -171,15 +171,16 @@ public class DDMFormBrowserDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		HttpServletRequest httpServletRequest =
-			_formWebRequestHelper.getRequest();
-
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
 				navigationItem.setHref(
 					_renderResponse.createRenderURL(), "mvcPath",
 					"/browser/view.jsp");
+
+				HttpServletRequest httpServletRequest =
+					_formWebRequestHelper.getRequest();
+
 				navigationItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "entries"));
 			}

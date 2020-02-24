@@ -414,13 +414,14 @@ public class SharedAssetsViewDisplayContext {
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
-		String orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "sharedDate");
-
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
+				String orderByCol = ParamUtil.getString(
+					_httpServletRequest, "orderByCol", "sharedDate");
+
 				dropdownItem.setActive(
 					Objects.equals(orderByCol, "sharedDate"));
+
 				dropdownItem.setHref(
 					_getCurrentSortingURL(), "orderByCol", "sharedDate");
 				dropdownItem.setLabel(

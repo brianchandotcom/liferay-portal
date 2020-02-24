@@ -29,6 +29,7 @@ export default ({
 	dataDefinitionId,
 	dataLayoutBuilder,
 	dataLayoutId,
+	groupId,
 }) => {
 	const reducer = createReducer(dataLayoutBuilder);
 	const [state, dispatch] = useReducer(reducer, initialState);
@@ -70,16 +71,29 @@ export default ({
 
 	useEffect(() => {
 		if (contentType) {
-			getItem(
+			const globalFieldSetsPromise = getItem(
+				`/o/data-engine/v2.0/sites/${groupId}/data-definitions/by-content-type/${contentType}`
+			);
+
+			const groupFieldSetsPromise = getItem(
 				`/o/data-engine/v2.0/data-definitions/by-content-type/${contentType}`
-			).then(({items}) =>
-				dispatch({
-					payload: {fieldsets: items},
-					type: UPDATE_FIELDSETS
-				})
+			);
+
+			Promise.all([globalFieldSetsPromise, groupFieldSetsPromise]).then(
+				([
+					{items: globalFieldSets = []},
+					{items: groupFieldSets = []}
+				]) => {
+					dispatch({
+						payload: {
+							fieldsets: [...globalFieldSets, ...groupFieldSets]
+						},
+						type: UPDATE_FIELDSETS
+					});
+				}
 			);
 		}
-	}, [contentType, dispatch]);
+	}, [contentType, dispatch, groupId]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

@@ -75,7 +75,8 @@ const App = props => {
 		contentType,
 		dataDefinitionId,
 		dataLayoutId,
-		fieldTypesModules
+		fieldTypesModules,
+		groupId
 	} = parseProps(props);
 
 	const [loaded, setLoaded] = useState(false);
@@ -96,6 +97,7 @@ const App = props => {
 						dataDefinitionId={dataDefinitionId}
 						dataLayoutBuilder={dataLayoutBuilder}
 						dataLayoutId={dataLayoutId}
+						groupId={groupId}
 					>
 						<AppContent
 							dataLayoutBuilder={dataLayoutBuilder}

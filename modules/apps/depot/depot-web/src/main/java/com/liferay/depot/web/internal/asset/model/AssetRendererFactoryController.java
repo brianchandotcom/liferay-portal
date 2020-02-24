@@ -15,6 +15,8 @@
 package com.liferay.depot.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -83,6 +85,9 @@ public class AssetRendererFactoryController {
 	private DepotApplicationController _depotApplicationController;
 
 	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	private final Map
@@ -99,6 +104,16 @@ public class AssetRendererFactoryController {
 			AssetRendererFactory assetRendererFactory) {
 
 			_assetRendererFactory = assetRendererFactory;
+		}
+
+		@Override
+		public ClassTypeReader getClassTypeReader() {
+			if (isSelectable()) {
+				return new DepotClassTypeReader(
+					super.getClassTypeReader(), _depotEntryLocalService);
+			}
+
+			return super.getClassTypeReader();
 		}
 
 		@Override

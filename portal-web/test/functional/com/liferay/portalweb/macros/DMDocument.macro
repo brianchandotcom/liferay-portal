@@ -60,6 +60,21 @@ definition {
 			PortletEntry.inputDescription(description = "${dmDocumentDescription}");
 		}
 
+		if (isSet(documentsAndMediaField)) {
+			var key_fieldName = "DocumentsandMedia";
+
+			AssertClick(
+				locator1 = "Button#SELECT_CONTENT",
+				value1 = "Select");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			AssertClick.assertPartialTextClickAt(
+				key_dmDocumentTitle = "${documentsAndMediaField}",
+				locator1 = "WC#ICON_DOCUMENT_TITLE",
+				value1 = "${documentsAndMediaField}");
+		}
+
 		if (isSet(textField)) {
 			var key_fieldName = "Text";
 

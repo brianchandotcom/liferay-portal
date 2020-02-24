@@ -84,6 +84,7 @@ function reducer(state, action) {
 		case CHANGE_TIME_SPAN_OPTION:
 			nextState = {
 				...state,
+				timeSpanOffset: 0,
 				timeSpanOption: action.payload.key,
 			};
 			break;

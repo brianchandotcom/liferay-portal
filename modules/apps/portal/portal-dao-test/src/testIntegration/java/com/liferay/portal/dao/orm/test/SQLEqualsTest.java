@@ -159,6 +159,17 @@ public class SQLEqualsTest {
 			sb.append(columnName);
 			sb.append(")");
 		}
+		else if (columnName.equals("typeBlob") &&
+				 (db.getDBType() == DBType.SQLSERVER)) {
+
+			sb.append("CAST(t1.");
+			sb.append(columnName);
+			sb.append(" as varbinary)");
+			sb.append(compare);
+			sb.append("CAST(t2.");
+			sb.append(columnName);
+			sb.append(" as varbinary)");
+		}
 		else {
 			sb.append("t1.");
 			sb.append(columnName);

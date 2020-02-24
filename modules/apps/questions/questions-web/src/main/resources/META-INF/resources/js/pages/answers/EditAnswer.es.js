@@ -12,27 +12,28 @@
  * details.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {withRouter} from 'react-router-dom';
+import {Editor} from 'frontend-editor-ckeditor-web';
 
 import {getMessage, updateMessage} from '../../utils/client.es';
+import {getCKEditorConfig, onBeforeLoadCKEditor} from "../../utils/utils.es";
 
 export default withRouter(
 	({
-		history,
-		match: {
-			params: {answerId}
-		}
-	}) => {
+		 history,
+		 match: {
+			 params: {answerId}
+		 }
+	 }) => {
 		const [articleBody, setArticleBody] = useState('');
 
-		useEffect(() => {
+		const loadMessage = () =>
 			getMessage(answerId).then(({articleBody}) =>
 				setArticleBody(articleBody)
 			);
-		}, [answerId]);
 
 		const submit = () => {
 			updateMessage(articleBody, answerId).then(() => history.goBack());
@@ -47,19 +48,21 @@ export default withRouter(
 						<label htmlFor="basicInput">
 							{Liferay.Language.get('answer')}
 							<span className="reference-mark">
-								<ClayIcon symbol="asterisk" />
+								<ClayIcon symbol="asterisk"/>
 							</span>
 						</label>
-						<ClayInput
+						<Editor
+							config={getCKEditorConfig()}
+							data={articleBody}
+							onBeforeLoad={onBeforeLoadCKEditor}
 							onChange={event =>
-								setArticleBody(event.target.value)
+								setArticleBody(
+									event.editor.getData()
+								)
 							}
-							placeholder={Liferay.Language.get(
-								'what-is-your-question'
-							)}
+							onInstanceReady={loadMessage}
 							required
 							type="text"
-							value={articleBody}
 						/>
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>

@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
-import java.text.Format;
-
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -82,12 +80,7 @@ public class AnalyticsReportsDisplayContextTest {
 
 		Assert.assertEquals(authorName, props.get("authorName"));
 
-		Format simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"MMMM dd, yyyy", locale);
-
-		Assert.assertEquals(
-			simpleDateFormat.format(layoutPublishDate),
-			props.get("publishDate"));
+		Assert.assertEquals(layoutPublishDate, props.get("publishDate"));
 
 		Assert.assertEquals(title, props.get("title"));
 	}

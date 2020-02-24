@@ -22,7 +22,7 @@ describe('BasicInformation', () => {
 	it('renders author, publish date and title', () => {
 		const testProps = {
 			authorName: 'John Tester',
-			publishDate: '13, July 2019',
+			publishDate: 1581957977840,
 			title: 'A testing page',
 		};
 
@@ -40,8 +40,10 @@ describe('BasicInformation', () => {
 			getByText('authored-by-' + testProps.authorName)
 		).toBeInTheDocument();
 
+		const formattedPublishDate = 'February 17, 2020';
+
 		expect(
-			getByText('published-on-' + testProps.publishDate)
+			getByText('published-on-' + formattedPublishDate)
 		).toBeInTheDocument();
 	});
 });

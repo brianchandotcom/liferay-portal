@@ -344,104 +344,114 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					.scrollIntoView();
 			});
 
-			Liferay.provide(window, '<%= namespace + randomNamespace %>sendMessage', function(
-				form,
-				refreshPage
-			) {
-				var commentButtons = form.querySelectorAll('.btn-comment');
+			Liferay.provide(
+				window,
+				'<%= namespace + randomNamespace %>sendMessage',
+				function(form, refreshPage) {
+					var commentButtons = form.querySelectorAll('.btn-comment');
 
-				Util.toggleDisabled(commentButtons, true);
+					Util.toggleDisabled(commentButtons, true);
 
-				var formData = new FormData(form);
+					var formData = new FormData(form);
 
-				formData.append('doAsUserId', themeDisplay.getDoAsUserIdEncoded());
+					formData.append('doAsUserId', themeDisplay.getDoAsUserIdEncoded());
 
-				Liferay.Util.fetch(form.action, {
-					body: formData,
-					method: 'POST'
-				})
-					.then(function(response) {
-						var promise;
-
-						var contentType = response.headers.get('content-type');
-
-						if (contentType && contentType.indexOf('application/json') !== -1) {
-							promise = response.json();
-						}
-						else {
-							promise = response.text();
-						}
-
-						return promise;
+					Liferay.Util.fetch(form.action, {
+						body: formData,
+						method: 'POST'
 					})
-					.then(function(response) {
-						var exception = response.exception;
+						.then(function(response) {
+							var promise;
 
-						if (!exception) {
-							Liferay.onceAfter(
-								'<%= portletDisplay.getId() %>:messagePosted',
-								function(event) {
-									<%= randomNamespace %>onMessagePosted(
-										response,
-										refreshPage
-									);
+							var contentType = response.headers.get('content-type');
+
+							if (
+								contentType &&
+								contentType.indexOf('application/json') !== -1
+							) {
+								promise = response.json();
+							}
+							else {
+								promise = response.text();
+							}
+
+							return promise;
+						})
+						.then(function(response) {
+							var exception = response.exception;
+
+							if (!exception) {
+								Liferay.onceAfter(
+									'<%= portletDisplay.getId() %>:messagePosted',
+									function(event) {
+										<%= randomNamespace %>onMessagePosted(
+											response,
+											refreshPage
+										);
+									}
+								);
+
+								Liferay.fire(
+									'<%= portletDisplay.getId() %>:messagePosted',
+									response
+								);
+							}
+							else {
+								var errorKey =
+									'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>';
+
+								if (
+									exception.indexOf('DiscussionMaxCommentsException') > -1
+								) {
+									errorKey =
+										'<%= UnicodeLanguageUtil.get(resourceBundle, "maximum-number-of-comments-has-been-reached") %>';
 								}
-							);
+								else if (exception.indexOf('MessageBodyException') > -1) {
+									errorKey =
+										'<%= UnicodeLanguageUtil.get(resourceBundle, "please-enter-a-valid-message") %>';
+								}
+								else if (
+									exception.indexOf('NoSuchMessageException') > -1
+								) {
+									errorKey =
+										'<%= UnicodeLanguageUtil.get(resourceBundle, "the-message-could-not-be-found") %>';
+								}
+								else if (exception.indexOf('PrincipalException') > -1) {
+									errorKey =
+										'<%= UnicodeLanguageUtil.get(resourceBundle, "you-do-not-have-the-required-permissions") %>';
+								}
+								else if (
+									exception.indexOf('RequiredMessageException') > -1
+								) {
+									errorKey =
+										'<%= UnicodeLanguageUtil.get(resourceBundle, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
+								}
 
-							Liferay.fire(
-								'<%= portletDisplay.getId() %>:messagePosted',
-								response
-							);
-						}
-						else {
-							var errorKey =
-								'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>';
-
-							if (exception.indexOf('DiscussionMaxCommentsException') > -1) {
-								errorKey =
-									'<%= UnicodeLanguageUtil.get(resourceBundle, "maximum-number-of-comments-has-been-reached") %>';
-							}
-							else if (exception.indexOf('MessageBodyException') > -1) {
-								errorKey =
-									'<%= UnicodeLanguageUtil.get(resourceBundle, "please-enter-a-valid-message") %>';
-							}
-							else if (exception.indexOf('NoSuchMessageException') > -1) {
-								errorKey =
-									'<%= UnicodeLanguageUtil.get(resourceBundle, "the-message-could-not-be-found") %>';
-							}
-							else if (exception.indexOf('PrincipalException') > -1) {
-								errorKey =
-									'<%= UnicodeLanguageUtil.get(resourceBundle, "you-do-not-have-the-required-permissions") %>';
-							}
-							else if (exception.indexOf('RequiredMessageException') > -1) {
-								errorKey =
-									'<%= UnicodeLanguageUtil.get(resourceBundle, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
+								<%= randomNamespace %>showStatusMessage({
+									id: '<%= randomNamespace %>',
+									message: errorKey,
+									title:
+										'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
+									type: 'danger'
+								});
 							}
 
+							Util.toggleDisabled(commentButtons, false);
+						})
+						.catch(function() {
 							<%= randomNamespace %>showStatusMessage({
 								id: '<%= randomNamespace %>',
-								message: errorKey,
+								message:
+									'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
 								title:
 									'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
 								type: 'danger'
 							});
-						}
 
-						Util.toggleDisabled(commentButtons, false);
-					})
-					.catch(function() {
-						<%= randomNamespace %>showStatusMessage({
-							id: '<%= randomNamespace %>',
-							message:
-								'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-							title:
-								'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
-							type: 'danger'
+							Util.toggleDisabled(commentButtons, false);
 						});
-
-						Util.toggleDisabled(commentButtons, false);
-					});
-			});
+				}
+			);
 
 			Liferay.provide(window, '<%= randomNamespace %>showEl', function(elementId) {
 				var element = document.getElementById(elementId);
@@ -456,9 +466,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				options
 			) {
 				var element = window['<%= namespace %>' + options.name];
-				var editorWrapper = element && element.querySelector('#' + formId + ' .editor-wrapper');
+				var editorWrapper =
+					element && element.querySelector('#' + formId + ' .editor-wrapper');
 
-				if (!editorWrapper || (editorWrapper.childNodes.length === 0)) {
+				if (!editorWrapper || editorWrapper.childNodes.length === 0) {
 
 					<%
 					String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));

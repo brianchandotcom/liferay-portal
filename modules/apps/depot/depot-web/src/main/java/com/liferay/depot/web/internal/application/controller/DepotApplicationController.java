@@ -24,6 +24,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -47,6 +49,49 @@ public class DepotApplicationController {
 		}
 
 		return depotApplications;
+	}
+
+	public boolean isClassNameEnabled(String className, long groupId) {
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			groupId);
+
+		if (depotEntry == null) {
+			return false;
+		}
+
+		Collection<DepotApplication> depotApplications =
+			_serviceTrackerMap.values();
+
+		Stream<DepotApplication> stream = depotApplications.stream();
+
+		Optional<DepotApplication> depotApplicationOptional = stream.filter(
+			depotApplication -> depotApplication.getClassNames(
+			).contains(
+				className
+			)
+		).findAny();
+
+		return depotApplicationOptional.map(
+			depotApplication -> {
+				if (!depotApplication.isCustomizable()) {
+					return true;
+				}
+
+				DepotAppCustomization depotApplicationCustomization =
+					_depotAppCustomizationLocalService.
+						fetchDepotAppCustomization(
+							depotEntry.getDepotEntryId(),
+							depotApplication.getPortletId());
+
+				if (depotApplicationCustomization == null) {
+					return true;
+				}
+
+				return depotApplicationCustomization.isEnabled();
+			}
+		).orElse(
+			false
+		);
 	}
 
 	public boolean isEnabled(String portletId) {

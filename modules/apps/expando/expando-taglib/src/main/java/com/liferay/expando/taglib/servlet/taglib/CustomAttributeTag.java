@@ -17,6 +17,9 @@ package com.liferay.expando.taglib.servlet.taglib;
 import com.liferay.expando.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Locale;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -24,6 +27,10 @@ import javax.servlet.jsp.PageContext;
  * @author Brian Wing Shun Chan
  */
 public class CustomAttributeTag extends IncludeTag {
+
+	public Set<Locale> getAvailableLocales() {
+		return _availableLocales;
+	}
 
 	public String getClassName() {
 		return _className;
@@ -43,6 +50,10 @@ public class CustomAttributeTag extends IncludeTag {
 
 	public boolean isLabel() {
 		return _label;
+	}
+
+	public void setAvailableLocales(Set<Locale> availableLocales) {
+		_availableLocales = availableLocales;
 	}
 
 	public void setClassName(String className) {
@@ -76,6 +87,7 @@ public class CustomAttributeTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_availableLocales = null;
 		_className = null;
 		_classPK = 0;
 		_editable = false;
@@ -90,6 +102,9 @@ public class CustomAttributeTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-expando:custom-attribute:availableLocales",
+			_availableLocales);
 		httpServletRequest.setAttribute(
 			"liferay-expando:custom-attribute:className", _className);
 		httpServletRequest.setAttribute(
@@ -106,6 +121,7 @@ public class CustomAttributeTag extends IncludeTag {
 
 	private static final String _PAGE = "/custom_attribute/page.jsp";
 
+	private Set<Locale> _availableLocales;
 	private String _className;
 	private long _classPK;
 	private boolean _editable;

@@ -19,6 +19,7 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_custom_attribute_page") + StringPool.UNDERLINE;
 
+Set<Locale> availableLocales = (Set<Locale>)request.getAttribute("liferay-expando:custom-attribute:availableLocales");
 String className = (String)request.getAttribute("liferay-expando:custom-attribute:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-expando:custom-attribute:classPK"));
 boolean editable = GetterUtil.getBoolean((String)request.getAttribute("liferay-expando:custom-attribute:editable"));
@@ -674,6 +675,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 							%>
 
 							<liferay-ui:input-localized
+								availableLocales="<%= availableLocales %>"
 								cssClass="lfr-input-text"
 								id="<%= randomNamespace + name %>"
 								name='<%= "ExpandoAttribute--" + name + "--" %>'

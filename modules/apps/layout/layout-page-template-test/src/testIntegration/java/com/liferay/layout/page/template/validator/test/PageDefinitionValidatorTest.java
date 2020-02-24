@@ -180,6 +180,14 @@ public class PageDefinitionValidatorTest {
 	}
 
 	@Test
+	public void testValidatePageDefinitionValidFragmentFieldTextComplete()
+		throws Exception {
+
+		PageDefinitionValidator.validatePageDefinition(
+			_read("page_definition_valid_fragment_field_text_complete.json"));
+	}
+
+	@Test
 	public void testValidatePageDefinitionValidRequired() throws Exception {
 		PageDefinitionValidator.validatePageDefinition(
 			_read("page_definition_valid_required.json"));

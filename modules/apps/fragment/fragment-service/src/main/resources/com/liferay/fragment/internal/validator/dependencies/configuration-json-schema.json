@@ -324,6 +324,70 @@
 						"placeholder": {
 							"title": "The Placeholder Schema",
 							"type": "string"
+						},
+						"validation": {
+							"anyOf": [
+								{
+									"not": {
+										"properties": {
+											"type": {
+												"const": "pattern"
+											}
+										}
+									}
+								},
+								{
+									"properties": {
+										"type": {
+											"const": "pattern"
+										}
+									},
+									"required": [
+										"regexp"
+									]
+								}
+							],
+							"properties": {
+								"errorMessage": {
+									"title": "The ErrorMessage Schema",
+									"type": "string"
+								},
+								"max": {
+									"title": "The Max Schema",
+									"type": "number"
+								},
+								"maxLength": {
+									"title": "The MaxLength Schema",
+									"type": "number"
+								},
+								"min": {
+									"title": "The Min Schema",
+									"type": "number"
+								},
+								"minLength": {
+									"title": "The MaxLength Schema",
+									"type": "number"
+								},
+								"regexp": {
+									"title": "The RegExp Schema",
+									"type": "string"
+								},
+								"type": {
+									"enum": [
+										"email",
+										"number",
+										"pattern",
+										"url"
+									],
+									"title": "The Type Schema",
+									"type": "string"
+								}
+							},
+							"required": [
+								"type"
+							],
+							"title": "The Validation Schema",
+							"type": "object"
 						}
 					},
 					"title": "The Typeoptions Schema",

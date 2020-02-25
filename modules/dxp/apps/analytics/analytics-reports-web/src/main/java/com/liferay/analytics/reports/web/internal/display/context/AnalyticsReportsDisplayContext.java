@@ -203,8 +203,7 @@ public class AnalyticsReportsDisplayContext {
 	}
 
 	private JSONArray _getTimeSpansJSONArray(Locale locale) {
-		JSONArray segmentsExperimentRelsJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		JSONArray timeSpansJSONArray = JSONFactoryUtil.createJSONArray();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -212,7 +211,7 @@ public class AnalyticsReportsDisplayContext {
 		Stream<TimeSpan> stream = Arrays.stream(TimeSpan.values());
 
 		stream.forEach(
-			timeSpan -> segmentsExperimentRelsJSONArray.put(
+			timeSpan -> timeSpansJSONArray.put(
 				JSONUtil.put(
 					"label",
 					LanguageUtil.get(resourceBundle, timeSpan.getLabel())
@@ -220,7 +219,7 @@ public class AnalyticsReportsDisplayContext {
 					"value", timeSpan.getLabel()
 				)));
 
-		return segmentsExperimentRelsJSONArray;
+		return timeSpansJSONArray;
 	}
 
 	private final AnalyticsReportsInfoItem _analyticsReportsInfoItem;

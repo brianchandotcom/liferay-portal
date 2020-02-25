@@ -51,7 +51,7 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
-	public String buildSQL(String template) throws IOException {
+	public String buildSQL(String template) throws IOException, SQLException {
 		template = replaceTemplate(template);
 		template = reword(template);
 		template = StringUtil.replace(
@@ -183,7 +183,7 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
-	protected String reword(String data) throws IOException {
+	protected String reword(String data) throws IOException, SQLException {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
 
@@ -217,8 +217,6 @@ public class OracleDB extends BaseDB {
 
 								nullable = StringPool.BLANK;
 							}
-						}
-						catch (SQLException sqlException) {
 						}
 					}
 

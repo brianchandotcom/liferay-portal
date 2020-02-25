@@ -405,11 +405,14 @@ public class FragmentInstanceDefinitionConverterUtil {
 			{
 				fragmentImage = new FragmentImage() {
 					{
+						Map<String, String> localeMap = _toLocaleMap(
+							jsonObject);
+
 						title = HashMapBuilder.<String, Object>put(
-							"value_i18n", _toLocaleMap(jsonObject, "title")
+							"value_i18n", localeMap
 						).build();
 						url = HashMapBuilder.<String, Object>put(
-							"value_i18n", _toLocaleMap(jsonObject, "url")
+							"value_i18n", localeMap
 						).build();
 					}
 				};

@@ -662,7 +662,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_EVENT_REPEATING_WEEKLY_REPEATED_EVENT_WEEK_AND_MONTH_VIEW</td>
-	<td>//div[@class='scheduler-view-table-row' and contains(.,'${key_eventTitle}')]/following-sibling::div//div[@class='scheduler-event-content']</td>
+	<td>//div[@class='scheduler-view-table-row']/following-sibling::div//div[@class='scheduler-event-content' and contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

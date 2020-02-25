@@ -488,31 +488,6 @@ public class FragmentInstanceDefinitionConverterUtil {
 		};
 	}
 
-	private static Map<String, String> _toLocaleMap(
-		JSONObject jsonObject, String key) {
-
-		return new HashMap<String, String>() {
-			{
-				Set<String> locales = jsonObject.keySet();
-
-				Iterator<String> iterator = locales.iterator();
-
-				while (iterator.hasNext()) {
-					String locale = iterator.next();
-
-					if (!locale.equals("config") &&
-						!locale.equals("defaultValue")) {
-
-						JSONObject localizedJSONObject =
-							jsonObject.getJSONObject(locale);
-
-						put(locale, localizedJSONObject.getString(key));
-					}
-				}
-			}
-		};
-	}
-
 	private static Map<String, String> _toMap(JSONObject jsonObject) {
 		HashMap<String, String> map = new HashMap<String, String>() {
 			{
@@ -537,31 +512,6 @@ public class FragmentInstanceDefinitionConverterUtil {
 		}
 
 		return map;
-	}
-
-	private static Map<String, String> _toMap(
-		JSONObject jsonObject, String key) {
-
-		return new HashMap<String, String>() {
-			{
-				Set<String> locales = jsonObject.keySet();
-
-				Iterator<String> iterator = locales.iterator();
-
-				while (iterator.hasNext()) {
-					String locale = iterator.next();
-
-					if (!locale.equals("config") &&
-						!locale.equals("defaultValue")) {
-
-						JSONObject localizedJSONObject =
-							jsonObject.getJSONObject(locale);
-
-						put(key, localizedJSONObject.getString(key));
-					}
-				}
-			}
-		};
 	}
 
 }

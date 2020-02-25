@@ -153,11 +153,11 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
-                taxonomyCategories:
+                taxonomyCategoryBriefs:
                     description:
                         The categories associated with this blog post.
                     items:
-                        $ref: "#/components/schemas/TaxonomyCategory"
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
@@ -832,11 +832,11 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
-                taxonomyCategories:
+                taxonomyCategoryBriefs:
                     description:
                         The categories associated with this document.
                     items:
-                        $ref: "#/components/schemas/TaxonomyCategory"
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
@@ -1150,11 +1150,11 @@ components:
                 subscribed:
                     readOnly: true
                     type: boolean
-                taxonomyCategories:
+                taxonomyCategoryBriefs:
                     description:
                         The categories associated with this article.
                     items:
-                        $ref: "#/components/schemas/TaxonomyCategory"
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
@@ -1647,9 +1647,9 @@ components:
                 subscribed:
                     readOnly: true
                     type: boolean
-                taxonomyCategories:
+                taxonomyCategoryBriefs:
                     items:
-                        $ref: "#/components/schemas/TaxonomyCategory"
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
@@ -1826,11 +1826,11 @@ components:
                     allOf:
                         - $ref: "#/components/schemas/PageTemplateCollection"
                     readOnly: true
-                taxonomyCategories:
+                taxonomyCategoryBriefs:
                     description:
                         The categories associated with this page template.
                     items:
-                        $ref: "#/components/schemas/TaxonomyCategory"
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
@@ -2116,11 +2116,11 @@ components:
                 subscribed:
                     readOnly: true
                     type: boolean
-                taxonomyCategories:
+                taxonomyCategoryBriefs:
                     description:
                         The categories associated with this structured content.
                     items:
-                        $ref: "#/components/schemas/TaxonomyCategory"
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:
@@ -2231,7 +2231,7 @@ components:
             required:
                 - name
             type: object
-        TaxonomyCategory:
+        TaxonomyCategoryBrief:
             properties:
                 taxonomyCategoryId:
                     description:
@@ -2411,11 +2411,11 @@ components:
                 subscribed:
                     readOnly: true
                     type: boolean
-                taxonomyCategories:
+                taxonomyCategoryBriefs:
                     description:
                         The categories associated with this blog post.
                     items:
-                        $ref: "#/components/schemas/TaxonomyCategory"
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     readOnly: true
                     type: array
                 taxonomyCategoryIds:

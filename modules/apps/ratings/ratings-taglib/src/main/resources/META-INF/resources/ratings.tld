@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<description>Provides the Liferay Ratings component tags, prefixed with <![CDATA[<code>liferay-ratings:</code>]]>.</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-ratings</short-name>
+	<uri>http://liferay.com/tld/ratings</uri>
+	<tag>
+		<description>Creates a ratings component.</description>
+		<name>ratings</name>
+		<tag-class>com.liferay.ratings.taglib.servlet.taglib.RatingsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

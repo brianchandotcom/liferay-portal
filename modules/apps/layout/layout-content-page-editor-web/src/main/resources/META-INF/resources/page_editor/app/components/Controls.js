@@ -92,6 +92,12 @@ const useActiveItemId = () => {
 	return state.activeItemId;
 };
 
+const useActiveItemType = () => {
+	const [state] = useContext(ControlsContext);
+
+	return state.activeItemType;
+};
+
 const useHoveredItemId = () => {
 	const [state] = useContext(ControlsContext);
 
@@ -172,6 +178,7 @@ export {
 	ControlsConsumer,
 	ControlsProvider,
 	useActiveItemId,
+	useActiveItemType,
 	useHoveredItemId,
 	useHoveredItemType,
 	useHoverItem,

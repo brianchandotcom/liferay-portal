@@ -2,7 +2,7 @@
 definition {
 
 	property custom.properties = "jsonws.web.service.paths.excludes=";
-	property portal.release = "false";
+	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Depot";
 

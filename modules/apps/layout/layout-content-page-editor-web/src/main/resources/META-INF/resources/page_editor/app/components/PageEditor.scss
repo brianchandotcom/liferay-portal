@@ -16,36 +16,54 @@
 		}
 	}
 
-	&__col {
-		&.col:after {
-			box-shadow: inset 0 0 0 1px rgba(11, 95, 255, 0.2);
-			left: 12px;
-			width: calc(100% - 24px);
-		}
+	&__col &__col__resizer.btn.btn-primary {
+		border-radius: 50%;
+		cursor: col-resize;
+		height: 16px;
+		left: 100%;
+		padding: 0;
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		width: 16px;
+		z-index: 1;
 
-		&__resizer.btn.btn-primary {
-			border-radius: 50%;
-			cursor: col-resize;
-			height: 16px;
-			left: 100%;
-			padding: 0;
-			position: absolute;
-			top: 50%;
-			transform: translate(-50%, -50%);
-			width: 16px;
-			z-index: 1;
-
-			html.rtl & {
-				transform: translate(50%, -50%);
-			}
+		html.rtl & {
+			transform: translate(50%, -50%);
 		}
 	}
 
+	&__col:after,
 	&__container,
+	&__container > .container:after,
+	&__container > .container-fluid:after,
+	&__row:after {
+		box-shadow: inset 0 0 0 1px rgba(11, 95, 255, 0.2);
+	}
+
+	&__col &__row:after,
+	&__container &__row:after {
+		box-shadow: none;
+	}
+
+	&__col,
 	&__container > .container,
 	&__container > .container-fluid,
 	&__row {
-		box-shadow: inset 0 0 0 1px rgba(11, 95, 255, 0.2);
+		position: relative;
+
+		&:after {
+			$spacingUnit: 12px;
+
+			content: '';
+			display: block;
+			height: 100%;
+			left: $spacingUnit;
+			pointer-events: none;
+			position: absolute;
+			top: 0;
+			width: calc(100% - #{$spacingUnit * 2});
+		}
 	}
 
 	&__container.empty > .container,

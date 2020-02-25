@@ -36,6 +36,12 @@ public interface UploadServletRequestConfiguration {
 	public long maxSize();
 
 	@Meta.AD(
+		deflt = "50", description = "max-tries-help",
+		name = "overall-maximum-unique-file-name-tries", required = false
+	)
+	public long maxTries();
+
+	@Meta.AD(
 		description = "temp-dir-help", name = "temporary-storage-directory",
 		required = false
 	)

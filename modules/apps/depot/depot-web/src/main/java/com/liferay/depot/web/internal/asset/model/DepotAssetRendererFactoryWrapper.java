@@ -31,7 +31,7 @@ import javax.portlet.WindowState;
 /**
  * @author Adolfo Pérez
  */
-public abstract class AssetRendererFactoryWrapper<T>
+public abstract class DepotAssetRendererFactoryWrapper<T>
 	implements AssetRendererFactory<T> {
 
 	@Override

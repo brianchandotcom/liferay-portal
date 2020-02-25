@@ -51,8 +51,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = AssetRendererFactoryController.class)
-public class AssetRendererFactoryController {
+@Component(
+	immediate = true, service = DepotAssetRendererFactoryController.class
+)
+public class DepotAssetRendererFactoryController {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
@@ -81,7 +83,7 @@ public class AssetRendererFactoryController {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AssetRendererFactoryController.class);
+		DepotAssetRendererFactoryController.class);
 
 	@Reference
 	private DepotApplicationController _depotApplicationController;
@@ -97,7 +99,7 @@ public class AssetRendererFactoryController {
 		_serviceTracker;
 
 	private class ControlledAssetRendererFactoryWrapper
-		extends AssetRendererFactoryWrapper {
+		extends DepotAssetRendererFactoryWrapper {
 
 		public ControlledAssetRendererFactoryWrapper(
 			AssetRendererFactory assetRendererFactory) {

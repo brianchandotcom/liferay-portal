@@ -141,13 +141,15 @@ public class ImageEditableElementParser implements EditableElementParser {
 				"alt", StringUtil.trim(_html.unescape(alt)));
 		}
 
-		String imageLink = configJSONObject.getString("imageLink");
+		String imageLink = configJSONObject.getString(
+			"imageLink", configJSONObject.getString("href"));
 
 		if (Validator.isNull(imageLink)) {
 			return;
 		}
 
-		String imageTarget = configJSONObject.getString("imageTarget");
+		String imageTarget = configJSONObject.getString(
+			"imageTarget", configJSONObject.getString("target"));
 
 		Element linkElement = new Element("a");
 

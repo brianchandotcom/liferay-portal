@@ -101,7 +101,7 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 	},
 
 	{
-		label: Liferay.Language.get('convert-to-content-page-and-preview'),
+		label: Liferay.Language.get('convert-to-content-page-...'),
 		name: 'layoutConversionPreviewURL',
 	},
 

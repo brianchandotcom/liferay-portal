@@ -85,7 +85,7 @@ Layout curLayout = (Layout)row.getObject();
 
 	<c:if test="<%= layoutsAdminDisplayContext.isShowConvertLayoutAction(curLayout) %>">
 		<liferay-ui:icon
-			message="convert-to-content-page-and-preview"
+			message="convert-to-content-page-..."
 			url="<%= layoutsAdminDisplayContext.getConvertLayoutURL(curLayout) %>"
 		/>
 	</c:if>

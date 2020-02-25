@@ -17,7 +17,7 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
-import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -328,22 +328,22 @@ public class BlogPostingSerDes {
 			sb.append(blogPosting.getSiteId());
 		}
 
-		if (blogPosting.getTaxonomyCategories() != null) {
+		if (blogPosting.getTaxonomyCategoryBriefs() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"taxonomyCategories\": ");
+			sb.append("\"taxonomyCategoryBriefs\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < blogPosting.getTaxonomyCategories().length;
+			for (int i = 0; i < blogPosting.getTaxonomyCategoryBriefs().length;
 				 i++) {
 
 				sb.append(
-					String.valueOf(blogPosting.getTaxonomyCategories()[i]));
+					String.valueOf(blogPosting.getTaxonomyCategoryBriefs()[i]));
 
-				if ((i + 1) < blogPosting.getTaxonomyCategories().length) {
+				if ((i + 1) < blogPosting.getTaxonomyCategoryBriefs().length) {
 					sb.append(", ");
 				}
 			}
@@ -548,13 +548,13 @@ public class BlogPostingSerDes {
 			map.put("siteId", String.valueOf(blogPosting.getSiteId()));
 		}
 
-		if (blogPosting.getTaxonomyCategories() == null) {
-			map.put("taxonomyCategories", null);
+		if (blogPosting.getTaxonomyCategoryBriefs() == null) {
+			map.put("taxonomyCategoryBriefs", null);
 		}
 		else {
 			map.put(
-				"taxonomyCategories",
-				String.valueOf(blogPosting.getTaxonomyCategories()));
+				"taxonomyCategoryBriefs",
+				String.valueOf(blogPosting.getTaxonomyCategoryBriefs()));
 		}
 
 		if (blogPosting.getTaxonomyCategoryIds() == null) {
@@ -721,17 +721,17 @@ public class BlogPostingSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "taxonomyCategories")) {
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
 
 				if (jsonParserFieldValue != null) {
-					blogPosting.setTaxonomyCategories(
+					blogPosting.setTaxonomyCategoryBriefs(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> TaxonomyCategorySerDes.toDTO(
+							object -> TaxonomyCategoryBriefSerDes.toDTO(
 								(String)object)
 						).toArray(
-							size -> new TaxonomyCategory[size]
+							size -> new TaxonomyCategoryBrief[size]
 						));
 				}
 			}

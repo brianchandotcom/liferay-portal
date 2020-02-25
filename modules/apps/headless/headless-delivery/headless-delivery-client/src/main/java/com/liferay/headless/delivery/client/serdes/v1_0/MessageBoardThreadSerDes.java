@@ -17,7 +17,7 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
-import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -309,24 +309,25 @@ public class MessageBoardThreadSerDes {
 			sb.append(messageBoardThread.getSubscribed());
 		}
 
-		if (messageBoardThread.getTaxonomyCategories() != null) {
+		if (messageBoardThread.getTaxonomyCategoryBriefs() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"taxonomyCategories\": ");
+			sb.append("\"taxonomyCategoryBriefs\": ");
 
 			sb.append("[");
 
 			for (int i = 0;
-				 i < messageBoardThread.getTaxonomyCategories().length; i++) {
+				 i < messageBoardThread.getTaxonomyCategoryBriefs().length;
+				 i++) {
 
 				sb.append(
 					String.valueOf(
-						messageBoardThread.getTaxonomyCategories()[i]));
+						messageBoardThread.getTaxonomyCategoryBriefs()[i]));
 
 				if ((i + 1) <
-						messageBoardThread.getTaxonomyCategories().length) {
+						messageBoardThread.getTaxonomyCategoryBriefs().length) {
 
 					sb.append(", ");
 				}
@@ -567,13 +568,13 @@ public class MessageBoardThreadSerDes {
 				String.valueOf(messageBoardThread.getSubscribed()));
 		}
 
-		if (messageBoardThread.getTaxonomyCategories() == null) {
-			map.put("taxonomyCategories", null);
+		if (messageBoardThread.getTaxonomyCategoryBriefs() == null) {
+			map.put("taxonomyCategoryBriefs", null);
 		}
 		else {
 			map.put(
-				"taxonomyCategories",
-				String.valueOf(messageBoardThread.getTaxonomyCategories()));
+				"taxonomyCategoryBriefs",
+				String.valueOf(messageBoardThread.getTaxonomyCategoryBriefs()));
 		}
 
 		if (messageBoardThread.getTaxonomyCategoryIds() == null) {
@@ -762,17 +763,17 @@ public class MessageBoardThreadSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "taxonomyCategories")) {
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
 
 				if (jsonParserFieldValue != null) {
-					messageBoardThread.setTaxonomyCategories(
+					messageBoardThread.setTaxonomyCategoryBriefs(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> TaxonomyCategorySerDes.toDTO(
+							object -> TaxonomyCategoryBriefSerDes.toDTO(
 								(String)object)
 						).toArray(
-							size -> new TaxonomyCategory[size]
+							size -> new TaxonomyCategoryBrief[size]
 						));
 				}
 			}

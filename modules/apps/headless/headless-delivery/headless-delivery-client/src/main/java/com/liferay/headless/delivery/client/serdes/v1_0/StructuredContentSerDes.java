@@ -19,7 +19,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.RenderedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
-import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -402,24 +402,25 @@ public class StructuredContentSerDes {
 			sb.append(structuredContent.getSubscribed());
 		}
 
-		if (structuredContent.getTaxonomyCategories() != null) {
+		if (structuredContent.getTaxonomyCategoryBriefs() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"taxonomyCategories\": ");
+			sb.append("\"taxonomyCategoryBriefs\": ");
 
 			sb.append("[");
 
 			for (int i = 0;
-				 i < structuredContent.getTaxonomyCategories().length; i++) {
+				 i < structuredContent.getTaxonomyCategoryBriefs().length;
+				 i++) {
 
 				sb.append(
 					String.valueOf(
-						structuredContent.getTaxonomyCategories()[i]));
+						structuredContent.getTaxonomyCategoryBriefs()[i]));
 
 				if ((i + 1) <
-						structuredContent.getTaxonomyCategories().length) {
+						structuredContent.getTaxonomyCategoryBriefs().length) {
 
 					sb.append(", ");
 				}
@@ -702,13 +703,13 @@ public class StructuredContentSerDes {
 				String.valueOf(structuredContent.getSubscribed()));
 		}
 
-		if (structuredContent.getTaxonomyCategories() == null) {
-			map.put("taxonomyCategories", null);
+		if (structuredContent.getTaxonomyCategoryBriefs() == null) {
+			map.put("taxonomyCategoryBriefs", null);
 		}
 		else {
 			map.put(
-				"taxonomyCategories",
-				String.valueOf(structuredContent.getTaxonomyCategories()));
+				"taxonomyCategoryBriefs",
+				String.valueOf(structuredContent.getTaxonomyCategoryBriefs()));
 		}
 
 		if (structuredContent.getTaxonomyCategoryIds() == null) {
@@ -940,17 +941,17 @@ public class StructuredContentSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "taxonomyCategories")) {
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
 
 				if (jsonParserFieldValue != null) {
-					structuredContent.setTaxonomyCategories(
+					structuredContent.setTaxonomyCategoryBriefs(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> TaxonomyCategorySerDes.toDTO(
+							object -> TaxonomyCategoryBriefSerDes.toDTO(
 								(String)object)
 						).toArray(
-							size -> new TaxonomyCategory[size]
+							size -> new TaxonomyCategoryBrief[size]
 						));
 				}
 			}

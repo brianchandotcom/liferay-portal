@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.PageTemplate;
-import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -171,22 +171,23 @@ public class PageTemplateSerDes {
 			sb.append(String.valueOf(pageTemplate.getPageTemplateCollection()));
 		}
 
-		if (pageTemplate.getTaxonomyCategories() != null) {
+		if (pageTemplate.getTaxonomyCategoryBriefs() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"taxonomyCategories\": ");
+			sb.append("\"taxonomyCategoryBriefs\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < pageTemplate.getTaxonomyCategories().length;
+			for (int i = 0; i < pageTemplate.getTaxonomyCategoryBriefs().length;
 				 i++) {
 
 				sb.append(
-					String.valueOf(pageTemplate.getTaxonomyCategories()[i]));
+					String.valueOf(
+						pageTemplate.getTaxonomyCategoryBriefs()[i]));
 
-				if ((i + 1) < pageTemplate.getTaxonomyCategories().length) {
+				if ((i + 1) < pageTemplate.getTaxonomyCategoryBriefs().length) {
 					sb.append(", ");
 				}
 			}
@@ -306,13 +307,13 @@ public class PageTemplateSerDes {
 				String.valueOf(pageTemplate.getPageTemplateCollection()));
 		}
 
-		if (pageTemplate.getTaxonomyCategories() == null) {
-			map.put("taxonomyCategories", null);
+		if (pageTemplate.getTaxonomyCategoryBriefs() == null) {
+			map.put("taxonomyCategoryBriefs", null);
 		}
 		else {
 			map.put(
-				"taxonomyCategories",
-				String.valueOf(pageTemplate.getTaxonomyCategories()));
+				"taxonomyCategoryBriefs",
+				String.valueOf(pageTemplate.getTaxonomyCategoryBriefs()));
 		}
 
 		if (pageTemplate.getTaxonomyCategoryIds() == null) {
@@ -404,17 +405,17 @@ public class PageTemplateSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "taxonomyCategories")) {
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
 
 				if (jsonParserFieldValue != null) {
-					pageTemplate.setTaxonomyCategories(
+					pageTemplate.setTaxonomyCategoryBriefs(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> TaxonomyCategorySerDes.toDTO(
+							object -> TaxonomyCategoryBriefSerDes.toDTO(
 								(String)object)
 						).toArray(
-							size -> new TaxonomyCategory[size]
+							size -> new TaxonomyCategoryBrief[size]
 						));
 				}
 			}

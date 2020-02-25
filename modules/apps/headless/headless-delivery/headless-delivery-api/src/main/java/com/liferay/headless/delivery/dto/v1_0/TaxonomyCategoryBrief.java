@@ -41,10 +41,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("TaxonomyCategory")
+@GraphQLName("TaxonomyCategoryBrief")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "TaxonomyCategory")
-public class TaxonomyCategory {
+@XmlRootElement(name = "TaxonomyCategoryBrief")
+public class TaxonomyCategoryBrief {
 
 	@Schema(
 		description = "The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API."
@@ -145,13 +145,14 @@ public class TaxonomyCategory {
 			return true;
 		}
 
-		if (!(object instanceof TaxonomyCategory)) {
+		if (!(object instanceof TaxonomyCategoryBrief)) {
 			return false;
 		}
 
-		TaxonomyCategory taxonomyCategory = (TaxonomyCategory)object;
+		TaxonomyCategoryBrief taxonomyCategoryBrief =
+			(TaxonomyCategoryBrief)object;
 
-		return Objects.equals(toString(), taxonomyCategory.toString());
+		return Objects.equals(toString(), taxonomyCategoryBrief.toString());
 	}
 
 	@Override
@@ -206,7 +207,7 @@ public class TaxonomyCategory {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -959,9 +959,9 @@ public abstract class BaseWikiPageResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"taxonomyCategories", additionalAssertFieldName)) {
+					"taxonomyCategoryBriefs", additionalAssertFieldName)) {
 
-				if (wikiPage.getTaxonomyCategories() == null) {
+				if (wikiPage.getTaxonomyCategoryBriefs() == null) {
 					valid = false;
 				}
 
@@ -1226,11 +1226,11 @@ public abstract class BaseWikiPageResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"taxonomyCategories", additionalAssertFieldName)) {
+					"taxonomyCategoryBriefs", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						wikiPage1.getTaxonomyCategories(),
-						wikiPage2.getTaxonomyCategories())) {
+						wikiPage1.getTaxonomyCategoryBriefs(),
+						wikiPage2.getTaxonomyCategoryBriefs())) {
 
 					return false;
 				}
@@ -1582,7 +1582,7 @@ public abstract class BaseWikiPageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("taxonomyCategories")) {
+		if (entityFieldName.equals("taxonomyCategoryBriefs")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

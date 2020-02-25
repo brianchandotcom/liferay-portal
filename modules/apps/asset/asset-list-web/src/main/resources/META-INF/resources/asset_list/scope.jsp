@@ -102,7 +102,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 	<liferay-ui:icon
 		cssClass="highlited scope-selector"
 		id="selectManageableGroup"
-		message='<%= LanguageUtil.get(request, "other-site") + StringPool.TRIPLE_PERIOD %>'
+		message='<%= LanguageUtil.get(request, "other-scope") + StringPool.TRIPLE_PERIOD %>'
 		method="get"
 		url="javascript:;"
 	/>

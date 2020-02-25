@@ -412,7 +412,7 @@ public class MessageBoardThreadResourceImpl
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.sqlRestriction(
 				"EXISTS (SELECT 1 FROM MBMessage WHERE this_.classPK = " +
-					"messageId AND parentMessageId = 0)"));
+					"messageId AND parentMessageId = 0 AND status = 0)"));
 
 		dynamicQuery.setLimit(
 			pagination.getStartPosition(), pagination.getEndPosition());

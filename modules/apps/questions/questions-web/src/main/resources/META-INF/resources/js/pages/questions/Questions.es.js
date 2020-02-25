@@ -201,9 +201,9 @@ export default ({
 							</h2>
 						</Link>
 
-						<p className="c-mb-0 c-mt-3 stretched-link-layer text-truncate">
+						<div className="c-mb-0 c-mt-3 stretched-link-layer text-truncate">
 							<ArticleBodyRenderer {...question} />
-						</p>
+						</div>
 
 						<div className="autofit-padded-no-gutters autofit-row autofit-row-center c-mt-3">
 							<div className="autofit-col autofit-col-expand">

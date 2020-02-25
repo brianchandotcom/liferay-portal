@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {Editor} from 'frontend-editor-ckeditor-web';
@@ -40,17 +41,19 @@ export default withRouter(
 		};
 
 		return (
-			<>
+			<section className="c-mt-5 c-mx-auto col-xl-10">
 				<h1>{Liferay.Language.get('edit-answer')}</h1>
 
 				<ClayForm>
-					<ClayForm.Group className="form-group-sm">
+					<ClayForm.Group className="c-mt-4">
 						<label htmlFor="basicInput">
 							{Liferay.Language.get('answer')}
-							<span className="reference-mark">
+
+							<span className="c-ml-2 reference-mark">
 								<ClayIcon symbol="asterisk" />
 							</span>
 						</label>
+
 						<Editor
 							config={getCKEditorConfig()}
 							data={articleBody}
@@ -62,38 +65,36 @@ export default withRouter(
 							required
 							type="text"
 						/>
+
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
-								{Liferay.Language.get(
-									'include-all-the-information-someone-would-need-to-answer-your-question'
-								)}
+								<span className="small">
+									{Liferay.Language.get(
+										'include-all-the-information-someone-would-need-to-answer-your-question'
+									)}
+								</span>
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					</ClayForm.Group>
 				</ClayForm>
 
-				<div className="sheet-footer">
-					<div className="btn-group-item">
-						<div className="btn-group-item">
-							<button
-								className="btn btn-primary"
-								disabled={!articleBody}
-								onClick={submit}
-							>
-								{Liferay.Language.get('update-your-answer')}
-							</button>
-						</div>
-						<div className="btn-group-item">
-							<button
-								className="btn btn-secondary"
-								onClick={() => history.goBack()}
-							>
-								{Liferay.Language.get('cancel')}
-							</button>
-						</div>
-					</div>
-				</div>
-			</>
+				<ClayButton.Group className="c-mt-4" spaced={true}>
+					<ClayButton
+						disabled={!articleBody}
+						displayType="primary"
+						onClick={submit}
+					>
+						{Liferay.Language.get('update-your-answer')}
+					</ClayButton>
+
+					<ClayButton
+						displayType="secondary"
+						onClick={() => history.goBack()}
+					>
+						{Liferay.Language.get('cancel')}
+					</ClayButton>
+				</ClayButton.Group>
+			</section>
 		);
 	}
 );

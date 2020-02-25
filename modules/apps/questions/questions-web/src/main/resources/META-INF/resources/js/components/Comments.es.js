@@ -72,7 +72,7 @@ export default ({
 						/>
 
 						{comment.length < 15 && (
-							<p className="c-y-3">
+							<p className="c-mt-3">
 								{lang.sub(
 									Liferay.Language.get('x-characters-left'),
 									[15 - comment.length]
@@ -80,7 +80,7 @@ export default ({
 							</p>
 						)}
 
-						<ClayButton.Group spaced>
+						<ClayButton.Group className="c-mt-3" spaced>
 							<ClayButton
 								disabled={comment.length < 15}
 								displayType="primary"

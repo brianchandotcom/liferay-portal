@@ -13,14 +13,12 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import {useModal} from '@clayui/modal';
-import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-import LanguageListItem from './LanguageListItem.es';
+import LanguagesList from './LanguagesList.es';
 import ManageLanguages from './ManageLanguages.es';
 
 const Languages = ({
@@ -63,6 +61,10 @@ const Languages = ({
 		onClose();
 	};
 
+	const handleOnModalOpen = () => {
+		setShowModal(true);
+	};
+
 	const handleOnMakeDefault = ({localeId}) => {
 		setCustomDefaultLocaleId(localeId);
 		setLanguageWarning(true);
@@ -79,52 +81,6 @@ const Languages = ({
 			customLocalesInputRef.current.value = localesIds.join(',');
 		}
 	}, [customLocales, selectedRadioGroupValue]);
-
-	const LanguagesList = ({defaultLocaleId, locales, showActions = false}) => {
-		return (
-			<ClayTable
-				borderless
-				headVerticalAlignment="middle"
-				hover={showActions}
-			>
-				<ClayTable.Head>
-					<ClayTable.Row>
-						<ClayTable.Cell expanded headingCell headingTitle>
-							{Liferay.Language.get('active-language')}
-						</ClayTable.Cell>
-
-						{showActions && (
-							<ClayTable.Cell align="center">
-								<ClayButton
-									displayType="secondary"
-									onClick={() => {
-										setShowModal(true);
-									}}
-									small
-								>
-									{Liferay.Language.get('edit')}
-								</ClayButton>
-							</ClayTable.Cell>
-						)}
-					</ClayTable.Row>
-				</ClayTable.Head>
-
-				<ClayTable.Body>
-					{locales.map(locale => {
-						return (
-							<LanguageListItem
-								{...locale}
-								isDefault={defaultLocaleId === locale.localeId}
-								key={locale.localeId}
-								onMakeDefault={handleOnMakeDefault}
-								showActions={showActions}
-							/>
-						);
-					})}
-				</ClayTable.Body>
-			</ClayTable>
-		);
-	};
 
 	return (
 		<div className="mt-5">
@@ -172,8 +128,9 @@ const Languages = ({
 					<LanguagesList
 						defaultLocaleId={customDefaultLocaleId}
 						locales={customLocales}
-						showActions
 						onMakeDefault={handleOnMakeDefault}
+						onOpenManageModal={handleOnModalOpen}
+						showActions
 					/>
 				</>
 			)}

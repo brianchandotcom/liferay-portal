@@ -144,6 +144,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_ENTER_A_VALID_VALUE</td>
+	<td>//div[@role='alert' and contains(.,'${key_alertMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_ENTER_A_UNIQUE_FOLDER</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter a unique folder name')]</td>
 	<td></td>

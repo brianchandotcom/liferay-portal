@@ -20,6 +20,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.ItemSelectorViewRendererCustomizer;
 import com.liferay.item.selector.PortletItemSelectorView;
+import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCriterion;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
@@ -48,6 +49,15 @@ public class DepotItemSelectorViewRendererCustomizer
 	@Override
 	public ItemSelectorViewRenderer customizeItemSelectorViewRenderer(
 		ItemSelectorViewRenderer itemSelectorViewRenderer) {
+
+		ItemSelectorCriterion itemSelectorCriterion =
+			itemSelectorViewRenderer.getItemSelectorCriterion();
+
+		if (itemSelectorCriterion instanceof AssetEntryItemSelectorCriterion) {
+			return new DepotAssetEntryItemSelectorViewRenderer(
+				_depotApplicationController, itemSelectorViewRenderer, _portal,
+				_servletContext);
+		}
 
 		ItemSelectorView<ItemSelectorCriterion> itemSelectorView =
 			itemSelectorViewRenderer.getItemSelectorView();
@@ -80,6 +90,7 @@ public class DepotItemSelectorViewRendererCustomizer
 
 	private static final List<Class<? extends ItemSelectorCriterion>>
 		_supportedItemSelectorCriterionClasses = Arrays.asList(
+			AssetEntryItemSelectorCriterion.class,
 			AudioItemSelectorCriterion.class, FileItemSelectorCriterion.class,
 			ImageItemSelectorCriterion.class,
 			InfoItemItemSelectorCriterion.class,

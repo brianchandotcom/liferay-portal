@@ -52,27 +52,42 @@ public class ActionUtil {
 
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
-			methodName, interfaceClasses[0].getName(), object,
-			groupedModel.getGroupId(), uriInfo);
+			methodName, object, groupedModel.getUserId(),
+			interfaceClasses[0].getName(), groupedModel.getGroupId(), uriInfo);
 	}
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, Long id, String methodName,
-		String permissionName, Object object, Long siteId, UriInfo uriInfo) {
+		Object object, Long ownerId, String permissionName, Long siteId,
+		UriInfo uriInfo) {
 
 		try {
 			return _addAction(
-				actionName, clazz, id, methodName, permissionName, object,
-				siteId, uriInfo);
+				actionName, clazz, id, methodName, object, ownerId,
+				permissionName, siteId, uriInfo);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static Map<String, String> addAction(
+		String actionName, Class clazz, Long id, String methodName,
+		String permissionName, Object object, Long siteId, UriInfo uriInfo) {
+
+		return addAction(
+			actionName, clazz, id, methodName, object, null, permissionName,
+			siteId, uriInfo);
+	}
+
 	private static Map<String, String> _addAction(
 			String actionName, Class clazz, Long id, String methodName,
-			String permissionName, Object object, Long siteId, UriInfo uriInfo)
+			Object object, Long ownerId, String permissionName, Long siteId,
+			UriInfo uriInfo)
 		throws Exception {
 
 		if (uriInfo == null) {
@@ -95,12 +110,11 @@ public class ActionUtil {
 		List<String> modelResourceActions =
 			ResourceActionsUtil.getModelResourceActions(permissionName);
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		if (!modelResourceActions.contains(actionName) ||
-			!permissionChecker.hasPermission(
-				siteId, permissionName, id, actionName)) {
+			!_hasPermission(
+				actionName, id, ownerId,
+				PermissionThreadLocal.getPermissionChecker(), permissionName,
+				siteId)) {
 
 			return null;
 		}
@@ -166,6 +180,24 @@ public class ActionUtil {
 		}
 
 		return null;
+	}
+
+	private static boolean _hasPermission(
+		String actionName, Long id, Long ownerId,
+		PermissionChecker permissionChecker, String permissionName,
+		Long siteId) {
+
+		if (((ownerId != null) &&
+			 permissionChecker.hasOwnerPermission(
+				 permissionChecker.getCompanyId(), permissionName, id, ownerId,
+				 actionName)) ||
+			permissionChecker.hasPermission(
+				siteId, permissionName, id, actionName)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -184,6 +184,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--NUMBER-->
+<tr>
+	<td>NUMBER_FIELD</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldLabel}')]/input[@type='number']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--TEXT-->
 <tr>
 	<td>REPEATABLE_TEXT_MULTILINE_FIELD</td>

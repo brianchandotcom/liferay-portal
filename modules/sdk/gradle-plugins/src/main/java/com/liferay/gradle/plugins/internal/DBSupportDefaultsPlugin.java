@@ -23,10 +23,10 @@ import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.util.Properties;
-import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -128,10 +128,10 @@ public class DBSupportDefaultsPlugin
 						return;
 					}
 
-					Properties properties = null;
+					Properties defaultProperties = null;
 
 					try {
-						properties = FileUtil.readPropertiesFromZipFile(
+						defaultProperties = FileUtil.readPropertiesFromZipFile(
 							jarFile, "portal.properties");
 					}
 					catch (IOException ioException) {
@@ -144,8 +144,25 @@ public class DBSupportDefaultsPlugin
 						}
 					}
 
-					if (properties == null) {
-						return;
+					Properties properties = new Properties(defaultProperties);
+
+					propertiesFile = _getPortalPropertiesFile();
+
+					if (propertiesFile != null) {
+						try (FileInputStream fileInputStream =
+								new FileInputStream(propertiesFile)) {
+
+							properties.load(fileInputStream);
+						}
+						catch (IOException ioException) {
+							Logger logger = baseDBSupportTask.getLogger();
+
+							if (logger.isWarnEnabled()) {
+								logger.warn(
+									"Unable to read properties from {}",
+									propertiesFile);
+							}
+						}
 					}
 
 					url = properties.getProperty("jdbc.default.url");
@@ -157,19 +174,18 @@ public class DBSupportDefaultsPlugin
 
 					baseDBSupportTask.setUrl(url);
 
-					baseDBSupportTask.setUserName(
-						properties.getProperty("jdbc.default.username"));
-					baseDBSupportTask.setPassword(
-						properties.getProperty("jdbc.default.password"));
+					if (Validator.isNull(baseDBSupportTask.getUserName())) {
+						baseDBSupportTask.setUserName(
+							properties.getProperty("jdbc.default.username"));
+					}
+
+					if (Validator.isNull(baseDBSupportTask.getPassword())) {
+						baseDBSupportTask.setPassword(
+							properties.getProperty("jdbc.default.password"));
+					}
 				}
 
-			});
-
-		baseDBSupportTask.setPropertiesFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
+				private File _getPortalPropertiesFile() {
 					File liferayHome = liferayExtension.getLiferayHome();
 
 					for (String fileName : _PORTAL_PROPERTIES_FILE_NAMES) {

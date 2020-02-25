@@ -172,9 +172,9 @@ public class KeywordResourceImpl
 				setCompanyId((long)assetTags[1]);
 				setCreateDate(_toDate((Timestamp)assetTags[2]));
 				setGroupId((long)assetTags[3]);
-				setTagId((long)assetTags[4]);
-				setModifiedDate(_toDate((Timestamp)assetTags[5]));
-				setName((String)assetTags[6]);
+				setModifiedDate(_toDate((Timestamp)assetTags[4]));
+				setName((String)assetTags[5]);
+				setTagId((long)assetTags[6]);
 				setUserId((long)assetTags[7]);
 			}
 		};

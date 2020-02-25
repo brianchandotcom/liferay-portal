@@ -20,7 +20,7 @@ export default function addItem({
 	parentItemId,
 	position,
 	selectItem = () => {},
-	store
+	store,
 }) {
 	return dispatch => {
 		const {segmentsExperienceId} = store;
@@ -30,7 +30,7 @@ export default function addItem({
 			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
-			segmentsExperienceId
+			segmentsExperienceId,
 		}).then(({addedItemId, layoutData}) => {
 			dispatch(updateLayoutData({layoutData}));
 

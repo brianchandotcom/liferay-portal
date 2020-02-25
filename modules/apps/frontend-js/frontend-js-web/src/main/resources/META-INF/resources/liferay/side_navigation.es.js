@@ -93,19 +93,19 @@ function getUniqueSelector(element) {
 	return [
 		ancestorWithId ? `#${ancestorWithId.id} ` : '',
 		element.tagName.toLowerCase(),
-		...attributes
+		...attributes,
 	].join('');
 }
 
 function addClass(element, className) {
 	setClasses(element, {
-		[className]: true
+		[className]: true,
 	});
 }
 
 function removeClass(element, className) {
 	setClasses(element, {
-		[className]: false
+		[className]: false,
 	});
 }
 
@@ -249,7 +249,7 @@ function subscribe(elementOrSelector, eventName, handler) {
 		return {
 			dispose() {
 				subscription.dispose();
-			}
+			},
 		};
 	}
 
@@ -400,14 +400,14 @@ SideNavigation.prototype = {
 
 		if (closed) {
 			setStyles(menu, {
-				width: px(width)
+				width: px(width),
 			});
 
 			if (sidenavRight) {
 				const positionDirection = options.rtl ? 'left' : 'right';
 
 				setStyles(menu, {
-					[positionDirection]: px(width)
+					[positionDirection]: px(width),
 				});
 			}
 		}
@@ -431,12 +431,12 @@ SideNavigation.prototype = {
 			if (mobile) {
 				setClasses(container, {
 					closed: true,
-					open: false
+					open: false,
 				});
 
 				setClasses(toggler, {
 					active: false,
-					open: false
+					open: false,
 				});
 			}
 
@@ -453,7 +453,7 @@ SideNavigation.prototype = {
 
 		// Force Reflow for IE11 Browser Bug
 		setStyles(container, {
-			display: ''
+			display: '',
 		});
 	},
 
@@ -517,7 +517,7 @@ SideNavigation.prototype = {
 			[content, navigation, menu].forEach(element => {
 				setStyles(element, {
 					height: '',
-					'min-height': ''
+					'min-height': '',
 				});
 			});
 		}
@@ -573,16 +573,16 @@ SideNavigation.prototype = {
 
 			setStyles(content, {
 				[paddingDirection]: '',
-				[positionDirection]: ''
+				[positionDirection]: '',
 			});
 
 			setStyles(navigation, {
-				width: ''
+				width: '',
 			});
 
 			if (sidenavRight) {
 				setStyles(menu, {
-					[positionDirection]: px(instance._getSidenavWidth())
+					[positionDirection]: px(instance._getSidenavWidth()),
 				});
 			}
 		}
@@ -620,7 +620,7 @@ SideNavigation.prototype = {
 				setClasses(content, {
 					[closedClass]: true,
 					[openClass]: false,
-					'sidenav-transition': true
+					'sidenav-transition': true,
 				});
 			}
 
@@ -629,7 +629,7 @@ SideNavigation.prototype = {
 
 			setClasses(container, {
 				[closedClass]: true,
-				[openClass]: false
+				[openClass]: false,
 			});
 
 			const nodes = document.querySelectorAll(
@@ -639,11 +639,11 @@ SideNavigation.prototype = {
 			Array.from(nodes).forEach(node => {
 				setClasses(node, {
 					active: false,
-					[openClass]: false
+					[openClass]: false,
 				});
 				setClasses(node, {
 					active: false,
-					[openClass]: false
+					[openClass]: false,
 				});
 			});
 		}
@@ -721,17 +721,17 @@ SideNavigation.prototype = {
 			const tallest = px(Math.max(contentHeight, navigationHeight));
 
 			setStyles(content, {
-				'min-height': tallest
+				'min-height': tallest,
 			});
 
 			setStyles(navigation, {
 				height: '100%',
-				'min-height': tallest
+				'min-height': tallest,
 			});
 
 			setStyles(menu, {
 				height: '100%',
-				'min-height': tallest
+				'min-height': tallest,
 			});
 		}
 	},
@@ -769,11 +769,11 @@ SideNavigation.prototype = {
 		}
 
 		setStyles(navigation, {
-			width: px(width)
+			width: px(width),
 		});
 
 		setStyles(menu, {
-			width: px(width)
+			width: px(width),
 		});
 
 		let positionDirection = options.rtl ? 'right' : 'left';
@@ -823,7 +823,7 @@ SideNavigation.prototype = {
 			}
 
 			setStyles(content, {
-				[pushContentCssProperty]: px(padding)
+				[pushContentCssProperty]: px(padding),
 			});
 		}
 	},
@@ -862,17 +862,17 @@ SideNavigation.prototype = {
 			setClasses(content, {
 				[closedClass]: false,
 				[openClass]: true,
-				'sidenav-transition': true
+				'sidenav-transition': true,
 			});
 			setClasses(container, {
 				[closedClass]: false,
 				[openClass]: true,
-				'sidenav-transition': true
+				'sidenav-transition': true,
 			});
 			setClasses(toggler, {
 				active: true,
 				[openClass]: true,
-				'sidenav-transition': true
+				'sidenav-transition': true,
 			});
 		}
 	},
@@ -917,7 +917,7 @@ SideNavigation.prototype = {
 
 				setClasses(toggler, {
 					open: false,
-					'sidenav-transition': false
+					'sidenav-transition': false,
 				});
 
 				instance._emit('closed.lexicon.sidenav');
@@ -925,7 +925,7 @@ SideNavigation.prototype = {
 			else {
 				setClasses(toggler, {
 					open: true,
-					'sidenav-transition': false
+					'sidenav-transition': false,
 				});
 
 				instance._emit('open.lexicon.sidenav');
@@ -941,14 +941,14 @@ SideNavigation.prototype = {
 			instance.setHeight();
 
 			setStyles(menu, {
-				width: px(width)
+				width: px(width),
 			});
 
 			const positionDirection = options.rtl ? 'left' : 'right';
 
 			if (sidenavRight) {
 				setStyles(menu, {
-					[positionDirection]: ''
+					[positionDirection]: '',
 				});
 			}
 		}
@@ -965,12 +965,12 @@ SideNavigation.prototype = {
 
 		setClasses(container, {
 			closed: !closed,
-			open: closed
+			open: closed,
 		});
 
 		setClasses(toggler, {
 			active: closed,
-			open: closed
+			open: closed,
 		});
 	},
 
@@ -1006,7 +1006,7 @@ SideNavigation.prototype = {
 		}
 
 		return !closed;
-	}
+	},
 };
 
 SideNavigation.destroy = function destroy(element) {
@@ -1066,7 +1066,7 @@ const defaults = {
 	type: 'relative',
 	typeMobile: 'relative',
 	url: null,
-	width: '225px'
+	width: '225px',
 };
 
 function onReady() {

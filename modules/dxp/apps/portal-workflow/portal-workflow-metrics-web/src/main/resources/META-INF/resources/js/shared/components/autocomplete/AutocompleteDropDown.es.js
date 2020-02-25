@@ -19,7 +19,7 @@ const DropDown = ({
 	items,
 	match,
 	onSelect,
-	setActiveItem
+	setActiveItem,
 }) => {
 	return (
 		<ClayAutocomplete.DropDown active={active}>

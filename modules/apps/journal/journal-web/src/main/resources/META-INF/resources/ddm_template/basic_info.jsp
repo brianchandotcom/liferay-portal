@@ -95,12 +95,12 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 					{
 						dialog: {
 							constrain: true,
-							modal: true
+							modal: true,
 						},
 						eventName: '<portlet:namespace />selectDDMStructure',
 						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
 						uri:
-							'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
+							'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
 					},
 					function(event) {
 						if (

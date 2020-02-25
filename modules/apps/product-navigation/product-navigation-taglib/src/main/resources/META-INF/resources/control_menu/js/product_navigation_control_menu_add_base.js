@@ -44,28 +44,28 @@ AUI.add(
 		var AddBase = A.Component.create({
 			ATTRS: {
 				focusItem: {
-					setter: A.one
+					setter: A.one,
 				},
 
 				id: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				inputNode: {
-					setter: A.one
+					setter: A.one,
 				},
 
 				nodeList: {
-					setter: A.one
+					setter: A.one,
 				},
 
 				nodeSelector: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				panelBody: {
-					setter: A.one
-				}
+					setter: A.one,
+				},
 			},
 
 			EXTENDS: A.Base,
@@ -162,7 +162,7 @@ AUI.add(
 							portletData,
 							portletId,
 							portletItemId,
-							portletUsed
+							portletUsed,
 						};
 
 						portlet._LFR_portletMetaData = portletMetaData;
@@ -182,13 +182,13 @@ AUI.add(
 						closeable: true,
 						delay: {
 							hide: 5000,
-							show: 0
+							show: 0,
 						},
 						duration: 500,
 						message: Liferay.Language.get(
 							'the-application-was-added-to-the-page'
 						),
-						type: 'success'
+						type: 'success',
 					}).render('body');
 				},
 
@@ -249,7 +249,7 @@ AUI.add(
 							plid: portletMetaData.plid,
 							portletData: portletMetaData.portletData,
 							portletId,
-							portletItemId: portletMetaData.portletItemId
+							portletItemId: portletMetaData.portletItemId,
 						});
 					}
 				},
@@ -277,19 +277,19 @@ AUI.add(
 					instance._eventHandles = [];
 
 					instance._bindUIDABase();
-				}
-			}
+				},
+			},
 		});
 
 		var PortletItem = A.Component.create({
 			ATTRS: {
 				lazyStart: {
-					value: true
+					value: true,
 				},
 
 				proxyNode: {
-					value: PROXY_NODE_ITEM
-				}
+					value: PROXY_NODE_ITEM,
+				},
 			},
 
 			EXTENDS: Layout.ColumnLayout,
@@ -391,8 +391,8 @@ AUI.add(
 						'placeholderAlign',
 						instance._onPlaceholderAlign
 					);
-				}
-			}
+				},
+			},
 		});
 
 		ControlMenu.AddBase = AddBase;
@@ -407,7 +407,7 @@ AUI.add(
 			'liferay-layout-column',
 			'liferay-notification',
 			'liferay-product-navigation-control-menu',
-			'transition'
-		]
+			'transition',
+		],
 	}
 );

@@ -26,8 +26,8 @@ import MultiStepNav from './MultiStepNav.es';
 
 export default ({
 	match: {
-		params: {appId, dataDefinitionId}
-	}
+		params: {appId, dataDefinitionId},
+	},
 }) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [isLoading, setLoading] = useState(false);
@@ -38,10 +38,10 @@ export default ({
 			dataLayoutId: null,
 			dataListViewId: null,
 			name: {
-				en_US: ''
+				en_US: '',
 			},
-			status: 'deployed'
-		}
+			status: 'deployed',
+		},
 	});
 
 	useEffect(() => {
@@ -52,7 +52,7 @@ export default ({
 				.then(app => {
 					dispatch({
 						app,
-						type: UPDATE_APP
+						type: UPDATE_APP,
 					});
 					setLoading(false);
 				})
@@ -69,7 +69,7 @@ export default ({
 	const getEmptyState = (description, title) => {
 		return {
 			description,
-			title
+			title,
 		};
 	};
 

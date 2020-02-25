@@ -29,7 +29,7 @@ function ContextualSidebar({
 	portletId,
 	redirect,
 	siteNavigationMenuId,
-	siteNavigationMenuName
+	siteNavigationMenuName,
 }) {
 	const [body, setBody] = useState('');
 	const [changed, setChanged] = useState(false);
@@ -58,7 +58,7 @@ function ContextualSidebar({
 
 			fetch(url, {
 				body: objectToFormData(Liferay.Util.ns(namespace, requestBody)),
-				method: 'POST'
+				method: 'POST',
 			})
 				.then(response => response.text())
 				.then(responseContent => {
@@ -76,7 +76,7 @@ function ContextualSidebar({
 		if (!siteNavigationMenuEditorRef.current) {
 			siteNavigationMenuEditorRef.current = new SiteNavigationMenuEditor({
 				editSiteNavigationMenuItemParentURL,
-				namespace
+				namespace,
 			});
 		}
 
@@ -87,7 +87,7 @@ function ContextualSidebar({
 
 				openSidebar(title, editSiteNavigationMenuItemURL, {
 					redirect,
-					siteNavigationMenuItemId
+					siteNavigationMenuItemId,
 				});
 			}
 		);
@@ -102,7 +102,7 @@ function ContextualSidebar({
 		editSiteNavigationMenuItemURL,
 		namespace,
 		openSidebar,
-		redirect
+		redirect,
 	]);
 
 	useEffect(() => {
@@ -117,7 +117,7 @@ function ContextualSidebar({
 					editSiteNavigationMenuSettingsURL,
 					{
 						redirect,
-						siteNavigationMenuId
+						siteNavigationMenuId,
 					}
 				);
 			};
@@ -137,7 +137,7 @@ function ContextualSidebar({
 		redirect,
 		siteNavigationMenuId,
 		siteNavigationMenuName,
-		visible
+		visible,
 	]);
 
 	const confirmUnsavedChanges = () => {

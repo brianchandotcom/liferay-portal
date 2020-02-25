@@ -20,7 +20,7 @@ export const mockDataMap = {
 		id: '1',
 		pinned: true,
 		title: 'Title Example 1',
-		type: 'Document'
+		type: 'Document',
 	},
 	2: {
 		author: 'Test Test',
@@ -32,7 +32,7 @@ export const mockDataMap = {
 		id: '2',
 		pinned: true,
 		title: 'Title Example 2',
-		type: 'Document'
+		type: 'Document',
 	},
 	3: {
 		author: 'Test Test',
@@ -44,7 +44,7 @@ export const mockDataMap = {
 		id: '3',
 		pinned: false,
 		title: 'Title Example 3',
-		type: 'Web Content'
+		type: 'Web Content',
 	},
 	4: {
 		author: 'test.test',
@@ -54,7 +54,7 @@ export const mockDataMap = {
 		id: '4',
 		pinned: false,
 		title: 'Test Test',
-		type: 'User'
+		type: 'User',
 	},
 	5: {
 		author: 'Test Test',
@@ -68,6 +68,6 @@ export const mockDataMap = {
 		pinned: false,
 		title:
 			'Title Example 5 Title Example 5 Title Example 5 Title Example 5 Title Example 5 Title Example 5 Title Example 5 Title Example 5',
-		type: 'Document'
-	}
+		type: 'Document',
+	},
 };

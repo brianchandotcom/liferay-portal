@@ -44,7 +44,7 @@ AUI.add(
 				var instance = this;
 
 				return instance.one(formatSelectorNS(ns, selector));
-			}
+			},
 		});
 
 		A.Node.formatSelectorNS = formatSelectorNS;
@@ -65,6 +65,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node-base']
+		requires: ['aui-node-base'],
 	}
 );

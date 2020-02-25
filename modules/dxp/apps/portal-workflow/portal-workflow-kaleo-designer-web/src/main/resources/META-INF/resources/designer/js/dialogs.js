@@ -62,8 +62,8 @@ AUI.add(
 											}
 
 											dialog.hide();
-										}
-									}
+										},
+									},
 								},
 								{
 									cssClass: 'btn btn-primary',
@@ -76,9 +76,9 @@ AUI.add(
 											}
 
 											dialog.hide();
-										}
-									}
-								}
+										},
+									},
+								},
 							],
 							header: [
 								{
@@ -97,18 +97,18 @@ AUI.add(
 											}
 
 											dialog.hide();
-										}
-									}
-								}
-							]
+										},
+									},
+								},
+							],
 						},
-						width: 500
+						width: 500,
 					},
-					title
+					title,
 				});
 
 				instance._duplicationDialog = dialog;
-			}
+			},
 		};
 
 		var openConfirmDeleteDialog = function(title, message, actionUrl) {
@@ -127,8 +127,8 @@ AUI.add(
 								on: {
 									click() {
 										window.location.assign(actionUrl);
-									}
-								}
+									},
+								},
 							},
 							{
 								cssClass: 'btn btn-secondary',
@@ -137,9 +137,9 @@ AUI.add(
 								on: {
 									click() {
 										dialog.destroy();
-									}
-								}
-							}
+									},
+								},
+							},
 						],
 						header: [
 							{
@@ -156,14 +156,14 @@ AUI.add(
 										dialog.destroy();
 
 										event.domEvent.stopPropagation();
-									}
-								}
-							}
-						]
+									},
+								},
+							},
+						],
 					},
-					width: 600
+					width: 600,
 				},
-				title
+				title,
 			});
 		};
 
@@ -182,10 +182,10 @@ AUI.add(
 				closeable: true,
 				delay: {
 					hide: 5000,
-					show: 0
+					show: 0,
 				},
 				message: successMessage,
-				type: 'success'
+				type: 'success',
 			});
 
 			if (!alert.get('rendered')) {
@@ -227,10 +227,10 @@ AUI.add(
 				closeable: true,
 				delay: {
 					hide: 10000,
-					show: 0
+					show: 0,
 				},
 				message: successMessage,
-				type: 'success'
+				type: 'success',
 			});
 
 			if (!alert.get('rendered')) {
@@ -252,6 +252,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-util-window']
+		requires: ['liferay-util-window'],
 	}
 );

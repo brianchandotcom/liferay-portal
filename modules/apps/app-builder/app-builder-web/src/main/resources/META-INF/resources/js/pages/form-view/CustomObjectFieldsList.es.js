@@ -16,7 +16,7 @@ import {
 	DataLayoutBuilderActions,
 	DataLayoutVisitor,
 	DragTypes,
-	FieldTypeList
+	FieldTypeList,
 } from 'data-engine-taglib';
 import React, {useContext} from 'react';
 
@@ -30,7 +30,7 @@ const getFieldTypes = ({
 	dataDefinition,
 	dataLayout,
 	fieldTypes,
-	focusedCustomObjectField
+	focusedCustomObjectField,
 }) => {
 	const {dataDefinitionFields} = dataDefinition;
 	const {dataLayoutPages} = dataLayout;
@@ -49,7 +49,7 @@ const getFieldTypes = ({
 			dragType: DragTypes.DRAG_DATA_DEFINITION_FIELD,
 			icon: fieldTypeSettings.icon,
 			label: label.en_US,
-			name
+			name,
 		};
 	});
 };
@@ -67,7 +67,7 @@ export default ({keywords}) => {
 
 		dispatch({
 			payload: {dataDefinitionField},
-			type: DataLayoutBuilderActions.UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
+			type: DataLayoutBuilderActions.UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD,
 		});
 	};
 	const onDoubleClick = ({name}) => {
@@ -83,9 +83,9 @@ export default ({keywords}) => {
 				indexes: {
 					columnIndex: 0,
 					pageIndex: activePage,
-					rowIndex: pages[activePage].rows.length
+					rowIndex: pages[activePage].rows.length,
 				},
-				skipFieldNameGeneration: true
+				skipFieldNameGeneration: true,
 			})
 		);
 	};

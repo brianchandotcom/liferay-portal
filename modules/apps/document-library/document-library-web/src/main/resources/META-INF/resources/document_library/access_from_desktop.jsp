@@ -80,10 +80,10 @@ else {
 			var webdavDialog = Liferay.Util.Window.getWindow({
 				dialog: {
 					bodyContent: A.one('#<%= randomNamespace %>webDav').html(),
-					destroyOnHide: true
+					destroyOnHide: true,
 				},
 				title:
-					'<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>'
+					'<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>',
 			});
 
 			webdavDialog.after('render', function(event) {

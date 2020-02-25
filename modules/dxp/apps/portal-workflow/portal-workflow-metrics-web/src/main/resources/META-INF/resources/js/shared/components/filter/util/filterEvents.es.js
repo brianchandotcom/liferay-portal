@@ -13,7 +13,7 @@ const buildFallbackItems = fallbackKeys => {
 	if (fallbackKeys) {
 		return fallbackKeys.map(key => ({
 			active: true,
-			key
+			key,
 		}));
 	}
 
@@ -40,5 +40,5 @@ export {
 	addClickOutsideListener,
 	buildFallbackItems,
 	handleClickOutside,
-	removeClickOutsideListener
+	removeClickOutsideListener,
 };

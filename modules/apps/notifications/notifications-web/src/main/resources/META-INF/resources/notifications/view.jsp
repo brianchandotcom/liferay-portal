@@ -158,7 +158,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	var ACTIONS = {
 		deleteNotifications: deleteNotifications,
 		markNotificationsAsRead: markNotificationsAsRead,
-		markNotificationsAsUnread: markNotificationsAsUnread
+		markNotificationsAsUnread: markNotificationsAsUnread,
 	};
 
 	Liferay.componentReady('notificationsManagementToolbar').then(function(
@@ -185,7 +185,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 			var currentTarget = event.currentTarget;
 
 			Liferay.Util.fetch(currentTarget.attr('href'), {
-				method: 'POST'
+				method: 'POST',
 			})
 				.then(function(response) {
 					return response.json();
@@ -229,7 +229,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 				timeout: 5000,
 				toggleText: false,
 				type: 'warning',
-				useAnimation: false
+				useAnimation: false,
 			});
 		}
 

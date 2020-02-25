@@ -18,6 +18,6 @@ export default function addFragmentEntryLink({fragmentEntryLink, layoutData}) {
 	return {
 		fragmentEntryLink,
 		layoutData,
-		type: ADD_FRAGMENT_ENTRY_LINK
+		type: ADD_FRAGMENT_ENTRY_LINK,
 	};
 }

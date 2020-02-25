@@ -62,7 +62,7 @@ describe('PortletHub', () => {
 
 		it('throws a TypeError if resource parameters is invalid', () => {
 			const parameters = {
-				param1: 'paramValue1'
+				param1: 'paramValue1',
 			};
 
 			const testFn = () => {
@@ -74,7 +74,7 @@ describe('PortletHub', () => {
 
 		it('throws a TypeError if the cacheability argument is invalid', () => {
 			const parameters = {
-				param1: ['paramValue1']
+				param1: ['paramValue1'],
 			};
 
 			const testFn = () => {
@@ -94,7 +94,7 @@ describe('PortletHub', () => {
 
 		it('throws a TypeError if there are 2 res parameters arguments', () => {
 			const parameters = {
-				param1: ['paramValue1']
+				param1: ['paramValue1'],
 			};
 
 			const testFn = () => {
@@ -106,7 +106,7 @@ describe('PortletHub', () => {
 
 		it('does not throw if both arguments are valid', done => {
 			const parameters = {
-				param1: ['paramValue1']
+				param1: ['paramValue1'],
 			};
 
 			return hubA
@@ -118,7 +118,7 @@ describe('PortletHub', () => {
 
 		it('returns a string if both arguments are valid', () => {
 			const parameters = {
-				param1: ['paramValue1']
+				param1: ['paramValue1'],
 			};
 
 			return hubA
@@ -130,7 +130,7 @@ describe('PortletHub', () => {
 
 		it('Throws an exception if cacheability is specified first', () => {
 			const parameters = {
-				param1: ['paramValue1']
+				param1: ['paramValue1'],
 			};
 
 			const testFn = () => {
@@ -151,7 +151,7 @@ describe('PortletHub', () => {
 		it('returns a string if only resource parameters present', () => {
 			const parameters = {
 				param1: ['paramValue1'],
-				param2: ['paramValue2']
+				param2: ['paramValue2'],
 			};
 
 			return hubA.createResourceUrl(parameters).then(url => {
@@ -168,7 +168,7 @@ describe('PortletHub', () => {
 		it('returns a URL indicating the initiating portlet A', () => {
 			const parameters = {
 				param1: ['paramValue1'],
-				param2: ['paramValue2']
+				param2: ['paramValue2'],
 			};
 
 			return hubA
@@ -182,7 +182,7 @@ describe('PortletHub', () => {
 			const cache = 'cacheLevelPage';
 			const parameters = {
 				param1: ['paramValue1'],
-				param2: ['paramValue2']
+				param2: ['paramValue2'],
 			};
 
 			return hubB
@@ -198,7 +198,7 @@ describe('PortletHub', () => {
 			const cache = 'cacheLevelPage';
 			const parameters = {
 				param1: ['paramValue1'],
-				param2: ['paramValue2']
+				param2: ['paramValue2'],
 			};
 
 			return hubB.createResourceUrl(parameters, cache).then(url => {

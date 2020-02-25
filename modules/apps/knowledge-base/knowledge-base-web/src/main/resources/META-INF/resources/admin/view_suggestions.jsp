@@ -107,7 +107,7 @@ List<KBComment> kbComments = kbCommentsSearchContainer.getResults();
 	};
 
 	var ACTIONS = {
-		deleteKBComments: deleteKBComments
+		deleteKBComments: deleteKBComments,
 	};
 
 	Liferay.componentReady('kbSuggestionListManagementToolbar').then(function(

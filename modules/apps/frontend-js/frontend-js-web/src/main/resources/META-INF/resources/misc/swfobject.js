@@ -219,7 +219,7 @@ deconcept.SWFObject.prototype = {
 		}
 
 		return false;
-	}
+	},
 };
 
 /* ---- detection functions ---- */
@@ -333,7 +333,7 @@ deconcept.util = {
 			}
 		}
 		return '';
-	}
+	},
 };
 
 /* fix for video streaming bug */

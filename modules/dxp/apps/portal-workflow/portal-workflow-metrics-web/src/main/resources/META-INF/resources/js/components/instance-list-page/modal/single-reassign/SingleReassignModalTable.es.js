@@ -22,7 +22,7 @@ const AssigneeInput = ({setAssigneeId, taskId}) => {
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params: {page: -1, pageSize: -1},
-		url: `/workflow-tasks/${taskId}/assignable-users`
+		url: `/workflow-tasks/${taskId}/assignable-users`,
 	});
 
 	const handleSelect = useCallback(
@@ -52,7 +52,7 @@ const Item = ({
 	index,
 	item,
 	setAssigneeId,
-	taskNames
+	taskNames,
 }) => {
 	const {singleModal} = useContext(ModalContext);
 
@@ -92,7 +92,7 @@ const Table = ({
 	data,
 	setAssigneeId,
 	status,
-	taskNames = []
+	taskNames = [],
 }) => {
 	const completed = status === 'Completed';
 	const {items} = data;
@@ -106,7 +106,7 @@ const Table = ({
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '10%'
+							width: '10%',
 						}}
 					>
 						{Liferay.Language.get('id')}
@@ -117,7 +117,7 @@ const Table = ({
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '25%'
+							width: '25%',
 						}}
 					>
 						{Liferay.Language.get('item-subject')}
@@ -128,7 +128,7 @@ const Table = ({
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '20%'
+							width: '20%',
 						}}
 					>
 						{Liferay.Language.get('process-step')}
@@ -138,7 +138,7 @@ const Table = ({
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '20%'
+							width: '20%',
 						}}
 					>
 						{Liferay.Language.get('current-assignee')}
@@ -148,7 +148,7 @@ const Table = ({
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '25%'
+							width: '25%',
 						}}
 					>
 						{`${Liferay.Language.get('new-assignee')} `}

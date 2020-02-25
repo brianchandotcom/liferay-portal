@@ -40,14 +40,14 @@ const handleFieldSetAdded = (props, state, event) => {
 						if (settingsContextField.fieldName === 'name') {
 							settingsContextField = {
 								...settingsContextField,
-								value: name
+								value: name,
 							};
 						}
 
 						return settingsContextField;
 					}
-				)
-			}
+				),
+			},
 		};
 	});
 

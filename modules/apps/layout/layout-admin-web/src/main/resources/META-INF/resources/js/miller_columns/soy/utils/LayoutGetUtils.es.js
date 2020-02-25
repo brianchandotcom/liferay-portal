@@ -132,5 +132,5 @@ export {
 	getItem,
 	getItemColumn,
 	getItemColumnIndex,
-	itemIsParent
+	itemIsParent,
 };

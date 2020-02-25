@@ -26,7 +26,7 @@ import FormViewUpperToolbar from './FormViewUpperToolbar.es';
 const parseProps = ({dataDefinitionId, dataLayoutId, ...props}) => ({
 	...props,
 	dataDefinitionId: Number(dataDefinitionId),
-	dataLayoutId: Number(dataLayoutId)
+	dataLayoutId: Number(dataLayoutId),
 });
 
 const FormViewControlMenu = ({backURL, dataLayoutId}) => {
@@ -47,7 +47,7 @@ const EditFormView = props => {
 		dataDefinitionId,
 		dataLayoutBuilder,
 		dataLayoutId,
-		newCustomObject
+		newCustomObject,
 	} = parseProps(props);
 	const {basePortletURL} = useContext(AppContext);
 

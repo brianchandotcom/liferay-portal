@@ -80,7 +80,7 @@
 							<portlet:param name="localPublishing" value="<%= String.valueOf(stagedLocally) %>" />
 						</liferay-portlet:renderURL>
 
-						uri: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>'
+						uri: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>',
 					});
 				});
 			}

@@ -17,7 +17,7 @@ import {useFilterStatic} from '../../shared/components/filter/hooks/useFilterSta
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 import {
 	getCapitalizedFilterKey,
-	mergeItemsArray
+	mergeItemsArray,
 } from '../../shared/components/filter/util/filterUtil.es';
 import {useRouterParams} from '../../shared/hooks/useRouterParams.es';
 import {useSessionStorage} from '../../shared/hooks/useStorage.es';
@@ -33,14 +33,14 @@ const TimeRangeFilter = ({
 	filterKey = filterConstants.timeRange.key,
 	options = {},
 	prefixKey = '',
-	style
+	style,
 }) => {
 	const defaultOptions = {
 		hideControl: true,
 		multiple: false,
 		position: 'left',
 		withSelectionTitle: true,
-		withoutRouteParams: false
+		withoutRouteParams: false,
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
@@ -51,7 +51,7 @@ const TimeRangeFilter = ({
 		formVisible,
 		onChangeFilter,
 		onClickFilter,
-		setFormVisible
+		setFormVisible,
 	} = useCustomFormState();
 	const [storedTimeRanges = {}] = useSessionStorage('timeRanges');
 
@@ -62,12 +62,12 @@ const TimeRangeFilter = ({
 	const dateStart = filters[dateStartKey];
 
 	const {items: timeRanges} = useMemo(() => storedTimeRanges, [
-		storedTimeRanges
+		storedTimeRanges,
 	]);
 
 	const customRange = useMemo(() => getCustomTimeRange(dateEnd, dateStart), [
 		dateEnd,
-		dateStart
+		dateStart,
 	]);
 
 	const staticItems = useMemo(

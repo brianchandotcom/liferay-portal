@@ -304,15 +304,15 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 			Liferay.Util.postForm(form, {
 				data: {
 					<%= Constants.CMD %>:
-						'<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>'
+						'<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>',
 				},
-				url: '<portlet:actionURL name="/wiki/edit_page" />'
+				url: '<portlet:actionURL name="/wiki/edit_page" />',
 			});
 		}
 	};
 
 	var ACTIONS = {
-		deletePages: deletePages
+		deletePages: deletePages,
 	};
 
 	Liferay.componentReady('wikiPagesManagementToolbar').then(function(

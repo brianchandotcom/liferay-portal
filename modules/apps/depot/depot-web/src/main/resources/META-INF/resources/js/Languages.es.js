@@ -32,7 +32,7 @@ const Languages = ({
 	portletNamespace,
 	siteAvailableLocales,
 	siteDefaultLocaleId,
-	translatedLanguages
+	translatedLanguages,
 }) => {
 	const [selectedRadioGroupValue, setSelectedRadioGroupValue] = useState(
 		inheritLocales
@@ -47,7 +47,7 @@ const Languages = ({
 	const [languageWarning, setLanguageWarning] = useState(false);
 	const [
 		languageTranslationWarning,
-		setLanguageTranslationWarning
+		setLanguageTranslationWarning,
 	] = useState(false);
 
 	const [showModal, setShowModal] = useState(false);
@@ -62,7 +62,7 @@ const Languages = ({
 	};
 
 	const {observer, onClose} = useModal({
-		onClose: handleOnModalClose
+		onClose: handleOnModalClose,
 	});
 
 	const customLocalesInputRef = useRef();
@@ -87,7 +87,7 @@ const Languages = ({
 			);
 
 			Liferay.fire('inputLocalized:defaultLocaleChanged', {
-				item: event.currentTarget
+				item: event.currentTarget,
 			});
 		};
 
@@ -270,7 +270,7 @@ Languages.propTypes = {
 	availableLocales: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,
-			localeId: PropTypes.string
+			localeId: PropTypes.string,
 		})
 	).isRequired,
 	defaultLocaleId: PropTypes.string.isRequired,
@@ -279,11 +279,11 @@ Languages.propTypes = {
 	siteAvailableLocales: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,
-			localeId: PropTypes.string
+			localeId: PropTypes.string,
 		})
 	).isRequired,
 	siteDefaultLocaleId: PropTypes.string.isRequired,
-	translatedLanguages: PropTypes.object
+	translatedLanguages: PropTypes.object,
 };
 
 export default function(props) {

@@ -114,7 +114,7 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 			'<%= HtmlUtil.escapeJS(siteURLLayoutsURL.toString()) %>',
 			{
 				body: formData,
-				method: 'POST'
+				method: 'POST',
 			}
 		)
 			.then(function(response) {
@@ -150,7 +150,7 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 
 		Liferay.Util.fetch('<%= HtmlUtil.escapeJS(editorURL.toString()) %>', {
 			body: formData,
-			method: 'POST'
+			method: 'POST',
 		})
 			.then(function(response) {
 				return response.text();

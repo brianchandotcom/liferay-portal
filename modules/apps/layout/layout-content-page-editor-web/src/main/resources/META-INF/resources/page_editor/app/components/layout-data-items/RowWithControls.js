@@ -33,7 +33,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import updateColSize from '../../actions/updateColSize';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
@@ -58,19 +58,19 @@ const RowWithControls = React.forwardRef(
 			...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
 				LAYOUT_DATA_ITEM_TYPES.row
 			],
-			...item.config
+			...item.config,
 		};
 		const isMounted = useIsMounted();
 		const [
 			openSaveFragmentCompositionModal,
-			setOpenSaveFragmentCompositionModal
+			setOpenSaveFragmentCompositionModal,
 		] = useState(false);
 		const {observer, onClose} = useModal({
 			onClose: () => {
 				if (isMounted()) {
 					setOpenSaveFragmentCompositionModal(false);
 				}
-			}
+			},
 		});
 
 		const state = useSelector(state => state);
@@ -87,7 +87,7 @@ const RowWithControls = React.forwardRef(
 				dispatch(
 					duplicateItem({
 						itemId: item.itemId,
-						store: state
+						store: state,
 					})
 				);
 			}
@@ -126,7 +126,7 @@ const RowWithControls = React.forwardRef(
 					currentColumn,
 					currentColumnConfig,
 					nextColumn,
-					nextColumnIndex
+					nextColumnIndex,
 				} = columnInfo;
 
 				const currentRange = columnSizes[colIndex];
@@ -145,7 +145,7 @@ const RowWithControls = React.forwardRef(
 							itemId: currentColumn.itemId,
 							nextColumnItemId: nextColumn.itemId,
 							nextColumnSize: newNextSize,
-							size: newCurrentSize
+							size: newCurrentSize,
 						})
 					);
 				}
@@ -165,7 +165,7 @@ const RowWithControls = React.forwardRef(
 				dispatch(
 					resizeColumns({
 						layoutData,
-						store: state
+						store: state,
 					})
 				);
 			}
@@ -190,7 +190,7 @@ const RowWithControls = React.forwardRef(
 					buttons={[
 						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
 						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
+						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration,
 					]}
 					item={item}
 					itemRef={ref}
@@ -201,7 +201,7 @@ const RowWithControls = React.forwardRef(
 					value={{
 						onResizeEnd,
 						onResizeStart,
-						onResizing
+						onResizing,
 					}}
 				>
 					{children}
@@ -239,9 +239,9 @@ const RowWithControls = React.forwardRef(
 
 RowWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes({
-		config: PropTypes.shape({gutters: PropTypes.bool})
+		config: PropTypes.shape({gutters: PropTypes.bool}),
 	}).isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default RowWithControls;
@@ -290,7 +290,7 @@ function getColumnAccumulationSizes(rowChildren, layoutData) {
 
 			return [
 				...acc,
-				acc[index - 1] + layoutData.items[currentId].config.size
+				acc[index - 1] + layoutData.items[currentId].config.size,
 			];
 		},
 		[layoutData.items[rowChildren[0]].config.size]
@@ -339,7 +339,7 @@ function getRect(element) {
 			left: 0,
 			right: 0,
 			top: 0,
-			width: 0
+			width: 0,
 		};
 	}
 

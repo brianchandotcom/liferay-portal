@@ -18,8 +18,8 @@ module.exports = {
 	build: {
 		dependencies: [
 			...preset.build.dependencies,
-			'dynamic-data-mapping-form-field-type'
-		]
+			'dynamic-data-mapping-form-field-type',
+		],
 	},
-	preset: 'liferay-npm-scripts/src/presets/standard'
+	preset: 'liferay-npm-scripts/src/presets/standard',
 };

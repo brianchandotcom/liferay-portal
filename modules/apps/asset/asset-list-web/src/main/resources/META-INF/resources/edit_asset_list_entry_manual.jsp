@@ -165,7 +165,7 @@
 			var itemSelectorDialog = new ItemSelectorDialog.default({
 				eventName: '<portlet:namespace />selectAsset',
 				title: delegateTarget.dataset.title,
-				url: delegateTarget.dataset.href
+				url: delegateTarget.dataset.href,
 			});
 
 			itemSelectorDialog.open();
@@ -184,8 +184,8 @@
 
 					Liferay.Util.postForm(document.<portlet:namespace />fm, {
 						data: {
-							assetEntryIds: assetEntryIds.join(',')
-						}
+							assetEntryIds: assetEntryIds.join(','),
+						},
 					});
 				}
 			});

@@ -83,7 +83,7 @@ describe('The PaginationBar component should', () => {
 
 	test('Render with initial params and change pageSize and page using route params', () => {
 		const {baseElement} = render(<PaginationBar totalCount={50} />, {
-			wrapper: MockRouter
+			wrapper: MockRouter,
 		});
 
 		const pageSizeBtn = baseElement.querySelector('button.dropdown-toggle');
@@ -134,7 +134,7 @@ describe('The PaginationBar component should', () => {
 
 	test('Render with insufficient total count to pagination', () => {
 		const {container} = render(<PaginationBar totalCount={4} />, {
-			wrapper: MockRouter
+			wrapper: MockRouter,
 		});
 
 		expect(container.innerHTML).toEqual('');

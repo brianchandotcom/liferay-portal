@@ -20,13 +20,13 @@ import {ENTER} from '../../utils/key-constants.es';
 
 class LocalizedDropdown extends React.Component {
 	static defaultProps = {
-		availableLanguages: []
+		availableLanguages: [],
 	};
 
 	static propTypes = {
 		availableLanguages: PropTypes.array,
 		initialLang: PropTypes.string,
-		initialOpen: PropTypes.bool
+		initialOpen: PropTypes.bool,
 	};
 
 	constructor(props) {
@@ -35,13 +35,13 @@ class LocalizedDropdown extends React.Component {
 		this.state = {
 			currentLangKey: keyLangToLanguageTag(initialLang),
 			currentLangTag: keyLangToLanguageTag(initialLang, false),
-			open: initialOpen
+			open: initialOpen,
 		};
 	}
 
 	_handleButtonClick = () => {
 		this.setState(prevState => ({
-			open: !prevState.open
+			open: !prevState.open,
 		}));
 	};
 
@@ -49,7 +49,7 @@ class LocalizedDropdown extends React.Component {
 		if (this.state.open) {
 			this.timer = setTimeout(() => {
 				this.setState(() => ({
-					open: false
+					open: false,
 				}));
 			}, 200);
 		}
@@ -60,7 +60,7 @@ class LocalizedDropdown extends React.Component {
 			{
 				currentLangKey: keyLangToLanguageTag(langKey),
 				currentLangTag: keyLangToLanguageTag(langKey, false),
-				open: false
+				open: false,
 			},
 			() => this.props.onLanguageChange(langKey)
 		);

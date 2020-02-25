@@ -20,7 +20,7 @@ class FilterDisplay extends Component {
 	static propTypes = {
 		onClear: PropTypes.func,
 		searchBarTerm: PropTypes.string,
-		totalResultsCount: PropTypes.number
+		totalResultsCount: PropTypes.number,
 	};
 
 	render() {
@@ -33,7 +33,7 @@ class FilterDisplay extends Component {
 						<span className="text-truncate">
 							{sub(Liferay.Language.get('x-results-for-x'), [
 								totalResultsCount,
-								searchBarTerm
+								searchBarTerm,
 							])}
 						</span>
 					</span>

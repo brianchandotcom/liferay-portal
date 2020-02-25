@@ -14,7 +14,7 @@
 
 import {
 	PagesVisitor,
-	normalizeFieldName
+	normalizeFieldName,
 } from 'dynamic-data-mapping-form-renderer';
 import {findFieldByName} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 
@@ -104,12 +104,12 @@ export const updateFieldValidationProperty = (
 				...field,
 				validation: {
 					...field.validation,
-					[propertyName]: propertyValue
+					[propertyName]: propertyValue,
 				},
 				value: {
 					...field.value,
-					expression
-				}
+					expression,
+				},
 			};
 		}
 

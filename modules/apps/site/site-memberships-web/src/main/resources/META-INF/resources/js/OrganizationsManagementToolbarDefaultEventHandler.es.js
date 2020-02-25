@@ -34,7 +34,7 @@ class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHand
 				Liferay.Language.get('assign-organizations-to-this-x'),
 				itemData.groupTypeLabel
 			),
-			url: itemData.selectOrganizationsURL
+			url: itemData.selectOrganizationsURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {

@@ -22,7 +22,7 @@ const client = {
 	get: jest
 		.fn()
 		.mockResolvedValueOnce({data: {totalCount: 1}})
-		.mockResolvedValueOnce({data: {totalCount: 0}})
+		.mockResolvedValueOnce({data: {totalCount: 0}}),
 };
 
 describe('The ProcessMetrics component should', () => {

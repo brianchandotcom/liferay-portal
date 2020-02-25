@@ -41,7 +41,7 @@ class PreviewButton extends Component {
 		return (
 			<ClayButton
 				events={{
-					click: this._handleButtonClicked.bind(this)
+					click: this._handleButtonClicked.bind(this),
 				}}
 				label={Liferay.Language.get('preview-form')}
 				ref={'button'}
@@ -58,7 +58,7 @@ class PreviewButton extends Component {
 
 PreviewButton.PROPS = {
 	resolvePreviewURL: Config.func().required(),
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
 };
 
 export default PreviewButton;

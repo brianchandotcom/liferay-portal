@@ -20,7 +20,7 @@ const props = {
 	content: 'This content will be displayed when popover appears',
 	placement: 0,
 	title: 'Liferay',
-	visible: false
+	visible: false,
 };
 
 let alignElement;
@@ -54,7 +54,7 @@ describe('Popover', () => {
 	it('renders popover opened', () => {
 		component = new Popover({
 			...props,
-			visible: true
+			visible: true,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -69,8 +69,8 @@ describe('Popover', () => {
 
 		component.willReceiveProps({
 			visible: {
-				newVal: true
-			}
+				newVal: true,
+			},
 		});
 
 		jest.runAllTimers();
@@ -93,7 +93,7 @@ describe('Popover', () => {
 	it('closes when it is already opened and the alignedElement is clicked', () => {
 		component = new Popover({
 			...props,
-			visible: true
+			visible: true,
 		});
 
 		jest.runAllTimers();
@@ -107,7 +107,7 @@ describe('Popover', () => {
 	it('closes when document has mousedown event', () => {
 		component = new Popover({
 			...props,
-			visible: true
+			visible: true,
 		});
 
 		jest.runAllTimers();

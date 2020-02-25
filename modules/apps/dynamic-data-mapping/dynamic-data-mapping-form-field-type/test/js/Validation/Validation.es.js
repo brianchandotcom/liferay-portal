@@ -29,7 +29,7 @@ describe('Validation', () => {
 			dataType: 'string',
 			label: 'Validator',
 			name: 'validation',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -44,8 +44,8 @@ describe('Validation', () => {
 			spritemap,
 			validation: {
 				dataType: 'string',
-				fieldName: 'textfield'
-			}
+				fieldName: 'textfield',
+			},
 		});
 
 		jest.runAllTimers();
@@ -71,8 +71,8 @@ describe('Validation', () => {
 			spritemap,
 			validation: {
 				dataType: 'string',
-				fieldName: 'textfield'
-			}
+				fieldName: 'textfield',
+			},
 		});
 
 		component.once('stateSynced', () => {
@@ -98,8 +98,8 @@ describe('Validation', () => {
 			spritemap,
 			validation: {
 				dataType: 'integer',
-				fieldName: 'numericfield'
-			}
+				fieldName: 'numericfield',
+			},
 		});
 
 		component.once('stateSynced', () => {
@@ -123,8 +123,8 @@ describe('Validation', () => {
 			name: 'validation',
 			spritemap,
 			validation: {
-				dataType: 'string'
-			}
+				dataType: 'string',
+			},
 		});
 
 		component.once('stateSynced', () => {
@@ -137,7 +137,7 @@ describe('Validation', () => {
 		component.refs.selectedValidation.emit('fieldEdited');
 		component.validation = {
 			...component.validation,
-			dataType: 'integer'
+			dataType: 'integer',
 		};
 
 		jest.runAllTimers();
@@ -155,12 +155,12 @@ describe('Validation', () => {
 					spritemap,
 					validation: {
 						dataType: 'string',
-						fieldName: 'textfield'
+						fieldName: 'textfield',
 					},
 					value: {
 						errorMessage: 'An error message',
-						expression: 'NOT(contains(textfield, ""))'
-					}
+						expression: 'NOT(contains(textfield, ""))',
+					},
 				});
 
 				jest.runAllTimers();

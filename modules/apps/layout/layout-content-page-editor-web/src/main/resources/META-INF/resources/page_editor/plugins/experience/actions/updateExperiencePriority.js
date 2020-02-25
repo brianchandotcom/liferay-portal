@@ -18,8 +18,8 @@ export default function updateExperiencePriority({subtarget, target}) {
 	return {
 		payload: {
 			subtarget,
-			target
+			target,
 		},
-		type: UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
+		type: UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
 	};
 }

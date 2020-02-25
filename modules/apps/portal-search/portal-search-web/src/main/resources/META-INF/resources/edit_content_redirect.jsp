@@ -35,7 +35,7 @@ redirect = PortalUtil.escapeRedirect(redirect);
 <aui:script>
 	var data = {
 		id: '<portlet:namespace />editAsset',
-		portletAjaxable: true
+		portletAjaxable: true,
 	};
 
 	<c:choose>

@@ -223,13 +223,13 @@ if (parentOrganization != null) {
 				{
 					dialog: {
 						constrain: true,
-						modal: true
+						modal: true,
 					},
 					id: '<portlet:namespace />selectOrganization',
 					selectedData: [searchContainerData],
 					title:
 						'<liferay-ui:message arguments="parent-organization" key="select-x" />',
-					uri: '<%= selectOrganizationRenderURL %>'
+					uri: '<%= selectOrganizationRenderURL %>',
 				},
 				function(event) {
 					var rowColumns = [];

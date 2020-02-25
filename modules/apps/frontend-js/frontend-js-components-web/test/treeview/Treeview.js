@@ -24,48 +24,48 @@ const nodes = [
 		children: [
 			{
 				id: '1.1',
-				name: 'Pablictor'
+				name: 'Pablictor',
 			},
 			{
 				children: [
 					{
 						id: '1.2.1',
-						name: 'Eudaldo'
-					}
+						name: 'Eudaldo',
+					},
 				],
 				id: '1.2',
-				name: 'Pabla'
-			}
+				name: 'Pabla',
+			},
 		],
 		id: '1',
-		name: 'Sandro'
+		name: 'Sandro',
 	},
 	{
 		id: '2',
-		name: 'Victor'
+		name: 'Victor',
 	},
 	{
 		children: [
 			{
 				id: '3.1',
-				name: 'Straight line'
-			}
+				name: 'Straight line',
+			},
 		],
 		expanded: true,
 		id: '3',
-		name: 'Juan'
+		name: 'Juan',
 	},
 	{
 		children: [
 			{
 				expanded: true,
 				id: '4.1',
-				name: 'Victor Son'
-			}
+				name: 'Victor Son',
+			},
 		],
 		id: '4',
-		name: 'Victor Father'
-	}
+		name: 'Victor Father',
+	},
 ];
 
 describe('Treeview', () => {
@@ -191,7 +191,7 @@ describe('Treeview', () => {
 			icon: 'cog',
 			id: '1',
 			name: 'Sandro',
-			size: 'sm'
+			size: 'sm',
 		};
 
 		const {getByText} = render(

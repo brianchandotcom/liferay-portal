@@ -25,8 +25,8 @@ jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
-			themeColorsCssClasses: []
-		}
+			themeColorsCssClasses: [],
+		},
 	})
 );
 
@@ -39,7 +39,7 @@ const renderComponent = (dispatch = () => {}) =>
 					config: {type: CONTAINER_TYPES.fluid},
 					itemId: '',
 					parentId: '',
-					type: ''
+					type: '',
 				}}
 			/>
 		</StoreAPIContextProvider>
@@ -75,13 +75,13 @@ describe('ContainerConfigurationPanel', () => {
 					const input = getByLabelText(paddingLabel);
 
 					await fireEvent.change(input, {
-						target: {value}
+						target: {value},
 					});
 
 					expect(dispatch).toHaveBeenCalledWith([
 						expect.objectContaining({
-							itemConfig: {[paddingPropName]: Number(value)}
-						})
+							itemConfig: {[paddingPropName]: Number(value)},
+						}),
 					]);
 				});
 			});

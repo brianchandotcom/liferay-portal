@@ -15,7 +15,7 @@
 import {fetch, objectToFormData} from 'frontend-js-web';
 
 const defaultHeaders = {
-	Accept: 'application/json'
+	Accept: 'application/json',
 };
 
 export const makeFetch = ({
@@ -28,7 +28,7 @@ export const makeFetch = ({
 	const fetchData = {
 		headers,
 		method,
-		...otherProps
+		...otherProps,
 	};
 
 	if (method === 'POST') {

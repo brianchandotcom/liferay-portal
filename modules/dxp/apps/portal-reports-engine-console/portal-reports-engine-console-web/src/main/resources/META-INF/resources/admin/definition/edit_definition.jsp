@@ -204,7 +204,7 @@ else {
 		Liferay.Report.initialize({
 			namespace: '<portlet:namespace />',
 			parameters:
-				'<%= HtmlUtil.escapeJS(BeanParamUtil.getString(definition, request, "reportParameters")) %>'
+				'<%= HtmlUtil.escapeJS(BeanParamUtil.getString(definition, request, "reportParameters")) %>',
 		});
 	});
 

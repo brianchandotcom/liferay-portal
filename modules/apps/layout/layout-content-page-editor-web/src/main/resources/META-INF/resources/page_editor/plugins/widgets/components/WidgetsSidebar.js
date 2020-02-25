@@ -37,7 +37,7 @@ export default function WidgetsSidebar() {
 							widget.title
 								.toLowerCase()
 								.indexOf(searchValueLowerCase) !== -1
-					)
+					),
 				};
 			})
 			.filter(category => {

@@ -104,7 +104,7 @@ if (categoryId > 0) {
 		var treeView = new A.TreeView({
 			boundingBox: item,
 			contentBox: assetCategoryList,
-			type: 'normal'
+			type: 'normal',
 		}).render();
 
 		var selected = assetCategoryList.one('.tree-node .tag-selected');

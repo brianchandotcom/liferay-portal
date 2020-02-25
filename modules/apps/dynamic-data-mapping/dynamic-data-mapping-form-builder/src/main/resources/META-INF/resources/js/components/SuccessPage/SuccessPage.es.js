@@ -27,7 +27,7 @@ class SuccessPage extends Component {
 		return {
 			...state,
 			body: (body && body[editingLanguageId]) || '',
-			title: (title && title[editingLanguageId]) || ''
+			title: (title && title[editingLanguageId]) || '',
 		};
 	}
 
@@ -46,7 +46,7 @@ class SuccessPage extends Component {
 		const {delegateTarget} = event;
 		const {
 			dataset: {setting},
-			value
+			value,
 		} = delegateTarget;
 		const {successPageSettings} = this;
 
@@ -68,8 +68,8 @@ SuccessPage.STATE = {
 
 	successPageSettings: Config.object().value({
 		body: {},
-		title: {}
-	})
+		title: {},
+	}),
 };
 
 Soy.register(SuccessPage, templates);

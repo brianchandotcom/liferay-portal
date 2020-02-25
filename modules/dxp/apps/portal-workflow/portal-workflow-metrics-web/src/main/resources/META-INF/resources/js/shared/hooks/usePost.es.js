@@ -30,7 +30,7 @@ const usePost = ({admin = false, body = {}, url}) => {
 
 	return {
 		data,
-		postData
+		postData,
 	};
 };
 

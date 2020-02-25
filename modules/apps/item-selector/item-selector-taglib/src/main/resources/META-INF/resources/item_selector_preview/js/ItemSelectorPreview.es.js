@@ -24,7 +24,7 @@ import Header from './Header.es';
 const KEY_CODE = {
 	ESC: 27,
 	LEFT: 37,
-	RIGTH: 39
+	RIGTH: 39,
 };
 
 const ItemSelectorPreview = ({
@@ -35,7 +35,7 @@ const ItemSelectorPreview = ({
 	headerTitle,
 	items,
 	uploadItemReturnType,
-	uploadItemURL
+	uploadItemURL,
 }) => {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
 	const [itemList, setItemList] = useState(items);
@@ -74,7 +74,7 @@ const ItemSelectorPreview = ({
 				container: '.sidenav-container',
 				position: 'right',
 				typeMobile: 'fixed',
-				width: '320px'
+				width: '320px',
 			});
 		}
 	}, [infoButtonRef]);
@@ -122,7 +122,7 @@ const ItemSelectorPreview = ({
 			{
 				dialog: {
 					destroyOnHide: true,
-					zIndex: editEntityBaseZIndex + 100
+					zIndex: editEntityBaseZIndex + 100,
 				},
 				id: 'Edit_' + itemTitle,
 				stack: false,
@@ -133,8 +133,8 @@ const ItemSelectorPreview = ({
 					saveFileDescription: currentItem.description,
 					saveFileName: itemTitle,
 					saveParamName: 'imageSelectorFileName',
-					saveURL: uploadItemURL
-				}
+					saveURL: uploadItemURL,
+				},
 			},
 			handleSaveEdit
 		);
@@ -201,16 +201,16 @@ const ItemSelectorPreview = ({
 					data: [
 						{
 							key: Liferay.Language.get('format'),
-							value: itemData.type
+							value: itemData.type,
 						},
 						{
 							key: Liferay.Language.get('name'),
-							value: itemData.title
-						}
+							value: itemData.title,
+						},
 					],
-					title: Liferay.Language.get('file-info')
-				}
-			]
+					title: Liferay.Language.get('file-info'),
+				},
+			],
 		};
 
 		const editedItem = {
@@ -218,7 +218,7 @@ const ItemSelectorPreview = ({
 			returntype: uploadItemReturnType,
 			title: itemData.title,
 			url: itemData.url,
-			value: itemData.resolvedValue
+			value: itemData.resolvedValue,
 		};
 
 		const updatedItemList = [...itemList, editedItem];
@@ -283,11 +283,11 @@ ItemSelectorPreview.propTypes = {
 			returntype: PropTypes.string.isRequired,
 			title: PropTypes.string.isRequired,
 			url: PropTypes.string,
-			value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+			value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		})
 	).isRequired,
 	uploadItemReturnType: PropTypes.string,
-	uploadItemURL: PropTypes.string
+	uploadItemURL: PropTypes.string,
 };
 
 export default ItemSelectorPreview;

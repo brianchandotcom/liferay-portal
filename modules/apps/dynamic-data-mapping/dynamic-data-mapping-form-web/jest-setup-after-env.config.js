@@ -14,6 +14,6 @@
 
 Liferay.DDM = {
 	FormSettings: {
-		spritemap: '/lexicon/icons.svg'
-	}
+		spritemap: '/lexicon/icons.svg',
+	},
 };

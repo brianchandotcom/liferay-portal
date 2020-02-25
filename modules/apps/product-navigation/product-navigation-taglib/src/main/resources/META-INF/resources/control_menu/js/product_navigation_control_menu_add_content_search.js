@@ -45,13 +45,13 @@ AUI.add(
 				var instance = this;
 
 				var contentSearch = new Liferay.SearchFilter({
-					inputNode: instance.get('inputNode')
+					inputNode: instance.get('inputNode'),
 				});
 
 				instance._search = contentSearch;
 
 				instance._bindUISearch();
-			}
+			},
 		};
 
 		Liferay.ControlMenu.AddContentSearch = AddContentSearch;
@@ -61,7 +61,7 @@ AUI.add(
 		requires: [
 			'aui-base',
 			'liferay-product-navigation-control-menu',
-			'liferay-search-filter'
-		]
+			'liferay-search-filter',
+		],
 	}
 );

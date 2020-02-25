@@ -66,6 +66,6 @@ beforeEach(() => {
 			Liferay[name] = {};
 
 			return Liferay[name];
-		}
+		},
 	};
 });

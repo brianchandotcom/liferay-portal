@@ -89,7 +89,7 @@
 					'/pushnotifications.pushnotificationsdevice/send-push-notification',
 					{
 						payload: message.value,
-						toUserIds: []
+						toUserIds: [],
 					},
 					onSendPushNotification
 				);

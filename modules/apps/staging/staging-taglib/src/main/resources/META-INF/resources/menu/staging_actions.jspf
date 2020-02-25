@@ -42,11 +42,11 @@
 									if (!event.newVal) {
 										instance.destroy();
 									}
-								}
-							}
+								},
+							},
 						},
 						title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-						uri: publishGlobalLink.getAttribute('href')
+						uri: publishGlobalLink.getAttribute('href'),
 					});
 				});
 			}
@@ -239,11 +239,11 @@
 										if (!event.newVal) {
 											instance.destroy();
 										}
-									}
-								}
+									},
+								},
 							},
 							title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-							uri: publishLink.getAttribute('href')
+							uri: publishLink.getAttribute('href'),
 						});
 					});
 				}
@@ -261,16 +261,16 @@
 								after: {
 									destroy: function(event) {
 										window.location.reload();
-									}
+									},
 								},
-								destroyOnHide: true
+								destroyOnHide: true,
 							},
 							dialogIframe: {
-								bodyCssClass: 'dialog-with-footer'
+								bodyCssClass: 'dialog-with-footer',
 							},
 							id: '<portlet:namespace />publishLatestChangesDialog',
 							title: '<%= UnicodeFormatter.toString(publishMessage) %>',
-							uri: publishToLiveLink.getAttribute('href')
+							uri: publishToLiveLink.getAttribute('href'),
 						});
 					});
 				}
@@ -315,12 +315,12 @@
 
 						Liferay.Util.openWindow({
 							dialog: {
-								width: 820
+								width: 820,
 							},
 							id: '<portlet:namespace />layoutSetBranches',
 							title:
 								'<%= UnicodeLanguageUtil.get(request, "manage-site-pages-variations") %>',
-							uri: layoutSetBranchesLink.getAttribute('href')
+							uri: layoutSetBranchesLink.getAttribute('href'),
 						});
 					});
 				}

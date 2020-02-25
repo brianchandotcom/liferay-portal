@@ -156,7 +156,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 						{
 							dialog: {
 								constrain: true,
-								modal: true
+								modal: true,
 							},
 
 							<%
@@ -177,7 +177,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 							selectRegularRoleURL.setWindowState(LiferayWindowState.POP_UP);
 							%>
 
-							uri: '<%= selectRegularRoleURL.toString() %>'
+							uri: '<%= selectRegularRoleURL.toString() %>',
 						},
 						function(event) {
 							<portlet:namespace />selectRole(
@@ -432,7 +432,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 						{
 							dialog: {
 								constrain: true,
-								modal: true
+								modal: true,
 							},
 
 							<%
@@ -456,7 +456,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 							selectOrganizationRoleURL.setWindowState(LiferayWindowState.POP_UP);
 							%>
 
-							uri: '<%= selectOrganizationRoleURL.toString() %>'
+							uri: '<%= selectOrganizationRoleURL.toString() %>',
 						},
 						function(event) {
 							<portlet:namespace />selectRole(
@@ -655,7 +655,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 						{
 							dialog: {
 								constrain: true,
-								modal: true
+								modal: true,
 							},
 
 							<%
@@ -678,7 +678,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 							selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
 							%>
 
-							uri: '<%= selectSiteRoleURL.toString() %>'
+							uri: '<%= selectSiteRoleURL.toString() %>',
 						},
 						function(event) {
 							<portlet:namespace />selectRole(

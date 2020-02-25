@@ -36,7 +36,7 @@ function Comparator({
 	previousVersion,
 	resourceURL,
 	sourceVersion,
-	targetVersion
+	targetVersion,
 }) {
 	const isMounted = useIsMounted();
 
@@ -195,7 +195,7 @@ function Comparator({
 						<div className="col-md-8 diff-target-selector">
 							<Selector
 								label={sub(Liferay.Language.get('version-x'), [
-									targetVersion
+									targetVersion,
 								])}
 								selectedVersion={nextVersion}
 								uniqueVersionLabel={Liferay.Language.get(

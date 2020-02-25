@@ -46,7 +46,7 @@
 		th: '_handleTableHeader',
 		tr: '_handleTableRow',
 		u: '_handleUnderline',
-		ul: '_handleUnorderedList'
+		ul: '_handleUnorderedList',
 	};
 
 	var MAP_IMAGE_ATTRIBUTES = [
@@ -60,11 +60,11 @@
 		'longdesc',
 		'style',
 		'title',
-		'width'
+		'width',
 	];
 
 	var MAP_LINK_HANDLERS = {
-		0: 'email'
+		0: 'email',
 	};
 
 	var NEW_LINE = '\n';
@@ -927,7 +927,7 @@
 				var converterConfig = {
 					emoticonImages: editorConfig.smiley_images,
 					emoticonPath: editorConfig.smiley_path,
-					emoticonSymbols: editorConfig.smiley_symbols
+					emoticonSymbols: editorConfig.smiley_symbols,
 				};
 
 				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML(
@@ -951,7 +951,7 @@
 			}
 
 			return data;
-		}
+		},
 	};
 
 	CKEDITOR.plugins.add('bbcode_data_processor', {
@@ -961,6 +961,6 @@
 			editor.fire('customDataProcessorLoaded');
 		},
 
-		requires: ['htmlwriter']
+		requires: ['htmlwriter'],
 	});
 })();

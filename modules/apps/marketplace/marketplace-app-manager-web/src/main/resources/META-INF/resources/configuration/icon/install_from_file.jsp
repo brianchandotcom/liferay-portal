@@ -26,11 +26,11 @@
 	function <portlet:namespace />uploadUrlLink() {
 		Liferay.Util.openWindow({
 			dialog: {
-				destroyOnHide: true
+				destroyOnHide: true,
 			},
 			title: '<liferay-ui:message key="upload" />',
 			uri:
-				'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/install_local_app.jsp" /></liferay-portlet:renderURL>'
+				'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/install_local_app.jsp" /></liferay-portlet:renderURL>',
 		});
 	}
 </aui:script>

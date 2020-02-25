@@ -64,13 +64,13 @@ export default function PageContent(props) {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				modal: true
+				modal: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
 			title,
-			uri
+			uri,
 		});
 	};
 
@@ -78,7 +78,7 @@ export default function PageContent(props) {
 		setIsHovered(true);
 
 		hoverItem(`${props.classNameId}-${props.classPK}`, {
-			itemType: ITEM_TYPES.mappedContent
+			itemType: ITEM_TYPES.mappedContent,
 		});
 	};
 
@@ -90,7 +90,7 @@ export default function PageContent(props) {
 	return (
 		<li
 			className={classNames('page-editor__contents__page-content', {
-				'page-editor__contents__page-content--mapped-item-hovered': isHovered
+				'page-editor__contents__page-content--mapped-item-hovered': isHovered,
 			})}
 			onMouseLeave={handleMouseLeave}
 			onMouseOver={handleMouseOver}
@@ -188,8 +188,8 @@ PageContent.propTypes = {
 	status: PropTypes.shape({
 		hasApprovedVersion: PropTypes.bool,
 		label: PropTypes.string,
-		style: PropTypes.string
+		style: PropTypes.string,
 	}),
 	title: PropTypes.string.isRequired,
-	usagesCount: PropTypes.number.isRequired
+	usagesCount: PropTypes.number.isRequired,
 };

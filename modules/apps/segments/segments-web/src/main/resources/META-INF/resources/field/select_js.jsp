@@ -46,14 +46,14 @@ String selectEventName = ParamUtil.getString(request, "selectEventName");
 
 			selectedData.push({
 				id: data.id,
-				name: data.name
+				name: data.name,
 			});
 		});
 
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escape(selectEventName) %>',
 			{
-				data: selectedData.length ? selectedData : null
+				data: selectedData.length ? selectedData : null,
 			}
 		);
 	});

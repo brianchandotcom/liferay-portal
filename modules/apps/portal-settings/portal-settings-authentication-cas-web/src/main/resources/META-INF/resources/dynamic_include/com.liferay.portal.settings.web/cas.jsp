@@ -88,14 +88,14 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 
 			var dialog = Liferay.Util.Window.getWindow({
 				dialog: {
-					destroyOnHide: true
+					destroyOnHide: true,
 				},
-				title: '<%= UnicodeLanguageUtil.get(request, "cas") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "cas") %>',
 			});
 
 			dialog.plug(A.Plugin.IO, {
 				data: data,
-				uri: url
+				uri: url,
 			});
 		},
 		['aui-io-plugin-deprecated', 'liferay-util-window']

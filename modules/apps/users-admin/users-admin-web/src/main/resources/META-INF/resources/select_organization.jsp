@@ -140,7 +140,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 	var openingLiferay = Util.getOpener().Liferay;
 
 	openingLiferay.fire('<portlet:namespace />enableRemovedOrganizations', {
-		selectors: A.all('.selector-button:disabled')
+		selectors: A.all('.selector-button:disabled'),
 	});
 
 	Util.selectEntityHandler(

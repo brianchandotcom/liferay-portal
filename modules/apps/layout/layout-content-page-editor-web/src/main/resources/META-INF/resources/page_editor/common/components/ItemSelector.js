@@ -27,7 +27,7 @@ export default function ItemSelector({
 	itemSelectorURL,
 	label,
 	onItemSelect,
-	selectedItemTitle
+	selectedItemTitle,
 }) {
 	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
 	const [active, setActive] = useState(false);
@@ -112,5 +112,5 @@ ItemSelector.propTypes = {
 	itemSelectorURL: PropTypes.string,
 	label: PropTypes.string,
 	onItemSelect: PropTypes.func.isRequired,
-	selectedItemTitle: PropTypes.string
+	selectedItemTitle: PropTypes.string,
 };

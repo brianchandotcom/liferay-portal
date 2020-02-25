@@ -119,12 +119,12 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 			closeable: true,
 			delay: {
 				hide: 5000,
-				show: 0
+				show: 0,
 			},
 			duration: 500,
 			message: message,
 			title: Liferay.Language.get('warning'),
-			type: 'warning'
+			type: 'warning',
 		}).render('body');
 	};
 
@@ -150,7 +150,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 				height: 600,
 				mode: 'xml',
 				tabSize: 4,
-				width: 600
+				width: 600,
 			}).render();
 		}
 
@@ -273,8 +273,8 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 			defaultLocale: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
 			localesMap: <%= localesMapJSONObject.toString() %>,
 			srcNode:
-				'#<portlet:namespace />translationManager .lfr-translation-manager-content'
-		}
+				'#<portlet:namespace />translationManager .lfr-translation-manager-content',
+		},
 	}).render();
 
 	var dialog = Liferay.Util.getWindow();
@@ -331,6 +331,6 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 	});
 
 	Liferay.fire('<portlet:namespace />formBuilderLoaded', {
-		formBuilder: formBuilder
+		formBuilder: formBuilder,
 	});
 </aui:script>

@@ -21,11 +21,11 @@ const instance = {
 	assetType: 'Blog',
 	assigneeUsers: [{id: 20124, name: 'Test Test'}],
 	creatorUser: {
-		name: 'User 1'
+		name: 'User 1',
 	},
 	dateCreated: new Date('2019-01-01'),
 	id: 1,
-	taskNames: ['Review', 'Update']
+	taskNames: ['Review', 'Update'],
 };
 
 let selectedItems = [];
@@ -38,13 +38,13 @@ const instanceContextValue = {
 	selectedItems,
 	setInstanceId: jest.fn(),
 	setSelectAll: jest.fn(),
-	setSelectedItems
+	setSelectedItems,
 };
 
 const modalContextValue = {
 	setInstanceDetailsModal: jest.fn(),
 	setSingleModal: jest.fn(),
-	singleModal: false
+	singleModal: false,
 };
 
 describe('The instance list item should', () => {
@@ -142,7 +142,7 @@ describe('The InstanceListPageItem quick action menu should', () => {
 		assetType: 'Blog',
 		dateCreated: new Date('2019-01-01'),
 		id: 1,
-		taskNames: ['Review']
+		taskNames: ['Review'],
 	};
 
 	test('set modal visualization by clicking the reassign task button', () => {
@@ -169,7 +169,7 @@ describe('The InstanceListPageItem instance checkbox component should', () => {
 		assetType: 'Blog',
 		dateCreated: new Date('2019-01-01'),
 		id: 1,
-		taskNames: ['Review']
+		taskNames: ['Review'],
 	};
 
 	test('Set checkbox value by clicking it', () => {

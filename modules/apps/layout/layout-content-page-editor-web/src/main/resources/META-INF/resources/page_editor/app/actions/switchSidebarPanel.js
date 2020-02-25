@@ -18,6 +18,6 @@ export default function switchSidebarPanel({sidebarOpen, sidebarPanelId}) {
 	return {
 		sidebarOpen,
 		sidebarPanelId,
-		type: SWITCH_SIDEBAR_PANEL
+		type: SWITCH_SIDEBAR_PANEL,
 	};
 }

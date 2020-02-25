@@ -36,7 +36,7 @@ class SLAListCard extends React.Component {
 			requestError: false,
 			showConfirmDialog: false,
 			showSLAsUpdatingAlert: false,
-			totalCount: 0
+			totalCount: 0,
 		};
 
 		this.slaContextState = {
@@ -44,7 +44,7 @@ class SLAListCard extends React.Component {
 				this.setConfirmDialogVisibility(null, false),
 			removeItem: this.removeItem.bind(this),
 			showConfirmDialog: (id, callback) =>
-				this.setConfirmDialogVisibility(id, true, callback)
+				this.setConfirmDialogVisibility(id, true, callback),
 		};
 	}
 
@@ -70,7 +70,7 @@ class SLAListCard extends React.Component {
 		this.requestData({
 			page,
 			pageSize,
-			processId
+			processId,
 		});
 	}
 
@@ -82,7 +82,7 @@ class SLAListCard extends React.Component {
 			.get(`/processes/${processId}/slas?page=1&pageSize=1&status=2`)
 			.then(({data: {totalCount: blockedSLACount}}) => {
 				this.setState({
-					blockedSLACount
+					blockedSLACount,
 				});
 			});
 	}
@@ -100,7 +100,7 @@ class SLAListCard extends React.Component {
 
 		this.setState({
 			itemToRemove: null,
-			showConfirmDialog: false
+			showConfirmDialog: false,
 		});
 	}
 
@@ -108,7 +108,7 @@ class SLAListCard extends React.Component {
 		this.setState(
 			{
 				itemToRemove: id,
-				showConfirmDialog: visible
+				showConfirmDialog: visible,
 			},
 			callback
 		);
@@ -149,7 +149,7 @@ class SLAListCard extends React.Component {
 				this.requestOriginType = REQUEST_ORIGIN_TYPE_FETCH;
 				this.setState({
 					items,
-					totalCount
+					totalCount,
 				});
 			})
 			.catch(() => {
@@ -166,7 +166,7 @@ class SLAListCard extends React.Component {
 			requestError,
 			showConfirmDialog,
 			showSLAsUpdatingAlert,
-			totalCount
+			totalCount,
 		} = this.state;
 		const {page, pageSize, processId} = this.props;
 		const emptyMessageText = Liferay.Language.get(

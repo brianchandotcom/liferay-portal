@@ -180,7 +180,7 @@ class Analytics {
 
 			result = Promise.race([
 				this._getUserId().then(userId => instance._sendData(userId)),
-				this._timeout(REQUEST_TIMEOUT)
+				this._timeout(REQUEST_TIMEOUT),
 			])
 				.then(() => {
 					const events = this.events.filter(
@@ -326,7 +326,7 @@ class Analytics {
 				applicationId,
 				eventProps,
 				currentContextHash
-			)
+			),
 		];
 	}
 
@@ -419,7 +419,7 @@ class Analytics {
 		const bodyData = {
 			dataSourceId,
 			identity,
-			userId
+			userId,
 		};
 
 		return hash(bodyData);
@@ -536,7 +536,7 @@ class Analytics {
 			const body = JSON.stringify({
 				dataSourceId,
 				identity,
-				userId
+				userId,
 			});
 			const headers = new Headers();
 
@@ -548,7 +548,7 @@ class Analytics {
 				credentials: 'same-origin',
 				headers,
 				method: 'POST',
-				mode: 'cors'
+				mode: 'cors',
 			};
 
 			identyHash = fetch(this.identityEndpoint, request).then(
@@ -579,7 +579,7 @@ class Analytics {
 			eventDate,
 			eventId,
 			eventLocalDate,
-			properties
+			properties,
 		};
 	}
 
@@ -630,7 +630,7 @@ class Analytics {
 // Exposes Analytics.create to the global scope
 
 ENV.Analytics = {
-	create: Analytics.create
+	create: Analytics.create,
 };
 
 export {Analytics};

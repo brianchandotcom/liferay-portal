@@ -24,7 +24,7 @@ describe('Footer', () => {
 		const props = {
 			currentIndex: 0,
 			title: 'test image.jpeg',
-			totalItems: 1
+			totalItems: 1,
 		};
 
 		const {asFragment} = render(<Footer {...props} />);

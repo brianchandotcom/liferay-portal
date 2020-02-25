@@ -24,7 +24,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			mainFieldName: 'name',
 			mainFieldPlaceholder: Liferay.Language.get('name'),
 			namespace: this.namespace,
-			spritemap: this.spritemap
+			spritemap: this.spritemap,
 		});
 	}
 
@@ -55,12 +55,12 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				dialog: {
 					constrain: true,
 					destroyOnHide: true,
-					modal: true
+					modal: true,
 				},
 				eventName: this.ns('selectFragmentCollection'),
 				id: this.ns('selectFragmentCollection'),
 				title: Liferay.Language.get('select-collection'),
-				uri: this.selectFragmentCollectionURL
+				uri: this.selectFragmentCollectionURL,
 			},
 			selectedItem => {
 				if (selectedItem) {
@@ -105,12 +105,12 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				dialog: {
 					constrain: true,
 					destroyOnHide: true,
-					modal: true
+					modal: true,
 				},
 				eventName: this.ns('selectFragmentCollection'),
 				id: this.ns('selectFragmentCollection'),
 				title: Liferay.Language.get('select-collection'),
-				uri: this.selectFragmentCollectionURL
+				uri: this.selectFragmentCollectionURL,
 			},
 			selectedItem => {
 				if (selectedItem) {
@@ -135,7 +135,7 @@ ManagementToolbarDefaultEventHandler.STATE = {
 	fragmentCollectionId: Config.string(),
 	moveFragmentEntryURL: Config.string(),
 	selectFragmentCollectionURL: Config.string(),
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export default ManagementToolbarDefaultEventHandler;

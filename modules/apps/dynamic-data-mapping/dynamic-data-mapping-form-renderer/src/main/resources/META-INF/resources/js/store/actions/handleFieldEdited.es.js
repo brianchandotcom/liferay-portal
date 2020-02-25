@@ -27,9 +27,9 @@ export default (evaluatorContext, properties, updateState) => {
 				...field,
 				localizedValue: {
 					...field.localizedValue,
-					[editingLanguageId]: value
+					[editingLanguageId]: value,
 				},
-				value
+				value,
 			};
 		}
 		else if (field.nestedFields) {
@@ -41,14 +41,14 @@ export default (evaluatorContext, properties, updateState) => {
 							...nestedField,
 							localizedValue: {
 								...field.localizedValue,
-								[editingLanguageId]: value
+								[editingLanguageId]: value,
 							},
-							value
+							value,
 						};
 					}
 
 					return nestedField;
-				})
+				}),
 			};
 		}
 
@@ -62,7 +62,7 @@ export default (evaluatorContext, properties, updateState) => {
 	if (evaluable) {
 		promise = evaluate(fieldName, {
 			...evaluatorContext,
-			pages: editedPages
+			pages: editedPages,
 		});
 	}
 

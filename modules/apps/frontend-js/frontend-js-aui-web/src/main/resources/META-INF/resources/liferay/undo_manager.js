@@ -56,8 +56,8 @@ AUI.add(
 		var UndoManager = A.Component.create({
 			ATTRS: {
 				location: {
-					value: 'top'
-				}
+					value: 'top',
+				},
 			},
 
 			NAME: 'undomanager',
@@ -124,13 +124,13 @@ AUI.add(
 					if (Lang.isFunction(handler)) {
 						var undo = {
 							handler,
-							stateData
+							stateData,
 						};
 
 						instance._undoCache.insert(0, undo);
 
 						var eventData = {
-							undo
+							undo,
 						};
 
 						instance.fire('update', eventData);
@@ -221,14 +221,14 @@ AUI.add(
 
 					instance.fire('update');
 					instance.fire('undo');
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.UndoManager = UndoManager;
 	},
 	'',
 	{
-		requires: ['aui-data-set-deprecated', 'base']
+		requires: ['aui-data-set-deprecated', 'base'],
 	}
 );

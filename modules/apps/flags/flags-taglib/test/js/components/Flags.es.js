@@ -17,7 +17,7 @@ import {
 	cleanup,
 	fireEvent,
 	render,
-	waitForElement
+	waitForElement,
 } from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
@@ -28,7 +28,7 @@ const formDataToObject = formData =>
 	Array.from(formData).reduce(
 		(memo, [key, val]) => ({
 			...memo,
-			[key]: val
+			[key]: val,
 		}),
 		{}
 	);
@@ -40,7 +40,7 @@ function _renderFlagsComponent({
 	pathTermsOfUse = '/',
 	reasons = {value: 'text', value2: 'text2'},
 	signedIn = false,
-	uri = '//'
+	uri = '//',
 } = {}) {
 	return render(
 		<Flags
@@ -53,7 +53,7 @@ function _renderFlagsComponent({
 			uri={uri}
 		/>,
 		{
-			baseElement: document.body
+			baseElement: document.body,
 		}
 	);
 }
@@ -77,8 +77,8 @@ describe('Flags', () => {
 	it('submits a report successfully with baseData', async () => {
 		const {getByRole} = _renderFlagsComponent({
 			baseData: {
-				testingField: 'testingValue'
-			}
+				testingField: 'testingValue',
+			},
 		});
 		fetch.mockResponse('');
 

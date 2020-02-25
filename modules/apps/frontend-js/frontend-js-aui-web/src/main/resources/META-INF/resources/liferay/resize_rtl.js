@@ -31,6 +31,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['resize-base']
+		requires: ['resize-base'],
 	}
 );

@@ -29,12 +29,12 @@
 							'liferay-portlet-base',
 							'liferay-product-navigation-control-menu',
 							'liferay-util-window',
-							'liferay-widget-size-animation-plugin'
-						]
-					}
+							'liferay-widget-size-animation-plugin',
+						],
+					},
 				},
-				root: MODULE_PATH + '/js/'
-			}
-		}
+				root: MODULE_PATH + '/js/',
+			},
+		},
 	});
 })();

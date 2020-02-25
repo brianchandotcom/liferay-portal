@@ -18,7 +18,7 @@ import AppContext, {createReducer, initialState} from './AppContext.es';
 import {
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT,
-	UPDATE_IDS
+	UPDATE_IDS,
 } from './actions.es';
 import {getItem} from './utils/client.es';
 
@@ -26,7 +26,7 @@ export default ({
 	children,
 	dataDefinitionId,
 	dataLayoutBuilder,
-	dataLayoutId
+	dataLayoutId,
 }) => {
 	const reducer = createReducer(dataLayoutBuilder);
 	const [state, dispatch] = useReducer(reducer, initialState);
@@ -35,9 +35,9 @@ export default ({
 		dispatch({
 			payload: {
 				dataDefinitionId,
-				dataLayoutId
+				dataLayoutId,
 			},
-			type: UPDATE_IDS
+			type: UPDATE_IDS,
 		});
 	}, [dataDefinitionId, dataLayoutId, dispatch]);
 
@@ -47,7 +47,7 @@ export default ({
 				dataLayout =>
 					dispatch({
 						payload: {dataLayout},
-						type: UPDATE_DATA_LAYOUT
+						type: UPDATE_DATA_LAYOUT,
 					})
 			);
 		}
@@ -60,7 +60,7 @@ export default ({
 			).then(dataDefinition =>
 				dispatch({
 					payload: {dataDefinition},
-					type: UPDATE_DATA_DEFINITION
+					type: UPDATE_DATA_DEFINITION,
 				})
 			);
 		}

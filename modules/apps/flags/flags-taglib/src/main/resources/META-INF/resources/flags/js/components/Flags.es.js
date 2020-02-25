@@ -26,7 +26,7 @@ import {
 	STATUS_ERROR,
 	STATUS_LOGIN,
 	STATUS_REPORT,
-	STATUS_SUCCESS
+	STATUS_SUCCESS,
 } from '../constants.es';
 import FlagsModal from './FlagsModal.es';
 
@@ -40,7 +40,7 @@ const Flags = ({
 	pathTermsOfUse,
 	reasons,
 	signedIn = false,
-	uri
+	uri,
 }) => {
 	const [isSending, setIsSending] = useState(false);
 	const [reportDialogOpen, setReportDialogOpen] = useState(false);
@@ -98,7 +98,7 @@ const Flags = ({
 
 		const formDataObj = {
 			...baseData,
-			[`${namespace}reason`]: getReason()
+			[`${namespace}reason`]: getReason(),
 		};
 
 		if (!signedIn) {
@@ -109,7 +109,7 @@ const Flags = ({
 
 		fetch(uri, {
 			body: objectToFormData(formDataObj),
-			method: 'post'
+			method: 'post',
 		})
 			.then(({status}) => {
 				if (isMounted()) {
@@ -129,7 +129,7 @@ const Flags = ({
 	};
 
 	const {observer, onClose} = useModal({
-		onClose: handleClickClose
+		onClose: handleClickClose,
 	});
 
 	return (
@@ -184,7 +184,7 @@ Flags.propTypes = {
 	pathTermsOfUse: PropTypes.string.isRequired,
 	reasons: PropTypes.object.isRequired,
 	signedIn: PropTypes.bool,
-	uri: PropTypes.string.isRequired
+	uri: PropTypes.string.isRequired,
 };
 
 export default Flags;

@@ -14,7 +14,7 @@
 
 import {
 	CONJUNCTIONS,
-	RELATIONAL_OPERATORS
+	RELATIONAL_OPERATORS,
 } from '../../src/main/resources/META-INF/resources/js/utils/constants.es';
 
 const {AND, OR} = CONJUNCTIONS;
@@ -27,7 +27,7 @@ function generateItems(times) {
 		items.push({
 			operatorName: EQ,
 			propertyName: 'firstName',
-			value: 'test'
+			value: 'test',
 		});
 	}
 
@@ -38,7 +38,7 @@ export function mockCriteria(numOfItems) {
 	return {
 		conjunctionName: AND,
 		groupId: 'group_01',
-		items: generateItems(numOfItems)
+		items: generateItems(numOfItems),
 	};
 }
 
@@ -58,15 +58,15 @@ export function mockCriteriaNested() {
 							{
 								conjunctionName: OR,
 								groupId: 'group_04',
-								items: generateItems(2)
+								items: generateItems(2),
 							},
-							...generateItems(1)
-						]
+							...generateItems(1),
+						],
 					},
-					...generateItems(1)
-				]
+					...generateItems(1),
+				],
 			},
-			...generateItems(1)
-		]
+			...generateItems(1),
+		],
 	};
 }

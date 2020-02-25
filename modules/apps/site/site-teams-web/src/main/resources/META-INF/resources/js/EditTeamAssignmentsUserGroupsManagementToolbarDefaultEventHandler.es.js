@@ -20,7 +20,7 @@ class EditTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler extends 
 		const itemSelectorDialog = new ItemSelectorDialog({
 			eventName: this.ns('selectUserGroup'),
 			title: itemData.title,
-			url: itemData.selectUserGroupURL
+			url: itemData.selectUserGroupURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {

@@ -20,25 +20,25 @@ import LayoutService from '../services/LayoutService';
 export default function updateItemConfig({
 	itemConfig,
 	itemId,
-	segmentsExperienceId
+	segmentsExperienceId,
 }) {
 	return dispatch =>
 		LayoutService.updateItemConfig({
 			itemConfig,
 			itemId,
 			onNetworkStatus: dispatch,
-			segmentsExperienceId
+			segmentsExperienceId,
 		})
 			.then(layoutData => {
 				dispatch(updateLayoutData({layoutData}));
 			})
 			.then(() => {
 				InfoItemService.getPageContents({
-					onNetworkStatus: dispatch
+					onNetworkStatus: dispatch,
 				}).then(pageContents => {
 					dispatch(
 						updatePageContents({
-							pageContents
+							pageContents,
 						})
 					);
 				});

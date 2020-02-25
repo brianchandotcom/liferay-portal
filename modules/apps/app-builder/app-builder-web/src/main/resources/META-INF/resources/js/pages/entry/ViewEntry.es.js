@@ -27,7 +27,7 @@ import ViewEntryUpperToolbar from './ViewEntryUpperToolbar.es';
 const ViewDataLayoutPageValues = ({
 	dataDefinition,
 	dataLayoutPage,
-	dataRecordValues
+	dataRecordValues,
 }) => {
 	const {dataLayoutRows} = dataLayoutPage;
 
@@ -38,7 +38,7 @@ const ViewDataLayoutPageValues = ({
 				...dataLayoutColumns.reduce(
 					(fields, {fieldNames = []}) => [...fields, ...fieldNames],
 					[]
-				)
+				),
 			],
 			[]
 		)
@@ -56,8 +56,8 @@ export default withRouter(
 	({
 		history,
 		match: {
-			params: {entryIndex}
-		}
+			params: {entryIndex},
+		},
 	}) => {
 		const {basePortletURL, dataDefinitionId, dataLayoutId} = useContext(
 			AppContext
@@ -69,13 +69,13 @@ export default withRouter(
 		const [{dataRecord, page, total}, setResults] = useState({
 			dataRecord: {},
 			page: 1,
-			total: 0
+			total: 0,
 		});
 
 		const [query] = useQuery(history, {
 			keywords: '',
 			page: 1,
-			sort: ''
+			sort: '',
 		});
 
 		useEffect(() => {
@@ -88,7 +88,7 @@ export default withRouter(
 						setResults({
 							dataRecord: items.pop(),
 							page,
-							total: totalCount
+							total: totalCount,
 						});
 					}
 				}),
@@ -97,7 +97,7 @@ export default withRouter(
 				).then(dataDefinition => setDataDefinition(dataDefinition)),
 				getItem(
 					`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`
-				).then(dataLayout => setDataLayout(dataLayout))
+				).then(dataLayout => setDataLayout(dataLayout)),
 			]).then(() => setLoading(false));
 		}, [dataDefinitionId, dataLayoutId, entryIndex, query]);
 
@@ -106,13 +106,13 @@ export default withRouter(
 
 		const onDelete = () => {
 			confirmDelete('/o/data-engine/v2.0/data-records/')({
-				id: dataRecord.id
+				id: dataRecord.id,
 			}).then(confirmed => {
 				if (confirmed) {
 					openToast({
 						message: Liferay.Language.get('an-entry-was-deleted'),
 						title: Liferay.Language.get('success'),
-						type: 'success'
+						type: 'success',
 					});
 
 					history.push('/');
@@ -127,7 +127,7 @@ export default withRouter(
 					dataLayoutId: dataLayout.id,
 					dataRecordId: dataRecord.id,
 					mvcPath: '/edit_entry.jsp',
-					redirect: location.href
+					redirect: location.href,
 				})
 			);
 		};

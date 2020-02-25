@@ -47,7 +47,7 @@ describe('MarkerBase', () => {
 				1
 			);
 			expect(markerChild._getNormalizedEventData.mock.calls[0]).toEqual([
-				{name: 'NativeEvent'}
+				{name: 'NativeEvent'},
 			]);
 		});
 
@@ -70,7 +70,7 @@ describe('MarkerBase', () => {
 			expect(markerChild.emit).toHaveBeenCalledTimes(1);
 			expect(markerChild.emit.mock.calls[0][1]).toEqual({
 				name: 'NormalizedEventData',
-				nativeEvent: {name: 'NativeEvent'}
+				nativeEvent: {name: 'NativeEvent'},
 			});
 		});
 	});
@@ -97,7 +97,7 @@ describe('MarkerBase', () => {
 
 			expect(markerChild._handleNativeEvent).toHaveBeenCalledTimes(1);
 			expect(markerChild._handleNativeEvent.mock.calls[0][0]).toEqual({
-				name: 'AwesomeNativeEvent'
+				name: 'AwesomeNativeEvent',
 			});
 		});
 

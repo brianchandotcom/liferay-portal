@@ -38,7 +38,7 @@ export default function({namespace}) {
 		previewSeoFireChange(namespace, {
 			disabled,
 			type: 'url',
-			value: canonicalURLField.value
+			value: canonicalURLField.value,
 		});
 	});
 }

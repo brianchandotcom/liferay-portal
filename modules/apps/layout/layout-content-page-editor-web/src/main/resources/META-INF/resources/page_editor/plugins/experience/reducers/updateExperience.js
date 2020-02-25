@@ -29,9 +29,9 @@ function updateExperienceReducer(state, payload) {
 				...nextState.availableSegmentsExperiences,
 				[experience.segmentsExperienceId]: {
 					...updatedExperience,
-					priority: experience.priority
-				}
-			}
+					priority: experience.priority,
+				},
+			},
 		};
 	}
 

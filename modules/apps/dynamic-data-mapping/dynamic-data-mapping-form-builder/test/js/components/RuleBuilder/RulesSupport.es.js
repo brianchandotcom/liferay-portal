@@ -17,12 +17,12 @@ import RulesSupport from '../../../src/main/resources/META-INF/resources/js/comp
 const mockActions = [
 	{
 		action: 'show',
-		target: 'text1'
+		target: 'text1',
 	},
 	{
 		action: 'enable',
-		target: 'text2'
-	}
+		target: 'text2',
+	},
 ];
 
 const mockConditions = [
@@ -30,15 +30,15 @@ const mockConditions = [
 		operands: [
 			{
 				type: 'show',
-				value: 'text1'
+				value: 'text1',
 			},
 			{
 				type: 'enable',
-				value: 'text2'
-			}
+				value: 'text2',
+			},
 		],
-		operator: 'isEmpty'
-	}
+		operator: 'isEmpty',
+	},
 ];
 
 describe('RulesSupport', () => {

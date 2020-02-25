@@ -43,7 +43,7 @@ describe('DateInput', () => {
 			newValue: '2019-01-24',
 			newValueExpected: '2019-01-24',
 			newValueOnChange: '2019-01-24',
-			value: defaultNumberValue
+			value: defaultNumberValue,
 		});
 	});
 
@@ -68,7 +68,7 @@ describe('DateInput', () => {
 			newValue: '2019-01-XX',
 			newValueExpected: date,
 			newValueOnChange: date,
-			value: defaultNumberValue
+			value: defaultNumberValue,
 		});
 	});
 });

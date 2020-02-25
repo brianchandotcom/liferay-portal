@@ -193,21 +193,21 @@ catch (NoSuchFolderException nsfe) {
 										constrain: true,
 										destroyOnHide: true,
 										modal: true,
-										width: 830
+										width: 830,
 									},
 									id:
 										'<%= HtmlUtil.escapeJS(PortalUtil.getPortletNamespace(portletResource)) %>selectFolder',
 									title:
 										'<liferay-ui:message arguments="folder" key="select-x" />',
 									uri:
-										'<liferay-portlet:renderURL portletName="<%= portletResource %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
+										'<liferay-portlet:renderURL portletName="<%= portletResource %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>',
 								},
 								function(event) {
 									var folderData = {
 										idString: 'rootFolderId',
 										idValue: event.entityid,
 										nameString: 'rootFolderName',
-										nameValue: event.entityname
+										nameValue: event.entityname,
 									};
 
 									Liferay.Util.selectFolder(folderData, '<portlet:namespace />');

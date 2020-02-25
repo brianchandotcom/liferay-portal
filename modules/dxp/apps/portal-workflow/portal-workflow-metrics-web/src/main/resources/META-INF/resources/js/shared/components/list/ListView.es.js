@@ -32,7 +32,7 @@ export default class ListView extends React.Component {
 			fetching,
 			hideAnimation = false,
 			loading,
-			searching
+			searching,
 		} = this.props;
 
 		const errorRender = secondaryRender =>

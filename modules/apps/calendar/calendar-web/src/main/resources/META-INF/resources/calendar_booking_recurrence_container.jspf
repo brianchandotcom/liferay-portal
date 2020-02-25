@@ -275,7 +275,8 @@ if (recurrence != null) {
 			'<portlet:namespace />startTimeDatePicker'
 		),
 		summaryNode: '#<portlet:namespace />summary',
-		weeklyRecurrenceOptions: '#<portlet:namespace />view<%= Frequency.WEEKLY %>'
+		weeklyRecurrenceOptions:
+			'#<portlet:namespace />view<%= Frequency.WEEKLY %>',
 	});
 
 	recurrenceDialogController.saveState();
@@ -309,7 +310,7 @@ if (recurrence != null) {
 						visibleChange: A.rbind(
 							'_afterVisibilityChange',
 							recurrenceDialogController
-						)
+						),
 					},
 					bodyContent: recurrenceContainerNode,
 					centered: true,
@@ -318,16 +319,16 @@ if (recurrence != null) {
 						{
 							eventName: 'key',
 							keyCode: 'esc',
-							node: editEventFormNode
-						}
+							node: editEventFormNode,
+						},
 					],
 					id: '<portlet:namespace />recurrenceDialog',
 					modal: true,
 					render: '#<portlet:namespace />fm',
 					visible: visible,
-					width: 600
+					width: 600,
 				},
-				title: getRecurrenceDialogTitle()
+				title: getRecurrenceDialogTitle(),
 			}
 		);
 
@@ -341,15 +342,15 @@ if (recurrence != null) {
 							'_hideModal',
 							recurrenceDialogController,
 							true
-						)
-					}
+						),
+					},
 				},
 				{
 					label: '<liferay-ui:message key="cancel" />',
 					on: {
-						click: A.rbind('_hideModal', recurrenceDialogController)
-					}
-				}
+						click: A.rbind('_hideModal', recurrenceDialogController),
+					},
+				},
 			],
 			'footer'
 		);

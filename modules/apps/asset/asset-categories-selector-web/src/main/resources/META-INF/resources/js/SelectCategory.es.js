@@ -30,7 +30,7 @@ function SelectCategory({
 	itemSelectorSaveEvent,
 	multiSelection,
 	namespace,
-	nodes
+	nodes,
 }) {
 	const [filterQuery, setFilterQuery] = useState('');
 
@@ -52,7 +52,7 @@ function SelectCategory({
 					categoryId: node.vocabulary ? 0 : node.id,
 					nodePath: node.nodePath,
 					value: node.name,
-					vocabularyId: node.vocabulary ? node.id : 0
+					vocabularyId: node.vocabulary ? node.id : 0,
 				};
 			}
 		});
@@ -63,7 +63,7 @@ function SelectCategory({
 				if (!selectedNodes.has(id)) {
 					data[id] = {
 						...node,
-						unchecked: true
+						unchecked: true,
 					};
 				}
 			});

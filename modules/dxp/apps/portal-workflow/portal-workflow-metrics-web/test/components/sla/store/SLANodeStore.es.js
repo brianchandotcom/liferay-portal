@@ -23,7 +23,7 @@ test('Should test fetch', () => {
 				label: 'Approved',
 				name: 'approved',
 				terminal: true,
-				type: 'STATE'
+				type: 'STATE',
 			},
 			{
 				id: 26605,
@@ -31,7 +31,7 @@ test('Should test fetch', () => {
 				label: 'Created',
 				name: 'created',
 				terminal: false,
-				type: 'STATE'
+				type: 'STATE',
 			},
 			{
 				id: 26610,
@@ -39,7 +39,7 @@ test('Should test fetch', () => {
 				label: 'Review',
 				name: 'review',
 				terminal: false,
-				type: 'TASK'
+				type: 'TASK',
 			},
 			{
 				id: 26625,
@@ -47,32 +47,32 @@ test('Should test fetch', () => {
 				label: 'Update',
 				name: 'update',
 				terminal: false,
-				type: 'TASK'
-			}
+				type: 'TASK',
+			},
 		],
 		lastPage: 1,
 		page: 1,
 		pageSize: 4,
-		totalCount: 4
+		totalCount: 4,
 	};
 	const pauseNodeKeys = [
 		{
 			executionType: 'leave',
-			id: 26121
-		}
+			id: 26121,
+		},
 	];
 	const startNodeKeys = [
 		{
 			executionType: 'enter',
 			id: 21125,
-			type: 'TASK'
-		}
+			type: 'TASK',
+		},
 	];
 	const stopNodeKeys = [
 		{
 			executionType: 'leave',
-			id: 26625
-		}
+			id: 26625,
+		},
 	];
 	const {result, waitForNextUpdate} = renderHook(() =>
 		useSLANodes('123', client(defaultData))
@@ -85,7 +85,7 @@ test('Should test fetch', () => {
 			getPauseNodes,
 			getStartNodes,
 			getStopNodes,
-			nodes
+			nodes,
 		} = result.current;
 
 		expect(nodes.map(({id}) => id)).toMatchObject([
@@ -94,7 +94,7 @@ test('Should test fetch', () => {
 			26625,
 			26610,
 			26625,
-			26603
+			26603,
 		]);
 
 		expect(
@@ -122,7 +122,7 @@ test('Should test fetch data', () => {
 				label: 'Approved',
 				name: 'approved',
 				terminal: true,
-				type: 'STATE'
+				type: 'STATE',
 			},
 			{
 				id: 26605,
@@ -130,7 +130,7 @@ test('Should test fetch data', () => {
 				label: 'Created',
 				name: 'created',
 				terminal: false,
-				type: 'STATE'
+				type: 'STATE',
 			},
 			{
 				id: 26610,
@@ -138,7 +138,7 @@ test('Should test fetch data', () => {
 				label: 'Review',
 				name: 'review',
 				terminal: false,
-				type: 'TASK'
+				type: 'TASK',
 			},
 			{
 				id: 26625,
@@ -146,32 +146,32 @@ test('Should test fetch data', () => {
 				label: 'Update',
 				name: 'update',
 				terminal: false,
-				type: 'TASK'
-			}
+				type: 'TASK',
+			},
 		],
 		lastPage: 1,
 		page: 1,
 		pageSize: 4,
-		totalCount: 4
+		totalCount: 4,
 	};
 	const pauseNodeKeys = [
 		{
 			executionType: 'leave',
-			id: 26121
-		}
+			id: 26121,
+		},
 	];
 	const startNodeKeys = [
 		{
 			executionType: 'enter',
 			id: 21125,
-			type: 'TASK'
-		}
+			type: 'TASK',
+		},
 	];
 	const stopNodeKeys = [
 		{
 			executionType: 'leave',
-			id: 26625
-		}
+			id: 26625,
+		},
 	];
 	const {result, waitForNextUpdate} = renderHook(() =>
 		useSLANodes('123', client(defaultData))
@@ -184,7 +184,7 @@ test('Should test fetch data', () => {
 			getPauseNodes,
 			getStartNodes,
 			getStopNodes,
-			nodes
+			nodes,
 		} = result.current;
 
 		expect(nodes.map(({id}) => id)).toMatchObject([
@@ -193,7 +193,7 @@ test('Should test fetch data', () => {
 			26625,
 			26610,
 			26625,
-			26603
+			26603,
 		]);
 
 		expect(
@@ -221,7 +221,7 @@ test('Should test initial state', () => {
 				lastPage: 1,
 				page: 1,
 				pageSize: 1,
-				totalCount: 0
+				totalCount: 0,
 			})
 		)
 	);
@@ -230,7 +230,7 @@ test('Should test initial state', () => {
 
 	return waitForNextUpdate().then(() => {
 		const defaultData = {
-			nodes: []
+			nodes: [],
 		};
 
 		expect(result.current.nodes).toMatchObject(defaultData.nodes);

@@ -94,7 +94,7 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 	var autoFields = new Liferay.AutoFields({
 		contentBox: 'fieldset#<portlet:namespace />rangesId',
 		fieldIndexes: '<portlet:namespace />rangesIndexes',
-		namespace: '<portlet:namespace />'
+		namespace: '<portlet:namespace />',
 	}).render();
 </aui:script>
 

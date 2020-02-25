@@ -40,7 +40,7 @@ class Numeric extends Component {
 
 		this.maskInstance = vanillaTextMask({
 			inputElement,
-			mask
+			mask,
 		});
 
 		this.setState({value: inputElement.value});
@@ -62,7 +62,7 @@ class Numeric extends Component {
 		let config = {
 			allowLeadingZeroes: true,
 			includeThousandsSeparator: false,
-			prefix: ''
+			prefix: '',
 		};
 
 		if (dataType === 'double') {
@@ -70,7 +70,7 @@ class Numeric extends Component {
 				...config,
 				allowDecimal: true,
 				decimalLimit: null,
-				decimalSymbol: symbols.decimalSymbol
+				decimalSymbol: symbols.decimalSymbol,
 			};
 		}
 
@@ -95,7 +95,7 @@ class Numeric extends Component {
 	willReceiveState(changes) {
 		if (changes.value) {
 			this.setState({
-				_value: changes.value.newVal
+				_value: changes.value.newVal,
 			});
 		}
 	}
@@ -104,7 +104,7 @@ class Numeric extends Component {
 		this.emit('fieldBlurred', {
 			fieldInstance: this,
 			originalEvent: event,
-			value: event.target.value
+			value: event.target.value,
 		});
 	}
 
@@ -117,13 +117,13 @@ class Numeric extends Component {
 
 		this.setState(
 			{
-				value
+				value,
 			},
 			() =>
 				this.emit('fieldEdited', {
 					fieldInstance: this,
 					originalEvent: event,
-					value
+					value,
 				})
 		);
 	}
@@ -132,7 +132,7 @@ class Numeric extends Component {
 		this.emit('fieldFocused', {
 			fieldInstance: this,
 			originalEvent: event,
-			value: event.target.value
+			value: event.target.value,
 		});
 	}
 
@@ -280,10 +280,10 @@ Numeric.STATE = {
 
 	symbols: Config.shapeOf({
 		decimalSymbol: Config.string(),
-		thousandsSeparator: Config.string()
+		thousandsSeparator: Config.string(),
 	}).value({
 		decimalSymbol: '.',
-		thousandsSeparator: ','
+		thousandsSeparator: ',',
 	}),
 
 	/**
@@ -320,7 +320,7 @@ Numeric.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.oneOfType([Config.number(), Config.string()])
+	value: Config.oneOfType([Config.number(), Config.string()]),
 };
 
 Soy.register(Numeric, templates);

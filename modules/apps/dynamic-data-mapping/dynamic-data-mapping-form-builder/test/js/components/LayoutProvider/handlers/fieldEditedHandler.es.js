@@ -21,12 +21,12 @@ describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 		it('calls updateFocusedField()', () => {
 			const event = {
 				propertyName: 'dataType',
-				propertyValue: 'string'
+				propertyValue: 'string',
 			};
 			const state = {
 				focusedField: {},
 				pages: mockPages,
-				rules: []
+				rules: [],
 			};
 
 			const updateFocusedFieldSpy = jest.spyOn(
@@ -46,12 +46,12 @@ describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 		it('does not call updateFocusedField() when changing name to an empty string', () => {
 			const event = {
 				propertyName: 'name',
-				propertyValue: ''
+				propertyValue: '',
 			};
 			const state = {
 				focusedField: {},
 				pages: mockPages,
-				rules: []
+				rules: [],
 			};
 
 			const updateFocusedFieldSpy = jest.spyOn(

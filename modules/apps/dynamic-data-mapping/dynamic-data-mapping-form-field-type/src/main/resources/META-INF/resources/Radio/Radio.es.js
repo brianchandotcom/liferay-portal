@@ -36,7 +36,7 @@ class Radio extends Component {
 
 		return {
 			...state,
-			predefinedValue: predefinedValueArray[0] || ''
+			predefinedValue: predefinedValueArray[0] || '',
 		};
 	}
 
@@ -54,14 +54,14 @@ class Radio extends Component {
 		this.emit('fieldBlurred', {
 			fieldInstance: this,
 			originalEvent: window.event,
-			value: window.event.target.value
+			value: window.event.target.value,
 		});
 	}
 
 	_handleFieldFocused(event) {
 		this.emit('fieldFocused', {
 			fieldInstance: this,
-			originalEvent: event
+			originalEvent: event,
 		});
 	}
 
@@ -69,7 +69,7 @@ class Radio extends Component {
 		this.emit('fieldEdited', {
 			fieldInstance: this,
 			originalEvent: event,
-			value: event.target.value
+			value: event.target.value,
 		});
 	}
 }
@@ -131,15 +131,15 @@ Radio.STATE = {
 		Config.shapeOf({
 			label: Config.string(),
 			name: Config.string(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	).value([
 		{
-			label: 'Option 1'
+			label: 'Option 1',
 		},
 		{
-			label: 'Option 2'
-		}
+			label: 'Option 2',
+		},
 	]),
 
 	/**
@@ -152,7 +152,7 @@ Radio.STATE = {
 	predefinedValue: Config.oneOfType([
 		Config.array(),
 		Config.object(),
-		Config.string()
+		Config.string(),
 	])
 		.setter(setJSONArrayValue)
 		.value([]),
@@ -227,7 +227,7 @@ Radio.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.string()
+	value: Config.string(),
 };
 
 Soy.register(Radio, templates);

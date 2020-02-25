@@ -34,7 +34,7 @@ export default function FragmentComment({
 	comment,
 	fragmentEntryLinkId,
 	onEdit,
-	parentCommentId
+	parentCommentId,
 }) {
 	const {
 		author,
@@ -43,7 +43,7 @@ export default function FragmentComment({
 		dateDescription,
 		edited,
 		modifiedDateDescription,
-		resolved
+		resolved,
 	} = comment;
 
 	const [changingResolved, setChangingResolved] = useState(false);
@@ -68,7 +68,7 @@ export default function FragmentComment({
 		'page-editor__fragment-comment--reply': !!parentCommentId,
 		'page-editor__fragment-comment--resolved': resolved,
 		'page-editor__fragment-comment--with-delete-mask': showDeleteMask,
-		'page-editor__fragment-comment--with-resolve-mask': showResolveMask
+		'page-editor__fragment-comment--with-resolve-mask': showResolveMask,
 	});
 
 	const handleResolveButtonClick = () => {
@@ -78,7 +78,7 @@ export default function FragmentComment({
 			body,
 			commentId,
 			onNetworkStatus: dispatch,
-			resolved: !resolved
+			resolved: !resolved,
 		})
 			.then(comment => {
 				setChangingResolved(false);
@@ -101,7 +101,7 @@ export default function FragmentComment({
 								'the-comment-could-not-be-resolved'
 						  ),
 					title: Liferay.Language.get('error'),
-					type: 'danger'
+					type: 'danger',
 				});
 
 				setChangingResolved(false);
@@ -151,7 +151,7 @@ export default function FragmentComment({
 
 					<p
 						className={classNames('m-0 text-secondary', {
-							'lfr-portal-tooltip': showModifiedDateTooltip
+							'lfr-portal-tooltip': showModifiedDateTooltip,
 						})}
 						data-title={
 							showModifiedDateTooltip &&
@@ -238,7 +238,7 @@ export default function FragmentComment({
 									comment={{
 										...childComment,
 										parentCommentId: comment.commentId,
-										resolved
+										resolved,
 									}}
 									fragmentEntryLinkId={fragmentEntryLinkId}
 									key={childComment.commentId}
@@ -269,7 +269,7 @@ export default function FragmentComment({
 							deleteFragmentComment({
 								commentId,
 								fragmentEntryLinkId,
-								parentCommentId
+								parentCommentId,
 							})
 						).catch(() => {
 							openToast({
@@ -277,7 +277,7 @@ export default function FragmentComment({
 									'the-comment-could-not-be-deleted'
 								),
 								title: Liferay.Language.get('error'),
-								type: 'danger'
+								type: 'danger',
 							});
 						})
 					}
@@ -297,15 +297,15 @@ FragmentComment.propTypes = {
 	comment: PropTypes.shape({
 		author: PropTypes.shape({
 			fullName: PropTypes.string,
-			portraitURL: PropTypes.string
+			portraitURL: PropTypes.string,
 		}),
 		body: PropTypes.string,
 		commentId: PropTypes.string.isRequired,
 		dateDescription: PropTypes.string,
-		parentCommentId: PropTypes.string
+		parentCommentId: PropTypes.string,
 	}),
 
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	onEdit: PropTypes.func,
-	parentCommentId: PropTypes.string
+	parentCommentId: PropTypes.string,
 };

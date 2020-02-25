@@ -21,7 +21,7 @@ const FilterItem = ({
 	multiple,
 	name,
 	onChange,
-	onClick
+	onClick,
 }) => {
 	const [checked, setChecked] = useState(active);
 
@@ -36,7 +36,7 @@ const FilterItem = ({
 				active && 'active',
 				description && 'with-description',
 				hideControl && 'control-hidden'
-			)
+			),
 		}),
 		[active, description, hideControl, multiple]
 	);

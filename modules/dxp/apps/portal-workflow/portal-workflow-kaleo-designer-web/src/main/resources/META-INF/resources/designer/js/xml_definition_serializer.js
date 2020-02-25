@@ -599,7 +599,7 @@ AUI.add(
 			'escape',
 			'liferay-kaleo-designer-utils',
 			'liferay-kaleo-designer-xml-util',
-			'liferay-xml-formatter'
-		]
+			'liferay-xml-formatter',
+		],
 	}
 );

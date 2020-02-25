@@ -39,12 +39,12 @@ class Calculator extends Component {
 		tokens.push(newToken);
 
 		this.setState({
-			expression: Tokenizer.stringifyTokens(tokens)
+			expression: Tokenizer.stringifyTokens(tokens),
 		});
 
 		this.emit('editExpression', {
 			expression: this.expression,
-			index
+			index,
 		});
 	}
 
@@ -88,7 +88,7 @@ class Calculator extends Component {
 			disableFunctions,
 			disableNumbers,
 			disableOperators,
-			showOnlyRepeatableFields
+			showOnlyRepeatableFields,
 		};
 	}
 
@@ -101,7 +101,7 @@ class Calculator extends Component {
 			expression: expression.replace(/[[\]]/g, ''),
 			placeholder: Liferay.Browser.isIe()
 				? ''
-				: Liferay.Language.get('the-expression-will-be-displayed-here')
+				: Liferay.Language.get('the-expression-will-be-displayed-here'),
 		};
 	}
 
@@ -121,12 +121,12 @@ class Calculator extends Component {
 		}
 
 		this.setState({
-			expression: Tokenizer.stringifyTokens(tokens)
+			expression: Tokenizer.stringifyTokens(tokens),
 		});
 
 		this.emit('editExpression', {
 			expression: this.expression,
-			index
+			index,
 		});
 	}
 
@@ -191,7 +191,7 @@ Calculator.STATE = {
 			fieldName: Config.string(),
 			label: Config.string(),
 			repeatable: Config.bool(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	).value([]),
 
@@ -201,7 +201,7 @@ Calculator.STATE = {
 
 	repeatableFields: Config.array().valueFn('_repeatableFieldsValueFn'),
 
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
 };
 
 Soy.register(Calculator, templates);

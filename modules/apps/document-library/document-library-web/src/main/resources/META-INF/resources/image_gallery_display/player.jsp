@@ -58,7 +58,7 @@ for (String previewFileURL : previewFileURLs) {
 					'#<portlet:namespace /><%= randomNamespace %>previewFileContent',
 				fixedAttributes: {
 					allowfullscreen: 'true',
-					wmode: 'opaque'
+					wmode: 'opaque',
 				},
 
 				<c:if test="<%= Validator.isNotNull(oggPreviewFileURL) %>">
@@ -66,7 +66,7 @@ for (String previewFileURL : previewFileURLs) {
 				</c:if>
 
 				<c:if test="<%= Validator.isNotNull(mp3PreviewFileURL) %>">
-					url: '<%= HtmlUtil.escapeJS(mp3PreviewFileURL) %>'
+					url: '<%= HtmlUtil.escapeJS(mp3PreviewFileURL) %>',
 				</c:if>
 			}).render();
 
@@ -113,7 +113,7 @@ for (String previewFileURL : previewFileURLs) {
 				fixedAttributes: {
 					allowfullscreen: 'true',
 					bgColor: '#000000',
-					wmode: 'opaque'
+					wmode: 'opaque',
 				},
 
 				on: {
@@ -126,7 +126,7 @@ for (String previewFileURL : previewFileURLs) {
 						);
 
 						playing = true;
-					}
+					},
 				},
 
 				<c:if test="<%= Validator.isNotNull(ogvPreviewFileURL) %>">
@@ -136,7 +136,7 @@ for (String previewFileURL : previewFileURLs) {
 				poster: '<%= HtmlUtil.escapeJS(videoThumbnailURL) %>',
 
 				<c:if test="<%= Validator.isNotNull(mp4PreviewFileURL) %>">
-					url: '<%= HtmlUtil.escapeJS(mp4PreviewFileURL) %>'
+					url: '<%= HtmlUtil.escapeJS(mp4PreviewFileURL) %>',
 				</c:if>
 			}).render();
 

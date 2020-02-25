@@ -21,11 +21,11 @@ const fireEvent = {
 		var event = new Event('input', {
 			...config,
 			bubbles: true,
-			cancelable: true
+			cancelable: true,
 		});
 
 		element.dispatchEvent(event);
-	}
+	},
 };
 
 let component;
@@ -35,13 +35,13 @@ const optionsValue = {
 	en_US: [
 		{
 			label: 'Option 1',
-			value: 'Option1'
+			value: 'Option1',
 		},
 		{
 			label: 'Option 2',
-			value: 'Option2'
-		}
-	]
+			value: 'Option2',
+		},
+	],
 };
 
 describe('Options', () => {
@@ -57,7 +57,7 @@ describe('Options', () => {
 		component = new Options({
 			name: 'options',
 			spritemap,
-			value: optionsValue
+			value: optionsValue,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -71,10 +71,10 @@ describe('Options', () => {
 				[themeDisplay.getLanguageId()]: [
 					{
 						label: 'Option',
-						value: 'Option'
-					}
-				]
-			}
+						value: 'Option',
+					},
+				],
+			},
 		});
 
 		jest.runAllTimers();
@@ -105,10 +105,10 @@ describe('Options', () => {
 				[themeDisplay.getLanguageId()]: [
 					{
 						label: 'Option',
-						value: 'Option'
-					}
-				]
-			}
+						value: 'Option',
+					},
+				],
+			},
 		});
 
 		jest.runAllTimers();
@@ -129,10 +129,10 @@ describe('Options', () => {
 				[themeDisplay.getLanguageId()]: [
 					{
 						label: 'Option',
-						value: 'Option'
-					}
-				]
-			}
+						value: 'Option',
+					},
+				],
+			},
 		});
 
 		jest.runAllTimers();
@@ -157,10 +157,10 @@ describe('Options', () => {
 				[themeDisplay.getLanguageId()]: [
 					{
 						label: 'Option',
-						value: 'Option'
-					}
-				]
-			}
+						value: 'Option',
+					},
+				],
+			},
 		});
 
 		jest.runAllTimers();
@@ -187,10 +187,10 @@ describe('Options', () => {
 				[themeDisplay.getLanguageId()]: [
 					{
 						label: 'Option',
-						value: 'Option'
-					}
-				]
-			}
+						value: 'Option',
+					},
+				],
+			},
 		});
 
 		jest.runAllTimers();

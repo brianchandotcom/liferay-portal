@@ -19,9 +19,9 @@ Liferay.Service.registerClass(Liferay.Service.OAuth, 'OAuthApplication', {
 	addOAuthApplication: true,
 	deleteLogo: true,
 	deleteOAuthApplication: true,
-	updateOAuthApplication: true
+	updateOAuthApplication: true,
 });
 
 Liferay.Service.registerClass(Liferay.Service.OAuth, 'OAuthUser', {
-	deleteOAuthUser: true
+	deleteOAuthUser: true,
 });

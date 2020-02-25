@@ -50,11 +50,11 @@ export default function render(renderFunction, renderData, container) {
 			{
 				destroy: () => {
 					ReactDOM.unmountComponentAtNode(container);
-				}
+				},
 			},
 			{
 				destroyOnNavigate,
-				portletId
+				portletId,
 			}
 		);
 

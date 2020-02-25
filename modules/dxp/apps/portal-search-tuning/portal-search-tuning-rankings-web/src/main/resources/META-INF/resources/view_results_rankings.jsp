@@ -149,9 +149,9 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 						actionFormInstanceIds: Liferay.Util.listCheckedExcept(
 							searchContainer,
 							'<portlet:namespace />allRowIds'
-						)
+						),
 					},
-					url: url
+					url: url,
 				}
 			);
 		}
@@ -193,7 +193,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 	var ACTIONS = {
 		activateResultsRankingsEntries: activateResultsRankingsEntries,
 		deactivateResultsRankingsEntries: deactivateResultsRankingsEntries,
-		deleteResultsRankingsEntries: deleteResultsRankingsEntries
+		deleteResultsRankingsEntries: deleteResultsRankingsEntries,
 	};
 
 	Liferay.componentReady('resultsRankingEntriesManagementToolbar').then(function(

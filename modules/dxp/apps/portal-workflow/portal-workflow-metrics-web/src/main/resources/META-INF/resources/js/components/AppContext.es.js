@@ -24,7 +24,7 @@ const AppContextProvider = ({children, ...props}) => {
 		setStatus,
 		setTitle,
 		status,
-		title
+		title,
 	};
 
 	return (
@@ -37,7 +37,7 @@ const AppContextProvider = ({children, ...props}) => {
 const AppStatus = {
 	slaDeleted: 'sla-deleted',
 	slaSaved: 'sla-saved',
-	slaUpdated: 'sla-updated'
+	slaUpdated: 'sla-updated',
 };
 
 export {AppContext, AppContextProvider, AppStatus};

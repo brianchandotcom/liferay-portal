@@ -376,8 +376,8 @@ int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasks
 					deleteBackgroundTaskIds: Liferay.Util.listCheckedExcept(
 						form,
 						'<portlet:namespace />allRowIds'
-					)
-				}
+					),
+				},
 			});
 		}
 	}
@@ -395,7 +395,7 @@ int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasks
 
 		Liferay.fire('<portlet:namespace />viewBackgroundTaskDetails', {
 			nodeId: 'backgroundTaskStatusMessage' + backgroundTaskId,
-			title: title
+			title: title,
 		});
 	}
 </script>

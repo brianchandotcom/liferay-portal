@@ -74,7 +74,7 @@ FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new Fragme
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(fragmentCollectionsDisplayContext.getEventName()) %>',
 			{
-				data: event.elements.allSelectedElements.getDOMNodes()
+				data: event.elements.allSelectedElements.getDOMNodes(),
 			}
 		);
 	});

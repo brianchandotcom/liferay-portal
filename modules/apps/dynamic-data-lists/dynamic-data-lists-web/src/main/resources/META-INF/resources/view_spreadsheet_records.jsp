@@ -97,7 +97,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	var numericData = {
 		double: 1,
 		integer: 1,
-		number: 1
+		number: 1,
 	};
 
 	var keys = columns.map(function(item, index) {
@@ -149,10 +149,10 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		plugins: [
 			{
 				cfg: {
-					highlightRange: false
+					highlightRange: false,
 				},
-				fn: A.Plugin.DataTableHighlight
-			}
+				fn: A.Plugin.DataTableHighlight,
+			},
 		],
 		portletNamespace: '<portlet:namespace />',
 		recordsetId: <%= recordSet.getRecordSetId() %>,
@@ -161,10 +161,10 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 			desc: '<liferay-ui:message key="descending" />',
 			reverseSortBy:
 				'<liferay-ui:message arguments="{column}" key="reverse-sort-by-x" />',
-			sortBy: '<liferay-ui:message arguments="{column}" key="sort-by-x" />'
+			sortBy: '<liferay-ui:message arguments="{column}" key="sort-by-x" />',
 		},
 		structure: structure,
-		width: '100%'
+		width: '100%',
 	});
 
 	spreadSheet.render('#<portlet:namespace />spreadsheet');

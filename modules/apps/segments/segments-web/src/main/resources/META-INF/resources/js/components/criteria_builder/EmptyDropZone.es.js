@@ -57,7 +57,7 @@ class EmptyDropZone extends Component {
 		emptyContributors: PropTypes.bool,
 		hover: PropTypes.bool,
 		onCriterionAdd: PropTypes.func.isRequired,
-		propertyKey: PropTypes.string.isRequired
+		propertyKey: PropTypes.string.isRequired,
 	};
 
 	render() {
@@ -65,14 +65,14 @@ class EmptyDropZone extends Component {
 			canDrop,
 			connectDropTarget,
 			emptyContributors,
-			hover
+			hover,
 		} = this.props;
 
 		const displayEmptyDropZone = canDrop || !emptyContributors;
 
 		const emptyZoneClasses = getCN('empty-drop-zone-root', {
 			'empty-drop-zone-dashed border-primary rounded':
-				displayEmptyDropZone && (!canDrop || !hover)
+				displayEmptyDropZone && (!canDrop || !hover),
 		});
 
 		const targetClasses = getCN(
@@ -81,7 +81,7 @@ class EmptyDropZone extends Component {
 				: 'drop-zone-target p-5',
 			{
 				'empty-drop-zone-target-solid dnd-hover border-primary rounded':
-					canDrop && hover
+					canDrop && hover,
 			}
 		);
 
@@ -107,11 +107,11 @@ export default dropTarget(
 	DragTypes.PROPERTY,
 	{
 		canDrop,
-		drop
+		drop,
 	},
 	(connect, monitor) => ({
 		canDrop: monitor.canDrop(),
 		connectDropTarget: connect.dropTarget(),
-		hover: monitor.isOver()
+		hover: monitor.isOver(),
 	})
 )(EmptyDropZone);

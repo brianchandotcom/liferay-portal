@@ -15,5 +15,5 @@ export default React.createContext({
 	companyId: '',
 	constants: {},
 	namespace: '',
-	spritemap: ''
+	spritemap: '',
 });

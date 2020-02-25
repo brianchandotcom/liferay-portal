@@ -143,7 +143,7 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 	};
 
 	var ACTIONS = {
-		deleteSegmentsEntries: deleteSegmentsEntries
+		deleteSegmentsEntries: deleteSegmentsEntries,
 	};
 
 	Liferay.componentReady('segmentsEntriesManagementToolbar').then(function(

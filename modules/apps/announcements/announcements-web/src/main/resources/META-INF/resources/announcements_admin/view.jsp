@@ -185,7 +185,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 	};
 
 	var ACTIONS = {
-		deleteEntries: deleteEntries
+		deleteEntries: deleteEntries,
 	};
 
 	Liferay.componentReady('announcementsAdminViewManagementToolbar').then(function(

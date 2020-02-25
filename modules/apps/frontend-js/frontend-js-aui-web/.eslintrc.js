@@ -14,6 +14,6 @@
 
 module.exports = {
 	globals: {
-		YUI: true
-	}
+		YUI: true,
+	},
 };

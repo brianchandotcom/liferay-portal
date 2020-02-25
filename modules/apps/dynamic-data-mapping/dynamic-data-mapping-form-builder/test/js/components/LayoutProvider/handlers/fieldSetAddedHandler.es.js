@@ -29,23 +29,23 @@ describe('LayoutProvider/handlers/fieldSetAddedHandler', () => {
 											{
 												fieldName: 'field1',
 												settingsContext: {
-													pages: []
-												}
-											}
-										]
-									}
-								]
-							}
-						]
-					}
+													pages: [],
+												},
+											},
+										],
+									},
+								],
+							},
+						],
+					},
 				],
 				target: {
 					pageIndex: 0,
-					rowIndex: 1
-				}
+					rowIndex: 1,
+				},
 			};
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newState = handleFieldSetAdded({}, state, event);

@@ -19,7 +19,7 @@ import '@testing-library/jest-dom/extend-expect';
 const items = [
 	{id: 1, name: '0test test0'},
 	{id: 2, name: '1test test1'},
-	{id: 3, name: '2test test2'}
+	{id: 3, name: '2test test2'},
 ];
 
 describe('The Autocomplete component should', () => {

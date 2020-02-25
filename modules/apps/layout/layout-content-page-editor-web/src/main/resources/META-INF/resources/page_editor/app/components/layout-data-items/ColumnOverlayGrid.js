@@ -22,7 +22,7 @@ import {FragmentsEditorShim} from './FragmentsEditorShim';
 export default function ColumnOverlayGrid({
 	columnSpacing,
 	highlightedColumn = null,
-	rowRect
+	rowRect,
 }) {
 	return createPortal(
 		<div
@@ -31,19 +31,19 @@ export default function ColumnOverlayGrid({
 				height: `${rowRect.height}px`,
 				left: `${rowRect.left}px`,
 				top: `${rowRect.top}px`,
-				width: `${rowRect.width}px`
+				width: `${rowRect.width}px`,
 			}}
 		>
 			<FragmentsEditorShim />
 
 			<div
 				className={classNames('container-fluid h-100 py-0', {
-					'px-0': !columnSpacing
+					'px-0': !columnSpacing,
 				})}
 			>
 				<div
 					className={classNames('h-100 row', {
-						'no-gutters': !columnSpacing
+						'no-gutters': !columnSpacing,
 					})}
 				>
 					{[...Array(12).keys()].map(column => (
@@ -52,7 +52,7 @@ export default function ColumnOverlayGrid({
 								'col column-overlay-grid__column',
 								{
 									'column-overlay-grid__column--highlighted':
-										column === highlightedColumn
+										column === highlightedColumn,
 								}
 							)}
 							key={`col-overlay-grid-column-${column}`}
@@ -70,5 +70,5 @@ export default function ColumnOverlayGrid({
 ColumnOverlayGrid.propTypes = {
 	columnSpacing: PropTypes.bool.isRequired,
 	highlightedColumn: PropTypes.number,
-	rowRect: PropTypes.instanceOf(DOMRect).isRequired
+	rowRect: PropTypes.instanceOf(DOMRect).isRequired,
 };

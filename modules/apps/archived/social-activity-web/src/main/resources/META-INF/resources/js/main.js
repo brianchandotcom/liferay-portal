@@ -24,7 +24,7 @@ AUI.add(
 		var COL_LIMIT_TYPE = [
 			Liferay.Language.get('social-activity-limit-type-times-a-day'),
 			Liferay.Language.get('social-activity-limit-type-times'),
-			Liferay.Language.get('social-activity-limit-type-times-per-period')
+			Liferay.Language.get('social-activity-limit-type-times-per-period'),
 		];
 
 		var CSS_SETTINGS_ICON_CLOSE = 'settings-icon-close';
@@ -123,7 +123,7 @@ AUI.add(
 			'form.update-socialactivity-form';
 
 		var SRC_UI = {
-			src: STR_UI
+			src: STR_UI,
 		};
 
 		var TPL_BUTTON_HOLDER =
@@ -361,7 +361,7 @@ AUI.add(
 
 					return {
 						actions: settingsDisplay.getSettingsJSON(),
-						modelName: instance._originalConfig.modelName
+						modelName: instance._originalConfig.modelName,
 					};
 				},
 
@@ -376,7 +376,7 @@ AUI.add(
 						'/socialactivitysetting/get-json-activity-definitions',
 						{
 							className: modelName,
-							groupId: groupId
+							groupId: groupId,
 						},
 						callback
 					);
@@ -430,7 +430,7 @@ AUI.add(
 						{
 							className: modelName,
 							enabled: currentTarget.attr('checked'),
-							groupId: themeDisplay.getScopeGroupIdOrLiveGroupId()
+							groupId: themeDisplay.getScopeGroupIdOrLiveGroupId(),
 						}
 					);
 				},
@@ -443,8 +443,8 @@ AUI.add(
 							instance._getJsonSettings(instance.settingsDisplay)
 						)
 					);
-				}
-			}
+				},
+			},
 		});
 
 		var SettingsDisplay = A.Component.create({
@@ -452,16 +452,16 @@ AUI.add(
 				buttonsNode: {
 					valueFn: function() {
 						return Node.create(TPL_BUTTON_HOLDER);
-					}
+					},
 				},
 
 				id: {
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				modelName: {
-					value: STR_BLANK
-				}
+					value: STR_BLANK,
+				},
 			},
 
 			NAME: STR_SETTINGS_DISPLAY,
@@ -493,7 +493,7 @@ AUI.add(
 						headerText: Liferay.Language.get(
 							'social-activity-setting-header-label'
 						),
-						saveText: STR_SAVE
+						saveText: STR_SAVE,
 					});
 
 					var bodyNode = settingsNode.one('.container-drop-box');
@@ -551,7 +551,7 @@ AUI.add(
 						instance._onBodyNodeClick,
 						[
 							SELECTOR_SETTINGS_ICON_CLOSE,
-							SELECTOR_SETTINGS_ICON_TOGGLE
+							SELECTOR_SETTINGS_ICON_TOGGLE,
 						].join(),
 						instance
 					);
@@ -677,68 +677,68 @@ AUI.add(
 					);
 
 					toggleIcon.attr('title', title);
-				}
-			}
+				},
+			},
 		});
 
 		var SettingsField = A.Component.create({
 			ATTRS: {
 				active: {
-					value: false
+					value: false,
 				},
 
 				activityType: {
-					value: 0
+					value: 0,
 				},
 
 				collapsed: {
-					value: false
+					value: false,
 				},
 
 				contributionIncrement: {
-					value: 0
+					value: 0,
 				},
 
 				contributionLimitEnabled: {
-					value: true
+					value: true,
 				},
 
 				contributionLimitPeriod: {
-					value: 1
+					value: 1,
 				},
 
 				contributionLimitValue: {
-					value: 0
+					value: 0,
 				},
 
 				languageKey: {
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				localizedName: {
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				participationIncrement: {
-					value: 0
+					value: 0,
 				},
 
 				participationLimitEnabled: {
-					value: true
+					value: true,
 				},
 
 				participationLimitPeriod: {
-					value: 1
+					value: 1,
 				},
 
 				participationLimitValue: {
-					value: 0
+					value: 0,
 				},
 
 				selected: {
 					setter: A.DataType.Boolean.parse,
-					value: false
-				}
+					value: false,
+				},
 			},
 
 			NAME: STR_SETTINGS_FIELD,
@@ -824,7 +824,7 @@ AUI.add(
 							),
 							limitValues:
 								counterSettings.contributionLimitValues,
-							type: 'contribution'
+							type: 'contribution',
 						});
 					}
 
@@ -843,7 +843,7 @@ AUI.add(
 							),
 							limitValues:
 								counterSettings.participationLimitValues,
-							type: 'participation'
+							type: 'participation',
 						});
 					}
 
@@ -852,12 +852,12 @@ AUI.add(
 							{
 								text: Liferay.Language.get('limit'),
 								title: STR_EXPAND,
-								type: 'toggle'
+								type: 'toggle',
 							},
 							{
 								title: Liferay.Language.get('close'),
-								type: 'close'
-							}
+								type: 'close',
+							},
 						],
 						contributionIncrement: instance.get(
 							STR_CONTRIBUTION_INCREMENT
@@ -886,7 +886,7 @@ AUI.add(
 						),
 						thirdText: Liferay.Language.get(
 							'social-activity-setting-third-text'
-						)
+						),
 					});
 
 					limitNode
@@ -916,7 +916,7 @@ AUI.add(
 						STR_PARTICIPATION_INCREMENT,
 						STR_PARTICIPATION_LIMIT_ENABLED,
 						STR_PARTICIPATION_LIMIT_PERIOD,
-						STR_PARTICIPATION_LIMIT_VALUE
+						STR_PARTICIPATION_LIMIT_VALUE,
 					]);
 				},
 
@@ -972,12 +972,12 @@ AUI.add(
 
 							parent.transition({
 								backgroundColor: SocialActivity.FADE_COLOR_END,
-								duration: 1.5
+								duration: 1.5,
 							});
 						}
 					}
-				}
-			}
+				},
+			},
 		});
 
 		var SocialActivity = Liferay.namespace('Portlet.SocialActivity');
@@ -996,7 +996,7 @@ AUI.add(
 			'aui-datatype',
 			'aui-template-deprecated',
 			'liferay-portlet-base',
-			'transition'
-		]
+			'transition',
+		],
 	}
 );

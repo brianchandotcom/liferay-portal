@@ -21,7 +21,7 @@ AUI.add(
 					Liferay.Service(
 						'/country/get-countries',
 						{
-							active: true
+							active: true,
 						},
 						callback
 					);
@@ -32,16 +32,16 @@ AUI.add(
 						'/region/get-regions',
 						{
 							active: true,
-							countryId: Number(selectKey)
+							countryId: Number(selectKey),
 						},
 						callback
 					);
-				}
+				},
 			};
 		}
 	},
 	'',
 	{
-		requires: []
+		requires: [],
 	}
 );

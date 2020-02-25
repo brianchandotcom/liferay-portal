@@ -120,7 +120,7 @@ renderResponse.setTitle(title);
 						portletId: '<%= PortalUtil.getPortletId(request) %>',
 						saveInPortletSessionURL:
 							'<portlet:resourceURL id="saveInPortletSession" />',
-						tabView: Liferay.component('<portlet:namespace />fmTabview')
+						tabView: Liferay.component('<portlet:namespace />fmTabview'),
 					});
 				});
 

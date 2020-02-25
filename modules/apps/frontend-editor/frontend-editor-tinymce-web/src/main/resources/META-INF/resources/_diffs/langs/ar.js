@@ -278,5 +278,5 @@ tinymce.addI18n('ar', {
 	View: '\u0639\u0631\u0636',
 	Table: '\u062c\u062f\u0648\u0644',
 	Format: '\u062a\u0646\u0633\u064a\u0642',
-	_dir: 'rtl'
+	_dir: 'rtl',
 });

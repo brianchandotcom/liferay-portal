@@ -62,7 +62,7 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escape(eventName) %>',
 				{
-					data: event.delegateTarget.dataset
+					data: event.delegateTarget.dataset,
 				}
 			);
 		}

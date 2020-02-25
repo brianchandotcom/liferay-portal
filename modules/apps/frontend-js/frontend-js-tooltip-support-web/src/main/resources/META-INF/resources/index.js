@@ -21,7 +21,7 @@ import React, {
 	useLayoutEffect,
 	useReducer,
 	useRef,
-	useState
+	useState,
 } from 'react';
 
 import reducer, {STATES} from './reducer';
@@ -34,7 +34,7 @@ const ALIGN_POSITIONS = [
 	'bottom',
 	'bottom-left',
 	'left',
-	'right'
+	'right',
 ];
 
 const SELECTOR_TOOLTIP = '.tooltip[role="tooltip"]';
@@ -64,14 +64,14 @@ const TRIGGER_HIDE_EVENTS = [
 	'mouseup',
 	'MSPointerUp',
 	'pointerup',
-	'touchend'
+	'touchend',
 ];
 const TRIGGER_SHOW_EVENTS = [
 	'mouseenter',
 	'mouseup',
 	'MSPointerDown',
 	'pointerdown',
-	'touchstart'
+	'touchstart',
 ];
 
 const DEFAULT_TOOLTIP_CONTAINER_ID = 'tooltipContainer';
@@ -197,7 +197,7 @@ const TooltipProvider = () => {
 				TOOLTIP_ENTER,
 				TOOLTIP_LEAVE,
 				...TRIGGER_HIDE_HANDLES,
-				...TRIGGER_SHOW_HANDLES
+				...TRIGGER_SHOW_HANDLES,
 			].forEach(handle => handle.dispose());
 		};
 	}, [state]);
@@ -227,7 +227,7 @@ const TooltipProvider = () => {
 					__html:
 						state.target.title ||
 						state.target.dataset.restoreTitle ||
-						state.target.dataset.title
+						state.target.dataset.title,
 				}}
 			/>
 		</ClayTooltip>

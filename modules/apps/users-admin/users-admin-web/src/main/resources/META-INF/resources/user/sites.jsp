@@ -154,7 +154,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 					{
 						dialog: {
 							constrain: true,
-							modal: true
+							modal: true,
 						},
 
 						<%
@@ -176,7 +176,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 						groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
 						%>
 
-						uri: '<%= groupSelectorURL.toString() %>'
+						uri: '<%= groupSelectorURL.toString() %>',
 					},
 					function(event) {
 						var entityId = event.entityid;

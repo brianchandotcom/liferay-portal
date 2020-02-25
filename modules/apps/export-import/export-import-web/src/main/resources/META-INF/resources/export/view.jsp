@@ -96,7 +96,7 @@ String searchContainerId = "exportLayoutProcesses";
 		namespace: '<portlet:namespace />',
 		processesNode: '#exportProcessesSearchContainer',
 		processesResourceURL:
-			'<%= HtmlUtil.escapeJS(exportProcessesURL.toString()) %>'
+			'<%= HtmlUtil.escapeJS(exportProcessesURL.toString()) %>',
 	});
 
 	var destroyInstance = function(event) {

@@ -13,7 +13,7 @@ import {act, renderHook} from '@testing-library/react-hooks';
 
 import {
 	START_NODE_KEYS,
-	STOP_NODE_KEYS
+	STOP_NODE_KEYS,
 } from '../../../../src/main/resources/META-INF/resources/js/components/sla/Constants.es';
 import {useSLA} from '../../../../src/main/resources/META-INF/resources/js/components/sla/store/SLAStore.es';
 import client from '../../../mock/fetch.es';
@@ -23,18 +23,18 @@ test('Should change SLA form values', () => {
 		{
 			compositeId: '123:enter',
 			executionType: 'enter',
-			id: 123
+			id: 123,
 		},
 		{
 			compositeId: '321:enter',
 			executionType: 'enter',
-			id: 321
+			id: 321,
 		},
 		{
 			compositeId: '1234:leave',
 			executionType: 'leave',
-			id: 1234
-		}
+			id: 1234,
+		},
 	];
 
 	const {result} = renderHook(() => useSLA(client({}), '1', '1'));
@@ -44,7 +44,7 @@ test('Should change SLA form values', () => {
 		changePauseNodes,
 		changeValue,
 		filterNodeTagIds,
-		pauseNodeTagIds
+		pauseNodeTagIds,
 	} = result.current;
 
 	act(() => changeValue('days', 123));
@@ -52,19 +52,19 @@ test('Should change SLA form values', () => {
 	expect(pauseNodeTagIds(nodeKeys, nodeKeys)).toMatchObject([
 		'123:enter',
 		'321:enter',
-		'1234:leave'
+		'1234:leave',
 	]);
 	expect(filterNodeTagIds(nodeKeys, nodeKeys)).toMatchObject([
 		'123:enter',
 		'321:enter',
-		'1234:leave'
+		'1234:leave',
 	]);
 
 	act(() =>
 		changePauseNodes(nodeKeys, () => {})([
 			'123:enter',
 			'456:enter',
-			'321:enter'
+			'321:enter',
 		])
 	);
 	expect(
@@ -75,7 +75,7 @@ test('Should change SLA form values', () => {
 		changeNodesKeys(START_NODE_KEYS, nodeKeys, () => {})([
 			'123:enter',
 			'456:enter',
-			'321:enter'
+			'321:enter',
 		])
 	);
 	expect(
@@ -86,7 +86,7 @@ test('Should change SLA form values', () => {
 		changeNodesKeys(STOP_NODE_KEYS, nodeKeys, () => {})([
 			'123:enter',
 			'456:enter',
-			'321:enter'
+			'321:enter',
 		])
 	);
 	expect(
@@ -104,7 +104,7 @@ test('Should test fetch data', () => {
 		pauseNodeKeys: {nodeKeys: []},
 		startNodeKeys: {nodeKeys: []},
 		status: undefined,
-		stopNodeKeys: {nodeKeys: []}
+		stopNodeKeys: {nodeKeys: []},
 	};
 
 	const {result, waitForNextUpdate} = renderHook(() =>
@@ -123,7 +123,7 @@ test('Should test fetch data without some parts', () => {
 		days: null,
 		hours: '',
 		name: 'test',
-		processId: ''
+		processId: '',
 	};
 
 	const {result, waitForNextUpdate} = renderHook(() =>
@@ -140,15 +140,15 @@ test('Should test fetch data without some parts', () => {
 			hours: '',
 			name: 'test',
 			pauseNodeKeys: {
-				nodeKeys: []
+				nodeKeys: [],
 			},
 			startNodeKeys: {
-				nodeKeys: []
+				nodeKeys: [],
 			},
 			status: undefined,
 			stopNodeKeys: {
-				nodeKeys: []
-			}
+				nodeKeys: [],
+			},
 		});
 	});
 });
@@ -163,7 +163,7 @@ test('Should test initial state', () => {
 		pauseNodeKeys: {nodeKeys: []},
 		startNodeKeys: {nodeKeys: []},
 		status: undefined,
-		stopNodeKeys: {nodeKeys: []}
+		stopNodeKeys: {nodeKeys: []},
 	};
 
 	const {result, waitForNextUpdate} = renderHook(() =>
@@ -187,7 +187,7 @@ test('Should test reset', () => {
 		pauseNodeKeys: {nodeKeys: []},
 		startNodeKeys: {nodeKeys: []},
 		status: undefined,
-		stopNodeKeys: {nodeKeys: []}
+		stopNodeKeys: {nodeKeys: []},
 	};
 
 	const {result, waitForNextUpdate} = renderHook(() =>
@@ -211,7 +211,7 @@ test('Should test save data', () => {
 		pauseNodeKeys: {nodeKeys: []},
 		startNodeKeys: {nodeKeys: []},
 		status: undefined,
-		stopNodeKeys: {nodeKeys: []}
+		stopNodeKeys: {nodeKeys: []},
 	};
 
 	const {result, waitForNextUpdate} = renderHook(() =>
@@ -235,7 +235,7 @@ test('Should test update data', () => {
 		pauseNodeKeys: {nodeKeys: []},
 		startNodeKeys: {nodeKeys: []},
 		status: undefined,
-		stopNodeKeys: {nodeKeys: []}
+		stopNodeKeys: {nodeKeys: []},
 	};
 
 	const {result, waitForNextUpdate} = renderHook(() =>

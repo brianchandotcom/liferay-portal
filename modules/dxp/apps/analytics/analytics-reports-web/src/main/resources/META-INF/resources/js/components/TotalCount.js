@@ -21,7 +21,7 @@ function TotalCount({
 	dataProvider,
 	label,
 	popoverHeader,
-	popoverMessage
+	popoverMessage,
 }) {
 	const iconRef = React.useRef();
 	const [showTooltip, setShowTooltip] = React.useState(false);
@@ -75,7 +75,7 @@ TotalCount.propTypes = {
 	dataProvider: PropTypes.func.isRequired,
 	label: PropTypes.string.isRequired,
 	popoverHeader: PropTypes.string.isRequired,
-	popoverMessage: PropTypes.string.isRequired
+	popoverMessage: PropTypes.string.isRequired,
 };
 
 export default TotalCount;

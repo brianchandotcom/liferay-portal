@@ -19,7 +19,7 @@ import './DocumentLibraryRegister.soy';
 import {
 	ItemSelectorDialog,
 	createActionURL,
-	createPortletURL
+	createPortletURL,
 } from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
@@ -51,7 +51,7 @@ class DocumentLibrary extends Component {
 			...state,
 			fileEntryTitle,
 			fileEntryURL,
-			value
+			value,
 		};
 	}
 
@@ -61,13 +61,13 @@ class DocumentLibrary extends Component {
 
 		const criterionJSON = {
 			desiredItemSelectorReturnTypes:
-				'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
+				'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
 		};
 
 		const uploadCriterionJSON = {
 			URL: this.getUploadURL(),
 			desiredItemSelectorReturnTypes:
-				'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
+				'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
 		};
 
 		const documentLibrarySelectorParameters = {
@@ -82,7 +82,7 @@ class DocumentLibrary extends Component {
 			p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
 			p_p_mode: 'view',
 			p_p_state: 'pop_up',
-			refererGroupId: themeDisplay.getScopeGroupId()
+			refererGroupId: themeDisplay.getScopeGroupId(),
 		};
 
 		const documentLibrarySelectorURL = createPortletURL(
@@ -98,7 +98,7 @@ class DocumentLibrary extends Component {
 			cmd: 'add_temp',
 			'javax.portlet.action': '/document_library/upload_file_entry',
 			p_auth: Liferay.authToken,
-			p_p_id: Liferay.PortletKeys.DOCUMENT_LIBRARY
+			p_p_id: Liferay.PortletKeys.DOCUMENT_LIBRARY,
 		};
 
 		const uploadURL = createActionURL(
@@ -112,12 +112,12 @@ class DocumentLibrary extends Component {
 	_handleClearButtonClicked() {
 		this.setState(
 			{
-				value: '{}'
+				value: '{}',
 			},
 			() => {
 				this.emit('fieldEdited', {
 					fieldInstance: this,
-					value: '{}'
+					value: '{}',
 				});
 			}
 		);
@@ -131,13 +131,13 @@ class DocumentLibrary extends Component {
 
 			this.setState(
 				{
-					value
+					value,
 				},
 				() => {
 					this.emit('fieldEdited', {
 						fieldInstance: this,
 						originalEvent: event,
-						value
+						value,
 					});
 				}
 			);
@@ -150,7 +150,7 @@ class DocumentLibrary extends Component {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			eventName: `${portletNamespace}selectDocumentLibrary`,
 			singleSelect: true,
-			url: this.getDocumentLibrarySelectorURL()
+			url: this.getDocumentLibrarySelectorURL(),
 		});
 
 		itemSelectorDialog.on(
@@ -169,13 +169,13 @@ class DocumentLibrary extends Component {
 		if (event.selectedItem) {
 			this.emit('fieldFocused', {
 				fieldInstance: this,
-				originalEvent: event
+				originalEvent: event,
 			});
 		}
 		else {
 			this.emit('fieldBlurred', {
 				fieldInstance: this,
-				originalEvent: event
+				originalEvent: event,
 			});
 		}
 	}
@@ -308,7 +308,7 @@ DocumentLibrary.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.oneOfType([Config.object(), Config.string()])
+	value: Config.oneOfType([Config.object(), Config.string()]),
 };
 
 Soy.register(DocumentLibrary, templates);

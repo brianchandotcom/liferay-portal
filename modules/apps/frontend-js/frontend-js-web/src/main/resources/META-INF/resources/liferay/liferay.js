@@ -196,9 +196,9 @@ Liferay = window.Liferay || {};
 		return Liferay.Util.fetch(instance.URL_INVOKE, {
 			body: data,
 			headers: {
-				contentType: ioConfig.contentType
+				contentType: ioConfig.contentType,
 			},
-			method: 'POST'
+			method: 'POST',
 		})
 			.then(response => response.json())
 			.then(ioConfig.complete)
@@ -227,6 +227,6 @@ Liferay = window.Liferay || {};
 
 	Liferay.Template = {
 		PORTLET:
-			'<div class="portlet"><div class="portlet-topper"><div class="portlet-title"></div></div><div class="portlet-content"></div><div class="forbidden-action"></div></div>'
+			'<div class="portlet"><div class="portlet-topper"><div class="portlet-title"></div></div><div class="portlet-content"></div><div class="forbidden-action"></div></div>',
 	};
 })(AUI.$, Liferay);

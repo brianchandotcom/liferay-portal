@@ -16,11 +16,11 @@ import {UPDATE_FRAGMENT_ENTRY_LINK_CONTENT} from './types';
 
 export default function updateFragmentEntryLinkContent({
 	content,
-	fragmentEntryLinkId
+	fragmentEntryLinkId,
 }) {
 	return {
 		content,
 		fragmentEntryLinkId,
-		type: UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
+		type: UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
 	};
 }

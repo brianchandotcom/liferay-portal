@@ -40,9 +40,9 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 						form,
 						this.ns('allRowIds')
 					),
-					selectAll: bulkSelection
+					selectAll: bulkSelection,
 				},
-				url: this.deleteEntriesURL
+				url: this.deleteEntriesURL,
 			});
 		}
 	}
@@ -51,7 +51,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 ManagementToolbarDefaultEventHandler.STATE = {
 	deleteEntriesCmd: Config.string(),
 	deleteEntriesURL: Config.string(),
-	trashEnabled: Config.bool()
+	trashEnabled: Config.bool(),
 };
 
 export default ManagementToolbarDefaultEventHandler;

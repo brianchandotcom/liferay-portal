@@ -31,7 +31,7 @@ import getEditableUniqueId from './getEditableUniqueId';
 export default function FragmentContentFloatingToolbar({
 	editableElements,
 	fragmentEntryLinkId,
-	onButtonClick
+	onButtonClick,
 }) {
 	const isActive = useIsActive();
 
@@ -82,7 +82,7 @@ export default function FragmentContentFloatingToolbar({
 			classPK,
 			config = {},
 			fieldId,
-			mappedField
+			mappedField,
 		} = editableValue;
 
 		const showLinkButton =
@@ -135,7 +135,10 @@ export default function FragmentContentFloatingToolbar({
 					editableId,
 					editableType,
 					fragmentEntryLinkId,
-					itemId: getEditableUniqueId(fragmentEntryLinkId, editableId)
+					itemId: getEditableUniqueId(
+						fragmentEntryLinkId,
+						editableId
+					),
 				}}
 				itemRef={{current: editableElement}}
 				onButtonClick={buttonId => onButtonClick(buttonId, editableId)}
@@ -147,5 +150,5 @@ export default function FragmentContentFloatingToolbar({
 FragmentContentFloatingToolbar.propTypes = {
 	element: PropTypes.instanceOf(HTMLElement),
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	onButtonClick: PropTypes.func.isRequired
+	onButtonClick: PropTypes.func.isRequired,
 };

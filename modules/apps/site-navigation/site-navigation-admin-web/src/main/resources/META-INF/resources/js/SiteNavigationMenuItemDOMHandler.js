@@ -19,7 +19,7 @@ import {
 	hasClass,
 	next,
 	removeClasses,
-	toElement
+	toElement,
 } from 'metal-dom';
 
 const MENU_CONTAINER_CLASSNAME = 'site-navigation-menu-container';
@@ -202,5 +202,5 @@ export {
 	isSelected,
 	setDragging,
 	setSelected,
-	unselectAll
+	unselectAll,
 };

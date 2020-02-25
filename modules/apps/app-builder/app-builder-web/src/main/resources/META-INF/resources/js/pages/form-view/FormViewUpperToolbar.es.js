@@ -50,7 +50,7 @@ export default ({newCustomObject}) => {
 					{'.'}
 				</>
 			),
-			title: `${Liferay.Language.get('error')}:`
+			title: `${Liferay.Language.get('error')}:`,
 		});
 	};
 
@@ -59,7 +59,7 @@ export default ({newCustomObject}) => {
 
 		dispatch({
 			payload: {name: {en_US: value}},
-			type: DataLayoutBuilderActions.UPDATE_DATA_LAYOUT_NAME
+			type: DataLayoutBuilderActions.UPDATE_DATA_LAYOUT_NAME,
 		});
 	};
 
@@ -82,7 +82,7 @@ export default ({newCustomObject}) => {
 	};
 
 	const {
-		name: {en_US: dataLayoutName = ''}
+		name: {en_US: dataLayoutName = ''},
 	} = dataLayout;
 
 	return (

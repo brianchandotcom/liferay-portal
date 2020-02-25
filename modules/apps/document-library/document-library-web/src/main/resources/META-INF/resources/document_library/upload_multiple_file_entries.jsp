@@ -87,12 +87,12 @@ if (portletTitleBasedNavigation) {
 										params: {
 											folderId: <%= folderId %>,
 											folderName: '<%= EditFileEntryMVCActionCommand.TEMP_FOLDER_NAME %>',
-											groupId: <%= scopeGroupId %>
-										}
+											groupId: <%= scopeGroupId %>,
+										},
 									},
 									tempRandomSuffix: '<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
 									uploadFile:
-										'<liferay-portlet:actionURL name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>'
+										'<liferay-portlet:actionURL name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>',
 								});
 							</aui:script>
 						</aui:col>
@@ -113,7 +113,7 @@ if (portletTitleBasedNavigation) {
 									Liferay.Util.openToast({
 										message:
 											'<%= LanguageUtil.get(request, "your-request-completed-successfully") %>',
-										title: '<%= LanguageUtil.get(request, "success") %>'
+										title: '<%= LanguageUtil.get(request, "success") %>',
 									});
 								});
 
@@ -169,7 +169,7 @@ if (portletTitleBasedNavigation) {
 
 										Liferay.Util.fetch(document.<portlet:namespace />fm2.action, {
 											body: new FormData(document.<portlet:namespace />fm2),
-											method: 'POST'
+											method: 'POST',
 										})
 											.then(function(response) {
 												return response.json();

@@ -20,7 +20,7 @@ const QuickActionKebab = ({
 	dropDownItems = [],
 	disabled = false,
 	iconItems = [],
-	items = []
+	items = [],
 }) => {
 	if (items.length > 0) {
 		dropDownItems = items;

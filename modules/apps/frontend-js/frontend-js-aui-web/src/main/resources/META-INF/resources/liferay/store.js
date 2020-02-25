@@ -62,8 +62,8 @@ AUI.add(
 					callback,
 					data: {
 						cmd,
-						key
-					}
+						key,
+					},
 				};
 
 				if (cmd == 'getAll') {
@@ -99,7 +99,7 @@ AUI.add(
 					themeDisplay.getPathMain() + '/portal/session_click',
 					{
 						body,
-						method: 'POST'
+						method: 'POST',
 					}
 				)
 					.then(response => {
@@ -135,7 +135,7 @@ AUI.add(
 				var instance = this;
 
 				instance._ioRequest({
-					data
+					data,
 				});
 			},
 
@@ -169,7 +169,7 @@ AUI.add(
 				var instance = this;
 
 				instance._setValues(obj);
-			}
+			},
 		});
 
 		Liferay.Store = Store;

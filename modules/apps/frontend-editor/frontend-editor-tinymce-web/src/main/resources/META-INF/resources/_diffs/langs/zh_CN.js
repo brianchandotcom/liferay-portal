@@ -215,5 +215,5 @@ tinymce.addI18n('zh_CN', {
 	Tools: '\u5de5\u5177',
 	View: '\u89c6\u56fe',
 	Table: '\u8868\u683c',
-	Format: '\u683c\u5f0f'
+	Format: '\u683c\u5f0f',
 });

@@ -84,7 +84,7 @@ class Select extends Component {
 
 		const emptyOption = {
 			label: Liferay.Language.get('choose-an-option'),
-			value: ''
+			value: '',
 		};
 
 		let newOptions = [...options]
@@ -92,7 +92,7 @@ class Select extends Component {
 				return {
 					...this._prepareOption(option, valueArray),
 					separator:
-						fixedOptions.length > 0 && index === options.length - 1
+						fixedOptions.length > 0 && index === options.length - 1,
 				};
 			})
 			.concat(
@@ -111,7 +111,7 @@ class Select extends Component {
 			options: newOptions,
 			value: valueArray.filter(value =>
 				newOptions.some(option => value === option.value)
-			)
+			),
 		};
 	}
 
@@ -150,7 +150,7 @@ class Select extends Component {
 				!menu.contains(target)
 			) {
 				this.setState({
-					expanded: false
+					expanded: false,
 				});
 			}
 		}
@@ -160,13 +160,13 @@ class Select extends Component {
 		if (newVal) {
 			this.emit('fieldFocused', {
 				fieldInstance: this,
-				originalEvent: window.event
+				originalEvent: window.event,
 			});
 		}
 		else {
 			this.emit('fieldBlurred', {
 				fieldInstance: this,
-				originalEvent: window.event
+				originalEvent: window.event,
 			});
 		}
 
@@ -201,12 +201,12 @@ class Select extends Component {
 		this.setState(
 			{
 				expanded: multiple,
-				value: newValue
+				value: newValue,
 			},
 			() =>
 				this.emit('fieldEdited', {
 					fieldInstance: this,
-					value: newValue
+					value: newValue,
 				})
 		);
 	}
@@ -221,12 +221,12 @@ class Select extends Component {
 
 		this.setState(
 			{
-				value: newValue
+				value: newValue,
 			},
 			() =>
 				this.emit('fieldEdited', {
 					fieldInstance: this,
-					value: newValue
+					value: newValue,
 				})
 		);
 	}
@@ -243,7 +243,7 @@ class Select extends Component {
 			...option,
 			active: !multiple && included,
 			checked: multiple && included,
-			type: multiple ? 'checkbox' : 'item'
+			type: multiple ? 'checkbox' : 'item',
 		};
 	}
 
@@ -316,7 +316,7 @@ Select.STATE = {
 			label: Config.string(),
 			name: Config.string(),
 			showLabel: Config.bool().value(true),
-			value: Config.string()
+			value: Config.string(),
 		})
 	).value([]),
 
@@ -351,7 +351,7 @@ Select.STATE = {
 			label: Config.string(),
 			name: Config.string(),
 			showLabel: Config.bool().value(true),
-			value: Config.string()
+			value: Config.string(),
 		})
 	).value([]),
 
@@ -372,7 +372,7 @@ Select.STATE = {
 	predefinedValue: Config.oneOfType([
 		Config.array(),
 		Config.object(),
-		Config.string()
+		Config.string(),
 	])
 		.setter(setJSONArrayValue)
 		.value([]),
@@ -442,8 +442,8 @@ Select.STATE = {
 	value: Config.oneOfType([
 		Config.array(),
 		Config.object(),
-		Config.string()
-	]).setter(setJSONArrayValue)
+		Config.string(),
+	]).setter(setJSONArrayValue),
 };
 
 Soy.register(Select, templates);

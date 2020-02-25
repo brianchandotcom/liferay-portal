@@ -23,7 +23,7 @@ import {
 	STATUS_ERROR,
 	STATUS_LOGIN,
 	STATUS_REPORT,
-	STATUS_SUCCESS
+	STATUS_SUCCESS,
 } from '../constants.es';
 import {sub} from '../utils.es';
 
@@ -35,7 +35,7 @@ const ModalContentForm = ({
 	pathTermsOfUse,
 	reasons,
 	selectedReason,
-	signedIn
+	signedIn,
 }) => {
 	const {namespace} = useContext(ThemeContext);
 
@@ -50,7 +50,7 @@ const ModalContentForm = ({
 						[
 							<a href={pathTermsOfUse} key={pathTermsOfUse}>
 								{Liferay.Language.get('terms-of-use')}
-							</a>
+							</a>,
 						],
 						false
 					)}
@@ -202,7 +202,7 @@ const FlagsModal = ({
 	reasons,
 	selectedReason,
 	signedIn,
-	status
+	status,
 }) => {
 	return (
 		<ClayModal observer={observer} size="md">
@@ -257,8 +257,8 @@ FlagsModal.propTypes = {
 		STATUS_ERROR,
 		STATUS_LOGIN,
 		STATUS_REPORT,
-		STATUS_SUCCESS
-	]).isRequired
+		STATUS_SUCCESS,
+	]).isRequired,
 };
 
 export default FlagsModal;

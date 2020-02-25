@@ -25,18 +25,18 @@ const getSLAStatusIcon = slaStatus => {
 		OnTime: {
 			bgColor: 'bg-success-light',
 			iconColor: 'text-success',
-			iconName: 'check-circle'
+			iconName: 'check-circle',
 		},
 		Overdue: {
 			bgColor: 'bg-danger-light',
 			iconColor: 'text-danger',
-			iconName: 'exclamation-circle'
+			iconName: 'exclamation-circle',
 		},
 		Untracked: {
 			bgColor: 'bg-info-light',
 			iconColor: 'text-info',
-			iconName: 'hr'
-		}
+			iconName: 'hr',
+		},
 	};
 
 	return items[slaStatus] || items.Untracked;
@@ -47,7 +47,7 @@ const Item = ({totalCount, ...instance}) => {
 		selectedItems = [],
 		setInstanceId,
 		setSelectAll,
-		setSelectedItems
+		setSelectedItems,
 	} = useContext(InstanceListContext);
 	const {instanceDetailsModal, setInstanceDetailsModal} = useContext(
 		ModalContext
@@ -64,7 +64,7 @@ const Item = ({totalCount, ...instance}) => {
 		id,
 		status,
 		slaStatus,
-		taskNames
+		taskNames,
 	} = instance;
 
 	useEffect(() => {
@@ -136,7 +136,7 @@ const Item = ({totalCount, ...instance}) => {
 
 						setInstanceDetailsModal(() => ({
 							...instanceDetailsModal,
-							visible: true
+							visible: true,
 						}));
 					}}
 					tabIndex="-1"
@@ -180,7 +180,7 @@ const QuickActionMenu = ({disabled, instance}) => {
 		setBulkModal,
 		setSingleModal,
 		setSingleTransition,
-		setUpdateDueDate
+		setUpdateDueDate,
 	} = useContext(ModalContext);
 
 	const {id, transitions = [], taskNames} = instance;
@@ -195,7 +195,7 @@ const QuickActionMenu = ({disabled, instance}) => {
 			else {
 				setSingleModal({
 					selectedItem: instance,
-					visible: true
+					visible: true,
 				});
 			}
 		},
@@ -222,19 +222,19 @@ const QuickActionMenu = ({disabled, instance}) => {
 		{
 			icon: 'change',
 			label: Liferay.Language.get('reassign-task'),
-			onClick: handleClickReassignTask
+			onClick: handleClickReassignTask,
 		},
 		{
 			icon: 'date',
 			label: Liferay.Language.get('update-due-date'),
-			onClick: handleClickUpdateDueDate
-		}
+			onClick: handleClickUpdateDueDate,
+		},
 	];
 
 	if (transitions.length > 0) {
 		const transitionItems = [
 			{
-				type: 'divider'
+				type: 'divider',
 			},
 			{
 				items: transitions.map(({label, name}) => ({
@@ -245,14 +245,14 @@ const QuickActionMenu = ({disabled, instance}) => {
 							selectedItemId: id,
 							title: label,
 							transitionName: name,
-							visible: true
+							visible: true,
 						});
-					}
+					},
 				})),
 				label: transitionLabel,
 				name: transitionLabel,
-				type: 'group'
-			}
+				type: 'group',
+			},
 		];
 
 		kebabItems.push(...transitionItems);

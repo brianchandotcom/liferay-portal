@@ -39,7 +39,7 @@ const EditTagsModal = ({
 	repositoryId,
 	selectAll = false,
 	observer,
-	onModalClose = noop
+	onModalClose = noop,
 }) => {
 	const {namespace} = useContext(EditTagsContext);
 
@@ -73,19 +73,19 @@ const EditTagsModal = ({
 			selectionScope: {
 				folderId,
 				repositoryId,
-				selectAll
-			}
+				selectAll,
+			},
 		};
 
 		Promise.all([
 			fetchTags(URL_TAGS, 'POST', selection),
-			fetchTags(URL_SELECTION, 'POST', selection)
+			fetchTags(URL_SELECTION, 'POST', selection),
 		]).then(([responseTags, responseSelection]) => {
 			if (responseTags && responseSelection) {
 				const selectedItems = (responseTags.items || []).map(
 					({name}) => ({
 						label: name,
-						value: name
+						value: name,
 					})
 				);
 
@@ -105,7 +105,7 @@ const EditTagsModal = ({
 		folderId,
 		isMounted,
 		repositoryId,
-		selectAll
+		selectAll,
 	]);
 
 	const fetchTags = useCallback(
@@ -113,7 +113,7 @@ const EditTagsModal = ({
 			const init = {
 				body: JSON.stringify(bodyData),
 				headers: {'Content-Type': 'application/json'},
-				method
+				method,
 			};
 
 			return fetch(`${pathModule}${url}`, init)
@@ -172,13 +172,13 @@ const EditTagsModal = ({
 				selectionScope: {
 					folderId,
 					repositoryId,
-					selectAll
-				}
+					selectAll,
+				},
 			},
 			keywordsToAdd: addedLabels.map(addedLabel => addedLabel.value),
 			keywordsToRemove: removedLabels.map(
 				removedLabel => removedLabel.value
-			)
+			),
 		}).then(() => {
 			const bulkStatusComponent = Liferay.component(
 				`${namespace}BulkStatus`
@@ -281,7 +281,7 @@ EditTagsModal.propTypes = {
 	id: PropTypes.string,
 	pathModule: PropTypes.string,
 	repositoryId: PropTypes.string,
-	selectAll: PropTypes.bool
+	selectAll: PropTypes.bool,
 };
 
 export default EditTagsModal;

@@ -26,7 +26,7 @@ const Table = ({
 	checkable,
 	columns,
 	forwardRef,
-	items
+	items,
 }) => {
 	return (
 		<div ref={forwardRef}>

@@ -60,7 +60,7 @@ export const updateRulesReferences = (rules, oldProperties, newProperties) => {
 		if (action.target === oldFieldName) {
 			action = {
 				...action,
-				target: newFieldName
+				target: newFieldName,
 			};
 		}
 
@@ -71,7 +71,7 @@ export const updateRulesReferences = (rules, oldProperties, newProperties) => {
 					action.expression,
 					oldFieldName,
 					newFieldName
-				)
+				),
 			};
 		}
 
@@ -93,7 +93,7 @@ export const updateRulesReferences = (rules, oldProperties, newProperties) => {
 				) {
 					return {
 						...operand,
-						value: newFieldName
+						value: newFieldName,
 					};
 				}
 				else if (
@@ -111,13 +111,13 @@ export const updateRulesReferences = (rules, oldProperties, newProperties) => {
 					if (changedOption) {
 						return {
 							...operand,
-							value: changedOption.value
+							value: changedOption.value,
 						};
 					}
 				}
 
 				return operand;
-			})
+			}),
 		};
 	});
 };

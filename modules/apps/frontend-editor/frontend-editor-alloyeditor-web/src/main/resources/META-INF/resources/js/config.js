@@ -26,8 +26,8 @@
 							'aui-component',
 							'liferay-notification',
 							'liferay-portlet-base',
-							'timers'
-						]
+							'timers',
+						],
 					},
 					'liferay-alloy-editor-source': {
 						path: 'alloyeditor_source.js',
@@ -35,8 +35,8 @@
 							'aui-debounce',
 							'liferay-fullscreen-source-editor',
 							'liferay-source-editor',
-							'plugin'
-						]
+							'plugin',
+						],
 					},
 					'liferay-editor-image-uploader': {
 						path: 'editor_image_uploader.js',
@@ -44,12 +44,12 @@
 							'aui-alert',
 							'aui-base',
 							'aui-progressbar',
-							'uploader'
-						]
-					}
+							'uploader',
+						],
+					},
 				},
-				root: MODULE_PATH + '/js/'
-			}
-		}
+				root: MODULE_PATH + '/js/',
+			},
+		},
 	});
 })();

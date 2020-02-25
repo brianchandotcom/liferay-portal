@@ -25,7 +25,7 @@ export default function({context, props}) {
 		getAnalyticsReportsHistoricalReadsURL,
 		getAnalyticsReportsHistoricalViewsURL,
 		getAnalyticsReportsTotalReadsURL,
-		getAnalyticsReportsTotalViewsURL
+		getAnalyticsReportsTotalViewsURL,
 	} = endpoints;
 
 	const api = APIService({
@@ -33,10 +33,10 @@ export default function({context, props}) {
 			getAnalyticsReportsHistoricalReadsURL,
 			getAnalyticsReportsHistoricalViewsURL,
 			getAnalyticsReportsTotalReadsURL,
-			getAnalyticsReportsTotalViewsURL
+			getAnalyticsReportsTotalViewsURL,
 		},
 		namespace,
-		page
+		page,
 	});
 
 	function _handleTotalReads() {

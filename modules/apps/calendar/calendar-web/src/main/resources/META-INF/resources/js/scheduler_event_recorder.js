@@ -39,58 +39,58 @@ AUI.add(
 			ATTRS: {
 				calendarContainer: {
 					validator: isObject,
-					value: null
+					value: null,
 				},
 
 				calendarId: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				dateFormat: {
 					validator: isString,
-					value: Liferay.Language.get('a-b-d')
+					value: Liferay.Language.get('a-b-d'),
 				},
 
 				editCalendarBookingURL: {
 					setter: String,
 					validator: isValue,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				permissionsCalendarBookingURL: {
 					setter: String,
 					validator: isValue,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				portletNamespace: {
 					setter: String,
 					validator: isValue,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				remoteServices: {
 					validator: isObject,
-					value: null
+					value: null,
 				},
 
 				status: {
 					setter: toInt,
-					value: CalendarWorkflow.STATUS_DRAFT
+					value: CalendarWorkflow.STATUS_DRAFT,
 				},
 
 				toolbar: {
 					value: {
-						children: []
-					}
+						children: [],
+					},
 				},
 
 				viewCalendarBookingURL: {
 					setter: String,
 					validator: isValue,
-					value: STR_BLANK
-				}
+					value: STR_BLANK,
+				},
 			},
 
 			EXTENDS: A.SchedulerEventRecorder,
@@ -140,9 +140,9 @@ AUI.add(
 									click: A.bind(
 										instance._handleSaveEvent,
 										instance
-									)
+									),
 								},
-								primary: true
+								primary: true,
 							});
 						}
 
@@ -160,8 +160,8 @@ AUI.add(
 									click: A.bind(
 										instance._handleEditEvent,
 										instance
-									)
-								}
+									),
+								},
 							});
 						}
 
@@ -176,8 +176,8 @@ AUI.add(
 									click: A.bind(
 										instance._handleViewEvent,
 										instance
-									)
-								}
+									),
+								},
 							});
 						}
 
@@ -196,8 +196,8 @@ AUI.add(
 									click: A.bind(
 										instance._handleDeleteEvent,
 										instance
-									)
-								}
+									),
+								},
 							});
 						}
 
@@ -266,20 +266,20 @@ AUI.add(
 							after: {
 								destroy() {
 									scheduler.load();
-								}
+								},
 							},
 							destroyOnHide: true,
-							modal: true
+							modal: true,
 						},
 						dialogIframe: {
-							bodyCssClass: 'dialog-with-footer'
+							bodyCssClass: 'dialog-with-footer',
 						},
 						refreshWindow: window,
 						title: Liferay.Language.get('edit-calendar-booking'),
 						uri: CalendarUtil.fillURLParameters(
 							editCalendarBookingURL,
 							data
-						)
+						),
 					});
 
 					instance.hidePopover();
@@ -365,10 +365,10 @@ AUI.add(
 							after: {
 								destroy() {
 									schedulerEvent.syncWithServer();
-								}
+								},
 							},
 							destroyOnHide: true,
-							modal: true
+							modal: true,
 						},
 						refreshWindow: window,
 						title: Liferay.Language.get(
@@ -377,7 +377,7 @@ AUI.add(
 						uri: CalendarUtil.fillURLParameters(
 							viewCalendarBookingURL,
 							data
-						)
+						),
 					});
 
 					event.domEvent.preventDefault();
@@ -455,7 +455,7 @@ AUI.add(
 									'color',
 									selectedCalendar.get('color'),
 									{
-										silent: true
+										silent: true,
 									}
 								);
 							}
@@ -504,7 +504,7 @@ AUI.add(
 					}
 
 					eventInstance.set('color', color, {
-						silent: true
+						silent: true,
 					});
 
 					var portletNamespace = instance.get('portletNamespace');
@@ -660,7 +660,7 @@ AUI.add(
 						permissions,
 						startTime: templateData.startDate,
 						status: schedulerEvent.get('status'),
-						workflowStatus: CalendarWorkflow
+						workflowStatus: CalendarWorkflow,
 					});
 				},
 
@@ -668,7 +668,7 @@ AUI.add(
 					var instance = this;
 
 					var attrMap = {
-						color: instance.get('color')
+						color: instance.get('color'),
 					};
 
 					var event = instance.get('event');
@@ -751,10 +751,10 @@ AUI.add(
 									click: A.bind(
 										instance._handleCancelEvent,
 										instance
-									)
+									),
 								},
-								render: true
-							}
+								render: true,
+							},
 						],
 						'body'
 					);
@@ -767,14 +767,14 @@ AUI.add(
 					}
 
 					instance._showResources();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.SchedulerEventRecorder = SchedulerEventRecorder;
 	},
 	'',
 	{
-		requires: ['dd-plugin', 'liferay-calendar-util', 'resize-plugin']
+		requires: ['dd-plugin', 'liferay-calendar-util', 'resize-plugin'],
 	}
 );

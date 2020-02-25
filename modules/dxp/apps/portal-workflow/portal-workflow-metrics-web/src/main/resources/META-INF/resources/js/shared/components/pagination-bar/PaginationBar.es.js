@@ -23,17 +23,17 @@ const PaginationBar = ({
 	pageSize,
 	totalCount,
 	setPage = () => {},
-	setPageSize = () => {}
+	setPageSize = () => {},
 }) => {
 	const {deltaValues} = useContext(AppContext);
 	const {
 		history,
 		location: {search},
-		match: {params, path}
+		match: {params, path},
 	} = useRouter();
 
 	const deltas = useMemo(() => deltaValues.map(label => ({label})), [
-		deltaValues
+		deltaValues,
 	]);
 
 	const labels = useMemo(
@@ -42,7 +42,7 @@ const PaginationBar = ({
 				'showing-x-to-x-of-x-entries'
 			),
 			perPageItems: Liferay.Language.get('x-entries'),
-			selectPerPageItems: Liferay.Language.get('x-entries')
+			selectPerPageItems: Liferay.Language.get('x-entries'),
 		}),
 		[]
 	);
@@ -53,7 +53,7 @@ const PaginationBar = ({
 				const pathname = pathToRegexp.compile(path)({
 					...params,
 					page: 1,
-					pageSize: newPageSize
+					pageSize: newPageSize,
 				});
 
 				history.push({pathname, search});
@@ -72,7 +72,7 @@ const PaginationBar = ({
 			if (routing) {
 				const pathname = pathToRegexp.compile(path)({
 					...params,
-					page: newPage
+					page: newPage,
 				});
 
 				history.push({pathname, search});

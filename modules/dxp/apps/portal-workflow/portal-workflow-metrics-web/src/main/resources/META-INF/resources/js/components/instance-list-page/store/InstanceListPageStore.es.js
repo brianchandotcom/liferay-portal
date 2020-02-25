@@ -22,7 +22,7 @@ const useInstanceListData = () => {
 		selectedItems,
 		setInstanceId,
 		setSelectAll,
-		setSelectedItems
+		setSelectedItems,
 	};
 };
 

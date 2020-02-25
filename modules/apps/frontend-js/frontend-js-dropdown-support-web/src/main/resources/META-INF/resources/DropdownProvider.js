@@ -16,11 +16,11 @@ import domAlign from 'dom-align';
 import dom from 'metal-dom';
 
 const CssClass = {
-	SHOW: 'show'
+	SHOW: 'show',
 };
 
 const Selector = {
-	TRIGGER: '[data-toggle="liferay-dropdown"]'
+	TRIGGER: '[data-toggle="liferay-dropdown"]',
 };
 
 class DropdownProvider {
@@ -90,9 +90,9 @@ class DropdownProvider {
 		domAlign(menu, trigger, {
 			overflow: {
 				adjustX: true,
-				adjustY: true
+				adjustY: true,
 			},
-			points: ['tl', 'bl']
+			points: ['tl', 'bl'],
 		});
 
 		Liferay.fire(this.EVENT_SHOWN, {menu, trigger});

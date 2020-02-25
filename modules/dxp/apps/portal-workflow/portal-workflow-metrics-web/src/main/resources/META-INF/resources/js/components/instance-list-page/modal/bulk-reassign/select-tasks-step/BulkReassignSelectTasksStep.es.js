@@ -30,12 +30,12 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 	const {
 		filterValues: {bulkAssigneeUserIds: userIds, bulkTaskKeys: taskNames},
 		prefixedKeys,
-		selectedFilters
+		selectedFilters,
 	} = useFilter({filterKeys, prefixKeys, withoutRouteParams: true});
 
 	const [retry, setRetry] = useState(0);
 	const {page, pageSize, pagination} = usePaginationState({
-		initialPageSize: 5
+		initialPageSize: 5,
 	});
 
 	const params = useMemo(() => {
@@ -54,7 +54,7 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 			pageSize,
 			searchByRoles,
 			sort: 'workflowInstanceId:asc',
-			taskNames
+			taskNames,
 		};
 
 		if (selectAll) {
@@ -73,12 +73,12 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params,
-		url: '/workflow-tasks'
+		url: '/workflow-tasks',
 	});
 
 	const paginationState = {
 		...pagination,
-		totalCount: data.totalCount
+		totalCount: data.totalCount,
 	};
 
 	const promises = useMemo(() => {
@@ -89,7 +89,7 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 				setErrorToast(Liferay.Language.get('your-request-has-failed'));
 
 				return Promise.reject(err);
-			})
+			}),
 		];
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fetchData, retry]);

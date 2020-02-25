@@ -47,14 +47,14 @@ AUI.add(
 							instance._setHostZIndex();
 						}
 					});
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.WidgetZIndex = WidgetZIndex;
 	},
 	'',
 	{
-		requires: ['aui-modal', 'plugin']
+		requires: ['aui-modal', 'plugin'],
 	}
 );

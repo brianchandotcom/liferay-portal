@@ -192,7 +192,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 								{
 									dialog: {
 										modal: true,
-										destroyOnHide: true
+										destroyOnHide: true,
 									},
 
 									<%
@@ -206,7 +206,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 
 									title: '<liferay-ui:message key="users" />',
 									uri:
-										'<%= HtmlUtil.escapeJS(String.valueOf(selectUsersDisplayContext.getPortletURL())) %>'
+										'<%= HtmlUtil.escapeJS(String.valueOf(selectUsersDisplayContext.getPortletURL())) %>',
 								},
 								function(event) {
 									A.one('#<portlet:namespace />clientCredentialUserId').val(

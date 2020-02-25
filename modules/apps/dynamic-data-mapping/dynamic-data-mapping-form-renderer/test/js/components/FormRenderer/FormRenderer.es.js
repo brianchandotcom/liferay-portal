@@ -44,7 +44,7 @@ describe('FormRenderer', () => {
 		component = new FormRenderer({
 			pages,
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -55,7 +55,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -66,7 +66,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'pagination',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -77,7 +77,7 @@ describe('FormRenderer', () => {
 			modeRenderer: 'list',
 			pages,
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -89,7 +89,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -102,7 +102,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		expect(component._dragAndDrop).toBeUndefined();
@@ -115,7 +115,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -137,7 +137,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -159,7 +159,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -181,7 +181,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -201,7 +201,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -223,7 +223,7 @@ describe('FormRenderer', () => {
 			pages: newPages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		jest.runAllTimers();
@@ -246,16 +246,16 @@ describe('FormRenderer', () => {
 			pages: newPages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 		const spy = jest.spyOn(component, 'emit');
 
 		component._handlePageSettingsClicked({
 			data: {
 				item: {
-					settingsItem: 'switch-pagination-mode'
-				}
-			}
+					settingsItem: 'switch-pagination-mode',
+				},
+			},
 		});
 
 		jest.runAllTimers();
@@ -273,16 +273,16 @@ describe('FormRenderer', () => {
 			pages: newPages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 		const spy = jest.spyOn(component, 'emit');
 
 		component._handlePageSettingsClicked({
 			data: {
 				item: {
-					settingsItem: 'switch-pagination-mode'
-				}
-			}
+					settingsItem: 'switch-pagination-mode',
+				},
+			},
 		});
 
 		jest.runAllTimers();
@@ -294,9 +294,9 @@ describe('FormRenderer', () => {
 		component._handlePageSettingsClicked({
 			data: {
 				item: {
-					settingsItem: 'switch-pagination-mode'
-				}
-			}
+					settingsItem: 'switch-pagination-mode',
+				},
+			},
 		});
 
 		jest.runAllTimers();
@@ -313,10 +313,10 @@ describe('FormRenderer', () => {
 				columns: [
 					{
 						fields: [],
-						size: 12
-					}
-				]
-			}
+						size: 12,
+					},
+				],
+			},
 		];
 
 		component = new FormRenderer({
@@ -325,7 +325,7 @@ describe('FormRenderer', () => {
 			pages: newPages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		jest.runAllTimers();
@@ -348,7 +348,7 @@ describe('FormRenderer', () => {
 			pages: newPages,
 			paginationMode: 'pagination',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		jest.runAllTimers();
@@ -376,7 +376,7 @@ describe('FormRenderer', () => {
 			pages: newPages,
 			paginationMode: 'pagination',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		jest.runAllTimers();
@@ -400,8 +400,8 @@ describe('FormRenderer', () => {
 			spritemap,
 			successPageSettings: {
 				...successPageSettings,
-				enabled: true
-			}
+				enabled: true,
+			},
 		});
 
 		jest.runAllTimers();
@@ -425,8 +425,8 @@ describe('FormRenderer', () => {
 			spritemap,
 			successPageSettings: {
 				...successPageSettings,
-				enabled: true
-			}
+				enabled: true,
+			},
 		});
 
 		component.activePage = -1;
@@ -450,7 +450,7 @@ describe('FormRenderer', () => {
 			pages: newPages,
 			paginationMode: 'pagination',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		jest.runAllTimers();
@@ -468,7 +468,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -484,7 +484,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -494,7 +494,7 @@ describe('FormRenderer', () => {
 
 		const mockEvent = {
 			source,
-			target
+			target,
 		};
 
 		component._handleDragAndDropEnd(mockEvent);
@@ -505,13 +505,13 @@ describe('FormRenderer', () => {
 			source: {
 				columnIndex: 1,
 				pageIndex: 0,
-				rowIndex: 1
+				rowIndex: 1,
 			},
 			target: {
 				columnIndex: 0,
 				pageIndex: 0,
-				rowIndex: 0
-			}
+				rowIndex: 0,
+			},
 		});
 	});
 
@@ -521,7 +521,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -530,7 +530,7 @@ describe('FormRenderer', () => {
 
 		const mockEvent = {
 			source,
-			target: null
+			target: null,
 		};
 
 		component._handleDragAndDropEnd(mockEvent);
@@ -545,7 +545,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const spyDragAndDrop = jest.spyOn(component._dragAndDrop, 'setState');
@@ -554,7 +554,7 @@ describe('FormRenderer', () => {
 
 		component.setState({
 			pages: newmockPages,
-			paginationMode: 'wizard'
+			paginationMode: 'wizard',
 		});
 
 		jest.runAllTimers();
@@ -568,7 +568,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const spy = jest.spyOn(component, '_startDrag');
@@ -577,7 +577,7 @@ describe('FormRenderer', () => {
 
 		component.setState({
 			pages: newmockPages,
-			paginationMode: 'wizard'
+			paginationMode: 'wizard',
 		});
 
 		jest.runAllTimers();
@@ -592,7 +592,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const spy = jest.spyOn(component, '_startDrag');
@@ -601,7 +601,7 @@ describe('FormRenderer', () => {
 
 		component.setState({
 			pages: newmockPages,
-			paginationMode: 'wizard'
+			paginationMode: 'wizard',
 		});
 
 		jest.runAllTimers();
@@ -614,8 +614,8 @@ describe('FormRenderer', () => {
 		const fields = [
 			{
 				spritemap: 'icons.svg',
-				type: 'option_multiple'
-			}
+				type: 'option_multiple',
+			},
 		];
 		const pageIndex = 0;
 		const rowIndex = 1;
@@ -633,7 +633,7 @@ describe('FormRenderer', () => {
 			pages: newmockPages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -644,8 +644,8 @@ describe('FormRenderer', () => {
 		const fields = [
 			{
 				spritemap: 'icons.svg',
-				type: 'option_multiple'
-			}
+				type: 'option_multiple',
+			},
 		];
 		const pageIndex = 0;
 		const rowIndex = 1;
@@ -663,7 +663,7 @@ describe('FormRenderer', () => {
 			pages: newmockPages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -675,7 +675,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const delegateTarget = component.element.querySelector(
@@ -685,7 +685,7 @@ describe('FormRenderer', () => {
 		delegateTarget.value = 'My Page Title';
 
 		dom.triggerEvent(delegateTarget, 'change', {
-			delegateTarget
+			delegateTarget,
 		});
 
 		jest.runAllTimers();
@@ -699,7 +699,7 @@ describe('FormRenderer', () => {
 			pages,
 			paginationMode: 'wizard',
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 
 		const delegateTarget = component.element.querySelector(
@@ -709,7 +709,7 @@ describe('FormRenderer', () => {
 		delegateTarget.value = 'My Page Description';
 
 		dom.triggerEvent(delegateTarget, 'change', {
-			delegateTarget
+			delegateTarget,
 		});
 
 		jest.runAllTimers();
@@ -724,15 +724,15 @@ describe('FormRenderer', () => {
 				pages,
 				paginationMode: 'wizard',
 				spritemap,
-				successPageSettings
+				successPageSettings,
 			});
 
 			component._handlePageSettingsClicked({
 				data: {
 					item: {
-						settingsItem: 'add-page'
-					}
-				}
+						settingsItem: 'add-page',
+					},
+				},
 			});
 
 			jest.runAllTimers();
@@ -746,15 +746,15 @@ describe('FormRenderer', () => {
 				pages,
 				paginationMode: 'wizard',
 				spritemap,
-				successPageSettings
+				successPageSettings,
 			});
 
 			component._handlePageSettingsClicked({
 				data: {
 					item: {
-						settingsItem: 'reset-page'
-					}
-				}
+						settingsItem: 'reset-page',
+					},
+				},
 			});
 
 			jest.runAllTimers();
@@ -768,15 +768,15 @@ describe('FormRenderer', () => {
 				pages,
 				paginationMode: 'wizard',
 				spritemap,
-				successPageSettings
+				successPageSettings,
 			});
 
 			component._handlePageSettingsClicked({
 				data: {
 					item: {
-						settingsItem: 'add-success-page'
-					}
-				}
+						settingsItem: 'add-success-page',
+					},
+				},
 			});
 
 			jest.runAllTimers();
@@ -790,15 +790,15 @@ describe('FormRenderer', () => {
 				pages,
 				paginationMode: 'wizard',
 				spritemap,
-				successPageSettings
+				successPageSettings,
 			});
 
 			component._handlePageSettingsClicked({
 				data: {
 					item: {
-						settingsItem: 'add-success-page'
-					}
-				}
+						settingsItem: 'add-success-page',
+					},
+				},
 			});
 
 			jest.runAllTimers();
@@ -808,9 +808,9 @@ describe('FormRenderer', () => {
 			component._handlePageSettingsClicked({
 				data: {
 					item: {
-						settingsItem: 'delete-page'
-					}
-				}
+						settingsItem: 'delete-page',
+					},
+				},
 			});
 
 			jest.runAllTimers();
@@ -825,7 +825,7 @@ describe('FormRenderer', () => {
 				pages,
 				paginationMode: 'wizard',
 				spritemap,
-				successPageSettings
+				successPageSettings,
 			});
 
 			component.activePage = -1;
@@ -853,7 +853,7 @@ describe('FormRenderer', () => {
 				pages: pagesTemp,
 				paginationMode: 'wizard',
 				spritemap,
-				successPageSettings
+				successPageSettings,
 			});
 
 			jest.runAllTimers();
@@ -863,20 +863,20 @@ describe('FormRenderer', () => {
 			).toEqual([
 				{
 					label: Liferay.Language.get('add-new-page'),
-					settingsItem: 'add-page'
+					settingsItem: 'add-page',
 				},
 				{
 					label: Liferay.Language.get('delete-current-page'),
-					settingsItem: 'delete-page'
+					settingsItem: 'delete-page',
 				},
 				{
 					label: Liferay.Language.get('add-success-page'),
-					settingsItem: 'add-success-page'
+					settingsItem: 'add-success-page',
 				},
 				{
 					label: 'switch-pagination-to-bottom',
-					settingsItem: 'switch-pagination-mode'
-				}
+					settingsItem: 'switch-pagination-mode',
+				},
 			]);
 			expect(component).toMatchSnapshot();
 		});
@@ -887,7 +887,7 @@ describe('FormRenderer', () => {
 				pages,
 				paginationMode: 'wizard',
 				spritemap,
-				successPageSettings
+				successPageSettings,
 			});
 
 			jest.runAllTimers();
@@ -897,16 +897,16 @@ describe('FormRenderer', () => {
 			).toEqual([
 				{
 					label: Liferay.Language.get('add-new-page'),
-					settingsItem: 'add-page'
+					settingsItem: 'add-page',
 				},
 				{
 					label: Liferay.Language.get('reset-page'),
-					settingsItem: 'reset-page'
+					settingsItem: 'reset-page',
 				},
 				{
 					label: Liferay.Language.get('add-success-page'),
-					settingsItem: 'add-success-page'
-				}
+					settingsItem: 'add-success-page',
+				},
 			]);
 			expect(component).toMatchSnapshot();
 		});
@@ -919,15 +919,15 @@ describe('FormRenderer', () => {
 				pages: newPages,
 				paginationMode: 'wizard',
 				spritemap,
-				successPageSettings
+				successPageSettings,
 			});
 
 			component._handlePageSettingsClicked({
 				data: {
 					item: {
-						settingsItem: 'delete-page'
-					}
-				}
+						settingsItem: 'delete-page',
+					},
+				},
 			});
 
 			jest.runAllTimers();

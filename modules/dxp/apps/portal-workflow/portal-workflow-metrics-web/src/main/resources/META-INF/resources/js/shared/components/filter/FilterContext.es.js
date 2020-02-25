@@ -43,7 +43,7 @@ const FilterContextProvider = ({children}) => {
 				dispatchFilterError,
 				filterState,
 				filterValues,
-				setFilterValues
+				setFilterValues,
 			}}
 		>
 			{children}

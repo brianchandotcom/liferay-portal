@@ -21,5 +21,5 @@ export const EDITABLE_TYPES = {
 	image: 'image',
 	link: 'link',
 	'rich-text': 'rich-text',
-	text: 'text'
+	text: 'text',
 };

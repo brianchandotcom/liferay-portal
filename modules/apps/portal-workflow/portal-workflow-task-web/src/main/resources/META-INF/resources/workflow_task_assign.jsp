@@ -82,7 +82,7 @@ boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workf
 
 			Liferay.Util.fetch('<%= assignURL.toString() %>', {
 				body: data,
-				method: 'POST'
+				method: 'POST',
 			}).then(function() {
 				Liferay.Util.getOpener().<portlet:namespace />refreshPortlet(
 					'<%= redirect.toString() %>'

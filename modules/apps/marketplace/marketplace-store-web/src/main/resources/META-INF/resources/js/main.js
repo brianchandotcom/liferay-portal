@@ -87,7 +87,7 @@ AUI.add(
 						}
 						else if (!response.empty) {
 							message = {
-								empty: true
+								empty: true,
 							};
 						}
 
@@ -110,14 +110,14 @@ AUI.add(
 
 			setTargetURI(targetURI) {
 				this._targetURI = targetURI;
-			}
+			},
 		};
 
 		Liferay.MarketplaceMessenger = MarketplaceMessenger;
 	},
 	'',
 	{
-		requires: ['aui-messaging']
+		requires: ['aui-messaging'],
 	}
 );
 
@@ -135,13 +135,13 @@ AUI.add(
 				});
 
 				return returnObject;
-			}
+			},
 		};
 
 		Liferay.MarketplaceUtil = MarketplaceUtil;
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base'],
 	}
 );

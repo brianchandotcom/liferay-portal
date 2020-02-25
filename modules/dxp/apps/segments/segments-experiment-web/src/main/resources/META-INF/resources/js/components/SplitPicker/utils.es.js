@@ -36,7 +36,7 @@ function _fixSplitArray(variants, editedIndex, indexToFix, totalSplit) {
 		if (correctedSplit < 0) {
 			variants[indexToFix] = {
 				...variants[indexToFix],
-				split: 0
+				split: 0,
 			};
 
 			return _fixSplitArray(
@@ -49,7 +49,7 @@ function _fixSplitArray(variants, editedIndex, indexToFix, totalSplit) {
 		else {
 			variants[indexToFix] = {
 				...variants[indexToFix],
-				split: correctedSplit
+				split: correctedSplit,
 			};
 		}
 	}
@@ -60,7 +60,7 @@ function _fixSplitArray(variants, editedIndex, indexToFix, totalSplit) {
 		if (correctedSplit > 100) {
 			variants[indexToFix] = {
 				...variants[indexToFix],
-				split: 100
+				split: 100,
 			};
 
 			return _fixSplitArray(
@@ -73,7 +73,7 @@ function _fixSplitArray(variants, editedIndex, indexToFix, totalSplit) {
 		else {
 			variants[indexToFix] = {
 				...variants[indexToFix],
-				split: correctedSplit
+				split: correctedSplit,
 			};
 		}
 	}

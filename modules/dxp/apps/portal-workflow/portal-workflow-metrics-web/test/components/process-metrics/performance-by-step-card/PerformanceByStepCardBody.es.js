@@ -21,20 +21,20 @@ const items = [
 		breachedInstanceCount: 3,
 		breachedInstancePercentage: 30,
 		durationAvg: 10800000,
-		name: 'Review'
+		name: 'Review',
 	},
 	{
 		breachedInstanceCount: 7,
 		breachedInstancePercentage: 22.5806,
 		durationAvg: 475200000,
-		name: 'Update'
+		name: 'Update',
 	},
 	{
 		breachedInstanceCount: 0,
 		breachedInstancePercentage: 0,
 		durationAvg: 0,
-		name: 'Translate'
-	}
+		name: 'Translate',
+	},
 ];
 
 describe('The performance by step body component should', () => {

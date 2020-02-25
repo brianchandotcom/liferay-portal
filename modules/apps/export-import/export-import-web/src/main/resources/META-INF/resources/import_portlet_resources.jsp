@@ -365,6 +365,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 		locale: '<%= locale.toLanguageTag() %>',
 		namespace: '<portlet:namespace />',
 		ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
-		timeZoneOffset: <%= timeZoneOffset %>
+		timeZoneOffset: <%= timeZoneOffset %>,
 	});
 </aui:script>

@@ -19,11 +19,11 @@ const query = '?filters.roleIds%5B0%5D=2';
 
 const items = [
 	{id: 1, name: 'Admin'},
-	{id: 2, name: 'User'}
+	{id: 2, name: 'User'},
 ];
 
 const clientMock = {
-	get: jest.fn().mockResolvedValue({data: {items, totalCount: items.length}})
+	get: jest.fn().mockResolvedValue({data: {items, totalCount: items.length}}),
 };
 
 const wrapper = ({children}) => (
@@ -39,7 +39,7 @@ describe('The role filter component should', () => {
 
 	beforeEach(() => {
 		const renderResult = render(<RoleFilter processId={12345} />, {
-			wrapper
+			wrapper,
 		});
 
 		getAllByTestId = renderResult.getAllByTestId;

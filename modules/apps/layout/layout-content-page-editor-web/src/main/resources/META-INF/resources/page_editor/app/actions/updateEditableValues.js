@@ -17,12 +17,12 @@ import {UPDATE_EDITABLE_VALUES} from './types';
 export default function updateEditableValues({
 	editableValues,
 	fragmentEntryLinkId,
-	segmentsExperienceId
+	segmentsExperienceId,
 }) {
 	return {
 		editableValues,
 		fragmentEntryLinkId,
 		segmentsExperienceId,
-		type: UPDATE_EDITABLE_VALUES
+		type: UPDATE_EDITABLE_VALUES,
 	};
 }

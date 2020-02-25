@@ -41,7 +41,7 @@ const PopoverBase = ({
 			{...otherProps}
 			className={classNames('popover', className, {
 				[`clay-popover-${placement}`]: placement,
-				hide: !visible
+				hide: !visible,
 			})}
 			ref={forwardRef}
 		>
@@ -53,7 +53,7 @@ const PopoverBase = ({
 
 PopoverBase.propTypes = {
 	placement: PropTypes.oneOf(['bottom', 'left', 'none', 'right', 'top']),
-	visible: PropTypes.bool
+	visible: PropTypes.bool,
 };
 
 PopoverBase.Header = Header;

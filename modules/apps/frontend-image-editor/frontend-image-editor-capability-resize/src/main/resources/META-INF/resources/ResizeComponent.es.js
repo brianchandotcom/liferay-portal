@@ -130,8 +130,8 @@ ResizeComponent.STATE = {
 	 * @type {Function}
 	 */
 	getImageEditorImageData: {
-		validator: core.isFunction
-	}
+		validator: core.isFunction,
+	},
 };
 
 Soy.register(ResizeComponent, componentTemplates);

@@ -38,7 +38,7 @@ AUI.add(
 		PortletBase.ATTRS = {
 			namespace: {
 				getter: '_getNS',
-				writeOnce: true
+				writeOnce: true,
 			},
 			rootNode: {
 				getter: '_getRootNode',
@@ -47,8 +47,8 @@ AUI.add(
 					var instance = this;
 
 					return A.one('#p_p_id' + instance.NS);
-				}
-			}
+				},
+			},
 		};
 
 		PortletBase.prototype = {
@@ -111,13 +111,13 @@ AUI.add(
 				return root.one(
 					instance._formatSelectorNS(instance.NS, selector)
 				);
-			}
+			},
 		};
 
 		Liferay.PortletBase = PortletBase;
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base'],
 	}
 );

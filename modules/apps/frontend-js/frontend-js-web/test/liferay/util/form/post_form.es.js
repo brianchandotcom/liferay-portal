@@ -82,9 +82,9 @@ describe('Liferay.Util.postForm', () => {
 		postForm(form, {
 			data: {
 				bar: '456',
-				foo: 'def'
+				foo: 'def',
 			},
-			url: 'http://sampleurl.com'
+			url: 'http://sampleurl.com',
 		});
 
 		const barElement = getFormElement(form, 'bar');

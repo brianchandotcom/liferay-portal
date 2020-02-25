@@ -190,7 +190,7 @@ name = HtmlUtil.escapeJS(name);
 
 			var defaultConfig = {
 				file_browser_callback: window['<%= name %>'].fileBrowserCallback,
-				init_instance_callback: window['<%= name %>'].initInstanceCallback
+				init_instance_callback: window['<%= name %>'].initInstanceCallback,
 			};
 
 			<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
@@ -252,7 +252,7 @@ name = HtmlUtil.escapeJS(name);
 			}
 
 			Liferay.component('<%= name %>', window['<%= name %>'], {
-				portletId: '<%= portletId %>'
+				portletId: '<%= portletId %>',
 			});
 		},
 
@@ -278,7 +278,7 @@ name = HtmlUtil.escapeJS(name);
 
 			context.setAttribute('dir', contentsLanguageDir);
 			context.setAttribute('lang', contentsLanguage);
-		}
+		},
 	};
 
 	<c:if test="<%= autoCreate %>">

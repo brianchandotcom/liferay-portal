@@ -30,7 +30,7 @@ const DEFAULT_COLORS = [
 	'2BA676',
 	'006EF8',
 	'7F26FF',
-	'FF21A0'
+	'FF21A0',
 ];
 
 const ClayColorPickerWithState = ({
@@ -38,7 +38,7 @@ const ClayColorPickerWithState = ({
 	inputValue,
 	name,
 	readOnly,
-	spritemap
+	spritemap,
 }) => {
 	const [customColors, setCustoms] = useState(DEFAULT_COLORS);
 

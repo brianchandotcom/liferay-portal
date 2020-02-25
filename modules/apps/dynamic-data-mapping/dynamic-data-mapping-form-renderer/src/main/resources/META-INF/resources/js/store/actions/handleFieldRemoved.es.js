@@ -20,7 +20,7 @@ export default (pages, name) => {
 	return visitor.mapColumns(column => {
 		return {
 			...column,
-			fields: column.fields.filter(field => field.name !== name)
+			fields: column.fields.filter(field => field.name !== name),
 		};
 	});
 };

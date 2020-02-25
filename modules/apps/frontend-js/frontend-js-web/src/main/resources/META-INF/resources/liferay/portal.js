@@ -84,7 +84,7 @@
 					namespace,
 					selectedIndex: names.indexOf(id),
 					tabItem: tab,
-					tabSection
+					tabSection,
 				};
 
 				if (callback && A.Lang.isFunction(callback)) {
@@ -98,7 +98,7 @@
 	);
 
 	Liferay.publish('showTab', {
-		defaultFn: Liferay.Portal.Tabs._show
+		defaultFn: Liferay.Portal.Tabs._show,
 	});
 
 	ToolTip._getText = function(id) {
@@ -144,7 +144,7 @@
 						opacity: 1,
 						stickDuration: 100,
 						visible: false,
-						zIndex: Liferay.zIndex.TOOLTIP
+						zIndex: Liferay.zIndex.TOOLTIP,
 					},
 					tooltipConfig
 				);

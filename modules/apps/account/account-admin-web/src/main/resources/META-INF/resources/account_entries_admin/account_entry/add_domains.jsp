@@ -82,7 +82,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		var openingLiferay = Util.getOpener().Liferay;
 
 		openingLiferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', {
-			data: document.getElementById('<portlet:namespace />domain').value
+			data: document.getElementById('<portlet:namespace />domain').value,
 		});
 
 		Util.getWindow().hide();

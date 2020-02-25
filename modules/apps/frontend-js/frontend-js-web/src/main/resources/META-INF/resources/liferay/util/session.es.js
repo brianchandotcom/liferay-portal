@@ -48,7 +48,7 @@ export function getSessionValue(key) {
 
 	return fetch(getSessionClickURL(), {
 		body: formData,
-		method: 'POST'
+		method: 'POST',
 	})
 		.then(response => response.text())
 		.then(responseText => {
@@ -80,6 +80,6 @@ export function setSessionValue(key, value) {
 
 	return fetch(getSessionClickURL(), {
 		body: formData,
-		method: 'POST'
+		method: 'POST',
 	});
 }

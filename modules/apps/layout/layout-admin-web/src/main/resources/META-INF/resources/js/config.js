@@ -25,12 +25,12 @@
 						requires: [
 							'aui-base',
 							'aui-overlay-mask-deprecated',
-							'liferay-portlet-base'
-						]
-					}
+							'liferay-portlet-base',
+						],
+					},
 				},
-				root: MODULE_PATH + '/'
-			}
-		}
+				root: MODULE_PATH + '/',
+			},
+		},
 	});
 })();

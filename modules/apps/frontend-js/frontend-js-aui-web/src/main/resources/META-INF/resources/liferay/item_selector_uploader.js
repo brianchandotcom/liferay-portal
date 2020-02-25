@@ -63,7 +63,7 @@ AUI.add(
 
 					var progressbar = new A.ProgressBar({
 						boundingBox: progressbarNode.one('.' + CSS_PROGRESS),
-						height: PROGRESS_HEIGHT
+						height: PROGRESS_HEIGHT,
 					}).render();
 
 					instance._progressBar = progressbar;
@@ -76,7 +76,7 @@ AUI.add(
 
 					if (!uploader) {
 						uploader = new A.Uploader({
-							fileFieldName: 'imageSelectorFileName'
+							fileFieldName: 'imageSelectorFileName',
 						});
 
 						instance._uploader = uploader;
@@ -179,7 +179,7 @@ AUI.add(
 							instance._onUploadProgress,
 							instance
 						),
-						cancelBtn.on('click', instance._onCancel, instance)
+						cancelBtn.on('click', instance._onCancel, instance),
 					];
 				},
 
@@ -199,8 +199,8 @@ AUI.add(
 						.html(file.get('name'));
 
 					instance.rootNode.addClass(CSS_UPLOADING);
-				}
-			}
+				},
+			},
 		});
 
 		A.LiferayItemSelectorUploader = ItemUploader;
@@ -211,7 +211,7 @@ AUI.add(
 			'aui-base',
 			'aui-progressbar',
 			'liferay-portlet-base',
-			'uploader'
-		]
+			'uploader',
+		],
 	}
 );

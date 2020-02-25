@@ -21,7 +21,7 @@ AUI.add(
 			ATTRS: {
 				intervalSelector: {},
 
-				schedulerEvent: {}
+				schedulerEvent: {},
 			},
 
 			EXTENDS: A.Base,
@@ -171,7 +171,7 @@ AUI.add(
 						schedulerEvent.after(
 							'startDateChange',
 							A.bind(instance._updateIntervalSelector, instance)
-						)
+						),
 					];
 				},
 
@@ -195,14 +195,14 @@ AUI.add(
 					var instance = this;
 
 					AArray.invoke(instance.eventHandlers, 'detach');
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.IntervalSelectorSchedulerEventLink = IntervalSelectorSchedulerEventLink;
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-portlet-base']
+		requires: ['aui-base', 'liferay-portlet-base'],
 	}
 );

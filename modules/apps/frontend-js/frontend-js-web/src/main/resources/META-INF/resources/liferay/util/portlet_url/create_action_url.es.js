@@ -24,6 +24,6 @@ import createPortletURL from './create_portlet_url.es';
 export default function createActionURL(basePortletURL, parameters = {}) {
 	return createPortletURL(basePortletURL, {
 		...parameters,
-		p_p_lifecycle: '1'
+		p_p_lifecycle: '1',
 	});
 }

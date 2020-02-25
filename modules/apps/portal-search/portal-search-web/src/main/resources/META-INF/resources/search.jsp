@@ -105,7 +105,7 @@ PortalUtil.setPageKeywords(pageKeywords, request);
 		var form = document.<portlet:namespace />fm;
 
 		Liferay.Util.setFormValues(form, {
-			<%= SearchContainer.DEFAULT_CUR_PARAM %>: 1
+			<%= SearchContainer.DEFAULT_CUR_PARAM %>: 1,
 		});
 
 		var keywordsInput = Liferay.Util.getFormElement(form, 'keywords');

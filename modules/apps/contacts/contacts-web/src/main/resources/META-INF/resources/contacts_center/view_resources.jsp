@@ -65,11 +65,11 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 										'<%= UnicodeLanguageUtil.get(request, "update-contact") %>',
 										'<%= viewEntryURL %>'
 									);
-								}
+								},
 							},
 							icon: 'icon-edit',
 							id: '<portlet:namespace />edit',
-							label: '<%= UnicodeLanguageUtil.get(request, "edit") %>'
+							label: '<%= UnicodeLanguageUtil.get(request, "edit") %>',
 						});
 
 						contactsToolbarChildren.push({
@@ -84,7 +84,7 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 
 										Liferay.Util.fetch('<portlet:actionURL name="deleteEntry" />', {
 											body: data,
-											method: 'POST'
+											method: 'POST',
 										})
 											.then(function(response) {
 												return response.text();
@@ -96,17 +96,17 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 												Liferay.component('contactsCenter').showMessage(false);
 											});
 									}
-								}
+								},
 							},
 							icon: 'icon-remove',
 							id: '<portlet:namespace />delete',
-							label: '<%= UnicodeLanguageUtil.get(request, "delete") %>'
+							label: '<%= UnicodeLanguageUtil.get(request, "delete") %>',
 						});
 
 						new A.Toolbar({
 							activeState: false,
 							boundingBox: buttonRow,
-							children: contactsToolbarChildren
+							children: contactsToolbarChildren,
 						}).render();
 					</aui:script>
 				</span>
@@ -156,14 +156,14 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 								on: {
 									click: function(event) {
 										Liferay.component('contactsCenter')._setVisibleSelectedUsersView();
-									}
-								}
+									},
+								},
 							});
 
 							new A.Toolbar({
 								activeState: false,
 								boundingBox: buttonRow,
-								children: contactsToolbarChildren
+								children: contactsToolbarChildren,
 							}).render();
 						</aui:script>
 					</c:when>

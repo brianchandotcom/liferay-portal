@@ -23,7 +23,7 @@ import EditAppContext, {
 	PRODUCT_MENU,
 	SITE_ID_ALL,
 	TOGGLE_SETTINGS_SITE_ID,
-	UPDATE_SETTINGS_SCOPE
+	UPDATE_SETTINGS_SCOPE,
 } from './EditAppContext.es';
 
 const {Divider, Item, ItemList} = ClayDropDown;
@@ -31,24 +31,24 @@ const {Divider, Item, ItemList} = ClayDropDown;
 const SCOPES = [
 	{
 		label: Liferay.Language.get('control-panel'),
-		value: ['control_panel']
+		value: ['control_panel'],
 	},
 	{
 		label: Liferay.Language.get('site-menu'),
-		value: ['site_administration.content']
+		value: ['site_administration.content'],
 	},
 	{
 		label: Liferay.Language.get('control-panel-and-site-menu'),
-		value: ['control_panel', 'site_administration.content']
-	}
+		value: ['control_panel', 'site_administration.content'],
+	},
 ];
 
 export default () => {
 	const {
 		dispatch,
 		state: {
-			app: {appDeployments}
-		}
+			app: {appDeployments},
+		},
 	} = useContext(EditAppContext);
 
 	const [sites, setSites] = useState([]);
@@ -76,19 +76,19 @@ export default () => {
 
 		dispatch({
 			scope: scope.split(','),
-			type: UPDATE_SETTINGS_SCOPE
+			type: UPDATE_SETTINGS_SCOPE,
 		});
 	};
 
 	const onSiteIdsChange = siteId => {
 		dispatch({
 			siteId: parseInt(siteId, 10),
-			type: TOGGLE_SETTINGS_SITE_ID
+			type: TOGGLE_SETTINGS_SITE_ID,
 		});
 	};
 
 	const {
-		settings: {scope, siteIds = []}
+		settings: {scope, siteIds = []},
 	} = appDeployments.find(
 		appDeployment => appDeployment.type === PRODUCT_MENU
 	);

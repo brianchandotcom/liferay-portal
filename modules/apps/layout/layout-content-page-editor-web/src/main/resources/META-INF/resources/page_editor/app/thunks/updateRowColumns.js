@@ -18,14 +18,14 @@ import LayoutService from '../services/LayoutService';
 export default function updateRowColumns({
 	itemId,
 	numberOfColumns,
-	segmentsExperienceId
+	segmentsExperienceId,
 }) {
 	return dispatch =>
 		LayoutService.updateRowColumns({
 			itemId,
 			numberOfColumns,
 			onNetworkStatus: dispatch,
-			segmentsExperienceId
+			segmentsExperienceId,
 		}).then(({layoutData}) => {
 			dispatch(updateLayoutData({layoutData}));
 		});

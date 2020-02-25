@@ -18,7 +18,7 @@ const EmptyState = ({
 	message,
 	messageClassName,
 	title,
-	type = ''
+	type = '',
 }) => {
 	const classNameType =
 		type === 'not-found'

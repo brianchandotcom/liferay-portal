@@ -19,18 +19,18 @@
 				modules: {
 					'liferay-kaleo-designer-autocomplete-util': {
 						path: 'autocomplete_util.js',
-						requires: ['autocomplete', 'autocomplete-highlighters']
+						requires: ['autocomplete', 'autocomplete-highlighters'],
 					},
 					'liferay-kaleo-designer-definition-diagram-controller': {
 						path: 'definition_diagram_controller.js',
 						requires: [
 							'liferay-kaleo-designer-field-normalizer',
-							'liferay-kaleo-designer-utils'
-						]
+							'liferay-kaleo-designer-utils',
+						],
 					},
 					'liferay-kaleo-designer-dialogs': {
 						path: 'dialogs.js',
-						requires: ['liferay-util-window']
+						requires: ['liferay-util-window'],
 					},
 					'liferay-kaleo-designer-editors': {
 						path: 'editors.js',
@@ -41,12 +41,12 @@
 							'aui-datatype',
 							'aui-node',
 							'liferay-kaleo-designer-autocomplete-util',
-							'liferay-kaleo-designer-utils'
-						]
+							'liferay-kaleo-designer-utils',
+						],
 					},
 					'liferay-kaleo-designer-field-normalizer': {
 						path: 'field_normalizer.js',
-						requires: ['liferay-kaleo-designer-remote-services']
+						requires: ['liferay-kaleo-designer-remote-services'],
 					},
 					'liferay-kaleo-designer-nodes': {
 						path: 'nodes.js',
@@ -55,20 +55,20 @@
 							'aui-datatype',
 							'aui-diagram-builder',
 							'liferay-kaleo-designer-editors',
-							'liferay-kaleo-designer-utils'
-						]
+							'liferay-kaleo-designer-utils',
+						],
 					},
 					'liferay-kaleo-designer-remote-services': {
 						path: 'remote_services.js',
-						requires: ['aui-io', 'liferay-portlet-url']
+						requires: ['aui-io', 'liferay-portlet-url'],
 					},
 					'liferay-kaleo-designer-templates': {
 						path: 'templates.js',
-						requires: ['aui-tpl-snippets-deprecated']
+						requires: ['aui-tpl-snippets-deprecated'],
 					},
 					'liferay-kaleo-designer-utils': {
 						path: 'utils.js',
-						requires: []
+						requires: [],
 					},
 					'liferay-kaleo-designer-xml-definition': {
 						path: 'xml_definition.js',
@@ -76,20 +76,20 @@
 							'aui-base',
 							'aui-component',
 							'dataschema-xml',
-							'datatype-xml'
-						]
+							'datatype-xml',
+						],
 					},
 					'liferay-kaleo-designer-xml-definition-serializer': {
 						path: 'xml_definition_serializer.js',
 						requires: [
 							'escape',
 							'liferay-kaleo-designer-xml-util',
-							'liferay-xml-formatter'
-						]
+							'liferay-xml-formatter',
+						],
 					},
 					'liferay-kaleo-designer-xml-util': {
 						path: 'xml_util.js',
-						requires: ['aui-base']
+						requires: ['aui-base'],
 					},
 					'liferay-portlet-kaleo-designer': {
 						path: 'main.js',
@@ -109,12 +109,12 @@
 							'liferay-kaleo-designer-utils',
 							'liferay-kaleo-designer-xml-util',
 							'liferay-util-window',
-							'liferay-xml-formatter'
-						]
-					}
+							'liferay-xml-formatter',
+						],
+					},
 				},
-				root: MODULE_PATH + '/designer/js/'
-			}
-		}
+				root: MODULE_PATH + '/designer/js/',
+			},
+		},
 	});
 })();

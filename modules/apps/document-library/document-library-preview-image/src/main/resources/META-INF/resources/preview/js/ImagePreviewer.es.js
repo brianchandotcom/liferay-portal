@@ -227,7 +227,7 @@ const ImagePreviewer = ({imageURL}) => {
 };
 
 ImagePreviewer.propTypes = {
-	imageURL: PropTypes.string
+	imageURL: PropTypes.string,
 };
 
 export default function(props) {

@@ -27,15 +27,15 @@ module.exports = {
 				exclude: /node_modules/,
 				test: /\.js$/,
 				use: {
-					loader: 'babel-loader'
-				}
-			}
-		]
+					loader: 'babel-loader',
+				},
+			},
+		],
 	},
 	output: {
 		filename: 'global.bundle.js',
 		libraryTarget: 'window',
 		path: path.resolve('./build/node/packageRunBuild/resources/liferay/'),
-		publicPath: PUBLIC_PATH
-	}
+		publicPath: PUBLIC_PATH,
+	},
 };

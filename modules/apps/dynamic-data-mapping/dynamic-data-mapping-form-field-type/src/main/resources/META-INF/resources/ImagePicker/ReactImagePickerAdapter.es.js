@@ -33,7 +33,7 @@ const ReactImagePicker = ({
 	itemSelectorURL,
 	name,
 	portletNamespace,
-	readOnly
+	readOnly,
 }) => {
 	const [imageValues, setImageValues] = useState({});
 	const [modalVisible, setModalVisible] = useState(false);
@@ -41,12 +41,12 @@ const ReactImagePicker = ({
 	useEffect(() => {
 		setImageValues({
 			...{description: '', title: '', url: ''},
-			...JSON.parse(inputValue || '{}')
+			...JSON.parse(inputValue || '{}'),
 		});
 	}, [inputValue]);
 
 	const {observer} = useModal({
-		onClose: () => setModalVisible(false)
+		onClose: () => setModalVisible(false),
 	});
 
 	const _dispatchValue = (value, clear) => {
@@ -55,7 +55,7 @@ const ReactImagePicker = ({
 
 			dispatch({
 				payload: clear ? '' : JSON.stringify(mergedValues),
-				type: 'value'
+				type: 'value',
 			});
 
 			return mergedValues;
@@ -84,7 +84,7 @@ const ReactImagePicker = ({
 
 				_dispatchValue({
 					...{description: '', height, title: '', url: '', width},
-					...item
+					...item,
 				});
 			});
 			img.src = item.url;
@@ -97,7 +97,7 @@ const ReactImagePicker = ({
 		const itemSelectorDialog = new ItemSelectorDialog({
 			eventName: `${portletNamespace}selectDocumentLibrary`,
 			singleSelect: true,
-			url: itemSelectorURL
+			url: itemSelectorURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', _handleFieldChanged);

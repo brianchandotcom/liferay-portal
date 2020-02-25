@@ -209,7 +209,7 @@
 	};
 
 	var ACTIONS = {
-		deleteLayoutSetPrototypes: deleteLayoutSetPrototypes
+		deleteLayoutSetPrototypes: deleteLayoutSetPrototypes,
 	};
 
 	Liferay.componentReady('layoutSetPrototypeWebManagementToolbar').then(function(

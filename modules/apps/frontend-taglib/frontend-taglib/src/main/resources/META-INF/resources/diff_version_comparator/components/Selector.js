@@ -22,7 +22,7 @@ export default function Selector({
 	selectedVersion,
 	uniqueVersionLabel,
 	urlSelector,
-	versions
+	versions,
 }) {
 	const [active, setActive] = useState(false);
 

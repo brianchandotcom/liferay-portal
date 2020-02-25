@@ -88,13 +88,13 @@ AUI.add(
 				}
 
 				return queryString;
-			}
+			},
 		});
 
 		Liferay.namespace('Search').CustomFilter = CustomFilter;
 	},
 	'',
 	{
-		requires: ['liferay-search-facet-util']
+		requires: ['liferay-search-facet-util'],
 	}
 );

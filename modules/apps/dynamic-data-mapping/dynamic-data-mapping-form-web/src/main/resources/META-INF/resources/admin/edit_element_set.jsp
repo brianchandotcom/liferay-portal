@@ -124,7 +124,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 	Liferay.namespace('DDM').FormSettings = {
 		portletNamespace: '<portlet:namespace />',
 		showPagination: false,
-		spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+		spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
 	};
 
 	Liferay.Forms.App = {
@@ -174,7 +174,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 							redirectURL: '<%= HtmlUtil.escape(redirect) %>',
 							spritemap: Liferay.DDM.FormSettings.spritemap,
 							strings: Liferay.DDM.FormSettings.strings,
-							view: 'fieldSets'
+							view: 'fieldSets',
 						},
 						'#<portlet:namespace />-container'
 					);
@@ -183,7 +183,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 					throw error;
 				}
 			);
-		}
+		},
 	};
 
 	var clearPortletHandlers = function(event) {

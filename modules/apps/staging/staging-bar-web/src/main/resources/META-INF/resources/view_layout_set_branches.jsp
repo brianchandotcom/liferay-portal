@@ -102,6 +102,6 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 <aui:script use="liferay-staging-branch">
 	Liferay.StagingBar.init({
 		namespace: '<portlet:namespace />',
-		portletId: '<%= portletDisplay.getId() %>'
+		portletId: '<%= portletDisplay.getId() %>',
 	});
 </aui:script>

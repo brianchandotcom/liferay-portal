@@ -31,7 +31,7 @@ class FieldBase extends Component {
 		return {
 			...state,
 			showRepeatableAddButton: this.repeatable,
-			showRepeatableRemoveButton: this.repeatable && repeatedIndex > 0
+			showRepeatableRemoveButton: this.repeatable && repeatedIndex > 0,
 		};
 	}
 }
@@ -123,7 +123,7 @@ FieldBase.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	tooltip: Config.string()
+	tooltip: Config.string(),
 };
 
 const composed = compose(withDispatch, withRepetitionControls)(FieldBase);

@@ -72,7 +72,7 @@ class SaturationComponent extends Component {
 		if (!promise) {
 			promise = this.spawnWorker_({
 				imageData,
-				saturationValue
+				saturationValue,
 			});
 
 			this.cache_[saturationValue] = promise;
@@ -120,7 +120,7 @@ SaturationComponent.STATE = {
 	 * @type {String}
 	 */
 	modulePath: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -130,8 +130,8 @@ SaturationComponent.STATE = {
 	 * @type {Function}
 	 */
 	requestImageEditorPreview: {
-		validator: core.isFunction
-	}
+		validator: core.isFunction,
+	},
 };
 
 Soy.register(SaturationComponent, componentTemplates);

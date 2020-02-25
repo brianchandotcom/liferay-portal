@@ -107,15 +107,15 @@
 							selectDesc: 'nameCurrentValue',
 							selectId: 'countryId',
 							selectSort: '<%= true %>',
-							selectVal: '<%= countryId %>'
+							selectVal: '<%= countryId %>',
 						},
 						{
 							select: '<portlet:namespace />addressRegionId<%= addressesIndex %>',
 							selectData: Liferay.Address.getRegions,
 							selectDesc: 'name',
 							selectId: 'regionId',
-							selectVal: '<%= regionId %>'
-						}
+							selectVal: '<%= regionId %>',
+						},
 					]);
 				</aui:script>
 
@@ -151,18 +151,18 @@
 								selectDesc: 'nameCurrentValue',
 								selectId: 'countryId',
 								selectSort: '<%= true %>',
-								selectVal: '0'
+								selectVal: '0',
 							},
 							{
 								select: '<portlet:namespace />addressRegionId' + guid,
 								selectData: Liferay.Address.getRegions,
 								selectDesc: 'name',
 								selectId: 'regionId',
-								selectVal: '0'
-							}
+								selectVal: '0',
+							},
 						]);
-					}
-				}
+					},
+				},
 			}).render();
 		</aui:script>
 	</c:when>

@@ -107,7 +107,7 @@ AUI.add(
 
 				return {
 					end,
-					start
+					start,
 				};
 			},
 
@@ -135,13 +135,13 @@ AUI.add(
 
 					range.select();
 				}
-			}
+			},
 		};
 
 		A.Base.mix(Liferay.AutoCompleteTextarea, [AutcompleteInputCaretIndex]);
 	},
 	'',
 	{
-		requires: ['liferay-autocomplete-textarea']
+		requires: ['liferay-autocomplete-textarea'],
 	}
 );

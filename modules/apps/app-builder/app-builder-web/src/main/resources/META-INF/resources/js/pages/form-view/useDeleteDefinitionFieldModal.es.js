@@ -25,8 +25,8 @@ export default callback => {
 		{
 			dataDefinition: {dataDefinitionFields},
 			dataDefinitionId,
-			fieldTypes
-		}
+			fieldTypes,
+		},
 	] = useContext(FormViewContext);
 	const [{onClose}, dispatchModal] = useContext(ClayModalContext);
 
@@ -155,13 +155,13 @@ export default callback => {
 							>
 								{Liferay.Language.get('delete')}
 							</ClayButton>
-						</ClayButton.Group>
+						</ClayButton.Group>,
 					],
 					header: Liferay.Language.get('delete-from-object'),
 					size: 'md',
-					status: 'warning'
+					status: 'warning',
 				},
-				type: 1
+				type: 1,
 			});
 		});
 	};

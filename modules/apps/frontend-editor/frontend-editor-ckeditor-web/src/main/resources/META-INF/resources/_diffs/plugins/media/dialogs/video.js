@@ -61,7 +61,7 @@ CKEDITOR.dialog.add('video', editor => {
 				ogvUrl: videoOgvUrl,
 				poster: value,
 				url: videoUrl,
-				width: videoWidth
+				width: videoWidth,
 			});
 
 			editor.plugins.media.applyMediaScript(
@@ -97,7 +97,7 @@ CKEDITOR.dialog.add('video', editor => {
 					ogvUrl: videoOgvUrl,
 					poster: videoPoster,
 					url: videoUrl,
-					width
+					width,
 				});
 
 				editor.plugins.media.applyMediaScript(
@@ -144,23 +144,24 @@ CKEDITOR.dialog.add('video', editor => {
 								id: 'poster',
 								label: Liferay.Language.get('video'),
 								setup: loadValue,
-								type: 'text'
+								type: 'text',
 							},
 							{
 								filebrowser: {
 									action: 'Browse',
 									target: 'info:poster',
-									url: editor.config.filebrowserVideoBrowseUrl
+									url:
+										editor.config.filebrowserVideoBrowseUrl,
 								},
 								hidden: 'true',
 								id: 'browse',
 								label: editor.lang.common.browseServer,
 								style: 'display:inline-block;margin-top:10px;',
-								type: 'button'
-							}
+								type: 'button',
+							},
 						],
 						type: 'hbox',
-						widths: ['', '100px']
+						widths: ['', '100px'],
 					},
 					{
 						children: [
@@ -175,7 +176,7 @@ CKEDITOR.dialog.add('video', editor => {
 									Liferay.Language.get(
 										'width-field-cannot-be-empty'
 									)
-								)
+								),
 							},
 							{
 								commit: commitValue,
@@ -188,15 +189,15 @@ CKEDITOR.dialog.add('video', editor => {
 									Liferay.Language.get(
 										'height-field-cannot-be-empty'
 									)
-								)
-							}
+								),
+							},
 						],
 						type: 'hbox',
-						widths: ['50%', '50%']
-					}
+						widths: ['50%', '50%'],
+					},
 				],
-				id: 'info'
-			}
+				id: 'info',
+			},
 		],
 
 		minHeight: 200,
@@ -214,6 +215,6 @@ CKEDITOR.dialog.add('video', editor => {
 			editor.plugins.media.onShowCallback(instance, editor, 'video');
 		},
 
-		title: Liferay.Language.get('video-properties')
+		title: Liferay.Language.get('video-properties'),
 	};
 });

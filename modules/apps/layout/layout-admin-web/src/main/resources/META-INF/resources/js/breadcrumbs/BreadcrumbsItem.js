@@ -18,7 +18,7 @@ import React from 'react';
 const BreadcrumbsItem = ({active, title, url}) => (
 	<li
 		className={classNames('breadcrumb-item', {
-			active
+			active,
 		})}
 	>
 		{active ? (

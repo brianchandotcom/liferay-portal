@@ -23,7 +23,7 @@ function AssetCategoriesSelectorTag({
 	id,
 	initialVocabularies = [],
 	inputName,
-	portletURL
+	portletURL,
 }) {
 	const [vocabularies, setVocabularies] = useState(initialVocabularies);
 
@@ -46,7 +46,7 @@ AssetCategoriesSelectorTag.propTypes = {
 	id: PropTypes.string,
 	initialVocabularies: PropTypes.array,
 	inputName: PropTypes.string,
-	portletURL: PropTypes.string
+	portletURL: PropTypes.string,
 };
 
 export default function(props) {

@@ -169,7 +169,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 					'<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
 				classPK: <%= ddmStructureId %>,
 				dialog: {
-					destroyOnHide: true
+					destroyOnHide: true,
 				},
 				eventName: '<portlet:namespace />selectDDMStructure',
 				groupId: <%= groupId %>,
@@ -183,12 +183,13 @@ if (ddlDisplayContext.isAdminPortlet()) {
 				refererPortletName: '<%= portlet.getPortletName() %>',
 				refererWebDAVToken: '<%= WebDAVUtil.getStorageToken(portlet) %>',
 				showAncestorScopes: true,
-				title: '<%= UnicodeLanguageUtil.get(request, "data-definitions") %>'
+				title:
+					'<%= UnicodeLanguageUtil.get(request, "data-definitions") %>',
 			},
 			function(event) {
 				Liferay.Util.setFormValues(form, {
 					ddmStructureId: event.ddmstructureid,
-					ddmStructureNameDisplay: Liferay.Util.unescape(event.name)
+					ddmStructureNameDisplay: Liferay.Util.unescape(event.name),
 				});
 			}
 		);

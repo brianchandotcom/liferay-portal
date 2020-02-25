@@ -126,12 +126,12 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 				dialog: {
 					constrain: true,
 					destroyOnHide: true,
-					modal: true
+					modal: true,
 				},
 				eventName: '<portlet:namespace />selectVersionFm',
 				id: '<portlet:namespace />compareVersions' + currentTarget.id,
 				title: '<liferay-ui:message key="compare-versions" />',
-				uri: currentTarget.dataset.uri
+				uri: currentTarget.dataset.uri,
 			},
 			function(event) {
 				var uri = '<%= HtmlUtil.escapeJS(compareVersionURL) %>';

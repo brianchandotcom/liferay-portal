@@ -53,7 +53,7 @@ String editorName = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUT
 				tinymceInstances--;
 
 				cleanupGlobals();
-			}
+			},
 		};
 
 		var destroyGlobalEditors = function() {

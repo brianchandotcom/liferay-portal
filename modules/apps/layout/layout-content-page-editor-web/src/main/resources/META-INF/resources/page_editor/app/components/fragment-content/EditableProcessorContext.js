@@ -49,7 +49,7 @@ export function useSetEditableProcessorUniqueId() {
 		editableUniqueIdOrNull => {
 			dispatch({
 				editableUniqueId: editableUniqueIdOrNull,
-				type: SET_EDITABLE_UNIQUE_ID
+				type: SET_EDITABLE_UNIQUE_ID,
 			});
 		},
 		[dispatch]

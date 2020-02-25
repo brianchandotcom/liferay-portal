@@ -213,5 +213,5 @@ tinymce.addI18n('nl', {
 	Tools: 'Gereedschap',
 	View: 'Beeld',
 	Table: 'Tabel',
-	Format: 'Opmaak'
+	Format: 'Opmaak',
 });

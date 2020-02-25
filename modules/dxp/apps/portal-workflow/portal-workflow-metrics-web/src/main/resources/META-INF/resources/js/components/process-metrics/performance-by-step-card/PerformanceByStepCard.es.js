@@ -46,7 +46,7 @@ const PerformanceByStepCard = ({routeParams}) => {
 
 	const {filterState = {}, filtersError} = useFilter({
 		filterKeys,
-		prefixKeys
+		prefixKeys,
 	});
 
 	const timeRange = filterState.stepTimeRange || [];
@@ -58,7 +58,7 @@ const PerformanceByStepCard = ({routeParams}) => {
 	if (isValidDate(dateEnd) && isValidDate(dateStart)) {
 		timeRangeParams = {
 			dateEnd: dateEnd.toISOString(),
-			dateStart: dateStart.toISOString()
+			dateStart: dateStart.toISOString(),
 		};
 	}
 
@@ -68,9 +68,9 @@ const PerformanceByStepCard = ({routeParams}) => {
 			page: 1,
 			pageSize: 10,
 			sort: 'durationAvg:desc',
-			...timeRangeParams
+			...timeRangeParams,
 		},
-		url: `/processes/${processId}/tasks`
+		url: `/processes/${processId}/tasks`,
 	});
 
 	const promises = useMemo(() => {
@@ -83,7 +83,7 @@ const PerformanceByStepCard = ({routeParams}) => {
 		fetchData,
 		filtersError,
 		timeRangeParams.dateEnd,
-		timeRangeParams.dateStart
+		timeRangeParams.dateStart,
 	]);
 
 	return (

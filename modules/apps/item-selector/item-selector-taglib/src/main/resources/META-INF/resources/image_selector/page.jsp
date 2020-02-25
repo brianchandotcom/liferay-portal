@@ -151,14 +151,14 @@ if (!draggableImage.equals("none")) {
 		paramName: '<portlet:namespace /><%= paramName %>',
 		rootNode: '#<%= randomNamespace %>taglibImageSelector',
 		uploadURL: '<%= uploadURL %>',
-		validExtensions: '<%= validExtensions %>'
+		validExtensions: '<%= validExtensions %>',
 	});
 
 	<c:if test='<%= !draggableImage.equals("none") %>'>
 		imageSelector.plug(Liferay.CoverCropper, {
 			direction: '<%= draggableImage %>',
 			imageContainerSelector: '.image-wrapper',
-			imageSelector: '#<%= randomNamespace %>image'
+			imageSelector: '#<%= randomNamespace %>image',
 		});
 	</c:if>
 

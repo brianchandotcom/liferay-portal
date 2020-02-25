@@ -122,7 +122,7 @@ if (portletTitleBasedNavigation) {
 						constrain: true,
 						destroyOnHide: true,
 						modal: true,
-						width: 680
+						width: 680,
 					},
 					id: '<portlet:namespace />selectKBObject',
 					title: '<liferay-ui:message key="select-parent" />',
@@ -139,19 +139,19 @@ if (portletTitleBasedNavigation) {
 						<portlet:param name="targetStatus" value="<%= String.valueOf(targetStatus) %>" />
 					</liferay-portlet:renderURL>
 
-					uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
+					uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>',
 				},
 				function(event) {
 					Liferay.Util.setFormValues(document.<portlet:namespace />fm, {
 						parentPriority: event.priority,
-						parentResourceClassNameId: event.resourceclassnameid
+						parentResourceClassNameId: event.resourceclassnameid,
 					});
 
 					var folderData = {
 						idString: 'parentResourcePrimKey',
 						idValue: event.resourceprimkey,
 						nameString: 'parentTitle',
-						nameValue: event.title
+						nameValue: event.title,
 					};
 
 					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');

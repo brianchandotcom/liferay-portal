@@ -17,5 +17,5 @@
  */
 export const CONTAINER_TYPES = {
 	fixed: 'fixed',
-	fluid: 'fluid'
+	fluid: 'fluid',
 };

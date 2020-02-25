@@ -33,13 +33,13 @@
 	AutoCompleteCKEditor.ATTRS = {
 		editor: {
 			validator: Lang.isObject,
-			writeOnce: true
+			writeOnce: true,
 		},
 
 		inputNode: {
 			valueFn: '_getInputElement',
-			writeOnce: true
-		}
+			writeOnce: true,
+		},
 	};
 
 	AutoCompleteCKEditor.prototype = {
@@ -53,7 +53,7 @@
 			var editor = instance.get(STR_EDITOR);
 
 			instance._eventHandles = [
-				editor.on('key', A.bind('_onEditorKey', instance))
+				editor.on('key', A.bind('_onEditorKey', instance)),
 			];
 
 			editor.once('instanceReady', event => {
@@ -113,7 +113,7 @@
 
 			return {
 				end: range.endOffset,
-				start: range.startOffset
+				start: range.startOffset,
 			};
 		},
 
@@ -134,7 +134,7 @@
 
 			return {
 				x: bookmarkXY[0],
-				y: bookmarkXY[1]
+				y: bookmarkXY[1],
 			};
 		},
 
@@ -241,7 +241,7 @@
 				container: triggerContainer,
 				index: triggerIndex,
 				query,
-				value: trigger
+				value: trigger,
 			};
 		},
 
@@ -309,7 +309,7 @@
 				keyCode: event.data.keyCode,
 				preventDefault: event.cancel,
 				stopPropagation: event.stop,
-				type: 'keydown'
+				type: 'keydown',
 			});
 		},
 
@@ -369,7 +369,7 @@
 
 			var newElement = CKEDITOR.dom.element.createFromHtml(
 				Lang.sub(TPL_REPLACE_HTML, {
-					html: text
+					html: text,
 				})
 			);
 
@@ -422,7 +422,7 @@
 
 			return {
 				index: 1,
-				node: nextElement
+				node: nextElement,
 			};
 		},
 
@@ -461,7 +461,7 @@
 			var instance = this;
 
 			instance._bindUIACCKEditor();
-		}
+		},
 	};
 
 	AutoCompleteCKEditor.CONTAINER_ASCENDANT = {
@@ -473,7 +473,7 @@
 		h4: 1,
 		p: 1,
 		pre: 1,
-		span: 1
+		span: 1,
 	};
 
 	Liferay.AutoCompleteCKEditor = A.Base.create(
@@ -482,7 +482,7 @@
 		[Liferay.AutoCompleteInputBase, AutoCompleteCKEditor],
 		{},
 		{
-			CSS_PREFIX: A.ClassNameManager.getClassName('aclist')
+			CSS_PREFIX: A.ClassNameManager.getClassName('aclist'),
 		}
 	);
 })();

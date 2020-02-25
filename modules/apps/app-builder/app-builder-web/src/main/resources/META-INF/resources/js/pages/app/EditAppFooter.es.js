@@ -28,12 +28,12 @@ export default withRouter(
 		currentStep,
 		history,
 		match: {
-			params: {dataDefinitionId}
+			params: {dataDefinitionId},
 		},
-		onCurrentStepChange
+		onCurrentStepChange,
 	}) => {
 		const {
-			state: {app}
+			state: {app},
 		} = useContext(EditAppContext);
 
 		const {getStandaloneURL} = useContext(AppContext);
@@ -46,7 +46,7 @@ export default withRouter(
 			dataLayoutId,
 			dataListViewId,
 			id: appId,
-			name: {en_US: appName}
+			name: {en_US: appName},
 		} = app;
 
 		const getStandaloneLink = appId => {
@@ -78,7 +78,7 @@ export default withRouter(
 						{getStandaloneLink(appId)}
 					</>
 				),
-				title: `${Liferay.Language.get('success')}:`
+				title: `${Liferay.Language.get('success')}:`,
 			});
 
 			setDeploying(false);
@@ -95,7 +95,7 @@ export default withRouter(
 						{'.'}
 					</>
 				),
-				title: `${Liferay.Language.get('error')}:`
+				title: `${Liferay.Language.get('error')}:`,
 			});
 
 			setDeploying(false);

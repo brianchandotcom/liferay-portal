@@ -29,7 +29,7 @@ function sendDummyEvents(eventsNumber = 5) {
 		const properties = {
 			a: 1,
 			b: 2,
-			c: 3
+			c: 3,
 		};
 
 		global.Analytics.send(eventId, applicationId, properties);
@@ -102,7 +102,7 @@ describe('Analytics MiddleWare Integration', () => {
 					timezoneOffset: expect.anything(),
 					title: expect.anything(),
 					url: expect.anything(),
-					userAgent: expect.anything()
+					userAgent: expect.anything(),
 				})
 			);
 		});

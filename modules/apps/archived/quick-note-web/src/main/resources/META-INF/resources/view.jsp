@@ -61,8 +61,8 @@
 
 				A.io.request('<%= saveURL %>', {
 					data: {
-						<portlet:namespace />color: bgColor
-					}
+						<portlet:namespace />color: bgColor,
+					},
 				});
 			});
 		}
@@ -81,12 +81,12 @@
 
 						A.io.request('<%= saveURL %>', {
 							data: {
-								<portlet:namespace />data: newValue
-							}
+								<portlet:namespace />data: newValue,
+							},
 						});
 					}
-				}
-			}
+				},
+			},
 		});
 	</aui:script>
 </c:if>

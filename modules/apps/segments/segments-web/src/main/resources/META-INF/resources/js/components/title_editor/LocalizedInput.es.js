@@ -26,14 +26,14 @@ export default class LocalizedInput extends React.Component {
 		initialValues: PropTypes.object,
 		onChange: PropTypes.func,
 		placeholder: PropTypes.string,
-		readOnly: PropTypes.bool
+		readOnly: PropTypes.bool,
 	};
 	static defaultProps = {
 		initialOpen: false,
 		initialValues: {},
 		onChange: () => {},
 		placeholder: '',
-		readOnly: false
+		readOnly: false,
 	};
 
 	constructor(props) {
@@ -47,19 +47,19 @@ export default class LocalizedInput extends React.Component {
 				return {
 					hasValue: !!initialValues[key],
 					key,
-					value
+					value,
 				};
 			}),
 			currentLang: initialLanguageId,
 			currentValue: initialValues[initialLanguageId] || '',
-			values: initialValues
+			values: initialValues,
 		};
 	}
 
 	_handleLanguageChange = langKey => {
 		this.setState(prevState => ({
 			currentLang: langKey,
-			currentValue: prevState.values[langKey] || ''
+			currentValue: prevState.values[langKey] || '',
 		}));
 	};
 
@@ -78,7 +78,7 @@ export default class LocalizedInput extends React.Component {
 			prevState => {
 				const newValues = {
 					...prevState.values,
-					[prevState.currentLang]: value
+					[prevState.currentLang]: value,
 				};
 
 				hasError = !this._validateValues(newValues);
@@ -90,7 +90,7 @@ export default class LocalizedInput extends React.Component {
 							if (lang.key === prevState.currentLang) {
 								newLang = {
 									...lang,
-									hasValue: value !== ''
+									hasValue: value !== '',
 								};
 							}
 
@@ -99,7 +99,7 @@ export default class LocalizedInput extends React.Component {
 					),
 					currentValue: value,
 					hasError,
-					values: newValues
+					values: newValues,
 				};
 			},
 			() => this._onChange(event, hasError)
@@ -121,13 +121,13 @@ export default class LocalizedInput extends React.Component {
 			initialLanguageId,
 			initialOpen,
 			placeholder,
-			readOnly
+			readOnly,
 		} = this.props;
 
 		const {availableLanguages, currentValue, hasError} = this.state;
 
 		const inputGroupItemClasses = getCN('input-group-item ml-2', {
-			'has-error': hasError
+			'has-error': hasError,
 		});
 
 		return (

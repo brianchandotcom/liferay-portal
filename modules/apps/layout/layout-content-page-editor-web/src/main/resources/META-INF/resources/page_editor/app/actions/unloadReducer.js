@@ -17,6 +17,6 @@ import {UNLOAD_REDUCER} from './types';
 export default function unloadReducer(key) {
 	return {
 		key,
-		type: UNLOAD_REDUCER
+		type: UNLOAD_REDUCER,
 	};
 }

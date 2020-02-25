@@ -25,7 +25,7 @@ export default function(nameSpace) {
 	};
 
 	const ACTIONS = {
-		deleteMultipleSynonyms
+		deleteMultipleSynonyms,
 	};
 
 	Liferay.componentReady('synonymSetsEntriesManagementToolbar').then(

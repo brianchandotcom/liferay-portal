@@ -33,7 +33,7 @@ const renderComponent = (dispatch = () => {}) =>
 					config: {gutters: true},
 					itemId: '0',
 					parentId: '',
-					type: ''
+					type: '',
 				}}
 			/>
 		</StoreAPIContextProvider>
@@ -66,13 +66,13 @@ describe('RowConfigurationPanel', () => {
 		const input = getByLabelText('number-of-columns');
 
 		await fireEvent.change(input, {
-			target: {value: '6'}
+			target: {value: '6'},
 		});
 
 		expect(updateRowColumns).toHaveBeenCalledWith({
 			itemId: '0',
 			numberOfColumns: 6,
-			segmentsExperienceId: 'segments-experience-id-0'
+			segmentsExperienceId: 'segments-experience-id-0',
 		});
 	});
 
@@ -85,7 +85,7 @@ describe('RowConfigurationPanel', () => {
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {gutters: false},
 			itemId: '0',
-			segmentsExperienceId: 'segments-experience-id-0'
+			segmentsExperienceId: 'segments-experience-id-0',
 		});
 	});
 });

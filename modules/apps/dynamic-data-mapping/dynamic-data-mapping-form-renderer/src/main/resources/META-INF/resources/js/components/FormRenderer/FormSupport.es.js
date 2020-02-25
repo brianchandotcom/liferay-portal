@@ -17,13 +17,13 @@ import {PagesVisitor} from '../../util/visitors.es';
 export const implAddColumn = (size, fields = []) => {
 	return {
 		fields,
-		size
+		size,
 	};
 };
 
 export const implAddRow = (size, fields) => {
 	return {
-		columns: [implAddColumn(size, fields)]
+		columns: [implAddColumn(size, fields)],
 	};
 };
 
@@ -44,8 +44,8 @@ export const addRow = (
 				rows: [
 					...page.rows.slice(0, indexToAddRow),
 					newRow,
-					...page.rows.slice(indexToAddRow)
-				]
+					...page.rows.slice(indexToAddRow),
+				],
 			};
 		}
 
@@ -71,8 +71,8 @@ export const addColumn = (
 				columns: [
 					...row.columns.slice(0, indexToAddColumn),
 					newColumn,
-					...row.columns.slice(indexToAddColumn)
-				]
+					...row.columns.slice(indexToAddColumn),
+				],
 			};
 		}
 
@@ -107,7 +107,7 @@ export const addFieldToColumn = (
 			) {
 				return {
 					...column,
-					fields: [...column.fields, field]
+					fields: [...column.fields, field],
 				};
 			}
 
@@ -179,7 +179,7 @@ export const removeColumn = (pages, pageIndex, rowIndex, columnIndex) => {
 				...row,
 				columns: row.columns.filter((col, currentColumnIndex) => {
 					return currentColumnIndex !== columnIndex;
-				})
+				}),
 			};
 		}
 
@@ -293,7 +293,7 @@ export const getIndexes = node => {
 	return {
 		columnIndex: Number(ddmFieldColumn) || 0,
 		pageIndex: Number(ddmFieldPage) || 0,
-		rowIndex: Number(ddmFieldRow) || 0
+		rowIndex: Number(ddmFieldRow) || 0,
 	};
 };
 
@@ -304,7 +304,7 @@ export const updateField = (pages, fieldName, properties) => {
 		if (fieldName === field.fieldName) {
 			field = {
 				...field,
-				...properties
+				...properties,
 			};
 		}
 
@@ -332,7 +332,7 @@ export const updateColumn = (
 			) {
 				newColumn = {
 					...column,
-					...properties
+					...properties,
 				};
 			}
 

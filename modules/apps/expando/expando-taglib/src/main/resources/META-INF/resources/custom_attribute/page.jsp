@@ -341,7 +341,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 												'value',
 												JSON.stringify({
 													latitude: location.lat,
-													longitude: location.lng
+													longitude: location.lng,
 												})
 											);
 										}
@@ -351,7 +351,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 										if (locationNode) {
 											locationNode.innerHTML = event.newVal.address;
 										}
-									}
+									},
 								};
 
 								geolocationField.init();

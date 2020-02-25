@@ -97,7 +97,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 			) {
 				return {
 					priority: index,
-					ruleGroupInstanceId: item.dataset.ruleGroupInstanceId
+					ruleGroupInstanceId: item.dataset.ruleGroupInstanceId,
 				};
 			});
 
@@ -137,9 +137,9 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 
 						priorityNode.html(nodes.indexOf(currentNode));
 					}
-				}
+				},
 			},
-			opacity: '.4'
+			opacity: '.4',
 		});
 
 		var sortableDD = sortable.delegate.dd;
@@ -166,12 +166,12 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 				var dragNode = drag.get('dragNode');
 
 				dragNode.addClass('rule-group-instance-dragging');
-			}
+			},
 		});
 
 		sortableDD.plug(A.Plugin.DDConstrained, {
 			constrain: container,
-			stickY: true
+			stickY: true,
 		});
 	}
 </aui:script>

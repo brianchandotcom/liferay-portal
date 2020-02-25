@@ -17,7 +17,7 @@ import React from 'react';
 
 import {
 	BackgroundImagePropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {CONTAINER_TYPES} from '../../config/constants/containerTypes';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
@@ -29,7 +29,7 @@ import {ContainerBackgroundColorConfiguration} from './ContainerBackgroundColorC
 import {ContainerBackgroundImageConfiguration} from './ContainerBackgroundImageConfiguration';
 import {
 	ContainerPaddingHorizontalConfiguration,
-	ContainerPaddingVerticalConfiguration
+	ContainerPaddingVerticalConfiguration,
 } from './ContainerPaddingConfiguration';
 import {ContainerTypeConfiguration} from './ContainerTypeConfiguration';
 
@@ -43,7 +43,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
 			LAYOUT_DATA_ITEM_TYPES.container
 		],
-		...item.config
+		...item.config,
 	};
 
 	const handleConfigurationValueChanged = itemConfig => {
@@ -51,7 +51,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 			updateItemConfig({
 				itemConfig,
 				itemId: item.itemId,
-				segmentsExperienceId
+				segmentsExperienceId,
 			})
 		);
 	};
@@ -100,7 +100,7 @@ ContainerConfigurationPanel.propTypes = {
 			backgroundImage: BackgroundImagePropTypes,
 			paddingBottom: PropTypes.number,
 			paddingHorizontal: PropTypes.number,
-			paddingTop: PropTypes.number
-		})
-	})
+			paddingTop: PropTypes.number,
+		}),
+	}),
 };

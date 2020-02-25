@@ -28,7 +28,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 	if (iframe) {
 		iframe.plug(A.Plugin.AutosizeIframe, {
-			monitorHeight: true
+			monitorHeight: true,
 		});
 	}
 </aui:script>

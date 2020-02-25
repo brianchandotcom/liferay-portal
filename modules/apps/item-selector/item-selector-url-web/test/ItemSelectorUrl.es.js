@@ -39,7 +39,7 @@ describe('ItemSelectorUrl', () => {
 	describe('when the user types an invalid url', () => {
 		beforeEach(() => {
 			fireEvent.change(itemSelectorUrl.getByLabelText('url'), {
-				target: {value: 'test'}
+				target: {value: 'test'},
 			});
 		});
 

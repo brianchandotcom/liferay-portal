@@ -36,7 +36,7 @@ describe('CriteriaRow', () => {
 				criterion={{
 					operatorName: PROPERTY_TYPES.STRING,
 					propertyName: 'test_prop',
-					value: 'test_val'
+					value: 'test_val',
 				}}
 				groupId="group_01"
 				index={0}
@@ -49,8 +49,8 @@ describe('CriteriaRow', () => {
 					{
 						label: 'Test Property',
 						name: 'test_prop',
-						type: PROPERTY_TYPES.STRING
-					}
+						type: PROPERTY_TYPES.STRING,
+					},
 				]}
 			/>
 		);
@@ -69,7 +69,7 @@ describe('CriteriaRow', () => {
 				criterion={{
 					operatorName: PROPERTY_TYPES.STRING,
 					propertyName: 'unknown_prop',
-					value: 'test_val'
+					value: 'test_val',
 				}}
 				groupId="group_01"
 				index={0}
@@ -82,8 +82,8 @@ describe('CriteriaRow', () => {
 					{
 						label: 'Test Property',
 						name: 'test_prop',
-						type: PROPERTY_TYPES.STRING
-					}
+						type: PROPERTY_TYPES.STRING,
+					},
 				]}
 			/>
 		);
@@ -96,7 +96,7 @@ describe('CriteriaRow', () => {
 
 		global.fetch = jest.fn(() =>
 			Promise.resolve({
-				json: () => Promise.resolve({})
+				json: () => Promise.resolve({}),
 			})
 		);
 
@@ -109,7 +109,7 @@ describe('CriteriaRow', () => {
 					operatorName: PROPERTY_TYPES.ID,
 					propertyName: 'test_prop',
 					unknownEntity: true,
-					value: '1234'
+					value: '1234',
 				}}
 				groupId="group_01"
 				index={0}
@@ -122,8 +122,8 @@ describe('CriteriaRow', () => {
 					{
 						label: 'Test Property',
 						name: 'test_prop',
-						type: PROPERTY_TYPES.ID
-					}
+						type: PROPERTY_TYPES.ID,
+					},
 				]}
 			/>
 		);
@@ -142,7 +142,7 @@ describe('CriteriaRow', () => {
 
 		global.fetch = jest.fn(() =>
 			Promise.resolve({
-				json: () => Promise.resolve({})
+				json: () => Promise.resolve({}),
 			})
 		);
 
@@ -155,7 +155,7 @@ describe('CriteriaRow', () => {
 					operatorName: PROPERTY_TYPES.ID,
 					propertyName: 'test_prop',
 					unknownEntity: true,
-					value: '1234'
+					value: '1234',
 				}}
 				editing={false}
 				groupId="group_01"
@@ -169,8 +169,8 @@ describe('CriteriaRow', () => {
 					{
 						label: 'Test Property',
 						name: 'test_prop',
-						type: PROPERTY_TYPES.ID
-					}
+						type: PROPERTY_TYPES.ID,
+					},
 				]}
 			/>
 		);
@@ -191,8 +191,8 @@ describe('CriteriaRow', () => {
 			Promise.resolve({
 				json: () =>
 					Promise.resolve({
-						fieldValueName: 'Known Entity'
-					})
+						fieldValueName: 'Known Entity',
+					}),
 			})
 		);
 
@@ -206,7 +206,7 @@ describe('CriteriaRow', () => {
 				criterion={{
 					operatorName: PROPERTY_TYPES.ID,
 					propertyName: 'test_prop',
-					value: '1234'
+					value: '1234',
 				}}
 				editing={false}
 				groupId="group_01"
@@ -220,8 +220,8 @@ describe('CriteriaRow', () => {
 					{
 						label: 'Test Property',
 						name: 'test_prop',
-						type: PROPERTY_TYPES.ID
-					}
+						type: PROPERTY_TYPES.ID,
+					},
 				]}
 			/>
 		);
@@ -230,7 +230,7 @@ describe('CriteriaRow', () => {
 
 		expect(onChangeMock).toHaveBeenCalledWith(
 			expect.objectContaining({
-				displayValue: 'Known Entity'
+				displayValue: 'Known Entity',
 			})
 		);
 	});
@@ -240,7 +240,7 @@ describe('CriteriaRow', () => {
 
 		global.fetch = jest.fn(() =>
 			Promise.resolve({
-				json: () => Promise.resolve({})
+				json: () => Promise.resolve({}),
 			})
 		);
 
@@ -254,7 +254,7 @@ describe('CriteriaRow', () => {
 				criterion={{
 					operatorName: PROPERTY_TYPES.ID,
 					propertyName: 'test_prop',
-					value: '1234'
+					value: '1234',
 				}}
 				editing={false}
 				groupId="group_01"
@@ -268,8 +268,8 @@ describe('CriteriaRow', () => {
 					{
 						label: 'Test Property',
 						name: 'test_prop',
-						type: PROPERTY_TYPES.ID
-					}
+						type: PROPERTY_TYPES.ID,
+					},
 				]}
 			/>
 		);
@@ -279,7 +279,7 @@ describe('CriteriaRow', () => {
 		expect(onChangeMock).toHaveBeenCalledWith(
 			expect.objectContaining({
 				displayValue: '1234',
-				unknownEntity: true
+				unknownEntity: true,
 			})
 		);
 	});

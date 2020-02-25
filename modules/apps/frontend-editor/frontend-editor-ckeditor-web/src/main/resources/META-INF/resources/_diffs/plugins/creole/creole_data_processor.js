@@ -70,7 +70,7 @@
 	var enterModeEmptyValue = {
 		1: ['<p>' + brFiller + '</p>'],
 		2: [brFiller],
-		3: ['<div>' + brFiller + '</div>']
+		3: ['<div>' + brFiller + '</div>'],
 	};
 
 	var CreoleDataProcessor = function(editor) {
@@ -702,7 +702,7 @@
 
 				if (!instance._creoleParser) {
 					instance._creoleParser = new CKEDITOR.CreoleParser({
-						imagePrefix: attachmentURLPrefix
+						imagePrefix: attachmentURLPrefix,
 					});
 				}
 
@@ -712,7 +712,7 @@
 			}
 
 			return data || enterModeEmptyValue[instance._editor.enterMode];
-		}
+		},
 	};
 
 	CKEDITOR.plugins.add('creole_data_processor', {
@@ -724,6 +724,6 @@
 			editor.fire('customDataProcessorLoaded');
 		},
 
-		requires: ['htmlwriter']
+		requires: ['htmlwriter'],
 	});
 })();

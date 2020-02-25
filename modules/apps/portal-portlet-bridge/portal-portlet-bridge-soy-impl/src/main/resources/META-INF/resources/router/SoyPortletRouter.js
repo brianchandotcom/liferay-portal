@@ -195,7 +195,7 @@ class SoyPortletRouter extends State {
 				pathFn ||
 				this.matchPath_.bind(this, route.mvcRenderCommandName),
 			portletNamespace: this.portletNamespace,
-			route
+			route,
 		};
 
 		try {
@@ -353,7 +353,7 @@ class SoyPortletRouter extends State {
 
 		this.createRouter_(
 			{
-				mvcRenderCommandName: '/'
+				mvcRenderCommandName: '/',
 			},
 			pathFn
 		);
@@ -508,7 +508,7 @@ class SoyPortletRouter extends State {
 			openToast({
 				message,
 				title,
-				type
+				type,
 			});
 		}
 	}
@@ -573,7 +573,7 @@ SoyPortletRouter.STATE = {
 	 * @type {string}
 	 */
 	element: {
-		setter: dom.toElement
+		setter: dom.toElement,
 	},
 
 	/**
@@ -624,8 +624,8 @@ SoyPortletRouter.STATE = {
 	 * @type {string}
 	 */
 	portletWrapper: {
-		setter: dom.toElement
-	}
+		setter: dom.toElement,
+	},
 };
 
 export default SoyPortletRouter;

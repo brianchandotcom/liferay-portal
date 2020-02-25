@@ -35,7 +35,7 @@ export default function objectToFormData(
 			value.forEach(item => {
 				objectToFormData(
 					{
-						[formKey]: item
+						[formKey]: item,
 					},
 					formData
 				);

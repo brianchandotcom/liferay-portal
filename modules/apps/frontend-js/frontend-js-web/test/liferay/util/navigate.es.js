@@ -25,8 +25,8 @@ describe('Liferay.Util.navigate', () => {
 			Liferay.SPA = {
 				app: {
 					canNavigate: jest.fn(url => url.includes('internal')),
-					navigate: jest.fn()
-				}
+					navigate: jest.fn(),
+				},
 			};
 		});
 
@@ -60,7 +60,7 @@ describe('Liferay.Util.navigate', () => {
 
 			navigate(internalUrl, {
 				event1: listenerFn,
-				event2: listenerFn
+				event2: listenerFn,
 			});
 
 			expect(Liferay.once).toHaveBeenCalledTimes(2);

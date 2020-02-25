@@ -171,7 +171,7 @@
 
 			var numberSize = [
 				'<%= ExpandoColumnConstants.PRECISION_64_BIT %>',
-				'<%= ExpandoColumnConstants.PRECISION_32_BIT %>'
+				'<%= ExpandoColumnConstants.PRECISION_32_BIT %>',
 			];
 
 			if (

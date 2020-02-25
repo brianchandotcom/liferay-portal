@@ -23,12 +23,12 @@
 		reportMismatchedAnonymousModules: 'warn',
 		url: combine
 			? LiferayAUI.getComboPath()
-			: Liferay.ThemeDisplay.getCDNBaseURL()
+			: Liferay.ThemeDisplay.getCDNBaseURL(),
 	};
 
 	if (!combine) {
 		__CONFIG__.defaultURLParams = {
-			languageId: themeDisplay.getLanguageId()
+			languageId: themeDisplay.getLanguageId(),
 		};
 	}
 

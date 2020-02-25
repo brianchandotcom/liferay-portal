@@ -32,16 +32,16 @@
 
 					Liferay.Util.openWindow({
 						dialog: {
-							zIndex: CKEDITOR.getNextZIndex()
+							zIndex: CKEDITOR.getNextZIndex(),
 						},
 						height,
 						stack: false,
 						title: options.title || '',
 						uri: url,
-						width
+						width,
 					});
 				};
 			});
-		}
+		},
 	});
 })();

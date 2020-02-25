@@ -75,7 +75,7 @@ const DisplayPageModal = props => {
 
 			fetch(formSubmitURL, {
 				body: new FormData(form.current),
-				method: 'POST'
+				method: 'POST',
 			})
 				.then(response => response.json())
 				.then(responseContent => {
@@ -85,7 +85,7 @@ const DisplayPageModal = props => {
 					}
 					else if (responseContent.redirectURL) {
 						navigate(responseContent.redirectURL, {
-							beforeScreenFlip: onClose
+							beforeScreenFlip: onClose,
 						});
 					}
 				})
@@ -93,7 +93,7 @@ const DisplayPageModal = props => {
 					setError({
 						other: Liferay.Language.get(
 							'an-unexpected-error-occurred-while-creating-the-display-page'
-						)
+						),
 					})
 				);
 		},
@@ -159,7 +159,7 @@ DisplayPageModal.propTypes = {
 	mappingTypes: PropTypes.array,
 	namespace: PropTypes.string.isRequired,
 	onClose: PropTypes.func.isRequired,
-	title: PropTypes.func.isRequired
+	title: PropTypes.func.isRequired,
 };
 
 export {DisplayPageModal};

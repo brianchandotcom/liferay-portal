@@ -21,7 +21,7 @@ import SimpleInputModal from '../components/SimpleInputModal.es';
 const DEFAULT_MODAL_CONTAINER_ID = 'modalContainer';
 
 const DEFAULT_RENDER_DATA = {
-	portletId: 'UNKNOWN_PORTLET_ID'
+	portletId: 'UNKNOWN_PORTLET_ID',
 };
 
 function getDefaultModalContainer() {
@@ -53,7 +53,7 @@ function SimpleInputModalComponent({
 	mainFieldName,
 	namespace,
 	onFormSuccess,
-	placeholder
+	placeholder,
 }) {
 	return (
 		<SimpleInputModal

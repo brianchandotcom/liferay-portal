@@ -32,13 +32,13 @@ const BulkReassignModal = () => {
 		selectAll: selectAllInstances,
 		selectedItems,
 		setSelectAll,
-		setSelectedItems
+		setSelectedItems,
 	} = useContext(InstanceListContext);
 
 	const {
 		dispatch,
 		filterState,
-		filterValues: {bulkAssigneeUserIds: userIds, bulkTaskKeys: taskNames}
+		filterValues: {bulkAssigneeUserIds: userIds, bulkTaskKeys: taskNames},
 	} = useFilter({withoutRouteParams: true});
 
 	const {
@@ -47,7 +47,7 @@ const BulkReassignModal = () => {
 		reassigning,
 		selectAll,
 		selectedTasks,
-		visible
+		visible,
 	} = bulkModal;
 
 	const [currentStep, setCurrentStep] = useState('selectTasks');
@@ -66,13 +66,13 @@ const BulkReassignModal = () => {
 				selectedAssignee: null,
 				selectedTasks: [],
 				useSameAssignee: false,
-				visible: false
+				visible: false,
 			});
 
 			dispatch({
 				...filterState,
 				bulkAssigneeUserIds: [],
-				bulkTaskKeys: []
+				bulkTaskKeys: [],
 			});
 
 			setCurrentStep('selectTasks');
@@ -80,13 +80,13 @@ const BulkReassignModal = () => {
 			setErrorToast(false);
 
 			setSingleModal({selectedItem: undefined});
-		}
+		},
 	});
 
 	const {patchData} = usePatch({
 		admin: true,
 		body: reassignedTasks,
-		url: 'workflow-tasks/assign-to-user'
+		url: 'workflow-tasks/assign-to-user',
 	});
 
 	const params = useMemo(() => {
@@ -105,7 +105,7 @@ const BulkReassignModal = () => {
 			pageSize: -1,
 			searchByRoles,
 			sort: 'workflowInstanceId:asc',
-			taskNames
+			taskNames,
 		};
 
 		if (selectAllInstances) {
@@ -126,7 +126,7 @@ const BulkReassignModal = () => {
 	const {fetchData} = useFetch({
 		admin: true,
 		params,
-		url: '/workflow-tasks'
+		url: '/workflow-tasks',
 	});
 
 	const handleNext = useCallback(() => {
@@ -137,7 +137,7 @@ const BulkReassignModal = () => {
 					setBulkModal({
 						...bulkModal,
 						selectAll: true,
-						selectedTasks: items
+						selectedTasks: items,
 					});
 					setCurrentStep('selectAssignees');
 					setFetching(false);
@@ -161,7 +161,7 @@ const BulkReassignModal = () => {
 			reassignedTasks: [],
 			reassigning: false,
 			selectedAssignee: null,
-			useSameAssignee: false
+			useSameAssignee: false,
 		});
 		setCurrentStep('selectTasks');
 		setErrorToast(false);
@@ -174,7 +174,7 @@ const BulkReassignModal = () => {
 		) {
 			setBulkModal({
 				...bulkModal,
-				reassigning: true
+				reassigning: true,
 			});
 
 			setErrorToast(false);
@@ -206,7 +206,7 @@ const BulkReassignModal = () => {
 
 					setBulkModal({
 						...bulkModal,
-						reassigning: false
+						reassigning: false,
 					});
 
 					setErrorToast(error);
@@ -224,25 +224,25 @@ const BulkReassignModal = () => {
 						disabled:
 							reassignedTasks.length !== selectedTasks.length,
 						handle: handleReassign,
-						text: Liferay.Language.get('reassign')
+						text: Liferay.Language.get('reassign'),
 					},
 					order: 2,
 					previousBtn: true,
 					subtitle: Liferay.Language.get('select-assignees'),
-					title: Liferay.Language.get('select-new-assignees')
+					title: Liferay.Language.get('select-new-assignees'),
 				},
 				selectTasks: {
 					component: BulkReassignSelectTasksStep,
 					nextBtn: {
 						disabled: selectedTasks.length === 0 || fetching,
 						handle: handleNext,
-						text: Liferay.Language.get('next')
+						text: Liferay.Language.get('next'),
 					},
 					order: 1,
 					previousBtn: false,
 					subtitle: Liferay.Language.get('select-tasks'),
-					title: Liferay.Language.get('select-tasks-to-reassign')
-				}
+					title: Liferay.Language.get('select-tasks-to-reassign'),
+				},
 			};
 
 			return steps[step];
@@ -252,7 +252,7 @@ const BulkReassignModal = () => {
 			handleNext,
 			handleReassign,
 			reassignedTasks.length,
-			selectedTasks.length
+			selectedTasks.length,
 		]
 	);
 

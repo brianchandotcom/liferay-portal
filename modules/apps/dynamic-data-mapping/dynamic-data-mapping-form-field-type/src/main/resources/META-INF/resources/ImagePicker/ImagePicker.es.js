@@ -31,7 +31,7 @@ class ImagePicker extends Component {
 		this.emit(name, {
 			fieldInstance: this,
 			originalEvent: event,
-			value
+			value,
 		});
 	}
 
@@ -163,7 +163,7 @@ ImagePicker.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.string()
+	value: Config.string(),
 };
 
 Soy.register(ImagePicker, templates);

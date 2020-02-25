@@ -99,7 +99,7 @@
 				mapInputEnabled: <%= mapInputEnabled %>,
 				namespace: '<portlet:namespace />',
 				portletId: '<%= portletDisplay.getId() %>',
-				showDirectionSteps: <%= showDirectionSteps %>
+				showDirectionSteps: <%= showDirectionSteps %>,
 			}).render();
 		</aui:script>
 	</c:when>

@@ -22,8 +22,8 @@ import {confirmDelete} from '../../utils/client.es';
 
 export default ({
 	match: {
-		params: {dataDefinitionId}
-	}
+		params: {dataDefinitionId},
+	},
 }) => {
 	const {basePortletURL} = useContext(AppContext);
 
@@ -31,7 +31,7 @@ export default ({
 		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
 			dataDefinitionId,
 			dataLayoutId: item.id,
-			mvcRenderCommandName: '/edit_form_view'
+			mvcRenderCommandName: '/edit_form_view',
 		});
 
 	const handleEditItem = item => {
@@ -44,24 +44,24 @@ export default ({
 		{
 			key: 'name',
 			sortable: true,
-			value: Liferay.Language.get('name')
+			value: Liferay.Language.get('name'),
 		},
 		{
 			key: 'dateCreated',
 			sortable: true,
-			value: Liferay.Language.get('create-date')
+			value: Liferay.Language.get('create-date'),
 		},
 		{
 			asc: false,
 			key: 'dateModified',
 			sortable: true,
-			value: Liferay.Language.get('modified-date')
-		}
+			value: Liferay.Language.get('modified-date'),
+		},
 	];
 
 	const addURL = Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
 		dataDefinitionId,
-		mvcRenderCommandName: '/edit_form_view'
+		mvcRenderCommandName: '/edit_form_view',
 	});
 
 	return (
@@ -69,12 +69,12 @@ export default ({
 			actions={[
 				{
 					action: item => Promise.resolve(handleEditItem(item)),
-					name: Liferay.Language.get('edit')
+					name: Liferay.Language.get('edit'),
 				},
 				{
 					action: confirmDelete('/o/data-engine/v2.0/data-layouts/'),
-					name: Liferay.Language.get('delete')
-				}
+					name: Liferay.Language.get('delete'),
+				},
 			]}
 			addButton={() => (
 				<Button
@@ -97,7 +97,7 @@ export default ({
 				description: Liferay.Language.get(
 					'create-one-or-more-forms-to-display-the-data-held-in-your-data-object'
 				),
-				title: Liferay.Language.get('there-are-no-form-views-yet')
+				title: Liferay.Language.get('there-are-no-form-views-yet'),
 			}}
 			endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`}
 		>
@@ -106,7 +106,7 @@ export default ({
 				dateCreated: moment(item.dateCreated).fromNow(),
 				dateModified: moment(item.dateModified).fromNow(),
 				id: item.id,
-				name: <a href={getItemURL(item)}>{item.name.en_US}</a>
+				name: <a href={getItemURL(item)}>{item.name.en_US}</a>,
 			})}
 		</ListView>
 	);

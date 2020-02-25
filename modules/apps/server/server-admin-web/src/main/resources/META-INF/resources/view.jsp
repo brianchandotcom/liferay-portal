@@ -56,6 +56,6 @@ portletURL.setParameter("tabs2", tabs2);
 		namespace: '<portlet:namespace />',
 		redirectUrl: '<%= redirectURL %>',
 		submitButton: '.save-server-button',
-		url: '<portlet:actionURL name="/server_admin/edit_server" />'
+		url: '<portlet:actionURL name="/server_admin/edit_server" />',
 	});
 </aui:script>

@@ -34,18 +34,18 @@ AUI.add(
 			ATTRS: {
 				message: {
 					validator: Lang.isString,
-					value: STR_EMPTY
+					value: STR_EMPTY,
 				},
 
 				sessionKey: {
 					validator: Lang.isString,
-					value: STR_EMPTY
+					value: STR_EMPTY,
 				},
 
 				updatePeriod: {
 					validator: Lang.isNumber,
-					value: 1000
-				}
+					value: 1000,
+				},
 			},
 
 			EXTENDS: A.ProgressBar,
@@ -136,18 +136,18 @@ AUI.add(
 					var url = Lang.sub(TPL_URL_UPDATE, [
 						instance.get('id'),
 						instance.get('sessionKey'),
-						instance.get(STR_UPDATE_PERIOD)
+						instance.get(STR_UPDATE_PERIOD),
 					]);
 
 					instance._frame.attr('src', url);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Progress = Progress;
 	},
 	'',
 	{
-		requires: ['aui-progressbar']
+		requires: ['aui-progressbar'],
 	}
 );

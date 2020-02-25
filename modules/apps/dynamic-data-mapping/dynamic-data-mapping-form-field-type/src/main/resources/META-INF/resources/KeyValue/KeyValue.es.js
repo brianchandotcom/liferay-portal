@@ -34,13 +34,13 @@ class KeyValue extends Component {
 	willReceiveState(changes) {
 		if (changes.keyword) {
 			this.setState({
-				_keyword: changes.keyword.newVal
+				_keyword: changes.keyword.newVal,
 			});
 		}
 
 		if (changes.value) {
 			this.setState({
-				_value: changes.value.newVal
+				_value: changes.value.newVal,
 			});
 		}
 	}
@@ -49,7 +49,7 @@ class KeyValue extends Component {
 		this.emit('fieldKeywordBlurred', {
 			fieldInstance: this,
 			originalEvent: event,
-			value: event.target.value
+			value: event.target.value,
 		});
 	}
 
@@ -64,13 +64,13 @@ class KeyValue extends Component {
 		this.setState(
 			{
 				generateKeyword: false,
-				keyword: value
+				keyword: value,
 			},
 			() => {
 				this.emit('fieldKeywordEdited', {
 					fieldInstance: this,
 					originalEvent: event,
-					value
+					value,
 				});
 			}
 		);
@@ -80,7 +80,7 @@ class KeyValue extends Component {
 		this.emit('fieldBlurred', {
 			fieldInstance: this,
 			originalEvent,
-			value
+			value,
 		});
 	}
 
@@ -96,21 +96,21 @@ class KeyValue extends Component {
 		this.setState(
 			{
 				keyword,
-				value
+				value,
 			},
 			() => {
 				if (generateKeyword) {
 					this.emit('fieldKeywordEdited', {
 						fieldInstance: this,
 						originalEvent,
-						value: keyword
+						value: keyword,
 					});
 				}
 
 				this.emit('fieldEdited', {
 					fieldInstance: this,
 					originalEvent,
-					value
+					value,
 				});
 			}
 		);
@@ -120,7 +120,7 @@ class KeyValue extends Component {
 		this.emit('fieldFocused', {
 			fieldInstance: this,
 			originalEvent,
-			value
+			value,
 		});
 	}
 
@@ -279,7 +279,7 @@ KeyValue.STATE = {
 	 * @type {?(bool)}
 	 */
 
-	value: Config.string()
+	value: Config.string(),
 };
 
 Soy.register(KeyValue, templates);

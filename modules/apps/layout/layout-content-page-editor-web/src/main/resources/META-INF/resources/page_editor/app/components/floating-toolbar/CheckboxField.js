@@ -35,5 +35,5 @@ export const CheckboxField = ({field, onValueSelect, value}) => (
 CheckboxField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onValueSelect: PropTypes.func.isRequired,
-	value: PropTypes.string
+	value: PropTypes.string,
 };

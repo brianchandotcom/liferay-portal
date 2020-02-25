@@ -399,12 +399,12 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 		editEntryUrl: '<portlet:actionURL />',
 		form: {
 			method: 'POST',
-			node: A.one(document.<portlet:namespace />fm)
+			node: A.one(document.<portlet:namespace />fm),
 		},
 		moveEntryUrl:
 			'<portlet:renderURL><portlet:param name="mvcPath" value="/move_entries.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
 		namespace: '<portlet:namespace />',
-		searchContainerId: 'articles'
+		searchContainerId: 'articles',
 	});
 
 	var clearJournalNavigationHandles = function(event) {

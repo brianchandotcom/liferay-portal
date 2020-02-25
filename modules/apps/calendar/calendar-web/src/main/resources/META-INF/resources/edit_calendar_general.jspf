@@ -94,8 +94,8 @@
 				A.one('#<portlet:namespace />color').val(
 					parseInt(event.newVal.substring(1), 16)
 				);
-			}
+			},
 		},
-		render: '#<portlet:namespace />colorPicker'
+		render: '#<portlet:namespace />colorPicker',
 	});
 </aui:script>

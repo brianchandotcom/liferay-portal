@@ -73,34 +73,34 @@ AUI.add(
 					value: {
 						fontSize: 13,
 						showInvisibles: false,
-						showPrintMargin: false
-					}
+						showPrintMargin: false,
+					},
 				},
 
 				dataProcessor: {
-					validator: Lang.isObject
+					validator: Lang.isObject,
 				},
 
 				layout: {
 					validator: Lang.isString,
-					value: 'vertical'
+					value: 'vertical',
 				},
 
 				previewCssClass: {
 					validator: Lang.isString,
-					value: ''
+					value: '',
 				},
 
 				previewDelay: {
 					validator: Lang.isNumber,
-					value: 100
+					value: 100,
 				},
 
 				value: {
 					getter: '_getValue',
 					validator: Lang.isString,
-					value: ''
-				}
+					value: '',
+				},
 			},
 
 			CSS_PREFIX: 'lfr-fullscreen-source-editor',
@@ -178,7 +178,7 @@ AUI.add(
 
 				CONTENT_TEMPLATE: Lang.sub(CONTENT_TEMPLATE, {
 					iconMoonTooltip: Liferay.Language.get('dark-theme'),
-					pathThemeImages: themeDisplay.getPathThemeImages()
+					pathThemeImages: themeDisplay.getPathThemeImages(),
 				}),
 
 				bindUI() {
@@ -216,7 +216,7 @@ AUI.add(
 								instance._onPreviewLink,
 								'a',
 								instance
-							)
+							),
 					];
 				},
 
@@ -266,9 +266,9 @@ AUI.add(
 									'data-title',
 									nextTheme.tooltip
 								);
-							}
+							},
 						},
-						value: instance.get(STR_VALUE)
+						value: instance.get(STR_VALUE),
 					}).render();
 
 					instance._previewPanel = boundingBox.one(CSS_PREVIEW_PANEL);
@@ -285,14 +285,14 @@ AUI.add(
 					var instance = this;
 
 					instance._editor.getEditor().resize();
-				}
-			}
+				},
+			},
 		});
 
 		A.LiferayFullScreenSourceEditor = LiferayFullScreenSourceEditor;
 	},
 	'',
 	{
-		requires: ['liferay-source-editor']
+		requires: ['liferay-source-editor'],
 	}
 );

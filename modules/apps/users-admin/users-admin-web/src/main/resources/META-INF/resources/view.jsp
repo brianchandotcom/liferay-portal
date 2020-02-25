@@ -141,9 +141,9 @@ else {
 						'<portlet:namespace />rowIdsUser'
 					),
 					redirect: '<%= currentURL %>',
-					<%= Constants.CMD %>: cmd
+					<%= Constants.CMD %>: cmd,
 				},
-				url: '<portlet:actionURL name="/users_admin/edit_user" />'
+				url: '<portlet:actionURL name="/users_admin/edit_user" />',
 			});
 		}
 	}
@@ -222,16 +222,16 @@ else {
 
 		if (organizationsRedirect) {
 			Liferay.Util.setFormValues(form, {
-				redirect: organizationsRedirect
+				redirect: organizationsRedirect,
 			});
 		}
 
 		Liferay.Util.postForm(form, {
 			data: {
 				deleteOrganizationIds: organizationIds,
-				<%= Constants.CMD %>: '<%= Constants.DELETE %>'
+				<%= Constants.CMD %>: '<%= Constants.DELETE %>',
 			},
-			url: '<portlet:actionURL name="/users_admin/edit_organization" />'
+			url: '<portlet:actionURL name="/users_admin/edit_organization" />',
 		});
 	}
 
@@ -246,7 +246,7 @@ else {
 			'<liferay-portlet:resourceURL id="/users_admin/get_users_count" />',
 			{
 				body: formData,
-				method: 'POST'
+				method: 'POST',
 			}
 		)
 			.then(function(response) {
@@ -293,7 +293,7 @@ else {
 		var selectUsersURL = Liferay.Util.PortletURL.createPortletURL(
 			'<%= selectUsersURL.toString() %>',
 			{
-				organizationId: organizationId
+				organizationId: organizationId,
 			}
 		);
 
@@ -304,7 +304,7 @@ else {
 					buttonAddLabel: '<liferay-ui:message key="done" />',
 					eventName: '<portlet:namespace />selectUsers',
 					title: '<liferay-ui:message key="assign-users" />',
-					url: selectUsersURL.toString()
+					url: selectUsersURL.toString(),
 				});
 
 				itemSelectorDialog.on('selectedItemChange', function(event) {
@@ -320,14 +320,14 @@ else {
 						var assignmentsRedirectURL = Liferay.Util.PortletURL.createPortletURL(
 							'<%= assignmentsURL.toString() %>',
 							{
-								organizationId: organizationId
+								organizationId: organizationId,
 							}
 						);
 
 						var editAssignmentParameters = {
 							addUserIds: data.value,
 							assignmentsRedirect: assignmentsRedirectURL.toString(),
-							organizationId: organizationId
+							organizationId: organizationId,
 						};
 
 						var editAssignmentURL = Liferay.Util.PortletURL.createPortletURL(

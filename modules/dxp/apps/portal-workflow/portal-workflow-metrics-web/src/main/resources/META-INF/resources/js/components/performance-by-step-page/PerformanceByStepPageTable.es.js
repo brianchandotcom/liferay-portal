@@ -20,7 +20,7 @@ const Item = ({
 	breachedInstanceCount,
 	breachedInstancePercentage,
 	durationAvg,
-	name
+	name,
 }) => {
 	const formattedDuration = formatDuration(durationAvg);
 	const formattedPercentage = getFormattedPercentage(

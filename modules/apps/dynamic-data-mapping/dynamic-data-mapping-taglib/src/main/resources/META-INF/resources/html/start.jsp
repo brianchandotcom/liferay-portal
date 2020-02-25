@@ -161,7 +161,7 @@
 					synchronousFormSubmission: <%= synchronousFormSubmission %>,
 
 					<c:if test="<%= ddmFormValues != null %>">
-						values: <%= DDMUtil.getDDMFormValuesJSONString(ddmFormValues) %>
+						values: <%= DDMUtil.getDDMFormValuesJSONString(ddmFormValues) %>,
 					</c:if>
 				})
 			);
@@ -175,7 +175,7 @@
 					'<span class="inline-item">{flag}</span><span class="btn-section">{languageId}</span>',
 					{
 						flag: Liferay.Util.getLexiconIconTpl(languageId.toLowerCase()),
-						languageId: languageId
+						languageId: languageId,
 					}
 				);
 
@@ -188,7 +188,7 @@
 
 			window.fireLocaleChanged = function(event) {
 				Liferay.fire('inputLocalized:localeChanged', {
-					item: event.currentTarget
+					item: event.currentTarget,
 				});
 			};
 

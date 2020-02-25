@@ -51,5 +51,5 @@ function render(element, value) {
 export default {
 	createEditor,
 	destroyEditor,
-	render
+	render,
 };

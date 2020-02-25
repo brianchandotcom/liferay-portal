@@ -27,7 +27,7 @@ const ALIGNMENTS_MAP = {
 	right: Align.Right,
 	top: Align.Top,
 	'top-left': Align.TopLeft,
-	'top-right': Align.TopRight
+	'top-right': Align.TopRight,
 };
 
 const POSITIONS = [
@@ -38,7 +38,7 @@ const POSITIONS = [
 	'bottom',
 	'bottom',
 	'left',
-	'top'
+	'top',
 ];
 
 const getAlignPosition = (source, target, suggestedPosition) => {
@@ -64,7 +64,7 @@ const Popover = ({
 	showArrow,
 	suggestedPosition,
 	title,
-	visible
+	visible,
 }) => {
 	const [state, setState] = useState({position: null, width: 240});
 	const {position, width} = state;
@@ -84,7 +84,7 @@ const Popover = ({
 					forwardRef.current,
 					alignElement,
 					suggestedPosition
-				)
+				),
 			});
 		}
 	}, [alignElement, forwardRef, suggestedPosition, visible]);
@@ -95,7 +95,7 @@ const Popover = ({
 		<PopoverBase
 			className={classNames(className, {
 				'no-content': withoutContent,
-				'popover-large': width > 600
+				'popover-large': width > 600,
 			})}
 			forwardRef={forwardRef}
 			placement={showArrow ? position : null}
@@ -122,7 +122,7 @@ Popover.propTypes = {
 	showArrow: PropTypes.bool,
 	suggestedPosition: PropTypes.string,
 	title: PropTypes.func,
-	visible: PropTypes.bool
+	visible: PropTypes.bool,
 };
 
 export default React.forwardRef((props, ref) => (

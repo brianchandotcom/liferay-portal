@@ -29,12 +29,12 @@ const CompletionVelocityCard = ({routeParams}) => {
 	const prefixKeys = [prefixKey];
 	const {filterState = {}, filtersError} = useFilter({
 		filterKeys,
-		prefixKeys
+		prefixKeys,
 	});
 
 	const {
 		completionVelocityUnit: velocityUnit = [],
-		completionTimeRange: timeRange = []
+		completionTimeRange: timeRange = [],
 	} = filterState;
 
 	const timeRangeValues = timeRange.length ? timeRange[0] : {};
@@ -44,7 +44,7 @@ const CompletionVelocityCard = ({routeParams}) => {
 	if (isValidDate(dateEnd) && isValidDate(dateStart)) {
 		timeRangeParams = {
 			dateEnd: dateEnd.toISOString(),
-			dateStart: dateStart.toISOString()
+			dateStart: dateStart.toISOString(),
 		};
 	}
 
@@ -75,9 +75,9 @@ const CompletionVelocityCard = ({routeParams}) => {
 	const {data, fetchData} = useFetch({
 		params: {
 			...timeRangeParams,
-			unit
+			unit,
 		},
-		url: `processes/${processId}/metric`
+		url: `processes/${processId}/metric`,
 	});
 
 	const promises = useMemo(() => {
@@ -91,7 +91,7 @@ const CompletionVelocityCard = ({routeParams}) => {
 		filtersError,
 		timeRangeParams.dateEnd,
 		timeRangeParams.dateStart,
-		unit
+		unit,
 	]);
 
 	return (
@@ -116,7 +116,7 @@ const CompletionVelocityCard = ({routeParams}) => {
 const Header = ({
 	disableFilters,
 	prefixKey,
-	timeRange: {dateEnd, dateStart}
+	timeRange: {dateEnd, dateStart},
 }) => {
 	return (
 		<Panel.HeaderWithOptions

@@ -80,7 +80,7 @@ export function initialContributorsToContributors(
 			modelLabel: propertyGroup && propertyGroup.name,
 			properties: propertyGroup && propertyGroup.properties,
 			propertyKey: initialContributor.propertyKey,
-			query: initialContributor.initialQuery
+			query: initialContributor.initialQuery,
 		};
 	});
 }
@@ -107,7 +107,7 @@ export function applyCriteriaChangeToContributors(contributors, change) {
 						[change.criteriaChange],
 						conjunctionId,
 						properties
-					)
+					),
 			  }
 			: contributor;
 	});
@@ -134,7 +134,7 @@ export function applyConjunctionChangeToContributor(
 
 	const nextContributors = contributors.map(contributor => ({
 		...contributor,
-		conjunctionId: conjunctionName
+		conjunctionId: conjunctionName,
 	}));
 
 	return nextContributors;

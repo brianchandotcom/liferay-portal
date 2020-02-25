@@ -138,51 +138,51 @@ AUI.add(
 			ATTRS: {
 				btnCloseCaption: {
 					validator: Lang.isString,
-					value: ''
+					value: '',
 				},
 
 				circular: {
-					value: true
+					value: true,
 				},
 
 				editItemURL: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				infoTemplate: {
-					value: '{current} of {total}'
+					value: '{current} of {total}',
 				},
 
 				playing: {
-					value: false
+					value: false,
 				},
 
 				previewTimeout: {
 					validator: Lang.isNumber,
-					value: 5000
+					value: 5000,
 				},
 
 				renderControls: {
 					validator: Lang.isBoolean,
-					value: true
+					value: true,
 				},
 
 				renderSidebar: {
 					validator: Lang.isBoolean,
-					value: true
+					value: true,
 				},
 
 				showPlayer: {
-					value: false
+					value: false,
 				},
 
 				uploadItemURL: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				zIndex: {
-					value: 5
-				}
+					value: 5,
+				},
 			},
 
 			EXTENDS: A.ImageViewer,
@@ -308,16 +308,16 @@ AUI.add(
 								data: [
 									{
 										key: Liferay.Language.get('format'),
-										value: file.type
+										value: file.type,
 									},
 									{
 										key: Liferay.Language.get('name'),
-										value: file.title
-									}
+										value: file.title,
+									},
 								],
-								title: Liferay.Language.get('file-info')
-							}
-						]
+								title: Liferay.Language.get('file-info'),
+							},
+						],
 					};
 				},
 
@@ -336,7 +336,7 @@ AUI.add(
 					var editDialogTitle = Lang.sub(TPL_EDIT_DIALOG_TITLE, {
 						copy: Liferay.Language.get('copy'),
 						edit: Liferay.Language.get('edit'),
-						title: itemTitle
+						title: itemTitle,
 					});
 
 					var editEntityBaseZIndex = Liferay.zIndex.WINDOW;
@@ -355,7 +355,7 @@ AUI.add(
 						{
 							dialog: {
 								destroyOnHide: true,
-								zIndex: editEntityBaseZIndex + 100
+								zIndex: editEntityBaseZIndex + 100,
 							},
 							id: instance.get('id'),
 							stack: false,
@@ -365,8 +365,8 @@ AUI.add(
 								entityURL: itemURL,
 								saveFileName: itemTitle,
 								saveParamName: 'imageSelectorFileName',
-								saveURL: instance.get('uploadItemURL')
-							}
+								saveURL: instance.get('uploadItemURL'),
+							},
 						},
 						A.bind('_onSaveEditSuccess', instance)
 					);
@@ -430,7 +430,7 @@ AUI.add(
 							Lang.sub(TPL_INFO_TAB_TITLE, {
 								className: index === 0 ? CSS_ACTIVE : STR_BLANK,
 								tabId: groupId,
-								tabTitle: group.title
+								tabTitle: group.title,
 							})
 						);
 
@@ -444,7 +444,7 @@ AUI.add(
 										dd: currentValue.value,
 										ddClassName: '',
 										dt: currentValue.key,
-										dtClassName: 'h5'
+										dtClassName: 'h5',
 									})
 								);
 							},
@@ -455,7 +455,7 @@ AUI.add(
 							Lang.sub(TPL_INFO_TAB_BODY, {
 								className: index === 0 ? CSS_ACTIVE : STR_BLANK,
 								content: dataStr,
-								tabId: groupId
+								tabId: groupId,
 							})
 						);
 
@@ -525,7 +525,7 @@ AUI.add(
 						if (instance.get('editItemURL')) {
 							var editIconEl = A.Node.create(
 								Lang.sub(TPL_EDIT_ICON, {
-									editItemURL: instance.get('editItemURL')
+									editItemURL: instance.get('editItemURL'),
 								})
 							);
 
@@ -722,7 +722,7 @@ AUI.add(
 					var instance = this;
 
 					instance.TPL_CLOSE = Lang.sub(TPL_CLOSE, [
-						instance.get('btnCloseCaption')
+						instance.get('btnCloseCaption'),
 					]);
 
 					instance._displacedMethodHandles = [
@@ -762,7 +762,7 @@ AUI.add(
 							instance,
 							'_syncInfoUI',
 							instance
-						)
+						),
 					];
 				},
 
@@ -818,21 +818,21 @@ AUI.add(
 							title: itemFile.title,
 							type: itemFile.type,
 							url: itemFileURL,
-							uuid: itemFile.uuid
+							uuid: itemFile.uuid,
 						};
 
 						link.setData('value', JSON.stringify(imageValue));
 					}
 
 					return link;
-				}
-			}
+				},
+			},
 		});
 
 		A.LiferayItemViewer = LiferayItemViewer;
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-image-viewer', 'liferay-portlet-url']
+		requires: ['aui-component', 'aui-image-viewer', 'liferay-portlet-url'],
 	}
 );

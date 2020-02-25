@@ -29,7 +29,7 @@ AUI.add(
 		var MAP_IGNORE_ATTRS = {
 			id: 1,
 			name: 1,
-			type: 1
+			type: 1,
 		};
 
 		var SELECTOR_PLACEHOLDER_INPUTS =
@@ -240,8 +240,8 @@ AUI.add(
 							instance
 						);
 					}
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Form.Placeholders = Placeholders;
@@ -250,6 +250,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-form', 'plugin']
+		requires: ['liferay-form', 'plugin'],
 	}
 );

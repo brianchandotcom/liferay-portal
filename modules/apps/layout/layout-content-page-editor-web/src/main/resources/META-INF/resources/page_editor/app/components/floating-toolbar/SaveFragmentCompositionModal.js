@@ -35,7 +35,7 @@ const SaveFragmentCompositionModal = ({
 	itemId,
 	observer,
 	onClose,
-	onErrorDismiss
+	onErrorDismiss,
 }) => {
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
@@ -62,7 +62,7 @@ const SaveFragmentCompositionModal = ({
 				itemId,
 				name,
 				previewImageURL: thumbnail.url,
-				store
+				store,
 			})
 		)
 			.then(() => {
@@ -74,7 +74,7 @@ const SaveFragmentCompositionModal = ({
 						'an-unexpected-error-occurred'
 					),
 					title: Liferay.Language.get('error'),
-					type: 'danger'
+					type: 'danger',
 				});
 
 				setLoading(false);
@@ -317,7 +317,7 @@ SaveFragmentCompositionModal.propTypes = {
 	itemId: PropTypes.string,
 	observer: PropTypes.object.isRequired,
 	onClose: PropTypes.func.isRequired,
-	onErrorDismiss: PropTypes.func.isRequired
+	onErrorDismiss: PropTypes.func.isRequired,
 };
 
 export default SaveFragmentCompositionModal;

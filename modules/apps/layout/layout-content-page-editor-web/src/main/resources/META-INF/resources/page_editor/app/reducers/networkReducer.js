@@ -18,7 +18,7 @@ import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkSt
 export const INITIAL_STATE = {
 	error: null,
 	lastFetch: null,
-	status: SERVICE_NETWORK_STATUS_TYPES.draftSaved
+	status: SERVICE_NETWORK_STATUS_TYPES.draftSaved,
 };
 
 export default function networkReducer(networkStatus = INITIAL_STATE, action) {
@@ -26,7 +26,7 @@ export default function networkReducer(networkStatus = INITIAL_STATE, action) {
 		case UPDATE_NETWORK:
 			return {
 				...networkStatus,
-				...action.network
+				...action.network,
 			};
 		default:
 			return networkStatus;

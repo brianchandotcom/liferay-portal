@@ -103,11 +103,11 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 				uri: uri,
 				dialog: {
 					cache: false,
-					modal: true
+					modal: true,
 				},
 				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
-				}
+					bodyCssClass: 'dialog-with-footer',
+				},
 			});
 		},
 		['aui-io', 'aui-io-plugin-deprecated', 'liferay-util-window']

@@ -28,13 +28,13 @@ AUI.add(
 			ATTRS: {
 				lineIndent: {
 					validator: Lang.isString,
-					value: '\r\n'
+					value: '\r\n',
 				},
 
 				tagIndent: {
 					validator: Lang.isString,
-					value: '\t'
-				}
+					value: '\t',
+				},
 			},
 
 			EXTENDS: A.Base,
@@ -51,16 +51,16 @@ AUI.add(
 
 					return Liferay.Util.formatXML(content, {
 						lineIndent,
-						tagIndent
+						tagIndent,
 					});
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.XMLFormatter = XMLFormatter;
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base'],
 	}
 );

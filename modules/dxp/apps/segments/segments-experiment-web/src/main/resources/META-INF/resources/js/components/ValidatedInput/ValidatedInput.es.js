@@ -29,7 +29,7 @@ function ValidatedInput(props) {
 		onChange = () => {},
 		onFocus = () => {},
 		onValidationChange = () => {},
-		value = ''
+		value = '',
 	} = props;
 
 	const [invalid, setInvalid] = useState(false);
@@ -42,7 +42,7 @@ function ValidatedInput(props) {
 	}, [autofocus]);
 
 	const formGroupClasses = getCN('form-group w-100', {
-		'has-error': invalid
+		'has-error': invalid,
 	});
 
 	return (
@@ -108,7 +108,7 @@ ValidatedInput.propTypes = {
 	onChange: PropTypes.func,
 	onFocus: PropTypes.func,
 	onValidationChange: PropTypes.func,
-	value: PropTypes.string
+	value: PropTypes.string,
 };
 
 export default ValidatedInput;

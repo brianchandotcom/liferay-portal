@@ -34,7 +34,7 @@ const PerformanceByStepPage = ({query, routeParams}) => {
 	const {
 		filterState: {timeRange},
 		hasFilterError,
-		prefixedKeys
+		prefixedKeys,
 	} = useFilter({});
 
 	const {dateEnd, dateStart} =
@@ -45,7 +45,7 @@ const PerformanceByStepPage = ({query, routeParams}) => {
 	if (isValidDate(dateEnd) && isValidDate(dateStart)) {
 		timeRangeParams = {
 			dateEnd: dateEnd.toISOString(),
-			dateStart: dateStart.toISOString()
+			dateStart: dateStart.toISOString(),
 		};
 	}
 
@@ -54,9 +54,9 @@ const PerformanceByStepPage = ({query, routeParams}) => {
 			completed: true,
 			key: search,
 			...routeParams,
-			...timeRangeParams
+			...timeRangeParams,
 		},
-		url: `/processes/${processId}/tasks`
+		url: `/processes/${processId}/tasks`,
 	});
 
 	const filterError = useMemo(
@@ -74,7 +74,7 @@ const PerformanceByStepPage = ({query, routeParams}) => {
 		fetchData,
 		filterError,
 		timeRangeParams.dateEnd,
-		timeRangeParams.dateStart
+		timeRangeParams.dateStart,
 	]);
 
 	return (

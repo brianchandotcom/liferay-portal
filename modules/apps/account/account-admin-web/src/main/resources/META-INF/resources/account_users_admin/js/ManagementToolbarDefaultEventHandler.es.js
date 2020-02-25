@@ -54,7 +54,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 					itemData.redirectURL,
 					{
 						accountEntriesNavigation: 'accounts',
-						accountEntryIds: selectedItems.value
+						accountEntryIds: selectedItems.value,
 					}
 				);
 
@@ -68,18 +68,18 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			{
 				dialog: {
 					constrain: true,
-					modal: true
+					modal: true,
 				},
 				eventName: this.ns('addAccountUser'),
 				id: this.ns('addAccountUser'),
 				title: Liferay.Language.get(itemData.dialogTitle),
-				uri: itemData.accountEntrySelectorURL
+				uri: itemData.accountEntrySelectorURL,
 			},
 			event => {
 				var addAccountUserURL = Liferay.Util.PortletURL.createPortletURL(
 					itemData.addAccountUserURL,
 					{
-						accountEntryId: event.accountentryid
+						accountEntryId: event.accountentryid,
 					}
 				);
 
@@ -99,7 +99,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			buttonAddLabel: dialogButtonLabel,
 			eventName: dialogEventName,
 			title: dialogTitle,
-			url: accountEntrySelectorURL
+			url: accountEntrySelectorURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {
@@ -119,9 +119,9 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				accountUserIds: Liferay.Util.listCheckedExcept(
 					form,
 					this.ns('allRowIds')
-				)
+				),
 			},
-			url
+			url,
 		});
 	}
 }

@@ -129,7 +129,7 @@ class UserNameFields extends PortletBase {
 	_getURL(languageId) {
 		return new Promise(resolve => {
 			const url = createPortletURL(this.baseURL, {
-				languageId
+				languageId,
 			});
 
 			resolve(url);
@@ -268,7 +268,7 @@ UserNameFields.STATE = {
 	 */
 	userNameFieldsNode: Config.required()
 		.setter(dom.toElement)
-		.writeOnce()
+		.writeOnce(),
 };
 
 export default UserNameFields;

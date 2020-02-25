@@ -32,7 +32,7 @@ describe('The velocity unit filter component should', () => {
 				processId={12345}
 				timeRange={{
 					dateEnd: '2019-12-10T20:19:34Z',
-					dateStart: '2019-09-12T00:00:00Z'
+					dateStart: '2019-09-12T00:00:00Z',
 				}}
 			/>,
 			{wrapper}

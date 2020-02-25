@@ -34,7 +34,7 @@ AUI.add(
 		var STR_HIDE = 'hide';
 
 		var defaultConfig = {
-			setter: '_setNode'
+			setter: '_setNode',
 		};
 
 		var ExportImport = A.Component.create({
@@ -54,7 +54,7 @@ AUI.add(
 				ratingsNode: defaultConfig,
 				setupNode: defaultConfig,
 				timeZoneOffset: 0,
-				userPreferencesNode: defaultConfig
+				userPreferencesNode: defaultConfig,
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -257,9 +257,9 @@ AUI.add(
 													);
 
 													contentDialog.hide();
-												}
+												},
 											},
-											primary: true
+											primary: true,
 										},
 										{
 											label: Liferay.Language.get(
@@ -274,14 +274,14 @@ AUI.add(
 													);
 
 													contentDialog.hide();
-												}
-											}
-										}
-									]
+												},
+											},
+										},
+									],
 								},
-								width: 400
+								width: 400,
 							},
-							title: portletTitle
+							title: portletTitle,
 						});
 
 						instance._storeNodeInputStates(contentNode);
@@ -324,9 +324,9 @@ AUI.add(
 													);
 
 													contentOptionsDialog.hide();
-												}
+												},
 											},
-											primary: true
+											primary: true,
 										},
 										{
 											label: Liferay.Language.get(
@@ -341,14 +341,14 @@ AUI.add(
 													);
 
 													contentOptionsDialog.hide();
-												}
-											}
-										}
-									]
+												},
+											},
+										},
+									],
 								},
-								width: 400
+								width: 400,
 							},
-							title: Liferay.Language.get('comments-and-ratings')
+							title: Liferay.Language.get('comments-and-ratings'),
 						});
 
 						instance._storeNodeInputStates(contentOptionsNode);
@@ -393,9 +393,9 @@ AUI.add(
 														instance._setGlobalConfigurationLabels();
 
 														globalConfigurationDialog.hide();
-													}
+													},
 												},
-												primary: true
+												primary: true,
 											},
 											{
 												label: Liferay.Language.get(
@@ -406,16 +406,16 @@ AUI.add(
 														event.domEvent.preventDefault();
 
 														globalConfigurationDialog.hide();
-													}
-												}
-											}
-										]
+													},
+												},
+											},
+										],
 									},
-									width: 400
+									width: 400,
 								},
 								title: Liferay.Language.get(
 									'application-configuration'
-								)
+								),
 							}
 						);
 
@@ -479,14 +479,14 @@ AUI.add(
 														event.domEvent.preventDefault();
 
 														scheduledPublishingEventsDialog.hide();
-													}
-												}
-											}
-										]
+													},
+												},
+											},
+										],
 									},
-									width: 400
+									width: 400,
 								},
-								title: Liferay.Language.get('scheduled-events')
+								title: Liferay.Language.get('scheduled-events'),
 							}
 						);
 
@@ -531,7 +531,7 @@ AUI.add(
 
 					return {
 						endDate,
-						startDate
+						startDate,
 					};
 				},
 
@@ -600,9 +600,9 @@ AUI.add(
 
 					Liferay.Util.openWindow({
 						dialog: {
-							bodyContent: bodyNode
+							bodyContent: bodyNode,
 						},
-						title
+						title,
 					});
 				},
 
@@ -669,7 +669,7 @@ AUI.add(
 
 					if (cmdNode.val() === 'add' || cmdNode.val() === 'update') {
 						var redirectParameters = {
-							cmd: cmdNode.val()
+							cmd: cmdNode.val(),
 						};
 
 						if (instance._exportLAR) {
@@ -785,7 +785,7 @@ AUI.add(
 									timeout: FAILURE_TIMEOUT,
 									toggleText: false,
 									type: 'warning',
-									useAnimation: true
+									useAnimation: true,
 								}).show();
 							});
 					}
@@ -1006,7 +1006,7 @@ AUI.add(
 
 						inputStates[id] = {
 							hiddenList,
-							value: val
+							value: val,
 						};
 					});
 				},
@@ -1092,7 +1092,7 @@ AUI.add(
 
 					var dateRangeChecker = {
 						todayUsed: adjustedDate,
-						validRange: true
+						validRange: true,
 					};
 
 					if (instance._isChecked('rangeDateRangeNode')) {
@@ -1127,7 +1127,7 @@ AUI.add(
 							instance.ns('viewBackgroundTaskDetails'),
 							instance._onViewBackgroundTaskDetails,
 							instance
-						)
+						),
 					];
 
 					instance._eventHandles = eventHandles;
@@ -1152,7 +1152,7 @@ AUI.add(
 						animationConfig: {
 							duration: 2,
 							left: '0px',
-							top: '0px'
+							top: '0px',
 						},
 						closeText: false,
 						content:
@@ -1164,12 +1164,12 @@ AUI.add(
 						timeout: 10000,
 						toggleText: false,
 						type: 'warning',
-						useAnimation: true
+						useAnimation: true,
 					});
 
 					instance._notice.show();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.ExportImport = ExportImport;
@@ -1185,7 +1185,7 @@ AUI.add(
 			'aui-tree-view',
 			'liferay-notice',
 			'liferay-portlet-base',
-			'liferay-util-window'
-		]
+			'liferay-util-window',
+		],
 	}
 );

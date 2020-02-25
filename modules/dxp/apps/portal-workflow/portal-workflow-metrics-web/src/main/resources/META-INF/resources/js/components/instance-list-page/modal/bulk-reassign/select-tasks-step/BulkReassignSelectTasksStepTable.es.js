@@ -23,7 +23,7 @@ const Item = ({totalCount, ...task}) => {
 		id,
 		label,
 		objectReviewed: {assetTitle, assetType},
-		workflowInstanceId
+		workflowInstanceId,
 	} = task;
 	const {selectedTasks} = bulkModal;
 
@@ -45,7 +45,7 @@ const Item = ({totalCount, ...task}) => {
 			setBulkModal({
 				...bulkModal,
 				selectAll: totalCount > 0 && totalCount === updatedItems.length,
-				selectedTasks: updatedItems
+				selectedTasks: updatedItems,
 			});
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,7 +89,7 @@ const Table = ({items, totalCount}) => {
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '5%'
+							width: '5%',
 						}}
 					></ClayTable.Cell>
 
@@ -98,7 +98,7 @@ const Table = ({items, totalCount}) => {
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '10%'
+							width: '10%',
 						}}
 					>
 						{Liferay.Language.get('id')}
@@ -109,7 +109,7 @@ const Table = ({items, totalCount}) => {
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '30%'
+							width: '30%',
 						}}
 					>
 						{Liferay.Language.get('item-subject')}
@@ -120,7 +120,7 @@ const Table = ({items, totalCount}) => {
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '25%'
+							width: '25%',
 						}}
 					>
 						{Liferay.Language.get('process-step')}
@@ -130,7 +130,7 @@ const Table = ({items, totalCount}) => {
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '30%'
+							width: '30%',
 						}}
 					>
 						{Liferay.Language.get('current-assignee')}

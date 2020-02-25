@@ -240,7 +240,7 @@ if (tabs1.equals("published")) {
 
 			A.one('#<portlet:namespace />workflowDefinitionDisplay').html(
 				A.Lang.sub('{title}', {
-					title: Liferay.Util.escapeHTML(event.title)
+					title: Liferay.Util.escapeHTML(event.title),
 				})
 			);
 
@@ -249,7 +249,7 @@ if (tabs1.equals("published")) {
 			);
 
 			kaleoFormsAdmin.saveInPortletSession({
-				workflowDefinition: workflowDefinition
+				workflowDefinition: workflowDefinition,
 			});
 
 			kaleoFormsAdmin.updateNavigationControls();
@@ -269,7 +269,7 @@ if (tabs1.equals("published")) {
 				id: A.guid(),
 				refreshWindow: WIN,
 				title: '<liferay-ui:message key="workflow" />',
-				uri: uri
+				uri: uri,
 			});
 		},
 		['liferay-util']

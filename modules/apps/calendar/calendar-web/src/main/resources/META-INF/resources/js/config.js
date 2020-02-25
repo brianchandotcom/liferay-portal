@@ -26,54 +26,54 @@
 							'aui-alert',
 							'aui-base',
 							'aui-component',
-							'liferay-portlet-base'
-						]
+							'liferay-portlet-base',
+						],
 					},
 					'liferay-calendar-date-picker-sanitizer': {
 						path: 'date_picker_sanitizer.js',
-						requires: ['aui-base']
+						requires: ['aui-base'],
 					},
 					'liferay-calendar-interval-selector': {
 						path: 'interval_selector.js',
-						requires: ['aui-base', 'liferay-portlet-base']
+						requires: ['aui-base', 'liferay-portlet-base'],
 					},
 					'liferay-calendar-interval-selector-scheduler-event-link': {
 						path: 'interval_selector_scheduler_event_link.js',
-						requires: ['aui-base', 'liferay-portlet-base']
+						requires: ['aui-base', 'liferay-portlet-base'],
 					},
 					'liferay-calendar-list': {
 						path: 'calendar_list.js',
 						requires: [
 							'aui-template-deprecated',
-							'liferay-scheduler'
-						]
+							'liferay-scheduler',
+						],
 					},
 					'liferay-calendar-message-util': {
 						path: 'message_util.js',
 						requires: [
 							'aui-alert',
 							'liferay-alert',
-							'liferay-util-window'
-						]
+							'liferay-util-window',
+						],
 					},
 					'liferay-calendar-recurrence-converter': {
 						path: 'recurrence_converter.js',
-						requires: []
+						requires: [],
 					},
 					'liferay-calendar-recurrence-dialog': {
 						path: 'recurrence.js',
 						requires: [
 							'aui-base',
-							'liferay-calendar-recurrence-util'
-						]
+							'liferay-calendar-recurrence-util',
+						],
 					},
 					'liferay-calendar-recurrence-util': {
 						path: 'recurrence_util.js',
-						requires: ['aui-base', 'liferay-util-window']
+						requires: ['aui-base', 'liferay-util-window'],
 					},
 					'liferay-calendar-reminders': {
 						path: 'calendar_reminders.js',
-						requires: ['aui-base']
+						requires: ['aui-base'],
 					},
 					'liferay-calendar-remote-services': {
 						path: 'remote_services.js',
@@ -81,16 +81,16 @@
 							'aui-base',
 							'aui-component',
 							'liferay-calendar-util',
-							'liferay-portlet-base'
-						]
+							'liferay-portlet-base',
+						],
 					},
 					'liferay-calendar-session-listener': {
 						path: 'session_listener.js',
-						requires: ['aui-base', 'liferay-scheduler']
+						requires: ['aui-base', 'liferay-scheduler'],
 					},
 					'liferay-calendar-simple-color-picker': {
 						path: 'simple_color_picker.js',
-						requires: ['aui-base', 'aui-template-deprecated']
+						requires: ['aui-base', 'aui-template-deprecated'],
 					},
 					'liferay-calendar-simple-menu': {
 						path: 'simple_menu.js',
@@ -104,8 +104,8 @@
 							'widget-position-align',
 							'widget-position-constrain',
 							'widget-stack',
-							'widget-stdmod'
-						]
+							'widget-stdmod',
+						],
 					},
 					'liferay-calendar-util': {
 						path: 'calendar_util.js',
@@ -115,8 +115,8 @@
 							'aui-scheduler',
 							'aui-toolbar',
 							'autocomplete',
-							'autocomplete-highlighters'
-						]
+							'autocomplete-highlighters',
+						],
 					},
 					'liferay-scheduler': {
 						path: 'scheduler.js',
@@ -132,28 +132,28 @@
 							'liferay-scheduler-event-recorder',
 							'liferay-scheduler-models',
 							'promise',
-							'resize-plugin'
-						]
+							'resize-plugin',
+						],
 					},
 					'liferay-scheduler-event-recorder': {
 						path: 'scheduler_event_recorder.js',
 						requires: [
 							'dd-plugin',
 							'liferay-calendar-util',
-							'resize-plugin'
-						]
+							'resize-plugin',
+						],
 					},
 					'liferay-scheduler-models': {
 						path: 'scheduler_models.js',
 						requires: [
 							'aui-datatype',
 							'dd-plugin',
-							'liferay-calendar-util'
-						]
-					}
+							'liferay-calendar-util',
+						],
+					},
 				},
-				root: MODULE_PATH + '/js/'
-			}
-		}
+				root: MODULE_PATH + '/js/',
+			},
+		},
 	});
 })();

@@ -588,7 +588,7 @@
 
 				sidenav.trigger({
 					toggler: $(instance.togglerSelector),
-					type: 'closedStart.lexicon.sidenav'
+					type: 'closedStart.lexicon.sidenav',
 				});
 
 				instance._onSidenavTransitionEnd(content, function() {
@@ -597,7 +597,7 @@
 
 					sidenav.trigger({
 						toggler: $(instance.togglerSelector),
-						type: 'closed.lexicon.sidenav'
+						type: 'closed.lexicon.sidenav',
 					});
 				});
 
@@ -697,12 +697,12 @@
 
 				navNode.css({
 					height: '100%',
-					'min-height': tallest
+					'min-height': tallest,
 				});
 
 				sideNavMenuNode.css({
 					height: '100%',
-					'min-height': tallest
+					'min-height': tallest,
 				});
 			}
 		},
@@ -732,12 +732,12 @@
 
 				navNode.css({
 					height: '100%',
-					'min-height': minHeight
+					'min-height': minHeight,
 				});
 
 				sidenavMenuNode.css({
 					height: '100%',
-					'min-height': minHeight
+					'min-height': minHeight,
 				});
 			}
 		},
@@ -869,7 +869,7 @@
 
 				sidenav.trigger({
 					toggler: $(instance.togglerSelector),
-					type: 'openStart.lexicon.sidenav'
+					type: 'openStart.lexicon.sidenav',
 				});
 
 				instance._onSidenavTransitionEnd(content, function() {
@@ -878,7 +878,7 @@
 
 					sidenav.trigger({
 						toggler: $(instance.togglerSelector),
-						type: 'open.lexicon.sidenav'
+						type: 'open.lexicon.sidenav',
 					});
 				});
 
@@ -926,13 +926,13 @@
 			if (closed) {
 				container.trigger({
 					toggler,
-					type: 'openStart.lexicon.sidenav'
+					type: 'openStart.lexicon.sidenav',
 				});
 			}
 			else {
 				container.trigger({
 					toggler,
-					type: 'closedStart.lexicon.sidenav'
+					type: 'closedStart.lexicon.sidenav',
 				});
 			}
 
@@ -948,7 +948,7 @@
 
 					container.trigger({
 						toggler,
-						type: 'closed.lexicon.sidenav'
+						type: 'closed.lexicon.sidenav',
 					});
 				}
 				else {
@@ -956,7 +956,7 @@
 
 					container.trigger({
 						toggler,
-						type: 'open.lexicon.sidenav'
+						type: 'open.lexicon.sidenav',
 					});
 				}
 
@@ -1018,7 +1018,7 @@
 			}
 
 			return !closed;
-		}
+		},
 	};
 
 	var old = $.fn.sideNavigation;
@@ -1137,7 +1137,7 @@
 		typeMobile: 'relative',
 		url: null,
 		useDelegate: true,
-		width: '225px'
+		width: '225px',
 	};
 
 	Plugin.Constructor = SideNavigation;

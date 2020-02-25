@@ -214,7 +214,7 @@ else {
 				{
 					dialog: {
 						constrain: true,
-						modal: true
+						modal: true,
 					},
 					id: '<portlet:namespace />selectGroup',
 					title: '<liferay-ui:message arguments="site" key="select-x" />',
@@ -228,7 +228,7 @@ else {
 					groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
 					%>
 
-					uri: '<%= groupSelectorURL.toString() %>'
+					uri: '<%= groupSelectorURL.toString() %>',
 				},
 				function(event) {
 					var searchContainer = Liferay.SearchContainer.get(

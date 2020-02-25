@@ -46,15 +46,15 @@ AUI.add(
 						Lang.toInt(range.boundingTop) -
 						xy[1] +
 						node.get('scrollTop') +
-						DOC.documentElement.scrollTop
+						DOC.documentElement.scrollTop,
 				};
-			}
+			},
 		};
 
 		A.Base.mix(Liferay.AutoCompleteTextarea, [AutcompleteInputCaretOffset]);
 	},
 	'',
 	{
-		requires: ['liferay-autocomplete-textarea']
+		requires: ['liferay-autocomplete-textarea'],
 	}
 );

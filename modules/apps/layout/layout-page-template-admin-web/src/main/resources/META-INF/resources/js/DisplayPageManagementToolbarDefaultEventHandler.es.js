@@ -28,7 +28,7 @@ class DisplayPageManagementToolbarDefaultEventHandler extends DefaultEventHandle
 }
 
 DisplayPageManagementToolbarDefaultEventHandler.STATE = {
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export default DisplayPageManagementToolbarDefaultEventHandler;

@@ -28,7 +28,7 @@ const NUMBER_OF_COLUMNS_OPTIONS = ['1', '2', '3', '4', '5', '6'];
 
 const ROW_CONFIGURATION_IDENTIFIERS = {
 	gutters: 'gutters',
-	numberOfColumns: 'numberOfColumns'
+	numberOfColumns: 'numberOfColumns',
 };
 
 const ClayCheckboxWithState = ({onValueChange, ...otherProps}) => {
@@ -54,7 +54,7 @@ export const RowConfigurationPanel = ({item}) => {
 
 	const rowConfig = {
 		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.row],
-		...item.config
+		...item.config,
 	};
 
 	const handleConfigurationValueChanged = (identifier, value) => {
@@ -75,7 +75,7 @@ export const RowConfigurationPanel = ({item}) => {
 					updateRowColumns({
 						itemId: item.itemId,
 						numberOfColumns: newNumberOfColumns,
-						segmentsExperienceId
+						segmentsExperienceId,
 					})
 				);
 			}
@@ -86,10 +86,10 @@ export const RowConfigurationPanel = ({item}) => {
 		dispatch(
 			updateItemConfig({
 				itemConfig: {
-					[identifier]: value
+					[identifier]: value,
 				},
 				itemId: item.itemId,
-				segmentsExperienceId
+				segmentsExperienceId,
 			})
 		);
 	};
@@ -111,7 +111,7 @@ export const RowConfigurationPanel = ({item}) => {
 					}}
 					options={NUMBER_OF_COLUMNS_OPTIONS.map(value => ({
 						label: value,
-						value
+						value,
 					}))}
 					value={String(rowConfig.numberOfColumns)}
 				/>
@@ -137,6 +137,6 @@ export const RowConfigurationPanel = ({item}) => {
 
 RowConfigurationPanel.propTypes = {
 	item: getLayoutDataItemPropTypes({
-		config: PropTypes.shape({numberOfColumns: PropTypes.number})
-	})
+		config: PropTypes.shape({numberOfColumns: PropTypes.number}),
+	}),
 };

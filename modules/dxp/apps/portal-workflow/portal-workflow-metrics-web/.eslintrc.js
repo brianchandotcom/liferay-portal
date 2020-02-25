@@ -12,6 +12,6 @@
 module.exports = {
 	globals: {
 		mount: true,
-		shallow: true
-	}
+		shallow: true,
+	},
 };

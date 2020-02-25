@@ -28,7 +28,7 @@ const ExperiencesList = ({
 	onDeleteExperience,
 	onEditExperience,
 	onPriorityDecrease,
-	onPriorityIncrease
+	onPriorityIncrease,
 }) => {
 	const dispatch = useDispatch();
 
@@ -75,7 +75,7 @@ ExperiencesList.propTypes = {
 	onDeleteExperience: PropTypes.func.isRequired,
 	onEditExperience: PropTypes.func.isRequired,
 	onPriorityDecrease: PropTypes.func.isRequired,
-	onPriorityIncrease: PropTypes.func.isRequired
+	onPriorityIncrease: PropTypes.func.isRequired,
 };
 
 export default ExperiencesList;

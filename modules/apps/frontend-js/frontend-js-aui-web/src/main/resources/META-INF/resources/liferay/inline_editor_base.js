@@ -42,11 +42,11 @@ AUI.add(
 			var instance = this;
 
 			instance.publish('saveFailure', {
-				defaultFn: instance._defSaveFailureFn
+				defaultFn: instance._defSaveFailureFn,
 			});
 
 			instance.publish('saveSuccess', {
-				defaultFn: instance._defSaveSuccessFn
+				defaultFn: instance._defSaveSuccessFn,
 			});
 		}
 
@@ -54,45 +54,45 @@ AUI.add(
 			autoSaveTimeout: {
 				getter: '_getAutoSaveTimeout',
 				validator: isNumber,
-				value: 3000
+				value: 3000,
 			},
 
 			closeNoticeTimeout: {
 				getter: '_getCloseNoticeTimeout',
 				validator: isNumber,
-				value: 8000
+				value: 8000,
 			},
 
 			editor: {
-				validator: Lang.isObject
+				validator: Lang.isObject,
 			},
 
 			editorName: {
-				validator: isString
+				validator: isString,
 			},
 
 			editorPrefix: {
 				validator: isString,
-				value: '#cke_'
+				value: '#cke_',
 			},
 
 			editorSuffix: {
 				validator: isString,
-				value: '_original'
+				value: '_original',
 			},
 
 			namespace: {
-				validator: isString
+				validator: isString,
 			},
 
 			saveURL: {
-				validator: isString
+				validator: isString,
 			},
 
 			toolbarTopOffset: {
 				validator: isNumber,
-				value: 30
-			}
+				value: 30,
+			},
 		};
 
 		InlineEditorBase.prototype = {
@@ -218,7 +218,7 @@ AUI.add(
 						contentBox: editNoticeNode,
 						footerContent: Liferay.Language.get('close'),
 						visible: false,
-						zIndex: triggerNode.getStyle('zIndex') + 2
+						zIndex: triggerNode.getStyle('zIndex') + 2,
 					}).render();
 
 					instance._editNoticeNode = editNoticeNode;
@@ -234,7 +234,7 @@ AUI.add(
 				var instance = this;
 
 				var data = {
-					content: instance.get(EDITOR).getData()
+					content: instance.get(EDITOR).getData(),
 				};
 
 				var namespacedData = Liferay.Util.ns(
@@ -244,7 +244,7 @@ AUI.add(
 
 				Liferay.Util.fetch(instance.get('saveURL'), {
 					body: Liferay.Util.objectToFormData(namespacedData),
-					method: 'POST'
+					method: 'POST',
 				})
 					.then(response => response.json())
 					.then(response => {
@@ -290,13 +290,13 @@ AUI.add(
 				}
 
 				return saveTask;
-			}
+			},
 		};
 
 		Liferay.InlineEditorBase = InlineEditorBase;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-overlay-base-deprecated']
+		requires: ['aui-base', 'aui-overlay-base-deprecated'],
 	}
 );

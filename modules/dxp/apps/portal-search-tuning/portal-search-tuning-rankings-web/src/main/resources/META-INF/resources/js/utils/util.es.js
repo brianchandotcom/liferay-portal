@@ -112,7 +112,7 @@ export function resultsDataToMap(resultsData, initialMap = {}) {
 			? acc
 			: {
 					...acc,
-					[cur.id]: cur
+					[cur.id]: cur,
 			  };
 	}, initialMap);
 }
@@ -151,8 +151,8 @@ export function updateDataMap(dataMap, ids, properties) {
 			...updatedDataMap,
 			[id]: {
 				...dataMap[id],
-				...properties
-			}
+				...properties,
+			},
 		};
 	}, dataMap);
 }

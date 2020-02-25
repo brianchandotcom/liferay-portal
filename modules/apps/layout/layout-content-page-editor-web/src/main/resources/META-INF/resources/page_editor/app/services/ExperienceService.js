@@ -22,8 +22,8 @@ function getExperienceUsedPortletIds({body, dispatch}) {
 		config.getExperienceUsedPortletsURL,
 		{
 			body: {
-				segmentsExperienceId
-			}
+				segmentsExperienceId,
+			},
 		},
 		dispatch
 	);
@@ -44,7 +44,7 @@ export default {
 		const payload = {
 			active: true,
 			name,
-			segmentsEntryId
+			segmentsEntryId,
 		};
 
 		return serviceFetch(
@@ -68,7 +68,7 @@ export default {
 		const payload = {
 			deleteSegmentsExperience: true,
 			fragmentEntryLinkIds: JSON.stringify(fragmentEntryLinkIds),
-			segmentsExperienceId
+			segmentsExperienceId,
 		};
 
 		return serviceFetch(
@@ -83,7 +83,7 @@ export default {
 
 		return getExperienceUsedPortletIds({
 			body: {segmentsExperienceId},
-			dispatch
+			dispatch,
 		});
 	},
 
@@ -117,7 +117,7 @@ export default {
 
 		const payload = {
 			newPriority,
-			segmentsExperienceId
+			segmentsExperienceId,
 		};
 
 		return serviceFetch(
@@ -125,5 +125,5 @@ export default {
 			{body: payload},
 			dispatch
 		);
-	}
+	},
 };

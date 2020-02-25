@@ -42,7 +42,7 @@ AUI.add(
 			iconHitAreaCollapsed: 'tree-hitarea icon-plus',
 			iconHitAreaExpanded: 'tree-hitarea icon-minus',
 			iconLoading: 'icon-refresh',
-			iconUncheck: 'icon-check'
+			iconUncheck: 'icon-check',
 		};
 
 		var TREE_LOADING_EL_TPL =
@@ -55,44 +55,44 @@ AUI.add(
 		LayoutsTreeBase.ATTRS = {
 			incomplete: {
 				validator: Lang.isBoolean,
-				value: true
+				value: true,
 			},
 
 			io: {
-				getter: '_getNodeIOConfig'
+				getter: '_getNodeIOConfig',
 			},
 
 			layouts: {
-				validator: Lang.isObject
+				validator: Lang.isObject,
 			},
 
 			linkTemplate: {
 				validator: Lang.isString,
-				value: NODE_LINK_TPL
+				value: NODE_LINK_TPL,
 			},
 
 			maxChildren: {
 				validator: Lang.isNumber,
-				value: 20
+				value: 20,
 			},
 
 			root: {
 				setter: '_setRootConfig',
-				validator: Lang.isObject
+				validator: Lang.isObject,
 			},
 
 			selPlid: {
-				validator: Lang.isString
+				validator: Lang.isString,
 			},
 
 			type: {
 				validator: Lang.isString,
-				value: 'pages'
+				value: 'pages',
 			},
 
 			urls: {
-				validator: Lang.isArray
-			}
+				validator: Lang.isArray,
+			},
 		};
 
 		LayoutsTreeBase.prototype = {
@@ -132,7 +132,7 @@ AUI.add(
 					groupId,
 					layoutId,
 					plid,
-					treeId: instance._treeId
+					treeId: instance._treeId,
 				});
 			},
 
@@ -149,7 +149,7 @@ AUI.add(
 
 				urls.forEach(item => {
 					data[item.name] = A.Lang.sub(item.value, {
-						selPlid: data.plid
+						selPlid: data.plid,
 					});
 				});
 
@@ -186,7 +186,7 @@ AUI.add(
 					type: type || 'warning',
 					useAnimation: Lang.isValue(useAnimation)
 						? useAnimation
-						: true
+						: true,
 				}).show();
 			},
 
@@ -220,7 +220,7 @@ AUI.add(
 				) {
 					cssIcons = {
 						iconCollapsed: iconCssClassName,
-						iconExpanded: iconCssClassName
+						iconExpanded: iconCssClassName,
 					};
 				}
 
@@ -242,7 +242,7 @@ AUI.add(
 				var newNode = {
 					alwaysShowHitArea: hasChildren,
 					cssClasses: {
-						pages: A.merge(TREE_CSS_CLASSES, cssIcons)
+						pages: A.merge(TREE_CSS_CLASSES, cssIcons),
 					},
 					draggable: node.sortable,
 					expanded,
@@ -253,9 +253,9 @@ AUI.add(
 						limit: maxChildren,
 						offsetParam: 'start',
 						start: Math.max(childLayouts.length - maxChildren, 0),
-						total
+						total,
 					},
-					type: total > 0 ? 'io' : 'node'
+					type: total > 0 ? 'io' : 'node',
 				};
 
 				if (nodeChildren && expanded) {
@@ -324,7 +324,7 @@ AUI.add(
 						plid: node.plid,
 						title,
 						url: node.regularURL,
-						uuid: node.uuid
+						uuid: node.uuid,
 					},
 					node
 				);
@@ -344,7 +344,7 @@ AUI.add(
 					A.merge(
 						{
 							label: LString.escapeHTML(rootConfig.label),
-							plid: rootConfig.defaultParentLayoutId
+							plid: rootConfig.defaultParentLayoutId,
 						},
 						rootConfig
 					),
@@ -359,7 +359,7 @@ AUI.add(
 					alwaysShowHitArea: true,
 					children,
 					cssClasses: {
-						pages: TREE_CSS_CLASSES
+						pages: TREE_CSS_CLASSES,
 					},
 					draggable: false,
 					expanded: rootConfig.expand,
@@ -377,9 +377,9 @@ AUI.add(
 							layouts.layouts.length - maxChildren,
 							0
 						),
-						total: layouts.total
+						total: layouts.total,
 					},
-					type: 'io'
+					type: 'io',
 				};
 
 				return rootNode;
@@ -403,7 +403,7 @@ AUI.add(
 								privateLayout: instance.get('root')
 									.privateLayout,
 								selPlid: instance.get('selPlid'),
-								treeId: instance._treeId
+								treeId: instance._treeId,
 							};
 						},
 						method: 'POST',
@@ -422,8 +422,8 @@ AUI.add(
 								catch (e) {}
 
 								this.fire('ioSuccess');
-							}
-						}
+							},
+						},
 					},
 					formatter: A.bind(instance._formatJSONResults, instance),
 					url:
@@ -431,7 +431,7 @@ AUI.add(
 							? themeDisplay.getPathMain() + '/portal/get_layouts'
 							: themeDisplay.getPathMain() +
 							  '/portal/get_layouts?doAsUserId=' +
-							  themeDisplay.getDoAsUserIdEncoded()
+							  themeDisplay.getDoAsUserIdEncoded(),
 				};
 
 				return ioCfg;
@@ -480,7 +480,7 @@ AUI.add(
 				}
 
 				instance.set('children', children, {
-					src: A.Widget.UI_SRC
+					src: A.Widget.UI_SRC,
 				});
 
 				instance
@@ -505,14 +505,14 @@ AUI.add(
 					groupId: response.groupId,
 					layoutId: response.layoutId,
 					plid: response.plid,
-					treeId: instance._treeId
+					treeId: instance._treeId,
 				});
 
 				var parentNodeId = A.Lang.sub(NODE_ID_TPL, {
 					groupId: response.groupId,
 					layoutId: response.originalParentLayoutId,
 					plid: response.originalParentPlid,
-					treeId: instance._treeId
+					treeId: instance._treeId,
 				});
 
 				var action = 'append';
@@ -551,7 +551,7 @@ AUI.add(
 
 			_setRootConfig(val) {
 				var defaultRootConfig = {
-					linkTemplate: NODE_LINK_TPL
+					linkTemplate: NODE_LINK_TPL,
 				};
 
 				return A.merge(defaultRootConfig, val);
@@ -568,10 +568,10 @@ AUI.add(
 								doAsGroupId: themeDisplay.getScopeGroupId(),
 								p_auth: Liferay.authToken,
 								p_l_id: themeDisplay.getPlid(),
-								p_p_id: '88'
+								p_p_id: '88',
 							})
 						),
-						method: 'POST'
+						method: 'POST',
 					}
 				)
 					.then(response => response.json())
@@ -592,7 +592,7 @@ AUI.add(
 					cmd: 'parent_layout_id',
 					parentPlid: dropPlid,
 					plid: dragPlid,
-					priority: index
+					priority: index,
 				});
 			},
 
@@ -657,23 +657,23 @@ AUI.add(
 
 					instance._pendingSelectedNodeId = null;
 				}
-			}
+			},
 		};
 
 		Liferay.LayoutsTree = A.Component.create({
 			AUGMENTS: LayoutsTreeBase,
 			EXTENDS: A.TreeView,
-			NAME: 'liferaylayoutstree'
+			NAME: 'liferaylayoutstree',
 		});
 
 		Liferay.LayoutsTreeDD = A.Component.create({
 			AUGMENTS: LayoutsTreeBase,
 			EXTENDS: A.TreeViewDD,
-			NAME: 'liferaylayoutstreedd'
+			NAME: 'liferaylayoutstreedd',
 		});
 	},
 	'',
 	{
-		requires: ['aui-tree-view']
+		requires: ['aui-tree-view'],
 	}
 );

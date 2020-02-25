@@ -213,5 +213,5 @@ tinymce.addI18n('sl_SI', {
 	Tools: 'Orodja',
 	View: 'Pogled',
 	Table: 'Tabela',
-	Format: 'Oblika'
+	Format: 'Oblika',
 });

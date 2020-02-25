@@ -14,14 +14,14 @@ import {
 	getByPlaceholderText,
 	render,
 	wait,
-	waitForElement
+	waitForElement,
 } from '@testing-library/react';
 import React from 'react';
 
 import AddResultModal from '../../../../src/main/resources/META-INF/resources/js/components/add_result/AddResultModal.es';
 import {
 	FETCH_SEARCH_DOCUMENTS_URL,
-	getMockResultsData
+	getMockResultsData,
 } from '../../mocks/data.es';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -99,7 +99,7 @@ describe('AddResultModal', () => {
 		const onAddResultSubmit = jest.fn();
 
 		const {getByTestId, getByText} = renderTestAddResultModal({
-			onAddResultSubmit
+			onAddResultSubmit,
 		});
 
 		await openResultsList(getByTestId);
@@ -183,7 +183,7 @@ describe('AddResultModal', () => {
 		const onAddResultSubmit = jest.fn();
 
 		const {getByTestId, queryAllByText} = renderTestAddResultModal({
-			onAddResultSubmit
+			onAddResultSubmit,
 		});
 
 		await openResultsList(getByTestId);

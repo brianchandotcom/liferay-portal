@@ -20,7 +20,7 @@
 			if (editor.ui.addButton) {
 				editor.ui.addButton('A11YBtn', {
 					command: 'a11yHelp',
-					label: Liferay.Language.get('action.HELP')
+					label: Liferay.Language.get('action.HELP'),
 				});
 			}
 
@@ -46,6 +46,6 @@
 						toolbarHTML.substr(0, a11ToolbarIndex) + toolbarText;
 				}
 			});
-		}
+		},
 	});
 })();

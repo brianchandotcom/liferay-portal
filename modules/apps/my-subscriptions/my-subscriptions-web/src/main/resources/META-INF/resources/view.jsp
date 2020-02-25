@@ -122,16 +122,16 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 				dialog: {
 					align: {
 						node: null,
-						points: ['tc', 'tc']
+						points: ['tc', 'tc'],
 					},
 					constrain2view: true,
 					cssClass: 'portlet-my-subscription',
 					modal: true,
 					resizable: true,
-					width: 950
+					width: 950,
 				},
 				title: title,
-				uri: url
+				uri: url,
 			});
 		},
 		['liferay-util-window']
@@ -164,7 +164,7 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 	};
 
 	var ACTIONS = {
-		unsubscribe: unsubscribe
+		unsubscribe: unsubscribe,
 	};
 
 	Liferay.componentReady('mySubscriptionsManagementToolbar').then(function(

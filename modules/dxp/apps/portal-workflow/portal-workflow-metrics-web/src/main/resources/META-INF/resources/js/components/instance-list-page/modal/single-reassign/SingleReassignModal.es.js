@@ -60,13 +60,13 @@ const SingleReassignModal = () => {
 		onClose: () => {
 			setSingleModal({selectedItem: undefined, visible: false});
 			setAssigneeId();
-		}
+		},
 	});
 
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params: {completed: false, page: 1, pageSize: 1},
-		url: `/workflow-instances/${selectedItem.id}/workflow-tasks`
+		url: `/workflow-instances/${selectedItem.id}/workflow-tasks`,
 	});
 
 	const taskId = useMemo(
@@ -77,7 +77,7 @@ const SingleReassignModal = () => {
 	const {postData} = usePost({
 		admin: true,
 		body: {assigneeId},
-		url: `/workflow-tasks/${taskId}/assign-to-user`
+		url: `/workflow-tasks/${taskId}/assign-to-user`,
 	});
 
 	const reassignButtonHandler = useCallback(() => {
@@ -111,7 +111,7 @@ const SingleReassignModal = () => {
 					setErrorToast(true);
 
 					return Promise.reject(err);
-				})
+				}),
 			];
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

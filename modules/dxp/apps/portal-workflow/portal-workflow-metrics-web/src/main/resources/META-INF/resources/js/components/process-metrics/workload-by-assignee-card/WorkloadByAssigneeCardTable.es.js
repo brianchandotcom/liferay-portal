@@ -26,7 +26,7 @@ const Item = ({
 	overdueTaskCount,
 	processId,
 	processStepKey,
-	taskCount
+	taskCount,
 }) => {
 	const currentCount =
 		currentTab === 'overdue'
@@ -42,9 +42,9 @@ const Item = ({
 		const filterParams = {
 			[filterConstants.assignee.key]: [id],
 			[filterConstants.processStatus.key]: [
-				processStatusConstants.pending
+				processStatusConstants.pending,
 			],
-			[filterConstants.slaStatus.key]: [slaStatusConstants[currentTab]]
+			[filterConstants.slaStatus.key]: [slaStatusConstants[currentTab]],
 		};
 
 		if (processStepKey && processStepKey !== 'allSteps') {

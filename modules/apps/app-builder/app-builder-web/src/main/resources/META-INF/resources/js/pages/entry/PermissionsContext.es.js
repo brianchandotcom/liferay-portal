@@ -23,7 +23,7 @@ const ACTIONS = {
 	DELETE_DATA_RECORD: 'DELETE_DATA_RECORD',
 	UPDATE_DATA_RECORD: 'UPDATE_DATA_RECORD',
 	VIEW: 'VIEW',
-	VIEW_DATA_RECORD: 'VIEW_DATA_RECORD'
+	VIEW_DATA_RECORD: 'VIEW_DATA_RECORD',
 };
 
 const PermissionsContextProvider = ({children, dataDefinitionId}) => {

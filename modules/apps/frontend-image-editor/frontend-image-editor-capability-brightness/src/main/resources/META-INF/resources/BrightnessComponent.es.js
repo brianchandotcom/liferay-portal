@@ -72,7 +72,7 @@ class BrightnessComponent extends Component {
 		if (!promise) {
 			promise = this.spawnWorker_({
 				brightnessValue,
-				imageData
+				imageData,
 			});
 
 			this.cache_[brightnessValue] = promise;
@@ -120,7 +120,7 @@ BrightnessComponent.STATE = {
 	 * @type {String}
 	 */
 	modulePath: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -130,8 +130,8 @@ BrightnessComponent.STATE = {
 	 * @type {Function}
 	 */
 	requestImageEditorPreview: {
-		validator: core.isFunction
-	}
+		validator: core.isFunction,
+	},
 };
 
 Soy.register(BrightnessComponent, componentTemplates);

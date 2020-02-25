@@ -35,7 +35,7 @@ function canDrop(props, monitor) {
 	const {
 		dropIndex: destIndex,
 		groupId: destGroupId,
-		propertyKey: destPropertyKey
+		propertyKey: destPropertyKey,
 	} = props;
 
 	const {
@@ -43,7 +43,7 @@ function canDrop(props, monitor) {
 		criterion,
 		groupId: startGroupId,
 		index: startIndex,
-		propertyKey: startPropertyKey
+		propertyKey: startPropertyKey,
 	} = monitor.getItem();
 
 	const disallowedGroupIds = [criterion.groupId, ...childGroupIds];
@@ -75,13 +75,13 @@ function drop(props, monitor) {
 		dropIndex: destIndex,
 		groupId: destGroupId,
 		onCriterionAdd,
-		onMove
+		onMove,
 	} = props;
 
 	const {
 		criterion,
 		groupId: startGroupId,
-		index: startIndex
+		index: startIndex,
 	} = monitor.getItem();
 
 	const itemType = monitor.getItemType();
@@ -104,14 +104,14 @@ class DropZone extends Component {
 		hover: PropTypes.bool,
 		onCriterionAdd: PropTypes.func.isRequired,
 		onMove: PropTypes.func.isRequired,
-		propertyKey: PropTypes.string.isRequired
+		propertyKey: PropTypes.string.isRequired,
 	};
 
 	render() {
 		const {before, canDrop, connectDropTarget, hover} = this.props;
 
 		const targetClasses = getCN('drop-zone-target', {
-			'drop-zone-target-before': before
+			'drop-zone-target-before': before,
 		});
 
 		return (
@@ -132,11 +132,11 @@ export default dropTarget(
 	acceptedDragTypes,
 	{
 		canDrop,
-		drop
+		drop,
 	},
 	(connect, monitor) => ({
 		canDrop: monitor.canDrop(),
 		connectDropTarget: connect.dropTarget(),
-		hover: monitor.isOver()
+		hover: monitor.isOver(),
 	})
 )(DropZone);

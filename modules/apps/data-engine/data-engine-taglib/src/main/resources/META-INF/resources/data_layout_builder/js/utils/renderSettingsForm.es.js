@@ -22,7 +22,7 @@ const UNIMPLEMENTED_PROPERTIES = [
 	'readOnly',
 	'type',
 	'validation',
-	'visibilityExpression'
+	'visibilityExpression',
 ];
 
 export const getFilteredSettingsContext = settingsContext => {
@@ -43,14 +43,14 @@ export const getFilteredSettingsContext = settingsContext => {
 							field = {
 								...field,
 								predefinedValue: '["manual"]',
-								readOnly: true
+								readOnly: true,
 							};
 						}
 
 						return field;
-					})
+					}),
 			};
-		})
+		}),
 	};
 };
 
@@ -62,7 +62,7 @@ export default ({dispatchEvent, settingsContext}, container) => {
 			dispatchEvent('fieldBlurred', {
 				editingLanguageId: settingsContext.editingLanguageId,
 				propertyName: fieldName,
-				propertyValue: value
+				propertyValue: value,
 			});
 		}
 	};
@@ -74,7 +74,7 @@ export default ({dispatchEvent, settingsContext}, container) => {
 			dispatchEvent('fieldEdited', {
 				editingLanguageId: settingsContext.editingLanguageId,
 				propertyName: fieldName,
-				propertyValue: value
+				propertyValue: value,
 			});
 		}
 	};
@@ -92,9 +92,9 @@ export default ({dispatchEvent, settingsContext}, container) => {
 			events: {
 				attached: handleFormAttached,
 				fieldBlurred: handleFieldBlurred,
-				fieldEdited: handleFieldEdited
+				fieldEdited: handleFieldEdited,
 			},
-			spritemap
+			spritemap,
 		},
 		container
 	);

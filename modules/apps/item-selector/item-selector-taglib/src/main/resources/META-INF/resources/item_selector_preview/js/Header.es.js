@@ -25,7 +25,7 @@ const Header = ({
 	headerTitle,
 	infoButtonRef,
 	showEditIcon,
-	showInfoIcon
+	showInfoIcon,
 }) => (
 	<div className="navbar navigation-bar navigation-bar-light">
 		<div className="container-fluid header">
@@ -100,7 +100,7 @@ Header.propTypes = {
 	handleClickEdit: PropTypes.func,
 	headerTitle: PropTypes.string.isRequired,
 	showEditIcon: PropTypes.bool,
-	showInfoIcon: PropTypes.bool
+	showInfoIcon: PropTypes.bool,
 };
 
 export default Header;

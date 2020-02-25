@@ -140,7 +140,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 									constrain: true,
 									destroyOnHide: true,
 									modal: true,
-									width: 600
+									width: 600,
 								},
 								id:
 									'_<%= HtmlUtil.escapeJS(dlRequestHelper.getPortletResource()) %>_selectFolder',
@@ -154,14 +154,14 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 									<portlet:param name="showMountFolder" value="<%= Boolean.FALSE.toString() %>" />
 								</liferay-portlet:renderURL>
 
-								uri: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>'
+								uri: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',
 							},
 							function(event) {
 								var folderData = {
 									idString: 'rootFolderId',
 									idValue: event.folderid,
 									nameString: 'rootFolderName',
-									nameValue: event.foldername
+									nameValue: event.foldername,
 								};
 
 								Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
@@ -223,8 +223,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				),
 				entryColumns: Util.listSelect(
 					Util.getFormElement(form, 'currentEntryColumns')
-				)
-			}
+				),
+			},
 		});
 	}
 </script>

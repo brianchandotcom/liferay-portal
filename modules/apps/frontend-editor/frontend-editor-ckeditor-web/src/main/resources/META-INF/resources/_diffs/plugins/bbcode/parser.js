@@ -33,11 +33,11 @@
 		table: 1,
 		td: 1,
 		th: 1,
-		tr: 1
+		tr: 1,
 	};
 
 	var ELEMENTS_CLOSE_SELF = {
-		'*': 1
+		'*': 1,
 	};
 
 	var ELEMENTS_INLINE = {
@@ -49,7 +49,7 @@
 		s: 1,
 		size: 1,
 		u: 1,
-		url: 1
+		url: 1,
 	};
 
 	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
@@ -89,7 +89,7 @@
 			if (length > instance._dataPointer) {
 				instance._result.push({
 					type: Parser.TOKEN_DATA,
-					value: data.substring(instance._dataPointer, length)
+					value: data.substring(instance._dataPointer, length),
 				});
 			}
 
@@ -128,7 +128,7 @@
 				for (var i = stack.length - 1; i >= pos; i--) {
 					instance._result.push({
 						type: tokenTagEnd,
-						value: stack[i]
+						value: stack[i],
 					});
 				}
 
@@ -167,7 +167,7 @@
 				instance._result.push({
 					attribute: token[2],
 					type: Parser.TOKEN_TAG_START,
-					value: tagName
+					value: tagName,
 				});
 			}
 		},
@@ -260,7 +260,7 @@
 			instance._reset();
 
 			return result;
-		}
+		},
 	};
 
 	Parser.TOKEN_DATA = 4;

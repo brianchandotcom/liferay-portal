@@ -47,14 +47,14 @@ export default function Widget({instanceable, portletId, title, used}) {
 					parentItemId: parentId,
 					portletId,
 					position,
-					store
+					store,
 				})
 			);
 		},
 		item: {
 			name: title,
-			type: LAYOUT_DATA_ITEM_TYPES.fragment
-		}
+			type: LAYOUT_DATA_ITEM_TYPES.fragment,
+		},
 	});
 
 	useEffect(() => {
@@ -81,5 +81,5 @@ Widget.propTypes = {
 	instanceable: PropTypes.bool.isRequired,
 	portletId: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
-	used: PropTypes.bool.isRequired
+	used: PropTypes.bool.isRequired,
 };

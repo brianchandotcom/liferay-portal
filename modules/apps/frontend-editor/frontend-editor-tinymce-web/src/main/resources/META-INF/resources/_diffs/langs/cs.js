@@ -215,5 +215,5 @@ tinymce.addI18n('cs', {
 	Tools: 'N\u00e1stroje',
 	View: 'Zobrazit',
 	Table: 'Tabulka',
-	Format: 'Form\u00e1t'
+	Format: 'Form\u00e1t',
 });

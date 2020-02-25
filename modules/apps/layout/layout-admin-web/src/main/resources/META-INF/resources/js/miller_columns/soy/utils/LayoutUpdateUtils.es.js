@@ -18,7 +18,7 @@ import {
 	getColumnActiveItem,
 	getItem,
 	getItemColumn,
-	getItemColumnIndex
+	getItemColumnIndex,
 } from './LayoutGetUtils.es';
 
 /**
@@ -55,7 +55,7 @@ function appendItemToColumn(sourceItem, layoutColumns, targetColumnIndex) {
  */
 function clearFollowingColumns(layoutColumns, startColumnIndex) {
 	const nextLayoutColumns = layoutColumns.map(layoutColumn => [
-		...layoutColumn
+		...layoutColumn,
 	]);
 
 	for (let i = startColumnIndex + 1; i < nextLayoutColumns.length; i++) {
@@ -82,7 +82,7 @@ function clearPath(
 	targetType
 ) {
 	let nextLayoutColumns = layoutColumns.map(layoutColumn => [
-		...layoutColumn
+		...layoutColumn,
 	]);
 
 	let targetColumnIndex = targetId;
@@ -273,5 +273,5 @@ export {
 	deleteEmptyColumns,
 	moveItemInside,
 	removeItem,
-	setActiveItem
+	setActiveItem,
 };

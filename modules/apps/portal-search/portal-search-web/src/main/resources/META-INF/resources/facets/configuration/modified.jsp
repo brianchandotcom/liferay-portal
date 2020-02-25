@@ -55,6 +55,6 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 		contentBox: 'fieldset#<portlet:namespace />rangesId',
 		fieldIndexes:
 			'<portlet:namespace /><%= searchFacet.getClassName() %>rangesIndexes',
-		namespace: '<portlet:namespace />'
+		namespace: '<portlet:namespace />',
 	}).render();
 </aui:script>

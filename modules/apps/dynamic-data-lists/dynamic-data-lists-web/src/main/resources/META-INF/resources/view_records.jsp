@@ -184,16 +184,16 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 						recordIds: Liferay.Util.listCheckedExcept(
 							searchContainer,
 							'<portlet:namespace />allRowIds'
-						)
+						),
 					},
-					url: '<%= deleteRecordURL %>'
+					url: '<%= deleteRecordURL %>',
 				});
 			}
 		}
 	};
 
 	var ACTIONS = {
-		deleteRecords: deleteRecords
+		deleteRecords: deleteRecords,
 	};
 
 	Liferay.componentReady('ddlViewRecordsManagementToolbar').then(function(

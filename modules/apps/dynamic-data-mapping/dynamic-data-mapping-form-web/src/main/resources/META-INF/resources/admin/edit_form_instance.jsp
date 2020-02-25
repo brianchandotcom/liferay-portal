@@ -151,7 +151,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			'<%= ddmFormAdminDisplayContext.getRestrictedFormURL() %>',
 		sharedFormURL: '<%= ddmFormAdminDisplayContext.getSharedFormURL() %>',
 		showPagination: true,
-		spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+		spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
 	};
 
 	Liferay.Forms.App = {
@@ -208,7 +208,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							showPublishAlert: <%= ddmFormAdminDisplayContext.isShowPublishAlert() %>,
 							spritemap: Liferay.DDM.FormSettings.spritemap,
 							strings: Liferay.DDM.FormSettings.strings,
-							view: 'formBuilder'
+							view: 'formBuilder',
 						},
 						'#<portlet:namespace />-container'
 					);
@@ -217,7 +217,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					throw error;
 				}
 			);
-		}
+		},
 	};
 
 	var clearPortletHandlers = function(event) {
@@ -279,8 +279,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 									Liferay.Util.getWindow(
 										'<portlet:namespace />settingsModal'
 									).hide();
-								}
-							}
+								},
+							},
 						},
 						{
 							cssClass: 'btn-primary',
@@ -290,15 +290,15 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 									Liferay.Util.getWindow(
 										'<portlet:namespace />settingsModal'
 									).hide();
-								}
-							}
-						}
+								},
+							},
+						},
 					],
-					width: 720
+					width: 720,
 				},
 				id: '<portlet:namespace />settingsModal',
 				stack: false,
-				title: '<liferay-ui:message key="form-settings" />'
+				title: '<liferay-ui:message key="form-settings" />',
 			},
 			function(dialogWindow) {
 				var bodyNode = dialogWindow.bodyNode;

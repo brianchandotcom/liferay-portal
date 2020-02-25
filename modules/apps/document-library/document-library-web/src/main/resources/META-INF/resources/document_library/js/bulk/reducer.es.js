@@ -16,18 +16,18 @@ const STATES = {
 	IDLE: {running: false, show: false},
 	LONG_POLLING: {running: true, show: true},
 	NOTIFY: {running: false, show: false},
-	SHORT_POLLING: {running: true, show: false}
+	SHORT_POLLING: {running: true, show: false},
 };
 
 const TOASTS = {
 	ERROR: {
 		message: Liferay.Language.get('an-unexpected-error-occurred'),
 		title: Liferay.Language.get('error'),
-		type: 'danger'
+		type: 'danger',
 	},
 	SUCCESS: {
-		message: Liferay.Language.get('changes-saved')
-	}
+		message: Liferay.Language.get('changes-saved'),
+	},
 };
 
 export {STATES};
@@ -38,7 +38,7 @@ export default function reducer(state, action) {
 			if (state.current === STATES.LONG_POLLING) {
 				return {
 					...state,
-					timestamp: Date.now()
+					timestamp: Date.now(),
 				};
 			}
 			break;
@@ -47,7 +47,7 @@ export default function reducer(state, action) {
 			return {
 				...state,
 				current: STATES.NOTIFY,
-				toast: TOASTS.ERROR
+				toast: TOASTS.ERROR,
 			};
 
 		case 'initialDelayCompleted':
@@ -55,7 +55,7 @@ export default function reducer(state, action) {
 				return {
 					...state,
 					current: STATES.LONG_POLLING,
-					timestamp: Date.now()
+					timestamp: Date.now(),
 				};
 			}
 
@@ -65,7 +65,7 @@ export default function reducer(state, action) {
 			if (state.current === STATES.NOTIFY) {
 				return {
 					...state,
-					current: STATES.IDLE
+					current: STATES.IDLE,
 				};
 			}
 
@@ -75,7 +75,7 @@ export default function reducer(state, action) {
 			if (state.current === STATES.IDLE) {
 				return {
 					...state,
-					current: STATES.SHORT_POLLING
+					current: STATES.SHORT_POLLING,
 				};
 			}
 
@@ -85,7 +85,7 @@ export default function reducer(state, action) {
 			return {
 				...state,
 				current: STATES.NOTIFY,
-				toast: TOASTS.SUCCESS
+				toast: TOASTS.SUCCESS,
 			};
 
 		default:

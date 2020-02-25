@@ -48,7 +48,7 @@ const FormField = ({children, error, id, name}) => {
 FormField.propTypes = {
 	error: PropTypes.string,
 	id: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired
+	name: PropTypes.string.isRequired,
 };
 
 export {FormField};

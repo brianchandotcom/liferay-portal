@@ -78,7 +78,7 @@ Separator.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	tip: Config.string()
+	tip: Config.string(),
 };
 
 Soy.register(Separator, templates);

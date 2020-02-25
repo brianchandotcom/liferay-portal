@@ -26,7 +26,7 @@ import {
 	validateArguments,
 	validateForm,
 	validateParameters,
-	validateState
+	validateState,
 } from './portlet_util.es';
 
 /**
@@ -307,14 +307,14 @@ class PortletInit {
 		if (this.isInProgress()) {
 			throw {
 				message: 'Operation is already in progress',
-				name: 'AccessDeniedException'
+				name: 'AccessDeniedException',
 			};
 		}
 
 		if (!this._hasListener(this._portletId)) {
 			throw {
 				message: `No onStateChange listener registered for portlet: ${this._portletId}`,
-				name: 'NotInitializedException'
+				name: 'NotInitializedException',
 			};
 		}
 
@@ -470,13 +470,13 @@ class PortletInit {
 		if (busy) {
 			throw {
 				message: 'Operation in progress',
-				name: 'AccessDeniedException'
+				name: 'AccessDeniedException',
 			};
 		}
 		else if (!this._hasListener(this._portletId)) {
 			throw {
 				message: `No onStateChange listener registered for portlet: ${this._portletId}`,
-				name: 'NotInitializedException'
+				name: 'NotInitializedException',
 			};
 		}
 
@@ -656,7 +656,7 @@ class PortletInit {
 			handle,
 			handler,
 			id,
-			type
+			type,
 		};
 
 		eventListeners[handle] = listener;
@@ -933,13 +933,13 @@ class PortletInit {
 		if (busy === true) {
 			throw {
 				message: 'Operation in progress',
-				name: 'AccessDeniedException'
+				name: 'AccessDeniedException',
 			};
 		}
 		else if (!this._hasListener(this._portletId)) {
 			throw {
 				message: `No onStateChange listener registered for portlet: ${this._portletId}`,
-				name: 'NotInitializedException'
+				name: 'NotInitializedException',
 			};
 		}
 
@@ -949,7 +949,7 @@ class PortletInit {
 			setPageState(updateString) {
 				instance._setPageState(instance._portletId, updateString);
 			},
-			url: ''
+			url: '',
 		};
 
 		return getUrl(

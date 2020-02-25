@@ -67,6 +67,6 @@ export default (history, defaultQuery = {}) => {
 
 	return [
 		query,
-		query => history.push(`${pathname}?${toQueryString(query, search)}`)
+		query => history.push(`${pathname}?${toQueryString(query, search)}`),
 	];
 };

@@ -30,7 +30,7 @@ const TranslationManager = ({
 	defaultLanguageId: initialDefaultLanguageId,
 	id,
 	locales,
-	readOnly
+	readOnly,
 }) => {
 	const compId = componentId ? componentId : id;
 
@@ -51,12 +51,12 @@ const TranslationManager = ({
 		states: {
 			availableLocales,
 			defaultLocale,
-			editingLocale
-		}
+			editingLocale,
+		},
 	});
 
 	const {observer, onClose} = useModal({
-		onClose: () => setVisibleModal(false)
+		onClose: () => setVisibleModal(false),
 	});
 
 	const localeToBeRemoved = React.useRef(null);
@@ -144,7 +144,7 @@ TranslationManager.propTypes = {
 	defaultLanguageId: PropTypes.string,
 	defaultLocale: PropTypes.string,
 	editingLocale: PropTypes.string,
-	locales: PropTypes.array
+	locales: PropTypes.array,
 };
 
 export default function(props) {

@@ -16,7 +16,7 @@ import React from 'react';
 
 import {
 	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useSelector} from '../../store/index';
@@ -51,7 +51,7 @@ const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
 
 DropZoneWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default DropZoneWithControls;

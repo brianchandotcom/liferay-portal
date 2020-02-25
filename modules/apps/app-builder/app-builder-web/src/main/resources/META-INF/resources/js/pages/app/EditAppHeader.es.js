@@ -22,9 +22,9 @@ export default () => {
 		dispatch,
 		state: {
 			app: {
-				name: {en_US: appName}
-			}
-		}
+				name: {en_US: appName},
+			},
+		},
 	} = useContext(EditAppContext);
 
 	const onAppNameChange = event => {
@@ -32,7 +32,7 @@ export default () => {
 
 		dispatch({
 			appName,
-			type: UPDATE_NAME
+			type: UPDATE_NAME,
 		});
 	};
 

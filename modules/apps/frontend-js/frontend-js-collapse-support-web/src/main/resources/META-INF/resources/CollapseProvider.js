@@ -18,16 +18,16 @@ const CssClass = {
 	COLLAPSE: 'collapse',
 	COLLAPSED: 'collapsed',
 	COLLAPSING: 'collapsing',
-	SHOW: 'show'
+	SHOW: 'show',
 };
 
 const Dimension = {
 	HEIGHT: 'height',
-	WIDTH: 'width'
+	WIDTH: 'width',
 };
 
 const Selector = {
-	TRIGGER: '[data-toggle="liferay-collapse"]'
+	TRIGGER: '[data-toggle="liferay-collapse"]',
 };
 
 class CollapseProvider {
@@ -204,7 +204,7 @@ class CollapseProvider {
 			MozTransition: 'transitionend',
 			OTransition: 'oTransitionEnd otransitionend',
 			WebkitTransition: 'webkitTransitionEnd',
-			transition: 'transitionend'
+			transition: 'transitionend',
 		};
 
 		let eventName = false;

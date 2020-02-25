@@ -25,15 +25,15 @@ const Column = React.forwardRef(({children, className, item}, ref) => {
 		config: {
 			size = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
 				LAYOUT_DATA_ITEM_TYPES.column
-			].size
-		}
+			].size,
+		},
 	} = item;
 
 	return (
 		<>
 			<div
 				className={classNames(className, 'col', {
-					[`col-${size}`]: size
+					[`col-${size}`]: size,
 				})}
 				ref={ref}
 			>
@@ -45,8 +45,8 @@ const Column = React.forwardRef(({children, className, item}, ref) => {
 
 Column.propTypes = {
 	item: getLayoutDataItemPropTypes({
-		config: PropTypes.shape({size: PropTypes.number})
-	}).isRequired
+		config: PropTypes.shape({size: PropTypes.number}),
+	}).isRequired,
 };
 
 export default Column;

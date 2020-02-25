@@ -21,7 +21,7 @@ export default class UnsafeHTML extends React.Component {
 		super(props);
 
 		this.state = {
-			contentRef: null
+			contentRef: null,
 		};
 	}
 
@@ -81,8 +81,8 @@ UnsafeHTML.propTypes = {
 	TagName: PropTypes.string,
 	contentRef: PropTypes.oneOfType([
 		PropTypes.func,
-		PropTypes.shape({current: PropTypes.instanceOf(Element)})
+		PropTypes.shape({current: PropTypes.instanceOf(Element)}),
 	]),
 	markup: PropTypes.string,
-	onRender: PropTypes.func
+	onRender: PropTypes.func,
 };

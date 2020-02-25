@@ -34,13 +34,13 @@ class AceEditor extends React.Component {
 				readOnly: 'true',
 				tabSize: 4,
 				value: this.props.fieldMappings,
-				width: '100%'
+				width: '100%',
 			}).render();
 
 			editor.on('render', () => {
 				this.props.onRender({
 					editorElement: document.querySelector('.ace_editor'),
-					editorTextInput: document.querySelector('.ace_text-input')
+					editorTextInput: document.querySelector('.ace_text-input'),
 				});
 			});
 		});
@@ -59,13 +59,13 @@ class AceEditor extends React.Component {
 
 AceEditor.propTypes = {
 	fieldMappings: PropTypes.string,
-	onRender: PropTypes.func
+	onRender: PropTypes.func,
 };
 
 const FieldMappings = ({
 	fieldMappingIndexDisplayContexts,
 	fieldMappings,
-	selectedIndexName
+	selectedIndexName,
 }) => {
 	const [theme, setTheme] = useState('light');
 
@@ -200,7 +200,7 @@ const FieldMappings = ({
 								fieldMappings={fieldMappings}
 								onRender={({
 									editorElement,
-									editorTextInput
+									editorTextInput,
 								}) => {
 									editorElementRef.current = editorElement;
 									editorTextInputRef.current = editorTextInput;
@@ -217,7 +217,7 @@ const FieldMappings = ({
 FieldMappings.propTypes = {
 	fieldMappingIndexDisplayContexts: PropTypes.array,
 	fieldMappings: PropTypes.string,
-	selectedIndexName: PropTypes.string
+	selectedIndexName: PropTypes.string,
 };
 
 export default function(props) {

@@ -28,7 +28,7 @@ describe('KeyValue', () => {
 		component = new KeyValue({
 			name: 'keyValue',
 			readOnly: false,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -38,7 +38,7 @@ describe('KeyValue', () => {
 		component = new KeyValue({
 			name: 'keyValue',
 			spritemap,
-			tip: 'Type something'
+			tip: 'Type something',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -48,7 +48,7 @@ describe('KeyValue', () => {
 		component = new KeyValue({
 			id: 'ID',
 			name: 'keyValue',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -58,7 +58,7 @@ describe('KeyValue', () => {
 		component = new KeyValue({
 			label: 'label',
 			name: 'keyValue',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -68,7 +68,7 @@ describe('KeyValue', () => {
 		component = new KeyValue({
 			name: 'keyValue',
 			placeholder: 'Option 1',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -78,7 +78,7 @@ describe('KeyValue', () => {
 		component = new KeyValue({
 			name: 'keyValue',
 			required: false,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -89,7 +89,7 @@ describe('KeyValue', () => {
 			label: 'text',
 			name: 'keyValue',
 			showLabel: true,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -98,7 +98,7 @@ describe('KeyValue', () => {
 	it('has a spritemap', () => {
 		component = new KeyValue({
 			name: 'keyValue',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -108,7 +108,7 @@ describe('KeyValue', () => {
 		component = new KeyValue({
 			name: 'keyValue',
 			spritemap,
-			value: 'value'
+			value: 'value',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -118,7 +118,7 @@ describe('KeyValue', () => {
 		component = new KeyValue({
 			keyword: 'key',
 			name: 'keyValue',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();

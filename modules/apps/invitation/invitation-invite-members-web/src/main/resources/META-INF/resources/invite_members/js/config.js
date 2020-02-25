@@ -29,12 +29,12 @@
 							'datatype-number',
 							'liferay-portlet-base',
 							'liferay-util-window',
-							'node-core'
-						]
-					}
+							'node-core',
+						],
+					},
 				},
-				root: MODULE_PATH + '/invite_members/js/'
-			}
-		}
+				root: MODULE_PATH + '/invite_members/js/',
+			},
+		},
 	});
 })();

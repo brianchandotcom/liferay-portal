@@ -35,8 +35,8 @@ AUI.add(
 			ATTRS: {
 				closeCaption: {
 					validator: Lang.isString,
-					value: ''
-				}
+					value: '',
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -79,7 +79,7 @@ AUI.add(
 							'click',
 							instance._previewItem,
 							instance
-						)
+						),
 					];
 				},
 
@@ -104,8 +104,8 @@ AUI.add(
 					instance.fire(STR_SELECTED_ITEM, {
 						data: {
 							returnType: link.getData('returnType'),
-							value: link.getData('value')
-						}
+							value: link.getData('value'),
+						},
 					});
 				},
 
@@ -118,7 +118,7 @@ AUI.add(
 						var linkNode = A.Node.create(
 							Lang.sub(ITEM_LINK_TPL, {
 								preview: url,
-								value: url
+								value: url,
 							})
 						);
 
@@ -154,7 +154,7 @@ AUI.add(
 						caption: '',
 						links: '',
 						renderControls: false,
-						renderSidebar: false
+						renderSidebar: false,
 					});
 
 					instance._inputNode = instance.one('#urlInput');
@@ -162,8 +162,8 @@ AUI.add(
 
 					instance._bindUI();
 					instance._renderUI();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.ItemSelectorUrl = ItemSelectorUrl;
@@ -173,7 +173,7 @@ AUI.add(
 		requires: [
 			'aui-event-input',
 			'liferay-item-viewer',
-			'liferay-portlet-base'
-		]
+			'liferay-portlet-base',
+		],
 	}
 );

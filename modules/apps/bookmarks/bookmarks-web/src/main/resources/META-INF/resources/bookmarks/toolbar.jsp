@@ -71,7 +71,7 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 	};
 
 	var ACTIONS = {
-		deleteEntries: deleteEntries
+		deleteEntries: deleteEntries,
 	};
 
 	Liferay.componentReady('bookmarksManagementToolbar').then(function(

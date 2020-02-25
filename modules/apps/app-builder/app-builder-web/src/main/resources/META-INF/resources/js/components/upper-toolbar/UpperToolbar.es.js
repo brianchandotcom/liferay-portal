@@ -76,7 +76,7 @@ const UpperToolbarItem = ({children, className, expand}) => {
 	return (
 		<li
 			className={classNames(className, 'tbar-item', {
-				'tbar-item-expand': expand
+				'tbar-item-expand': expand,
 			})}
 		>
 			<div className="tbar-section">{children}</div>
@@ -103,5 +103,5 @@ export {
 	UpperToolbarButton,
 	UpperToolbarGroup,
 	UpperToolbarInput,
-	UpperToolbarItem
+	UpperToolbarItem,
 };

@@ -24,17 +24,17 @@ const SEARCH_INPUT_TESTID = 'search-input';
 
 class TestComponent extends Component {
 	static propTypes = {
-		initialValue: PropTypes.string
+		initialValue: PropTypes.string,
 	};
 
 	static defaultProps = {
-		initialValue: ''
+		initialValue: '',
 	};
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			value: props.initialValue
+			value: props.initialValue,
 		};
 	}
 

@@ -37,10 +37,10 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 			updateItemConfig({
 				itemConfig: {
 					allowNewFragmentEntries,
-					fragmentEntryKeys: [...selectedFragments]
+					fragmentEntryKeys: [...selectedFragments],
 				},
 				itemId: item.itemId,
-				segmentsExperienceId: 0
+				segmentsExperienceId: 0,
 			})
 		).then(() => {
 			setLoading(false);
@@ -109,10 +109,10 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 ManageAllowedFragmentModal.propTypes = {
 	item: PropTypes.shape({
 		config: PropTypes.object.isRequired,
-		itemId: PropTypes.string.isRequired
+		itemId: PropTypes.string.isRequired,
 	}).isRequired,
 	observer: PropTypes.object.isRequired,
-	onClose: PropTypes.func.isRequired
+	onClose: PropTypes.func.isRequired,
 };
 
 export default ManageAllowedFragmentModal;

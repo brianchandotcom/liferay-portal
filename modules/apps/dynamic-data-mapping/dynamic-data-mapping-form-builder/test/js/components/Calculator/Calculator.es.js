@@ -27,7 +27,7 @@ const fields = [
 		repeatable: true,
 		title: 'option1repeatablefieldName',
 		type: 'checkbox',
-		value: 'option1repeatablefieldName'
+		value: 'option1repeatablefieldName',
 	},
 	{
 		dataType: 'number',
@@ -37,8 +37,8 @@ const fields = [
 		repeatable: false,
 		title: 'option1nonrepeatablefieldName',
 		type: 'checkbox',
-		value: 'option1nonrepeatablefieldName'
-	}
+		value: 'option1nonrepeatablefieldName',
+	},
 ];
 
 const spritemap = 'icons.svg';
@@ -50,11 +50,11 @@ const getBaseConfig = () => ({
 		{
 			label: 'sum',
 			tooltip: '',
-			value: 'sum'
-		}
+			value: 'sum',
+		},
 	],
 	index: 0,
-	spritemap
+	spritemap,
 });
 
 describe('Calculator', () => {
@@ -69,8 +69,8 @@ describe('Calculator', () => {
 			window.Liferay = {
 				...(window.Liferay || {}),
 				Browser: {
-					isIe: () => false
-				}
+					isIe: () => false,
+				},
 			};
 
 			component = new Calculator(getBaseConfig());

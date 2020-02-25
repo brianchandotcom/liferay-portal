@@ -59,7 +59,7 @@ const withEditablePageHeader = ChildComponent => {
 						Liferay.Language.get('untitled-page-x-of-x'),
 						[pageIndex + 1, total]
 					),
-					total
+					total,
 				};
 			});
 		}
@@ -88,8 +88,8 @@ const withEditablePageHeader = ChildComponent => {
 							description: value,
 							localizedDescription: {
 								...page.localizedDescription,
-								[editingLanguageId]: value
-							}
+								[editingLanguageId]: value,
+							},
 						};
 					}
 
@@ -113,9 +113,9 @@ const withEditablePageHeader = ChildComponent => {
 							...page,
 							localizedTitle: {
 								...page.localizedTitle,
-								[editingLanguageId]: value
+								[editingLanguageId]: value,
 							},
-							title: value
+							title: value,
 						};
 					}
 
@@ -232,7 +232,7 @@ const withEditablePageHeader = ChildComponent => {
 		successPageSettings: Config.shapeOf({
 			body: Config.object(),
 			enabled: Config.bool(),
-			title: Config.object()
+			title: Config.object(),
 		}).value({}),
 
 		/**
@@ -242,7 +242,7 @@ const withEditablePageHeader = ChildComponent => {
 		 * @type {?string}
 		 */
 
-		view: Config.string()
+		view: Config.string(),
 	};
 
 	return EditablePageHeader;

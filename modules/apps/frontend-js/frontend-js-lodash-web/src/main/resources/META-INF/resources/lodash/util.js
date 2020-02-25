@@ -35,7 +35,7 @@ _.mixin({
 				? Array.prototype.join.call(arguments, '_')
 				: String(arguments[0]);
 		});
-	}
+	},
 });
 
 _.mixin(
@@ -58,9 +58,9 @@ _.mixin(
 			}
 
 			return obj;
-		}
+		},
 	},
 	{
-		chain: false
+		chain: false,
 	}
 );

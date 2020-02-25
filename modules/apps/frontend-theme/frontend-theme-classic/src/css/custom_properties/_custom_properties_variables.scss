@@ -11,7 +11,7 @@ $spacers-cp: map-deep-merge(
 		5: var(--spacer-5),
 		6: var(--spacer-6),
 		7: var(--spacer-7),
-		8: var(--spacer-8)
+		8: var(--spacer-8),
 	),
 	$spacers-cp
 );
@@ -30,7 +30,7 @@ $theme-colors-cp: map-deep-merge(
 		light: var(--light),
 		lighter: var(--gray-100),
 		gray-dark: var(--gray-800),
-		dark: var(--dark)
+		dark: var(--dark),
 	),
 	$theme-colors-cp
 );

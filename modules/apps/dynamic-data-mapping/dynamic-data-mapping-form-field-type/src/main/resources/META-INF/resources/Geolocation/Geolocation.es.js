@@ -34,12 +34,12 @@ import 'leaflet/dist/leaflet.css';
 
 const GEOLOCATE_CONFIG = {
 	geolocateTitle: Liferay.Language.get('geolocate'),
-	pathThemeImages: Liferay.ThemeDisplay.getPathThemeImages()
+	pathThemeImages: Liferay.ThemeDisplay.getPathThemeImages(),
 };
 
 const MAP_PROVIDER = {
 	googleMaps: 'GoogleMaps',
-	openStreetMap: 'OpenStreetMap'
+	openStreetMap: 'OpenStreetMap',
 };
 
 const {CONTROLS} = Liferay.MapBase;
@@ -50,10 +50,10 @@ const MAP_CONFIG = {
 		CONTROLS.PAN,
 		CONTROLS.SEARCH,
 		CONTROLS.TYPE,
-		CONTROLS.ZOOM
+		CONTROLS.ZOOM,
 	],
 	geolocation: true,
-	position: {location: {lat: 0, lng: 0}}
+	position: {location: {lat: 0, lng: 0}},
 };
 
 class Geolocation extends Component {
@@ -158,7 +158,7 @@ class Geolocation extends Component {
 
 	_eventHandlerPositionChanged(event) {
 		const {
-			newVal: {location}
+			newVal: {location},
 		} = event;
 
 		const value = JSON.stringify(location);
@@ -169,7 +169,7 @@ class Geolocation extends Component {
 
 		this.emit('fieldEdited', {
 			fieldInstance: this,
-			value
+			value,
 		});
 	}
 
@@ -181,7 +181,7 @@ class Geolocation extends Component {
 		return {
 			...state,
 			predefinedValue: predefinedValueArray[0] || '',
-			...GEOLOCATE_CONFIG
+			...GEOLOCATE_CONFIG,
 		};
 	}
 
@@ -293,15 +293,15 @@ Geolocation.STATE = {
 		Config.shapeOf({
 			label: Config.string(),
 			name: Config.string(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	).value([
 		{
-			label: 'Option 1'
+			label: 'Option 1',
 		},
 		{
-			label: 'Option 2'
-		}
+			label: 'Option 2',
+		},
 	]),
 
 	/**
@@ -323,7 +323,7 @@ Geolocation.STATE = {
 	predefinedValue: Config.oneOfType([
 		Config.array(),
 		Config.object(),
-		Config.string()
+		Config.string(),
 	])
 		.setter(setJSONArrayValue)
 		.value([]),
@@ -407,7 +407,7 @@ Geolocation.STATE = {
 	 * @type {?bool}
 	 */
 
-	viewMode: Config.bool().value(false)
+	viewMode: Config.bool().value(false),
 };
 
 Soy.register(Geolocation, templates);

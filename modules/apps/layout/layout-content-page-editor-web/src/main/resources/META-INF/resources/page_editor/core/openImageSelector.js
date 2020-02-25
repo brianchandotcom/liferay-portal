@@ -21,7 +21,7 @@ export function openImageSelector(callback, destroyedCallback = null) {
 		eventName: `${config.portletNamespace}selectImage`,
 		singleSelect: true,
 		title: Liferay.Language.get('select'),
-		url: config.imageSelectorURL
+		url: config.imageSelectorURL,
 	});
 
 	itemSelectorDialog.on('selectedItemChange', event => {

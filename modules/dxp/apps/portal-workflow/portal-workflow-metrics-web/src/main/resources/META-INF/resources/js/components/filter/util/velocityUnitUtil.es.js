@@ -16,33 +16,33 @@ const asDefault = velocityUnit => {
 	return {
 		...velocityUnit,
 		active: true,
-		defaultVelocityUnit: true
+		defaultVelocityUnit: true,
 	};
 };
 
 const daysUnit = {
 	key: 'Days',
-	name: Liferay.Language.get('inst-day')
+	name: Liferay.Language.get('inst-day'),
 };
 
 const hoursUnit = {
 	key: 'Hours',
-	name: Liferay.Language.get('inst-hour')
+	name: Liferay.Language.get('inst-hour'),
 };
 
 const monthsUnit = {
 	key: 'Months',
-	name: Liferay.Language.get('inst-month')
+	name: Liferay.Language.get('inst-month'),
 };
 
 const weeksUnit = {
 	key: 'Weeks',
-	name: Liferay.Language.get('inst-week')
+	name: Liferay.Language.get('inst-week'),
 };
 
 const yearsUnit = {
 	key: 'Years',
-	name: Liferay.Language.get('inst-year')
+	name: Liferay.Language.get('inst-year'),
 };
 
 const velocityUnitsMap = {
@@ -52,7 +52,7 @@ const velocityUnitsMap = {
 	90: [daysUnit, asDefault(weeksUnit), monthsUnit],
 	180: [weeksUnit, asDefault(monthsUnit)],
 	366: [weeksUnit, asDefault(monthsUnit)],
-	730: [asDefault(monthsUnit), yearsUnit]
+	730: [asDefault(monthsUnit), yearsUnit],
 };
 
 const getVelocityUnits = ({dateEnd, dateStart}) => {

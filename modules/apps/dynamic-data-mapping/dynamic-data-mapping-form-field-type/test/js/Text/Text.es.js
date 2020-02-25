@@ -19,7 +19,7 @@ const spritemap = 'icons.svg';
 
 const defaultTextConfig = {
 	name: 'textField',
-	spritemap
+	spritemap,
 };
 
 describe('Field Text', () => {
@@ -32,7 +32,7 @@ describe('Field Text', () => {
 	it('is not readOnly', () => {
 		component = new Text({
 			...defaultTextConfig,
-			readOnly: false
+			readOnly: false,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -41,7 +41,7 @@ describe('Field Text', () => {
 	it('has a helptext', () => {
 		component = new Text({
 			...defaultTextConfig,
-			tip: 'Type something'
+			tip: 'Type something',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -50,7 +50,7 @@ describe('Field Text', () => {
 	it('has an id', () => {
 		component = new Text({
 			...defaultTextConfig,
-			id: 'ID'
+			id: 'ID',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -59,7 +59,7 @@ describe('Field Text', () => {
 	it('has a label', () => {
 		component = new Text({
 			...defaultTextConfig,
-			label: 'label'
+			label: 'label',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -68,7 +68,7 @@ describe('Field Text', () => {
 	it('has a placeholder', () => {
 		component = new Text({
 			...defaultTextConfig,
-			placeholder: 'Placeholder'
+			placeholder: 'Placeholder',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -77,7 +77,7 @@ describe('Field Text', () => {
 	it('is not required', () => {
 		component = new Text({
 			...defaultTextConfig,
-			required: false
+			required: false,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -87,7 +87,7 @@ describe('Field Text', () => {
 		component = new Text({
 			...defaultTextConfig,
 			label: 'text',
-			showLabel: true
+			showLabel: true,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -102,7 +102,7 @@ describe('Field Text', () => {
 	it('has a value', () => {
 		component = new Text({
 			...defaultTextConfig,
-			value: 'value'
+			value: 'value',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -114,7 +114,7 @@ describe('Field Text', () => {
 				expect.objectContaining({
 					fieldInstance: component,
 					originalEvent: expect.any(Object),
-					value: expect.any(String)
+					value: expect.any(String),
 				})
 			);
 			done();
@@ -125,13 +125,13 @@ describe('Field Text', () => {
 		component = new Text({
 			...defaultTextConfig,
 			events,
-			key: 'input'
+			key: 'input',
 		});
 
 		component._handleFieldChanged({
 			target: {
-				value: 'test'
-			}
+				value: 'test',
+			},
 		});
 	});
 });

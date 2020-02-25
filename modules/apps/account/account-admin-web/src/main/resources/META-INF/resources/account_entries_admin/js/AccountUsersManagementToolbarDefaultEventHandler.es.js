@@ -30,9 +30,9 @@ class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandl
 					accountUserIds: Liferay.Util.listCheckedExcept(
 						form,
 						this.ns('allRowIds')
-					)
+					),
 				},
-				url: itemData.removeUsersURL
+				url: itemData.removeUsersURL,
 			});
 		}
 	}
@@ -45,7 +45,7 @@ class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandl
 				Liferay.Language.get('assign-users-to-x'),
 				itemData.accountEntryName
 			),
-			url: itemData.selectAccountUsersURL
+			url: itemData.selectAccountUsersURL,
 		});
 
 		itemSelectorDialog.open();
@@ -58,9 +58,9 @@ class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandl
 
 				Liferay.Util.postForm(form, {
 					data: {
-						accountUserIds: selectedItem.value
+						accountUserIds: selectedItem.value,
 					},
-					url: itemData.assignAccountUsersURL
+					url: itemData.assignAccountUsersURL,
 				});
 			}
 		});

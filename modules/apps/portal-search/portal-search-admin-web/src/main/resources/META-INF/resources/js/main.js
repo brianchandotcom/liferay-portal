@@ -22,7 +22,7 @@ AUI.add(
 		var INTERVAL_RENDER_IN_PROGRESS = 2000;
 
 		var MAP_DATA_PARAMS = {
-			classname: 'className'
+			classname: 'className',
 		};
 
 		var STR_CLICK = 'click';
@@ -37,26 +37,26 @@ AUI.add(
 			ATTRS: {
 				form: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				indexActionsPanel: {
-					value: null
+					value: null,
 				},
 
 				redirectUrl: {
 					validator: Lang.isString,
-					value: null
+					value: null,
 				},
 
 				submitButton: {
 					validator: Lang.isString,
-					value: null
+					value: null,
 				},
 
 				url: {
-					value: null
-				}
+					value: null,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -137,7 +137,7 @@ AUI.add(
 
 					if (currentAdminIndexPanel) {
 						Liferay.Util.fetch(instance.get(STR_URL), {
-							method: 'POST'
+							method: 'POST',
 						})
 							.then(response => {
 								return response.text();
@@ -239,8 +239,8 @@ AUI.add(
 						instance,
 						'_updateIndexActions'
 					);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Portlet.Admin = Admin;
@@ -250,7 +250,7 @@ AUI.add(
 		requires: [
 			'aui-io-plugin-deprecated',
 			'liferay-portlet-base',
-			'querystring-parse'
-		]
+			'querystring-parse',
+		],
 	}
 );

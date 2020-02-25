@@ -26,13 +26,13 @@ const JournalArticleSelectorWithState = ({
 	itemSelectorURL,
 	name,
 	portletNamespace,
-	readOnly
+	readOnly,
 }) => {
 	const [article, setArticle] = useState({});
 
 	useEffect(() => {
 		setArticle({
-			...JSON.parse(inputValue || '{}')
+			...JSON.parse(inputValue || '{}'),
 		});
 	}, [inputValue]);
 
@@ -40,7 +40,7 @@ const JournalArticleSelectorWithState = ({
 		setArticle(() => {
 			dispatch({
 				payload: clear ? '' : JSON.stringify(value),
-				type: 'value'
+				type: 'value',
 			});
 
 			return value;
@@ -58,7 +58,7 @@ const JournalArticleSelectorWithState = ({
 			setArticle(() => {
 				dispatch({
 					payload: selectedItem.value,
-					type: 'value'
+					type: 'value',
 				});
 
 				return selectedItem.value;
@@ -73,7 +73,7 @@ const JournalArticleSelectorWithState = ({
 			eventName: `${portletNamespace}selectJournalArticle`,
 			singleSelect: true,
 			title: Liferay.Language.get('journal-article'),
-			url: itemSelectorURL
+			url: itemSelectorURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', _handleFieldChanged);

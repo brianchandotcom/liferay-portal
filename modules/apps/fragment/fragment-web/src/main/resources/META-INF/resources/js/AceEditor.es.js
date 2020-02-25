@@ -58,7 +58,7 @@ class AceEditor extends Component {
 					boundingBox: this.refs.wrapper,
 					highlightActiveLine: false,
 					mode: this.syntax,
-					tabSize: 2
+					tabSize: 2,
 				});
 
 				this._editor.set('readOnly', this.readOnly);
@@ -121,7 +121,7 @@ class AceEditor extends Component {
 			{
 				getMatch: this._getAutocompleteMatch,
 				getResults: this._getAutocompleteResults,
-				getSuggestion: this._getAutocompleteSuggestion
+				getSuggestion: this._getAutocompleteSuggestion,
 			}
 		);
 
@@ -131,7 +131,7 @@ class AceEditor extends Component {
 			processor: autocompleteProcessor,
 			render: true,
 			visible: false,
-			zIndex: 10000
+			zIndex: 10000,
 		});
 	}
 
@@ -157,19 +157,19 @@ class AceEditor extends Component {
 			if (/<lfr[\w]*[^<lfr]*$/.test(matchContent)) {
 				match = {
 					content: matchContent.substring(1),
-					type: MATCH_TAG
+					type: MATCH_TAG,
 				};
 			}
 			else if (/\[@[^\]]+$/.test(matchContent)) {
 				match = {
 					content: matchContent.substring(2),
-					type: MATCH_TAGLIB
+					type: MATCH_TAGLIB,
 				};
 			}
 			else if (/\${[^}]+$/.test(matchContent)) {
 				match = {
 					content: matchContent.substring(2),
-					type: MATCH_VARIABLE
+					type: MATCH_VARIABLE,
 				};
 			}
 		}
@@ -236,7 +236,7 @@ class AceEditor extends Component {
 		if (!result) {
 			result = [
 				...this.freeMarkerTaglibs,
-				...this.freeMarkerVariables
+				...this.freeMarkerVariables,
 			].find(variable => variable === selectedSuggestion);
 		}
 
@@ -258,7 +258,7 @@ class AceEditor extends Component {
 
 		this.emit('contentChanged', {
 			content: this._editorDocument.getValue(),
-			valid
+			valid,
 		});
 	}
 
@@ -288,7 +288,7 @@ AceEditor.SYNTAX = {
 	css: 'css',
 	html: 'html',
 	javascript: 'javascript',
-	json: 'json'
+	json: 'json',
 };
 
 /**
@@ -342,7 +342,7 @@ AceEditor.STATE = {
 	autocompleteTags: Config.arrayOf(
 		Config.shapeOf({
 			attributes: Config.arrayOf(Config.string()),
-			name: Config.string()
+			name: Config.string(),
 		})
 	),
 
@@ -396,7 +396,7 @@ AceEditor.STATE = {
 	 * @see {@link AceEditor.SYNTAX|SYNTAX}
 	 * @type {!string}
 	 */
-	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required()
+	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required(),
 };
 
 Soy.register(AceEditor, templates);

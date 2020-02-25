@@ -26,7 +26,7 @@ function PersonalMenu({
 	itemsURL,
 	label,
 	size,
-	userPortraitURL
+	userPortraitURL,
 }) {
 	const [items, setItems] = useState([]);
 	const preloadPromise = useRef();
@@ -95,7 +95,7 @@ function PersonalMenu({
 }
 
 PersonalMenu.propTypes = {
-	itemsURL: PropTypes.string
+	itemsURL: PropTypes.string,
 };
 
 export default function(props) {

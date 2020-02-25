@@ -47,57 +47,57 @@ AUI.add(
 			ATTRS: {
 				animateClass: {
 					validator: Lang.isString,
-					value: 'highlight-animation'
+					value: 'highlight-animation',
 				},
 
 				defaultLanguageId: {
-					value: defaultLanguageId
+					value: defaultLanguageId,
 				},
 
 				editor: {},
 
 				fieldPrefix: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				fieldPrefixSeparator: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				helpMessage: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				id: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				inputBox: {
-					setter: A.one
+					setter: A.one,
 				},
 
 				inputPlaceholder: {
-					setter: A.one
+					setter: A.one,
 				},
 
 				instanceId: {
-					value: Lang.isString
+					value: Lang.isString,
 				},
 
 				items: {
-					value: availableLanguageIds
+					value: availableLanguageIds,
 				},
 
 				itemsError: {
-					validator: Array.isArray
+					validator: Array.isArray,
 				},
 
 				name: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				namespace: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				selected: {
@@ -113,7 +113,7 @@ AUI.add(
 						}
 
 						return instance.get(STR_ITEMS).indexOf(itemIndex);
-					}
+					},
 				},
 
 				translatedLanguages: {
@@ -126,8 +126,8 @@ AUI.add(
 
 						return set;
 					},
-					value: null
-				}
+					value: null,
+				},
 			},
 
 			EXTENDS: A.Palette,
@@ -211,7 +211,7 @@ AUI.add(
 								id,
 								name: A.Lang.String.escapeHTML(name),
 								namespace,
-								value: languageId
+								value: languageId,
 							})
 						);
 
@@ -259,7 +259,7 @@ AUI.add(
 
 					Liferay.fire('inputLocalized:localeChanged', {
 						item: event.item,
-						source: instance
+						source: instance,
 					});
 				},
 
@@ -296,7 +296,7 @@ AUI.add(
 					if (!event.domEvent) {
 						Liferay.fire('inputLocalized:localeChanged', {
 							item: event.item,
-							source: instance
+							source: instance,
 						});
 					}
 				},
@@ -402,7 +402,7 @@ AUI.add(
 							A.Lang.sub(instance.TRANSLATION_STATUS_TEMPLATE, {
 								languageId,
 								translationStatus,
-								translationStatusCssClass
+								translationStatusCssClass,
 							})
 						);
 					}
@@ -417,7 +417,7 @@ AUI.add(
 						flag: Liferay.Util.getLexiconIconTpl(
 							languageId.toLowerCase()
 						),
-						languageId
+						languageId,
 					});
 
 					instance
@@ -490,7 +490,7 @@ AUI.add(
 						Liferay.on(
 							'submitForm',
 							A.rbind(STR_SUBMIT, instance, inputPlaceholder)
-						)
+						),
 					];
 
 					if (!instance.get('editor')) {
@@ -510,8 +510,8 @@ AUI.add(
 						descendants: '.palette-item a',
 						keys: {
 							next: 'down:39,40',
-							previous: 'down:37,38'
-						}
+							previous: 'down:37,38',
+						},
 					});
 
 					instance._inputPlaceholderDescription = boundingBox.one(
@@ -627,7 +627,7 @@ AUI.add(
 					translatedLanguages[action](selectedLanguageId);
 
 					instance._updateTranslationStatus(selectedLanguageId);
-				}
+				},
 			},
 
 			register(id, config) {
@@ -662,7 +662,7 @@ AUI.add(
 
 			unregister(id) {
 				delete InputLocalized._instances[id];
-			}
+			},
 		});
 
 		Liferay.InputLocalized = InputLocalized;
@@ -686,7 +686,7 @@ AUI.add(
 			'aui-palette',
 			'aui-set',
 			'liferay-form',
-			'portal-available-languages'
-		]
+			'portal-available-languages',
+		],
 	}
 );

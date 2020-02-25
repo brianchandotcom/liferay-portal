@@ -58,7 +58,7 @@
 					fileEntryId: fileEntryId,
 					preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
 					title: decodeURIComponent(match[3].replace(/\+/gi, ' ')),
-					version: getParameterValue('version')
+					version: getParameterValue('version'),
 				});
 			}
 		}

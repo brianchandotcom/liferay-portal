@@ -44,8 +44,8 @@ describe('updateRowColumns', () => {
 			Promise.resolve({
 				layoutData: {
 					items: {},
-					version: 1
-				}
+					version: 1,
+				},
 			})
 		);
 	});
@@ -54,7 +54,7 @@ describe('updateRowColumns', () => {
 		updateRowColumns({
 			itemId: '0',
 			numberOfColumns: 6,
-			segmentsExperienceId: '0'
+			segmentsExperienceId: '0',
 		})(() => {});
 
 	it('calls LayoutService.updateRowColumns with the given information', () => {
@@ -64,7 +64,7 @@ describe('updateRowColumns', () => {
 			expect.objectContaining({
 				itemId: '0',
 				numberOfColumns: 6,
-				segmentsExperienceId: '0'
+				segmentsExperienceId: '0',
 			})
 		);
 	});
@@ -75,8 +75,8 @@ describe('updateRowColumns', () => {
 		expect(updateLayoutData).toHaveBeenCalledWith({
 			layoutData: {
 				items: {},
-				version: 1
-			}
+				version: 1,
+			},
 		});
 	});
 });

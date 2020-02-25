@@ -28,9 +28,9 @@ const ContainerMock = ({children}) => {
 			assigneeUsers: [{id: 2, name: 'Test Test'}],
 			id: 1,
 			status: 'In Progress',
-			taskNames: ['Review']
+			taskNames: ['Review'],
 		},
-		visible: true
+		visible: true,
 	});
 
 	return (
@@ -48,8 +48,8 @@ describe('The SingleReassignModal component should', () => {
 	const items = [
 		{
 			id: 1,
-			name: '0test test0'
-		}
+			name: '0test test0',
+		},
 	];
 
 	const clientMock = {
@@ -59,16 +59,16 @@ describe('The SingleReassignModal component should', () => {
 			.mockResolvedValueOnce({
 				data: {
 					items: [
-						{assigneePerson: {id: 2, name: 'Test Test'}, id: 1}
+						{assigneePerson: {id: 2, name: 'Test Test'}, id: 1},
 					],
-					totalCount: items.length
-				}
+					totalCount: items.length,
+				},
 			})
 			.mockResolvedValue({data: {items}}),
 		post: jest
 			.fn()
 			.mockRejectedValueOnce(new Error('Request failed'))
-			.mockResolvedValue({data: {items: []}})
+			.mockResolvedValue({data: {items: []}}),
 	};
 
 	beforeAll(() => {
@@ -77,7 +77,7 @@ describe('The SingleReassignModal component should', () => {
 				<SingleReassignModal />
 			</MockRouter>,
 			{
-				wrapper: ContainerMock
+				wrapper: ContainerMock,
 			}
 		);
 		getByTestId = renderResult.getByTestId;

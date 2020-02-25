@@ -34,23 +34,23 @@ jest.mock(
 						{
 							fragmentEntryKey: 'basicComponentButton',
 							imagePreviewURL: 'buttonImageURL',
-							name: 'Button'
+							name: 'Button',
 						},
 						{
 							fragmentEntryKey: 'basicComponentCard',
 							imagePreviewURL: 'cardImageURL',
-							name: 'Card'
+							name: 'Card',
 						},
 						{
 							fragmentEntryKey: 'basicComponentHeading',
 							imagePreviewURL: 'headingImageURL',
-							name: 'Heading'
-						}
+							name: 'Heading',
+						},
 					],
-					name: 'Basic Components'
-				}
-			]
-		}
+					name: 'Basic Components',
+				},
+			],
+		},
 	})
 );
 
@@ -70,7 +70,7 @@ describe('FragmentsSidebar', () => {
 		const {
 			getByLabelText,
 			getByText,
-			queryByText
+			queryByText,
 		} = renderFragmentsSidebar();
 
 		expect(getByText('Basic Components')).toBeInTheDocument();
@@ -105,7 +105,7 @@ describe('FragmentsSidebar', () => {
 		const {
 			getByLabelText,
 			getByText,
-			queryByText
+			queryByText,
 		} = renderFragmentsSidebar();
 		const searchFormInput = getByLabelText('search-form');
 
@@ -120,7 +120,7 @@ describe('FragmentsSidebar', () => {
 		const {
 			getByLabelText,
 			getByText,
-			queryByText
+			queryByText,
 		} = renderFragmentsSidebar();
 
 		userEvent.type(getByLabelText('search-form'), 'a');

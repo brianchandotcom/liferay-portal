@@ -43,7 +43,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 			54,
 			55,
 			56,
-			57
+			57,
 		];
 	}
 
@@ -239,8 +239,8 @@ EditAdaptiveMediaConfig.STATE = {
 	 */
 	errorNode: {
 		validator: core.isString,
-		value: '.error-wrapper'
-	}
+		value: '.error-wrapper',
+	},
 };
 
 export default EditAdaptiveMediaConfig;

@@ -89,7 +89,7 @@ function GroupLabels({itemSelectorURL, portletNamespace, target}) {
 											id => id !== groupIds[i]
 										)
 									);
-								}
+								},
 							}}
 							key={i}
 							large
@@ -107,7 +107,7 @@ function GroupLabels({itemSelectorURL, portletNamespace, target}) {
 						dialog: {
 							constrain: true,
 							modal: true,
-							width: 600
+							width: 600,
 						},
 						id: `${portletNamespace}selectGroup${target}`,
 						selectedData: groupIds,
@@ -115,7 +115,7 @@ function GroupLabels({itemSelectorURL, portletNamespace, target}) {
 							Liferay.Language.get('select-x'),
 							Liferay.Language.get('site')
 						),
-						uri: itemSelectorURL
+						uri: itemSelectorURL,
 					});
 				}}
 			>

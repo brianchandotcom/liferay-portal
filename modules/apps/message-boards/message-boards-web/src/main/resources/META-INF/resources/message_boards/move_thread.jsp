@@ -117,8 +117,8 @@ if (portletTitleBasedNavigation) {
 	function <portlet:namespace />moveThread() {
 		Liferay.Util.postForm(form, {
 			data: {
-				body: <portlet:namespace />getHTML()
-			}
+				body: <portlet:namespace />getHTML(),
+			},
 		});
 	}
 
@@ -151,7 +151,7 @@ if (portletTitleBasedNavigation) {
 					dialog: {
 						constrain: true,
 						modal: true,
-						width: 680
+						width: 680,
 					},
 					id: '<portlet:namespace />selectCategory',
 					title:
@@ -162,12 +162,12 @@ if (portletTitleBasedNavigation) {
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" />
 					</portlet:renderURL>
 
-					uri: '<%= selectCategoryURL %>'
+					uri: '<%= selectCategoryURL %>',
 				},
 				function(event) {
 					Liferay.Util.setFormValues(form, {
 						categoryName: Liferay.Util.unescape(event.name),
-						mbCategoryId: event.categoryid
+						mbCategoryId: event.categoryid,
 					});
 				}
 			);

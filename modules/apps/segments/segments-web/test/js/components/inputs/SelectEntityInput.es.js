@@ -33,7 +33,7 @@ describe('SelectEntityInput', () => {
 				selectEntity={{
 					id: 'entitySelect',
 					title: 'Select Entity Test',
-					url: ''
+					url: '',
 				}}
 				value={defaultNumberValue}
 			/>

@@ -32,8 +32,8 @@ const renderComponent = (state = {}, dispatch) => {
 
 const RESOLVED_COMMENTS_STATE = {
 	fragmentEntryLinks: {
-		'fragment-entry-link-1': {comments: [{resolved: true}]}
-	}
+		'fragment-entry-link-1': {comments: [{resolved: true}]},
+	},
 };
 
 describe('ResolvedCommentsToggle', () => {

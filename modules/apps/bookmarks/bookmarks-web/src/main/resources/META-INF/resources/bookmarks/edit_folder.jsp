@@ -121,20 +121,20 @@ renderResponse.setTitle(headerTitle);
 												constrain: true,
 												destroyOnHide: true,
 												modal: true,
-												width: 680
+												width: 680,
 											},
 											id: '<portlet:namespace />selectFolder',
 											title:
 												'<liferay-ui:message arguments="folder" key="select-x" />',
 											uri:
-												'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
+												'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>',
 										},
 										function(event) {
 											var folderData = {
 												idString: 'parentFolderId',
 												idValue: event.entityid,
 												nameString: 'parentFolderName',
-												nameValue: event.entityname
+												nameValue: event.entityname,
 											};
 
 											Liferay.Util.selectFolder(folderData, '<portlet:namespace />');

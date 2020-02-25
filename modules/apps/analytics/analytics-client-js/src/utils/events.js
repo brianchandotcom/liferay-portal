@@ -35,7 +35,7 @@ const clickEvent = ({
 	eventType,
 	getPayload,
 	isTrackable,
-	type
+	type,
 }) => {
 	const onClick = ({target}) => {
 		const element = getClosestAssetElement(target, type);
@@ -48,7 +48,7 @@ const clickEvent = ({
 
 		const payload = {
 			...getPayload(element),
-			tagName
+			tagName,
 		};
 
 		if (tagName === 'a') {

@@ -20,7 +20,7 @@ import DataLayoutBuilderColumn from './DataLayoutBuilderDropColumn.es';
 import DragLayer from './DragLayer.es';
 
 const getColumns = () => [
-	...document.querySelectorAll('.col-empty .ddm-target')
+	...document.querySelectorAll('.col-empty .ddm-target'),
 ];
 
 const getColumnKey = node => {

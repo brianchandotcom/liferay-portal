@@ -20,7 +20,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 const {processId, query} = {
 	processId: 12345,
-	query: '?filters.stepTimeRange%5B0%5D=7'
+	query: '?filters.stepTimeRange%5B0%5D=7',
 };
 
 const items = [
@@ -28,20 +28,20 @@ const items = [
 		breachedInstanceCount: 3,
 		breachedInstancePercentage: 30,
 		durationAvg: 10800000,
-		name: 'Review'
+		name: 'Review',
 	},
 	{
 		breachedInstanceCount: 7,
 		breachedInstancePercentage: 22.5806,
 		durationAvg: 475200000,
-		name: 'Update'
+		name: 'Update',
 	},
 	{
 		breachedInstanceCount: 0,
 		breachedInstancePercentage: 0,
 		durationAvg: 0,
-		name: 'Translate'
-	}
+		name: 'Translate',
+	},
 ];
 const data = {items, totalCount: items.length};
 
@@ -52,17 +52,17 @@ const timeRangeData = {
 			dateStart: '2019-12-03T00:00:00Z',
 			defaultTimeRange: false,
 			id: 7,
-			name: 'Last 7 Days'
+			name: 'Last 7 Days',
 		},
 		{
 			dateEnd: '2019-12-09T00:00:00Z',
 			dateStart: '2019-11-10T00:00:00Z',
 			defaultTimeRange: true,
 			id: 30,
-			name: 'Last 30 Days'
-		}
+			name: 'Last 30 Days',
+		},
 	],
-	totalCount: 2
+	totalCount: 2,
 };
 
 describe('The performance by step card component should', () => {
@@ -75,7 +75,7 @@ describe('The performance by step card component should', () => {
 	describe('Be rendered with results', () => {
 		beforeAll(() => {
 			const clientMock = {
-				get: jest.fn().mockResolvedValue({data})
+				get: jest.fn().mockResolvedValue({data}),
 			};
 
 			const wrapper = ({children}) => (
@@ -127,7 +127,7 @@ describe('The performance by step card component should', () => {
 			const clientMock = {
 				get: jest
 					.fn()
-					.mockResolvedValue({data: {items: [], totalCount: 0}})
+					.mockResolvedValue({data: {items: [], totalCount: 0}}),
 			};
 
 			const wrapper = ({children}) => (

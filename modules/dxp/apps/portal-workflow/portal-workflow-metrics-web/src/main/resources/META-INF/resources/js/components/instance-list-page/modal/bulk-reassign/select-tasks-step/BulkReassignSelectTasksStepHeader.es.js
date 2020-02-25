@@ -24,7 +24,7 @@ const Header = ({
 	items = [],
 	prefixKey,
 	selectedFilters,
-	totalCount
+	totalCount,
 }) => {
 	const previousCount = usePrevious(totalCount);
 	const {bulkModal, setBulkModal} = useContext(ModalContext);
@@ -43,7 +43,7 @@ const Header = ({
 	const checkbox = {
 		checked: allPageSelected || selectAll,
 		indeterminate:
-			selectedOnPage.length > 0 && !allPageSelected && !selectAll
+			selectedOnPage.length > 0 && !allPageSelected && !selectAll,
 	};
 
 	const remainingItems = useMemo(() => {
@@ -52,7 +52,7 @@ const Header = ({
 		);
 	}, [items, selectedTasks]);
 	const toolbarActive = useMemo(() => selectedTasks.length > 0, [
-		selectedTasks
+		selectedTasks,
 	]);
 
 	useEffect(() => {
@@ -63,7 +63,7 @@ const Header = ({
 		) {
 			setBulkModal({
 				...bulkModal,
-				selectedTasks: items
+				selectedTasks: items,
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,7 +72,7 @@ const Header = ({
 	useEffect(() => {
 		setBulkModal({
 			...bulkModal,
-			selectAll: totalCount > 0 && totalCount === selectedTasks.length
+			selectAll: totalCount > 0 && totalCount === selectedTasks.length,
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [totalCount]);
@@ -92,7 +92,7 @@ const Header = ({
 			setBulkModal({
 				...bulkModal,
 				selectAll: totalCount > 0 && totalCount === updatedItems.length,
-				selectedTasks: updatedItems
+				selectedTasks: updatedItems,
 			});
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -112,7 +112,7 @@ const Header = ({
 					setBulkModal({
 						...bulkModal,
 						selectAll: true,
-						selectedTasks: items
+						selectedTasks: items,
 					});
 				}}
 				selectAll={selectAll}

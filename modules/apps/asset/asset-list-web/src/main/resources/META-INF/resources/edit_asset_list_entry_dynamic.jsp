@@ -98,7 +98,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 						form,
 						'<%= className %>currentClassTypeIds'
 					)
-				)
+				),
 			});
 
 		<%
@@ -113,8 +113,10 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 		if (currentClassNameIdsSelect) {
 			Liferay.Util.postForm(form, {
 				data: {
-					classNameIds: Liferay.Util.listSelect(currentClassNameIdsSelect)
-				}
+					classNameIds: Liferay.Util.listSelect(
+						currentClassNameIdsSelect
+					),
+				},
 			});
 		}
 		else {

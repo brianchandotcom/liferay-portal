@@ -32,7 +32,7 @@ class SLAListItem extends React.Component {
 			id,
 			name,
 			processId,
-			status
+			status,
 		} = this.props;
 
 		const blocked = status === 2;

@@ -89,7 +89,7 @@ DLViewMoreMenuItemsDisplayContext dlViewMoreMenuItemsDisplayContext = new DLView
 				{
 					fileEntryTypeId: event.currentTarget.attr(
 						'data-fileEntryTypeId'
-					)
+					),
 				}
 			);
 

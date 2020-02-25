@@ -21,7 +21,7 @@ export default function resizeColumns({layoutData, store}) {
 		return LayoutService.updateLayoutData({
 			layoutData,
 			onNetworkStatus: dispatch,
-			segmentsExperienceId
+			segmentsExperienceId,
 		});
 	};
 }

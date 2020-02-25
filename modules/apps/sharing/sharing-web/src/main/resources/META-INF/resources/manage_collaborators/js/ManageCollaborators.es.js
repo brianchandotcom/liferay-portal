@@ -36,7 +36,7 @@ const ManageCollaborators = ({
 	classPK,
 	collaborators,
 	dialogId,
-	portletNamespace
+	portletNamespace,
 }) => {
 	const [currentCollaborators, setCurrentCollaborators] = useState(
 		collaborators
@@ -47,15 +47,15 @@ const ManageCollaborators = ({
 	const [loadingResponse, setLoadingResponse] = useState(false);
 	const [
 		sharingEntryIdsAndExpirationDate,
-		setSharingEntryIdsAndExpirationDate
+		setSharingEntryIdsAndExpirationDate,
 	] = useState({});
 	const [
 		sharingEntryIdsAndPermissions,
-		setSharingEntryIdsAndPermissions
+		setSharingEntryIdsAndPermissions,
 	] = useState({});
 	const [
 		sharingEntryIdsAndShareables,
-		setSharingEntryIdsAndShareables
+		setSharingEntryIdsAndShareables,
 	] = useState({});
 	const [tomorrowDate, setTomorrowDate] = useState();
 
@@ -178,7 +178,7 @@ const ManageCollaborators = ({
 
 		setSharingEntryIdsAndExpirationDate({
 			...sharingEntryIdsAndExpirationDate,
-			[collaborator.sharingEntryId]: sharingEntryExpirationDate
+			[collaborator.sharingEntryId]: sharingEntryExpirationDate,
 		});
 	};
 
@@ -205,7 +205,7 @@ const ManageCollaborators = ({
 
 			setSharingEntryIdsAndExpirationDate({
 				...sharingEntryIdsAndExpirationDate,
-				[sharingEntryId]: sharingEntryExpirationDate
+				[sharingEntryId]: sharingEntryExpirationDate,
 			});
 		}
 
@@ -229,12 +229,12 @@ const ManageCollaborators = ({
 			),
 			sharingEntryIdShareablePairs: objectToPairArray(
 				sharingEntryIdsAndShareables
-			)
+			),
 		});
 
 		fetch(actionUrl, {
 			body: objectToFormData(data),
-			method: 'POST'
+			method: 'POST',
 		})
 			.then(response => {
 				const jsonResponse = response.json();
@@ -251,7 +251,7 @@ const ManageCollaborators = ({
 			.then(json => {
 				parent.Liferay.fire('sharing:changed', {
 					classNameId,
-					classPK
+					classPK,
 				});
 
 				showNotification(json.successMessage);
@@ -280,7 +280,7 @@ const ManageCollaborators = ({
 
 		setSharingEntryIdsAndShareables({
 			...sharingEntryIdsAndShareables,
-			[sharingEntryId]: shareable
+			[sharingEntryId]: shareable,
 		});
 	};
 
@@ -290,7 +290,7 @@ const ManageCollaborators = ({
 				if (collaborator.userId === updatedCollaborator.userId) {
 					return {
 						...collaborator,
-						...updatedCollaborator
+						...updatedCollaborator,
 					};
 				}
 
@@ -303,7 +303,7 @@ const ManageCollaborators = ({
 		const parentOpenToast = Liferay.Util.getOpener().Liferay.Util.openToast;
 
 		const openToastParams = {
-			message
+			message,
 		};
 
 		if (error) {
@@ -334,7 +334,7 @@ const ManageCollaborators = ({
 		sharingEntryPermissionActionId,
 		sharingEntryPermissionDisplaySelectOptions,
 		sharingEntryShareable,
-		userId
+		userId,
 	}) => {
 		return (
 			<li
@@ -343,7 +343,7 @@ const ManageCollaborators = ({
 					'list-group-item-action',
 					'list-group-item-flex',
 					{
-						active: userId === expandedCollaboratorId
+						active: userId === expandedCollaboratorId,
 					}
 				)}
 				data-collaboratorid={userId}
@@ -403,7 +403,7 @@ const ManageCollaborators = ({
 								onChange={event => {
 									setSharingEntryIdsAndPermissions({
 										...sharingEntryIdsAndPermissions,
-										[event.target.name]: event.target.value
+										[event.target.name]: event.target.value,
 									});
 								}}
 								options={
@@ -430,7 +430,7 @@ const ManageCollaborators = ({
 					</div>
 					<div
 						className={classNames({
-							hide: userId !== expandedCollaboratorId
+							hide: userId !== expandedCollaboratorId,
 						})}
 					>
 						<div className="autofit-row autofit-row-center">
@@ -480,7 +480,7 @@ const ManageCollaborators = ({
 									'autofit-col',
 									'no-padding',
 									{
-										'has-error': sharingEntryExpirationDateError
+										'has-error': sharingEntryExpirationDateError,
 									}
 								)}
 							>
@@ -580,7 +580,7 @@ ManageCollaborators.propTypes = {
 	classPK: PropTypes.string,
 	collaborators: PropTypes.array.isRequired,
 	dialogId: PropTypes.string.isRequired,
-	portletNamespace: PropTypes.string
+	portletNamespace: PropTypes.string,
 };
 
 export default function(props) {

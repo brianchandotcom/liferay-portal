@@ -18,14 +18,14 @@ const DEFAULT_PANEL_ID = 'fragments';
 
 export const INITIAL_STATE = {
 	open: true,
-	panelId: DEFAULT_PANEL_ID
+	panelId: DEFAULT_PANEL_ID,
 };
 
 export default function sidebarReducer(sidebarStatus = INITIAL_STATE, action) {
 	if (action.type === SWITCH_SIDEBAR_PANEL) {
 		return {
 			open: action.sidebarOpen,
-			panelId: action.sidebarPanelId
+			panelId: action.sidebarPanelId,
 		};
 	}
 

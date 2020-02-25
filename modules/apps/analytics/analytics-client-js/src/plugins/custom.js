@@ -29,13 +29,13 @@ function getCustomAssetPayload({dataset}) {
 	const {
 		analyticsAssetCategory: category,
 		analyticsAssetId: assetId,
-		analyticsAssetTitle: title
+		analyticsAssetTitle: title,
 	} = dataset;
 
 	return {
 		assetId,
 		category,
-		title
+		title,
 	};
 }
 
@@ -89,7 +89,7 @@ function trackCustomAssetScroll(analytics, customAssetElements) {
 				analytics.send('assetDepthReached', applicationId, {
 					...getCustomAssetPayload(element),
 					depth,
-					sessionId: scrollSessionId
+					sessionId: scrollSessionId,
 				});
 			}, element);
 		});
@@ -151,7 +151,7 @@ function trackCustomAssetViewed(analytics) {
 					element.getElementsByTagName('form').length > 0;
 				const payload = {
 					...getCustomAssetPayload(element),
-					formEnabled
+					formEnabled,
 				};
 
 				customAssetElements.push(element);
@@ -182,7 +182,7 @@ function trackCustomAssetClick(analytics) {
 		eventType: 'assetClicked',
 		getPayload: getCustomAssetPayload,
 		isTrackable: isTrackableCustomAsset,
-		type: 'custom'
+		type: 'custom',
 	});
 }
 

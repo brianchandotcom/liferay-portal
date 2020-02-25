@@ -56,7 +56,7 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 							deleteFormInstanceIds: Liferay.Util.listCheckedExcept(
 								searchContainer,
 								'<portlet:namespace />allRowIds'
-							)
+							),
 						},
 
 						<portlet:actionURL name="deleteFormInstance" var="deleteFormInstanceURL">
@@ -64,7 +64,7 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:actionURL>
 
-						url: '<%= deleteFormInstanceURL %>'
+						url: '<%= deleteFormInstanceURL %>',
 					}
 				);
 			}
@@ -89,7 +89,7 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 							deleteStructureIds: Liferay.Util.listCheckedExcept(
 								searchContainer,
 								'<portlet:namespace />allRowIds'
-							)
+							),
 						},
 
 						<portlet:actionURL name="deleteStructure" var="deleteStructureURL">
@@ -98,7 +98,7 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:actionURL>
 
-						url: '<%= deleteStructureURL %>'
+						url: '<%= deleteStructureURL %>',
 					}
 				);
 			}
@@ -107,7 +107,7 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 
 	var ACTIONS = {
 		deleteFormInstances: deleteFormInstances,
-		deleteStructures: deleteStructures
+		deleteStructures: deleteStructures,
 	};
 
 	Liferay.componentReady('ddmFormManagementToolbar').then(function(

@@ -118,14 +118,14 @@ PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL
 
 			arr.push({
 				id: data.id,
-				name: data.name
+				name: data.name,
 			});
 		});
 
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{
-				data: arr
+				data: arr,
 			}
 		);
 	});

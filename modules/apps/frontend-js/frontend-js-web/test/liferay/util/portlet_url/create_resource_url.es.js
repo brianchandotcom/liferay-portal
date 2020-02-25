@@ -20,8 +20,8 @@ describe('Liferay.Util.PortletURL.createResourceURL', () => {
 	it('returns a url with the p_p_lifecycle parameter set to 2', () => {
 		Liferay = {
 			ThemeDisplay: {
-				getPortalURL: jest.fn(() => 'http://localhost:8080')
-			}
+				getPortalURL: jest.fn(() => 'http://localhost:8080'),
+			},
 		};
 
 		const portletURL = createResourceURL(

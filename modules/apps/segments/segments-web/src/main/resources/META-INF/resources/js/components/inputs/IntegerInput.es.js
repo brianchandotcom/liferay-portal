@@ -19,7 +19,7 @@ class IntegerInput extends React.Component {
 	static propTypes = {
 		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
-		value: propTypes.oneOfType([propTypes.string, propTypes.number])
+		value: propTypes.oneOfType([propTypes.string, propTypes.number]),
 	};
 
 	_handleIntegerChange = event => {

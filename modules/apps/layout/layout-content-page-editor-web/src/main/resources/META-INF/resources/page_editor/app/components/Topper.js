@@ -20,7 +20,7 @@ import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
@@ -36,11 +36,11 @@ import {
 	useHoveredItemId,
 	useIsHovered,
 	useIsSelected,
-	useSelectItem
+	useSelectItem,
 } from './Controls';
 import useDragAndDrop, {
 	DragDropManagerImpl,
-	TARGET_POSITION
+	TARGET_POSITION,
 } from './useDragAndDrop';
 
 const TOPPER_BAR_HEIGHT = 24;
@@ -63,7 +63,7 @@ const TopperListItem = React.forwardRef(
 );
 
 TopperListItem.propTypes = {
-	expand: PropTypes.bool
+	expand: PropTypes.bool,
 };
 
 export default function Topper({children, item, itemRef, layoutData}) {
@@ -78,7 +78,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 	const selectItem = useSelectItem();
 
 	const {
-		store: {dropTargetItemId, targetPosition}
+		store: {dropTargetItemId, targetPosition},
 	} = useContext(DragDropManagerImpl);
 
 	const {canDrop, drag, drop, isDragging, isOver} = useDragAndDrop({
@@ -89,14 +89,14 @@ export default function Topper({children, item, itemRef, layoutData}) {
 			dispatch(
 				moveItem({
 					...data,
-					store
+					store,
 				})
-			)
+			),
 	});
 
 	const itemIsRemovable = useMemo(() => isRemovable(item, layoutData), [
 		item,
-		layoutData
+		layoutData,
 	]);
 	const showRemoveButton =
 		useSelector(selectShowLayoutItemRemoveButton) && itemIsRemovable;
@@ -206,7 +206,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 					dropTargetItemId === item.itemId,
 				dragged: isDragging,
 				hovered: isHovered(item.itemId) || fragmentShouldBeHovered(),
-				'page-editor__topper': true
+				'page-editor__topper': true,
 			})}
 			onClick={event => {
 				event.stopPropagation();
@@ -243,7 +243,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 		>
 			<div
 				className={classNames('page-editor__topper__bar', 'tbar', {
-					'page-editor__topper__bar--inset': isInset
+					'page-editor__topper__bar--inset': isInset,
 				})}
 			>
 				<ul className="tbar-nav">
@@ -276,7 +276,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 										dispatch(
 											switchSidebarPanel({
 												sidebarOpen: true,
-												sidebarPanelId: commentsPanelId
+												sidebarPanelId: commentsPanelId,
 											})
 										);
 									}}
@@ -295,7 +295,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 									dispatch(
 										deleteItem({
 											itemId: item.itemId,
-											store
+											store,
 										})
 									);
 								}}
@@ -321,7 +321,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 
 Topper.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 function isRemovable(item, layoutData) {

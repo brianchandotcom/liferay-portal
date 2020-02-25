@@ -44,7 +44,7 @@ export default function useRegistry({componentId, states}) {
 		eventsRef.current.push({callback, stateName});
 
 		return {
-			detach: () => detach(stateName, callback)
+			detach: () => detach(stateName, callback),
 		};
 	};
 
@@ -54,10 +54,10 @@ export default function useRegistry({componentId, states}) {
 			{
 				detach,
 				get,
-				on
+				on,
 			},
 			{
-				destroyOnNavigate: true
+				destroyOnNavigate: true,
 			}
 		);
 	}
@@ -79,7 +79,7 @@ export default function useRegistry({componentId, states}) {
 			if (stateChanged.includes(stateName)) {
 				callback({
 					newValue: states[stateName],
-					previousValue: previousState.current[stateName]
+					previousValue: previousState.current[stateName],
 				});
 			}
 		});

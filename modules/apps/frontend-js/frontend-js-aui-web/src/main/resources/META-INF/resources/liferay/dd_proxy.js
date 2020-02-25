@@ -33,7 +33,7 @@ AUI.add(
 							left: '-999px',
 							position: 'absolute',
 							top: '-999px',
-							zIndex: '999'
+							zIndex: '999',
 						});
 
 						body.prepend(proxyNode);
@@ -68,7 +68,7 @@ AUI.add(
 						border: drag.proxy.get('borderStyle'),
 						cursor,
 						display: 'block',
-						visibility: 'hidden'
+						visibility: 'hidden',
 					});
 
 					if (drag.proxy.get('cloneNode')) {
@@ -80,7 +80,7 @@ AUI.add(
 
 						dragNode.setStyles({
 							height: Math.ceil(size.height),
-							width: Math.ceil(size.width)
+							width: Math.ceil(size.width),
 						});
 					}
 
@@ -89,13 +89,13 @@ AUI.add(
 					}
 
 					dragNode.setStyle('visibility', 'visible');
-				}
+				},
 			},
 			true
 		);
 	},
 	'',
 	{
-		requires: ['dd-proxy']
+		requires: ['dd-proxy'],
 	}
 );

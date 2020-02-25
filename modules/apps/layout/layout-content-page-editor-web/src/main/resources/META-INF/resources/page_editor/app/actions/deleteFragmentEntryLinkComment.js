@@ -17,12 +17,12 @@ import {DELETE_FRAGMENT_ENTRY_LINK_COMMENT} from './types';
 export default function deleteFragmentEntryLinkComment({
 	commentId,
 	fragmentEntryLinkId,
-	parentCommentId
+	parentCommentId,
 }) {
 	return {
 		commentId,
 		fragmentEntryLinkId,
 		parentCommentId,
-		type: DELETE_FRAGMENT_ENTRY_LINK_COMMENT
+		type: DELETE_FRAGMENT_ENTRY_LINK_COMMENT,
 	};
 }

@@ -58,7 +58,7 @@ UserGroupRolesDisplayContext userGroupRolesDisplayContext = new UserGroupRolesDi
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(userGroupRolesDisplayContext.getEventName()) %>',
 			{
-				data: event.elements.allSelectedElements.getDOMNodes()
+				data: event.elements.allSelectedElements.getDOMNodes(),
 			}
 		);
 	});

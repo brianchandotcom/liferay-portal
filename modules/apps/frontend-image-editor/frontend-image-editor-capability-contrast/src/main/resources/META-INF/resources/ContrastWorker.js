@@ -52,7 +52,7 @@ onmessage = function(event) {
 			0,
 			0,
 			1,
-			0
+			0,
 		];
 
 		for (var i = 0; i < dataLength; i += 4) {

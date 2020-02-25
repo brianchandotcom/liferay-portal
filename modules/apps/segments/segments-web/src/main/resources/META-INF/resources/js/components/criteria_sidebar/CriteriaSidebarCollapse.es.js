@@ -77,7 +77,7 @@ const CriteriaSidebarCollapse = ({
 	onCollapseClick,
 	propertyGroups,
 	propertyKey,
-	searchValue
+	searchValue,
 }) => {
 	const _handleClick = (key, editing) => () => onCollapseClick(key, editing);
 
@@ -96,7 +96,7 @@ const CriteriaSidebarCollapse = ({
 					: properties;
 
 				const activeClasses = getCN({
-					active
+					active,
 				});
 
 				const propertyListClasses = getCN(
@@ -149,7 +149,7 @@ const CriteriaSidebarCollapse = ({
 											label,
 											name,
 											options,
-											type
+											type,
 										});
 
 										return (
@@ -177,7 +177,7 @@ CriteriaSidebarCollapse.propTypes = {
 	onCollapseClick: PropTypes.func,
 	propertyGroups: PropTypes.arrayOf(propertyGroupShape),
 	propertyKey: PropTypes.string,
-	searchValue: PropTypes.string
+	searchValue: PropTypes.string,
 };
 
 export default CriteriaSidebarCollapse;

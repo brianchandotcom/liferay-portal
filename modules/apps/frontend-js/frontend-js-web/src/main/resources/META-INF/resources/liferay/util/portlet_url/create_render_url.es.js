@@ -24,6 +24,6 @@ import createPortletURL from './create_portlet_url.es';
 export default function createRenderURL(basePortletURL, parameters = {}) {
 	return createPortletURL(basePortletURL, {
 		...parameters,
-		p_p_lifecycle: '0'
+		p_p_lifecycle: '0',
 	});
 }

@@ -22,6 +22,6 @@ export default function getEditableItemPropTypes(extraPropTypes = {}) {
 		editableType: PropTypes.oneOf(Object.values(EDITABLE_TYPES)),
 		fragmentEntryLinkId: PropTypes.string.isRequired,
 		itemId: PropTypes.string.isRequired,
-		...extraPropTypes
+		...extraPropTypes,
 	});
 }

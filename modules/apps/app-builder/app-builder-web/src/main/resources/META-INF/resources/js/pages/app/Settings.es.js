@@ -17,15 +17,15 @@ import React, {useContext} from 'react';
 import ToggleSwitch from '../../components/toggle-switch/ToggleSwitch.es';
 import EditAppContext, {
 	ADD_DEPLOYMENT,
-	REMOVE_DEPLOYMENT
+	REMOVE_DEPLOYMENT,
 } from './EditAppContext.es';
 
 export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
 	const {
 		dispatch,
 		state: {
-			app: {appDeployments}
-		}
+			app: {appDeployments},
+		},
 	} = useContext(EditAppContext);
 
 	const checked = appDeployments.some(
@@ -51,13 +51,13 @@ export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
 							if (checked) {
 								dispatch({
 									deploymentType,
-									type: ADD_DEPLOYMENT
+									type: ADD_DEPLOYMENT,
 								});
 							}
 							else {
 								dispatch({
 									deploymentType,
-									type: REMOVE_DEPLOYMENT
+									type: REMOVE_DEPLOYMENT,
 								});
 							}
 						}}

@@ -42,9 +42,9 @@ LayoutBreadcrumbs.STATE = {
 	breadcrumbEntries: Config.arrayOf(
 		Config.shapeOf({
 			title: Config.string().required(),
-			url: Config.string().required()
+			url: Config.string().required(),
 		})
-	).required()
+	).required(),
 };
 
 Soy.register(LayoutBreadcrumbs, templates);

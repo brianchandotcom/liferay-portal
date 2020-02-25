@@ -18,5 +18,5 @@
 export const CONTAINER_PADDING_IDENTIFIERS = {
 	paddingBottom: 'paddingBottom',
 	paddingHorizontal: 'paddingHorizontal',
-	paddingTop: 'paddingTop'
+	paddingTop: 'paddingTop',
 };

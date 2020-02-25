@@ -198,7 +198,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 					function <portlet:namespace />fireFormView() {
 						Liferay.fire('ddmFormView', {
 							formId: '<%= formInstanceId %>',
-							title: '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>'
+							title: '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>',
 						});
 					}
 
@@ -217,12 +217,12 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 									<portlet:namespace />formInstanceId: <%= formInstanceId %>,
 									<portlet:namespace />serializedDDMFormValues: JSON.stringify(
 										<portlet:namespace />form.toJSON()
-									)
+									),
 								});
 
 								Liferay.Util.fetch('<%= autoSaveFormInstanceRecordURL.toString() %>', {
 									body: data,
-									method: 'POST'
+									method: 'POST',
 								});
 							}
 

@@ -30,9 +30,9 @@ class AccountRolesManagementToolbarDefaultEventHandler extends DefaultEventHandl
 					accountRoleIds: Liferay.Util.listCheckedExcept(
 						form,
 						this.ns('allRowIds')
-					)
+					),
 				},
-				url: itemData.deleteAccountRolesURL
+				url: itemData.deleteAccountRolesURL,
 			});
 		}
 	}

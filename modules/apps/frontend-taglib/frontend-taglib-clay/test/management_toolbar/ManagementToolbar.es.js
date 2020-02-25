@@ -26,9 +26,9 @@ describe('ManagementToolbar', () => {
 		global.Liferay = {
 			componentReady() {
 				return {
-					then: jest.fn(cb => cb(searchContainer))
+					then: jest.fn(cb => cb(searchContainer)),
 				};
-			}
+			},
 		};
 	});
 
@@ -46,12 +46,12 @@ describe('ManagementToolbar', () => {
 				return searchContainerHandle;
 			}),
 			select: {
-				toggleAllRows: jest.fn()
-			}
+				toggleAllRows: jest.fn(),
+			},
 		};
 
 		managementToolbar = new ManagementToolbar({
-			spritemap: ''
+			spritemap: '',
 		});
 	});
 
@@ -82,16 +82,16 @@ describe('ManagementToolbar', () => {
 	it('toggles the searchContainer selected rows', () => {
 		managementToolbar._handleSelectPageCheckboxChanged({
 			data: {
-				checked: true
-			}
+				checked: true,
+			},
 		});
 
 		expect(searchContainer.select.toggleAllRows).toHaveBeenCalledWith(true);
 
 		managementToolbar._handleSelectPageCheckboxChanged({
 			data: {
-				checked: false
-			}
+				checked: false,
+			},
 		});
 
 		expect(searchContainer.select.toggleAllRows).toHaveBeenCalledWith(

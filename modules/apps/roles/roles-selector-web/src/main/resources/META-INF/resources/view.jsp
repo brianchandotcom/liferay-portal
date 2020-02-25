@@ -222,9 +222,9 @@ else {
 				removeUserGroupIds: Util.listUncheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'
-				)
+				),
 			},
-			url: '<portlet:actionURL name="editUserGroupGroupRoleUsers" />'
+			url: '<portlet:actionURL name="editUserGroupGroupRoleUsers" />',
 		});
 	}
 
@@ -243,9 +243,9 @@ else {
 				removeUserIds: Util.listUncheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'
-				)
+				),
 			},
-			url: '<portlet:actionURL name="editUserGroupRoleUsers" />'
+			url: '<portlet:actionURL name="editUserGroupRoleUsers" />',
 		});
 	}
 </script>

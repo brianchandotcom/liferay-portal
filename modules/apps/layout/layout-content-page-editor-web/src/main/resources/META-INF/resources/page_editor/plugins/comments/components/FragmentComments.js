@@ -79,7 +79,7 @@ export default function FragmentComments({fragmentEntryLink}) {
 									dispatch(
 										editFragmentEntryComment({
 											fragmentEntryLinkComment,
-											fragmentEntryLinkId
+											fragmentEntryLinkId,
 										})
 									)
 								}
@@ -93,5 +93,5 @@ export default function FragmentComments({fragmentEntryLink}) {
 }
 
 FragmentComments.propTypes = {
-	fragmentEntryLink: PropTypes.object.isRequired
+	fragmentEntryLink: PropTypes.object.isRequired,
 };

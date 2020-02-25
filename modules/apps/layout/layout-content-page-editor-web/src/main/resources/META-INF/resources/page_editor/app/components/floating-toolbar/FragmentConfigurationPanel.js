@@ -19,7 +19,7 @@ import React from 'react';
 
 import {
 	ConfigurationFieldPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../../config/constants/fragmentConfigurationFieldTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
@@ -56,7 +56,7 @@ FieldSet.propTypes = {
 	configurationValues: PropTypes.object,
 	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),
 	label: PropTypes.string,
-	onValueSelect: PropTypes.func.isRequired
+	onValueSelect: PropTypes.func.isRequired,
 };
 
 export const FragmentConfigurationPanel = ({item}) => {
@@ -78,7 +78,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 		...defaultConfigurationValues,
 		...fragmentEntryLink.editableValues[
 			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-		][segmentsExperienceId]
+		][segmentsExperienceId],
 	};
 
 	const onRestoreButtonClick = () => {
@@ -86,7 +86,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 			updateFragmentConfiguration({
 				configurationValues: defaultConfigurationValues,
 				fragmentEntryLink,
-				segmentsExperienceId
+				segmentsExperienceId,
 			})
 		);
 	};
@@ -94,14 +94,14 @@ export const FragmentConfigurationPanel = ({item}) => {
 	const onValueSelect = (name, value) => {
 		const nextConfigurationValues = {
 			...configurationValues,
-			[name]: value
+			[name]: value,
 		};
 
 		dispatch(
 			updateFragmentConfiguration({
 				configurationValues: nextConfigurationValues,
 				fragmentEntryLink,
-				segmentsExperienceId
+				segmentsExperienceId,
 			})
 		);
 	};
@@ -127,9 +127,9 @@ export const FragmentConfigurationPanel = ({item}) => {
 FragmentConfigurationPanel.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({
-			fragmentEntryLinkId: PropTypes.string.isRequired
-		}).isRequired
-	})
+			fragmentEntryLinkId: PropTypes.string.isRequired,
+		}).isRequired,
+	}),
 };
 
 const RestoreButton = ({onRestoreButtonClick}) => (
@@ -146,5 +146,5 @@ const RestoreButton = ({onRestoreButtonClick}) => (
 );
 
 RestoreButton.propTypes = {
-	onRestoreButtonClick: PropTypes.func.isRequired
+	onRestoreButtonClick: PropTypes.func.isRequired,
 };

@@ -53,7 +53,7 @@ class Text extends Component {
 		this.emit(name, {
 			fieldInstance: this,
 			originalEvent: event,
-			value
+			value,
 		});
 	}
 
@@ -74,7 +74,7 @@ class Text extends Component {
 
 		return {
 			...state,
-			options: this.getAutocompleteOptions(options)
+			options: this.getAutocompleteOptions(options),
 		};
 	}
 
@@ -106,7 +106,7 @@ class Text extends Component {
 
 			this.setState(
 				{
-					value
+					value,
 				},
 				() => this.dispatchEvent(event, 'fieldEdited', value)
 			);
@@ -125,7 +125,7 @@ class Text extends Component {
 
 		if (filteredItemsReceived.newVal.length != filteredItems.length) {
 			this.setState({
-				filteredItems: filteredItemsReceived.newVal
+				filteredItems: filteredItemsReceived.newVal,
 			});
 		}
 	}
@@ -136,7 +136,7 @@ class Text extends Component {
 		this.setState(
 			{
 				filteredItems: [],
-				value
+				value,
 			},
 			() => {
 				this.dispatchEvent(event, 'fieldEdited', value);
@@ -161,7 +161,7 @@ class Text extends Component {
 
 		this.setState(
 			{
-				value
+				value,
 			},
 			() => this.dispatchEvent(event, 'fieldEdited', value)
 		);
@@ -298,7 +298,7 @@ Text.STATE = {
 			label: Config.string(),
 			name: Config.string(),
 			showLabel: Config.bool().value(true),
-			value: Config.string()
+			value: Config.string(),
 		})
 	).value([]),
 
@@ -399,7 +399,7 @@ Text.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.string().value('')
+	value: Config.string().value(''),
 };
 
 Soy.register(Text, templates);

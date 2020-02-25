@@ -43,8 +43,8 @@ const renderForm = props =>
 				{},
 				{
 					defaultEditorConfigurations: {comment: {editorConfig: {}}},
-					portletNamespace: '_testNamespace_'
-				}
+					portletNamespace: '_testNamespace_',
+				},
 			]}
 		>
 			<CommentForm
@@ -84,7 +84,7 @@ describe('CommentForm', () => {
 	it('sets given submit button label', () => {
 		const {getByText} = renderForm({
 			showButtons: true,
-			submitButtonLabel: 'customLabel'
+			submitButtonLabel: 'customLabel',
 		});
 
 		expect(getByText('customLabel')).toBeInTheDocument();
@@ -93,7 +93,7 @@ describe('CommentForm', () => {
 	it('shows buttons if showButtons is true', () => {
 		const {getByText} = renderForm({
 			showButtons: true,
-			submitButtonLabel: 'mySubmit'
+			submitButtonLabel: 'mySubmit',
 		});
 
 		expect(getByText('cancel')).toBeInTheDocument();
@@ -104,7 +104,7 @@ describe('CommentForm', () => {
 		const {getByPlaceholderText, getByText} = renderForm({
 			loading: true,
 			showButtons: true,
-			submitButtonLabel: 'submit'
+			submitButtonLabel: 'submit',
 		});
 
 		expect(getByPlaceholderText('type-your-comment-here')).toBeDisabled();
@@ -117,7 +117,7 @@ describe('CommentForm', () => {
 
 		const {getByText} = renderForm({
 			onCancelButtonClick: onCancel,
-			showButtons: true
+			showButtons: true,
 		});
 
 		fireEvent.click(getByText('cancel'));
@@ -135,7 +135,7 @@ describe('CommentForm', () => {
 
 	it('sets given textareaContent as default textarea content', () => {
 		const {getByPlaceholderText} = renderForm({
-			textareaContent: 'This is Something'
+			textareaContent: 'This is Something',
 		});
 
 		expect(getByPlaceholderText('type-your-comment-here').value).toBe(
@@ -149,7 +149,7 @@ describe('CommentForm', () => {
 		const {getByText} = renderForm({
 			onSubmitButtonClick: onSubmit,
 			showButtons: true,
-			submitButtonLabel: 'tryToSubmit'
+			submitButtonLabel: 'tryToSubmit',
 		});
 
 		fireEvent.click(getByText('tryToSubmit'));
@@ -164,7 +164,7 @@ describe('CommentForm', () => {
 			onSubmitButtonClick: onSubmit,
 			showButtons: true,
 			submitButtonLabel: 'submitForm',
-			textareaContent: 'tarta'
+			textareaContent: 'tarta',
 		});
 
 		fireEvent.click(getByText('submitForm'));
@@ -176,7 +176,7 @@ describe('CommentForm', () => {
 		const onChange = jest.fn();
 
 		const {getByPlaceholderText} = renderForm({
-			onTextareaChange: onChange
+			onTextareaChange: onChange,
 		});
 
 		userEvent.type(

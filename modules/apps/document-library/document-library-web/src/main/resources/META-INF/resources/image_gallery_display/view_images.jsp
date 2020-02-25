@@ -201,7 +201,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 
 						actions.append(action);
 					}
-				}
+				},
 			</c:if>
 		},
 		delay: 5000,
@@ -226,7 +226,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 
 					playingMediaIndex = -1;
 				}
-			}
+			},
 		},
 		playingLabel: '(<liferay-ui:message key="playing" />)',
 		plugins: [
@@ -242,14 +242,14 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 							mp4PreviewURL: '',
 							oggPreviewURL: '',
 							ogvPreviewURL: '',
-							thumbnailURL: ''
-						})
-					}
+							thumbnailURL: '',
+						}),
+					},
 				},
-				fn: A.MediaViewerPlugin
-			}
+				fn: A.MediaViewerPlugin,
+			},
 		],
-		zIndex: ++Liferay.zIndex.WINDOW
+		zIndex: ++Liferay.zIndex.WINDOW,
 	});
 
 	imageViewer.TPL_CLOSE = imageViewer.TPL_CLOSE.replace(

@@ -24,7 +24,7 @@ class FormRendererWithProvider extends FormRenderer {
 			if (field.fieldName === properties.fieldInstance.fieldName) {
 				return {
 					...field,
-					value: properties.value
+					value: properties.value,
 				};
 			}
 		});

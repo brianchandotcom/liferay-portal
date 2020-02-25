@@ -26,7 +26,7 @@ import {useSelector} from '../../store/index';
 import UnsafeHTML from '../UnsafeHTML';
 import {
 	useEditableProcessorUniqueId,
-	useSetEditableProcessorUniqueId
+	useSetEditableProcessorUniqueId,
 } from './EditableProcessorContext';
 import FragmentContentDecoration from './FragmentContentDecoration';
 import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
@@ -129,7 +129,7 @@ const FragmentContent = React.forwardRef(
 			editableValues,
 			isMounted,
 			languageId,
-			segmentsExperienceId
+			segmentsExperienceId,
 		]);
 
 		const onFloatingToolbarButtonClick = (buttonId, editableId) => {
@@ -182,7 +182,7 @@ const FragmentContent = React.forwardRef(
 
 FragmentContent.propTypes = {
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	itemId: PropTypes.string.isRequired
+	itemId: PropTypes.string.isRequired,
 };
 
 export default FragmentContent;

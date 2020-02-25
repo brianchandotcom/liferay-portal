@@ -76,7 +76,7 @@ AUI.add(
 			instance._animationConfig = options.animationConfig || {
 				duration: 2,
 				easing: 'ease-out',
-				top: '50px'
+				top: '50px',
 			};
 
 			instance._useAnimation = options.useAnimation;
@@ -92,7 +92,7 @@ AUI.add(
 			if (options.toggleText !== false) {
 				instance.toggleText = A.mix(options.toggleText, {
 					hide: null,
-					show: null
+					show: null,
 				});
 
 				instance._useToggleButton = true;
@@ -233,7 +233,7 @@ AUI.add(
 
 				Liferay.fire('noticeShow', {
 					notice: instance,
-					useAnimation: instance._useAnimation
+					useAnimation: instance._useAnimation,
 				});
 			},
 
@@ -244,7 +244,7 @@ AUI.add(
 
 				if (instance._useAnimation) {
 					var animationConfig = A.merge(instance._animationConfig, {
-						top: -instance._notice.get('offsetHeight') + STR_PX
+						top: -instance._notice.get('offsetHeight') + STR_PX,
 					});
 
 					instance._notice.transition(animationConfig, () => {
@@ -256,7 +256,7 @@ AUI.add(
 
 				Liferay.fire('noticeHide', {
 					notice: instance,
-					useAnimation: instance._useAnimation
+					useAnimation: instance._useAnimation,
 				});
 
 				return returnVal;
@@ -356,13 +356,13 @@ AUI.add(
 
 					alerts.each(instance._addCloseButton, instance);
 				}
-			}
+			},
 		};
 
 		Liferay.Notice = Notice;
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base'],
 	}
 );

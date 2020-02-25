@@ -119,12 +119,12 @@ class ChangeListsHistory extends PortletBase {
 				openToast({
 					message,
 					title: Liferay.Language.get('error'),
-					type: 'danger'
+					type: 'danger',
 				});
 			});
 
 		const processUsersParameters = {
-			type: this.filterStatus
+			type: this.filterStatus,
 		};
 
 		if (this.keywords) {
@@ -153,7 +153,7 @@ class ChangeListsHistory extends PortletBase {
 				openToast({
 					message,
 					title: Liferay.Language.get('error'),
-					type: 'danger'
+					type: 'danger',
 				});
 			});
 	}
@@ -161,7 +161,7 @@ class ChangeListsHistory extends PortletBase {
 	_getUrlProcesses() {
 		const processesParameters = {
 			sort: this.orderByCol + ':' + this.orderByType,
-			type: this.filterStatus
+			type: this.filterStatus,
 		};
 
 		if (this.filterUser > 0) {
@@ -208,7 +208,7 @@ class ChangeListsHistory extends PortletBase {
 				displayStyle: 'list',
 				orderByCol: this.orderByCol,
 				orderByType: this.orderByType,
-				user: processUser.userId
+				user: processUser.userId,
 			};
 
 			if (this.keywords) {
@@ -224,7 +224,7 @@ class ChangeListsHistory extends PortletBase {
 				active: this.filterUser === processUser.userId.toString(),
 				href: userFilterURL.toString(),
 				label: processUser.userName,
-				type: 'item'
+				type: 'item',
 			});
 		});
 
@@ -245,7 +245,7 @@ class ChangeListsHistory extends PortletBase {
 				timestamp: processEntry.timestamp,
 				undoURL: processEntry.undoURL,
 				userInitials: processEntry.userInitials,
-				userName: processEntry.userName
+				userName: processEntry.userName,
 			});
 		});
 
@@ -297,7 +297,7 @@ ChangeListsHistory.STATE = {
 			timestamp: Config.string(),
 			undoURL: Config.string(),
 			userInitials: Config.string(),
-			userName: Config.string()
+			userName: Config.string(),
 		})
 	),
 
@@ -313,7 +313,7 @@ ChangeListsHistory.STATE = {
 
 	urlProcessUsers: Config.string(),
 
-	urlProcesses: Config.string()
+	urlProcesses: Config.string(),
 };
 
 // Register component

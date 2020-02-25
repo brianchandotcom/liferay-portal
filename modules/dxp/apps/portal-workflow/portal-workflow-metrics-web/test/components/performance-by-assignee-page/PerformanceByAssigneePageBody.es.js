@@ -21,19 +21,19 @@ const items = [
 		durationTaskAvg: 10800000,
 		image: 'path/to/image',
 		name: 'User Test First',
-		taskCount: 10
+		taskCount: 10,
 	},
 	{
 		durationTaskAvg: 475200000,
 		image: 'path/to/image',
 		name: 'User Test Second',
-		taskCount: 31
+		taskCount: 31,
 	},
 	{
 		durationTaskAvg: 0,
 		name: 'User Test Third',
-		taskCount: 1
-	}
+		taskCount: 1,
+	},
 ];
 
 const wrapper = ({children}) => (

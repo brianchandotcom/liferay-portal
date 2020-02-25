@@ -24,7 +24,7 @@ export default function Editor({
 	id,
 	initialValue,
 	onChange,
-	placeholder
+	placeholder,
 }) {
 	const editorConfig =
 		config.defaultEditorConfigurations[configurationName].editorConfig;
@@ -73,7 +73,7 @@ export default function Editor({
 			...editorConfig,
 			enterMode: 1,
 			startupFocus: autoFocus,
-			title: false
+			title: false,
 		});
 
 		let ready = false;
@@ -132,5 +132,5 @@ Editor.propTypes = {
 	id: PropTypes.string.isRequired,
 	initialValue: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
-	placeholder: PropTypes.string.isRequired
+	placeholder: PropTypes.string.isRequired,
 };

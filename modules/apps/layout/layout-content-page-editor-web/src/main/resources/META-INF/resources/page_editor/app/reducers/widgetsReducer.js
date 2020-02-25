@@ -46,7 +46,7 @@ export default function widgetsReducer(widgets, action) {
 					);
 
 					nextWidgets = setWidgetUsage(nextWidgets, widgetPath, {
-						used: false
+						used: false,
 					});
 				}
 			});
@@ -79,7 +79,7 @@ function getWidgetPath(widgets, portletId, path = []) {
 		const subCategoryPortletPath = getWidgetPath(categories, portletId, [
 			...path,
 			categoryIndex.toString(),
-			'categories'
+			'categories',
 		]);
 
 		if (categoryPortletIndex !== -1) {
@@ -87,7 +87,7 @@ function getWidgetPath(widgets, portletId, path = []) {
 				...path,
 				categoryIndex,
 				'portlets',
-				categoryPortletIndex
+				categoryPortletIndex,
 			];
 		}
 
@@ -107,7 +107,7 @@ function setWidgetUsage(widgets, path, usage) {
 	if (!path.length) {
 		return {
 			...widgets,
-			used: usage.used
+			used: usage.used,
 		};
 	}
 
@@ -125,7 +125,11 @@ function setWidgetUsage(widgets, path, usage) {
 	else {
 		return {
 			...widgets,
-			[currentPath]: setWidgetUsage(widgets[currentPath], restPath, usage)
+			[currentPath]: setWidgetUsage(
+				widgets[currentPath],
+				restPath,
+				usage
+			),
 		};
 	}
 }

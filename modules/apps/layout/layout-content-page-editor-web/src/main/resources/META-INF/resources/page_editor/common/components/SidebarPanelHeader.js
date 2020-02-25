@@ -27,7 +27,7 @@ export default function SidebarPanelHeader({padded = true, ...props}) {
 				{
 					[props.className]: !!props.className,
 					'pt-2': padded,
-					'px-3': padded
+					'px-3': padded,
 				}
 			)}
 		/>
@@ -35,5 +35,5 @@ export default function SidebarPanelHeader({padded = true, ...props}) {
 }
 
 SidebarPanelHeader.propTypes = {
-	padded: PropTypes.bool
+	padded: PropTypes.bool,
 };

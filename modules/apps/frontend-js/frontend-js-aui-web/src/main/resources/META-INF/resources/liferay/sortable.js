@@ -76,11 +76,11 @@ AUI.add(
 					var delegateConfig = {
 						container: instance.get(STR_CONT),
 						dragConfig: {
-							groups: [id]
+							groups: [id],
 						},
 						invalid: instance.get('invalid'),
 						nodes: instance.get(STR_NODES),
-						target: true
+						target: true,
 					};
 
 					if (instance.get('handles')) {
@@ -93,13 +93,13 @@ AUI.add(
 
 					delegate.dd.plug(A.Plugin.DDProxy, {
 						cloneNode: true,
-						moveOnEnd: false
+						moveOnEnd: false,
 					});
 
 					instance.drop = new A.DD.Drop({
 						bubbleTarget: delegate,
 						groups: delegate.dd.get('groups'),
-						node: instance.get(STR_CONT)
+						node: instance.get(STR_CONT),
 					});
 
 					instance.drop.on(
@@ -113,19 +113,19 @@ AUI.add(
 						'drag:drag': A.bind('_dragMethod', instance),
 						'drag:end': A.bind('_onDragEnd', instance),
 						'drag:over': A.bind('_onDragOver', instance),
-						'drag:start': A.bind('_onDragStart', instance)
+						'drag:start': A.bind('_onDragStart', instance),
 					});
 
 					instance.delegate = delegate;
 
 					Sortable.reg(instance, id);
-				}
+				},
 			},
 			true
 		);
 	},
 	'',
 	{
-		requires: ['liferay-dd-proxy', 'sortable']
+		requires: ['liferay-dd-proxy', 'sortable'],
 	}
 );

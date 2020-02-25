@@ -23,7 +23,7 @@ const headerProps = {
 	handleClickAdd: jest.fn(),
 	handleClickBack: jest.fn(),
 	headerTitle,
-	showInfoIcon: true
+	showInfoIcon: true,
 };
 
 describe('Header', () => {
@@ -139,7 +139,7 @@ describe('Header', () => {
 		const props = {
 			...headerProps,
 			handleClickEdit: onClickEditMock,
-			showEditIcon: true
+			showEditIcon: true,
 		};
 
 		const {container} = render(<Header {...props} />);

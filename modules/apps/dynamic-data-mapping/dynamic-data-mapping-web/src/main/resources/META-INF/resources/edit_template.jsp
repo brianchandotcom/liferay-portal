@@ -184,14 +184,14 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 									event.domEvent.preventDefault();
 
 									window.location.href = '<%= viewHistoryURL %>';
-								}
-							}
-						}
+								},
+							},
+						},
 					];
 
 					new A.Toolbar({
 						boundingBox: '#<portlet:namespace />templateHistoryToolbar',
-						children: toolbarChildren
+						children: toolbarChildren,
 					}).render();
 				</aui:script>
 			</c:if>
@@ -395,8 +395,8 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						else {
 							values.attr('disabled', true);
 						}
-					}
-				}
+					},
+				},
 			});
 
 			selectSmallImageType(
@@ -419,7 +419,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						mvcPath: '/select_structure.jsp',
 						navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
 						showAncestorScopes: true,
-						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
+						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
 					},
 					function(event) {
 						if (
@@ -450,7 +450,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 				if (statusInput) {
 					Liferay.Util.setFormValues(form, {
-						statusInput: <%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>
+						statusInput: <%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>,
 					});
 				}
 

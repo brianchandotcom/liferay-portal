@@ -26,7 +26,7 @@ export const EditEntry = ({
 	dataDefinitionId,
 	dataRecordId,
 	ddmForm,
-	redirect
+	redirect,
 }) => {
 	const {basePortletURL} = useContext(AppContext);
 
@@ -49,13 +49,13 @@ export const EditEntry = ({
 			}
 
 			const dataRecord = {
-				dataRecordValues: {}
+				dataRecordValues: {},
 			};
 
 			visitor.mapFields(({fieldName, localizable, value}) => {
 				if (localizable) {
 					dataRecord.dataRecordValues[fieldName] = {
-						[themeDisplay.getLanguageId()]: value
+						[themeDisplay.getLanguageId()]: value,
 					};
 				}
 				else {
@@ -71,7 +71,7 @@ export const EditEntry = ({
 				openToast({
 					message,
 					title: Liferay.Language.get('success'),
-					type: 'success'
+					type: 'success',
 				});
 			};
 

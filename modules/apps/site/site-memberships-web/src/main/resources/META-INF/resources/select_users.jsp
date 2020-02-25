@@ -65,7 +65,7 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 
 		if (data.length) {
 			result = {
-				data: data
+				data: data,
 			};
 		}
 

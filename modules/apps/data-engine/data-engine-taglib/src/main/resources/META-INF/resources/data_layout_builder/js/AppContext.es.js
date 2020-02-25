@@ -28,7 +28,7 @@ import {
 	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD,
 	UPDATE_FOCUSED_FIELD,
 	UPDATE_IDS,
-	UPDATE_PAGES
+	UPDATE_PAGES,
 } from './actions.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
 import generateDataDefinitionFieldName from './utils/generateDataDefinitionFieldName.es';
@@ -38,26 +38,26 @@ const AppContext = createContext();
 const initialState = {
 	dataDefinition: {
 		dataDefinitionFields: [],
-		name: {}
+		name: {},
 	},
 	dataDefinitionId: 0,
 	dataLayout: {
 		dataLayoutPages: [],
 		name: {},
-		paginationMode: 'wizard'
+		paginationMode: 'wizard',
 	},
 	dataLayoutId: 0,
 	editingLanguageId: themeDisplay.getLanguageId(),
 	fieldTypes: [],
 	focusedCustomObjectField: {},
-	focusedField: {}
+	focusedField: {},
 };
 
 const addCustomObjectField = ({
 	dataDefinition,
 	dataLayoutBuilder,
 	fieldTypeName,
-	fieldTypes
+	fieldTypes,
 }) => {
 	const fieldType = fieldTypes.find(({name}) => name === fieldTypeName);
 	const dataDefinitionField = dataLayoutBuilder.getDefinitionField(fieldType);
@@ -65,9 +65,9 @@ const addCustomObjectField = ({
 	return {
 		...dataDefinitionField,
 		label: {
-			[themeDisplay.getLanguageId()]: fieldType.label
+			[themeDisplay.getLanguageId()]: fieldType.label,
 		},
-		name: generateDataDefinitionFieldName(dataDefinition, fieldType.label)
+		name: generateDataDefinitionFieldName(dataDefinition, fieldType.label),
 	};
 };
 
@@ -76,7 +76,7 @@ const deleteDataDefinitionField = (dataDefinition, fieldName) => {
 		...dataDefinition,
 		dataDefinitionFields: dataDefinition.dataDefinitionFields.filter(
 			field => field.name !== fieldName
-		)
+		),
 	};
 };
 
@@ -86,14 +86,14 @@ const deleteDataLayoutField = (dataLayout, fieldName) => {
 		dataLayoutPages: DataLayoutVisitor.deleteField(
 			dataLayout.dataLayoutPages,
 			fieldName
-		)
+		),
 	};
 };
 
 const editFocusedCustomObjectField = ({
 	focusedCustomObjectField,
 	propertyName,
-	propertyValue
+	propertyValue,
 }) => {
 	let localizableProperty = false;
 	const {settingsContext} = focusedCustomObjectField;
@@ -110,26 +110,26 @@ const editFocusedCustomObjectField = ({
 					...field,
 					localizedValue: {
 						...field.localizedValue,
-						[themeDisplay.getLanguageId()]: propertyValue
+						[themeDisplay.getLanguageId()]: propertyValue,
 					},
-					value: propertyValue
+					value: propertyValue,
 				};
 			}
 
 			return field;
-		})
+		}),
 	};
 
 	if (localizableProperty) {
 		propertyValue = {
-			[themeDisplay.getLanguageId()]: propertyValue
+			[themeDisplay.getLanguageId()]: propertyValue,
 		};
 	}
 
 	return {
 		...focusedCustomObjectField,
 		[propertyName]: propertyValue,
-		settingsContext: newSettingsContext
+		settingsContext: newSettingsContext,
 	};
 };
 
@@ -178,7 +178,7 @@ const createReducer = dataLayoutBuilder => {
 					dataDefinition,
 					dataLayoutBuilder,
 					fieldTypeName,
-					fieldTypes
+					fieldTypes,
 				});
 
 				return {
@@ -187,15 +187,15 @@ const createReducer = dataLayoutBuilder => {
 						...dataDefinition,
 						dataDefinitionFields: [
 							...dataDefinition.dataDefinitionFields,
-							newCustomObjectField
-						]
+							newCustomObjectField,
+						],
 					},
 					focusedCustomObjectField: {
 						...newCustomObjectField,
 						settingsContext: dataLayoutBuilder.getFieldSettingsContext(
 							newCustomObjectField
-						)
-					}
+						),
+					},
 				};
 			}
 			case DELETE_DATA_DEFINITION_FIELD: {
@@ -207,7 +207,7 @@ const createReducer = dataLayoutBuilder => {
 					dataDefinition: deleteDataDefinitionField(
 						dataDefinition,
 						fieldName
-					)
+					),
 				};
 			}
 			case DELETE_DATA_LAYOUT_FIELD: {
@@ -216,7 +216,7 @@ const createReducer = dataLayoutBuilder => {
 
 				return {
 					...state,
-					dataLayout: deleteDataLayoutField(dataLayout, fieldName)
+					dataLayout: deleteDataLayoutField(dataLayout, fieldName),
 				};
 			}
 			case EDIT_CUSTOM_OBJECT_FIELD: {
@@ -224,7 +224,7 @@ const createReducer = dataLayoutBuilder => {
 				const editedFocusedCustomObjectField = editFocusedCustomObjectField(
 					{
 						...action.payload,
-						focusedCustomObjectField
+						focusedCustomObjectField,
 					}
 				);
 				const {settingsContext} = editedFocusedCustomObjectField;
@@ -246,12 +246,12 @@ const createReducer = dataLayoutBuilder => {
 
 								return dataDefinitionField;
 							}
-						)
+						),
 					},
 					focusedCustomObjectField: {
 						...editedFocusedCustomObjectField,
-						settingsContext
-					}
+						settingsContext,
+					},
 				};
 			}
 			case UPDATE_DATA_DEFINITION: {
@@ -261,8 +261,8 @@ const createReducer = dataLayoutBuilder => {
 					...state,
 					dataDefinition: {
 						...state.dataDefinition,
-						...dataDefinition
-					}
+						...dataDefinition,
+					},
 				};
 			}
 			case UPDATE_DATA_LAYOUT: {
@@ -272,8 +272,8 @@ const createReducer = dataLayoutBuilder => {
 					...state,
 					dataLayout: {
 						...state.dataLayout,
-						...dataLayout
-					}
+						...dataLayout,
+					},
 				};
 			}
 			case UPDATE_DATA_LAYOUT_NAME: {
@@ -283,14 +283,14 @@ const createReducer = dataLayoutBuilder => {
 					...state,
 					dataLayout: {
 						...state.dataLayout,
-						name
-					}
+						name,
+					},
 				};
 			}
 			case UPDATE_EDITING_LANGUAGE_ID: {
 				return {
 					...state,
-					editingLanguageId: action.payload
+					editingLanguageId: action.payload,
 				};
 			}
 			case UPDATE_FIELD_TYPES: {
@@ -298,7 +298,7 @@ const createReducer = dataLayoutBuilder => {
 
 				return {
 					...state,
-					fieldTypes: fieldTypes.filter(({system}) => !system)
+					fieldTypes: fieldTypes.filter(({system}) => !system),
 				};
 			}
 			case UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD: {
@@ -310,19 +310,19 @@ const createReducer = dataLayoutBuilder => {
 						...dataDefinitionField,
 						settingsContext: dataLayoutBuilder.getFieldSettingsContext(
 							dataDefinitionField
-						)
+						),
 					};
 
 					return {
 						...state,
 						focusedCustomObjectField,
-						focusedField: {}
+						focusedField: {},
 					};
 				}
 
 				return {
 					...state,
-					focusedCustomObjectField: {}
+					focusedCustomObjectField: {},
 				};
 			}
 			case UPDATE_FOCUSED_FIELD: {
@@ -336,15 +336,15 @@ const createReducer = dataLayoutBuilder => {
 							...focusedField,
 							settingsContext: {
 								...focusedField.settingsContext,
-								editingLanguageId: state.editingLanguageId
-							}
-						}
+								editingLanguageId: state.editingLanguageId,
+							},
+						},
 					};
 				}
 
 				return {
 					...state,
-					focusedField: {}
+					focusedField: {},
 				};
 			}
 			case UPDATE_IDS: {
@@ -353,7 +353,7 @@ const createReducer = dataLayoutBuilder => {
 				return {
 					...state,
 					dataDefinitionId,
-					dataLayoutId
+					dataLayoutId,
 				};
 			}
 			case UPDATE_PAGES: {
@@ -367,12 +367,12 @@ const createReducer = dataLayoutBuilder => {
 							dataLayoutBuilder,
 							dataDefinition,
 							dataLayout
-						)
+						),
 					},
 					dataLayout: {
 						...dataLayout,
-						...setDataLayout(dataLayoutBuilder)
-					}
+						...setDataLayout(dataLayoutBuilder),
+					},
 				};
 			}
 			default:

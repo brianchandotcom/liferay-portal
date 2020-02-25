@@ -40,13 +40,13 @@ class PageRenderer extends Component {
 		if (core.isObject(page.description)) {
 			page = {
 				...page,
-				description: page.description[editingLanguageId]
+				description: page.description[editingLanguageId],
 			};
 		}
 		if (core.isObject(page.title)) {
 			page = {
 				...page,
-				title: page.title[editingLanguageId]
+				title: page.title[editingLanguageId],
 			};
 		}
 
@@ -81,7 +81,7 @@ class PageRenderer extends Component {
 		return {
 			...states,
 			empty: this.isEmptyPage(states.page),
-			page: this.getPage(states.page)
+			page: this.getPage(states.page),
 		};
 	}
 
@@ -94,7 +94,7 @@ class PageRenderer extends Component {
 		const indexes = FormSupport.getIndexes(fieldNode);
 
 		this.emit('fieldClicked', {
-			...indexes
+			...indexes,
 		});
 	}
 
@@ -148,7 +148,7 @@ PageRenderer.STATE = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
 };
 
 Soy.register(PageRenderer, templates);

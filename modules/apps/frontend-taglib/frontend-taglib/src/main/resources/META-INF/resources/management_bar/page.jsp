@@ -91,7 +91,7 @@
 		var managementBar = new Liferay.ManagementBar({
 			namespace: '<%= namespace %>',
 			searchContainerId: '<%= namespace + searchContainerId %>',
-			secondaryBar: '#actionButtons'
+			secondaryBar: '#actionButtons',
 		});
 
 		var clearManagementBarHandles = function(event) {

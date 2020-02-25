@@ -20,7 +20,7 @@ import {parse, stringify} from '../router/queryString.es';
 
 const SearchField = ({
 	disabled,
-	placeholder = Liferay.Language.get('search-for')
+	placeholder = Liferay.Language.get('search-for'),
 }) => {
 	const routerProps = useRouter();
 

@@ -169,7 +169,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 		setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>',
 		timeZoneOffset: <%= timeZoneOffset %>,
 		userPreferencesNode:
-			'#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
+			'#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>',
 	});
 
 	Liferay.component('<portlet:namespace />ExportImportComponent', exportImport);
@@ -208,7 +208,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', [
 		'<portlet:namespace />startEndDate',
-		'<portlet:namespace />rangeLastInputs'
+		'<portlet:namespace />rangeLastInputs',
 	]);
 	Liferay.Util.toggleRadio(
 		'<portlet:namespace />rangeDateRange',

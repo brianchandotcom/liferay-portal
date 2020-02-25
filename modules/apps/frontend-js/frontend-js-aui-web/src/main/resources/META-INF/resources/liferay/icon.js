@@ -85,11 +85,11 @@ AUI.add(
 			_useDialog(event) {
 				Liferay.Util.openInDialog(event, {
 					dialog: {
-						destroyOnHide: true
+						destroyOnHide: true,
 					},
 					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					}
+						bodyCssClass: 'dialog-with-footer',
+					},
 				});
 			},
 
@@ -122,13 +122,13 @@ AUI.add(
 				Liferay.once('screenLoad', () => {
 					delete _ICON_REGISTRY[config.id];
 				});
-			}
+			},
 		};
 
 		Liferay.Icon = Icon;
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-util-window']
+		requires: ['aui-base', 'liferay-util-window'],
 	}
 );

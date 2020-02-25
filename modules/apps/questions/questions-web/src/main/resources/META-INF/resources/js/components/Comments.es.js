@@ -25,7 +25,7 @@ export default ({
 	commentsChange,
 	entityId,
 	showNewComment,
-	showNewCommentChange
+	showNewCommentChange,
 }) => {
 	const [comment, setComment] = useState('');
 
@@ -41,7 +41,7 @@ export default ({
 		comment => {
 			if (commentsChange) {
 				return commentsChange([
-					...comments.filter(o => o.id !== comment.id)
+					...comments.filter(o => o.id !== comment.id),
 				]);
 			}
 

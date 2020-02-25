@@ -29,7 +29,7 @@ class OpenStreetMapDialog extends State {
 
 		this._dialog = L.popup({
 			className: 'leaflet-popup',
-			minWidth: 400
+			minWidth: 400,
 		});
 	}
 
@@ -62,7 +62,7 @@ OpenStreetMapDialog.STATE = {
 	 * @review
 	 * @type {Object}
 	 */
-	map: Config.object()
+	map: Config.object(),
 };
 
 export default OpenStreetMapDialog;

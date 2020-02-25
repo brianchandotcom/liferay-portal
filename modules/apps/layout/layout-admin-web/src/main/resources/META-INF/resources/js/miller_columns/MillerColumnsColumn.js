@@ -37,7 +37,7 @@ const MillerColumnsColumn = ({
 	namespace,
 	onItemDrop,
 	onItemStayHover,
-	parent
+	parent,
 }) => {
 	const ref = useRef();
 
@@ -49,13 +49,13 @@ const MillerColumnsColumn = ({
 			);
 		},
 		collect: monitor => ({
-			canDrop: !!monitor.canDrop()
+			canDrop: !!monitor.canDrop(),
 		}),
 		drop(source) {
 			if (canDrop) {
 				onItemDrop(source.id, parent.id);
 			}
-		}
+		},
 	});
 
 	useEffect(() => {
@@ -67,7 +67,7 @@ const MillerColumnsColumn = ({
 			className={classNames(
 				'col-11 col-lg-4 col-md-6 miller-columns-col show-quick-actions-on-hover',
 				{
-					'drop-target': canDrop
+					'drop-target': canDrop,
 				}
 			)}
 			ref={ref}

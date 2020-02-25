@@ -62,7 +62,7 @@ PagesTreeEventHandler.STATE = {
 	deleteLayoutURL: Config.string(),
 	duplicateLayoutURL: Config.string(),
 	editLayoutURL: Config.string(),
-	portletNamescape: Config.string()
+	portletNamescape: Config.string(),
 };
 
 export default PagesTreeEventHandler;

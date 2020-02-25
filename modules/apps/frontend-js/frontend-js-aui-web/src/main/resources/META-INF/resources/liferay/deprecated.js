@@ -33,7 +33,7 @@
 		'/': '&#047;',
 		'<': '&lt;',
 		'>': '&gt;',
-		'`': '&#096;'
+		'`': '&#096;',
 	};
 
 	var MAP_HTML_CHARS_UNESCAPED = {};
@@ -497,7 +497,7 @@
 					el = A.one(el);
 
 					var styles = {
-						width: '98%'
+						width: '98%',
 					};
 
 					if (event) {

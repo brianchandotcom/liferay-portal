@@ -16,7 +16,7 @@ window.AlloyEditor = {
 	Selections: [
 		{
 			buttons: ['linkEdit'],
-			name: 'link'
+			name: 'link',
 		},
 		{
 			buttons: [
@@ -25,11 +25,11 @@ window.AlloyEditor = {
 				'italic',
 				'underline',
 				'link',
-				'twitter'
+				'twitter',
 			],
-			name: 'text'
-		}
-	]
+			name: 'text',
+		},
+	],
 };
 
 window.AUI = () => ({
@@ -43,13 +43,13 @@ window.AUI = () => ({
 					getHTML: () => 'test',
 					getNativeEditor: () => ({
 						on: () => true,
-						setData: () => false
-					})
-				})
+						setData: () => false,
+					}),
+				}),
 			}),
 			one: () => ({
-				innerHTML: () => {}
-			})
+				innerHTML: () => {},
+			}),
 		});
-	}
+	},
 });

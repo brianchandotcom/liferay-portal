@@ -54,7 +54,7 @@ describe('ScrollTracker', () => {
 			};
 
 			Object.defineProperty(document.body, 'clientHeight', {
-				value: 4000
+				value: 4000,
 			});
 		});
 
@@ -76,7 +76,7 @@ describe('ScrollTracker', () => {
 				return {
 					bottom: 1600,
 					height: 500,
-					top: 1100
+					top: 1100,
 				};
 			});
 
@@ -103,7 +103,7 @@ describe('ScrollTracker', () => {
 				return {
 					bottom: -1100,
 					height: 500,
-					top: -1600
+					top: -1600,
 				};
 			});
 
@@ -130,7 +130,7 @@ describe('ScrollTracker', () => {
 				return {
 					bottom: 900,
 					height: 1000,
-					top: -100
+					top: -100,
 				};
 			});
 

@@ -59,7 +59,7 @@
 					}
 				}
 			}
-		}
+		},
 	};
 
 	Liferay.DOMTaskRunner = DOMTaskRunner;

@@ -90,9 +90,9 @@ if (user2 != null) {
 						event,
 						'<portlet:actionURL name="requestSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_BI_CONNECTION) %>" /></portlet:actionURL>'
 					);
-				}
+				},
 			},
-			render: true
+			render: true,
 		})
 	);
 
@@ -107,9 +107,9 @@ if (user2 != null) {
 						event,
 						'<portlet:actionURL name="deleteSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_BI_CONNECTION) %>" /></portlet:actionURL>'
 					);
-				}
+				},
 			},
-			render: true
+			render: true,
 		})
 	);
 
@@ -124,9 +124,9 @@ if (user2 != null) {
 						event,
 						'<portlet:actionURL name="addSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_FOLLOWER) %>" /></portlet:actionURL>'
 					);
-				}
+				},
 			},
-			render: true
+			render: true,
 		})
 	);
 
@@ -141,9 +141,9 @@ if (user2 != null) {
 						event,
 						'<portlet:actionURL name="deleteSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_FOLLOWER) %>" /></portlet:actionURL>'
 					);
-				}
+				},
 			},
-			render: true
+			render: true,
 		})
 	);
 
@@ -158,9 +158,9 @@ if (user2 != null) {
 						event,
 						'<portlet:actionURL name="addSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_ENEMY) %>" /></portlet:actionURL>'
 					);
-				}
+				},
 			},
-			render: true
+			render: true,
 		})
 	);
 
@@ -175,9 +175,9 @@ if (user2 != null) {
 						event,
 						'<portlet:actionURL name="deleteSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_ENEMY) %>" /></portlet:actionURL>'
 					);
-				}
+				},
 			},
-			render: true
+			render: true,
 		})
 	);
 
@@ -199,15 +199,15 @@ if (user2 != null) {
 								A.all('.lfr-contact-grid-item input').val();
 						</c:otherwise>
 					</c:choose>
-				}
-			}
+				},
+			},
 		})
 	);
 
 	var contactsToolbar = new A.Toolbar({
 		activeState: false,
 		boundingBox: buttonRow,
-		children: contactsToolbarChildren
+		children: contactsToolbarChildren,
 	}).render();
 
 	var editToolbar = A.one('.edit-toolbar');
@@ -266,12 +266,12 @@ if (user2 != null) {
 			<portlet:namespace />jsonFormat: true,
 			<portlet:namespace />keywords: searchInput.get('value'),
 			<portlet:namespace />start: 0,
-			<portlet:namespace />userIds: userIds.join()
+			<portlet:namespace />userIds: userIds.join(),
 		});
 
 		Liferay.Util.fetch(uri, {
 			body: data,
-			method: 'POST'
+			method: 'POST',
 		})
 			.then(function(response) {
 				return response.json();

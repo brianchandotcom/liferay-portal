@@ -23,7 +23,7 @@ const ENDPOINT_URL = 'https://ac-server.io';
 const FLUSH_INTERVAL = 100;
 const INITIAL_CONFIG = {
 	dataSourceId: '1234',
-	endpointUrl: ENDPOINT_URL
+	endpointUrl: ENDPOINT_URL,
 };
 const MOCKED_REQUEST_DURATION = 5000;
 
@@ -45,7 +45,7 @@ function sendDummyEvents(client, eventsNumber = 5) {
 		const properties = {
 			a: 1,
 			b: 2,
-			c: 3
+			c: 3,
 		};
 
 		client.send(eventId, applicationId, properties);
@@ -68,9 +68,9 @@ describe('Analytics', () => {
 				get() {
 					return {
 						loadEventStart: 1,
-						navigationStart: 0
+						navigationStart: 0,
 					};
-				}
+				},
 			});
 		}
 	});
@@ -126,7 +126,7 @@ describe('Analytics', () => {
 
 			Analytics = AnalyticsClient.create({
 				flushInterval: FLUSH_INTERVAL,
-				...INITIAL_CONFIG
+				...INITIAL_CONFIG,
 			});
 
 			const flush = jest.spyOn(Analytics, 'flush');
@@ -162,7 +162,7 @@ describe('Analytics', () => {
 
 			await Analytics.setIdentity({
 				email: 'john@liferay.com',
-				name: 'John'
+				name: 'John',
 			});
 
 			const currentIdentityHash = localStorage.getItem(
@@ -228,7 +228,7 @@ describe('Analytics', () => {
 
 			Analytics = AnalyticsClient.create({
 				flushInterval: FLUSH_INTERVAL * 10,
-				...INITIAL_CONFIG
+				...INITIAL_CONFIG,
 			});
 
 			fetchMock.mock(/ac-server/i, () => {
@@ -259,7 +259,7 @@ describe('Analytics', () => {
 
 			await Analytics.setIdentity({
 				email: 'john@liferay.com',
-				name: 'John'
+				name: 'John',
 			});
 
 			expect(localStorage.getItem(STORAGE_KEY_USER_ID)).toEqual(userId);
@@ -271,14 +271,14 @@ describe('Analytics', () => {
 
 			await Analytics.setIdentity({
 				email: 'john@liferay.com',
-				name: 'John'
+				name: 'John',
 			});
 
 			const firstUserId = localStorage.getItem(STORAGE_KEY_USER_ID);
 
 			await Analytics.setIdentity({
 				email: 'brian@liferay.com',
-				name: 'Brian'
+				name: 'Brian',
 			});
 
 			const secondUserId = localStorage.getItem(STORAGE_KEY_USER_ID);
@@ -301,7 +301,7 @@ describe('Analytics', () => {
 
 			await Analytics.setIdentity({
 				email: 'john@liferay.com',
-				name: 'John'
+				name: 'John',
 			});
 
 			Analytics.reset();
@@ -335,8 +335,8 @@ describe('Analytics', () => {
 				expect.objectContaining({
 					applicationId,
 					eventId,
-					properties
-				})
+					properties,
+				}),
 			]);
 		});
 

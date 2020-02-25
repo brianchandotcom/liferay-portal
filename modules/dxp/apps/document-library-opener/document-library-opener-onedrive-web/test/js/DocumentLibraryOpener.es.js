@@ -22,7 +22,7 @@ function replyAndWait({body = {}, ms}) {
 		}, 0);
 
 		return Promise.resolve({
-			body: JSON.stringify(body)
+			body: JSON.stringify(body),
 		});
 	};
 }
@@ -41,7 +41,7 @@ describe('DocumentLibraryOpener', () => {
 			.mockImplementation((_, cb) => cb());
 		global.Liferay.Util.getWindow = () => ({hide: jest.fn()});
 		global.themeDisplay = {
-			getPathThemeImages: jest.fn().mockImplementation(() => '//images/')
+			getPathThemeImages: jest.fn().mockImplementation(() => '//images/'),
 		};
 
 		jest.useFakeTimers();
@@ -66,17 +66,17 @@ describe('DocumentLibraryOpener', () => {
 				fetch.mockResponses(
 					[
 						JSON.stringify({
-							oneDriveBackgroundTaskStatusURL: STATUS_URL
-						})
+							oneDriveBackgroundTaskStatusURL: STATUS_URL,
+						}),
 					],
 					[
 						replyAndWait({
 							body: {
 								complete: true,
-								office365EditURL: OFFICE365_EDIT_URL
+								office365EditURL: OFFICE365_EDIT_URL,
 							},
-							ms: 2000
-						})
+							ms: 2000,
+						}),
 					]
 				);
 
@@ -112,25 +112,25 @@ describe('DocumentLibraryOpener', () => {
 				fetch.mockResponses(
 					[
 						JSON.stringify({
-							oneDriveBackgroundTaskStatusURL: STATUS_URL
-						})
+							oneDriveBackgroundTaskStatusURL: STATUS_URL,
+						}),
 					],
 					[
 						replyAndWait({
 							body: {
-								complete: false
+								complete: false,
 							},
-							ms: 500
-						})
+							ms: 500,
+						}),
 					],
 					[
 						replyAndWait({
 							body: {
 								complete: true,
-								office365EditURL: OFFICE365_EDIT_URL
+								office365EditURL: OFFICE365_EDIT_URL,
 							},
-							ms: 2000
-						})
+							ms: 2000,
+						}),
 					]
 				);
 
@@ -170,24 +170,24 @@ describe('DocumentLibraryOpener', () => {
 				fetch.mockResponses(
 					[
 						JSON.stringify({
-							oneDriveBackgroundTaskStatusURL: STATUS_URL
-						})
+							oneDriveBackgroundTaskStatusURL: STATUS_URL,
+						}),
 					],
 					[
 						replyAndWait({
 							body: {
-								complete: false
+								complete: false,
 							},
-							ms: 500
-						})
+							ms: 500,
+						}),
 					],
 					[
 						replyAndWait({
 							body: {
-								error: true
+								error: true,
 							},
-							ms: 2000
-						})
+							ms: 2000,
+						}),
 					]
 				);
 
@@ -229,16 +229,16 @@ describe('DocumentLibraryOpener', () => {
 					replyAndWait({
 						body: {
 							complete: true,
-							office365EditURL: OFFICE365_EDIT_URL
+							office365EditURL: OFFICE365_EDIT_URL,
 						},
-						ms: 2000
-					})
+						ms: 2000,
+					}),
 				]);
 
 				return opener.open({
 					dialogMessage:
 						'you-are-being-redirected-to-an-external-editor-to-create-this-document',
-					statusURL: STATUS_URL
+					statusURL: STATUS_URL,
 				});
 			});
 
@@ -272,17 +272,17 @@ describe('DocumentLibraryOpener', () => {
 					replyAndWait({
 						body: {
 							complete: true,
-							office365EditURL: OFFICE365_EDIT_URL
+							office365EditURL: OFFICE365_EDIT_URL,
 						},
-						ms: 2000
-					})
+						ms: 2000,
+					}),
 				]);
 
 				return opener.open({
 					dialogMessage:
 						'you-are-being-redirected-to-an-external-editor-to-create-this-document',
 					refresh: true,
-					statusURL: STATUS_URL
+					statusURL: STATUS_URL,
 				});
 			});
 

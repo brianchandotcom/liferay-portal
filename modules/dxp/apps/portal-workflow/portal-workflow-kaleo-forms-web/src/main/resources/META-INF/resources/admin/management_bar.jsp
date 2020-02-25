@@ -60,7 +60,7 @@
 	};
 
 	var ACTIONS = {
-		deleteKaleoProcess: deleteKaleoProcess
+		deleteKaleoProcess: deleteKaleoProcess,
 	};
 
 	Liferay.componentReady('kaleoFormsManagementToolbar').then(function(

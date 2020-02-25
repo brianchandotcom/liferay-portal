@@ -175,18 +175,18 @@
 					data: [
 						Math.random() * 100,
 						Math.random() * 100,
-						Math.random() * 100
+						Math.random() * 100,
 					],
-					id: 'data1'
+					id: 'data1',
 				},
 				{
 					data: [
 						Math.random() * 100,
 						Math.random() * 100,
-						Math.random() * 100
+						Math.random() * 100,
 					],
-					id: 'data2'
-				}
+					id: 'data2',
+				},
 			]);
 		};
 	});
@@ -208,9 +208,9 @@
 					[220, 245, 305],
 					[240, 275, 295],
 					[200, 235, 325],
-					[110, 145, 235]
+					[110, 145, 235],
 				],
-				id: 'data3'
+				id: 'data3',
 			};
 
 			chart.data = new Promise(function(resolve, reject) {

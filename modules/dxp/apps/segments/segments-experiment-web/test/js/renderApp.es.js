@@ -27,7 +27,7 @@ export default function renderApp({
 	APIService = {},
 	selectedSegmentsExperienceId,
 	type = 'content',
-	winnerSegmentsVariantId = null
+	winnerSegmentsVariantId = null,
 } = {}) {
 	const {
 		createExperiment = () => {},
@@ -44,7 +44,7 @@ export default function renderApp({
 		),
 		runExperiment = jest.fn(
 			_runExperimentMockGenerator(initialSegmentsExperiment)
-		)
+		),
 	} = APIService;
 
 	const renderMethods = render(
@@ -59,14 +59,14 @@ export default function renderApp({
 					editVariant,
 					getEstimatedTime,
 					publishExperience,
-					runExperiment
+					runExperiment,
 				},
 				assetsPath: '',
 				page: {
 					classNameId,
 					classPK,
-					type
-				}
+					type,
+				},
 			}}
 		>
 			<SegmentsExperimentsSidebar
@@ -80,7 +80,7 @@ export default function renderApp({
 			/>
 		</SegmentsExperimentsContext.Provider>,
 		{
-			baseElement: document.body
+			baseElement: document.body,
 		}
 	);
 
@@ -91,8 +91,8 @@ export default function renderApp({
 			editExperimentStatus,
 			getEstimatedTime,
 			publishExperience,
-			runExperiment
-		}
+			runExperiment,
+		},
 	};
 }
 
@@ -106,28 +106,28 @@ const _createVariantMock = variant =>
 			segmentsExperienceId: JSON.stringify(Math.random()),
 			segmentsExperimentId: JSON.stringify(Math.random()),
 			segmentsExperimentRelId: JSON.stringify(Math.random()),
-			split: 0.0
-		}
+			split: 0.0,
+		},
 	});
 
 const _getEstimatedTimeMock = () =>
 	Promise.resolve({
-		segmentsExperimentEstimatedDaysDuration: DEFAULT_ESTIMATED_DAYS.value
+		segmentsExperimentEstimatedDaysDuration: DEFAULT_ESTIMATED_DAYS.value,
 	});
 
 const _publishExperienceMockGenerator = experiment => ({
 	status,
-	winnerSegmentsExperienceId
+	winnerSegmentsExperienceId,
 }) =>
 	Promise.resolve({
 		segmentsExperiment: {
 			...experiment,
 			status: {
 				label: 'completed',
-				value: status
-			}
+				value: status,
+			},
 		},
-		winnerSegmentsExperienceId
+		winnerSegmentsExperienceId,
 	});
 
 const _runExperimentMockGenerator = segmentsExperiment => ({status}) =>
@@ -135,8 +135,8 @@ const _runExperimentMockGenerator = segmentsExperiment => ({status}) =>
 		segmentsExperiment: {
 			...segmentsExperiment,
 			editable: false,
-			status: {label: 'running', value: status}
-		}
+			status: {label: 'running', value: status},
+		},
 	});
 
 const _editExperimentStatusMockGenerator = experiment => ({status}) => {
@@ -144,8 +144,8 @@ const _editExperimentStatusMockGenerator = experiment => ({status}) => {
 		segmentsExperiment: {
 			...experiment,
 			status: {
-				value: status
-			}
-		}
+				value: status,
+			},
+		},
 	});
 };

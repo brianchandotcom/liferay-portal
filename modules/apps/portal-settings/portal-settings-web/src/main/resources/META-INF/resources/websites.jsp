@@ -113,7 +113,7 @@
 			new Liferay.AutoFields({
 				contentBox: '#<portlet:namespace />websites',
 				fieldIndexes: '<portlet:namespace />websitesIndexes',
-				namespace: '<portlet:namespace />'
+				namespace: '<portlet:namespace />',
 			}).render();
 		</aui:script>
 	</c:when>

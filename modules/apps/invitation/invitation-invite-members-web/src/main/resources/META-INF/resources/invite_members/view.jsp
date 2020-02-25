@@ -43,13 +43,13 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 					dialog: {
 						cssClass: 'so-portlet-invite-members',
 						destroyOnHide: true,
-						width: 700
+						width: 700,
 					},
 					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
+						bodyCssClass: 'dialog-with-footer',
 					},
 					title: '<%= portletDisplay.getTitle() %>',
-					uri: '<%= HtmlUtil.escapeJS(inviteURL) %>'
+					uri: '<%= HtmlUtil.escapeJS(inviteURL) %>',
 				});
 			});
 		</aui:script>

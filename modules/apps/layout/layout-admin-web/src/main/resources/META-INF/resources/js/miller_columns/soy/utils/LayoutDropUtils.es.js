@@ -17,12 +17,12 @@ import {
 	columnIsItemChild,
 	getColumnActiveItem,
 	getItemColumn,
-	getItemColumnIndex
+	getItemColumnIndex,
 } from './LayoutGetUtils.es';
 import {
 	appendItemToColumn,
 	moveItemInside,
-	removeItem
+	removeItem,
 } from './LayoutUpdateUtils.es';
 
 /**
@@ -99,7 +99,7 @@ function dropItemInsideColumn(layoutColumns, sourceItem, targetColumnIndex) {
 	return {
 		layoutColumns: nextLayoutColumns,
 		newParentPlid,
-		priority
+		priority,
 	};
 }
 
@@ -146,7 +146,7 @@ function dropItemInsideItem(
 	return {
 		layoutColumns: nextLayoutColumns,
 		newParentPlid: targetItem.plid,
-		priority
+		priority,
 	};
 }
 
@@ -194,7 +194,7 @@ function dropItemNextToItem(
 	return {
 		layoutColumns: nextLayoutColumns,
 		newParentPlid: parentPlid,
-		priority
+		priority,
 	};
 }
 
@@ -202,5 +202,5 @@ export {
 	dropIsValid,
 	dropItemInsideColumn,
 	dropItemInsideItem,
-	dropItemNextToItem
+	dropItemNextToItem,
 };

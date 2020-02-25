@@ -128,7 +128,7 @@ if (!GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(
 					rangeLastNode: '#rangeLast',
 					rangeLastPublishNode: '#rangeLastPublish',
 					ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
-					timeZoneOffset: <%= timeZoneOffset %>
+					timeZoneOffset: <%= timeZoneOffset %>,
 				});
 
 				Liferay.component('<portlet:namespace />ExportImportComponent', exportImport);
@@ -183,12 +183,12 @@ if (!GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(
 					'<portlet:namespace />portletMetaDataList'
 				);
 				Liferay.Util.toggleRadio('<portlet:namespace />portletMetaDataAll', '', [
-					'<portlet:namespace />portletMetaDataList'
+					'<portlet:namespace />portletMetaDataList',
 				]);
 
 				Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', [
 					'<portlet:namespace />startEndDate',
-					'<portlet:namespace />rangeLastInputs'
+					'<portlet:namespace />rangeLastInputs',
 				]);
 				Liferay.Util.toggleRadio(
 					'<portlet:namespace />rangeDateRange',
@@ -197,7 +197,7 @@ if (!GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(
 				);
 				Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish', '', [
 					'<portlet:namespace />startEndDate',
-					'<portlet:namespace />rangeLastInputs'
+					'<portlet:namespace />rangeLastInputs',
 				]);
 				Liferay.Util.toggleRadio(
 					'<portlet:namespace />rangeLast',

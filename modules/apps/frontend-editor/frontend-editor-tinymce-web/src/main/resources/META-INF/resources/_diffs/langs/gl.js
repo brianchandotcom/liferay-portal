@@ -208,5 +208,5 @@ tinymce.addI18n('gl', {
 	Tools: 'Ferramentas',
 	View: 'Ver',
 	Table: 'T\u00e1boa',
-	Format: 'Formato'
+	Format: 'Formato',
 });

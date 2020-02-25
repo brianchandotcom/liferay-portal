@@ -26,7 +26,7 @@ const Collaborators = ({
 	classNameId,
 	classPK,
 	collaboratorsResourceURL,
-	initialData
+	initialData,
 }) => {
 	const [data, setData] = useState(initialData);
 
@@ -165,7 +165,7 @@ const userShape = PropTypes.shape({
 	displayURL: PropTypes.string,
 	fullName: PropTypes.string.isRequired,
 	portraitURL: PropTypes.string,
-	userId: PropTypes.string.isRequired
+	userId: PropTypes.string.isRequired,
 });
 
 Collaborators.propTypes = {
@@ -176,8 +176,8 @@ Collaborators.propTypes = {
 	initialData: PropTypes.shape({
 		collaborators: PropTypes.arrayOf(userShape).isRequired,
 		owner: userShape.isRequired,
-		total: PropTypes.number.isRequired
-	}).isRequired
+		total: PropTypes.number.isRequired,
+	}).isRequired,
 };
 
 export default Collaborators;

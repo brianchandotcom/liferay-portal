@@ -543,7 +543,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 			%>
 
 			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(returnType) %>',
-			uploadItemURL: '<%= uploadURL.toString() %>'
+			uploadItemURL: '<%= uploadURL.toString() %>',
 		</c:if>
 	});
 

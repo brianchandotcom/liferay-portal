@@ -431,7 +431,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 						'<portlet:resourceURL id="getSelectedContacts" />',
 					maxResultCount: <%= ContactsConstants.MAX_RESULT_COUNT %>,
 					namespace: '<portlet:namespace />',
-					showIcon: '<%= showIcon %>'
+					showIcon: '<%= showIcon %>',
 				});
 			});
 
@@ -515,14 +515,14 @@ portletURL.setWindowState(WindowState.NORMAL);
 							contactFilterSelect.get('value') ||
 							'<%= ContactsConstants.FILTER_BY_DEFAULT %>',
 						<portlet:namespace />keywords: searchInput.get('value'),
-						<portlet:namespace />start: start
+						<portlet:namespace />start: start,
 					});
 
 					Liferay.Util.fetch(
 						'<portlet:resourceURL id="getContacts"><portlet:param name="portletResource" value="<%= portletResource %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:resourceURL>',
 						{
 							body: data,
-							method: 'POST'
+							method: 'POST',
 						}
 					)
 						.then(function(response) {
@@ -544,14 +544,14 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 					if (checkBox.get('checked')) {
 						var data = new URLSearchParams({
-							<portlet:namespace />userId: userId
+							<portlet:namespace />userId: userId,
 						});
 
 						Liferay.Util.fetch(
 							'<portlet:resourceURL id="getContact"><portlet:param name="portletResource" value="<%= portletResource %>" /></portlet:resourceURL>',
 							{
 								body: data,
-								method: 'POST'
+								method: 'POST',
 							}
 						)
 							.then(function(response) {
@@ -584,7 +584,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 					data.append(<portlet:namespace />userId, userId);
 
 					Liferay.Util.fetch(node.getAttribute('data-viewSummaryURL'), {
-						body: data
+						body: data,
 					})
 						.then(function(response) {
 							return response.text();

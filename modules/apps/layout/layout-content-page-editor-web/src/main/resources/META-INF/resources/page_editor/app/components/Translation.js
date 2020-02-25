@@ -42,12 +42,12 @@ const getEditableValues = fragmentEntryLinks =>
 				fragmentEntryLink.editableValues[
 					BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
 				] || {}
-			)
+			),
 		])
 		.reduce(
 			(editableValuesA, editableValuesB) => [
 				...editableValuesA,
-				...editableValuesB
+				...editableValuesB,
 			],
 			[]
 		);
@@ -60,7 +60,7 @@ const isTranslated = (editableValue, languageId, segmentExperienceId) =>
 const getTranslationStatus = ({
 	editableValuesLength,
 	isDefault,
-	translatedValuesLength
+	translatedValuesLength,
 }) => {
 	if (isDefault) {
 		return TRANSLATION_STATUS_TYPE.default;
@@ -82,7 +82,7 @@ const TRANSLATION_STATUS_LANGUAGE = {
 	[TRANSLATION_STATUS_TYPE.translating]: Liferay.Language.get('translating'),
 	[TRANSLATION_STATUS_TYPE.untranslated]: Liferay.Language.get(
 		'not-translated'
-	)
+	),
 };
 
 const TranslationItem = ({
@@ -93,12 +93,12 @@ const TranslationItem = ({
 	languageId,
 	languageLabel,
 	onClick,
-	translatedValuesLength
+	translatedValuesLength,
 }) => {
 	const status = getTranslationStatus({
 		editableValuesLength,
 		isDefault,
-		translatedValuesLength
+		translatedValuesLength,
 	});
 
 	return (
@@ -130,7 +130,7 @@ export default function Translation({
 	defaultLanguageId,
 	dispatch,
 	fragmentEntryLinks,
-	languageId
+	languageId,
 }) {
 	const [active, setActive] = useState(false);
 	const segmentsExperienceId = useSelector(
@@ -149,18 +149,18 @@ export default function Translation({
 
 		return Object.keys({
 			[defaultLanguageId]: defaultLanguage,
-			...availableLanguagesMut
+			...availableLanguagesMut,
 		}).map(languageId => ({
 			languageId,
 			values: editableValues.filter(editableValue =>
 				isTranslated(editableValue, languageId, segmentsExperienceId)
-			)
+			),
 		}));
 	}, [
 		availableLanguages,
 		defaultLanguageId,
 		editableValues,
-		segmentsExperienceId
+		segmentsExperienceId,
 	]);
 
 	const {languageIcon} = availableLanguages[languageId];
@@ -171,7 +171,7 @@ export default function Translation({
 			hasLeftSymbols
 			hasRightSymbols
 			menuElementAttrs={{
-				className: 'page-editor__translation'
+				className: 'page-editor__translation',
 			}}
 			onActiveChange={setActive}
 			trigger={
@@ -200,7 +200,7 @@ export default function Translation({
 						onClick={() => {
 							dispatch(
 								updateLanguageId({
-									languageId: language.languageId
+									languageId: language.languageId,
 								})
 							);
 							setActive(false);
@@ -217,11 +217,11 @@ Translation.propTypes = {
 	availableLanguages: PropTypes.objectOf(
 		PropTypes.shape({
 			languageIcon: PropTypes.string.isRequired,
-			languageLabel: PropTypes.string.isRequired
+			languageLabel: PropTypes.string.isRequired,
 		})
 	).isRequired,
 	defaultLanguageId: PropTypes.string.isRequired,
 	dispatch: PropTypes.func.isRequired,
 	fragmentEntryLinks: PropTypes.object.isRequired,
-	languageId: PropTypes.string.isRequired
+	languageId: PropTypes.string.isRequired,
 };

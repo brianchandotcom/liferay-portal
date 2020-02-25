@@ -23,19 +23,19 @@ const items = [
 		durationTaskAvg: 10800000,
 		image: 'path/to/image',
 		name: 'User Test First',
-		taskCount: 10
+		taskCount: 10,
 	},
 	{
 		durationTaskAvg: 475200000,
 		image: 'path/to/image',
 		name: 'User Test Second',
-		taskCount: 31
+		taskCount: 31,
 	},
 	{
 		durationTaskAvg: 0,
 		name: 'User Test Third',
-		taskCount: 1
-	}
+		taskCount: 1,
+	},
 ];
 
 const data = {items, totalCount: items.length};
@@ -47,24 +47,24 @@ const timeRangeData = {
 			dateStart: '2019-12-03T00:00:00Z',
 			defaultTimeRange: false,
 			id: 7,
-			name: 'Last 7 Days'
+			name: 'Last 7 Days',
 		},
 		{
 			dateEnd: '2019-12-09T00:00:00Z',
 			dateStart: '2019-11-10T00:00:00Z',
 			defaultTimeRange: true,
 			id: 30,
-			name: 'Last 30 Days'
-		}
+			name: 'Last 30 Days',
+		},
 	],
-	totalCount: 2
+	totalCount: 2,
 };
 
 const clientMock = {
 	get: jest
 		.fn()
 		.mockResolvedValueOnce({data: timeRangeData})
-		.mockResolvedValue({data})
+		.mockResolvedValue({data}),
 };
 
 const wrapper = ({children}) => (

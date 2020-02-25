@@ -20,7 +20,7 @@ import {
 	deleteItem,
 	getItem,
 	request,
-	updateItem
+	updateItem,
 } from '../../../src/main/resources/META-INF/resources/js/utils/client.es';
 
 describe('client', () => {

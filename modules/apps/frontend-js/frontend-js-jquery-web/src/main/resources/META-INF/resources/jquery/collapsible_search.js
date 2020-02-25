@@ -140,7 +140,7 @@
 					}
 				}
 			}
-		}
+		},
 	};
 
 	var Plugin = function(option) {

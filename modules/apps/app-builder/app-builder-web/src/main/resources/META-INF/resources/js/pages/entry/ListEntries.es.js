@@ -30,16 +30,16 @@ const ListEntries = withRouter(({history, location}) => {
 	const [state, setState] = useState({
 		dataDefinition: null,
 		dataListView: {
-			fieldNames: []
+			fieldNames: [],
 		},
-		isLoading: true
+		isLoading: true,
 	});
 
 	const {
 		basePortletURL,
 		dataDefinitionId,
 		dataListViewId,
-		showFormView
+		showFormView,
 	} = useContext(AppContext);
 
 	const actionIds = useContext(PermissionsContext);
@@ -49,19 +49,19 @@ const ListEntries = withRouter(({history, location}) => {
 	useEffect(() => {
 		Promise.all([
 			getItem(`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`),
-			getItem(`/o/data-engine/v2.0/data-list-views/${dataListViewId}`)
+			getItem(`/o/data-engine/v2.0/data-list-views/${dataListViewId}`),
 		]).then(([dataDefinition, dataListView]) => {
 			setState(prevState => ({
 				...prevState,
 				dataDefinition: {
 					...prevState.dataDefinition,
-					...dataDefinition
+					...dataDefinition,
 				},
 				dataListView: {
 					...prevState.dataListView,
-					...dataListView
+					...dataListView,
 				},
-				isLoading: false
+				isLoading: false,
 			}));
 		});
 	}, [dataDefinitionId, dataListViewId]);
@@ -72,7 +72,7 @@ const ListEntries = withRouter(({history, location}) => {
 	const getEditURL = (dataRecordId = 0) =>
 		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
 			dataRecordId,
-			mvcPath: '/edit_entry.jsp'
+			mvcPath: '/edit_entry.jsp',
 		});
 
 	const handleEditItem = dataRecordId => {
@@ -85,14 +85,14 @@ const ListEntries = withRouter(({history, location}) => {
 		if (hasViewPermission) {
 			actions.push({
 				action: ({viewURL}) => Promise.resolve(history.push(viewURL)),
-				name: Liferay.Language.get('view')
+				name: Liferay.Language.get('view'),
 			});
 		}
 
 		if (actionIds.includes(ACTIONS.UPDATE_DATA_RECORD)) {
 			actions.push({
 				action: ({id}) => Promise.resolve(handleEditItem(id)),
-				name: Liferay.Language.get('edit')
+				name: Liferay.Language.get('edit'),
 			});
 		}
 
@@ -108,13 +108,13 @@ const ListEntries = withRouter(({history, location}) => {
 									'an-entry-was-deleted'
 								),
 								title: Liferay.Language.get('success'),
-								type: 'success'
+								type: 'success',
 							});
 						}
 
 						return Promise.resolve(confirmed);
 					}),
-				name: Liferay.Language.get('delete')
+				name: Liferay.Language.get('delete'),
 			});
 		}
 	}
@@ -137,7 +137,7 @@ const ListEntries = withRouter(({history, location}) => {
 				columns={columns.map(column => ({
 					key: 'dataRecordValues/' + column,
 					sortable: true,
-					value: getFieldLabel(dataDefinition, column)
+					value: getFieldLabel(dataDefinition, column),
 				}))}
 				emptyState={{
 					button: () =>
@@ -150,7 +150,7 @@ const ListEntries = withRouter(({history, location}) => {
 								{Liferay.Language.get('new-entry')}
 							</Button>
 						),
-					title: Liferay.Language.get('there-are-no-entries-yet')
+					title: Liferay.Language.get('there-are-no-entries-yet'),
 				}}
 				endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`}
 				queryParams={{dataListViewId}}
@@ -161,7 +161,7 @@ const ListEntries = withRouter(({history, location}) => {
 						keywords: '',
 						page: 1,
 						pageSize: 20,
-						sort: ''
+						sort: '',
 					});
 
 					const entryIndex =
@@ -197,7 +197,7 @@ const ListEntries = withRouter(({history, location}) => {
 					return {
 						...displayedDataRecordValues,
 						id,
-						viewURL
+						viewURL,
 					};
 				}}
 			</ListView>

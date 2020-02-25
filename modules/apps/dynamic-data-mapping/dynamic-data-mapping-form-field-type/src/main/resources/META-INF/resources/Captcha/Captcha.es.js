@@ -71,7 +71,7 @@ Captcha.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	type: Config.string().value('captcha')
+	type: Config.string().value('captcha'),
 };
 
 export default Captcha;

@@ -21,8 +21,8 @@ describe('LayoutProvider/handlers/columnResized', () => {
 				dataset: {
 					ddmFieldColumn: 1,
 					ddmFieldPage: 0,
-					ddmFieldRow: 0
-				}
+					ddmFieldRow: 0,
+				},
 			};
 			const state = {
 				pages: [
@@ -32,17 +32,17 @@ describe('LayoutProvider/handlers/columnResized', () => {
 								columns: [
 									{
 										fields: [{}],
-										size: 4
+										size: 4,
 									},
 									{
 										fields: [{}],
-										size: 8
-									}
-								]
-							}
-						]
-					}
-				]
+										size: 8,
+									},
+								],
+							},
+						],
+					},
+				],
 			};
 
 			const result = columnResizedHandler.handleColumnResized(
@@ -61,8 +61,8 @@ describe('LayoutProvider/handlers/columnResized', () => {
 				dataset: {
 					ddmFieldColumn: 1,
 					ddmFieldPage: 0,
-					ddmFieldRow: 0
-				}
+					ddmFieldRow: 0,
+				},
 			};
 			const state = {
 				pages: [
@@ -72,17 +72,17 @@ describe('LayoutProvider/handlers/columnResized', () => {
 								columns: [
 									{
 										fields: [],
-										size: 1
+										size: 1,
 									},
 									{
 										fields: [{}],
-										size: 11
-									}
-								]
-							}
-						]
-					}
-				]
+										size: 11,
+									},
+								],
+							},
+						],
+					},
+				],
 			};
 
 			const result = columnResizedHandler.handleColumnResized(
@@ -100,8 +100,8 @@ describe('LayoutProvider/handlers/columnResized', () => {
 				dataset: {
 					ddmFieldColumn: 0,
 					ddmFieldPage: 0,
-					ddmFieldRow: 0
-				}
+					ddmFieldRow: 0,
+				},
 			};
 			const state = {
 				pages: [
@@ -111,17 +111,17 @@ describe('LayoutProvider/handlers/columnResized', () => {
 								columns: [
 									{
 										fields: [],
-										size: 4
+										size: 4,
 									},
 									{
 										fields: [{}],
-										size: 8
-									}
-								]
-							}
-						]
-					}
-				]
+										size: 8,
+									},
+								],
+							},
+						],
+					},
+				],
 			};
 
 			const result = columnResizedHandler.handleColumnResized(
@@ -139,8 +139,8 @@ describe('LayoutProvider/handlers/columnResized', () => {
 				dataset: {
 					ddmFieldColumn: 0,
 					ddmFieldPage: 0,
-					ddmFieldRow: 0
-				}
+					ddmFieldRow: 0,
+				},
 			};
 			const state = {
 				pages: [
@@ -150,17 +150,17 @@ describe('LayoutProvider/handlers/columnResized', () => {
 								columns: [
 									{
 										fields: [{}],
-										size: 11
+										size: 11,
 									},
 									{
 										fields: [],
-										size: 1
-									}
-								]
-							}
-						]
-					}
-				]
+										size: 1,
+									},
+								],
+							},
+						],
+					},
+				],
 			};
 
 			const result = columnResizedHandler.handleColumnResized(

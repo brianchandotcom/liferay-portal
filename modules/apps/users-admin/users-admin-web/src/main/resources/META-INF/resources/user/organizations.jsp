@@ -215,14 +215,14 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 					{
 						dialog: {
 							constrain: true,
-							modal: true
+							modal: true,
 						},
 						id: '<portlet:namespace />selectOrganization',
 						selectedData: searchContainerData,
 						title:
 							'<liferay-ui:message arguments="organization" key="select-x" />',
 						uri:
-							'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organization.jsp" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
+							'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organization.jsp" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>',
 					},
 					function(event) {
 						var entityId = event.entityid;

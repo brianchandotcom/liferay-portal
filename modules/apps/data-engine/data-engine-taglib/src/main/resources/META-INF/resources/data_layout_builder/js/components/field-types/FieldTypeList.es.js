@@ -22,7 +22,7 @@ export default ({
 	keywords,
 	onClick,
 	onDelete,
-	onDoubleClick
+	onDoubleClick,
 }) => {
 	const regex = new RegExp(keywords, 'ig');
 

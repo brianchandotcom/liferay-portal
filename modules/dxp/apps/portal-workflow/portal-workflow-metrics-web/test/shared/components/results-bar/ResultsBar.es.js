@@ -22,16 +22,16 @@ describe('The ResultsBar component should', () => {
 			{
 				items: [
 					{active: true, key: 'review', name: 'Review'},
-					{active: true, key: 'update', name: 'Update'}
+					{active: true, key: 'update', name: 'Update'},
 				],
 				key: 'taskKeys',
 				name: 'Process Step',
-				pinned: false
-			}
+				pinned: false,
+			},
 		],
 		page: 1,
 		pageSize: 20,
-		sort: encodeURIComponent('overdueTaskCount:asc')
+		sort: encodeURIComponent('overdueTaskCount:asc'),
 	};
 
 	afterEach(cleanup);
@@ -65,7 +65,7 @@ describe('The ResultsBar component should', () => {
 		);
 
 		const {
-			filters: [{items}]
+			filters: [{items}],
 		} = mockProps;
 
 		const removeFilter = getAllByTestId('removeFilter');

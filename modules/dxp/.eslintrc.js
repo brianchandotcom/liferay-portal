@@ -16,8 +16,8 @@ module.exports = {
 		'notice/notice': [
 			'error',
 			{
-				templateFile: path.join(__dirname, 'copyright.js')
-			}
-		]
-	}
+				templateFile: path.join(__dirname, 'copyright.js'),
+			},
+		],
+	},
 };

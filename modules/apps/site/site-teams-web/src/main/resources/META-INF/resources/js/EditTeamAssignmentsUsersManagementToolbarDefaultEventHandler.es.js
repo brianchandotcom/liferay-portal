@@ -20,7 +20,7 @@ class EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler extends Defau
 		const itemSelectorDialog = new ItemSelectorDialog({
 			eventName: this.ns('selectUser'),
 			title: itemData.title,
-			url: itemData.selectUserURL
+			url: itemData.selectUserURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {

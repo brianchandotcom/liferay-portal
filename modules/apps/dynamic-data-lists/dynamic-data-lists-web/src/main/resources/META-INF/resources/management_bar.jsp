@@ -78,7 +78,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	};
 
 	var ACTIONS = {
-		deleteRecordSets: deleteRecordSets
+		deleteRecordSets: deleteRecordSets,
 	};
 
 	Liferay.componentReady('ddlManagementToolbar').then(function(

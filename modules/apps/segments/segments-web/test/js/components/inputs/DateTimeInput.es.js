@@ -44,7 +44,7 @@ describe('DateTimeInput', () => {
 			newValue: '2019-01-24',
 			newValueExpected: '2019-01-24',
 			newValueOnChange: '2019-01-24T00:00:00.000Z',
-			value: defaultValue
+			value: defaultValue,
 		});
 	});
 
@@ -70,7 +70,7 @@ describe('DateTimeInput', () => {
 			newValue: '2019-01-XX',
 			newValueExpected: date,
 			newValueOnChange: dateFns.parse(date, 'YYYY-MM-DD').toISOString(),
-			value: defaultValue
+			value: defaultValue,
 		});
 	});
 });

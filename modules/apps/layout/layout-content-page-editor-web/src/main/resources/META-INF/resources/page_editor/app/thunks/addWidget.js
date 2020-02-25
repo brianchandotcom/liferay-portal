@@ -24,12 +24,12 @@ export default function addWidget({parentItemId, portletId, position, store}) {
 			parentItemId,
 			portletId,
 			position,
-			segmentsExperienceId
+			segmentsExperienceId,
 		}).then(({fragmentEntryLink, layoutData}) => {
 			dispatch(
 				addFragmentEntryLink({
 					fragmentEntryLink,
-					layoutData
+					layoutData,
 				})
 			);
 		});

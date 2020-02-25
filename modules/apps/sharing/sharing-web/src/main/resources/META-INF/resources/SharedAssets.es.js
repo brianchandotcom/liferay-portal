@@ -38,7 +38,7 @@ class SharedAssets extends PortletBase {
 				eventName: namespace + 'selectAssetType',
 				singleSelect: true,
 				title: Liferay.Language.get('select-asset-type'),
-				url: this._selectAssetTypeURL
+				url: this._selectAssetTypeURL,
 			});
 
 			itemSelectorDialog.open();

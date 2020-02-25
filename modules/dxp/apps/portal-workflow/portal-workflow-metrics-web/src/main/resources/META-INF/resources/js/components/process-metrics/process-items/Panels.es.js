@@ -18,7 +18,7 @@ const PANELS = [
 		iconColor: 'danger',
 		iconName: 'exclamation-circle',
 		slaStatusFilter: slaStatusConstants.overdue,
-		totalField: 'instanceCount'
+		totalField: 'instanceCount',
 	},
 	{
 		addressedToField: 'onTimeInstanceCount',
@@ -26,7 +26,7 @@ const PANELS = [
 		iconColor: 'success',
 		iconName: 'check-circle',
 		slaStatusFilter: slaStatusConstants.onTime,
-		totalField: 'instanceCount'
+		totalField: 'instanceCount',
 	},
 	{
 		addressedToField: 'untrackedInstanceCount',
@@ -34,7 +34,7 @@ const PANELS = [
 		iconColor: 'info',
 		iconName: 'hr',
 		slaStatusFilter: slaStatusConstants.untracked,
-		totalField: 'instanceCount'
+		totalField: 'instanceCount',
 	},
 	{
 		addressedToField: 'instanceCount',
@@ -42,8 +42,8 @@ const PANELS = [
 			completed
 				? Liferay.Language.get('total-completed')
 				: Liferay.Language.get('total-pending'),
-		totalField: 'instanceCount'
-	}
+		totalField: 'instanceCount',
+	},
 ];
 
 export default PANELS;

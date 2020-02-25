@@ -56,7 +56,7 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 							deleteDataProviderInstanceIds: Liferay.Util.listCheckedExcept(
 								searchContainer,
 								'<portlet:namespace />allRowIds'
-							)
+							),
 						},
 
 						<portlet:actionURL name="deleteDataProvider" var="deleteDataProviderURL">
@@ -64,7 +64,7 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:actionURL>
 
-						url: '<%= deleteDataProviderURL %>'
+						url: '<%= deleteDataProviderURL %>',
 					}
 				);
 			}
@@ -72,7 +72,7 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 	};
 
 	var ACTIONS = {
-		deleteDataProviderInstances: deleteDataProviderInstances
+		deleteDataProviderInstances: deleteDataProviderInstances,
 	};
 
 	Liferay.componentReady('ddmDataProviderManagementToolbar').then(function(

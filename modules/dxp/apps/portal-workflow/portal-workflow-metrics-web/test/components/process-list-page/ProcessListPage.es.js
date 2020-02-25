@@ -21,28 +21,28 @@ describe('The process list page component having data should', () => {
 	const items = [
 		{
 			instancesCount: 0,
-			title: 'Single Approver 1'
+			title: 'Single Approver 1',
 		},
 		{
 			instancesCount: 0,
-			title: 'Single Approver 2'
+			title: 'Single Approver 2',
 		},
 		{
 			instancesCount: 0,
-			title: 'Single Approver 3'
-		}
+			title: 'Single Approver 3',
+		},
 	];
 	const data = {items, totalCount: items.length};
 
 	const clientMock = {
-		get: jest.fn().mockResolvedValue({data})
+		get: jest.fn().mockResolvedValue({data}),
 	};
 
 	const routeParams = {
 		page: 1,
 		pageSize: 20,
 		query: '',
-		sort: 'overdueInstanceCount%3Adesc'
+		sort: 'overdueInstanceCount%3Adesc',
 	};
 
 	afterEach(cleanup);

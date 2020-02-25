@@ -26,9 +26,9 @@ class SelectEntityInput extends React.Component {
 			id: propTypes.string,
 			multiple: propTypes.bool,
 			title: propTypes.string,
-			uri: propTypes.string
+			uri: propTypes.string,
 		}),
-		value: propTypes.oneOfType([propTypes.string, propTypes.number])
+		value: propTypes.oneOfType([propTypes.string, propTypes.number]),
 	};
 
 	/**
@@ -39,7 +39,7 @@ class SelectEntityInput extends React.Component {
 	_handleSelectEntity = () => {
 		const {
 			onChange,
-			selectEntity: {id, multiple, title, uri}
+			selectEntity: {id, multiple, title, uri},
 		} = this.props;
 
 		if (multiple) {
@@ -47,7 +47,7 @@ class SelectEntityInput extends React.Component {
 				buttonAddLabel: Liferay.Language.get('select'),
 				eventName: id,
 				title,
-				url: uri
+				url: uri,
 			});
 
 			itemSelectorDialog.open();
@@ -58,7 +58,7 @@ class SelectEntityInput extends React.Component {
 				if (selectedItems) {
 					const selectedValues = selectedItems.map(item => ({
 						displayValue: item.name,
-						value: item.id
+						value: item.id,
 					}));
 
 					onChange(selectedValues);
@@ -71,16 +71,16 @@ class SelectEntityInput extends React.Component {
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true
+						modal: true,
 					},
 					id,
 					title,
-					uri
+					uri,
 				},
 				event => {
 					onChange({
 						displayValue: event.entityname,
-						value: event.entityid
+						value: event.entityid,
 					});
 				}
 			);

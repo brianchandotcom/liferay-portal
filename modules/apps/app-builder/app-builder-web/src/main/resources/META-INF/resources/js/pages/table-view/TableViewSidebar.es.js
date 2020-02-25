@@ -18,10 +18,10 @@ import React, {useContext, useState} from 'react';
 import Button from '../../components/button/Button.es';
 import {
 	getDataDefinitionField,
-	getFieldLabel
+	getFieldLabel,
 } from '../../utils/dataDefinition.es';
 import EditTableViewContext, {
-	UPDATE_FOCUSED_COLUMN
+	UPDATE_FOCUSED_COLUMN,
 } from './EditTableViewContext.es';
 import TableViewFiltersList from './TableViewFilters.es';
 import {getFieldTypeLabel} from './utils.es';
@@ -69,8 +69,8 @@ const FieldsTabContent = ({keywords, onAddFieldName}) => {
 		{
 			dataDefinition: {dataDefinitionFields},
 			dataListView: {fieldNames},
-			fieldTypes
-		}
+			fieldTypes,
+		},
 	] = useContext(EditTableViewContext);
 
 	return (
@@ -82,7 +82,7 @@ const FieldsTabContent = ({keywords, onAddFieldName}) => {
 					disabled: fieldNames.some(fieldName => fieldName === name),
 					icon: fieldType,
 					label,
-					name
+					name,
 				})
 			)}
 			keywords={keywords}
@@ -140,13 +140,13 @@ export default ({onAddFieldName, onClose}) => {
 							{
 								active: activeTabIndex === 0,
 								label: Liferay.Language.get('columns'),
-								onClick: onClickTab
+								onClick: onClickTab,
 							},
 							{
 								active: activeTabIndex === 1,
 								label: Liferay.Language.get('filters'),
-								onClick: onClickTab
-							}
+								onClick: onClickTab,
+							},
 						]}
 					/>
 				)}

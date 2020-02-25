@@ -21,7 +21,7 @@ const mockProps = {
 	page: 1,
 	pageSize: 10,
 	processId: '12345',
-	sort: 'overdueTaskCount:desc'
+	sort: 'overdueTaskCount:desc',
 };
 
 describe('The WorkloadByStepCard component should', () => {
@@ -33,16 +33,16 @@ describe('The WorkloadByStepCard component should', () => {
 				instanceCount: 1,
 				name: 'Task Name',
 				onTimeInstanceCount: 1,
-				overdueInstanceCount: 0
-			}
+				overdueInstanceCount: 0,
+			},
 		],
-		totalCount: 1
+		totalCount: 1,
 	};
 
 	let getByTestId;
 
 	const clientMock = {
-		get: jest.fn().mockResolvedValue({data})
+		get: jest.fn().mockResolvedValue({data}),
 	};
 
 	beforeAll(() => {
@@ -78,7 +78,7 @@ describe('The WorkloadByStepCard component should', () => {
 
 describe('When request fails the WorkloadByStepCard component should', () => {
 	const clientMock = {
-		get: jest.fn().mockRejectedValueOnce(new Error('request-failure'))
+		get: jest.fn().mockRejectedValueOnce(new Error('request-failure')),
 	};
 	let getByTestId;
 
@@ -117,7 +117,7 @@ describe('When request returns do data the WorkloadByStepCard component should',
 	const data = {};
 
 	const clientMock = {
-		get: jest.fn().mockResolvedValue({data})
+		get: jest.fn().mockResolvedValue({data}),
 	};
 
 	let getByTestId;

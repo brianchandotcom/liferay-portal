@@ -27,37 +27,37 @@ import MappingSelector from './MappingSelector';
 
 const SOURCE_TYPES = {
 	fromContentField: 'fromContentField',
-	manual: 'manual'
+	manual: 'manual',
 };
 
 const SOURCE_TYPES_OPTIONS = [
 	{
 		label: `${Liferay.Language.get('manual')}`,
-		value: SOURCE_TYPES.manual
+		value: SOURCE_TYPES.manual,
 	},
 	{
 		label: `${Liferay.Language.get('from-content-field')}`,
-		value: SOURCE_TYPES.fromContentField
-	}
+		value: SOURCE_TYPES.fromContentField,
+	},
 ];
 
 const TARGET_OPTIONS = [
 	{
 		label: `${Liferay.Language.get('self')}`,
-		value: '_self'
+		value: '_self',
 	},
 	{
 		label: `${Liferay.Language.get('blank')}`,
-		value: '_blank'
+		value: '_blank',
 	},
 	{
 		label: `${Liferay.Language.get('parent')}`,
-		value: '_parent'
+		value: '_parent',
 	},
 	{
 		label: `${Liferay.Language.get('top')}`,
-		value: '_top'
-	}
+		value: '_top',
+	},
 ];
 
 export default function LinkPanel({item}) {
@@ -90,13 +90,13 @@ export default function LinkPanel({item}) {
 			classNameId: editableConfig.classNameId,
 			classPK: editableConfig.classPK,
 			fieldId: editableConfig.fieldId,
-			languageId
+			languageId,
 		});
 	}, [
 		editableConfig.classNameId,
 		editableConfig.classPK,
 		editableConfig.fieldId,
-		languageId
+		languageId,
 	]);
 
 	const updateRowConfig = useCallback(
@@ -114,17 +114,17 @@ export default function LinkPanel({item}) {
 					[editableId]: {
 						...editableProcessorValues[editableId],
 						config: {
-							...newConfig
-						}
-					}
-				}
+							...newConfig,
+						},
+					},
+				},
 			};
 
 			dispatch(
 				updateEditableValues({
 					editableValues: nextEditableValues,
 					fragmentEntryLinkId,
-					segmentsExperienceId
+					segmentsExperienceId,
 				})
 			);
 		},
@@ -133,7 +133,7 @@ export default function LinkPanel({item}) {
 			editableId,
 			fragmentEntryLinkId,
 			fragmentEntryLinks,
-			segmentsExperienceId
+			segmentsExperienceId,
 		]
 	);
 
@@ -143,7 +143,7 @@ export default function LinkPanel({item}) {
 		classNameId,
 		classPK,
 		fieldId,
-		languageId
+		languageId,
 	}) => {
 		if (!classNameId || !classPK || !fieldId) {
 			return;
@@ -154,7 +154,7 @@ export default function LinkPanel({item}) {
 			classPK,
 			fieldId,
 			languageId,
-			onNetworkStatus: () => {}
+			onNetworkStatus: () => {},
 		}).then(response => {
 			const {fieldValue = ''} = response;
 
@@ -189,14 +189,14 @@ export default function LinkPanel({item}) {
 						updateRowConfig({
 							...mappedItem,
 							mapperType: 'link',
-							target: editableConfig.target
+							target: editableConfig.target,
 						});
 
 						updateMappedHrefValue({
 							classNameId: mappedItem.classNameId,
 							classPK: mappedItem.classPK,
 							fieldId: mappedItem.fieldId,
-							languageId
+							languageId,
 						});
 					}}
 				/>
@@ -230,7 +230,7 @@ export default function LinkPanel({item}) {
 					onChange={event => {
 						updateRowConfig({
 							...editableConfig,
-							target: event.target.value
+							target: event.target.value,
 						});
 					}}
 					options={TARGET_OPTIONS}
@@ -247,18 +247,18 @@ LinkPanel.propTypes = {
 		config: PropTypes.oneOfType([
 			PropTypes.shape({
 				href: PropTypes.string,
-				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS))
+				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
 			}),
 			PropTypes.shape({
 				classNameId: PropTypes.string,
 				classPK: PropTypes.string,
 				fieldId: PropTypes.string,
-				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS))
+				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
 			}),
 			PropTypes.shape({
 				mappedField: PropTypes.string,
-				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS))
-			})
-		])
-	})
+				target: PropTypes.oneOf(Object.values(TARGET_OPTIONS)),
+			}),
+		]),
+	}),
 };

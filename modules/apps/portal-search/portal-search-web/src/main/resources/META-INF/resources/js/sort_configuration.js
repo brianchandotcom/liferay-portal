@@ -42,20 +42,20 @@ AUI.add(
 
 					fields.push({
 						field,
-						label
+						label,
 					});
 				});
 
 				instance.form.one('.fields-input').val(JSON.stringify(fields));
 
 				submitForm(instance.form);
-			}
+			},
 		});
 
 		Liferay.namespace('Search').SortConfiguration = SortConfiguration;
 	},
 	'',
 	{
-		requires: ['aui-node']
+		requires: ['aui-node'],
 	}
 );

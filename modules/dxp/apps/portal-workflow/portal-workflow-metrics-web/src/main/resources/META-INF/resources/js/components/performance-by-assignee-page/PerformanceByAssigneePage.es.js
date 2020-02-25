@@ -37,7 +37,7 @@ const PerformanceByAssigneePage = ({query, routeParams}) => {
 		filterValues: {roleIds, taskKeys},
 		filtersError,
 		prefixedKeys,
-		selectedFilters
+		selectedFilters,
 	} = useFilter({filterKeys});
 
 	const {dateEnd, dateStart} =
@@ -48,7 +48,7 @@ const PerformanceByAssigneePage = ({query, routeParams}) => {
 	if (isValidDate(dateEnd) && isValidDate(dateStart)) {
 		timeRangeParams = {
 			dateEnd: dateEnd.toISOString(),
-			dateStart: dateStart.toISOString()
+			dateStart: dateStart.toISOString(),
 		};
 	}
 
@@ -59,9 +59,9 @@ const PerformanceByAssigneePage = ({query, routeParams}) => {
 			roleIds,
 			taskKeys,
 			...routeParams,
-			...timeRangeParams
+			...timeRangeParams,
 		},
-		url: `/processes/${processId}/assignee-users`
+		url: `/processes/${processId}/assignee-users`,
 	});
 
 	const promises = useMemo(() => {
@@ -74,7 +74,7 @@ const PerformanceByAssigneePage = ({query, routeParams}) => {
 		fetchData,
 		filtersError,
 		timeRangeParams.dateEnd,
-		timeRangeParams.dateStart
+		timeRangeParams.dateStart,
 	]);
 
 	return (

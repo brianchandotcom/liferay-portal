@@ -52,7 +52,7 @@ function ContributorInputs({contributors}) {
 }
 
 ContributorInputs.propTypes = {
-	contributors: PropTypes.arrayOf(initialContributorShape)
+	contributors: PropTypes.arrayOf(initialContributorShape),
 };
 
 export default ContributorInputs;

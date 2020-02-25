@@ -43,7 +43,7 @@ const useSLANodes = (processId, fetchClient) => {
 								desc: node.initial
 									? processBeginsString
 									: `${processEndsString} ${node.label}`,
-								executionType: node.initial ? 'begin' : 'end'
+								executionType: node.initial ? 'begin' : 'end',
 							};
 
 							if (node.initial) {
@@ -57,13 +57,13 @@ const useSLANodes = (processId, fetchClient) => {
 							nodeEnters.push({
 								...node,
 								desc: `${entersTaskString} ${node.label}`,
-								executionType: 'enter'
+								executionType: 'enter',
 							});
 
 							nodeLeaves.push({
 								...node,
 								desc: `${leavesTaskString} ${node.label}`,
-								executionType: 'leave'
+								executionType: 'leave',
 							});
 						}
 					});
@@ -78,10 +78,10 @@ const useSLANodes = (processId, fetchClient) => {
 						...nodeBegins,
 						...nodeEnters,
 						...nodeLeaves,
-						...nodeEnds
+						...nodeEnds,
 					].map(node => ({
 						...node,
-						compositeId: `${node.id}:${node.executionType}`
+						compositeId: `${node.id}:${node.executionType}`,
 					}));
 
 					setNodes(nodes);
@@ -108,7 +108,7 @@ const useSLANodes = (processId, fetchClient) => {
 				...node,
 				compositeId: `${node.id}:on`,
 				desc: `${onTaskString} ${node.label}`,
-				executionType: 'on'
+				executionType: 'on',
 			}));
 	};
 
@@ -159,7 +159,7 @@ const useSLANodes = (processId, fetchClient) => {
 		getPauseNodes,
 		getStartNodes,
 		getStopNodes,
-		nodes
+		nodes,
 	};
 };
 

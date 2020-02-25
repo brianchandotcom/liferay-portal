@@ -21,7 +21,7 @@
 				canUndo: false,
 				exec(editor) {
 					editor.fire('restoreContent');
-				}
+				},
 			});
 
 			if (editor.ui.addButton) {
@@ -30,9 +30,9 @@
 					icon:
 						Liferay.AUI.getPathCKEditor() +
 						'/ckeditor/plugins/restore/assets/restore.png',
-					label: Liferay.Language.get('restore-the-original-content')
+					label: Liferay.Language.get('restore-the-original-content'),
 				});
 			}
-		}
+		},
 	});
 })();

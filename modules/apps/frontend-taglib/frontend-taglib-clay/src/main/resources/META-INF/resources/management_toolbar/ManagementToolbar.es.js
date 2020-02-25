@@ -17,7 +17,7 @@ import {
 	actionItemsValidator,
 	creationMenuItemsValidator,
 	filterItemsValidator,
-	filterLabelsValidator
+	filterLabelsValidator,
 } from 'clay-management-toolbar';
 import {EventEmitterProxy} from 'metal-events';
 import Soy from 'metal-soy';
@@ -43,7 +43,7 @@ class ManagementToolbar extends ClayComponent {
 					'rowToggled',
 					this._handleSearchContainerRowToggled,
 					this
-				)
+				),
 			];
 
 			this._searchContainer = searchContainer;
@@ -63,7 +63,7 @@ class ManagementToolbar extends ClayComponent {
 					{
 						allSelectedElements: select.getAllSelectedElements(),
 						currentPageElements: select.getCurrentPageElements(),
-						currentPageSelectedElements: select.getCurrentPageSelectedElements()
+						currentPageSelectedElements: select.getCurrentPageSelectedElements(),
 					},
 					bulkSelection
 				);
@@ -79,7 +79,7 @@ class ManagementToolbar extends ClayComponent {
 					position: 'right',
 					type: 'relative',
 					typeMobile: 'fixed',
-					width: '320px'
+					width: '320px',
 				});
 			}
 		}
@@ -223,7 +223,7 @@ class ManagementToolbar extends ClayComponent {
 					disabled:
 						actions &&
 						actions.indexOf(actionItem.data.action) === -1 &&
-						(!bulkSelection || !actionItem.data.enableOnBulk)
+						(!bulkSelection || !actionItem.data.enableOnBulk),
 				});
 			});
 		}
@@ -295,7 +295,7 @@ ManagementToolbar.STATE = {
 	checkboxStatus: Config.oneOf([
 		'checked',
 		'indeterminate',
-		'unchecked'
+		'unchecked',
 	]).value('unchecked'),
 
 	/**
@@ -359,7 +359,7 @@ ManagementToolbar.STATE = {
 		maxTotalItems: Config.number(),
 		primaryItems: creationMenuItemsValidator,
 		secondaryItems: creationMenuItemsValidator,
-		viewMoreURL: Config.string()
+		viewMoreURL: Config.string(),
 	}),
 
 	/**
@@ -669,9 +669,9 @@ ManagementToolbar.STATE = {
 			disabled: Config.bool().value(false),
 			href: Config.string(),
 			icon: Config.string().required(),
-			label: Config.string().required()
+			label: Config.string().required(),
 		})
-	)
+	),
 };
 
 Soy.register(ManagementToolbar, templates);

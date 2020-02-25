@@ -50,8 +50,8 @@ export const dropCustomObjectField = ({
 		fieldType: {
 			...fieldType,
 			label: label[themeDisplay.getLanguageId()],
-			settingsContext
-		}
+			settingsContext,
+		},
 	};
 };
 
@@ -68,7 +68,7 @@ export const dropLayoutBuilderField = ({
 		...payload,
 		fieldType: {
 			...fieldType,
-			editable: true
-		}
+			editable: true,
+		},
 	};
 };

@@ -20,19 +20,19 @@ class Tabs extends React.Component {
 		super(props);
 
 		this.state = {
-			expanded: false
+			expanded: false,
 		};
 	}
 
 	hideNavbar() {
 		this.setState({
-			expanded: false
+			expanded: false,
 		});
 	}
 
 	toggleExpanded() {
 		this.setState({
-			expanded: !this.state.expanded
+			expanded: !this.state.expanded,
 		});
 	}
 
@@ -40,7 +40,7 @@ class Tabs extends React.Component {
 		const {expanded} = this.state;
 		const {
 			location: {pathname},
-			tabs
+			tabs,
 		} = this.props;
 
 		const isActive = tab => pathname.includes(tab.key);

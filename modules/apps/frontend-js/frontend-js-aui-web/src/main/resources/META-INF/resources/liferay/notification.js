@@ -56,14 +56,14 @@ AUI.add(
 				TPL_ALERT_NODE: '<div class="lfr-notification-wrapper"></div>',
 
 				TPL_ALERTS_CONTAINER:
-					'<div class="lfr-notification-container"></div>'
-			}
+					'<div class="lfr-notification-container"></div>',
+			},
 		});
 
 		Liferay.Notification = Notification;
 	},
 	'',
 	{
-		requires: ['liferay-alert']
+		requires: ['liferay-alert'],
 	}
 );

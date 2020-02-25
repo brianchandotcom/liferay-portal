@@ -41,7 +41,7 @@ describe('DecimalInput', () => {
 			element,
 			mockFunc: mockOnChange,
 			newValue: newNumberValue,
-			value: defaultNumberValue
+			value: defaultNumberValue,
 		});
 	});
 
@@ -53,7 +53,7 @@ describe('DecimalInput', () => {
 		const element = getByTestId(DECIMAL_NUMBER_INPUT_TESTID);
 
 		fireEvent.change(element, {
-			target: {value: '1.009'}
+			target: {value: '1.009'},
 		});
 
 		fireEvent.blur(element);

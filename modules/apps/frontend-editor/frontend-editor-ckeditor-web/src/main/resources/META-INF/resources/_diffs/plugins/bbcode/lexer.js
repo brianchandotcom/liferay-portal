@@ -33,7 +33,7 @@
 			var instance = this;
 
 			return REGEX_BBCODE.exec(instance._data);
-		}
+		},
 	};
 
 	Liferay.BBCodeLexer = Lexer;

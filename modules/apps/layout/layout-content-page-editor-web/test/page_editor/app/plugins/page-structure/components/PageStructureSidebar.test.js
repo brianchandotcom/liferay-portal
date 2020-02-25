@@ -32,15 +32,15 @@ const fragmentEntryLinks = {
 	'001': {
 		content: {
 			value: {
-				content: '<div>001</div>'
-			}
+				content: '<div>001</div>',
+			},
 		},
 		editableValues: {
-			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {}
+			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 		},
 		fragmentEntryLinkId: '001',
-		name: 'Fragment 1'
-	}
+		name: 'Fragment 1',
+	},
 };
 
 const layoutData = {
@@ -50,42 +50,42 @@ const layoutData = {
 			config: {...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.root},
 			itemId: '00-main',
 			parentId: null,
-			type: LAYOUT_DATA_ITEM_TYPES.root
+			type: LAYOUT_DATA_ITEM_TYPES.root,
 		},
 		'01-container': {
 			children: ['02-row'],
 			config: {},
 			itemId: '01-container',
 			parentId: 'main',
-			type: LAYOUT_DATA_ITEM_TYPES.container
+			type: LAYOUT_DATA_ITEM_TYPES.container,
 		},
 		'02-row': {
 			children: ['03-column'],
 			config: {},
 			itemId: '02-row',
 			parentId: '01-container',
-			type: LAYOUT_DATA_ITEM_TYPES.row
+			type: LAYOUT_DATA_ITEM_TYPES.row,
 		},
 		'03-column': {
 			children: ['04-fragment'],
 			config: {},
 			itemId: '03-column',
 			parentId: '02-row',
-			type: LAYOUT_DATA_ITEM_TYPES.column
+			type: LAYOUT_DATA_ITEM_TYPES.column,
 		},
 		'04-fragment': {
 			children: [],
 			config: {
-				fragmentEntryLinkId: '001'
+				fragmentEntryLinkId: '001',
 			},
 			itemId: '04-fragment',
 			parentId: '03-column',
-			type: LAYOUT_DATA_ITEM_TYPES.fragment
-		}
+			type: LAYOUT_DATA_ITEM_TYPES.fragment,
+		},
 	},
 
 	rootItems: {main: '00-main'},
-	version: 1
+	version: 1,
 };
 
 const RenderPageStructureSidebar = () => {

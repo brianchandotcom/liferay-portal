@@ -53,6 +53,6 @@ export default function getCropRegion(imagePreview, region) {
 		height,
 		width,
 		x,
-		y
+		y,
 	};
 }

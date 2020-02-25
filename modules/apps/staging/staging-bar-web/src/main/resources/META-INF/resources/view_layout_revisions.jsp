@@ -183,12 +183,12 @@ function <portlet:namespace />selectRevision(
 		layoutSetBranchId: layoutSetBranchId,
 		p_auth: Liferay.authToken,
 		p_l_id: themeDisplay.getPlid(),
-		p_v_l_s_g_id: themeDisplay.getSiteGroupId()
+		p_v_l_s_g_id: themeDisplay.getSiteGroupId(),
 	};
 
 	Liferay.Util.fetch(themeDisplay.getPathMain() + '/portal/update_layout', {
 		body: Liferay.Util.objectToFormData(updateLayoutData),
-		method: 'POST'
+		method: 'POST',
 	}).then(function() {
 		var parentWindow = Liferay.Util.getOpener();
 

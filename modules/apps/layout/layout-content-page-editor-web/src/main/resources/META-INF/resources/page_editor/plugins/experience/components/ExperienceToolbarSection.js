@@ -42,7 +42,7 @@ export default function ExperienceToolbarSection({selectId}) {
 
 					return {
 						...experience,
-						segmentsEntryName
+						segmentsEntryName,
 					};
 				}),
 		[availableSegmentsExperiences]

@@ -51,16 +51,16 @@ export function MappingPanel({item}) {
 				[editableId]: {
 					config: editableValue.config,
 					defaultValue: editableValue.defaultValue,
-					...newEditableValue
-				}
-			}
+					...newEditableValue,
+				},
+			},
 		};
 
 		dispatch(
 			updateEditableValues({
 				editableValues: nextEditableValues,
 				fragmentEntryLinkId,
-				segmentsExperienceId: state.segmentsExperienceId
+				segmentsExperienceId: state.segmentsExperienceId,
 			})
 		);
 	};
@@ -75,5 +75,5 @@ export function MappingPanel({item}) {
 }
 
 MappingPanel.propTypes = {
-	item: getEditableItemPropTypes()
+	item: getEditableItemPropTypes(),
 };

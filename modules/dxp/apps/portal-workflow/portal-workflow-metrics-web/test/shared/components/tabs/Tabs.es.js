@@ -20,18 +20,18 @@ const tabs = [
 		key: 'completed',
 		name: Liferay.Language.get('completed'),
 		params: {
-			processId: 35135
+			processId: 35135,
 		},
-		path: '/metrics/:processId/completed'
+		path: '/metrics/:processId/completed',
 	},
 	{
 		key: 'pending',
 		name: Liferay.Language.get('pending'),
 		params: {
-			processId: 35135
+			processId: 35135,
 		},
-		path: '/metrics/:processId/pending'
-	}
+		path: '/metrics/:processId/pending',
+	},
 ];
 
 test('Should expand tab items', () => {
@@ -39,7 +39,7 @@ test('Should expand tab items', () => {
 		<Router>
 			<Tabs
 				location={{
-					pathname: '/metrics/:processId/completed'
+					pathname: '/metrics/:processId/completed',
 				}}
 				tabs={tabs}
 			/>
@@ -58,7 +58,7 @@ test('Should hide tab items', () => {
 		<Router>
 			<Tabs
 				location={{
-					pathname: '/metrics/:processId/completed'
+					pathname: '/metrics/:processId/completed',
 				}}
 				tabs={tabs}
 			/>
@@ -78,7 +78,7 @@ test('Should render component', () => {
 		<Router>
 			<Tabs
 				location={{
-					pathname: '/metrics/:processId/pending'
+					pathname: '/metrics/:processId/pending',
 				}}
 				tabs={tabs}
 			/>

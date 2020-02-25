@@ -24,7 +24,7 @@ const STATE_IMAGES_PATH = '/o/admin-theme/images/states';
 export const DISPLAY_STATES = {
 	EMPTY: 'empty',
 	SEARCH: 'search',
-	SUCCESS: 'success'
+	SUCCESS: 'success',
 };
 
 class ClayEmptyState extends Component {
@@ -34,14 +34,14 @@ class ClayEmptyState extends Component {
 		displayState: PropTypes.oneOf([
 			DISPLAY_STATES.EMPTY,
 			DISPLAY_STATES.SEARCH,
-			DISPLAY_STATES.SUCCESS
+			DISPLAY_STATES.SUCCESS,
 		]),
 		onClickAction: PropTypes.func,
-		title: PropTypes.string
+		title: PropTypes.string,
 	};
 
 	static defaultProps = {
-		displayState: DISPLAY_STATES.SEARCH
+		displayState: DISPLAY_STATES.SEARCH,
 	};
 
 	render() {
@@ -50,7 +50,7 @@ class ClayEmptyState extends Component {
 			description,
 			displayState,
 			onClickAction,
-			title
+			title,
 		} = this.props;
 
 		return (

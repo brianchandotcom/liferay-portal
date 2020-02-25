@@ -17,23 +17,23 @@ import React, {useContext, useRef} from 'react';
 
 import {
 	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import useDragAndDrop, {
 	DragDropManagerImpl,
-	TARGET_POSITION
+	TARGET_POSITION,
 } from './useDragAndDrop';
 
 export default function TopperEmpty({children, item, layoutData}) {
 	const {
-		store: {dropTargetItemId, targetPosition}
+		store: {dropTargetItemId, targetPosition},
 	} = useContext(DragDropManagerImpl);
 	const containerRef = useRef(null);
 
 	const {canDrop, drop, isDragging, isOver} = useDragAndDrop({
 		containerRef,
 		item,
-		layoutData
+		layoutData,
 	});
 
 	const childrenElement = children({canDrop, isOver});
@@ -61,7 +61,7 @@ export default function TopperEmpty({children, item, layoutData}) {
 					targetPosition === TARGET_POSITION.TOP &&
 					dropTargetItemId === item.itemId,
 				dragged: isDragging,
-				'page-editor__topper': true
+				'page-editor__topper': true,
 			}),
 			ref: node => {
 				containerRef.current = node;
@@ -71,12 +71,12 @@ export default function TopperEmpty({children, item, layoutData}) {
 				if (typeof child.ref === 'function') {
 					child.ref(node);
 				}
-			}
+			},
 		});
 	});
 }
 
 TopperEmpty.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };

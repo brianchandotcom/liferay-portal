@@ -27,85 +27,85 @@ const functionsMetadata = {
 			name: 'contains',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Contains'
+			value: 'Contains',
 		},
 		{
 			name: 'equals-to',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Is equal to'
+			value: 'Is equal to',
 		},
 		{
 			name: 'is-empty',
 			parameterTypes: ['text'],
 			returnType: 'boolean',
-			value: 'Is empty'
+			value: 'Is empty',
 		},
 		{
 			name: 'not-contains',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Does not contain'
+			value: 'Does not contain',
 		},
 		{
 			name: 'not-equals-to',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Is not equal to'
+			value: 'Is not equal to',
 		},
 		{
 			name: 'not-is-empty',
 			parameterTypes: ['text'],
 			returnType: 'boolean',
-			value: 'Is not empty'
-		}
+			value: 'Is not empty',
+		},
 	],
 	text: [
 		{
 			name: 'contains',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Contains'
+			value: 'Contains',
 		},
 		{
 			name: 'equals-to',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Is equal to'
+			value: 'Is equal to',
 		},
 		{
 			name: 'is-empty',
 			parameterTypes: ['text'],
 			returnType: 'boolean',
-			value: 'Is empty'
+			value: 'Is empty',
 		},
 		{
 			name: 'not-contains',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Does not contain'
+			value: 'Does not contain',
 		},
 		{
 			name: 'not-equals-to',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Is not equal to'
+			value: 'Is not equal to',
 		},
 		{
 			name: 'not-is-empty',
 			parameterTypes: ['text'],
 			returnType: 'boolean',
-			value: 'Is not empty'
-		}
+			value: 'Is not empty',
+		},
 	],
 	user: [
 		{
 			name: 'belongs-to',
 			parameterTypes: ['text'],
 			returnType: 'boolean',
-			value: 'Belongs to'
-		}
-	]
+			value: 'Belongs to',
+		},
+	],
 };
 
 const baseConfig = {
@@ -124,18 +124,18 @@ const baseConfig = {
 							fields: [
 								{
 									fieldName: 'text1',
-									label: 'label text 1'
+									label: 'label text 1',
 								},
 								{
 									fieldName: 'text2',
-									label: 'label text 2'
-								}
-							]
-						}
-					]
-				}
-			]
-		}
+									label: 'label text 2',
+								},
+							],
+						},
+					],
+				},
+			],
+		},
 	],
 	rolesURL: '/o/dynamic-data-mapping-form-builder-roles/',
 	rules: [
@@ -144,53 +144,53 @@ const baseConfig = {
 				{
 					action: 'require',
 					expression: '[x+2]',
-					target: 'text1'
-				}
+					target: 'text1',
+				},
 			],
 			conditions: [
 				{
 					operands: [
 						{
 							type: 'field',
-							value: 'text1'
+							value: 'text1',
 						},
 						{
 							type: 'field',
-							value: 'text2'
-						}
+							value: 'text2',
+						},
 					],
-					operator: 'equals-to'
-				}
+					operator: 'equals-to',
+				},
 			],
-			['logical-operator']: 'OR'
+			['logical-operator']: 'OR',
 		},
 		{
 			actions: [
 				{
 					action: 'show',
-					target: 'text1'
-				}
+					target: 'text1',
+				},
 			],
 			conditions: [
 				{
 					operands: [
 						{
 							type: 'field',
-							value: 'text1'
+							value: 'text1',
 						},
 						{
 							type: 'field',
-							value: 'text2'
-						}
+							value: 'text2',
+						},
 					],
-					operator: 'not-equals-to'
-				}
+					operator: 'not-equals-to',
+				},
 			],
-			['logical-operator']: 'AND'
-		}
+			['logical-operator']: 'AND',
+		},
 	],
 	spritemap,
-	url: '/o/dynamic-data-mapping-form-builder-roles/'
+	url: '/o/dynamic-data-mapping-form-builder-roles/',
 };
 
 describe('RuleBuilder', () => {
@@ -258,7 +258,7 @@ describe('RuleBuilder', () => {
 		jest.useFakeTimers();
 
 		component.refs.RuleList.emit('ruleEdited', {
-			ruleId: 0
+			ruleId: 0,
 		});
 
 		jest.runAllTimers();
@@ -305,7 +305,7 @@ describe('RuleBuilder', () => {
 		jest.useFakeTimers();
 
 		component.refs.RuleList.emit('ruleEdited', {
-			ruleId: 1
+			ruleId: 1,
 		});
 
 		jest.runAllTimers();
@@ -318,15 +318,15 @@ describe('RuleBuilder', () => {
 			...baseConfig,
 			rules: [
 				{
-					...baseConfig.rules[0]
-				}
-			]
+					...baseConfig.rules[0],
+				},
+			],
 		});
 
 		jest.useFakeTimers();
 
 		component.refs.RuleList.emit('ruleEdited', {
-			ruleId: 0
+			ruleId: 0,
 		});
 
 		jest.runAllTimers();

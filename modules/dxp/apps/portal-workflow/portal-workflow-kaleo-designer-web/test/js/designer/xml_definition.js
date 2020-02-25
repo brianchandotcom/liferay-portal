@@ -21,7 +21,7 @@ describe('liferay-kaleo-designer-xml-definition', () => {
 				...metadata,
 				requires: metadata.requires.filter(
 					name => name !== 'aui-component'
-				)
+				),
 			});
 		};
 
@@ -54,12 +54,12 @@ describe('liferay-kaleo-designer-xml-definition', () => {
 										ATTRS[key].value = value;
 									}
 								);
-							}
+							},
 						}
 					);
 
 					return constructor;
-				}
+				},
 			};
 
 			AUI().use(['liferay-kaleo-designer-xml-definition'], () => {
@@ -73,7 +73,7 @@ describe('liferay-kaleo-designer-xml-definition', () => {
 			const definition = loadResource('metadata-only-definition.xml');
 
 			const xmlDefinition = new Liferay.KaleoDesignerXMLDefinition({
-				value: definition
+				value: definition,
 			});
 
 			const metadata = xmlDefinition.getDefinitionMetadata();
@@ -91,7 +91,7 @@ describe('liferay-kaleo-designer-xml-definition', () => {
 			);
 
 			const xmlDefinition = new Liferay.KaleoDesignerXMLDefinition({
-				value: definition
+				value: definition,
 			});
 
 			// Jest's jsdom's XMLDocument evaluate() implementation
@@ -122,7 +122,7 @@ describe('liferay-kaleo-designer-xml-definition', () => {
 			);
 
 			const xmlDefinition = new Liferay.KaleoDesignerXMLDefinition({
-				value: definition
+				value: definition,
 			});
 
 			xmlDefinition.forEachField((_tagName, fieldData) => {
@@ -142,7 +142,7 @@ describe('liferay-kaleo-designer-xml-definition', () => {
 			);
 
 			const xmlDefinition = new Liferay.KaleoDesignerXMLDefinition({
-				value: definition
+				value: definition,
 			});
 
 			xmlDefinition.forEachField((_tagName, fieldData) => {
@@ -162,7 +162,7 @@ describe('liferay-kaleo-designer-xml-definition', () => {
 			);
 
 			const xmlDefinition = new Liferay.KaleoDesignerXMLDefinition({
-				value: definition
+				value: definition,
 			});
 
 			xmlDefinition.forEachField((_tagName, fieldData) => {

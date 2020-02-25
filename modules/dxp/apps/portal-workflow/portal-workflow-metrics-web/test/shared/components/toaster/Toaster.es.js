@@ -44,7 +44,7 @@ describe('The Toaster component should', () => {
 		const {
 			getAllByTestId,
 			getByTestId,
-			getByText
+			getByText,
 		} = render(<ComponentMock />, {wrapper: ToasterProvider});
 
 		const alertContainer = getByTestId('alertContainer');

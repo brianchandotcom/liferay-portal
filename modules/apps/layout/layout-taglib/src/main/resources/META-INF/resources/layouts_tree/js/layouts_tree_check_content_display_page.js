@@ -57,7 +57,7 @@ AUI.add(
 								label,
 								Liferay.Language.get(
 									'this-page-is-not-a-content-display-page-template'
-								)
+								),
 							]
 						);
 					}
@@ -71,7 +71,7 @@ AUI.add(
 					return new A.Do.AlterReturn(
 						'Modified label attribute',
 						A.merge(A.Do.currentRetVal, {
-							label: instance.get(STR_HOST).get('root').label
+							label: instance.get(STR_HOST).get('root').label,
 						})
 					);
 				},
@@ -82,7 +82,7 @@ AUI.add(
 					var host = instance.get(STR_HOST);
 
 					host.fire('checkContentDisplayTreeAppend', {
-						node: event.tree.node
+						node: event.tree.node,
 					});
 				},
 
@@ -117,18 +117,18 @@ AUI.add(
 							'_onClickNodeEl',
 							instance._beforeClickNodeEl,
 							instance
-						)
+						),
 					];
 
 					host.get('boundingBox').addClass('lfr-tree-display-page');
-				}
-			}
+				},
+			},
 		});
 
 		A.Plugin.LayoutsTreeCheckContentDisplayPage = LayoutsTreeCheckContentDisplayPage;
 	},
 	'',
 	{
-		requires: ['aui-component', 'plugin']
+		requires: ['aui-component', 'plugin'],
 	}
 );

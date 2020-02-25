@@ -18,7 +18,7 @@ AUI.add(
 		var Lang = A.Lang;
 
 		var MAP_DATA_PARAMS = {
-			classname: 'className'
+			classname: 'className',
 		};
 
 		var STR_CLICK = 'click';
@@ -31,22 +31,22 @@ AUI.add(
 			ATTRS: {
 				form: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				redirectUrl: {
 					validator: Lang.isString,
-					value: null
+					value: null,
 				},
 
 				submitButton: {
 					validator: Lang.isString,
-					value: null
+					value: null,
 				},
 
 				url: {
-					value: null
-				}
+					value: null,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -106,10 +106,10 @@ AUI.add(
 						loadingMask: {
 							'strings.loading': Liferay.Language.get(
 								'xuggler-library-is-installing'
-							)
+							),
 						},
 						selector: '#adminXugglerPanelContent',
-						where: 'outer'
+						where: 'outer',
 					});
 				},
 
@@ -174,8 +174,8 @@ AUI.add(
 					instance._eventHandles = [];
 
 					instance.bindUI();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Portlet.Admin = Admin;
@@ -186,7 +186,7 @@ AUI.add(
 			'aui-io-plugin-deprecated',
 			'io',
 			'liferay-portlet-base',
-			'querystring-parse'
-		]
+			'querystring-parse',
+		],
 	}
 );

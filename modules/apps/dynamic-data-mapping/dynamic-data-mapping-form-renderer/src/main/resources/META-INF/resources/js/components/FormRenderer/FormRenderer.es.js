@@ -132,7 +132,7 @@ FormRenderer.STATE = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
 };
 
 Soy.register(FormRenderer, templates);

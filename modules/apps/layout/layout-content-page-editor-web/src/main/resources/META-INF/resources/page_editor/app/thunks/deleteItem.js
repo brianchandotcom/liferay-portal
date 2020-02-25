@@ -25,7 +25,7 @@ export default function deleteItem({itemId, store}) {
 		return LayoutService.deleteItem({
 			itemId,
 			onNetworkStatus: dispatch,
-			segmentsExperienceId
+			segmentsExperienceId,
 		})
 			.then(({deletedFragmentEntryLinkIds = [], layoutData}) => {
 				const deletedWidgets = deletedFragmentEntryLinkIds
@@ -48,11 +48,11 @@ export default function deleteItem({itemId, store}) {
 			})
 			.then(() => {
 				InfoItemService.getPageContents({
-					onNetworkStatus: dispatch
+					onNetworkStatus: dispatch,
 				}).then(pageContents => {
 					dispatch(
 						updatePageContents({
-							pageContents
+							pageContents,
 						})
 					);
 				});

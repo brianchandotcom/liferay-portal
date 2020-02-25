@@ -32,7 +32,7 @@ const useFetch = ({admin = false, params = {}, url}) => {
 
 	return {
 		data,
-		fetchData
+		fetchData,
 	};
 };
 

@@ -48,6 +48,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "process-details"));
 		namespace: '<portlet:namespace />',
 		processesNode: '#exportImportProcessContainer',
 		processesResourceURL: '<%= HtmlUtil.escapeJS(exportImportProcessURL) %>',
-		timeZoneOffset: <%= timeZoneOffset %>
+		timeZoneOffset: <%= timeZoneOffset %>,
 	});
 </aui:script>

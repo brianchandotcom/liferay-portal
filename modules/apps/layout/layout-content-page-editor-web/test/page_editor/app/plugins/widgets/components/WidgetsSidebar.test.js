@@ -30,22 +30,22 @@ const widgets = [
 				instanceable: true,
 				portletId: 'assetPublisher',
 				title: 'Asset Publisher',
-				used: false
+				used: false,
 			},
 			{
 				instanceable: true,
 				portletId: 'DocumentsAndMedia',
 				title: 'Documents and Media',
-				used: false
+				used: false,
 			},
 			{
 				instanceable: true,
 				portletId: 'NavigationMenu',
 				title: 'Navigation Menu',
-				used: false
-			}
+				used: false,
+			},
 		],
-		title: 'Highlighted'
+		title: 'Highlighted',
 	},
 	{
 		portlets: [
@@ -53,17 +53,17 @@ const widgets = [
 				instanceable: false,
 				portletId: 'Blogs',
 				title: 'Blogs',
-				used: false
+				used: false,
 			},
 			{
 				instanceable: false,
 				portletId: 'BlogsAggregator',
 				title: 'Blogs Aggregator',
-				used: false
-			}
+				used: false,
+			},
 		],
-		title: 'Collaboration'
-	}
+		title: 'Collaboration',
+	},
 ];
 
 const RenderWidgetsSidebar = () => {

@@ -15,7 +15,7 @@
 import {
 	DefaultEventHandler,
 	ItemSelectorDialog,
-	openSimpleInputModal
+	openSimpleInputModal,
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
 
@@ -38,13 +38,13 @@ class LayoutPageTemplateEntryDropdownDefaultEventHandler extends DefaultEventHan
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				modal: true
+				modal: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
 			title: Liferay.Language.get('permissions'),
-			uri: itemData.permissionsLayoutPageTemplateEntryURL
+			uri: itemData.permissionsLayoutPageTemplateEntryURL,
 		});
 	}
 
@@ -59,7 +59,7 @@ class LayoutPageTemplateEntryDropdownDefaultEventHandler extends DefaultEventHan
 			mainFieldPlaceholder: Liferay.Language.get('name'),
 			mainFieldValue: itemData.layoutPageTemplateEntryName,
 			namespace: this.namespace,
-			spritemap: this.spritemap
+			spritemap: this.spritemap,
 		});
 	}
 
@@ -68,7 +68,7 @@ class LayoutPageTemplateEntryDropdownDefaultEventHandler extends DefaultEventHan
 			eventName: this.ns('changePreview'),
 			singleSelect: true,
 			title: Liferay.Language.get('page-template-thumbnail'),
-			url: itemData.itemSelectorURL
+			url: itemData.itemSelectorURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {
@@ -94,7 +94,7 @@ class LayoutPageTemplateEntryDropdownDefaultEventHandler extends DefaultEventHan
 }
 
 LayoutPageTemplateEntryDropdownDefaultEventHandler.STATE = {
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export default LayoutPageTemplateEntryDropdownDefaultEventHandler;

@@ -49,7 +49,7 @@ function filterEmptyStrings(list) {
 function trimListItems(list) {
 	return list.map(({label, value}) => ({
 		label: label.trim(),
-		value: value.trim()
+		value: value.trim(),
 	}));
 }
 
@@ -57,16 +57,16 @@ class SynonymSetsForm extends Component {
 	static propTypes = {
 		formName: PropTypes.string.isRequired,
 		inputName: PropTypes.string.isRequired,
-		synonymSets: PropTypes.string
+		synonymSets: PropTypes.string,
 	};
 
 	static defaultProps = {
-		synonymSets: ''
+		synonymSets: '',
 	};
 
 	state = {
 		inputValue: '',
-		synonyms: []
+		synonyms: [],
 	};
 
 	constructor(props) {
@@ -76,7 +76,7 @@ class SynonymSetsForm extends Component {
 			props.synonymSets.split(',').forEach(synonym => {
 				this.state.synonyms.push({
 					label: synonym,
-					value: synonym
+					value: synonym,
 				});
 			});
 		}
@@ -106,7 +106,7 @@ class SynonymSetsForm extends Component {
 
 	_handleItemsChange = values => {
 		this.setState({
-			synonyms: filterDuplicates(values)
+			synonyms: filterDuplicates(values),
 		});
 	};
 

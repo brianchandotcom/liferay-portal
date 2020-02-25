@@ -46,13 +46,13 @@ String openSSOSubjectScreenName = (String)request.getAttribute(OpenSSOWebKeys.OP
 			closeable: true,
 			delay: {
 				hide: 10000,
-				show: 0
+				show: 0,
 			},
 			duration: 500,
 			message: '<%= HtmlUtil.escapeJS(msg) %>',
 			render: true,
 			title: '<liferay-ui:message key="warning" />',
-			type: 'warning'
+			type: 'warning',
 		}).render('body');
 	});
 </script>

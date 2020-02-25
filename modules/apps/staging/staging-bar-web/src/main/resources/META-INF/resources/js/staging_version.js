@@ -19,7 +19,7 @@ AUI.add(
 
 		var MAP_CMD_REVISION = {
 			redo: 'redo_layout_revision',
-			undo: 'undo_layout_revision'
+			undo: 'undo_layout_revision',
 		};
 
 		var MAP_TEXT_REVISION = {
@@ -28,7 +28,7 @@ AUI.add(
 			),
 			undo: Liferay.Language.get(
 				'are-you-sure-you-want-to-undo-your-last-changes'
-			)
+			),
 		};
 
 		A.mix(StagingBar, {
@@ -55,7 +55,7 @@ AUI.add(
 						timeout: 10000,
 						toggleText: false,
 						type: 'warning',
-						useAnimation: true
+						useAnimation: true,
 					});
 
 					instance._notification = notification;
@@ -93,7 +93,7 @@ AUI.add(
 						namespace + 'viewHistory',
 						instance._onViewHistory,
 						instance
-					)
+					),
 				];
 
 				var layoutRevisionDetails = A.one(
@@ -219,12 +219,12 @@ AUI.add(
 						after: {
 							destroy() {
 								window.location.reload();
-							}
+							},
 						},
-						destroyOnHide: true
+						destroyOnHide: true,
 					},
 					title: Liferay.Language.get('history'),
-					uri: StagingBar.viewHistoryURL
+					uri: StagingBar.viewHistoryURL,
 				});
 			},
 
@@ -238,14 +238,14 @@ AUI.add(
 					layoutSetBranchId,
 					p_auth: Liferay.authToken,
 					p_l_id: themeDisplay.getPlid(),
-					p_v_l_s_g_id: themeDisplay.getSiteGroupId()
+					p_v_l_s_g_id: themeDisplay.getSiteGroupId(),
 				};
 
 				Liferay.Util.fetch(
 					themeDisplay.getPathMain() + '/portal/update_layout',
 					{
 						body: Liferay.Util.objectToFormData(updateLayoutData),
-						method: 'POST'
+						method: 'POST',
 					}
 				)
 					.then(() => {
@@ -260,13 +260,13 @@ AUI.add(
 				var instance = this;
 
 				instance._cleanup();
-			}
+			},
 		});
 
 		Liferay.on('initStagingBar', StagingBar._onInit, StagingBar);
 	},
 	'',
 	{
-		requires: ['aui-button', 'liferay-staging']
+		requires: ['aui-button', 'liferay-staging'],
 	}
 );

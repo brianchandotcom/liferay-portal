@@ -22,8 +22,8 @@ describe('The QuickActionKebab component should', () => {
 			{
 				action: jest.fn(),
 				icon: 'change',
-				title: Liferay.Language.get('reassign-task')
-			}
+				title: Liferay.Language.get('reassign-task'),
+			},
 		];
 		const {getByTestId} = render(
 			<QuickActionKebab iconItems={kebabIconItems} />

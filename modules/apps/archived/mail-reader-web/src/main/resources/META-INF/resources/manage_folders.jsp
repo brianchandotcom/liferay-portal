@@ -95,14 +95,14 @@ long accountId = ParamUtil.getLong(request, "accountId");
 				A.io.request(themeDisplay.getLayoutURL() + '/-/mail/add_folder', {
 					data: Liferay.Util.ns('<portlet:namespace />', {
 						accountId: <%= accountId %>,
-						displayName: displayName
+						displayName: displayName,
 					}),
 					dataType: 'JSON',
 					method: 'POST',
 					on: {
 						failure: <portlet:namespace />onIOFailure,
-						success: <portlet:namespace />onIOSuccess
-					}
+						success: <portlet:namespace />onIOSuccess,
+					},
 				});
 			},
 			['aui-io-deprecated']
@@ -130,14 +130,14 @@ long accountId = ParamUtil.getLong(request, "accountId");
 
 				A.io.request(themeDisplay.getLayoutURL() + '/-/mail/delete_folder', {
 					data: Liferay.Util.ns('<portlet:namespace />', {
-						folderId: id
+						folderId: id,
 					}),
 					dataType: 'JSON',
 					method: 'POST',
 					on: {
 						failure: <portlet:namespace />onIOFailure,
-						success: <portlet:namespace />onIOSuccess
-					}
+						success: <portlet:namespace />onIOSuccess,
+					},
 				});
 			},
 			['aui-io-deprecated']
@@ -155,15 +155,15 @@ long accountId = ParamUtil.getLong(request, "accountId");
 						cssClass: 'mail-dialog',
 						destroyOnClose: true,
 						modal: true,
-						width: 600
+						width: 600,
 					},
-					title: '<liferay-ui:message key="rename-folder" />'
+					title: '<liferay-ui:message key="rename-folder" />',
 				})
 					.plug(A.Plugin.IO, {
 						data: Liferay.Util.ns('<portlet:namespace />', {
-							folderId: id
+							folderId: id,
 						}),
-						uri: themeDisplay.getLayoutURL() + '/-/mail/edit_folder'
+						uri: themeDisplay.getLayoutURL() + '/-/mail/edit_folder',
 					})
 					.render();
 			},

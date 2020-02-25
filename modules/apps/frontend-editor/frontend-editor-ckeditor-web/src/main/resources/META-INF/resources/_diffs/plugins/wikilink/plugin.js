@@ -21,12 +21,12 @@ CKEDITOR.plugins.add('wikilink', {
 
 		editor.ui.addButton('Link', {
 			command: 'link',
-			label: editor.lang.link.toolbar
+			label: editor.lang.link.toolbar,
 		});
 
 		editor.ui.addButton('Unlink', {
 			command: 'unlink',
-			label: editor.lang.link.unlink
+			label: editor.lang.link.unlink,
 		});
 
 		CKEDITOR.dialog.add('link', instance.path + 'dialogs/link.js');
@@ -72,14 +72,14 @@ CKEDITOR.plugins.add('wikilink', {
 					command: 'link',
 					group: 'link',
 					label: editor.lang.link.menu,
-					order: 1
+					order: 1,
 				},
 				unlink: {
 					command: 'unlink',
 					group: 'link',
 					label: editor.lang.link.unlink,
-					order: 5
-				}
+					order: 5,
+				},
 			});
 		}
 
@@ -93,7 +93,7 @@ CKEDITOR.plugins.add('wikilink', {
 					if (element) {
 						selectionObj = {
 							link: CKEDITOR.TRISTATE_OFF,
-							unlink: CKEDITOR.TRISTATE_OFF
+							unlink: CKEDITOR.TRISTATE_OFF,
 						};
 					}
 				}
@@ -101,7 +101,7 @@ CKEDITOR.plugins.add('wikilink', {
 				return selectionObj;
 			});
 		}
-	}
+	},
 });
 
 CKEDITOR.plugins.link = {
@@ -131,7 +131,7 @@ CKEDITOR.plugins.link = {
 		catch (e) {}
 
 		return selectedLink;
-	}
+	},
 };
 
 CKEDITOR.unlinkCommand = function() {};
@@ -162,5 +162,5 @@ CKEDITOR.unlinkCommand.prototype = {
 		selection.selectBookmarks(bookmarks);
 	},
 
-	startDisabled: true
+	startDisabled: true,
 };

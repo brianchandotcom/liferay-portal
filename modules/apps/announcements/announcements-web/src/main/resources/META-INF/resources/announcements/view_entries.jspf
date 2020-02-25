@@ -64,7 +64,7 @@ if ((entriesCount == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) &
 			'/announcementsflag/add-flag',
 			{
 				entryId: entryId,
-				value: <%= AnnouncementsFlagConstants.HIDDEN %>
+				value: <%= AnnouncementsFlagConstants.HIDDEN %>,
 			},
 			Liferay.Portlet.refresh.bind(
 				Liferay.Portlet,
@@ -78,13 +78,13 @@ if ((entriesCount == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) &
 			'/announcementsflag/get-flag',
 			{
 				entryId: entryId,
-				value: <%= AnnouncementsFlagConstants.HIDDEN %>
+				value: <%= AnnouncementsFlagConstants.HIDDEN %>,
 			},
 			function(response) {
 				Liferay.Service(
 					'/announcementsflag/delete-flag',
 					{
-						flagId: response.flagId
+						flagId: response.flagId,
 					},
 					Liferay.Portlet.refresh.bind(
 						Liferay.Portlet,

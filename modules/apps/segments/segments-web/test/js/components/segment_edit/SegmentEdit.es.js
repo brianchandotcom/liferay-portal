@@ -31,11 +31,11 @@ const PROPERTY_GROUPS_BASIC = [
 				name: 'value',
 				options: [],
 				selectEntity: null,
-				type: 'string'
-			}
+				type: 'string',
+			},
 		],
-		propertyKey: 'first-test-values-group'
-	}
+		propertyKey: 'first-test-values-group',
+	},
 ];
 
 const DEFAULT_REDIRECT = '/test-url';
@@ -46,8 +46,8 @@ const CONTRIBUTORS = [
 		conjunctionInputId: 'conjunction-input-1',
 		initialQuery: "(value eq 'value')",
 		inputId: 'input-id-for-backend-form',
-		propertyKey: 'first-test-values-group'
-	}
+		propertyKey: 'first-test-values-group',
+	},
 ];
 
 function _renderSegmentEditComponent({
@@ -55,18 +55,18 @@ function _renderSegmentEditComponent({
 	redirect = DEFAULT_REDIRECT,
 	hasUpdatePermission = undefined,
 	contributors = undefined,
-	showInEditMode = undefined
+	showInEditMode = undefined,
 } = {}) {
 	return render(
 		<SegmentEdit
 			availableLocales={{
-				en_US: ''
+				en_US: '',
 			}}
 			contributors={contributors}
 			defaultLanguageId="en_US"
 			hasUpdatePermission={hasUpdatePermission}
 			initialSegmentName={{
-				en_US: 'Segment title'
+				en_US: 'Segment title',
 			}}
 			locale="en_US"
 			redirect={redirect}
@@ -89,7 +89,7 @@ describe('SegmentEdit', () => {
 		const {icon, name} = SOURCES.ASAH_FARO_BACKEND;
 
 		const {getByTestId} = _renderSegmentEditComponent({
-			source: name
+			source: name,
 		});
 
 		const image = getByTestId(SOURCE_ICON_TESTID);
@@ -101,7 +101,7 @@ describe('SegmentEdit', () => {
 		const {icon, name} = SOURCES.DEFAULT;
 
 		const {getByTestId} = _renderSegmentEditComponent({
-			source: name
+			source: name,
 		});
 
 		const image = getByTestId(SOURCE_ICON_TESTID);
@@ -113,7 +113,7 @@ describe('SegmentEdit', () => {
 		const hasUpdatePermission = true;
 
 		const {asFragment} = _renderSegmentEditComponent({
-			hasUpdatePermission
+			hasUpdatePermission,
 		});
 
 		expect(asFragment()).toMatchSnapshot();
@@ -123,7 +123,7 @@ describe('SegmentEdit', () => {
 		const hasUpdatePermission = false;
 
 		const {asFragment} = _renderSegmentEditComponent({
-			hasUpdatePermission
+			hasUpdatePermission,
 		});
 
 		expect(asFragment()).toMatchSnapshot();
@@ -135,13 +135,13 @@ describe('SegmentEdit', () => {
 		const {asFragment, getByTestId} = render(
 			<SegmentEdit
 				availableLocales={{
-					en_US: ''
+					en_US: '',
 				}}
 				contributors={CONTRIBUTORS}
 				defaultLanguageId="en_US"
 				hasUpdatePermission={hasUpdatePermission}
 				initialSegmentName={{
-					en_US: 'Segment title'
+					en_US: 'Segment title',
 				}}
 				locale="en_US"
 				propertyGroups={PROPERTY_GROUPS_BASIC}
@@ -168,7 +168,7 @@ describe('SegmentEdit', () => {
 		const {getByText} = _renderSegmentEditComponent({
 			contributors: CONTRIBUTORS,
 			hasUpdatePermission,
-			propertyGroups: PROPERTY_GROUPS_BASIC
+			propertyGroups: PROPERTY_GROUPS_BASIC,
 		});
 
 		const cancelButton = getByText('cancel');
@@ -193,7 +193,7 @@ describe('SegmentEdit', () => {
 		const {getByTestId, getByText} = _renderSegmentEditComponent({
 			contributors: CONTRIBUTORS,
 			hasUpdatePermission,
-			propertyGroups: PROPERTY_GROUPS_BASIC
+			propertyGroups: PROPERTY_GROUPS_BASIC,
 		});
 
 		const localizedInput = getByTestId('localized-main-input');

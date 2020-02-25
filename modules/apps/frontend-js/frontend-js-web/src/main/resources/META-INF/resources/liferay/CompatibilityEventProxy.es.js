@@ -141,8 +141,8 @@ CompatibilityEventProxy.STATE = {
 	adaptedEvents: {
 		value: {
 			match: /(.*)(Changed)$/,
-			replace: '$1Change'
-		}
+			replace: '$1Change',
+		},
 	},
 
 	/**
@@ -154,8 +154,8 @@ CompatibilityEventProxy.STATE = {
 	 * @type {String}
 	 */
 	emitFacade: {
-		value: false
-	}
+		value: false,
+	},
 };
 
 export default CompatibilityEventProxy;

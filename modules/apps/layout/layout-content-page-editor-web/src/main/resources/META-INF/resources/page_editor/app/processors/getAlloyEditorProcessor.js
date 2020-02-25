@@ -71,7 +71,7 @@ export default function getAlloyEditorProcessor(
 				filebrowserImageBrowseUrl: editorConfig.filebrowserImageBrowseUrl.replace(
 					'_EDITOR_NAME_',
 					editorName
-				)
+				),
 			});
 
 			const nativeEditor = _editor.get('nativeEditor');
@@ -117,7 +117,7 @@ export default function getAlloyEditorProcessor(
 
 				_stopEventPropagation(element, 'keydown'),
 				_stopEventPropagation(element, 'keyup'),
-				_stopEventPropagation(element, 'keypress')
+				_stopEventPropagation(element, 'keypress'),
 			];
 		},
 
@@ -151,7 +151,7 @@ export default function getAlloyEditorProcessor(
 			if (element !== _element) {
 				render(element, value, editableConfig);
 			}
-		}
+		},
 	};
 }
 
@@ -168,7 +168,7 @@ function _stopEventPropagation(element, eventName) {
 	return {
 		removeListener: () => {
 			element.removeEventListener(eventName, handler);
-		}
+		},
 	};
 }
 

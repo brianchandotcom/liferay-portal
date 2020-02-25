@@ -150,6 +150,6 @@
 		fieldIndexes: '<portlet:namespace />subscriptionIndexes',
 		namespace: '<portlet:namespace />',
 		sortable: true,
-		sortableHandle: '.field-row'
+		sortableHandle: '.field-row',
 	}).render();
 </aui:script>

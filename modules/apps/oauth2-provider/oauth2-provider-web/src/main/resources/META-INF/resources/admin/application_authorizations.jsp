@@ -134,9 +134,9 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 					oAuth2AuthorizationIds: Liferay.Util.listCheckedExcept(
 						form,
 						'<portlet:namespace />allRowIds'
-					)
+					),
 				},
-				url: '<%= revokeOAuth2AuthorizationsURL %>'
+				url: '<%= revokeOAuth2AuthorizationsURL %>',
 			});
 		}
 	}
@@ -151,9 +151,9 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 
 			Liferay.Util.postForm(form, {
 				data: {
-					oAuth2AuthorizationIds: oAuth2AuthorizationId
+					oAuth2AuthorizationIds: oAuth2AuthorizationId,
 				},
-				url: '<%= revokeOAuth2AuthorizationsURL %>'
+				url: '<%= revokeOAuth2AuthorizationsURL %>',
 			});
 		}
 	}

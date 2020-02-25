@@ -214,5 +214,5 @@ tinymce.addI18n('nb_NO', {
 	Tools: 'Verkt\u00f8y',
 	View: 'Vis',
 	Table: 'Tabell',
-	Format: 'Format'
+	Format: 'Format',
 });

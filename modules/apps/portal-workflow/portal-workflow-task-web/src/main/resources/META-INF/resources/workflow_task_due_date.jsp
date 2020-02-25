@@ -63,7 +63,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
 			Liferay.Util.fetch('<%= updateURL.toString() %>', {
 				body: data,
-				method: 'POST'
+				method: 'POST',
 			}).then(function() {
 				Liferay.Util.getOpener().<portlet:namespace />refreshPortlet(
 					'<%= redirect.toString() %>'

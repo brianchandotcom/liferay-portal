@@ -28,26 +28,26 @@ const rules = [
 				action: 'require',
 				expression: '[x+2]',
 				label: 'label text 1',
-				target: 'text1'
-			}
+				target: 'text1',
+			},
 		],
 		conditions: [
 			{
 				operands: [
 					{
 						type: 'field',
-						value: 'text1'
+						value: 'text1',
 					},
 					{
 						type: 'value',
-						value: 'value 2'
-					}
+						value: 'value 2',
+					},
 				],
-				operator: 'equals-to'
-			}
+				operator: 'equals-to',
+			},
 		],
-		['logical-operator']: 'OR'
-	}
+		['logical-operator']: 'OR',
+	},
 ];
 
 const spritemap = 'icons.svg';
@@ -91,7 +91,7 @@ describe('LayoutProvider', () => {
 	it('receives pages through PROPS and move to the internal state', () => {
 		component = new LayoutProvider({
 			initialPages: pages,
-			rules: []
+			rules: [],
 		});
 
 		expect(component.state.pages).toEqual(component.props.initialPages);
@@ -107,7 +107,7 @@ describe('LayoutProvider', () => {
 			fieldClicked: expect.any(Function),
 			fieldDeleted: expect.any(Function),
 			fieldEdited: expect.any(Function),
-			fieldMoved: expect.any(Function)
+			fieldMoved: expect.any(Function),
 		});
 	});
 
@@ -128,11 +128,11 @@ describe('LayoutProvider', () => {
 			columnIndex: 0,
 			pageIndex: 0,
 			rowIndex: 0,
-			type: 'radio'
+			type: 'radio',
 		};
 
 		provider.setState({
-			focusedField
+			focusedField,
 		});
 
 		jest.runAllTimers();
@@ -152,7 +152,7 @@ describe('LayoutProvider', () => {
 			action: 'calculate',
 			expression: '22+2',
 			label: 'liferay',
-			target: 'liferay'
+			target: 'liferay',
 		};
 
 		child.emit('ruleAdded', mockEvent);
@@ -172,7 +172,7 @@ describe('LayoutProvider', () => {
 		const {child, provider} = component.refs;
 
 		provider.setState({
-			rules
+			rules,
 		});
 
 		jest.runAllTimers();
@@ -186,10 +186,10 @@ describe('LayoutProvider', () => {
 			actions: [
 				{
 					...rules[0].actions[0],
-					action: 'show'
-				}
+					action: 'show',
+				},
 			],
-			ruleEditedIndex: 0
+			ruleEditedIndex: 0,
 		};
 
 		child.emit('ruleSaved', mockEvent);
@@ -205,7 +205,7 @@ describe('LayoutProvider', () => {
 		const {child, provider} = component.refs;
 
 		provider.setState({
-			mode: 'edit'
+			mode: 'edit',
 		});
 
 		jest.runAllTimers();
@@ -224,13 +224,13 @@ describe('LayoutProvider', () => {
 					source: {
 						columnIndex: 0,
 						pageIndex: 0,
-						rowIndex: 1
+						rowIndex: 1,
 					},
 					target: {
 						columnIndex: 0,
 						pageIndex: 0,
-						rowIndex: 0
-					}
+						rowIndex: 0,
+					},
 				};
 
 				const fields =
@@ -267,14 +267,14 @@ describe('LayoutProvider', () => {
 					source: {
 						columnIndex: 1,
 						pageIndex: 0,
-						rowIndex: 1
+						rowIndex: 1,
 					},
 					target: {
 						columnIndex: 1,
 						pageIndex: 0,
-						rowIndex: 0
+						rowIndex: 0,
 					},
-					targetIsEmptyRow: false
+					targetIsEmptyRow: false,
 				};
 
 				child.emit('fieldMoved', mockEvent);
@@ -293,14 +293,14 @@ describe('LayoutProvider', () => {
 					source: {
 						columnIndex: 0,
 						pageIndex: 0,
-						rowIndex: 2
+						rowIndex: 2,
 					},
 					target: {
 						columnIndex: 1,
 						pageIndex: 0,
-						rowIndex: 0
+						rowIndex: 0,
 					},
-					targetIsEmptyRow: false
+					targetIsEmptyRow: false,
 				};
 
 				child.emit('fieldMoved', mockEvent);
@@ -320,13 +320,13 @@ describe('LayoutProvider', () => {
 					source: {
 						columnIndex: 0,
 						pageIndex: 0,
-						rowIndex: 0
+						rowIndex: 0,
 					},
 					target: {
 						columnIndex: 0,
 						pageIndex: 0,
-						rowIndex: 0
-					}
+						rowIndex: 0,
+					},
 				};
 
 				child.emit('fieldMoved', mockEvent);
@@ -347,14 +347,14 @@ describe('LayoutProvider', () => {
 					focusedField: {
 						name: 'text',
 						settingsContext: {
-							pages: mockPages
-						}
+							pages: mockPages,
+						},
 					},
 					target: {
 						columnIndex: 1,
 						pageIndex: 0,
-						rowIndex: 0
-					}
+						rowIndex: 0,
+					},
 				};
 
 				child.emit('fieldAdded', mockEvent);
@@ -372,14 +372,14 @@ describe('LayoutProvider', () => {
 					focusedField: {
 						name: 'text',
 						settingsContext: {
-							pages: mockPages
-						}
+							pages: mockPages,
+						},
 					},
 					target: {
 						columnIndex: 0,
 						pageIndex: 0,
-						rowIndex: 0
-					}
+						rowIndex: 0,
+					},
 				};
 
 				child.emit('fieldAdded', mockEvent);
@@ -397,14 +397,14 @@ describe('LayoutProvider', () => {
 					focusedField: {
 						name: 'text',
 						settingsContext: {
-							pages: mockPages
-						}
+							pages: mockPages,
+						},
 					},
 					target: {
 						columnIndex: 2,
 						pageIndex: 0,
-						rowIndex: 1
-					}
+						rowIndex: 1,
+					},
 				};
 
 				child.emit('fieldAdded', mockEvent);
@@ -425,7 +425,7 @@ describe('LayoutProvider', () => {
 				const mockEvent = {
 					columnIndex: 0,
 					pageIndex: 0,
-					rowIndex: 1
+					rowIndex: 1,
 				};
 
 				child.emit('fieldDeleted', mockEvent);
@@ -445,7 +445,7 @@ describe('LayoutProvider', () => {
 				const mockEvent = {
 					columnIndex: 0,
 					pageIndex: 0,
-					rowIndex: 0
+					rowIndex: 0,
 				};
 
 				child.emit('fieldDuplicated', mockEvent);
@@ -473,7 +473,7 @@ describe('LayoutProvider', () => {
 							return {
 								...field,
 								fieldName: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`,
-								name: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`
+								name: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`,
 							};
 						}
 					)
@@ -489,13 +489,13 @@ describe('LayoutProvider', () => {
 				const mockEvent = {
 					columnIndex: 0,
 					pageIndex: 0,
-					rowIndex: 0
+					rowIndex: 0,
 				};
 
 				child.emit('fieldClicked', mockEvent);
 
 				expect(provider.props.children[0].props.events).toMatchObject({
-					fieldClicked: expect.any(Function)
+					fieldClicked: expect.any(Function),
 				});
 				expect(provider.state.focusedField).toEqual(mockEvent);
 			});
@@ -510,7 +510,7 @@ describe('LayoutProvider', () => {
 				child.emit('fieldBlurred');
 
 				expect(provider.props.children[0].props.events).toMatchObject({
-					fieldBlurred: expect.any(Function)
+					fieldBlurred: expect.any(Function),
 				});
 				expect(provider.state.focusedField).toMatchSnapshot();
 			});
@@ -528,9 +528,9 @@ describe('LayoutProvider', () => {
 						dataset: {
 							ddmFieldColumn: 1,
 							ddmFieldPage: 0,
-							ddmFieldRow: 0
-						}
-					}
+							ddmFieldRow: 0,
+						},
+					},
 				};
 
 				child.emit('columnResized', mockEvent);
@@ -545,7 +545,7 @@ describe('LayoutProvider', () => {
 		xdescribe('fieldChangesCanceled', () => {
 			it('listens the fieldChangesCanceled event and change the state of the focusedField and pages for the data wich was received', () => {
 				component = new Parent({
-					initialPages: pages
+					initialPages: pages,
 				});
 
 				const {child, provider} = component.refs;
@@ -553,9 +553,9 @@ describe('LayoutProvider', () => {
 					fieldName: 'original',
 					name: 'text1',
 					settingsContext: {
-						pages: []
+						pages: [],
 					},
-					type: 'text'
+					type: 'text',
 				};
 
 				provider.setState({
@@ -565,9 +565,9 @@ describe('LayoutProvider', () => {
 						name: 'text1',
 						originalContext: mockedData,
 						settingsContext: {
-							pages: []
-						}
-					}
+							pages: [],
+						},
+					},
 				});
 
 				child.emit('fieldChangesCanceled');
@@ -589,13 +589,13 @@ describe('LayoutProvider', () => {
 				const mockEvent = {
 					columnIndex: 0,
 					pageIndex: 0,
-					rowIndex: 0
+					rowIndex: 0,
 				};
 
 				child.emit('focusedFieldUpdated', mockEvent);
 
 				expect(provider.props.children[0].props.events).toMatchObject({
-					focusedFieldUpdated: expect.any(Function)
+					focusedFieldUpdated: expect.any(Function),
 				});
 				expect(provider.state.focusedField).toEqual(mockEvent);
 				expect(provider.state.pages).toMatchSnapshot();
@@ -614,7 +614,7 @@ describe('LayoutProvider', () => {
 				expect(
 					provider.props.children[pageIndex].props.events
 				).toMatchObject({
-					pageDeleted: expect.any(Function)
+					pageDeleted: expect.any(Function),
 				});
 				expect(provider.state.pages).toMatchSnapshot();
 			});
@@ -629,7 +629,7 @@ describe('LayoutProvider', () => {
 				child.emit('pageAdded');
 
 				expect(provider.props.children[0].props.events).toMatchObject({
-					pageAdded: expect.any(Function)
+					pageAdded: expect.any(Function),
 				});
 				expect(provider.state.pages).toMatchSnapshot();
 			});
@@ -644,7 +644,7 @@ describe('LayoutProvider', () => {
 				child.emit('pageReset');
 
 				expect(provider.props.children[0].props.events).toMatchObject({
-					pageReset: expect.any(Function)
+					pageReset: expect.any(Function),
 				});
 				expect(provider.state.pages).toMatchSnapshot();
 			});
@@ -659,7 +659,7 @@ describe('LayoutProvider', () => {
 				child.emit('paginationModeUpdated');
 
 				expect(provider.props.children[0].props.events).toMatchObject({
-					paginationModeUpdated: expect.any(Function)
+					paginationModeUpdated: expect.any(Function),
 				});
 				expect(provider.state.pages).toMatchSnapshot();
 			});
@@ -670,7 +670,7 @@ describe('LayoutProvider', () => {
 				const {child, provider} = component.refs;
 
 				provider.setState({
-					paginationMode: 'pagination'
+					paginationMode: 'pagination',
 				});
 
 				jest.runAllTimers();
@@ -678,7 +678,7 @@ describe('LayoutProvider', () => {
 				child.emit('paginationModeUpdated');
 
 				expect(provider.props.children[0].props.events).toMatchObject({
-					paginationModeUpdated: expect.any(Function)
+					paginationModeUpdated: expect.any(Function),
 				});
 				expect(provider.state.pages).toMatchSnapshot();
 			});
@@ -691,11 +691,11 @@ describe('LayoutProvider', () => {
 				const {child, provider} = component.refs;
 
 				child.emit('successPageChanged', {
-					enabled: true
+					enabled: true,
 				});
 
 				expect(provider.props.children[0].props.events).toMatchObject({
-					successPageChanged: expect.any(Function)
+					successPageChanged: expect.any(Function),
 				});
 				expect(provider.state.pages).toMatchSnapshot();
 			});
@@ -710,7 +710,7 @@ describe('LayoutProvider', () => {
 				child.emit('activePageUpdated', 1);
 
 				expect(provider.props.children[0].props.events).toMatchObject({
-					activePageUpdated: expect.any(Function)
+					activePageUpdated: expect.any(Function),
 				});
 				expect(provider.state.pages).toMatchSnapshot();
 			});

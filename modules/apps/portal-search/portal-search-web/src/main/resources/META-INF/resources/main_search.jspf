@@ -145,8 +145,8 @@ Hits hits = searchDisplayContext.getHits();
 
 					Liferay.Util.postForm(form, {
 						data: {
-							<%= SearchContainer.DEFAULT_CUR_PARAM %>: 1
-						}
+							<%= SearchContainer.DEFAULT_CUR_PARAM %>: 1,
+						},
 					});
 				}
 			}

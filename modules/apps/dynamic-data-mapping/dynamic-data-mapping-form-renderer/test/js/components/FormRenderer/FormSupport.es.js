@@ -31,8 +31,8 @@ describe('FormSupport', () => {
 		const indexToAddRow = 0;
 		const newRow = FormSupport.implAddRow(12, [
 			{
-				type: 'newRow'
-			}
+				type: 'newRow',
+			},
 		]);
 		const pageIndex = 0;
 
@@ -45,8 +45,8 @@ describe('FormSupport', () => {
 		const row = [
 			{
 				spritemap: 'icons.svg',
-				type: 'text'
-			}
+				type: 'text',
+			},
 		];
 		const size = 12;
 
@@ -56,12 +56,12 @@ describe('FormSupport', () => {
 					fields: [
 						{
 							spritemap: 'icons.svg',
-							type: 'text'
-						}
+							type: 'text',
+						},
 					],
-					size: 12
-				}
-			]
+					size: 12,
+				},
+			],
 		});
 	});
 
@@ -79,7 +79,7 @@ describe('FormSupport', () => {
 		const columnIndex = 1;
 		const field = {
 			spritemap: 'icons.svg',
-			type: 'text'
+			type: 'text',
 		};
 		const pageIndex = 0;
 		const rowIndex = 0;
@@ -100,8 +100,8 @@ describe('FormSupport', () => {
 		const fields = [
 			{
 				spritemap: 'icons.svg',
-				type: 'text'
-			}
+				type: 'text',
+			},
 		];
 		const pageIndex = 0;
 		const rowIndex = 1;
@@ -192,24 +192,24 @@ describe('FormSupport', () => {
 			attributes: [
 				{
 					key: 'data-ddm-field-column',
-					value: 0
+					value: 0,
 				},
 				{
 					key: 'data-ddm-field-row',
-					value: 2
+					value: 2,
 				},
 				{
 					key: 'data-ddm-field-page',
-					value: 2
-				}
+					value: 2,
+				},
 			],
-			tagname: 'div'
+			tagname: 'div',
 		});
 
 		expect(FormSupport.getIndexes(element)).toEqual({
 			columnIndex: 0,
 			pageIndex: 2,
-			rowIndex: 2
+			rowIndex: 2,
 		});
 	});
 
@@ -218,31 +218,31 @@ describe('FormSupport', () => {
 			attributes: [
 				{
 					key: 'data-ddm-field-column',
-					value: 0
+					value: 0,
 				},
 				{
 					key: 'data-ddm-field-row',
-					value: 1
+					value: 1,
 				},
 				{
 					key: 'data-ddm-field-page',
-					value: 2
-				}
+					value: 2,
+				},
 			],
-			tagname: 'div'
+			tagname: 'div',
 		});
 
 		expect(FormSupport.getIndexes(element)).toEqual({
 			columnIndex: 0,
 			pageIndex: 2,
-			rowIndex: 1
+			rowIndex: 1,
 		});
 	});
 
 	it('updates a field', () => {
 		const properties = {
 			label: 'Foo',
-			type: 'radio'
+			type: 'radio',
 		};
 
 		expect(

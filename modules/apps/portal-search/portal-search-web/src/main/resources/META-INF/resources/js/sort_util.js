@@ -88,13 +88,13 @@ AUI.add(
 				}
 
 				return search;
-			}
+			},
 		};
 
 		Liferay.namespace('Search').SortUtil = SortUtil;
 	},
 	'',
 	{
-		requires: []
+		requires: [],
 	}
 );

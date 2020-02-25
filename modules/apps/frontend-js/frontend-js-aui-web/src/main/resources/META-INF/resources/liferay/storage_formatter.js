@@ -31,33 +31,33 @@ AUI.add(
 		StorageFormatter.ATTRS = {
 			addSpaceBeforeSuffix: {
 				validator: Lang.isBoolean,
-				value: false
+				value: false,
 			},
 
 			decimalSeparator: {
 				validator: Lang.isString,
-				value: '.'
+				value: '.',
 			},
 
 			denominator: {
 				validator: Lang.isNumber,
-				value: 1024.0
+				value: 1024.0,
 			},
 
 			suffixGB: {
 				validator: Lang.isString,
-				value: 'GB'
+				value: 'GB',
 			},
 
 			suffixKB: {
 				validator: Lang.isString,
-				value: 'KB'
+				value: 'KB',
 			},
 
 			suffixMB: {
 				validator: Lang.isString,
-				value: 'MB'
-			}
+				value: 'MB',
+			},
 		};
 
 		StorageFormatter.prototype = {
@@ -77,15 +77,15 @@ AUI.add(
 					denominator,
 					suffixGB,
 					suffixKB,
-					suffixMB
+					suffixMB,
 				});
-			}
+			},
 		};
 
 		Liferay.StorageFormatter = StorageFormatter;
 	},
 	'',
 	{
-		requires: ['aui-base', 'datatype-number-format']
+		requires: ['aui-base', 'datatype-number-format'],
 	}
 );

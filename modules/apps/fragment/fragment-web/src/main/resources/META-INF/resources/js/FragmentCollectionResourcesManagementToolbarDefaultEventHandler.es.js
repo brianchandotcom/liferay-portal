@@ -20,7 +20,7 @@ class FragmentCollectionResourcesManagementToolbarDefaultEventHandler extends De
 			eventName: this.ns('uploadFragmentCollectionResource'),
 			singleSelect: true,
 			title: Liferay.Language.get('upload-fragment-collection-resource'),
-			url: itemData.itemSelectorURL
+			url: itemData.itemSelectorURL,
 		});
 
 		itemSelectorDialog.open();

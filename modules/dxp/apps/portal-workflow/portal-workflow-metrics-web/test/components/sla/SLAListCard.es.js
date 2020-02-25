@@ -25,10 +25,10 @@ test('Should render component', () => {
 				),
 				description: 'Total time to complete the request.',
 				duration: 1553879089,
-				name: 'Total resolution time'
-			}
+				name: 'Total resolution time',
+			},
 		],
-		totalCount: 0
+		totalCount: 0,
 	};
 
 	const component = renderer.create(

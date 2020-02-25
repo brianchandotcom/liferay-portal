@@ -25,34 +25,34 @@ const {
 	items,
 	processSteps,
 	selectedItems,
-	workflowTaskAssignableUsers
+	workflowTaskAssignableUsers,
 } = {
 	assignees: [{id: 1, name: 'Test Test'}],
 	items: [
 		{
 			assigneePerson: {
 				id: 1,
-				name: 'Test Test'
+				name: 'Test Test',
 			},
 			id: 1,
 			label: 'Review',
 			objectReviewed: {assetTitle: 'Blog 1', assetType: 'Blog'},
-			workflowInstanceId: 1
+			workflowInstanceId: 1,
 		},
 		{
 			assigneePerson: {
 				id: 1,
-				name: 'Test Test'
+				name: 'Test Test',
 			},
 			id: 2,
 			label: 'Update',
 			objectReviewed: {assetTitle: 'Blog 2', assetType: 'Blog'},
-			workflowInstanceId: 2
-		}
+			workflowInstanceId: 2,
+		},
 	],
 	processSteps: [
 		{key: 'review', name: 'Review'},
-		{key: 'update', name: 'Update'}
+		{key: 'update', name: 'Update'},
 	],
 	selectedItems: [{id: 1}, {id: 2}],
 	workflowTaskAssignableUsers: [
@@ -60,37 +60,37 @@ const {
 			assignableUsers: [
 				{
 					id: 1,
-					name: '1test test1'
+					name: '1test test1',
 				},
 				{
 					id: 2,
-					name: '2test test2'
+					name: '2test test2',
 				},
 				{
 					id: 3,
-					name: '3test test3'
+					name: '3test test3',
 				},
 				{
 					id: 4,
-					name: '4test test4'
+					name: '4test test4',
 				},
 				{
 					id: 5,
-					name: 'Test Test'
-				}
+					name: 'Test Test',
+				},
 			],
-			workflowTaskId: 1
+			workflowTaskId: 1,
 		},
 		{
 			assignableUsers: [
 				{
 					id: 5,
-					name: 'Test Test'
-				}
+					name: 'Test Test',
+				},
 			],
-			workflowTaskId: 0
-		}
-	]
+			workflowTaskId: 0,
+		},
+	],
 };
 
 const clientMock = {
@@ -113,7 +113,7 @@ const clientMock = {
 	patch: jest
 		.fn()
 		.mockRejectedValueOnce(new Error('request-failure'))
-		.mockResolvedValueOnce({data: {}})
+		.mockResolvedValueOnce({data: {}}),
 };
 
 const ContainerMock = ({children}) => {
@@ -124,7 +124,7 @@ const ContainerMock = ({children}) => {
 		selectedAssignee: null,
 		selectedTasks: [],
 		useSameAssignee: false,
-		visible: true
+		visible: true,
 	});
 
 	return (

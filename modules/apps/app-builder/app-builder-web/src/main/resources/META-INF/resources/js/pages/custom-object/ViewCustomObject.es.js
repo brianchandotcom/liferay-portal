@@ -28,8 +28,8 @@ import CustomObjectNavigationBar from './CustomObjectNavigationBar.es';
 export default ({
 	match: {
 		params: {dataDefinitionId},
-		path
-	}
+		path,
+	},
 }) => {
 	const [title, setTitle] = useState('');
 
@@ -45,7 +45,7 @@ export default ({
 				component={EditFormView}
 				path={[
 					`${path}/form-views/add`,
-					`${path}/form-views/:dataLayoutId(\\d+)`
+					`${path}/form-views/:dataLayoutId(\\d+)`,
 				]}
 			/>
 
@@ -53,7 +53,7 @@ export default ({
 				component={EditTableView}
 				path={[
 					`${path}/table-views/add`,
-					`${path}/table-views/:dataListViewId(\\d+)`
+					`${path}/table-views/:dataListViewId(\\d+)`,
 				]}
 			/>
 

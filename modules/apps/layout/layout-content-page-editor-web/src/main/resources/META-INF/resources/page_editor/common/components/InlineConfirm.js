@@ -24,7 +24,7 @@ export default function InlineConfirm({
 	confirmButtonLabel,
 	message,
 	onCancelButtonClick,
-	onConfirmButtonClick
+	onConfirmButtonClick,
 }) {
 	const [performingAction, setPerformingAction] = useState(false);
 	const wrapper = useRef(null);
@@ -127,5 +127,5 @@ InlineConfirm.propTypes = {
 	confirmButtonLabel: PropTypes.string,
 	message: PropTypes.string,
 	onCancelButtonClick: PropTypes.func,
-	onConfirmButtonClick: PropTypes.func
+	onConfirmButtonClick: PropTypes.func,
 };

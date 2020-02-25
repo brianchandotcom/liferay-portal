@@ -53,7 +53,7 @@ const initSPA = function() {
 				}
 
 				return match;
-			}
+			},
 		},
 		{
 			handler: RenderURLScreen,
@@ -77,8 +77,8 @@ const initSPA = function() {
 				}
 
 				return match;
-			}
-		}
+			},
+		},
 	]);
 
 	Liferay.Util.submitForm = function(form) {
@@ -144,5 +144,5 @@ export default {
 		else {
 			callback.call(this, initSPA());
 		}
-	}
+	},
 };

@@ -254,8 +254,8 @@ portletURL.setParameter("delta", String.valueOf(delta));
 								Liferay.Portlet.refresh(
 									'#p_p_id<portlet:namespace />'
 								);
-							}
-						}
+							},
+						},
 					},
 					id: '<portlet:namespace />editDefaultFilePermissionsDialog',
 					title: '<liferay-ui:message key="default-file-permissions" />',
@@ -270,9 +270,9 @@ portletURL.setParameter("delta", String.valueOf(delta));
 							'<%= editSitesDefaultFilePermissionsURL %>'
 						),
 						{
-							groupIds: groupIds
+							groupIds: groupIds,
 						}
-					)
+					),
 				});
 			}
 		}

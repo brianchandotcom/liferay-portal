@@ -23,7 +23,7 @@ module.exports = {
 		'core-js/es6/symbol',
 		'core-js/fn/promise',
 		'whatwg-fetch',
-		'./src/analytics.js'
+		'./src/analytics.js',
 	],
 	mode: 'production',
 	module: {
@@ -34,18 +34,18 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						compact: false
-					}
-				}
-			}
-		]
+						compact: false,
+					},
+				},
+			},
+		],
 	},
 	optimization: {
-		minimize: true
+		minimize: true,
 	},
 	output: {
 		filename: buildName,
-		path: buildFolder
+		path: buildFolder,
 	},
-	plugins: [new webpack.optimize.ModuleConcatenationPlugin()]
+	plugins: [new webpack.optimize.ModuleConcatenationPlugin()],
 };

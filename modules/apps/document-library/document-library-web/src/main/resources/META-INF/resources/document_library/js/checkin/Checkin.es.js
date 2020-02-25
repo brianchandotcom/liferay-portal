@@ -20,7 +20,7 @@ import CheckinModal from './CheckinModal.es';
 function Checkin({
 	checkedOut,
 	dlVersionNumberIncreaseValues,
-	portletNamespace
+	portletNamespace,
 }) {
 	const [showModal, setShowModal] = useState(false);
 	const [callback, setCallback] = useState();
@@ -31,7 +31,7 @@ function Checkin({
 	};
 
 	const {observer, onClose} = useModal({
-		onClose: handleOnClose
+		onClose: handleOnClose,
 	});
 
 	if (!Liferay.component(bridgeComponentId)) {
@@ -41,10 +41,10 @@ function Checkin({
 				open: callback => {
 					setCallback(() => callback);
 					setShowModal(true);
-				}
+				},
 			},
 			{
-				destroyOnNavigate: true
+				destroyOnNavigate: true,
 			}
 		);
 	}

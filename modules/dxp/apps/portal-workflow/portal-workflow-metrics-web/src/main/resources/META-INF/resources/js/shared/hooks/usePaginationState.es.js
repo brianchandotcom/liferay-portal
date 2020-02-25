@@ -19,7 +19,7 @@ const usePaginationState = props => {
 	const {
 		initialPage = 1,
 		initialPageSize = defaultDelta,
-		items = false
+		items = false,
 	} = props;
 
 	const defaultPageSize =
@@ -32,7 +32,7 @@ const usePaginationState = props => {
 			page,
 			pageSize,
 			setPage,
-			setPageSize
+			setPageSize,
 		}),
 		[page, pageSize]
 	);
@@ -46,7 +46,7 @@ const usePaginationState = props => {
 		page,
 		pageSize,
 		paginatedItems,
-		pagination
+		pagination,
 	};
 };
 

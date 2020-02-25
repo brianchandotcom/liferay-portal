@@ -21,41 +21,41 @@ import '@testing-library/jest-dom/extend-expect';
 const {processId, query} = {
 	processId: 12345,
 	query:
-		'?filters.completionVelocityUnit%5B0%5D=Days&filters.completionTimeRange%5B0%5D=7'
+		'?filters.completionVelocityUnit%5B0%5D=Days&filters.completionTimeRange%5B0%5D=7',
 };
 
 const data = {
 	histograms: [
 		{
 			key: '2019-12-03T00:00',
-			value: 0.0
+			value: 0.0,
 		},
 		{
 			key: '2019-12-04T00:00',
-			value: 0.0
+			value: 0.0,
 		},
 		{
 			key: '2019-12-05T00:00',
-			value: 0.0
+			value: 0.0,
 		},
 		{
 			key: '2019-12-06T00:00',
-			value: 0.0
+			value: 0.0,
 		},
 		{
 			key: '2019-12-07T00:00',
-			value: 0.0
+			value: 0.0,
 		},
 		{
 			key: '2019-12-08T00:00',
-			value: 0.8
+			value: 0.8,
 		},
 		{
 			key: '2019-12-09T00:00',
-			value: 0.0
-		}
+			value: 0.0,
+		},
 	],
-	value: 0.36
+	value: 0.36,
 };
 
 const timeRangeData = {
@@ -65,17 +65,17 @@ const timeRangeData = {
 			dateStart: '2019-12-03T00:00:00Z',
 			defaultTimeRange: false,
 			id: 7,
-			name: 'Last 7 Days'
+			name: 'Last 7 Days',
 		},
 		{
 			dateEnd: '2019-12-09T00:00:00Z',
 			dateStart: '2019-11-10T00:00:00Z',
 			defaultTimeRange: true,
 			id: 30,
-			name: 'Last 30 Days'
-		}
+			name: 'Last 30 Days',
+		},
 	],
-	totalCount: 2
+	totalCount: 2,
 };
 
 describe('The completion velocity card component should', () => {
@@ -85,7 +85,7 @@ describe('The completion velocity card component should', () => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
 
 		const clientMock = {
-			get: jest.fn().mockResolvedValue({data})
+			get: jest.fn().mockResolvedValue({data}),
 		};
 
 		const renderResult = render(

@@ -24,7 +24,7 @@ const UserIcon = ({fullName = '', portraitURL = '', size = 'lg', userId}) => {
 	return (
 		<ClaySticker
 			className={classNames('sticker-use-icon', {
-				[`user-icon-color-${stickerColor}`]: !portraitURL
+				[`user-icon-color-${stickerColor}`]: !portraitURL,
 			})}
 			displayType="secondary"
 			shape="circle"
@@ -48,7 +48,7 @@ const UserIcon = ({fullName = '', portraitURL = '', size = 'lg', userId}) => {
 UserIcon.propTypes = {
 	fullName: PropTypes.string,
 	portraitURL: PropTypes.string,
-	userId: PropTypes.string.isRequired
+	userId: PropTypes.string.isRequired,
 };
 
 export default UserIcon;

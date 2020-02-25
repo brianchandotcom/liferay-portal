@@ -58,7 +58,7 @@ const formatRules = (state, pages) => {
 		return {
 			...rule,
 			actions: RulesSupport.syncActions(pages, actions),
-			conditions
+			conditions,
 		};
 	});
 
@@ -88,13 +88,13 @@ export const handleFieldDeleted = (state, {indexes}) => {
 	newContext = removeEmptyRow(newContext, {
 		columnIndex,
 		pageIndex,
-		rowIndex
+		rowIndex,
 	});
 
 	return {
 		focusedField: {},
 		pages: newContext,
-		rules: formatRules(state, newContext)
+		rules: formatRules(state, newContext),
 	};
 };
 

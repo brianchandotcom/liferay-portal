@@ -20,7 +20,7 @@ const ConfigurationFieldPropTypes = {
 	description: PropTypes.string,
 	label: PropTypes.string,
 	name: PropTypes.string.isRequired,
-	type: PropTypes.string
+	type: PropTypes.string,
 };
 
 export default ConfigurationFieldPropTypes;

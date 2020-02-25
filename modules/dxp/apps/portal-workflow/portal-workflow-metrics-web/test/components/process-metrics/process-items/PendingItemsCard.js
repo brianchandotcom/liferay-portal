@@ -21,7 +21,7 @@ const data = {
 	onTimeInstanceCount: 2,
 	overdueInstanceCount: 1,
 	title: 'Single Approver',
-	untrackedInstanceCount: 3
+	untrackedInstanceCount: 3,
 };
 
 describe('The pending items card component should', () => {
@@ -31,7 +31,7 @@ describe('The pending items card component should', () => {
 
 	beforeEach(() => {
 		const clientMock = {
-			get: jest.fn().mockResolvedValue({data})
+			get: jest.fn().mockResolvedValue({data}),
 		};
 
 		const wrapper = ({children}) => (

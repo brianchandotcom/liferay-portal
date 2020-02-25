@@ -567,13 +567,13 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 			{
 				dialog: {
 					constrain: true,
-					modal: true
+					modal: true,
 				},
 				eventName: '<portlet:namespace />selectDDMStructureField',
 				id: '<portlet:namespace />selectDDMStructure' + delegateTarget.id,
 				title:
 					'<liferay-ui:message arguments="structure-field" key="select-x" />',
-				uri: uri
+				uri: uri,
 			},
 			function(event) {
 				setDDMFields(

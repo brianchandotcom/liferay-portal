@@ -36,7 +36,7 @@ export function pageOptions(pages, maxPageIndex = 0) {
 		pageOptions.push({
 			label: pageTitle,
 			name: pageIndex.toString(),
-			value: pageIndex.toString()
+			value: pageIndex.toString(),
 		});
 	}
 

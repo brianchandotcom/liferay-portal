@@ -21,33 +21,33 @@ const ACTIONS = [
 	{
 		key: 'ADD',
 		sortable: false,
-		value: Liferay.Language.get('add')
+		value: Liferay.Language.get('add'),
 	},
 	{
 		key: 'VIEW',
 		sortable: false,
-		value: Liferay.Language.get('view')
-	}
+		value: Liferay.Language.get('view'),
+	},
 ];
 
 const PERMISSIONS = {
 	items: [
 		{
 			actionIds: ['ADD', 'VIEW'],
-			roleName: 'Administrator'
+			roleName: 'Administrator',
 		},
 		{
 			actionIds: ['VIEW'],
-			roleName: 'Power User'
-		}
-	]
+			roleName: 'Power User',
+		},
+	],
 };
 
 const ROLES = {
 	items: [
 		{id: 1, name: 'Administrator', roleType: 'regular'},
-		{id: 2, name: 'Power User', roleType: 'regular'}
-	]
+		{id: 2, name: 'Power User', roleType: 'regular'},
+	],
 };
 
 describe('PermissionsModal', () => {

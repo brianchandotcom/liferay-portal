@@ -11,89 +11,89 @@
 
 export const addSegmentsExperiment = payload => ({
 	payload,
-	type: 'ADD_EXPERIMENT'
+	type: 'ADD_EXPERIMENT',
 });
 
 export const addVariant = payload => ({
 	payload,
-	type: 'ADD_VARIANT'
+	type: 'ADD_VARIANT',
 });
 
 export const archiveExperiment = payload => ({
 	payload,
-	type: 'ARCHIVE_EXPERIMENT'
+	type: 'ARCHIVE_EXPERIMENT',
 });
 
 export const closeCreationModal = () => ({
-	type: 'CREATE_EXPERIMENT_FINISH'
+	type: 'CREATE_EXPERIMENT_FINISH',
 });
 
 export const closeEditionModal = () => ({
-	type: 'EDIT_EXPERIMENT_FINISH'
+	type: 'EDIT_EXPERIMENT_FINISH',
 });
 
 export const closeReviewAndRunExperiment = () => ({
-	type: 'REVIEW_AND_RUN_EXPERIMENT_FINISH'
+	type: 'REVIEW_AND_RUN_EXPERIMENT_FINISH',
 });
 
 export const deleteArchivedExperiment = experimentId => ({
 	payload: {
-		experimentId
+		experimentId,
 	},
-	type: 'DELETE_ARCHIVED_EXPERIMENT'
+	type: 'DELETE_ARCHIVED_EXPERIMENT',
 });
 
 export const editSegmentsExperiment = payload => ({
 	payload,
-	type: 'EDIT_EXPERIMENT'
+	type: 'EDIT_EXPERIMENT',
 });
 
 export const openCreationModal = payload => ({
 	payload,
-	type: 'CREATE_EXPERIMENT_START'
+	type: 'CREATE_EXPERIMENT_START',
 });
 
 export const openEditionModal = payload => ({
 	payload,
-	type: 'EDIT_EXPERIMENT_START'
+	type: 'EDIT_EXPERIMENT_START',
 });
 
 export const reviewAndRunExperiment = () => ({
-	type: 'REVIEW_AND_RUN_EXPERIMENT'
+	type: 'REVIEW_AND_RUN_EXPERIMENT',
 });
 
 export const reviewVariants = () => ({
-	type: 'REVIEW_VARIANTS'
+	type: 'REVIEW_VARIANTS',
 });
 
 export const reviewClickTargetElement = () => ({
-	type: 'REVIEW_CLICK_TARGET_ELEMENT'
+	type: 'REVIEW_CLICK_TARGET_ELEMENT',
 });
 
 export const runExperiment = ({experiment, splitVariantsMap}) => ({
 	payload: {
 		experiment,
-		splitVariantsMap
+		splitVariantsMap,
 	},
-	type: 'RUN_EXPERIMENT'
+	type: 'RUN_EXPERIMENT',
 });
 
 export const updateSegmentsExperimentTarget = payload => ({
 	payload,
-	type: 'UPDATE_SEGMENTS_EXPERIMENT_TARGET'
+	type: 'UPDATE_SEGMENTS_EXPERIMENT_TARGET',
 });
 
 export const updateSegmentsExperimentStatus = payload => ({
 	payload,
-	type: 'UPDATE_EXPERIMENT_STATUS'
+	type: 'UPDATE_EXPERIMENT_STATUS',
 });
 
 export const updateVariant = payload => ({
 	payload,
-	type: 'UPDATE_VARIANT'
+	type: 'UPDATE_VARIANT',
 });
 
 export const updateVariants = payload => ({
 	payload,
-	type: 'UPDATE_VARIANTS'
+	type: 'UPDATE_VARIANTS',
 });

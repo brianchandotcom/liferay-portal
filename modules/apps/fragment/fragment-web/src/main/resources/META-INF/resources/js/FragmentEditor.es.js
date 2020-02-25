@@ -60,7 +60,7 @@ class FragmentEditor extends PortletBase {
 			configuration: this._configuration,
 			css: this._css,
 			html: this._html,
-			js: this._js
+			js: this._js,
 		};
 	}
 
@@ -165,7 +165,7 @@ class FragmentEditor extends PortletBase {
 				htmlContent: content.html,
 				jsContent: content.js,
 				name: this.name,
-				status
+				status,
 			})
 				.then(response => response.json())
 				.then(response => {
@@ -191,7 +191,7 @@ class FragmentEditor extends PortletBase {
 					openToast({
 						message,
 						title: Liferay.Language.get('error'),
-						type: 'danger'
+						type: 'danger',
 					});
 				});
 		}
@@ -301,7 +301,7 @@ FragmentEditor.STATE = {
 	autocompleteTags: Config.arrayOf(
 		Config.shapeOf({
 			content: Config.string(),
-			name: Config.string()
+			name: Config.string(),
 		})
 	),
 
@@ -380,8 +380,8 @@ FragmentEditor.STATE = {
 	 */
 	urls: Config.shapeOf({
 		edit: Config.string().required(),
-		redirect: Config.string().required()
-	}).required()
+		redirect: Config.string().required(),
+	}).required(),
 };
 
 Soy.register(FragmentEditor, templates);

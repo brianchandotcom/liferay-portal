@@ -19,7 +19,7 @@ const spritemap = 'icons.svg';
 
 const defaultDocumentLibraryConfig = {
 	name: 'textField',
-	spritemap
+	spritemap,
 };
 
 describe('Field DocumentLibrary', () => {
@@ -32,7 +32,7 @@ describe('Field DocumentLibrary', () => {
 	it('is not readOnly', () => {
 		component = new DocumentLibrary({
 			...defaultDocumentLibraryConfig,
-			readOnly: false
+			readOnly: false,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -41,7 +41,7 @@ describe('Field DocumentLibrary', () => {
 	it('has a helptext', () => {
 		component = new DocumentLibrary({
 			...defaultDocumentLibraryConfig,
-			tip: 'Type something'
+			tip: 'Type something',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -50,7 +50,7 @@ describe('Field DocumentLibrary', () => {
 	it('has an id', () => {
 		component = new DocumentLibrary({
 			...defaultDocumentLibraryConfig,
-			id: 'ID'
+			id: 'ID',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -59,7 +59,7 @@ describe('Field DocumentLibrary', () => {
 	it('has a label', () => {
 		component = new DocumentLibrary({
 			...defaultDocumentLibraryConfig,
-			label: 'label'
+			label: 'label',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -68,7 +68,7 @@ describe('Field DocumentLibrary', () => {
 	it('has a placeholder', () => {
 		component = new DocumentLibrary({
 			...defaultDocumentLibraryConfig,
-			placeholder: 'Placeholder'
+			placeholder: 'Placeholder',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -77,7 +77,7 @@ describe('Field DocumentLibrary', () => {
 	it('is not required', () => {
 		component = new DocumentLibrary({
 			...defaultDocumentLibraryConfig,
-			required: false
+			required: false,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -87,7 +87,7 @@ describe('Field DocumentLibrary', () => {
 		component = new DocumentLibrary({
 			...defaultDocumentLibraryConfig,
 			label: 'text',
-			showLabel: true
+			showLabel: true,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -102,7 +102,7 @@ describe('Field DocumentLibrary', () => {
 	it('has a value', () => {
 		component = new DocumentLibrary({
 			...defaultDocumentLibraryConfig,
-			value: '{"id":"123"}'
+			value: '{"id":"123"}',
 		});
 
 		expect(component).toMatchSnapshot();

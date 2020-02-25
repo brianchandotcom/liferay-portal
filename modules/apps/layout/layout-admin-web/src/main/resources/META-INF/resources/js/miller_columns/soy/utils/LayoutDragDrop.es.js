@@ -24,7 +24,7 @@ import State, {Config} from 'metal-state';
 const DROP_TARGET_BORDERS = {
 	bottom: 'layout-column-item-drag-bottom',
 	inside: 'layout-column-item-drag-inside',
-	top: 'layout-column-item-drag-top'
+	top: 'layout-column-item-drag-top',
 };
 
 /**
@@ -34,7 +34,7 @@ const DROP_TARGET_BORDERS = {
 
 const DROP_TARGET_ITEM_TYPES = {
 	column: 'layout-column',
-	item: 'layout-column-item'
+	item: 'layout-column-item',
 };
 
 /**
@@ -123,7 +123,7 @@ class LayoutDragDrop extends State {
 				position: this._draggingItemPosition,
 				sourceItemPlid,
 				targetId,
-				targetType
+				targetType,
 			});
 		}
 	}
@@ -149,7 +149,7 @@ class LayoutDragDrop extends State {
 			.layoutColumnItemPlid;
 
 		this.emit('startMovingLayoutColumnItem', {
-			sourceItemPlid
+			sourceItemPlid,
 		});
 	}
 
@@ -184,7 +184,7 @@ class LayoutDragDrop extends State {
 		this.emit('dropLayoutColumnItem', {
 			sourceItemPlid,
 			targetId,
-			targetType
+			targetType,
 		});
 	}
 
@@ -203,7 +203,7 @@ class LayoutDragDrop extends State {
 			handles: '.layout-drag-handler',
 			scrollContainers: '.layout-column, .layout-columns',
 			sources: '.layout-drag-item',
-			targets: '.layout-drop-target-item'
+			targets: '.layout-drop-target-item',
 		});
 
 		this._dragDrop.on(DragDrop.Events.DRAG, this._handleDrag.bind(this));
@@ -246,7 +246,7 @@ LayoutDragDrop.STATE = {
 	 * @type {!string}
 	 */
 
-	_draggingItemPosition: Config.internal().string()
+	_draggingItemPosition: Config.internal().string(),
 };
 
 export {DROP_TARGET_BORDERS, DROP_TARGET_ITEM_TYPES, LayoutDragDrop};

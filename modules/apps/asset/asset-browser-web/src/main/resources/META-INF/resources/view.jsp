@@ -212,7 +212,7 @@
 				Liferay.Util.getOpener().Liferay.fire(
 					'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>',
 					{
-						data: arr
+						data: arr,
 					}
 				);
 			});

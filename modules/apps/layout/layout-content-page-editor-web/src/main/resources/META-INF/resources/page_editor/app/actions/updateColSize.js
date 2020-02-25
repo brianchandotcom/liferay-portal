@@ -18,13 +18,13 @@ export default function updateColSize({
 	itemId,
 	nextColumnItemId,
 	nextColumnSize,
-	size
+	size,
 }) {
 	return {
 		itemId,
 		nextColumnItemId,
 		nextColumnSize,
 		size,
-		type: UPDATE_COL_SIZE
+		type: UPDATE_COL_SIZE,
 	};
 }

@@ -58,7 +58,7 @@ export const updateFocusedFieldName = (
 				fieldName,
 				'fieldName',
 				newFieldName
-			)
+			),
 		};
 
 		focusedField = {
@@ -69,7 +69,7 @@ export const updateFocusedFieldName = (
 				settingsContext,
 				'name',
 				newFieldName
-			)
+			),
 		};
 	}
 
@@ -90,7 +90,7 @@ export const updateFocusedFieldDataType = (
 			focusedField.fieldName,
 			'dataType',
 			value
-		)
+		),
 	};
 
 	return {
@@ -101,7 +101,7 @@ export const updateFocusedFieldDataType = (
 			settingsContext,
 			'dataType',
 			value
-		)
+		),
 	};
 };
 
@@ -141,7 +141,7 @@ export const updateFocusedFieldLabel = (
 			settingsContext,
 			'label',
 			value
-		)
+		),
 	};
 };
 
@@ -159,7 +159,7 @@ export const updateFocusedFieldProperty = (
 			focusedField.settingsContext,
 			propertyName,
 			propertyValue
-		)
+		),
 	};
 };
 
@@ -178,7 +178,7 @@ export const updateFocusedFieldOptions = (
 			focusedField.settingsContext,
 			'options',
 			value
-		)
+		),
 	};
 };
 
@@ -197,7 +197,7 @@ export const updateFocusedField = (
 				editingLanguageId,
 				focusedField,
 				value
-			)
+			),
 		};
 	}
 	else if (fieldName === 'label') {
@@ -209,7 +209,7 @@ export const updateFocusedField = (
 				fieldNameGenerator,
 				focusedField,
 				value
-			)
+			),
 		};
 	}
 	else if (fieldName === 'name') {
@@ -220,13 +220,17 @@ export const updateFocusedField = (
 				fieldNameGenerator,
 				focusedField,
 				value
-			)
+			),
 		};
 	}
 	else if (fieldName === 'options') {
 		focusedField = {
 			...focusedField,
-			...updateFocusedFieldOptions(editingLanguageId, focusedField, value)
+			...updateFocusedFieldOptions(
+				editingLanguageId,
+				focusedField,
+				value
+			),
 		};
 	}
 	else {
@@ -237,7 +241,7 @@ export const updateFocusedField = (
 				focusedField,
 				fieldName,
 				value
-			)
+			),
 		};
 	}
 

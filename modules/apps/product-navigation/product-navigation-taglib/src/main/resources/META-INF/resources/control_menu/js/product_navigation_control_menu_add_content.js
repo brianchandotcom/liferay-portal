@@ -84,14 +84,14 @@ AUI.add(
 					var data = instance.ns({
 						delta: instance._delta,
 						displayStyle: instance._displayStyle,
-						keywords: instance.get('inputNode').val()
+						keywords: instance.get('inputNode').val(),
 					});
 
 					Liferay.Util.fetch(
 						instance._addContentForm.getAttribute('action'),
 						{
 							body: Liferay.Util.objectToFormData(data),
-							method: 'POST'
+							method: 'POST',
 						}
 					)
 						.then(response => {
@@ -121,8 +121,8 @@ AUI.add(
 					instance._entriesPanel.plug(A.Plugin.ParseContent);
 
 					instance._bindUI();
-				}
-			}
+				},
+			},
 		});
 
 		ControlMenu.AddContent = AddContent;
@@ -133,7 +133,7 @@ AUI.add(
 			'aui-parse-content',
 			'liferay-product-navigation-control-menu',
 			'liferay-product-navigation-control-menu-add-base',
-			'liferay-product-navigation-control-menu-add-content-search'
-		]
+			'liferay-product-navigation-control-menu-add-content-search',
+		],
 	}
 );

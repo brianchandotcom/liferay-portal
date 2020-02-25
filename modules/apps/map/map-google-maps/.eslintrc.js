@@ -14,6 +14,6 @@
 
 module.exports = {
 	globals: {
-		google: true
-	}
+		google: true,
+	},
 };

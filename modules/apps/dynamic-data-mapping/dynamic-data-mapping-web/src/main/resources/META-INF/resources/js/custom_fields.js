@@ -34,7 +34,7 @@ AUI.add(
 		var editorLocalizedStrings = {
 			cancel: Liferay.Language.get('cancel'),
 			edit: Liferay.Language.get('edit'),
-			save: Liferay.Language.get('save')
+			save: Liferay.Language.get('save'),
 		};
 
 		var instanceOf = A.instanceOf;
@@ -121,7 +121,7 @@ AUI.add(
 				CSS_FIELD,
 				CSS_FIELD_CHOICE,
 				CSS_FIELD_RADIO,
-				CSS_FORM_BUILDER_FIELD_NODE
+				CSS_FORM_BUILDER_FIELD_NODE,
 			].join(' ') +
 			'" name="{name}" type="radio" value="{value}" {checked} {disabled} />' +
 			'{label}' +
@@ -281,7 +281,7 @@ AUI.add(
 
 					var colorPicker = new A.ColorPickerPopover({
 						trigger: input,
-						zIndex: 65535
+						zIndex: 65535,
 					}).render();
 
 					colorPicker.on('select', event => {
@@ -290,13 +290,13 @@ AUI.add(
 
 						instance.fire('save', {
 							newVal: instance.getValue(),
-							prevVal: event.color
+							prevVal: event.color,
 						});
 					});
 
 					instance.set('colorPicker', colorPicker);
-				}
-			}
+				},
+			},
 		});
 
 		var DLFileEntryCellEditor = A.Component.create({
@@ -317,8 +317,8 @@ AUI.add(
 						{
 							label: Liferay.Language.get('select'),
 							on: {
-								click: A.bind('_onClickChoose', instance)
-							}
+								click: A.bind('_onClickChoose', instance),
+							},
 						},
 						1
 					);
@@ -327,8 +327,8 @@ AUI.add(
 						{
 							label: Liferay.Language.get('clear'),
 							on: {
-								click: A.bind('_onClickClear', instance)
-							}
+								click: A.bind('_onClickClear', instance),
+							},
 						},
 						2
 					);
@@ -341,13 +341,13 @@ AUI.add(
 
 					var criterionJSON = {
 						desiredItemSelectorReturnTypes:
-							'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
+							'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
 					};
 
 					var uploadCriterionJSON = {
 						URL: instance._getUploadURL(),
 						desiredItemSelectorReturnTypes:
-							'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
+							'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
 					};
 
 					var documentLibrarySelectorParameters = {
@@ -360,7 +360,7 @@ AUI.add(
 							portletNamespace + 'selectDocumentLibrary',
 						p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
 						p_p_mode: 'view',
-						p_p_state: 'pop_up'
+						p_p_state: 'pop_up',
 					};
 
 					var documentLibrarySelectorURL = Liferay.Util.PortletURL.createPortletURL(
@@ -377,7 +377,7 @@ AUI.add(
 						'javax.portlet.action':
 							'/document_library/upload_file_entry',
 						p_auth: Liferay.authToken,
-						p_p_id: Liferay.PortletKeys.DOCUMENT_LIBRARY
+						p_p_id: Liferay.PortletKeys.DOCUMENT_LIBRARY,
 					};
 
 					var uploadURL = Liferay.Util.PortletURL.createActionURL(
@@ -412,7 +412,7 @@ AUI.add(
 										portletNamespace +
 										'selectDocumentLibrary',
 									singleSelect: true,
-									url: instance._getDocumentLibrarySelectorURL()
+									url: instance._getDocumentLibrarySelectorURL(),
 								}
 							);
 
@@ -469,7 +469,7 @@ AUI.add(
 						JSON.stringify({
 							groupId,
 							title,
-							uuid
+							uuid,
 						})
 					);
 				},
@@ -536,8 +536,8 @@ AUI.add(
 					var instance = this;
 
 					return instance.get('value');
-				}
-			}
+				},
+			},
 		});
 
 		var JournalArticleCellEditor = A.Component.create({
@@ -558,8 +558,8 @@ AUI.add(
 						{
 							label: Liferay.Language.get('select'),
 							on: {
-								click: A.bind('_onClickChoose', instance)
-							}
+								click: A.bind('_onClickChoose', instance),
+							},
 						},
 						1
 					);
@@ -568,8 +568,8 @@ AUI.add(
 						{
 							label: Liferay.Language.get('clear'),
 							on: {
-								click: A.bind('_onClickClear', instance)
-							}
+								click: A.bind('_onClickClear', instance),
+							},
 						},
 						2
 					);
@@ -582,7 +582,7 @@ AUI.add(
 
 					var criterionJSON = {
 						desiredItemSelectorReturnTypes:
-							'com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType'
+							'com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType',
 					};
 
 					var webContentSelectorParameters = {
@@ -594,7 +594,7 @@ AUI.add(
 						p_auth: Liferay.authToken,
 						p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
 						p_p_mode: 'view',
-						p_p_state: 'pop_up'
+						p_p_state: 'pop_up',
 					};
 
 					var webContentSelectorURL = Liferay.Util.PortletURL.createRenderURL(
@@ -638,7 +638,7 @@ AUI.add(
 									title: Liferay.Language.get(
 										'journal-article'
 									),
-									url: instance._getWebContentSelectorURL()
+									url: instance._getWebContentSelectorURL(),
 								}
 							);
 
@@ -655,7 +655,7 @@ AUI.add(
 										instance.setValue({
 											className: itemValue.className,
 											classPK: itemValue.classPK,
-											title: itemValue.title
+											title: itemValue.title,
 										});
 									}
 								}
@@ -749,8 +749,8 @@ AUI.add(
 					}
 
 					instance.set('value', value);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.FormBuilder.CUSTOM_CELL_EDITORS = {};
@@ -758,7 +758,7 @@ AUI.add(
 		var customCellEditors = [
 			ColorCellEditor,
 			DLFileEntryCellEditor,
-			JournalArticleCellEditor
+			JournalArticleCellEditor,
 		];
 
 		customCellEditors.forEach(item => {
@@ -770,18 +770,18 @@ AUI.add(
 		LiferayFieldSupport.ATTRS = {
 			autoGeneratedName: {
 				setter: booleanParse,
-				value: true
+				value: true,
 			},
 
 			indexType: {
 				valueFn() {
 					return structureFieldIndexEnable() ? 'keyword' : '';
-				}
+				},
 			},
 
 			localizable: {
 				setter: booleanParse,
-				value: true
+				value: true,
 			},
 
 			name: {
@@ -805,13 +805,13 @@ AUI.add(
 					}
 
 					return name;
-				}
+				},
 			},
 
 			repeatable: {
 				setter: booleanParse,
-				value: false
-			}
+				value: false,
+			},
 		};
 
 		LiferayFieldSupport.prototype.initializer = function() {
@@ -848,22 +848,22 @@ AUI.add(
 										instance.destroy();
 
 										deleteModal.hide();
-									}
-								}
+									},
+								},
 							},
 							{
 								label: Liferay.Language.get('cancel'),
 								on: {
 									click() {
 										deleteModal.hide();
-									}
-								}
-							}
-						]
+									},
+								},
+							},
+						],
 					},
-					width: 700
+					width: 700,
 				},
-				title: instance.get('label')
+				title: instance.get('label'),
 			})
 				.render()
 				.show();
@@ -882,12 +882,12 @@ AUI.add(
 		LocalizableFieldSupport.ATTRS = {
 			localizationMap: {
 				setter: A.clone,
-				value: {}
+				value: {},
 			},
 
 			readOnlyAttributes: {
-				getter: '_getReadOnlyAttributes'
-			}
+				getter: '_getReadOnlyAttributes',
+			},
 		};
 
 		LocalizableFieldSupport.prototype.initializer = function() {
@@ -1081,7 +1081,7 @@ AUI.add(
 					}
 
 					localizationMap[locale] = {
-						label: item.label
+						label: item.label,
 					};
 
 					item.localizationMap = localizationMap;
@@ -1224,7 +1224,7 @@ AUI.add(
 
 			value = A.Object.getValue(localizationMap, [
 				defaultLocale,
-				attribute
+				attribute,
 			]);
 
 			if (isValue(value)) {
@@ -1234,7 +1234,7 @@ AUI.add(
 			for (var localizationMapLocale in localizationMap) {
 				value = A.Object.getValue(localizationMap, [
 					localizationMapLocale,
-					attribute
+					attribute,
 				]);
 
 				if (isValue(value)) {
@@ -1260,7 +1260,7 @@ AUI.add(
 		A.Base.mix(A.FormBuilderField, [
 			LiferayFieldSupport,
 			LocalizableFieldSupport,
-			SerializableFieldSupport
+			SerializableFieldSupport,
 		]);
 
 		var FormBuilderProto = A.FormBuilderField.prototype;
@@ -1276,26 +1276,26 @@ AUI.add(
 
 			var booleanOptions = {
 				false: Liferay.Language.get('no'),
-				true: Liferay.Language.get('yes')
+				true: Liferay.Language.get('yes'),
 			};
 
 			var indexTypeOptions = {
 				'': Liferay.Language.get('no'),
-				keyword: Liferay.Language.get('yes')
+				keyword: Liferay.Language.get('yes'),
 			};
 
 			if (type == 'ddm-image' || type == 'text') {
 				indexTypeOptions = {
 					'': Liferay.Language.get('not-indexable'),
 					keyword: Liferay.Language.get('indexable-keyword'),
-					text: Liferay.Language.get('indexable-text')
+					text: Liferay.Language.get('indexable-text'),
 				};
 			}
 
 			if (type == 'ddm-text-html' || type == 'textarea') {
 				indexTypeOptions = {
 					'': Liferay.Language.get('not-indexable'),
-					text: Liferay.Language.get('indexable-text')
+					text: Liferay.Language.get('indexable-text'),
 				};
 			}
 
@@ -1308,10 +1308,10 @@ AUI.add(
 									required: true,
 									structureDuplicateFieldName: true,
 									structureFieldName: true,
-									structureRestrictedFieldName: true
-								}
-							}
-						}
+									structureRestrictedFieldName: true,
+								},
+							},
+						},
 					});
 				}
 
@@ -1325,51 +1325,51 @@ AUI.add(
 					attributeName: 'indexType',
 					editor: new A.RadioCellEditor({
 						options: indexTypeOptions,
-						strings: editorLocalizedStrings
+						strings: editorLocalizedStrings,
 					}),
 					formatter(val) {
 						return indexTypeOptions[val.data.value];
 					},
-					name: Liferay.Language.get('indexable')
+					name: Liferay.Language.get('indexable'),
 				},
 				{
 					attributeName: 'localizable',
 					editor: new A.RadioCellEditor({
 						options: booleanOptions,
-						strings: editorLocalizedStrings
+						strings: editorLocalizedStrings,
 					}),
 					formatter(val) {
 						return booleanOptions[val.data.value];
 					},
-					name: Liferay.Language.get('localizable')
+					name: Liferay.Language.get('localizable'),
 				},
 				{
 					attributeName: 'repeatable',
 					editor: new A.RadioCellEditor({
 						options: booleanOptions,
-						strings: editorLocalizedStrings
+						strings: editorLocalizedStrings,
 					}),
 					formatter(val) {
 						return booleanOptions[val.data.value];
 					},
-					name: Liferay.Language.get('repeatable')
-				}
+					name: Liferay.Language.get('repeatable'),
+				},
 			]);
 		};
 
 		var DDMColorField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'color'
+					value: 'color',
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
+					value: 'ddm',
 				},
 
 				showLabel: {
-					value: false
-				}
+					value: false,
+				},
 			},
 
 			EXTENDS: A.FormBuilderField,
@@ -1396,27 +1396,27 @@ AUI.add(
 							collection[index] = {
 								attributeName,
 								editor: new ColorCellEditor({
-									strings: editorLocalizedStrings
+									strings: editorLocalizedStrings,
 								}),
-								name: Liferay.Language.get('predefined-value')
+								name: Liferay.Language.get('predefined-value'),
 							};
 						}
 					});
 
 					return model;
-				}
-			}
+				},
+			},
 		});
 
 		var DDMDateField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'date'
+					value: 'date',
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
-				}
+					value: 'ddm',
+				},
 			},
 
 			EXTENDS: A.FormBuilderTextField,
@@ -1467,10 +1467,10 @@ AUI.add(
 										}
 
 										return retVal;
-									}
+									},
 								}),
 								name: Liferay.Language.get('predefined-value'),
-								strings: editorLocalizedStrings
+								strings: editorLocalizedStrings,
 							};
 						}
 					});
@@ -1488,14 +1488,14 @@ AUI.add(
 					if (trigger) {
 						instance.datePicker = new A.DatePickerDeprecated({
 							calendar: {
-								locale: Liferay.ThemeDisplay.getLanguageId()
+								locale: Liferay.ThemeDisplay.getLanguageId(),
 							},
 							on: {
 								selectionChange(event) {
 									var date = event.newSelection;
 
 									instance.setValue(A.Date.format(date));
-								}
+								},
 							},
 							popover: {
 								on: {
@@ -1516,10 +1516,10 @@ AUI.add(
 												trigger
 											);
 										}
-									}
-								}
+									},
+								},
 							},
-							trigger
+							trigger,
 						}).render();
 					}
 
@@ -1527,37 +1527,37 @@ AUI.add(
 						next: Liferay.Language.get('next'),
 						none: Liferay.Language.get('none'),
 						previous: Liferay.Language.get('previous'),
-						today: Liferay.Language.get('today')
+						today: Liferay.Language.get('today'),
 					});
-				}
-			}
+				},
+			},
 		});
 
 		var DDMDecimalField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'double'
+					value: 'double',
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
-				}
+					value: 'ddm',
+				},
 			},
 
 			EXTENDS: A.FormBuilderTextField,
 
-			NAME: 'ddm-decimal'
+			NAME: 'ddm-decimal',
 		});
 
 		var DDMDocumentLibraryField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'document-library'
+					value: 'document-library',
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
-				}
+					value: 'ddm',
+				},
 			},
 
 			EXTENDS: A.FormBuilderField,
@@ -1590,7 +1590,7 @@ AUI.add(
 
 						if (attributeName === 'predefinedValue') {
 							item.editor = new DLFileEntryCellEditor({
-								strings: editorLocalizedStrings
+								strings: editorLocalizedStrings,
 							});
 
 							item.formatter = function(obj) {
@@ -1616,24 +1616,24 @@ AUI.add(
 					});
 
 					return model;
-				}
-			}
+				},
+			},
 		});
 
 		var DDMGeolocationField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'geolocation'
+					value: 'geolocation',
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
+					value: 'ddm',
 				},
 
 				localizable: {
 					setter: booleanParse,
-					value: false
-				}
+					value: false,
+				},
 			},
 
 			EXTENDS: A.FormBuilderField,
@@ -1653,25 +1653,25 @@ AUI.add(
 						.filter(item => {
 							return item.attributeName !== 'predefinedValue';
 						});
-				}
-			}
+				},
+			},
 		});
 
 		var DDMImageField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'image'
+					value: 'image',
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
+					value: 'ddm',
 				},
 
 				indexType: {
 					valueFn() {
 						return structureFieldIndexEnable() ? 'text' : '';
-					}
-				}
+					},
+				},
 			},
 
 			EXTENDS: A.FormBuilderField,
@@ -1681,60 +1681,60 @@ AUI.add(
 			prototype: {
 				getHTML() {
 					return TPL_WCM_IMAGE;
-				}
-			}
+				},
+			},
 		});
 
 		var DDMIntegerField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'integer'
+					value: 'integer',
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
-				}
+					value: 'ddm',
+				},
 			},
 
 			EXTENDS: A.FormBuilderTextField,
 
-			NAME: 'ddm-integer'
+			NAME: 'ddm-integer',
 		});
 
 		var DDMNumberField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'number'
+					value: 'number',
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
-				}
+					value: 'ddm',
+				},
 			},
 
 			EXTENDS: A.FormBuilderTextField,
 
-			NAME: 'ddm-number'
+			NAME: 'ddm-number',
 		});
 
 		var DDMParagraphField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: undefined
+					value: undefined,
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
+					value: 'ddm',
 				},
 
 				showLabel: {
 					readOnly: true,
-					value: true
+					value: true,
 				},
 
 				style: {
-					value: STR_BLANK
-				}
+					value: STR_BLANK,
+				},
 			},
 
 			EXTENDS: A.FormBuilderField,
@@ -1767,38 +1767,38 @@ AUI.add(
 						{
 							attributeName: 'type',
 							editor: false,
-							name: Liferay.Language.get('type')
+							name: Liferay.Language.get('type'),
 						},
 						{
 							attributeName: 'label',
 							editor: new A.TextAreaCellEditor({
-								strings: editorLocalizedStrings
+								strings: editorLocalizedStrings,
 							}),
-							name: Liferay.Language.get('text')
+							name: Liferay.Language.get('text'),
 						},
 						{
 							attributeName: 'style',
 							editor: new A.TextAreaCellEditor({
-								strings: editorLocalizedStrings
+								strings: editorLocalizedStrings,
 							}),
-							name: Liferay.Language.get('style')
-						}
+							name: Liferay.Language.get('style'),
+						},
 					];
-				}
-			}
+				},
+			},
 		});
 
 		var DDMRadioField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'radio'
+					value: 'radio',
 				},
 
 				predefinedValue: {
 					setter(val) {
 						return val;
-					}
-				}
+					},
+				},
 			},
 
 			EXTENDS: A.FormBuilderRadioField,
@@ -1831,7 +1831,7 @@ AUI.add(
 								),
 								label: AEscape.html(item.label),
 								name: AEscape.html(instance.get('name')),
-								value: AEscape.html(item.value)
+								value: AEscape.html(item.value),
 							})
 						);
 					});
@@ -1855,27 +1855,27 @@ AUI.add(
 					optionNodes
 						.all('input[value="' + AEscape.html(val) + '"]')
 						.set('checked', true);
-				}
-			}
+				},
+			},
 		});
 
 		var DDMSeparatorField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: undefined
+					value: undefined,
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
+					value: 'ddm',
 				},
 
 				showLabel: {
-					value: false
+					value: false,
 				},
 
 				style: {
-					value: STR_BLANK
-				}
+					value: STR_BLANK,
+				},
 			},
 
 			EXTENDS: A.FormBuilderField,
@@ -1908,31 +1908,31 @@ AUI.add(
 					model.push({
 						attributeName: 'style',
 						editor: new A.TextAreaCellEditor({
-							strings: editorLocalizedStrings
+							strings: editorLocalizedStrings,
 						}),
-						name: Liferay.Language.get('style')
+						name: Liferay.Language.get('style'),
 					});
 
 					return model;
-				}
-			}
+				},
+			},
 		});
 
 		var DDMHTMLTextField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'html'
+					value: 'html',
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
+					value: 'ddm',
 				},
 
 				indexType: {
 					valueFn() {
 						return structureFieldIndexEnable() ? 'text' : '';
-					}
-				}
+					},
+				},
 			},
 
 			EXTENDS: FormBuilderTextField,
@@ -1942,19 +1942,19 @@ AUI.add(
 			prototype: {
 				getHTML() {
 					return TPL_TEXT_HTML;
-				}
-			}
+				},
+			},
 		});
 
 		var DDMJournalArticleField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'journal-article'
+					value: 'journal-article',
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
-				}
+					value: 'ddm',
+				},
 			},
 
 			EXTENDS: A.FormBuilderField,
@@ -1977,9 +1977,9 @@ AUI.add(
 					model.push({
 						attributeName: 'style',
 						editor: new A.TextAreaCellEditor({
-							strings: editorLocalizedStrings
+							strings: editorLocalizedStrings,
 						}),
-						name: Liferay.Language.get('style')
+						name: Liferay.Language.get('style'),
 					});
 
 					model.forEach(item => {
@@ -1987,7 +1987,7 @@ AUI.add(
 
 						if (attributeName === 'predefinedValue') {
 							item.editor = new JournalArticleCellEditor({
-								strings: editorLocalizedStrings
+								strings: editorLocalizedStrings,
 							});
 
 							item.formatter = function(obj) {
@@ -2012,19 +2012,19 @@ AUI.add(
 					});
 
 					return model;
-				}
-			}
+				},
+			},
 		});
 
 		var DDMLinkToPageField = A.Component.create({
 			ATTRS: {
 				dataType: {
-					value: 'link-to-page'
+					value: 'link-to-page',
 				},
 
 				fieldNamespace: {
-					value: 'ddm'
-				}
+					value: 'ddm',
+				},
 			},
 
 			EXTENDS: A.FormBuilderField,
@@ -2034,8 +2034,8 @@ AUI.add(
 			prototype: {
 				getHTML() {
 					return TPL_INPUT_BUTTON;
-				}
-			}
+				},
+			},
 		});
 
 		var DDMTextAreaField = A.Component.create({
@@ -2043,13 +2043,13 @@ AUI.add(
 				indexType: {
 					valueFn() {
 						return structureFieldIndexEnable() ? 'text' : '';
-					}
-				}
+					},
+				},
 			},
 
 			EXTENDS: A.FormBuilderTextAreaField,
 
-			NAME: 'textarea'
+			NAME: 'textarea',
 		});
 
 		var plugins = [
@@ -2067,7 +2067,7 @@ AUI.add(
 			DDMRadioField,
 			DDMSeparatorField,
 			DDMHTMLTextField,
-			DDMTextAreaField
+			DDMTextAreaField,
 		];
 
 		plugins.forEach(item => {
@@ -2081,7 +2081,7 @@ AUI.add(
 			'aui-color-picker-popover',
 			'aui-url',
 			'liferay-item-selector-dialog',
-			'liferay-portlet-dynamic-data-mapping'
-		]
+			'liferay-portlet-dynamic-data-mapping',
+		],
 	}
 );

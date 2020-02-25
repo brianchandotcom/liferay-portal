@@ -21,7 +21,7 @@ import Button from '../../components/button/Button.es';
 import {useKeyDown} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import EditTableViewContext, {
-	UPDATE_FOCUSED_COLUMN
+	UPDATE_FOCUSED_COLUMN,
 } from './EditTableViewContext.es';
 import {getColumnIndex, getColumnNode, getFieldTypeLabel} from './utils.es';
 
@@ -33,7 +33,7 @@ const getStyle = (container, index) => {
 		left: columnNode.offsetLeft,
 		position: 'absolute',
 		top: container.offsetTop,
-		width: columnNode.offsetWidth
+		width: columnNode.offsetWidth,
 	};
 };
 
@@ -44,7 +44,7 @@ const Overlay = ({
 	name,
 	onRemoveFieldName,
 	selected,
-	total
+	total,
 }) => {
 	const [{fieldTypes}] = useContext(EditTableViewContext);
 	const [style, setStyle] = useState({});
@@ -96,7 +96,7 @@ export default ({container, fields, onRemoveFieldName}) => {
 
 				dispatch({
 					payload: {fieldName: name},
-					type: UPDATE_FOCUSED_COLUMN
+					type: UPDATE_FOCUSED_COLUMN,
 				});
 			}
 		},
@@ -117,7 +117,7 @@ export default ({container, fields, onRemoveFieldName}) => {
 			) {
 				dispatch({
 					payload: {fieldName: null},
-					type: UPDATE_FOCUSED_COLUMN
+					type: UPDATE_FOCUSED_COLUMN,
 				});
 			}
 		},
@@ -163,7 +163,7 @@ export default ({container, fields, onRemoveFieldName}) => {
 		if (focusedColumn) {
 			dispatch({
 				payload: {fieldName: null},
-				type: UPDATE_FOCUSED_COLUMN
+				type: UPDATE_FOCUSED_COLUMN,
 			});
 		}
 	}, 27);

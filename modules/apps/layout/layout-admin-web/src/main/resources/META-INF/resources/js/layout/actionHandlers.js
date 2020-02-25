@@ -21,14 +21,14 @@ const actionHandlers = {
 				destroyOnHide: true,
 				height: 480,
 				resizable: false,
-				width: 640
+				width: 640,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
 			id: 'addLayoutDialog',
 			title: Liferay.Language.get('copy-page'),
-			uri: event.target.href
+			uri: event.target.href,
 		});
 	},
 
@@ -45,14 +45,14 @@ const actionHandlers = {
 	permissions: event => {
 		Liferay.Util.openInDialog(event, {
 			dialog: {
-				destroyOnHide: true
+				destroyOnHide: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
-			uri: event.target.href
+			uri: event.target.href,
 		});
-	}
+	},
 };
 
 export default actionHandlers;

@@ -31,10 +31,10 @@ class MockField extends Component {
 				target: {
 					getAttribute: () => {
 						return fieldName;
-					}
-				}
+					},
+				},
 			},
-			value
+			value,
 		});
 	}
 }
@@ -45,7 +45,7 @@ MockField.STATE = {
 	options: Config.array(),
 	readOnly: Config.bool(),
 	type: Config.string(),
-	value: Config.any()
+	value: Config.any(),
 };
 
 Soy.register(MockField, templates);

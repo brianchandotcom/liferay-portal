@@ -61,7 +61,7 @@ AUI.add(
 				acceptFiles,
 				maxFileSize,
 				number,
-				url
+				url,
 			},
 			true
 		);
@@ -110,7 +110,7 @@ AUI.add(
 					'please-enter-a-value-between-x-and-x-characters-long'
 				),
 				required: Liferay.Language.get('this-field-is-required'),
-				url: Liferay.Language.get('please-enter-a-valid-url')
+				url: Liferay.Language.get('please-enter-a-valid-url'),
 			},
 			true
 		);
@@ -126,7 +126,7 @@ AUI.add(
 						instance._processFieldRules(val);
 
 						return val;
-					}
+					},
 				},
 				id: {},
 				namespace: {},
@@ -135,12 +135,12 @@ AUI.add(
 						var instance = this;
 
 						return instance._onSubmit;
-					}
+					},
 				},
 				validateOnBlur: {
 					validator: Lang.isBoolean,
-					value: true
-				}
+					value: true,
+				},
 			},
 
 			EXTENDS: A.Base,
@@ -462,7 +462,7 @@ AUI.add(
 							custom: custom || false,
 							errorMessage: errorMessage || '',
 							fieldName,
-							validatorName
+							validatorName,
 						});
 
 						instance._processFieldRules(fieldRules);
@@ -483,7 +483,7 @@ AUI.add(
 					if (formNode) {
 						var formValidator = new A.FormValidator({
 							boundingBox: formNode,
-							validateOnBlur: instance.get('validateOnBlur')
+							validateOnBlur: instance.get('validateOnBlur'),
 						});
 
 						A.Do.before(
@@ -528,7 +528,7 @@ AUI.add(
 
 						instance._processFieldRules(fieldRules);
 					}
-				}
+				},
 			},
 
 			/*
@@ -545,17 +545,17 @@ AUI.add(
 
 				Liferay.fire('form:registered', {
 					form,
-					formName
+					formName,
 				});
 
 				return form;
-			}
+			},
 		});
 
 		Liferay.Form = Form;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-form-validator']
+		requires: ['aui-base', 'aui-form-validator'],
 	}
 );

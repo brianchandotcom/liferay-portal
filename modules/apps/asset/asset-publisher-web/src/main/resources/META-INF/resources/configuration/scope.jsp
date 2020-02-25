@@ -163,20 +163,20 @@ itemSelectorURL.setParameter("portletResource", assetPublisherDisplayContext.get
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true
+						modal: true,
 					},
 					eventName: '<%= eventName %>',
 					id: '<%= eventName %>' + event.currentTarget.id,
 					selectedData: searchContainerData,
 					title: '<liferay-ui:message key="scopes" />',
-					uri: '<%= itemSelectorURL.toString() %>'
+					uri: '<%= itemSelectorURL.toString() %>',
 				},
 				function(event) {
 					Liferay.Util.postForm(form, {
 						data: {
 							cmd: 'add-scope',
-							groupId: event.groupid
-						}
+							groupId: event.groupid,
+						},
 					});
 				}
 			);

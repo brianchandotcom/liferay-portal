@@ -140,7 +140,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 	};
 
 	var ACTIONS = {
-		deleteKBTemplates: deleteKBTemplates
+		deleteKBTemplates: deleteKBTemplates,
 	};
 
 	Liferay.componentReady('kbTemplatesManagementToolbar').then(function(

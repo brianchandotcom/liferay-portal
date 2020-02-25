@@ -26,12 +26,12 @@
 						requires: [
 							'aui-component',
 							'liferay-search-container',
-							'liferay-search-container-select'
-						]
-					}
+							'liferay-search-container-select',
+						],
+					},
 				},
-				root: MODULE_PATH + '/'
-			}
-		}
+				root: MODULE_PATH + '/',
+			},
+		},
 	});
 })();

@@ -19,7 +19,7 @@ import * as DataLayoutBuilderActions from './actions.es';
 import FieldType from './components/field-types/FieldType.es';
 import FieldTypeList from './components/field-types/FieldTypeList.es';
 import SearchInput, {
-	SearchInputWithForm
+	SearchInputWithForm,
 } from './components/search-input/SearchInput.es';
 import Sidebar from './components/sidebar/Sidebar.es';
 import DataLayoutBuilderDragAndDrop from './drag-and-drop/DataLayoutBuilderDragAndDrop.es';
@@ -41,7 +41,7 @@ export {
 	SearchInput,
 	SearchInputWithForm,
 	Sidebar,
-	withDragAndDropContext
+	withDragAndDropContext,
 };
 
 export default App;

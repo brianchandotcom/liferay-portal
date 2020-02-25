@@ -64,7 +64,7 @@ export default () => {
 													[
 														dateToInternationalHuman(
 															tag.dateCreated
-														)
+														),
 													]
 												)}
 											</ClayCard.Description>

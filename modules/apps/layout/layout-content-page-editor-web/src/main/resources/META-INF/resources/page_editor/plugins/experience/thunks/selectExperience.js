@@ -19,15 +19,15 @@ export default function selectExperience(id) {
 	return dispatch => {
 		return ExperienceService.selectExperience({
 			body: {
-				segmentsExperienceId: id
+				segmentsExperienceId: id,
 			},
-			dispatch
+			dispatch,
 		})
 			.then(portletIds => {
 				return dispatch(
 					selectExperienceAction({
 						portletIds,
-						segmentsExperienceId: id
+						segmentsExperienceId: id,
 					})
 				);
 			})

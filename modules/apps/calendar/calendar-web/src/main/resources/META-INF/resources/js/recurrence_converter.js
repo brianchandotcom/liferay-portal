@@ -125,7 +125,7 @@ AUI.add(
 
 				return {
 					dayOfWeek,
-					position: Lang.toInt(position)
+					position: Lang.toInt(position),
 				};
 			},
 
@@ -210,7 +210,7 @@ AUI.add(
 
 					if (rrule) {
 						recurrence = {
-							rrule
+							rrule,
 						};
 
 						var exdate = instance._parseExDate(parts[1]);
@@ -222,7 +222,7 @@ AUI.add(
 				}
 
 				return recurrence;
-			}
+			},
 		});
 
 		Liferay.RecurrenceConverter = RecurrenceConverter;

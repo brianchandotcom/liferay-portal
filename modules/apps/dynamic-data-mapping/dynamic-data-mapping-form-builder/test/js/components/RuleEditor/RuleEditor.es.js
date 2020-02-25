@@ -33,85 +33,85 @@ const functionsMetadata = {
 			name: 'contains',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Contains'
+			value: 'Contains',
 		},
 		{
 			name: 'equals-to',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Is equal to'
+			value: 'Is equal to',
 		},
 		{
 			name: 'is-empty',
 			parameterTypes: ['text'],
 			returnType: 'boolean',
-			value: 'Is empty'
+			value: 'Is empty',
 		},
 		{
 			name: 'not-contains',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Does not contain'
+			value: 'Does not contain',
 		},
 		{
 			name: 'not-equals-to',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Is not equal to'
+			value: 'Is not equal to',
 		},
 		{
 			name: 'not-is-empty',
 			parameterTypes: ['text'],
 			returnType: 'boolean',
-			value: 'Is not empty'
-		}
+			value: 'Is not empty',
+		},
 	],
 	text: [
 		{
 			name: 'contains',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Contains'
+			value: 'Contains',
 		},
 		{
 			name: 'equals-to',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Is equal to'
+			value: 'Is equal to',
 		},
 		{
 			name: 'is-empty',
 			parameterTypes: ['text'],
 			returnType: 'boolean',
-			value: 'Is empty'
+			value: 'Is empty',
 		},
 		{
 			name: 'not-contains',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Does not contain'
+			value: 'Does not contain',
 		},
 		{
 			name: 'not-equals-to',
 			parameterTypes: ['text', 'text'],
 			returnType: 'boolean',
-			value: 'Is not equal to'
+			value: 'Is not equal to',
 		},
 		{
 			name: 'not-is-empty',
 			parameterTypes: ['text'],
 			returnType: 'boolean',
-			value: 'Is not empty'
-		}
+			value: 'Is not empty',
+		},
 	],
 	user: [
 		{
 			name: 'belongs-to',
 			parameterTypes: ['text'],
 			returnType: 'boolean',
-			value: 'Belongs to'
-		}
-	]
+			value: 'Belongs to',
+		},
+	],
 };
 
 const functionsURL = '/o/dynamic-data-mapping-form-builder-functions/';
@@ -130,7 +130,7 @@ const getBaseConfig = () => ({
 	functionsURL,
 	pages,
 	rolesURL,
-	spritemap
+	spritemap,
 });
 
 describe('Rule Editor', () => {
@@ -146,25 +146,25 @@ describe('Rule Editor', () => {
 		describe("When a condition is added and there's more than one condition, there must be an option the delete the condition", () => {
 			it('displays a confirmation modal when trying to delete a condition', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['date']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-equals-to'
+					'not-equals-to',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 				component.refs.addConditionButton.emit('click');
 
 				jest.runAllTimers();
 
 				component.refs.trashButton0.emit('click', {
-					currentTarget: component.refs.trashButton0.element
+					currentTarget: component.refs.trashButton0.element,
 				});
 
 				jest.runAllTimers();
@@ -174,25 +174,25 @@ describe('Rule Editor', () => {
 
 			it('deletes a condition of user accepts confirmation modal', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['date']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-equals-to'
+					'not-equals-to',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 				component.refs.addConditionButton.emit('click');
 
 				jest.runAllTimers();
 
 				component.refs.trashButton0.emit('click', {
-					currentTarget: component.refs.trashButton0.element
+					currentTarget: component.refs.trashButton0.element,
 				});
 
 				jest.runAllTimers();
@@ -210,7 +210,7 @@ describe('Rule Editor', () => {
 		describe('The OR select must be disabled by default', () => {
 			it('disables the "AND" or "OR" selector when there\'s only one condtion', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				jest.runAllTimers();
@@ -226,18 +226,18 @@ describe('Rule Editor', () => {
 		describe('The OR select must be activated if the are more than one condition', () => {
 			it('enables the "AND" or "OR" selector when there\'s more than one condtion', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['date']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-equals-to'
+					'not-equals-to',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 
 				component.refs.addConditionButton.emit('click');
@@ -255,7 +255,7 @@ describe('Rule Editor', () => {
 		describe('Clear all fields when first operand is not selected', () => {
 			it('makes operators field "read only" when first operand is not selected', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['']);
@@ -267,7 +267,7 @@ describe('Rule Editor', () => {
 
 			it('hides the second operand type selector when first operand is not selected', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['']);
@@ -279,7 +279,7 @@ describe('Rule Editor', () => {
 
 			it('hides the second operand when first operand is not selected', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['']);
@@ -291,18 +291,18 @@ describe('Rule Editor', () => {
 
 			it('resets the operator, and hide the second operand type selector and second operand', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-contains'
+					'not-contains',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 
 				jest.runAllTimers();
@@ -322,18 +322,18 @@ describe('Rule Editor', () => {
 
 			it('resets the operator, and hide the second operand type selector and second operand', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-contains'
+					'not-contains',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 
 				jest.runAllTimers();
@@ -353,18 +353,18 @@ describe('Rule Editor', () => {
 
 			it('does not reset second operand type selector nor second operand when operator changes from a binary type to another binary type', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['select']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-contains'
+					'not-contains',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 
 				jest.runAllTimers();
@@ -378,7 +378,7 @@ describe('Rule Editor', () => {
 				jest.runAllTimers();
 
 				expect(component.refs.conditionOperator0.value).toEqual([
-					'contains'
+					'contains',
 				]);
 				expect(
 					component.refs.secondOperandTypeSelector0.value
@@ -388,18 +388,18 @@ describe('Rule Editor', () => {
 
 			it('hides second operand type selector and hide second operand when operator changes from a binary type to an unary type', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-contains'
+					'not-contains',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 
 				jest.runAllTimers();
@@ -418,7 +418,7 @@ describe('Rule Editor', () => {
 
 			it('does not make operators field "read only" when first operand is selected', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
@@ -432,7 +432,7 @@ describe('Rule Editor', () => {
 		describe('configuring the conditions according to the first operand type', () => {
 			it('populates operators when the first selected operand is a field', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
@@ -446,7 +446,7 @@ describe('Rule Editor', () => {
 
 			it('populates operators when the first selected operand is an user', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['user']);
@@ -460,7 +460,7 @@ describe('Rule Editor', () => {
 
 			it('keeps operator values the same when first operand changes to another value of the same type', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['text1']);
@@ -481,7 +481,7 @@ describe('Rule Editor', () => {
 
 			it('clears first operand when field is removed from pages', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
@@ -497,7 +497,7 @@ describe('Rule Editor', () => {
 
 			it('does not clear first operand when pages are changed and first operand is User', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['user']);
@@ -513,7 +513,7 @@ describe('Rule Editor', () => {
 
 			it('does not clear first operand when pages were changed but selected field was not removed', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
@@ -531,14 +531,14 @@ describe('Rule Editor', () => {
 											{
 												fieldName: 'newField',
 												label: 'New Field',
-												type: 'text'
-											}
-										]
-									}
-								]
-							}
-						]
-					}
+												type: 'text',
+											},
+										],
+									},
+								],
+							},
+						],
+					},
 				];
 
 				jest.runAllTimers();
@@ -548,19 +548,19 @@ describe('Rule Editor', () => {
 
 			it('does not clear second operand value when pages were changed but selected field was not removed', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
 
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-contains'
+					'not-contains',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 
 				jest.runAllTimers();
@@ -580,14 +580,14 @@ describe('Rule Editor', () => {
 											{
 												fieldName: 'newField',
 												label: 'New Field',
-												type: 'text'
-											}
-										]
-									}
-								]
-							}
-						]
-					}
+												type: 'text',
+											},
+										],
+									},
+								],
+							},
+						],
+					},
 				];
 
 				jest.runAllTimers();
@@ -603,12 +603,12 @@ describe('Rule Editor', () => {
 
 			it('does not display second operand type selector ("Other Field" or "Value") when operator is empty', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-equals-to'
+					'not-equals-to',
 				]);
 
 				jest.runAllTimers();
@@ -624,18 +624,18 @@ describe('Rule Editor', () => {
 
 			it('resets second operand type selector ("Other Field" or "Value") and hide second operand when selected field is removed', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-equals-to'
+					'not-equals-to',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'field'
+					'field',
 				]);
 
 				jest.runAllTimers();
@@ -651,14 +651,14 @@ describe('Rule Editor', () => {
 										fields: [
 											{
 												fieldName: 'radio',
-												label: 'Field A'
-											}
-										]
-									}
-								]
-							}
-						]
-					}
+												label: 'Field A',
+											},
+										],
+									},
+								],
+							},
+						],
+					},
 				];
 
 				jest.runAllTimers();
@@ -671,18 +671,18 @@ describe('Rule Editor', () => {
 
 			it('resets second operand type selector ("Other Field" or "Value") and hide second operand when first operand field is changed', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-equals-to'
+					'not-equals-to',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'field'
+					'field',
 				]);
 
 				jest.runAllTimers();
@@ -696,7 +696,7 @@ describe('Rule Editor', () => {
 				jest.runAllTimers();
 
 				component.refs.conditionOperator0.emitFieldEdited([
-					'equals-to'
+					'equals-to',
 				]);
 
 				jest.runAllTimers();
@@ -709,18 +709,18 @@ describe('Rule Editor', () => {
 
 			it('adds a new condition to the conditions array', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['date']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-equals-to'
+					'not-equals-to',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 
 				component.refs.addConditionButton.emit('click');
@@ -734,18 +734,18 @@ describe('Rule Editor', () => {
 
 			it('changes all logical operators when changing it via the global logical operator selector', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['date']);
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-equals-to'
+					'not-equals-to',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 
 				component.refs.addConditionButton.emit('click');
@@ -763,7 +763,7 @@ describe('Rule Editor', () => {
 		describe('When the user choose any of the options of the action a select target should be displayed', () => {
 			it('displays the action target according to action type (Show, Enable or Required)', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.action0.emitFieldEdited(['show']);
@@ -775,7 +775,7 @@ describe('Rule Editor', () => {
 
 			it('adds to the deletedField all the fields removed from the FormBuilder', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
@@ -799,7 +799,7 @@ describe('Rule Editor', () => {
 
 			it('does not reset the target after setting a target to an action and click in the action selected without changing it', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.action0.emitFieldEdited(['show']);
@@ -817,7 +817,7 @@ describe('Rule Editor', () => {
 
 			it('shows Result field when the action Calculate is selected', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.action0.emitFieldEdited(['calculate']);
@@ -831,7 +831,7 @@ describe('Rule Editor', () => {
 
 			it('shows Result field when the action Calculate is selected', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.action0.emitFieldEdited(['calculate']);
@@ -855,7 +855,7 @@ describe('Rule Editor', () => {
 
 			it('refreshes the target when the user changes any of the options of the first action select between (Show, Enable or Required)', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.action0.emitFieldEdited(['show']);
@@ -874,7 +874,7 @@ describe('Rule Editor', () => {
 
 			it('refreshes the target when the user changes de Action from autofill to Show, Enable or Required', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.action0.emitFieldEdited(['auto-fill']);
@@ -894,7 +894,7 @@ describe('Rule Editor', () => {
 
 			it('displays the action target according to action type (Autofill)', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.action0.emitFieldEdited(['auto-fill']);
@@ -912,7 +912,7 @@ describe('Rule Editor', () => {
 
 			it('displays only one data-provider label everytime an autofill target is selected', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.action0.emitFieldEdited(['auto-fill']);
@@ -936,7 +936,7 @@ describe('Rule Editor', () => {
 
 			it('duplicates an action when duplicate field is clicked', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.action0.emitFieldEdited(['show']);
@@ -948,7 +948,7 @@ describe('Rule Editor', () => {
 				jest.runAllTimers();
 
 				component.refs.trashButtonAction0.emit('click', {
-					currentTarget: component.refs.trashButtonAction0.element
+					currentTarget: component.refs.trashButtonAction0.element,
 				});
 
 				jest.runAllTimers();
@@ -966,7 +966,7 @@ describe('Rule Editor', () => {
 		describe('When a rule is not fully filled with actions and conditions', () => {
 			it('the save rule button must be disabled', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				expect(component.refs.save.disabled).toBe(true);
@@ -977,7 +977,7 @@ describe('Rule Editor', () => {
 		describe('When a rule is fully filled with actions and conditions', () => {
 			it('the save rule button must be enabled', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				component.refs.firstOperand0.emitFieldEdited(['radio']);
@@ -985,13 +985,13 @@ describe('Rule Editor', () => {
 				jest.runAllTimers();
 
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-contains'
+					'not-contains',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 
 				jest.runAllTimers();
@@ -1014,7 +1014,7 @@ describe('Rule Editor', () => {
 				jest.useFakeTimers();
 
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				const spy = jest.spyOn(component, 'emit');
@@ -1024,7 +1024,7 @@ describe('Rule Editor', () => {
 				jest.runAllTimers();
 
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-contains'
+					'not-contains',
 				]);
 
 				jest.runAllTimers();
@@ -1054,8 +1054,8 @@ describe('Rule Editor', () => {
 						{
 							action: 'show',
 							label: 'date',
-							target: 'date'
-						}
+							target: 'date',
+						},
 					],
 					conditions: [
 						{
@@ -1064,25 +1064,25 @@ describe('Rule Editor', () => {
 									label: 'Radio Field',
 									repeatable: undefined,
 									type: 'field',
-									value: 'radio'
+									value: 'radio',
 								},
 								{
 									label: '123',
 									type: 'field',
-									value: '123'
-								}
+									value: '123',
+								},
 							],
-							operator: 'not-contains'
-						}
+							operator: 'not-contains',
+						},
 					],
 					['logical-operator']: 'or',
-					ruleEditedIndex: undefined
+					ruleEditedIndex: undefined,
 				});
 			});
 
 			it('is possible to cancel a rule', () => {
 				component = new RuleEditor({
-					...getBaseConfig()
+					...getBaseConfig(),
 				});
 
 				const spy = jest.spyOn(component, 'emit');
@@ -1092,13 +1092,13 @@ describe('Rule Editor', () => {
 				jest.runAllTimers();
 
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-contains'
+					'not-contains',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 
 				jest.runAllTimers();
@@ -1130,26 +1130,26 @@ describe('Rule Editor', () => {
 						actions: [
 							{
 								action: 'require',
-								target: 'text1'
-							}
+								target: 'text1',
+							},
 						],
 						conditions: [
 							{
 								operands: [
 									{
 										type: 'field',
-										value: 'text1'
+										value: 'text1',
 									},
 									{
 										type: 'field',
-										value: 'text2'
-									}
+										value: 'text2',
+									},
 								],
-								operator: 'equals-to'
-							}
+								operator: 'equals-to',
+							},
 						],
-						['logical-operator']: 'OR'
-					}
+						['logical-operator']: 'OR',
+					},
 				});
 
 				const spy = jest.spyOn(component, 'emit');
@@ -1159,13 +1159,13 @@ describe('Rule Editor', () => {
 				jest.runAllTimers();
 
 				component.refs.conditionOperator0.emitFieldEdited([
-					'not-contains'
+					'not-contains',
 				]);
 
 				jest.runAllTimers();
 
 				component.refs.secondOperandTypeSelector0.emitFieldEdited([
-					'value'
+					'value',
 				]);
 
 				jest.runAllTimers();
@@ -1191,7 +1191,7 @@ describe('Regression', () => {
 	describe('LPS-86162 The filled value is being lost when re-selecting Value in the rule builder', () => {
 		it('does not clear second operand value when there were no changes on second oprand type', () => {
 			component = new RuleEditor({
-				...getBaseConfig()
+				...getBaseConfig(),
 			});
 
 			component.refs.firstOperand0.emitFieldEdited(['radio']);
@@ -1200,7 +1200,7 @@ describe('Regression', () => {
 			jest.runAllTimers();
 
 			component.refs.secondOperandTypeSelector0.emitFieldEdited([
-				'value'
+				'value',
 			]);
 
 			jest.runAllTimers();
@@ -1210,7 +1210,7 @@ describe('Regression', () => {
 			jest.runAllTimers();
 
 			component.refs.secondOperandTypeSelector0.emitFieldEdited([
-				'value'
+				'value',
 			]);
 
 			jest.runAllTimers();

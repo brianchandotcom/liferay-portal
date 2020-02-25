@@ -20,16 +20,16 @@ AUI.add(
 		var SegmentsSimulation = A.Component.create({
 			ATTRS: {
 				deactivateSimulationUrl: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				form: {
-					validator: Lang.isObject
+					validator: Lang.isObject,
 				},
 
 				simulateSegmentsEntriesUrl: {
-					validator: Lang.isString
-				}
+					validator: Lang.isString,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -77,7 +77,7 @@ AUI.add(
 						instance.get('deactivateSimulationUrl'),
 						{
 							body: new FormData(form),
-							method: 'POST'
+							method: 'POST',
 						}
 					).then(() => {
 						A.all('#' + form.id + ' input').set('checked', false);
@@ -91,7 +91,7 @@ AUI.add(
 						instance.get('simulateSegmentsEntriesUrl'),
 						{
 							body: new FormData(instance.get('form')),
-							method: 'POST'
+							method: 'POST',
 						}
 					).then(() => {
 						const iframe = A.one('#simulationDeviceIframe');
@@ -118,14 +118,14 @@ AUI.add(
 					var instance = this;
 
 					instance._bindUI();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Portlet.SegmentsSimulation = SegmentsSimulation;
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-portlet-base']
+		requires: ['aui-base', 'liferay-portlet-base'],
 	}
 );

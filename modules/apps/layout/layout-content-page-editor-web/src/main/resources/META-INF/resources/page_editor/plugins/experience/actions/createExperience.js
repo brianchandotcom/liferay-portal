@@ -17,14 +17,14 @@ import {CREATE_SEGMENTS_EXPERIENCE} from '../actions/types';
 export default function createExperience({
 	fragmentEntryLinkIds,
 	layoutData,
-	segmentsExperience
+	segmentsExperience,
 }) {
 	return {
 		payload: {
 			fragmentEntryLinkIds,
 			layoutData,
-			segmentsExperience
+			segmentsExperience,
 		},
-		type: CREATE_SEGMENTS_EXPERIENCE
+		type: CREATE_SEGMENTS_EXPERIENCE,
 	};
 }

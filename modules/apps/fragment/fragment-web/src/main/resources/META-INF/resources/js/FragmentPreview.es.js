@@ -26,16 +26,16 @@ import templates from './FragmentPreview.soy';
 const SIZE_RATIO = {
 	desktop: {
 		height: 9,
-		width: 16
+		width: 16,
 	},
 	'mobile-portrait': {
 		height: 16,
-		width: 10
+		width: 10,
 	},
 	'tablet-portrait': {
 		height: 3,
-		width: 4
-	}
+		width: 4,
+	},
 };
 
 /**
@@ -163,7 +163,7 @@ class FragmentPreview extends PortletBase {
 				configuration: this.configuration,
 				css: this.css,
 				html: this.html,
-				js: this.js
+				js: this.js,
 			})
 				.then(response => response.text())
 				.then(response => {
@@ -313,8 +313,8 @@ FragmentPreview.STATE = {
 	 * }}
 	 */
 	urls: Config.shapeOf({
-		render: Config.string().required()
-	}).required()
+		render: Config.string().required(),
+	}).required(),
 };
 
 Soy.register(FragmentPreview, templates);

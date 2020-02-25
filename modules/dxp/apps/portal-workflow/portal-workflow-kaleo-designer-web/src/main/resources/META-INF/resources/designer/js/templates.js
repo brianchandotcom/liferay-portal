@@ -22,13 +22,13 @@ AUI.add(
 			'<tpl for="options">',
 			'<option value="{value}">{label}</option>',
 			'</tpl>',
-			'</select>'
+			'</select>',
 		];
 
 		Template.register('select-multiple', TPL_SELECT_MULTIPLE);
 	},
 	'',
 	{
-		requires: 'aui-tpl-snippets-deprecated'
+		requires: 'aui-tpl-snippets-deprecated',
 	}
 );

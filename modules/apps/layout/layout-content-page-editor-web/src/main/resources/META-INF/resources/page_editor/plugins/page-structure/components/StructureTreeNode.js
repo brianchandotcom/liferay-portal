@@ -22,7 +22,7 @@ import {
 	useHoverItem,
 	useIsHovered,
 	useIsSelected,
-	useSelectItem
+	useSelectItem,
 } from '../../../app/components/Controls';
 import selectShowLayoutItemRemoveButton from '../../../app/selectors/selectShowLayoutItemRemoveButton';
 import {useDispatch, useSelector} from '../../../app/store/index';
@@ -38,7 +38,7 @@ const NameButton = ({disabled, id, name}) => {
 				{
 					'page-editor__page-structure__tree-node__name-button--active': isSelected(
 						id
-					)
+					),
 				}
 			)}
 			disabled={disabled}
@@ -115,6 +115,6 @@ StructureTreeNode.propTypes = {
 	node: PropTypes.shape({
 		id: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
-		removable: PropTypes.bool
-	}).isRequired
+		removable: PropTypes.bool,
+	}).isRequired,
 };

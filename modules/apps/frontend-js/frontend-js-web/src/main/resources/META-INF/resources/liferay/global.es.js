@@ -24,7 +24,7 @@ import {
 	destroyComponents,
 	destroyUnfulfilledPromises,
 	getComponentCache,
-	initComponentCache
+	initComponentCache,
 } from './component.es';
 import {
 	getLayoutIcons,
@@ -32,7 +32,7 @@ import {
 	proposeLayout,
 	publishToLive,
 	showLayoutPane,
-	toggleLayoutDetails
+	toggleLayoutDetails,
 } from './layout_exporter.es';
 import portlet from './portlet/portlet.es';
 import SideNavigation from './side_navigation.es';
@@ -69,7 +69,7 @@ Liferay.initComponentCache = initComponentCache;
 
 Liferay.Address = {
 	getCountries,
-	getRegions
+	getRegions,
 };
 
 Liferay.LayoutExporter = {
@@ -78,7 +78,7 @@ Liferay.LayoutExporter = {
 	icons: getLayoutIcons(),
 	proposeLayout,
 	publishToLive,
-	selected: showLayoutPane
+	selected: showLayoutPane,
 };
 
 Liferay.SideNavigation = SideNavigation;
@@ -103,7 +103,7 @@ Liferay.Util.PortletURL = {
 	createActionURL,
 	createPortletURL,
 	createRenderURL,
-	createResourceURL
+	createResourceURL,
 };
 
 Liferay.Util.postForm = postForm;
@@ -121,7 +121,7 @@ Liferay.Util.openToast = (...args) => {
 
 Liferay.Util.Session = {
 	get: getSessionValue,
-	set: setSessionValue
+	set: setSessionValue,
 };
 
 Liferay.Util.unescape = unescape;

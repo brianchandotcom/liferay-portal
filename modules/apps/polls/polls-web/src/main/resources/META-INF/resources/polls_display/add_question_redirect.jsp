@@ -24,6 +24,6 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 	Liferay.fire('closeWindow', {
 		id: '<portlet:namespace />editQuestion',
 		portletAjaxable: <%= portlet.isAjaxable() %>,
-		refresh: '<%= portletDisplay.getId() %>'
+		refresh: '<%= portletDisplay.getId() %>',
 	});
 </aui:script>

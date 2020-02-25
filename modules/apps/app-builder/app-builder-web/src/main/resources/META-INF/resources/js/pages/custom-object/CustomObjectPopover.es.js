@@ -25,7 +25,7 @@ const CustomObjectPopover = ({
 	forwardRef,
 	onCancel,
 	onSubmit,
-	visible
+	visible,
 }) => {
 	const nameInputRef = useRef();
 	const [isAddFormView, setAddFormView] = useState(true);

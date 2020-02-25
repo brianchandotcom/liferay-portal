@@ -63,12 +63,12 @@ function ToolbarBody() {
 					Actions,
 					config,
 					dispatch,
-					store
+					store,
 				};
 
 				return register(pluginEntryPoint, promise, {
 					app,
-					toolbarPlugin
+					toolbarPlugin,
 				}).then(plugin => {
 					if (!plugin) {
 						throw new Error(

@@ -117,7 +117,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 							constrain: true,
 							destroyOnHide: true,
 							modal: true,
-							width: 600
+							width: 600,
 						},
 						id: '<portlet:namespace />selectKBObject',
 						title: '<liferay-ui:message key="select-article" />',
@@ -131,14 +131,14 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 							<portlet:param name="selectableClassNameIds" value="<%= String.valueOf(PortalUtil.getClassNameId(KBArticleConstants.getClassName())) %>" />
 						</liferay-portlet:renderURL>
 
-						uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
+						uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>',
 					},
 					function(event) {
 						var kbArticleData = {
 							idString: 'resourcePrimKey',
 							idValue: event.resourceprimkey,
 							nameString: 'configurationKBObject',
-							nameValue: event.title
+							nameValue: event.title,
 						};
 
 						Liferay.Util.selectFolder(

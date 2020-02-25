@@ -21,7 +21,7 @@ import {TOGGLE_PERMISSION} from './types';
 export default function togglePermission(key, value = undefined) {
 	const action = {
 		key,
-		type: TOGGLE_PERMISSION
+		type: TOGGLE_PERMISSION,
 	};
 
 	if (typeof value === 'boolean') {

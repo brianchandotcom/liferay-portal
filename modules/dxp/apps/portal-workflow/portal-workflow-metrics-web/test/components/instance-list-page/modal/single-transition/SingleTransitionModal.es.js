@@ -28,11 +28,11 @@ const ContainerMock = ({children}) => {
 			assigneeUsers: [{id: 2, name: 'Test Test'}],
 			id: 1,
 			status: 'In Progress',
-			taskNames: ['Review']
+			taskNames: ['Review'],
 		},
 		title: 'Test',
 		transitionName: 'test',
-		visible: true
+		visible: true,
 	});
 
 	return (
@@ -52,21 +52,21 @@ const items = [
 	{
 		id: 2,
 		label: 'Test',
-		name: 'test'
-	}
+		name: 'test',
+	},
 ];
 
 const clientMock = {
 	get: jest.fn().mockResolvedValueOnce({
 		data: {
 			items,
-			totalCount: 1
-		}
+			totalCount: 1,
+		},
 	}),
 	post: jest
 		.fn()
 		.mockRejectedValueOnce(new Error('Request failed'))
-		.mockResolvedValue({data: {items: []}})
+		.mockResolvedValue({data: {items: []}}),
 };
 
 describe('The SingleTransitionModal component should', () => {
@@ -76,7 +76,7 @@ describe('The SingleTransitionModal component should', () => {
 				<SingleTransitionModal />
 			</MockRouter>,
 			{
-				wrapper: ContainerMock
+				wrapper: ContainerMock,
 			}
 		);
 

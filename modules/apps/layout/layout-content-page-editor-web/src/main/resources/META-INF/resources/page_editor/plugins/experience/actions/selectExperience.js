@@ -16,13 +16,13 @@ import {SELECT_SEGMENTS_EXPERIENCE} from './types';
 
 export default function selectExperience({
 	portletIds = [],
-	segmentsExperienceId
+	segmentsExperienceId,
 }) {
 	return {
 		payload: {
 			portletIds,
-			segmentsExperienceId
+			segmentsExperienceId,
 		},
-		type: SELECT_SEGMENTS_EXPERIENCE
+		type: SELECT_SEGMENTS_EXPERIENCE,
 	};
 }

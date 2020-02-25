@@ -222,8 +222,8 @@ AUI.add(
 											}
 
 											dialog.destroy();
-										}
-									}
+										},
+									},
 								},
 								{
 									cssClass: 'btn btn-primary',
@@ -236,9 +236,9 @@ AUI.add(
 											}
 
 											dialog.hide();
-										}
-									}
-								}
+										},
+									},
+								},
 							],
 							header: [
 								{
@@ -257,14 +257,14 @@ AUI.add(
 											}
 
 											dialog.destroy();
-										}
-									}
-								}
-							]
+										},
+									},
+								},
+							],
 						},
-						width: 500
+						width: 500,
 					},
-					title
+					title,
 				});
 
 				instance._duplicationDialog = dialog;
@@ -286,8 +286,8 @@ AUI.add(
 									on: {
 										click() {
 											window.location.assign(actionUrl);
-										}
-									}
+										},
+									},
 								},
 								{
 									cssClass: 'btn btn-secondary',
@@ -296,9 +296,9 @@ AUI.add(
 									on: {
 										click() {
 											dialog.destroy();
-										}
-									}
-								}
+										},
+									},
+								},
 							],
 							header: [
 								{
@@ -315,14 +315,14 @@ AUI.add(
 											dialog.destroy();
 
 											event.domEvent.stopPropagation();
-										}
-									}
-								}
-							]
+										},
+									},
+								},
+							],
 						},
-						width: 600
+						width: 600,
 					},
-					title
+					title,
 				});
 			},
 
@@ -340,8 +340,8 @@ AUI.add(
 									on: {
 										click() {
 											dialog.destroy();
-										}
-									}
+										},
+									},
 								},
 								{
 									cssClass: 'btn btn-primary',
@@ -350,9 +350,9 @@ AUI.add(
 									on: {
 										click() {
 											window.location.assign(actionUrl);
-										}
-									}
-								}
+										},
+									},
+								},
 							],
 							header: [
 								{
@@ -369,14 +369,14 @@ AUI.add(
 											dialog.destroy();
 
 											event.domEvent.stopPropagation();
-										}
-									}
-								}
-							]
-						}
+										},
+									},
+								},
+							],
+						},
 					},
 					title,
-					uri: renderUrl
+					uri: renderUrl,
 				});
 			},
 
@@ -405,10 +405,10 @@ AUI.add(
 					closeable: true,
 					delay: {
 						hide: 5000,
-						show: 0
+						show: 0,
 					},
 					message: successMessage,
-					type: 'success'
+					type: 'success',
 				});
 
 				if (!alert.get('rendered')) {
@@ -450,10 +450,10 @@ AUI.add(
 					closeable: true,
 					delay: {
 						hide: 10000,
-						show: 0
+						show: 0,
 					},
 					message: successMessage,
-					type: 'success'
+					type: 'success',
 				});
 
 				if (!alert.get('rendered')) {
@@ -519,13 +519,13 @@ AUI.add(
 						instance._doToggleDefinitionLinkEditionMode(namespace);
 					}
 				}
-			}
+			},
 		};
 
 		Liferay.WorkflowWeb = WorkflowWeb;
 	},
 	'',
 	{
-		requires: ['liferay-alert', 'liferay-util-window']
+		requires: ['liferay-alert', 'liferay-util-window'],
 	}
 );

@@ -20,24 +20,24 @@ AUI.add(
 		var PanelSearch = A.Component.create({
 			ATTRS: {
 				categorySelector: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				inputNode: {
-					setter: A.one
+					setter: A.one,
 				},
 
 				nodeContainerSelector: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				nodeList: {
-					setter: A.one
+					setter: A.one,
 				},
 
 				nodeSelector: {
-					validator: Lang.isString
-				}
+					validator: Lang.isString,
+				},
 			},
 
 			EXTENDS: A.Base,
@@ -182,21 +182,21 @@ AUI.add(
 					var applicationSearch = new Liferay.SearchFilter({
 						inputNode: instance.get('inputNode'),
 						nodeList,
-						nodeSelector: instance.get('nodeSelector')
+						nodeSelector: instance.get('nodeSelector'),
 					});
 
 					instance._nodes = applicationSearch._nodes;
 					instance._search = applicationSearch;
 
 					instance._bindUISearch();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.PanelSearch = PanelSearch;
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-search-filter']
+		requires: ['aui-base', 'liferay-search-filter'],
 	}
 );

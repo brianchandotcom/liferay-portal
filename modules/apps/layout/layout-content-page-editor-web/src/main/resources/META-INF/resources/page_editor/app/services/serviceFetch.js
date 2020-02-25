@@ -56,7 +56,7 @@ export default function serviceFetch(
 		onNetworkStatus(
 			updateNetwork({
 				requestGenerateDraft,
-				status: SERVICE_NETWORK_STATUS_TYPES.savingDraft
+				status: SERVICE_NETWORK_STATUS_TYPES.savingDraft,
 			})
 		);
 	}
@@ -64,7 +64,7 @@ export default function serviceFetch(
 	return fetch(url, {
 		...options,
 		body: getFormData(body),
-		method: method || 'POST'
+		method: method || 'POST',
 	})
 		.then(
 			response =>
@@ -112,7 +112,7 @@ export default function serviceFetch(
 					updateNetwork({
 						error: null,
 						lastFetch: new Date(),
-						status: SERVICE_NETWORK_STATUS_TYPES.draftSaved
+						status: SERVICE_NETWORK_STATUS_TYPES.draftSaved,
 					})
 				);
 			}
@@ -129,7 +129,7 @@ function handleErroredResponse(error, onNetworkStatus) {
 	onNetworkStatus(
 		updateNetwork({
 			error,
-			status: SERVICE_NETWORK_STATUS_TYPES.error
+			status: SERVICE_NETWORK_STATUS_TYPES.error,
 		})
 	);
 

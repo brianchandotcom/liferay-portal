@@ -16,5 +16,5 @@ export const TRANSLATION_STATUS_TYPE = {
 	default: 'default',
 	translated: 'translated',
 	translating: 'translating',
-	untranslated: 'untranslated'
+	untranslated: 'untranslated',
 };

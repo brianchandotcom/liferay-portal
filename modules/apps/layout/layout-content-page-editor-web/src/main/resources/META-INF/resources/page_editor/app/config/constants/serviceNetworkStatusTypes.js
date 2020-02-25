@@ -21,5 +21,5 @@
 export const SERVICE_NETWORK_STATUS_TYPES = {
 	draftSaved: 0,
 	error: 1,
-	savingDraft: 2
+	savingDraft: 2,
 };

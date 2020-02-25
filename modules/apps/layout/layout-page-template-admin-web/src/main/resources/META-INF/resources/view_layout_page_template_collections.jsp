@@ -161,7 +161,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 				eventName: '<portlet:namespace />selectCollections',
 				title: '<liferay-ui:message key="delete-collection" />',
 				url:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/layout_page_template/select_layout_page_template_collections" /></portlet:renderURL>'
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/layout_page_template/select_layout_page_template_collections" /></portlet:renderURL>',
 			});
 
 			itemSelectorDialog.on('selectedItemChange', function(event) {
@@ -201,7 +201,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 	};
 
 	var ACTIONS = {
-		deleteCollections: deleteCollections
+		deleteCollections: deleteCollections,
 	};
 
 	Liferay.componentReady('actionsComponent').then(function(actionsComponent) {

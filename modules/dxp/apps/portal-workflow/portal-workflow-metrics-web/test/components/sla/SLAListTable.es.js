@@ -23,7 +23,7 @@ test('Should render component', () => {
 			),
 			description: 'Total time to complete the request.',
 			duration: 863999940000,
-			name: 'Total resolution time'
+			name: 'Total resolution time',
 		},
 		{
 			dateModified: new Date(
@@ -31,7 +31,7 @@ test('Should render component', () => {
 			),
 			description: 'Total time to complete the request.',
 			duration: 60000,
-			name: 'Total resolution time'
+			name: 'Total resolution time',
 		},
 		{
 			dateModified: new Date(
@@ -39,8 +39,8 @@ test('Should render component', () => {
 			),
 			description: 'Total time to complete the request.',
 			duration: 7140000,
-			name: 'Total resolution time'
-		}
+			name: 'Total resolution time',
+		},
 	];
 
 	const component = renderer.create(

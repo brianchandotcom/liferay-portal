@@ -30,16 +30,16 @@ AUI.add(
 		var CoverCropper = A.Component.create({
 			ATTRS: {
 				direction: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				imageContainerSelector: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				imageSelector: {
-					validator: Lang.isString
-				}
+					validator: Lang.isString,
+				},
 			},
 
 			EXTENDS: A.Plugin.Base,
@@ -57,7 +57,7 @@ AUI.add(
 							'load',
 							instance._onImageUpdated,
 							instance
-						)
+						),
 					];
 				},
 
@@ -118,7 +118,7 @@ AUI.add(
 
 						constrain = {
 							left: containerX,
-							right: containerX + imageContainer.width()
+							right: containerX + imageContainer.width(),
 						};
 					}
 					else if (direction === STR_HORIZONTAL) {
@@ -126,7 +126,7 @@ AUI.add(
 
 						constrain = {
 							bottom: containerY + imageContainer.height(),
-							top: containerY
+							top: containerY,
 						};
 					}
 
@@ -149,7 +149,7 @@ AUI.add(
 					var cropRegion = Liferay.Util.getCropRegion(image._node, {
 						height: imageContainer.height(),
 						x: containerPos[0] - imagePos[0],
-						y: containerPos[1] - imagePos[1]
+						y: containerPos[1] - imagePos[1],
 					});
 
 					var cropRegionNode = host.rootNode.one(
@@ -181,23 +181,23 @@ AUI.add(
 						node: instance._image,
 						on: {
 							'drag:drag': A.bind('_constrainDrag', instance),
-							'drag:end': A.bind('_onImageUpdated', instance)
-						}
+							'drag:end': A.bind('_onImageUpdated', instance),
+						},
 					}).plug(A.Plugin.DDConstrained, {
-						constrain: instance._getConstrain()
+						constrain: instance._getConstrain(),
 					});
 
 					instance._dd = dd;
 
 					instance._bindUI();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.CoverCropper = CoverCropper;
 	},
 	'',
 	{
-		requires: ['aui-base', 'dd-constrain', 'dd-drag', 'plugin']
+		requires: ['aui-base', 'dd-constrain', 'dd-drag', 'plugin'],
 	}
 );

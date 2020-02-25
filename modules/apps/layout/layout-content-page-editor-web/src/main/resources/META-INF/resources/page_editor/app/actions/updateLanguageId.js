@@ -21,6 +21,6 @@ import {UPDATE_LANGUAGE_ID} from './types';
 export default function updateLanguageId({languageId}) {
 	return {
 		languageId,
-		type: UPDATE_LANGUAGE_ID
+		type: UPDATE_LANGUAGE_ID,
 	};
 }

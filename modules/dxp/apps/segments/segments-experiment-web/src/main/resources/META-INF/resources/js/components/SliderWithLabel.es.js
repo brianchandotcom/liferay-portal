@@ -19,7 +19,7 @@ function SliderWithLabel({
 	min = 1,
 	onValueChange,
 	subTitle,
-	value
+	value,
 }) {
 	return (
 		<label className="form-group-autofit">
@@ -54,7 +54,7 @@ SliderWithLabel.propTypes = {
 	min: PropTypes.number,
 	onValueChange: PropTypes.func.isRequired,
 	subTitle: PropTypes.string,
-	value: PropTypes.number.isRequired
+	value: PropTypes.number.isRequired,
 };
 
 export {SliderWithLabel};

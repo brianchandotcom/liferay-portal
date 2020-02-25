@@ -25,8 +25,8 @@ export default withRouter(
 	({
 		history,
 		match: {
-			params: {answerId}
-		}
+			params: {answerId},
+		},
 	}) => {
 		const [articleBody, setArticleBody] = useState('');
 

@@ -37,7 +37,7 @@ const Tabs = ({currentTab, setCurrentTab}) => {
 	const tabs = [
 		{name: Liferay.Language.get('overdue'), tabKey: 'overdue'},
 		{name: Liferay.Language.get('on-time'), tabKey: 'onTime'},
-		{name: Liferay.Language.get('total'), tabKey: 'total'}
+		{name: Liferay.Language.get('total'), tabKey: 'total'},
 	];
 
 	return (

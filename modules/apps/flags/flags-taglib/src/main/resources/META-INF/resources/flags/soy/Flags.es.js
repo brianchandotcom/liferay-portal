@@ -117,7 +117,7 @@ class Flags extends PortletBase {
 
 		fetch(this.uri, {
 			body: formData,
-			method: 'POST'
+			method: 'POST',
 		})
 			.then(response => {
 				if (response.status === Liferay.STATUS_CODE.OK) {
@@ -320,7 +320,7 @@ Flags.STATE = {
 	 * @type {String}
 	 */
 
-	uri: Config.string().required()
+	uri: Config.string().required(),
 };
 
 // Register component

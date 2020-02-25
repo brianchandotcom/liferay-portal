@@ -14,5 +14,5 @@
 
 export const MOVE_ITEM_DIRECTIONS = {
 	DOWN: 1,
-	UP: -1
+	UP: -1,
 };

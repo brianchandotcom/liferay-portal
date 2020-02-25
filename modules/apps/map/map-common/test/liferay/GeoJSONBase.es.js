@@ -17,11 +17,11 @@ import GeoJSONBase from '../../src/main/resources/META-INF/resources/js/GeoJSONB
 describe('GeoJSONBase', () => {
 	const features = [
 		{
-			name: 'FeatureA'
+			name: 'FeatureA',
 		},
 		{
-			name: 'FeatureB'
-		}
+			name: 'FeatureB',
+		},
 	];
 
 	let geoJSONBase;
@@ -100,7 +100,7 @@ describe('GeoJSONBase', () => {
 
 			expect(eventData.feature).toEqual({
 				feature: 'Nice feature baby',
-				wrapped: true
+				wrapped: true,
 			});
 		});
 	});

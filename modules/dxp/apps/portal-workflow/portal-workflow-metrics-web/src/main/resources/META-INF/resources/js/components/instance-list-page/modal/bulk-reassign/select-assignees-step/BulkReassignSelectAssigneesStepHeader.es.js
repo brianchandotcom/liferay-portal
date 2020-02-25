@@ -24,7 +24,7 @@ const Header = ({data}) => {
 		reassigning,
 		selectedAssignee,
 		selectedTasks = [],
-		useSameAssignee
+		useSameAssignee,
 	} = bulkModal;
 
 	const [assignees, setAssignees] = useState([]);
@@ -47,7 +47,7 @@ const Header = ({data}) => {
 
 	const disableBulk = useMemo(() => reassigning || assignees.length === 0, [
 		assignees,
-		reassigning
+		reassigning,
 	]);
 
 	const handleCheck = ({target}) => {
@@ -55,7 +55,7 @@ const Header = ({data}) => {
 			...bulkModal,
 			reassignedTasks: [],
 			selectedAssignee: null,
-			useSameAssignee: target.checked
+			useSameAssignee: target.checked,
 		});
 	};
 
@@ -66,7 +66,7 @@ const Header = ({data}) => {
 			selectedTasks.forEach(task => {
 				reassignedTasks.push({
 					assigneeId: newAssignee.id,
-					workflowTaskId: task.id
+					workflowTaskId: task.id,
 				});
 			});
 		}
@@ -74,7 +74,7 @@ const Header = ({data}) => {
 		setBulkModal({
 			...bulkModal,
 			reassignedTasks,
-			selectedAssignee: newAssignee
+			selectedAssignee: newAssignee,
 		});
 	};
 

@@ -39,11 +39,11 @@ const fieldOptionStructure = Config.shapeOf({
 		Config.shapeOf({
 			label: Config.string(),
 			name: Config.string(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	),
 	type: Config.string(),
-	value: Config.string()
+	value: Config.string(),
 });
 
 /**
@@ -72,7 +72,7 @@ class RuleEditor extends Component {
 				name,
 				required,
 				type,
-				value: data[key]
+				value: data[key],
 			};
 		});
 	}
@@ -91,7 +91,7 @@ class RuleEditor extends Component {
 		this.setState({
 			actions: [],
 			conditions: [],
-			logicalOperator: ''
+			logicalOperator: '',
 		});
 	}
 
@@ -102,7 +102,7 @@ class RuleEditor extends Component {
 				[name]:
 					Object.keys(actionParameters).indexOf(name) !== -1
 						? actionParameters[name]
-						: value
+						: value,
 			}),
 			{}
 		);
@@ -115,7 +115,7 @@ class RuleEditor extends Component {
 				[id]:
 					Object.keys(actionParameters).indexOf(id) !== -1
 						? actionParameters[id]
-						: undefined
+						: undefined,
 			}),
 			{}
 		);
@@ -151,7 +151,7 @@ class RuleEditor extends Component {
 											action.outputs,
 											outputs
 										),
-										outputsData: outputs
+										outputsData: outputs,
 								  }
 								: action;
 						});
@@ -202,7 +202,7 @@ class RuleEditor extends Component {
 				'numeric',
 				'radio',
 				'select',
-				'text'
+				'text',
 			];
 		}
 		else if (fieldType == 'number') {
@@ -251,7 +251,7 @@ class RuleEditor extends Component {
 		}
 
 		this.setState({
-			actions
+			actions,
 		});
 	}
 
@@ -267,7 +267,7 @@ class RuleEditor extends Component {
 					this.setState({
 						actions: actions.map((action, currentIndex) => {
 							return index == currentIndex ? actionData : action;
-						})
+						}),
 					});
 				}
 			})
@@ -287,7 +287,7 @@ class RuleEditor extends Component {
 						: [],
 					outputs: action.outputs
 						? this.convertAutoFillDataToArray(action, 'outputs')
-						: []
+						: [],
 			  }));
 
 		const conditions = state.conditions.map(condition => {
@@ -320,13 +320,13 @@ class RuleEditor extends Component {
 								pages,
 								condition.operands[0].value,
 								'type'
-							)
+							),
 						};
 					}
 
 					return operand;
 				}),
-				operators
+				operators,
 			};
 		});
 
@@ -342,7 +342,7 @@ class RuleEditor extends Component {
 			...state,
 			actionTypes,
 			actions,
-			conditions
+			conditions,
 		};
 	}
 
@@ -392,11 +392,11 @@ class RuleEditor extends Component {
 			calculatorResultOptions: this._calculatorResultOptionsValueFn(),
 			conditions,
 			conditionsFieldOptions: this._conditionsFieldOptionsValueFn([
-				'paragraph'
+				'paragraph',
 			]),
 			deletedFields: this._getDeletedFields(visitor),
 			pageOptions: pageOptions(pages, maxPage),
-			roles: this._rolesValueFn()
+			roles: this._rolesValueFn(),
 		});
 	}
 
@@ -404,7 +404,7 @@ class RuleEditor extends Component {
 		this.setState({
 			invalidRule:
 				!this._validateConditionsFilling() ||
-				!this._validateActionsFilling()
+				!this._validateActionsFilling(),
 		});
 	}
 
@@ -418,7 +418,7 @@ class RuleEditor extends Component {
 				fields.push({
 					...field,
 					options: field.options ? field.options : [],
-					value: field.fieldName
+					value: field.fieldName,
 				});
 			}
 		});
@@ -438,7 +438,7 @@ class RuleEditor extends Component {
 						inputs: {},
 						label: '',
 						outputs: {},
-						target: ''
+						target: '',
 				  }
 				: action;
 		});
@@ -454,7 +454,7 @@ class RuleEditor extends Component {
 
 		this.setState({
 			conditions,
-			secondOperandSelectedList
+			secondOperandSelectedList,
 		});
 
 		return conditions;
@@ -494,7 +494,7 @@ class RuleEditor extends Component {
 
 		return makeFetch({
 			method: 'GET',
-			url: `${dataProviderInstanceParameterSettingsURL}?ddmDataProviderInstanceId=${id}`
+			url: `${dataProviderInstanceParameterSettingsURL}?ddmDataProviderInstanceId=${id}`,
 		}).catch(error => {
 			throw new Error(error);
 		});
@@ -505,12 +505,12 @@ class RuleEditor extends Component {
 
 		makeFetch({
 			method: 'GET',
-			url: functionsURL
+			url: functionsURL,
 		})
 			.then(responseData => {
 				if (!this.isDisposed()) {
 					this.setState({
-						calculatorFunctions: responseData
+						calculatorFunctions: responseData,
 					});
 				}
 			})
@@ -559,7 +559,7 @@ class RuleEditor extends Component {
 				fields.push({
 					...field,
 					options: field.options ? field.options : [],
-					value: field.fieldName
+					value: field.fieldName,
 				});
 			}
 		});
@@ -625,7 +625,7 @@ class RuleEditor extends Component {
 		return {
 			dataType,
 			repeatable,
-			type
+			type,
 		};
 	}
 
@@ -647,7 +647,7 @@ class RuleEditor extends Component {
 		return this.functionsMetadata[fieldType].map(metadata => {
 			return {
 				...metadata,
-				value: metadata.name
+				value: metadata.name,
 			};
 		});
 	}
@@ -661,7 +661,7 @@ class RuleEditor extends Component {
 			inputs: {},
 			label: '',
 			outputs: {},
-			target: ''
+			target: '',
 		};
 
 		if (actions.length == 0) {
@@ -672,7 +672,7 @@ class RuleEditor extends Component {
 
 		this.setState({
 			actions,
-			invalidRule: true
+			invalidRule: true,
 		});
 	}
 
@@ -702,7 +702,7 @@ class RuleEditor extends Component {
 									calculatorFields: [],
 									label: '',
 									source: conditions[0].operands[0].source,
-									target: ''
+									target: '',
 							  }
 							: action;
 					});
@@ -717,7 +717,7 @@ class RuleEditor extends Component {
 		}
 
 		this.setState({
-			actions: newActions
+			actions: newActions,
 		});
 	}
 
@@ -728,14 +728,14 @@ class RuleEditor extends Component {
 			operands: [
 				{
 					type: '',
-					value: ''
-				}
+					value: '',
+				},
 			],
-			operator: ''
+			operator: '',
 		});
 
 		this.setState({
-			conditions
+			conditions,
 		});
 	}
 
@@ -755,7 +755,7 @@ class RuleEditor extends Component {
 		actions[actionIndex].inputs[editedInput] = value[0];
 
 		this.setState({
-			actions
+			actions,
 		});
 	}
 
@@ -775,7 +775,7 @@ class RuleEditor extends Component {
 		actions[actionIndex].outputs[editedOutput] = value[0];
 
 		this.setState({
-			actions
+			actions,
 		});
 	}
 
@@ -785,7 +785,7 @@ class RuleEditor extends Component {
 
 		this.refs.confirmationModalAction.show();
 		this.setState({
-			activeActionIndex: parseInt(index, 10)
+			activeActionIndex: parseInt(index, 10),
 		});
 	}
 
@@ -795,7 +795,7 @@ class RuleEditor extends Component {
 
 		this.refs.confirmationModalCondition.show();
 		this.setState({
-			activeConditionIndex: parseInt(index, 10)
+			activeConditionIndex: parseInt(index, 10),
 		});
 	}
 
@@ -822,7 +822,7 @@ class RuleEditor extends Component {
 				label: this._getFieldLabel(fieldName),
 				repeatable,
 				type: dataType == 'user' ? 'user' : 'field',
-				value: fieldName
+				value: fieldName,
 			};
 
 			if (conditions.length === 0) {
@@ -868,7 +868,7 @@ class RuleEditor extends Component {
 				}
 
 				return {
-					action
+					action,
 				};
 			});
 		}
@@ -876,7 +876,7 @@ class RuleEditor extends Component {
 		this.setState({
 			actions,
 			conditions,
-			pageOptions: pageOptions(pages, maxPageIndex)
+			pageOptions: pageOptions(pages, maxPageIndex),
 		});
 	}
 
@@ -886,7 +886,7 @@ class RuleEditor extends Component {
 
 		if (value !== this.logicalOperator) {
 			this.setState({
-				logicalOperator: value
+				logicalOperator: value,
 			});
 		}
 	}
@@ -920,7 +920,7 @@ class RuleEditor extends Component {
 				actions,
 				activeActionIndex: -1,
 				activeConditionIndex: -1,
-				conditions
+				conditions,
 			});
 		}
 	}
@@ -946,7 +946,7 @@ class RuleEditor extends Component {
 		}
 
 		this.setState({
-			conditions
+			conditions,
 		});
 	}
 
@@ -959,7 +959,7 @@ class RuleEditor extends Component {
 			actions,
 			conditions,
 			['logical-operator']: this.logicalOperator,
-			ruleEditedIndex
+			ruleEditedIndex,
 		});
 	}
 
@@ -990,7 +990,7 @@ class RuleEditor extends Component {
 		if (!secondOperand) {
 			secondOperand = {
 				dataType: fieldInstance.dataType,
-				type: fieldInstance.type
+				type: fieldInstance.type,
 			};
 		}
 
@@ -1005,11 +1005,11 @@ class RuleEditor extends Component {
 			dataType: fieldInstance.dataType,
 			label: fieldValue,
 			type: userType ? userType : fieldInstance.type,
-			value: fieldValue
+			value: fieldValue,
 		};
 
 		this.setState({
-			conditions
+			conditions,
 		});
 	}
 
@@ -1050,12 +1050,12 @@ class RuleEditor extends Component {
 		else if (value[0] !== '') {
 			conditions[index].operands.push({
 				type: secondOperandType,
-				value: ''
+				value: '',
 			});
 		}
 
 		this.setState({
-			conditions
+			conditions,
 		});
 	}
 
@@ -1072,15 +1072,15 @@ class RuleEditor extends Component {
 				if (index == conditionIndex) {
 					operands[1] = {
 						...operands[1],
-						value: secondOperandValue
+						value: secondOperandValue,
 					};
 				}
 
 				return {
 					...condition,
-					operands
+					operands,
 				};
-			})
+			}),
 		});
 	}
 
@@ -1157,7 +1157,7 @@ class RuleEditor extends Component {
 			actions: newActions,
 			conditions: rule.conditions,
 			logicalOperator: rule['logical-operator'].toLowerCase(),
-			rule: newRule
+			rule: newRule,
 		});
 	}
 
@@ -1173,13 +1173,13 @@ class RuleEditor extends Component {
 				label,
 				outputs,
 				source,
-				target
+				target,
 			} = action;
 
 			let newAction = {
 				action: actionType,
 				label,
-				target
+				target,
 			};
 
 			if (actionType == 'auto-fill') {
@@ -1187,20 +1187,20 @@ class RuleEditor extends Component {
 					...newAction,
 					ddmDataProviderInstanceUUID,
 					inputs,
-					outputs
+					outputs,
 				};
 			}
 			else if (actionType == 'calculate') {
 				newAction = {
 					...newAction,
-					expression
+					expression,
 				};
 			}
 			else if (actionType == 'jump-to-page') {
 				newAction = {
 					...newAction,
 					source: `${source}`,
-					target: `${parseInt(target, 10) - 1}`
+					target: `${parseInt(target, 10) - 1}`,
 				};
 			}
 
@@ -1231,7 +1231,7 @@ class RuleEditor extends Component {
 		return roles.map(role => {
 			return {
 				...role,
-				value: role.label
+				value: role.label,
 			};
 		});
 	}
@@ -1246,7 +1246,7 @@ class RuleEditor extends Component {
 				inputs: {},
 				label: '',
 				outputs: {},
-				target: ''
+				target: '',
 			});
 		}
 
@@ -1258,7 +1258,7 @@ class RuleEditor extends Component {
 
 		if (rule) {
 			this.setState({
-				loadingDataProviderOptions: true
+				loadingDataProviderOptions: true,
 			});
 
 			Promise.all(
@@ -1293,7 +1293,7 @@ class RuleEditor extends Component {
 				.then(actions => {
 					this.setState({
 						actions,
-						loadingDataProviderOptions: false
+						loadingDataProviderOptions: false,
 					});
 				})
 				.catch(error => {
@@ -1308,10 +1308,10 @@ class RuleEditor extends Component {
 				operands: [
 					{
 						type: '',
-						value: ''
-					}
+						value: '',
+					},
 				],
-				operator: ''
+				operator: '',
 			});
 		}
 
@@ -1336,7 +1336,7 @@ class RuleEditor extends Component {
 				}
 
 				return action;
-			})
+			}),
 		});
 	}
 
@@ -1369,7 +1369,7 @@ class RuleEditor extends Component {
 			else if (action.action == 'auto-fill') {
 				action = {
 					...action,
-					calculatorFields: []
+					calculatorFields: [],
 				};
 			}
 		});
@@ -1388,8 +1388,8 @@ class RuleEditor extends Component {
 						{
 							...option,
 							title: option.fieldName,
-							type: 'item'
-						}
+							type: 'item',
+						},
 				  ];
 		}, []);
 	}
@@ -1512,35 +1512,35 @@ RuleEditor.STATE = {
 	actionTypes: Config.arrayOf(
 		Config.shapeOf({
 			label: Config.string(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	)
 		.internal()
 		.value([
 			{
 				label: Liferay.Language.get('show'),
-				value: 'show'
+				value: 'show',
 			},
 			{
 				label: Liferay.Language.get('enable'),
-				value: 'enable'
+				value: 'enable',
 			},
 			{
 				label: Liferay.Language.get('require'),
-				value: 'require'
+				value: 'require',
 			},
 			{
 				label: Liferay.Language.get('autofill'),
-				value: 'auto-fill'
+				value: 'auto-fill',
 			},
 			{
 				label: Liferay.Language.get('calculate'),
-				value: 'calculate'
+				value: 'calculate',
 			},
 			{
 				label: Liferay.Language.get('jump-to-page'),
-				value: 'jump-to-page'
-			}
+				value: 'jump-to-page',
+			},
 		]),
 
 	actions: Config.arrayOf(
@@ -1552,7 +1552,7 @@ RuleEditor.STATE = {
 			inputs: Config.object(),
 			label: Config.string(),
 			outputs: Config.object(),
-			target: Config.string()
+			target: Config.string(),
 		})
 	)
 		.internal()
@@ -1588,7 +1588,7 @@ RuleEditor.STATE = {
 		Config.shapeOf({
 			label: Config.string(),
 			tooltip: Config.string(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	)
 		.internal()
@@ -1613,10 +1613,10 @@ RuleEditor.STATE = {
 					label: Config.string(),
 					repeatable: Config.bool(),
 					type: Config.string(),
-					value: Config.string()
+					value: Config.string(),
 				})
 			),
-			operator: Config.string()
+			operator: Config.string(),
 		})
 	)
 		.internal()
@@ -1631,7 +1631,7 @@ RuleEditor.STATE = {
 		Config.shapeOf({
 			id: Config.string(),
 			name: Config.string(),
-			uuid: Config.string()
+			uuid: Config.string(),
 		})
 	).internal(),
 
@@ -1646,8 +1646,8 @@ RuleEditor.STATE = {
 			dataType: 'user',
 			label: Liferay.Language.get('user'),
 			name: 'user',
-			value: 'user'
-		}
+			value: 'user',
+		},
 	]),
 
 	functionsMetadata: Config.shapeOf({
@@ -1656,7 +1656,7 @@ RuleEditor.STATE = {
 				label: Config.string(),
 				name: Config.string(),
 				parameterTypes: Config.array(),
-				returnType: Config.string()
+				returnType: Config.string(),
 			})
 		),
 		text: Config.arrayOf(
@@ -1664,7 +1664,7 @@ RuleEditor.STATE = {
 				label: Config.string(),
 				name: Config.string(),
 				parameterTypes: Config.array(),
-				returnType: Config.string()
+				returnType: Config.string(),
 			})
 		),
 		user: Config.arrayOf(
@@ -1672,9 +1672,9 @@ RuleEditor.STATE = {
 				label: Config.string(),
 				name: Config.string(),
 				parameterTypes: Config.array(),
-				returnType: Config.string()
+				returnType: Config.string(),
 			})
-		)
+		),
 	}),
 
 	functionsURL: Config.string(),
@@ -1695,11 +1695,11 @@ RuleEditor.STATE = {
 				Config.shapeOf({
 					label: Config.string(),
 					name: Config.string(),
-					value: Config.string()
+					value: Config.string(),
 				})
 			),
 			type: Config.string(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	)
 		.internal()
@@ -1712,7 +1712,7 @@ RuleEditor.STATE = {
 	roles: Config.arrayOf(
 		Config.shapeOf({
 			id: Config.string(),
-			name: Config.string()
+			name: Config.string(),
 		})
 	).valueFn('_rolesValueFn'),
 
@@ -1735,7 +1735,7 @@ RuleEditor.STATE = {
 				inputs: Config.object(),
 				label: Config.string(),
 				outputs: Config.object(),
-				target: Config.string()
+				target: Config.string(),
 			})
 		),
 		conditions: Config.arrayOf(
@@ -1745,13 +1745,13 @@ RuleEditor.STATE = {
 						label: Config.string(),
 						repeatable: Config.bool(),
 						type: Config.string(),
-						value: Config.string()
+						value: Config.string(),
 					})
 				),
-				operator: Config.string()
+				operator: Config.string(),
 			})
 		),
-		['logical-operator']: Config.string()
+		['logical-operator']: Config.string(),
 	}),
 
 	ruleEditedIndex: Config.number(),
@@ -1759,16 +1759,16 @@ RuleEditor.STATE = {
 	secondOperandList: Config.arrayOf(
 		Config.shapeOf({
 			name: Config.string(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	).value([
 		{
-			value: Liferay.Language.get('value')
+			value: Liferay.Language.get('value'),
 		},
 		{
 			name: 'field',
-			value: Liferay.Language.get('other-field')
-		}
+			value: Liferay.Language.get('other-field'),
+		},
 	]),
 
 	/**
@@ -1778,7 +1778,7 @@ RuleEditor.STATE = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
 };
 
 Soy.register(RuleEditor, templates);

@@ -20,16 +20,16 @@ AUI.add(
 		var SidebarPanel = A.Component.create({
 			ATTRS: {
 				resourceUrl: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				searchContainerId: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				targetNode: {
-					setter: A.one
-				}
+					setter: A.one,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -56,7 +56,7 @@ AUI.add(
 							setTimeout(() => {
 								instance._getSidebarContent();
 							}, 0);
-						})
+						}),
 					];
 				},
 
@@ -80,7 +80,7 @@ AUI.add(
 						body: new FormData(
 							instance._searchContainer.getForm().getDOM()
 						),
-						method: 'POST'
+						method: 'POST',
 					})
 						.then(response => response.text())
 						.then(response =>
@@ -123,8 +123,8 @@ AUI.add(
 						instance._onSearchContainerRegistered,
 						instance
 					);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.SidebarPanel = SidebarPanel;
@@ -135,7 +135,7 @@ AUI.add(
 			'aui-base',
 			'aui-debounce',
 			'aui-parse-content',
-			'liferay-portlet-base'
-		]
+			'liferay-portlet-base',
+		],
 	}
 );

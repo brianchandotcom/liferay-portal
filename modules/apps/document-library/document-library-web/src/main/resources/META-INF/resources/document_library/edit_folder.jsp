@@ -353,14 +353,14 @@ renderResponse.setTitle(headerTitle);
 					constrain: true,
 					destroyOnHide: true,
 					modal: true,
-					width: 1024
+					width: 1024,
 				},
 				eventName: '<portlet:namespace />selectFileEntryType',
 				id: '<portlet:namespace />fileEntryTypeSelector',
 				selectedData: searchContainerData,
 				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
 				uri:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" /><portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" /></portlet:renderURL>'
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" /><portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" /></portlet:renderURL>',
 			},
 			function(event) {
 				<portlet:namespace />selectFileEntryType(
@@ -463,7 +463,7 @@ renderResponse.setTitle(headerTitle);
 
 	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeInherit', '', [
 		'<portlet:namespace />restrictionTypeDefinedDiv',
-		'<portlet:namespace />restrictionTypeWorkflowDiv'
+		'<portlet:namespace />restrictionTypeWorkflowDiv',
 	]);
 	Liferay.Util.toggleRadio(
 		'<portlet:namespace />restrictionTypeDefined',

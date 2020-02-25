@@ -24,7 +24,7 @@ describe('The filter component should', () => {
 		items = [
 			{active: false, key: 'overdue', name: 'Overdue'},
 			{active: false, key: 'onTime', name: 'OnTime'},
-			{active: false, key: 'untracked', name: 'Untracked'}
+			{active: false, key: 'untracked', name: 'Untracked'},
 		];
 	});
 
@@ -92,7 +92,7 @@ describe('The filter component should', () => {
 			mappedItems.push({
 				active: false,
 				key: `${i}`,
-				name: `${i}test${i}`
+				name: `${i}test${i}`,
 			});
 		}
 

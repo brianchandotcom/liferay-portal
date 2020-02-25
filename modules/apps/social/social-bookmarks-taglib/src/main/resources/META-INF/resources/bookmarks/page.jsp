@@ -110,7 +110,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 					'toolbar=0',
 					'top=' + (window.innerHeight / 2 - SHARE_WINDOW_HEIGHT / 2),
 					'status=0',
-					'width=' + SHARE_WINDOW_WIDTH
+					'width=' + SHARE_WINDOW_WIDTH,
 				];
 
 				event.preventDefault();
@@ -122,7 +122,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 					className: className,
 					classPK: classPK,
 					type: type,
-					url: url
+					url: url,
 				});
 
 				return false;

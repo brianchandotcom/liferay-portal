@@ -39,7 +39,7 @@ class DataLayoutBuilder extends React.Component {
 			fieldTypes,
 			localizable,
 			portletNamespace,
-			singlePage
+			singlePage,
 		} = this.props;
 
 		const context = this._setContext(this.props.context);
@@ -51,13 +51,13 @@ class DataLayoutBuilder extends React.Component {
 						this.props.onLoad(this);
 
 						Liferay.component(dataLayoutBuilderId, this);
-					}
+					},
 				},
 				formBuilderProps: {
 					fieldTypes,
 					paginationMode: 'wizard',
 					portletNamespace,
-					ref: 'builder'
+					ref: 'builder',
 				},
 				layoutProviderProps: {
 					...this.props,
@@ -66,9 +66,9 @@ class DataLayoutBuilder extends React.Component {
 					editingLanguageId: themeDisplay.getDefaultLanguageId(),
 					initialPages: context.pages,
 					initialPaginationMode: context.paginationMode,
-					ref: 'layoutProvider'
+					ref: 'layoutProvider',
 				},
-				singlePage
+				singlePage,
 			},
 			this.containerRef.current
 		);
@@ -134,7 +134,7 @@ class DataLayoutBuilder extends React.Component {
 
 	getDefinitionField({settingsContext}) {
 		const fieldConfig = {
-			customProperties: {}
+			customProperties: {},
 		};
 		const settingsContextVisitor = new PagesVisitor(settingsContext.pages);
 
@@ -174,11 +174,11 @@ class DataLayoutBuilder extends React.Component {
 
 	getDefinitionAndLayout(pages) {
 		const {
-			defaultLanguageId = themeDisplay.getDefaultLanguageId()
+			defaultLanguageId = themeDisplay.getDefaultLanguageId(),
 		} = this.props;
 		const availableLanguageIds = this.state.availableLanguageIds ||
 			this.props.availableLanguageIds || [
-				themeDisplay.getDefaultLanguageId()
+				themeDisplay.getDefaultLanguageId(),
 			];
 		const fieldDefinitions = [];
 		const pagesVisitor = new PagesVisitor(pages);
@@ -193,7 +193,7 @@ class DataLayoutBuilder extends React.Component {
 			definition: {
 				availableLanguageIds,
 				dataDefinitionFields: fieldDefinitions,
-				defaultLanguageId
+				defaultLanguageId,
 			},
 			layout: {
 				dataLayoutPages: newPages.map(page => {
@@ -201,23 +201,23 @@ class DataLayoutBuilder extends React.Component {
 						const columns = row.columns.map(column => {
 							return {
 								columnSize: column.size,
-								fieldNames: column.fields
+								fieldNames: column.fields,
 							};
 						});
 
 						return {
-							dataLayoutColumns: columns
+							dataLayoutColumns: columns,
 						};
 					});
 
 					return {
 						dataLayoutRows: rows,
 						description: page.localizedDescription,
-						title: page.localizedTitle
+						title: page.localizedTitle,
 					};
 				}),
-				paginationMode: 'wizard'
-			}
+				paginationMode: 'wizard',
+			},
 		};
 	}
 
@@ -264,9 +264,9 @@ class DataLayoutBuilder extends React.Component {
 				return {
 					...field,
 					localizedValue,
-					value
+					value,
 				};
-			})
+			}),
 		};
 	}
 
@@ -286,7 +286,7 @@ class DataLayoutBuilder extends React.Component {
 		const layoutProvider = this.getLayoutProvider();
 
 		return {
-			...layoutProvider.state
+			...layoutProvider.state,
 		};
 	}
 
@@ -301,12 +301,12 @@ class DataLayoutBuilder extends React.Component {
 			contentType,
 			dataDefinitionId,
 			dataLayoutId,
-			groupId
+			groupId,
 		} = this.props;
 		const {pages} = this.getStore();
 		const {
 			definition: dataDefinition,
-			layout: dataLayout
+			layout: dataLayout,
 		} = this.getDefinitionAndLayout(pages);
 
 		return saveDefinitionAndLayout({
@@ -316,7 +316,7 @@ class DataLayoutBuilder extends React.Component {
 			dataLayout,
 			dataLayoutId,
 			groupId,
-			params
+			params,
 		});
 	}
 
@@ -325,7 +325,7 @@ class DataLayoutBuilder extends React.Component {
 
 		return {
 			definition: JSON.stringify(definition),
-			layout: JSON.stringify(layout)
+			layout: JSON.stringify(layout),
 		};
 	}
 
@@ -342,7 +342,7 @@ class DataLayoutBuilder extends React.Component {
 			'repeatable',
 			'required',
 			'showLabel',
-			'tip'
+			'tip',
 		];
 
 		return fields.indexOf(name) === -1;
@@ -352,7 +352,7 @@ class DataLayoutBuilder extends React.Component {
 		const map = {
 			fieldName: 'name',
 			predefinedValue: 'defaultValue',
-			type: 'fieldType'
+			type: 'fieldType',
 		};
 
 		return map[propertyName] || propertyName;
@@ -373,17 +373,17 @@ class DataLayoutBuilder extends React.Component {
 		let {availableLanguageIds = []} = this.props;
 
 		availableLanguageIds = [
-			...new Set([...availableLanguageIds, selectedLanguageId])
+			...new Set([...availableLanguageIds, selectedLanguageId]),
 		];
 
 		this.setState({
-			availableLanguageIds
+			availableLanguageIds,
 		});
 
 		this.formBuilderWithLayoutProvider.props.layoutProviderProps = {
 			...this.formBuilderWithLayoutProvider.props.layoutProviderProps,
 			availableLanguageIds,
-			editingLanguageId: selectedLanguageId
+			editingLanguageId: selectedLanguageId,
 		};
 	}
 
@@ -391,7 +391,7 @@ class DataLayoutBuilder extends React.Component {
 		const {defaultLanguageId} = this.props;
 
 		const emptyLocalizableValue = {
-			[defaultLanguageId]: ''
+			[defaultLanguageId]: '',
 		};
 
 		const pages = context.pages || [];
@@ -409,16 +409,16 @@ class DataLayoutBuilder extends React.Component {
 								columns: [
 									{
 										fields: [],
-										size: 12
-									}
-								]
-							}
+										size: 12,
+									},
+								],
+							},
 						],
-						title: ''
-					}
+						title: '',
+					},
 				],
 				paginationMode: 'wizard',
-				rules: context.rules || []
+				rules: context.rules || [],
 			};
 		}
 
@@ -429,20 +429,20 @@ class DataLayoutBuilder extends React.Component {
 					description,
 					localizedDescription,
 					localizedTitle,
-					title
+					title,
 				} = page;
 
 				if (!core.isString(description)) {
 					description = description[defaultLanguageId];
 					localizedDescription = {
-						[defaultLanguageId]: description
+						[defaultLanguageId]: description,
 					};
 				}
 
 				if (!core.isString(title)) {
 					title = title[defaultLanguageId];
 					localizedTitle = {
-						[defaultLanguageId]: title
+						[defaultLanguageId]: title,
 					};
 				}
 
@@ -451,10 +451,10 @@ class DataLayoutBuilder extends React.Component {
 					description,
 					localizedDescription,
 					localizedTitle,
-					title
+					title,
 				};
 			}),
-			rules: context.rules || []
+			rules: context.rules || [],
 		};
 	}
 }

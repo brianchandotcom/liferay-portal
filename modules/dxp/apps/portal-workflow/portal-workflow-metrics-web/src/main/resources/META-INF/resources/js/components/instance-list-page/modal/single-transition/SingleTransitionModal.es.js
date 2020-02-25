@@ -18,7 +18,7 @@ import React, {
 	useContext,
 	useEffect,
 	useMemo,
-	useState
+	useState,
 } from 'react';
 
 import {useToaster} from '../../../../shared/components/toaster/hooks/useToaster.es';
@@ -37,7 +37,7 @@ const SingleTransitionModal = () => {
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params: {completed: false, page: 1, pageSize: 1},
-		url: `/workflow-instances/${selectedItemId}/workflow-tasks`
+		url: `/workflow-instances/${selectedItemId}/workflow-tasks`,
 	});
 
 	const {observer, onClose} = useModal({
@@ -46,9 +46,9 @@ const SingleTransitionModal = () => {
 				selectedItemId: undefined,
 				title: '',
 				transitionName: '',
-				visible: false
+				visible: false,
 			});
-		}
+		},
 	});
 
 	useEffect(() => {
@@ -59,13 +59,13 @@ const SingleTransitionModal = () => {
 	}, [selectedItemId]);
 
 	const taskId = useMemo(() => (data && data.items ? data.items[0].id : {}), [
-		data
+		data,
 	]);
 
 	const {postData} = usePost({
 		admin: true,
 		body: {comment, transitionName, workflowTaskId: taskId},
-		url: `/workflow-tasks/${taskId}/change-transition`
+		url: `/workflow-tasks/${taskId}/change-transition`,
 	});
 
 	const handleDone = useCallback(() => {

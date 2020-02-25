@@ -50,32 +50,32 @@ AUI.add(
 		var ListView = A.Component.create({
 			ATTRS: {
 				cssClass: {
-					value: 'lfr-list-view'
+					value: 'lfr-list-view',
 				},
 				data: {
 					setter: '_setData',
 					validator: '_validateData',
-					value: null
+					value: null,
 				},
 
 				direction: {
 					validator: '_validateDirection',
-					value: STR_LEFT
+					value: STR_LEFT,
 				},
 
 				item: {
 					validator: Lang.isObject,
-					value: null
+					value: null,
 				},
 
 				itemChosenEvent: {
 					validator: isString,
-					value: 'click'
+					value: 'click',
 				},
 
 				itemSelector: {
 					validator: isString,
-					value: null
+					value: null,
 				},
 
 				transitionConfig: {
@@ -84,14 +84,14 @@ AUI.add(
 						duration: 0.3,
 						easing: 'ease-out',
 						left: 0,
-						top: 0
-					}
+						top: 0,
+					},
 				},
 
 				useTransition: {
 					validator: Lang.isBoolean,
-					value: true
-				}
+					value: true,
+				},
 			},
 
 			NAME,
@@ -162,7 +162,7 @@ AUI.add(
 					event.preventDefault();
 
 					instance.set('item', event.currentTarget, {
-						src: UI_SRC
+						src: UI_SRC,
 					});
 				},
 
@@ -187,7 +187,7 @@ AUI.add(
 
 					var styles = {
 						left: 0,
-						top: 0
+						top: 0,
 					};
 
 					if (direction == STR_LEFT) {
@@ -237,7 +237,7 @@ AUI.add(
 					instance.after('dataChange', instance._afterDataChange);
 
 					instance.publish('transitionComplete', {
-						defaultFn: instance._defTransitionCompletedFn
+						defaultFn: instance._defTransitionCompletedFn,
 					});
 				},
 
@@ -273,14 +273,14 @@ AUI.add(
 					boundingBox.append(dataContainer);
 
 					instance._dataContainer = dataContainer;
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.ListView = ListView;
 	},
 	'',
 	{
-		requires: ['aui-base', 'transition']
+		requires: ['aui-base', 'transition'],
 	}
 );

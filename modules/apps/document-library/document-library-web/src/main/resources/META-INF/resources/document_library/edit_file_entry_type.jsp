@@ -185,14 +185,14 @@ function <portlet:namespace />openDDMStructureSelector() {
 		{
 			dialog: {
 				constrain: true,
-				modal: true
+				modal: true,
 			},
 			eventName: '<portlet:namespace />selectDDMStructure',
 			id: '<portlet:namespace />selectDDMStructure',
 			title:
 				'<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
 			uri:
-				'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" /></portlet:renderURL>'
+				'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" /></portlet:renderURL>',
 		},
 		function(event) {
 			var searchContainer = Liferay.SearchContainer.get(
@@ -236,21 +236,21 @@ function <portlet:namespace />saveStructure() {
 					.save({
 						dataDefinition: {
 							description: {
-								value: description
+								value: description,
 							},
 							name: {
-								value: name
+								value: name,
 							},
-							dataDefinitionKey: '<%= ddmStructureKey %>'
+							dataDefinitionKey: '<%= ddmStructureKey %>',
 						},
 						dataLayout: {
 							description: {
-								value: description
+								value: description,
 							},
 							name: {
-								value: name
-							}
-						}
+								value: name,
+							},
+						},
 					})
 					.then(function(dataLayout) {
 						document.<portlet:namespace />fm[

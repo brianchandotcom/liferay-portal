@@ -28,5 +28,5 @@ const STATUS_TO_TYPE = {
 	[STATUS_PAUSED]: 'warning',
 	[STATUS_RUNNING]: 'primary',
 	[STATUS_SCHEDULED]: 'warning',
-	[STATUS_TERMINATED]: 'danger'
+	[STATUS_TERMINATED]: 'danger',
 };

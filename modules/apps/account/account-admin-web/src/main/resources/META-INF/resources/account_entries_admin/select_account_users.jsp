@@ -82,8 +82,8 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 		if (!selectedItems.isEmpty()) {
 			result = {
 				data: {
-					value: selectedItems.get('value').join(',')
-				}
+					value: selectedItems.get('value').join(','),
+				},
 			};
 		}
 

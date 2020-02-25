@@ -99,7 +99,7 @@ Tooltip.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	text: Config.string().required()
+	text: Config.string().required(),
 };
 
 export default Tooltip;

@@ -23,21 +23,21 @@ describe('The workload by assignee card should', () => {
 			name: 'User 1',
 			onTimeTaskCount: 10,
 			overdueTaskCount: 5,
-			taskCount: 15
+			taskCount: 15,
 		},
 		{
 			name: 'User 2',
 			onTimeTaskCount: 3,
 			overdueTaskCount: 7,
-			taskCount: 10
-		}
+			taskCount: 10,
+		},
 	];
 
 	afterEach(cleanup);
 
 	beforeEach(() => {
 		const clientMock = {
-			get: jest.fn().mockResolvedValue({data: {items, totalCount: 2}})
+			get: jest.fn().mockResolvedValue({data: {items, totalCount: 2}}),
 		};
 
 		const renderResult = render(

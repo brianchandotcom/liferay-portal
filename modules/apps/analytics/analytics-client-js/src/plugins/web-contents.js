@@ -26,13 +26,13 @@ function getWebContentPayload(webContent) {
 	const {dataset} = webContent;
 
 	let payload = {
-		articleId: dataset.analyticsAssetId
+		articleId: dataset.analyticsAssetId,
 	};
 
 	if (dataset.analyticsAssetTitle) {
 		payload = {
 			...payload,
-			title: dataset.analyticsAssetTitle
+			title: dataset.analyticsAssetTitle,
 		};
 	}
 
@@ -59,7 +59,7 @@ function trackWebContentClicked(analytics) {
 		eventType: 'webContentClicked',
 		getPayload: getWebContentPayload,
 		isTrackable: isTrackableWebContent,
-		type: 'web-content'
+		type: 'web-content',
 	});
 }
 
@@ -83,7 +83,7 @@ function trackWebContentViewed(analytics) {
 
 				payload = {
 					...payload,
-					numberOfWords
+					numberOfWords,
 				};
 
 				analytics.send('webContentViewed', applicationId, payload);

@@ -20,14 +20,14 @@ import React, {
 	useEffect,
 	useLayoutEffect,
 	useRef,
-	useState
+	useState,
 } from 'react';
 
 import AppContext from '../AppContext.es';
 import {
 	EDIT_CUSTOM_OBJECT_FIELD,
 	EVALUATION_ERROR,
-	dropLayoutBuilderField
+	dropLayoutBuilderField,
 } from '../actions.es';
 import Button from '../components/button/Button.es';
 import FieldTypeList from '../components/field-types/FieldTypeList.es';
@@ -35,7 +35,7 @@ import Sidebar from '../components/sidebar/Sidebar.es';
 import {useSidebarContent} from '../hooks/index.es';
 import isClickOutside from '../utils/clickOutside.es';
 import renderSettingsForm, {
-	getFilteredSettingsContext
+	getFilteredSettingsContext,
 } from '../utils/renderSettingsForm.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 
@@ -54,8 +54,8 @@ const DefaultSidebarBody = ({keywords}) => {
 				indexes: {
 					columnIndex: 0,
 					pageIndex: activePage,
-					rowIndex: pages[activePage].rows.length
-				}
+					rowIndex: pages[activePage].rows.length,
+				},
 			})
 		);
 	};
@@ -88,7 +88,7 @@ const SettingsSidebarBody = () => {
 	const [state, dispatch] = useContext(AppContext);
 	const {focusedCustomObjectField, focusedField} = state;
 	const {
-		settingsContext: customObjectFieldSettingsContext
+		settingsContext: customObjectFieldSettingsContext,
 	} = focusedCustomObjectField;
 	const {settingsContext: fieldSettingsContext} = focusedField;
 	const formRef = useRef();
@@ -117,7 +117,7 @@ const SettingsSidebarBody = () => {
 				renderSettingsForm(
 					{
 						dispatchEvent,
-						settingsContext: filteredSettingsContext
+						settingsContext: filteredSettingsContext,
 					},
 					formRef.current
 				)
@@ -130,7 +130,7 @@ const SettingsSidebarBody = () => {
 			if (form.activePage > pages.length - 1) {
 				newState = {
 					...newState,
-					activePage: 0
+					activePage: 0,
 				};
 			}
 
@@ -164,7 +164,7 @@ const SettingsSidebarBody = () => {
 		form,
 		formRef,
 		hasFocusedCustomObjectField,
-		settingsContext
+		settingsContext,
 	]);
 
 	useEffect(() => {

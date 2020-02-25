@@ -160,14 +160,14 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 				destroyOnHide: true,
 				height: 430,
 				resizable: false,
-				width: 896
+				width: 896,
 			},
 			dialogIframe: {
-				bodyCssClass: 'task-dialog'
+				bodyCssClass: 'task-dialog',
 			},
 			id: '<portlet:namespace />assignToDialog',
 			title: '<liferay-ui:message key="assign-to-..." />',
-			uri: uri
+			uri: uri,
 		});
 	}
 
@@ -177,14 +177,14 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 				destroyOnHide: true,
 				height: 340,
 				resizable: false,
-				width: 896
+				width: 896,
 			},
 			dialogIframe: {
-				bodyCssClass: 'task-dialog'
+				bodyCssClass: 'task-dialog',
 			},
 			id: '<portlet:namespace />assignToDialog',
 			title: '<liferay-ui:message key="assign-to-me" />',
-			uri: uri
+			uri: uri,
 		});
 	}
 
@@ -194,14 +194,14 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 				destroyOnHide: true,
 				height: 430,
 				resizable: false,
-				width: 896
+				width: 896,
 			},
 			dialogIframe: {
-				bodyCssClass: 'task-dialog'
+				bodyCssClass: 'task-dialog',
 			},
 			id: '<portlet:namespace />updateDialog',
 			title: '<liferay-ui:message key="update-due-date" />',
-			uri: uri
+			uri: uri,
 		});
 	}
 

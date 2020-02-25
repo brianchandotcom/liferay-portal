@@ -74,7 +74,7 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 				ckEditorInstances--;
 
 				cleanupCkEditorResources();
-			}
+			},
 		};
 
 		var destroyGlobalCkEditor = function() {

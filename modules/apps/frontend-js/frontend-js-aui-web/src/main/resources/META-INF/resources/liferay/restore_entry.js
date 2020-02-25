@@ -31,16 +31,16 @@ AUI.add(
 		var RestoreEntry = A.Component.create({
 			ATTRS: {
 				checkEntryURL: {
-					validator: isString
+					validator: isString,
 				},
 
 				duplicateEntryURL: {
-					validator: isString
+					validator: isString,
 				},
 
 				namespace: {
-					validator: isString
-				}
+					validator: isString,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -67,7 +67,7 @@ AUI.add(
 							duplicateEntryId: response.duplicateEntryId,
 							oldName: response.oldName,
 							overridable: response.overridable,
-							trashEntryId: response.trashEntryId
+							trashEntryId: response.trashEntryId,
 						});
 
 						instance._showPopup(
@@ -127,12 +127,12 @@ AUI.add(
 					var uri = event.uri;
 
 					var data = {
-						trashEntryId: event.trashEntryId
+						trashEntryId: event.trashEntryId,
 					};
 
 					Liferay.Util.fetch(instance.get(STR_CHECK_ENTRY_URL), {
 						body: Liferay.Util.objectToFormData(instance.ns(data)),
-						method: 'POST'
+						method: 'POST',
 					})
 						.then(response => response.json())
 						.then(response => {
@@ -151,9 +151,9 @@ AUI.add(
 					if (!popup) {
 						popup = Liferay.Util.Window.getWindow({
 							dialog: {
-								cssClass: 'trash-restore-popup'
+								cssClass: 'trash-restore-popup',
 							},
-							title: Liferay.Language.get('warning')
+							title: Liferay.Language.get('warning'),
 						});
 
 						popup.plug(A.Plugin.IO, {
@@ -161,9 +161,9 @@ AUI.add(
 								success: A.bind(
 									'_initializeRestorePopup',
 									instance
-								)
+								),
 							},
-							autoLoad: false
+							autoLoad: false,
 						});
 
 						instance._popup = popup;
@@ -225,14 +225,14 @@ AUI.add(
 					else {
 						var data = {
 							newName: newName.val(),
-							trashEntryId: trashEntryId.val()
+							trashEntryId: trashEntryId.val(),
 						};
 
 						Liferay.Util.fetch(instance.get(STR_CHECK_ENTRY_URL), {
 							body: Liferay.Util.objectToFormData(
 								instance.ns(data)
 							),
-							method: 'POST'
+							method: 'POST',
 						})
 							.then(response => response.json())
 							.then(response => {
@@ -280,12 +280,12 @@ AUI.add(
 							instance._eventCheckEntry,
 							instance._checkEntry,
 							instance
-						)
+						),
 					];
 
 					instance._eventHandles = eventHandles;
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.RestoreEntry = RestoreEntry;
@@ -295,7 +295,7 @@ AUI.add(
 		requires: [
 			'aui-io-plugin-deprecated',
 			'liferay-portlet-base',
-			'liferay-util-window'
-		]
+			'liferay-util-window',
+		],
 	}
 );

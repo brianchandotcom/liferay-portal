@@ -128,15 +128,15 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 				selectDesc: 'nameCurrentValue',
 				selectId: 'countryId',
 				selectSort: '<%= true %>',
-				selectVal: '<%= countryId %>'
+				selectVal: '<%= countryId %>',
 			},
 			{
 				select: '<portlet:namespace />addressRegionId',
 				selectData: Liferay.Address.getRegions,
 				selectDesc: 'name',
 				selectId: 'regionId',
-				selectVal: '<%= regionId %>'
-			}
+				selectVal: '<%= regionId %>',
+			},
 		]);
 	</aui:script>
 </aui:form>
@@ -150,7 +150,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 		Liferay.Service(
 			'/country/get-country',
 			{
-				countryId: countryId
+				countryId: countryId,
 			},
 			function(response, err) {
 				if (err) {

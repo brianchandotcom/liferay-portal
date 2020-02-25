@@ -27,7 +27,7 @@ AUI.add(
 
 				maximumDate: {},
 
-				minimumDate: {}
+				minimumDate: {},
 			},
 
 			EXTENDS: A.Base,
@@ -98,14 +98,14 @@ AUI.add(
 					var instance = this;
 
 					AArray.invoke(instance.eventHandlers, 'detach');
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.DatePickerSanitizer = DatePickerSanitizer;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-datatype']
+		requires: ['aui-base', 'aui-datatype'],
 	}
 );

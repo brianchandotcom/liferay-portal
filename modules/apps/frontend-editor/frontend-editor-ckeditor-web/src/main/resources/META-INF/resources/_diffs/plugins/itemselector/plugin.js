@@ -80,7 +80,7 @@
 
 			return instance._audioTPL.output({
 				oggUrl: audioOggUrl,
-				url: audioUrl
+				url: audioUrl,
 			});
 		},
 
@@ -99,7 +99,7 @@
 								value,
 								editor,
 								type
-							)
+							),
 						},
 						editor,
 						type
@@ -148,7 +148,7 @@
 				ogvUrl: videoOgvUrl,
 				poster,
 				url: videoUrl,
-				width: videoWidth
+				width: videoWidth,
 			});
 		},
 
@@ -205,7 +205,7 @@
 							eventName,
 							singleSelect: true,
 							url,
-							zIndex: CKEDITOR.getNextZIndex()
+							zIndex: CKEDITOR.getNextZIndex(),
 						});
 
 						instance._itemSelectorDialog = itemSelectorDialog;
@@ -311,8 +311,8 @@
 										nativeEvent: {},
 										selectionData: {
 											element,
-											region: element.getClientRect()
-										}
+											region: element.getClientRect(),
+										},
 									});
 								}
 								else {
@@ -389,7 +389,7 @@
 							itemSelectorDialog.open();
 						}
 					);
-				}
+				},
 			});
 
 			editor.addCommand('imageselector', {
@@ -413,7 +413,7 @@
 							itemSelectorDialog.open();
 						}
 					);
-				}
+				},
 			});
 
 			editor.addCommand('linkselector', {
@@ -437,7 +437,7 @@
 							itemSelectorDialog.open();
 						}
 					);
-				}
+				},
 			});
 
 			editor.addCommand('videoselector', {
@@ -461,26 +461,26 @@
 							itemSelectorDialog.open();
 						}
 					);
-				}
+				},
 			});
 
 			if (editor.ui.addButton) {
 				editor.ui.addButton('ImageSelector', {
 					command: 'imageselector',
 					icon: instance.path + 'assets/image.png',
-					label: editor.lang.common.image
+					label: editor.lang.common.image,
 				});
 
 				editor.ui.addButton('AudioSelector', {
 					command: 'audioselector',
 					icon: instance.path + 'assets/audio.png',
-					label: Liferay.Language.get('audio')
+					label: Liferay.Language.get('audio'),
 				});
 
 				editor.ui.addButton('VideoSelector', {
 					command: 'videoselector',
 					icon: instance.path + 'assets/video.png',
-					label: Liferay.Language.get('video')
+					label: Liferay.Language.get('video'),
 				});
 			}
 
@@ -540,6 +540,6 @@
 					instance._itemSelectorDialog.dispose();
 				}
 			});
-		}
+		},
 	});
 })();

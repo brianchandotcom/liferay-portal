@@ -37,18 +37,18 @@ class List extends PureComponent {
 		onMove: PropTypes.func,
 		resultIds: PropTypes.arrayOf(Number),
 		resultIdsPinned: PropTypes.arrayOf(Number),
-		showLoadMore: PropTypes.bool
+		showLoadMore: PropTypes.bool,
 	};
 
 	static defaultProps = {
 		dataLoading: false,
-		resultIds: []
+		resultIds: [],
 	};
 
 	state = {
 		focusIndex: null,
 		reorder: false,
-		selectedIds: []
+		selectedIds: [],
 	};
 
 	_handleItemBlur = () => {
@@ -122,7 +122,7 @@ class List extends PureComponent {
 	 */
 	_handleRemoveSelect = ids => {
 		this.setState(state => ({
-			selectedIds: state.selectedIds.filter(id => !ids.includes(id))
+			selectedIds: state.selectedIds.filter(id => !ids.includes(id)),
 		}));
 	};
 
@@ -132,7 +132,7 @@ class List extends PureComponent {
 
 	_handleSelect = id => {
 		this.setState(state => ({
-			selectedIds: toggleListItem(state.selectedIds, id)
+			selectedIds: toggleListItem(state.selectedIds, id),
 		}));
 	};
 
@@ -224,7 +224,7 @@ class List extends PureComponent {
 			onClickHide,
 			onClickPin,
 			resultIds,
-			showLoadMore
+			showLoadMore,
 		} = this.props;
 
 		const {selectedIds} = this.state;

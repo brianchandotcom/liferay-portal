@@ -31,7 +31,7 @@ export default {
 		onNetworkStatus,
 		parentItemId,
 		position,
-		segmentsExperienceId
+		segmentsExperienceId,
 	}) {
 		return layoutServiceFetch(
 			config.addItemURL,
@@ -40,8 +40,8 @@ export default {
 					itemType,
 					parentItemId,
 					position,
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus
 		);
@@ -61,8 +61,8 @@ export default {
 			{
 				body: {
 					itemId,
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus
 		);
@@ -83,7 +83,7 @@ export default {
 		onNetworkStatus,
 		parentItemId,
 		position,
-		segmentsExperienceId
+		segmentsExperienceId,
 	}) {
 		return layoutServiceFetch(
 			config.moveItemURL,
@@ -92,8 +92,8 @@ export default {
 					itemId,
 					parentItemId,
 					position,
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus
 		);
@@ -112,7 +112,7 @@ export default {
 		itemConfig,
 		itemId,
 		onNetworkStatus,
-		segmentsExperienceId
+		segmentsExperienceId,
 	}) {
 		return layoutServiceFetch(
 			config.updateItemConfigURL,
@@ -120,8 +120,8 @@ export default {
 				body: {
 					itemConfig: JSON.stringify(itemConfig),
 					itemId,
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus
 		);
@@ -141,8 +141,8 @@ export default {
 			{
 				body: {
 					data: JSON.stringify(layoutData),
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus
 		);
@@ -161,7 +161,7 @@ export default {
 		itemId,
 		numberOfColumns,
 		onNetworkStatus,
-		segmentsExperienceId
+		segmentsExperienceId,
 	}) {
 		return layoutServiceFetch(
 			config.updateRowColumnsURL,
@@ -169,16 +169,16 @@ export default {
 				body: {
 					itemId,
 					numberOfColumns,
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus
 		);
-	}
+	},
 };
 
 const layoutServiceFetch = (url, options, onNetworkStatus) => {
 	return serviceFetch(url, options, onNetworkStatus, {
-		requestGenerateDraft: true
+		requestGenerateDraft: true,
 	});
 };

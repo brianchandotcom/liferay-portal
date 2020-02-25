@@ -19,12 +19,12 @@ export function testControlledInput({
 	mockFunc,
 	newValue = 'Liferay',
 	newValueExpected,
-	value
+	value,
 }) {
 	expect(element.value).toBe(value);
 
 	fireEvent.change(element, {
-		target: {value: newValue}
+		target: {value: newValue},
 	});
 
 	expect(mockFunc.mock.calls.length).toBe(1);
@@ -42,12 +42,12 @@ export function testControlledDateInput({
 	newValue = 'Liferay',
 	newValueExpected,
 	newValueOnChange,
-	value
+	value,
 }) {
 	expect(element.value).toBe(value);
 
 	fireEvent.change(element, {
-		target: {value: newValue}
+		target: {value: newValue},
 	});
 
 	expect(mockOnChangeFunc.mock.calls.length).toBe(0);
@@ -57,7 +57,7 @@ export function testControlledDateInput({
 	expect(mockOnChangeFunc.mock.calls.length).toBe(1);
 
 	expect(mockOnChangeFunc.mock.calls[0][0]).toMatchObject({
-		value: newValueOnChange
+		value: newValueOnChange,
 	});
 
 	expect(element.value).toBe(newValueExpected);

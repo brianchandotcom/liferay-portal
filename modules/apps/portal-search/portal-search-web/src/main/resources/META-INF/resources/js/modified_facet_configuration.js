@@ -42,14 +42,14 @@ AUI.add(
 
 					ranges.push({
 						label,
-						range
+						range,
 					});
 				});
 
 				instance.form.one('.ranges-input').val(JSON.stringify(ranges));
 
 				submitForm(instance.form);
-			}
+			},
 		});
 
 		Liferay.namespace(
@@ -58,6 +58,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node']
+		requires: ['aui-node'],
 	}
 );

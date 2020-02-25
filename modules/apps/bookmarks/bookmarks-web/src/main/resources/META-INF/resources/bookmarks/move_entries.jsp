@@ -298,7 +298,7 @@ if (portletTitleBasedNavigation) {
 							constrain: true,
 							destroyOnHide: true,
 							modal: true,
-							width: 680
+							width: 680,
 						},
 						id: '<portlet:namespace />selectFolder',
 						selectedData: [folderName.value],
@@ -310,14 +310,14 @@ if (portletTitleBasedNavigation) {
 							<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
 						</portlet:renderURL>
 
-						uri: '<%= selectFolderURL.toString() %>'
+						uri: '<%= selectFolderURL.toString() %>',
 					},
 					function(event) {
 						var folderData = {
 							idString: 'newFolderId',
 							idValue: event.entityid,
 							nameString: 'folderName',
-							nameValue: event.entityname
+							nameValue: event.entityname,
 						};
 
 						Liferay.Util.selectFolder(

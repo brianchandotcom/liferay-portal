@@ -64,7 +64,7 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 
 		if (data.length) {
 			result = {
-				data: data
+				data: data,
 			};
 		}
 

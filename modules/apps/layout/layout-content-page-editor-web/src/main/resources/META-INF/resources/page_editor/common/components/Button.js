@@ -32,5 +32,5 @@ export default function Button({children, loading = false, ...props}) {
 
 Button.propTypes = {
 	children: PropTypes.node.isRequired,
-	loading: PropTypes.bool
+	loading: PropTypes.bool,
 };

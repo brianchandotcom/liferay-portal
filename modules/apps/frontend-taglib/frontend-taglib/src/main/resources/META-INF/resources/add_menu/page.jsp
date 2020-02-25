@@ -145,11 +145,11 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 								Liferay.Util.openWindow({
 									dialog: {
 										destroyOnHide: true,
-										modal: true
+										modal: true,
 									},
 									id: '<%= namespace %>selectAddMenuItem',
 									title: '<liferay-ui:message key="more" />',
-									uri: '<%= viewMoreURL %>'
+									uri: '<%= viewMoreURL %>',
 								});
 							});
 						</aui:script>

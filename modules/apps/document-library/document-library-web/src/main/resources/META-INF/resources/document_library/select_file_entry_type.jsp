@@ -107,7 +107,7 @@ portletURL.setParameter("eventName", eventName);
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(eventName) %>',
 				{
-					data: currentTarget.attr('data-fileEntryTypeId')
+					data: currentTarget.attr('data-fileEntryTypeId'),
 				}
 			);
 		},

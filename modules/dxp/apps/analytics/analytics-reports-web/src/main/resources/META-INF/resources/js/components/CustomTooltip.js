@@ -22,7 +22,7 @@ export default function CustomTooltip(props) {
 		label,
 		labelFormatter = label => label,
 		payload,
-		separator = ''
+		separator = '',
 	} = props;
 
 	return label ? (
@@ -39,7 +39,7 @@ export default function CustomTooltip(props) {
 							<div
 								className="custom-tooltip-dot"
 								style={{
-									backgroundColor: item.color
+									backgroundColor: item.color,
 								}}
 							></div>
 							{name}
@@ -60,8 +60,8 @@ CustomTooltip.propTypes = {
 	payload: PropTypes.arrayOf(
 		PropTypes.shape({
 			name: PropTypes.string.isRequired,
-			value: PropTypes.number.isRequired
+			value: PropTypes.number.isRequired,
 		})
 	),
-	separator: PropTypes.string
+	separator: PropTypes.string,
 };

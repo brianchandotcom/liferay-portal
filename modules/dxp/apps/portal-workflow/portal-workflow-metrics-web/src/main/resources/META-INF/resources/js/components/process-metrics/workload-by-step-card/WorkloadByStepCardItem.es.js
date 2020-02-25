@@ -22,16 +22,16 @@ const Item = ({
 	onTimeInstanceCount,
 	overdueInstanceCount,
 	processId,
-	taskKey
+	taskKey,
 }) => {
 	const {defaultDelta} = useContext(AppContext);
 	const getFiltersQuery = slaStatusFilter => {
 		return {
 			[filterConstants.processStatus.key]: [
-				processStatusConstants.pending
+				processStatusConstants.pending,
 			],
 			[filterConstants.processStep.key]: [taskKey],
-			[filterConstants.slaStatus.key]: [slaStatusFilter]
+			[filterConstants.slaStatus.key]: [slaStatusFilter],
 		};
 	};
 	const instancesListPath = `/instance/${processId}/${defaultDelta}/1`;

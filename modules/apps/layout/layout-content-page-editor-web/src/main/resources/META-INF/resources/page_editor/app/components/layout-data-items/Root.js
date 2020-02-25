@@ -31,7 +31,7 @@ import React from 'react';
 
 import {
 	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import TopperEmpty from '../TopperEmpty';
 
@@ -49,7 +49,7 @@ const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 								'taglib-empty-result-message',
 								{
 									'page-editor__no-fragments-message--active':
-										isOver && canDrop
+										isOver && canDrop,
 								}
 							)}
 						>
@@ -68,7 +68,7 @@ const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 
 Root.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default Root;

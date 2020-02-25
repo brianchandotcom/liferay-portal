@@ -21,5 +21,5 @@ export default function InvisibleFieldset({children, disabled}) {
 
 InvisibleFieldset.propTypes = {
 	children: PropTypes.node.isRequired,
-	disabled: PropTypes.bool
+	disabled: PropTypes.bool,
 };

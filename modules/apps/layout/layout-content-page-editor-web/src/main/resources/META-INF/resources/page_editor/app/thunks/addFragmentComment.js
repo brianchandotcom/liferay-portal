@@ -18,20 +18,20 @@ import FragmentService from '../services/FragmentService';
 export default function addFragmentComment({
 	body,
 	fragmentEntryLinkId,
-	parentCommentId = undefined
+	parentCommentId = undefined,
 }) {
 	return dispatch => {
 		return FragmentService.addComment({
 			body,
 			fragmentEntryLinkId,
 			onNetworkStatus: dispatch,
-			parentCommentId
+			parentCommentId,
 		}).then(fragmentEntryLinkComment => {
 			dispatch(
 				addFragmentEntryLinkComment({
 					fragmentEntryLinkComment,
 					fragmentEntryLinkId,
-					parentCommentId
+					parentCommentId,
 				})
 			);
 		});

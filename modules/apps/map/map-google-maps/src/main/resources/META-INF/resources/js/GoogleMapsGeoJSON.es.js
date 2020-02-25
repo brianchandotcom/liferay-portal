@@ -60,7 +60,7 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 				this.map.data,
 				'click',
 				this._handleFeatureClicked
-			)
+			),
 		];
 	}
 
@@ -74,7 +74,7 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 	 */
 	_getFeatureStyle(feature) {
 		return {
-			icon: feature.getProperty('icon')
+			icon: feature.getProperty('icon'),
 		};
 	}
 
@@ -102,7 +102,7 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 					map: this.map,
 					opacity: 0,
 					position: feature.getGeometry().get('location'),
-					zIndex: -1
+					zIndex: -1,
 				});
 
 				feature._marker = marker;

@@ -38,7 +38,7 @@ const EditCategoriesModal = ({
 	pathModule,
 	repositoryId,
 	selectAll = false,
-	selectCategoriesUrl
+	selectCategoriesUrl,
 }) => {
 	const {namespace} = useContext(EditCategoriesContext);
 
@@ -136,11 +136,11 @@ const EditCategoriesModal = ({
 				selectionScope: {
 					folderId,
 					repositoryId,
-					selectAll
-				}
+					selectAll,
+				},
 			},
 			taxonomyCategoryIdsToAdd: addedCategories,
-			taxonomyCategoryIdsToRemove: removedCategories
+			taxonomyCategoryIdsToRemove: removedCategories,
 		}).then(() => {
 			onModalClose();
 
@@ -156,7 +156,7 @@ const EditCategoriesModal = ({
 		return categories.map(item => {
 			return {
 				label: item.taxonomyCategoryName,
-				value: item.taxonomyCategoryId
+				value: item.taxonomyCategoryId,
 			};
 		});
 	};
@@ -179,7 +179,7 @@ const EditCategoriesModal = ({
 				selectedCategoryIds: categoryIds.join(','),
 				selectedItems: categories,
 				singleSelect: !vocabulary.multiValued,
-				title: vocabulary.name
+				title: vocabulary.name,
 			};
 
 			vocabulariesList.push(obj);
@@ -202,15 +202,15 @@ const EditCategoriesModal = ({
 			selectionScope: {
 				folderId,
 				repositoryId,
-				selectAll
-			}
+				selectAll,
+			},
 		};
 
 		const urlCategories = `/bulk/v1.0/sites/${groupIds[0]}/taxonomy-vocabularies/common`;
 
 		Promise.all([
 			fetchCategories(urlCategories, 'POST', selection),
-			fetchCategories(URL_SELECTION, 'POST', selection)
+			fetchCategories(URL_SELECTION, 'POST', selection),
 		]).then(([responseCategories, responseSelection]) => {
 			if (responseCategories && responseSelection) {
 				if (isMounted()) {
@@ -232,7 +232,7 @@ const EditCategoriesModal = ({
 		isMounted,
 		parseVocabularies,
 		repositoryId,
-		selectAll
+		selectAll,
 	]);
 
 	const fetchCategories = useCallback(
@@ -240,9 +240,9 @@ const EditCategoriesModal = ({
 			const init = {
 				body: JSON.stringify(bodyData),
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				},
-				method
+				method,
 			};
 
 			return fetch(`${pathModule}${url}`, init)
@@ -355,7 +355,7 @@ EditCategoriesModal.propTypes = {
 	pathModule: PropTypes.string.isRequired,
 	repositoryId: PropTypes.string.isRequired,
 	selectAll: PropTypes.bool,
-	selectCategoriesUrl: PropTypes.string.isRequired
+	selectCategoriesUrl: PropTypes.string.isRequired,
 };
 
 export default EditCategoriesModal;

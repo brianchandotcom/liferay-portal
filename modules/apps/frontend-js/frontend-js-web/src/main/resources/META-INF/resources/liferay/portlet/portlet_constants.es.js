@@ -31,7 +31,7 @@ const PortletConstants = {
 
 	FULL: 'cacheLevelFull',
 	PAGE: 'cacheLevelPage',
-	PORTLET: 'cacheLevelPortlet'
+	PORTLET: 'cacheLevelPortlet',
 };
 
 export {PortletConstants};

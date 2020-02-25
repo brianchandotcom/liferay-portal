@@ -18,7 +18,7 @@ import React, {useMemo} from 'react';
 
 import {
 	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
@@ -33,7 +33,7 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 				),
 				'no-gutters': !(typeof item.config.gutters === 'boolean'
 					? item.config.gutters
-					: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[item.type])
+					: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[item.type]),
 			})}
 			ref={ref}
 		>
@@ -64,9 +64,9 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 
 Row.propTypes = {
 	item: getLayoutDataItemPropTypes({
-		config: PropTypes.shape({gutters: PropTypes.bool})
+		config: PropTypes.shape({gutters: PropTypes.bool}),
 	}).isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 function getItemParent(item, itemLayoutData) {

@@ -69,7 +69,7 @@ if (wikiPage != null) {
 			Liferay.Util.openWindow({
 				id: '<portlet:namespace />openRemovedPageAttachments',
 				title: '<%= LanguageUtil.get(request, "removed-attachments") %>',
-				uri: '<%= viewTrashAttachmentsURL %>'
+				uri: '<%= viewTrashAttachmentsURL %>',
 			});
 		});
 	</aui:script>

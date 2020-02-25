@@ -70,7 +70,7 @@
 		assetAddonEntries.push({
 			icon: '<%= assetAddonEntry.getIcon() %>',
 			key: '<%= assetAddonEntry.getKey() %>',
-			label: '<%= assetAddonEntry.getLabel(locale) %>'
+			label: '<%= assetAddonEntry.getLabel(locale) %>',
 		});
 
 	<%
@@ -93,6 +93,6 @@
 		assetAddonEntries: assetAddonEntries,
 		dialogTitle: '<liferay-ui:message key="<%= title %>" />',
 		rootNode: '#<%= namespace + id %>assetAddonEntrySelector',
-		selectedAssetAddonEntries: selectedAssetAddonEntries
+		selectedAssetAddonEntries: selectedAssetAddonEntries,
 	});
 </aui:script>

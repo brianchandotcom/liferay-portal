@@ -21,12 +21,12 @@ import Conjunction from '../../../../src/main/resources/META-INF/resources/js/co
 const conjunctions = [
 	{
 		label: 'AND',
-		name: 'and'
+		name: 'and',
 	},
 	{
 		label: 'OR',
-		name: 'or'
-	}
+		name: 'or',
+	},
 ];
 
 describe('Conjunction', () => {
@@ -35,7 +35,7 @@ describe('Conjunction', () => {
 	it('renders with value in editable mode', () => {
 		const {
 			label: initialConjunctionLabel,
-			name: initialConjunctionName
+			name: initialConjunctionName,
 		} = conjunctions[0];
 
 		const {getAllByText} = render(
@@ -46,7 +46,7 @@ describe('Conjunction', () => {
 				supportedConjunctions={conjunctions}
 			/>,
 			{
-				baseElement: document.body
+				baseElement: document.body,
 			}
 		);
 
@@ -58,7 +58,7 @@ describe('Conjunction', () => {
 	it('renders with value in non-editable mode', () => {
 		const {
 			label: initialConjunctionLabel,
-			name: initialConjunctionName
+			name: initialConjunctionName,
 		} = conjunctions[0];
 
 		const {getByText} = render(
@@ -69,7 +69,7 @@ describe('Conjunction', () => {
 				supportedConjunctions={conjunctions}
 			/>,
 			{
-				baseElement: document.body
+				baseElement: document.body,
 			}
 		);
 
@@ -81,7 +81,7 @@ describe('Conjunction', () => {
 	it('dropdown opens on click in editable mode', () => {
 		const {
 			label: initialConjunctionLabel,
-			name: initialConjunctionName
+			name: initialConjunctionName,
 		} = conjunctions[0];
 
 		const {getAllByText} = render(
@@ -92,7 +92,7 @@ describe('Conjunction', () => {
 				supportedConjunctions={conjunctions}
 			/>,
 			{
-				baseElement: document.body
+				baseElement: document.body,
 			}
 		);
 
@@ -110,7 +110,7 @@ describe('Conjunction', () => {
 		const onSelectMock = jest.fn(() => {});
 		const {
 			label: initialConjunctionLabel,
-			name: initialConjunctionName
+			name: initialConjunctionName,
 		} = conjunctions[0];
 
 		const {getAllByText, getByText} = render(
@@ -121,7 +121,7 @@ describe('Conjunction', () => {
 				supportedConjunctions={conjunctions}
 			/>,
 			{
-				baseElement: document.body
+				baseElement: document.body,
 			}
 		);
 

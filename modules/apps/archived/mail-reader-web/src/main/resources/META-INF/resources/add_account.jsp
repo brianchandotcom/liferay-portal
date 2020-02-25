@@ -170,7 +170,7 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/update_account', {
 			dataType: 'JSON',
 			form: {
-				id: form.getDOMNode()
+				id: form.getDOMNode(),
 			},
 			method: 'POST',
 			on: {
@@ -192,8 +192,8 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 					if (responseData.status == 'success') {
 						Liferay.Mail.loadAccounts(Liferay.Mail.accountId);
 					}
-				}
-			}
+				},
+			},
 		});
 	});
 </aui:script>

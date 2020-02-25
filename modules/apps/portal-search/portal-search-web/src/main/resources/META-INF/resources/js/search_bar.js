@@ -113,7 +113,7 @@ AUI.add(
 				searchParams.delete('start');
 
 				return '?' + searchParams.toString();
-			}
+			},
 		});
 
 		Liferay.namespace('Search').SearchBar = SearchBar;

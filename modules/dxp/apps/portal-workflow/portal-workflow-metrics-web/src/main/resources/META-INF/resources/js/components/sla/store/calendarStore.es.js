@@ -15,14 +15,14 @@ class CalendarStore {
 	constructor(client) {
 		this.client = client;
 		this.state = {
-			calendars: []
+			calendars: [],
 		};
 	}
 
 	fetchCalendars() {
 		return this.client.get('/calendars').then(({data}) =>
 			this.setState({
-				calendars: data.items
+				calendars: data.items,
 			})
 		);
 	}

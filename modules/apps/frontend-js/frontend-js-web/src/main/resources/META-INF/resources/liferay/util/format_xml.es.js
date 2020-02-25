@@ -54,7 +54,7 @@ const TAG_INDENT = '\t';
 
 const DEFAULT_OPTIONS = {
 	newLine: NEW_LINE,
-	tagIndent: TAG_INDENT
+	tagIndent: TAG_INDENT,
 };
 
 /**
@@ -66,7 +66,7 @@ const DEFAULT_OPTIONS = {
 export default function formatXML(content, options = {}) {
 	const {newLine, tagIndent} = {
 		...DEFAULT_OPTIONS,
-		...options
+		...options,
 	};
 
 	if (!isString(content)) {

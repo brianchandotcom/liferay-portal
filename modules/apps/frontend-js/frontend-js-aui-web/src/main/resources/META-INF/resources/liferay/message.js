@@ -16,7 +16,7 @@ AUI.add(
 	'liferay-message',
 	A => {
 		var EVENT_DATA_DISMISS_ALL = {
-			categoryVisible: false
+			categoryVisible: false,
 		};
 
 		var NAME = 'liferaymessage';
@@ -36,11 +36,11 @@ AUI.add(
 				closeButton: {
 					valueFn() {
 						return A.Node.create(TPL_HIDE_NOTICES);
-					}
+					},
 				},
 
 				dismissible: {
-					value: true
+					value: true,
 				},
 
 				hideAllNotices: {
@@ -54,31 +54,31 @@ AUI.add(
 									'disable-this-note-for-all-portlets'
 								) + '</small></a>'
 						);
-					}
+					},
 				},
 
 				persistenceCategory: {
-					value: ''
+					value: '',
 				},
 
 				persistent: {
-					value: true
+					value: true,
 				},
 
 				trigger: {
-					setter: A.one
+					setter: A.one,
 				},
 
 				type: {
-					value: 'info'
-				}
+					value: 'info',
+				},
 			},
 
 			CSS_PREFIX: 'lfr-message',
 
 			HTML_PARSER: {
 				closeButton: '.close',
-				hideAllNotices: '.btn-link'
+				hideAllNotices: '.btn-link',
 			},
 
 			NAME,
@@ -249,14 +249,14 @@ AUI.add(
 					}
 
 					instance._dismissible = dismissible;
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Message = Message;
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base'],
 	}
 );

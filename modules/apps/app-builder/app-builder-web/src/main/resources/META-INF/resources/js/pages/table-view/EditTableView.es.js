@@ -21,7 +21,7 @@ import DragLayer from '../../components/drag-and-drop/DragLayer.es';
 import {Loading} from '../../components/loading/Loading.es';
 import {
 	ToastContext,
-	ToastContextProvider
+	ToastContextProvider,
 } from '../../components/toast/ToastContext.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import {addItem, updateItem} from '../../utils/client.es';
@@ -29,7 +29,7 @@ import DropZone from './DropZone.es';
 import EditTableViewContext, {
 	ADD_DATA_LIST_VIEW_FIELD,
 	REMOVE_DATA_LIST_VIEW_FIELD,
-	UPDATE_DATA_LIST_VIEW_NAME
+	UPDATE_DATA_LIST_VIEW_NAME,
 } from './EditTableViewContext.es';
 import EditTableViewContextProvider from './EditTableViewContextProvider.es';
 import TableViewSidebar from './TableViewSidebar.es';
@@ -58,7 +58,7 @@ const EditTableView = withRouter(({history}) => {
 					{'.'}
 				</>
 			),
-			title: `${Liferay.Language.get('error')}:`
+			title: `${Liferay.Language.get('error')}:`,
 		});
 	};
 
@@ -78,8 +78,8 @@ const EditTableView = withRouter(({history}) => {
 		return {
 			...dataListView,
 			name: {
-				en_US: name
-			}
+				en_US: name,
+			},
 		};
 	};
 
@@ -116,7 +116,7 @@ const EditTableView = withRouter(({history}) => {
 
 	const {
 		fieldNames,
-		name: {en_US: dataListViewName}
+		name: {en_US: dataListViewName},
 	} = dataListView;
 
 	const [isSidebarClosed, setSidebarClosed] = useState(false);
@@ -124,7 +124,7 @@ const EditTableView = withRouter(({history}) => {
 	const onAddFieldName = (fieldName, index = 0) => {
 		dispatch({
 			payload: {fieldName, index},
-			type: ADD_DATA_LIST_VIEW_FIELD
+			type: ADD_DATA_LIST_VIEW_FIELD,
 		});
 	};
 
@@ -183,7 +183,7 @@ const EditTableView = withRouter(({history}) => {
 					className={classNames(
 						'data-layout-builder-sidebar-content',
 						{
-							closed: isSidebarClosed
+							closed: isSidebarClosed,
 						}
 					)}
 				>
@@ -192,7 +192,7 @@ const EditTableView = withRouter(({history}) => {
 							fields={fieldNames.map(fieldName => ({
 								...dataDefinitionFields.find(
 									({name}) => name === fieldName
-								)
+								),
 							}))}
 							onAddFieldName={onAddFieldName}
 							onRemoveFieldName={onRemoveFieldName}

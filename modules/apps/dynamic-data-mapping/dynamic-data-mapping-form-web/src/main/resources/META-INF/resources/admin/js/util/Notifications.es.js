@@ -42,7 +42,7 @@ class Notifications {
 				spritemap,
 				style,
 				title,
-				visible: true
+				visible: true,
 			},
 			document.querySelector(
 				`#p_p_id${portletNamespace} .lfr-alert-wrapper`

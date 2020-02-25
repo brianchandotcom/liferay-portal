@@ -465,7 +465,7 @@ if (portletTitleBasedNavigation) {
 		constants: {
 			ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
 			ACTION_SAVE_DRAFT: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
-			CMD: '<%= Constants.CMD %>'
+			CMD: '<%= Constants.CMD %>',
 		},
 		currentAction:
 			'<%= (message == null) ? Constants.ADD : Constants.UPDATE %>',
@@ -488,7 +488,7 @@ if (portletTitleBasedNavigation) {
 				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 			</portlet:renderURL>
 
-			viewTrashAttachmentsURL: '<%= viewTrashAttachmentsURL %>'
+			viewTrashAttachmentsURL: '<%= viewTrashAttachmentsURL %>',
 		</c:if>
 	});
 </aui:script>

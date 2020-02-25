@@ -27,11 +27,11 @@ AUI.add(
 						hideOn: [],
 						resizable: false,
 						toolbars: {
-							footer: footerContent
+							footer: footerContent,
 						},
-						width: 700
+						width: 700,
 					},
-					title
+					title,
 				});
 			},
 
@@ -40,7 +40,7 @@ AUI.add(
 
 				var contentNode = A.Node.create(
 					A.Lang.sub(instance.RECURRING_EVENT_MODAL_TEMPLATE, {
-						description
+						description,
 					})
 				);
 
@@ -51,7 +51,7 @@ AUI.add(
 							confirmationDescription:
 								option.confirmationDescription,
 							confirmationDescriptionComplement:
-								option.confirmationDescriptionComplement || ''
+								option.confirmationDescriptionComplement || '',
 						}
 					);
 
@@ -86,8 +86,8 @@ AUI.add(
 								}
 
 								instance.confirmationPanel.hide();
-							}
-						}
+							},
+						},
 					};
 				};
 
@@ -101,7 +101,7 @@ AUI.add(
 							),
 							confirmationDescription: Liferay.Language.get(
 								'only-this-event-will-be-modified-the-rest-of-the-series-will-not-change'
-							)
+							),
 						},
 						{
 							button: getButtonConfig(
@@ -114,7 +114,7 @@ AUI.add(
 							),
 							confirmationDescriptionComplement: Liferay.Language.get(
 								'any-previous-edits-to-future-events-will-be-overwritten'
-							)
+							),
 						},
 						{
 							button: getButtonConfig(
@@ -127,14 +127,14 @@ AUI.add(
 							),
 							confirmationDescriptionComplement: Liferay.Language.get(
 								'any-events-edited-previously-will-not-be-affected-by-this-modification'
-							)
-						}
+							),
+						},
 					],
 					dismiss: getButtonConfig(
 						Liferay.Language.get('cancel'),
 						cancelFn,
 						'btn-link'
-					)
+					),
 				};
 
 				return buttons;
@@ -144,7 +144,7 @@ AUI.add(
 				DAILY: 'DAILY',
 				MONTHLY: 'MONTHLY',
 				WEEKLY: 'WEEKLY',
-				YEARLY: 'YEARLY'
+				YEARLY: 'YEARLY',
 			},
 
 			INTERVAL_UNITS: {},
@@ -305,11 +305,11 @@ AUI.add(
 				);
 
 				return instance.confirmationPanel.render().show();
-			}
+			},
 		};
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-util-window']
+		requires: ['aui-base', 'liferay-util-window'],
 	}
 );

@@ -62,17 +62,17 @@ export function ImagePropertiesPanel({item}) {
 						...editableProcessorValues[editableId],
 						config: {
 							...editableConfig,
-							...newConfig
-						}
-					}
-				}
+							...newConfig,
+						},
+					},
+				},
 			};
 
 			dispatch(
 				updateEditableValues({
 					editableValues: nextEditableValues,
 					fragmentEntryLinkId,
-					segmentsExperienceId: state.segmentsExperienceId
+					segmentsExperienceId: state.segmentsExperienceId,
 				})
 			);
 		},
@@ -83,7 +83,7 @@ export function ImagePropertiesPanel({item}) {
 			fragmentEntryLinkId,
 			processoryKey,
 			state.fragmentEntryLinks,
-			state.segmentsExperienceId
+			state.segmentsExperienceId,
 		]
 	);
 
@@ -108,15 +108,15 @@ export function ImagePropertiesPanel({item}) {
 				config: {...editableValue.config, imageTitle},
 				[prefixedSegmentsExperienceId]: {
 					...editableValue[prefixedSegmentsExperienceId],
-					[state.languageId]: imageUrl
-				}
+					[state.languageId]: imageUrl,
+				},
 			};
 		}
 		else {
 			nextEditableValue = {
 				...editableValue,
 				config: {...editableValue.config, imageTitle},
-				[state.languageId]: imageUrl
+				[state.languageId]: imageUrl,
 			};
 		}
 
@@ -126,16 +126,16 @@ export function ImagePropertiesPanel({item}) {
 			[processoryKey]: {
 				...editableProcessorValues,
 				[editableId]: {
-					...nextEditableValue
-				}
-			}
+					...nextEditableValue,
+				},
+			},
 		};
 
 		dispatch(
 			updateEditableValues({
 				editableValues: nextEditableValues,
 				fragmentEntryLinkId,
-				segmentsExperienceId: state.segmentsExperienceId
+				segmentsExperienceId: state.segmentsExperienceId,
 			})
 		);
 	};
@@ -160,7 +160,7 @@ export function ImagePropertiesPanel({item}) {
 							setImageDescription(event.target.value);
 
 							debounceUpdateRowConfig({
-								alt: event.target.value
+								alt: event.target.value,
 							});
 						}}
 						sizing="sm"
@@ -177,7 +177,7 @@ ImagePropertiesPanel.propTypes = {
 	item: getEditableItemPropTypes({
 		config: PropTypes.shape({
 			alt: PropTypes.string,
-			imageTitle: PropTypes.string
-		})
-	})
+			imageTitle: PropTypes.string,
+		}),
+	}),
 };

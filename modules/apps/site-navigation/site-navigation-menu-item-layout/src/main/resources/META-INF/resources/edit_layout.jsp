@@ -95,7 +95,7 @@ if (selLayout != null) {
 				var itemSelectorDialog = new ItemSelectorDialog.default({
 					eventName: '<%= eventName %>',
 					title: '<liferay-ui:message key="select-layout" />',
-					url: '<%= itemSelectorURL.toString() %>'
+					url: '<%= itemSelectorURL.toString() %>',
 				});
 
 				itemSelectorDialog.on('selectedItemChange', function(event) {

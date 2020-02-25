@@ -149,7 +149,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 							deleteFormInstanceRecordIds: Liferay.Util.listCheckedExcept(
 								searchContainer,
 								'<portlet:namespace />allRowIds'
-							)
+							),
 						},
 
 						<portlet:actionURL name="deleteFormInstanceRecord" var="deleteFormInstanceRecordURL">
@@ -157,7 +157,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:actionURL>
 
-						url: '<%= deleteFormInstanceRecordURL %>'
+						url: '<%= deleteFormInstanceRecordURL %>',
 					}
 				);
 			}
@@ -165,7 +165,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 	};
 
 	var ACTIONS = {
-		deleteRecords: deleteRecords
+		deleteRecords: deleteRecords,
 	};
 
 	Liferay.componentReady('ddmFormInstanceRecordsManagementToolbar').then(function(

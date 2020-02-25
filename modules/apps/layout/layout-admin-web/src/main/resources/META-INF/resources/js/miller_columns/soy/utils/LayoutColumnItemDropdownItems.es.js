@@ -15,27 +15,27 @@
 const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 	{
 		label: Liferay.Language.get('view'),
-		name: 'viewLayoutURL'
+		name: 'viewLayoutURL',
 	},
 
 	{
 		label: Liferay.Language.get('preview'),
-		name: 'previewLayoutURL'
+		name: 'previewLayoutURL',
 	},
 
 	{
 		label: Liferay.Language.get('edit-conversion-draft'),
-		name: 'editConversionLayoutURL'
+		name: 'editConversionLayoutURL',
 	},
 
 	{
 		label: Liferay.Language.get('edit'),
-		name: 'editLayoutURL'
+		name: 'editLayoutURL',
 	},
 
 	{
 		label: Liferay.Language.get('configure'),
-		name: 'configureURL'
+		name: 'configureURL',
 	},
 
 	{
@@ -52,18 +52,18 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 					destroyOnHide: true,
 					height: 480,
 					resizable: false,
-					width: 640
+					width: 640,
 				},
 				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
+					bodyCssClass: 'dialog-with-footer',
 				},
 				id: event.data.item.namespace + 'addLayoutDialog',
 				title: Liferay.Language.get('copy-page'),
-				uri: event.data.item.href
+				uri: event.data.item.href,
 			});
 		},
 		label: Liferay.Language.get('copy-page'),
-		name: 'copyLayoutURL'
+		name: 'copyLayoutURL',
 	},
 
 	{
@@ -77,37 +77,37 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 				{...event, currentTarget: event.target.element},
 				{
 					dialog: {
-						destroyOnHide: true
+						destroyOnHide: true,
 					},
 					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
+						bodyCssClass: 'dialog-with-footer',
 					},
-					uri: event.data.item.href
+					uri: event.data.item.href,
 				}
 			);
 		},
 		label: Liferay.Language.get('permissions'),
-		name: 'permissionsURL'
+		name: 'permissionsURL',
 	},
 
 	{
 		label: Liferay.Language.get('orphan-widgets'),
-		name: 'orphanPortletsURL'
+		name: 'orphanPortletsURL',
 	},
 
 	{
 		label: Liferay.Language.get('convert-to-content-page'),
-		name: 'convertLayoutURL'
+		name: 'convertLayoutURL',
 	},
 
 	{
 		label: Liferay.Language.get('convert-to-content-page-and-preview'),
-		name: 'layoutConversionPreviewURL'
+		name: 'layoutConversionPreviewURL',
 	},
 
 	{
 		label: Liferay.Language.get('discard-conversion-draft'),
-		name: 'deleteLayoutConversionPreviewURL'
+		name: 'deleteLayoutConversionPreviewURL',
 	},
 
 	{
@@ -126,8 +126,8 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 			}
 		},
 		label: Liferay.Language.get('delete'),
-		name: 'deleteURL'
-	}
+		name: 'deleteURL',
+	},
 ];
 
 export {LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS};

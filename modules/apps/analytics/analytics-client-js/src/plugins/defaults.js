@@ -33,5 +33,5 @@ export default [
 	forms,
 	scrolling,
 	timing,
-	webContents
+	webContents,
 ];

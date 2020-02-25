@@ -27,7 +27,7 @@ const Item = ({
 	overdueTaskCount,
 	processId,
 	taskCount,
-	taskKeys
+	taskKeys,
 }) => {
 	const {defaultDelta} = useContext(AppContext);
 	const instancesListPath = `/instance/${processId}/${defaultDelta}/1`;
@@ -36,10 +36,10 @@ const Item = ({
 		const filterParams = {
 			[filterConstants.assignee.key]: [id],
 			[filterConstants.processStatus.key]: [
-				processStatusConstants.pending
+				processStatusConstants.pending,
 			],
 			[filterConstants.processStep.key]: taskKeys,
-			[filterConstants.slaStatus.key]: [slaStatus]
+			[filterConstants.slaStatus.key]: [slaStatus],
 		};
 
 		return filterParams;
@@ -66,7 +66,7 @@ const Item = ({
 				<ChildLink
 					className="workload-by-step-link"
 					query={{
-						filters: getFiltersQuery(slaStatusConstants.overdue)
+						filters: getFiltersQuery(slaStatusConstants.overdue),
 					}}
 					to={instancesListPath}
 				>
@@ -81,7 +81,7 @@ const Item = ({
 				<ChildLink
 					className="workload-by-step-link"
 					query={{
-						filters: getFiltersQuery(slaStatusConstants.onTime)
+						filters: getFiltersQuery(slaStatusConstants.onTime),
 					}}
 					to={instancesListPath}
 				>

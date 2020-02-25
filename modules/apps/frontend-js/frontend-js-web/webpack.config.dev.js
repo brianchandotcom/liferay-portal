@@ -19,10 +19,10 @@ module.exports = {
 	devServer: {
 		port: 3000,
 		proxy: {
-			'**': 'http://0.0.0.0:8080'
+			'**': 'http://0.0.0.0:8080',
 		},
-		publicPath: config.output.publicPath
+		publicPath: config.output.publicPath,
 	},
 	devtool: 'inline-source-map',
-	mode: 'development'
+	mode: 'development',
 };

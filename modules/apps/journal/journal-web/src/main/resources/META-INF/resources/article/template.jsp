@@ -129,12 +129,12 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 				Liferay.Util.selectEntity(
 					{
 						dialog: {
-							destroyOnHide: true
+							destroyOnHide: true,
 						},
 						eventName: '<portlet:namespace />preview',
 						id: '<portlet:namespace />preview',
 						title: '<liferay-ui:message key="preview" />',
-						uri: uri
+						uri: uri,
 					},
 					function(event) {
 						changeDDMTemplate(event.ddmtemplateid);
@@ -198,13 +198,13 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true
+						modal: true,
 					},
 					eventName: '<portlet:namespace />selectDDMTemplate',
 					id: '<portlet:namespace />selectDDMTemplate',
 					title: '<%= UnicodeLanguageUtil.get(request, "templates") %>',
 					uri:
-						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_template.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" /></portlet:renderURL>'
+						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_template.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" /></portlet:renderURL>',
 				},
 				function(event) {
 					changeDDMTemplate(event.ddmtemplateid);

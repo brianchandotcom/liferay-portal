@@ -19,24 +19,24 @@ const reducer = (state, action) => {
 		case 'CHANGE_PAGE':
 			return {
 				...state,
-				page: action.page
+				page: action.page,
 			};
 		case 'CHANGE_PAGE_SIZE':
 			return {
 				...state,
 				page: 1,
-				pageSize: action.pageSize
+				pageSize: action.pageSize,
 			};
 		case 'SEARCH':
 			return {
 				...state,
 				keywords: action.keywords,
-				page: 1
+				page: 1,
 			};
 		case 'SORT':
 			return {
 				...state,
-				sort: action.sort
+				sort: action.sort,
 			};
 		default:
 			return state;

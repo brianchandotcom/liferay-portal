@@ -21,7 +21,7 @@ const spritemap = 'icons.svg';
 
 const defaultDatePickerConfig = {
 	name: 'dateField',
-	spritemap
+	spritemap,
 };
 
 describe('DatePicker', () => {
@@ -36,7 +36,7 @@ describe('DatePicker', () => {
 	it('has a helptext', () => {
 		component = new DatePicker({
 			...defaultDatePickerConfig,
-			tip: 'Type something'
+			tip: 'Type something',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -45,7 +45,7 @@ describe('DatePicker', () => {
 	it('has an id', () => {
 		component = new DatePicker({
 			...defaultDatePickerConfig,
-			id: 'ID'
+			id: 'ID',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -54,7 +54,7 @@ describe('DatePicker', () => {
 	it('has a label', () => {
 		component = new DatePicker({
 			...defaultDatePickerConfig,
-			label: 'label'
+			label: 'label',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -63,7 +63,7 @@ describe('DatePicker', () => {
 	it('has a predefinedValue', () => {
 		component = new DatePicker({
 			...defaultDatePickerConfig,
-			predefinedValue: '05/05/2019'
+			predefinedValue: '05/05/2019',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -71,7 +71,7 @@ describe('DatePicker', () => {
 
 	it('expands the datepicker when clicking the calendar icon', () => {
 		component = new DatePicker({
-			...defaultDatePickerConfig
+			...defaultDatePickerConfig,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -90,7 +90,7 @@ describe('DatePicker', () => {
 
 	it('fills the input with the current date selected on Date Picker', () => {
 		component = new DatePicker({
-			...defaultDatePickerConfig
+			...defaultDatePickerConfig,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -114,7 +114,7 @@ describe('DatePicker', () => {
 
 	it('decreases the current month when the back arrow is selected on Date Picker', () => {
 		component = new DatePicker({
-			...defaultDatePickerConfig
+			...defaultDatePickerConfig,
 		});
 
 		dom.triggerEvent(
@@ -150,7 +150,7 @@ describe('DatePicker', () => {
 
 	it('increases the current month when the forward arrow is selected on Date Picker', () => {
 		component = new DatePicker({
-			...defaultDatePickerConfig
+			...defaultDatePickerConfig,
 		});
 
 		dom.triggerEvent(

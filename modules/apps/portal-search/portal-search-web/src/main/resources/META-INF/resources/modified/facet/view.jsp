@@ -153,7 +153,7 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 			toInputDatePicker: Liferay.component(
 				'<portlet:namespace />toInputDatePicker'
 			),
-			toInputName: '<portlet:namespace />toInput'
+			toInputName: '<portlet:namespace />toInput',
 		});
 	</aui:script>
 </c:if>

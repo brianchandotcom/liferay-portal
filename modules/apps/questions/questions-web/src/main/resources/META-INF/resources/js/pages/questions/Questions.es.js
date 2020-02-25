@@ -29,9 +29,9 @@ import {dateToInternationalHuman, normalizeRating} from '../../utils/utils.es';
 
 export default ({
 	match: {
-		params: {creatorId, tag}
+		params: {creatorId, tag},
 	},
-	search
+	search,
 }) => {
 	const context = useContext(AppContext);
 
@@ -60,7 +60,7 @@ export default ({
 				search,
 				siteKey: context.siteKey,
 				sort,
-				tag
+				tag,
 			}),
 		[context.siteKey, creatorId, page, pageSize, search, tag]
 	);
@@ -100,7 +100,7 @@ export default ({
 			<ClayButton.Group>
 				<ClayButton
 					className={classnames('secondary', {
-						'btn-secondary': activeFilter !== 'created'
+						'btn-secondary': activeFilter !== 'created',
 					})}
 					onClick={() => filterBy('created')}
 				>
@@ -108,7 +108,7 @@ export default ({
 				</ClayButton>
 				<ClayButton
 					className={classnames('secondary', {
-						'btn-secondary': activeFilter !== 'modified'
+						'btn-secondary': activeFilter !== 'modified',
 					})}
 					onClick={() => filterBy('modified')}
 				>
@@ -116,7 +116,7 @@ export default ({
 				</ClayButton>
 				<ClayButton
 					className={classnames('secondary', {
-						'btn-secondary': activeFilter !== 'week'
+						'btn-secondary': activeFilter !== 'week',
 					})}
 					onClick={() => filterBy('week')}
 				>
@@ -124,7 +124,7 @@ export default ({
 				</ClayButton>
 				<ClayButton
 					className={classnames('secondary', {
-						'btn-secondary': activeFilter !== 'month'
+						'btn-secondary': activeFilter !== 'month',
 					})}
 					onClick={() => filterBy('month')}
 				>

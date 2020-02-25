@@ -124,7 +124,7 @@
 	var openingLiferay = Util.getOpener().Liferay;
 
 	openingLiferay.fire('<portlet:namespace />enableRemovedSites', {
-		selectors: document.querySelectorAll('.selector-button:disabled')
+		selectors: document.querySelectorAll('.selector-button:disabled'),
 	});
 
 	Util.selectEntityHandler(

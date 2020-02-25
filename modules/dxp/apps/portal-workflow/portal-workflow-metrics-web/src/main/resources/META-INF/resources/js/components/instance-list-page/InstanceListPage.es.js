@@ -44,27 +44,27 @@ const InstanceListPage = ({routeParams}) => {
 		selectAll: false,
 		selectedTasks: [],
 		useSameAssignee: false,
-		visible: false
+		visible: false,
 	});
 
 	const [instanceDetailsModal, setInstanceDetailsModal] = useState({
 		processId,
-		visible: false
+		visible: false,
 	});
 
 	const [singleModal, setSingleModal] = useState({
-		visible: false
+		visible: false,
 	});
 
 	const [singleTransition, setSingleTransition] = useState({
 		selectedItemId: undefined,
 		title: '',
 		transitionName: '',
-		visible: false
+		visible: false,
 	});
 
 	const [updateDueDate, setUpdateDueDate] = useState({
-		visible: false
+		visible: false,
 	});
 
 	const modalState = {
@@ -77,7 +77,7 @@ const InstanceListPage = ({routeParams}) => {
 		setUpdateDueDate,
 		singleModal,
 		singleTransition,
-		updateDueDate
+		updateDueDate,
 	};
 
 	useProcessTitle(processId, Liferay.Language.get('all-items'));
@@ -87,7 +87,7 @@ const InstanceListPage = ({routeParams}) => {
 		'processStep',
 		'processStatus',
 		'slaStatus',
-		'timeRange'
+		'timeRange',
 	];
 
 	const {
@@ -95,7 +95,7 @@ const InstanceListPage = ({routeParams}) => {
 		filterValues: {assigneeUserIds, slaStatuses, statuses = [], taskKeys},
 		filtersError,
 		prefixedKeys,
-		selectedFilters
+		selectedFilters,
 	} = useFilter({filterKeys});
 
 	const {dateEnd, dateStart} =
@@ -112,7 +112,7 @@ const InstanceListPage = ({routeParams}) => {
 	if (completedStatus && isValidDate(dateEnd) && isValidDate(dateStart)) {
 		timeRangeParams = {
 			dateEnd: dateEnd.toISOString(),
-			dateStart: dateStart.toISOString()
+			dateStart: dateStart.toISOString(),
 		};
 		completedAndDate = true;
 	}
@@ -125,9 +125,9 @@ const InstanceListPage = ({routeParams}) => {
 			slaStatuses,
 			statuses,
 			taskKeys,
-			...timeRangeParams
+			...timeRangeParams,
 		},
-		url: `/processes/${processId}/instances`
+		url: `/processes/${processId}/instances`,
 	});
 
 	const promises = useMemo(() => {
@@ -149,7 +149,7 @@ const InstanceListPage = ({routeParams}) => {
 		filtersError,
 		singleModal.visible,
 		singleTransition.visible,
-		updateDueDate.visible
+		updateDueDate.visible,
 	]);
 
 	return (

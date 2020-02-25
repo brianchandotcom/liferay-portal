@@ -28,7 +28,7 @@ export default function FragmentEntryLinksWithComments() {
 			.filter(item => item.type === LAYOUT_DATA_ITEM_TYPES.fragment)
 			.map(item => [
 				item,
-				state.fragmentEntryLinks[item.config.fragmentEntryLinkId]
+				state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
 			])
 			.map(([item, fragmentEntryLink]) => [
 				item,
@@ -38,8 +38,8 @@ export default function FragmentEntryLinksWithComments() {
 						({resolved}) =>
 							(state.showResolvedComments && resolved) ||
 							!resolved
-					)
-				}
+					),
+				},
 			])
 			.filter(
 				([, fragmentEntryLink]) => fragmentEntryLink.comments.length

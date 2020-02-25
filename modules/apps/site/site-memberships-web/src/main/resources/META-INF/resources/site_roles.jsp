@@ -57,7 +57,7 @@ RolesDisplayContext rolesDisplayContext = new RolesDisplayContext(request, rende
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(rolesDisplayContext.getEventName()) %>',
 			{
-				data: event.elements.allSelectedElements.getDOMNodes()
+				data: event.elements.allSelectedElements.getDOMNodes(),
 			}
 		);
 	});

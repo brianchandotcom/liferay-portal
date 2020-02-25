@@ -30,24 +30,24 @@ AUI.add(
 		var Blogs = A.Component.create({
 			ATTRS: {
 				constants: {
-					validator: Lang.isObject
+					validator: Lang.isObject,
 				},
 
 				descriptionLength: {
 					validator: Lang.isNumber,
-					value: 400
+					value: 400,
 				},
 
 				editEntryURL: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				entry: {
-					validator: Lang.isObject
+					validator: Lang.isObject,
 				},
 
 				saveInterval: {
-					value: 30000
+					value: 30000,
 				},
 
 				strings: {
@@ -68,9 +68,9 @@ AUI.add(
 						),
 						titleRequiredAtPublish: Liferay.Language.get(
 							'this-field-is-required-to-publish-the-entry'
-						)
-					}
-				}
+						),
+					},
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -129,7 +129,7 @@ AUI.add(
 							['coverImageUploaded', 'coverImageSelected'],
 							instance._showCaption,
 							instance
-						)
+						),
 					];
 
 					var publishButton = instance.one('#publishButton');
@@ -452,7 +452,7 @@ AUI.add(
 								subtitle,
 								title,
 								urlTitle,
-								workflowAction: constants.ACTION_SAVE_DRAFT
+								workflowAction: constants.ACTION_SAVE_DRAFT,
 							});
 
 							var customAttributes = form.all(
@@ -474,7 +474,7 @@ AUI.add(
 
 							Liferay.Util.fetch(instance.get('editEntryURL'), {
 								body,
-								method: 'POST'
+								method: 'POST',
 							})
 								.then(response => {
 									return response.json();
@@ -774,14 +774,14 @@ AUI.add(
 					}
 
 					instance._originalFriendlyURLChanged = true;
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Blogs = Blogs;
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-form']
+		requires: ['aui-base', 'liferay-form'],
 	}
 );

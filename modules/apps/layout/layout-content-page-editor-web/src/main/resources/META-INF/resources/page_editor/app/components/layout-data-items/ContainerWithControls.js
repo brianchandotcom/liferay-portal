@@ -19,7 +19,7 @@ import React, {useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
@@ -37,14 +37,14 @@ const ContainerWithControls = React.forwardRef(
 		const isMounted = useIsMounted();
 		const [
 			openSaveFragmentCompositionModal,
-			setOpenSaveFragmentCompositionModal
+			setOpenSaveFragmentCompositionModal,
 		] = useState(false);
 		const {observer, onClose} = useModal({
 			onClose: () => {
 				if (isMounted()) {
 					setOpenSaveFragmentCompositionModal(false);
 				}
-			}
+			},
 		});
 
 		const segmentsExperienceId = useSelector(
@@ -59,7 +59,7 @@ const ContainerWithControls = React.forwardRef(
 					duplicateItem({
 						itemId: item.itemId,
 						selectItem,
-						store: {segmentsExperienceId}
+						store: {segmentsExperienceId},
 					})
 				);
 			}
@@ -74,7 +74,7 @@ const ContainerWithControls = React.forwardRef(
 		const content = (
 			<Container
 				className={classNames('page-editor__container', {
-					empty: !item.children.length
+					empty: !item.children.length,
 				})}
 				item={item}
 				ref={ref}
@@ -83,7 +83,7 @@ const ContainerWithControls = React.forwardRef(
 					buttons={[
 						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
 						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
+						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration,
 					]}
 					item={item}
 					itemRef={ref}
@@ -116,7 +116,7 @@ const ContainerWithControls = React.forwardRef(
 
 ContainerWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default ContainerWithControls;

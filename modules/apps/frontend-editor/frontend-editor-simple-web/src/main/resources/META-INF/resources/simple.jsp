@@ -177,7 +177,7 @@ name = HtmlUtil.escapeJS(name);
 					new A.Resize({
 						handles: 'br',
 						node: '#<%= name %>Container',
-						wrap: true
+						wrap: true,
 					});
 				}, 0);
 			</c:if>
@@ -215,12 +215,12 @@ name = HtmlUtil.escapeJS(name);
 
 			nativeEditor.setAttribute('dir', contentsLanguageDir);
 			nativeEditor.setAttribute('lang', contentsLanguage);
-		}
+		},
 	};
 
 	Liferay.fire('editorAPIReady', {
 		editor: window['<%= name %>'],
-		editorName: '<%= name %>'
+		editorName: '<%= name %>',
 	});
 
 	<c:if test="<%= autoCreate %>">

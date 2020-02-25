@@ -22,11 +22,11 @@
 				modules: {
 					'liferay-bookmarks': {
 						path: 'main.js',
-						requires: ['liferay-portlet-base']
-					}
+						requires: ['liferay-portlet-base'],
+					},
 				},
-				root: MODULE_PATH + '/bookmarks/js/'
-			}
-		}
+				root: MODULE_PATH + '/bookmarks/js/',
+			},
+		},
 	});
 })();

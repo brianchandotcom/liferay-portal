@@ -30,14 +30,14 @@ function AddMenu({dropdownItems, portletId}) {
 
 			Liferay.Util.openInDialog(event.nativeEvent || event, {
 				dialog: {
-					destroyOnHide: true
+					destroyOnHide: true,
 				},
 				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
+					bodyCssClass: 'dialog-with-footer',
 				},
 				id: `_${portletId}_addMenuItem`,
 				title: event.target.title || event.target.innerText,
-				uri
+				uri,
 			});
 		},
 		[portletId]
@@ -56,7 +56,7 @@ function AddMenu({dropdownItems, portletId}) {
 			addMenuDefaultEventHandlerId,
 			new AddMenuDefaultEventHandler(),
 			{
-				destroyOnNavigate: true
+				destroyOnNavigate: true,
 			}
 		);
 	}

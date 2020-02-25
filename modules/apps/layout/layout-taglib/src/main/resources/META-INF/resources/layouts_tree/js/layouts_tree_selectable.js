@@ -28,8 +28,8 @@ AUI.add(
 			ATTRS: {
 				defaultState: {
 					validator: Lang.isBoolean,
-					value: false
-				}
+					value: false,
+				},
 			},
 
 			EXTENDS: A.Plugin.Base,
@@ -48,7 +48,7 @@ AUI.add(
 						'Modified checked and type attributes',
 						A.merge(currentRetVal, {
 							checked: instance.get(STR_DEFAULT_STATE),
-							type: 'liferay-task'
+							type: 'liferay-task',
 						})
 					);
 				},
@@ -59,7 +59,7 @@ AUI.add(
 						Lang.sub(LABEL_TPL, {
 							cssClass,
 							label,
-							title
+							title,
 						})
 					);
 				},
@@ -72,7 +72,7 @@ AUI.add(
 						A.merge(A.Do.currentRetVal, {
 							checked: instance.get(STR_DEFAULT_STATE),
 							label: rootConfig.label,
-							type: 'liferay-task'
+							type: 'liferay-task',
 						})
 					);
 				},
@@ -85,7 +85,7 @@ AUI.add(
 					if (event.target === event.originalTarget) {
 						host.fire('selectableNodeCheckedChange', {
 							checked: event.newVal,
-							node: event.target
+							node: event.target,
 						});
 					}
 				},
@@ -97,7 +97,7 @@ AUI.add(
 
 					if (event.src !== A.Widget.UI_SRC) {
 						host.fire('selectableNodeChildrenChange', {
-							node: event.target
+							node: event.target,
 						});
 					}
 				},
@@ -108,7 +108,7 @@ AUI.add(
 					var host = instance.get(STR_HOST);
 
 					host.fire('selectableTreeAppend', {
-						node: event.tree.node
+						node: event.tree.node,
 					});
 				},
 
@@ -164,16 +164,16 @@ AUI.add(
 							'_formatRootNode',
 							instance._formatRootNode,
 							instance
-						)
+						),
 					];
-				}
-			}
+				},
+			},
 		});
 
 		A.Plugin.LayoutsTreeSelectable = LayoutsTreeSelectable;
 	},
 	'',
 	{
-		requires: ['liferay-layouts-tree-node-task']
+		requires: ['liferay-layouts-tree-node-task'],
 	}
 );

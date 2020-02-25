@@ -43,8 +43,8 @@ export const dropCustomObjectField = ({
 		fieldType: {
 			...fieldType,
 			label: label[themeDisplay.getLanguageId()],
-			settingsContext
-		}
+			settingsContext,
+		},
 	};
 };
 
@@ -61,12 +61,12 @@ export const dropLayoutBuilderField = ({
 		...payload,
 		fieldType: {
 			...fieldType,
-			editable: true
-		}
+			editable: true,
+		},
 	};
 };
 
 export const deleteDefinitionField = fieldName => ({
 	payload: {fieldName},
-	type: DataLayoutBuilderActions.DELETE_DATA_DEFINITION_FIELD
+	type: DataLayoutBuilderActions.DELETE_DATA_DEFINITION_FIELD,
 });

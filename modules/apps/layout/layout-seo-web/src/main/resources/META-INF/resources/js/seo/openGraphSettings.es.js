@@ -24,7 +24,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		eventName: `${namespace}openGraphImageSelectedItem`,
 		singleSelect: true,
 		title: Liferay.Language.get('open-graph-image'),
-		url: uploadOpenGraphImageURL
+		url: uploadOpenGraphImageURL,
 	});
 
 	const openGraphImageFileEntryId = document.getElementById(

@@ -75,7 +75,7 @@ name = HtmlUtil.escapeJS(name);
 	var browseUrls = {
 		file: 'filebrowserBrowseUrl',
 		image: 'filebrowserImageBrowseUrl',
-		media: 'filebrowserVideoBrowseUrl'
+		media: 'filebrowserVideoBrowseUrl',
 	};
 
 	var getInitialContent = function() {
@@ -270,7 +270,7 @@ name = HtmlUtil.escapeJS(name);
 				file_picker_callback: window['<%= name %>'].filePickerCallback,
 				height: 400,
 				init_instance_callback: window['<%= name %>'].initInstanceCallback,
-				paste_data_images: true
+				paste_data_images: true,
 			};
 
 			<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
@@ -330,7 +330,7 @@ name = HtmlUtil.escapeJS(name);
 			}
 
 			Liferay.component('<%= name %>', window['<%= name %>'], {
-				portletId: '<%= portletId %>'
+				portletId: '<%= portletId %>',
 			});
 		},
 
@@ -367,12 +367,12 @@ name = HtmlUtil.escapeJS(name);
 			this.contentsLanguage = event.item.getAttribute('data-value');
 			this.contentsLanguageDir =
 				Liferay.Language.direction[this.contentsLanguage];
-		}
+		},
 	};
 
 	Liferay.fire('editorAPIReady', {
 		editor: window['<%= name %>'],
-		editorName: '<%= name %>'
+		editorName: '<%= name %>',
 	});
 
 	<c:if test="<%= autoCreate %>">

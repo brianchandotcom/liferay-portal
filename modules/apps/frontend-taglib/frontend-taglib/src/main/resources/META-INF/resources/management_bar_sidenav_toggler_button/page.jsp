@@ -36,7 +36,7 @@
 			position: '<%= position %>',
 			type: '<%= type %>',
 			typeMobile: '<%= typeMobile %>',
-			width: '<%= width %>'
+			width: '<%= width %>',
 		});
 
 		sidenavInstance.on('closed.lexicon.sidenav', function(event) {

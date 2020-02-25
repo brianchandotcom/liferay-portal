@@ -31,20 +31,20 @@ import TagList from '../../components/TagList.es';
 import {
 	createAnswer,
 	getThread,
-	markAsAnswerMessageBoardMessage
+	markAsAnswerMessageBoardMessage,
 } from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {
 	dateToBriefInternationalHuman,
 	getCKEditorConfig,
-	onBeforeLoadCKEditor
+	onBeforeLoadCKEditor,
 } from '../../utils/utils.es';
 
 export default ({
 	location: key,
 	match: {
-		params: {questionId}
-	}
+		params: {questionId},
+	},
 }) => {
 	const context = useContext(AppContext);
 
@@ -77,7 +77,7 @@ export default ({
 	const deleteAnswer = useCallback(
 		answer => {
 			setAnswers([
-				...answers.filter(otherAnswer => answer.id !== otherAnswer.id)
+				...answers.filter(otherAnswer => answer.id !== otherAnswer.id),
 			]);
 		},
 		[answers]
@@ -97,7 +97,7 @@ export default ({
 								otherAnswer.id === answerId;
 
 							return otherAnswer;
-						})
+						}),
 					]);
 				});
 			}
@@ -158,7 +158,7 @@ export default ({
 												onSubscription={subscribed =>
 													setQuestion({
 														...question,
-														subscribed
+														subscribed,
 													})
 												}
 												question={question}

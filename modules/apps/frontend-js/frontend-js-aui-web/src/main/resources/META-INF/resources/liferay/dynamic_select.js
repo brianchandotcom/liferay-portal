@@ -157,13 +157,13 @@ AUI.add(
 						Liferay.Util.toggleDisabled(select, !list.length);
 					}
 				}
-			}
+			},
 		};
 
 		Liferay.DynamicSelect = DynamicSelect;
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base'],
 	}
 );

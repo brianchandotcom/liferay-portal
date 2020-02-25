@@ -116,7 +116,7 @@ SearchContainer searchContainer = editUserGroupAssignmentsManagementToolbarDispl
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(eventName) %>',
 			{
-				data: data.join(',')
+				data: data.join(','),
 			}
 		);
 	});

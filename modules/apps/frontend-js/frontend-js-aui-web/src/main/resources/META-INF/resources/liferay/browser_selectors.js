@@ -50,12 +50,12 @@ YUI.add(
 			'netscape',
 			'icab',
 			'konqueror',
-			'safari'
+			'safari',
 		];
 
 		var MAP_OS_SELECTORS = {
 			macintosh: 'mac',
-			windows: 'win'
+			windows: 'win',
 		};
 
 		var nav = navigator;
@@ -82,7 +82,7 @@ YUI.add(
 			konqueror: 0,
 			mozilla: 0,
 			netscape: 0,
-			safari: 0
+			safari: 0,
 		};
 
 		UAX.mac = OS == 'macintosh';
@@ -171,7 +171,7 @@ YUI.add(
 
 					var versionObj = {
 						major: versionMajor,
-						string: ''
+						string: '',
 					};
 
 					var i = BROWSERS.length;
@@ -312,13 +312,13 @@ YUI.add(
 				}
 
 				documentElement.className += ' ' + selectors;
-			}
+			},
 		};
 
 		Liferay.BrowserSelectors = BrowserSelectors;
 	},
 	'',
 	{
-		requires: ['yui-base']
+		requires: ['yui-base'],
 	}
 );

@@ -71,6 +71,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	new Liferay.UADExport({
 		exportProcessesNode: '#exportProcesses',
 		exportProcessesResourceURL: '<%= exportProcessesURL.toString() %>',
-		namespace: '<portlet:namespace />'
+		namespace: '<portlet:namespace />',
 	});
 </aui:script>

@@ -96,15 +96,15 @@ double interestPaid = totalPaid - loanAmount;
 
 		A.io.request(uri, {
 			form: {
-				id: form
+				id: form,
 			},
 			on: {
 				success: function(event, id, obj) {
 					var responseData = this.get('responseData');
 
 					parentNode.setContent(responseData);
-				}
-			}
+				},
+			},
 		});
 
 		event.halt();

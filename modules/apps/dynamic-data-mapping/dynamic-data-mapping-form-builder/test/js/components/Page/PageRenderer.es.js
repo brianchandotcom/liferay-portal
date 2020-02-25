@@ -35,7 +35,7 @@ describe('PageRenderer', () => {
 			page,
 			pageId: 0,
 			spritemap,
-			total: 1
+			total: 1,
 		};
 
 		jest.useFakeTimers();
@@ -45,15 +45,15 @@ describe('PageRenderer', () => {
 		component = new PageRenderer({
 			...componentProps,
 			page: {
-				rows: [{}]
-			}
+				rows: [{}],
+			},
 		});
 		expect(component).toMatchSnapshot();
 	});
 
 	it('changes the page title', () => {
 		component = new PageRenderer({
-			...componentProps
+			...componentProps,
 		});
 
 		const pageTitle = component.element.querySelector(
@@ -74,7 +74,7 @@ describe('PageRenderer', () => {
 
 	it('changes the page title', () => {
 		component = new PageRenderer({
-			...componentProps
+			...componentProps,
 		});
 
 		const pageDescription = component.element.querySelector(
@@ -95,7 +95,7 @@ describe('PageRenderer', () => {
 
 	it('renders a layout and emit an event when delete button is clicked', () => {
 		component = new PageRenderer({
-			...componentProps
+			...componentProps,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -111,7 +111,7 @@ describe('PageRenderer', () => {
 
 	it('renders a layout and emit an event when duplicate button is clicked', () => {
 		component = new PageRenderer({
-			...componentProps
+			...componentProps,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -127,7 +127,7 @@ describe('PageRenderer', () => {
 
 	it('renders a layout with emit an field clicked event', () => {
 		component = new PageRenderer({
-			...componentProps
+			...componentProps,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -141,7 +141,7 @@ describe('PageRenderer', () => {
 	it('emits a fieldClicked event with the field location', () => {
 		component = new PageRenderer({
 			...componentProps,
-			dragAndDropDisabled: true
+			dragAndDropDisabled: true,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -154,7 +154,7 @@ describe('PageRenderer', () => {
 			expect.objectContaining({
 				columnIndex: expect.anything(),
 				pageIndex: expect.any(Number),
-				rowIndex: expect.any(Number)
+				rowIndex: expect.any(Number),
 			})
 		);
 	});

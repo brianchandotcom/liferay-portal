@@ -22,7 +22,7 @@ import {PADDING_OPTIONS} from '../../config/constants/paddingOptions';
 export const ContainerPaddingVerticalConfiguration = ({
 	onValueChange,
 	paddingBottom,
-	paddingTop
+	paddingTop,
 }) => (
 	<ClayForm.Group className="form-group-autofit" small>
 		<div className="form-group-item">
@@ -36,7 +36,7 @@ export const ContainerPaddingVerticalConfiguration = ({
 					onValueChange({
 						[CONTAINER_PADDING_IDENTIFIERS.paddingTop]: Number(
 							value
-						)
+						),
 					})
 				}
 				options={PADDING_OPTIONS}
@@ -55,7 +55,7 @@ export const ContainerPaddingVerticalConfiguration = ({
 					onValueChange({
 						[CONTAINER_PADDING_IDENTIFIERS.paddingBottom]: Number(
 							value
-						)
+						),
 					})
 				}
 				options={PADDING_OPTIONS}
@@ -68,12 +68,12 @@ export const ContainerPaddingVerticalConfiguration = ({
 ContainerPaddingVerticalConfiguration.propTypes = {
 	onValueChange: PropTypes.func.isRequired,
 	paddingBottom: PropTypes.number,
-	paddingTop: PropTypes.number
+	paddingTop: PropTypes.number,
 };
 
 export const ContainerPaddingHorizontalConfiguration = ({
 	onValueChange,
-	paddingHorizontal
+	paddingHorizontal,
 }) => (
 	<ClayForm.Group className="form-group-autofit" small>
 		<div className="form-group-item">
@@ -87,7 +87,7 @@ export const ContainerPaddingHorizontalConfiguration = ({
 					onValueChange({
 						[CONTAINER_PADDING_IDENTIFIERS.paddingHorizontal]: Number(
 							value
-						)
+						),
 					})
 				}
 				options={PADDING_OPTIONS}
@@ -99,5 +99,5 @@ export const ContainerPaddingHorizontalConfiguration = ({
 
 ContainerPaddingVerticalConfiguration.propTypes = {
 	onValueChange: PropTypes.func.isRequired,
-	paddingHorizontal: PropTypes.number
+	paddingHorizontal: PropTypes.number,
 };

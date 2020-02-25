@@ -239,11 +239,11 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 					);
 
 					actionMethodNameInput.attr('disabled', false);
-				}
+				},
 			},
 			resultFilters: 'phraseMatch',
 			resultTextLocator: 'serviceClassName',
-			source: serviceClassNamesToContextNames
+			source: serviceClassNamesToContextNames,
 		}).render();
 
 		new A.AutoComplete({
@@ -263,7 +263,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 				}
 
 				getActionMethodNames(contextName, serviceClassName, callback);
-			}
+			},
 		}).render();
 	};
 
@@ -344,13 +344,13 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 
 				serviceClassNameInput.attr({
 					'data-context-name': '',
-					'data-service-class-name': ''
+					'data-service-class-name': '',
 				});
 
 				initAutoCompleteRow(rowNode);
 			},
-			delete: updateAdvancedModeTextarea
-		}
+			delete: updateAdvancedModeTextarea,
+		},
 	}).render();
 
 	var rows = A.all(

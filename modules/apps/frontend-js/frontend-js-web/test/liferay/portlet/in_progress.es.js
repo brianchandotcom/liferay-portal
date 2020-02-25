@@ -45,7 +45,7 @@ describe('PortletHub', () => {
 				register(portletA),
 				register(portletB),
 				register(portletC),
-				register(portletD)
+				register(portletD),
 			]).then(values => {
 				hubA = values[0];
 

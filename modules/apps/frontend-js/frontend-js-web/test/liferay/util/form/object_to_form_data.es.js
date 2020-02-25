@@ -21,7 +21,7 @@ describe('Liferay.Util.objectToFormData', () => {
 		it('converts the object string entries into string FormData entries', () => {
 			const body = {
 				value1: 'value1',
-				value2: 'value2'
+				value2: 'value2',
 			};
 
 			const formData = objectToFormData(body);
@@ -33,7 +33,7 @@ describe('Liferay.Util.objectToFormData', () => {
 		it('converts the object boolean entries into string FormData entries', () => {
 			const body = {
 				value1: true,
-				value2: false
+				value2: false,
 			};
 
 			const formData = objectToFormData(body);
@@ -45,7 +45,7 @@ describe('Liferay.Util.objectToFormData', () => {
 		it('converts the object number entries into string FormData entries', () => {
 			const body = {
 				value1: 1,
-				value2: -1
+				value2: -1,
 			};
 
 			const formData = objectToFormData(body);
@@ -56,7 +56,7 @@ describe('Liferay.Util.objectToFormData', () => {
 
 		it('converts the object File entries into File FormData entries', () => {
 			const body = {
-				value1: new File([''], '')
+				value1: new File([''], ''),
 			};
 
 			const formData = objectToFormData(body);
@@ -68,7 +68,7 @@ describe('Liferay.Util.objectToFormData', () => {
 	describe('for objects with array values', () => {
 		it('generates a grouped field matching the key of the array', () => {
 			const body = {
-				array: ['value1', 'value2']
+				array: ['value1', 'value2'],
 			};
 
 			const formData = objectToFormData(body);
@@ -85,10 +85,10 @@ describe('Liferay.Util.objectToFormData', () => {
 				objectValue: {
 					arrayValue: ['arrayValue1', 'arrayValue2'],
 					objectValue: {
-						stringValue: 'objectValue.stringValue'
+						stringValue: 'objectValue.stringValue',
 					},
-					stringValue: 'stringValue'
-				}
+					stringValue: 'stringValue',
+				},
 			};
 
 			const formData = objectToFormData(body);

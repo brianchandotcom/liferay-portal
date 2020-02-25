@@ -99,7 +99,7 @@ describe('PortletHub', () => {
 
 		it('throws a TypeError if action parameters is invalid', () => {
 			const parameters = {
-				a: 'value'
+				a: 'value',
 			};
 
 			const testFn = () => {
@@ -138,7 +138,7 @@ describe('PortletHub', () => {
 		it('does not throw if both arguments are valid', () => {
 			const element = document.createElement('form');
 			const parameters = {
-				param1: ['paramValue1']
+				param1: ['paramValue1'],
 			};
 
 			return hubA.action(parameters, element).then(() => {
@@ -161,7 +161,7 @@ describe('PortletHub', () => {
 		it('throws an NotInitializedException if no onStateChange listener is registered.', () => {
 			const element = document.createElement('form');
 			const parameters = {
-				param1: ['paramValue1']
+				param1: ['paramValue1'],
 			};
 
 			const testFn = () => {
@@ -208,7 +208,7 @@ describe('PortletHub', () => {
 				register(portletA),
 				register(portletB),
 				register(portletC),
-				register(portletD)
+				register(portletD),
 			]).then(values => {
 				hubA = values[0];
 

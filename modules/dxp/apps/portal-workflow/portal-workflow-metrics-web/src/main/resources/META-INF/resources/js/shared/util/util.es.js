@@ -54,5 +54,5 @@ export {
 	getFormattedPercentage,
 	getPercentage,
 	isValidNumber,
-	toUppercase
+	toUppercase,
 };

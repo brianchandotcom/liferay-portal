@@ -18,7 +18,7 @@ import React, {useEffect, useState} from 'react';
 
 import {
 	BackgroundImagePropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
@@ -32,12 +32,12 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 		paddingBottom,
 		paddingHorizontal,
 		paddingTop,
-		type
+		type,
 	} = {
 		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
 			LAYOUT_DATA_ITEM_TYPES.container
 		],
-		...item.config
+		...item.config,
 	};
 
 	const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 				classNameId: backgroundImage.classNameId,
 				classPK: backgroundImage.classPK,
 				fieldId: backgroundImage.fieldId,
-				onNetworkStatus: dispatch
+				onNetworkStatus: dispatch,
 			}).then(response => {
 				const {fieldValue} = response;
 
@@ -74,7 +74,7 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 				`pb-${paddingBottom} pt-${paddingTop}`,
 				{
 					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
-					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
+					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3,
 				}
 			)}
 			ref={ref}
@@ -84,7 +84,7 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 							backgroundImage: `url(${backgroundImageValue})`,
 							backgroundPosition: '50% 50%',
 							backgroundRepeat: 'no-repeat',
-							backgroundSize: 'cover'
+							backgroundSize: 'cover',
 					  }
 					: {}
 			}
@@ -92,7 +92,7 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 			<div
 				className={classNames({
 					container: type === 'fixed',
-					'container-fluid': type === 'fluid'
+					'container-fluid': type === 'fluid',
 				})}
 			>
 				{children}
@@ -109,9 +109,9 @@ Container.propTypes = {
 			paddingBottom: PropTypes.number,
 			paddingHorizontal: PropTypes.number,
 			paddingTop: PropTypes.number,
-			type: PropTypes.oneOf(['fluid', 'fixed'])
-		})
-	}).isRequired
+			type: PropTypes.oneOf(['fluid', 'fixed']),
+		}),
+	}).isRequired,
 };
 
 export default Container;

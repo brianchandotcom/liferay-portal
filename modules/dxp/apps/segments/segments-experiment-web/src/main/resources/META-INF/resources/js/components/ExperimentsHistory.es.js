@@ -104,7 +104,7 @@ function ExperimentsHistory({experimentHistory, onDeleteSegmentsExperiment}) {
 
 ExperimentsHistory.propTypes = {
 	experimentHistory: PropTypes.arrayOf(SegmentsExperimentType).isRequired,
-	onDeleteSegmentsExperiment: PropTypes.func.isRequired
+	onDeleteSegmentsExperiment: PropTypes.func.isRequired,
 };
 
 export default ExperimentsHistory;

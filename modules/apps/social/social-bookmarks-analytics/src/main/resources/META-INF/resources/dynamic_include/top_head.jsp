@@ -23,7 +23,7 @@
 				className: data.className,
 				classPK: data.classPK,
 				type: data.type,
-				url: data.url
+				url: data.url,
 			});
 		}
 	};

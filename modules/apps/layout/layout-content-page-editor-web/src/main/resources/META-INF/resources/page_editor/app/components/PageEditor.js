@@ -21,11 +21,11 @@ import React, {useCallback, useEffect, useRef} from 'react';
 
 import {
 	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {
 	ARROW_DOWN_KEYCODE,
-	ARROW_UP_KEYCODE
+	ARROW_UP_KEYCODE,
 } from '../config/constants/keycodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {MOVE_ITEM_DIRECTIONS} from '../config/constants/moveItemDirections';
@@ -43,7 +43,7 @@ import {
 	DropZoneWithControls,
 	FragmentWithControls,
 	Root,
-	RowWithControls
+	RowWithControls,
 } from './layout-data-items/index';
 import {DragDropManager} from './useDragAndDrop';
 
@@ -53,7 +53,7 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: DropZoneWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: FragmentWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
-	[LAYOUT_DATA_ITEM_TYPES.row]: RowWithControls
+	[LAYOUT_DATA_ITEM_TYPES.row]: RowWithControls,
 };
 
 export default function PageEditor({withinMasterPage = false}) {
@@ -134,7 +134,7 @@ export default function PageEditor({withinMasterPage = false}) {
 						itemId,
 						parentItemId: parentId,
 						position,
-						store
+						store,
 					})
 				);
 			}
@@ -180,7 +180,7 @@ export default function PageEditor({withinMasterPage = false}) {
 			{isPageConversion && (
 				<div
 					className={classNames('page-editor__conversion-messages', {
-						'page-editor__conversion-messages--with-sidebar-open': sidebarOpen
+						'page-editor__conversion-messages--with-sidebar-open': sidebarOpen,
 					})}
 				>
 					<ClayAlert
@@ -210,7 +210,7 @@ export default function PageEditor({withinMasterPage = false}) {
 				className={classNames('page-editor', {
 					'page-editor--with-sidebar': !withinMasterPage,
 					'page-editor--with-sidebar-open':
-						sidebarOpen && !withinMasterPage
+						sidebarOpen && !withinMasterPage,
 				})}
 				id="page-editor"
 				onClick={onClick}
@@ -235,7 +235,7 @@ export default function PageEditor({withinMasterPage = false}) {
 }
 
 PageEditor.propTypes = {
-	withinMasterPage: PropTypes.bool
+	withinMasterPage: PropTypes.bool,
 };
 
 class LayoutDataItem extends React.PureComponent {
@@ -247,7 +247,7 @@ class LayoutDataItem extends React.PureComponent {
 		super(props);
 
 		this.state = {
-			error: null
+			error: null,
 		};
 	}
 
@@ -270,7 +270,7 @@ class LayoutDataItem extends React.PureComponent {
 LayoutDataItem.propTypes = {
 	fragmentEntryLinks: PropTypes.object.isRequired,
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 function LayoutDataItemContent({
@@ -289,7 +289,7 @@ function LayoutDataItemContent({
 			componentRef.current.scrollIntoView({
 				behavior: 'smooth',
 				block: 'nearest',
-				inline: 'nearest'
+				inline: 'nearest',
 			});
 		}
 	}, [componentRef, isActive, isMounted]);
@@ -314,5 +314,5 @@ function LayoutDataItemContent({
 LayoutDataItemContent.propTypes = {
 	fragmentEntryLinks: PropTypes.object.isRequired,
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };

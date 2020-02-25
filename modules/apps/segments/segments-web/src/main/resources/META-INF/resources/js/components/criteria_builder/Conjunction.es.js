@@ -26,14 +26,14 @@ function Conjunction({
 	conjunctionName,
 	editing,
 	onSelect,
-	supportedConjunctions = []
+	supportedConjunctions = [],
 }) {
 	const [active, setActive] = useState(false);
 
 	const classnames = getCN(
 		{
 			'conjunction-button': editing,
-			'conjunction-label': !editing
+			'conjunction-label': !editing,
 		},
 		className
 	);
@@ -93,7 +93,7 @@ Conjunction.propTypes = {
 	conjunctionName: PropTypes.string.isRequired,
 	editing: PropTypes.bool.isRequired,
 	onSelect: PropTypes.func.isRequired,
-	supportedConjunctions: PropTypes.arrayOf(conjunctionShape)
+	supportedConjunctions: PropTypes.arrayOf(conjunctionShape),
 };
 
 export default Conjunction;

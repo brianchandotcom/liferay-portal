@@ -31,9 +31,9 @@ const CKEDITOR_CONFIG = {
 				'Strike',
 				'-',
 				'CopyFormatting',
-				'RemoveFormat'
+				'RemoveFormat',
 			],
-			name: 'basicstyles'
+			name: 'basicstyles',
 		},
 		{
 			items: [
@@ -48,14 +48,14 @@ const CKEDITOR_CONFIG = {
 				'JustifyLeft',
 				'JustifyCenter',
 				'JustifyRight',
-				'JustifyBlock'
+				'JustifyBlock',
 			],
-			name: 'paragraph'
+			name: 'paragraph',
 		},
 		{items: ['Link', 'Unlink', 'Anchor'], name: 'links'},
 		{
 			items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
-			name: 'insert'
+			name: 'insert',
 		},
 		'/',
 		{items: ['Styles', 'Format', 'Font', 'FontSize'], name: 'styles'},
@@ -63,15 +63,15 @@ const CKEDITOR_CONFIG = {
 		{items: ['Maximize'], name: 'tools'},
 		{
 			items: ['Source'],
-			name: 'document'
-		}
-	]
+			name: 'document',
+		},
+	],
 };
 
 const RichText = ({data, dispatch, name, readOnly}) => {
 	const editorProps = {
 		config: CKEDITOR_CONFIG,
-		data
+		data,
 	};
 
 	if (readOnly) {
@@ -82,7 +82,7 @@ const RichText = ({data, dispatch, name, readOnly}) => {
 		editorProps.onChange = event => {
 			dispatch({
 				payload: event.editor.getData(),
-				type: 'value'
+				type: 'value',
 			});
 		};
 	}

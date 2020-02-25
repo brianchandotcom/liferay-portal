@@ -19,7 +19,7 @@ import {
 	UPDATE_EDITING_LANGUAGE_ID,
 	UPDATE_FIELD_TYPES,
 	UPDATE_FOCUSED_FIELD,
-	UPDATE_PAGES
+	UPDATE_PAGES,
 } from '../actions.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 
@@ -35,7 +35,7 @@ export default ({children, dataLayoutBuilder}) => {
 				provider.once('rendered', () => {
 					dispatch({
 						payload: newVal,
-						type: UPDATE_EDITING_LANGUAGE_ID
+						type: UPDATE_EDITING_LANGUAGE_ID,
 					});
 				});
 			}
@@ -51,7 +51,7 @@ export default ({children, dataLayoutBuilder}) => {
 			provider.once('rendered', () => {
 				dispatch({
 					payload: {focusedField: newVal},
-					type: UPDATE_FOCUSED_FIELD
+					type: UPDATE_FOCUSED_FIELD,
 				});
 			});
 		});

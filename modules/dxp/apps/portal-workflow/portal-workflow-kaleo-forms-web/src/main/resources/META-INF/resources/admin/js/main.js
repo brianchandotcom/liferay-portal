@@ -18,34 +18,34 @@ AUI.add(
 			DETAILS: 1,
 			FIELDS: 2,
 			FORMS: 4,
-			WORKFLOW: 3
+			WORKFLOW: 3,
 		};
 
 		var KaleoFormsAdmin = A.Component.create({
 			ATTRS: {
 				currentURL: {
-					value: null
+					value: null,
 				},
 
 				form: {
-					value: null
+					value: null,
 				},
 
 				kaleoProcessId: {
-					value: null
+					value: null,
 				},
 
 				portletId: {
-					value: null
+					value: null,
 				},
 
 				saveInPortletSessionURL: {
-					value: null
+					value: null,
 				},
 
 				tabView: {
-					value: null
-				}
+					value: null,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -174,7 +174,7 @@ AUI.add(
 						ddmStructureName,
 						ddmTemplateId,
 						kaleoTaskFormPairsData,
-						workflowDefinition
+						workflowDefinition,
 					});
 				},
 
@@ -326,7 +326,7 @@ AUI.add(
 
 					instance.formWizard = new Liferay.KaleoFormWizard({
 						form: instance.get('form'),
-						tabView: instance.get('tabView')
+						tabView: instance.get('tabView'),
 					});
 
 					instance.bindUI();
@@ -337,7 +337,7 @@ AUI.add(
 					var instance = this;
 
 					A.io.request(instance.get('saveInPortletSessionURL'), {
-						data: instance.ns(data)
+						data: instance.ns(data),
 					});
 				},
 
@@ -384,8 +384,8 @@ AUI.add(
 						instance.prevBtn.show();
 						instance.submitBtn.hide();
 					}
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.KaleoFormsAdmin = KaleoFormsAdmin;
@@ -400,7 +400,7 @@ AUI.add(
 			'liferay-kaleo-forms-components',
 			'liferay-portlet-url',
 			'liferay-store',
-			'node-load'
-		]
+			'node-load',
+		],
 	}
 );

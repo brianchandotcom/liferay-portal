@@ -27,11 +27,11 @@ const renderPageContent = props =>
 				actions={{
 					editURL: 'editURL',
 					permissionsURL: 'permissionsURL',
-					viewUsagesURL: 'viewUsagesURL'
+					viewUsagesURL: 'viewUsagesURL',
 				}}
 				name="Web Content Article"
 				status={{
-					hasApprovedVersion: true
+					hasApprovedVersion: true,
 				}}
 				title="Test Web Content"
 				usagesCount={1}
@@ -80,8 +80,8 @@ describe('PageContent', () => {
 	it('shows View Usages action in dropdown menu if receives a View Usages URL', () => {
 		const {getByText} = renderPageContent({
 			status: {
-				hasApprovedVersion: false
-			}
+				hasApprovedVersion: false,
+			},
 		});
 
 		fireEvent.click(getByText('open-actions-menu'));

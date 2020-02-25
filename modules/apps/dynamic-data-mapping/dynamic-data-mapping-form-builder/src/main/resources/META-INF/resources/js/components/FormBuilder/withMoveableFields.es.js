@@ -25,7 +25,7 @@ const withMoveableFields = ChildComponent => {
 			this._dragAndDrop = new DragDrop({
 				sources: '.moveable .ddm-drag',
 				targets: '.moveable .ddm-target',
-				useShim: false
+				useShim: false,
 			});
 
 			this._dragAndDrop.on(
@@ -100,7 +100,7 @@ const withMoveableFields = ChildComponent => {
 				this._handleFieldMoved({
 					addedToPlaceholder,
 					source: sourceIndexes,
-					target: targetIndexes
+					target: targetIndexes,
 				});
 			}
 		}
@@ -235,7 +235,7 @@ const withMoveableFields = ChildComponent => {
 		successPageSettings: Config.shapeOf({
 			body: Config.object(),
 			enabled: Config.bool(),
-			title: Config.object()
+			title: Config.object(),
 		}).value({}),
 
 		/**
@@ -245,7 +245,7 @@ const withMoveableFields = ChildComponent => {
 		 * @type {?string}
 		 */
 
-		view: Config.string()
+		view: Config.string(),
 	};
 
 	return MoveableFields;

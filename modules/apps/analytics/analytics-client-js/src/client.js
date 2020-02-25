@@ -33,7 +33,7 @@ class Client {
 	_getContextEvents(analytics, context) {
 		return analytics.events.filter(event => {
 			const contextHash = hash(context, {
-				unorderedObjects: false
+				unorderedObjects: false,
 			});
 
 			let eventId = false;
@@ -68,7 +68,7 @@ class Client {
 			credentials: 'same-origin',
 			headers,
 			method: 'POST',
-			mode: 'cors'
+			mode: 'cors',
 		};
 	}
 
@@ -89,7 +89,7 @@ class Client {
 			dataSourceId,
 			events,
 			protocolVersion: '1.0',
-			userId
+			userId,
 		};
 	}
 

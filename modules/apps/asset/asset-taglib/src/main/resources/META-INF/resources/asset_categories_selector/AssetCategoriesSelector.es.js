@@ -25,7 +25,7 @@ function AssetCategoriesSelector({
 	onVocabulariesChange,
 	portletURL,
 	useFallbackInput,
-	vocabularies = []
+	vocabularies = [],
 }) {
 	return (
 		<div id={id}>
@@ -45,13 +45,13 @@ function AssetCategoriesSelector({
 						onSelectedItemsChange={selectedItems => {
 							const newVocabulary = {
 								...vocabulary,
-								selectedItems
+								selectedItems,
 							};
 
 							onVocabulariesChange([
 								...vocabularies.slice(0, index),
 								newVocabulary,
-								...vocabularies.slice(index + 1)
+								...vocabularies.slice(index + 1),
 							]);
 						}}
 						portletURL={portletURL}
@@ -75,7 +75,7 @@ AssetCategoriesSelector.propTypes = {
 	label: PropTypes.string,
 	onVocabulariesChange: PropTypes.func.isRequired,
 	portletURL: PropTypes.string.isRequired,
-	useFallbackInput: PropTypes.bool
+	useFallbackInput: PropTypes.bool,
 };
 
 export default AssetCategoriesSelector;

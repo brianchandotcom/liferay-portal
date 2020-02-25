@@ -16,7 +16,7 @@ import {
 	cleanup,
 	fireEvent,
 	render,
-	waitForElement
+	waitForElement,
 } from '@testing-library/react';
 import React from 'react';
 
@@ -26,12 +26,12 @@ const availableLocales = [
 	{displayName: 'a', localeId: 'a'},
 	{displayName: 'b', localeId: 'b'},
 	{displayName: 'c', localeId: 'c'},
-	{displayName: 'd', localeId: 'd'}
+	{displayName: 'd', localeId: 'd'},
 ];
 
 const siteAvailableLocales = [
 	{displayName: 'a', localeId: 'a'},
-	{displayName: 'b', localeId: 'b'}
+	{displayName: 'b', localeId: 'b'},
 ];
 
 const defaultProps = {
@@ -40,7 +40,7 @@ const defaultProps = {
 	manageCustomLanguagesURL: '',
 	portletNamespace: 'portletNamespace',
 	siteAvailableLocales,
-	siteDefaultLocaleId: 'b'
+	siteDefaultLocaleId: 'b',
 };
 const renderLanguagesComponent = props => render(<Languages {...props} />);
 
@@ -83,7 +83,7 @@ describe('Languages', () => {
 	it('renders a "edit" button if custom option is checked', () => {
 		const {getByText} = renderLanguagesComponent({
 			...defaultProps,
-			inheritLocales: false
+			inheritLocales: false,
 		});
 
 		expect(getByText('edit'));
@@ -92,7 +92,7 @@ describe('Languages', () => {
 	it('changes the default language', () => {
 		const {container, getAllByText} = renderLanguagesComponent({
 			...defaultProps,
-			inheritLocales: false
+			inheritLocales: false,
 		});
 
 		const actions = getAllByText('make-default');
@@ -109,7 +109,7 @@ describe('Languages', () => {
 	it('fires default locale changed event', () => {
 		const {getAllByText} = renderLanguagesComponent({
 			...defaultProps,
-			inheritLocales: false
+			inheritLocales: false,
 		});
 
 		fireEvent.click(getAllByText('make-default')[0]);
@@ -124,7 +124,7 @@ describe('Languages', () => {
 	it('renders a warning when default language is changed', () => {
 		const {getAllByText, getByText} = renderLanguagesComponent({
 			...defaultProps,
-			inheritLocales: false
+			inheritLocales: false,
 		});
 
 		fireEvent.click(getAllByText('make-default')[0]);
@@ -144,7 +144,7 @@ describe('Languages', () => {
 		beforeEach(() => {
 			result = renderLanguagesComponent({
 				...defaultProps,
-				inheritLocales: false
+				inheritLocales: false,
 			});
 
 			fireEvent.click(result.getByText('edit'));

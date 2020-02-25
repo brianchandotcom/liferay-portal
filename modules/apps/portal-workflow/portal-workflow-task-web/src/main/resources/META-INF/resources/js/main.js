@@ -41,8 +41,8 @@ AUI.add(
 											}
 
 											dialog.destroy();
-										}
-									}
+										},
+									},
 								},
 								{
 									cssClass:
@@ -75,9 +75,9 @@ AUI.add(
 													dialog.hide();
 												}
 											}
-										}
-									}
-								}
+										},
+									},
+								},
 							],
 							header: [
 								{
@@ -92,14 +92,14 @@ AUI.add(
 											}
 
 											dialog.destroy();
-										}
-									}
-								}
-							]
+										},
+									},
+								},
+							],
 						},
-						width: 896
+						width: 896,
 					},
-					title: A.Lang.String.escapeHTML(title)
+					title: A.Lang.String.escapeHTML(title),
 				});
 			},
 
@@ -130,12 +130,12 @@ AUI.add(
 				}
 
 				WorkflowTasks._showPopup(form, 400, icon.text());
-			}
+			},
 		};
 		Liferay.WorkflowTasks = WorkflowTasks;
 	},
 	'',
 	{
-		requires: ['liferay-util-window']
+		requires: ['liferay-util-window'],
 	}
 );

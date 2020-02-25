@@ -108,7 +108,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 			{
 				ddmStructureKey: event.delegateTarget.getAttribute(
 					'data-ddmStructureKey'
-				)
+				),
 			}
 		);
 

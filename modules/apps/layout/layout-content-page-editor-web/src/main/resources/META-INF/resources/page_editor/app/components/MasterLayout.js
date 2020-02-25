@@ -21,7 +21,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
@@ -39,7 +39,7 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: DropZoneContainer,
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: Fragment,
 	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
-	[LAYOUT_DATA_ITEM_TYPES.row]: Row
+	[LAYOUT_DATA_ITEM_TYPES.row]: Row,
 };
 
 export default function MasterPage() {
@@ -54,7 +54,7 @@ export default function MasterPage() {
 	return (
 		<div
 			className={classNames('master-page', 'master-page--with-sidebar', {
-				'master-page--with-sidebar-open': sidebarOpen
+				'master-page--with-sidebar-open': sidebarOpen,
 			})}
 			id="master-layout"
 		>
@@ -97,7 +97,7 @@ function MasterLayoutDataItem({fragmentEntryLinks, item, layoutData}) {
 MasterLayoutDataItem.propTypes = {
 	fragmentEntryLinks: PropTypes.object.isRequired,
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 function DropZoneContainer() {
@@ -111,7 +111,7 @@ function Root({children}) {
 const FragmentContent = React.memo(function FragmentContent({
 	content: defaultContent,
 	editableValues,
-	languageId
+	languageId,
 }) {
 	const ref = useRef(null);
 	const isMounted = useIsMounted();
@@ -218,7 +218,7 @@ const FragmentContent = React.memo(function FragmentContent({
 FragmentContent.propTypes = {
 	content: PropTypes.string.isRequired,
 	editableValues: PropTypes.object.isRequired,
-	languageId: PropTypes.string
+	languageId: PropTypes.string,
 };
 
 function Fragment({fragmentEntryLinks, item}) {
@@ -240,9 +240,9 @@ Fragment.propTypes = {
 	fragmentEntryLinks: PropTypes.object.isRequired,
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({
-			fragmentEntryLinkId: PropTypes.string.isRequired
-		})
-	}).isRequired
+			fragmentEntryLinkId: PropTypes.string.isRequired,
+		}),
+	}).isRequired,
 };
 
 function editableIsMapped(editableValue) {

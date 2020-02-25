@@ -35,5 +35,5 @@ const sub = (langKey, args) => {
 };
 
 export default {
-	sub
+	sub,
 };

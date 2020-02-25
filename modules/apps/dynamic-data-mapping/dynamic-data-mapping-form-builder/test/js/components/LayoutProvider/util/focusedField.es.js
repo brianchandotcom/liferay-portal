@@ -15,14 +15,14 @@
 import mockPages from '../../../__mock__/mockPages.es';
 import {
 	getFieldProperty,
-	getFieldValue
+	getFieldValue,
 } from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/fields.es';
 import {
 	updateFocusedFieldDataType,
 	updateFocusedFieldLabel,
 	updateFocusedFieldName,
 	updateFocusedFieldOptions,
-	updateFocusedFieldProperty
+	updateFocusedFieldProperty,
 } from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/focusedField.es';
 
 const focusedField = {
@@ -38,55 +38,55 @@ const focusedField = {
 								fields: [
 									{
 										fieldName: 'name',
-										value: 'oldFieldName'
+										value: 'oldFieldName',
 									},
 									{
 										fieldName: 'label',
-										value: 'Old Field Label'
+										value: 'Old Field Label',
 									},
 									{
 										fieldName: 'readOnly',
-										value: false
+										value: false,
 									},
 									{
 										fieldName: 'dataType',
-										value: 'oldDataType'
+										value: 'oldDataType',
 									},
 									{
 										fieldName: 'predefinedValue',
 										value: [
 											{
 												label: 'Predefined',
-												value: 'Predefined'
-											}
-										]
+												value: 'Predefined',
+											},
+										],
 									},
 									{
 										fieldName: 'validation',
 										validation: {
 											dataType: 'oldDataType',
-											fieldName: 'oldFieldName'
+											fieldName: 'oldFieldName',
 										},
 										value: {
 											expression:
-												'isEmailAddress(oldFieldName)'
-										}
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		]
-	}
+												'isEmailAddress(oldFieldName)',
+										},
+									},
+								],
+							},
+						],
+					},
+				],
+			},
+		],
+	},
 };
 
 describe('LayoutProvider/util/focusedField', () => {
 	describe('updateFocusedFieldLabel(state, focusedField, value)', () => {
 		it('updates the focused field "label" property', () => {
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldLabel(
@@ -100,7 +100,7 @@ describe('LayoutProvider/util/focusedField', () => {
 
 		it('updates the settingsContext of the focused field with the new field label', () => {
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldLabel(
@@ -118,11 +118,11 @@ describe('LayoutProvider/util/focusedField', () => {
 			const mockFocusedField = {
 				...focusedField,
 				fieldName: 'GeneratedFieldName',
-				label: 'Generated Field Name'
+				label: 'Generated Field Name',
 			};
 
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldLabel(
@@ -139,7 +139,7 @@ describe('LayoutProvider/util/focusedField', () => {
 
 		it('does not automatically update the field name if it was not auto generated from its label', () => {
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldLabel(
@@ -158,7 +158,7 @@ describe('LayoutProvider/util/focusedField', () => {
 	describe('updateFocusedFieldName(state, focusedField, value)', () => {
 		it('updates the focused field "fieldName" property', () => {
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldName(
@@ -172,7 +172,7 @@ describe('LayoutProvider/util/focusedField', () => {
 
 		it('updates the settingsContext of the focused field with the new field name', () => {
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldName(
@@ -188,7 +188,7 @@ describe('LayoutProvider/util/focusedField', () => {
 
 		it('updates the validation expression of the validation field of the settingsContext with the new field name', () => {
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldName(
@@ -214,7 +214,7 @@ describe('LayoutProvider/util/focusedField', () => {
 
 		it('falls back to the previous valid name when trying to change to an invalid one', () => {
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldName(
@@ -232,7 +232,7 @@ describe('LayoutProvider/util/focusedField', () => {
 	describe('updateFocusedFieldDataType(state, focusedField, value)', () => {
 		it('updates the focused field "dataType" property', () => {
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldDataType(
@@ -246,7 +246,7 @@ describe('LayoutProvider/util/focusedField', () => {
 
 		it('updates the settingsContext of the focused field with the new dataType', () => {
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldDataType(
@@ -262,7 +262,7 @@ describe('LayoutProvider/util/focusedField', () => {
 
 		it('updates the validation expression of the validation field of the settingsContext with the new dataType', () => {
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldDataType(
@@ -286,11 +286,11 @@ describe('LayoutProvider/util/focusedField', () => {
 			const newOptions = [
 				{
 					label: 'New Label',
-					value: 'NewLabel'
-				}
+					value: 'NewLabel',
+				},
 			];
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldOptions(
@@ -306,7 +306,7 @@ describe('LayoutProvider/util/focusedField', () => {
 	describe('updateFocusedFieldProperty(state, focusedField, options)', () => {
 		it('updates the desired property', () => {
 			const state = {
-				pages: mockPages
+				pages: mockPages,
 			};
 
 			const newFocusedField = updateFocusedFieldProperty(

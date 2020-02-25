@@ -36,7 +36,7 @@
 						Liferay.Util.fetch(editor.config.readingTime.url, {
 							body: formData,
 							credentials: 'same-origin',
-							method: 'POST'
+							method: 'POST',
 						})
 							.then(response => {
 								return response.json();
@@ -61,6 +61,6 @@
 					}, 500)
 				);
 			});
-		}
+		},
 	});
 })();

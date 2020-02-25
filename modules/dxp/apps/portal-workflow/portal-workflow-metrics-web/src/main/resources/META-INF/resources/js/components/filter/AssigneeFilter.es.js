@@ -21,14 +21,14 @@ const AssigneeFilter = ({
 	filterKey = filterConstants.assignee.key,
 	options = {},
 	prefixKey = '',
-	processId
+	processId,
 }) => {
 	const defaultOptions = {
 		hideControl: false,
 		multiple: true,
 		position: 'left',
 		withSelectionTitle: false,
-		withoutRouteParams: false
+		withoutRouteParams: false,
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
@@ -39,8 +39,8 @@ const AssigneeFilter = ({
 				dividerAfter: true,
 				id: -1,
 				key: '-1',
-				name: Liferay.Language.get('unassigned')
-			}
+				name: Liferay.Language.get('unassigned'),
+			},
 		],
 		[]
 	);
@@ -50,7 +50,7 @@ const AssigneeFilter = ({
 		prefixKey,
 		requestUrl: `/processes/${processId}/assignee-users?page=0&pageSize=0`,
 		staticItems,
-		withoutRouteParams: options.withoutRouteParams
+		withoutRouteParams: options.withoutRouteParams,
 	});
 
 	const defaultItem = useMemo(() => (items ? items[0] : undefined), [items]);

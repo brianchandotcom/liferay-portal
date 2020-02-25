@@ -23,7 +23,7 @@ export default ({endpoint, title, ...restProps}) => {
 
 	const {
 		response: {items = []},
-		isLoading
+		isLoading,
 	} = useRequest(endpoint);
 
 	const filteredItems = items.filter(item =>

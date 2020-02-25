@@ -44,7 +44,7 @@ export default function FragmentCard({
 	fragmentEntryKey,
 	groupId,
 	imagePreviewURL,
-	name
+	name,
 }) {
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
@@ -67,14 +67,14 @@ export default function FragmentCard({
 					parentItemId: parentId,
 					position,
 					selectItem,
-					store
+					store,
 				})
 			);
 		},
 		item: {
 			name,
-			type: LAYOUT_DATA_ITEM_TYPES.fragment
-		}
+			type: LAYOUT_DATA_ITEM_TYPES.fragment,
+		},
 	});
 
 	useEffect(() => {
@@ -108,5 +108,5 @@ export default function FragmentCard({
 
 FragmentCard.propTypes = {
 	imagePreviewURL: PropTypes.string,
-	name: PropTypes.string.isRequired
+	name: PropTypes.string.isRequired,
 };

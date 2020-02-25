@@ -16,7 +16,7 @@ function APIService({endpoints, namespace, page}) {
 		getAnalyticsReportsHistoricalReadsURL,
 		getAnalyticsReportsHistoricalViewsURL,
 		getAnalyticsReportsTotalReadsURL,
-		getAnalyticsReportsTotalViewsURL
+		getAnalyticsReportsTotalViewsURL,
 	} = endpoints;
 	const {plid} = page;
 
@@ -26,7 +26,7 @@ function APIService({endpoints, namespace, page}) {
 		return _fetchWithError(getAnalyticsReportsTotalReadsURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
-			method: 'POST'
+			method: 'POST',
 		});
 	}
 
@@ -36,7 +36,7 @@ function APIService({endpoints, namespace, page}) {
 		return _fetchWithError(getAnalyticsReportsTotalViewsURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
-			method: 'POST'
+			method: 'POST',
 		});
 	}
 
@@ -46,7 +46,7 @@ function APIService({endpoints, namespace, page}) {
 		return _fetchWithError(getAnalyticsReportsHistoricalReadsURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
-			method: 'POST'
+			method: 'POST',
 		});
 	}
 
@@ -56,7 +56,7 @@ function APIService({endpoints, namespace, page}) {
 		return _fetchWithError(getAnalyticsReportsHistoricalViewsURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
-			method: 'POST'
+			method: 'POST',
 		});
 	}
 
@@ -64,7 +64,7 @@ function APIService({endpoints, namespace, page}) {
 		getHistoricalReads,
 		getHistoricalViews,
 		getTotalReads,
-		getTotalViews
+		getTotalViews,
 	};
 }
 

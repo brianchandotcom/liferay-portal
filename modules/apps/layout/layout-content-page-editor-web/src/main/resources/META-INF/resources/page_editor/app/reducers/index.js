@@ -49,11 +49,11 @@ const combinedReducer = (state, action) =>
 		reducers: baseReducer,
 		showResolvedComments: resolvedCommentsReducer,
 		sidebar: sidebarReducer,
-		widgets: widgetsReducer
+		widgets: widgetsReducer,
 	}).reduce(
 		(nextState, [namespace, reducer]) => ({
 			...nextState,
-			[namespace]: reducer(nextState[namespace], action)
+			[namespace]: reducer(nextState[namespace], action),
 		}),
 		state
 	);

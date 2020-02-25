@@ -31,7 +31,7 @@ class ColorPicker extends Component {
 		this.emit(name, {
 			fieldInstance: this,
 			originalEvent: event,
-			value
+			value,
 		});
 	}
 
@@ -177,7 +177,7 @@ ColorPicker.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.string()
+	value: Config.string(),
 };
 
 Soy.register(ColorPicker, templates);

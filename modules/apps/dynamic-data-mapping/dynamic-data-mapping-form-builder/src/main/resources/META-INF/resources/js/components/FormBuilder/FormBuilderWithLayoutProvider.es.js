@@ -39,7 +39,7 @@ class FormBuilderWithLayoutProvider extends Component {
 		const composeList = [
 			withActionableFields,
 			withMoveableFields,
-			withResizeableColumns
+			withResizeableColumns,
 		];
 
 		if (!singlePage) {
@@ -59,7 +59,7 @@ class FormBuilderWithLayoutProvider extends Component {
 
 FormBuilderWithLayoutProvider.PROPS = {
 	formBuilderProps: Config.object(),
-	layoutProviderProps: Config.object()
+	layoutProviderProps: Config.object(),
 };
 
 export default FormBuilderWithLayoutProvider;

@@ -29,7 +29,7 @@ function BusyButton(props) {
 }
 
 BusyButton.propTypes = {
-	busy: PropTypes.bool
+	busy: PropTypes.bool,
 };
 
 export default BusyButton;

@@ -20,7 +20,7 @@ import {Link} from 'react-router-dom';
 
 import {
 	deleteMessage,
-	markAsAnswerMessageBoardMessage
+	markAsAnswerMessageBoardMessage,
 } from '../utils/client.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Comments from './Comments.es';

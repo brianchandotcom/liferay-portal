@@ -213,5 +213,5 @@ tinymce.addI18n('pl', {
 	Tools: 'Narz\u0119dzia',
 	View: 'Widok',
 	Table: 'Tabela',
-	Format: 'Format'
+	Format: 'Format',
 });

@@ -64,8 +64,8 @@
 				ruleGroupInstanceId: ruleGroupInstanceId,
 				serviceContext: JSON.stringify({
 					scopeGroupId: themeDisplay.getScopeGroupId(),
-					userId: themeDisplay.getUserId()
-				})
+					userId: themeDisplay.getUserId(),
+				}),
 			},
 			function(response, xhr) {
 				<portlet:namespace />updateRuleGroupInstances();
@@ -86,8 +86,8 @@
 				ruleGroupId: ruleGroupId,
 				serviceContext: JSON.stringify({
 					scopeGroupId: themeDisplay.getScopeGroupId(),
-					userId: themeDisplay.getUserId()
-				})
+					userId: themeDisplay.getUserId(),
+				}),
 			},
 			function(response, xhr) {
 				<portlet:namespace />updateRuleGroupInstances();
@@ -108,7 +108,7 @@
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true
+						modal: true,
 					},
 					id: '<portlet:namespace />selectRuleGroup',
 					title:
@@ -122,7 +122,7 @@
 						<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectRuleGroup" %>' />
 					</liferay-portlet:renderURL>
 
-					uri: '<%= selectRuleGroupURL %>'
+					uri: '<%= selectRuleGroupURL %>',
 				},
 				function(event) {
 					<portlet:namespace />saveRuleGroupInstance(
@@ -142,7 +142,7 @@
 		managePrioritiesButton.addEventListener('click', function(event) {
 			Liferay.Util.openWindow({
 				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
+					bodyCssClass: 'dialog-with-footer',
 				},
 				id: '<portlet:namespace />ruleGroupsPriorities',
 				title:
@@ -156,7 +156,7 @@
 					<portlet:param name="saveCallback" value='<%= liferayPortletResponse.getNamespace() + "saveRuleGroupsPriorities" %>' />
 				</liferay-portlet:renderURL>
 
-				uri: '<%= managePrioritiesURL %>'
+				uri: '<%= managePrioritiesURL %>',
 			});
 		});
 	}

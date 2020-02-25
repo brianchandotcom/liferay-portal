@@ -100,7 +100,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 					basePortletURL: '<%= basePortletURL %>',
 					classNameId: '<%= classNameId %>',
 					dialog: {
-						width: 1024
+						width: 1024,
 					},
 					eventName: '<portlet:namespace />saveTemplate',
 					groupId: <%= ddmTemplateGroupId %>,
@@ -109,7 +109,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 					refererPortletName:
 						'<%= PortletKeys.PORTLET_DISPLAY_TEMPLATE %>',
 					title:
-						'<%= UnicodeLanguageUtil.get(request, "widget-templates") %>'
+						'<%= UnicodeLanguageUtil.get(request, "widget-templates") %>',
 				},
 				function(event) {
 					if (!event.newVal) {

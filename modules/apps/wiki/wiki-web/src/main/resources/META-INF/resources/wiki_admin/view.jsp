@@ -240,15 +240,15 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 			Liferay.Util.postForm(form, {
 				data: {
 					<%= Constants.CMD %>:
-						'<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>'
+						'<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>',
 				},
-				url: '<portlet:actionURL name="/wiki/edit_node" />'
+				url: '<portlet:actionURL name="/wiki/edit_node" />',
 			});
 		}
 	};
 
 	var ACTIONS = {
-		deleteNodes: deleteNodes
+		deleteNodes: deleteNodes,
 	};
 
 	Liferay.componentReady('wikiNodesManagementToolbar').then(function(

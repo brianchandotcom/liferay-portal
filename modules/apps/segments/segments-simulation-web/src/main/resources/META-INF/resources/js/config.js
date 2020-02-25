@@ -22,11 +22,11 @@
 				modules: {
 					'liferay-portlet-segments-simulation': {
 						path: 'main.js',
-						requires: ['aui-base', 'liferay-portlet-base']
-					}
+						requires: ['aui-base', 'liferay-portlet-base'],
+					},
 				},
-				root: MODULE_PATH + '/js/'
-			}
-		}
+				root: MODULE_PATH + '/js/',
+			},
+		},
 	});
 })();

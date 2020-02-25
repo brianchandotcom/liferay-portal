@@ -108,7 +108,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"),
 					dialog: {
 						constrain: true,
 						modal: true,
-						width: 680
+						width: 680,
 					},
 					id: '<portlet:namespace />selectCategory',
 					title:
@@ -120,14 +120,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"),
 						<portlet:param name="excludedMBCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
 
-					uri: '<%= selectCategoryURL %>'
+					uri: '<%= selectCategoryURL %>',
 				},
 				function(event) {
 					var form = document.<portlet:namespace />fm;
 
 					Liferay.Util.setFormValues(form, {
 						parentCategoryId: event.categoryid,
-						parentCategoryName: Liferay.Util.unescape(event.name)
+						parentCategoryName: Liferay.Util.unescape(event.name),
 					});
 
 					var removeCategoryButton = document.getElementById(

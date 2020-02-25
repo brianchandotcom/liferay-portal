@@ -13,7 +13,7 @@ import {
 	STORYBOOK_CONSTANTS,
 	StorybookAddonActions,
 	StorybookAddonKnobs,
-	StorybookReact
+	StorybookReact,
 } from 'liferay-npm-scripts/src/storybook';
 import React from 'react';
 
@@ -47,11 +47,11 @@ addDecorator(storyFn => {
 	const context = {
 		constants: {
 			WORKFLOW_ACTION_PUBLISH: '1',
-			WORKFLOW_ACTION_SAVE_DRAFT: '2'
+			WORKFLOW_ACTION_SAVE_DRAFT: '2',
 		},
 		namespace:
 			'_com_liferay_portal_search_ranking_web_portlet_ResultRankingsPortlet_',
-		spritemap: STORYBOOK_CONSTANTS.SPRITEMAP_PATH
+		spritemap: STORYBOOK_CONSTANTS.SPRITEMAP_PATH,
 	};
 
 	return (
@@ -127,7 +127,7 @@ storiesOf('Components|ClayEmptyState', module)
 				{
 					Empty: 'empty',
 					Search: 'search',
-					Success: 'success'
+					Success: 'success',
 				},
 				'search'
 			)}

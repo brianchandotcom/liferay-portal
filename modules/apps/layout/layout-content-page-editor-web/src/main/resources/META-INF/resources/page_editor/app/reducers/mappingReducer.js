@@ -28,8 +28,8 @@ export default function mappingReducer(
 					className: action.className,
 					classNameId: action.classNameId,
 					classPK: action.classPK,
-					title: action.title
-				}
+					title: action.title,
+				},
 			];
 
 		default:

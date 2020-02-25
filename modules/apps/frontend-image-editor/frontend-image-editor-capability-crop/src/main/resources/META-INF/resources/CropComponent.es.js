@@ -42,7 +42,7 @@ class CropComponent extends Component {
 			height: cropHandles.element.offsetHeight,
 			left: cropHandles.element.offsetLeft - imageCanvas.offsetLeft,
 			top: cropHandles.element.offsetTop - imageCanvas.offsetTop,
-			width: cropHandles.element.offsetWidth
+			width: cropHandles.element.offsetWidth,
 		};
 
 		const rawCanvas = document.createElement('canvas');
@@ -94,8 +94,8 @@ CropComponent.STATE = {
 	 * @type {Function}
 	 */
 	getImageEditorCanvas: {
-		validator: core.isFunction
-	}
+		validator: core.isFunction,
+	},
 };
 
 Soy.register(CropComponent, componentTemplates);

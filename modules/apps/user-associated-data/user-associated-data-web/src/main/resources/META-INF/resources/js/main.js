@@ -26,12 +26,12 @@ AUI.add(
 		var UADExport = A.Component.create({
 			ATTRS: {
 				exportProcessesNode: {
-					setter: '_setNode'
+					setter: '_setNode',
 				},
 
 				exportProcessesResourceURL: {
-					setter: 'isString'
-				}
+					setter: 'isString',
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -130,14 +130,14 @@ AUI.add(
 						'beforeNavigate',
 						instance.destroy.bind(instance)
 					);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.UADExport = UADExport;
 	},
 	'',
 	{
-		requires: ['aui-parse-content', 'liferay-portlet-base']
+		requires: ['aui-parse-content', 'liferay-portlet-base'],
 	}
 );

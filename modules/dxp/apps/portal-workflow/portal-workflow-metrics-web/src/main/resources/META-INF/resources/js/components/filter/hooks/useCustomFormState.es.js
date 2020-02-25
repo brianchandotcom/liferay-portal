@@ -38,7 +38,7 @@ const useCustomFormState = () => {
 		formVisible,
 		onChangeFilter,
 		onClickFilter,
-		setFormVisible
+		setFormVisible,
 	};
 };
 

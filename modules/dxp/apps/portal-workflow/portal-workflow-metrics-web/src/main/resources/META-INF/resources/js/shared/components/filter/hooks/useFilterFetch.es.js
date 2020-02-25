@@ -16,7 +16,7 @@ import {FilterContext} from '../FilterContext.es';
 import {
 	buildFilterItems,
 	getCapitalizedFilterKey,
-	mergeItemsArray
+	mergeItemsArray,
 } from '../util/filterUtil.es';
 import {useFilterState} from './useFilterState.es';
 
@@ -25,7 +25,7 @@ const useFilterFetch = ({
 	prefixKey,
 	requestUrl,
 	staticItems,
-	withoutRouteParams
+	withoutRouteParams,
 }) => {
 	const {client} = useContext(AppContext);
 	const {dispatchFilterError} = useContext(FilterContext);
@@ -62,7 +62,7 @@ const useFilterFetch = ({
 
 	return {
 		items,
-		selectedItems
+		selectedItems,
 	};
 };
 

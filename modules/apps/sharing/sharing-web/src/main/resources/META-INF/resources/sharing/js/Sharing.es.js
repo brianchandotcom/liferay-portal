@@ -19,7 +19,7 @@ import ClayForm, {
 	ClayCheckbox,
 	ClayInput,
 	ClayRadio,
-	ClayRadioGroup
+	ClayRadioGroup,
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
@@ -47,7 +47,7 @@ const Sharing = ({
 	sharingEntryPermissionDisplayActionId,
 	sharingEntryPermissionDisplays,
 	sharingUserAutocompleteURL,
-	sharingVerifyEmailAddressURL
+	sharingVerifyEmailAddressURL,
 }) => {
 	const [emailAddressErrorMessages, setEmailAddressErrorMessages] = useState(
 		[]
@@ -91,14 +91,14 @@ const Sharing = ({
 			[`${portletNamespace}sharingEntryPermissionDisplayActionId`]: sharingPermission,
 			[`${portletNamespace}userEmailAddress`]: selectedItems
 				.map(({value}) => value)
-				.join(',')
+				.join(','),
 		};
 
 		const formData = objectToFormData(data);
 
 		fetch(shareActionURL, {
 			body: formData,
-			method: 'POST'
+			method: 'POST',
 		})
 			.then(response => {
 				const jsonResponse = response.json();
@@ -115,7 +115,7 @@ const Sharing = ({
 			.then(response => {
 				parent.Liferay.fire('sharing:changed', {
 					classNameId,
-					classPK
+					classPK,
 				});
 				showNotification(response.successMessage);
 			})
@@ -159,15 +159,15 @@ const Sharing = ({
 								),
 								item.value
 							),
-							item
+							item,
 						});
 					}
 
 					return fetch(sharingVerifyEmailAddressURL, {
 						body: objectToFormData({
-							[`${portletNamespace}emailAddress`]: item.value
+							[`${portletNamespace}emailAddress`]: item.value,
 						}),
-						method: 'POST'
+						method: 'POST',
 					})
 						.then(response => response.json())
 						.then(({userExists}) => ({
@@ -179,7 +179,7 @@ const Sharing = ({
 										item.value
 								  )
 								: undefined,
-							item
+							item,
 						}));
 				})
 			).then(results => {
@@ -223,15 +223,15 @@ const Sharing = ({
 		fetchOptions: {
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET'
+			method: 'GET',
 		},
 		fetchRetry: {
-			attempts: 0
+			attempts: 0,
 		},
 		link: multiSelectValue ? sharingUserAutocompleteURL : undefined,
 		variables: {
-			[`${portletNamespace}query`]: multiSelectValue
-		}
+			[`${portletNamespace}query`]: multiSelectValue,
+		},
 	});
 
 	const users = resource;
@@ -272,7 +272,7 @@ const Sharing = ({
 													label: user.fullName,
 													portraitURL:
 														user.portraitURL,
-													value: user.emailAddress
+													value: user.emailAddress,
 												};
 										  })
 										: []

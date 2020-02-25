@@ -48,7 +48,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	attached() {
 		AUI().use('liferay-item-selector-uploader', A => {
 			this._itemSelectorUploader = new A.LiferayItemSelectorUploader({
-				rootNode: this.rootNode
+				rootNode: this.rootNode,
 			});
 
 			this._bindEvents();
@@ -91,7 +91,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			headerTitle: this.closeCaption,
 			items,
 			uploadItemReturnType: this.uploadItemReturnType,
-			uploadItemURL: this.uploadItemURL
+			uploadItemURL: this.uploadItemURL,
 		};
 
 		render(props => <ItemSelectorPreview {...props} />, data, container);
@@ -154,7 +154,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 							title: itemFile.title,
 							type: itemFile.type,
 							url: itemFileUrl,
-							uuid: itemFile.uuid
+							uuid: itemFile.uuid,
 						};
 
 						itemFileValue = JSON.stringify(imageValue);
@@ -163,7 +163,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					Liferay.componentReady('ItemSelectorPreview').then(() => {
 						Liferay.fire('updateCurrentItem', {
 							url: itemFileUrl,
-							value: itemFileValue
+							value: itemFileValue,
 						});
 					});
 				}),
@@ -337,20 +337,20 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					data: [
 						{
 							key: Liferay.Language.get('format'),
-							value: file.type
+							value: file.type,
 						},
 						{
 							key: Liferay.Language.get('size'),
-							value: Liferay.Util.formatStorage(file.size)
+							value: Liferay.Util.formatStorage(file.size),
 						},
 						{
 							key: Liferay.Language.get('name'),
-							value: file.name
-						}
+							value: file.name,
+						},
 					],
-					title: Liferay.Language.get('file-info')
-				}
-			]
+					title: Liferay.Language.get('file-info'),
+				},
+			],
 		};
 	}
 
@@ -364,8 +364,8 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		this.emit('selectedItem', {
 			data: {
 				returnType: item.returntype,
-				value: item.value
-			}
+				value: item.value,
+			},
 		});
 	}
 
@@ -417,7 +417,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					'/lexicon/icons.svg',
 				style: 'danger',
 				title: '',
-				visible: true
+				visible: true,
 			},
 			this.one('.message-container')
 		);
@@ -447,7 +447,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			metadata: JSON.stringify(this._getUploadFileMetadata(file)),
 			returntype: this.uploadItemReturnType,
 			title: file.name,
-			value: preview
+			value: preview,
 		};
 
 		this.openItemSelectorPreview([item], 0);
@@ -580,7 +580,7 @@ ItemSelectorRepositoryEntryBrowser.STATE = {
 	 * @memberof ItemSelectorRepositoryEntryBrowser
 	 * @type {String}
 	 */
-	validExtensions: Config.string().value('*')
+	validExtensions: Config.string().value('*'),
 };
 
 export default ItemSelectorRepositoryEntryBrowser;

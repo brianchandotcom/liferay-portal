@@ -39,7 +39,7 @@
 			}
 
 			var headers = {
-				'X-CSRF-Token': Liferay.authToken
+				'X-CSRF-Token': Liferay.authToken,
 			};
 
 			var value = '';
@@ -50,9 +50,9 @@
 				on: {
 					complete(i, o) {
 						value = o.responseText;
-					}
+					},
 				},
-				sync: true
+				sync: true,
 			});
 
 			return value;

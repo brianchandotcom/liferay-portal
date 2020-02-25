@@ -35,7 +35,7 @@ AUI.add(
 					var instance = this;
 
 					var actionParameters = {
-						'javax.portlet.action': config.actionName
+						'javax.portlet.action': config.actionName,
 					};
 
 					A.mix(actionParameters, config.queryParameters);
@@ -62,7 +62,7 @@ AUI.add(
 
 					Liferay.Util.fetch(url.toString(), {
 						body: data,
-						method: 'POST'
+						method: 'POST',
 					})
 						.then(response => {
 							return response.json();
@@ -77,7 +77,7 @@ AUI.add(
 
 					var resourceParameters = {
 						doAsUserId: Liferay.ThemeDisplay.getDoAsUserIdEncoded(),
-						p_p_resource_id: config.resourceId
+						p_p_resource_id: config.resourceId,
 					};
 
 					A.mix(resourceParameters, config.queryParameters);
@@ -106,7 +106,7 @@ AUI.add(
 
 					Liferay.Util.fetch(url.toString(), {
 						body: data,
-						method: 'POST'
+						method: 'POST',
 					})
 						.then(response => {
 							return response.text();
@@ -129,7 +129,7 @@ AUI.add(
 
 					Liferay.Util.fetch(instance.get('invokerURL'), {
 						body: data,
-						method: 'POST'
+						method: 'POST',
 					})
 						.then(response => {
 							return response.json();
@@ -152,13 +152,13 @@ AUI.add(
 					instance._invokeService(
 						{
 							'/calendar.calendar/delete-calendar': {
-								calendarId
-							}
+								calendarId,
+							},
 						},
 						{
 							success() {
 								callback(this.get('responseData'));
-							}
+							},
 						}
 					);
 				},
@@ -171,8 +171,8 @@ AUI.add(
 							'/calendar.calendarbooking/move-calendar-booking-to-trash': {
 								calendarBookingId: schedulerEvent.get(
 									'calendarBookingId'
-								)
-							}
+								),
+							},
 						},
 						{
 							success(data) {
@@ -182,7 +182,7 @@ AUI.add(
 										instance.get('rootNode')
 									);
 								}
-							}
+							},
 						}
 					);
 				},
@@ -200,8 +200,8 @@ AUI.add(
 								deleteRecurringCalendarBookings: true,
 								instanceIndex: schedulerEvent.get(
 									'instanceIndex'
-								)
-							}
+								),
+							},
 						},
 						{
 							success(data) {
@@ -211,7 +211,7 @@ AUI.add(
 										instance.get('rootNode')
 									);
 								}
-							}
+							},
 						}
 					);
 				},
@@ -222,9 +222,9 @@ AUI.add(
 					instance._invokeResourceURL({
 						callback,
 						queryParameters: {
-							calendarId
+							calendarId,
 						},
-						resourceId: 'calendar'
+						resourceId: 'calendar',
 					});
 				},
 
@@ -234,9 +234,9 @@ AUI.add(
 					instance._invokeResourceURL({
 						callback,
 						queryParameters: {
-							parentCalendarBookingId: calendarBookingId
+							parentCalendarBookingId: calendarBookingId,
 						},
-						resourceId: 'calendarBookingInvitees'
+						resourceId: 'calendarBookingInvitees',
 					});
 				},
 
@@ -255,9 +255,9 @@ AUI.add(
 							calendarIds: calendarIds.join(),
 							endTime: endDate.getTime(),
 							ruleName,
-							startTime: startDate.getTime()
+							startTime: startDate.getTime(),
 						},
-						resourceId: 'calendarRenderingRules'
+						resourceId: 'calendarRenderingRules',
 					});
 				},
 
@@ -298,7 +298,7 @@ AUI.add(
 
 							callback(instance.lastCurrentTime);
 						},
-						resourceId: 'currentTime'
+						resourceId: 'currentTime',
 					});
 				},
 
@@ -308,12 +308,12 @@ AUI.add(
 					instance._invokeService(
 						{
 							'/calendar.calendarbooking/get-calendar-booking': {
-								calendarBookingId
-							}
+								calendarBookingId,
+							},
 						},
 						{
 							failure,
-							success
+							success,
 						}
 					);
 				},
@@ -343,9 +343,9 @@ AUI.add(
 							startTimeMinute: startDate.getMinutes(),
 							startTimeMonth: startDate.getMonth(),
 							startTimeYear: startDate.getFullYear(),
-							statuses: status.join(',')
+							statuses: status.join(','),
 						},
-						resourceId: 'calendarBookings'
+						resourceId: 'calendarBookings',
 					});
 				},
 
@@ -355,9 +355,9 @@ AUI.add(
 					instance._invokeResourceURL({
 						callback,
 						queryParameters: {
-							calendarResourceId
+							calendarResourceId,
 						},
-						resourceId: 'resourceCalendars'
+						resourceId: 'resourceCalendars',
 					});
 				},
 
@@ -384,9 +384,9 @@ AUI.add(
 							startTimeHour: startDate.getHours(),
 							startTimeMinute: startDate.getMinutes(),
 							startTimeMonth: startDate.getMonth(),
-							startTimeYear: startDate.getFullYear()
+							startTimeYear: startDate.getFullYear(),
 						},
-						resourceId: 'hasExclusiveCalendarBooking'
+						resourceId: 'hasExclusiveCalendarBooking',
 					});
 				},
 
@@ -411,19 +411,19 @@ AUI.add(
 								instanceIndex,
 								status,
 								updateInstance,
-								userId: instance.get('userId')
-							}
+								userId: instance.get('userId'),
+							},
 						},
 						{
 							start() {
 								schedulerEvent.set('loading', true, {
-									silent: true
+									silent: true,
 								});
 							},
 
 							success(data) {
 								schedulerEvent.set('loading', false, {
-									silent: true
+									silent: true,
 								});
 
 								if (data && !data.exception && scheduler) {
@@ -435,7 +435,7 @@ AUI.add(
 
 									scheduler.load();
 								}
-							}
+							},
 						}
 					);
 				},
@@ -446,8 +446,8 @@ AUI.add(
 					instance._invokeService({
 						'/calendar.calendar/update-color': {
 							calendarId,
-							color: parseInt(color.substr(1), 16)
-						}
+							color: parseInt(color.substr(1), 16),
+						},
 					});
 				},
 
@@ -466,7 +466,7 @@ AUI.add(
 						actionName: 'updateSchedulerCalendarBooking',
 						callback(data) {
 							schedulerEvent.set('loading', false, {
-								silent: true
+								silent: true,
 							});
 
 							if (data) {
@@ -514,29 +514,29 @@ AUI.add(
 							title: LString.unescapeHTML(
 								schedulerEvent.get('content')
 							),
-							updateInstance
-						}
+							updateInstance,
+						},
 					});
-				}
+				},
 			},
 			{
 				ATTRS: {
 					baseActionURL: {
 						validator: isString,
-						value: STR_BLANK
+						value: STR_BLANK,
 					},
 					baseResourceURL: {
 						validator: isString,
-						value: STR_BLANK
+						value: STR_BLANK,
 					},
 					invokerURL: {
 						validator: isString,
-						value: STR_BLANK
+						value: STR_BLANK,
 					},
 					userId: {
-						setter: toInt
-					}
-				}
+						setter: toInt,
+					},
+				},
 			}
 		);
 
@@ -549,7 +549,7 @@ AUI.add(
 			'aui-component',
 			'liferay-calendar-message-util',
 			'liferay-calendar-util',
-			'liferay-portlet-base'
-		]
+			'liferay-portlet-base',
+		],
 	}
 );

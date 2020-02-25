@@ -19,7 +19,7 @@ import {FilterContextProvider} from '../../src/main/resources/META-INF/resources
 const withParamsMock = (...components) => ({
 	history,
 	location: {search: query},
-	match: {params: routeParams}
+	match: {params: routeParams},
 }) => {
 	return components.map(component => {
 		if (routeParams.sort) {
@@ -30,7 +30,7 @@ const withParamsMock = (...components) => ({
 			...routeParams,
 			history,
 			query,
-			routeParams
+			routeParams,
 		});
 	});
 };
@@ -42,7 +42,7 @@ const MockRouter = ({
 	isAmPm,
 	path = '/:page/:pageSize/:sort',
 	query = '?backPath=%2F',
-	withoutRouterProps
+	withoutRouterProps,
 }) => {
 	const [title, setTitle] = useState(null);
 	const [status, setStatus] = useState(null);
@@ -59,7 +59,7 @@ const MockRouter = ({
 			setStatus,
 			setTitle,
 			status,
-			title
+			title,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]

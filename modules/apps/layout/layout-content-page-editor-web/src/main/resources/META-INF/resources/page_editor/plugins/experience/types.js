@@ -22,15 +22,15 @@ export const ExperienceType = {
 	segmentsEntryName: PropTypes.string,
 	segmentsExperienceId: PropTypes.string.isRequired,
 	segmentsExperimentStatus: PropTypes.shape(ExperimentStatusType),
-	segmentsExperimentURL: PropTypes.string
+	segmentsExperimentURL: PropTypes.string,
 };
 
 export const SegmentType = {
 	name: PropTypes.string.isRequired,
-	segmentsEntryId: PropTypes.string.isRequired
+	segmentsEntryId: PropTypes.string.isRequired,
 };
 
 export const ExperimentStatusType = {
 	label: PropTypes.string.isRequired,
-	value: PropTypes.number.isRequired
+	value: PropTypes.number.isRequired,
 };

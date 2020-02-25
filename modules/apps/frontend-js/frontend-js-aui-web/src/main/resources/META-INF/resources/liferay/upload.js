@@ -127,7 +127,7 @@ AUI.add(
 			'</ul>',
 			'</li>',
 			'</tpl>',
-			'</tpl>'
+			'</tpl>',
 		];
 
 		var TPL_UPLOAD = [
@@ -171,7 +171,7 @@ AUI.add(
 
 			'<div class="upload-list" id="{$ns}fileList">',
 			'<ul class="list-unstyled {[ this.multipleFiles ? "multiple-files" : "single-file" ]}" id="{$ns}fileListContent"></ul>',
-			'</div>'
+			'</div>',
 		];
 
 		var UPLOADER_TYPE = A.Uploader.TYPE || 'none';
@@ -200,57 +200,58 @@ AUI.add(
 		var Upload = A.Component.create({
 			ATTRS: {
 				deleteFile: {
-					value: ''
+					value: '',
 				},
 
 				fallback: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				maxFileSize: {
 					setter: Lang.toInt,
 					value:
-						Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE
+						Liferay.PropsValues
+							.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 				},
 
 				metadataContainer: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				metadataExplanationContainer: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				multipleFiles: {
 					validator: Lang.isBoolean,
-					value: true
+					value: true,
 				},
 
 				removeOnComplete: {
 					validator: Lang.isBoolean,
-					value: false
+					value: false,
 				},
 
 				render: {
-					value: true
+					value: true,
 				},
 
 				restoreState: {
 					validator: Lang.isBoolean,
-					value: true
+					value: true,
 				},
 
 				rootElement: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				simultaneousUploads: {
 					validator: Lang.isNumber,
-					value: 2
+					value: 2,
 				},
 
 				strings: {
@@ -324,22 +325,22 @@ AUI.add(
 						),
 						zeroByteSizeText: Liferay.Language.get(
 							'the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader'
-						)
-					}
+						),
+					},
 				},
 
 				tempFileURL: {
-					value: ''
+					value: '',
 				},
 
 				tempRandomSuffix: {
 					validator: Lang.isString,
-					value: null
+					value: null,
 				},
 
 				uploadFile: {
-					value: ''
-				}
+					value: '',
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -451,7 +452,7 @@ AUI.add(
 								id: A.guid(),
 								name: item,
 								temp: true,
-								title: tempTitle
+								title: tempTitle,
 							};
 						});
 
@@ -521,8 +522,8 @@ AUI.add(
 							{
 								error: json.errorMessage,
 								id: li.attr('data-fileId'),
-								name: li.attr('data-fileName')
-							}
+								name: li.attr('data-fileName'),
+							},
 						]);
 
 						li.replace(errorHTML);
@@ -734,21 +735,21 @@ AUI.add(
 					li.hide();
 
 					var failureResponse = {
-						errorMessage: strings.unexpectedErrorOnDeleteText
+						errorMessage: strings.unexpectedErrorOnDeleteText,
 					};
 
 					var deleteFile = instance.get('deleteFile');
 
 					if (deleteFile) {
 						var data = {
-							fileName: li.attr('data-fileName')
+							fileName: li.attr('data-fileName'),
 						};
 
 						Liferay.Util.fetch(deleteFile, {
 							body: Liferay.Util.objectToFormData(
 								instance.ns(data)
 							),
-							method: 'POST'
+							method: 'POST',
 						})
 							.then(response => response.json())
 							.then(response => {
@@ -1016,7 +1017,7 @@ AUI.add(
 							? strings.selectFilesText
 							: strings.selectFileText,
 						strings,
-						uploaderType: UPLOADER_TYPE
+						uploaderType: UPLOADER_TYPE,
 					};
 
 					instance._fileListTPL = new A.Template(
@@ -1063,7 +1064,7 @@ AUI.add(
 						TPL_UPLOAD,
 						templateConfig
 					).render({
-						multipleFiles
+						multipleFiles,
 					});
 
 					instance._allRowIdsCheckbox = uploadFragment.one(
@@ -1158,7 +1159,7 @@ AUI.add(
 								instance
 									.get('boundingBox')
 									.setContent(instance._uploadFragment);
-							}
+							},
 						},
 						selectFilesButton: instance._selectFilesButton,
 						simLimit: instance.get('simultaneousUploads'),
@@ -1169,7 +1170,7 @@ AUI.add(
 						uploadURL: Liferay.Util.addParams(
 							timestampParam,
 							instance.get('uploadFile')
-						)
+						),
 					}).render();
 
 					uploader.addTarget(instance);
@@ -1479,7 +1480,7 @@ AUI.add(
 								.one('#fileUpload')
 								.append(
 									Lang.sub(TPL_ERROR_MESSAGE, [
-										strings.notAvailableText
+										strings.notAvailableText,
 									])
 								);
 						}
@@ -1533,8 +1534,8 @@ AUI.add(
 
 					instance._renderControls();
 					instance._renderUploader();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Upload = Upload;
@@ -1545,7 +1546,7 @@ AUI.add(
 			'aui-template-deprecated',
 			'collection',
 			'liferay-portlet-base',
-			'uploader'
-		]
+			'uploader',
+		],
 	}
 );

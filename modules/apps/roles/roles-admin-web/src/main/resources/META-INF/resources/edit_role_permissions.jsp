@@ -123,8 +123,8 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 					instance._bindUIACBase();
 					instance._syncUIACBase();
-				}
-			}
+				},
+			},
 		});
 
 		var getItems = function() {
@@ -133,7 +133,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			permissionNavigationItems.each(function(item, index, collection) {
 				results.push({
 					data: item.text().trim(),
-					node: item
+					node: item,
 				});
 			});
 
@@ -166,7 +166,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			nodes: '.permission-navigation-item-container',
 			resultFilters: 'subWordMatch',
 			resultTextLocator: 'data',
-			source: getItems()
+			source: getItems(),
 		});
 
 		permissionNavigationSearch.on('query', function(event) {
@@ -290,13 +290,13 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 							closeable: true,
 							delay: {
 								hide: 0,
-								show: 0
+								show: 0,
 							},
 							duration: 500,
 							message: error.message,
 							render: true,
 							title: '<liferay-ui:message key="warning" />',
-							type: 'warning'
+							type: 'warning',
 						});
 					});
 			},
@@ -349,7 +349,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		togglerDelegate = new A.TogglerDelegate({
 			container: <portlet:namespace />permissionNavigationDataContainer,
 			content: '.permission-navigation-item-content',
-			header: '.permission-navigation-item-header'
+			header: '.permission-navigation-item-header',
 		});
 
 		createLiveSearch();
@@ -372,8 +372,8 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 				unselectedTargets: Liferay.Util.listUncheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'
-				)
-			}
+				),
+			},
 		});
 	}
 </aui:script>

@@ -136,10 +136,10 @@ if (accountEntryDisplay != null) {
 						destroyOnHide: true,
 						height: 350,
 						modal: true,
-						width: 800
+						width: 800,
 					},
 					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
+						bodyCssClass: 'dialog-with-footer',
 					},
 					id:
 						'<%= liferayPortletResponse.getNamespace() + "addDomains" %>',
@@ -152,7 +152,7 @@ if (accountEntryDisplay != null) {
 					addDomainsURL.setWindowState(LiferayWindowState.POP_UP);
 					%>
 
-					uri: '<%= addDomainsURL.toString() %>'
+					uri: '<%= addDomainsURL.toString() %>',
 				},
 				function(event) {
 					var newDomains = event.data.split(',');

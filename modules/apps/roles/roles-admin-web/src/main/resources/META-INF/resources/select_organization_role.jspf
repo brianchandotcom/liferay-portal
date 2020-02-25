@@ -161,7 +161,7 @@ else {
 				dom.delegate(form, 'click', '.organization-selector-button', function(event) {
 					Liferay.Util.postForm(form, {
 						data: {
-							organizationId: event.delegateTarget.dataset.organizationid
+							organizationId: event.delegateTarget.dataset.organizationid,
 						},
 
 						<%
@@ -169,7 +169,7 @@ else {
 						portletURL.setParameter("step", "2");
 						%>
 
-						url: '<%= portletURL.toString() %>'
+						url: '<%= portletURL.toString() %>',
 					});
 				});
 			</aui:script>
@@ -259,7 +259,7 @@ else {
 	var openingLiferay = Util.getOpener().Liferay;
 
 	openingLiferay.fire('<%= HtmlUtil.escape(syncEntitiesEventName) %>', {
-		selectors: A.all('.selector-button')
+		selectors: A.all('.selector-button'),
 	});
 
 	Util.selectEntityHandler(

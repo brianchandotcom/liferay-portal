@@ -212,38 +212,38 @@ public class DocumentFolderResourceImpl
 			addAction(
 				"DELETE", folder.getFolderId(), "deleteDocumentFolder",
 				"com.liferay.document.library.kernel.model.DLFolder",
-				folder.getGroupId())
+				folder.getGroupId(), folder.getUserId())
 		).put(
 			"get",
 			addAction(
 				"ACCESS", folder.getFolderId(), "getDocumentFolder",
 				"com.liferay.document.library.kernel.model.DLFolder",
-				folder.getGroupId())
+				folder.getGroupId(), folder.getUserId())
 		).put(
 			"replace",
 			addAction(
 				"UPDATE", folder.getFolderId(), "putDocumentFolder",
 				"com.liferay.document.library.kernel.model.DLFolder",
-				folder.getGroupId())
+				folder.getGroupId(), folder.getUserId())
 		).put(
 			"subscribe",
 			addAction(
 				"SUBSCRIBE", folder.getFolderId(), "putDocumentFolderSubscribe",
 				"com.liferay.document.library.kernel.model.DLFolder",
-				folder.getGroupId())
+				folder.getGroupId(), folder.getUserId())
 		).put(
 			"unsubscribe",
 			addAction(
 				"SUBSCRIBE", folder.getFolderId(),
 				"putDocumentFolderUnsubscribe",
 				"com.liferay.document.library.kernel.model.DLFolder",
-				folder.getGroupId())
+				folder.getGroupId(), folder.getUserId())
 		).put(
 			"update",
 			addAction(
 				"UPDATE", folder.getFolderId(), "patchDocumentFolder",
 				"com.liferay.document.library.kernel.model.DLFolder",
-				folder.getGroupId())
+				folder.getGroupId(), folder.getUserId())
 		).build();
 	}
 

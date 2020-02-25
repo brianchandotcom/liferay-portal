@@ -75,7 +75,7 @@ public class CommentResourceImpl
 		return spiCommentResource.getEntityCommentsPage(
 			_getBlogPostingCommentsListActions(
 				BlogsEntry.class.getName(), blogPostingId,
-				blogsEntry.getGroupId()),
+				blogsEntry.getGroupId(), blogsEntry.getUserId()),
 			blogsEntry.getGroupId(), BlogsEntry.class.getName(), blogPostingId,
 			search, filter, pagination, sorts);
 	}
@@ -115,7 +115,7 @@ public class CommentResourceImpl
 		return spiCommentResource.getEntityCommentsPage(
 			_getDocumentCommentsListActions(
 				DLFileEntry.class.getName(), documentId,
-				dlFileEntry.getGroupId()),
+				dlFileEntry.getGroupId(), dlFileEntry.getUserId()),
 			dlFileEntry.getGroupId(), DLFileEntry.class.getName(), documentId,
 			search, filter, pagination, sorts);
 	}
@@ -143,7 +143,7 @@ public class CommentResourceImpl
 		return spiCommentResource.getEntityCommentsPage(
 			_getStructuredContentCommentsListActions(
 				JournalArticle.class.getName(), structuredContentId,
-				journalArticle.getGroupId()),
+				journalArticle.getGroupId(), journalArticle.getUserId()),
 			journalArticle.getGroupId(), JournalArticle.class.getName(),
 			structuredContentId, search, filter, pagination, sorts);
 	}
@@ -221,33 +221,34 @@ public class CommentResourceImpl
 	}
 
 	private Map<String, Map<String, String>> _getBlogPostingCommentsListActions(
-		String className, Long entityId, long groupId) {
+		String className, Long entityId, long groupId, long userId) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"add-discussion",
 			addAction(
 				"ADD_DISCUSSION", entityId, "postBlogPostingComment", className,
-				groupId)
+				groupId, userId)
 		).put(
 			"get",
 			addAction(
 				"VIEW", entityId, "getBlogPostingCommentsPage", className,
-				groupId)
+				groupId, userId)
 		).build();
 	}
 
 	private Map<String, Map<String, String>> _getDocumentCommentsListActions(
-		String className, Long entityId, long groupId) {
+		String className, Long entityId, long groupId, long userId) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"add-discussion",
 			addAction(
 				"ADD_DISCUSSION", entityId, "postDocumentComment", className,
-				groupId)
+				groupId, userId)
 		).put(
 			"get",
 			addAction(
-				"VIEW", entityId, "getDocumentCommentsPage", className, groupId)
+				"VIEW", entityId, "getDocumentCommentsPage", className, groupId,
+				userId)
 		).build();
 	}
 
@@ -260,18 +261,18 @@ public class CommentResourceImpl
 
 	private Map<String, Map<String, String>>
 		_getStructuredContentCommentsListActions(
-			String className, Long entityId, long groupId) {
+			String className, Long entityId, long groupId, long userId) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"add-discussion",
 			addAction(
 				"ADD_DISCUSSION", entityId, "postStructuredContentComment",
-				className, groupId)
+				className, groupId, userId)
 		).put(
 			"get",
 			addAction(
 				"VIEW", entityId, "getStructuredContentCommentsPage", className,
-				groupId)
+				groupId, userId)
 		).build();
 	}
 

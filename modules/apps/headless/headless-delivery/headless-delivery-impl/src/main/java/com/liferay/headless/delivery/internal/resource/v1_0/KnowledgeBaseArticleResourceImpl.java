@@ -331,35 +331,35 @@ public class KnowledgeBaseArticleResourceImpl
 				"DELETE", kbArticle.getResourcePrimKey(),
 				"deleteKnowledgeBaseArticle",
 				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
+				kbArticle.getGroupId(), kbArticle.getUserId())
 		).put(
 			"get",
 			addAction(
 				"VIEW", kbArticle.getResourcePrimKey(),
 				"getKnowledgeBaseArticle",
 				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
+				kbArticle.getGroupId(), kbArticle.getUserId())
 		).put(
 			"replace",
 			addAction(
 				"UPDATE", kbArticle.getResourcePrimKey(),
 				"putKnowledgeBaseArticle",
 				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
+				kbArticle.getGroupId(), kbArticle.getUserId())
 		).put(
 			"subscribe",
 			addAction(
 				"SUBSCRIBE", kbArticle.getResourcePrimKey(),
 				"putKnowledgeBaseArticleSubscribe",
 				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
+				kbArticle.getGroupId(), kbArticle.getUserId())
 		).put(
 			"unsubscribe",
 			addAction(
 				"SUBSCRIBE", kbArticle.getResourcePrimKey(),
 				"putKnowledgeBaseArticleUnsubscribe",
 				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
+				kbArticle.getGroupId(), kbArticle.getUserId())
 		).build();
 	}
 
@@ -467,28 +467,28 @@ public class KnowledgeBaseArticleResourceImpl
 				"UPDATE", kbArticle.getResourcePrimKey(),
 				"postKnowledgeBaseArticleMyRating",
 				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
+				kbArticle.getGroupId(), kbArticle.getUserId())
 		).put(
 			"delete",
 			addAction(
 				"UPDATE", kbArticle.getResourcePrimKey(),
 				"deleteKnowledgeBaseArticleMyRating",
 				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
+				kbArticle.getGroupId(), kbArticle.getUserId())
 		).put(
 			"get",
 			addAction(
 				"VIEW", kbArticle.getResourcePrimKey(),
 				"getKnowledgeBaseArticleMyRating",
 				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
+				kbArticle.getGroupId(), kbArticle.getUserId())
 		).put(
 			"replace",
 			addAction(
 				"UPDATE", kbArticle.getResourcePrimKey(),
 				"putKnowledgeBaseArticleMyRating",
 				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
+				kbArticle.getGroupId(), kbArticle.getUserId())
 		).build();
 	}
 

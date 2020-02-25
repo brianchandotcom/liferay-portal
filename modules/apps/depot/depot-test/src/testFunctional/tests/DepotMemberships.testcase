@@ -1,0 +1,142 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Depot";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that an organization can be added and removed in the membership of an asset library."
+	@priority = "5"
+	test AddAndRemoveOrganization {
+		JSONOrganization.addOrganization(
+			organizationName = "Organization Name",
+			organizationSite = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Site.assignOrganizationAsMemberCP(orgName = "Organization Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Site.viewMemberOrganizationCP(orgName = "Organization Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Navigator.gotoNavItem(navItem = "Organizations");
+
+		Site.removeOrganizationCP(orgName = "Organization Name");
+	}
+
+	@description = "This ensures that a user can be added and removed in the membership of an asset library."
+	@priority = "5"
+	test AddAndRemoveUser {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Site.removeMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+	}
+
+	@description = "This ensures that a user group can be added and removed in the membership of an asset library."
+	@priority = "5"
+	test AddAndRemoveUserGroup {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "User Groups");
+
+		UserGroup.addCP(userGroupName = "User Group Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Site.viewMemberUserGroupCP(userGroupName = "User Group Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Navigator.gotoNavItem(navItem = "User Groups");
+
+		Site.removeUserGroupCP(
+			bulkEditing = "true",
+			userGroupNameList = "User Group Name");
+	}
+
+}

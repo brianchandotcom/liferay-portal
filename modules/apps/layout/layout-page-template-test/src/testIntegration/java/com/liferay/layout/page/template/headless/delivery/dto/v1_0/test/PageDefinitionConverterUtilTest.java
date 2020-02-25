@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.headless.delivery.dto.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -98,6 +99,12 @@ public class PageDefinitionConverterUtilTest {
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		_fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				_serviceContext);
 	}
 
 	@Test
@@ -151,6 +158,8 @@ public class PageDefinitionConverterUtilTest {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
+
+	private FragmentCollection _fragmentCollection;
 
 	@Inject
 	private FragmentCollectionContributorTracker

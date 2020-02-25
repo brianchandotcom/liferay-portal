@@ -25,6 +25,10 @@ public class UploadServletRequestConfigurationHelperUtil {
 		return _uploadServletRequestConfigurationHelper.getMaxSize();
 	}
 
+	public static long getMaxTries() {
+		return _uploadServletRequestConfigurationHelper.getMaxTries();
+	}
+
 	public static String getTempDir() {
 		return _uploadServletRequestConfigurationHelper.getTempDir();
 	}

@@ -142,10 +142,27 @@ for (String childrenItemId : childrenItemIds) {
 			RowLayoutStructureItem rowLayoutStructureItem = (RowLayoutStructureItem)layoutStructureItem;
 
 			LayoutStructureItem parentLayoutStructureItem = layoutStructure.getLayoutStructureItem(rowLayoutStructureItem.getParentItemId());
+
+			boolean includeContainer = false;
+
+			if (parentLayoutStructureItem instanceof RootLayoutStructureItem) {
+				LayoutStructureItem rootParentLayoutStructureItem = layoutStructure.getLayoutStructureItem(parentLayoutStructureItem.getParentItemId());
+
+				if (rootParentLayoutStructureItem == null) {
+					includeContainer = true;
+				}
+				else if (rootParentLayoutStructureItem instanceof DropZoneLayoutStructureItem) {
+					LayoutStructureItem dropZoneParentLayoutStructureItem = layoutStructure.getLayoutStructureItem(rootParentLayoutStructureItem.getParentItemId());
+
+					if (dropZoneParentLayoutStructureItem instanceof RootLayoutStructureItem) {
+						includeContainer = true;
+					}
+				}
+			}
 			%>
 
 			<c:choose>
-				<c:when test="<%= parentLayoutStructureItem instanceof RootLayoutStructureItem %>">
+				<c:when test="<%= includeContainer %>">
 					<div className="container-fluid p-0">
 						<div class="row <%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>">
 

@@ -53,17 +53,18 @@ public class ActionUtil {
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
 			methodName, interfaceClasses[0].getName(), object,
-			groupedModel.getGroupId(), uriInfo);
+			groupedModel.getGroupId(), uriInfo, groupedModel.getUserId());
 	}
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, Long id, String methodName,
-		String permissionName, Object object, Long siteId, UriInfo uriInfo) {
+		String permissionName, Object object, Long siteId, UriInfo uriInfo,
+		Long userId) {
 
 		try {
 			return _addAction(
 				actionName, clazz, id, methodName, permissionName, object,
-				siteId, uriInfo);
+				siteId, uriInfo, userId);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -72,7 +73,8 @@ public class ActionUtil {
 
 	private static Map<String, String> _addAction(
 			String actionName, Class clazz, Long id, String methodName,
-			String permissionName, Object object, Long siteId, UriInfo uriInfo)
+			String permissionName, Object object, Long siteId, UriInfo uriInfo,
+			Long userId)
 		throws Exception {
 
 		if (uriInfo == null) {
@@ -99,8 +101,11 @@ public class ActionUtil {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (!modelResourceActions.contains(actionName) ||
-			!permissionChecker.hasPermission(
-				siteId, permissionName, id, actionName)) {
+			(!permissionChecker.hasOwnerPermission(
+				permissionChecker.getCompanyId(), permissionName, id, userId,
+				actionName) &&
+			 !permissionChecker.hasPermission(
+				 siteId, permissionName, id, actionName))) {
 
 			return null;
 		}

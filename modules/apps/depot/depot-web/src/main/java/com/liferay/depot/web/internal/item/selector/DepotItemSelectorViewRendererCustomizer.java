@@ -27,11 +27,13 @@ import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCrite
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -54,9 +56,13 @@ public class DepotItemSelectorViewRendererCustomizer
 			itemSelectorViewRenderer.getItemSelectorCriterion();
 
 		if (itemSelectorCriterion instanceof AssetEntryItemSelectorCriterion) {
-			return new DepotAssetEntryItemSelectorViewRenderer(
+			AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
+				(AssetEntryItemSelectorCriterion)itemSelectorCriterion;
+
+			return new DepotItemSelectorViewRenderer(
+				assetEntryItemSelectorCriterion.getTypeSelection(),
 				_depotApplicationController, itemSelectorViewRenderer, _portal,
-				_servletContext);
+				Collections.emptyList(), _servletContext);
 		}
 
 		ItemSelectorView<ItemSelectorCriterion> itemSelectorView =
@@ -77,8 +83,8 @@ public class DepotItemSelectorViewRendererCustomizer
 		}
 
 		return new DepotItemSelectorViewRenderer(
-			_depotApplicationController, itemSelectorViewRenderer, _portal,
-			portletIds, _servletContext);
+			StringPool.BLANK, _depotApplicationController,
+			itemSelectorViewRenderer, _portal, portletIds, _servletContext);
 	}
 
 	@Override

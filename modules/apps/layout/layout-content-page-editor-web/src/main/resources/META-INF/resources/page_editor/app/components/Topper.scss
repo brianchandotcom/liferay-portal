@@ -9,7 +9,7 @@
 
 	position: relative;
 
-	&:after {
+	&:before {
 		box-shadow: inset 0 0 0 $borderWidth fade_out($backgroundColor, 1);
 		content: '';
 		display: block;
@@ -63,11 +63,11 @@
 		z-index: 3;
 	}
 
-	&.hovered:after {
+	&.hovered:before {
 		box-shadow: inset 0 0 0 $borderWidth $backgroundColor;
 	}
 
-	&.active:after {
+	&.active:before {
 		box-shadow: inset 0 0 0 $borderWidth $activeBackgroundColor;
 	}
 
@@ -76,18 +76,18 @@
 		box-shadow: 0 0 0 $borderWidth $activeBackgroundColor;
 	}
 
-	&.drag-over-middle .page-editor__container > .container,
-	&.drag-over-middle .page-editor__container > .container-fluid,
-	&.drag-over-middle.page-editor__col {
-		border: 4px solid $activeBackgroundColor;
-	}
-
-	&.drag-over-bottom:after {
+	&.drag-over-bottom:before {
 		border-bottom: 4px solid $activeBackgroundColor;
 	}
 
-	&.drag-over-top:after {
+	&.drag-over-top:before {
 		border-top: 4px solid $activeBackgroundColor;
+	}
+
+	&.drag-over-middle .page-editor__container > .container:after,
+	&.drag-over-middle .page-editor__container > .container-fluid:after,
+	&.drag-over-middle.page-editor__col:after {
+		box-shadow: inset 0 0 0 4px $activeBackgroundColor;
 	}
 
 	&__drag-icon {

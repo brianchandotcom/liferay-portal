@@ -39,6 +39,8 @@ import javax.portlet.PortletURL;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -97,33 +99,41 @@ public class DepotItemSelectorViewRenderer implements ItemSelectorViewRenderer {
 					return;
 				}
 
-				String portletId = _getPortletId(scopeGroup.getGroupId());
-
-				if (Validator.isNotNull(portletId)) {
-					_itemSelectorViewRenderer.renderHTML(pageContext);
-
-					return;
-				}
-
-				RequestDispatcher requestDispatcher =
-					_servletContext.getRequestDispatcher(
-						"/item/selector/application_disabled.jsp");
-
-				DepotApplicationDisplayContext depotApplicationDisplayContext =
-					new DepotApplicationDisplayContext(
-						httpServletRequest, _portal);
-
-				depotApplicationDisplayContext.setPortletId(_portletIds.get(0));
-				depotApplicationDisplayContext.setPortletURL(
-					_itemSelectorViewRenderer.getPortletURL());
-
-				httpServletRequest.setAttribute(
-					DepotAdminWebKeys.DEPOT_APPLICATION_DISPLAY_CONTEXT,
-					depotApplicationDisplayContext);
-
-				requestDispatcher.include(
-					httpServletRequest, httpServletResponse);
+				_dispatchPortletItemSelectorView(
+					scopeGroup.getGroupId(), httpServletRequest,
+					httpServletResponse, pageContext);
 			});
+	}
+
+	private void _dispatchPortletItemSelectorView(
+			long groupId, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, PageContext pageContext)
+		throws IOException, ServletException {
+
+		String portletId = _getPortletId(groupId);
+
+		if (Validator.isNotNull(portletId)) {
+			_itemSelectorViewRenderer.renderHTML(pageContext);
+
+			return;
+		}
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(
+				"/item/selector/application_disabled.jsp");
+
+		DepotApplicationDisplayContext depotApplicationDisplayContext =
+			new DepotApplicationDisplayContext(httpServletRequest, _portal);
+
+		depotApplicationDisplayContext.setPortletId(_portletIds.get(0));
+		depotApplicationDisplayContext.setPortletURL(
+			_itemSelectorViewRenderer.getPortletURL());
+
+		httpServletRequest.setAttribute(
+			DepotAdminWebKeys.DEPOT_APPLICATION_DISPLAY_CONTEXT,
+			depotApplicationDisplayContext);
+
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	private String _getPortletId(long groupId) {

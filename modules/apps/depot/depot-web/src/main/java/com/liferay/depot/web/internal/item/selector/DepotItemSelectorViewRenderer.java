@@ -17,13 +17,22 @@ package com.liferay.depot.web.internal.item.selector;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.display.context.DepotApplicationDisplayContext;
+import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -49,10 +58,11 @@ import javax.servlet.jsp.PageContext;
 public class DepotItemSelectorViewRenderer implements ItemSelectorViewRenderer {
 
 	public DepotItemSelectorViewRenderer(
-		DepotApplicationController depotApplicationController,
+		String className, DepotApplicationController depotApplicationController,
 		ItemSelectorViewRenderer itemSelectorViewRenderer, Portal portal,
 		List<String> portletIds, ServletContext servletContext) {
 
+		_className = className;
 		_depotApplicationController = depotApplicationController;
 		_itemSelectorViewRenderer = itemSelectorViewRenderer;
 		_portal = portal;
@@ -99,10 +109,55 @@ public class DepotItemSelectorViewRenderer implements ItemSelectorViewRenderer {
 					return;
 				}
 
-				_dispatchPortletItemSelectorView(
-					scopeGroup.getGroupId(), httpServletRequest,
-					httpServletResponse, pageContext);
+				if (ListUtil.isNotEmpty(_portletIds)) {
+					_dispatchPortletItemSelectorView(
+						scopeGroup.getGroupId(), httpServletRequest,
+						httpServletResponse, pageContext);
+				}
+				else {
+					_dispatchAssetEntryItemSelectorView(
+						scopeGroup.getGroupId(), httpServletRequest,
+						httpServletResponse, pageContext);
+				}
 			});
+	}
+
+	private void _dispatchAssetEntryItemSelectorView(
+			long groupId, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, PageContext pageContext)
+		throws IOException, ServletException {
+
+		String portletId = _getPortletId(_className);
+
+		if (_depotApplicationController.isEnabled(portletId, groupId)) {
+			_itemSelectorViewRenderer.renderHTML(pageContext);
+
+			return;
+		}
+
+		RequestDispatcher requestDispatcher = null;
+
+		if (Validator.isNull(portletId)) {
+			requestDispatcher = _servletContext.getRequestDispatcher(
+				"/item/selector/application_not_supported.jsp");
+		}
+		else {
+			requestDispatcher = _servletContext.getRequestDispatcher(
+				"/item/selector/application_disabled.jsp");
+		}
+
+		DepotApplicationDisplayContext depotApplicationDisplayContext =
+			new DepotApplicationDisplayContext(httpServletRequest, _portal);
+
+		depotApplicationDisplayContext.setPortletId(portletId);
+		depotApplicationDisplayContext.setPortletURL(
+			_itemSelectorViewRenderer.getPortletURL());
+
+		httpServletRequest.setAttribute(
+			DepotAdminWebKeys.DEPOT_APPLICATION_DISPLAY_CONTEXT,
+			depotApplicationDisplayContext);
+
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	private void _dispatchPortletItemSelectorView(
@@ -148,6 +203,25 @@ public class DepotItemSelectorViewRenderer implements ItemSelectorViewRenderer {
 		);
 	}
 
+	private String _getPortletId(String className) {
+		if (className.equals(DLFileEntryConstants.getClassName()) ||
+			className.equals(DLFolderConstants.getClassName()) ||
+			className.equals(FileEntry.class.getName()) ||
+			className.equals(Folder.class.getName())) {
+
+			return DLPortletKeys.DOCUMENT_LIBRARY_ADMIN;
+		}
+		else if (className.equals(JournalArticle.class.getName()) ||
+				 className.equals(JournalFolder.class.getName())) {
+
+			return JournalPortletKeys.JOURNAL;
+		}
+		else {
+			return StringPool.BLANK;
+		}
+	}
+
+	private final String _className;
 	private final DepotApplicationController _depotApplicationController;
 	private final ItemSelectorViewRenderer _itemSelectorViewRenderer;
 	private final Portal _portal;

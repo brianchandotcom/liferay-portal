@@ -23,6 +23,7 @@ import com.liferay.project.templates.extensions.util.FileUtil;
 import com.liferay.project.templates.extensions.util.Validator;
 import com.liferay.project.templates.extensions.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
+import com.liferay.project.templates.util.XMLTestUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -44,6 +45,8 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -59,7 +62,7 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -3454,6 +3457,61 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			nativeSassProjectDir, "build/libs/foo.portlet-1.0.0.jar");
 		File rubySassOutputFile = testExists(
 			rubySassProjectDir, "build/libs/foo.portlet-1.0.0.jar");
+
+		testBundlesDiff(nativeSassOutputFile, rubySassOutputFile);
+	}
+
+	@Test
+	public void testSassCompilerMavenWorkspace() throws Exception {
+		File nativeSassWorkspaceDir = _buildTemplateWithMaven(
+			"workspace", "nativeSassMavenWS", "liferayMaven", "-DliferayVersion=7.3.0");
+
+		File nativeSassModulesDir = new File(nativeSassWorkspaceDir, "modules");
+
+		File nativeSassProjectDir = buildTemplateWithMaven(
+			nativeSassWorkspaceDir.getParentFile(), nativeSassModulesDir,
+			"mvc-portlet", "foo-portlet", "com.test", mavenExecutor,
+			"-DclassName=Foo", "-Dpackage=foo.portlet",
+			"-DprojectType=workspace");
+
+		String nativeSassOutput = executeMaven(nativeSassProjectDir, mavenExecutor, MAVEN_GOAL_PACKAGE);
+
+		Assert.assertTrue(
+			nativeSassOutput,
+			nativeSassOutput.contains("Using native Sass compiler"));
+
+		File rubySassWorkspaceDir = _buildTemplateWithMaven(
+			"workspace", "rubySassMavenWS", "liferayMaven", "-DliferayVersion=7.3.0");
+
+		File rubySassModulesDir = new File(rubySassWorkspaceDir, "modules");
+
+		File rubySassProjectDir = buildTemplateWithMaven(
+			rubySassWorkspaceDir.getParentFile(), rubySassModulesDir,
+			"mvc-portlet", "foo-portlet", "com.test", mavenExecutor,
+			"-DclassName=Foo", "-Dpackage=foo.portlet",
+			"-DprojectType=workspace");
+
+		File pomXmlFile = new File(rubySassProjectDir, "pom.xml");
+
+		if (pomXmlFile.exists()) {
+			editXml(
+				pomXmlFile,
+				document -> {
+					addCssBuilderConfigurationElement(
+						document, "sassCompilerClassName", "ruby");
+				});
+		}
+
+		String rubySassOutput = executeMaven(rubySassProjectDir, mavenExecutor, MAVEN_GOAL_PACKAGE);
+
+		Assert.assertTrue(
+			rubySassOutput,
+			rubySassOutput.contains("Using Ruby Sass compiler"));
+
+		File nativeSassOutputFile = testExists(
+			nativeSassProjectDir, "target/foo-portlet-1.0.0.jar");
+		File rubySassOutputFile = testExists(
+			rubySassProjectDir, "target/foo-portlet-1.0.0.jar");
 
 		testBundlesDiff(nativeSassOutputFile, rubySassOutputFile);
 	}

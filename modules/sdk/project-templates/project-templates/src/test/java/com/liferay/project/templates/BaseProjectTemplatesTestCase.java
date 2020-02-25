@@ -82,6 +82,7 @@ import org.junit.rules.TemporaryFolder;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /**
@@ -213,6 +214,40 @@ public interface BaseProjectTemplatesTestCase {
 		repositoryElement.appendChild(urlElement);
 
 		repositoriesElement.appendChild(repositoryElement);
+	}
+
+	public default void addCssBuilderConfigurationElement(Document document, String configurationName, String configurationContents) {
+
+		Element projectElement = document.getDocumentElement();
+
+		Element buildElement = XMLTestUtil.getChildElement(
+			projectElement, "build");
+
+		Element pluginsElement = XMLTestUtil.getChildElement(
+				buildElement, "plugins");
+
+		List<Element> pluginElement = XMLTestUtil.getChildElements(
+				pluginsElement);
+
+		for (Element element : pluginElement) {
+
+			String artifactId = element.getAttribute("artifactId");
+
+			if (artifactId.contentEquals("com.liferay.css.builder")) {
+				Element configurationElement = XMLTestUtil.getChildElement(
+					element, "configuration");
+
+				Element newElement = document.createElement(configurationName);
+
+				configurationElement.appendChild(newElement);
+
+				newElement.setTextContent(configurationContents);
+
+			}
+
+		}
+
+
 	}
 
 	public default void buildProjects(
@@ -385,7 +420,7 @@ public interface BaseProjectTemplatesTestCase {
 			String... args)
 		throws Exception {
 
-		File destinationDir = temporaryFolder.newFolder("gradle");
+		File destinationDir = temporaryFolder.newFolder("gradle" + name);
 
 		return buildTemplateWithGradle(destinationDir, template, name, args);
 	}
@@ -480,7 +515,7 @@ public interface BaseProjectTemplatesTestCase {
 			String groupId, MavenExecutor mavenExecutor, String... args)
 		throws Exception {
 
-		File mavenDir = temporaryFolder.newFolder("maven");
+		File mavenDir = temporaryFolder.newFolder("maven" + name);
 
 		return buildTemplateWithMaven(
 			mavenDir, mavenDir, template, name, groupId, mavenExecutor, args);
@@ -490,10 +525,12 @@ public interface BaseProjectTemplatesTestCase {
 			TemporaryFolder temporaryFolder, String liferayVersion)
 		throws Exception {
 
-		File destinationDir = temporaryFolder.newFolder("workspace");
+		String name = "test-workspace";
+
+		File destinationDir = temporaryFolder.newFolder("workspace" + name);
 
 		return buildTemplateWithGradle(
-			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace",
+			destinationDir, WorkspaceUtil.WORKSPACE, name,
 			"--liferay-version", liferayVersion);
 	}
 

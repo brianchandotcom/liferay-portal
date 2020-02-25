@@ -127,6 +127,8 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_1.jpg");
 
+		ScrollWebElementIntoView(locator1 = "//label[contains(.,'Preview')]");
+
 		AssertVisible(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
@@ -148,6 +150,8 @@ definition {
 		Button.click(button = "Save");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		ScrollWebElementIntoView(locator1 = "//label[contains(.,'Preview')]");
 
 		AssertVisible(
 			key_imageName = "Document_1.jpg",

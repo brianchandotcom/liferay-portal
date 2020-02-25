@@ -39,6 +39,8 @@ definition {
 		if (isSet(customImage)) {
 			var key_uploadFileName = "${uploadFileName}";
 
+			AssertElementPresent(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
+
 			Click(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
 
 			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");

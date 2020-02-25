@@ -77,7 +77,7 @@
 		display: block;
 	}
 
-	&__row.no-gutters .page-editor__col:after {
+	&__row.no-gutters > .page-editor__col:after {
 		left: 0;
 		width: 100%;
 	}

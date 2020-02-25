@@ -87,7 +87,7 @@ public class SimilarResultsPortletSearchContributor
 					similarResultsPortletPreferences.getFederatedSearchKey()));
 
 		filterByEntryClassName(
-			criteria, searchRequestBuilder, portletSharedSearchSettings);
+			criteria, portletSharedSearchSettings, searchRequestBuilder);
 
 		filterByGroupId(portletSharedSearchSettings, searchRequestBuilder);
 
@@ -104,8 +104,9 @@ public class SimilarResultsPortletSearchContributor
 	}
 
 	protected void filterByEntryClassName(
-		Criteria criteria, SearchRequestBuilder searchRequestBuilder,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
+		Criteria criteria,
+		PortletSharedSearchSettings portletSharedSearchSettings,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		Optional<String> optional =
 			portletSharedSearchSettings.getParameterOptional(

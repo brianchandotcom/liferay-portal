@@ -66,12 +66,26 @@ public class PageDefinitionConverterUtil {
 		FragmentRendererTracker fragmentRendererTracker,
 		com.liferay.portal.kernel.model.Layout layout) {
 
+		return toPageDefinition(
+			fragmentCollectionContributorTracker,
+			fragmentEntryConfigurationParser, fragmentRendererTracker, layout,
+			true, true);
+	}
+
+	public static PageDefinition toPageDefinition(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentRendererTracker fragmentRendererTracker,
+		com.liferay.portal.kernel.model.Layout layout,
+		boolean saveInlineContent, boolean saveMappingConfiguration) {
+
 		return new PageDefinition() {
 			{
 				pageElement = _toPageElement(
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
-					layout);
+					layout, saveInlineContent, saveMappingConfiguration);
 				settings = _toSettings(layout);
 			}
 		};
@@ -83,7 +97,8 @@ public class PageDefinitionConverterUtil {
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererTracker fragmentRendererTracker,
 		LayoutStructure layoutStructure,
-		LayoutStructureItem layoutStructureItem) {
+		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
+		boolean saveMappingConfiguration) {
 
 		List<PageElement> pageElements = new ArrayList<>();
 
@@ -101,7 +116,8 @@ public class PageDefinitionConverterUtil {
 					_toPageElement(
 						fragmentCollectionContributorTracker,
 						fragmentEntryConfigurationParser,
-						fragmentRendererTracker, childLayoutStructureItem));
+						fragmentRendererTracker, childLayoutStructureItem,
+						saveInlineContent, saveMappingConfiguration));
 			}
 			else {
 				pageElements.add(
@@ -109,14 +125,15 @@ public class PageDefinitionConverterUtil {
 						fragmentCollectionContributorTracker,
 						fragmentEntryConfigurationParser,
 						fragmentRendererTracker, layoutStructure,
-						childLayoutStructureItem));
+						childLayoutStructureItem, saveInlineContent,
+						saveMappingConfiguration));
 			}
 		}
 
 		PageElement pageElement = _toPageElement(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			layoutStructureItem);
+			layoutStructureItem, saveInlineContent, saveMappingConfiguration);
 
 		if (!pageElements.isEmpty()) {
 			pageElement.setPageElements(
@@ -131,7 +148,8 @@ public class PageDefinitionConverterUtil {
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererTracker fragmentRendererTracker,
-		com.liferay.portal.kernel.model.Layout layout) {
+		com.liferay.portal.kernel.model.Layout layout,
+		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
@@ -157,13 +175,15 @@ public class PageDefinitionConverterUtil {
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
 					layoutStructure,
-					layoutStructure.getLayoutStructureItem(childItemId)));
+					layoutStructure.getLayoutStructureItem(childItemId),
+					saveInlineContent, saveMappingConfiguration));
 		}
 
 		PageElement pageElement = _toPageElement(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			mainLayoutStructureItem);
+			mainLayoutStructureItem, saveInlineContent,
+			saveMappingConfiguration);
 
 		if (!mainPageElements.isEmpty()) {
 			pageElement.setPageElements(
@@ -178,7 +198,8 @@ public class PageDefinitionConverterUtil {
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererTracker fragmentRendererTracker,
-		LayoutStructureItem layoutStructureItem) {
+		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
+		boolean saveMappingConfiguration) {
 
 		if (layoutStructureItem instanceof ColumnLayoutStructureItem) {
 			ColumnLayoutStructureItem columnLayoutStructureItem =
@@ -288,7 +309,8 @@ public class PageDefinitionConverterUtil {
 								fragmentCollectionContributorTracker,
 								fragmentEntryConfigurationParser,
 								fragmentLayoutStructureItem,
-								fragmentRendererTracker);
+								fragmentRendererTracker, saveInlineContent,
+								saveMappingConfiguration);
 					type = PageElement.Type.FRAGMENT;
 				}
 			};

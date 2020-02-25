@@ -74,6 +74,20 @@ public class FragmentInstanceDefinitionConverterUtil {
 		FragmentLayoutStructureItem fragmentLayoutStructureItem,
 		FragmentRendererTracker fragmentRendererTracker) {
 
+		return toFragmentInstanceDefinition(
+			fragmentCollectionContributorTracker,
+			fragmentEntryConfigurationParser, fragmentLayoutStructureItem,
+			fragmentRendererTracker, true, true);
+	}
+
+	public static FragmentInstanceDefinition toFragmentInstanceDefinition(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentLayoutStructureItem fragmentLayoutStructureItem,
+		FragmentRendererTracker fragmentRendererTracker,
+		boolean saveInlineContent, boolean saveMappingConfiguration) {
+
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
 				fragmentLayoutStructureItem.getFragmentEntryLinkId());
@@ -104,7 +118,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 				};
 				fragmentConfig = _getFragmentConfig(
 					fragmentEntryConfigurationParser, fragmentEntryLink);
-				fragmentFields = _getFragmentFields(fragmentEntryLink);
+				fragmentFields = _getFragmentFields(
+					fragmentEntryLink, saveInlineContent);
 			}
 		};
 	}
@@ -278,7 +293,11 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static FragmentField[] _getFragmentFields(
-		FragmentEntryLink fragmentEntryLink) {
+		FragmentEntryLink fragmentEntryLink, boolean saveInlineContent) {
+
+		if (!saveInlineContent) {
+			return new FragmentField[0];
+		}
 
 		JSONObject editableValuesJSONObject = null;
 

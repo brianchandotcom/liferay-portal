@@ -58,20 +58,6 @@ public class TagFacetPortletPreferencesImpl
 	}
 
 	@Override
-	public boolean isDisplayStyleCloud() {
-		String displayStyle = getDisplayStyle();
-
-		return displayStyle.equals("cloud");
-	}
-
-	@Override
-	public boolean isDisplayStyleList() {
-		String displayStyle = getDisplayStyle();
-
-		return displayStyle.equals("list");
-	}
-
-	@Override
 	public boolean isFrequenciesVisible() {
 		return _portletPreferencesHelper.getBoolean(
 			TagFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE,

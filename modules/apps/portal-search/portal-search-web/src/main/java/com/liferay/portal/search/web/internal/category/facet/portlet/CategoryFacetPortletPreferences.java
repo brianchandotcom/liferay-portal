@@ -40,10 +40,6 @@ public interface CategoryFacetPortletPreferences {
 
 	public String getParameterName();
 
-	public boolean isDisplayStyleCloud();
-
-	public boolean isDisplayStyleList();
-
 	public boolean isFrequenciesVisible();
 
 }

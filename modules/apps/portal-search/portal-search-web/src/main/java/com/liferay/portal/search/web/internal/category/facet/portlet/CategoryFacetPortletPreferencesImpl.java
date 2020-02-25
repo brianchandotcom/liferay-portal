@@ -61,20 +61,6 @@ public class CategoryFacetPortletPreferencesImpl
 	}
 
 	@Override
-	public boolean isDisplayStyleCloud() {
-		String displayStyle = getDisplayStyle();
-
-		return displayStyle.equals("cloud");
-	}
-
-	@Override
-	public boolean isDisplayStyleList() {
-		String displayStyle = getDisplayStyle();
-
-		return displayStyle.equals("list");
-	}
-
-	@Override
 	public boolean isFrequenciesVisible() {
 		return _portletPreferencesHelper.getBoolean(
 			CategoryFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE,

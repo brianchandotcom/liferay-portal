@@ -15,27 +15,15 @@
 package com.liferay.portal.dao.db;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.stubbing.OngoingStubbing;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.api.mockito.expectation.ConstructorExpectationSetup;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Shinn Lok
  * @author Alberto Chaparro
  */
-@PrepareForTest({DataAccess.class, OracleDB.class})
-@RunWith(PowerMockRunner.class)
 public class OracleDBTest extends BaseDBTestCase {
 
 	@Test
@@ -61,8 +49,6 @@ public class OracleDBTest extends BaseDBTestCase {
 
 	@Test
 	public void testRewordAlterColumnTypeNotNullWhenNotNull() throws Exception {
-		_mockIsNullable(false);
-
 		Assert.assertEquals(
 			"alter table DLFolder modify userName VARCHAR2(75 CHAR);\n",
 			buildSQL(
@@ -71,7 +57,7 @@ public class OracleDBTest extends BaseDBTestCase {
 
 	@Test
 	public void testRewordAlterColumnTypeNotNullWhenNull() throws Exception {
-		_mockIsNullable(true);
+		_nullable = true;
 
 		Assert.assertEquals(
 			"alter table DLFolder modify userName VARCHAR2(75 CHAR) not " +
@@ -82,8 +68,6 @@ public class OracleDBTest extends BaseDBTestCase {
 
 	@Test
 	public void testRewordAlterColumnTypeNullWhenNotNull() throws Exception {
-		_mockIsNullable(false);
-
 		Assert.assertEquals(
 			"alter table DLFolder modify userName VARCHAR2(75 CHAR) null;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
@@ -91,7 +75,7 @@ public class OracleDBTest extends BaseDBTestCase {
 
 	@Test
 	public void testRewordAlterColumnTypeNullWhenNull() throws Exception {
-		_mockIsNullable(true);
+		_nullable = true;
 
 		Assert.assertEquals(
 			"alter table DLFolder modify userName VARCHAR2(75 CHAR);\n",
@@ -107,34 +91,16 @@ public class OracleDBTest extends BaseDBTestCase {
 
 	@Override
 	protected DB getDB() {
-		return new OracleDB(0, 0);
+		return new OracleDB(0, 0) {
+
+			@Override
+			protected boolean isNullable(String tableName, String columnName) {
+				return _nullable;
+			}
+
+		};
 	}
 
-	private void _mockIsNullable(boolean nullable) throws Exception {
-		PowerMockito.mockStatic(DataAccess.class);
-
-		PowerMockito.when(
-			DataAccess.getConnection()
-		).thenReturn(
-			null
-		);
-
-		DBInspector dbInspector = PowerMockito.mock(DBInspector.class);
-
-		ConstructorExpectationSetup<DBInspector>
-			dbInspectorConstructorExpectationSetup = PowerMockito.whenNew(
-				DBInspector.class);
-
-		OngoingStubbing dbInspectorOngoingStubbing =
-			dbInspectorConstructorExpectationSetup.withAnyArguments();
-
-		dbInspectorOngoingStubbing.thenReturn(dbInspector);
-
-		PowerMockito.when(
-			dbInspector.isNullable("DLFolder", "userName")
-		).thenReturn(
-			nullable
-		);
-	}
+	private boolean _nullable;
 
 }

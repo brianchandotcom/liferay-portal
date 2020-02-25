@@ -34,7 +34,10 @@ definition {
 	test CreateContentWithExistingStructureViaInlineFieldWithoutMappingRequiredField {
 		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentCreationContentPageEditorConfiguration.config";
 		property osgi.module.configurations = "contentCreationEnabled=&quot;true&quot;";
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until POSHI-48 resolved
+
+		property portal.acceptance = "false";
 
 		task ("Create a web content structure with a required text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

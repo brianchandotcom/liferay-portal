@@ -138,7 +138,10 @@ definition {
 
 	@description = "This is a test for LPS-96685. User can change select fragment configuration in a content page template."
 	test AddSelectConfigurationFragmentToContentPageTemplate {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until POSHI-48 resolved
+
+		property portal.acceptance = "false";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.html");

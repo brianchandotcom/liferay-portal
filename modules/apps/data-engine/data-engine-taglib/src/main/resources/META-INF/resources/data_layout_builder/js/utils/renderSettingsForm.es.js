@@ -16,7 +16,13 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
 
 export const getFilteredSettingsContext = ({config, settingsContext}) => {
-	const visitor = new PagesVisitor(settingsContext.pages);
+	const unsupportedTabs = [...config.disabledTabs];
+
+	const pages = settingsContext.pages.filter(
+		page => unsupportedTabs.indexOf(page.title) === -1
+	);
+
+	const visitor = new PagesVisitor(pages);
 
 	const unsupportedProperties = [
 		...config.unimplementedProperties,

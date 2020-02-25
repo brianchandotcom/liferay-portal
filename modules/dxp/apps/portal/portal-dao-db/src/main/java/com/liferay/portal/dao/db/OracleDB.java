@@ -156,6 +156,16 @@ public class OracleDB extends BaseDB {
 		return _ORACLE;
 	}
 
+	protected boolean isNullable(String tableName, String columnName)
+		throws SQLException {
+
+		try (Connection con = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(con);
+
+			return dbInspector.isNullable(tableName, columnName);
+		}
+	}
+
 	@Override
 	protected String replaceTemplate(String template) {
 
@@ -206,17 +216,13 @@ public class OracleDB extends BaseDB {
 					String nullable = template[template.length - 1];
 
 					if (!Validator.isBlank(nullable)) {
-						try (Connection con = DataAccess.getConnection()) {
-							DBInspector dbInspector = new DBInspector(con);
+						boolean currentNullable = isNullable(
+							template[0], template[1]);
 
-							boolean isNullable = dbInspector.isNullable(
-								template[0], template[1]);
+						if ((nullable.equals("null") && currentNullable) ||
+							(nullable.equals("not null") && !currentNullable)) {
 
-							if ((nullable.equals("null") && isNullable) ||
-								(nullable.equals("not null") && !isNullable)) {
-
-								nullable = StringPool.BLANK;
-							}
+							nullable = StringPool.BLANK;
 						}
 					}
 

@@ -15,12 +15,15 @@
 import React, {useCallback, useContext, useReducer} from 'react';
 
 const EditableProcessorContext = React.createContext(null);
-const INITIAL_STATE = null;
+const INITIAL_STATE = {editableClickPosition: null, editableUniqueId: null};
 const SET_EDITABLE_UNIQUE_ID = 'SET_EDITABLE_UNIQUE_ID';
 
 function reducer(state = INITIAL_STATE, action) {
 	if (action.type === SET_EDITABLE_UNIQUE_ID) {
-		return action.editableUniqueId;
+		return {
+			editableClickPosition: action.editableClickPosition,
+			editableUniqueId: action.editableUniqueId
+		};
 	}
 
 	return state;
@@ -36,18 +39,25 @@ export function EditableProcessorContextProvider({children}) {
 	);
 }
 
+export function useEditableProcessorClickPosition() {
+	const [state] = useContext(EditableProcessorContext);
+
+	return state.editableClickPosition;
+}
+
 export function useEditableProcessorUniqueId() {
 	const [state] = useContext(EditableProcessorContext);
 
-	return state;
+	return state.editableUniqueId;
 }
 
 export function useSetEditableProcessorUniqueId() {
 	const [, dispatch] = useContext(EditableProcessorContext);
 
 	return useCallback(
-		editableUniqueIdOrNull => {
+		(editableUniqueIdOrNull, editableClickPosition = null) => {
 			dispatch({
+				editableClickPosition,
 				editableUniqueId: editableUniqueIdOrNull,
 				type: SET_EDITABLE_UNIQUE_ID
 			});

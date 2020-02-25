@@ -48,7 +48,12 @@ export default function getAlloyEditorProcessor(
 	let _element;
 
 	return {
-		createEditor: (element, changeCallback, destroyCallback, event) => {
+		createEditor: (
+			element,
+			changeCallback,
+			destroyCallback,
+			clickPosition
+		) => {
 			if (_editor) {
 				return;
 			}
@@ -107,8 +112,8 @@ export default function getAlloyEditorProcessor(
 				nativeEditor.on('instanceReady', () => {
 					nativeEditor.focus();
 
-					if (event) {
-						_selectRange(event, nativeEditor);
+					if (clickPosition) {
+						_selectRange(clickPosition, nativeEditor);
 					}
 					else {
 						nativeEditor.execCommand('selectAll');
@@ -177,13 +182,13 @@ function _stopEventPropagation(element, eventName) {
  * @param {Event} event
  * @param {CKEditor} nativeEditor
  */
-function _selectRange(event, nativeEditor) {
+function _selectRange(clickPosition, nativeEditor) {
 	const ckRange = nativeEditor.getSelection().getRanges()[0];
 
 	if (document.caretPositionFromPoint) {
 		const range = document.caretPositionFromPoint(
-			event.clientX,
-			event.clientY
+			clickPosition.clientX,
+			clickPosition.clientY
 		);
 
 		const node = range.offsetNode;
@@ -195,8 +200,8 @@ function _selectRange(event, nativeEditor) {
 	}
 	else if (document.caretRangeFromPoint) {
 		const range = document.caretRangeFromPoint(
-			event.clientX,
-			event.clientY
+			clickPosition.clientX,
+			clickPosition.clientY
 		);
 
 		const offset = range.startOffset || 0;

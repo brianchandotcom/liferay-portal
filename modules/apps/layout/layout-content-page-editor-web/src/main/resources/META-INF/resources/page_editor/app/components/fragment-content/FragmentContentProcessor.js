@@ -24,6 +24,7 @@ import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 import {useActiveItemId} from '../Controls';
 import {
+	useEditableProcessorClickPosition,
 	useEditableProcessorUniqueId,
 	useSetEditableProcessorUniqueId
 } from './EditableProcessorContext';
@@ -37,6 +38,7 @@ export default function FragmentContentProcessor({
 }) {
 	const activeItemId = useActiveItemId();
 	const dispatch = useDispatch();
+	const editableProcessorClickPosition = useEditableProcessorClickPosition();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const languageId = useSelector(
@@ -131,7 +133,8 @@ export default function FragmentContentProcessor({
 			() => {
 				processor.destroyEditor(editableElement, editableValue.config);
 				setEditableProcessorUniqueId(null);
-			}
+			},
+			editableProcessorClickPosition
 		);
 
 		return () => {
@@ -142,6 +145,7 @@ export default function FragmentContentProcessor({
 	}, [
 		dispatch,
 		editableElement,
+		editableProcessorClickPosition,
 		editableProcessorUniqueId,
 		editableValues,
 		fragmentEntryLinkId,

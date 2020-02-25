@@ -89,13 +89,20 @@ export default function FragmentContentInteractionsFilter({
 		const editableElement = getEditableElement(event.target);
 
 		if (editableElement) {
+			const editableClickPosition = {
+				clientX: event.clientX,
+				clientY: event.clientY
+			};
 			const editableUniqueId = getEditableUniqueId(
 				fragmentEntryLinkId,
 				getEditableElementId(editableElement)
 			);
 
 			if (isActive(editableUniqueId)) {
-				setEditableProcessorUniqueId(editableUniqueId);
+				setEditableProcessorUniqueId(
+					editableUniqueId,
+					editableClickPosition
+				);
 			}
 		}
 	};

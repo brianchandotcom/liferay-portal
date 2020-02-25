@@ -374,9 +374,12 @@ public class LangBuilder {
 				if ((translatedText == null) || translatedText.equals("")) {
 					String value = array[1];
 
-					if (line.contains("{") || line.contains("<") ||
-						ArrayUtil.contains(
-							_AUTOMATIC_COPY_LANGUAGE_IDS, languageId)) {
+					if (LanguageValidator.isSpecialPropertyKey(key)) {
+						translatedText = _getSpecialPropertyValue(key);
+					}
+					else if (line.contains("{") || line.contains("<") ||
+							 ArrayUtil.contains(
+								 _AUTOMATIC_COPY_LANGUAGE_IDS, languageId)) {
 
 						translatedText = value + AUTOMATIC_COPY;
 					}
@@ -394,9 +397,6 @@ public class LangBuilder {
 						else {
 							translatedText = value + AUTOMATIC_COPY;
 						}
-					}
-					else if (LanguageValidator.isSpecialPropertyKey(key)) {
-						translatedText = _getSpecialPropertyValue(key);
 					}
 					else if (languageId.equals("el") &&
 							 (key.equals("enabled") || key.equals("on") ||

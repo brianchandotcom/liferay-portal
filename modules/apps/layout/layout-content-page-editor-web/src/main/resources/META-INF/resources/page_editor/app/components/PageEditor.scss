@@ -52,7 +52,7 @@
 	&__container.empty > .container,
 	&__container.empty > .container-fluid,
 	&__row.empty {
-		min-height: 10em;
+		height: 10em;
 	}
 
 	&__editable {

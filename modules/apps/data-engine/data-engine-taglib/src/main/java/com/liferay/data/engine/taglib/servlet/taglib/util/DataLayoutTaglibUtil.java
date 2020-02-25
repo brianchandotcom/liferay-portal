@@ -150,6 +150,8 @@ public class DataLayoutTaglibUtil {
 			"disabledProperties",
 			dataLayoutBuilderConfiguration.getDisabledProperties()
 		).put(
+			"disabledTabs", dataLayoutBuilderConfiguration.getDisabledTabs()
+		).put(
 			"unimplementedProperties",
 			dataLayoutBuilderConfiguration.getUnimplementedProperties()
 		);

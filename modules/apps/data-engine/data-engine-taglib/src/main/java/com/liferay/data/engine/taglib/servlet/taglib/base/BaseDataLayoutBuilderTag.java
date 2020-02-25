@@ -66,10 +66,6 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		return _scopes;
 	}
 
-	public boolean getSinglePage() {
-		return _singlePage;
-	}
-
 	public void setComponentId(java.lang.String componentId) {
 		_componentId = componentId;
 	}
@@ -102,10 +98,6 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		_scopes = scopes;
 	}
 
-	public void setSinglePage(boolean singlePage) {
-		_singlePage = singlePage;
-	}
-
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -125,7 +117,6 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		_localizable = false;
 		_namespace = null;
 		_scopes = null;
-		_singlePage = false;
 	}
 
 	@Override
@@ -148,7 +139,6 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		setNamespacedAttribute(request, "localizable", _localizable);
 		setNamespacedAttribute(request, "namespace", _namespace);
 		setNamespacedAttribute(request, "scopes", _scopes);
-		setNamespacedAttribute(request, "singlePage", _singlePage);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-data-engine:data-layout-builder:";
@@ -167,6 +157,5 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 	private boolean _localizable = false;
 	private java.lang.String _namespace = null;
 	private java.util.Set _scopes = null;
-	private boolean _singlePage = false;
 
 }

@@ -124,16 +124,16 @@ const viewsDataProvider = jest.fn(() =>
 const mockedTimeSpanOptions = [
 	{
 		key: 'last-30-days',
-		label: 'Last 30 days'
+		label: 'Last 30 days',
 	},
 	{
 		key: 'last-7-days',
-		label: 'Last 7 days'
+		label: 'Last 7 days',
 	},
 	{
 		key: 'last-24-hours',
-		label: 'Last 24 hours'
-	}
+		label: 'Last 24 hours',
+	},
 ];
 
 describe('Chart', () => {
@@ -156,7 +156,7 @@ describe('Chart', () => {
 
 		expect(viewsDataProvider).toHaveBeenCalledWith({
 			timeSpanKey: 'last-7-days',
-			timeSpanOffset: 0
+			timeSpanOffset: 0,
 		});
 
 		expect(getByText('225')).toBeInTheDocument();
@@ -179,12 +179,12 @@ describe('Chart', () => {
 
 		expect(viewsDataProvider).toHaveBeenCalledWith({
 			timeSpanKey: 'last-7-days',
-			timeSpanOffset: 0
+			timeSpanOffset: 0,
 		});
 
 		expect(readsDataProvider).toHaveBeenCalledWith({
 			timeSpanKey: 'last-7-days',
-			timeSpanOffset: 0
+			timeSpanOffset: 0,
 		});
 
 		expect(getByText('225')).toBeInTheDocument();

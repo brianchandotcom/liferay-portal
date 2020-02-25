@@ -32,32 +32,38 @@ import CustomTooltip from './CustomTooltip';
 
 const {useEffect, useMemo} = React;
 
-const CHART_SIZE = {height: 220, width: 280};
-
+const CARTESIAN_GRID_COLOR = '#E7E7ED';
+const CHART_SIZES = {
+	dotRadius: 5,
+	height: 220,
+	lineWidth: 2,
+	width: 280,
+	yAxisWidth: 40,
+};
 const LAST_24_HOURS = 'last-24-hours';
 
+const METRICS_STATIC_VALUES = {
+	analyticsReportsHistoricalReads: {
+		color: '#50D2A0',
+		langKey: Liferay.Language.get('reads-metric'),
+	},
+
+	analyticsReportsHistoricalViews: {
+		color: '#4B9BFF',
+		langKey: Liferay.Language.get('views-metric'),
+	},
+};
+
 function keyToTranslatedLabelValue(key) {
-	if (key === 'analyticsReportsHistoricalViews') {
-		return Liferay.Language.get('views-metric');
-	}
-	else if (key === 'analyticsReportsHistoricalReads') {
-		return Liferay.Language.get('reads-metric');
-	}
-	else {
-		return key;
-	}
+	const metricValues = METRICS_STATIC_VALUES[key];
+
+	return metricValues ? metricValues.langKey : key;
 }
 
 function keyToHexColor(key) {
-	if (key === 'analyticsReportsHistoricalViews') {
-		return '#4B9BFF';
-	}
-	else if (key === 'analyticsReportsHistoricalReads') {
-		return '#50D2A0';
-	}
-	else {
-		return '#666666';
-	}
+	const metricValues = METRICS_STATIC_VALUES[key];
+
+	return metricValues ? metricValues.color : '#666666';
 }
 
 /*
@@ -303,8 +309,8 @@ export default function Chart({
 					<div className="mt-3">
 						<LineChart
 							data={dataSet.histogram}
-							height={CHART_SIZE.height}
-							width={CHART_SIZE.width}
+							height={CHART_SIZES.height}
+							width={CHART_SIZES.width}
 						>
 							<Legend
 								formatter={legendFormatter}
@@ -316,15 +322,17 @@ export default function Chart({
 							/>
 
 							<CartesianGrid
-								stroke="#E7E7ED"
+								stroke={CARTESIAN_GRID_COLOR}
 								strokeDasharray="0 0"
 								vertical={true}
-								verticalPoints={[CHART_SIZE.width - 5]}
+								verticalPoints={[
+									CHART_SIZES.width - CHART_SIZES.dotRadius,
+								]}
 							/>
 
 							<XAxis
 								axisLine={{
-									stroke: '#E7E7ED',
+									stroke: CARTESIAN_GRID_COLOR,
 								}}
 								dataKey="label"
 								tickFormatter={xAxisFormatter}
@@ -334,12 +342,12 @@ export default function Chart({
 							<YAxis
 								allowDecimals={false}
 								axisLine={{
-									stroke: '#E7E7ED',
+									stroke: CARTESIAN_GRID_COLOR,
 								}}
 								minTickGap={3}
 								tickFormatter={thousandsToKilosFormater}
 								tickLine={false}
-								width={40}
+								width={CHART_SIZES.yAxisWidth}
 							/>
 
 							<Tooltip
@@ -359,12 +367,15 @@ export default function Chart({
 
 								return (
 									<Line
-										activeDot={{r: 5, strokeWidth: 0}}
+										activeDot={{
+											r: CHART_SIZES.dotRadius,
+											strokeWidth: 0,
+										}}
 										dataKey={keyName}
 										fill={color}
 										key={keyName}
 										stroke={color}
-										strokeWidth={2}
+										strokeWidth={CHART_SIZES.lineWidth}
 										type="monotone"
 									/>
 								);

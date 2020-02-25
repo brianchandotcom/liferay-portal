@@ -24,7 +24,6 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -143,8 +143,30 @@ public class DepotAssetRendererFactoryControllerTest {
 			});
 	}
 
-	private ServiceContext _getServiceContext(Group group)
-		throws PortalException {
+	private void _withGroup(
+			Group group, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		long previousGroupId = GroupThreadLocal.getGroupId();
+
+		GroupThreadLocal.setGroupId(group.getGroupId());
+
+		try {
+			unsafeRunnable.run();
+		}
+		finally {
+			GroupThreadLocal.setGroupId(previousGroupId);
+		}
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		try {
+			unsafeRunnable.run();
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -170,14 +192,7 @@ public class DepotAssetRendererFactoryControllerTest {
 
 			});
 
-		return serviceContext;
-	}
-
-	private void _withGroup(
-			Group group, UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		ServiceContextThreadLocal.pushServiceContext(_getServiceContext(group));
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
 			unsafeRunnable.run();

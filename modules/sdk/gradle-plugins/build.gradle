@@ -46,7 +46,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "3.1.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.db.support", version: "1.0.5"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "2.0.70"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "2.0.6"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "2.0.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.javadoc.formatter", version: "1.0.30"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.js.module.config.generator", version: "2.1.69"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.js.transpiler", version: "2.4.48"

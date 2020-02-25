@@ -123,11 +123,66 @@ public class PageDefinitionConverterUtilTest {
 	public void testToPageDefinitionFragmentFieldText() throws Exception {
 		_testToPageDefinitionFragmentField(
 			"editable_values_fragment_field_text.json",
-			"<lfr-editable id=\"my-text\" type=\"text\">Example</lfr-editable>");
+			"<lfr-editable id=\"my-text\" type=\"text\">Example</lfr-editable" +
+				">");
+	}
+
+	@Test
+	public void testToPageDefinitionRoot() throws Exception {
+		_addLayoutPageTemplateStructure(
+			"layout_data_root.json", new HashMap<>());
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			_layoutPageTemplateEntry.getPlid());
+
+		ColorScheme colorScheme = layout.getColorScheme();
+
+		Theme theme = layout.getTheme();
+
+		PageDefinition pageDefinition =
+			PageDefinitionConverterUtil.toPageDefinition(
+				_fragmentCollectionContributorTracker,
+				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
+				layout);
+
+		Settings settings = pageDefinition.getSettings();
+
+		Assert.assertEquals(
+			colorScheme.getName(), settings.getColorSchemeName());
+		Assert.assertNull(settings.getCss());
+		Assert.assertNull(settings.getJavascript());
+		Assert.assertNull(settings.getMasterPage());
+		Assert.assertEquals(theme.getName(), settings.getThemeName());
+		Assert.assertNull(settings.getThemeSettings());
+
+		PageElement pageElement = pageDefinition.getPageElement();
+
+		Assert.assertNull(pageElement.getDefinition());
+		Assert.assertNull(pageElement.getPageElements());
+		Assert.assertEquals(PageElement.Type.ROOT, pageElement.getType());
+	}
+
+	private void _addLayoutPageTemplateStructure(
+			String fileName, Map<String, String> valuesMap)
+		throws Exception {
+
+		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class.getName()),
+			_layoutPageTemplateEntry.getPlid(),
+			StringUtil.replace(_read(fileName), "${", "}", valuesMap),
+			_serviceContext);
+	}
+
+	private String _read(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 	private void _testToPageDefinitionFragmentField(
-		String editableValuesFileName, String html) throws Exception {
+			String editableValuesFileName, String html)
+		throws Exception {
+
 		Layout layout = _layoutLocalService.fetchLayout(
 			_layoutPageTemplateEntry.getPlid());
 
@@ -219,58 +274,6 @@ public class PageDefinitionConverterUtilTest {
 
 		Assert.assertEquals("My example", i18nMap.get("en_US"));
 		Assert.assertEquals("Mi ejemplo", i18nMap.get("es_ES"));
-	}
-
-	@Test
-	public void testToPageDefinitionRoot() throws Exception {
-		_addLayoutPageTemplateStructure(
-			"layout_data_root.json", new HashMap<>());
-
-		Layout layout = _layoutLocalService.fetchLayout(
-			_layoutPageTemplateEntry.getPlid());
-
-		ColorScheme colorScheme = layout.getColorScheme();
-
-		Theme theme = layout.getTheme();
-
-		PageDefinition pageDefinition =
-			PageDefinitionConverterUtil.toPageDefinition(
-				_fragmentCollectionContributorTracker,
-				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				layout);
-
-		Settings settings = pageDefinition.getSettings();
-
-		Assert.assertEquals(
-			colorScheme.getName(), settings.getColorSchemeName());
-		Assert.assertNull(settings.getCss());
-		Assert.assertNull(settings.getJavascript());
-		Assert.assertNull(settings.getMasterPage());
-		Assert.assertEquals(theme.getName(), settings.getThemeName());
-		Assert.assertNull(settings.getThemeSettings());
-
-		PageElement pageElement = pageDefinition.getPageElement();
-
-		Assert.assertNull(pageElement.getDefinition());
-		Assert.assertNull(pageElement.getPageElements());
-		Assert.assertEquals(PageElement.Type.ROOT, pageElement.getType());
-	}
-
-	private void _addLayoutPageTemplateStructure(
-			String fileName, Map<String, String> valuesMap)
-		throws Exception {
-
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()),
-			_layoutPageTemplateEntry.getPlid(),
-			StringUtil.replace(_read(fileName), "${", "}", valuesMap),
-			_serviceContext);
-	}
-
-	private String _read(String fileName) throws Exception {
-		return new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 	private FragmentCollection _fragmentCollection;

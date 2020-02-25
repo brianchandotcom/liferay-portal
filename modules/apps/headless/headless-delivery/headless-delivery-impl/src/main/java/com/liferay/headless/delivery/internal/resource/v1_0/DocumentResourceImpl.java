@@ -391,24 +391,28 @@ public class DocumentResourceImpl
 			"delete",
 			addAction(
 				"DELETE", fileEntry.getPrimaryKey(), "deleteDocument",
+				fileEntry.getUserId(),
 				"com.liferay.document.library.kernel.model.DLFileEntry",
 				fileEntry.getGroupId())
 		).put(
 			"get",
 			addAction(
 				"VIEW", fileEntry.getPrimaryKey(), "getDocument",
+				fileEntry.getUserId(),
 				"com.liferay.document.library.kernel.model.DLFileEntry",
 				fileEntry.getGroupId())
 		).put(
 			"replace",
 			addAction(
 				"UPDATE", fileEntry.getPrimaryKey(), "putDocument",
+				fileEntry.getUserId(),
 				"com.liferay.document.library.kernel.model.DLFileEntry",
 				fileEntry.getGroupId())
 		).put(
 			"update",
 			addAction(
 				"UPDATE", fileEntry.getPrimaryKey(), "patchDocument",
+				fileEntry.getUserId(),
 				"com.liferay.document.library.kernel.model.DLFileEntry",
 				fileEntry.getGroupId())
 		).build();
@@ -479,24 +483,28 @@ public class DocumentResourceImpl
 			"create",
 			addAction(
 				"UPDATE", fileEntry.getPrimaryKey(), "postDocumentMyRating",
+				fileEntry.getUserId(),
 				"com.liferay.document.library.kernel.model.DLFileEntry",
 				fileEntry.getGroupId())
 		).put(
 			"delete",
 			addAction(
 				"UPDATE", fileEntry.getPrimaryKey(), "deleteDocumentMyRating",
+				fileEntry.getUserId(),
 				"com.liferay.document.library.kernel.model.DLFileEntry",
 				fileEntry.getGroupId())
 		).put(
 			"get",
 			addAction(
 				"VIEW", fileEntry.getPrimaryKey(), "getDocumentMyRating",
+				fileEntry.getUserId(),
 				"com.liferay.document.library.kernel.model.DLFileEntry",
 				fileEntry.getGroupId())
 		).put(
 			"replace",
 			addAction(
 				"UPDATE", fileEntry.getPrimaryKey(), "putDocumentMyRating",
+				fileEntry.getUserId(),
 				"com.liferay.document.library.kernel.model.DLFileEntry",
 				fileEntry.getGroupId())
 		).build();

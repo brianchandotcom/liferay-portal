@@ -157,23 +157,11 @@ public class KnowledgeBaseFolderResourceImpl
 
 	private Map<String, Map<String, String>> _getActions(KBFolder kbFolder) {
 		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			addAction(
-				"DELETE", kbFolder.getKbFolderId(), "deleteKnowledgeBaseFolder",
-				"com.liferay.knowledge.base.model.KBFolder",
-				kbFolder.getGroupId())
+			"delete", addAction("DELETE", kbFolder, "deleteKnowledgeBaseFolder")
 		).put(
-			"get",
-			addAction(
-				"VIEW", kbFolder.getKbFolderId(), "getKnowledgeBaseFolder",
-				"com.liferay.knowledge.base.model.KBFolder",
-				kbFolder.getGroupId())
+			"get", addAction("VIEW", kbFolder, "getKnowledgeBaseFolder")
 		).put(
-			"replace",
-			addAction(
-				"UPDATE", kbFolder.getKbFolderId(), "putKnowledgeBaseFolder",
-				"com.liferay.knowledge.base.model.KBFolder",
-				kbFolder.getGroupId())
+			"replace", addAction("UPDATE", kbFolder, "putKnowledgeBaseFolder")
 		).build();
 	}
 

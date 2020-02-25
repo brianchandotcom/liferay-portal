@@ -665,44 +665,45 @@ public class StructuredContentResourceImpl
 			"delete",
 			addAction(
 				"DELETE", journalArticle.getResourcePrimKey(),
-				"deleteStructuredContent", JournalArticle.class.getName(),
-				journalArticle.getGroupId())
+				"deleteStructuredContent", journalArticle.getUserId(),
+				JournalArticle.class.getName(), journalArticle.getGroupId())
 		).put(
 			"get",
 			addAction(
 				"VIEW", journalArticle.getResourcePrimKey(),
-				"getStructuredContent", JournalArticle.class.getName(),
-				journalArticle.getGroupId())
+				"getStructuredContent", journalArticle.getUserId(),
+				JournalArticle.class.getName(), journalArticle.getGroupId())
 		).put(
 			"get-template",
 			addAction(
 				"VIEW", journalArticle.getResourcePrimKey(),
 				"getStructuredContentRenderedContentTemplate",
-				JournalArticle.class.getName(), journalArticle.getGroupId())
+				journalArticle.getUserId(), JournalArticle.class.getName(),
+				journalArticle.getGroupId())
 		).put(
 			"replace",
 			addAction(
 				"UPDATE", journalArticle.getResourcePrimKey(),
-				"putStructuredContent", JournalArticle.class.getName(),
-				journalArticle.getGroupId())
+				"putStructuredContent", journalArticle.getUserId(),
+				JournalArticle.class.getName(), journalArticle.getGroupId())
 		).put(
 			"subscribe",
 			addAction(
 				"SUBSCRIBE", journalArticle.getResourcePrimKey(),
-				"putStructuredContentSubscribe", JournalArticle.class.getName(),
-				journalArticle.getGroupId())
+				"putStructuredContentSubscribe", journalArticle.getUserId(),
+				JournalArticle.class.getName(), journalArticle.getGroupId())
 		).put(
 			"unsubscribe",
 			addAction(
 				"SUBSCRIBE", journalArticle.getResourcePrimKey(),
-				"putStructuredContentUnsubscribe",
+				"putStructuredContentUnsubscribe", journalArticle.getUserId(),
 				JournalArticle.class.getName(), journalArticle.getGroupId())
 		).put(
 			"update",
 			addAction(
 				"UPDATE", journalArticle.getResourcePrimKey(),
-				"patchStructuredContent", JournalArticle.class.getName(),
-				journalArticle.getGroupId())
+				"patchStructuredContent", journalArticle.getUserId(),
+				JournalArticle.class.getName(), journalArticle.getGroupId())
 		).build();
 	}
 
@@ -714,7 +715,8 @@ public class StructuredContentResourceImpl
 			addAction(
 				"VIEW", ddmStructure.getStructureId(),
 				"getContentStructureStructuredContentsPage",
-				"com.liferay.journal", ddmStructure.getGroupId())
+				ddmStructure.getUserId(), "com.liferay.journal",
+				ddmStructure.getGroupId())
 		).build();
 	}
 
@@ -765,26 +767,26 @@ public class StructuredContentResourceImpl
 			"create",
 			addAction(
 				"UPDATE", journalArticle.getResourcePrimKey(),
-				"postStructuredContentMyRating", JournalArticle.class.getName(),
-				journalArticle.getGroupId())
+				"postStructuredContentMyRating", journalArticle.getUserId(),
+				JournalArticle.class.getName(), journalArticle.getGroupId())
 		).put(
 			"delete",
 			addAction(
 				"UPDATE", journalArticle.getResourcePrimKey(),
-				"deleteStructuredContentMyRating",
+				"deleteStructuredContentMyRating", journalArticle.getUserId(),
 				JournalArticle.class.getName(), journalArticle.getGroupId())
 		).put(
 			"get",
 			addAction(
 				"VIEW", journalArticle.getResourcePrimKey(),
-				"getStructuredContentMyRating", JournalArticle.class.getName(),
-				journalArticle.getGroupId())
+				"getStructuredContentMyRating", journalArticle.getUserId(),
+				JournalArticle.class.getName(), journalArticle.getGroupId())
 		).put(
 			"replace",
 			addAction(
 				"UPDATE", journalArticle.getResourcePrimKey(),
-				"putStructuredContentMyRating", JournalArticle.class.getName(),
-				journalArticle.getGroupId())
+				"putStructuredContentMyRating", journalArticle.getUserId(),
+				JournalArticle.class.getName(), journalArticle.getGroupId())
 		).build();
 	}
 
@@ -839,13 +841,15 @@ public class StructuredContentResourceImpl
 			addAction(
 				"ADD_ARTICLE", journalFolder.getFolderId(),
 				"postStructuredContentFolderStructuredContent",
-				"com.liferay.journal", journalFolder.getGroupId())
+				journalFolder.getUserId(), "com.liferay.journal",
+				journalFolder.getGroupId())
 		).put(
 			"get",
 			addAction(
 				"VIEW", journalFolder.getFolderId(),
 				"getStructuredContentFolderStructuredContentsPage",
-				"com.liferay.journal", journalFolder.getGroupId())
+				journalFolder.getUserId(), "com.liferay.journal",
+				journalFolder.getGroupId())
 		).build();
 	}
 

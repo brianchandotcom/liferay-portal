@@ -190,7 +190,11 @@
 	<td></td>
 </tr>
 
-
+<tr>
+	<td>TEXT_BOX_FIELD</td>
+	<td>//input[contains(@name, '${key_fieldName}')]</td>
+	<td></td>
+</tr>
 
 
 

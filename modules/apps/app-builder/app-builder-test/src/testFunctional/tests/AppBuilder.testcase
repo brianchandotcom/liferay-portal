@@ -1521,6 +1521,10 @@ definition {
 		AppBuilderAdmin.save();
 
 		AppBuilderAdmin.validateSuccessMessage();
+
+		AppBuilderAdmin.validateTextBox(fieldName = "FullName");
+
+		AppBuilderAdmin.validateTextBox(fieldName = "Nickname");
 	}
 
 	@description = "Publish my app as a widget and submit entry"

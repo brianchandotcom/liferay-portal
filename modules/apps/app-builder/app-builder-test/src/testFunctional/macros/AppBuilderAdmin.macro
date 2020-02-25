@@ -461,6 +461,12 @@ definition {
 		AssertElementPresent(locator1 = "AppBuilder#ENTRY_SUCCESS_MESSAGE");
 	}
 
+	macro validateTextBox {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#TEXT_BOX_FIELD");
+	}
+
 	macro validateUndeployedApp {
 		AssertTextEquals(
 			locator1 = "AppBuilder#PORTLET_UNDEPLOYED",

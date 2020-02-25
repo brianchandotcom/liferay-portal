@@ -80,6 +80,7 @@ export default withRouter(({history, location, searchChange}) => {
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 			</div>
+
 			<div className="autofit-col">
 				{context.canCreateThread && (
 					<ClayButton

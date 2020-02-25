@@ -5,3 +5,11 @@
 	position: relative;
 	z-index: 2;
 }
+
+.question-list {
+	display: flex;
+	flex-direction: row;
+	list-style: none;
+	margin-bottom: 0;
+	padding-left: 0;
+}

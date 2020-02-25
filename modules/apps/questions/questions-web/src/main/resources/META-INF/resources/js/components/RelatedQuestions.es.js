@@ -41,8 +41,8 @@ export default ({question}) => {
 		<>
 			{!!relatedQuestions.length && (
 				<>
-					<h3>Related Questions</h3>
-					<hr/>
+					<h3 className="c-mt-5">Related Questions</h3>
+					<hr />
 					<div className="autofit-padded autofit-row">
 						{relatedQuestions.map(relatedQuestion => (
 							<div className="autofit-col"

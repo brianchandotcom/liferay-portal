@@ -1,68 +1,42 @@
-.question-headline {
-	margin-bottom: 0;
-}
-
 .question-answer {
-	border-top: 1px solid #e5e5e5;
 	padding: 1rem;
 
-	& small {
-		margin-bottom: 0;
+	&:not(:first-child) {
+		border-top: 1px solid $secondary-l3;
+	}
+
+	&.question-answer-success {
+		border-radius: 0.25rem;
+		border: 1px solid $success-l1;
+		background-color: $success-l2;
 	}
 }
 
-.question-comment {
-	padding-left: 3rem;
-}
+.question-reply {
+	&:not(:first-child) {
+		border-top: 1px solid $secondary-l3;
+		padding-top: 1rem;
+	}
 
-.question-accepted-message {
-	color: $success;
-}
-
-.question-accepted-answer {
-	background: $success-l2;
-	border: 1px solid $success-l1;
-	border-radius: 4px;
-	box-sizing: border-box;
-}
-
-.question-author-badge {
-	border: 1px solid $secondary-l3;
-}
-
-.question-reply-icon-row {
-	margin-top: 1.5rem;
-}
-
-.question-reply-icon {
-	color: $secondary-l2;
-	transform: rotate(-180deg);
-}
-
-.question-comment-separator {
-	margin: 0 0 1rem;
-}
-
-.question-comment-validation {
-	& span {
-		align-self: flex-end;
+	.question-reply-icon {
+		transform: rotateZ(180deg);
 	}
 }
 
-.btn-secondary.question-subscribed,
-.btn-secondary.question-subscribed:hover {
-	background-color: $primary-l3;
-}
+// .btn-secondary.question-subscribed,
+// .btn-secondary.question-subscribed:hover {
+// 	background-color: $primary-l3;
+// }
 
-.question-bell-subscribed,
-.question-bell-subscribed:hover {
-	color: $primary;
-}
+// .question-bell-subscribed,
+// .question-bell-subscribed:hover {
+// 	color: $primary;
+// }
 
-.questions-my-rating {
-	color: $primary;
-}
+// .questions-my-rating {
+// 	color: $primary;
+// }
 
-.question-user-popover {
-	width: 200px;
-}
+// .question-user-popover {
+// 	width: 200px;
+// }

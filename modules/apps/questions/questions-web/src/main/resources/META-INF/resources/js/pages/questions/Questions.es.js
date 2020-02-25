@@ -99,33 +99,36 @@ export default ({
 		<section className="c-mt-5 c-mx-auto col-xl-10">
 			<ClayButton.Group>
 				<ClayButton
-					className={classnames('secondary', {
-						'btn-secondary': activeFilter !== 'created'
-					})}
+					displayType={
+						activeFilter === 'created' ? 'primary' : 'secondary'
+					}
 					onClick={() => filterBy('created')}
 				>
 					{Liferay.Language.get('latest-created')}
 				</ClayButton>
+
 				<ClayButton
-					className={classnames('secondary', {
-						'btn-secondary': activeFilter !== 'modified'
-					})}
+					displayType={
+						activeFilter === 'modified' ? 'primary' : 'secondary'
+					}
 					onClick={() => filterBy('modified')}
 				>
 					{Liferay.Language.get('latest-edited')}
 				</ClayButton>
+
 				<ClayButton
-					className={classnames('secondary', {
-						'btn-secondary': activeFilter !== 'week'
-					})}
+					displayType={
+						activeFilter === 'week' ? 'primary' : 'secondary'
+					}
 					onClick={() => filterBy('week')}
 				>
 					{Liferay.Language.get('week')}
 				</ClayButton>
+
 				<ClayButton
-					className={classnames('secondary', {
-						'btn-secondary': activeFilter !== 'month'
-					})}
+					displayType={
+						activeFilter === 'month' ? 'primary' : 'secondary'
+					}
 					onClick={() => filterBy('month')}
 				>
 					{Liferay.Language.get('month')}

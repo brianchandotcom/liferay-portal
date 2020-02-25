@@ -33,9 +33,11 @@ export default ({onSubscription, question}) => {
 
 	return (
 		<ClayButton
-			className={classnames('btn', 'btn-secondary', {
+			className={classnames({
 				'question-subscribed': question.subscribed
 			})}
+			displayType="secondary"
+			monospaced
 			onClick={changeSubscription}
 		>
 			<ClayIcon

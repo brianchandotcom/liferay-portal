@@ -61,90 +61,110 @@ export default ({answer, answerChange, deleteAnswer}) => {
 	return (
 		<>
 			<div
-				className={classnames(
-					'autofit-row',
-					'autofit-padded',
-					'question-answer',
-					{'question-accepted-answer': showAsAnswer}
-				)}
+				className={classnames('question-answer', {
+					'question-answer-success': showAsAnswer
+				})}
 			>
-				<div className="autofit-col">
-					<Rating
-						aggregateRating={answer.aggregateRating}
-						entityId={answer.id}
-						myRating={
-							answer.myRating && answer.myRating.ratingValue
-						}
-						ratingChange={_ratingChange}
-						type={'Message'}
-					/>
-				</div>
+				<div className="row">
+					<div className="col-1 text-center">
+						<Rating
+							aggregateRating={answer.aggregateRating}
+							entityId={answer.id}
+							myRating={
+								answer.myRating && answer.myRating.ratingValue
+							}
+							ratingChange={_ratingChange}
+							type={'Message'}
+						/>
+					</div>
 
-				<div className="autofit-col autofit-col-expand">
-					<div className="autofit-section">
+					<div className="col-9">
 						{showAsAnswer && (
-							<p className="question-accepted-message">
-								<ClayIcon symbol="check-circle-full" />{' '}
-								<strong>
+							<p className="c-mb-0 font-weight-bold text-success">
+								<ClayIcon symbol="check-circle-full" />
+
+								<span className="c-ml-3">
 									{Liferay.Language.get('chosen-answer')}
-								</strong>
+								</span>
 							</p>
 						)}
 
-						<ArticleBodyRenderer {...answer} />
+						<div className="c-mt-2">
+							<ArticleBodyRenderer {...answer} />
+						</div>
 
-						<ClayButton.Group spaced={true}>
+						<ClayButton.Group
+							className="font-weight-bold text-secondary"
+							spaced={true}
+						>
 							{answer.actions['reply-to-message'] && (
 								<ClayButton
-									displayType="link"
+									className="text-reset"
+									displayType="unstyled"
 									onClick={() => setShowNewComment(true)}
 								>
 									{Liferay.Language.get('reply')}
 								</ClayButton>
 							)}
+
 							{answer.actions.delete && (
 								<ClayButton
-									displayType="link"
+									className="text-reset"
+									displayType="unstyled"
 									onClick={_deleteAnswer}
 								>
 									{Liferay.Language.get('delete')}
 								</ClayButton>
 							)}
+
 							{answer.actions.replace && (
-								<>
-									<ClayButton
-										displayType="link"
-										onClick={_answerChange}
+								<ClayButton
+									className="text-reset"
+									displayType="unstyled"
+									onClick={_answerChange}
+								>
+									{Liferay.Language.get(
+										showAsAnswer
+											? 'unmark as answer'
+											: 'mark as answer'
+									)}
+								</ClayButton>
+							)}
+
+							{/* this is an extra double check, remove it without creating 2 clay-group-item */}
+							{answer.actions.replace && (
+								<ClayButton
+									className="text-reset"
+									displayType="unstyled"
+								>
+									<Link
+										className="text-reset"
+										to={`/answers/${answer.id}/edit`}
 									>
-										{Liferay.Language.get(
-											showAsAnswer
-												? 'unmark as answer'
-												: 'mark as answer'
-										)}
-									</ClayButton>
-									<ClayButton displayType="unstyled">
-										<Link to={`/answers/${answer.id}/edit`}>
-											<span>
-												{Liferay.Language.get('edit')}
-											</span>
-										</Link>
-									</ClayButton>
-								</>
+										{Liferay.Language.get('edit')}
+									</Link>
+								</ClayButton>
 							)}
 						</ClayButton.Group>
 					</div>
-				</div>
-				<div className="autofit-col">
-					<UserRow creator={answer.creator} />
+
+					<div className="col-2 text-right">
+						<UserRow creator={answer.creator} />
+					</div>
 				</div>
 			</div>
-			<Comments
-				comments={comments}
-				commentsChange={_commentsChange}
-				entityId={answer.id}
-				showNewComment={showNewComment}
-				showNewCommentChange={value => setShowNewComment(value)}
-			/>
+
+			<div className="row">
+				<div className="col-9 offset-1">
+					<Comments
+						comments={comments}
+						commentsChange={_commentsChange}
+						entityId={answer.id}
+						showNewComment={showNewComment}
+						showNewCommentChange={value => setShowNewComment(value)}
+					/>
+				</div>
+			</div>
 		</>
 	);
 };

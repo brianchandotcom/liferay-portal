@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import React, {useCallback, useState} from 'react';
 
 import {createComment} from '../utils/client.es';
@@ -61,59 +61,45 @@ export default ({
 			))}
 
 			{showNewComment && (
-				<div
-					className="autofit-padded autofit-row"
-					style={{paddingLeft: '5em'}}
-				>
-					<div className="autofit-col autofit-col-expand">
-						<hr className="question-comment-separator" />
+				<>
+					<ClayForm.Group small>
+						<ClayInput
+							component="textarea"
+							// placeholder="Insert your name here"
+							onChange={event => setComment(event.target.value)}
+							type="text"
+							value={comment}
+						/>
 
-						<div>
-							<ClayForm.Group className="form-group-sm">
-								<textarea
-									className="form-control"
-									onChange={event =>
-										setComment(event.target.value)
-									}
-									value={comment}
-								/>
-							</ClayForm.Group>
-						</div>
-
-						<div className="autofit-row">
-							<ClayButton.Group spaced={true}>
-								<ClayButton
-									disabled={comment.length < 15}
-									displayType="primary"
-									onClick={postComment}
-									small={true}
-								>
-									{Liferay.Language.get('reply')}
-								</ClayButton>
-								<ClayButton
-									displayType="secondary"
-									onClick={() => showNewCommentChange(false)}
-									small={true}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
-							</ClayButton.Group>
-
-							<div className="autofit-col autofit-col-expand question-comment-validation">
-								{comment.length < 15 && (
-									<span>
-										{lang.sub(
-											Liferay.Language.get(
-												'x-characters-left'
-											),
-											[15 - comment.length]
-										)}
-									</span>
+						{comment.length < 15 && (
+							<p className="c-y-3">
+								{lang.sub(
+									Liferay.Language.get('x-characters-left'),
+									[15 - comment.length]
 								)}
-							</div>
-						</div>
-					</div>
-				</div>
+							</p>
+						)}
+
+						<ClayButton.Group spaced>
+							<ClayButton
+								disabled={comment.length < 15}
+								displayType="primary"
+								onClick={postComment}
+								// small
+							>
+								{Liferay.Language.get('reply')}
+							</ClayButton>
+
+							<ClayButton
+								displayType="secondary"
+								onClick={() => showNewCommentChange(false)}
+								// small
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+						</ClayButton.Group>
+					</ClayForm.Group>
+				</>
 			)}
 		</div>
 	);

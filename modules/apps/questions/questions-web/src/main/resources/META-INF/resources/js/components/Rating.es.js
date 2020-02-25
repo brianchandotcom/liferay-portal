@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React, {useEffect, useState} from 'react';
 
@@ -57,20 +58,29 @@ export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 	};
 
 	return (
-		<div className="autofit-col text-center">
-			<ClayIcon
-				className={userRating === 1 ? 'questions-my-rating' : ''}
+		<div className="align-items-center d-inline-flex flex-column justify-content-center text-secondary">
+			<ClayButton
+				className="text-reset"
+				className={userRating === 1 ? 'text-primary' : ''}
+				displayType="unstyled"
+				monospaced
 				onClick={() => voteChange(1)}
-				symbol="caret-top"
-			/>
+			>
+				<ClayIcon symbol="caret-top" />
+			</ClayButton>
 
 			<span>{rating || 0}</span>
 
-			<ClayIcon
-				className={userRating === -1 ? 'questions-my-rating' : ''}
+			<ClayButton
+				className="text-reset"
+				className={userRating === -1 ? 'text-primary' : ''}
+				displayType="unstyled"
+				// small={if-it-is-a-sub-comment}
+				monospaced
 				onClick={() => voteChange(-1)}
-				symbol="caret-bottom"
-			/>
+			>
+				<ClayIcon symbol="caret-bottom" />
+			</ClayButton>
 		</div>
 	);
 };

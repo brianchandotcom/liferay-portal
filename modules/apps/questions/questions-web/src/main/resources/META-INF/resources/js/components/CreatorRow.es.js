@@ -24,30 +24,20 @@ export default ({question: {creator, dateCreated}}) => {
 
 	return (
 		<div
-			className={classnames(
-				'autofit-padded',
-				'autofit-row',
-				'autofit-row-center',
-				'question-author-badge'
-			)}
+			className="align-items-center bg-white border border-light c-ml-3 c-p-3 d-inline-flex justify-content-center rounded"
 			onMouseLeave={() => setShowPopover(false)}
 			onMouseOver={() => setShowPopover(true)}
 		>
-			<div className="autofit-col">
-				<UserIcon
-					fullName={creator.name}
-					portraitURL={creator.image}
-					size="sm"
-					userId={String(creator.id)}
-				/>
-			</div>
-			<div className="autofit-col">
-				<p className="mb-0">
-					<small>{timeDifference(dateCreated)}</small>
-				</p>
-				<p className="mb-0">
-					<strong>{creator.name}</strong>
-				</p>
+			<UserIcon
+				fullName={creator.name}
+				portraitURL={creator.image}
+				userId={String(creator.id)}
+			/>
+
+			<div className="c-ml-3 text-left">
+				<p className="c-mb-0 small">{timeDifference(dateCreated)}</p>
+
+				<p className="c-mb-0 font-weight-bold">{creator.name}</p>
 			</div>
 
 			<UserPopover creator={creator} show={showPopover} />

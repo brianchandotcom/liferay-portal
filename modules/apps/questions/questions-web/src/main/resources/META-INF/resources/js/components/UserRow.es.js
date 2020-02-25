@@ -21,16 +21,14 @@ export default ({creator}) => {
 
 	return (
 		<div
-			className="text-right"
 			onMouseLeave={() => setShowPopover(false)}
 			onMouseOver={() => setShowPopover(true)}
 		>
-			<p className="mb-0">
-				<small>{Liferay.Language.get('answered-by')}</small>
+			<p className="mb-0 small text-secondary">
+				{Liferay.Language.get('answered-by')}
 			</p>
-			<p>
-				<strong>{creator.name}</strong>
-			</p>
+
+			<p className="font-weight-bold">{creator.name}</p>
 
 			<UserPopover creator={creator} show={showPopover} />
 		</div>

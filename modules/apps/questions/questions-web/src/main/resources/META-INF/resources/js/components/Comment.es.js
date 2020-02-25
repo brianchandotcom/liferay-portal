@@ -25,26 +25,32 @@ export default ({comment, commentChange}) => {
 	};
 
 	return (
-		<div className="autofit-padded autofit-row question-comment">
-			<div className="autofit-col question-reply-icon-row">
-				<ClayIcon className="question-reply-icon" symbol="reply" />
+		<div className="c-my-3 question-reply row">
+			<div className="align-items-center col-1 d-flex justify-content-center">
+				<ClayIcon
+					className="question-reply-icon text-secondary"
+					symbol="reply"
+				/>
 			</div>
-			<div className="autofit-col autofit-col-expand">
-				<hr className="question-comment-separator" />
-				<p>
-					{comment.articleBody} -{' '}
-					<strong>{comment.creator.name}</strong>
+
+			<div className="col-11">
+				<p className="c-mb-0">
+					{comment.articleBody}
+					{' - '}
+					<span className="font-weight-bold">
+						{comment.creator.name}
+					</span>
 				</p>
-				<p>
-					{comment.actions.delete && (
-						<ClayButton
-							displayType="unstyled"
-							onClick={deleteComment}
-						>
-							{Liferay.Language.get('delete')}
-						</ClayButton>
-					)}
-				</p>
+
+				{comment.actions.delete && (
+					<ClayButton
+						className="c-mt-3 font-weight-bold text-secondary"
+						displayType="unstyled"
+						onClick={deleteComment}
+					>
+						{Liferay.Language.get('delete')}
+					</ClayButton>
+				)}
 			</div>
 		</div>
 	);

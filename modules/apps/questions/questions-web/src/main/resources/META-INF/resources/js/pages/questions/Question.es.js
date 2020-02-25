@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
@@ -147,10 +148,10 @@ export default ({
 	};
 
 	return (
-		<section>
+		<section className="c-mt-5">
 			{question && (
-				<div className="autofit-padded autofit-row">
-					<div className="autofit-col">
+				<div className="row">
+					<div className="col-1 text-center">
 						<Rating
 							aggregateRating={question.aggregateRating}
 							entityId={question.id}
@@ -162,130 +163,137 @@ export default ({
 						/>
 					</div>
 
-					<div className="autofit-col autofit-col-expand">
-						<div className="autofit-section">
-							<div className="autofit-row">
-								<div className="autofit-col-expand">
-									<h1 className="question-headline">
-										{question.headline}
-									</h1>
-									<p>
-										<small>
-											{Liferay.Language.get('asked')}{' '}
-											{dateToBriefInternationalHuman(
-												question.dateCreated
-											)}
-											{' - '}
-											{Liferay.Language.get(
-												'active'
-											)}{' '}
-											{dateToBriefInternationalHuman(
-												question.dateModified
-											)}
-											{' - '}
-											{lang.sub(
-												Liferay.Language.get(
-													'viewed-x-times'
-												),
-												[question.viewCount]
-											)}
-										</small>
-									</p>
-								</div>
-								<div>
-									<ClayButton.Group spaced={true}>
-										{question.actions.subscribe && (
-											<Subscription
-												onSubscription={subscribed =>
-													setQuestion({
-														...question,
-														subscribed
-													})
-												}
-												question={question}
-											/>
-										)}
-										{question.actions.replace && (
-											<Link
-												to={`/questions/${questionId}/edit`}
-											>
-												<ClayButton className="btn btn-secondary">
-													{Liferay.Language.get(
-														'edit'
-													)}
-												</ClayButton>
-											</Link>
-										)}
-									</ClayButton.Group>
-								</div>
-							</div>
-							<div>
-								<ArticleBodyRenderer {...question} />
+					<div className="col-10">
+						<ClayLabel
+							className="bg-light border-0 text-uppercase"
+							displayType="secondary"
+							large
+						>
+							{'Collaboration'}
+						</ClayLabel>
+
+						<div className="c-mt-2 row">
+							<div className="col-10">
+								<h1 className="question-headline">
+									{question.headline}
+								</h1>
+
+								<p className="c-mb-0 small text-secondary">
+									{Liferay.Language.get('asked')}{' '}
+									{dateToBriefInternationalHuman(
+										question.dateCreated
+									)}
+									{' - '}
+									{Liferay.Language.get('active')}{' '}
+									{dateToBriefInternationalHuman(
+										question.dateModified
+									)}
+									{' - '}
+									{lang.sub(
+										Liferay.Language.get('viewed-x-times'),
+										[question.viewCount]
+									)}
+								</p>
 							</div>
 
+							<div className="col-2 text-right">
+								<ClayButton.Group spaced={true}>
+									{question.actions.subscribe && (
+										<Subscription
+											onSubscription={subscribed =>
+												setQuestion({
+													...question,
+													subscribed
+												})
+											}
+											question={question}
+										/>
+									)}
+
+									{question.actions.replace && (
+										<Link
+											to={`/questions/${questionId}/edit`}
+										>
+											<ClayButton displayType="secondary">
+												{Liferay.Language.get('edit')}
+											</ClayButton>
+										</Link>
+									)}
+								</ClayButton.Group>
+							</div>
+						</div>
+
+						<div className="c-mt-4">
+							<ArticleBodyRenderer {...question} />
+						</div>
+
+						<div className="c-mt-4">
 							<TagList tags={question.keywords} />
 						</div>
 
-						<div
-							className="autofit-row"
-							style={{alignItems: 'center'}}
-						>
-							<div className="autofit-col-expand">
-								<hr />
-							</div>
-							<div>
-								<CreatorRow question={question} />
-							</div>
+						<div className="c-mt-4 position-relative text-right">
+							<hr
+								className="c-my-0 position-absolute w-100"
+								style={{top: '50%'}}
+							/>
+
+							<CreatorRow question={question} />
 						</div>
 
-						<h3 className="subtitle">
+						<h3 className="c-mt-4 text-secondary">
 							{answers.length} {Liferay.Language.get('answers')}
 						</h3>
 
-						<ClayNavigationBar triggerLabel="Active">
-							<ClayNavigationBar.Item
-								active={filter === 'active'}
-							>
-								<ClayLink
-									className="nav-link"
-									displayType="unstyled"
-									onClick={() => filterBy('active')}
+						<div className="border-bottom c-mt-3">
+							<ClayNavigationBar triggerLabel="Active">
+								<ClayNavigationBar.Item
+									active={filter === 'active'}
 								>
-									{Liferay.Language.get('active')}
-								</ClayLink>
-							</ClayNavigationBar.Item>
+									<ClayLink
+										className="nav-link"
+										displayType="unstyled"
+										onClick={() => filterBy('active')}
+									>
+										{Liferay.Language.get('active')}
+									</ClayLink>
+								</ClayNavigationBar.Item>
 
-							<ClayNavigationBar.Item
-								active={filter === 'oldest'}
-							>
-								<ClayLink
-									className="nav-link"
-									displayType="unstyled"
-									onClick={() => filterBy('oldest')}
+								<ClayNavigationBar.Item
+									active={filter === 'oldest'}
 								>
-									{Liferay.Language.get('oldest')}
-								</ClayLink>
-							</ClayNavigationBar.Item>
+									<ClayLink
+										className="nav-link"
+										displayType="unstyled"
+										onClick={() => filterBy('oldest')}
+									>
+										{Liferay.Language.get('oldest')}
+									</ClayLink>
+								</ClayNavigationBar.Item>
 
-							<ClayNavigationBar.Item active={filter === 'votes'}>
-								<ClayLink
-									className="nav-link"
-									displayType="unstyled"
-									onClick={() => filterBy('votes')}
+								<ClayNavigationBar.Item
+									active={filter === 'votes'}
 								>
-									{Liferay.Language.get('votes')}
-								</ClayLink>
-							</ClayNavigationBar.Item>
-						</ClayNavigationBar>
+									<ClayLink
+										className="nav-link"
+										displayType="unstyled"
+										onClick={() => filterBy('votes')}
+									>
+										{Liferay.Language.get('votes')}
+									</ClayLink>
+								</ClayNavigationBar.Item>
+							</ClayNavigationBar>
+						</div>
 
-						{answers.map(answer => (
-							<Answer
-								answer={answer}
-								answerChange={answerChange}
-								deleteAnswer={deleteAnswer}
-								key={answer.id}
-							/>
-						))}
+						<div className="c-mt-3">
+							{answers.map(answer => (
+								<Answer
+									answer={answer}
+									answerChange={answerChange}
+									deleteAnswer={deleteAnswer}
+									key={answer.id}
+								/>
+							))}
+						</div>
 
 						{!!answers.totalCount &&
 							answers.totalCount > answers.pageSize && (
@@ -300,47 +308,44 @@ export default ({
 							)}
 
 						{context.canCreateThread && (
-							<>
+							<div className="c-mt-5">
 								<ClayForm>
 									<ClayForm.Group className="form-group-sm">
 										<label htmlFor="basicInput">
 											{Liferay.Language.get(
 												'your-answer'
 											)}
-											<span className="reference-mark">
+
+											<span className="c-ml-2 reference-mark">
 												<ClayIcon symbol="asterisk" />
 											</span>
 										</label>
 
-										<Editor
-											config={getCKEditorConfig()}
-											data={articleBody}
-											onBeforeLoad={onBeforeLoadCKEditor}
-											onChange={event =>
-												setArticleBody(
-													event.editor.getData()
-												)
-											}
-										/>
+										<div className="c-mt-2">
+											<Editor
+												config={getCKEditorConfig()}
+												data={articleBody}
+												onBeforeLoad={
+													onBeforeLoadCKEditor
+												}
+												onChange={event =>
+													setArticleBody(
+														event.editor.getData()
+													)
+												}
+											/>
+										</div>
 									</ClayForm.Group>
 								</ClayForm>
 
-								<div className="sheet-footer">
-									<div className="btn-group-item">
-										<div className="btn-group-item">
-											<button
-												className="btn btn-primary"
-												disabled={!articleBody}
-												onClick={postAnswer}
-											>
-												{Liferay.Language.get(
-													'post-answer'
-												)}
-											</button>
-										</div>
-									</div>
-								</div>
-							</>
+								<ClayButton
+									disabled={!articleBody}
+									displayType="primary"
+									onClick={postAnswer}
+								>
+									{Liferay.Language.get('post-answer')}
+								</ClayButton>
+							</div>
 						)}
 					</div>
 				</div>

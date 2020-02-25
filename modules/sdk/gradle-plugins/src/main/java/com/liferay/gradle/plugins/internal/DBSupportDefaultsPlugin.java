@@ -174,12 +174,12 @@ public class DBSupportDefaultsPlugin
 
 					baseDBSupportTask.setUrl(url);
 
-					if (Validator.isNull(baseDBSupportTask.getUserName())) {
+					if (baseDBSupportTask.getUserName() == null) {
 						baseDBSupportTask.setUserName(
 							properties.getProperty("jdbc.default.username"));
 					}
 
-					if (Validator.isNull(baseDBSupportTask.getPassword())) {
+					if (baseDBSupportTask.getPassword() == null) {
 						baseDBSupportTask.setPassword(
 							properties.getProperty("jdbc.default.password"));
 					}

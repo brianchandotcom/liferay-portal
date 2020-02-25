@@ -49,12 +49,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Alicia García
  */
-@Component(service = ItemSelectorViewRenderer.class)
 public class DepotAssetEntryItemSelectorViewRenderer
 	implements ItemSelectorViewRenderer {
 

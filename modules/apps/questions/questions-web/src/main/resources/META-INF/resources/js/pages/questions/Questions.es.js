@@ -37,7 +37,7 @@ export default ({
 
 	const [loading, setLoading] = useState(true);
 	const [page, setPage] = useState(1);
-	const [pageSize] = useState(5);
+	const [pageSize] = useState(20);
 	const [questions, setQuestions] = useState([]);
 	const [activeFilter, setActiveFilter] = useState('modified');
 

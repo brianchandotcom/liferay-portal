@@ -63,7 +63,7 @@ const AdaptiveMediaProgress = ({
 
 	const [imagesFailed, setImagesFailed] = useState(0);
 
-	const retry = () => {
+	const onClickRetry = () => {
 		setImagesFailed(0);
 
 		startProgress();
@@ -158,17 +158,23 @@ const AdaptiveMediaProgress = ({
 	return imagesFailed > 0 ? (
 		<div className="progress-error-container">
 			<span className="text-danger">
-				<ClayIcon symbol="exclamation-circle" />
-				<span>Error: {imagesFailed} images have failed. </span>
+				<ClayIcon symbol="exclamation-full" />
+				<span>
+					<strong>{Liferay.Language.get('error')}: </strong>
+					{Liferay.Util.sub(
+						Liferay.Language.get('x-images-failed-process'),
+						imagesFailed
+					)}
+				</span>
 			</span>
 
 			<ClayButton
+				borderless
 				className="text-danger"
-				displayType="link"
-				onClick={retry}
+				onClick={onClickRetry}
 				small
 			>
-				Retry
+				{Liferay.Language.get('retry')}
 			</ClayButton>
 		</div>
 	) : (

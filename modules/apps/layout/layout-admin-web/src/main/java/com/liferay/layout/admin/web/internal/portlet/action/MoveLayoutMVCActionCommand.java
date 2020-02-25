@@ -47,7 +47,8 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 		long plid = ParamUtil.getLong(actionRequest, "plid");
 
 		long parentPlid = ParamUtil.getLong(actionRequest, "parentPlid");
-		int priority = ParamUtil.getInteger(actionRequest, "priority");
+		int priority = ParamUtil.getInteger(
+			actionRequest, "priority", Integer.MAX_VALUE);
 
 		Layout layout = layoutLocalService.fetchLayout(plid);
 

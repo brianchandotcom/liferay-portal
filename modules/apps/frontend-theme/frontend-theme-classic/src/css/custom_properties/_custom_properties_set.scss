@@ -178,33 +178,39 @@
 }
 
 .btn:not(.btn-monospaced):not(.btn-unstyled) {
-	@include button-size(
-		var(--btn-padding-y),
-		var(--btn-padding-x),
-		var(--btn-font-size),
-		var(--btn-line-height),
-		var(--btn-border-radius)
-	);
+	font-size: var(--btn-font-size);
+	line-height: var(--btn-line-height);
+	padding: var(--btn-padding-y) var(--btn-padding-x);
+
+	@at-root {
+		:not(.btn-group) > & {
+			border-radius: var(--btn-border-radius);
+		}
+	}
 }
 
 .btn-lg:not(.btn-monospaced):not(.btn-unstyled) {
-	@include button-size(
-		var(--btn-padding-y-lg),
-		var(--btn-padding-x-lg),
-		var(--btn-font-size-lg),
-		var(--btn-line-height-lg),
-		var(--btn-border-radius-lg)
-	);
+	font-size: var(--btn-font-size-lg);
+	line-height: var(--btn-line-height-lg);
+	padding: var(--btn-padding-y) var(--btn-padding-x-lg);
+
+	@at-root {
+		:not(.btn-group) > & {
+			border-radius: var(--btn-border-radius-lg);
+		}
+	}
 }
 
 .btn-sm:not(.btn-monospaced):not(.btn-unstyled) {
-	@include button-size(
-		var(--btn-padding-y-sm),
-		var(--btn-padding-x-sm),
-		var(--btn-font-size-sm),
-		var(--btn-line-height-sm),
-		var(--btn-border-radius-sm)
-	);
+	font-size: var(--btn-font-size-sm);
+	line-height: var(--btn-line-height-sm);
+	padding: var(--btn-padding-y) var(--btn-padding-x-sm);
+
+	@at-root {
+		:not(.btn-group) > & {
+			border-radius: var(--btn-border-radius-sm);
+		}
+	}
 }
 
 // Shadows

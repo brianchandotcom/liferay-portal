@@ -83,6 +83,21 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		template.put("saveEventName", eventName);
 
+		String saveFileCustomFieldsKeys = ParamUtil.getString(
+			renderRequest, "saveFileCustomFieldsKeys");
+
+		template.put("saveFileCustomFieldsKeys", saveFileCustomFieldsKeys);
+
+		String saveFileCustomFieldsTypes = ParamUtil.getString(
+			renderRequest, "saveFileCustomFieldsTypes");
+
+		template.put("saveFileCustomFieldsTypes", saveFileCustomFieldsTypes);
+
+		String saveFileCustomFieldsValues = ParamUtil.getString(
+			renderRequest, "saveFileCustomFieldsValues");
+
+		template.put("saveFileCustomFieldsValues", saveFileCustomFieldsValues);
+
 		String saveFileDescription = ParamUtil.getString(
 			renderRequest, "saveFileDescription");
 

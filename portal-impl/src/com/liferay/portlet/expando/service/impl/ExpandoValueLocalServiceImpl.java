@@ -25,6 +25,7 @@ import com.liferay.expando.kernel.util.ExpandoValueDeleteHandler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONMap;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,6 +51,8 @@ import java.util.Objects;
 
 import jodd.typeconverter.TypeConverterManager;
 import jodd.typeconverter.TypeConverterManagerBean;
+
+import org.apache.commons.lang.ArrayUtils;
 
 /**
  * @author Raymond Augé
@@ -795,8 +798,18 @@ public class ExpandoValueLocalServiceImpl
 				value.setFloatArray((float[])attributeValue);
 			}
 			else if (type == ExpandoColumnConstants.GEOLOCATION) {
-				JSONObject geolocation = JSONFactoryUtil.createJSONObject(
-					attributeValue.toString());
+				JSONObject geolocation;
+
+				if (attributeValue instanceof HashMap) {
+					geolocation = JSONFactoryUtil.createJSONObject(
+						new JSONMap(
+							(HashMap)attributeValue
+						).toString());
+				}
+				else {
+					geolocation = JSONFactoryUtil.createJSONObject(
+						attributeValue.toString());
+				}
 
 				value.setGeolocationJSONObject(geolocation);
 			}
@@ -810,6 +823,14 @@ public class ExpandoValueLocalServiceImpl
 				value.setLong((Long)attributeValue);
 			}
 			else if (type == ExpandoColumnConstants.LONG_ARRAY) {
+				if (attributeValue instanceof List) {
+					List list = (List)attributeValue;
+
+					attributeValue = list.toArray(new Long[0]);
+					attributeValue = ArrayUtils.toPrimitive(
+						(Long[])attributeValue);
+				}
+
 				value.setLongArray((long[])attributeValue);
 			}
 			else if (type == ExpandoColumnConstants.NUMBER) {

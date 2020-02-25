@@ -21,8 +21,14 @@
 <%@ page import="com.liferay.document.library.util.DLURLHelperUtil" %><%@
 page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.taglib.internal.display.context.ItemSelectorRepositoryEntryManagementToolbarDisplayContext" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.model.Image" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %>
+
+<%@ page import="java.io.Serializable" %>
+
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.stream.Collectors" %>

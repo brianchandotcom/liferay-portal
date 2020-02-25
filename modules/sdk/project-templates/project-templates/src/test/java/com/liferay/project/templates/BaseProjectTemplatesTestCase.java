@@ -82,7 +82,7 @@ import org.junit.rules.TemporaryFolder;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
 /**
@@ -173,6 +173,42 @@ public interface BaseProjectTemplatesTestCase {
 		return null;
 	}
 
+	public default void addCssBuilderConfigurationElement(
+		Document document, String configurationName, String configurationText) {
+
+		Element projectElement = document.getDocumentElement();
+
+		Element buildElement = XMLTestUtil.getChildElement(
+			projectElement, "build");
+
+		Element pluginsElement = XMLTestUtil.getChildElement(
+			buildElement, "plugins");
+
+		List<Element> pluginElementList = XMLTestUtil.getChildElements(
+			pluginsElement);
+
+		for (Element pluginElement : pluginElementList) {
+			Element artifactIdElement = XMLTestUtil.getChildElement(
+				pluginElement, "artifactId");
+
+			Node node = artifactIdElement.getFirstChild();
+
+			String artifactId = node.getNodeValue();
+
+			if (artifactId.equals("com.liferay.css.builder")) {
+				Element configurationElement = XMLTestUtil.getChildElement(
+					pluginElement, "configuration");
+
+				Element newElement = document.createElement(configurationName);
+
+				newElement.appendChild(
+					document.createTextNode(configurationText));
+
+				configurationElement.appendChild(newElement);
+			}
+		}
+	}
+
 	public default void addNexusRepositoriesElement(
 		Document document, String parentElementName, String elementName) {
 
@@ -214,40 +250,6 @@ public interface BaseProjectTemplatesTestCase {
 		repositoryElement.appendChild(urlElement);
 
 		repositoriesElement.appendChild(repositoryElement);
-	}
-
-	public default void addCssBuilderConfigurationElement(Document document, String configurationName, String configurationContents) {
-
-		Element projectElement = document.getDocumentElement();
-
-		Element buildElement = XMLTestUtil.getChildElement(
-			projectElement, "build");
-
-		Element pluginsElement = XMLTestUtil.getChildElement(
-				buildElement, "plugins");
-
-		List<Element> pluginElement = XMLTestUtil.getChildElements(
-				pluginsElement);
-
-		for (Element element : pluginElement) {
-
-			String artifactId = element.getAttribute("artifactId");
-
-			if (artifactId.contentEquals("com.liferay.css.builder")) {
-				Element configurationElement = XMLTestUtil.getChildElement(
-					element, "configuration");
-
-				Element newElement = document.createElement(configurationName);
-
-				configurationElement.appendChild(newElement);
-
-				newElement.setTextContent(configurationContents);
-
-			}
-
-		}
-
-
 	}
 
 	public default void buildProjects(
@@ -530,8 +532,8 @@ public interface BaseProjectTemplatesTestCase {
 		File destinationDir = temporaryFolder.newFolder("workspace" + name);
 
 		return buildTemplateWithGradle(
-			destinationDir, WorkspaceUtil.WORKSPACE, name,
-			"--liferay-version", liferayVersion);
+			destinationDir, WorkspaceUtil.WORKSPACE, name, "--liferay-version",
+			liferayVersion);
 	}
 
 	public default void editXml(File xmlFile, Consumer<Document> consumer)

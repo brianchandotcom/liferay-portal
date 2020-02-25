@@ -180,33 +180,29 @@ definition {
 		}
 	}
 
-	@description = "LRQA-55802, Validation of images for Sign In and Sign Out "
+	@description = "This test validates sign in and sign out UI"
 	@priority = "5"
-	test ValidateSignInSignOut {
+	test ValidateSignInSignOutUI {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#RefreshWebContent";
 
 		SignOut.signOut();
 
-		Refresh();
-
 		takeScreenshot();
 
-		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_SIGN_IN");
+		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_USER_PERSONAL_BAR_SIGN_IN_PNG");
 
 		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/login");
 
-		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_LOG_IN_MODAL");
+		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_LOG_IN_MODAL_PNG");
 
-		SignIn.signInSpecificURL(url = "http://localhost:8080/c/portal/login");
-
-		Refresh();
+		SignIn.signIn();
 
 		takeScreenshot();
 
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_ICON_IE");
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_ICON");
 
-		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_LOG_IN");
+		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_USER_AVATAR_ICON_PNG");
 
 		UserBar.signOut();
 

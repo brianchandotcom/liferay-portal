@@ -667,6 +667,34 @@ components:
                     readOnly: true
                     type: string
             type: object
+        CreatorStatistics:
+            # @review
+            description:
+                Detailed info of the creator.
+            properties:
+                joinDate:
+                    description:
+                        Join date of the author
+                    format: date-time
+                    readOnly: true
+                    type: string
+                lastPostDate:
+                    description:
+                        Last post created by the author
+                    format: date-time
+                    readOnly: true
+                    type: string
+                postsNumber:
+                    description:
+                        Number of posts publicated by the author.
+                    readOnly: true
+                    type: integer
+                rank:
+                    description:
+                        The rank of the author.
+                    readOnly: true
+                    type: string
+            type: object
         CustomField:
             # @review
             description:
@@ -1389,6 +1417,8 @@ components:
                     description:
                         The message's author.
                     readOnly: true
+                creatorStatistics:
+                    $ref: "#/components/schemas/CreatorStatistics"
                 customFields:
                     items:
                         $ref: "#/components/schemas/CustomField"
@@ -1579,6 +1609,8 @@ components:
                     description:
                         The thread's creator.
                     readOnly: true
+                creatorStatistics:
+                    $ref: "#/components/schemas/CreatorStatistics"
                 customFields:
                     items:
                         $ref: "#/components/schemas/CustomField"

@@ -48,6 +48,11 @@ const SaveFragmentCompositionModal = ({
 			: -1
 	);
 
+	const [saveInlineContent, setSaveInlineContent] = useState(false);
+	const [saveMappingConfiguration, setSaveMappingConfiguration] = useState(
+		false
+	);
+
 	const [thumbnail, setThumbnail] = useState({});
 
 	const handleSubmit = event => {
@@ -62,7 +67,9 @@ const SaveFragmentCompositionModal = ({
 				itemId,
 				name,
 				previewImageURL: thumbnail.url,
-				store,
+				saveInlineContent,
+				saveMappingConfiguration,
+				store
 			})
 		)
 			.then(() => {
@@ -192,18 +199,30 @@ const SaveFragmentCompositionModal = ({
 							<ClayInput.Group className="input-group-stacked-sm-down">
 								<ClayInput.GroupItem className="mr-4" shrink>
 									<ClayCheckbox
+										checked={saveInlineContent}
 										id={`${config.portletNamespace}saveInlineContent`}
 										label={Liferay.Language.get(
 											'save-inline-content'
 										)}
+										onChange={event =>
+											setSaveInlineContent(
+												event.target.checked
+											)
+										}
 									/>
 								</ClayInput.GroupItem>
 								<ClayInput.GroupItem>
 									<ClayCheckbox
+										checked={saveMappingConfiguration}
 										id={`${config.portletNamespace}saveMappingConfiguration`}
 										label={Liferay.Language.get(
 											'save-mapping-configuration'
 										)}
+										onChange={event =>
+											setSaveMappingConfiguration(
+												event.target.checked
+											)
+										}
 									/>
 								</ClayInput.GroupItem>
 							</ClayInput.Group>

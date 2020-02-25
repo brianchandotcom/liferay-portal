@@ -15,6 +15,7 @@
 package com.liferay.upload.web.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FileImpl;
 
@@ -43,7 +44,10 @@ public class DefaultUniqueFileNameProviderTest {
 
 		String originalFileName = "filename.extension";
 
-		for (int i = 1; i <= 50; i++) {
+		for (int i = 1;
+			 i <= UploadServletRequestConfigurationHelperUtil.getMaxTries();
+			 i++) {
+
 			String uniqueFileName = _defaultUniqueFileNameProvider.provide(
 				originalFileName, _existsUntil(i));
 

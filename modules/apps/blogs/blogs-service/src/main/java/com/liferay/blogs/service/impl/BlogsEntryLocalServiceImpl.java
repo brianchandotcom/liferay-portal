@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -1796,7 +1797,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		int suffix = 1;
 
-		for (int i = 0; i < _UNIQUE_FILE_NAME_TRIES; i++) {
+		for (int i = 0;
+			 i < _uploadServletRequestConfigurationHelper.getMaxTries(); i++) {
+
 			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
@@ -2334,8 +2337,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	private static final String _SMALL_IMAGE_FOLDER_NAME = "Small Image";
 
-	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryLocalServiceImpl.class);
 
@@ -2376,5 +2377,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Reference
 	private UnsubscribeHelper _unsubscribeHelper;
+
+	@Reference
+	private UploadServletRequestConfigurationHelper
+		_uploadServletRequestConfigurationHelper;
 
 }

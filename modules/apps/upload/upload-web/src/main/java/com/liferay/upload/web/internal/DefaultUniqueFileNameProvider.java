@@ -16,6 +16,7 @@ package com.liferay.upload.web.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.upload.UniqueFileNameProvider;
 
@@ -24,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -42,7 +44,9 @@ public class DefaultUniqueFileNameProvider implements UniqueFileNameProvider {
 		int tries = 0;
 
 		while (predicate.test(uniqueFileName)) {
-			if (tries >= _UNIQUE_FILE_NAME_TRIES) {
+			if (tries >=
+					_uploadServletRequestConfigurationHelper.getMaxTries()) {
+
 				throw new PortalException(
 					"Unable to get a unique file name for " + fileName);
 			}
@@ -73,9 +77,11 @@ public class DefaultUniqueFileNameProvider implements UniqueFileNameProvider {
 		return fileName;
 	}
 
-	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
-
 	private static final Pattern _pattern = Pattern.compile(
 		"(?<name>.+) \\(\\d+\\)(\\.(?<extension>[^.]+))?");
+
+	@Reference
+	private UploadServletRequestConfigurationHelper
+		_uploadServletRequestConfigurationHelper;
 
 }

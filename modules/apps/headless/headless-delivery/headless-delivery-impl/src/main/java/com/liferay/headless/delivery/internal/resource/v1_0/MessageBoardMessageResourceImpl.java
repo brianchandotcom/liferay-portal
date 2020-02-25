@@ -306,7 +306,8 @@ public class MessageBoardMessageResourceImpl
 			addAction(
 				"REPLY_TO_MESSAGE", mbMessage.getMessageId(),
 				"postMessageBoardMessageMessageBoardMessage",
-				"com.liferay.message.boards", mbMessage.getGroupId())
+				"com.liferay.message.boards", mbMessage.getUserId(),
+				mbMessage.getGroupId())
 		).put(
 			"subscribe",
 			addAction("SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
@@ -335,13 +336,15 @@ public class MessageBoardMessageResourceImpl
 			addAction(
 				"VIEW", mbMessage.getMessageId(),
 				"getMessageBoardMessageMessageBoardMessagesPage",
-				"com.liferay.message.boards", mbMessage.getGroupId())
+				"com.liferay.message.boards", mbMessage.getUserId(),
+				mbMessage.getGroupId())
 		).put(
 			"reply-to-message",
 			addAction(
 				"REPLY_TO_MESSAGE", mbMessage.getMessageId(),
 				"postMessageBoardMessageMessageBoardMessage",
-				"com.liferay.message.boards", mbMessage.getGroupId())
+				"com.liferay.message.boards", mbMessage.getUserId(),
+				mbMessage.getGroupId())
 		).build();
 	}
 
@@ -417,13 +420,15 @@ public class MessageBoardMessageResourceImpl
 			addAction(
 				"ADD_MESSAGE", mbThread.getThreadId(),
 				"postMessageBoardThreadMessageBoardMessage",
-				"com.liferay.message.boards", mbThread.getGroupId())
+				"com.liferay.message.boards", mbThread.getUserId(),
+				mbThread.getGroupId())
 		).put(
 			"get",
 			addAction(
 				"VIEW", mbThread.getThreadId(),
 				"getMessageBoardThreadMessageBoardMessagesPage",
-				"com.liferay.message.boards", mbThread.getGroupId())
+				"com.liferay.message.boards", mbThread.getUserId(),
+				mbThread.getGroupId())
 		).build();
 	}
 

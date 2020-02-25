@@ -138,11 +138,11 @@ public class DEDataDefinitionFieldLinkStagedModelDataHandler
 
 		importedDEDataDefinitionFieldLink.setGroupId(
 			portletDataContext.getScopeGroupId());
-		importedDEDataDefinitionFieldLink.setDdmStructureId(ddmStructureId);
 		importedDEDataDefinitionFieldLink.setClassNameId(
 			_portal.getClassNameId(
 				deDataDefinitionFieldLinkElement.attributeValue(
 					"link-class-name")));
+		importedDEDataDefinitionFieldLink.setDdmStructureId(ddmStructureId);
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
 			ddmStructureId);

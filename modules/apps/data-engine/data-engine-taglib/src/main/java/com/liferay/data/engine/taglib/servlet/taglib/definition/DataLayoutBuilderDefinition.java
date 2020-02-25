@@ -23,6 +23,10 @@ public interface DataLayoutBuilderDefinition {
 		return new String[0];
 	}
 
+	public default String[] getDisabledTabs() {
+		return new String[0];
+	}
+
 	public default String[] getUnimplementedProperties() {
 		return new String[] {
 			"fieldNamespace", "indexType", "localizable", "readOnly", "type",

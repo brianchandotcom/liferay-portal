@@ -45,6 +45,15 @@ definition {
 			value1 = "${rowLocation}");
 	}
 
+	macro changeNumberOfEntriesPerFeed {
+		SelectFrame(locator1 = "RSSFeed#RSS_CONFIGURATION_IFRAME");
+
+		Type(
+			key_fieldLabel = "# of Entries Per Feed",
+			locator1 = "FormFields#NUMBER_FIELD",
+			value1 = "${numberOfEntries}");
+	}
+
 	macro configureFeedDisplayStyle {
 		SelectFrame(value1 = "relative=top");
 

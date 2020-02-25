@@ -29,13 +29,10 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Dictionary;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -100,10 +97,10 @@ public class DepotAssetRendererFactoryController {
 	private ServiceTracker<AssetRendererFactory, AssetRendererFactory>
 		_serviceTracker;
 
-	private class ControlledAssetRendererFactoryWrapper
+	private class ControlledDepotAssetRendererFactoryWrapper
 		extends DepotAssetRendererFactoryWrapper {
 
-		public ControlledAssetRendererFactoryWrapper(
+		public ControlledDepotAssetRendererFactoryWrapper(
 			AssetRendererFactory assetRendererFactory) {
 
 			_assetRendererFactory = assetRendererFactory;
@@ -148,16 +145,10 @@ public class DepotAssetRendererFactoryController {
 					GroupThreadLocal.getGroupId());
 			}
 
-			HttpServletRequest httpServletRequest = serviceContext.getRequest();
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-			if (httpServletRequest != null) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				if (themeDisplay != null) {
-					return themeDisplay.getScopeGroup();
-				}
+			if (themeDisplay != null) {
+				return themeDisplay.getScopeGroup();
 			}
 
 			return _groupLocalService.fetchGroup(
@@ -191,7 +182,7 @@ public class DepotAssetRendererFactoryController {
 				_bundleContext.getService(serviceReference);
 
 			if (assetRendererFactory instanceof
-					ControlledAssetRendererFactoryWrapper) {
+					ControlledDepotAssetRendererFactoryWrapper) {
 
 				return assetRendererFactory;
 			}
@@ -208,7 +199,8 @@ public class DepotAssetRendererFactoryController {
 				"service.ranking", Integer.MAX_VALUE);
 
 			AssetRendererFactory wrappedAssetRendererFactoryWrapper =
-				new ControlledAssetRendererFactoryWrapper(assetRendererFactory);
+				new ControlledDepotAssetRendererFactoryWrapper(
+					assetRendererFactory);
 
 			ServiceRegistration<AssetRendererFactory> serviceRegistration =
 				_bundleContext.registerService(

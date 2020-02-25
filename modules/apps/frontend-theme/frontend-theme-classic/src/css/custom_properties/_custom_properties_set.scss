@@ -350,7 +350,8 @@
 
 	&.input-group-inset-item-before {
 		border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
-		border-width: var(--input-border-width) 0 var(--input-border-width) var(--input-border-width);
+		border-width: var(--input-border-width) 0 var(--input-border-width)
+			var(--input-border-width);
 	}
 }
 

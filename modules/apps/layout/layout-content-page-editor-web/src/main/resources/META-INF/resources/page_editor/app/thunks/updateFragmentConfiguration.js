@@ -26,10 +26,11 @@ export default function updateFragmentConfiguration({
 
 	const nextEditableValues = {
 		...editableValues,
-		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
-			...editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR],
-			[segmentsExperienceId]: configurationValues
-		}
+		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: segmentsExperienceId
+			? {
+					[segmentsExperienceId]: configurationValues
+			  }
+			: configurationValues
 	};
 
 	return dispatch => {

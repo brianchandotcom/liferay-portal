@@ -61,6 +61,10 @@ definition {
 		Navigator.gotoNavItem(navItem = "Organizations");
 
 		Site.removeOrganizationCP(orgName = "Organization Name");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No organization was found that is a member of this asset library.");
 	}
 
 	@description = "This ensures that a user can be added and removed in the membership of an asset library."
@@ -95,6 +99,10 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		LexiconEntry.viewNoEntry(rowEntry = "userfn");
 	}
 
 	@description = "This ensures that a user group can be added and removed in the membership of an asset library."
@@ -137,6 +145,10 @@ definition {
 		Site.removeUserGroupCP(
 			bulkEditing = "true",
 			userGroupNameList = "User Group Name");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No user group was found that is a member of this asset library.");
 	}
 
 }

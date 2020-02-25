@@ -39,18 +39,25 @@ public class ItemSelectorKeyUtil {
 	}
 
 	private static String _getKey(Class<?> clazz, String suffix) {
-		return _itemSelectorKeysMap.computeIfAbsent(
-			clazz.getName(),
-			className -> {
-				String key = StringUtil.lowerCase(
-					StringUtil.removeSubstring(clazz.getSimpleName(), suffix));
+		String key = _itemSelectorKeysMap.get(clazz.getName());
 
-				if (!_itemSelectorKeysMap.containsValue(key)) {
-					return key;
-				}
+		if (key == null) {
+			key = StringUtil.lowerCase(
+				StringUtil.removeSubstring(clazz.getSimpleName(), suffix));
 
-				return className;
-			});
+			if (_itemSelectorKeysMap.containsValue(key)) {
+				key = clazz.getName();
+			}
+
+			String oldKey = _itemSelectorKeysMap.putIfAbsent(
+				clazz.getName(), key);
+
+			if (oldKey != null) {
+				key = oldKey;
+			}
+		}
+
+		return key;
 	}
 
 	private static final Map<String, String> _itemSelectorKeysMap =

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -184,7 +185,10 @@ public class TestUploadHandler {
 
 		int suffix = 1;
 
-		for (int i = 0; i < _UNIQUE_FILE_NAME_TRIES; i++) {
+		for (int i = 0;
+			 i < UploadServletRequestConfigurationHelperUtil.getMaxTries();
+			 i++) {
+
 			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
@@ -257,8 +261,6 @@ public class TestUploadHandler {
 			throw new SystemException(ioException);
 		}
 	}
-
-	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 
 	private final TestUploadPortlet _testUploadPortlet;
 

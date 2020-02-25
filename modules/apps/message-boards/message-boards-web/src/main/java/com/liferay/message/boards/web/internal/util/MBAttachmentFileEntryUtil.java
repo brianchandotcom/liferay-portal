@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -117,7 +118,10 @@ public class MBAttachmentFileEntryUtil {
 
 		int suffix = 1;
 
-		for (int i = 0; i < _UNIQUE_FILE_NAME_TRIES; i++) {
+		for (int i = 0;
+			 i < UploadServletRequestConfigurationHelperUtil.getMaxTries();
+			 i++) {
+
 			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
@@ -135,8 +139,6 @@ public class MBAttachmentFileEntryUtil {
 				"Unable to get a unique file name for ", fileName,
 				" in folder ", folderId));
 	}
-
-	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBAttachmentFileEntryUtil.class);

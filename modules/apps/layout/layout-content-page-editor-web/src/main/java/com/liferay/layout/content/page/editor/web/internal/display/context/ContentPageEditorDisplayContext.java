@@ -46,6 +46,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
+import com.liferay.layout.content.page.editor.web.internal.configuration.LayoutContentPageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
@@ -181,6 +182,10 @@ public class ContentPageEditorDisplayContext {
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
+		_layoutContentPageEditorConfiguration =
+			(LayoutContentPageEditorConfiguration)
+				httpServletRequest.getAttribute(
+					LayoutContentPageEditorConfiguration.class.getName());
 	}
 
 	public Map<String, Object> getEditorContext(String npmResolvedPackageName)
@@ -238,6 +243,10 @@ public class ContentPageEditorDisplayContext {
 				"editFragmentEntryLinkURL",
 				getFragmentEntryActionURL(
 					"/content_layout/edit_fragment_entry_link")
+			).put(
+				"fragmentCompositionsEnabled",
+				_layoutContentPageEditorConfiguration.
+					fragmentCompositionsEnabled()
 			).put(
 				"fragments", _getFragmentCollections(false, true)
 			).put(
@@ -1650,6 +1659,8 @@ public class ContentPageEditorDisplayContext {
 	private Long _groupId;
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
+	private final LayoutContentPageEditorConfiguration
+		_layoutContentPageEditorConfiguration;
 	private String _layoutData;
 	private LayoutStructure _masterLayoutStructure;
 	private Integer _pageType;

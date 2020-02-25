@@ -142,7 +142,7 @@ describe('Chart', () => {
 		cleanup();
 	});
 
-	it('displays total views and date range title', async () => {
+	it('displays total views and date range title for default time span', async () => {
 		const {getByText} = render(
 			<Chart
 				dataProviders={[viewsDataProvider]}
@@ -164,7 +164,7 @@ describe('Chart', () => {
 		expect(getByText('Jan 27 - Feb 2, 2020')).toBeInTheDocument();
 	});
 
-	it('displays total views and reads and date range title', async () => {
+	it('displays total views and reads and date range title for default time span', async () => {
 		const {getByText} = render(
 			<Chart
 				dataProviders={[viewsDataProvider, readsDataProvider]}

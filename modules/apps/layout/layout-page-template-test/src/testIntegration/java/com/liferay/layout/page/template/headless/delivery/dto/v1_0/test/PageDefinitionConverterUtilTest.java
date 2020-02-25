@@ -121,13 +121,17 @@ public class PageDefinitionConverterUtilTest {
 
 	@Test
 	public void testToPageDefinitionFragmentFieldText() throws Exception {
+		_testToPageDefinitionFragmentField(
+			"editable_values_fragment_field_text.json",
+			"<lfr-editable id=\"my-text\" type=\"text\">Example</lfr-editable>");
+	}
+
+	private void _testToPageDefinitionFragmentField(
+		String editableValuesFileName, String html) throws Exception {
 		Layout layout = _layoutLocalService.fetchLayout(
 			_layoutPageTemplateEntry.getPlid());
 
 		String fragmentName = RandomTestUtil.randomString();
-
-		String html =
-			"<lfr-editable id=\"my-text\" type=\"text\">Example</lfr-editable>";
 
 		String fragmentEntryKey = "my-fragment-entry-key";
 
@@ -145,8 +149,8 @@ public class PageDefinitionConverterUtilTest {
 				fragmentEntry.getFragmentEntryId(),
 				_portal.getClassNameId(Layout.class), layout.getPlid(),
 				StringPool.BLANK, html, StringPool.BLANK, StringPool.BLANK,
-				_read("editable_values_fragment_field_text.json"),
-				StringPool.BLANK, 0, null, _serviceContext);
+				_read(editableValuesFileName), StringPool.BLANK, 0, null,
+				_serviceContext);
 
 		_addLayoutPageTemplateStructure(
 			"layout_data_fragment.json",

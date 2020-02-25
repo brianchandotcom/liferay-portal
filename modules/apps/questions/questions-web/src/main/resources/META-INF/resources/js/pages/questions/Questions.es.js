@@ -47,7 +47,7 @@ export default ({
 
 	const renderQuestions = questions => {
 		questions
-			.then(data => setQuestions(data))
+			.then(data => setQuestions(data || []))
 			.then(() => setLoading(false));
 	};
 

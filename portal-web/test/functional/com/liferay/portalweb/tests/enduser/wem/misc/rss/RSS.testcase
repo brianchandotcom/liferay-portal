@@ -188,6 +188,105 @@ definition {
 		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Latimes &gt; Technology News");
 	}
 
+	@description = "This is a use case for LPS-107942. The input field of Entries Per Feed shouldn't allow 0 value, negative value, decimal value, letters and symbols."
+	@priority = "4"
+	test CannotChangeNumberOfEntriesPerFeedToInvalidValue {
+		property testray.component.names = "RSS";
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		task ("Assert the input field of Entries Per Feed shouldn't allow 0 value and negative value") {
+			for (var numberOfEntries : list "0,-1") {
+				Navigator.gotoSitePage(
+					pageName = "Site Page Name",
+					siteName = "Site Name");
+
+				Portlet.gotoPortletOptions(
+					portletName = "RSS Publisher",
+					portletOption = "Configuration");
+
+				RSSPortlet.changeNumberOfEntriesPerFeed(numberOfEntries = "${numberOfEntries}");
+
+				Click(
+					key_fieldLabel = "# of Entries Per Feed",
+					locator1 = "FormFields#LABEL");
+
+				AssertTextEquals(
+					key_fieldLabel = "# of Entries Per Feed",
+					locator1 = "FormFields#NUMBER_FIELD",
+					value1 = "${numberOfEntries}");
+
+				AssertTextEquals(
+					key_alertMessage = "Please enter a value greater than or equal to 1.",
+					locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+					value1 = "Please enter a value greater than or equal to 1.");
+
+				Button.clickSave();
+
+				AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+			}
+		}
+
+		task ("Assert the input field of Entries Per Feed shouldn't allow decimal value") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page Name",
+				siteName = "Site Name");
+
+			Portlet.gotoPortletOptions(
+				portletName = "RSS Publisher",
+				portletOption = "Configuration");
+
+			RSSPortlet.changeNumberOfEntriesPerFeed(numberOfEntries = "2.5");
+
+			Click(
+				key_fieldLabel = "# of Entries Per Feed",
+				locator1 = "FormFields#LABEL");
+
+			AssertTextEquals(
+				key_fieldLabel = "# of Entries Per Feed",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "2.5");
+
+			AssertTextEquals(
+				key_alertMessage = "Please enter only digits.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "Please enter only digits.");
+
+			Button.clickSave();
+
+			AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+		}
+
+		task ("Assert the input field of Entries Per Feed shouldn't allow letters and symbols") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page Name",
+				siteName = "Site Name");
+
+			Portlet.gotoPortletOptions(
+				portletName = "RSS Publisher",
+				portletOption = "Configuration");
+
+			RSSPortlet.changeNumberOfEntriesPerFeed(numberOfEntries = "test@liferay.com");
+
+			Click(
+				key_fieldLabel = "# of Entries Per Feed",
+				locator1 = "FormFields#LABEL");
+
+			AssertTextEquals(
+				key_fieldLabel = "# of Entries Per Feed",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "");
+
+			Button.clickSave();
+
+			AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+		}
+	}
+
 	@priority = "3"
 	test ChangeDefaultToNavigationDisplay {
 		property testray.component.names = "RSS";
@@ -227,6 +326,31 @@ definition {
 			siteName = "Site Name");
 
 		RSSPortlet.viewNavigationDisplayFeedTitle(feedTitle = "Technology");
+	}
+
+	@description = "This is a use case for LPS-107942.The input field of Entries Per Feed allows integer numbers greater than 10."
+	@priority = "5"
+	test ChangeNumberOfEntriesPerFeedToEleven {
+		property testray.component.names = "RSS";
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "RSS Publisher");
+
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration");
+
+		RSSPortlet.changeNumberOfEntriesPerFeed(numberOfEntries = "11");
+
+		AssertTextEquals(
+			key_fieldLabel = "# of Entries Per Feed",
+			locator1 = "FormFields#NUMBER_FIELD",
+			value1 = "11");
+
+		PortletEntry.save();
 	}
 
 	@priority = "3"

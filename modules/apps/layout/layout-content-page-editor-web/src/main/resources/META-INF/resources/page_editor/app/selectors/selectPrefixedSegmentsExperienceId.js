@@ -15,6 +15,14 @@
 import {SEGMENTS_EXPERIENCE_ID_PREFIX} from '../config/constants/segmentsExperienceIdPrefix';
 import {config} from '../config/index';
 
+/**
+ * Returns the selected segmentsExperienceId or the default one.
+ * Warning: this function may return an empty string if the editor is
+ * being used in an environment without experiences (ex. Page Templates).
+ *
+ * @param {object} state
+ * @return {string}
+ */
 export default function selectPrefixedSegmentsExperienceId(state) {
 	const segmentsExperienceId =
 		state.segmentsExperienceId || config.defaultSegmentsExperienceId;

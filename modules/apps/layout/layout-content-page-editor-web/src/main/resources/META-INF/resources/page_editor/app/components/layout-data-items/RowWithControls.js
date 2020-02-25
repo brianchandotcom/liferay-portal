@@ -39,6 +39,7 @@ import updateColSize from '../../actions/updateColSize';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {config} from '../../config/index';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -171,6 +172,16 @@ const RowWithControls = React.forwardRef(
 			}
 		}, [layoutData, state, dispatch, resizeFinished]);
 
+		const buttons = [LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem];
+
+		if (config.fragmentCompositionsEnabled) {
+			buttons.push(
+				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition
+			);
+		}
+
+		buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration);
+
 		const content = (
 			<Row
 				className="page-editor__row"
@@ -187,11 +198,7 @@ const RowWithControls = React.forwardRef(
 				}}
 			>
 				<FloatingToolbar
-					buttons={[
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
-					]}
+					buttons={buttons}
 					item={item}
 					itemRef={ref}
 					onButtonClick={handleButtonClick}

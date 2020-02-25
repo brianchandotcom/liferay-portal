@@ -16,13 +16,10 @@ package com.liferay.item.selector.web.internal.util;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Alejandro Tardín
@@ -42,26 +39,20 @@ public class ItemSelectorKeyUtil {
 	}
 
 	private static String _getKey(Class<?> clazz, String suffix) {
-		String key = _itemSelectorKeysMap.get(clazz.getName());
+		return _itemSelectorKeysMap.computeIfAbsent(
+			clazz.getName(),
+			className -> {
+				String key = StringUtil.lowerCase(
+					StringUtil.removeSubstring(clazz.getSimpleName(), suffix));
 
-		if (key == null) {
-			key = StringBundler.concat(
-				StringUtil.lowerCase(
-					StringUtil.removeSubstring(clazz.getSimpleName(), suffix)),
-				StringPool.UNDERLINE, _atomicInteger.incrementAndGet());
+				if (!_itemSelectorKeysMap.containsValue(key)) {
+					return key;
+				}
 
-			String oldKey = _itemSelectorKeysMap.putIfAbsent(
-				clazz.getName(), key);
-
-			if (oldKey != null) {
-				key = oldKey;
-			}
-		}
-
-		return key;
+				return className;
+			});
 	}
 
-	private static final AtomicInteger _atomicInteger = new AtomicInteger();
 	private static final Map<String, String> _itemSelectorKeysMap =
 		new ConcurrentHashMap<>();
 

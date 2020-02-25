@@ -135,20 +135,14 @@ public class DepotItemSelectorViewRenderer implements ItemSelectorViewRenderer {
 			return;
 		}
 
-		RequestDispatcher requestDispatcher = null;
-
-		if (Validator.isNull(portletId)) {
-			requestDispatcher = _servletContext.getRequestDispatcher(
-				"/item/selector/application_not_supported.jsp");
-		}
-		else {
-			requestDispatcher = _servletContext.getRequestDispatcher(
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(
 				"/item/selector/application_disabled.jsp");
-		}
 
 		DepotApplicationDisplayContext depotApplicationDisplayContext =
 			new DepotApplicationDisplayContext(httpServletRequest, _portal);
 
+		depotApplicationDisplayContext.setPortletId(portletId);
 		depotApplicationDisplayContext.setPortletURL(
 			_itemSelectorViewRenderer.getPortletURL());
 

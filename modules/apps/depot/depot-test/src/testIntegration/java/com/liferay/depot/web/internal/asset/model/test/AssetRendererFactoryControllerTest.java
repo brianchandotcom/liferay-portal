@@ -20,7 +20,9 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -92,7 +94,7 @@ public class AssetRendererFactoryControllerTest {
 
 				Assert.assertTrue(
 					assetRendererFactories.toString(),
-					assetRendererFactories.size() > 2);
+					assetRendererFactories.size() > 4);
 			});
 	}
 
@@ -108,7 +110,7 @@ public class AssetRendererFactoryControllerTest {
 						TestPropsValues.getCompanyId(), true);
 
 				Assert.assertEquals(
-					assetRendererFactories.toString(), 2,
+					assetRendererFactories.toString(), 4,
 					assetRendererFactories.size());
 
 				AssetRendererFactory<?> journalArticleAssetRendererFactory =
@@ -124,6 +126,20 @@ public class AssetRendererFactoryControllerTest {
 				Assert.assertEquals(
 					dlFileEntryAssetRendererFactory.getClassName(),
 					DLFileEntry.class.getName());
+
+				AssetRendererFactory<?> journalFolderAssetRendererFactory =
+					assetRendererFactories.get(2);
+
+				Assert.assertEquals(
+					journalFolderAssetRendererFactory.getClassName(),
+					JournalFolder.class.getName());
+
+				AssetRendererFactory<?> dlFolderAssetRendererFactory =
+					assetRendererFactories.get(3);
+
+				Assert.assertEquals(
+					dlFolderAssetRendererFactory.getClassName(),
+					DLFolder.class.getName());
 			});
 	}
 

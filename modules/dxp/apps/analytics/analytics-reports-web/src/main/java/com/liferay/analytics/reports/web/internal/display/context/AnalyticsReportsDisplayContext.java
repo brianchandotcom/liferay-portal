@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -153,18 +154,24 @@ public class AnalyticsReportsDisplayContext {
 
 	public enum TimeSpan {
 
-		LAST_7_DAYS("last-7-days"), LAST_24_HOURS("last-24-hours"),
-		LAST_30_DAYS("last-30-days");
+		LAST_7_DAYS("last-7-days", 2), LAST_24_HOURS("last-24-hours", 1),
+		LAST_30_DAYS("last-30-days", 3);
 
 		public String getLabel() {
 			return _label;
 		}
 
-		private TimeSpan(String label) {
+		public int getOrder() {
+			return _order;
+		}
+
+		private TimeSpan(String label, int order) {
 			_label = label;
+			_order = order;
 		}
 
 		private final String _label;
+		private final int _order;
 
 	}
 
@@ -205,14 +212,17 @@ public class AnalyticsReportsDisplayContext {
 
 		Stream<TimeSpan> stream = Arrays.stream(TimeSpan.values());
 
-		stream.forEach(
+		stream.sorted(
+			Comparator.comparingInt(TimeSpan::getOrder)
+		).forEach(
 			timeSpan -> timeSpansJSONArray.put(
 				JSONUtil.put(
 					"label",
 					LanguageUtil.get(_httpServletRequest, timeSpan.getLabel())
 				).put(
 					"value", timeSpan.getLabel()
-				)));
+				))
+		);
 
 		return timeSpansJSONArray;
 	}

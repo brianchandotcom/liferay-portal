@@ -61,13 +61,6 @@
 				<inputType>java.util.Set</inputType>
 				<required>false</required>
 			</attribute>
-			<attribute>
-				<name>singlePage</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-				<required>false</required>
-				<defaultValue>false</defaultValue>
-			</attribute>
 		</attributes>
 	</component>
 	<component bodyContent="false" name="DataLayoutRenderer" writeJSP="true">

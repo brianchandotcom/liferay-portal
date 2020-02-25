@@ -59,12 +59,6 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.Set</type>
 		</attribute>
-		<attribute>
-			<name>singlePage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>

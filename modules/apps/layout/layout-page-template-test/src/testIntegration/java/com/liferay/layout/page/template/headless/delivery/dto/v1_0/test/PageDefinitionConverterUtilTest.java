@@ -15,13 +15,23 @@
 package com.liferay.layout.page.template.headless.delivery.dto.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.headless.delivery.dto.v1_0.Fragment;
+import com.liferay.headless.delivery.dto.v1_0.FragmentField;
+import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
+import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
+import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
+import com.liferay.headless.delivery.dto.v1_0.InlineLink;
+import com.liferay.headless.delivery.dto.v1_0.InlineValue;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
@@ -47,6 +57,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -54,6 +65,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,6 +117,104 @@ public class PageDefinitionConverterUtilTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				_serviceContext);
+	}
+
+	@Test
+	public void testToPageDefinitionFragmentFieldText() throws Exception {
+		Layout layout = _layoutLocalService.fetchLayout(
+			_layoutPageTemplateEntry.getPlid());
+
+		String fragmentName = RandomTestUtil.randomString();
+
+		String html =
+			"<lfr-editable id=\"my-text\" type=\"text\">Example</lfr-editable>";
+
+		String fragmentEntryKey = "my-fragment-entry-key";
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
+				fragmentName, StringPool.BLANK, html, StringPool.BLANK,
+				StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_portal.getClassNameId(Layout.class), layout.getPlid(),
+				StringPool.BLANK, html, StringPool.BLANK, StringPool.BLANK,
+				_read("editable_values_fragment_field_text.json"),
+				StringPool.BLANK, 0, null, _serviceContext);
+
+		_addLayoutPageTemplateStructure(
+			"layout_data_fragment.json",
+			HashMapBuilder.put(
+				"FRAGMENT_ENTRY_LINK_ID",
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
+			).build());
+
+		PageDefinition pageDefinition =
+			PageDefinitionConverterUtil.toPageDefinition(
+				_fragmentCollectionContributorTracker,
+				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
+				layout);
+
+		PageElement rootPageElement = pageDefinition.getPageElement();
+
+		Assert.assertEquals(PageElement.Type.ROOT, rootPageElement.getType());
+
+		PageElement[] pageElements = rootPageElement.getPageElements();
+
+		Assert.assertEquals(
+			Arrays.toString(pageElements), 1, pageElements.length);
+
+		PageElement fragmentPageElement = pageElements[0];
+
+		Assert.assertNull(fragmentPageElement.getPageElements());
+		Assert.assertEquals(
+			PageElement.Type.FRAGMENT, fragmentPageElement.getType());
+
+		FragmentInstanceDefinition fragmentInstanceDefinition =
+			(FragmentInstanceDefinition)fragmentPageElement.getDefinition();
+
+		Fragment fragment = fragmentInstanceDefinition.getFragment();
+
+		Assert.assertEquals(
+			_fragmentCollection.getName(),
+			fragment.getFragmentCollectionName());
+		Assert.assertEquals(fragmentEntryKey, fragment.getFragmentKey());
+		Assert.assertEquals(fragmentName, fragment.getFragmentName());
+
+		FragmentField[] fragmentFields =
+			fragmentInstanceDefinition.getFragmentFields();
+
+		Assert.assertEquals(
+			Arrays.toString(fragmentFields), 1, fragmentFields.length);
+
+		FragmentField fragmentField = fragmentFields[0];
+
+		FragmentFieldText fragmentFieldText =
+			(FragmentFieldText)fragmentField.getValue();
+
+		FragmentLink fragmentLink = fragmentFieldText.getFragmentLink();
+
+		Assert.assertEquals(
+			FragmentLink.Target.BLANK, fragmentLink.getTarget());
+
+		InlineLink inlineLink = (InlineLink)fragmentLink.getValue();
+
+		Assert.assertEquals("http://www.myexample.com", inlineLink.getHref());
+
+		InlineValue inlineValue = (InlineValue)fragmentFieldText.getText();
+
+		Assert.assertNull(inlineValue.getValue());
+
+		Map<String, String> i18nMap = inlineValue.getValue_i18n();
+
+		Assert.assertEquals("My example", i18nMap.get("en_US"));
+		Assert.assertEquals("Mi ejemplo", i18nMap.get("es_ES"));
 	}
 
 	@Test

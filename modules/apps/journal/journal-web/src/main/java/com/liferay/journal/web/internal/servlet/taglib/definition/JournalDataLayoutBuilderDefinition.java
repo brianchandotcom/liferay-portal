@@ -33,4 +33,9 @@ public class JournalDataLayoutBuilderDefinition
 		return new String[] {"predefinedValue"};
 	}
 
+	@Override
+	public String[] getDisabledTabs() {
+		return new String[] {"Autocomplete"};
+	}
+
 }

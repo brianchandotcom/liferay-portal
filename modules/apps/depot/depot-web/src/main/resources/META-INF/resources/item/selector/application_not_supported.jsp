@@ -18,11 +18,6 @@
 
 <%
 DepotApplicationDisplayContext depotApplicationDisplayContext = (DepotApplicationDisplayContext)request.getAttribute(DepotAdminWebKeys.DEPOT_APPLICATION_DISPLAY_CONTEXT);
-
-PortletURL viewGroupSelectorURL = PortletURLUtil.clone(depotApplicationDisplayContext.getPortletURL(), liferayPortletResponse);
-
-viewGroupSelectorURL.setParameter("groupType", "site");
-viewGroupSelectorURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
 %>
 
 <div class="container-fluid container-fluid-max-xl pt-4">
@@ -33,10 +28,6 @@ viewGroupSelectorURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
 			</svg>
 		</span>
 
-		<%
-		String taglibViewGroupSelectorLink = "<a href=\"" + HtmlUtil.escape(viewGroupSelectorURL.toString()) + "\">";
-		%>
-
-		<strong class="lead">Info:</strong><liferay-ui:message arguments='<%= new Object[] {taglibViewGroupSelectorLink, "</a>"} %>' key="application-is-not-supported.-please-go-back-to-selection" />
+		<strong class="lead">Info:</strong><%= depotApplicationDisplayContext.getMessage() %>
 	</div>
 </div>

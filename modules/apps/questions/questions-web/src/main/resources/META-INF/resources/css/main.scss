@@ -6,6 +6,10 @@
 	z-index: 2;
 }
 
+.bg-white {
+	background-color: $white;
+}
+
 .question-list {
 	display: flex;
 	flex-direction: row;

@@ -60,8 +60,9 @@ export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 	return (
 		<div className="align-items-center d-inline-flex flex-column justify-content-center text-secondary">
 			<ClayButton
-				className="text-reset"
-				className={userRating === 1 ? 'text-primary' : ''}
+				className={
+					'text-reset' + (userRating === 1 ? ' text-primary' : '')
+				}
 				displayType="unstyled"
 				monospaced
 				onClick={() => voteChange(1)}
@@ -72,8 +73,9 @@ export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 			<span>{rating || 0}</span>
 
 			<ClayButton
-				className="text-reset"
-				className={userRating === -1 ? 'text-primary' : ''}
+				className={
+					'text-reset' + (userRating === -1 ? ' text-primary' : '')
+				}
 				displayType="unstyled"
 				// small={if-it-is-a-sub-comment}
 				monospaced

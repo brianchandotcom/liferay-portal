@@ -6,9 +6,9 @@
 	}
 
 	&.question-answer-success {
-		border-radius: 0.25rem;
-		border: 1px solid $success-l1;
 		background-color: $success-l2;
+		border: 1px solid $success-l1;
+		border-radius: 0.25rem;
 	}
 }
 
@@ -22,21 +22,3 @@
 		transform: rotateZ(180deg);
 	}
 }
-
-// .btn-secondary.question-subscribed,
-// .btn-secondary.question-subscribed:hover {
-// 	background-color: $primary-l3;
-// }
-
-// .question-bell-subscribed,
-// .question-bell-subscribed:hover {
-// 	color: $primary;
-// }
-
-// .questions-my-rating {
-// 	color: $primary;
-// }
-
-// .question-user-popover {
-// 	width: 200px;
-// }

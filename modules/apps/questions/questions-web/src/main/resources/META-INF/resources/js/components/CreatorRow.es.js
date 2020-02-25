@@ -12,7 +12,6 @@
  * details.
  */
 
-import classnames from 'classnames';
 import React, {useState} from 'react';
 
 import {timeDifference} from '../utils/utils.es';
@@ -24,7 +23,7 @@ export default ({question: {creator, dateCreated}}) => {
 
 	return (
 		<div
-			className="align-items-center bg-white border border-light c-ml-3 c-p-3 d-inline-flex justify-content-center rounded"
+			className="align-items-center bg-white border border-light c-ml-3 c-p-3 d-inline-flex justify-content-center position-relative rounded"
 			onMouseLeave={() => setShowPopover(false)}
 			onMouseOver={() => setShowPopover(true)}
 		>

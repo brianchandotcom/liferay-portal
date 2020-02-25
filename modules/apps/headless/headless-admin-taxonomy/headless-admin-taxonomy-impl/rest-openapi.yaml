@@ -208,6 +208,9 @@ components:
                             type: string
                     readOnly: true
                     type: object
+                taxonomyCategoryUsageCount:
+                    readOnly: true
+                    type: integer
                 viewableBy:
                     description:
                         A write-only property that specifies the category's default permissions.
@@ -578,6 +581,39 @@ paths:
                     description:
                         ""
             tags: ["TaxonomyVocabulary"]
+    "/taxonomy-categories/ranked":
+        get:
+            operationId: getTaxonomyCategoryRankedPage
+            parameters:
+                - in: query
+                  name: siteId
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaxonomyCategory"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaxonomyCategory"
+                                type: array
+                    description:
+                        ""
+            tags: ["TaxonomyCategory"]
     "/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories":
         get:
             description:

@@ -28,16 +28,16 @@ public class LayoutStructureItemHelperFactory {
 	public LayoutStructureItemHelper getLayoutStructureItemHelper(
 		PageElement.Type pageElementType) {
 
-		if (pageElementType == PageElement.Type.SECTION) {
-			return new ContainerLayoutStructureItemHelper();
+		if (pageElementType == PageElement.Type.COLUMN) {
+			return new ColumnLayoutStructureItemHelper();
 		}
 
 		if (pageElementType == PageElement.Type.ROW) {
 			return new RowLayoutStructureItemHelper();
 		}
 
-		if (pageElementType == PageElement.Type.COLUMN) {
-			return new ColumnLayoutStructureItemHelper();
+		if (pageElementType == PageElement.Type.SECTION) {
+			return new ContainerLayoutStructureItemHelper();
 		}
 
 		return null;

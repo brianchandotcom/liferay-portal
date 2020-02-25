@@ -120,6 +120,14 @@ public class PageDefinitionConverterUtilTest {
 	}
 
 	@Test
+	public void testToPageDefinitionFragmentFieldLink() throws Exception {
+		_testToPageDefinitionFragmentField(
+			"editable_values_fragment_field_link.json",
+			"<lfr-editable id=\"my-link\" type=\"link\"><a href=\"\" id=\"" +
+				"my-link\">Go here</a></lfr-editable>");
+	}
+
+	@Test
 	public void testToPageDefinitionFragmentFieldText() throws Exception {
 		_testToPageDefinitionFragmentField(
 			"editable_values_fragment_field_text.json",

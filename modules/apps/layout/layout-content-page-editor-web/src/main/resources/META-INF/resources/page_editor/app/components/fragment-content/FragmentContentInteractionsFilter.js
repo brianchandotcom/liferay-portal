@@ -13,10 +13,16 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
-import {useHoverItem, useIsActive, useSelectItem} from '../Controls';
+import {
+	useActiveItemId,
+	useActiveItemType,
+	useHoverItem,
+	useIsActive,
+	useSelectItem
+} from '../Controls';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
 import {getEditableElement} from './getEditableElement';
 import getEditableElementId from './getEditableElementId';
@@ -26,12 +32,77 @@ export default function FragmentContentInteractionsFilter({
 	children,
 	editableElements,
 	fragmentEntryLinkId,
-	itemId,
+	itemId
 }) {
 	const hoverItem = useHoverItem();
 	const isActive = useIsActive();
+	const activeItemId = useActiveItemId();
+	const activeItemType = useActiveItemType();
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
+
+	useEffect(() => {
+		let activeEditableElement;
+
+		const enableProcessor = event => {
+			const editableElement = getEditableElement(event.target);
+
+			if (editableElement) {
+				const editableClickPosition = {
+					clientX: event.clientX,
+					clientY: event.clientY
+				};
+				const editableUniqueId = getEditableUniqueId(
+					fragmentEntryLinkId,
+					getEditableElementId(editableElement)
+				);
+
+				if (isActive(editableUniqueId)) {
+					setEditableProcessorUniqueId(
+						editableUniqueId,
+						editableClickPosition
+					);
+				}
+			}
+		};
+
+		if (activeItemId && activeItemType === ITEM_TYPES.editable) {
+			activeEditableElement = editableElements.find(editableElement =>
+				isActive(
+					getEditableUniqueId(
+						fragmentEntryLinkId,
+						getEditableElementId(editableElement)
+					)
+				)
+			);
+
+			if (activeEditableElement) {
+				requestAnimationFrame(() => {
+					activeEditableElement.addEventListener(
+						'dblclick',
+						enableProcessor
+					);
+				});
+			}
+		}
+
+		return () => {
+			if (activeEditableElement) {
+				activeEditableElement.removeEventListener(
+					'dblclick',
+					enableProcessor
+				);
+			}
+		};
+	}, [
+		activeItemId,
+		activeItemType,
+		editableElements,
+		fragmentEntryLinkId,
+		isActive,
+		itemId,
+		setEditableProcessorUniqueId
+	]);
 
 	const siblingIds = useMemo(
 		() => [
@@ -41,9 +112,9 @@ export default function FragmentContentInteractionsFilter({
 					fragmentEntryLinkId,
 					getEditableElementId(editableElement)
 				)
-			),
+			)
 		],
-		[fragmentEntryLinkId, itemId, editableElements]
+		[itemId, editableElements, fragmentEntryLinkId]
 	);
 
 	const hoverEditable = event => {
@@ -79,30 +150,8 @@ export default function FragmentContentInteractionsFilter({
 			else {
 				selectItem(editableUniqueId, {
 					itemType: ITEM_TYPES.editable,
-					multiSelect: event.shiftKey,
+					multiSelect: event.shiftKey
 				});
-			}
-		}
-	};
-
-	const enableProcessor = event => {
-		const editableElement = getEditableElement(event.target);
-
-		if (editableElement) {
-			const editableClickPosition = {
-				clientX: event.clientX,
-				clientY: event.clientY,
-			};
-			const editableUniqueId = getEditableUniqueId(
-				fragmentEntryLinkId,
-				getEditableElementId(editableElement)
-			);
-
-			if (isActive(editableUniqueId)) {
-				setEditableProcessorUniqueId(
-					editableUniqueId,
-					editableClickPosition
-				);
 			}
 		}
 	};
@@ -111,7 +160,6 @@ export default function FragmentContentInteractionsFilter({
 
 	if (siblingIds.some(isActive)) {
 		props.onClickCapture = selectEditable;
-		props.onDoubleClickCapture = enableProcessor;
 		props.onMouseOverCapture = hoverEditable;
 	}
 
@@ -121,5 +169,5 @@ export default function FragmentContentInteractionsFilter({
 FragmentContentInteractionsFilter.propTypes = {
 	element: PropTypes.instanceOf(HTMLElement),
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	itemId: PropTypes.string.isRequired,
+	itemId: PropTypes.string.isRequired
 };

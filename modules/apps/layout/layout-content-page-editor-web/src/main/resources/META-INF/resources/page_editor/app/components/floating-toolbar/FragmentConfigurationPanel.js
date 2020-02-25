@@ -74,12 +74,19 @@ export const FragmentConfigurationPanel = ({item}) => {
 	const defaultConfigurationValues =
 		fragmentEntryLink.defaultConfigurationValues;
 
-	const configurationValues = {
-		...defaultConfigurationValues,
-		...fragmentEntryLink.editableValues[
-			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-		][segmentsExperienceId]
-	};
+	const configurationValues = segmentsExperienceId
+		? {
+				...defaultConfigurationValues,
+				...fragmentEntryLink.editableValues[
+					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+				][segmentsExperienceId]
+		  }
+		: {
+				...defaultConfigurationValues,
+				...fragmentEntryLink.editableValues[
+					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+				]
+		  };
 
 	const onRestoreButtonClick = () => {
 		dispatch(

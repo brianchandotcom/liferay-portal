@@ -249,11 +249,11 @@ public abstract class BasePhoneResourceImpl
 
 	protected Map<String, String> addAction(
 		String actionName, Long id, String methodName, String permissionName,
-		Long siteId) {
+		Long siteId, Long userId) {
 
 		return ActionUtil.addAction(
 			actionName, getClass(), id, methodName, permissionName,
-			contextScopeChecker, siteId, contextUriInfo);
+			contextScopeChecker, siteId, contextUriInfo, userId);
 	}
 
 	protected Map<String, String> addAction(
@@ -261,7 +261,7 @@ public abstract class BasePhoneResourceImpl
 		Long siteId) {
 
 		return addAction(
-			actionName, siteId, methodName, permissionName, siteId);
+			actionName, siteId, methodName, permissionName, siteId, null);
 	}
 
 	protected void preparePatch(Phone phone, Phone existingPhone) {

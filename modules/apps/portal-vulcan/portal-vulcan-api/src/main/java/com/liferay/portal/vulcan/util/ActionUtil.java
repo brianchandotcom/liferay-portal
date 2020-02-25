@@ -53,17 +53,18 @@ public class ActionUtil {
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
 			methodName, interfaceClasses[0].getName(), object,
-			groupedModel.getGroupId(), uriInfo);
+			groupedModel.getGroupId(), uriInfo, groupedModel.getUserId());
 	}
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, Long id, String methodName,
-		String permissionName, Object object, Long siteId, UriInfo uriInfo) {
+		String permissionName, Object object, Long siteId, UriInfo uriInfo,
+		Long userId) {
 
 		try {
 			return _addAction(
 				actionName, clazz, id, methodName, permissionName, object,
-				siteId, uriInfo);
+				siteId, uriInfo, userId);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -72,7 +73,8 @@ public class ActionUtil {
 
 	private static Map<String, String> _addAction(
 			String actionName, Class clazz, Long id, String methodName,
-			String permissionName, Object object, Long siteId, UriInfo uriInfo)
+			String permissionName, Object object, Long siteId, UriInfo uriInfo,
+			Long userId)
 		throws Exception {
 
 		if (uriInfo == null) {
@@ -95,12 +97,10 @@ public class ActionUtil {
 		List<String> modelResourceActions =
 			ResourceActionsUtil.getModelResourceActions(permissionName);
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		if (!modelResourceActions.contains(actionName) ||
-			!permissionChecker.hasPermission(
-				siteId, permissionName, id, actionName)) {
+			!_hasPermission(
+				actionName, id, permissionName, siteId, userId,
+				PermissionThreadLocal.getPermissionChecker())) {
 
 			return null;
 		}
@@ -166,6 +166,23 @@ public class ActionUtil {
 		}
 
 		return null;
+	}
+
+	private static boolean _hasPermission(
+		String actionName, Long id, String permissionName, Long siteId,
+		Long userId, PermissionChecker permissionChecker) {
+
+		if (((userId != null) &&
+			 permissionChecker.hasOwnerPermission(
+				 permissionChecker.getCompanyId(), permissionName, id, userId,
+				 actionName)) ||
+			permissionChecker.hasPermission(
+				siteId, permissionName, id, actionName)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

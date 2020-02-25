@@ -70,6 +70,8 @@ export default {
 	 * @param {string} options.name Fragment composition name
 	 * @param {function} options.onNetworkStatus
 	 * @param {string} options.previewImageURL Fragment composition preview image url
+	 * @param {boolean} options.saveInlineContent Save inline editable content
+	 * @param {boolean} options.saveMappingConfiguration Save fields mapping configuration
 	 * @param {string} options.segmentsExperienceId Current segmentsExperienceId
 	 * @return {Promise<FragmentComposition>} Created FragmentComposition
 	 */
@@ -80,6 +82,8 @@ export default {
 		name,
 		onNetworkStatus,
 		previewImageURL,
+		saveInlineContent,
+		saveMappingConfiguration,
 		segmentsExperienceId
 	}) {
 		return serviceFetch(
@@ -91,6 +95,8 @@ export default {
 					itemId,
 					name,
 					previewImageURL,
+					saveInlineContent,
+					saveMappingConfiguration,
 					segmentsExperienceId
 				}
 			},

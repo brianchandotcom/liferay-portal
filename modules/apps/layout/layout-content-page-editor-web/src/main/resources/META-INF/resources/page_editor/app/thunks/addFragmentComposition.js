@@ -21,6 +21,8 @@ export default function addFragment({
 	itemId,
 	name,
 	previewImageURL,
+	saveInlineContent,
+	saveMappingConfiguration,
 	store
 }) {
 	return dispatch => {
@@ -33,6 +35,8 @@ export default function addFragment({
 			name,
 			onNetworkStatus: dispatch,
 			previewImageURL,
+			saveInlineContent,
+			saveMappingConfiguration,
 			segmentsExperienceId
 		}).then(({fragmentComposition, layoutData}) => {
 			dispatch(

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
+import com.liferay.taglib.util.HtmlTopTag;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -51,8 +52,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,21 +86,80 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 		Writer writer = httpServletResponse.getWriter();
 
-		writer.write("<div class=\"change-tracking-indicator\">");
+		HtmlTopTag htmlTopTag = new HtmlTopTag();
 
-		String componentId =
-			_portal.getPortletNamespace(CTPortletKeys.CHANGE_LISTS) +
-				"IndicatorComponent";
-		String module =
-			_npmResolver.resolveModuleName("change-tracking-web") +
-				"/dynamic_include/ChangeTrackingIndicator";
+		htmlTopTag.setOutputKey("change_tracking_indicator_css");
+		htmlTopTag.setPosition("auto");
 
-		_reactRenderer.renderReact(
-			new ComponentDescriptor(module, componentId),
-			_getReactData(httpServletRequest, themeDisplay), httpServletRequest,
-			writer);
+		try {
+			htmlTopTag.doBodyTag(
+				httpServletRequest, httpServletResponse,
+				pageContext -> {
+					try {
+						writer.write("<link href=\"");
+						writer.write(
+							_portal.getStaticResourceURL(
+								httpServletRequest,
+								StringBundler.concat(
+									_servletContext.getContextPath(),
+									"/dynamic_include/ChangeTrackingIndicator.",
+									"css")));
+						writer.write(
+							"\" rel=\"stylesheet\" type=\"text/css\" />");
+					}
+					catch (IOException ioException) {
+						ReflectionUtil.throwException(ioException);
+					}
+				});
 
-		writer.write("</div>");
+			writer.write("<div class=\"change-tracking-indicator\">");
+			writer.write(
+				"<div><button class=\"change-tracking-indicator-button\">");
+
+			CTCollection ctCollection = null;
+
+			ctPreferences = _ctPreferencesLocalService.fetchCTPreferences(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId());
+
+			if (ctPreferences != null) {
+				ctCollection = _ctCollectionLocalService.fetchCTCollection(
+					ctPreferences.getCtCollectionId());
+			}
+
+			String title = null;
+
+			if (ctCollection == null) {
+				title = _language.get(themeDisplay.getLocale(), "production");
+			}
+			else {
+				title = ctCollection.getName();
+			}
+
+			writer.write(
+				"<span className=\"change-tracking-indicator-title\">");
+			writer.write(title);
+			writer.write("</span>");
+			writer.write("</button></div>");
+
+			String componentId =
+				_portal.getPortletNamespace(CTPortletKeys.CHANGE_LISTS) +
+					"IndicatorComponent";
+			String module =
+				_npmResolver.resolveModuleName("change-tracking-web") +
+					"/dynamic_include/ChangeTrackingIndicator";
+
+			_reactRenderer.renderReact(
+				new ComponentDescriptor(module, componentId),
+				_getReactData(
+					httpServletRequest, ctCollection, ctPreferences,
+					themeDisplay),
+				httpServletRequest, writer);
+
+			writer.write("</div>");
+		}
+		catch (JspException jspException) {
+			ReflectionUtil.throwException(jspException);
+		}
 	}
 
 	@Override
@@ -107,7 +169,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private Map<String, Object> _getReactData(
-		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+		HttpServletRequest httpServletRequest, CTCollection ctCollection,
+		CTPreferences ctPreferences, ThemeDisplay themeDisplay) {
 
 		PortletURL checkoutURL = _portal.getControlPanelPortletURL(
 			httpServletRequest, themeDisplay.getScopeGroup(),
@@ -146,17 +209,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 
-		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.fetchCTPreferences(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId());
-
-		CTCollection ctCollection = null;
-
-		if (ctPreferences != null) {
-			ctCollectionId = ctPreferences.getCtCollectionId();
-
-			ctCollection = _ctCollectionLocalService.fetchCTCollection(
-				ctCollectionId);
+		if (ctCollection != null) {
+			ctCollectionId = ctCollection.getCtCollectionId();
 		}
 
 		if (ctCollection == null) {
@@ -322,5 +376,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private ReactRenderer _reactRenderer;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.change.tracking.web)"
+	)
+	private ServletContext _servletContext;
 
 }

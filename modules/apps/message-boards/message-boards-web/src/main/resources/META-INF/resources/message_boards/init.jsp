@@ -115,7 +115,6 @@ page import="com.liferay.message.boards.web.internal.util.MBMailUtil" %><%@
 page import="com.liferay.message.boards.web.internal.util.MBMessageIterator" %><%@
 page import="com.liferay.message.boards.web.internal.util.MBRSSUtil" %><%@
 page import="com.liferay.message.boards.web.internal.util.MBSubscriptionUtil" %><%@
-page import="com.liferay.message.boards.web.internal.util.MBUserRankUtil" %><%@
 page import="com.liferay.message.boards.web.internal.util.MBUtil" %><%@
 page import="com.liferay.message.boards.web.internal.util.MBWebComponentProvider" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@

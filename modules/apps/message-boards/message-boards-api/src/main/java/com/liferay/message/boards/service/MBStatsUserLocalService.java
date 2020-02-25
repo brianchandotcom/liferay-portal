@@ -268,6 +268,10 @@ public interface MBStatsUserLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBStatsUser> getStatsUsersByUserId(long userId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String[] getUserRank(long groupId, String languageId, long userId)
+		throws PortalException;
+
 	/**
 	 * Updates the message boards stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

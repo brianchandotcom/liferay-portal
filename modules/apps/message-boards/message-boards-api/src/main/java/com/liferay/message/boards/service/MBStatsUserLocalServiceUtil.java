@@ -338,6 +338,13 @@ public class MBStatsUserLocalServiceUtil {
 		return getService().getStatsUsersByUserId(userId);
 	}
 
+	public static String[] getUserRank(
+			long groupId, String languageId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getUserRank(groupId, languageId, userId);
+	}
+
 	/**
 	 * Updates the message boards stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

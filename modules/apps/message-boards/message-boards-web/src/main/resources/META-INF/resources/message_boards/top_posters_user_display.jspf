@@ -26,7 +26,7 @@ User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
 	</liferay-ui:search-container-column-text>
 
 	<%
-	String[] ranks = MBUserRankUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
+	String[] ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), statsUser.getUserId());
 	%>
 
 	<liferay-ui:search-container-column-text

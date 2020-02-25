@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.message.boards.web.internal.util;
+package com.liferay.message.boards.internal.util;
 
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -34,14 +35,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Sergio González
+ * @author Luis Miguel Barcos
  */
 public class MBUserRankUtil {
 
 	public static String[] getUserRank(
 			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
 			MBStatsUser statsUser)
-		throws Exception {
+		throws PortalException {
 
 		String[] rank = {StringPool.BLANK, StringPool.BLANK};
 

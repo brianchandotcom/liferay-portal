@@ -93,7 +93,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 				String[] ranks = {StringPool.BLANK, StringPool.BLANK};
 
 				if (!message.isAnonymous()) {
-					ranks = MBUserRankUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
+					ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), message.getUserId());
 				}
 
 				User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());

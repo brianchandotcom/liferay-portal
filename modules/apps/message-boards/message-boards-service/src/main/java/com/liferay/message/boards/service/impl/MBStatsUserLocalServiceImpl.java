@@ -15,11 +15,13 @@
 package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.internal.util.MBThreadUtil;
+import com.liferay.message.boards.internal.util.MBUserRankUtil;
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.base.MBStatsUserLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
+import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -237,6 +239,15 @@ public class MBStatsUserLocalServiceImpl
 	@Override
 	public List<MBStatsUser> getStatsUsersByUserId(long userId) {
 		return mbStatsUserPersistence.findByUserId(userId);
+	}
+
+	@Override
+	public String[] getUserRank(long groupId, String languageId, long userId)
+		throws PortalException {
+
+		return MBUserRankUtil.getUserRank(
+			MBGroupServiceSettings.getInstance(groupId), languageId,
+			getStatsUser(groupId, userId));
 	}
 
 	@Override

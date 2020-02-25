@@ -268,7 +268,9 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 
 		String from = format.format(calendar.getTime());
 
-		String rangeURL = _http.setParameter(_currentURL, "modifiedFrom", from);
+		String rangeURL = _http.removeParameter(_currentURL, "modified");
+
+		rangeURL = _http.setParameter(rangeURL, "modifiedFrom", from);
 
 		return _http.setParameter(rangeURL, "modifiedTo", to);
 	}

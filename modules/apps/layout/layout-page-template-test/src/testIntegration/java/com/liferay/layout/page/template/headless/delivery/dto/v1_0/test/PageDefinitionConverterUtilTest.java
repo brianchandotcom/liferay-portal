@@ -44,10 +44,14 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -95,11 +99,8 @@ public class PageDefinitionConverterUtilTest {
 
 	@Test
 	public void testToPageDefinitionRoot() throws Exception {
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()),
-			_layoutPageTemplateEntry.getPlid(), _read("layout_data_root.json"),
-			_serviceContext);
+		_addLayoutPageTemplateStructure(
+			"layout_data_root.json", new HashMap<>());
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			_layoutPageTemplateEntry.getPlid());
@@ -129,6 +130,18 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertNull(pageElement.getDefinition());
 		Assert.assertNull(pageElement.getPageElements());
 		Assert.assertEquals(PageElement.Type.ROOT, pageElement.getType());
+	}
+
+	private void _addLayoutPageTemplateStructure(
+			String fileName, Map<String, String> valuesMap)
+		throws Exception {
+
+		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class.getName()),
+			_layoutPageTemplateEntry.getPlid(),
+			StringUtil.replace(_read(fileName), "${", "}", valuesMap),
+			_serviceContext);
 	}
 
 	private String _read(String fileName) throws Exception {

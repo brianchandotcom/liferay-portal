@@ -146,7 +146,7 @@ export const deleteMessage = messageBoardMessage =>
 export const getTags = (page = 1, siteKey) =>
 	request(gql`
         query {
-            keywords(page: ${page}, pageSize: 20, siteKey: ${siteKey} sort: "dateModified:desc"){
+            keywordsRanked(page: ${page}, pageSize: 20, siteKey: ${siteKey}){
                 items {
                     name
                     dateCreated

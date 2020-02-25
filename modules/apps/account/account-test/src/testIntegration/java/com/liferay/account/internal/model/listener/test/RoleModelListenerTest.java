@@ -72,7 +72,7 @@ public class RoleModelListenerTest {
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), RoleConstants.TYPE_PROVIDER,
+			RandomTestUtil.randomLocaleStringMap(), RoleConstants.TYPE_ACCOUNT,
 			null, null);
 
 		AccountRole accountRole =
@@ -87,20 +87,23 @@ public class RoleModelListenerTest {
 	public void testDeleteAccountScopedRoleDeletesAccountRole()
 		throws Exception {
 
-		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(),
+		Role role = _roleLocalService.addRole(
+			TestPropsValues.getUserId(), AccountRole.class.getName(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap());
+			RandomTestUtil.randomLocaleStringMap(), RoleConstants.TYPE_ACCOUNT,
+			null, null);
 
-		Assert.assertNotNull(accountRole.getRole());
+		Assert.assertNotNull(
+			_accountRoleLocalService.fetchAccountRoleByRoleId(
+				role.getRoleId()));
 
-		_roleLocalService.deleteRole(accountRole.getRole());
+		_roleLocalService.deleteRole(role);
 
 		Assert.assertNull(
-			_accountRoleLocalService.fetchAccountRole(
-				accountRole.getAccountRoleId()));
+			_accountRoleLocalService.fetchAccountRoleByRoleId(
+				role.getRoleId()));
 	}
 
 	@Test

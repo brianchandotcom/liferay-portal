@@ -144,6 +144,40 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
+	@description = "This ensures that an MB thread can be searched via category."
+	@priority = "5"
+	test SearchMBThreadCategory {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories");
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.addCP(
+			categoryName = "Category Name",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			vocabularyName = "Vocabulary Name");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "MB Thread Message Body",
+			searchAssetTitle = "MB Thread Message Subject",
+			searchAssetType = "Message Boards Message");
+	}
+
 	@priority = "3"
 	test SearchMessageBoardsAttachment {
 		JSONLayout.addPublicLayout(

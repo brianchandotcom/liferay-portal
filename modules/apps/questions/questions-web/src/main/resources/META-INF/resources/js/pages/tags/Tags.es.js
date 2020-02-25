@@ -29,7 +29,7 @@ export default () => {
 	const [tags, setTags] = useState({});
 
 	useEffect(() => {
-		getTags(page, context.siteKey).then(data => setTags(data));
+		getTags(page, context.siteKey).then(data => setTags(data || []));
 	}, [page, context.siteKey]);
 
 	return (

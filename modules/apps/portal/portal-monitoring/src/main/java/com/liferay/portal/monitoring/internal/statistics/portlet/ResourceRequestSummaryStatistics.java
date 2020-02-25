@@ -55,7 +55,7 @@ public class ResourceRequestSummaryStatistics
 			return averageTime / count;
 		}
 
-		return averageTime;
+		return 0;
 	}
 
 	@Override

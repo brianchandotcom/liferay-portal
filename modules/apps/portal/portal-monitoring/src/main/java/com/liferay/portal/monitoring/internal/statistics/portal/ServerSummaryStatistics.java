@@ -36,10 +36,14 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 
 	@Override
 	public long getAverageTime() {
-		long averageTime = 0;
-
 		Set<CompanyStatistics> companyStatisticsSet =
 			_serverStatistics.getCompanyStatisticsSet();
+
+		if (companyStatisticsSet.isEmpty()) {
+			return 0;
+		}
+
+		long averageTime = 0;
 
 		for (CompanyStatistics companyStatistics : companyStatisticsSet) {
 			RequestStatistics requestStatistics =
@@ -48,11 +52,7 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 			averageTime += requestStatistics.getAverageTime();
 		}
 
-		if (!companyStatisticsSet.isEmpty()) {
-			return averageTime / companyStatisticsSet.size();
-		}
-
-		return averageTime;
+		return averageTime / companyStatisticsSet.size();
 	}
 
 	@Override

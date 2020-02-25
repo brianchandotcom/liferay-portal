@@ -55,7 +55,7 @@ public class RenderRequestSummaryStatistics
 			return averageTime / count;
 		}
 
-		return averageTime;
+		return 0;
 	}
 
 	@Override

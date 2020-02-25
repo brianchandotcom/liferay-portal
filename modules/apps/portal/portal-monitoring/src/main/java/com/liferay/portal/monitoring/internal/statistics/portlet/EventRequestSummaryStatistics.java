@@ -54,7 +54,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 			return averageTime / count;
 		}
 
-		return averageTime;
+		return 0;
 	}
 
 	@Override

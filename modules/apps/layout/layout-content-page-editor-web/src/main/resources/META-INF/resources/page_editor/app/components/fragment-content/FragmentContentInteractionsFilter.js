@@ -13,12 +13,18 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {useSelector} from '../../store/index';
-import {useHoverItem, useIsActive, useSelectItem} from '../Controls';
+import {
+	useActiveItemId,
+	useActiveItemType,
+	useHoverItem,
+	useIsActive,
+	useSelectItem,
+} from '../Controls';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
 import {getEditableElement} from './getEditableElement';
 import getEditableElementId from './getEditableElementId';
@@ -32,6 +38,8 @@ export default function FragmentContentInteractionsFilter({
 }) {
 	const hoverItem = useHoverItem();
 	const isActive = useIsActive();
+	const activeItemId = useActiveItemId();
+	const activeItemType = useActiveItemType();
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 
@@ -43,6 +51,82 @@ export default function FragmentContentInteractionsFilter({
 			: {}
 	);
 
+	useEffect(() => {
+		let activeEditableElement;
+
+		const enableProcessor = event => {
+			const editableElement = getEditableElement(event.target);
+
+			if (editableElement) {
+				const editableElementId = getEditableElementId(editableElement);
+				const editableValue = editableValues[editableElementId] || {};
+
+				const isMapped =
+					(editableValue.classNameId &&
+						editableValue.classPK &&
+						editableValue.fieldId) ||
+					editableValue.mappedField;
+
+				if (isMapped) {
+					return;
+				}
+				const editableClickPosition = {
+					clientX: event.clientX,
+					clientY: event.clientY,
+				};
+				const editableUniqueId = getEditableUniqueId(
+					fragmentEntryLinkId,
+					getEditableElementId(editableElement)
+				);
+
+				if (isActive(editableUniqueId)) {
+					setEditableProcessorUniqueId(
+						editableUniqueId,
+						editableClickPosition
+					);
+				}
+			}
+		};
+
+		if (activeItemId && activeItemType === ITEM_TYPES.editable) {
+			activeEditableElement = editableElements.find(editableElement =>
+				isActive(
+					getEditableUniqueId(
+						fragmentEntryLinkId,
+						getEditableElementId(editableElement)
+					)
+				)
+			);
+
+			if (activeEditableElement) {
+				requestAnimationFrame(() => {
+					activeEditableElement.addEventListener(
+						'dblclick',
+						enableProcessor
+					);
+				});
+			}
+		}
+
+		return () => {
+			if (activeEditableElement) {
+				activeEditableElement.removeEventListener(
+					'dblclick',
+					enableProcessor
+				);
+			}
+		};
+	}, [
+		activeItemId,
+		activeItemType,
+		editableElements,
+		editableValues,
+		fragmentEntryLinkId,
+		isActive,
+		itemId,
+		setEditableProcessorUniqueId,
+	]);
+
 	const siblingIds = useMemo(
 		() => [
 			itemId,
@@ -53,7 +137,7 @@ export default function FragmentContentInteractionsFilter({
 				)
 			),
 		],
-		[fragmentEntryLinkId, itemId, editableElements]
+		[itemId, editableElements, fragmentEntryLinkId]
 	);
 
 	const hoverEditable = event => {
@@ -95,46 +179,10 @@ export default function FragmentContentInteractionsFilter({
 		}
 	};
 
-	const enableProcessor = event => {
-		const editableElement = getEditableElement(event.target);
-
-		if (editableElement) {
-			const editableElementId = getEditableElementId(editableElement);
-			const editableValue = editableValues[editableElementId] || {};
-
-			const isMapped =
-				(editableValue.classNameId &&
-					editableValue.classPK &&
-					editableValue.fieldId) ||
-				editableValue.mappedField;
-
-			if (isMapped) {
-				return;
-			}
-
-			const editableClickPosition = {
-				clientX: event.clientX,
-				clientY: event.clientY,
-			};
-			const editableUniqueId = getEditableUniqueId(
-				fragmentEntryLinkId,
-				editableElementId
-			);
-
-			if (isActive(editableUniqueId)) {
-				setEditableProcessorUniqueId(
-					editableUniqueId,
-					editableClickPosition
-				);
-			}
-		}
-	};
-
 	const props = {};
 
 	if (siblingIds.some(isActive)) {
 		props.onClickCapture = selectEditable;
-		props.onDoubleClickCapture = enableProcessor;
 		props.onMouseOverCapture = hoverEditable;
 	}
 

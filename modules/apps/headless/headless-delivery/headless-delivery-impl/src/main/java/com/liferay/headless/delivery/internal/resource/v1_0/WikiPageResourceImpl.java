@@ -23,14 +23,14 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.WikiPageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -403,15 +403,16 @@ public class WikiPageResourceImpl
 					wikiPage.getCompanyId(), contextUser.getUserId(),
 					com.liferay.wiki.model.WikiPage.class.getName(),
 					wikiPage.getResourcePrimKey());
-				taxonomyCategories = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						com.liferay.wiki.model.WikiPage.class.getName(),
 						wikiPage.getPageId()),
-					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
-						contextAcceptLanguage.isAcceptAllLanguages(),
-						assetCategory,
-						contextAcceptLanguage.getPreferredLocale()),
-					TaxonomyCategory.class);
+					assetCategory ->
+						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+							contextAcceptLanguage.isAcceptAllLanguages(),
+							assetCategory,
+							contextAcceptLanguage.getPreferredLocale()),
+					TaxonomyCategoryBrief.class);
 
 				setParentWikiPageId(
 					() -> {

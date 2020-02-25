@@ -24,7 +24,7 @@ import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Image;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.BlogPostingDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
@@ -233,13 +233,14 @@ public class BlogPostingResourceImpl
 				});
 		}
 
-		TaxonomyCategory[] taxonomyCategories =
-			blogPosting.getTaxonomyCategories();
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
+			blogPosting.getTaxonomyCategoryBriefs();
 
-		if (taxonomyCategories != null) {
+		if (taxonomyCategoryBriefs != null) {
 			blogPosting.setTaxonomyCategoryIds(
 				transform(
-					taxonomyCategories, TaxonomyCategory::getTaxonomyCategoryId,
+					taxonomyCategoryBriefs,
+					TaxonomyCategoryBrief::getTaxonomyCategoryId,
 					Long[].class));
 		}
 	}

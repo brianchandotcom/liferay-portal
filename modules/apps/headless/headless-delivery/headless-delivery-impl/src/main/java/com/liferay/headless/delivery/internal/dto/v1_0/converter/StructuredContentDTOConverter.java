@@ -34,7 +34,7 @@ import com.liferay.headless.delivery.dto.v1_0.Geo;
 import com.liferay.headless.delivery.dto.v1_0.RenderedContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentLink;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.dto.v1_0.Value;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentDocumentUtil;
@@ -42,7 +42,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentStructureUtil
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.headless.delivery.internal.resource.v1_0.BaseStructuredContentResourceImpl;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
@@ -168,14 +168,15 @@ public class StructuredContentDTOConverter
 					dtoConverterContext.getUserId(),
 					JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey());
-				taxonomyCategories = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()),
-					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
-						dtoConverterContext.isAcceptAllLanguages(),
-						assetCategory, dtoConverterContext.getLocale()),
-					TaxonomyCategory.class);
+					assetCategory ->
+						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+							dtoConverterContext.isAcceptAllLanguages(),
+							assetCategory, dtoConverterContext.getLocale()),
+					TaxonomyCategoryBrief.class);
 				title = journalArticle.getTitle(
 					dtoConverterContext.getLocale());
 				title_i18n = LocalizedMapUtil.getLocalizedMap(

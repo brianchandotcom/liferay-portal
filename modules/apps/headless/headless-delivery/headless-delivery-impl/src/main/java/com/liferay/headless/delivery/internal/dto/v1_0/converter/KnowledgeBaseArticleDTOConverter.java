@@ -20,13 +20,13 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
@@ -119,13 +119,14 @@ public class KnowledgeBaseArticleDTOConverter
 				subscribed = _subscriptionLocalService.isSubscribed(
 					kbArticle.getCompanyId(), dtoConverterContext.getUserId(),
 					KBArticle.class.getName(), kbArticle.getResourcePrimKey());
-				taxonomyCategories = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						KBArticle.class.getName(), kbArticle.getClassPK()),
-					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
-						dtoConverterContext.isAcceptAllLanguages(),
-						assetCategory, dtoConverterContext.getLocale()),
-					TaxonomyCategory.class);
+					assetCategory ->
+						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+							dtoConverterContext.isAcceptAllLanguages(),
+							assetCategory, dtoConverterContext.getLocale()),
+					TaxonomyCategoryBrief.class);
 				title = kbArticle.getTitle();
 
 				setParentKnowledgeBaseFolder(

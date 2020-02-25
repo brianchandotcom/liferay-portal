@@ -31,12 +31,12 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.delivery.dto.v1_0.AdaptedImage;
 import com.liferay.headless.delivery.dto.v1_0.Document;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -116,14 +116,15 @@ public class DocumentDTOConverter
 					DLFileEntry.class.getName(), fileEntry.getFileEntryId(),
 					dtoConverterContext.getLocale());
 				sizeInBytes = fileEntry.getSize();
-				taxonomyCategories = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()),
-					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
-						dtoConverterContext.isAcceptAllLanguages(),
-						assetCategory, dtoConverterContext.getLocale()),
-					TaxonomyCategory.class);
+					assetCategory ->
+						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+							dtoConverterContext.isAcceptAllLanguages(),
+							assetCategory, dtoConverterContext.getLocale()),
+					TaxonomyCategoryBrief.class);
 				title = fileEntry.getTitle();
 			}
 		};

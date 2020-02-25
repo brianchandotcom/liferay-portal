@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Locale;
@@ -23,13 +23,13 @@ import java.util.Locale;
 /**
  * @author Javier Gamarra
  */
-public class TaxonomyCategoryUtil {
+public class TaxonomyCategoryBriefUtil {
 
-	public static TaxonomyCategory toTaxonomyCategory(
+	public static TaxonomyCategoryBrief toTaxonomyCategoryBrief(
 		boolean acceptAllLanguages, AssetCategory assetCategory,
 		Locale locale) {
 
-		return new TaxonomyCategory() {
+		return new TaxonomyCategoryBrief() {
 			{
 				taxonomyCategoryId = assetCategory.getCategoryId();
 				taxonomyCategoryName = assetCategory.getTitle(locale);

@@ -25,14 +25,14 @@ import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.message.boards.constants.MBMessageConstants;
@@ -584,14 +584,15 @@ public class MessageBoardThreadResourceImpl
 				subscribed = _subscriptionLocalService.isSubscribed(
 					mbMessage.getCompanyId(), contextUser.getUserId(),
 					MBThread.class.getName(), mbMessage.getThreadId());
-				taxonomyCategories = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						MBMessage.class.getName(), mbThread.getRootMessageId()),
-					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
-						contextAcceptLanguage.isAcceptAllLanguages(),
-						assetCategory,
-						contextAcceptLanguage.getPreferredLocale()),
-					TaxonomyCategory.class);
+					assetCategory ->
+						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+							contextAcceptLanguage.isAcceptAllLanguages(),
+							assetCategory,
+							contextAcceptLanguage.getPreferredLocale()),
+					TaxonomyCategoryBrief.class);
 				threadType = _toThreadType(
 					mbThread.getGroupId(), mbThread.getPriority());
 				viewCount = mbThread.getViewCount();

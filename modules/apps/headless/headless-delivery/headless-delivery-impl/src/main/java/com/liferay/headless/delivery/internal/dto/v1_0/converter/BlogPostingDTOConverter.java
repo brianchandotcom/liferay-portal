@@ -25,12 +25,12 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Image;
-import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -101,13 +101,14 @@ public class BlogPostingDTOConverter
 					blogsEntry.getModelClassName(), blogsEntry.getEntryId(),
 					dtoConverterContext.getLocale());
 				siteId = blogsEntry.getGroupId();
-				taxonomyCategories = TransformUtil.transformToArray(
+				taxonomyCategoryBriefs = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
-					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
-						dtoConverterContext.isAcceptAllLanguages(),
-						assetCategory, dtoConverterContext.getLocale()),
-					TaxonomyCategory.class);
+					assetCategory ->
+						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+							dtoConverterContext.isAcceptAllLanguages(),
+							assetCategory, dtoConverterContext.getLocale()),
+					TaxonomyCategoryBrief.class);
 			}
 		};
 	}

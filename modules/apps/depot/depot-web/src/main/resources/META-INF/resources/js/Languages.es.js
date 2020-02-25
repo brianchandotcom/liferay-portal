@@ -14,15 +14,13 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
-import ClayLabel from '@clayui/label';
 import {useModal} from '@clayui/modal';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
+import LanguageListItem from './LanguageListItem.es';
 import ManageLanguages from './ManageLanguages.es';
 
 const Languages = ({
@@ -32,7 +30,7 @@ const Languages = ({
 	portletNamespace,
 	siteAvailableLocales,
 	siteDefaultLocaleId,
-	translatedLanguages,
+	translatedLanguages
 }) => {
 	const [selectedRadioGroupValue, setSelectedRadioGroupValue] = useState(
 		inheritLocales
@@ -47,7 +45,7 @@ const Languages = ({
 	const [languageWarning, setLanguageWarning] = useState(false);
 	const [
 		languageTranslationWarning,
-		setLanguageTranslationWarning,
+		setLanguageTranslationWarning
 	] = useState(false);
 
 	const [showModal, setShowModal] = useState(false);
@@ -56,15 +54,22 @@ const Languages = ({
 		setShowModal(false);
 	};
 
+	const {observer, onClose} = useModal({
+		onClose: handleOnModalClose
+	});
+
 	const handleOnModalDone = selectedLocales => {
 		setCustomLocales(selectedLocales);
 		onClose();
 	};
 
-	const {observer, onClose} = useModal({
-		onClose: handleOnModalClose,
-	});
-
+	const handleOnMakeDefault = ({localeId}) => {
+		setCustomDefaultLocaleId(localeId);
+		setLanguageWarning(true);
+		setLanguageTranslationWarning(
+			translatedLanguages && !translatedLanguages[localeId]
+		);
+	};
 	const customLocalesInputRef = useRef();
 
 	useEffect(() => {
@@ -74,63 +79,6 @@ const Languages = ({
 			customLocalesInputRef.current.value = localesIds.join(',');
 		}
 	}, [customLocales, selectedRadioGroupValue]);
-
-	const Language = ({displayName, isDefault, localeId, showActions}) => {
-		const [active, setActive] = useState(false);
-
-		const makeDefault = event => {
-			setActive(false);
-			setCustomDefaultLocaleId(localeId);
-			setLanguageWarning(true);
-			setLanguageTranslationWarning(
-				translatedLanguages && !translatedLanguages[localeId]
-			);
-
-			Liferay.fire('inputLocalized:defaultLocaleChanged', {
-				item: event.currentTarget,
-			});
-		};
-
-		return (
-			<ClayTable.Row>
-				<ClayTable.Cell expanded>
-					{displayName}
-					{isDefault && (
-						<ClayLabel className="ml-3" displayType="info">
-							{Liferay.Language.get('default')}
-						</ClayLabel>
-					)}
-				</ClayTable.Cell>
-				{showActions && (
-					<ClayTable.Cell align="right">
-						<ClayDropDown
-							active={active}
-							onActiveChange={setActive}
-							trigger={
-								<ClayButton
-									displayType="unstyled"
-									monospaced
-									small
-								>
-									<ClayIcon symbol="ellipsis-v" />
-								</ClayButton>
-							}
-						>
-							<ClayDropDown.ItemList>
-								<ClayDropDown.Item
-									data-value={localeId}
-									key={localeId}
-									onClick={event => makeDefault(event)}
-								>
-									{Liferay.Language.get('make-default')}
-								</ClayDropDown.Item>
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
-					</ClayTable.Cell>
-				)}
-			</ClayTable.Row>
-		);
-	};
 
 	const LanguagesList = ({defaultLocaleId, locales, showActions = false}) => {
 		return (
@@ -164,10 +112,11 @@ const Languages = ({
 				<ClayTable.Body>
 					{locales.map(locale => {
 						return (
-							<Language
+							<LanguageListItem
 								{...locale}
 								isDefault={defaultLocaleId === locale.localeId}
 								key={locale.localeId}
+								onMakeDefault={handleOnMakeDefault}
 								showActions={showActions}
 							/>
 						);
@@ -224,6 +173,7 @@ const Languages = ({
 						defaultLocaleId={customDefaultLocaleId}
 						locales={customLocales}
 						showActions
+						onMakeDefault={handleOnMakeDefault}
 					/>
 				</>
 			)}
@@ -270,7 +220,7 @@ Languages.propTypes = {
 	availableLocales: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,
-			localeId: PropTypes.string,
+			localeId: PropTypes.string
 		})
 	).isRequired,
 	defaultLocaleId: PropTypes.string.isRequired,
@@ -279,11 +229,11 @@ Languages.propTypes = {
 	siteAvailableLocales: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,
-			localeId: PropTypes.string,
+			localeId: PropTypes.string
 		})
 	).isRequired,
 	siteDefaultLocaleId: PropTypes.string.isRequired,
-	translatedLanguages: PropTypes.object,
+	translatedLanguages: PropTypes.object
 };
 
 export default function(props) {

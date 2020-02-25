@@ -118,6 +118,17 @@ public class MessageBoardMessageSerDes {
 			sb.append(String.valueOf(messageBoardMessage.getCreator()));
 		}
 
+		if (messageBoardMessage.getCreatorStatistics() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creatorStatistics\": ");
+
+			sb.append(
+				String.valueOf(messageBoardMessage.getCreatorStatistics()));
+		}
+
 		if (messageBoardMessage.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -420,6 +431,15 @@ public class MessageBoardMessageSerDes {
 				"creator", String.valueOf(messageBoardMessage.getCreator()));
 		}
 
+		if (messageBoardMessage.getCreatorStatistics() == null) {
+			map.put("creatorStatistics", null);
+		}
+		else {
+			map.put(
+				"creatorStatistics",
+				String.valueOf(messageBoardMessage.getCreatorStatistics()));
+		}
+
 		if (messageBoardMessage.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
@@ -613,6 +633,13 @@ public class MessageBoardMessageSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardMessage.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creatorStatistics")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardMessage.setCreatorStatistics(
+						CreatorStatisticsSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {

@@ -1923,6 +1923,16 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"creatorStatistics", additionalAssertFieldName)) {
+
+				if (messageBoardThread.getCreatorStatistics() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (messageBoardThread.getCustomFields() == null) {
 					valid = false;
@@ -2230,6 +2240,19 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardThread1.getCreator(),
 						messageBoardThread2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"creatorStatistics", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						messageBoardThread1.getCreatorStatistics(),
+						messageBoardThread2.getCreatorStatistics())) {
 
 					return false;
 				}
@@ -2753,6 +2776,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("creatorStatistics")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

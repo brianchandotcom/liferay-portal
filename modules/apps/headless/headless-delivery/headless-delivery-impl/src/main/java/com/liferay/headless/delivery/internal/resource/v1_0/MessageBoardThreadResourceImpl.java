@@ -27,6 +27,7 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorStatisticsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
@@ -43,6 +44,7 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
@@ -553,6 +555,10 @@ public class MessageBoardThreadResourceImpl
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(mbThread.getUserId()));
+				creatorStatistics = CreatorStatisticsUtil.toCreatorStatistics(
+					_mbStatsUserLocalService,
+					contextAcceptLanguage.getPreferredLanguageId(),
+					contextUser);
 				customFields = CustomFieldsUtil.toCustomFields(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					MBMessage.class.getName(), mbMessage.getMessageId(),
@@ -704,6 +710,9 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private MBMessageService _mbMessageService;
+
+	@Reference
+	private MBStatsUserLocalService _mbStatsUserLocalService;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;

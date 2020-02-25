@@ -341,6 +341,11 @@
 	height: var(--input-height);
 	line-height: var(--input-line-height);
 	padding: var(--input-inset-padding-y) var(--input-inset-padding-x);
+
+	&.input-group-inset-item-before {
+		border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+		border-width: var(--input-border-width) 0 var(--input-border-width) var(--input-border-width);
+	}
 }
 
 .custom-control-input:checked ~ .custom-control-label::before {

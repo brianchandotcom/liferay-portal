@@ -48,7 +48,14 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 		const newRects = {};
 
 		Object.entries(elements).forEach(([editableId, element]) => {
-			const rect = element.getBoundingClientRect();
+			let rect;
+
+			try {
+				rect = element.getBoundingClientRect();
+			}
+			catch (error) {
+				return;
+			}
 
 			if (!(rect.bottom < 0 || rect.top > window.innerHeight)) {
 				newRects[editableId] = {

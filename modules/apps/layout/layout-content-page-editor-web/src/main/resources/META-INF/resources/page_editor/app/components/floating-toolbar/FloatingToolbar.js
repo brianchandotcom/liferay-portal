@@ -58,12 +58,15 @@ export default function FloatingToolbar({
 				elementRef.current &&
 				anchorRef.current
 			) {
-				Align.align(
-					elementRef.current,
-					anchorRef.current,
-					getElementAlign(elementRef.current, anchorRef.current),
-					false
-				);
+				try {
+					Align.align(
+						elementRef.current,
+						anchorRef.current,
+						getElementAlign(elementRef.current, anchorRef.current),
+						false
+					);
+				}
+				catch (error) {}
 
 				if (callback) {
 					requestAnimationFrame(() => {
@@ -353,18 +356,28 @@ const ELEMENT_POSITION = {
  * @review
  */
 const getElementAlign = (element, anchor) => {
-	const alignFits = (align, availableAlign) =>
-		availableAlign.includes(
-			Align.suggestAlignBestRegion(element, anchor, align).position
-		);
-
-	const anchorRect = anchor.getBoundingClientRect();
-	const elementRect = element.getBoundingClientRect();
-	const horizontal =
-		anchorRect.right - elementRect.width > 0 ? 'right' : 'left';
+	const alignFits = (align, availableAlign) => {
+		try {
+			return availableAlign.includes(
+				Align.suggestAlignBestRegion(element, anchor, align).position
+			);
+		}
+		catch (error) {
+			return true;
+		}
+	};
 
 	const fallbackVertical = 'top';
+	let horizontal = 'left';
 	let vertical = 'bottom';
+
+	try {
+		const {right: anchorRight} = anchor.getBoundingClientRect();
+		const {width: elementWidth} = element.getBoundingClientRect();
+
+		horizontal = anchorRight - elementWidth > 0 ? 'right' : 'left';
+	}
+	catch (error) {}
 
 	if (
 		!alignFits(

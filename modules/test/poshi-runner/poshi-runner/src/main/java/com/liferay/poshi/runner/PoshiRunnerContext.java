@@ -1699,29 +1699,30 @@ public class PoshiRunnerContext {
 		public URL call() {
 			String filePath = _url.getFile();
 
-			if (OSDetector.isWindows()) {
-				if (filePath.startsWith("/")) {
-					filePath = filePath.substring(1);
+			try {
+				if (OSDetector.isWindows()) {
+					if (filePath.startsWith("/")) {
+						filePath = filePath.substring(1);
+					}
+
+					filePath = StringUtil.replace(filePath, "/", "\\");
 				}
 
-				filePath = StringUtil.replace(filePath, "/", "\\");
-			}
+				String fileName = PoshiRunnerGetterUtil.getFileNameFromFilePath(
+					filePath);
 
-			String fileName = PoshiRunnerGetterUtil.getFileNameFromFilePath(
-				filePath);
+				String namespacedFileName = _namespace + "." + fileName;
 
-			String namespacedFileName = _namespace + "." + fileName;
+				if (_filePaths.containsKey(namespacedFileName)) {
+					String duplicateFilePath = _filePaths.get(
+						namespacedFileName);
 
-			if (_filePaths.containsKey(namespacedFileName)) {
-				String duplicateFilePath = _filePaths.get(namespacedFileName);
+					StringUtil.combine(
+						"WARNING: Duplicate file name '", fileName,
+						"' found within the namespace '", _namespace, "':\n",
+						filePath, "\n", duplicateFilePath, "\n");
+				}
 
-				System.out.println(
-					"WARNING: Duplicate file name '" + fileName +
-						"' found within the namespace '" + _namespace + "':\n" +
-							filePath + "\n" + duplicateFilePath + "\n");
-			}
-
-			try {
 				Element rootElement =
 					PoshiRunnerGetterUtil.getRootElementFromURL(_url);
 

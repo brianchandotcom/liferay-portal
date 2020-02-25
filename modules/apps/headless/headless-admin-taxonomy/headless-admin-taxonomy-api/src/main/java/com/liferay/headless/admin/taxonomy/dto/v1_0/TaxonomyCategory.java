@@ -509,6 +509,38 @@ public class TaxonomyCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
+	@Schema
+	public Integer getTaxonomyCategoryUsageCount() {
+		return taxonomyCategoryUsageCount;
+	}
+
+	public void setTaxonomyCategoryUsageCount(
+		Integer taxonomyCategoryUsageCount) {
+
+		this.taxonomyCategoryUsageCount = taxonomyCategoryUsageCount;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyCategoryUsageCount(
+		UnsafeSupplier<Integer, Exception>
+			taxonomyCategoryUsageCountUnsafeSupplier) {
+
+		try {
+			taxonomyCategoryUsageCount =
+				taxonomyCategoryUsageCountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer taxonomyCategoryUsageCount;
+
 	@Schema(
 		description = "A write-only property that specifies the category's default permissions."
 	)
@@ -757,6 +789,16 @@ public class TaxonomyCategory {
 			sb.append("\"parentTaxonomyVocabulary\": ");
 
 			sb.append(String.valueOf(parentTaxonomyVocabulary));
+		}
+
+		if (taxonomyCategoryUsageCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryUsageCount\": ");
+
+			sb.append(taxonomyCategoryUsageCount);
 		}
 
 		if (viewableBy != null) {

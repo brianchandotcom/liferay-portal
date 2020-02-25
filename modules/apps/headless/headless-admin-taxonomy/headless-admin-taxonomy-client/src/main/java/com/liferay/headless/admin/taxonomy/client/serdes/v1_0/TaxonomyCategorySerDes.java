@@ -247,6 +247,16 @@ public class TaxonomyCategorySerDes {
 				String.valueOf(taxonomyCategory.getParentTaxonomyVocabulary()));
 		}
 
+		if (taxonomyCategory.getTaxonomyCategoryUsageCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryUsageCount\": ");
+
+			sb.append(taxonomyCategory.getTaxonomyCategoryUsageCount());
+		}
+
 		if (taxonomyCategory.getViewableBy() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -391,6 +401,16 @@ public class TaxonomyCategorySerDes {
 				String.valueOf(taxonomyCategory.getParentTaxonomyVocabulary()));
 		}
 
+		if (taxonomyCategory.getTaxonomyCategoryUsageCount() == null) {
+			map.put("taxonomyCategoryUsageCount", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryUsageCount",
+				String.valueOf(
+					taxonomyCategory.getTaxonomyCategoryUsageCount()));
+		}
+
 		if (taxonomyCategory.getViewableBy() == null) {
 			map.put("viewableBy", null);
 		}
@@ -515,6 +535,14 @@ public class TaxonomyCategorySerDes {
 					taxonomyCategory.setParentTaxonomyVocabulary(
 						ParentTaxonomyVocabularySerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryUsageCount")) {
+
+				if (jsonParserFieldValue != null) {
+					taxonomyCategory.setTaxonomyCategoryUsageCount(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {

@@ -365,6 +365,31 @@ public class TaxonomyCategory implements Cloneable {
 
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
+	public Integer getTaxonomyCategoryUsageCount() {
+		return taxonomyCategoryUsageCount;
+	}
+
+	public void setTaxonomyCategoryUsageCount(
+		Integer taxonomyCategoryUsageCount) {
+
+		this.taxonomyCategoryUsageCount = taxonomyCategoryUsageCount;
+	}
+
+	public void setTaxonomyCategoryUsageCount(
+		UnsafeSupplier<Integer, Exception>
+			taxonomyCategoryUsageCountUnsafeSupplier) {
+
+		try {
+			taxonomyCategoryUsageCount =
+				taxonomyCategoryUsageCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer taxonomyCategoryUsageCount;
+
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

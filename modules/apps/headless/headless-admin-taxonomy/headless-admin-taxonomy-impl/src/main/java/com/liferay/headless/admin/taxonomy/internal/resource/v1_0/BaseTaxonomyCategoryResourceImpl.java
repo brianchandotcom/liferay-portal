@@ -85,6 +85,31 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/ranked'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/taxonomy-categories/ranked")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public Page<TaxonomyCategory> getTaxonomyCategoryRankedPage(
+			@Parameter(hidden = true) @QueryParam("siteId") Long siteId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -298,6 +323,11 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		if (taxonomyCategory.getNumberOfTaxonomyCategories() != null) {
 			existingTaxonomyCategory.setNumberOfTaxonomyCategories(
 				taxonomyCategory.getNumberOfTaxonomyCategories());
+		}
+
+		if (taxonomyCategory.getTaxonomyCategoryUsageCount() != null) {
+			existingTaxonomyCategory.setTaxonomyCategoryUsageCount(
+				taxonomyCategory.getTaxonomyCategoryUsageCount());
 		}
 
 		if (taxonomyCategory.getViewableBy() != null) {

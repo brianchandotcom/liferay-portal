@@ -43,6 +43,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TaxonomyCategoryResource {
 
+	public Page<TaxonomyCategory> getTaxonomyCategoryRankedPage(
+			Long siteId, Pagination pagination)
+		throws Exception;
+
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
 			String parentTaxonomyCategoryId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)

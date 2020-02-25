@@ -224,7 +224,8 @@ public class MessageBoardSectionResourceImpl
 			addAction(
 				"ADD_CATEGORY", mbCategory.getCategoryId(),
 				"postMessageBoardSectionMessageBoardSection",
-				"com.liferay.message.boards", mbCategory.getGroupId())
+				"com.liferay.message.boards", mbCategory.getGroupId(),
+				mbCategory.getUserId())
 		).put(
 			"delete",
 			addAction("DELETE", mbCategory, "deleteMessageBoardSection")

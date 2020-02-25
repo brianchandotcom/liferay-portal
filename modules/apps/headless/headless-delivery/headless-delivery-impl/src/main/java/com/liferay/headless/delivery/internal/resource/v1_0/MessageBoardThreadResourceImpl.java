@@ -376,7 +376,7 @@ public class MessageBoardThreadResourceImpl
 				mbMessage.getMessageId(),
 				"postMessageBoardThreadMessageBoardMessage",
 				"com.liferay.message.boards", contextScopeChecker,
-				mbMessage.getGroupId(), contextUriInfo)
+				mbMessage.getGroupId(), contextUriInfo, mbMessage.getUserId())
 		).put(
 			"subscribe",
 			addAction("UPDATE", mbMessage, "putMessageBoardThreadSubscribe")
@@ -455,13 +455,15 @@ public class MessageBoardThreadResourceImpl
 			addAction(
 				"ADD_MESSAGE", mbCategory.getCategoryId(),
 				"postMessageBoardSectionMessageBoardThread",
-				"com.liferay.message.boards", mbCategory.getGroupId())
+				"com.liferay.message.boards", mbCategory.getGroupId(),
+				mbCategory.getUserId())
 		).put(
 			"get",
 			addAction(
 				"VIEW", mbCategory.getCategoryId(),
 				"getMessageBoardSectionMessageBoardThreadsPage",
-				"com.liferay.message.boards", mbCategory.getGroupId())
+				"com.liferay.message.boards", mbCategory.getGroupId(),
+				mbCategory.getUserId())
 		).build();
 	}
 

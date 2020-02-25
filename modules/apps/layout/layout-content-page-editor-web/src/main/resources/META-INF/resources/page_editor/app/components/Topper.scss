@@ -60,7 +60,7 @@
 		opacity: 1;
 		transform: translateY(1px);
 		transition-delay: 0.3s;
-		z-index: 3;
+		z-index: $portletTopperZIndex + 1;
 	}
 
 	&.hovered:after {

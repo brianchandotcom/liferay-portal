@@ -18,9 +18,10 @@ import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterNode;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -45,6 +46,7 @@ import java.nio.file.Path;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 
 import org.apache.http.HttpHost;
 import org.apache.http.util.EntityUtils;
@@ -72,8 +74,7 @@ public class ClusterableSidecar
 	public ClusterableSidecar(
 		ComponentContext componentContext, String componentName,
 		ElasticsearchConfiguration elasticsearchConfiguration,
-		ClusterExecutor clusterExecutor,
-		ClusterMasterExecutor clusterMasterExecutor, JSONFactory jsonFactory,
+		ClusterExecutor clusterExecutor, JSONFactory jsonFactory,
 		ProcessExecutor processExecutor, Props props) {
 
 		super(
@@ -81,7 +82,6 @@ public class ClusterableSidecar
 			processExecutor, props);
 
 		_clusterExecutor = clusterExecutor;
-		_clusterMasterExecutor = clusterMasterExecutor;
 		_jsonFactory = jsonFactory;
 
 		ClusterNode clusterNode = _clusterExecutor.getLocalClusterNode();
@@ -98,7 +98,9 @@ public class ClusterableSidecar
 
 	@Override
 	public void start() {
-		if (_isOneNodeCluster()) {
+		_initialMasterNodeTransportAddress = _getMasterNodeTransportAddress();
+
+		if (_initialMasterNodeTransportAddress == null) {
 			try {
 				_cleanUpClusterMetaData();
 			}
@@ -180,24 +182,12 @@ public class ClusterableSidecar
 			settingsBuilder.put("network.host", inetAddress.getHostAddress());
 		}
 
-		if (_isOneNodeCluster()) {
+		if (_initialMasterNodeTransportAddress == null) {
 			super.setClusterDiscoverySettings(settingsBuilder);
-
-			return;
 		}
-
-		try {
-			NoticeableFuture<String> noticeableFuture =
-				_clusterMasterExecutor.executeOnMaster(
-					new MethodHandler(
-						_getMasterNodeTransportAddressMethodKey,
-						getOSGiServiceIdentifier()));
-
-			settingsBuilder.put("discovery.seed_hosts", noticeableFuture.get());
-		}
-		catch (Exception exception) {
-			throw new IllegalStateException(
-				"Unable to get master node transport address", exception);
+		else {
+			settingsBuilder.put(
+				"discovery.seed_hosts", _initialMasterNodeTransportAddress);
 		}
 	}
 
@@ -304,6 +294,39 @@ public class ClusterableSidecar
 			nodePath);
 	}
 
+	private String _getMasterNodeTransportAddress() {
+		if (_isOneNodeCluster()) {
+			return null;
+		}
+
+		FutureClusterResponses futureClusterResponses =
+			_clusterExecutor.execute(
+				ClusterRequest.createMulticastRequest(
+					new MethodHandler(
+						_getMasterNodeTransportAddressMethodKey,
+						getOSGiServiceIdentifier()),
+					true));
+
+		BlockingQueue<ClusterNodeResponse> blockingQueue =
+			futureClusterResponses.getPartialResults();
+
+		try {
+			ClusterNodeResponse clusterNodeResponse = blockingQueue.take();
+
+			return (String)clusterNodeResponse.getResult();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get master node transport address, will " +
+						"create a new elasticsearch cluster",
+					exception);
+			}
+
+			return null;
+		}
+	}
+
 	private boolean _isOneNodeCluster() {
 		List<ClusterNode> clusterNodes = _clusterExecutor.getClusterNodes();
 
@@ -323,7 +346,7 @@ public class ClusterableSidecar
 			String.class);
 
 	private final ClusterExecutor _clusterExecutor;
-	private final ClusterMasterExecutor _clusterMasterExecutor;
+	private String _initialMasterNodeTransportAddress;
 	private final JSONFactory _jsonFactory;
 	private final String _nodeName;
 	private RestClient _restClient;

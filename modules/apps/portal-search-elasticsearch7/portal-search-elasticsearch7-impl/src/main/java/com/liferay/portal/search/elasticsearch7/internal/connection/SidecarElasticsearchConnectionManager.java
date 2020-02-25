@@ -18,7 +18,6 @@ import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -81,9 +80,8 @@ public class SidecarElasticsearchConnectionManager {
 				ClusterableSidecar clusterableSidecar = new ClusterableSidecar(
 					componentContext,
 					SidecarElasticsearchConnectionManager.class.getName(),
-					elasticsearchConfiguration, _clusterExecutor,
-					_clusterMasterExecutor, _jsonFactory, _processExecutor,
-					_props);
+					elasticsearchConfiguration, _clusterExecutor, _jsonFactory,
+					_processExecutor, _props);
 
 				_identifiableOSGiServiceserviceRegistration =
 					bundleContext.registerService(
@@ -126,9 +124,6 @@ public class SidecarElasticsearchConnectionManager {
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;
-
-	@Reference
-	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	private ServiceRegistration<IdentifiableOSGiService>
 		_identifiableOSGiServiceserviceRegistration;

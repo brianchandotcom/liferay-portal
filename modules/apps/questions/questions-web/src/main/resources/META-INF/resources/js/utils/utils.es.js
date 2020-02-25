@@ -126,9 +126,10 @@ export function useDebounceCallback(callback, milliseconds) {
 }
 
 export function normalizeRating(aggregateRating) {
-	return aggregateRating &&
-		   aggregateRating.ratingCount *
-		   normalize(aggregateRating.ratingAverage);
+	return (
+		aggregateRating &&
+		aggregateRating.ratingCount * normalize(aggregateRating.ratingAverage)
+	);
 }
 
 export function normalize(ratingValue) {

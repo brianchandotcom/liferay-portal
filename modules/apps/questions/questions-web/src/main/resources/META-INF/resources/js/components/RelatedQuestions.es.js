@@ -54,10 +54,16 @@ export default ({question}) => {
 								</div>
 								<div>
 									<QuestionBadge
-										symbol={normalizeRating(question.aggregateRating) < 0 ? 'caret-bottom' : 'caret-top'}
-										value={
-											normalizeRating(relatedQuestion.aggregateRating)
+										symbol={
+											normalizeRating(
+												question.aggregateRating
+											) < 0
+												? 'caret-bottom'
+												: 'caret-top'
 										}
+										value={normalizeRating(
+											relatedQuestion.aggregateRating
+										)}
 									/>
 								</div>
 							</div>

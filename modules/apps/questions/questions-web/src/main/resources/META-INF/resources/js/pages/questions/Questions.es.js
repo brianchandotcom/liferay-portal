@@ -12,10 +12,10 @@
  * details.
  */
 
-import classnames from 'classnames';
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
+import classnames from 'classnames';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
@@ -150,10 +150,16 @@ export default ({
 								<ul className="question-list">
 									<li>
 										<QuestionBadge
-											symbol={normalizeRating(question.aggregateRating) < 0 ? 'caret-bottom' : 'caret-top'}
-											value={
-												normalizeRating(question.aggregateRating)
+											symbol={
+												normalizeRating(
+													question.aggregateRating
+												) < 0
+													? 'caret-bottom'
+													: 'caret-top'
 											}
+											value={normalizeRating(
+												question.aggregateRating
+											)}
 										/>
 									</li>
 

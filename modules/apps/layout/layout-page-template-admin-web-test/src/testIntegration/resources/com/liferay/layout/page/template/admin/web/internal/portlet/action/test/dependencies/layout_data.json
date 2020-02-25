@@ -1,15 +1,15 @@
 {
 	"items": {
-		"root": {
+		"MAIN-UUID": {
 			"children": [],
 			"config": {},
-			"itemId": "root",
+			"itemId": "MAIN-UUID",
 			"parentId": null,
-			"type": "fragment"
+			"type": "root"
 		}
 	},
 	"rootItems": {
-		"main": "root"
+		"main": "MAIN-UUID"
 	},
 	"version": 1
 }

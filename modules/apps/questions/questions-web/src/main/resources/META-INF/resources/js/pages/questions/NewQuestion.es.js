@@ -20,7 +20,11 @@ import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import {createQuestion} from '../../utils/client.es';
-import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
+import {
+	getCKEditorConfig,
+	onBeforeLoadCKEditor,
+	useDebounceCallback
+} from '../../utils/utils.es';
 
 export default withRouter(({history}) => {
 	const context = useContext(AppContext);
@@ -28,9 +32,12 @@ export default withRouter(({history}) => {
 	const [headline, setHeadline] = useState('');
 	const [tags, setTags] = useState('');
 
+	const [debounceCallback] = useDebounceCallback(
+		() => history.push('/'), 500);
+
 	const submit = () =>
 		createQuestion(articleBody, headline, tags, context.siteKey).then(() =>
-			history.push('/')
+			debounceCallback()
 		);
 
 	return (
@@ -42,7 +49,7 @@ export default withRouter(({history}) => {
 					<label htmlFor="basicInput">
 						{Liferay.Language.get('title')}
 						<span className="reference-mark">
-							<ClayIcon symbol="asterisk" />
+							<ClayIcon symbol="asterisk"/>
 						</span>
 					</label>
 					<ClayInput
@@ -66,7 +73,7 @@ export default withRouter(({history}) => {
 					<label htmlFor="basicInput">
 						{Liferay.Language.get('body')}
 						<span className="reference-mark">
-							<ClayIcon symbol="asterisk" />
+							<ClayIcon symbol="asterisk"/>
 						</span>
 					</label>
 

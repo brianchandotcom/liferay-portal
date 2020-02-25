@@ -34,4 +34,8 @@ public interface DataLayoutBuilderConfiguration {
 		};
 	}
 
+	public default boolean isMultiPage() {
+		return true;
+	}
+
 }

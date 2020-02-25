@@ -40,6 +40,7 @@ const initialState = {
 	config: {
 		disabledProperties: [],
 		disabledTabs: [],
+		multiPage: true,
 		unimplementedProperties: []
 	},
 	dataDefinition: {

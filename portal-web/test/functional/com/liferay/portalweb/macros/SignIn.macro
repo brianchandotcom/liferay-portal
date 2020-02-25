@@ -108,9 +108,7 @@ definition {
 
 		Button.clickSave();
 
-		while (IsElementPresent(locator1 = "//html[contains(@class,'lfr-spa-loading')]")) {
-			Pause(locator1 = "3000");
-		}
+		Pause(locator1 = "3000");
 
 		Alert.viewSuccessMessage();
 

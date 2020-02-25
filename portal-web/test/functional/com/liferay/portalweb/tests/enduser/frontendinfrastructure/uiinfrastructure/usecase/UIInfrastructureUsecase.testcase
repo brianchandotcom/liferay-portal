@@ -180,6 +180,39 @@ definition {
 		}
 	}
 
+	@description = "LRQA-55802, Validation of images for Sign In and Sign Out "
+	@priority = "5"
+	test ValidateSignInSignOut {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "UIInfrastructureUsecase#RefreshWebContent";
+
+		SignOut.signOut();
+
+		Refresh();
+
+		takeScreenshot();
+
+		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_SIGN_IN");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/login");
+
+		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_LOG_IN_MODAL");
+
+		SignIn.signInSpecificURL(url = "http://localhost:8080/c/portal/login");
+
+		Refresh();
+
+		takeScreenshot();
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_ICON_IE");
+
+		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_LOG_IN");
+
+		UserBar.signOut();
+
+		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
+	}
+
 	@description = "This is a use case for LPS-70390."
 	@priority = "4"
 	test ViewNonASCIICharactersWithSPADisabled {

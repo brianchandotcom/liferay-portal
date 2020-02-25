@@ -27,14 +27,12 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 import javax.portlet.RenderResponse;
@@ -140,7 +138,7 @@ public class AnalyticsReportsDisplayContext {
 					}
 				).build()
 			).put(
-				"timeSpans", _getTimeSpansJSONArray(_themeDisplay.getLocale())
+				"timeSpans", _getTimeSpansJSONArray()
 			).build()
 		).put(
 			"props", getProps()
@@ -202,11 +200,8 @@ public class AnalyticsReportsDisplayContext {
 		return layout.getPublishDate();
 	}
 
-	private JSONArray _getTimeSpansJSONArray(Locale locale) {
+	private JSONArray _getTimeSpansJSONArray() {
 		JSONArray timeSpansJSONArray = JSONFactoryUtil.createJSONArray();
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
 
 		Stream<TimeSpan> stream = Arrays.stream(TimeSpan.values());
 
@@ -214,7 +209,7 @@ public class AnalyticsReportsDisplayContext {
 			timeSpan -> timeSpansJSONArray.put(
 				JSONUtil.put(
 					"label",
-					LanguageUtil.get(resourceBundle, timeSpan.getLabel())
+					LanguageUtil.get(_httpServletRequest, timeSpan.getLabel())
 				).put(
 					"value", timeSpan.getLabel()
 				)));

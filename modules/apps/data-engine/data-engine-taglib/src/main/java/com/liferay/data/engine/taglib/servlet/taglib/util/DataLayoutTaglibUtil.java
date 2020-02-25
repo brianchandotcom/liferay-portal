@@ -152,6 +152,8 @@ public class DataLayoutTaglibUtil {
 		).put(
 			"disabledTabs", dataLayoutBuilderConfiguration.getDisabledTabs()
 		).put(
+			"multiPage", dataLayoutBuilderConfiguration.isMultiPage()
+		).put(
 			"unimplementedProperties",
 			dataLayoutBuilderConfiguration.getUnimplementedProperties()
 		);

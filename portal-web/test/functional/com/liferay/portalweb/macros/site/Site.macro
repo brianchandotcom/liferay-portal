@@ -887,6 +887,58 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro removeOrganizationCP {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		if (isSet(bulkEditing)) {
+			for (var orgName : list "${orgNameList}") {
+				Check(
+					key_tableEntry = "${userGroupName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			}
+
+			ClickNoError(locator1 = "Icon#DELETE");
+		}
+		else {
+			Search.searchCP(searchTerm = "${orgName}");
+
+			LexiconTable.clickEllipsisItem(
+				item = "Remove Membership",
+				tableEntry = "${orgName}");
+		}
+
+		Confirm();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro removeUserGroupCP {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		if (isSet(bulkEditing)) {
+			for (var userGroupName : list "${userGroupNameList}") {
+				Check(
+					key_tableEntry = "${userGroupName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			}
+
+			ClickNoError(locator1 = "Icon#DELETE");
+		}
+		else {
+			Search.searchCP(searchTerm = "${userGroupName}");
+
+			Click.waitForMenuToggleJSClick(
+				key_rowEntry = "${userGroupName}",
+				locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Remove Membership");
+		}
+
+		Confirm();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro searchCP {
 		Search.searchCP(searchTerm = "Site Name");
 

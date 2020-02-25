@@ -81,12 +81,12 @@ public class AopCacheManagerTest {
 			Class<?> clazz = classLoader.loadClass(
 				TestChainableMethodAdvice.class.getName() + (i % 10));
 
-			TestChainableMethodAdvice testChainableMethodAdvice =
-				(TestChainableMethodAdvice)clazz.newInstance();
-
 			callables.add(
 				() -> {
 					Registry registry = RegistryUtil.getRegistry();
+
+					TestChainableMethodAdvice testChainableMethodAdvice =
+						(TestChainableMethodAdvice)clazz.newInstance();
 
 					ServiceRegistration<?> serviceRegistration =
 						registry.registerService(

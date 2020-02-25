@@ -92,15 +92,16 @@ public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 		Serializable batchKey = cacheKeyGenerator.finish();
 
 		try {
-			Increment<?> increment = IncrementFactory.createIncrement(
-				incrementClass, value);
-
-			BufferedIncreasableEntry bufferedIncreasableEntry =
-				new BufferedIncreasableEntry(
-					aopMethodInvocation, arguments, batchKey, increment);
-
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
+					Increment<?> increment = IncrementFactory.createIncrement(
+						incrementClass, value);
+
+					BufferedIncreasableEntry bufferedIncreasableEntry =
+						new BufferedIncreasableEntry(
+							aopMethodInvocation, arguments, batchKey,
+							increment);
+
 					bufferedIncrementProcessor.process(
 						bufferedIncreasableEntry);
 

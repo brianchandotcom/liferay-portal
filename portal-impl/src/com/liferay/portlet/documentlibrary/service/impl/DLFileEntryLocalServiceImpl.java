@@ -1587,9 +1587,6 @@ public class DLFileEntryLocalServiceImpl
 						treePathProperty.ne(treePath)));
 			});
 
-		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
-			DLFileEntry.class.getName());
-
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DLFileEntry dlFileEntry) -> {
 				dlFileEntry.setTreePath(treePath);
@@ -1599,6 +1596,9 @@ public class DLFileEntryLocalServiceImpl
 				if (!reindex) {
 					return;
 				}
+
+				Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
+					DLFileEntry.class.getName());
 
 				indexableActionableDynamicQuery.addDocuments(
 					indexer.getDocument(dlFileEntry));

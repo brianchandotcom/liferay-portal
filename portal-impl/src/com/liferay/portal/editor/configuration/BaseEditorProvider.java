@@ -185,21 +185,6 @@ public abstract class BaseEditorProvider<T> {
 
 			T editorOptionsContributor = registry.getService(serviceReference);
 
-			List<String> portletNames = StringPlus.asList(
-				serviceReference.getProperty("javax.portlet.name"));
-			List<String> editorConfigKeys = StringPlus.asList(
-				serviceReference.getProperty("editor.config.key"));
-			List<String> editorNames = StringPlus.asList(
-				serviceReference.getProperty("editor.name"));
-
-			int serviceRanking = GetterUtil.getInteger(
-				serviceReference.getProperty("service.ranking"));
-
-			EditorContributorProvider<T> editorContributorProvider =
-				new EditorContributorProvider<>(
-					editorOptionsContributor, portletNames, editorConfigKeys,
-					editorNames, serviceRanking);
-
 			_editorContributorsProviders.updateAndGet(
 				editorContributorProviders -> {
 					if (editorContributorProviders == null) {
@@ -209,6 +194,21 @@ public abstract class BaseEditorProvider<T> {
 						editorContributorProviders = new ArrayList<>(
 							editorContributorProviders);
 					}
+
+					List<String> portletNames = StringPlus.asList(
+						serviceReference.getProperty("javax.portlet.name"));
+					List<String> editorConfigKeys = StringPlus.asList(
+						serviceReference.getProperty("editor.config.key"));
+					List<String> editorNames = StringPlus.asList(
+						serviceReference.getProperty("editor.name"));
+
+					int serviceRanking = GetterUtil.getInteger(
+						serviceReference.getProperty("service.ranking"));
+
+					EditorContributorProvider<T> editorContributorProvider =
+						new EditorContributorProvider<>(
+							editorOptionsContributor, portletNames,
+							editorConfigKeys, editorNames, serviceRanking);
 
 					int index = Collections.binarySearch(
 						editorContributorProviders, editorContributorProvider,

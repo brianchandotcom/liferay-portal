@@ -224,8 +224,8 @@ public class SQLServerDB extends BaseDB {
 
 	private static final int[] _SQL_TYPES = {
 		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.BIT, Types.TIMESTAMP,
-		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.LONGVARCHAR,
-		Types.LONGVARCHAR, Types.VARCHAR
+		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.NVARCHAR,
+		Types.NVARCHAR, Types.NVARCHAR
 	};
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = false;

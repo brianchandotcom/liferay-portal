@@ -30,7 +30,7 @@ const Languages = ({
 	siteDefaultLocaleId,
 	translatedLanguages
 }) => {
-	const [selectedRadioGroupValue, setSelectedRadioGroupValue] = useState(
+	const [currentInheritLocales, setCurrentInheritLocales] = useState(
 		inheritLocales
 	);
 
@@ -75,19 +75,19 @@ const Languages = ({
 	const customLocalesInputRef = useRef();
 
 	useEffect(() => {
-		if (!selectedRadioGroupValue) {
+		if (!currentInheritLocales) {
 			const localesIds = customLocales.map(({localeId}) => localeId);
 
 			customLocalesInputRef.current.value = localesIds.join(',');
 		}
-	}, [customLocales, selectedRadioGroupValue]);
+	}, [customLocales, currentInheritLocales]);
 
 	return (
 		<div className="mt-5">
 			<ClayRadioGroup
 				name={`_${portletNamespace}_TypeSettingsProperties--inheritLocales--`}
-				onSelectedValueChange={setSelectedRadioGroupValue}
-				selectedValue={selectedRadioGroupValue}
+				onSelectedValueChange={setCurrentInheritLocales}
+				selectedValue={currentInheritLocales}
 			>
 				<ClayRadio
 					label={Liferay.Language.get(
@@ -104,14 +104,12 @@ const Languages = ({
 				/>
 			</ClayRadioGroup>
 
-			{selectedRadioGroupValue && (
+			{currentInheritLocales ? (
 				<LanguagesList
 					defaultLocaleId={defaultLocaleId}
 					locales={availableLocales}
 				/>
-			)}
-
-			{!selectedRadioGroupValue && (
+			) : (
 				<>
 					<input
 						name={`_${portletNamespace}_TypeSettingsProperties--languageId--`}

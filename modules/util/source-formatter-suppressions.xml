@@ -11,7 +11,6 @@
 		<suppress checks="JavaXMLSecurityCheck" files="portal-tools-db-support/.*" />
 		<suppress checks="PrimitiveWrapperInstantiationCheck" files="portal-tools-upgrade-table-builder/src/main/java/com/liferay/portal/tools/upgrade/table/builder/UpgradeTableBuilder\.java" />
 		<suppress checks="StringMethodsCheck" files="css-builder/.*" />
-		<suppress checks="StringMethodsCheck" files="jasper-jspc/.*" />
 		<suppress checks="StringMethodsCheck" files="portal-tools-data-partitioning-sql-builder-postgresql/.*" />
 		<suppress checks="StringMethodsCheck" files="portal-tools-soy-builder/.*" />
 		<suppress checks="StringMethodsCheck" files="sass-compiler-jni/.*" />

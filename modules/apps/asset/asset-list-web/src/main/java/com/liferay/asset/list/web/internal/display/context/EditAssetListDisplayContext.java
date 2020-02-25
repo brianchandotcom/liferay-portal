@@ -602,16 +602,12 @@ public class EditAssetListDisplayContext {
 
 		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				_themeDisplay.getCompanyId()),
+				_themeDisplay.getCompanyId(), true),
 			new AssetRendererFactoryTypeNameComparator(
 				_themeDisplay.getLocale()));
 
 		for (AssetRendererFactory<?> curRendererFactory :
 				assetRendererFactories) {
-
-			if (!curRendererFactory.isSelectable()) {
-				continue;
-			}
 
 			if (!curRendererFactory.isSupportsClassTypes()) {
 				manualAddIconDataMap.put(

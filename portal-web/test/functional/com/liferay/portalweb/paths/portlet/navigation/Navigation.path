@@ -39,6 +39,24 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>SCREENSHOTS_SIGN_IN</td>
+	<td>portal/screenshots/user/sign_in.png</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SCREENSHOTS_LOG_IN</td>
+	<td>portal/screenshots/user/log_in.png</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SCREENSHOTS_LOG_IN_MODAL</td>
+	<td>portal/screenshots/user/loginmodal.png</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

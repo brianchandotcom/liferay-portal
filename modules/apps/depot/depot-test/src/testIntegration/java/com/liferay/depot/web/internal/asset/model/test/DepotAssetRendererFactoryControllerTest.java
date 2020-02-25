@@ -99,6 +99,19 @@ public class DepotAssetRendererFactoryControllerTest {
 	}
 
 	@Test
+	public void testDefaultAssetRendererFactoriesAreSelectableForNoGroup()
+		throws Exception {
+
+		List<AssetRendererFactory<?>> assetRendererFactories =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				TestPropsValues.getCompanyId(), true);
+
+		Assert.assertTrue(
+			assetRendererFactories.toString(),
+			assetRendererFactories.size() > 4);
+	}
+
+	@Test
 	public void testOnlySupportedAssetRendererFactoriesAreSelectableForADepotGroup()
 		throws Exception {
 

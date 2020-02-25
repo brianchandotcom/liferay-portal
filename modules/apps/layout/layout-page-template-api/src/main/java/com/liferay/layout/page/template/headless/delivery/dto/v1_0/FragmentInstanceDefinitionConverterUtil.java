@@ -28,6 +28,8 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
+import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
+import com.liferay.headless.delivery.dto.v1_0.FragmentFieldHTML;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
@@ -42,7 +44,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -123,20 +124,21 @@ public class FragmentInstanceDefinitionConverterUtil {
 				new FragmentField() {
 					{
 						id = backgroundImageId;
-						value = new FragmentFieldImage() {
+						value = new FragmentFieldBackgroundImage() {
 							{
-								fragmentImage = new FragmentImage() {
+								backgroundImage = new FragmentImage() {
 									{
+										Map<String, String> localeMap =
+											_toLocaleMap(imageJSONObject);
+
 										title = new InlineValue() {
 											{
-												value_i18n = _toMap(
-													imageJSONObject, "title");
+												value_i18n = localeMap;
 											}
 										};
 										url = new InlineValue() {
 											{
-												value_i18n = _toMap(
-													imageJSONObject, "url");
+												value_i18n = localeMap;
 											}
 										};
 									}
@@ -386,12 +388,30 @@ public class FragmentInstanceDefinitionConverterUtil {
 						String type = editableTypes.getOrDefault(
 							textId, "text");
 
+						if (Objects.equals(type, "html")) {
+							return _toFragmentFieldHTML(textJSONObject);
+						}
+
 						if (Objects.equals(type, "image")) {
 							return _toFragmentFieldImage(textJSONObject);
 						}
 
 						return _toFragmentFieldText(textJSONObject);
 					});
+			}
+		};
+	}
+
+	private static FragmentFieldHTML _toFragmentFieldHTML(
+		JSONObject jsonObject) {
+
+		return new FragmentFieldHTML() {
+			{
+				html = new InlineValue() {
+					{
+						value_i18n = _toLocaleMap(jsonObject);
+					}
+				};
 			}
 		};
 	}
@@ -403,12 +423,20 @@ public class FragmentInstanceDefinitionConverterUtil {
 			{
 				fragmentImage = new FragmentImage() {
 					{
-						title = HashMapBuilder.<String, Object>put(
-							"value_i18n", _toLocaleMap(jsonObject, "title")
-						).build();
-						url = HashMapBuilder.<String, Object>put(
-							"value_i18n", _toLocaleMap(jsonObject, "url")
-						).build();
+						Map<String, String> localeMap = _toLocaleMap(
+							jsonObject);
+
+						title = new InlineValue() {
+							{
+								value_i18n = localeMap;
+							}
+						};
+
+						url = new InlineValue() {
+							{
+								value_i18n = localeMap;
+							}
+						};
 					}
 				};
 				fragmentLink = _toFragmentLink(jsonObject);
@@ -483,31 +511,6 @@ public class FragmentInstanceDefinitionConverterUtil {
 		};
 	}
 
-	private static Map<String, String> _toLocaleMap(
-		JSONObject jsonObject, String key) {
-
-		return new HashMap<String, String>() {
-			{
-				Set<String> locales = jsonObject.keySet();
-
-				Iterator<String> iterator = locales.iterator();
-
-				while (iterator.hasNext()) {
-					String locale = iterator.next();
-
-					if (!locale.equals("config") &&
-						!locale.equals("defaultValue")) {
-
-						JSONObject localizedJSONObject =
-							jsonObject.getJSONObject(locale);
-
-						put(locale, localizedJSONObject.getString(key));
-					}
-				}
-			}
-		};
-	}
-
 	private static Map<String, String> _toMap(JSONObject jsonObject) {
 		HashMap<String, String> map = new HashMap<String, String>() {
 			{
@@ -532,31 +535,6 @@ public class FragmentInstanceDefinitionConverterUtil {
 		}
 
 		return map;
-	}
-
-	private static Map<String, String> _toMap(
-		JSONObject jsonObject, String key) {
-
-		return new HashMap<String, String>() {
-			{
-				Set<String> locales = jsonObject.keySet();
-
-				Iterator<String> iterator = locales.iterator();
-
-				while (iterator.hasNext()) {
-					String locale = iterator.next();
-
-					if (!locale.equals("config") &&
-						!locale.equals("defaultValue")) {
-
-						JSONObject localizedJSONObject =
-							jsonObject.getJSONObject(locale);
-
-						put(key, localizedJSONObject.getString(key));
-					}
-				}
-			}
-		};
 	}
 
 }

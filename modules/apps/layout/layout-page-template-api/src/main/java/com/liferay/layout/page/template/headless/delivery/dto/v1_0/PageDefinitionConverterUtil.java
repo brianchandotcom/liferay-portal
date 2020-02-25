@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -218,6 +219,23 @@ public class PageDefinitionConverterUtil {
 									paddingTop =
 										containerLayoutStructureItem.
 											getPaddingTop();
+
+									setContainerType(
+										() -> {
+											String containerType =
+												containerLayoutStructureItem.
+													getContainerType();
+
+											if (Validator.isNull(
+													containerType)) {
+
+												return null;
+											}
+
+											return ContainerType.create(
+												StringUtil.upperCaseFirstLetter(
+													containerType));
+										});
 								}
 							};
 

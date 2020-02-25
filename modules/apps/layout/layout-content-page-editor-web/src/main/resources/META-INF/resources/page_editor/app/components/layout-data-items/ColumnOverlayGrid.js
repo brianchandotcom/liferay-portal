@@ -70,5 +70,10 @@ export default function ColumnOverlayGrid({
 ColumnOverlayGrid.propTypes = {
 	columnSpacing: PropTypes.bool.isRequired,
 	highlightedColumn: PropTypes.number,
-	rowRect: PropTypes.instanceOf(DOMRect).isRequired
+	rowRect: PropTypes.shape({
+		height: PropTypes.number.isRequired,
+		left: PropTypes.number.isRequired,
+		top: PropTypes.number.isRequired,
+		width: PropTypes.number.isRequired
+	}).isRequired
 };

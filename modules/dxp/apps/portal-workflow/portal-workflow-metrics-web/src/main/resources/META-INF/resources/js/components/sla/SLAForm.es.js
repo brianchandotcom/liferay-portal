@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 import MaskedInput from 'react-text-mask';
@@ -98,31 +99,24 @@ const AlertMessage = () => {
 };
 
 const AlertWorkflowDefinitionChange = () => {
+	const [visible, setVisible] = useState(true);
+
 	return (
-		<div className="alert-container">
-			<div className="alert alert-danger alert-dismissible" role="alert">
-				<span className="alert-indicator">
-					<Icon iconName="exclamation-full" />
-				</span>
-
-				<strong className="lead">
-					{Liferay.Language.get('error')}
-				</strong>
-
-				{Liferay.Language.get(
-					'the-time-frame-options-changed-in-the-workflow-definition'
-				)}
-
-				<button
-					aria-label="Close"
-					className="close"
-					data-dismiss="alert"
-					type="button"
+		visible && (
+			<div className="alert-container">
+				<ClayAlert
+					displayType="danger"
+					onClose={() => {
+						setVisible(false);
+					}}
+					title={Liferay.Language.get('error')}
 				>
-					<Icon iconName="times" />
-				</button>
+					{Liferay.Language.get(
+						'the-time-frame-options-changed-in-the-workflow-definition'
+					)}
+				</ClayAlert>
 			</div>
-		</div>
+		)
 	);
 };
 

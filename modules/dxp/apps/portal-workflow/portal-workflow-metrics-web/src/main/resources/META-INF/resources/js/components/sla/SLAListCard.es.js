@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
@@ -36,7 +37,8 @@ class SLAListCard extends React.Component {
 			requestError: false,
 			showConfirmDialog: false,
 			showSLAsUpdatingAlert: false,
-			totalCount: 0
+			totalCount: 0,
+			visibleBlockedSLAAlert: true
 		};
 
 		this.slaContextState = {
@@ -166,7 +168,8 @@ class SLAListCard extends React.Component {
 			requestError,
 			showConfirmDialog,
 			showSLAsUpdatingAlert,
-			totalCount
+			totalCount,
+			visibleBlockedSLAAlert
 		} = this.state;
 		const {page, pageSize, processId} = this.props;
 		const emptyMessageText = Liferay.Language.get(
@@ -214,47 +217,32 @@ class SLAListCard extends React.Component {
 				)}
 
 				<div className="container-fluid-1280">
-					{blockedSLACount > 0 && (
-						<div
-							className="alert alert-danger alert-dismissible"
-							role="alert"
+					{blockedSLACount > 0 && visibleBlockedSLAAlert && (
+						<ClayAlert
+							displayType="danger"
+							onClose={() => {
+								this.setState({
+									visibleBlockedSLAAlert: false
+								});
+							}}
+							title={Liferay.Language.get('error')}
 						>
-							<span className="alert-indicator">
-								<Icon iconName="exclamation-full" />
-							</span>
-
-							<strong className="lead">
-								{Liferay.Language.get('error')}
-							</strong>
-
 							{Liferay.Language.get(
 								'fix-blocked-slas-to-resume-accurate-reporting'
 							)}
-
-							<button
-								aria-label="Close"
-								className="close"
-								data-dismiss="alert"
-								type="button"
-							>
-								<Icon iconName="times" />
-							</button>
-						</div>
+						</ClayAlert>
 					)}
 
 					{showSLAsUpdatingAlert && (
-						<div
-							className="alert alert-dismissible alert-info"
-							role="alert"
+						<ClayAlert
+							displayType="info"
+							onClose={() => {
+								this.setState({
+									showSLAsUpdatingAlert: false
+								});
+							}}
+							title={Liferay.Language.get('error')}
 						>
-							<span className="alert-indicator">
-								<Icon iconName="exclamation-full" />
-							</span>
-
-							<strong className="lead">
-								{Liferay.Language.get('info')}
-							</strong>
-
 							<span>
 								{`${Liferay.Language.get(
 									'one-or-more-slas-are-being-updated'
@@ -262,16 +250,7 @@ class SLAListCard extends React.Component {
 									'there-may-be-a-delay-before-sla-changes-are-fully-propagated'
 								)}`}
 							</span>
-
-							<button
-								aria-label="Close"
-								className="close"
-								data-dismiss="alert"
-								type="button"
-							>
-								<Icon iconName="times" />
-							</button>
-						</div>
+						</ClayAlert>
 					)}
 
 					<ListView

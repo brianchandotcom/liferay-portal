@@ -188,7 +188,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 
 			<li class="nav-item permission-navigation-section">
 				<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
-					<liferay-ui:message key="site-administration" />
+					<liferay-ui:message key="site-and-asset-library-administration" />
 
 					<span class="collapse-icon-closed">
 						<aui:icon image="caret-right" markupView="lexicon" />

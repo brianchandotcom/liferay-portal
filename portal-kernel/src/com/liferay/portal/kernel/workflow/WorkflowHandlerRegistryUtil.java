@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.function.Predicate;
 
 /**
  * @author Bruno Farache
@@ -52,18 +53,7 @@ import java.util.concurrent.Callable;
 public class WorkflowHandlerRegistryUtil {
 
 	public static List<WorkflowHandler<?>> getScopeableWorkflowHandlers() {
-		Set<String> modelClassNames =
-			_scopeableWorkflowHandlerServiceTrackerMap.keySet();
-
-		List<WorkflowHandler<?>> workflowHandlers = new ArrayList<>();
-
-		for (String modelClassName : modelClassNames) {
-			workflowHandlers.add(
-				_scopeableWorkflowHandlerServiceTrackerMap.getService(
-					modelClassName));
-		}
-
-		return workflowHandlers;
+		return _getWorkflowHandlers(_scopeableWorkflowHandlerServiceTrackerMap);
 	}
 
 	public static <T> WorkflowHandler<T> getWorkflowHandler(String className) {
@@ -72,17 +62,7 @@ public class WorkflowHandlerRegistryUtil {
 	}
 
 	public static List<WorkflowHandler<?>> getWorkflowHandlers() {
-		Set<String> modelClassNames =
-			_workflowHandlerServiceTrackerMap.keySet();
-
-		List<WorkflowHandler<?>> workflowHandlers = new ArrayList<>();
-
-		for (String modelClassName : modelClassNames) {
-			workflowHandlers.add(
-				_workflowHandlerServiceTrackerMap.getService(modelClassName));
-		}
-
-		return workflowHandlers;
+		return _getWorkflowHandlers(_workflowHandlerServiceTrackerMap);
 	}
 
 	public static void register(List<WorkflowHandler<?>> workflowHandlers) {
@@ -285,6 +265,22 @@ public class WorkflowHandlerRegistryUtil {
 		return null;
 	}
 
+	private static List<WorkflowHandler<?>> _getWorkflowHandlers(
+		ServiceTrackerMap<String, WorkflowHandler<?>>
+			workflowHandlerServiceTrackerMap) {
+
+		Set<String> modelClassNames = workflowHandlerServiceTrackerMap.keySet();
+
+		List<WorkflowHandler<?>> workflowHandlers = new ArrayList<>();
+
+		for (String modelClassName : modelClassNames) {
+			workflowHandlers.add(
+				workflowHandlerServiceTrackerMap.getService(modelClassName));
+		}
+
+		return workflowHandlers;
+	}
+
 	private static boolean _hasWorkflowInstanceInProgress(
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException {
@@ -318,50 +314,47 @@ public class WorkflowHandlerRegistryUtil {
 	private static final ServiceTrackerMap<String, WorkflowHandler<?>>
 		_workflowHandlerServiceTrackerMap;
 
+	private static class WorkflowHandlerServiceReferenceMapper
+		implements ServiceReferenceMapper<String, WorkflowHandler<?>> {
+
+		public WorkflowHandlerServiceReferenceMapper(
+			Predicate<WorkflowHandler<?>> filter) {
+
+			_filter = filter;
+		}
+
+		@Override
+		public void map(
+			ServiceReference<WorkflowHandler<?>> serviceReference,
+			Emitter<String> emitter) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			WorkflowHandler<?> workflowHandler = registry.getService(
+				serviceReference);
+
+			if (_filter.test(workflowHandler)) {
+				emitter.emit(workflowHandler.getClassName());
+			}
+		}
+
+		private final Predicate<WorkflowHandler<?>> _filter;
+
+	}
+
 	static {
 		_workflowHandlerServiceTrackerMap =
 			ServiceTrackerCollections.openSingleValueMap(
 				(Class<WorkflowHandler<?>>)(Class<?>)WorkflowHandler.class,
 				null,
-				new ServiceReferenceMapper<String, WorkflowHandler<?>>() {
-
-					@Override
-					public void map(
-						ServiceReference<WorkflowHandler<?>> serviceReference,
-						ServiceReferenceMapper.Emitter<String> emitter) {
-
-						Registry registry = RegistryUtil.getRegistry();
-
-						WorkflowHandler<?> workflowHandler =
-							registry.getService(serviceReference);
-
-						emitter.emit(workflowHandler.getClassName());
-					}
-
-				});
+				new WorkflowHandlerServiceReferenceMapper(handler -> true));
 
 		_scopeableWorkflowHandlerServiceTrackerMap =
 			ServiceTrackerCollections.openSingleValueMap(
 				(Class<WorkflowHandler<?>>)(Class<?>)WorkflowHandler.class,
 				null,
-				new ServiceReferenceMapper<String, WorkflowHandler<?>>() {
-
-					@Override
-					public void map(
-						ServiceReference<WorkflowHandler<?>> serviceReference,
-						ServiceReferenceMapper.Emitter<String> emitter) {
-
-						Registry registry = RegistryUtil.getRegistry();
-
-						WorkflowHandler<?> workflowHandler =
-							registry.getService(serviceReference);
-
-						if (workflowHandler.isScopeable()) {
-							emitter.emit(workflowHandler.getClassName());
-						}
-					}
-
-				});
+				new WorkflowHandlerServiceReferenceMapper(
+					handler -> handler.isScopeable()));
 	}
 
 }

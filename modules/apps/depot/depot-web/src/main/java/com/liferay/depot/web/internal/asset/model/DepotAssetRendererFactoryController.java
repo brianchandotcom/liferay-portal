@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -88,6 +90,9 @@ public class DepotAssetRendererFactoryController {
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
 
+	@Reference
+	private GroupLocalService _groupLocalService;
+
 	private final Map
 		<ServiceReference<AssetRendererFactory>,
 		 ServiceRegistration<AssetRendererFactory>> _serviceRegistrations =
@@ -139,24 +144,24 @@ public class DepotAssetRendererFactoryController {
 				ServiceContextThreadLocal.getServiceContext();
 
 			if (serviceContext == null) {
-				return null;
+				return _groupLocalService.fetchGroup(
+					GroupThreadLocal.getGroupId());
 			}
 
 			HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
-			if (httpServletRequest == null) {
-				return null;
+			if (httpServletRequest != null) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				if (themeDisplay != null) {
+					return themeDisplay.getScopeGroup();
+				}
 			}
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			if (themeDisplay == null) {
-				return null;
-			}
-
-			return themeDisplay.getScopeGroup();
+			return _groupLocalService.fetchGroup(
+				serviceContext.getScopeGroupId());
 		}
 
 		private final AssetRendererFactory _assetRendererFactory;

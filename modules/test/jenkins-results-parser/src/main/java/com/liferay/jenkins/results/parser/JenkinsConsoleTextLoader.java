@@ -14,21 +14,22 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 import org.apache.commons.lang.StringEscapeUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * @author Peter Yoo
@@ -36,46 +37,27 @@ import org.json.JSONObject;
 public class JenkinsConsoleTextLoader {
 
 	public JenkinsConsoleTextLoader(String buildURL) {
-		this(buildURL, false);
-	}
-
-	public JenkinsConsoleTextLoader(String buildURL, boolean buildComplete) {
 		this.buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
 
-		this.buildComplete = buildComplete;
+		FileSystem fileSystem = FileSystems.getDefault();
 
-		if (!this.buildComplete) {
-			try {
-				JSONObject buildJSONObject =
-					JenkinsResultsParserUtil.toJSONObject(
-						this.buildURL + "/api/json");
+		localCachedLogFilePath = fileSystem.getPath(
+			System.getProperty("java.io.tmpdir"), "jenkins-cached-files",
+			JenkinsResultsParserUtil.combine(
+				"jenkins_console_log-", String.valueOf(buildURL.hashCode()),
+				".log"));
 
-				String result = buildJSONObject.optString("result");
+		File localCachedLogFile = localCachedLogFilePath.toFile();
 
-				if (!result.isEmpty()) {
-					this.buildComplete = true;
-				}
-			}
-			catch (IOException | JSONException exception) {
-				throw new RuntimeException(
-					"Unable to determine build status for build " +
-						this.buildURL,
-					exception);
-			}
-		}
+		localCachedLogFile.deleteOnExit();
 
-		logStringBuilder = new StringBuilder();
 		serverLogSize = 0;
 	}
 
 	public String getConsoleText() {
-		String consoleText = null;
-
-		if (buildURL.startsWith("file:") || buildURL.contains("mirrors") ||
-			buildComplete) {
-
+		if (buildURL.startsWith("file:") || buildURL.contains("mirrors")) {
 			try {
-				consoleText = JenkinsResultsParserUtil.toString(
+				return JenkinsResultsParserUtil.toString(
 					buildURL + "/consoleText", false);
 			}
 			catch (IOException ioException) {
@@ -83,17 +65,22 @@ public class JenkinsConsoleTextLoader {
 			}
 		}
 
-		if ((consoleText == null) || !consoleText.contains("\nFinished:")) {
-			update();
+		update();
 
-			consoleText = logStringBuilder.toString();
+		try {
+			return StringEscapeUtils.unescapeHtml(
+				new String(Files.readAllBytes(localCachedLogFilePath)));
 		}
-
-		return StringEscapeUtils.unescapeHtml(consoleText);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to read cached log file " +
+					localCachedLogFilePath.toString(),
+				ioException);
+		}
 	}
 
 	public int getLineCount() {
-		String consoleLog = logStringBuilder.toString();
+		String consoleLog = getConsoleText();
 
 		String[] consoleLogLines = consoleLog.split("\n");
 
@@ -105,82 +92,75 @@ public class JenkinsConsoleTextLoader {
 	}
 
 	protected void update() {
-		StringBuilder sb = new StringBuilder();
+		boolean hasMoreData = true;
 
-		boolean behindLatest = true;
+		try (OutputStream outputStream = Files.newOutputStream(
+				localCachedLogFilePath, StandardOpenOption.CREATE,
+				StandardOpenOption.APPEND)) {
 
-		while (behindLatest) {
-			String url =
-				buildURL + "/logText/progressiveHtml?start=" + serverLogSize;
+			while (hasMoreData) {
+				String url =
+					buildURL + "/logText/progressiveHtml?start=" +
+						serverLogSize;
 
-			try {
-				URL urlObject = new URL(
-					JenkinsResultsParserUtil.getLocalURL(url));
+				try {
+					URL urlObject = new URL(
+						JenkinsResultsParserUtil.getLocalURL(url));
 
-				HttpURLConnection httpURLConnection =
-					(HttpURLConnection)urlObject.openConnection();
+					HttpURLConnection httpURLConnection =
+						(HttpURLConnection)urlObject.openConnection();
 
-				long latestServerLogSize = httpURLConnection.getHeaderFieldLong(
-					"X-Text-Size", serverLogSize);
+					long latestServerLogSize =
+						httpURLConnection.getHeaderFieldLong(
+							"X-Text-Size", serverLogSize);
 
-				if (latestServerLogSize > serverLogSize) {
-					try (BufferedReader bufferedReader = new BufferedReader(
-							new InputStreamReader(
-								httpURLConnection.getInputStream()))) {
+					if (latestServerLogSize == serverLogSize) {
+						break;
+					}
 
-						String line = bufferedReader.readLine();
+					byte[] readBuffer = new byte[512];
 
-						while (line != null) {
-							Matcher matcher = _anchorPattern.matcher(line);
+					if (latestServerLogSize > serverLogSize) {
+						try (InputStream inputStream =
+								httpURLConnection.getInputStream()) {
 
-							line = matcher.replaceAll("$1");
-
-							sb.append(line);
-
-							sb.append("\n");
-
-							line = bufferedReader.readLine();
+							while (inputStream.read(readBuffer) > 0) {
+								outputStream.write(readBuffer);
+							}
 						}
 					}
+
+					hasMoreData = Boolean.parseBoolean(
+						httpURLConnection.getHeaderField("X-More-Data"));
+
+					serverLogSize = latestServerLogSize;
 				}
-
-				hasMoreData = Boolean.parseBoolean(
-					httpURLConnection.getHeaderField("X-More-Data"));
-
-				if (((latestServerLogSize - serverLogSize) < 5000) ||
-					!hasMoreData) {
-
-					behindLatest = false;
+				catch (MalformedURLException malformedURLException) {
+					throw new IllegalArgumentException(
+						"Invalid buildURL " + buildURL, malformedURLException);
 				}
+				catch (IOException ioException) {
+					System.out.println(
+						"Unable to update console log for build: " + buildURL);
 
-				serverLogSize = latestServerLogSize;
-			}
-			catch (MalformedURLException malformedURLException) {
-				throw new IllegalArgumentException(
-					"Invalid buildURL " + buildURL, malformedURLException);
-			}
-			catch (IOException ioException) {
-				System.out.println(
-					"Unable to update console log for build: " + buildURL);
+					ioException.printStackTrace();
 
-				ioException.printStackTrace();
-
-				return;
+					return;
+				}
 			}
 		}
-
-		if (sb.length() > 0) {
-			logStringBuilder.append(sb);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to create local cached log file output stream ",
+					localCachedLogFilePath.toString()),
+				ioException);
 		}
 	}
 
-	protected boolean buildComplete;
 	protected String buildURL;
 	protected boolean hasMoreData = true;
-	protected StringBuilder logStringBuilder;
+	protected Path localCachedLogFilePath;
 	protected long serverLogSize;
-
-	private static final Pattern _anchorPattern = Pattern.compile(
-		"\\<a[^>]*\\>(?<text>[^<]*)\\</a\\>");
 
 }

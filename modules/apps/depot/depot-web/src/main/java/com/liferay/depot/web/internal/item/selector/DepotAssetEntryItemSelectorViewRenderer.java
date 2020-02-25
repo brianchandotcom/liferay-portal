@@ -14,7 +14,6 @@
 
 package com.liferay.depot.web.internal.item.selector;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.depot.application.DepotApplication;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;

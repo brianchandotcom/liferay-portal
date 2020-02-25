@@ -38,4 +38,9 @@ public class JournalDataLayoutBuilderConfiguration
 		return new String[] {"Autocomplete"};
 	}
 
+	@Override
+	public boolean isMultiPage() {
+		return false;
+	}
+
 }

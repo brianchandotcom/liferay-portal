@@ -149,7 +149,6 @@ public class DepotItemSelectorViewRenderer implements ItemSelectorViewRenderer {
 		DepotApplicationDisplayContext depotApplicationDisplayContext =
 			new DepotApplicationDisplayContext(httpServletRequest, _portal);
 
-		depotApplicationDisplayContext.setPortletId(portletId);
 		depotApplicationDisplayContext.setPortletURL(
 			_itemSelectorViewRenderer.getPortletURL());
 

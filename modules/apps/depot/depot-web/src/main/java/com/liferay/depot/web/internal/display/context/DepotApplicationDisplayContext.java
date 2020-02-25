@@ -16,12 +16,18 @@ package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,8 +41,11 @@ public class DepotApplicationDisplayContext {
 		HttpServletRequest httpServletRequest, Portal portal) {
 
 		_portal = portal;
+
 		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
+		_portletResponse = (PortletResponse)httpServletRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -46,6 +55,26 @@ public class DepotApplicationDisplayContext {
 			DepotAdminWebKeys.DEPOT_ENTRY);
 
 		return depotEntry.getDepotEntryId();
+	}
+
+	public String getMessage() throws PortletException {
+		String taglibViewGroupSelectorLink =
+			"<a href=\"" + HtmlUtil.escape(_getViewGroupSelectorURL()) + "\">";
+
+		if (Validator.isNotNull(_portletId)) {
+			return LanguageUtil.format(
+				_themeDisplay.getLocale(),
+				"x-application-is-disabled-for-this-scope.-please-go-back-to-" +
+					"selection",
+				new Object[] {
+					getPortletTitle(), taglibViewGroupSelectorLink, "</a>"
+				});
+		}
+
+		return LanguageUtil.format(
+			_themeDisplay.getLocale(),
+			"application-is-not-supported.-please-go-back-to-selection",
+			new Object[] {taglibViewGroupSelectorLink, "</a>"});
 	}
 
 	public String getPortletTitle() {
@@ -64,9 +93,22 @@ public class DepotApplicationDisplayContext {
 		_portletURL = portletURL;
 	}
 
+	private String _getViewGroupSelectorURL() throws PortletException {
+		PortletURL viewGroupSelectorURL = PortletURLUtil.clone(
+			getPortletURL(),
+			_portal.getLiferayPortletResponse(_portletResponse));
+
+		viewGroupSelectorURL.setParameter("groupType", "site");
+		viewGroupSelectorURL.setParameter(
+			"showGroupSelector", Boolean.TRUE.toString());
+
+		return viewGroupSelectorURL.toString();
+	}
+
 	private final Portal _portal;
 	private String _portletId;
 	private final PortletRequest _portletRequest;
+	private final PortletResponse _portletResponse;
 	private PortletURL _portletURL;
 	private final ThemeDisplay _themeDisplay;
 

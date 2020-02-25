@@ -18,7 +18,8 @@ import APIService from './utils/APIService';
 import {numberFormat} from './utils/numberFormat';
 
 export default function({context, props}) {
-	const {endpoints, languageTag, namespace, page} = context;
+	const {languageTag, namespace, page} = context;
+	const {defaultTimeSpanKey, timeSpans} = context;
 	const {authorName, publishDate, title} = props;
 
 	const {
@@ -26,7 +27,7 @@ export default function({context, props}) {
 		getAnalyticsReportsHistoricalViewsURL,
 		getAnalyticsReportsTotalReadsURL,
 		getAnalyticsReportsTotalViewsURL,
-	} = endpoints;
+	} = context.endpoints;
 
 	const api = APIService({
 		endpoints: {
@@ -38,6 +39,8 @@ export default function({context, props}) {
 		namespace,
 		page,
 	});
+
+	const {getHistoricalReads, getHistoricalViews} = api;
 
 	function _handleTotalReads() {
 		return api.getTotalReads().then(response => {
@@ -54,14 +57,6 @@ export default function({context, props}) {
 				response.analyticsReportsTotalViews
 			);
 		});
-	}
-
-	function _handleHistoricalViews() {
-		return api.getHistoricalViews();
-	}
-
-	function _handleHistoricalReads() {
-		return api.getHistoricalReads();
 	}
 
 	return (
@@ -82,6 +77,7 @@ export default function({context, props}) {
 					'this-number-refers-to-the-total-number-of-views-since-the-content-was-published'
 				)}
 			/>
+
 			<TotalCount
 				className="mt-2"
 				dataProvider={_handleTotalReads}
@@ -91,10 +87,14 @@ export default function({context, props}) {
 					'this-number-refers-to-the-total-number-of-reads-since-the-content-was-published'
 				)}
 			/>
+
 			<hr />
+
 			<Chart
-				dataProviders={[_handleHistoricalViews, _handleHistoricalReads]}
+				dataProviders={[getHistoricalReads, getHistoricalViews]}
+				defaultTimeSpanOption={defaultTimeSpanKey}
 				languageTag={languageTag}
+				timeSpanOptions={timeSpans}
 			/>
 		</div>
 	);

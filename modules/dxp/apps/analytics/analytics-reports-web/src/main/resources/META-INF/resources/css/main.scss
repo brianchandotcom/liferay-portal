@@ -71,9 +71,30 @@
 		.custom-tooltip-dot {
 			border-radius: 50%;
 			display: inline-block;
-			height: 0.7rem;
+			height: 10px;
 			margin-right: 0.2rem;
-			width: 0.7rem;
+			width: 10px;
 		}
+	}
+
+	.line-chart-wrapper {
+		opacity: 1;
+		position: relative;
+
+		&.line-chart-wrapper--loading {
+			opacity: 0.8;
+			pointer-events: none;
+		}
+	}
+
+	.loading-animation {
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: calc(50% - 1rem);
+	}
+
+	.interval-selector-wrapper {
+		display: flex;
 	}
 }

@@ -9,6 +9,10 @@
  * distribution rights of the Software.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
+import {ClaySelect} from '@clayui/form';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import className from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -22,12 +26,15 @@ import {
 	YAxis,
 } from 'recharts';
 
+import {useChartState} from '../utils/chartState';
 import {numberFormat} from '../utils/numberFormat';
 import CustomTooltip from './CustomTooltip';
 
-const {useEffect, useMemo, useReducer} = React;
+const {useEffect, useMemo} = React;
 
 const CHART_SIZE = {height: 220, width: 280};
+
+const LAST_24_HOURS = 'last-24-hours';
 
 function keyToTranslatedLabelValue(key) {
 	if (key === 'analyticsReportsHistoricalViews') {
@@ -51,58 +58,6 @@ function keyToHexColor(key) {
 	else {
 		return '#666666';
 	}
-}
-
-function mergeDataSets(newData, previousDataSet, key) {
-	const resultDataSet = {};
-
-	resultDataSet.keyList = [...previousDataSet.keyList, key];
-
-	resultDataSet.totals = {
-		...previousDataSet.totals,
-		[key]: newData.value,
-	};
-
-	const newFormattedHistogram = newData.histogram.map(h => ({
-		[key]: h.value,
-		label: h.key,
-	}));
-
-	let start = 0;
-	const mergeHistogram = [];
-
-	while (start < newData.histogram.length) {
-		if (!previousDataSet.histogram[start]) {
-			mergeHistogram.push({
-				...newFormattedHistogram[start],
-			});
-		}
-		else if (
-			newFormattedHistogram[start].label ===
-			previousDataSet.histogram[start].label
-		) {
-			mergeHistogram.push({
-				...newFormattedHistogram[start],
-				...previousDataSet.histogram[start],
-			});
-		}
-
-		start = start + 1;
-	}
-
-	resultDataSet.histogram = mergeHistogram;
-
-	return resultDataSet;
-}
-
-function transformDataToDataSet(
-	key,
-	data,
-	previousDataset = {histogram: [], keyList: [], totals: []}
-) {
-	const result = mergeDataSets(data, previousDataset, key);
-
-	return result;
 }
 
 /*
@@ -131,6 +86,9 @@ const generateDateFormatters = key => {
 	 * [Date, Date] => '16 - Jun 21, 2020'
 	 */
 	function formatChartTitle([initialDate, finalDate]) {
+		const singleDayDateRange =
+			finalDate - initialDate <= 1000 * 60 * 60 * 24;
+
 		const dateFormatter = (
 			date,
 			options = {
@@ -148,6 +106,10 @@ const generateDateFormatters = key => {
 			month: equalMonth && equalYear ? undefined : 'short',
 			year: equalYear ? undefined : 'numeric',
 		};
+
+		if (singleDayDateRange) {
+			return dateFormatter(finalDate);
+		}
 
 		return `${dateFormatter(
 			initialDate,
@@ -177,10 +139,23 @@ const generateDateFormatters = key => {
 		}).format(new Date(value));
 	}
 
+	/*
+	 * Given a date like string produces the hour of the day
+	 *
+	 * For 'en-US'
+	 * String => '04 AM'
+	 */
+	function formatNumericHour(value) {
+		return Intl.DateTimeFormat([key], {
+			hour: 'numeric',
+		}).format(new Date(value));
+	}
+
 	return {
 		formatChartTitle,
 		formatLongDate,
 		formatNumericDay,
+		formatNumericHour,
 	};
 };
 
@@ -195,42 +170,51 @@ function legendFormatterGenerator(totals, languageTag) {
 	);
 }
 
-function reducer(state, action) {
-	switch (action.type) {
-		case 'add-data-key':
-			return transformDataToDataSet(
-				action.payload.key,
-				action.payload.dataSet,
-				state
-			);
-		default:
-			return state;
-	}
-}
-
-export default function Chart({languageTag, dataProviders = []}) {
-	const [dataSet, setDataSet] = useReducer(reducer);
+export default function Chart({
+	dataProviders = [],
+	defaultTimeSpanOption,
+	languageTag,
+	timeSpanOptions,
+}) {
+	const {actions, state: chartState} = useChartState({
+		defaultTimeSpanOption,
+	});
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
+		let gone = false;
+
+		actions.setLoading();
+
 		dataProviders.map(getter => {
-			getter().then(data => {
-				if (isMounted()) {
-					Object.keys(data).map(key => {
-						setDataSet({
-							payload: {dataSet: data[key], key},
-							type: 'add-data-key',
+			getter({
+				timeSpanKey: chartState.timeSpanOption,
+				timeSpanOffset: chartState.timeSpanOffset,
+			}).then(data => {
+				if (!gone) {
+					if (isMounted()) {
+						Object.keys(data).map(key => {
+							actions.addDataSetItem({
+								dataSetItem: data[key],
+								key,
+							});
 						});
-					});
+					}
 				}
 			});
 		});
+
+		return () => {
+			gone = true;
+		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dataProviders]);
+	}, [chartState.timeSpanOption, chartState.timeSpanOffset]);
 
 	const dateFormatters = useMemo(() => generateDateFormatters(languageTag), [
 		languageTag,
 	]);
+
+	const {dataSet} = chartState;
 
 	const title = useMemo(() => {
 		if (dataSet && dataSet.histogram) {
@@ -245,77 +229,162 @@ export default function Chart({languageTag, dataProviders = []}) {
 		}
 	}, [dataSet, dateFormatters]);
 
+	const handleTimeSpanChange = event => {
+		const {value} = event.target;
+
+		actions.changeTimeSpanOption({key: value});
+	};
+	const handlePreviousTimeSpanClick = () => {
+		actions.previousTimeSpan();
+	};
+	const handleNextTimeSpanClick = () => {
+		actions.nextTimeSpan();
+	};
+
 	const legendFormatter =
 		dataSet && legendFormatterGenerator(dataSet.totals, languageTag);
 
-	return dataSet ? (
+	const disabledNextTimeSpan = chartState.timeSpanOffset === 0;
+
+	const xAxisFormatter =
+		chartState.timeSpanOption === LAST_24_HOURS
+			? dateFormatters.formatNumericHour
+			: dateFormatters.formatNumericDay;
+
+	const lineChartWrapperClasses = className('line-chart-wrapper', {
+		'line-chart-wrapper--loading': chartState.loading,
+	});
+
+	return (
 		<>
-			{title && <h4>{title}</h4>}
+			{timeSpanOptions.length && (
+				<div className="d-flex mb-3">
+					<ClaySelect
+						aria-label={Liferay.Language.get('select-date-range')}
+						onChange={handleTimeSpanChange}
+						value={chartState.timeSpanOption}
+					>
+						{timeSpanOptions.map(option => {
+							return (
+								<ClaySelect.Option
+									key={option.key}
+									label={option.label}
+									value={option.key}
+								/>
+							);
+						})}
+					</ClaySelect>
 
-			<div className="mt-3">
-				<LineChart
-					data={dataSet.histogram}
-					height={CHART_SIZE.height}
-					width={CHART_SIZE.width}
-				>
-					<Legend
-						formatter={legendFormatter}
-						iconType="circle"
-						layout="vertical"
-						verticalAlign="top"
-						wrapperStyle={{left: 0, paddingBottom: '1rem'}}
-					/>
+					<div className="d-flex ml-2">
+						<ClayButtonWithIcon
+							ariaLabel={Liferay.Language.get('previous-period')}
+							className="mr-1"
+							displayType="secondary"
+							onClick={handlePreviousTimeSpanClick}
+							symbol="angle-left"
+						/>
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('next-period')}
+							disabled={disabledNextTimeSpan}
+							displayType="secondary"
+							onClick={handleNextTimeSpanClick}
+							symbol="angle-right"
+						/>
+					</div>
+				</div>
+			)}
 
-					<CartesianGrid strokeDasharray="0 0" vertical={false} />
+			{dataSet ? (
+				<div className={lineChartWrapperClasses}>
+					{chartState.loading && <ClayLoadingIndicator small />}
 
-					<XAxis
-						dataKey="label"
-						tickFormatter={dateFormatters.formatNumericDay}
-						tickLine={false}
-					/>
+					{title && <h4>{title}</h4>}
 
-					<YAxis
-						allowDecimals={false}
-						minTickGap={3}
-						tickFormatter={thousandsToKilosFormater}
-						tickLine={false}
-						width={40}
-					/>
-
-					<Tooltip
-						content={<CustomTooltip />}
-						formatter={(value, name) => {
-							return [
-								numberFormat(languageTag, value),
-								keyToTranslatedLabelValue(name),
-							];
-						}}
-						labelFormatter={dateFormatters.formatLongDate}
-						separator={': '}
-					/>
-
-					{dataSet.keyList.map(keyName => {
-						const color = keyToHexColor(keyName);
-
-						return (
-							<Line
-								activeDot={{r: 6, strokeWidth: 0}}
-								dataKey={keyName}
-								fill={color}
-								key={keyName}
-								stroke={color}
-								strokeWidth={2}
-								type="monotone"
+					<div className="mt-3">
+						<LineChart
+							data={dataSet.histogram}
+							height={CHART_SIZE.height}
+							width={CHART_SIZE.width}
+						>
+							<Legend
+								formatter={legendFormatter}
+								iconSize={10}
+								iconType="circle"
+								layout="vertical"
+								verticalAlign="top"
+								wrapperStyle={{left: 0, paddingBottom: '1rem'}}
 							/>
-						);
-					})}
-				</LineChart>
-			</div>
+
+							<CartesianGrid
+								stroke="#E7E7ED"
+								strokeDasharray="0 0"
+								vertical={true}
+								verticalPoints={[CHART_SIZE.width - 5]}
+							/>
+
+							<XAxis
+								axisLine={{
+									stroke: '#E7E7ED',
+								}}
+								dataKey="label"
+								tickFormatter={xAxisFormatter}
+								tickLine={false}
+							/>
+
+							<YAxis
+								allowDecimals={false}
+								axisLine={{
+									stroke: '#E7E7ED',
+								}}
+								minTickGap={3}
+								tickFormatter={thousandsToKilosFormater}
+								tickLine={false}
+								width={40}
+							/>
+
+							<Tooltip
+								content={<CustomTooltip />}
+								formatter={(value, name) => {
+									return [
+										numberFormat(languageTag, value),
+										keyToTranslatedLabelValue(name),
+									];
+								}}
+								labelFormatter={dateFormatters.formatLongDate}
+								separator={': '}
+							/>
+
+							{dataSet.keyList.map(keyName => {
+								const color = keyToHexColor(keyName);
+
+								return (
+									<Line
+										activeDot={{r: 5, strokeWidth: 0}}
+										dataKey={keyName}
+										fill={color}
+										key={keyName}
+										stroke={color}
+										strokeWidth={2}
+										type="monotone"
+									/>
+								);
+							})}
+						</LineChart>
+					</div>
+				</div>
+			) : null}
 		</>
-	) : null;
+	);
 }
 
 Chart.propTypes = {
 	dataProviders: PropTypes.arrayOf(PropTypes.func).isRequired,
+	defaultTimeSpanKey: PropTypes.string.isRequired,
 	languageTag: PropTypes.string.isRequired,
+	timeSpans: PropTypes.arrayOf(
+		PropTypes.shape({
+			key: PropTypes.string.isRequired,
+			label: PropTypes.string.isRequired,
+		})
+	).isRequired,
 };

@@ -40,8 +40,8 @@ function APIService({endpoints, namespace, page}) {
 		});
 	}
 
-	function getHistoricalReads() {
-		const body = {plid};
+	function getHistoricalReads({timeSpanKey, timeSpanOffset}) {
+		const body = {plid, timeSpanKey, timeSpanOffset};
 
 		return _fetchWithError(getAnalyticsReportsHistoricalReadsURL, {
 			body: _getFormDataRequest(body, namespace),
@@ -50,8 +50,8 @@ function APIService({endpoints, namespace, page}) {
 		});
 	}
 
-	function getHistoricalViews() {
-		const body = {plid};
+	function getHistoricalViews({timeSpanKey, timeSpanOffset}) {
+		const body = {plid, timeSpanKey, timeSpanOffset};
 
 		return _fetchWithError(getAnalyticsReportsHistoricalViewsURL, {
 			body: _getFormDataRequest(body, namespace),

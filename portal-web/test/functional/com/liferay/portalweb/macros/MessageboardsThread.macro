@@ -22,6 +22,14 @@ definition {
 			content = "${threadBody}",
 			editor = "body");
 
+		if (isSet(categoryName)) {
+			Panel.expandPanel(panel = "Categorization");
+
+			AssetCategorization.addCategory(
+				categoryName = "${categoryName}",
+				vocabularyName = "${vocabularyName}");
+		}
+
 		PortletEntry.publish();
 	}
 

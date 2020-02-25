@@ -392,25 +392,25 @@ public class DocumentResourceImpl
 			addAction(
 				"DELETE", fileEntry.getPrimaryKey(), "deleteDocument",
 				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
+				fileEntry.getUserId(), fileEntry.getGroupId())
 		).put(
 			"get",
 			addAction(
 				"VIEW", fileEntry.getPrimaryKey(), "getDocument",
 				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
+				fileEntry.getUserId(), fileEntry.getGroupId())
 		).put(
 			"replace",
 			addAction(
 				"UPDATE", fileEntry.getPrimaryKey(), "putDocument",
 				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
+				fileEntry.getUserId(), fileEntry.getGroupId())
 		).put(
 			"update",
 			addAction(
 				"UPDATE", fileEntry.getPrimaryKey(), "patchDocument",
 				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
+				fileEntry.getUserId(), fileEntry.getGroupId())
 		).build();
 	}
 
@@ -480,25 +480,25 @@ public class DocumentResourceImpl
 			addAction(
 				"UPDATE", fileEntry.getPrimaryKey(), "postDocumentMyRating",
 				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
+				fileEntry.getUserId(), fileEntry.getGroupId())
 		).put(
 			"delete",
 			addAction(
 				"UPDATE", fileEntry.getPrimaryKey(), "deleteDocumentMyRating",
 				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
+				fileEntry.getUserId(), fileEntry.getGroupId())
 		).put(
 			"get",
 			addAction(
 				"VIEW", fileEntry.getPrimaryKey(), "getDocumentMyRating",
 				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
+				fileEntry.getUserId(), fileEntry.getGroupId())
 		).put(
 			"replace",
 			addAction(
 				"UPDATE", fileEntry.getPrimaryKey(), "putDocumentMyRating",
 				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
+				fileEntry.getUserId(), fileEntry.getGroupId())
 		).build();
 	}
 

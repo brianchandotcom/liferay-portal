@@ -112,9 +112,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					}
 				});
 
-			writer.write("<div class=\"change-tracking-indicator\">");
 			writer.write(
-				"<div><button class=\"change-tracking-indicator-button\">");
+				"<div class=\"change-tracking-indicator\"><div>" +
+					"<button class=\"change-tracking-indicator-button\">" +
+						"<span className=\"change-tracking-indicator-title\">");
 
 			CTCollection ctCollection = null;
 
@@ -126,20 +127,15 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					ctPreferences.getCtCollectionId());
 			}
 
-			String title = null;
-
 			if (ctCollection == null) {
-				title = _language.get(themeDisplay.getLocale(), "production");
+				writer.write(
+					_language.get(themeDisplay.getLocale(), "production"));
 			}
 			else {
-				title = ctCollection.getName();
+				writer.write(_html.escape(ctCollection.getName()));
 			}
 
-			writer.write(
-				"<span className=\"change-tracking-indicator-title\">");
-			writer.write(title);
-			writer.write("</span>");
-			writer.write("</button></div>");
+			writer.write("</span></button></div>");
 
 			String componentId =
 				_portal.getPortletNamespace(CTPortletKeys.CHANGE_LISTS) +
@@ -192,7 +188,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			selectURL.setWindowState(LiferayWindowState.POP_UP);
 		}
 		catch (WindowStateException windowStateException) {
-			return ReflectionUtil.throwException(windowStateException);
+			ReflectionUtil.throwException(windowStateException);
 		}
 
 		Map<String, Object> data = HashMapBuilder.<String, Object>put(

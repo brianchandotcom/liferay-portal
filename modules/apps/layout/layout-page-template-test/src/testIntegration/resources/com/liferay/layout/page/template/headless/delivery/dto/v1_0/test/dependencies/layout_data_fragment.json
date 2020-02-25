@@ -1,0 +1,27 @@
+{
+	"items": {
+		"75d9f756-a7fb-4b9a-b949-601d5d4461e9": {
+			"children": [],
+			"config": {
+				"fragmentEntryLinkId": "${FRAGMENT_ENTRY_LINK_ID}"
+			},
+			"itemId": "75d9f756-a7fb-4b9a-b949-601d5d4461e9",
+			"parentId": "9ae245cb-f716-494b-b51c-b23836cff3fe",
+			"type": "fragment"
+		},
+		"9ae245cb-f716-494b-b51c-b23836cff3fe": {
+			"children": [
+				"75d9f756-a7fb-4b9a-b949-601d5d4461e9"
+			],
+			"config": {},
+			"itemId": "9ae245cb-f716-494b-b51c-b23836cff3fe",
+			"parentId": "",
+			"type": "root"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "9ae245cb-f716-494b-b51c-b23836cff3fe"
+	},
+	"version": 1
+}

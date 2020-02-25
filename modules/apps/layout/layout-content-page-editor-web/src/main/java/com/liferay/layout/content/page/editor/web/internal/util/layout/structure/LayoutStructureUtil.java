@@ -68,7 +68,8 @@ public class LayoutStructureUtil {
 				fragmentCollectionContributorTracker,
 			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 			FragmentRendererTracker fragmentRendererTracker, long groupId,
-			String itemId, long plid, long segmentsExperienceId)
+			String itemId, long plid, boolean saveInlineContent,
+			boolean saveMappingConfiguration, long segmentsExperienceId)
 		throws PortalException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -83,7 +84,8 @@ public class LayoutStructureUtil {
 		PageElement pageElement = PageDefinitionConverterUtil.toPageElement(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			layoutStructure, layoutStructure.getLayoutStructureItem(itemId));
+			layoutStructure, layoutStructure.getLayoutStructureItem(itemId),
+			saveInlineContent, saveMappingConfiguration);
 
 		return pageElement.toString();
 	}

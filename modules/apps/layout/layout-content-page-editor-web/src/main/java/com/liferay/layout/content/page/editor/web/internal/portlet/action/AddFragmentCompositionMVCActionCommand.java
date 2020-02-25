@@ -106,6 +106,10 @@ public class AddFragmentCompositionMVCActionCommand
 		String description = ParamUtil.getString(actionRequest, "description");
 
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
+		boolean saveInlineContent = ParamUtil.getBoolean(
+			actionRequest, "saveInlineContent");
+		boolean saveMappingConfiguration = ParamUtil.getBoolean(
+			actionRequest, "saveMappingConfiguration");
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
@@ -115,6 +119,7 @@ public class AddFragmentCompositionMVCActionCommand
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
 				themeDisplay.getScopeGroupId(), itemId, themeDisplay.getPlid(),
+				saveInlineContent, saveMappingConfiguration,
 				segmentsExperienceId);
 
 		FragmentComposition fragmentComposition =

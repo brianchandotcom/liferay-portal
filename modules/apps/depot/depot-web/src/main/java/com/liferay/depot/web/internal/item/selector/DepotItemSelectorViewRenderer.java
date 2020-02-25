@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.PortalIncludeUtil;
 
@@ -48,8 +47,6 @@ import javax.portlet.PortletURL;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -109,82 +106,42 @@ public class DepotItemSelectorViewRenderer implements ItemSelectorViewRenderer {
 					return;
 				}
 
-				if (ListUtil.isNotEmpty(_portletIds)) {
-					_dispatchPortletItemSelectorView(
-						scopeGroup.getGroupId(), httpServletRequest,
-						httpServletResponse, pageContext);
+				long groupId = scopeGroup.getGroupId();
+
+				String portletId = _getPortletId(groupId);
+
+				if (_depotApplicationController.isEnabled(portletId, groupId)) {
+					_itemSelectorViewRenderer.renderHTML(pageContext);
+
+					return;
 				}
-				else {
-					_dispatchAssetEntryItemSelectorView(
-						scopeGroup.getGroupId(), httpServletRequest,
-						httpServletResponse, pageContext);
-				}
+
+				RequestDispatcher requestDispatcher =
+					_servletContext.getRequestDispatcher(
+						"/item/selector/application_disabled.jsp");
+
+				DepotApplicationDisplayContext depotApplicationDisplayContext =
+					new DepotApplicationDisplayContext(
+						httpServletRequest, _portal);
+
+				depotApplicationDisplayContext.setPortletId(portletId);
+				depotApplicationDisplayContext.setPortletURL(
+					_itemSelectorViewRenderer.getPortletURL());
+
+				httpServletRequest.setAttribute(
+					DepotAdminWebKeys.DEPOT_APPLICATION_DISPLAY_CONTEXT,
+					depotApplicationDisplayContext);
+
+				requestDispatcher.include(
+					httpServletRequest, httpServletResponse);
 			});
 	}
 
-	private void _dispatchAssetEntryItemSelectorView(
-			long groupId, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, PageContext pageContext)
-		throws IOException, ServletException {
-
-		String portletId = _getPortletId(_className);
-
-		if (_depotApplicationController.isEnabled(portletId, groupId)) {
-			_itemSelectorViewRenderer.renderHTML(pageContext);
-
-			return;
-		}
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/item/selector/application_disabled.jsp");
-
-		DepotApplicationDisplayContext depotApplicationDisplayContext =
-			new DepotApplicationDisplayContext(httpServletRequest, _portal);
-
-		depotApplicationDisplayContext.setPortletId(portletId);
-		depotApplicationDisplayContext.setPortletURL(
-			_itemSelectorViewRenderer.getPortletURL());
-
-		httpServletRequest.setAttribute(
-			DepotAdminWebKeys.DEPOT_APPLICATION_DISPLAY_CONTEXT,
-			depotApplicationDisplayContext);
-
-		requestDispatcher.include(httpServletRequest, httpServletResponse);
-	}
-
-	private void _dispatchPortletItemSelectorView(
-			long groupId, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, PageContext pageContext)
-		throws IOException, ServletException {
-
-		String portletId = _getPortletId(groupId);
-
-		if (Validator.isNotNull(portletId)) {
-			_itemSelectorViewRenderer.renderHTML(pageContext);
-
-			return;
-		}
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/item/selector/application_disabled.jsp");
-
-		DepotApplicationDisplayContext depotApplicationDisplayContext =
-			new DepotApplicationDisplayContext(httpServletRequest, _portal);
-
-		depotApplicationDisplayContext.setPortletId(_portletIds.get(0));
-		depotApplicationDisplayContext.setPortletURL(
-			_itemSelectorViewRenderer.getPortletURL());
-
-		httpServletRequest.setAttribute(
-			DepotAdminWebKeys.DEPOT_APPLICATION_DISPLAY_CONTEXT,
-			depotApplicationDisplayContext);
-
-		requestDispatcher.include(httpServletRequest, httpServletResponse);
-	}
-
 	private String _getPortletId(long groupId) {
+		if (ListUtil.isEmpty(_portletIds)) {
+			return _getPortletId(_className);
+		}
+
 		Stream<String> stream = _portletIds.stream();
 
 		return stream.filter(

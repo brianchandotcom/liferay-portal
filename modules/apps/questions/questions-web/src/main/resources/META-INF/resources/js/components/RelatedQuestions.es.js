@@ -39,61 +39,66 @@ export default ({question}) => {
 
 	return (
 		<>
-			<h3>Related Questions</h3>
-			<hr />
-
 			{!!relatedQuestions.length && (
-				<div className="autofit-padded autofit-row">
-					{relatedQuestions.map(relatedQuestion => (
-						<div className="autofit-col" key={relatedQuestion.id}>
-							<div className="autofit-row">
-								<div className="autofit-col autofit-col-expand">
-									{relatedQuestion.messageBoardSection &&
-										relatedQuestion.messageBoardSection
-											.title}
+				<>
+					<h3>Related Questions</h3>
+					<hr/>
+					<div className="autofit-padded autofit-row">
+						{relatedQuestions.map(relatedQuestion => (
+							<div className="autofit-col"
+								 key={relatedQuestion.id}>
+								<div className="autofit-row">
+									<div
+										className="autofit-col autofit-col-expand">
+										{relatedQuestion.messageBoardSection &&
+										 relatedQuestion.messageBoardSection
+											 .title}
+									</div>
+									<div>
+										<QuestionBadge
+											symbol={
+												normalizeRating(
+													question.aggregateRating
+												) < 0
+													? 'caret-bottom'
+													: 'caret-top'
+											}
+											value={normalizeRating(
+												relatedQuestion.aggregateRating
+											)}
+										/>
+									</div>
 								</div>
+								<h2 className="question-headline">
+									<Link
+										to={'/questions/' + relatedQuestion.id}>
+										{relatedQuestion.headline}
+									</Link>
+								</h2>
 								<div>
-									<QuestionBadge
-										symbol={
-											normalizeRating(
-												question.aggregateRating
-											) < 0
-												? 'caret-bottom'
-												: 'caret-top'
-										}
-										value={normalizeRating(
-											relatedQuestion.aggregateRating
-										)}
+									<UserIcon
+										fullName={relatedQuestion.creator.name}
+										portraitURL={relatedQuestion.creator.image}
+										size="sm"
+										userId={String(
+											relatedQuestion.creator.id)}
 									/>
-								</div>
-							</div>
-							<h2 className="question-headline">
-								<Link to={'/questions/' + relatedQuestion.id}>
-									{relatedQuestion.headline}
-								</Link>
-							</h2>
-							<div>
-								<UserIcon
-									fullName={relatedQuestion.creator.name}
-									portraitURL={relatedQuestion.creator.image}
-									size="sm"
-									userId={String(relatedQuestion.creator.id)}
-								/>
-								<span>
+									<span>
 									<strong>
 										{relatedQuestion.creator.name}
 									</strong>
 								</span>
-								<span>
+									<span>
 									{' - ' +
-										dateToInternationalHuman(
-											relatedQuestion.dateModified
-										)}
+									 dateToInternationalHuman(
+										 relatedQuestion.dateModified
+									 )}
 								</span>
+								</div>
 							</div>
-						</div>
-					))}
-				</div>
+						))}
+					</div>
+				</>
 			)}
 		</>
 	);

@@ -136,11 +136,23 @@ public class AssetRendererFactoryController {
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
+			if (serviceContext == null) {
+				return null;
+			}
+
 			HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+			if (httpServletRequest == null) {
+				return null;
+			}
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay == null) {
+				return null;
+			}
 
 			return themeDisplay.getScopeGroup();
 		}

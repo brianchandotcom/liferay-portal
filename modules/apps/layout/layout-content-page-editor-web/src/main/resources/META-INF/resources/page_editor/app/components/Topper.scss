@@ -52,6 +52,7 @@
 		&--inset {
 			border-radius: 0 0 2px;
 			top: $borderWidth;
+			transform: translateY(0);
 		}
 	}
 

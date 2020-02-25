@@ -32,11 +32,11 @@ public class RowLayoutStructureItemHelper implements LayoutStructureItemHelper {
 	public LayoutStructureItem addLayoutStructureItem(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
 		LayoutStructure layoutStructure, PageElement pageElement,
-		String parentId, int position) {
+		String parentItemId, int position) {
 
 		RowLayoutStructureItem rowLayoutStructureItem =
 			(RowLayoutStructureItem)layoutStructure.addLayoutStructureItem(
-				LayoutDataItemTypeConstants.TYPE_ROW, parentId, position);
+				LayoutDataItemTypeConstants.TYPE_ROW, parentItemId, position);
 
 		Map<String, Object> definitionMap =
 			(Map<String, Object>)pageElement.getDefinition();

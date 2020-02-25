@@ -34,12 +34,12 @@ public class ContainerLayoutStructureItemHelper
 	public LayoutStructureItem addLayoutStructureItem(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
 		LayoutStructure layoutStructure, PageElement pageElement,
-		String parentId, int position) {
+		String parentItemId, int position) {
 
 		ContainerLayoutStructureItem containerLayoutStructureItem =
 			(ContainerLayoutStructureItem)
 				layoutStructure.addContainerLayoutStructureItem(
-					parentId, position);
+					parentItemId, position);
 
 		Map<String, Object> definitionMap =
 			(Map<String, Object>)pageElement.getDefinition();

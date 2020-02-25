@@ -323,7 +323,7 @@ public class LayoutPageTemplatesImporterImpl
 	private void _processPageElement(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
 		LayoutStructure layoutStructure, PageElement pageElement,
-		String parentId, int position) {
+		String parentItemId, int position) {
 
 		LayoutStructureItemHelperFactory layoutStructureItemHelperFactory =
 			LayoutStructureItemHelperFactory.getInstance();
@@ -338,8 +338,8 @@ public class LayoutPageTemplatesImporterImpl
 
 		LayoutStructureItem layoutStructureItem =
 			layoutStructureItemHelper.addLayoutStructureItem(
-				layoutPageTemplateEntry, layoutStructure, pageElement, parentId,
-				position);
+				layoutPageTemplateEntry, layoutStructure, pageElement,
+				parentItemId, position);
 
 		if ((layoutStructureItem == null) ||
 			(pageElement.getPageElements() == null)) {

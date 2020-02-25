@@ -28,6 +28,7 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
+import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
@@ -123,20 +124,21 @@ public class FragmentInstanceDefinitionConverterUtil {
 				new FragmentField() {
 					{
 						id = backgroundImageId;
-						value = new FragmentFieldImage() {
+						value = new FragmentFieldBackgroundImage() {
 							{
-								fragmentImage = new FragmentImage() {
+								backgroundImage = new FragmentImage() {
 									{
+										Map<String, String> localeMap =
+											_toLocaleMap(imageJSONObject);
+
 										title = new InlineValue() {
 											{
-												value_i18n = _toMap(
-													imageJSONObject, "title");
+												value_i18n = localeMap;
 											}
 										};
 										url = new InlineValue() {
 											{
-												value_i18n = _toMap(
-													imageJSONObject, "url");
+												value_i18n = localeMap;
 											}
 										};
 									}

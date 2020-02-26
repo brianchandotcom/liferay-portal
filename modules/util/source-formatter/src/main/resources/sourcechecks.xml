@@ -12,35 +12,91 @@
 		<check name="NewFileCheck" />
 	</source-processor>
 	<source-processor name="BNDRunSourceProcessor">
-		<check name="BNDRunInstructionsOrderCheck" />
+		<check name="BNDRunInstructionsOrderCheck">
+			<category name="Styling" />
+			<description name="Sorts definition keys alphabetically" />
+		</check>
 	</source-processor>
 	<source-processor name="BNDSourceProcessor">
-		<check name="BNDBundleCheck" />
-		<check name="BNDCapabilityCheck" />
-		<check name="BNDDefinitionKeysCheck" />
-		<check name="BNDDeprecatedAppBNDsCheck" />
-		<check name="BNDLineBreaksCheck" />
-		<check name="BNDMultipleAppBNDsCheck" />
-		<check name="BNDRangeCheck" />
-		<check name="BNDSchemaVersionCheck" />
-		<check name="BNDStylingCheck" />
-		<check name="BNDWhitespaceCheck" />
+		<check name="BNDBundleCheck">
+			<category name="Bug Prevention" />
+			<description name="Validates `Liferay-Releng-*` properties" />
+		</check>
+		<check name="BNDCapabilityCheck">
+			<category name="Styling" />
+			<description name="Sorts and applies logic to fix line breaks to property values for `Provide-Capability` and `Require-Capability`" />
+		</check>
+		<check name="BNDDefinitionKeysCheck">
+			<category name="Bug Prevention" />
+			<description name="Validates definition keys in `.bnd` files" />
+		</check>
+		<check name="BNDDeprecatedAppBNDsCheck">
+			<category name="Miscellaneous" />
+			<description name="Checks for redundant `app.bnd` in deprecated or archived modules" />
+		</check>
+		<check name="BNDLineBreaksCheck">
+			<category name="Styling" />
+			<description name="Checks for incorrect/missing line breaks" />
+		</check>
+		<check name="BNDMultipleAppBNDsCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for duplicate `app.bnd` (when both `/apps/` and `/apps/dxp/` contain the same module)" />
+		</check>
+		<check name="BNDRangeCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for use or range expressions" />
+		</check>
+		<check name="BNDSchemaVersionCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for incorrect use of property `Liferay-Require-SchemaVersion`" />
+		</check>
+		<check name="BNDStylingCheck">
+			<category name="Styling" />
+			<description name="Applies rules to enforce consisteny in code style" />
+		</check>
+		<check name="BNDWhitespaceCheck">
+			<category name="Styling" />
+			<description name="Checks for incorrect/missing line whitespace" />
+		</check>
 
 		<!-- Liferay Source Checks -->
 
-		<check name="BNDExportsCheck" />
-		<check name="BNDImportsCheck" />
-		<check name="BNDSuiteCheck" />
+		<check name="BNDExportsCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that modules not ending with `-api`, `-client`, `-spi`, `-tablig`, `-test-util` do not export packages" />
+		</check>
+		<check name="BNDImportsCheck">
+			<category name="Styling" />
+			<description name="Sorts class names and checks for use of wildcards in property values for `-conditionalpackage`, `-exportcontents` and `Export-Package`" />
+		</check>
+		<check name="BNDSuiteCheck">
+			<category name="Miscellaneous" />
+			<description name="Checks that deprecated apps are moved to the `archived` folder" />
+		</check>
 
 		<!-- Module Source Checks -->
 
-		<check name="BNDBundleActivatorCheck" />
-		<check name="BNDBundleInformationCheck" />
-		<check name="BNDDirectoryNameCheck" />
+		<check name="BNDBundleActivatorCheck">
+			<category name="Bug Prevention" />
+			<description name="Validates property value for `Bundle-Activator`" />
+		</check>
+		<check name="BNDBundleInformationCheck">
+			<category name="Bug Prevention" />
+			<description name="Validates property values for `Bundle-Version`, `Bundle-Name` and `Bundle-SymbolicName`" />
+		</check>
+		<check name="BNDDirectoryNameCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks if the directory names of the submodules match the parent module name" />
+		</check>
 		<check name="BNDIncludeResourceCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for unnesecarry including of `test-classes/integration`" />
 			<property name="checkTestIncludeResource" value="true" />
 		</check>
-		<check name="BNDWebContextPathCheck" />
+		<check name="BNDWebContextPathCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks if the property value for `Web-ContextPath` matches the module directory" />
+		</check>
 	</source-processor>
 	<source-processor name="CodeownersSourceProcessor">
 		<check name="CodeownersFileLocationCheck" />

@@ -120,6 +120,10 @@ public interface MessageBoardThreadResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
+	public MessageBoardThread getSiteMessageBoardThreadByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

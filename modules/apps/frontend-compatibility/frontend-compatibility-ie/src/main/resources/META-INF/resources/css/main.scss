@@ -110,7 +110,8 @@
 }
 
 .form-control-inline {
-	&:-ms-input-placeholder, &::-ms-input-placeholder {
+	&:-ms-input-placeholder,
+	&::-ms-input-placeholder {
 		color: $gray-500;
 		font-style: italic;
 	}

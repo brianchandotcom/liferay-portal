@@ -2,4 +2,4 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-BNDRunInstructionsOrderCheck | Miscellaneous | |
+BNDRunInstructionsOrderCheck | Styling | Sorts definition keys alphabetically |

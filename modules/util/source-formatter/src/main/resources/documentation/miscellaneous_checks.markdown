@@ -12,25 +12,8 @@ AssertEqualsCheck | .java | |
 AttributeOrderCheck | .java | |
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/config_blocks.html#AvoidNestedBlocks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Finds nested blocks (blocks that are used freely in the code). |
 [AvoidStarImportCheck](https://checkstyle.sourceforge.io/config_imports.html#AvoidStarImport) | .java | Checks that there are no import statements that use the * notation. |
-[BNDBundleActivatorCheck](checks/bnd_bundle_activator_check.markdown#bndbundleactivatorcheck) | .bnd | |
-BNDBundleCheck | .bnd | |
-[BNDBundleInformationCheck](checks/bnd_bundle_information_check.markdown#bndbundleinformationcheck) | .bnd | |
-BNDCapabilityCheck | .bnd | |
-[BNDDefinitionKeysCheck](checks/bnd_definition_keys_check.markdown#bnddefinitionkeyscheck) | .bnd | |
-BNDDeprecatedAppBNDsCheck | .bnd | |
-[BNDDirectoryNameCheck](checks/bnd_directory_name_check.markdown#bnddirectorynamecheck) | .bnd | |
-[BNDExportsCheck](checks/bnd_exports_check.markdown#bndexportscheck) | .bnd | |
-BNDImportsCheck | .bnd | |
-[BNDIncludeResourceCheck](checks/bnd_include_resource_check.markdown#bndincluderesourcecheck) | .bnd | |
-BNDLineBreaksCheck | .bnd | |
-BNDMultipleAppBNDsCheck | .bnd | |
-BNDRangeCheck | .bnd | |
-BNDRunInstructionsOrderCheck | .bndrun | |
-[BNDSchemaVersionCheck](checks/bnd_schema_version_check.markdown#bndschemaversioncheck) | .bnd | |
-BNDStylingCheck | .bnd | |
-BNDSuiteCheck | .bnd | |
-[BNDWebContextPathCheck](checks/bnd_web_context_path_check.markdown#bndwebcontextpathcheck) | .bnd | |
-BNDWhitespaceCheck | .bnd | |
+BNDDeprecatedAppBNDsCheck | .bnd | Checks for redundant `app.bnd` in deprecated or archived modules |
+BNDSuiteCheck | .bnd | Checks that deprecated apps are moved to the `archived` folder |
 CDNCheck | | |
 CQLKeywordCheck | .cql | |
 CSSCommentsCheck | .css or .scss | |

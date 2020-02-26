@@ -13,25 +13,25 @@ AssertEqualsCheck | Miscellaneous | .java | |
 AttributeOrderCheck | Miscellaneous | .java | |
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/config_blocks.html#AvoidNestedBlocks) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | Finds nested blocks (blocks that are used freely in the code). |
 [AvoidStarImportCheck](https://checkstyle.sourceforge.io/config_imports.html#AvoidStarImport) | Miscellaneous | .java | Checks that there are no import statements that use the * notation. |
-[BNDBundleActivatorCheck](checks/bnd_bundle_activator_check.markdown#bndbundleactivatorcheck) | Miscellaneous | .bnd | |
-BNDBundleCheck | Miscellaneous | .bnd | |
-[BNDBundleInformationCheck](checks/bnd_bundle_information_check.markdown#bndbundleinformationcheck) | Miscellaneous | .bnd | |
-BNDCapabilityCheck | Miscellaneous | .bnd | |
-[BNDDefinitionKeysCheck](checks/bnd_definition_keys_check.markdown#bnddefinitionkeyscheck) | Miscellaneous | .bnd | |
-BNDDeprecatedAppBNDsCheck | Miscellaneous | .bnd | |
-[BNDDirectoryNameCheck](checks/bnd_directory_name_check.markdown#bnddirectorynamecheck) | Miscellaneous | .bnd | |
-[BNDExportsCheck](checks/bnd_exports_check.markdown#bndexportscheck) | Miscellaneous | .bnd | |
-BNDImportsCheck | Miscellaneous | .bnd | |
-[BNDIncludeResourceCheck](checks/bnd_include_resource_check.markdown#bndincluderesourcecheck) | Miscellaneous | .bnd | |
-BNDLineBreaksCheck | Miscellaneous | .bnd | |
-BNDMultipleAppBNDsCheck | Miscellaneous | .bnd | |
-BNDRangeCheck | Miscellaneous | .bnd | |
-BNDRunInstructionsOrderCheck | Miscellaneous | .bndrun | |
-[BNDSchemaVersionCheck](checks/bnd_schema_version_check.markdown#bndschemaversioncheck) | Miscellaneous | .bnd | |
-BNDStylingCheck | Miscellaneous | .bnd | |
-BNDSuiteCheck | Miscellaneous | .bnd | |
-[BNDWebContextPathCheck](checks/bnd_web_context_path_check.markdown#bndwebcontextpathcheck) | Miscellaneous | .bnd | |
-BNDWhitespaceCheck | Miscellaneous | .bnd | |
+[BNDBundleActivatorCheck](checks/bnd_bundle_activator_check.markdown#bndbundleactivatorcheck) | Bug Prevention | .bnd | Validates property value for `Bundle-Activator` |
+BNDBundleCheck | Bug Prevention | .bnd | Validates `Liferay-Releng-*` properties |
+[BNDBundleInformationCheck](checks/bnd_bundle_information_check.markdown#bndbundleinformationcheck) | Bug Prevention | .bnd | Validates property values for `Bundle-Version`, `Bundle-Name` and `Bundle-SymbolicName` |
+BNDCapabilityCheck | Styling | .bnd | Sorts and applies logic to fix line breaks to property values for `Provide-Capability` and `Require-Capability` |
+[BNDDefinitionKeysCheck](checks/bnd_definition_keys_check.markdown#bnddefinitionkeyscheck) | Bug Prevention | .bnd | Validates definition keys in `.bnd` files |
+BNDDeprecatedAppBNDsCheck | Miscellaneous | .bnd | Checks for redundant `app.bnd` in deprecated or archived modules |
+[BNDDirectoryNameCheck](checks/bnd_directory_name_check.markdown#bnddirectorynamecheck) | Bug Prevention | .bnd | Checks if the directory names of the submodules match the parent module name |
+[BNDExportsCheck](checks/bnd_exports_check.markdown#bndexportscheck) | Bug Prevention | .bnd | Checks that modules not ending with `-api`, `-client`, `-spi`, `-tablig`, `-test-util` do not export packages |
+BNDImportsCheck | Styling | .bnd | Sorts class names and checks for use of wildcards in property values for `-conditionalpackage`, `-exportcontents` and `Export-Package` |
+[BNDIncludeResourceCheck](checks/bnd_include_resource_check.markdown#bndincluderesourcecheck) | Bug Prevention | .bnd | Checks for unnesecarry including of `test-classes/integration` |
+BNDLineBreaksCheck | Styling | .bnd | Checks for incorrect/missing line breaks |
+BNDMultipleAppBNDsCheck | Bug Prevention | .bnd | Checks for duplicate `app.bnd` (when both `/apps/` and `/apps/dxp/` contain the same module) |
+BNDRangeCheck | Bug Prevention | .bnd | Checks for use or range expressions |
+BNDRunInstructionsOrderCheck | Styling | .bndrun | Sorts definition keys alphabetically |
+[BNDSchemaVersionCheck](checks/bnd_schema_version_check.markdown#bndschemaversioncheck) | Bug Prevention | .bnd | Checks for incorrect use of property `Liferay-Require-SchemaVersion` |
+BNDStylingCheck | Styling | .bnd | Applies rules to enforce consisteny in code style |
+BNDSuiteCheck | Miscellaneous | .bnd | Checks that deprecated apps are moved to the `archived` folder |
+[BNDWebContextPathCheck](checks/bnd_web_context_path_check.markdown#bndwebcontextpathcheck) | Bug Prevention | .bnd | Checks if the property value for `Web-ContextPath` matches the module directory |
+BNDWhitespaceCheck | Styling | .bnd | Checks for incorrect/missing line whitespace |
 CDNCheck | Miscellaneous | | |
 CQLKeywordCheck | Miscellaneous | .cql | |
 CSSCommentsCheck | Miscellaneous | .css or .scss | |

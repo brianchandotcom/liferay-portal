@@ -154,10 +154,16 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 		return signedIn;
 	}
 
+	@Override
+	public void setPermissionChecker(PermissionChecker permissionChecker) {
+		this.permissionChecker = permissionChecker;
+	}
+
 	protected boolean checkGuest = PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED;
 	protected long defaultUserId;
 	protected Boolean omniadmin;
 	protected Role ownerRole;
+	protected PermissionChecker permissionChecker = this;
 	protected boolean signedIn;
 	protected User user;
 

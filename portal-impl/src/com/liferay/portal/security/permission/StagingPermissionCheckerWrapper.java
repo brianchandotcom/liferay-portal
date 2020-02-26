@@ -18,86 +18,28 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.UserBag;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerWrapper;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
-import java.util.Map;
 import java.util.Objects;
 
 /**
  * @author Tomas Polesovsky
  */
-public class StagingPermissionChecker implements PermissionChecker {
+public class StagingPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
-	public StagingPermissionChecker(PermissionChecker permissionChecker) {
-		_permissionChecker = permissionChecker;
+	public StagingPermissionCheckerWrapper(
+		PermissionChecker permissionChecker) {
+
+		super(permissionChecker);
 	}
 
 	@Override
 	public PermissionChecker clone() {
-		return new StagingPermissionChecker(_permissionChecker.clone());
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _permissionChecker.getCompanyId();
-	}
-
-	@Override
-	public long[] getGuestUserRoleIds() {
-		return _permissionChecker.getGuestUserRoleIds();
-	}
-
-	@Override
-	public long getOwnerRoleId() {
-		return _permissionChecker.getOwnerRoleId();
-	}
-
-	@Override
-	public Map<Object, Object> getPermissionChecksMap() {
-		return _permissionChecker.getPermissionChecksMap();
-	}
-
-	@Override
-	public long[] getRoleIds(long userId, long groupId) {
-		return _permissionChecker.getRoleIds(
-			userId, StagingUtil.getLiveGroupId(groupId));
-	}
-
-	@Override
-	public User getUser() {
-		return _permissionChecker.getUser();
-	}
-
-	@Override
-	public UserBag getUserBag() throws Exception {
-		return _permissionChecker.getUserBag();
-	}
-
-	@Override
-	public long getUserId() {
-		return _permissionChecker.getUserId();
-	}
-
-	@Override
-	public boolean hasOwnerPermission(
-		long companyId, String name, long primKey, long ownerId,
-		String actionId) {
-
-		return _permissionChecker.hasOwnerPermission(
-			companyId, name, primKey, ownerId, actionId);
-	}
-
-	@Override
-	public boolean hasOwnerPermission(
-		long companyId, String name, String primKey, long ownerId,
-		String actionId) {
-
-		return _permissionChecker.hasOwnerPermission(
-			companyId, name, primKey, ownerId, actionId);
+		return new StagingPermissionCheckerWrapper(
+			delegatePermissionChecker.clone());
 	}
 
 	@Override
@@ -114,7 +56,7 @@ public class StagingPermissionChecker implements PermissionChecker {
 			return true;
 		}
 
-		return _permissionChecker.hasPermission(
+		return delegatePermissionChecker.hasPermission(
 			liveGroup, name, primKey, actionId);
 	}
 
@@ -134,7 +76,7 @@ public class StagingPermissionChecker implements PermissionChecker {
 			return true;
 		}
 
-		return _permissionChecker.hasPermission(
+		return delegatePermissionChecker.hasPermission(
 			liveGroup, name, primKey, actionId);
 	}
 
@@ -142,7 +84,7 @@ public class StagingPermissionChecker implements PermissionChecker {
 	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
-		return hasPermission(
+		return delegatePermissionChecker.hasPermission(
 			GroupLocalServiceUtil.fetchGroup(groupId), name, primKey, actionId);
 	}
 
@@ -150,72 +92,32 @@ public class StagingPermissionChecker implements PermissionChecker {
 	public boolean hasPermission(
 		long groupId, String name, String primKey, String actionId) {
 
-		return hasPermission(
+		return delegatePermissionChecker.hasPermission(
 			GroupLocalServiceUtil.fetchGroup(groupId), name, primKey, actionId);
 	}
 
 	@Override
-	public void init(User user) {
-		_permissionChecker.init(user);
-	}
-
-	@Override
-	public boolean isCheckGuest() {
-		return _permissionChecker.isCheckGuest();
-	}
-
-	@Override
-	public boolean isCompanyAdmin() {
-		return _permissionChecker.isCompanyAdmin();
-	}
-
-	@Override
-	public boolean isCompanyAdmin(long companyId) {
-		return _permissionChecker.isCompanyAdmin(companyId);
-	}
-
-	@Override
 	public boolean isContentReviewer(long companyId, long groupId) {
-		return _permissionChecker.isContentReviewer(
+		return delegatePermissionChecker.isContentReviewer(
 			companyId, StagingUtil.getLiveGroupId(groupId));
 	}
 
 	@Override
 	public boolean isGroupAdmin(long groupId) {
-		return _permissionChecker.isGroupAdmin(
+		return delegatePermissionChecker.isGroupAdmin(
 			StagingUtil.getLiveGroupId(groupId));
 	}
 
 	@Override
 	public boolean isGroupMember(long groupId) {
-		return _permissionChecker.isGroupMember(
+		return delegatePermissionChecker.isGroupMember(
 			StagingUtil.getLiveGroupId(groupId));
 	}
 
 	@Override
 	public boolean isGroupOwner(long groupId) {
-		return _permissionChecker.isGroupOwner(
+		return delegatePermissionChecker.isGroupOwner(
 			StagingUtil.getLiveGroupId(groupId));
-	}
-
-	@Override
-	public boolean isOmniadmin() {
-		return _permissionChecker.isOmniadmin();
-	}
-
-	@Override
-	public boolean isOrganizationAdmin(long organizationId) {
-		return _permissionChecker.isOrganizationAdmin(organizationId);
-	}
-
-	@Override
-	public boolean isOrganizationOwner(long organizationId) {
-		return _permissionChecker.isOrganizationOwner(organizationId);
-	}
-
-	@Override
-	public boolean isSignedIn() {
-		return _permissionChecker.isSignedIn();
 	}
 
 	private boolean _isStagingFolder(String name, String actionId) {
@@ -230,7 +132,5 @@ public class StagingPermissionChecker implements PermissionChecker {
 
 		return false;
 	}
-
-	private final PermissionChecker _permissionChecker;
 
 }

@@ -173,7 +173,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		try {
-			long ownerRoleId = getOwnerRoleId();
+			long ownerRoleId = permissionChecker.getOwnerRoleId();
 
 			if (ownerIsDefaultUser) {
 				Role guestRole = RoleLocalServiceUtil.getRole(
@@ -765,7 +765,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	protected boolean isContentReviewerImpl(long groupId)
 		throws PortalException {
 
-		if (isCompanyAdmin() || isGroupAdmin(groupId)) {
+		if (permissionChecker.isCompanyAdmin() ||
+			permissionChecker.isGroupAdmin(groupId)) {
+
 			return true;
 		}
 
@@ -796,11 +798,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
-		if (isOmniadmin()) {
+		if (permissionChecker.isOmniadmin()) {
 			return true;
 		}
 
-		if (isCompanyAdmin(companyId)) {
+		if (permissionChecker.isCompanyAdmin(companyId)) {
 			return true;
 		}
 
@@ -808,7 +810,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
-		if (isGroupAdmin(groupId)) {
+		if (permissionChecker.isGroupAdmin(groupId)) {
 			return true;
 		}
 
@@ -1053,7 +1055,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
-		if (isOmniadmin()) {
+		if (permissionChecker.isOmniadmin()) {
 			return true;
 		}
 
@@ -1063,7 +1065,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		if (isCompanyAdmin(group.getCompanyId())) {
+		if (permissionChecker.isCompanyAdmin(group.getCompanyId())) {
 			return true;
 		}
 
@@ -1096,7 +1098,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
-		if (isOmniadmin()) {
+		if (permissionChecker.isOmniadmin()) {
 			return true;
 		}
 

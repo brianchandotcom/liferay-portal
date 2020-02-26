@@ -256,4 +256,8 @@ public interface PermissionChecker extends Cloneable {
 	 */
 	public boolean isSignedIn();
 
+	public default void setPermissionChecker(
+		PermissionChecker permissionChecker) {
+	}
+
 }

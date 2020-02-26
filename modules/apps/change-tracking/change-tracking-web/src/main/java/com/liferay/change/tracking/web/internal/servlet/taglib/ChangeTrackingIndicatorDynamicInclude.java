@@ -283,14 +283,14 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			httpServletRequest, themeDisplay.getScopeGroup(),
 			CTPortletKeys.CHANGE_LISTS, 0, 0, PortletRequest.RENDER_PHASE);
 
+		addURL.setParameter(
+			"mvcRenderCommandName", "/change_lists/add_ct_collection");
+
 		PortletURL overviewURL = _portal.getControlPanelPortletURL(
 			httpServletRequest, themeDisplay.getScopeGroup(),
 			CTPortletKeys.CHANGE_LISTS, 0, 0, PortletRequest.RENDER_PHASE);
 
 		addURL.setParameter("backURL", overviewURL.toString());
-
-		addURL.setParameter(
-			"mvcRenderCommandName", "/change_lists/add_ct_collection");
 
 		jsonArray.put(
 			JSONUtil.put(
@@ -327,7 +327,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 				conflictsURL.setParameter(
 					"mvcRenderCommandName", "/change_lists/view_conflicts");
-
 				conflictsURL.setParameter(
 					"ctCollectionId",
 					String.valueOf(ctCollection.getCtCollectionId()));

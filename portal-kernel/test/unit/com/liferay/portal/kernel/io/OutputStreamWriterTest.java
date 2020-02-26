@@ -16,12 +16,15 @@ package com.liferay.portal.kernel.io;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.CharsetEncoder;
@@ -188,6 +191,35 @@ public class OutputStreamWriterTest {
 			Assert.assertEquals(
 				"Output buffer size 3 is less than 4",
 				illegalArgumentException.getMessage());
+		}
+	}
+
+	@Test
+	public void testException() throws IOException {
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		ExceptionThrowingOutputStream exceptionThrowingOutputStream =
+			new ExceptionThrowingOutputStream(byteArrayOutputStream);
+
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+			exceptionThrowingOutputStream, "UTF-8", 4, true);
+
+		UnsyncPrintWriter writer = new UnsyncPrintWriter(outputStreamWriter);
+
+		writer.write(10);
+
+		exceptionThrowingOutputStream.forceException(true);
+
+		writer.write(10);
+
+		exceptionThrowingOutputStream.forceException(false);
+
+		try {
+			writer.write(10);
+		}
+		catch (BufferOverflowException bufferOverflowException) {
+			bufferOverflowException.printStackTrace();
 		}
 	}
 
@@ -583,6 +615,48 @@ public class OutputStreamWriterTest {
 		}
 
 		private final CharsetEncoder _charsetEncoder;
+
+	}
+
+	private static class ExceptionThrowingOutputStream extends OutputStream {
+
+		public ExceptionThrowingOutputStream(OutputStream outputStream) {
+			_outputStream = outputStream;
+		}
+
+		public void forceException(boolean bool) {
+			_forceException = bool;
+		}
+
+		@Override
+		public void write(byte[] b) throws IOException {
+			if (_forceException) {
+				throw new IOException();
+			}
+
+			_outputStream.write(b);
+		}
+
+		@Override
+		public void write(byte[] b, int off, int len) throws IOException {
+			if (_forceException) {
+				throw new IOException();
+			}
+
+			_outputStream.write(b, off, len);
+		}
+
+		@Override
+		public void write(int b) throws IOException {
+			if (_forceException) {
+				throw new IOException();
+			}
+
+			_outputStream.write(b);
+		}
+
+		private boolean _forceException;
+		private final OutputStream _outputStream;
 
 	}
 

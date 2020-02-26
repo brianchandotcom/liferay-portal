@@ -285,8 +285,19 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			}
 
 			if (displayCategory) {
-				if (Validator.isNotNull(checkInfo.getCategory())) {
-					sb.append(checkInfo.getCategory());
+				String category = checkInfo.getCategory();
+
+				if (Validator.isNotNull(category)) {
+					String markdownFileName =
+						SourceFormatterUtil.getMarkdownFileName(
+							StringUtil.removeChar(category, CharPool.SPACE) +
+								"Checks");
+
+					sb.append(
+						_getLink(
+							markdownFileName, "", category,
+							category + " Checks"));
+
 					sb.append(" | ");
 				}
 				else {
@@ -402,7 +413,10 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
 			"AllChecks");
 
-		sb.append(_getLink(markdownFileName, "- ###", headerName, headerName));
+		sb.append(
+			_getLink(
+				_DOCUMENTATION_DIR_LOCATION + markdownFileName, "- ### ",
+				headerName, headerName));
 
 		sb.append("\n\n");
 
@@ -417,7 +431,10 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			markdownFileName = SourceFormatterUtil.getMarkdownFileName(
 				StringUtil.removeChar(category, CharPool.SPACE) + "Checks");
 
-			sb.append(_getLink(markdownFileName, "   -", category, headerName));
+			sb.append(
+				_getLink(
+					_DOCUMENTATION_DIR_LOCATION + markdownFileName, "   - ",
+					category, headerName));
 
 			sb.append("\n");
 
@@ -448,8 +465,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 			sb.append(
 				_getLink(
-					markdownFileName, "   -", fileExtensionsString,
-					headerName));
+					_DOCUMENTATION_DIR_LOCATION + markdownFileName, "   - ",
+					fileExtensionsString, headerName));
 
 			sb.append("\n");
 
@@ -534,13 +551,12 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		String markdownFileName, String prefix, String linkName,
 		String headerName) {
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(prefix);
-		sb.append(" [");
+		sb.append("[");
 		sb.append(linkName);
 		sb.append("](");
-		sb.append(_DOCUMENTATION_DIR_LOCATION);
 		sb.append(markdownFileName);
 		sb.append("#");
 

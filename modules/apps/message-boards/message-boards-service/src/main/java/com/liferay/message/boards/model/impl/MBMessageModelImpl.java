@@ -91,9 +91,9 @@ public class MBMessageModelImpl
 		{"body", Types.CLOB}, {"format", Types.VARCHAR},
 		{"anonymous", Types.BOOLEAN}, {"priority", Types.DOUBLE},
 		{"allowPingbacks", Types.BOOLEAN}, {"answer", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"lastPublishDate", Types.TIMESTAMP}, {"urlTitle", Types.VARCHAR},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -123,6 +123,7 @@ public class MBMessageModelImpl
 		TABLE_COLUMNS_MAP.put("allowPingbacks", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("answer", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
@@ -130,7 +131,7 @@ public class MBMessageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,treePath STRING null,subject VARCHAR(75) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,treePath STRING null,subject VARCHAR(75) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,urlTitle VARCHAR(255) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table MBMessage";
 
@@ -164,13 +165,15 @@ public class MBMessageModelImpl
 
 	public static final long THREADID_COLUMN_BITMASK = 256L;
 
-	public static final long USERID_COLUMN_BITMASK = 512L;
+	public static final long URLTITLE_COLUMN_BITMASK = 512L;
 
-	public static final long UUID_COLUMN_BITMASK = 1024L;
+	public static final long USERID_COLUMN_BITMASK = 1024L;
 
-	public static final long CREATEDATE_COLUMN_BITMASK = 2048L;
+	public static final long UUID_COLUMN_BITMASK = 2048L;
 
-	public static final long MESSAGEID_COLUMN_BITMASK = 4096L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 4096L;
+
+	public static final long MESSAGEID_COLUMN_BITMASK = 8192L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -216,6 +219,7 @@ public class MBMessageModelImpl
 		model.setAllowPingbacks(soapModel.isAllowPingbacks());
 		model.setAnswer(soapModel.isAnswer());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setUrlTitle(soapModel.getUrlTitle());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -453,6 +457,9 @@ public class MBMessageModelImpl
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
 			(BiConsumer<MBMessage, Date>)MBMessage::setLastPublishDate);
+		attributeGetterFunctions.put("urlTitle", MBMessage::getUrlTitle);
+		attributeSetterBiConsumers.put(
+			"urlTitle", (BiConsumer<MBMessage, String>)MBMessage::setUrlTitle);
 		attributeGetterFunctions.put("status", MBMessage::getStatus);
 		attributeSetterBiConsumers.put(
 			"status", (BiConsumer<MBMessage, Integer>)MBMessage::setStatus);
@@ -944,6 +951,32 @@ public class MBMessageModelImpl
 
 	@JSON
 	@Override
+	public String getUrlTitle() {
+		if (_urlTitle == null) {
+			return "";
+		}
+		else {
+			return _urlTitle;
+		}
+	}
+
+	@Override
+	public void setUrlTitle(String urlTitle) {
+		_columnBitmask |= URLTITLE_COLUMN_BITMASK;
+
+		if (_originalUrlTitle == null) {
+			_originalUrlTitle = _urlTitle;
+		}
+
+		_urlTitle = urlTitle;
+	}
+
+	public String getOriginalUrlTitle() {
+		return GetterUtil.getString(_originalUrlTitle);
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -1310,6 +1343,7 @@ public class MBMessageModelImpl
 		mbMessageImpl.setAllowPingbacks(isAllowPingbacks());
 		mbMessageImpl.setAnswer(isAnswer());
 		mbMessageImpl.setLastPublishDate(getLastPublishDate());
+		mbMessageImpl.setUrlTitle(getUrlTitle());
 		mbMessageImpl.setStatus(getStatus());
 		mbMessageImpl.setStatusByUserId(getStatusByUserId());
 		mbMessageImpl.setStatusByUserName(getStatusByUserName());
@@ -1430,6 +1464,8 @@ public class MBMessageModelImpl
 
 		mbMessageModelImpl._setOriginalAnswer = false;
 
+		mbMessageModelImpl._originalUrlTitle = mbMessageModelImpl._urlTitle;
+
 		mbMessageModelImpl._originalStatus = mbMessageModelImpl._status;
 
 		mbMessageModelImpl._setOriginalStatus = false;
@@ -1542,6 +1578,14 @@ public class MBMessageModelImpl
 		}
 		else {
 			mbMessageCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
+		mbMessageCacheModel.urlTitle = getUrlTitle();
+
+		String urlTitle = mbMessageCacheModel.urlTitle;
+
+		if ((urlTitle != null) && (urlTitle.length() == 0)) {
+			mbMessageCacheModel.urlTitle = null;
 		}
 
 		mbMessageCacheModel.status = getStatus();
@@ -1684,6 +1728,8 @@ public class MBMessageModelImpl
 	private boolean _originalAnswer;
 	private boolean _setOriginalAnswer;
 	private Date _lastPublishDate;
+	private String _urlTitle;
+	private String _originalUrlTitle;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

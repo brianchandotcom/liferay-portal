@@ -459,6 +459,21 @@ public interface MBMessageModel
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**
+	 * Returns the url title of this message-boards message.
+	 *
+	 * @return the url title of this message-boards message
+	 */
+	@AutoEscape
+	public String getUrlTitle();
+
+	/**
+	 * Sets the url title of this message-boards message.
+	 *
+	 * @param urlTitle the url title of this message-boards message
+	 */
+	public void setUrlTitle(String urlTitle);
+
+	/**
 	 * Returns the status of this message-boards message.
 	 *
 	 * @return the status of this message-boards message

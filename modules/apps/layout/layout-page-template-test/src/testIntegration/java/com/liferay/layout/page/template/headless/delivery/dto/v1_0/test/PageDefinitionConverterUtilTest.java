@@ -248,7 +248,8 @@ public class PageDefinitionConverterUtilTest {
 
 		FragmentInstanceDefinition fragmentInstanceDefinition =
 			_getFragmentInstanceDefinition(
-				editableValuesFileName, fragmentEntryKey, fragmentName, html);
+				StringPool.BLANK, editableValuesFileName, fragmentEntryKey,
+				fragmentName, html);
 
 		Fragment fragment = fragmentInstanceDefinition.getFragment();
 
@@ -272,8 +273,8 @@ public class PageDefinitionConverterUtilTest {
 	}
 
 	private FragmentInstanceDefinition _getFragmentInstanceDefinition(
-			String editableValuesFileName, String fragmentEntryKey,
-			String fragmentName, String html)
+			String configuration, String editableValuesFileName,
+			String fragmentEntryKey, String fragmentName, String html)
 		throws Exception {
 
 		Layout layout = _layoutLocalService.fetchLayout(
@@ -284,7 +285,7 @@ public class PageDefinitionConverterUtilTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
 				fragmentName, StringPool.BLANK, html, StringPool.BLANK,
-				StringPool.BLANK, 0, FragmentConstants.TYPE_COMPONENT,
+				configuration, 0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -292,7 +293,7 @@ public class PageDefinitionConverterUtilTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(),
 				_portal.getClassNameId(Layout.class), layout.getPlid(),
-				StringPool.BLANK, html, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, html, StringPool.BLANK, configuration,
 				_read(editableValuesFileName), StringPool.BLANK, 0, null,
 				_serviceContext);
 

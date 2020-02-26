@@ -462,7 +462,12 @@ function getParentItemIdAndPositon({
 		if (parent.children.includes(item.itemId)) {
 			const itemIndex = parent.children.indexOf(item.itemId);
 
-			position = itemIndex < siblingIndex ? position - 1 : position;
+			if (parent.children.length === 1) {
+				position = 0;
+			}
+			else {
+				position = itemIndex < siblingIndex ? position - 1 : position;
+			}
 		}
 
 		return {

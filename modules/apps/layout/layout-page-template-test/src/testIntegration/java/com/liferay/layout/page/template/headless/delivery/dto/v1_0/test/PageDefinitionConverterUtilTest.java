@@ -27,6 +27,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
+import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
@@ -119,6 +120,22 @@ public class PageDefinitionConverterUtilTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				_serviceContext);
+	}
+
+	@Test
+	public void testToPageDefinitionFragmentFieldBackgroundImage()
+		throws Exception {
+
+		FragmentField fragmentField = _getFragmentField(
+			"editable_values_fragment_field_background_image.json",
+			"my-background-image",
+			"<div data-lfr-background-image-id=\"my-background-image\"></div>");
+
+		FragmentFieldBackgroundImage fragmentFieldBackgroundImage =
+			(FragmentFieldBackgroundImage)fragmentField.getValue();
+
+		_validateFragmentImage(
+			fragmentFieldBackgroundImage.getBackgroundImage());
 	}
 
 	@Test

@@ -190,6 +190,12 @@ export const getThread = (
                     id
                     name
                 } 
+                creatorStatistics {
+					joinDate
+					lastPostDate
+					postsNumber
+					rank
+				}
                 dateCreated
                 dateModified
                 encodingFormat
@@ -208,6 +214,12 @@ export const getThread = (
                         creator {
                             id
                             name
+                        }
+                        creatorStatistics {
+                        	joinDate
+                        	lastPostDate
+                        	postsNumber
+                        	rank
                         }
                         encodingFormat
                         id

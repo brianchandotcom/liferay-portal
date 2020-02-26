@@ -161,6 +161,12 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		List<DLFolder> dlFolders = dlFolderPersistence.findByGroupId(groupId);
 
 		for (DLFolder dlFolder : dlFolders) {
+			if (dlFolder.getParentFolderId() !=
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+				continue;
+			}
+
 			dlFolderLocalService.deleteFolder(dlFolder);
 		}
 

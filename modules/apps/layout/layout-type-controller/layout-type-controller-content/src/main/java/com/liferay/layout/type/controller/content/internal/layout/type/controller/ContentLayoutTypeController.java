@@ -15,20 +15,14 @@
 package com.liferay.layout.type.controller.content.internal.layout.type.controller;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
-import com.liferay.info.item.selector.InfoItemSelectorTracker;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
-import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -122,19 +116,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				themeDisplay.getPermissionChecker(), layout)) {
 
 			layoutMode = Constants.VIEW;
-		}
-
-		if (layoutMode.equals(Constants.EDIT)) {
-			httpServletRequest.setAttribute(
-				ContentLayoutTypeControllerWebKeys.ITEM_SELECTOR,
-				_itemSelector);
-			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.
-					FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
-				_fragmentCollectionContributorTracker);
-			httpServletRequest.setAttribute(
-				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER,
-				_fragmentRendererTracker);
 		}
 
 		httpServletRequest.setAttribute(
@@ -335,26 +316,10 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		ContentLayoutTypeController.class);
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Reference
 	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
-
-	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
-	@Reference
-	private InfoItemRendererTracker _infoItemRendererTracker;
-
-	@Reference
-	private InfoItemSelectorTracker _infoItemSelectorTracker;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

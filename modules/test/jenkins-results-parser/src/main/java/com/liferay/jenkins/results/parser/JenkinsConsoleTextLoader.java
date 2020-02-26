@@ -14,9 +14,10 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
@@ -28,6 +29,9 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -118,22 +122,27 @@ public class JenkinsConsoleTextLoader {
 						break;
 					}
 
-					byte[] readBuffer = new byte[512];
+					try (BufferedReader bufferedReader = new BufferedReader(
+							new InputStreamReader(
+								httpURLConnection.getInputStream()))) {
 
-					if (latestServerLogSize > serverLogSize) {
-						try (InputStream inputStream =
-								httpURLConnection.getInputStream()) {
+						String line = bufferedReader.readLine();
 
-							while (inputStream.read(readBuffer) > 0) {
-								outputStream.write(readBuffer);
-							}
+						while (line != null) {
+							Matcher matcher = _anchorPattern.matcher(line);
+
+							line = matcher.replaceAll("$1") + "\n";
+
+							outputStream.write(line.getBytes());
+
+							line = bufferedReader.readLine();
 						}
+
+						hasMoreData = Boolean.parseBoolean(
+							httpURLConnection.getHeaderField("X-More-Data"));
+
+						serverLogSize = latestServerLogSize;
 					}
-
-					hasMoreData = Boolean.parseBoolean(
-						httpURLConnection.getHeaderField("X-More-Data"));
-
-					serverLogSize = latestServerLogSize;
 				}
 				catch (MalformedURLException malformedURLException) {
 					throw new IllegalArgumentException(
@@ -162,5 +171,8 @@ public class JenkinsConsoleTextLoader {
 	protected boolean hasMoreData = true;
 	protected Path localCachedLogFilePath;
 	protected long serverLogSize;
+
+	private static final Pattern _anchorPattern = Pattern.compile(
+		"\\<a[^>]*\\>(?<text>[^<]*)\\</a\\>");
 
 }

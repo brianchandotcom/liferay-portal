@@ -68,6 +68,8 @@ definition {
 	@description = "This is a test for LPS-102208. As a master pages administrator I can duplicate a masters template"
 	@priority = "5"
 	test CanDuplicateMastersPageTemplate {
+		property portal.acceptance = "true";
+
 		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 			item = "Make a Copy",
 			masterLayoutName = "Custom Masters Page Template");
@@ -78,6 +80,8 @@ definition {
 	@description = "This is for LPS-103687. Validate if the Blank page template can not be deleted."
 	@priority = "5"
 	test CannotDeleteBlankPageTemplate {
+		property portal.acceptance = "true";
+
 		task ("Assert the Blank page template exist") {
 			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Blank");
 		}
@@ -98,6 +102,8 @@ definition {
 	@description = "This is for LPS-103687. Validate if the Blank page template can not be edited."
 	@priority = "5"
 	test CannotEditBlankPageTemplate {
+		property portal.acceptance = "true";
+
 		task ("Assert the Blank page template exist") {
 			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Blank");
 		}

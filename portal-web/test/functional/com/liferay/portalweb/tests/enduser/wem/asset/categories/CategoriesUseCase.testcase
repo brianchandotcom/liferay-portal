@@ -1222,6 +1222,7 @@ definition {
 	@Description ="This is for LPS-101409. Validate if select a required category when entering the page name not based on a page template."
 	@priority ="5"
 	test SelectRequiredCategoryWhenEnterPageNameWithBlankPageTemplate {
+		property portal.acceptance = "true";
 		property testray.component.names = "Categories";
 
 		task ("Add a vocabulary with required for page") {
@@ -1272,6 +1273,7 @@ definition {
 	@Description ="This is for LPS-101409. Validate if select a required category when entering the page name based on a page template. Also add a step to check adding page with category successfully via json."
 	@priority ="5"
 	test SelectRequiredCategoryWhenEnterPageNameWithWidgetPageTemplate {
+		property portal.acceptance = "true";
 		property testray.component.names = "Categories";
 
 		task ("Add a vocabulary with required for page") {

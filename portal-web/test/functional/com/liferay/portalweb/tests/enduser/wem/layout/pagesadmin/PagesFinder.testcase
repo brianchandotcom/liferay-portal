@@ -91,6 +91,8 @@ definition {
 	@description = "This is the test for LPS-103104. Can add a child page via page tree panel."
 	@priority = "5"
 	test AddChildPageViaPageFinder {
+		property portal.acceptance = "true";
+
 		Navigator.openSiteURL(siteName = "Test Site Name 2");
 
 		PagesFinder.goToFindAPage();
@@ -159,6 +161,8 @@ definition {
 	@description = "This is the test for LPS-103104. Can add a widget page via page tree panel."
 	@priority = "5"
 	test AddPageViaPageFinder {
+		property portal.acceptance = "true";
+
 		Navigator.openSiteURL(siteName = "Test Site Name 2");
 
 		PagesFinder.goToFindAPage();

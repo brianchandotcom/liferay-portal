@@ -29,6 +29,7 @@ definition {
 	@description = "This is a test for LPS-106253. Can delete read-only deployed fragments of site-scoped in that site."
 	@priority = "5"
 	test CanDeleteSiteScopedReadOnlyDeployedFragmentInThatSite {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FragmentsDeploy#CanDeleteSiteScopedReadOnlyDeployedFragmentInThatSite";
 
 		task ("Deploy fragments zip to Test Site Name") {
@@ -66,6 +67,7 @@ definition {
 	@description = "This is a test for LPS-106253. Can delete read-only deployed fragments of system-scoped in Global site of the default virtual instance."
 	@priority = "5"
 	test CanDeleteSystemScopedReadOnlyDeployedFragmentInGlobalSiteOfDefaultInstance {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FragmentsDeploy#CanDeleteSystemScopedReadOnlyDeployedFragmentInGlobalSiteOfDefaultInstance";
 
 		task ("Deploy fragments zip are available in System wide") {
@@ -103,6 +105,7 @@ definition {
 	@description = "This is a test for LPS-106253. Can delete read-only deployed fragments of virtual instance-scoped in Global site of that virtual instance."
 	@priority = "5"
 	test CanDeleteVirtualInstanceScopedReadOnlyDeployedFragmentInGlobalSiteOfThatInstance {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FragmentsDeploy#CanDeleteVirtualInstanceScopedReadOnlyDeployedFragmentInGlobalSiteOfThatInstance";
 
 		task ("Deploy fragments zip are available in Liferay.com intance") {
@@ -256,6 +259,7 @@ definition {
 	@description = "This is a test for LPS-105110. A system administrator can deploy a zip file of fragments in the deploy folder to a specific site. Fragments deployed to a specific site are not available in other sites."
 	@priority = "5"
 	test DeployFragmentsToSpecificSite {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FragmentsDeploy#DeployFragmentsToSpecificSite";
 
 		task ("Deploy fragments zip to Test Site Name") {
@@ -292,6 +296,7 @@ definition {
 	@priority = "5"
 	test DeployFragmentsToSpecificVirtualInstance {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FragmentsDeploy#DeployFragmentsToSpecificVirtualInstance";
 
 		task ("Add a new Virtual Instance") {
@@ -339,6 +344,8 @@ definition {
 	@description = "This is a test for LPS-105625. A system administrator can deploy a zip file of fragments in the deploy folder that are available system wide for future and existing site instances"
 	@priority = "5"
 	test ViewFragmentsDeployedToSystemWideAreAvailableForExistAndFutureSite {
+		property portal.acceptance = "true";
+
 		task ("Deploy fragments zip are available in System wide") {
 			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "image.zip");
 		}

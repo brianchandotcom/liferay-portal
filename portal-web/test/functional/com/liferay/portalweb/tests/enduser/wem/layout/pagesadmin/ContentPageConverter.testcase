@@ -29,6 +29,8 @@ definition {
 	@description = "This is a test for LPS-98303. Assert that a page that uses a default layout template, does not have a 'Nested Application' Widget, and is not set as customizable can be converted to a Content Page by default."
 	@priority = "5"
 	test ConvertBasicWidgetPageToContentPage {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
@@ -67,6 +69,7 @@ definition {
 	@description = "This is a test for LPS-98325. Assert that multiple pages with several widget pages(that can be converted) and an api to convert bulk widget pages to content pages is executed, all widget pages are converted."
 	@priority = "5"
 	test ConvertMultipleWidgetPagesToContentPagesViaAPI {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertMultipleWidgetPagesToContentPagesViaAPI";
 
 		for (var i : list "1,2,3,4,5,6,7,8,9,10") {
@@ -178,6 +181,8 @@ definition {
 	@description = "This is a test for LPS-98589. Multiple widgets with different application decorators survive content page conversion."
 	@priority = "5"
 	test ConvertWidgetPageDecoratorsToContentPage {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
@@ -272,6 +277,7 @@ definition {
 	@description = "This is a test for LPS-98325. Assert that widget pages with nested application and customization setting can be converted to content pages via API."
 	@priority = "5"
 	test ConvertWidgetPagesWithNestedApplicationAndCustomizationSettingToContentPagesViaAPI {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPagesWithNestedApplicationAndCustomizationSettingToContentPagesViaAPI";
 
 		JSONLayout.addPublicLayout(
@@ -328,6 +334,8 @@ definition {
 	@description = "This is a test for LPS-105943. When convert a widget page with one Customizable column, there will be a warning message shown in conversion review"
 	@priority = "5"
 	test ConvertWidgetPageWithCustomizableColumnContainingWidgets {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
@@ -440,6 +448,8 @@ definition {
 	@description = "This is a test for LPS-105943. When convert a widget page with a non-standard layout, there will be a warning message shown in conversion preview"
 	@priority = "5"
 	test ConvertWidgetPageWithNonStandardLayout {
+		property portal.acceptance = "true";
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -708,6 +718,8 @@ definition {
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."
 	@priority = "5"
 	test EditConvertedContentPageWithDecorator {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
@@ -867,6 +879,8 @@ definition {
 	@description = "This is a test for LPS-106198. check the status for convension draft page and can edit widget page to content page conversion in draft form."
 	@priority = "5"
 	test ViewAndEditConversionDraftPage {
+		property portal.acceptance = "true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");

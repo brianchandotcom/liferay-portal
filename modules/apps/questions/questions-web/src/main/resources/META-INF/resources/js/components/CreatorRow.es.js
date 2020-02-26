@@ -13,7 +13,6 @@
  */
 
 import React from 'react';
-import {Link} from 'react-router-dom';
 
 import {timeDifference} from '../utils/utils.es';
 import UserIcon from './UserIcon.es';
@@ -21,10 +20,7 @@ import UserPopover from './UserPopover.es';
 
 export default ({question: {creator, dateCreated}}) => {
 	return (
-		<Link
-			className="align-items-center border-light btn btn-secondary c-ml-3 c-p-3 d-inline-flex justify-content-center position-relative question-user"
-			to={``}
-		>
+		<div className="align-items-center border-light btn btn-secondary c-ml-3 c-p-3 d-inline-flex justify-content-center position-relative question-user">
 			<UserIcon
 				fullName={creator.name}
 				portraitURL={creator.image}
@@ -40,6 +36,6 @@ export default ({question: {creator, dateCreated}}) => {
 			</div>
 
 			<UserPopover creator={creator} />
-		</Link>
+		</div>
 	);
 };

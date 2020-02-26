@@ -13,16 +13,12 @@
  */
 
 import React from 'react';
-import {Link} from 'react-router-dom';
 
 import UserPopover from './UserPopover.es';
 
 export default ({creator}) => {
 	return (
-		<Link
-			className="border-0 btn btn-block btn-secondary position-relative question-user text-right"
-			to={``}
-		>
+		<div className="border-0 btn btn-block btn-secondary position-relative question-user text-right">
 			<p className="c-mb-0 small">
 				{Liferay.Language.get('answered-by')}
 			</p>
@@ -30,6 +26,6 @@ export default ({creator}) => {
 			<p className="c-mb-0 font-weight-bold text-dark">{creator.name}</p>
 
 			<UserPopover creator={creator} />
-		</Link>
+		</div>
 	);
 };

@@ -88,11 +88,12 @@ public class JSPLineBreakCheck extends BaseLineBreakCheck {
 	private String _fixRedundantCommaInsideArray(String content) {
 		Matcher matcher = _redundantCommaPattern.matcher(content);
 
-		if (matcher.find() &&
-			JSPSourceUtil.isJavaSource(content, matcher.start())) {
-
-			return StringUtil.replaceFirst(
-				content, StringPool.COMMA, StringPool.BLANK, matcher.start());
+		while (matcher.find()) {
+			if (JSPSourceUtil.isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, StringPool.COMMA, StringPool.BLANK,
+					matcher.start());
+			}
 		}
 
 		return content;

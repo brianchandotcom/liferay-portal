@@ -75,19 +75,6 @@ public class RoleModelListener extends BaseModelListener<Role> {
 	}
 
 	@Override
-	public void onAfterRemove(Role role) throws ModelListenerException {
-		AccountRole accountRole =
-			_accountRoleLocalService.fetchAccountRoleByRoleId(role.getRoleId());
-
-		if (accountRole != null) {
-			_userGroupRoleLocalService.deleteUserGroupRolesByRoleId(
-				role.getRoleId());
-
-			_accountRolePersistence.remove(accountRole);
-		}
-	}
-
-	@Override
 	public void onBeforeRemove(Role role) throws ModelListenerException {
 		if (CompanyThreadLocal.isDeleteInProcess()) {
 			return;
@@ -105,17 +92,23 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		AccountRole accountRole =
 			_accountRoleLocalService.fetchAccountRoleByRoleId(role.getRoleId());
 
-		if ((accountRole != null) &&
-			!Objects.equals(
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-				accountRole.getAccountEntryId())) {
+		if (accountRole != null) {
+			if (!Objects.equals(
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+					accountRole.getAccountEntryId())) {
 
-			throw new ModelListenerException(
-				new RequiredRoleException(
-					StringBundler.concat(
-						"Role \"", role.getName(),
-						"\" is required by account role ",
-						accountRole.getAccountRoleId())));
+				throw new ModelListenerException(
+					new RequiredRoleException(
+						StringBundler.concat(
+							"Role \"", role.getName(),
+							"\" is required by account role ",
+							accountRole.getAccountRoleId())));
+			}
+
+			_userGroupRoleLocalService.deleteUserGroupRolesByRoleId(
+				role.getRoleId());
+
+			_accountRolePersistence.remove(accountRole);
 		}
 	}
 

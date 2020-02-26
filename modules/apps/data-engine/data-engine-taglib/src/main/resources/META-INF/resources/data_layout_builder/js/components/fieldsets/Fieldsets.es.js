@@ -15,7 +15,6 @@
 import React, {useContext} from 'react';
 
 import AppContext from '../../AppContext.es';
-import saveDefinitionAndLayout from '../../data-layout-builder/saveDefinitionAndLayout.es';
 import FieldType from '../field-types/FieldType.es';
 
 export default function FieldSets() {

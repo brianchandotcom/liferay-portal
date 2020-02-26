@@ -45,14 +45,15 @@ export default ({question}) => {
 					<hr />
 					<div className="autofit-padded autofit-row">
 						{relatedQuestions.map(relatedQuestion => (
-							<div className="autofit-col"
-								 key={relatedQuestion.id}>
+							<div
+								className="autofit-col"
+								key={relatedQuestion.id}
+							>
 								<div className="autofit-row">
-									<div
-										className="autofit-col autofit-col-expand">
+									<div className="autofit-col autofit-col-expand">
 										{relatedQuestion.messageBoardSection &&
-										 relatedQuestion.messageBoardSection
-											 .title}
+											relatedQuestion.messageBoardSection
+												.title}
 									</div>
 									<div>
 										<QuestionBadge
@@ -71,29 +72,33 @@ export default ({question}) => {
 								</div>
 								<h2 className="question-headline">
 									<Link
-										to={'/questions/' + relatedQuestion.id}>
+										to={'/questions/' + relatedQuestion.id}
+									>
 										{relatedQuestion.headline}
 									</Link>
 								</h2>
 								<div>
 									<UserIcon
 										fullName={relatedQuestion.creator.name}
-										portraitURL={relatedQuestion.creator.image}
+										portraitURL={
+											relatedQuestion.creator.image
+										}
 										size="sm"
 										userId={String(
-											relatedQuestion.creator.id)}
+											relatedQuestion.creator.id
+										)}
 									/>
 									<span>
-									<strong>
-										{relatedQuestion.creator.name}
-									</strong>
-								</span>
+										<strong>
+											{relatedQuestion.creator.name}
+										</strong>
+									</span>
 									<span>
-									{' - ' +
-									 dateToInternationalHuman(
-										 relatedQuestion.dateModified
-									 )}
-								</span>
+										{' - ' +
+											dateToInternationalHuman(
+												relatedQuestion.dateModified
+											)}
+									</span>
 								</div>
 							</div>
 						))}

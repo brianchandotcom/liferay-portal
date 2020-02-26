@@ -192,6 +192,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		messageBoardThread.setArticleBody(regex);
 		messageBoardThread.setEncodingFormat(regex);
+		messageBoardThread.setFriendlyUrlPath(regex);
 		messageBoardThread.setHeadline(regex);
 		messageBoardThread.setThreadType(regex);
 
@@ -203,6 +204,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		Assert.assertEquals(regex, messageBoardThread.getArticleBody());
 		Assert.assertEquals(regex, messageBoardThread.getEncodingFormat());
+		Assert.assertEquals(regex, messageBoardThread.getFriendlyUrlPath());
 		Assert.assertEquals(regex, messageBoardThread.getHeadline());
 		Assert.assertEquals(regex, messageBoardThread.getThreadType());
 	}
@@ -1049,6 +1051,66 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteMessageBoardThreadByFriendlyUrlPath()
+		throws Exception {
+
+		MessageBoardThread postMessageBoardThread =
+			testGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread();
+
+		MessageBoardThread getMessageBoardThread =
+			messageBoardThreadResource.
+				getSiteMessageBoardThreadByFriendlyUrlPath(
+					postMessageBoardThread.getSiteId(),
+					postMessageBoardThread.getFriendlyUrlPath());
+
+		assertEquals(postMessageBoardThread, getMessageBoardThread);
+		assertValid(getMessageBoardThread);
+	}
+
+	protected MessageBoardThread
+			testGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread()
+		throws Exception {
+
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Test
+	public void testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath()
+		throws Exception {
+
+		MessageBoardThread messageBoardThread =
+			testGraphQLMessageBoardThread_addMessageBoardThread();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"messageBoardThreadByFriendlyUrlPath",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", messageBoardThread.getSiteId());
+						put(
+							"friendlyUrlPath",
+							messageBoardThread.getFriendlyUrlPath());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				messageBoardThread,
+				dataJSONObject.getJSONObject(
+					"messageBoardThreadByFriendlyUrlPath")));
+	}
+
+	@Test
 	public void testGetSiteMessageBoardThreadsPage() throws Exception {
 		Page<MessageBoardThread> page =
 			messageBoardThreadResource.getSiteMessageBoardThreadsPage(
@@ -1557,6 +1619,24 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = messageBoardThread.getFriendlyUrlPath();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("headline", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1939,6 +2019,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				if (messageBoardThread.getFriendlyUrlPath() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("headline", additionalAssertFieldName)) {
 				if (messageBoardThread.getHeadline() == null) {
 					valid = false;
@@ -2281,6 +2369,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardThread1.getFriendlyUrlPath(),
+						messageBoardThread2.getFriendlyUrlPath())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("headline", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardThread1.getHeadline(),
@@ -2578,6 +2677,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("friendlyUrlPath", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardThread.getFriendlyUrlPath(),
+						jsonObject.getString("friendlyUrlPath"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("headline", fieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardThread.getHeadline(),
@@ -2838,6 +2948,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("friendlyUrlPath")) {
+			sb.append("'");
+			sb.append(String.valueOf(messageBoardThread.getFriendlyUrlPath()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("headline")) {
 			sb.append("'");
 			sb.append(String.valueOf(messageBoardThread.getHeadline()));
@@ -2947,6 +3065,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				encodingFormat = RandomTestUtil.randomString();
+				friendlyUrlPath = RandomTestUtil.randomString();
 				headline = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				messageBoardSectionId = RandomTestUtil.randomLong();

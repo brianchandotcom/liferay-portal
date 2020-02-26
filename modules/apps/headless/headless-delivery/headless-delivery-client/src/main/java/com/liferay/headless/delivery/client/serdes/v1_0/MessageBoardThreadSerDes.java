@@ -178,6 +178,20 @@ public class MessageBoardThreadSerDes {
 			sb.append("\"");
 		}
 
+		if (messageBoardThread.getFriendlyUrlPath() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlPath\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(messageBoardThread.getFriendlyUrlPath()));
+
+			sb.append("\"");
+		}
+
 		if (messageBoardThread.getHeadline() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -482,6 +496,15 @@ public class MessageBoardThreadSerDes {
 				String.valueOf(messageBoardThread.getEncodingFormat()));
 		}
 
+		if (messageBoardThread.getFriendlyUrlPath() == null) {
+			map.put("friendlyUrlPath", null);
+		}
+		else {
+			map.put(
+				"friendlyUrlPath",
+				String.valueOf(messageBoardThread.getFriendlyUrlPath()));
+		}
+
 		if (messageBoardThread.getHeadline() == null) {
 			map.put("headline", null);
 		}
@@ -686,6 +709,12 @@ public class MessageBoardThreadSerDes {
 			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setEncodingFormat(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setFriendlyUrlPath(
 						(String)jsonParserFieldValue);
 				}
 			}

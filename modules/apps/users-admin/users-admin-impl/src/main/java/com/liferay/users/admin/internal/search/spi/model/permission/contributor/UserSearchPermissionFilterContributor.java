@@ -40,31 +40,23 @@ public class UserSearchPermissionFilterContributor
 		BooleanFilter booleanFilter, long companyId, long[] groupIds,
 		long userId, PermissionChecker permissionChecker, String className) {
 
-		_setTermsFilterField(booleanFilter, Field.ROLE_ID, Field.ROLE_IDS);
-	}
-
-	private void _setTermsFilterField(
-		BooleanFilter booleanFilter, String oldField, String newField) {
-
-		TermsFilter oldTermsFilter;
-		String field;
-
 		for (BooleanClause<Filter> clause :
 				booleanFilter.getShouldBooleanClauses()) {
 
 			if (clause.getClause() instanceof TermsFilter) {
-				oldTermsFilter = (TermsFilter)clause.getClause();
+				TermsFilter termsFilter = (TermsFilter)clause.getClause();
 
-				field = oldTermsFilter.getField();
+				String field = termsFilter.getField();
 
-				if (field.equals(oldField)) {
-					TermsFilter newTermsFilter = new TermsFilter(newField);
+				if (field.equals(Field.ROLE_ID)) {
+					TermsFilter roleIdsTermsFilter = new TermsFilter(
+						Field.ROLE_IDS);
 
-					newTermsFilter.addValues(oldTermsFilter.getValues());
+					roleIdsTermsFilter.addValues(termsFilter.getValues());
 
-					booleanFilter.add(newTermsFilter);
+					booleanFilter.add(roleIdsTermsFilter);
 
-					return;
+					break;
 				}
 			}
 		}

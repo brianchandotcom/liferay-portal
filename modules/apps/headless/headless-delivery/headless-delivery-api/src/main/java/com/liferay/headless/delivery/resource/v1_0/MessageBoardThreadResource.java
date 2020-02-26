@@ -107,6 +107,10 @@ public interface MessageBoardThreadResource {
 	public void putMessageBoardThreadUnsubscribe(Long messageBoardThreadId)
 		throws Exception;
 
+	public MessageBoardThread getSiteMessageBoardThreadByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception;
+
 	public Page<MessageBoardThread> getSiteMessageBoardThreadsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)

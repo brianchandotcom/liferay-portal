@@ -118,6 +118,10 @@ public interface MessageBoardMessageResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public MessageBoardMessage getSiteMessageBoardMessageByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

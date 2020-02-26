@@ -158,6 +158,8 @@
 			<property name="checkPetraDependencies" value="true" />
 		</check>
 		<check name="GradleDependencyArtifactsCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that value `default` is not used for attribute `version`" />
 			<property name="enabled" value="false" />
 		</check>
 		<check name="GradleDependencyConfigurationCheck" />
@@ -172,7 +174,10 @@
 			<property name="enabled" value="false" />
 		</check>
 		<check name="GradleStylingCheck" />
-		<check name="GradleTaskCreationCheck" />
+		<check name="GradleTaskCreationCheck">
+			<category name="Styling" />
+			<description name="Checks that a task is declared on a separate line before the closure" />
+		</check>
 		<check name="GradleTestDependencyVersionCheck">
 			<property name="allowedDependencyNames" value="com.liferay.arquillian.arquillian-container-liferay" />
 			<property name="allowedDependencyNames" value="com.liferay.arquillian.arquillian-deployment-generator-bnd" />
@@ -207,10 +212,22 @@
 		<check name="JavaAssertEqualsCheck" />
 		<check name="JavaBooleanStatementCheck" />
 		<check name="JavaBooleanUsageCheck" />
-		<check name="JavaCollatorUtilCheck" />
-		<check name="JavaConfigurationAdminCheck" />
-		<check name="JavaConfigurationCategoryCheck" />
-		<check name="JavaConstructorParametersCheck" />
+		<check name="JavaCollatorUtilCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for correct use of `Collator`" />
+		</check>
+		<check name="JavaConfigurationAdminCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for correct use of `location == ?` when calling `org.osgi.service.cm.ConfigurationAdmin#createFactoryConfiguration`" />
+		</check>
+		<check name="JavaConfigurationCategoryCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that the value of `category` in `@ExtendedObjectClassDefinition` matches the `categoryKey` of the corresponding class in `configuration-admin-web`" />
+		</check>
+		<check name="JavaConstructorParametersCheck">
+			<category name="Styling" />
+			<description name="Checks that the order of variable assignments matches the order of the parameters in the constructor signature" />
+		</check>
 		<check name="JavaConstructorSuperCallCheck" />
 		<check name="JavaDeserializationSecurityCheck" />
 		<check name="JavaDiamondOperatorCheck" />
@@ -226,24 +243,45 @@
 		</check>
 		<check name="JavaHibernateSQLCheck" />
 		<check name="JavaImportsCheck" />
-		<check name="JavaIndexableCheck" />
+		<check name="JavaIndexableCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that the type gets returned when using annotation `@Indexable`" />
+		</check>
 		<check name="JavaInnerClassImportsCheck">
 			<property name="upperCasePackageNames" value="com.microsoft.webservices.SharePoint.QueryService" />
 		</check>
 		<check name="JavaInterfaceCheck" />
 		<check name="JavaIOExceptionCheck" />
-		<check name="JavaLocalSensitiveComparisonCheck" />
+		<check name="JavaLocalSensitiveComparisonCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that `java.text.Collator` is used when comparing localized values" />
+		</check>
 		<check name="JavaLongLinesCheck" />
 		<check name="JavaMapBuilderGenericsCheck" />
-		<check name="JavaMetaAnnotationsCheck" />
+		<check name="JavaMetaAnnotationsCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for correct use of attributes `description` and `name` in annotation `@aQute.bnd.annotation.metatype.Meta`" />
+		</check>
 		<check name="JavaModifiedServiceMethodCheck" />
-		<check name="JavaPackagePathCheck" />
+		<check name="JavaPackagePathCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that the package name matches the file location" />
+		</check>
 		<check name="JavaParameterAnnotationsCheck" />
-		<check name="JavaProcessCallableCheck" />
+		<check name="JavaProcessCallableCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that a class implementing `ProcessCallable` assigns a `serialVersionUID`" />
+		</check>
 		<check name="JavaRedundantConstructorCheck" />
-		<check name="JavaResultSetCheck" />
+		<check name="JavaResultSetCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for correct use `java.sql.ResultSet.getInt(int)`" />
+		</check>
 		<check name="JavaReturnStatementCheck" />
-		<check name="JavaSeeAnnotationCheck" />
+		<check name="JavaSeeAnnotationCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for nested annotations inside `@see`" />
+		</check>
 		<check name="JavaServiceImplCheck" />
 		<check name="JavaSessionCheck" />
 		<check name="JavaStaticBlockCheck" />
@@ -266,13 +304,18 @@
 
 		<check name="JavaAnonymousInnerClassCheck" />
 		<check name="JavaAPISignatureCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that types `HttpServletRequest`, `HttpServletResponse`, `ThemeDisplay`, and `ServiceContext` are not used in API method signatures" />
 			<property name="illegalAPIParameterTypes" value="HttpServletRequest" />
 			<property name="illegalAPIParameterTypes" value="HttpServletResponse" />
 			<property name="illegalAPIParameterTypes" value="ThemeDisplay" />
 			<property name="illegalAPIServiceParameterTypes" value="ServiceContext" />
 		</check>
 		<check name="JavaCleanUpMethodSuperCleanUpCheck" />
-		<check name="JavaCleanUpMethodVariablesCheck" />
+		<check name="JavaCleanUpMethodVariablesCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that variables in `Tag` classes get cleaned up properly" />
+		</check>
 		<check name="JavaComponentActivateCheck">
 			<property name="enabled" value="false" />
 		</check>
@@ -286,7 +329,10 @@
 		</check>
 		<check name="JavaDeprecatedJavadocCheck" />
 		<check name="JavaDeprecatedKernelClassesCheck" />
-		<check name="JavaFinderCacheCheck" />
+		<check name="JavaFinderCacheCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that the method `BasePersistenceImpl.fetchByPrimaryKey` is overridden, when using `FinderPath`" />
+		</check>
 		<check name="JavaFinderImplCustomSQLCheck" />
 		<check name="JavaIllegalImportsCheck">
 			<property name="enforceJavaUtilFunctionImports" value="true" />
@@ -296,7 +342,10 @@
 		<check name="JavaLogClassNameCheck" />
 		<check name="JavaLogLevelCheck" />
 		<check name="JavaLogParametersCheck" />
-		<check name="JavaMultiPlusConcatCheck" />
+		<check name="JavaMultiPlusConcatCheck">
+			<category name="Performance" />
+			<description name="Checks that we do not concatenate more than 3 String objects" />
+		</check>
 		<check name="JavaProviderTypeAnnotationCheck">
 			<property name="enabled" value="false" />
 		</check>
@@ -341,8 +390,13 @@
 
 		<!-- Module Source Checks -->
 
-		<check name="JavaModuleComponentCheck" />
+		<check name="JavaModuleComponentCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for use of `@Component` in `-api` or `-spi` modules" />
+		</check>
 		<check name="JavaModuleExposureCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for exposure of SPI types in API" />
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaModuleExtendedObjectClassDefinitionCheck" />
@@ -353,7 +407,10 @@
 		<check name="JavaModuleJavaxPortletInitParamTemplatePathCheck" />
 		<check name="JavaModuleServiceProxyFactoryCheck" />
 		<check name="JavaModuleServiceReferenceCheck" />
-		<check name="JavaModuleTestCheck" />
+		<check name="JavaModuleTestCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks package names in tests" />
+		</check>
 		<check name="JavaOSGiReferenceCheck">
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.ExportImportHelperUtil" />
 			<property name="serviceReferenceUtilClassNames" value="com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil" />

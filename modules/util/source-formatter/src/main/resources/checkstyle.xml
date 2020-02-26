@@ -233,6 +233,8 @@
 			<property name="allowedMockitoMethodNames" value="doAnswer,doCallRealMethod,doNothing,doReturn,doThrow,field,replace,stub,verify,verifyPrivate,when" />
 			<property name="allowedVariableTypeNames" value="^(?!String).+Builder(Impl)?,Column,CompletableFuture,.*Consumer,ContactsEngineClient,Dataset,Description,ExecuteActionRequest,(FormsEventDataset)?Filter,.*Function[0-9]*,HttpSecurity,InOrder,JSONArray,JSONObject,JsonPath,.*Mapper,NestedRepresentor.*,Optional,Predicate,RequestSpecification,Response,SoyContext,(Double|Int|Long)?Stream,Try,UpdateFieldPropertyRequest,ValidatableResponse,WebTarget" />
 			<property name="applyToTypeCast" value="true" />
+			<property name="category" value="Styling" />
+			<property name="description" value="Checks that chaining is only applied on certain types and methods" />
 			<message key="chaining.allowed" value="Chaining is allowed on ''{0}''" />
 			<message key="chaining.avoid.method" value="Avoid chaining on method ''{0}''" />
 			<message key="chaining.avoid.type.cast" value="Avoid chaining on Type Cast" />
@@ -294,6 +296,8 @@
 			<message key="whitespace.incorrect" value="The value of ''{0}'' should not have spaces around ''='', see LPS-70526" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FrameworkBundleCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Checks that `org.osgi.framework.Bundle.getHeaders()` is not used" />
 			<message key="bundle.get.headers.use" value="Use ''Bundle.getHeaders(java.lang.String locale)'' statement instead ''Bundle.getHeaders()''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FullyQualifiedNameCheck">

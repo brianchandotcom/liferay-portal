@@ -177,11 +177,9 @@ public class ReportsEngineDisplayContext {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					new DropdownItemList() {
-						{
-							add(_getFilterNavigationDropdownItem("all"));
-						}
-					});
+					DropdownItemListBuilder.add(
+						_getFilterNavigationDropdownItem("all")
+					).build());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(
 						_reportsEngineRequestHelper.getRequest(), "filter"));
@@ -189,11 +187,9 @@ public class ReportsEngineDisplayContext {
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					new DropdownItemList() {
-						{
-							add(_getOrderByDropdownItem("create-date"));
-						}
-					});
+					DropdownItemListBuilder.add(
+						_getOrderByDropdownItem("create-date")
+					).build());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(
 						_reportsEngineRequestHelper.getRequest(), "order-by"));

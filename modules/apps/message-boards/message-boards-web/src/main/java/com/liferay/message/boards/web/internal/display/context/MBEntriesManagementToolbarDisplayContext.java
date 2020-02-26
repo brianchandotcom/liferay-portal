@@ -83,54 +83,48 @@ public class MBEntriesManagementToolbarDisplayContext {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteEntries");
+
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)_httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "deleteEntries");
+				boolean trashEnabled = _trashHelper.isTrashEnabled(
+					themeDisplay.getScopeGroupId());
 
-						boolean trashEnabled = _trashHelper.isTrashEnabled(
-							themeDisplay.getScopeGroupId());
+				dropdownItem.setIcon(trashEnabled ? "trash" : "times-circle");
 
-						dropdownItem.setIcon(
-							trashEnabled ? "trash" : "times-circle");
+				String label = "delete";
 
-						String label = "delete";
+				if (trashEnabled) {
+					label = "move-to-recycle-bin";
+				}
 
-						if (trashEnabled) {
-							label = "move-to-recycle-bin";
-						}
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, label));
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, label));
-
-						dropdownItem.setQuickAction(true);
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "lockEntries");
-						dropdownItem.setIcon("lock");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "lock"));
-
-						dropdownItem.setQuickAction(true);
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "unlockEntries");
-						dropdownItem.setIcon("unlock");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "unlock"));
-						dropdownItem.setQuickAction(true);
-					});
+				dropdownItem.setQuickAction(true);
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "lockEntries");
+				dropdownItem.setIcon("lock");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "lock"));
+
+				dropdownItem.setQuickAction(true);
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "unlockEntries");
+				dropdownItem.setIcon("unlock");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "unlock"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
 	}
 
 	public List<String> getAvailableActions(MBCategory category)

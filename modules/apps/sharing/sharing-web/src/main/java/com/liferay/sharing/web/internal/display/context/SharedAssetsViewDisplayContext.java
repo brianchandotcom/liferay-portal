@@ -15,7 +15,6 @@
 package com.liferay.sharing.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
@@ -359,58 +358,52 @@ public class SharedAssetsViewDisplayContext {
 		return urlMenuItem;
 	}
 
+	private String _getClassNameLabel(String className) {
+		if (Validator.isNotNull(className)) {
+			SharedAssetsFilterItem sharedAssetsFilterItem =
+				_sharedAssetsFilterItemTracker.getSharedAssetsFilterItem(
+					className);
+
+			if (sharedAssetsFilterItem != null) {
+				return sharedAssetsFilterItem.getLabel(
+					_themeDisplay.getLocale());
+			}
+		}
+
+		return LanguageUtil.get(_httpServletRequest, "asset-types");
+	}
+
 	private PortletURL _getCurrentSortingURL() throws PortletException {
 		return PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse);
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				String className = ParamUtil.getString(
-					_httpServletRequest, "className");
+		String className = ParamUtil.getString(
+			_httpServletRequest, "className");
 
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(Validator.isNull(className));
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(Validator.isNull(className));
 
-						PortletURL viewAllClassNamesURL = PortletURLUtil.clone(
-							_currentURLObj, _liferayPortletResponse);
+				PortletURL viewAllClassNamesURL = PortletURLUtil.clone(
+					_currentURLObj, _liferayPortletResponse);
 
-						viewAllClassNamesURL.setParameter(
-							"mvcRenderCommandName", "/shared_assets/view");
-						viewAllClassNamesURL.setParameter(
-							"className", (String)null);
+				viewAllClassNamesURL.setParameter(
+					"mvcRenderCommandName", "/shared_assets/view");
+				viewAllClassNamesURL.setParameter("className", (String)null);
 
-						dropdownItem.setHref(viewAllClassNamesURL);
+				dropdownItem.setHref(viewAllClassNamesURL);
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "all"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "openAssetTypesSelector");
-						dropdownItem.setActive(Validator.isNotNull(className));
-						dropdownItem.setLabel(_getClassNameLabel(className));
-					});
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "all"));
 			}
-
-			private String _getClassNameLabel(String className) {
-				if (Validator.isNotNull(className)) {
-					SharedAssetsFilterItem sharedAssetsFilterItem =
-						_sharedAssetsFilterItemTracker.
-							getSharedAssetsFilterItem(className);
-
-					if (sharedAssetsFilterItem != null) {
-						return sharedAssetsFilterItem.getLabel(
-							_themeDisplay.getLocale());
-					}
-				}
-
-				return LanguageUtil.get(_httpServletRequest, "asset-types");
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "openAssetTypesSelector");
+				dropdownItem.setActive(Validator.isNotNull(className));
+				dropdownItem.setLabel(_getClassNameLabel(className));
 			}
-
-		};
+		).build();
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {

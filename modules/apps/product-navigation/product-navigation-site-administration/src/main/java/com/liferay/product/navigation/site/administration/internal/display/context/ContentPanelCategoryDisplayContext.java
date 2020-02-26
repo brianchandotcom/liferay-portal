@@ -18,6 +18,7 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -68,17 +69,14 @@ public class ContentPanelCategoryDisplayContext {
 			_portletRequest, themeDisplay.getSiteGroup(), portletId, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
-		DropdownItemList dropdownItems = new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(portletURL);
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								themeDisplay.getLocale(), "default-scope"));
-					});
+		DropdownItemList dropdownItems = DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(portletURL);
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						themeDisplay.getLocale(), "default-scope"));
 			}
-		};
+		).build();
 
 		List<Layout> scopeLayouts = LayoutLocalServiceUtil.getScopeGroupLayouts(
 			themeDisplay.getSiteGroupId());

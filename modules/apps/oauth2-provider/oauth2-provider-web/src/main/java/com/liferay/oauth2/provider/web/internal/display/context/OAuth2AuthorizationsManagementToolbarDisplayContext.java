@@ -46,9 +46,7 @@ public class OAuth2AuthorizationsManagementToolbarDisplayContext
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		DropdownItemList dropdownItems = new DropdownItemList();
-
-		dropdownItems.add(
+		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setHref(
 					StringBundler.concat(
@@ -59,9 +57,8 @@ public class OAuth2AuthorizationsManagementToolbarDisplayContext
 					LanguageUtil.get(
 						httpServletRequest, "revoke-authorizations"));
 				dropdownItem.setQuickAction(true);
-			});
-
-		return dropdownItems;
+			}
+		).build();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

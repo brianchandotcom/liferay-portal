@@ -15,7 +15,7 @@
 package com.liferay.oauth2.provider.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -47,9 +47,7 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		DropdownItemList dropdownItems = new DropdownItemList();
-
-		dropdownItems.add(
+		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setHref(
 					StringBundler.concat(
@@ -59,29 +57,26 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "remove-access"));
 				dropdownItem.setQuickAction(true);
-			});
-
-		return dropdownItems;
+			}
+		).build();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
 				Map<String, String> orderColumnsMap = HashMapBuilder.put(
 					"createDate", "authorization"
 				).put(
 					"oAuth2ApplicationId", "application-id"
 				).build();
 
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							getOrderByDropdownItems(orderColumnsMap));
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "order-by"));
-					});
+				dropdownGroupItem.setDropdownItems(
+					getOrderByDropdownItems(orderColumnsMap));
+
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
-		};
+		).build();
 	}
 
 	public OrderByComparator<OAuth2Authorization> getOrderByComparator() {

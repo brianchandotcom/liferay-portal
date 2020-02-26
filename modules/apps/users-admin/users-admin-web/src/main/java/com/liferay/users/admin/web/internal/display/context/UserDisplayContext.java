@@ -15,7 +15,7 @@
 package com.liferay.users.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -215,39 +215,32 @@ public class UserDisplayContext {
 	}
 
 	public List<NavigationItem> getViewNavigationItems() {
-		return new NavigationItemList() {
-			{
-				String toolbarItem = ParamUtil.getString(
-					_httpServletRequest, "toolbarItem", "view-all-users");
+		String toolbarItem = ParamUtil.getString(
+			_httpServletRequest, "toolbarItem", "view-all-users");
 
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							toolbarItem.equals("view-all-users"));
-						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "toolbarItem",
-							"view-all-users", "saveUsersListView", true,
-							"usersListView",
-							UserConstants.LIST_VIEW_FLAT_USERS);
-						navigationItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "users"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							toolbarItem.equals("view-all-organizations"));
-						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "toolbarItem",
-							"view-all-organizations", "saveUsersListView", true,
-							"usersListView",
-							UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "organizations"));
-					});
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(toolbarItem.equals("view-all-users"));
+				navigationItem.setHref(
+					_renderResponse.createRenderURL(), "toolbarItem",
+					"view-all-users", "saveUsersListView", true,
+					"usersListView", UserConstants.LIST_VIEW_FLAT_USERS);
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "users"));
 			}
-		};
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(
+					toolbarItem.equals("view-all-organizations"));
+				navigationItem.setHref(
+					_renderResponse.createRenderURL(), "toolbarItem",
+					"view-all-organizations", "saveUsersListView", true,
+					"usersListView",
+					UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "organizations"));
+			}
+		).build();
 	}
 
 	private List<Group> _getAllGroups() throws PortalException {

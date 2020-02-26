@@ -2,5 +2,5 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-CodeownersFileLocationCheck | Miscellaneous | |
-CodeownersWhitespaceCheck | Miscellaneous | |
+CodeownersFileLocationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+CodeownersWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |

@@ -2,5 +2,5 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-SoyEmptyLinesCheck | Miscellaneous | |
-WhitespaceCheck | Miscellaneous | |
+SoyEmptyLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+WhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |

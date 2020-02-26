@@ -2,4 +2,4 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-BNDRunInstructionsOrderCheck | Miscellaneous | |
+BNDRunInstructionsOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts definition keys alphabetically |

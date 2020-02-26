@@ -2,5 +2,5 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-ConfigDefinitionKeysCheck | Miscellaneous | |
-WhitespaceCheck | Miscellaneous | |
+ConfigDefinitionKeysCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+WhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |

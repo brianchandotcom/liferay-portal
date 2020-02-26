@@ -2,4 +2,4 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-WhitespaceCheck | Miscellaneous | |
+WhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |

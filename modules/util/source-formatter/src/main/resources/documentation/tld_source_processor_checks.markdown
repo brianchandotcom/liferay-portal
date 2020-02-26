@@ -2,7 +2,7 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-TLDElementOrderCheck | Miscellaneous | |
-TLDTypeCheck | Miscellaneous | |
-WhitespaceCheck | Miscellaneous | |
-XMLIndentationCheck | Miscellaneous | |
+TLDElementOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+TLDTypeCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+WhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+XMLIndentationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |

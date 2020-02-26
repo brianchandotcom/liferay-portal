@@ -2,6 +2,6 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-DockerfileEmptyLinesCheck | Miscellaneous | |
-DockerfileInstructionCheck | Miscellaneous | |
-WhitespaceCheck | Miscellaneous | |
+DockerfileEmptyLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+DockerfileInstructionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+WhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |

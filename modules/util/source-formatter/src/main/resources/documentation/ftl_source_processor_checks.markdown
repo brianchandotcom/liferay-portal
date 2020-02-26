@@ -2,12 +2,12 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-FTLEmptyLinesCheck | Miscellaneous | |
-FTLIfStatementCheck | Miscellaneous | |
-FTLImportsCheck | Miscellaneous | |
-FTLLiferayVariableOrderCheck | Miscellaneous | |
-FTLStringRelationalOperatorCheck | Miscellaneous | |
-FTLStylingCheck | Miscellaneous | |
-FTLTagAttributesCheck | Miscellaneous | |
-FTLTagCheck | Miscellaneous | |
-FTLWhitespaceCheck | Miscellaneous | |
+FTLEmptyLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+FTLIfStatementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+FTLImportsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+FTLLiferayVariableOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+FTLStringRelationalOperatorCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+FTLStylingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+FTLTagAttributesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+FTLTagCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+FTLWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |

@@ -18,6 +18,11 @@
 	<td>//section[@id='portlet_com_liferay_login_web_portlet_LoginPortlet']//div[@class='portlet-body']/a</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LOGIN_PORTLET_PNG</td>
+	<td>portal/screenshots/user/login_portlet.png</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

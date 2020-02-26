@@ -50,15 +50,17 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 
 			const {parentId, position} = result;
 
-			dispatch(
-				addItem({
-					itemType: item.type,
-					parentItemId: parentId,
-					position,
-					selectItem,
-					store,
-				})
-			);
+			if (parentId) {
+				dispatch(
+					addItem({
+						itemType: item.type,
+						parentItemId: parentId,
+						position,
+						selectItem,
+						store,
+					})
+				);
+			}
 		},
 		item: {
 			name: label,

@@ -60,16 +60,18 @@ export default function FragmentCard({
 
 			const {parentId, position} = result;
 
-			dispatch(
-				addFragment({
-					fragmentEntryKey,
-					groupId,
-					parentItemId: parentId,
-					position,
-					selectItem,
-					store,
-				})
-			);
+			if (parentId) {
+				dispatch(
+					addFragment({
+						fragmentEntryKey,
+						groupId,
+						parentItemId: parentId,
+						position,
+						selectItem,
+						store,
+					})
+				);
+			}
 		},
 		item: {
 			name,

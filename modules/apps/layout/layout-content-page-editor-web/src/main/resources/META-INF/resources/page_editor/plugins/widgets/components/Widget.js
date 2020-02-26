@@ -42,14 +42,16 @@ export default function Widget({instanceable, portletId, title, used}) {
 
 			const {parentId, position} = result;
 
-			dispatch(
-				addWidget({
-					parentItemId: parentId,
-					portletId,
-					position,
-					store,
-				})
-			);
+			if (parentId) {
+				dispatch(
+					addWidget({
+						parentItemId: parentId,
+						portletId,
+						position,
+						store,
+					})
+				);
+			}
 		},
 		item: {
 			name: title,

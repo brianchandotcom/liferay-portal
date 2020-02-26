@@ -18,9 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -28,6 +32,7 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -54,6 +59,46 @@ public class DepotPermissionCheckerWrapperTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testHasPermissionForADepotGroupDelegatesToDepot()
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		try {
+			DepotTestUtil.withRegularUser(
+				(user, role) -> {
+					PermissionChecker permissionChecker =
+						_permissionCheckerFactory.create(user);
+
+					Assert.assertFalse(
+						permissionChecker.hasPermission(
+							depotEntry.getGroup(), Group.class.getName(),
+							depotEntry.getGroupId(), ActionKeys.VIEW));
+
+					RoleTestUtil.addResourcePermission(
+						role, DepotEntry.class.getName(),
+						ResourceConstants.SCOPE_COMPANY,
+						String.valueOf(TestPropsValues.getCompanyId()),
+						ActionKeys.VIEW);
+
+					Assert.assertTrue(
+						permissionChecker.hasPermission(
+							depotEntry.getGroup(), Group.class.getName(),
+							depotEntry.getGroupId(), ActionKeys.VIEW));
+				});
+		}
+		finally {
+			_depotEntryLocalService.deleteDepotEntry(depotEntry);
+		}
+	}
 
 	@Test
 	public void testIsGroupAdminWithDepotGroupAndAssetLibraryAdmin()

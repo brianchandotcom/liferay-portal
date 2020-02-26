@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"@clayui/css": "3.6.0"
+	},
+	"name": "frontend-compatibility-ie",
+	"private": true,
+	"scripts": {
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "4.0.1"
+}

@@ -30,6 +30,7 @@ import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import SaveFragmentCompositionModal from '../floating-toolbar/SaveFragmentCompositionModal';
 import Container from './Container';
+import hasDropZoneChild from './hasDropZoneChild';
 
 const ContainerWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
@@ -71,6 +72,19 @@ const ContainerWithControls = React.forwardRef(
 			}
 		};
 
+		const buttons = [];
+
+		if (!hasDropZoneChild(item, layoutData)) {
+			buttons.push(
+				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
+				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition
+			);
+		}
+
+		buttons.push(
+			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
+		);
+
 		const content = (
 			<Container
 				className={classNames('page-editor__container', {
@@ -80,11 +94,7 @@ const ContainerWithControls = React.forwardRef(
 				ref={ref}
 			>
 				<FloatingToolbar
-					buttons={[
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration,
-					]}
+					buttons={buttons}
 					item={item}
 					itemRef={ref}
 					onButtonClick={handleButtonClick}

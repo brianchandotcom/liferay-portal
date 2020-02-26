@@ -29,6 +29,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
+import com.liferay.headless.delivery.dto.v1_0.FragmentFieldHTML;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
@@ -387,12 +388,30 @@ public class FragmentInstanceDefinitionConverterUtil {
 						String type = editableTypes.getOrDefault(
 							textId, "text");
 
+						if (Objects.equals(type, "html")) {
+							return _toFragmentFieldHTML(textJSONObject);
+						}
+
 						if (Objects.equals(type, "image")) {
 							return _toFragmentFieldImage(textJSONObject);
 						}
 
 						return _toFragmentFieldText(textJSONObject);
 					});
+			}
+		};
+	}
+
+	private static FragmentFieldHTML _toFragmentFieldHTML(
+		JSONObject jsonObject) {
+
+		return new FragmentFieldHTML() {
+			{
+				html = new InlineValue() {
+					{
+						value_i18n = _toLocaleMap(jsonObject);
+					}
+				};
 			}
 		};
 	}

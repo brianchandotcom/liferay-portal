@@ -516,7 +516,7 @@ public class AuthVerifierTest {
 
 			httpServletRequest.setAttribute("MATCHED", Boolean.TRUE);
 
-			return null;
+			return new AuthVerifierResult();
 		}
 
 	}

@@ -232,6 +232,9 @@ export const getThread = (
                     pageSize
                     totalCount
                 }
+                messageBoardSection {
+                	title
+                }
                 myRating {
                     ratingValue
                 }

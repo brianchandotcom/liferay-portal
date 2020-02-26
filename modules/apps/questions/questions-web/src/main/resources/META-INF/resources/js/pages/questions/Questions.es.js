@@ -13,7 +13,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
@@ -23,6 +22,7 @@ import {AppContext} from '../../AppContext.es';
 import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import Error from '../../components/Error.es';
 import QuestionBadge from '../../components/QuestionsBadge.es';
+import SectionLabel from '../../components/SectionLabel.es';
 import TagList from '../../components/TagList.es';
 import UserIcon from '../../components/UserIcon.es';
 import {getRankedThreads, getThreads} from '../../utils/client.es';
@@ -151,14 +151,11 @@ export default ({
 						key={question.id}
 					>
 						<div className="align-items-center d-flex justify-content-between">
-							<ClayLabel
-								className="bg-light border-0 stretched-link-layer text-uppercase"
-								displayType="secondary"
-								large
-							>
-								{'Collaboration'}
-								{/* {question.category} */}
-							</ClayLabel>
+							<div className={'stretched-link-layer'}>
+								<SectionLabel
+									section={question.messageBoardSection}
+								/>
+							</div>
 
 							<ul className="question-list">
 								<li>

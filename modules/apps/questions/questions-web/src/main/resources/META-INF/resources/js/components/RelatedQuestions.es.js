@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayLabel from '@clayui/label';
 import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
@@ -20,6 +19,7 @@ import {AppContext} from '../AppContext.es';
 import {getRelatedThreads} from '../utils/client.es';
 import {dateToInternationalHuman, normalizeRating} from '../utils/utils.es';
 import QuestionBadge from './QuestionsBadge.es';
+import SectionLabel from './SectionLabel.es';
 import UserIcon from './UserIcon.es';
 
 export default ({question}) => {
@@ -55,16 +55,11 @@ export default ({question}) => {
 								key={relatedQuestion.id}
 							>
 								<div className="d-flex justify-content-between stretched-link-layer">
-									<ClayLabel
-										className="bg-light border-0 text-uppercase"
-										displayType="secondary"
-										large
-									>
-										{'Collaboration'}
-										{/* {relatedQuestion.messageBoardSection &&
-												relatedQuestion
-													.messageBoardSection.title} */}
-									</ClayLabel>
+									<SectionLabel
+										section={
+											relatedQuestion.messageBoardSection
+										}
+									/>
 
 									<QuestionBadge
 										className="text-secondary"

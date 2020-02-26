@@ -15,7 +15,6 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
@@ -29,6 +28,7 @@ import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import CreatorRow from '../../components/CreatorRow.es';
 import Rating from '../../components/Rating.es';
 import RelatedQuestions from '../../components/RelatedQuestions.es';
+import SectionLabel from '../../components/SectionLabel.es';
 import Subscription from '../../components/Subscription.es';
 import TagList from '../../components/TagList.es';
 import {
@@ -164,13 +164,7 @@ export default ({
 					</div>
 
 					<div className="col-10">
-						<ClayLabel
-							className="bg-light border-0 text-uppercase"
-							displayType="secondary"
-							large
-						>
-							{'Collaboration'}
-						</ClayLabel>
+						<SectionLabel section={question.messageBoardSection} />
 
 						<div className="c-mt-2 row">
 							<div className="col-10">

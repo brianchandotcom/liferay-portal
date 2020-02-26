@@ -38,6 +38,7 @@ import com.liferay.headless.delivery.dto.v1_0.InlineLink;
 import com.liferay.headless.delivery.dto.v1_0.InlineValue;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
@@ -246,6 +247,58 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertNull(pageElement.getDefinition());
 		Assert.assertNull(pageElement.getPageElements());
 		Assert.assertEquals(PageElement.Type.ROOT, pageElement.getType());
+	}
+
+	@Test
+	public void testToPageDefinitionSection() throws Exception {
+		_addLayoutPageTemplateStructure(
+			"layout_data_section.json", new HashMap<>());
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			_layoutPageTemplateEntry.getPlid());
+
+		PageDefinition pageDefinition =
+			PageDefinitionConverterUtil.toPageDefinition(
+				_fragmentCollectionContributorTracker,
+				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
+				layout);
+
+		PageElement rootPageElement = pageDefinition.getPageElement();
+
+		Assert.assertEquals(PageElement.Type.ROOT, rootPageElement.getType());
+
+		PageElement[] pageElements = rootPageElement.getPageElements();
+
+		Assert.assertEquals(
+			Arrays.toString(pageElements), 1, pageElements.length);
+
+		PageElement sectionPageElement = pageElements[0];
+
+		Assert.assertEquals(
+			PageElement.Type.SECTION, sectionPageElement.getType());
+
+		SectionDefinition sectionDefinition =
+			(SectionDefinition)sectionPageElement.getDefinition();
+
+		Assert.assertEquals(
+			"primary", sectionDefinition.getBackgroundColorCssClass());
+
+		FragmentImage fragmentImage = sectionDefinition.getBackgroundImage();
+
+		Assert.assertEquals(
+			"http://myexample.com/myexample.png", fragmentImage.getTitle());
+		Assert.assertEquals(
+			"http://myexample.com/myexample.png", fragmentImage.getUrl());
+
+		com.liferay.headless.delivery.dto.v1_0.Layout sectionLayout =
+			sectionDefinition.getLayout();
+
+		Assert.assertEquals("Fluid", sectionLayout.getContainerTypeAsString());
+		Assert.assertEquals(
+			Integer.valueOf(5), sectionLayout.getPaddingBottom());
+		Assert.assertEquals(
+			Integer.valueOf(6), sectionLayout.getPaddingHorizontal());
+		Assert.assertEquals(Integer.valueOf(4), sectionLayout.getPaddingTop());
 	}
 
 	private void _addLayoutPageTemplateStructure(

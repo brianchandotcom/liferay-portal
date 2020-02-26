@@ -1,0 +1,35 @@
+{
+	"items": {
+		"247d4dd8-6743-403f-927a-ff3f3015497c": {
+			"children": [],
+			"config": {
+				"backgroundColorCssClass": "primary",
+				"backgroundImage": {
+					"title": "http://myexample.com/myexample.png",
+					"url": "http://myexample.com/myexample.png"
+				},
+				"paddingBottom": 5,
+				"paddingHorizontal": 6,
+				"paddingTop": 4,
+				"type": "fluid"
+			},
+			"itemId": "247d4dd8-6743-403f-927a-ff3f3015497c",
+			"parentId": "281911a2-118c-402d-8c7d-f061aa4d2a24",
+			"type": "container"
+		},
+		"281911a2-118c-402d-8c7d-f061aa4d2a24": {
+			"children": [
+				"247d4dd8-6743-403f-927a-ff3f3015497c"
+			],
+			"config": {},
+			"itemId": "281911a2-118c-402d-8c7d-f061aa4d2a24",
+			"parentId": "",
+			"type": "root"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "281911a2-118c-402d-8c7d-f061aa4d2a24"
+	},
+	"version": 1
+}

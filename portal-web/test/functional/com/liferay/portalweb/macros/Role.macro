@@ -100,6 +100,7 @@ definition {
 
 	macro definePermissionCmdCP {
 		Role.editPermissionCmdCP(
+			assetLibrariesScope = "${assetLibrariesScope}",
 			define = "true",
 			permissionDefinitionKey = "${permissionDefinitionKey}",
 			permissionDefinitionKeyChange = "${permissionDefinitionKeyChange}",
@@ -116,6 +117,7 @@ definition {
 
 	macro definePermissionCP {
 		Role.definePermissionCmdCP(
+			assetLibrariesScope = "${assetLibrariesScope}",
 			permissionDefinitionKey = "${permissionDefinitionKey}",
 			roleTitle = "${roleTitle}",
 			roleType = "${roleType}",
@@ -126,7 +128,8 @@ definition {
 			permissionDefinitionKey = "${permissionDefinitionKey}",
 			permissionDefinitionValue = "${permissionDefinitionValue}",
 			permissionNavigationValue = "${permissionNavigationValue}",
-			remove = "${remove}");
+			remove = "${remove}",
+			siteNameScope = "${siteNameScope}");
 	}
 
 	macro definePermissionPG {
@@ -281,6 +284,10 @@ definition {
 				var permissionNavigationKey = "SITE_ADMIN_CATEGORIES";
 				var permissionNavigationValue = "Categories";
 			}
+			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_CONTENT_SETS")) {
+				var permissionNavigationKey = "SITE_ADMIN_CONTENT_CONTENT_SETS";
+				var permissionNavigationValue = "Content Sets";
+			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA")) {
 				var permissionNavigationKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA";
 				var permissionNavigationValue = "Documents and Media";
@@ -357,6 +364,22 @@ definition {
 				var key_card = "${siteNameScope}";
 
 				SelectFrame(locator1 = "RolesPermissionsSelectSite#SELECT_SITE_IFRAME");
+
+				AssertClick(
+					locator1 = "NavBar#RECENT",
+					value1 = "Recent");
+
+				if ("${assetLibrariesScope}" == "true") {
+					AssertClick(
+						locator1 = "NavBar#ASSET_LIBRARIES",
+						value1 = "Asset Libraries");
+				}
+				else {
+					AssertClick(
+						locator1 = "NavBar#MY_SITES",
+						value1 = "My Sites");
+
+				}
 
 				AssertClick.assertPartialTextClickAt(
 					locator1 = "LexiconCard#CARD_TITLE",
@@ -596,6 +619,10 @@ definition {
 			var permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS";
 			var permissionNavigationValue = "Blogs";
 		}
+		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_CONTENT_SETS")) {
+			var permissionNavigationKey = "SITE_ADMIN_CONTENT_CONTENT_SETS";
+			var permissionNavigationValue = "Content Sets";
+		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA")) {
 			var permissionNavigationKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA";
 			var permissionNavigationValue = "Documents and Media";
@@ -654,6 +681,13 @@ definition {
 			AssertTextEquals(
 				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_REMOVE",
 				value1 = "Remove");
+
+			if (isSet(siteNameScope)) {
+				AssertTextEquals(
+					key_siteNameScope = "${siteNameScope}",
+					locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_SCOPE",
+					value1 = "${siteNameScope}");
+			}
 		}
 	}
 

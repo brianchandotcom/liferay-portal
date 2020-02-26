@@ -172,6 +172,20 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
+		if (isSet(depotName)) {
+			AssertClick(
+				key_breadcrumbName = "Sites",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Sites");
+
+			AssertClick(
+				key_groupTab = "Asset Library",
+				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+				value1 = "Asset Library");
+
+			LexiconCard.clickCard(card = "${depotName}");
+		}
+
 		LexiconEntry.selectEntry(rowEntry = "${assetName}");
 
 		SelectFrameTop();

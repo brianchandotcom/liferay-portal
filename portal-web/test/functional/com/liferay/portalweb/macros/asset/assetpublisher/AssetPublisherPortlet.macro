@@ -874,6 +874,8 @@ definition {
 			Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE_CARD");
 		}
 		else {
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 			Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 		}
 

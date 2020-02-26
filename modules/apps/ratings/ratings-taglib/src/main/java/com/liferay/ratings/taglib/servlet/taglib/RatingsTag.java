@@ -1,14 +1,5 @@
 package com.liferay.ratings.taglib.servlet.taglib;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.ratings.kernel.RatingsType;
-import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
 import com.liferay.ratings.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -26,6 +17,10 @@ public class RatingsTag extends IncludeTag {
 
 	public long getClassPK() {
 		return _classPK;
+	}
+
+	public String getType() {
+		return _type;
 	}
 
 	public void setClassName(String className) {
@@ -61,48 +56,9 @@ public class RatingsTag extends IncludeTag {
 		return _PAGE;
 	}
 
-	protected String getType(HttpServletRequest httpServletRequest) {
-		if (Validator.isNotNull(_type)) {
-			return _type;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getSiteGroup();
-
-		if (group.isStagingGroup()) {
-			group = group.getLiveGroup();
-		}
-
-		RatingsType ratingsType = null;
-
-		if (group != null) {
-			try {
-				ratingsType = PortletRatingsDefinitionUtil.getRatingsType(
-					themeDisplay.getCompanyId(), group.getGroupId(),
-					_className);
-			}
-			catch (PortalException portalException) {
-				_log.error(
-					"Unable to get ratings type for group " +
-						group.getGroupId(),
-					portalException);
-			}
-		}
-
-		if (ratingsType == null) {
-			ratingsType = RatingsType.STARS;
-		}
-
-		return ratingsType.getValue();
-	}
-
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest.setAttribute(
-			"liferay-ratings:ratings:type", getType(httpServletRequest));
+		httpServletRequest.setAttribute("liferay-ratings:ratings:type", _type);
 		httpServletRequest.setAttribute(
 			"liferay-ui:ratings:className", _className);
 		httpServletRequest.setAttribute(
@@ -110,8 +66,6 @@ public class RatingsTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/page.jsp";
-
-	private static final Log _log = LogFactoryUtil.getLog(RatingsTag.class);
 
 	private String _className;
 	private long _classPK;

@@ -22,6 +22,7 @@ import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editable
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import Processors from '../../processors/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
+import selectShowEditableFloatingToolbar from '../../selectors/selectShowEditableFloatingToolbar';
 import {useSelector} from '../../store/index';
 import UnsafeHTML from '../UnsafeHTML';
 import {
@@ -43,6 +44,9 @@ const FragmentContent = React.forwardRef(
 		const isMounted = useIsMounted();
 		const editableProcessorUniqueId = useEditableProcessorUniqueId();
 		const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
+		const showEditableFloatingToolbar = useSelector(
+			selectShowEditableFloatingToolbar
+		);
 
 		const [editableElements, setEditableElements] = useState([]);
 
@@ -156,11 +160,13 @@ const FragmentContent = React.forwardRef(
 					/>
 				</FragmentContentInteractionsFilter>
 
-				<FragmentContentFloatingToolbar
-					editableElements={editableElements}
-					fragmentEntryLinkId={fragmentEntryLinkId}
-					onButtonClick={onFloatingToolbarButtonClick}
-				/>
+				{showEditableFloatingToolbar && (
+					<FragmentContentFloatingToolbar
+						editableElements={editableElements}
+						fragmentEntryLinkId={fragmentEntryLinkId}
+						onButtonClick={onFloatingToolbarButtonClick}
+					/>
+				)}
 
 				<FragmentContentProcessor
 					element={element}

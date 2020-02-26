@@ -391,6 +391,8 @@ public class GitUtil {
 
 					if (matcher != null) {
 						while (matcher.find()) {
+							retryDelay = 0;
+
 							modifiedCommand = modifiedCommand.replaceFirst(
 								matcher.group(0),
 								toSlaveGitHubDevNodeRemoteURL(
@@ -405,6 +407,13 @@ public class GitUtil {
 				for (int i = 0; i < modifiedCommands.length; i++) {
 					modifiedCommands[i] = modifiedCommands[i].replace(
 						_HOSTNAME_GITHUB_CACHE_PROXY, gitHubDevNodeHostname);
+
+					if ((retryDelay != 0) &&
+						modifiedCommands[i].contains(
+							_HOSTNAME_GITHUB_CACHE_PROXY)) {
+
+						retryDelay = 0;
+					}
 				}
 			}
 

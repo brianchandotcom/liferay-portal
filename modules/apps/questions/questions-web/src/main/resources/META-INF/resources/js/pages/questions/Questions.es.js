@@ -20,6 +20,7 @@ import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
+import Error from '../../components/Error.es';
 import QuestionBadge from '../../components/QuestionsBadge.es';
 import TagList from '../../components/TagList.es';
 import UserIcon from '../../components/UserIcon.es';
@@ -34,6 +35,7 @@ export default ({
 }) => {
 	const context = useContext(AppContext);
 
+	const [error, setError] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [page, setPage] = useState(1);
 	const [pageSize] = useState(20);
@@ -47,7 +49,11 @@ export default ({
 	const renderQuestions = questions => {
 		questions
 			.then(data => setQuestions(data || []))
-			.then(() => setLoading(false));
+			.then(() => setLoading(false))
+			.catch(_ => {
+				setLoading(false);
+				setError({message: 'Loading Questions', title: 'Error'});
+			});
 	};
 
 	const loadThreads = useCallback(
@@ -257,6 +263,7 @@ export default ({
 						)}
 					/>
 				)}
+			<Error error={error} />
 		</section>
 	);
 };

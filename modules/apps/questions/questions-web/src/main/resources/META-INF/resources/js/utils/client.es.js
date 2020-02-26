@@ -151,7 +151,7 @@ export const getTags = (page = 1, siteKey) =>
                     name
                     dateCreated
                     id
-                    keywordUsageCount
+                    taxonomyCategoryUsageCount
                 }
                 lastPage
                 page

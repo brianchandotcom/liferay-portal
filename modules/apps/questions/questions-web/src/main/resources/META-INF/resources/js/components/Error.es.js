@@ -15,33 +15,12 @@
 import ClayAlert from '@clayui/alert';
 import React from 'react';
 
-export class ErrorBoundary extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {hasError: false};
-	}
-
-	static getDerivedStateFromError(error) {
-		return {error, hasError: true};
-	}
-
-	componentDidCatch(_error, _errorInfo) {}
-
-	render() {
-		if (this.state.hasError) {
-			return (
-				<>
-					<ClayAlert
-						autoClose={5000}
-						displayType="danger"
-						title={'Error:'}
-					>
-						{'Could not load the page'}
-					</ClayAlert>
-				</>
-			);
-		}
-
-		return this.props.children;
-	}
-}
+export default ({error: {message, title}}) => (
+	<>
+		{title && (<ClayAlert.ToastContainer>
+			<ClayAlert displayType="danger" title={title}>
+				{message}
+			</ClayAlert>
+		</ClayAlert.ToastContainer>)}
+	</>
+);

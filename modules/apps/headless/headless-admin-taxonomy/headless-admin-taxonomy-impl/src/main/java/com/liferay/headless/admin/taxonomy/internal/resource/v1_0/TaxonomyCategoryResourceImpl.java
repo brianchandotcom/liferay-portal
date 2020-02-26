@@ -374,9 +374,9 @@ public class TaxonomyCategoryResourceImpl
 		projectionList.add(
 			ProjectionFactoryUtil.alias(
 				ProjectionFactoryUtil.sqlProjection(
-					"select count(entryId) AS count from " +
+					"(select count(entryId) AS count from " +
 						"AssetEntries_AssetCategories where categoryId = " +
-							"this_.categoryId group by categoryId AS count",
+							"this_.categoryId group by categoryId) AS count",
 					new String[] {"count"}, new Type[] {Type.INTEGER}),
 				"count"));
 		projectionList.add(ProjectionFactoryUtil.property("categoryId"));

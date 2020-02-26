@@ -28,6 +28,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
+import com.liferay.headless.delivery.dto.v1_0.FragmentFieldHTML;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
@@ -136,6 +137,19 @@ public class PageDefinitionConverterUtilTest {
 
 		_validateFragmentImage(
 			fragmentFieldBackgroundImage.getBackgroundImage());
+	}
+
+	@Test
+	public void testToPageDefinitionFragmentFieldHTML() throws Exception {
+		FragmentField fragmentField = _getFragmentField(
+			"editable_values_fragment_field_html.json", "my-html",
+			"<lfr-editable id=\"my-html\" type=\"html\"><h1>Example</h1>" +
+				"</lfr-editable>");
+
+		FragmentFieldHTML fragmentFieldHTML =
+			(FragmentFieldHTML)fragmentField.getValue();
+
+		_validateFragmentFieldHTML(fragmentFieldHTML);
 	}
 
 	@Test
@@ -307,6 +321,19 @@ public class PageDefinitionConverterUtilTest {
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void _validateFragmentFieldHTML(
+		FragmentFieldHTML fragmentFieldHTML) {
+
+		InlineValue inlineValue = (InlineValue)fragmentFieldHTML.getHtml();
+
+		Assert.assertNull(inlineValue.getValue());
+
+		Map<String, String> i18nMap = inlineValue.getValue_i18n();
+
+		Assert.assertEquals("My example", i18nMap.get("en_US"));
+		Assert.assertEquals("Mi ejemplo", i18nMap.get("es_ES"));
 	}
 
 	private void _validateFragmentFieldText(

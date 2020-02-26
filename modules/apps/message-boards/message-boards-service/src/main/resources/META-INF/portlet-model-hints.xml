@@ -121,6 +121,9 @@
 		<field name="allowPingbacks" type="boolean" />
 		<field name="answer" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="urlTitle" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

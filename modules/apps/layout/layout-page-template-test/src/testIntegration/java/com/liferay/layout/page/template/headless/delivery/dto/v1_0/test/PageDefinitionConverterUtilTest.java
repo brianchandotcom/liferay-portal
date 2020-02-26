@@ -27,6 +27,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
+import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
@@ -118,6 +119,19 @@ public class PageDefinitionConverterUtilTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				_serviceContext);
+	}
+
+	@Test
+	public void testToPageDefinitionFragmentFieldImage() throws Exception {
+		FragmentField fragmentField = _getFragmentField(
+			"editable_values_fragment_field_image.json", "my-image",
+			"<lfr-editable id=\"my-image\" type=\"image\"><img/>" +
+				"</lfr-editable>");
+
+		FragmentFieldImage fragmentFieldImage =
+			(FragmentFieldImage)fragmentField.getValue();
+
+		_validateFragmentImage(fragmentFieldImage.getFragmentImage());
 	}
 
 	@Test

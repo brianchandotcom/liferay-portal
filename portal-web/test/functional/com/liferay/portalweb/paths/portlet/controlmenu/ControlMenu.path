@@ -49,6 +49,29 @@
 	<td>//div[contains(@id,'product_menu')]//a[contains(.,'Users')]</td>
 	<td>Users Navigation</td>
 </tr>
+<!--HOME-->
+<tr>
+	<td>HOME_HEADING_AND_PRODUCT_MENU_OPENED_PNG</td>
+	<td>portal/screenshots/controlmenu/home/heading_and_product_menu_opened.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HOME_ICONS_RIGHT_PNG</td>
+	<td>portal/screenshots/controlmenu/home/icons_right.png</td>
+	<td></td>
+</tr>
+<!--WEB CONTENT-->
+<tr>
+	<td>WC_HEADING_AND_PRODUCT_MENU_OPENED_PNG</td>
+	<td>portal/screenshots/controlmenu/webcontent/heading_and_product_menu_opened.png</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>WC_ICONS_RIGHT_PNG</td>
+	<td>portal/screenshots/controlmenu/webcontent/icons_right.png</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

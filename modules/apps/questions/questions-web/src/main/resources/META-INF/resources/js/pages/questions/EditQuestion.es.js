@@ -151,7 +151,7 @@ export default withRouter(
 
 					<Link to={'/questions/'}>
 						<ClayButton displayType="secondary">
-								{Liferay.Language.get('cancel')}
+							{Liferay.Language.get('cancel')}
 						</ClayButton>
 					</Link>
 				</ClayButton.Group>

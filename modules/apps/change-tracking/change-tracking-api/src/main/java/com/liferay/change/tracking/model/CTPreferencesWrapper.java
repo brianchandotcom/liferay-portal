@@ -46,6 +46,7 @@ public class CTPreferencesWrapper
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("ctCollectionId", getCtCollectionId());
+		attributes.put("previousCtCollectionId", getPreviousCtCollectionId());
 		attributes.put("confirmationEnabled", isConfirmationEnabled());
 
 		return attributes;
@@ -81,6 +82,13 @@ public class CTPreferencesWrapper
 
 		if (ctCollectionId != null) {
 			setCtCollectionId(ctCollectionId);
+		}
+
+		Long previousCtCollectionId = (Long)attributes.get(
+			"previousCtCollectionId");
+
+		if (previousCtCollectionId != null) {
+			setPreviousCtCollectionId(previousCtCollectionId);
 		}
 
 		Boolean confirmationEnabled = (Boolean)attributes.get(
@@ -139,6 +147,16 @@ public class CTPreferencesWrapper
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
+	}
+
+	/**
+	 * Returns the previous ct collection ID of this ct preferences.
+	 *
+	 * @return the previous ct collection ID of this ct preferences
+	 */
+	@Override
+	public long getPreviousCtCollectionId() {
+		return model.getPreviousCtCollectionId();
 	}
 
 	/**
@@ -234,6 +252,16 @@ public class CTPreferencesWrapper
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
+	}
+
+	/**
+	 * Sets the previous ct collection ID of this ct preferences.
+	 *
+	 * @param previousCtCollectionId the previous ct collection ID of this ct preferences
+	 */
+	@Override
+	public void setPreviousCtCollectionId(long previousCtCollectionId) {
+		model.setPreviousCtCollectionId(previousCtCollectionId);
 	}
 
 	/**

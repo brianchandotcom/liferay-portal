@@ -16,4 +16,18 @@
 
 <%@ include file="/init.jsp" %>
 
-<h1>RATINGS!!!</h1>
+<%
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ratings_page") + StringPool.UNDERLINE;
+String className = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:className"));
+long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ratings:ratings:classPK"));
+String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:type"));
+%>
+
+<div class="taglib-ratings <%= type %>" id="<%= randomNamespace %>ratingsContainer">
+	<liferay-ui:ratings
+		className="<%= className %>"
+		classPK="<%= classPK %>"
+		inTrash="<%= false %>"
+		type="<%= type %>"
+	/>
+</div>

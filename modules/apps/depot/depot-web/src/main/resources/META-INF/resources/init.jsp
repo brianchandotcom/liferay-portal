@@ -71,7 +71,8 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.roles.admin.kernel.util.RolesAdminUtil" %><%@
 page import="com.liferay.sharing.configuration.SharingConfiguration" %>
 
-<%@ page import="java.util.HashMap" %><%@
+<%@ page import="java.util.Collections" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>

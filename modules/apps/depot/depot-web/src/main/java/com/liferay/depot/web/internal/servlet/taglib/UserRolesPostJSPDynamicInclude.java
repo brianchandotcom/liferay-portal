@@ -14,13 +14,21 @@
 
 package com.liferay.depot.web.internal.servlet.taglib;
 
+import com.liferay.depot.web.internal.display.context.DepotAdminRolesDisplayContext;
 import com.liferay.depot.web.internal.util.DepotSupportChecker;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -41,11 +49,29 @@ public class UserRolesPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (!_depotSupportChecker.isEnabled()) {
-			return;
-		}
+		try {
+			if (!_depotSupportChecker.isEnabled()) {
+				return;
+			}
 
-		super.include(httpServletRequest, httpServletResponse, key);
+			PortletRequest portletRequest =
+				(PortletRequest)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST);
+			PortletResponse portletResponse =
+				(PortletResponse)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+			httpServletRequest.setAttribute(
+				DepotAdminRolesDisplayContext.class.getName(),
+				new DepotAdminRolesDisplayContext(
+					_portal.getLiferayPortletRequest(portletRequest),
+					_portal.getLiferayPortletResponse(portletResponse)));
+
+			super.include(httpServletRequest, httpServletResponse, key);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
 	}
 
 	@Override
@@ -78,5 +104,11 @@ public class UserRolesPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Reference
 	private DepotSupportChecker _depotSupportChecker;
+
+	@Reference
+	private ItemSelector _itemSelector;
+
+	@Reference
+	private Portal _portal;
 
 }

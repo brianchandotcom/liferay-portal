@@ -26,6 +26,80 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the scope can be changed through dynamic selection in a depot."
+	@priority = "5"
+	test ChangeScope {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Second Depot Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			title = "WC Depot 1 Title");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Second Depot Name",
+			title = "WC Depot 2 Title");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.configureScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			depotName = "Test Second Depot Name");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.removeScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			scopeName = "Current Site");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.viewContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "WC Depot 2 Title",
+			assetType = "Web Content Article");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.viewNoContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "WC Depot 1 Title",
+			assetType = "Web Content Article");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.configureScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			depotName = "Test Depot Name");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.removeScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			scopeName = "Test Second Depot Name");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.viewContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "WC Depot 1 Title",
+			assetType = "Web Content Article");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.viewNoContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "WC Depot 2 Title",
+			assetType = "Web Content Article");
+	}
+
 	@description = "This ensures that content sets from a site can select the basic web content stored in a depot."
 	@priority = "5"
 	test CreateSetOnSiteUsingDepotWC {
@@ -625,6 +699,108 @@ definition {
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Depot Manual Asset List",
+				assetTitle = "WC WebContent Title ${i}",
+				assetType = "Web Content Article");
+		}
+	}
+
+	@description = "This ensures that web contents from all the scopes can be selected through dynamic selection in a depot."
+	@priority = "4"
+	test SelectWCFromAllScopesDynamically {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Second Depot Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Third Depot Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			title = "WC Depot 1 Title");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Second Depot Name",
+			title = "WC Depot 2 Title");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Third Depot Name",
+			title = "WC Depot 3 Title");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.configureScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			depotName = "Test Second Depot Name");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.configureScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			depotName = "Test Third Depot Name");
+
+		for (var i : list "1,2,3") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Depot Dynamic Asset List",
+				assetTitle = "WC Depot ${i} Title",
+				assetType = "Web Content Article");
+		}
+	}
+
+	@description = "This ensures that a web content can be selected from other depot through dynamic selection that does not contain the keyword."
+	@priority = "5"
+	test SelectWCFromOtherScopeDynamically {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Second Depot Name");
+
+		for (var i : list "1 2,2 3,3 4") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Second Depot Name",
+				title = "WC WebContent Title ${i}");
+		}
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.configureScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			depotName = "Test Second Depot Name");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.editAssetList(assetListTitle = "Depot Dynamic Asset List");
+
+		AssetListsAdmin.addKeywordsFilter(
+			keyWords = "3",
+			queryAndOperator = "Any",
+			queryContains = "Does Not Contain");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.viewContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "WC WebContent Title 1 2",
+			assetType = "Web Content Article");
+
+		for (var i : list "2 3,3 4") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+			AssetListsAdmin.viewNoContent(
+				assetListTitle = "Depot Dynamic Asset List",
 				assetTitle = "WC WebContent Title ${i}",
 				assetType = "Web Content Article");
 		}

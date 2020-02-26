@@ -130,7 +130,6 @@ Liferay-JS-Resources-Top-Head:\
 	/liferay/util.js,\
 	\
 	/liferay/global.bundle.js,\
-	/liferay/portal.js,\
 	/liferay/portlet.js,\
 	/liferay/workflow.js,\
 	\

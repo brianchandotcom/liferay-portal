@@ -214,6 +214,8 @@ public class ServiceBuilder {
 		String sqlSequencesFileName = arguments.get(
 			"service.sql.sequences.file");
 		String targetEntityName = arguments.get("service.target.entity.name");
+		String targetKernelVersion = arguments.get(
+			"service.target.kernel.version");
 		String testDirName = arguments.get("service.test.dir");
 		String uadDirName = arguments.get("service.uad.dir");
 
@@ -239,7 +241,7 @@ public class ServiceBuilder {
 				readOnlyPrefixes, resourceActionModels, resourcesDirName,
 				springFileName, springNamespaces, sqlDirName, sqlFileName,
 				sqlIndexesFileName, sqlSequencesFileName, targetEntityName,
-				testDirName, uadDirName, true);
+				targetKernelVersion, testDirName, uadDirName, true);
 
 			String modifiedFileNames = StringUtil.merge(
 				serviceBuilder.getModifiedFileNames());
@@ -287,6 +289,8 @@ public class ServiceBuilder {
 					"\tservice.sql.sequences.file=sequences.sql\n",
 					"\tservice.target.entity.name=",
 					"${service.target.entity.name}\n",
+					"\tservice.target.kernel.version=",
+					"${service.target.kernel.version}\n",
 					"\tservice.test.dir=${basedir}/test/integration\n\n",
 					"You can also customize the generated code by overriding ",
 					"the default templates with these optional system ",
@@ -489,7 +493,7 @@ public class ServiceBuilder {
 			pluginName, propsUtil, readOnlyPrefixes, resourceActionModels,
 			resourcesDirName, springFileName, springNamespaces, sqlDirName,
 			sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
-			targetEntityName, testDirName, uadDirName, true);
+			targetEntityName, null, testDirName, uadDirName, true);
 	}
 
 	public ServiceBuilder(
@@ -503,7 +507,8 @@ public class ServiceBuilder {
 			String springFileName, String[] springNamespaces, String sqlDirName,
 			String sqlFileName, String sqlIndexesFileName,
 			String sqlSequencesFileName, String targetEntityName,
-			String testDirName, String uadDirName, boolean build)
+			String targetKernelVersion, String testDirName, String uadDirName,
+			boolean build)
 		throws Exception {
 
 		_tplBadAliasNames = _getTplProperty(
@@ -586,6 +591,7 @@ public class ServiceBuilder {
 			_sqlIndexesFileName = sqlIndexesFileName;
 			_sqlSequencesFileName = sqlSequencesFileName;
 			_targetEntityName = targetEntityName;
+			_targetKernelVersion = targetKernelVersion;
 			_testDirName = _normalize(testDirName);
 			_uadDirName = _normalize(uadDirName);
 			_build = build;
@@ -1185,7 +1191,8 @@ public class ServiceBuilder {
 			_pluginName, _propsUtil, _readOnlyPrefixes, _resourceActionModels,
 			_resourcesDirName, _springFileName, _springNamespaces, _sqlDirName,
 			_sqlFileName, _sqlIndexesFileName, _sqlSequencesFileName,
-			_targetEntityName, _testDirName, _uadDirName, false);
+			_targetEntityName, _targetKernelVersion, _testDirName, _uadDirName,
+			false);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -7489,6 +7496,7 @@ public class ServiceBuilder {
 	private String _sqlIndexesFileName;
 	private String _sqlSequencesFileName;
 	private String _targetEntityName;
+	private String _targetKernelVersion;
 	private String _testDirName;
 	private String _testOutputPath;
 	private String _tplBadAliasNames = _TPL_ROOT + "bad_alias_names.txt";

@@ -168,6 +168,12 @@ public class BuildServiceTask extends JavaExec {
 
 	@Input
 	@Optional
+	public String getTargetKernelVersion() {
+		return GradleUtil.toString(_targetKernelVersion);
+	}
+
+	@Input
+	@Optional
 	public File getTestDir() {
 		return GradleUtil.toFile(getProject(), _testDir);
 	}
@@ -370,6 +376,10 @@ public class BuildServiceTask extends JavaExec {
 		_targetEntityName = targetEntityName;
 	}
 
+	public void setTargetKernelVersion(Object targetKernelVersion) {
+		_targetKernelVersion = targetKernelVersion;
+	}
+
 	public void setTestDir(Object testDir) {
 		_testDir = testDir;
 	}
@@ -441,6 +451,12 @@ public class BuildServiceTask extends JavaExec {
 		}
 
 		args.add("service.target.entity.name=" + targetEntityName);
+
+		String targetKernelVersion = getTargetKernelVersion();
+
+		if (Validator.isNotNull(targetKernelVersion)) {
+			args.add("service.target.kernel.version=" + targetKernelVersion);
+		}
 
 		File testDir = getTestDir();
 
@@ -526,6 +542,7 @@ public class BuildServiceTask extends JavaExec {
 	private Object _sqlIndexesFileName = "indexes.sql";
 	private Object _sqlSequencesFileName = "sequences.sql";
 	private Object _targetEntityName;
+	private Object _targetKernelVersion;
 	private Object _testDir;
 	private Object _uadDir;
 	private Object _uadTestIntegrationDir;

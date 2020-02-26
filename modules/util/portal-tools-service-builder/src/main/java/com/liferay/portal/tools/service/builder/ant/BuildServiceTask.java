@@ -162,6 +162,10 @@ public class BuildServiceTask extends Task {
 		_serviceBuilderArgs.setTargetEntityName(targetEntityName);
 	}
 
+	public void setTargetKernelVersion(String targetKernelVersion) {
+		_serviceBuilderArgs.setTargetKernelVersion(targetKernelVersion);
+	}
+
 	public void setTestDirName(String testDirName) {
 		_serviceBuilderArgs.setTestDirName(testDirName);
 	}

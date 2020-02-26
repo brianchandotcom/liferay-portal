@@ -207,6 +207,16 @@ public class BuildServiceMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setServiceBuilderTargetKernelVersion(
+		String serviceBuilderTargetKernelVersion) {
+
+		_serviceBuilderArgs.setTargetKernelVersion(
+			serviceBuilderTargetKernelVersion);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setSpringFileName(String springFileName) {
 		_serviceBuilderArgs.setSpringFileName(springFileName);
 	}

@@ -124,6 +124,10 @@ public class ServiceBuilderArgs {
 		return _targetEntityName;
 	}
 
+	public String getTargetKernelVersion() {
+		return _targetKernelVersion;
+	}
+
 	public String getTestDirName() {
 		return _testDirName;
 	}
@@ -300,6 +304,10 @@ public class ServiceBuilderArgs {
 		_targetEntityName = targetEntityName;
 	}
 
+	public void setTargetKernelVersion(String targetKernelVersion) {
+		_targetKernelVersion = targetKernelVersion;
+	}
+
 	public void setTestDirName(String testDirName) {
 		_testDirName = testDirName;
 	}
@@ -391,6 +399,7 @@ public class ServiceBuilderArgs {
 	private String _sqlIndexesFileName = "indexes.sql";
 	private String _sqlSequencesFileName = "sequences.sql";
 	private String _targetEntityName;
+	private String _targetKernelVersion;
 	private String _testDirName = "test/integration";
 	private String _uadDirName = StringPool.BLANK;
 	private String _uadTestIntegrationDirName = StringPool.BLANK;

@@ -73,6 +73,10 @@ definition {
 	macro selectScopeCP {
 		var key_scopeDefault = "${scopeDefault}";
 
+		if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
+			Click(locator1 = "ProductMenu#TOGGLE");
+		}
+
 		Click.pauseClickAt(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SCOPE_COG");
 
 		var key_scopeSelection = "${scopeSelection}";

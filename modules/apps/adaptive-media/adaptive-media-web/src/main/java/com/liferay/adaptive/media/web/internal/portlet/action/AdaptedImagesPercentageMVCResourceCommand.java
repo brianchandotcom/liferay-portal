@@ -18,7 +18,6 @@ import com.liferay.adaptive.media.constants.AMOptimizeImagesBackgroundTaskConsta
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.web.internal.background.task.OptimizeImagesSingleConfigurationBackgroundTaskExecutor;
 import com.liferay.adaptive.media.web.internal.constants.AMPortletKeys;
-
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
@@ -32,15 +31,16 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
+
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Ambrín Chaudhary
@@ -77,14 +77,14 @@ public class AdaptedImagesPercentageMVCResourceCommand
 		List<BackgroundTask> optimizeImageSingleBackgroundTasks =
 			BackgroundTaskManagerUtil.getBackgroundTasks(
 				CompanyConstants.SYSTEM,
-				OptimizeImagesSingleConfigurationBackgroundTaskExecutor.
-					class.getName(),
+				OptimizeImagesSingleConfigurationBackgroundTaskExecutor.class.
+					getName(),
 				BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
 		boolean isTaskInProgress = false;
 
 		for (BackgroundTask backgroundTask :
-			optimizeImageSingleBackgroundTasks) {
+				optimizeImageSingleBackgroundTasks) {
 
 			Map<String, Serializable> taskContextMap =
 				backgroundTask.getTaskContextMap();

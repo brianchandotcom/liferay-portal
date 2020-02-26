@@ -29,9 +29,9 @@ definition {
 
 		Refresh();
 
-		SikuliAssertElementPresent(locator1 = "Navigation#HOME_PAGE_NAV_LEFT_PNG");
+		SikuliAssertElementPresent(locator1 = "ControlMenu#HOME_HEADING_AND_PRODUCT_MENU_OPENED_PNG");
 
-		SikuliAssertElementPresent(locator1 = "Navigation#HOME_PAGE_NAV_RIGHT_PNG");
+		SikuliAssertElementPresent(locator1 = "ControlMenu#HOME_ICONS_RIGHT_PNG");
 
 		takeScreenshot();
 	}
@@ -49,9 +49,9 @@ definition {
 
 		Refresh();
 
-		SikuliAssertElementPresent(locator1 = "Navigation#WEB_CONTENT_NAV_LEFT_PNG");
+		SikuliAssertElementPresent(locator1 = "ControlMenu#WC_HEADING_AND_PRODUCT_MENU_OPENED_PNG");
 
-		SikuliAssertElementPresent(locator1 = "Navigation#WEB_CONTENT_NAV_RIGHT_PNG");
+		SikuliAssertElementPresent(locator1 = "ControlMenu#WC_ICONS_RIGHT_PNG");
 
 		takeScreenshot();
 	}

@@ -64,11 +64,11 @@ export default ({
 
 	const loadThread = useCallback(
 		() =>
-			getThread(questionId, page).then(data => {
+			getThread(questionId, context.siteKey, page).then(data => {
 				setQuestion(data);
 				setAnswers(data.messageBoardMessages.items);
 			}),
-		[page, questionId]
+		[context.siteKey, page, questionId]
 	);
 
 	const postAnswer = () => {

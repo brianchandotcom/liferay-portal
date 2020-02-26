@@ -17,7 +17,7 @@ package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -35,31 +35,26 @@ public class ManagementToolbarsDisplayContext {
 			return _actionDropdownItems;
 		}
 
-		_actionDropdownItems = new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref("#edit");
-						dropdownItem.setLabel("Edit");
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref("#download");
-						dropdownItem.setIcon("download");
-						dropdownItem.setLabel("Download");
-						dropdownItem.setQuickAction(true);
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref("#delete");
-						dropdownItem.setLabel("Delete");
-						dropdownItem.setIcon("trash");
-						dropdownItem.setQuickAction(true);
-					});
+		_actionDropdownItems = DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref("#edit");
+				dropdownItem.setLabel("Edit");
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref("#download");
+				dropdownItem.setIcon("download");
+				dropdownItem.setLabel("Download");
+				dropdownItem.setQuickAction(true);
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref("#delete");
+				dropdownItem.setLabel("Delete");
+				dropdownItem.setIcon("trash");
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
 
 		return _actionDropdownItems;
 	}
@@ -99,55 +94,45 @@ public class ManagementToolbarsDisplayContext {
 			return _filterDropdownItems;
 		}
 
-		List<DropdownItem> filterByDropdownItems = new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref("#1");
-						dropdownItem.setLabel("Filter 1");
-					});
+		_filterDropdownItems = DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				List<DropdownItem> filterByDropdownItems =
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setHref("#1");
+							dropdownItem.setLabel("Filter 1");
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setHref("#2");
+							dropdownItem.setLabel("Filter 2");
+						}
+					).build();
 
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref("#2");
-						dropdownItem.setLabel("Filter 2");
-					});
+				dropdownGroupItem.setDropdownItems(filterByDropdownItems);
+
+				dropdownGroupItem.setLabel("Filter By");
 			}
-		};
+		).addGroup(
+			dropdownGroupItem -> {
+				List<DropdownItem> orderByDropdownItems =
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setHref("#3");
+							dropdownItem.setLabel("Order 1");
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setHref("#4");
+							dropdownItem.setLabel("Order 2");
+						}
+					).build();
 
-		List<DropdownItem> orderByDropdownItems = new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref("#3");
-						dropdownItem.setLabel("Order 1");
-					});
+				dropdownGroupItem.setDropdownItems(orderByDropdownItems);
 
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref("#4");
-						dropdownItem.setLabel("Order 2");
-					});
+				dropdownGroupItem.setLabel("Order By");
 			}
-		};
-
-		_filterDropdownItems = new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							filterByDropdownItems);
-						dropdownGroupItem.setLabel("Filter By");
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							orderByDropdownItems);
-						dropdownGroupItem.setLabel("Order By");
-					});
-			}
-		};
+		).build();
 
 		return _filterDropdownItems;
 	}

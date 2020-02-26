@@ -15,7 +15,7 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.portal.kernel.security.RandomUtil;
@@ -34,22 +34,18 @@ public class CardsDisplayContext {
 			return _actionDropdownItems;
 		}
 
-		_actionDropdownItems = new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref("#1");
-						dropdownItem.setLabel("Edit");
-						dropdownItem.setSeparator(true);
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref("#2");
-						dropdownItem.setLabel("Save");
-					});
+		_actionDropdownItems = DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref("#1");
+				dropdownItem.setLabel("Edit");
+				dropdownItem.setSeparator(true);
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref("#2");
+				dropdownItem.setLabel("Save");
+			}
+		).build();
 
 		return _actionDropdownItems;
 	}

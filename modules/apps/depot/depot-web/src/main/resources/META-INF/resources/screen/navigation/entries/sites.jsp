@@ -108,14 +108,14 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true,
+						modal: true
 					},
 					eventName:
 						'<%= liferayPortletResponse.getNamespace() + "selectSite" %>',
 					id: '<portlet:namespace />selectSite',
 					title: '<liferay-ui:message key="select-site" />',
 					uri:
-						'<%= String.valueOf(depotAdminSitesDisplayContext.getItemSelectorURL()) %>',
+						'<%= String.valueOf(depotAdminSitesDisplayContext.getItemSelectorURL()) %>'
 				},
 				function(event) {
 					var toGroupIdInput = document.querySelector(

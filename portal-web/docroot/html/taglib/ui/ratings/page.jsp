@@ -208,7 +208,7 @@ if (!inTrash) {
 			</c:if>
 
 			<div class="liferay-rating-score" id="<%= randomNamespace %>ratingScore">
-				<div id="<%= randomNamespace %>ratingScoreContent">
+				<div class="lfr-portal-tooltip" id="<%= randomNamespace %>ratingScoreContent">
 					<div class="rating-label">
 						<liferay-ui:message key="average" />
 

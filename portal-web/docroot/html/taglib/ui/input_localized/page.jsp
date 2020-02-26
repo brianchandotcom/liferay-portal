@@ -17,8 +17,10 @@
 <%@ include file="/html/taglib/ui/input_localized/init.jsp" %>
 
 <c:if test="<%= Validator.isNotNull(inputAddon) %>">
-	<div class="form-text" id="<portlet:namespace /><%= id %>InputAddon">
-		<liferay-ui:message key="<%= StringUtil.shorten(inputAddon, 40) %>" />
+	<div class="form-text">
+		<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(inputAddon) %>">
+			<liferay-ui:message key="<%= HtmlUtil.escape(StringUtil.shorten(inputAddon, 40)) %>" />
+		</span>
 	</div>
 </c:if>
 
@@ -215,27 +217,6 @@
 			}
 		);
 	</aui:script>
-</c:if>
-
-<c:if test="<%= Validator.isNotNull(inputAddon) %>">
-	<script>
-		(function() {
-			var inputAddon = '<%= inputAddon.toString() %>';
-
-			if (inputAddon.length > 40) {
-				var inputAddonElement = document.getElementById('<portlet:namespace /><%= id %>InputAddon');
-
-				if (inputAddonElement) {
-					inputAddonElement.addEventListener(
-						'mouseenter',
-						function(event) {
-							Liferay.Portal.ToolTip.show(event.currentTarget, inputAddon);
-						}
-					);
-				}
-			}
-		})();
-	</script>
 </c:if>
 
 <c:choose>

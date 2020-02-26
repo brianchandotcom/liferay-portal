@@ -46,7 +46,7 @@ User statusByUser = UserLocalServiceUtil.fetchUser(statusByUserId);
 		</div>
 	</liferay-util:buffer>
 
-	<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(HtmlUtil.extractText(buffer)) %>')">
+	<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(HtmlUtil.extractText(buffer)) %>">
 </c:if>
 
 <aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />

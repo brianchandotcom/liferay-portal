@@ -174,15 +174,6 @@ class SegmentEdit extends Component {
 		handleBlur(event);
 	};
 
-	_handleSourceIconMouseOver = event => {
-		const message =
-			this.props.source === SOURCES.ASAH_FARO_BACKEND.name
-				? SOURCES.ASAH_FARO_BACKEND.label
-				: SOURCES.DEFAULT.label;
-
-		Liferay.Portal.ToolTip.show(event.currentTarget, message);
-	};
-
 	_handleConjunctionChange = conjunctionName => {
 		this.setState(prevState => {
 			const contributors = applyConjunctionChangeToContributor(
@@ -427,13 +418,17 @@ class SegmentEdit extends Component {
 							/>
 
 							<img
-								className="source-icon"
+								className="lfr-portal-tooltip source-icon"
 								data-testid="source-icon"
-								onMouseOver={this._handleSourceIconMouseOver}
 								src={
 									source === SOURCES.ASAH_FARO_BACKEND.name
 										? `${assetsPath}${SOURCES.ASAH_FARO_BACKEND.icon}`
 										: `${assetsPath}${SOURCES.DEFAULT.icon}`
+								}
+								title={
+									source === SOURCES.ASAH_FARO_BACKEND.name
+										? SOURCES.ASAH_FARO_BACKEND.label
+										: SOURCES.DEFAULT.label
 								}
 							/>
 						</div>

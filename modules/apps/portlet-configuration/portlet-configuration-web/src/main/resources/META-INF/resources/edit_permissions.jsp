@@ -152,7 +152,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 								<input name="<%= renderResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" type="hidden" value="<%= true %>" />
 							</c:if>
 
-							<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= Validator.isNotNull(preselectedMsg) ? "lfr-checkbox-preselected" : StringPool.BLANK %>" data-message="<%= dataMessage %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>" name="<%= renderResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" onclick="<%= Validator.isNotNull(preselectedMsg) ? "return false;" : StringPool.BLANK %>" type="checkbox" />
+							<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= Validator.isNotNull(preselectedMsg) ? "lfr-checkbox-preselected lfr-portal-tooltip" : StringPool.BLANK %>" title="<%= dataMessage %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>" name="<%= renderResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" onclick="<%= Validator.isNotNull(preselectedMsg) ? "return false;" : StringPool.BLANK %>" type="checkbox" />
 						</liferay-ui:search-container-column-text>
 
 					<%
@@ -175,24 +175,6 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 		<aui:button type="cancel" />
 	</aui:button-row>
 </div>
-
-<aui:script require="metal-dom/src/all/dom as dom">
-	var form = document.getElementById('<portlet:namespace />fm');
-
-	var preSelectedHandler = dom.delegate(
-		form,
-		'mouseover',
-		'.lfr-checkbox-preselected',
-		function(event) {
-			var target = event.target;
-
-			Liferay.Portal.ToolTip.show(
-				target,
-				target.getAttribute('data-message')
-			);
-		}
-	);
-</aui:script>
 
 <aui:script>
 	var <portlet:namespace />saveButton = document.getElementById(

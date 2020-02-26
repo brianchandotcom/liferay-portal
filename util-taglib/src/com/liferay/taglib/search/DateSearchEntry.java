@@ -52,10 +52,9 @@ public class DateSearchEntry extends TextSearchEntry {
 
 			StringBundler sb = new StringBundler(5);
 
-			sb.append(
-				"<span onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
+			sb.append("<span class='lfr-portal-tooltip' title='");
 			sb.append(dateFormatDateTime.format(_date));
-			sb.append("')\">");
+			sb.append("'>");
 
 			sb.append(
 				LanguageUtil.format(

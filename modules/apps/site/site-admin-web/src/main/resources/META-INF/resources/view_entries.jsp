@@ -174,7 +174,7 @@
 					cssClass="table-cell-expand-smallest table-cell-minw-150"
 					name="members"
 				>
-					<span onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="inherited-memberships-are-not-included-in-members-count" unicode="<%= true %>" />');">
+					<span class="lfr-portal-tooltip" title="<liferay-ui:message key="inherited-memberships-are-not-included-in-members-count" />">
 
 						<%
 						int usersCount = UserLocalServiceUtil.getGroupUsersCount(curGroup.getGroupId(), WorkflowConstants.STATUS_APPROVED);

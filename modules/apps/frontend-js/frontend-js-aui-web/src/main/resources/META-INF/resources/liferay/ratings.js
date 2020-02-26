@@ -251,10 +251,9 @@ AUI.add(
 						message = Liferay.Language.get('stars');
 					}
 
-					Liferay.Portal.ToolTip.show(
-						event.currentTarget,
-						stars + ' ' + message
-					);
+					var currentTarget = event.currentTarget.getDOM();
+
+					currentTarget.setAttribute('title', stars + ' ' + message);
 				},
 
 				_updateAverageScoreText(averageScore) {

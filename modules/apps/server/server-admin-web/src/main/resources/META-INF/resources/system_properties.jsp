@@ -105,7 +105,7 @@ propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 				<c:if test="<%= Validator.isNotNull(value) %>">
 					<c:choose>
 						<c:when test="<%= value.length() > 80 %>">
-							<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(value) %>');">
+							<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(value) %>">
 								<%= HtmlUtil.escape(StringUtil.shorten(value, 80)) %>
 							</span>
 						</c:when>

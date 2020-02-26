@@ -148,6 +148,16 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	@Override
+	public MessageBoardMessage getSiteMessageBoardMessageByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception {
+
+		return _toMessageBoardMessage(
+			_mbMessageService.fetchMBMessageByUrlSubject(
+				siteId, friendlyUrlPath));
+	}
+
+	@Override
 	public Page<MessageBoardMessage> getSiteMessageBoardMessagesPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)

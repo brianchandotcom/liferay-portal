@@ -207,6 +207,16 @@ public class MessageBoardThreadResourceImpl
 	}
 
 	@Override
+	public MessageBoardThread getSiteMessageBoardThreadByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception {
+
+		return _toMessageBoardThread(
+			_mbMessageService.fetchMBMessageByUrlSubject(
+				siteId, friendlyUrlPath));
+	}
+
+	@Override
 	public Page<MessageBoardThread> getSiteMessageBoardThreadsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -575,6 +585,7 @@ public class MessageBoardThreadResourceImpl
 				dateCreated = mbMessage.getCreateDate();
 				dateModified = mbMessage.getModifiedDate();
 				encodingFormat = mbMessage.getFormat();
+				friendlyUrlPath = mbMessage.getUrlSubject();
 				headline = mbMessage.getSubject();
 				id = mbThread.getThreadId();
 				keywords = ListUtil.toArray(

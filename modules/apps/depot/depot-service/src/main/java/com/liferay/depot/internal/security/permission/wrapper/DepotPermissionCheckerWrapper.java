@@ -15,6 +15,8 @@
 package com.liferay.depot.internal.security.permission.wrapper;
 
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -24,10 +26,12 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapper;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 
 import java.util.Arrays;
@@ -40,14 +44,73 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 	public DepotPermissionCheckerWrapper(
 		PermissionChecker permissionChecker,
+		DepotEntryLocalService depotEntryLocalService,
+		ModelResourcePermission<DepotEntry> depotEntryModelResourcePermission,
 		GroupLocalService groupLocalService, RoleLocalService roleLocalService,
 		UserGroupRoleLocalService userGroupRoleLocalService) {
 
 		super(permissionChecker);
 
+		_depotEntryLocalService = depotEntryLocalService;
+		_depotEntryModelResourcePermission = depotEntryModelResourcePermission;
 		_groupLocalService = groupLocalService;
 		_roleLocalService = roleLocalService;
 		_userGroupRoleLocalService = userGroupRoleLocalService;
+	}
+
+	@Override
+	public boolean hasPermission(
+		Group group, String name, long primKey, String actionId) {
+
+		if (StringUtil.equals(name, Group.class.getName())) {
+			try {
+				Group currentGroup = _groupLocalService.getGroup(primKey);
+
+				if (currentGroup.getType() == GroupConstants.TYPE_DEPOT) {
+					return _depotEntryModelResourcePermission.contains(
+						this, currentGroup.getClassPK(), actionId);
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
+
+				return false;
+			}
+		}
+
+		return super.hasPermission(group, name, primKey, actionId);
+	}
+
+	@Override
+	public boolean hasPermission(
+		Group group, String name, String primKey, String actionId) {
+
+		if (StringUtil.equals(name, Group.class.getName())) {
+			return hasPermission(group, name, Long.valueOf(primKey), actionId);
+		}
+
+		return super.hasPermission(group, name, primKey, actionId);
+	}
+
+	@Override
+	public boolean hasPermission(
+		long groupId, String name, long primKey, String actionId) {
+
+		return hasPermission(
+			_groupLocalService.fetchGroup(groupId), name, primKey, actionId);
+	}
+
+	@Override
+	public boolean hasPermission(
+		long groupId, String name, String primKey, String actionId) {
+
+		if (StringUtil.equals(name, Group.class.getName())) {
+			return hasPermission(
+				_groupLocalService.fetchGroup(groupId), name,
+				Long.valueOf(primKey), actionId);
+		}
+
+		return super.hasPermission(groupId, name, primKey, actionId);
 	}
 
 	@Override
@@ -211,6 +274,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DepotPermissionCheckerWrapper.class);
 
+	private final DepotEntryLocalService _depotEntryLocalService;
+	private final ModelResourcePermission<DepotEntry>
+		_depotEntryModelResourcePermission;
 	private final GroupLocalService _groupLocalService;
 	private final RoleLocalService _roleLocalService;
 	private final UserGroupRoleLocalService _userGroupRoleLocalService;

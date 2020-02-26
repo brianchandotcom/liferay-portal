@@ -18,9 +18,15 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
+import com.liferay.layout.content.page.editor.web.internal.configuration.LayoutContentPageEditorConfiguration;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -46,16 +52,29 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	extends ContentPageEditorDisplayContext {
 
 	public ContentPageEditorLayoutPageTemplateDisplayContext(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		boolean pageIsDisplayPage, CommentManager commentManager,
+		CommentManager commentManager,
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererController fragmentRendererController,
-		PortletRequest portletRequest) {
+		FragmentRendererTracker fragmentRendererTracker,
+		HttpServletRequest httpServletRequest,
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		ItemSelector itemSelector,
+		LayoutContentPageEditorConfiguration
+			layoutContentPageEditorConfiguration,
+		boolean pageIsDisplayPage, PortletRequest portletRequest,
+		RenderResponse renderResponse) {
 
 		super(
-			httpServletRequest, renderResponse, commentManager,
-			contentPageEditorSidebarPanels, fragmentRendererController,
-			portletRequest);
+			commentManager, contentPageEditorSidebarPanels,
+			fragmentCollectionContributorTracker,
+			fragmentEntryConfigurationParser, fragmentRendererController,
+			fragmentRendererTracker, httpServletRequest,
+			infoDisplayContributorTracker, itemSelector,
+			layoutContentPageEditorConfiguration, portletRequest,
+			renderResponse);
 
 		_pageIsDisplayPage = pageIsDisplayPage;
 	}

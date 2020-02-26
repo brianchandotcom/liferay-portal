@@ -35,6 +35,7 @@ public class CTPreferencesSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCtCollectionId(model.getCtCollectionId());
+		soapModel.setPreviousCtCollectionId(model.getPreviousCtCollectionId());
 		soapModel.setConfirmationEnabled(model.isConfirmationEnabled());
 
 		return soapModel;
@@ -129,6 +130,14 @@ public class CTPreferencesSoap implements Serializable {
 		_ctCollectionId = ctCollectionId;
 	}
 
+	public long getPreviousCtCollectionId() {
+		return _previousCtCollectionId;
+	}
+
+	public void setPreviousCtCollectionId(long previousCtCollectionId) {
+		_previousCtCollectionId = previousCtCollectionId;
+	}
+
 	public boolean getConfirmationEnabled() {
 		return _confirmationEnabled;
 	}
@@ -146,6 +155,7 @@ public class CTPreferencesSoap implements Serializable {
 	private long _companyId;
 	private long _userId;
 	private long _ctCollectionId;
+	private long _previousCtCollectionId;
 	private boolean _confirmationEnabled;
 
 }

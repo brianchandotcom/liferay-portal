@@ -130,6 +130,8 @@ public class CTPreferencesPersistenceTest {
 
 		newCTPreferences.setCtCollectionId(RandomTestUtil.nextLong());
 
+		newCTPreferences.setPreviousCtCollectionId(RandomTestUtil.nextLong());
+
 		newCTPreferences.setConfirmationEnabled(RandomTestUtil.randomBoolean());
 
 		_ctPreferenceses.add(_persistence.update(newCTPreferences));
@@ -152,6 +154,9 @@ public class CTPreferencesPersistenceTest {
 			existingCTPreferences.getCtCollectionId(),
 			newCTPreferences.getCtCollectionId());
 		Assert.assertEquals(
+			existingCTPreferences.getPreviousCtCollectionId(),
+			newCTPreferences.getPreviousCtCollectionId());
+		Assert.assertEquals(
 			existingCTPreferences.isConfirmationEnabled(),
 			newCTPreferences.isConfirmationEnabled());
 	}
@@ -161,6 +166,13 @@ public class CTPreferencesPersistenceTest {
 		_persistence.countByCollectionId(RandomTestUtil.nextLong());
 
 		_persistence.countByCollectionId(0L);
+	}
+
+	@Test
+	public void testCountByPreviousCollectionId() throws Exception {
+		_persistence.countByPreviousCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByPreviousCollectionId(0L);
 	}
 
 	@Test
@@ -198,7 +210,7 @@ public class CTPreferencesPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CTPreferences", "mvccVersion", true, "ctPreferencesId", true,
 			"companyId", true, "userId", true, "ctCollectionId", true,
-			"confirmationEnabled", true);
+			"previousCtCollectionId", true, "confirmationEnabled", true);
 	}
 
 	@Test
@@ -446,6 +458,8 @@ public class CTPreferencesPersistenceTest {
 		ctPreferences.setUserId(RandomTestUtil.nextLong());
 
 		ctPreferences.setCtCollectionId(RandomTestUtil.nextLong());
+
+		ctPreferences.setPreviousCtCollectionId(RandomTestUtil.nextLong());
 
 		ctPreferences.setConfirmationEnabled(RandomTestUtil.randomBoolean());
 

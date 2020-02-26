@@ -51,6 +51,7 @@ create table CTPreferences (
 	companyId LONG,
 	userId LONG,
 	ctCollectionId LONG,
+	previousCtCollectionId LONG,
 	confirmationEnabled BOOLEAN
 );
 

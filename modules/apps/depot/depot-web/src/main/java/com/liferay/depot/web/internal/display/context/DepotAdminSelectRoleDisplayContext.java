@@ -1,0 +1,387 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.depot.web.internal.display.context;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.rolesadmin.search.RoleSearch;
+import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
+import com.liferay.portlet.usersadmin.search.GroupSearch;
+import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
+import com.liferay.roles.admin.kernel.util.RolesAdminUtil;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
+
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+/**
+ * @author Cristina González
+ */
+public class DepotAdminSelectRoleDisplayContext {
+
+	public DepotAdminSelectRoleDisplayContext(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
+
+		_user = PortalUtil.getSelectedUser(renderRequest);
+
+		int step = ParamUtil.getInteger(renderRequest, "step", 1);
+
+		if (step == Step2.TYPE) {
+			_step = new Step2(renderRequest, renderResponse, _user);
+		}
+		else {
+			_step = new Step1(renderRequest, renderResponse, _user);
+		}
+	}
+
+	public PortletURL getPortletURL() throws PortalException {
+		return _getPortletURL(
+			_renderRequest, _renderResponse,
+			PortalUtil.getUser(_renderRequest));
+	}
+
+	public Step getStep() {
+		return _step;
+	}
+
+	public static class Step1 implements Step {
+
+		public static final int TYPE = 1;
+
+		public Step1(
+				RenderRequest renderRequest, RenderResponse renderResponse,
+				User user)
+			throws PortalException {
+
+			_renderRequest = renderRequest;
+			_renderResponse = renderResponse;
+			_user = user;
+		}
+
+		@Override
+		public SearchContainer getSearchContainer() throws PortalException {
+			if (_groupSearch != null) {
+				return _groupSearch;
+			}
+
+			GroupSearch groupSearch = new GroupSearch(
+				_renderRequest,
+				_getPortletURL(_renderRequest, _renderResponse, _user));
+
+			GroupSearchTerms groupSearchTerms =
+				(GroupSearchTerms)groupSearch.getSearchTerms();
+
+			List<Group> groups = _getDepotGroups(groupSearchTerms);
+
+			groupSearch.setTotal(groups.size());
+
+			groupSearch.setResults(
+				ListUtil.subList(
+					groups, groupSearch.getStart(), groupSearch.getEnd()));
+
+			_groupSearch = groupSearch;
+
+			return groupSearch;
+		}
+
+		public PortletURL getSelectRolePortletURL() {
+			PortletURL portletURL = _getPortletURL(
+				_renderRequest, _renderResponse, _user);
+
+			portletURL.setParameter("resetCur", Boolean.TRUE.toString());
+			portletURL.setParameter("step", "2");
+
+			return portletURL;
+		}
+
+		public int getType() {
+			return TYPE;
+		}
+
+		private List<Group> _getDepotGroups(GroupSearchTerms groupSearchTerms) {
+			if (_user == null) {
+				return Collections.emptyList();
+			}
+
+			if (!groupSearchTerms.hasSearchTerms()) {
+				List<Group> groups = ListUtil.copy(_user.getGroups());
+
+				Iterator<Group> itr = groups.iterator();
+
+				while (itr.hasNext()) {
+					Group group = itr.next();
+
+					if (group.getType() != GroupConstants.TYPE_DEPOT) {
+						itr.remove();
+					}
+				}
+
+				return groups;
+			}
+
+			return GroupLocalServiceUtil.search(
+				_user.getCompanyId(), groupSearchTerms.getKeywords(),
+				LinkedHashMapBuilder.<String, Object>put(
+					"inherit", Boolean.FALSE
+				).put(
+					"types",
+					Collections.singletonList(GroupConstants.TYPE_DEPOT)
+				).put(
+					"usersGroups", _user.getUserId()
+				).build(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
+		private GroupSearch _groupSearch;
+		private final RenderRequest _renderRequest;
+		private final RenderResponse _renderResponse;
+		private final User _user;
+
+	}
+
+	public static class Step2 implements Step {
+
+		public static final int TYPE = 2;
+
+		public Step2(
+				RenderRequest renderRequest, RenderResponse renderResponse,
+				User user)
+			throws PortalException {
+
+			_renderRequest = renderRequest;
+			_renderResponse = renderResponse;
+			_user = user;
+
+			_group = _getGroup(renderRequest);
+
+			_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		public String getBreadCrumbs() throws PortalException {
+			PortletURL portletURL = _getPortletURL(
+				_renderRequest, _renderResponse, _user);
+
+			portletURL.setParameter("step", "1");
+
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				_themeDisplay.getLocale(), getClass());
+
+			return StringBundler.concat(
+				"<a href=\"", portletURL.toString(), "\">",
+				ResourceBundleUtil.getString(resourceBundle, "asset-libraries"),
+				"</a> &raquo; ",
+				HtmlUtil.escape(
+					_group.getDescriptiveName(_themeDisplay.getLocale())));
+		}
+
+		public Map<String, Object> getData(Role role) throws PortalException {
+			return HashMapBuilder.<String, Object>put(
+				"groupdescriptivename",
+				_group.getDescriptiveName(_themeDisplay.getLocale())
+			).put(
+				"groupid", _group.getGroupId()
+			).put(
+				"iconcssclass", RolesAdminUtil.getIconCssClass(role)
+			).put(
+				"roleid", role.getRoleId()
+			).put(
+				"rolename", role.getTitle(_themeDisplay.getLocale())
+			).build();
+		}
+
+		public String getEventName() {
+			return _renderResponse.getNamespace() + "selectDepotRole";
+		}
+
+		public SearchContainer getSearchContainer() throws PortalException {
+			if (_roleSearch != null) {
+				return _roleSearch;
+			}
+
+			RoleSearch roleSearch = new RoleSearch(
+				_renderRequest,
+				_getPortletURL(_renderRequest, _renderResponse, _user));
+
+			RoleSearchTerms searchTerms =
+				(RoleSearchTerms)roleSearch.getSearchTerms();
+
+			List<Role> roles = RoleLocalServiceUtil.search(
+				_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				new Integer[] {RoleConstants.TYPE_DEPOT}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, roleSearch.getOrderByComparator());
+
+			if (_group != null) {
+				roles = UsersAdminUtil.filterGroupRoles(
+					_themeDisplay.getPermissionChecker(), _group.getGroupId(),
+					roles);
+			}
+
+			int rolesCount = roles.size();
+
+			roleSearch.setTotal(rolesCount);
+
+			roleSearch.setResults(
+				ListUtil.subList(
+					roles, roleSearch.getStart(), roleSearch.getEnd()));
+
+			_roleSearch = roleSearch;
+
+			return _roleSearch;
+		}
+
+		public String getSyncEntitiesEventName() {
+			return _renderResponse.getNamespace() + "syncDepotRoles";
+		}
+
+		public int getType() {
+			return TYPE;
+		}
+
+		public boolean isDisabled(Role role) {
+			if ((_user != null) && (_group != null)) {
+				List<UserGroupRole> userGroupRoles =
+					UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+						_user.getUserId());
+
+				for (UserGroupRole userGroupRole : userGroupRoles) {
+					if ((_group.getGroupId() == userGroupRole.getGroupId()) &&
+						(userGroupRole.getRoleId() == role.getRoleId())) {
+
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
+		public boolean isRoleAllowed(Role role) throws PortalException {
+			long groupId = 0;
+
+			if (_group != null) {
+				groupId = _group.getGroupId();
+			}
+
+			long userId = 0;
+
+			if (_user != null) {
+				userId = _user.getUserId();
+			}
+
+			if (SiteMembershipPolicyUtil.isRoleAllowed(
+					userId, groupId, role.getRoleId())) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		private Group _getGroup(RenderRequest renderRequest)
+			throws PortalException {
+
+			long groupId = ParamUtil.getLong(renderRequest, "groupId", 0);
+
+			if (groupId > 0) {
+				return GroupServiceUtil.getGroup(groupId);
+			}
+
+			return null;
+		}
+
+		private final Group _group;
+		private final RenderRequest _renderRequest;
+		private final RenderResponse _renderResponse;
+		private RoleSearch _roleSearch;
+		private final ThemeDisplay _themeDisplay;
+		private final User _user;
+
+	}
+
+	public interface Step {
+
+		public SearchContainer getSearchContainer() throws PortalException;
+
+		public int getType();
+
+	}
+
+	private static PortletURL _getPortletURL(
+		RenderRequest renderRequest, RenderResponse renderResponse, User user) {
+
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		if (user != null) {
+			portletURL.setParameter(
+				"p_u_i_d", String.valueOf(user.getUserId()));
+		}
+
+		portletURL.setParameter("mvcRenderCommandName", "/depot/select_role");
+
+		String[] keywords = ParamUtil.getStringValues(
+			renderRequest, "keywords");
+
+		if (ArrayUtil.isNotEmpty(keywords)) {
+			portletURL.setParameter("keywords", keywords[keywords.length - 1]);
+		}
+
+		portletURL.setParameter(
+			"step",
+			String.valueOf(ParamUtil.getInteger(renderRequest, "step", 1)));
+
+		return portletURL;
+	}
+
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
+	private final Step _step;
+	private final User _user;
+
+}

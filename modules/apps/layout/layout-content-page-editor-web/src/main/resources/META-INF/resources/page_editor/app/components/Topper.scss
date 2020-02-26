@@ -63,8 +63,7 @@
 		}
 	}
 
-	&.active > &__bar,
-	&.hovered > &__bar {
+	&.active > &__bar {
 		opacity: 1;
 		transform: translateY(1px);
 		transition-delay: 0.3s;

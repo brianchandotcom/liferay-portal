@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -30,7 +29,6 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.item.selector.ItemSelector;
@@ -43,7 +41,6 @@ import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelect
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.LayoutContentPageEditorConfiguration;
@@ -150,42 +147,38 @@ import org.jsoup.select.Elements;
 public class ContentPageEditorDisplayContext {
 
 	public ContentPageEditorDisplayContext(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		CommentManager commentManager,
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererController fragmentRendererController,
-		PortletRequest portletRequest) {
+		FragmentRendererTracker fragmentRendererTracker,
+		HttpServletRequest httpServletRequest,
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		ItemSelector itemSelector,
+		LayoutContentPageEditorConfiguration
+			layoutContentPageEditorConfiguration,
+		PortletRequest portletRequest, RenderResponse renderResponse) {
 
-		_renderResponse = renderResponse;
 		_commentManager = commentManager;
 		_contentPageEditorSidebarPanels = contentPageEditorSidebarPanels;
+		_fragmentCollectionContributorTracker =
+			fragmentCollectionContributorTracker;
+		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
 		_fragmentRendererController = fragmentRendererController;
+		_fragmentRendererTracker = fragmentRendererTracker;
+		_itemSelector = itemSelector;
+		_layoutContentPageEditorConfiguration =
+			layoutContentPageEditorConfiguration;
 		_portletRequest = portletRequest;
+		_renderResponse = renderResponse;
 
 		this.httpServletRequest = httpServletRequest;
+		this.infoDisplayContributorTracker = infoDisplayContributorTracker;
 
-		infoDisplayContributorTracker =
-			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-		_fragmentCollectionContributorTracker =
-			(FragmentCollectionContributorTracker)
-				httpServletRequest.getAttribute(
-					ContentPageEditorWebKeys.
-						FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
-		_fragmentEntryConfigurationParser =
-			(FragmentEntryConfigurationParser)httpServletRequest.getAttribute(
-				FragmentEntryConfigurationParser.class.getName());
-		_fragmentRendererTracker =
-			(FragmentRendererTracker)httpServletRequest.getAttribute(
-				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
-		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
-			ContentPageEditorWebKeys.ITEM_SELECTOR);
-		_layoutContentPageEditorConfiguration =
-			(LayoutContentPageEditorConfiguration)
-				httpServletRequest.getAttribute(
-					LayoutContentPageEditorConfiguration.class.getName());
 	}
 
 	public Map<String, Object> getEditorContext(String npmResolvedPackageName)

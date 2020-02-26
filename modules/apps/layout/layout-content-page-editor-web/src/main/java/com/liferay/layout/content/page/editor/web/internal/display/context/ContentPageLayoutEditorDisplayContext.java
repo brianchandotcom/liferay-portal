@@ -14,8 +14,14 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
+import com.liferay.layout.content.page.editor.web.internal.configuration.LayoutContentPageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
@@ -72,16 +78,29 @@ public class ContentPageLayoutEditorDisplayContext
 	extends ContentPageEditorDisplayContext {
 
 	public ContentPageLayoutEditorDisplayContext(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		CommentManager commentManager,
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererController fragmentRendererController,
-		PortletRequest portletRequest, StagingGroupHelper stagingGroupHelper) {
+		FragmentRendererTracker fragmentRendererTracker,
+		HttpServletRequest httpServletRequest,
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		ItemSelector itemSelector,
+		LayoutContentPageEditorConfiguration
+			layoutContentPageEditorConfiguration,
+		PortletRequest portletRequest, RenderResponse renderResponse,
+		StagingGroupHelper stagingGroupHelper) {
 
 		super(
-			httpServletRequest, renderResponse, commentManager,
-			contentPageEditorSidebarPanels, fragmentRendererController,
-			portletRequest);
+			commentManager, contentPageEditorSidebarPanels,
+			fragmentCollectionContributorTracker,
+			fragmentEntryConfigurationParser, fragmentRendererController,
+			fragmentRendererTracker, httpServletRequest,
+			infoDisplayContributorTracker, itemSelector,
+			layoutContentPageEditorConfiguration, portletRequest,
+			renderResponse);
 
 		_stagingGroupHelper = stagingGroupHelper;
 	}

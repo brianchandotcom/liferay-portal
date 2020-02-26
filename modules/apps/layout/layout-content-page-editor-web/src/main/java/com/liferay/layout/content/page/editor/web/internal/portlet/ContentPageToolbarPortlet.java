@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet;
 
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageEditorDisplayContext;
@@ -66,10 +65,6 @@ public class ContentPageToolbarPortlet extends MVCPortlet {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		httpServletRequest.setAttribute(
-			FragmentEntryConfigurationParser.class.getName(),
-			_fragmentEntryConfigurationParser);
-
 		ContentPageEditorDisplayContext contentPageEditorDisplayContext =
 			(ContentPageEditorDisplayContext)httpServletRequest.getAttribute(
 				ContentPageEditorWebKeys.
@@ -93,9 +88,6 @@ public class ContentPageToolbarPortlet extends MVCPortlet {
 	@Reference
 	private ContentPageEditorDisplayContextProvider
 		_contentPageEditorDisplayContextProvider;
-
-	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
 	private Portal _portal;

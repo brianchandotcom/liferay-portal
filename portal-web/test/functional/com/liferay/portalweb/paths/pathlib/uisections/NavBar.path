@@ -29,6 +29,11 @@
 	<td>Application Search Field</td>
 </tr>
 <tr>
+	<td>ASSET_LIBRARIES</td>
+	<td>//a[contains(@class,'nav-link')]/span[contains(.,'Asset Libraries')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_TITLE</td>
 	<td>//a[contains(@class,'nav-link')]//span[contains(text(),'${key_assetTitle}')] | //a[@title='${key_assetTitle}']</td>
 	<td></td>
@@ -59,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MY_SITES</td>
+	<td>//a[contains(@class,'nav-link')]/span[contains(.,'My Sites')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAV_ITEM_LINK</td>
 	<td>//div[contains(@class,'navbar')]//a[normalize-space()='${key_navItem}']</td>
 	<td></td>
@@ -66,6 +76,11 @@
 <tr>
 	<td>ORGANIZATIONS</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'navbar-nav')]/li/a[contains(.,'Organizations')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECENT</td>
+	<td>//a[contains(@class,'navbar-toggler') and contains(.,'Recent')]</td>
 	<td></td>
 </tr>
 <tr>

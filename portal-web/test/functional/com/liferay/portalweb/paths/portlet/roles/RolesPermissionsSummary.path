@@ -19,6 +19,11 @@
 	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionDefinitionValue}')]/td//a[contains(.,'Remove')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PERMISSION_TABLE_SCOPE</td>
+	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionDefinitionValue}')]/td[contains(.,'${siteNameScope}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -74,7 +74,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		try {
 			return _getOrAddToPermissionCache(
 				_groupLocalService.fetchGroup(groupId), this::_isGroupAdmin,
-				DepotRolesConstants.DEPOT_ADMINISTRATOR);
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -120,7 +120,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		try {
 			return _getOrAddToPermissionCache(
 				_groupLocalService.getGroup(groupId), this::_isGroupOwner,
-				DepotRolesConstants.DEPOT_OWNER);
+				DepotRolesConstants.ASSET_LIBRARY_OWNER);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -164,10 +164,10 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		if (Objects.equals(group.getType(), GroupConstants.TYPE_DEPOT)) {
 			if (_userGroupRoleLocalService.hasUserGroupRole(
 					getUserId(), group.getGroupId(),
-					DepotRolesConstants.DEPOT_ADMINISTRATOR, true) ||
+					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, true) ||
 				_userGroupRoleLocalService.hasUserGroupRole(
 					getUserId(), group.getGroupId(),
-					DepotRolesConstants.DEPOT_OWNER, true)) {
+					DepotRolesConstants.ASSET_LIBRARY_OWNER, true)) {
 
 				return true;
 			}
@@ -194,7 +194,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		long[] roleIds = getRoleIds(getUserId(), group.getGroupId());
 
 		Role role = _roleLocalService.getRole(
-			group.getCompanyId(), DepotRolesConstants.DEPOT_MEMBER);
+			group.getCompanyId(), DepotRolesConstants.ASSET_LIBRARY_MEMBER);
 
 		if (Arrays.binarySearch(roleIds, role.getRoleId()) >= 0) {
 			return true;
@@ -207,7 +207,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		if (Objects.equals(group.getType(), GroupConstants.TYPE_DEPOT) &&
 			_userGroupRoleLocalService.hasUserGroupRole(
 				getUserId(), group.getGroupId(),
-				DepotRolesConstants.DEPOT_OWNER, true)) {
+				DepotRolesConstants.ASSET_LIBRARY_OWNER, true)) {
 
 			return true;
 		}

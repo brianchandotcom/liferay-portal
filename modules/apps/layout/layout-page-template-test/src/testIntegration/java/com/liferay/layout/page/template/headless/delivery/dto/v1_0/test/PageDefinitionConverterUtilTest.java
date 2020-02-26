@@ -153,20 +153,28 @@ public class PageDefinitionConverterUtilTest {
 
 	@Test
 	public void testToPageDefinitionFragmentFieldLink() throws Exception {
-		_validateFragmentFieldText(
-			_getFragmentField(
-				"editable_values_fragment_field_link.json", "my-link",
-				"<lfr-editable id=\"my-link\" type=\"link\"><a href=\"\" " +
-					"id=\"my-link\">Go here</a></lfr-editable>"));
+		FragmentField fragmentField = _getFragmentField(
+			"editable_values_fragment_field_link.json", "my-link",
+			"<lfr-editable id=\"my-link\" type=\"link\"><a href=\"\" " +
+				"id=\"my-link\">Go here</a></lfr-editable>");
+
+		FragmentFieldText fragmentFieldText =
+			(FragmentFieldText)fragmentField.getValue();
+
+		_validateFragmentFieldText(fragmentFieldText);
 	}
 
 	@Test
 	public void testToPageDefinitionFragmentFieldText() throws Exception {
-		_validateFragmentFieldText(
-			_getFragmentField(
-				"editable_values_fragment_field_text.json", "my-text",
-				"<lfr-editable id=\"my-text\" type=\"text\">Example" +
-					"</lfr-editable>"));
+		FragmentField fragmentField = _getFragmentField(
+			"editable_values_fragment_field_text.json", "my-text",
+			"<lfr-editable id=\"my-text\" type=\"text\">Example" +
+				"</lfr-editable>");
+
+		FragmentFieldText fragmentFieldText =
+			(FragmentFieldText)fragmentField.getValue();
+
+		_validateFragmentFieldText(fragmentFieldText);
 	}
 
 	@Test
@@ -301,9 +309,8 @@ public class PageDefinitionConverterUtilTest {
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
-	private void _validateFragmentFieldText(FragmentField fragmentField) {
-		FragmentFieldText fragmentFieldText =
-			(FragmentFieldText)fragmentField.getValue();
+	private void _validateFragmentFieldText(
+		FragmentFieldText fragmentFieldText) {
 
 		FragmentLink fragmentLink = fragmentFieldText.getFragmentLink();
 

@@ -132,7 +132,7 @@ definition {
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
-		MessageboardsThread.addCPWithAttachment(
+		MessageboardsThread.addCP(
 			mbAttachmentFile = "Document_1.doc",
 			threadBody = "MB Body",
 			threadSubject = "MB Subject");

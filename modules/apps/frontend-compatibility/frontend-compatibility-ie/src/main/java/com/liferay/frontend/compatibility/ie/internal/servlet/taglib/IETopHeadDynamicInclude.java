@@ -54,25 +54,25 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					httpServletRequest);
 
-			for (String fileName : _FILE_NAMES) {
+			for (String jsFileName : _JS_FILE_NAMES) {
 				printWriter.print(
 					"<script data-senna-track=\"permanent\" src=\"");
 
 				printWriter.print(
 					absolutePortalURLBuilder.forModule(
-						_bundleContext.getBundle(), fileName
+						_bundleContext.getBundle(), jsFileName
 					).build());
 
 				printWriter.println("\" type=\"text/javascript\"></script>");
 			}
 
-			for (String fileName : _CSS_FILE_NAMES) {
+			for (String cssFileName : _CSS_FILE_NAMES) {
 				printWriter.print(
 					"<link data-senna-track=\"permanent\" href=\"");
 
 				printWriter.print(
 					absolutePortalURLBuilder.forModule(
-						_bundleContext.getBundle(), fileName
+						_bundleContext.getBundle(), cssFileName
 					).build());
 
 				printWriter.println("\" rel=\"stylesheet\" type=\"text/css\">");
@@ -94,7 +94,7 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 
 	private static final String[] _CSS_FILE_NAMES = {"/css/main.css"};
 
-	private static final String[] _FILE_NAMES = {
+	private static final String[] _JS_FILE_NAMES = {
 		"closest.js", "control.menu.js", "/core-js-bundle.min.js", "/fetch.js",
 		"/svg.contains.js", "/uint16array.slice.js"
 	};

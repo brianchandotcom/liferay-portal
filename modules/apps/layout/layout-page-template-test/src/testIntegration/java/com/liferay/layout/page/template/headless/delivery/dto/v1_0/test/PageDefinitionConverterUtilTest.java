@@ -28,6 +28,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
+import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.InlineLink;
@@ -290,6 +291,30 @@ public class PageDefinitionConverterUtilTest {
 
 		Assert.assertEquals("My example", i18nMap.get("en_US"));
 		Assert.assertEquals("Mi ejemplo", i18nMap.get("es_ES"));
+	}
+
+	private void _validateFragmentImage(FragmentImage fragmentImage) {
+		InlineValue titleInlineValue = (InlineValue)fragmentImage.getTitle();
+
+		Assert.assertNull(titleInlineValue.getValue());
+
+		Map<String, String> titleI18nMap = titleInlineValue.getValue_i18n();
+
+		Assert.assertEquals(
+			"http://myexample.com/myexample.png", titleI18nMap.get("en_US"));
+		Assert.assertEquals(
+			"http://miejemplo.es/miejemplo.png", titleI18nMap.get("es_ES"));
+
+		InlineValue urlInlineValue = (InlineValue)fragmentImage.getUrl();
+
+		Assert.assertNull(urlInlineValue.getValue());
+
+		Map<String, String> urlI18nMap = urlInlineValue.getValue_i18n();
+
+		Assert.assertEquals(
+			"http://myexample.com/myexample.png", urlI18nMap.get("en_US"));
+		Assert.assertEquals(
+			"http://miejemplo.es/miejemplo.png", urlI18nMap.get("es_ES"));
 	}
 
 	private FragmentCollection _fragmentCollection;

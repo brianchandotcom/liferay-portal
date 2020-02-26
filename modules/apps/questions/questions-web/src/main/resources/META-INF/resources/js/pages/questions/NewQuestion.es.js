@@ -139,9 +139,11 @@ export default withRouter(({history}) => {
 					{Liferay.Language.get('post-your-question')}
 				</ClayButton>
 
-				<ClayButton displayType="secondary">
-					<Link to={`/`}>{Liferay.Language.get('cancel')}</Link>
-				</ClayButton>
+				<Link to={`/`}>
+					<ClayButton displayType="secondary">
+						{Liferay.Language.get('cancel')}
+					</ClayButton>
+				</Link>
 			</ClayButton.Group>
 		</section>
 	);

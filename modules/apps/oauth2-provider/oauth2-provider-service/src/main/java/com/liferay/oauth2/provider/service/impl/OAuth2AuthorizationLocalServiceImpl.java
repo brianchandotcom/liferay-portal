@@ -21,6 +21,7 @@ import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.base.OAuth2AuthorizationLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -110,7 +111,12 @@ public class OAuth2AuthorizationLocalServiceImpl
 			purgeDate.getTime() +
 				_expiredAuthorizationsAfterlifeDurationMillis);
 
-		oAuth2AuthorizationFinder.removeByPurgeDate(purgeDate);
+		for (OAuth2Authorization oAuth2Authorization :
+				oAuth2AuthorizationFinder.findByPurgeDate(
+					purgeDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			oAuth2AuthorizationPersistence.remove(oAuth2Authorization);
+		}
 	}
 
 	@Override

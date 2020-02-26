@@ -73,16 +73,6 @@ public class OAuth2AuthorizationFinderImpl
 		}
 	}
 
-	@Override
-	public void removeByPurgeDate(Date purgeDate) {
-		for (OAuth2Authorization oAuth2Authorization :
-				findByPurgeDate(
-					purgeDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-			oAuth2AuthorizationPersistence.remove(oAuth2Authorization);
-		}
-	}
-
 	@Reference
 	private CustomSQL _customSQL;
 

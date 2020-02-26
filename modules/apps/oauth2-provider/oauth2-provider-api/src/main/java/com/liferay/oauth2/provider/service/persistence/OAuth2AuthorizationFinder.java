@@ -27,6 +27,4 @@ public interface OAuth2AuthorizationFinder {
 		<com.liferay.oauth2.provider.model.OAuth2Authorization> findByPurgeDate(
 			java.util.Date purgeDate, int start, int end);
 
-	public void removeByPurgeDate(java.util.Date purgeDate);
-
 }

@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -2107,6 +2108,219 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static BufferedReader toBufferedReader(
+			String url, boolean checkCache)
+		throws IOException {
+
+		return toBufferedReader(
+			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, null, null,
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
+	}
+
+	public static BufferedReader toBufferedReader(
+			String url, boolean checkCache, int maxRetries,
+			HttpRequestMethod method, String postContent, int retryPeriod,
+			int timeout, HTTPAuthorization httpAuthorizationHeader)
+		throws IOException {
+
+		if (url.contains("/userContent/") && (timeout == 0)) {
+			timeout = 5000;
+		}
+
+		if (method == null) {
+			if (postContent != null) {
+				method = HttpRequestMethod.POST;
+			}
+			else {
+				method = HttpRequestMethod.GET;
+			}
+		}
+
+		url = fixURL(url);
+
+		String key = url.replace("//", "/");
+
+		if (checkCache && !url.startsWith("file:")) {
+			if (debug) {
+				System.out.println("Loading " + url);
+			}
+
+			File cachedFile = _getCacheFile(_PREFIX_TO_STRING_CACHE + key);
+
+			if ((cachedFile != null) && cachedFile.exists()) {
+				FileReader fileReader = new FileReader(cachedFile);
+
+				return new BufferedReader(fileReader);
+			}
+		}
+
+		int retryCount = 0;
+
+		while (true) {
+			try {
+				if (debug) {
+					System.out.println("Downloading " + url);
+				}
+
+				if ((httpAuthorizationHeader == null) &&
+					url.startsWith("https://api.github.com")) {
+
+					Properties buildProperties = getBuildProperties();
+
+					httpAuthorizationHeader = new TokenHTTPAuthorization(
+						buildProperties.getProperty("github.access.token"));
+				}
+
+				if ((httpAuthorizationHeader == null) &&
+					url.matches("https://liferay.spiraservice.net.+")) {
+
+					Properties buildProperties = getBuildProperties();
+
+					httpAuthorizationHeader = new BasicHTTPAuthorization(
+						buildProperties.getProperty("spira.admin.user.token"),
+						buildProperties.getProperty("spira.admin.user.name"));
+				}
+
+				if ((httpAuthorizationHeader == null) &&
+					url.matches("https://test-\\d+-\\d+.liferay.com/.+")) {
+
+					Properties buildProperties = getBuildProperties();
+
+					httpAuthorizationHeader = new BasicHTTPAuthorization(
+						buildProperties.getProperty("jenkins.admin.user.token"),
+						buildProperties.getProperty("jenkins.admin.user.name"));
+				}
+
+				URL urlObject = new URL(url);
+
+				URLConnection urlConnection = urlObject.openConnection();
+
+				if (urlConnection instanceof HttpURLConnection) {
+					HttpURLConnection httpURLConnection =
+						(HttpURLConnection)urlConnection;
+
+					if (method == HttpRequestMethod.PATCH) {
+						httpURLConnection.setRequestMethod("POST");
+
+						httpURLConnection.setRequestProperty(
+							"X-HTTP-Method-Override", "PATCH");
+					}
+					else {
+						httpURLConnection.setRequestMethod(method.name());
+					}
+
+					if (url.startsWith("https://api.github.com") &&
+						(httpURLConnection instanceof HttpsURLConnection)) {
+
+						SSLContext sslContext = null;
+
+						try {
+							if (getJavaVersionNumber() < 1.8F) {
+								sslContext = SSLContext.getInstance("TLSv1.2");
+
+								sslContext.init(null, null, null);
+
+								HttpsURLConnection httpsURLConnection =
+									(HttpsURLConnection)httpURLConnection;
+
+								httpsURLConnection.setSSLSocketFactory(
+									sslContext.getSocketFactory());
+							}
+						}
+						catch (KeyManagementException | NoSuchAlgorithmException
+									exception) {
+
+							throw new RuntimeException(
+								"Unable to set SSL context to TLS v1.2",
+								exception);
+						}
+					}
+
+					if (httpAuthorizationHeader != null) {
+						httpURLConnection.setRequestProperty(
+							"accept", "application/json");
+						httpURLConnection.setRequestProperty(
+							"Authorization",
+							httpAuthorizationHeader.toString());
+						httpURLConnection.setRequestProperty(
+							"Content-Type", "application/json");
+					}
+
+					if (postContent != null) {
+						httpURLConnection.setRequestMethod("POST");
+
+						httpURLConnection.setDoOutput(true);
+
+						try (OutputStream outputStream =
+								httpURLConnection.getOutputStream()) {
+
+							outputStream.write(postContent.getBytes("UTF-8"));
+
+							outputStream.flush();
+						}
+					}
+				}
+
+				if (timeout != 0) {
+					urlConnection.setConnectTimeout(timeout);
+					urlConnection.setReadTimeout(timeout);
+				}
+
+				urlConnection.connect();
+
+				if (url.startsWith("https://api.github.com")) {
+					try {
+						int limit = Integer.parseInt(
+							urlConnection.getHeaderField("X-RateLimit-Limit"));
+						int remaining = Integer.parseInt(
+							urlConnection.getHeaderField(
+								"X-RateLimit-Remaining"));
+						long reset = Long.parseLong(
+							urlConnection.getHeaderField("X-RateLimit-Reset"));
+
+						System.out.println(
+							combine(
+								_getGitHubAPIRateLimitStatusMessage(
+									limit, remaining, reset),
+								"\n    ", url));
+					}
+					catch (Exception exception) {
+						System.out.println(
+							"Unable to parse GitHub API rate limit headers");
+
+						exception.printStackTrace();
+					}
+				}
+
+				return new BufferedReader(
+					new InputStreamReader(urlConnection.getInputStream()));
+			}
+			catch (IOException ioException) {
+				if ((ioException instanceof UnknownHostException) &&
+					url.matches("http://test-\\d+-\\d+/.*")) {
+
+					return toBufferedReader(
+						url.replaceAll(
+							"http://(test-\\d+-\\d+)(/.*)",
+							"https://$1.liferay.com$2"),
+						checkCache, maxRetries, method, postContent,
+						retryPeriod, timeout, httpAuthorizationHeader);
+				}
+
+				retryCount++;
+
+				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
+					throw ioException;
+				}
+
+				System.out.println(
+					"Retrying " + url + " in " + retryPeriod + " seconds");
+
+				sleep(1000 * retryPeriod);
+			}
+		}
+	}
+
 	public static String toDateString(Date date, String timeZoneName) {
 		return toDateString(date, "MMM dd, yyyy h:mm:ss a z", timeZoneName);
 	}
@@ -2388,232 +2602,36 @@ public class JenkinsResultsParserUtil {
 			int timeout, HTTPAuthorization httpAuthorizationHeader)
 		throws IOException {
 
-		if (url.contains("/userContent/") && (timeout == 0)) {
-			timeout = 5000;
-		}
+		try (BufferedReader bufferedReader = toBufferedReader(
+				url, checkCache, maxRetries, method, postContent, retryPeriod,
+				timeout, httpAuthorizationHeader)) {
 
-		if (method == null) {
-			if (postContent != null) {
-				method = HttpRequestMethod.POST;
-			}
-			else {
-				method = HttpRequestMethod.GET;
-			}
-		}
+			StringBuilder sb = new StringBuilder();
 
-		url = fixURL(url);
+			String line = bufferedReader.readLine();
 
-		String key = url.replace("//", "/");
+			while (line != null) {
+				sb.append(line);
+				sb.append("\n");
 
-		if (checkCache && !url.startsWith("file:")) {
-			if (debug) {
-				System.out.println("Loading " + url);
+				line = bufferedReader.readLine();
 			}
 
-			String response = getCachedText(_PREFIX_TO_STRING_CACHE + key);
+			int bytes = sb.length();
 
-			if (response != null) {
-				return response;
+			String content = sb.toString();
+
+			if (checkCache && !url.startsWith("file:") &&
+				(bytes < (3 * 1024 * 1024))) {
+
+				url = fixURL(url);
+
+				String key = url.replace("//", "/");
+
+				saveToCacheFile(_PREFIX_TO_STRING_CACHE + key, content);
 			}
-		}
 
-		int retryCount = 0;
-
-		while (true) {
-			try {
-				if (debug) {
-					System.out.println("Downloading " + url);
-				}
-
-				if ((httpAuthorizationHeader == null) &&
-					url.startsWith("https://api.github.com")) {
-
-					Properties buildProperties = getBuildProperties();
-
-					httpAuthorizationHeader = new TokenHTTPAuthorization(
-						buildProperties.getProperty("github.access.token"));
-				}
-
-				if ((httpAuthorizationHeader == null) &&
-					url.matches("https://liferay.spiraservice.net.+")) {
-
-					Properties buildProperties = getBuildProperties();
-
-					httpAuthorizationHeader = new BasicHTTPAuthorization(
-						buildProperties.getProperty("spira.admin.user.token"),
-						buildProperties.getProperty("spira.admin.user.name"));
-				}
-
-				if ((httpAuthorizationHeader == null) &&
-					url.matches("https://test-\\d+-\\d+.liferay.com/.+")) {
-
-					Properties buildProperties = getBuildProperties();
-
-					httpAuthorizationHeader = new BasicHTTPAuthorization(
-						buildProperties.getProperty("jenkins.admin.user.token"),
-						buildProperties.getProperty("jenkins.admin.user.name"));
-				}
-
-				URL urlObject = new URL(url);
-
-				URLConnection urlConnection = urlObject.openConnection();
-
-				if (urlConnection instanceof HttpURLConnection) {
-					HttpURLConnection httpURLConnection =
-						(HttpURLConnection)urlConnection;
-
-					if (method == HttpRequestMethod.PATCH) {
-						httpURLConnection.setRequestMethod("POST");
-
-						httpURLConnection.setRequestProperty(
-							"X-HTTP-Method-Override", "PATCH");
-					}
-					else {
-						httpURLConnection.setRequestMethod(method.name());
-					}
-
-					if (url.startsWith("https://api.github.com") &&
-						(httpURLConnection instanceof HttpsURLConnection)) {
-
-						SSLContext sslContext = null;
-
-						try {
-							if (getJavaVersionNumber() < 1.8F) {
-								sslContext = SSLContext.getInstance("TLSv1.2");
-
-								sslContext.init(null, null, null);
-
-								HttpsURLConnection httpsURLConnection =
-									(HttpsURLConnection)httpURLConnection;
-
-								httpsURLConnection.setSSLSocketFactory(
-									sslContext.getSocketFactory());
-							}
-						}
-						catch (KeyManagementException | NoSuchAlgorithmException
-									exception) {
-
-							throw new RuntimeException(
-								"Unable to set SSL context to TLS v1.2",
-								exception);
-						}
-					}
-
-					if (httpAuthorizationHeader != null) {
-						httpURLConnection.setRequestProperty(
-							"accept", "application/json");
-						httpURLConnection.setRequestProperty(
-							"Authorization",
-							httpAuthorizationHeader.toString());
-						httpURLConnection.setRequestProperty(
-							"Content-Type", "application/json");
-					}
-
-					if (postContent != null) {
-						httpURLConnection.setRequestMethod("POST");
-
-						httpURLConnection.setDoOutput(true);
-
-						try (OutputStream outputStream =
-								httpURLConnection.getOutputStream()) {
-
-							outputStream.write(postContent.getBytes("UTF-8"));
-
-							outputStream.flush();
-						}
-					}
-				}
-
-				if (timeout != 0) {
-					urlConnection.setConnectTimeout(timeout);
-					urlConnection.setReadTimeout(timeout);
-				}
-
-				urlConnection.connect();
-
-				if (url.startsWith("https://api.github.com")) {
-					try {
-						int limit = Integer.parseInt(
-							urlConnection.getHeaderField("X-RateLimit-Limit"));
-						int remaining = Integer.parseInt(
-							urlConnection.getHeaderField(
-								"X-RateLimit-Remaining"));
-						long reset = Long.parseLong(
-							urlConnection.getHeaderField("X-RateLimit-Reset"));
-
-						System.out.println(
-							combine(
-								_getGitHubAPIRateLimitStatusMessage(
-									limit, remaining, reset),
-								"\n    ", url));
-					}
-					catch (Exception exception) {
-						System.out.println(
-							"Unable to parse GitHub API rate limit headers");
-
-						exception.printStackTrace();
-					}
-				}
-
-				StringBuilder sb = new StringBuilder();
-
-				int bytes = 0;
-				String line = null;
-
-				try (BufferedReader bufferedReader = new BufferedReader(
-						new InputStreamReader(
-							urlConnection.getInputStream()))) {
-
-					while ((line = bufferedReader.readLine()) != null) {
-						byte[] lineBytes = line.getBytes();
-
-						bytes += lineBytes.length;
-
-						if (bytes > (30 * 1024 * 1024)) {
-							sb.append("Response for ");
-							sb.append(url);
-							sb.append(" was truncated due to its size.");
-
-							break;
-						}
-
-						sb.append(line);
-						sb.append("\n");
-					}
-				}
-
-				if (checkCache && !url.startsWith("file:") &&
-					(bytes < (3 * 1024 * 1024))) {
-
-					saveToCacheFile(
-						_PREFIX_TO_STRING_CACHE + key, sb.toString());
-				}
-
-				return sb.toString();
-			}
-			catch (IOException ioException) {
-				if ((ioException instanceof UnknownHostException) &&
-					url.matches("http://test-\\d+-\\d+/.*")) {
-
-					return toString(
-						url.replaceAll(
-							"http://(test-\\d+-\\d+)(/.*)",
-							"https://$1.liferay.com$2"),
-						checkCache, maxRetries, method, postContent,
-						retryPeriod, timeout, httpAuthorizationHeader);
-				}
-
-				retryCount++;
-
-				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
-					throw ioException;
-				}
-
-				System.out.println(
-					"Retrying " + url + " in " + retryPeriod + " seconds");
-
-				sleep(1000 * retryPeriod);
-			}
+			return content;
 		}
 	}
 

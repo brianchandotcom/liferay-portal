@@ -259,6 +259,7 @@
 		<column name="allowPingbacks" type="boolean" />
 		<column name="answer" type="boolean" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="urlTitle" type="String" uad-nonanonymizable="true" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
@@ -298,6 +299,10 @@
 		<finder name="G_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" />
+		</finder>
+		<finder name="G_UT" return-type="MBMessage" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="urlTitle" />
 		</finder>
 		<finder name="G_S" return-type="Collection" where="categoryId != -1">
 			<finder-column name="groupId" />

@@ -233,6 +233,25 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static com.liferay.message.boards.model.MBMessageSoap
+			fetchMBMessageByUrlTitle(long groupId, String urlTitle)
+		throws RemoteException {
+
+		try {
+			com.liferay.message.boards.model.MBMessage returnValue =
+				MBMessageServiceUtil.fetchMBMessageByUrlTitle(
+					groupId, urlTitle);
+
+			return com.liferay.message.boards.model.MBMessageSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.message.boards.model.MBMessageSoap[]
 			getCategoryMessages(
 				long groupId, long categoryId, int status, int start, int end)

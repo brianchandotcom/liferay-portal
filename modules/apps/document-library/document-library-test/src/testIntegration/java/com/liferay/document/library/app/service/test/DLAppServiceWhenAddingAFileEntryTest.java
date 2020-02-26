@@ -355,7 +355,6 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 			_users.length, successCount);
 	}
 
-	@Ignore
 	@Test
 	public void testShouldSucceedWithNullBytes() throws Exception {
 		String fileName = RandomTestUtil.randomString();

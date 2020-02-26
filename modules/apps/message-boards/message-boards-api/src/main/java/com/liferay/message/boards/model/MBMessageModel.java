@@ -540,6 +540,21 @@ public interface MBMessageModel
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the url title of this message-boards message.
+	 *
+	 * @return the url title of this message-boards message
+	 */
+	@AutoEscape
+	public String getUrlTitle();
+
+	/**
+	 * Sets the url title of this message-boards message.
+	 *
+	 * @param urlTitle the url title of this message-boards message
+	 */
+	public void setUrlTitle(String urlTitle);
+
+	/**
 	 * Returns the trash entry created when this message-boards message was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message-boards message.
 	 *
 	 * @return the trash entry created when this message-boards message was moved to the Recycle Bin

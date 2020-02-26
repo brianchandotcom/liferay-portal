@@ -61,7 +61,7 @@ public class MBMessageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -117,6 +117,8 @@ public class MBMessageCacheModel
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", urlTitle=");
+		sb.append(urlTitle);
 		sb.append("}");
 
 		return sb.toString();
@@ -223,6 +225,13 @@ public class MBMessageCacheModel
 			mbMessageImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (urlTitle == null) {
+			mbMessageImpl.setUrlTitle("");
+		}
+		else {
+			mbMessageImpl.setUrlTitle(urlTitle);
+		}
+
 		mbMessageImpl.resetOriginalValues();
 
 		return mbMessageImpl;
@@ -273,6 +282,7 @@ public class MBMessageCacheModel
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		urlTitle = objectInput.readUTF();
 	}
 
 	@Override
@@ -363,6 +373,13 @@ public class MBMessageCacheModel
 		}
 
 		objectOutput.writeLong(statusDate);
+
+		if (urlTitle == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(urlTitle);
+		}
 	}
 
 	public String uuid;
@@ -392,5 +409,6 @@ public class MBMessageCacheModel
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public String urlTitle;
 
 }

@@ -105,7 +105,8 @@ create table MBMessage (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	urlTitle VARCHAR(75) null
 );
 
 create table MBStatsUser (

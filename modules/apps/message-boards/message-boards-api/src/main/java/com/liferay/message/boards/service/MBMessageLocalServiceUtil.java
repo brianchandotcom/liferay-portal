@@ -403,6 +403,12 @@ public class MBMessageLocalServiceUtil {
 		return getService().fetchMBMessage(messageId);
 	}
 
+	public static com.liferay.message.boards.model.MBMessage
+		fetchMBMessageByUrlTitle(long groupId, String urlTitle) {
+
+		return getService().fetchMBMessageByUrlTitle(groupId, urlTitle);
+	}
+
 	/**
 	 * Returns the message-boards message matching the UUID and group.
 	 *

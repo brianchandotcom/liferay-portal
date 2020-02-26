@@ -177,6 +177,8 @@ public class MBMessagePersistenceTest {
 
 		newMBMessage.setStatusDate(RandomTestUtil.nextDate());
 
+		newMBMessage.setUrlTitle(RandomTestUtil.randomString());
+
 		_mbMessages.add(_persistence.update(newMBMessage));
 
 		MBMessage existingMBMessage = _persistence.findByPrimaryKey(
@@ -245,6 +247,8 @@ public class MBMessagePersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingMBMessage.getStatusDate()),
 			Time.getShortTimestamp(newMBMessage.getStatusDate()));
+		Assert.assertEquals(
+			existingMBMessage.getUrlTitle(), newMBMessage.getUrlTitle());
 	}
 
 	@Test
@@ -338,6 +342,15 @@ public class MBMessagePersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
+	}
+
+	@Test
+	public void testCountByG_UT() throws Exception {
+		_persistence.countByG_UT(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_UT(0L, "null");
+
+		_persistence.countByG_UT(0L, (String)null);
 	}
 
 	@Test
@@ -547,7 +560,7 @@ public class MBMessagePersistenceTest {
 			"format", true, "anonymous", true, "priority", true,
 			"allowPingbacks", true, "answer", true, "lastPublishDate", true,
 			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"statusDate", true, "urlTitle", true);
 	}
 
 	@Test
@@ -774,6 +787,17 @@ public class MBMessagePersistenceTest {
 			Long.valueOf(existingMBMessage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingMBMessage, "getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(
+			Long.valueOf(existingMBMessage.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingMBMessage, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingMBMessage.getUrlTitle(),
+				ReflectionTestUtil.invoke(
+					existingMBMessage, "getOriginalUrlTitle",
+					new Class<?>[0])));
 	}
 
 	protected MBMessage addMBMessage() throws Exception {
@@ -832,6 +856,8 @@ public class MBMessagePersistenceTest {
 		mbMessage.setStatusByUserName(RandomTestUtil.randomString());
 
 		mbMessage.setStatusDate(RandomTestUtil.nextDate());
+
+		mbMessage.setUrlTitle(RandomTestUtil.randomString());
 
 		_mbMessages.add(_persistence.update(mbMessage));
 

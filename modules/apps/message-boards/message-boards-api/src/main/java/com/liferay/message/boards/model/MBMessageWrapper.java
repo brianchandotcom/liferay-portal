@@ -70,6 +70,7 @@ public class MBMessageWrapper
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("urlTitle", getUrlTitle());
 
 		return attributes;
 	}
@@ -236,6 +237,12 @@ public class MBMessageWrapper
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		String urlTitle = (String)attributes.get("urlTitle");
+
+		if (urlTitle != null) {
+			setUrlTitle(urlTitle);
 		}
 	}
 
@@ -640,6 +647,16 @@ public class MBMessageWrapper
 	@Override
 	public String getTreePath() {
 		return model.getTreePath();
+	}
+
+	/**
+	 * Returns the url title of this message-boards message.
+	 *
+	 * @return the url title of this message-boards message
+	 */
+	@Override
+	public String getUrlTitle() {
+		return model.getUrlTitle();
 	}
 
 	/**
@@ -1120,6 +1137,16 @@ public class MBMessageWrapper
 	@Override
 	public void setTreePath(String treePath) {
 		model.setTreePath(treePath);
+	}
+
+	/**
+	 * Sets the url title of this message-boards message.
+	 *
+	 * @param urlTitle the url title of this message-boards message
+	 */
+	@Override
+	public void setUrlTitle(String urlTitle) {
+		model.setUrlTitle(urlTitle);
 	}
 
 	/**

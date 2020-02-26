@@ -58,6 +58,7 @@ public class MBMessageSoap implements Serializable {
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
+		soapModel.setUrlTitle(model.getUrlTitle());
 
 		return soapModel;
 	}
@@ -339,6 +340,14 @@ public class MBMessageSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	public String getUrlTitle() {
+		return _urlTitle;
+	}
+
+	public void setUrlTitle(String urlTitle) {
+		_urlTitle = urlTitle;
+	}
+
 	private String _uuid;
 	private long _messageId;
 	private long _groupId;
@@ -366,5 +375,6 @@ public class MBMessageSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private String _urlTitle;
 
 }

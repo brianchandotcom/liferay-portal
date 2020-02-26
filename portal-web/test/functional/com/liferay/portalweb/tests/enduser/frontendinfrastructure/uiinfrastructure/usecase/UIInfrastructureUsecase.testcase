@@ -180,6 +180,34 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-70390."
+	@priority = "4"
+	test ViewNonASCIICharactersWithSPADisabled {
+		property custom.properties = "javascript.single.page.application.enabled=false";
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "skandi@liferay.com",
+			userFirstName = "Skändi",
+			userLastName = "Ääkkönen",
+			userScreenName = "uskandi");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.viewCP(
+			userEmailAddress = "skandi@liferay.com",
+			userFirstName = "Skändi",
+			userLastName = "Ääkkönen",
+			userScreenName = "uskandi");
+	}
+
 	@description = "This test validates sign in and sign out UI"
 	@priority = "5"
 	test ViewSignInSignOutUI {
@@ -214,34 +242,6 @@ definition {
 		UserBar.signOut();
 
 		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
-	}
-
-	@description = "This is a use case for LPS-70390."
-	@priority = "4"
-	test ViewNonASCIICharactersWithSPADisabled {
-		property custom.properties = "javascript.single.page.application.enabled=false";
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
-			userEmailAddress = "skandi@liferay.com",
-			userFirstName = "Skändi",
-			userLastName = "Ääkkönen",
-			userScreenName = "uskandi");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.viewCP(
-			userEmailAddress = "skandi@liferay.com",
-			userFirstName = "Skändi",
-			userLastName = "Ääkkönen",
-			userScreenName = "uskandi");
 	}
 
 }

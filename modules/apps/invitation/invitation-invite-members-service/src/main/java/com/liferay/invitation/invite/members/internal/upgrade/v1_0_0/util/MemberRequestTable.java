@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class MemberRequestTable {
 
-	public static final String TABLE_NAME = "MemberRequest";
+	public static final String TABLE_NAME = "IM_MemberRequest";
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"memberRequestId", Types.BIGINT},
@@ -70,14 +70,14 @@ TABLE_COLUMNS_MAP.put("invitedTeamId", Types.BIGINT);
 TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table MemberRequest (memberRequestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,key_ VARCHAR(75) null,receiverUserId LONG,invitedRoleId LONG,invitedTeamId LONG,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table IM_MemberRequest (memberRequestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,key_ VARCHAR(75) null,receiverUserId LONG,invitedRoleId LONG,invitedTeamId LONG,status INTEGER)";
 
-	public static final String TABLE_SQL_DROP = "drop table MemberRequest";
+	public static final String TABLE_SQL_DROP = "drop table IM_MemberRequest";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_85C0843E on MemberRequest (groupId, receiverUserId, status)",
-		"create index IX_9BBFC28F on MemberRequest (key_[$COLUMN_LENGTH:75$])",
-		"create index IX_F6ED732A on MemberRequest (receiverUserId, status)"
+		"create index IX_85C0843E on IM_MemberRequest (groupId, receiverUserId, status)",
+		"create index IX_9BBFC28F on IM_MemberRequest (key_[$COLUMN_LENGTH:75$])",
+		"create index IX_F6ED732A on IM_MemberRequest (receiverUserId, status)"
 	};
 
 }

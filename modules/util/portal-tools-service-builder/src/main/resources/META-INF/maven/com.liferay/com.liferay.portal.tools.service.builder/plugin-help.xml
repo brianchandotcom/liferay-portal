@@ -173,13 +173,6 @@
 					<description/>
 				</parameter>
 				<parameter>
-					<name>serviceBuilderTargetKernelVersion</name>
-					<type>java.lang.String</type>
-					<required>false</required>
-					<editable>true</editable>
-					<description/>
-				</parameter>
-				<parameter>
 					<name>springFileName</name>
 					<type>java.lang.String</type>
 					<required>false</required>
@@ -223,6 +216,13 @@
 				</parameter>
 				<parameter>
 					<name>targetEntityName</name>
+					<type>java.lang.String</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>targetKernelVersion</name>
 					<type>java.lang.String</type>
 					<required>false</required>
 					<editable>true</editable>

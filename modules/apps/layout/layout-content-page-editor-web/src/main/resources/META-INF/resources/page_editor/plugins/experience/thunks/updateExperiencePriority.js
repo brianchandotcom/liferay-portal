@@ -20,9 +20,9 @@ export default function updateExperiencePriority({subtarget, target}) {
 		return ExperienceService.updateExperiencePriority({
 			body: {
 				newPriority: target.priority,
-				segmentsExperienceId: target.segmentsExperienceId
+				segmentsExperienceId: target.segmentsExperienceId,
 			},
-			dispatch
+			dispatch,
 		}).then(() => {
 			return dispatch(
 				updateExperiencePriorityAction({subtarget, target})

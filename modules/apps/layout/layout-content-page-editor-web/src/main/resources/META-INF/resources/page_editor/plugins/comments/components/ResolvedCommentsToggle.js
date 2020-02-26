@@ -42,7 +42,7 @@ export default function ResolvedCommentsToggle() {
 				onChange={event =>
 					dispatch(
 						toggleShowResolvedComments({
-							showResolvedComments: Boolean(event.target.checked)
+							showResolvedComments: Boolean(event.target.checked),
 						})
 					)
 				}

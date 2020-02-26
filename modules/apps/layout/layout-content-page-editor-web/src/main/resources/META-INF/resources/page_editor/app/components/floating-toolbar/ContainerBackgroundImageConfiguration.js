@@ -23,12 +23,12 @@ import MappingSelector from './MappingSelector';
 
 const IMAGE_SOURCE = {
 	contentMapping: 'content_mapping',
-	manualSelection: 'manual_selection'
+	manualSelection: 'manual_selection',
 };
 
 export const ContainerBackgroundImageConfiguration = ({
 	backgroundImage,
-	onValueChange
+	onValueChange,
 }) => {
 	const [imageSource, setImageSource] = useState(
 		IMAGE_SOURCE.manualSelection
@@ -55,12 +55,12 @@ export const ContainerBackgroundImageConfiguration = ({
 					options={[
 						{
 							label: Liferay.Language.get('manual-selection'),
-							value: IMAGE_SOURCE.manualSelection
+							value: IMAGE_SOURCE.manualSelection,
 						},
 						{
 							label: Liferay.Language.get('content-mapping'),
-							value: IMAGE_SOURCE.contentMapping
-						}
+							value: IMAGE_SOURCE.contentMapping,
+						},
 					]}
 					value={imageSource}
 				/>
@@ -73,16 +73,16 @@ export const ContainerBackgroundImageConfiguration = ({
 						onValueChange({
 							backgroundImage: {
 								title: '',
-								url: ''
-							}
+								url: '',
+							},
 						})
 					}
 					onImageSelected={image =>
 						onValueChange({
 							backgroundImage: {
 								title: image.title,
-								url: image.url
-							}
+								url: image.url,
+							},
 						})
 					}
 				/>
@@ -92,7 +92,7 @@ export const ContainerBackgroundImageConfiguration = ({
 					mappedItem={backgroundImage}
 					onMappingSelect={mappedItem => {
 						onValueChange({
-							backgroundImage: mappedItem
+							backgroundImage: mappedItem,
 						});
 					}}
 				/>
@@ -103,5 +103,5 @@ export const ContainerBackgroundImageConfiguration = ({
 
 ContainerBackgroundImageConfiguration.propTypes = {
 	backgroundImage: BackgroundImagePropTypes,
-	onValueChange: PropTypes.func.isRequired
+	onValueChange: PropTypes.func.isRequired,
 };

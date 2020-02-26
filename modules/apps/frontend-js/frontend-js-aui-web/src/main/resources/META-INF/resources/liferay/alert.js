@@ -21,7 +21,7 @@ AUI.add(
 			ATTRS: {
 				animated: {
 					validator: Lang.isBoolean,
-					value: true
+					value: true,
 				},
 
 				closeableNode: {
@@ -33,27 +33,27 @@ AUI.add(
 								Liferay.Util.getLexiconIconTpl('times') +
 								'</button>'
 						);
-					}
+					},
 				},
 
 				icon: {
 					validator: Lang.isString,
-					value: 'info-circle'
+					value: 'info-circle',
 				},
 
 				message: {
 					validator: Lang.isString,
-					value: ''
+					value: '',
 				},
 
 				title: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				type: {
 					validator: Lang.isString,
-					value: 'info'
-				}
+					value: 'info',
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -206,7 +206,7 @@ AUI.add(
 										? instance
 												.get('boundingBox')
 												.outerHeight() + 'px'
-										: 0
+										: 0,
 								},
 								() => {
 									parentNode.toggleClass('in', visible);
@@ -235,7 +235,7 @@ AUI.add(
 						icon: instance.get('icon'),
 						message: instance.get('message'),
 						pathThemeImages: themeDisplay.getPathThemeImages(),
-						title: instance.get('title') || ''
+						title: instance.get('title') || '',
 					});
 
 					instance.set('bodyContent', bodyContent);
@@ -280,7 +280,7 @@ AUI.add(
 							'mouseleave',
 							instance._onMouseLeave,
 							instance
-						)
+						),
 					];
 
 					boundingBox.attr('role', 'alert');
@@ -300,8 +300,8 @@ AUI.add(
 						this,
 						this._getParentNode(parentNode)
 					);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Alert = Alert;
@@ -313,7 +313,7 @@ AUI.add(
 			'aui-component',
 			'event-mouseenter',
 			'liferay-portlet-base',
-			'timers'
-		]
+			'timers',
+		],
 	}
 );

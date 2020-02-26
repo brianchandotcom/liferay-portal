@@ -26,7 +26,7 @@ export default function FragmentContentInteractionsFilter({
 	children,
 	editableElements,
 	fragmentEntryLinkId,
-	itemId
+	itemId,
 }) {
 	const hoverItem = useHoverItem();
 	const isActive = useIsActive();
@@ -41,7 +41,7 @@ export default function FragmentContentInteractionsFilter({
 					fragmentEntryLinkId,
 					getEditableElementId(editableElement)
 				)
-			)
+			),
 		],
 		[fragmentEntryLinkId, itemId, editableElements]
 	);
@@ -79,7 +79,7 @@ export default function FragmentContentInteractionsFilter({
 			else {
 				selectItem(editableUniqueId, {
 					itemType: ITEM_TYPES.editable,
-					multiSelect: event.shiftKey
+					multiSelect: event.shiftKey,
 				});
 			}
 		}
@@ -91,7 +91,7 @@ export default function FragmentContentInteractionsFilter({
 		if (editableElement) {
 			const editableClickPosition = {
 				clientX: event.clientX,
-				clientY: event.clientY
+				clientY: event.clientY,
 			};
 			const editableUniqueId = getEditableUniqueId(
 				fragmentEntryLinkId,
@@ -121,5 +121,5 @@ export default function FragmentContentInteractionsFilter({
 FragmentContentInteractionsFilter.propTypes = {
 	element: PropTypes.instanceOf(HTMLElement),
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	itemId: PropTypes.string.isRequired
+	itemId: PropTypes.string.isRequired,
 };

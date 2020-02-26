@@ -16,11 +16,11 @@ import dom from 'metal-dom';
 
 const CssClass = {
 	ACTIVE: 'active',
-	SHOW: 'show'
+	SHOW: 'show',
 };
 
 const Selector = {
-	TRIGGER: '[data-toggle="liferay-tab"]'
+	TRIGGER: '[data-toggle="liferay-tab"]',
 };
 
 class TabsProvider {
@@ -150,7 +150,7 @@ class TabsProvider {
 			MozTransition: 'transitionend',
 			OTransition: 'oTransitionEnd otransitionend',
 			WebkitTransition: 'webkitTransitionEnd',
-			transition: 'transitionend'
+			transition: 'transitionend',
 		};
 
 		let eventName = false;

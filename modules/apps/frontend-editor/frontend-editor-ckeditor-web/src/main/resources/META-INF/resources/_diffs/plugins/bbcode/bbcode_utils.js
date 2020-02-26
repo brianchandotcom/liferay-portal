@@ -21,7 +21,7 @@
 		'(': '&#40;',
 		')': '&#41;',
 		'[': '&#91;',
-		']': '&#93;'
+		']': '&#93;',
 	});
 
 	var BBCodeUtil = Liferay.namespace('BBCodeUtil');

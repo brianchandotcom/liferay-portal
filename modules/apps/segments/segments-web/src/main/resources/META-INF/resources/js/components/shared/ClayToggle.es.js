@@ -29,7 +29,7 @@ class ClayToggle extends Component {
 		labelOn: PropTypes.string,
 		labelRight: PropTypes.string,
 		name: PropTypes.string,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
 	};
 
 	static defaultProps = {
@@ -38,7 +38,7 @@ class ClayToggle extends Component {
 		labelLeft: '',
 		labelOff: '',
 		labelOn: '',
-		labelRight: ''
+		labelRight: '',
 	};
 
 	render() {

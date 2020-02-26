@@ -56,16 +56,16 @@ AUI.add(
 								) - 15,
 							minLines: 10,
 							showInvisibles: false,
-							showPrintMargin: false
+							showPrintMargin: false,
 						};
-					}
+					},
 				},
 
 				height: {
 					validator(value) {
 						return Lang.isString(value) || Lang.isNumber(value);
 					},
-					value: 'auto'
+					value: 'auto',
 				},
 
 				themes: {
@@ -75,25 +75,25 @@ AUI.add(
 							{
 								cssClass: '',
 								icon: A.one(Liferay.Util.getLexiconIcon('sun')),
-								tooltip: Liferay.Language.get('light-theme')
+								tooltip: Liferay.Language.get('light-theme'),
 							},
 							{
 								cssClass: 'ace_dark',
 								icon: A.one(
 									Liferay.Util.getLexiconIcon('moon')
 								),
-								tooltip: Liferay.Language.get('dark-theme')
-							}
+								tooltip: Liferay.Language.get('dark-theme'),
+							},
 						];
-					}
+					},
 				},
 
 				width: {
 					validator(value) {
 						return Lang.isString(value) || Lang.isNumber(value);
 					},
-					value: '100%'
-				}
+					value: '100%',
+				},
 			},
 
 			CSS_PREFIX: 'lfr-source-editor',
@@ -139,7 +139,7 @@ AUI.add(
 
 					instance.fire('change', {
 						change: data,
-						newVal: instance.get('value')
+						newVal: instance.get('value'),
 					});
 				},
 
@@ -205,7 +205,7 @@ AUI.add(
 						if (!codeContainer) {
 							codeContainer = A.Node.create(
 								Lang.sub(TPL_CODE_CONTAINER, {
-									cssClass: instance.getClassName(STR_CODE)
+									cssClass: instance.getClassName(STR_CODE),
 								})
 							);
 
@@ -267,16 +267,16 @@ AUI.add(
 						currentThemeIndex,
 						nextThemeIndex,
 						prevThemeIndex,
-						themes
+						themes,
 					});
-				}
-			}
+				},
+			},
 		});
 
 		A.LiferaySourceEditor = LiferaySourceEditor;
 	},
 	'',
 	{
-		requires: ['aui-ace-editor']
+		requires: ['aui-ace-editor'],
 	}
 );

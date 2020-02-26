@@ -31,7 +31,7 @@ class RichText extends Component {
 		this.emit(name, {
 			fieldInstance: this,
 			originalEvent: event,
-			value
+			value,
 		});
 	}
 
@@ -163,7 +163,7 @@ RichText.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.string()
+	value: Config.string(),
 };
 
 Soy.register(RichText, templates);

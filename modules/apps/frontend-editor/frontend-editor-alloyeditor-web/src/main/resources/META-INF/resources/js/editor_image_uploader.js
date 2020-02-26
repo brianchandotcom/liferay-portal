@@ -37,24 +37,24 @@ AUI.add(
 					value: {
 						uploadingFileError: Liferay.Language.get(
 							'an-unexpected-error-occurred-while-uploading-your-file'
-						)
-					}
+						),
+					},
 				},
 
 				timeout: {
 					validator: Lang.isNumber,
-					value: 10000
+					value: 10000,
 				},
 
 				uploadItemReturnType: {
 					validator: Lang.isString,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				uploadUrl: {
 					validator: Lang.isString,
-					value: STR_BLANK
-				}
+					value: STR_BLANK,
+				},
 			},
 
 			EXTENDS: A.Plugin.Base,
@@ -73,7 +73,7 @@ AUI.add(
 					imageContainerNode.appendChild(progressBarNode);
 
 					var progressbar = new A.ProgressBar({
-						boundingBox: progressBarNode
+						boundingBox: progressBarNode,
 					}).render();
 
 					return progressbar;
@@ -88,7 +88,7 @@ AUI.add(
 							closeable: true,
 							cssClass: null,
 							duration: instance.get('timeout'),
-							render: true
+							render: true,
 						});
 					}
 
@@ -103,7 +103,7 @@ AUI.add(
 					if (!uploader) {
 						uploader = new A.Uploader({
 							fileFieldName: 'imageSelectorFileName',
-							uploadURL: instance.get('uploadUrl')
+							uploadURL: instance.get('uploadUrl'),
 						});
 
 						instance._uploader = uploader;
@@ -203,7 +203,7 @@ AUI.add(
 								fileEntryId: data.file.fileEntryId,
 								uploadImageReturnType: instance.get(
 									'uploadItemReturnType'
-								)
+								),
 							});
 						}
 					}
@@ -260,7 +260,7 @@ AUI.add(
 					var uploader = instance._getUploader();
 
 					uploader.set('postVarsPerFile', {
-						randomId
+						randomId,
 					});
 
 					uploader.upload(file);
@@ -313,10 +313,10 @@ AUI.add(
 							'uploadprogress',
 							instance._onUploadProgress,
 							instance
-						)
+						),
 					];
-				}
-			}
+				},
+			},
 		});
 
 		A.Plugin.LiferayBlogsUploader = EditorImageUploader;
@@ -324,6 +324,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-progressbar', 'liferay-notice', 'uploader']
+		requires: ['aui-base', 'aui-progressbar', 'liferay-notice', 'uploader'],
 	}
 );

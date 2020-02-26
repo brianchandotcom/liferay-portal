@@ -22,13 +22,13 @@ export default function duplicateItem({itemId, store, selectItem = () => {}}) {
 		FragmentService.duplicateItem({
 			itemId,
 			onNetworkStatus: dispatch,
-			segmentsExperienceId
+			segmentsExperienceId,
 		}).then(
 			({duplicatedFragmentEntryLinks, duplicatedItemId, layoutData}) => {
 				dispatch(
 					updateLayoutData({
 						addedFragmentEntryLinks: duplicatedFragmentEntryLinks,
-						layoutData
+						layoutData,
 					})
 				);
 

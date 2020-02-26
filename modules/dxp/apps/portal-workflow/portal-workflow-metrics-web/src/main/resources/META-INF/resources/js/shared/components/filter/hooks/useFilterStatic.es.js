@@ -29,7 +29,7 @@ const useFilterStatic = (filterKey, prefixKey, routing, staticItems) => {
 
 	return {
 		items,
-		selectedItems
+		selectedItems,
 	};
 };
 

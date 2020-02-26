@@ -64,7 +64,7 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new Segments
 						'<%= segmentsSimulationDisplayContext.getDeactivateSimulationURL() %>',
 					form: document.<portlet:namespace />segmentsSimulationFm,
 					simulateSegmentsEntriesUrl:
-						'<%= segmentsSimulationDisplayContext.getSimulateSegmentsEntriesURL() %>'
+						'<%= segmentsSimulationDisplayContext.getSimulateSegmentsEntriesURL() %>',
 				});
 			</aui:script>
 		</c:otherwise>

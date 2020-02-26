@@ -58,16 +58,16 @@ boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true)
 						deleteTemplateIds: Liferay.Util.listCheckedExcept(
 							searchContainer,
 							'<portlet:namespace />allRowIds'
-						)
+						),
 					},
-					url: '<%= deleteTemplatesURL %>'
+					url: '<%= deleteTemplatesURL %>',
 				});
 			}
 		}
 	};
 
 	var ACTIONS = {
-		deleteTemplates: deleteTemplates
+		deleteTemplates: deleteTemplates,
 	};
 
 	Liferay.componentReady('ddmTemplateManagementToolbar').then(function(

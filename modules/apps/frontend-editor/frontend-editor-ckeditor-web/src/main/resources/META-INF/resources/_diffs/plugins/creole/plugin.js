@@ -21,7 +21,7 @@
 
 			var dependencies = [
 				CKEDITOR.getUrl(path + 'creole_data_processor.js'),
-				CKEDITOR.getUrl(path + 'creole_parser.js')
+				CKEDITOR.getUrl(path + 'creole_parser.js'),
 			];
 
 			CKEDITOR.scriptLoader.load(dependencies, () => {
@@ -31,6 +31,6 @@
 
 				creoleDataProcessor.init(editor);
 			});
-		}
+		},
 	});
 })();

@@ -30,8 +30,8 @@
 	function <portlet:namespace />chooseSelectionStyle() {
 		Liferay.Util.postForm(document.<portlet:namespace />fm, {
 			data: {
-				cmd: 'selection-style'
-			}
+				cmd: 'selection-style',
+			},
 		});
 	}
 </script>

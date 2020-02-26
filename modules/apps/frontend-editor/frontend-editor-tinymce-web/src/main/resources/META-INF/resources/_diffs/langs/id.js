@@ -203,5 +203,5 @@ tinymce.addI18n('id', {
 	Tools: 'Tools',
 	View: 'View',
 	Table: 'Table',
-	Format: 'Format'
+	Format: 'Format',
 });

@@ -152,7 +152,7 @@ RotateComponent.STATE = {
 	 * @type {Function}
 	 */
 	modulePath: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -162,8 +162,8 @@ RotateComponent.STATE = {
 	 * @type {Function}
 	 */
 	requestImageEditorPreview: {
-		validator: core.isFunction
-	}
+		validator: core.isFunction,
+	},
 };
 
 Soy.register(RotateComponent, componentTemplates);

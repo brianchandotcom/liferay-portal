@@ -258,7 +258,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				anonymousAccount
 			) {
 				Util.setFormValues(form, {
-					emailAddress: emailAddress
+					emailAddress: emailAddress,
 				});
 
 				<%= namespace + randomNamespace %>sendMessage(form, !anonymousAccount);
@@ -270,7 +270,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				if (commentIdElement) {
 					Util.setFormValues(form, {
 						commentId: commentIdElement.value,
-						<%= Constants.CMD %>: '<%= Constants.DELETE %>'
+						<%= Constants.CMD %>: '<%= Constants.DELETE %>',
 					});
 
 					<%= namespace + randomNamespace %>sendMessage(form);
@@ -311,7 +311,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					Util.setFormValues(form, {
 						body: editorInstance.getHTML(),
 						parentCommentId: parentCommentIdElement.value,
-						<%= Constants.CMD %>: '<%= Constants.ADD %>'
+						<%= Constants.CMD %>: '<%= Constants.ADD %>',
 					});
 				}
 
@@ -322,11 +322,11 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					Util.openWindow({
 						dialog: {
 							height: 450,
-							width: 560
+							width: 560,
 						},
 						id: '<%= namespace %>signInDialog',
 						title: '<%= UnicodeLanguageUtil.get(resourceBundle, "sign-in") %>',
-						uri: '<%= loginURL.toString() %>'
+						uri: '<%= loginURL.toString() %>',
 					});
 				}
 				else {
@@ -358,7 +358,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 					Liferay.Util.fetch(form.action, {
 						body: formData,
-						method: 'POST'
+						method: 'POST',
 					})
 						.then(function(response) {
 							var promise;
@@ -432,7 +432,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 									message: errorKey,
 									title:
 										'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
-									type: 'danger'
+									type: 'danger',
 								});
 							}
 
@@ -445,7 +445,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 									'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
 								title:
 									'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
-								type: 'danger'
+								type: 'danger',
 							});
 
 							Util.toggleDisabled(commentButtons, false);
@@ -479,7 +479,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 					Liferay.Util.fetch('<%= editorURL %>', {
 						body: Util.objectToFormData(Util.ns('<%= namespace %>', options)),
-						method: 'POST'
+						method: 'POST',
 					})
 						.then(function(response) {
 							return response.text();
@@ -507,7 +507,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 								id: '<%= randomNamespace %>',
 								message:
 									'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-								type: 'danger'
+								type: 'danger',
 							});
 						});
 				}
@@ -521,7 +521,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					{
 						name: '<%= randomNamespace %>' + 'postReplyBody' + index,
 						onChangeMethod: '<%= randomNamespace %>' + index + 'ReplyOnChange',
-						placeholder: 'type-your-comment-here'
+						placeholder: 'type-your-comment-here',
 					}
 				);
 
@@ -557,7 +557,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 							contents: discussionIdElement.innerHTML,
 							name: '<%= randomNamespace %>' + 'editReplyBody' + index,
 							onChangeMethod:
-								'<%= randomNamespace %>' + index + 'EditOnChange'
+								'<%= randomNamespace %>' + index + 'EditOnChange',
 						}
 					);
 
@@ -578,7 +578,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						'<%= discussionTaglibHelper.getSubscriptionClassName() %>',
 					<%= Constants.CMD %>: subscribe
 						? '<%= Constants.SUBSCRIBE_TO_COMMENTS %>'
-						: '<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>'
+						: '<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>',
 				});
 
 				<%= namespace + randomNamespace %>sendMessage(form);
@@ -596,14 +596,14 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				if (commentIdElement) {
 					if (pending) {
 						Util.setFormValues(form, {
-							workflowAction: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>'
+							workflowAction: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
 						});
 					}
 
 					Util.setFormValues(form, {
 						body: editorInstance.getHTML(),
 						commentId: commentIdElement.value,
-						<%= Constants.CMD %>: '<%= Constants.UPDATE %>'
+						<%= Constants.CMD %>: '<%= Constants.UPDATE %>',
 					});
 
 					<%= namespace + randomNamespace %>sendMessage(form);
@@ -637,7 +637,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						randomNamespace: '<%= randomNamespace %>',
 						ratingsEnabled: '<%= discussionTaglibHelper.isRatingsEnabled() %>',
 						rootIndexPage: rootIndexPageElement.value,
-						userId: '<%= discussionTaglibHelper.getUserId() %>'
+						userId: '<%= discussionTaglibHelper.getUserId() %>',
 					});
 
 					<%
@@ -648,7 +648,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 					Liferay.Util.fetch('<%= paginationURL %>', {
 						body: Util.objectToFormData(data),
-						method: 'POST'
+						method: 'POST',
 					})
 						.then(function(response) {
 							return response.text();
@@ -676,7 +676,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 									'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
 								title:
 									'<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
-								type: 'danger'
+								type: 'danger',
 							});
 						});
 				});
@@ -708,7 +708,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 										'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-completed-successfully") %>',
 									title:
 										'<%= UnicodeLanguageUtil.get(resourceBundle, "success") %>',
-									type: 'success'
+									type: 'success',
 								});
 							}
 
@@ -736,7 +736,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 							className: '<%= discussionTaglibHelper.getClassName() %>',
 							classPK: '<%= discussionTaglibHelper.getClassPK() %>',
 							commentId: response.commentId,
-							text: messageTextNode.value
+							text: messageTextNode.value,
 						});
 					}
 				}
@@ -755,7 +755,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 							Liferay.Util.ns('<%= namespace %>', {
 								className: '<%= discussionTaglibHelper.getClassName() %>',
 								classPK: '<%= discussionTaglibHelper.getClassPK() %>',
-								skipEditorLoading: true
+								skipEditorLoading: true,
 							}),
 							portletNode.refreshURLData || {}
 						)
@@ -771,7 +771,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				position: 'top',
 				visible: false,
 				width: 400,
-				zIndex: Liferay.zIndex.OVERLAY
+				zIndex: Liferay.zIndex.OVERLAY,
 			}).render(discussionContainer);
 
 			var handle;

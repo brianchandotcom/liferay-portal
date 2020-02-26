@@ -49,8 +49,8 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
 				data: {
 					folderId: node.id,
-					folderName: node.name
-				}
+					folderName: node.name,
+				},
 			});
 		}
 	};

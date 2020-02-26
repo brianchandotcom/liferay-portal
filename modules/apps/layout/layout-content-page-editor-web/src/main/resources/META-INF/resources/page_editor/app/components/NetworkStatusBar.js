@@ -58,7 +58,7 @@ const NetworkStatusBar = ({error, lastFetch, status}) => {
 			openToast({
 				message: error,
 				title: Liferay.Language.get('error'),
-				type: 'danger'
+				type: 'danger',
 			});
 		}
 	}, [error, status]);

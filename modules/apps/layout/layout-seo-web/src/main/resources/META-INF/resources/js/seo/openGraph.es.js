@@ -25,7 +25,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		eventName: `${namespace}openGraphImageSelectedItem`,
 		singleSelect: true,
 		title: Liferay.Language.get('open-graph-image'),
-		url: uploadOpenGraphImageURL
+		url: uploadOpenGraphImageURL,
 	});
 
 	const openGraphImageFileEntryId = document.getElementById(
@@ -64,7 +64,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 
 			previewSeoFireChange(namespace, {
 				type: 'imgUrl',
-				value: itemValue.url
+				value: itemValue.url,
 			});
 		}
 	});
@@ -87,7 +87,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 
 		previewSeoFireChange(namespace, {
 			type: 'imgUrl',
-			value: ''
+			value: '',
 		});
 	});
 
@@ -110,7 +110,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		previewSeoFireChange(namespace, {
 			disabled,
 			type: 'title',
-			value: openGraphTitleField.value
+			value: openGraphTitleField.value,
 		});
 	});
 
@@ -136,7 +136,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		previewSeoFireChange(namespace, {
 			disabled,
 			type: 'description',
-			value: openGraphDescriptionField.value
+			value: openGraphDescriptionField.value,
 		});
 	});
 }

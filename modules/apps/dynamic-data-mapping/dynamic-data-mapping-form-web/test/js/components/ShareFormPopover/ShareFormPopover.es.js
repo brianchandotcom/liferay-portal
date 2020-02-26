@@ -20,9 +20,9 @@ const url = 'publish/url';
 const props = {
 	spritemap,
 	strings: {
-		'copied-to-clipboard': 'copied-to-clipboard'
+		'copied-to-clipboard': 'copied-to-clipboard',
 	},
-	url
+	url,
 };
 
 let shareFormIcon;

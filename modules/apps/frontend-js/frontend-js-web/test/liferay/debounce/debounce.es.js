@@ -14,7 +14,7 @@
 
 import {
 	cancelDebounce,
-	debounce
+	debounce,
 } from '../../../src/main/resources/META-INF/resources/liferay/debounce/debounce.es';
 
 describe('debounce', () => {

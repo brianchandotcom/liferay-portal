@@ -42,7 +42,7 @@ describe('Blogs Plugin', () => {
 		// Force attaching DOM Content Loaded event
 		Object.defineProperty(document, 'readyState', {
 			value: 'loading',
-			writable: false
+			writable: false,
 		});
 
 		fetchMock.mock('*', () => 200);
@@ -76,8 +76,8 @@ describe('Blogs Plugin', () => {
 					applicationId,
 					eventId: 'blogViewed',
 					properties: expect.objectContaining({
-						entryId: 'assetId'
-					})
+						entryId: 'assetId',
+					}),
 				})
 			);
 
@@ -104,9 +104,9 @@ describe('Blogs Plugin', () => {
 					properties: expect.objectContaining({
 						entryId: 'assetId',
 						src: googleUrl,
-						tagName: 'img'
-					})
-				})
+						tagName: 'img',
+					}),
+				}),
 			]);
 
 			document.body.removeChild(blogElement);
@@ -135,9 +135,9 @@ describe('Blogs Plugin', () => {
 						entryId: 'assetId',
 						href: googleUrl,
 						tagName: 'a',
-						text
-					})
-				})
+						text,
+					}),
+				}),
 			]);
 
 			document.body.removeChild(blogElement);
@@ -162,9 +162,9 @@ describe('Blogs Plugin', () => {
 					eventId: 'blogClicked',
 					properties: expect.objectContaining({
 						entryId: 'assetId',
-						tagName: 'p'
-					})
-				})
+						tagName: 'p',
+					}),
+				}),
 			]);
 
 			document.body.removeChild(blogElement);

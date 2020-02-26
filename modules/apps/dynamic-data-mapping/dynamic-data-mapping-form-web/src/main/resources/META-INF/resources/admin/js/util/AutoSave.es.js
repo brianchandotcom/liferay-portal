@@ -14,7 +14,7 @@
 
 import {
 	convertToFormData,
-	makeFetch
+	makeFetch,
 } from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
@@ -45,7 +45,7 @@ class AutoSave extends Component {
 	getStateHash(state) {
 		return objectHash(state, {
 			algorithm: 'md5',
-			unorderedObjects: true
+			unorderedObjects: true,
 		});
 	}
 
@@ -64,7 +64,7 @@ class AutoSave extends Component {
 
 		this._pendingRequest = makeFetch({
 			body: this._getFormData(saveAsDraft),
-			url: this.props.url
+			url: this.props.url,
 		})
 			.then(responseData => {
 				this._pendingRequest = null;
@@ -75,7 +75,7 @@ class AutoSave extends Component {
 
 				this.emit('autosaved', {
 					modifiedDate: responseData.modifiedDate,
-					savedAsDraft: saveAsDraft
+					savedAsDraft: saveAsDraft,
 				});
 
 				return responseData;
@@ -174,7 +174,7 @@ AutoSave.PROPS = {
 	interval: Config.number().setter('_setInterval'),
 	saveAsDraft: Config.bool().value(true),
 	stateSyncronizer: Config.any(),
-	url: Config.string()
+	url: Config.string(),
 };
 
 export default AutoSave;

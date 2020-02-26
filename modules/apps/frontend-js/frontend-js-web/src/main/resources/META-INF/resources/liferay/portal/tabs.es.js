@@ -37,7 +37,7 @@ export function showTab(namespace, names, id, callback) {
 			names,
 			namespace,
 			selectedTab,
-			selectedTabSection
+			selectedTabSection,
 		};
 
 		if (callback && typeof callback === 'function') {
@@ -68,7 +68,7 @@ export function applyTabSelectionDOMChanges({
 	names,
 	namespace,
 	selectedTab,
-	selectedTabSection
+	selectedTabSection,
 }) {
 	const selectedTabLink = selectedTab.querySelector('a');
 

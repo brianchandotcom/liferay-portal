@@ -64,7 +64,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new Select
 
 		if (data.length) {
 			result = {
-				data: data
+				data: data,
 			};
 		}
 

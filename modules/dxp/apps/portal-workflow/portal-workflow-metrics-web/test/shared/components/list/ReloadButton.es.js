@@ -16,7 +16,7 @@ import ReloadButton from '../../../../src/main/resources/META-INF/resources/js/s
 test('Should component reload page', () => {
 	Object.defineProperty(window, 'location', {
 		value: {reload: jest.fn()},
-		writable: true
+		writable: true,
 	});
 
 	const component = shallow(<ReloadButton />);

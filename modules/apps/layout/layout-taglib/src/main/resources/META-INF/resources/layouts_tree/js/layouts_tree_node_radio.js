@@ -21,8 +21,8 @@ AUI.add(
 			ATTRS: {
 				checkEl: {
 					setter: A.one,
-					valueFn: '_valueCheckEl'
-				}
+					valueFn: '_valueCheckEl',
+				},
 			},
 
 			EXTENDS: A.TreeNodeRadio,
@@ -77,8 +77,8 @@ AUI.add(
 
 					instance.get('hitAreaEl').remove();
 					instance.get('iconEl').remove();
-				}
-			}
+				},
+			},
 		});
 
 		A.LayoutsTreeNodeRadio = LayoutsTreeNodeRadio;
@@ -87,6 +87,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-tree-node']
+		requires: ['aui-tree-node'],
 	}
 );

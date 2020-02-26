@@ -23,7 +23,7 @@ export default function VariantForm({
 	onClose,
 	onSave,
 	title,
-	variantId
+	variantId,
 }) {
 	const [inputName, setInputName] = useState(name);
 	const [error, setError] = useState(false);

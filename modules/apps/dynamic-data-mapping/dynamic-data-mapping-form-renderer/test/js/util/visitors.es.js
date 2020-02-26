@@ -44,7 +44,7 @@ describe('PagesVisitor', () => {
 		expect(
 			visitor.mapPages((page, index) => ({
 				...page,
-				title: `New title ${index}`
+				title: `New title ${index}`,
 			}))
 		).toMatchSnapshot();
 	});
@@ -53,7 +53,7 @@ describe('PagesVisitor', () => {
 		expect(
 			visitor.mapRows(row => ({
 				...row,
-				columns: []
+				columns: [],
 			}))
 		).toMatchSnapshot();
 	});
@@ -62,7 +62,7 @@ describe('PagesVisitor', () => {
 		expect(
 			visitor.mapColumns(column => ({
 				...column,
-				size: 6
+				size: 6,
 			}))
 		).toMatchSnapshot();
 	});
@@ -71,7 +71,7 @@ describe('PagesVisitor', () => {
 		expect(
 			visitor.mapFields((field, index) => ({
 				...field,
-				label: `New label ${index}`
+				label: `New label ${index}`,
 			}))
 		).toMatchSnapshot();
 	});

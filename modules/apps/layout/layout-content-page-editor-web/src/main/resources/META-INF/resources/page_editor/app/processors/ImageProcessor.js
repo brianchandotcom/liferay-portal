@@ -81,5 +81,5 @@ function render(element, value, config = {}) {
 export default {
 	createEditor,
 	destroyEditor,
-	render
+	render,
 };

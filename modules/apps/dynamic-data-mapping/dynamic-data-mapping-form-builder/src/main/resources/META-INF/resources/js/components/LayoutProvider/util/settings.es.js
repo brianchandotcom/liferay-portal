@@ -28,18 +28,18 @@ export const updateSettingsContextProperty = (
 			if (propertyName === field.fieldName) {
 				field = {
 					...field,
-					value: propertyValue
+					value: propertyValue,
 				};
 
 				if (field.localizable) {
 					field.localizedValue = {
 						...field.localizedValue,
-						[editingLanguageId]: propertyValue
+						[editingLanguageId]: propertyValue,
 					};
 				}
 			}
 
 			return field;
-		})
+		}),
 	};
 };

@@ -24,7 +24,7 @@ const FALLBACK_CONFIG = {
 	singleQuote: true,
 	tabWidth: 4,
 	trailingComma: 'es5',
-	useTabs: true
+	useTabs: true,
 };
 
 /* eslint-disable no-console */

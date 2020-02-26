@@ -23,7 +23,7 @@ import {createPortal} from 'react-dom';
 import debounceRAF from '../../../core/debounceRAF';
 import {
 	getEditableItemPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {EDITABLE_FLOATING_TOOLBAR_CLASSNAMES} from '../../config/constants/editableFloatingToolbarClassNames';
 import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../../config/constants/floatingToolbarConfigurations';
@@ -33,7 +33,7 @@ export default function FloatingToolbar({
 	buttons,
 	item,
 	itemRef,
-	onButtonClick = () => {}
+	onButtonClick = () => {},
 }) {
 	const isMounted = useIsMounted();
 	const [panelId, setPanelId] = useState(null);
@@ -124,7 +124,7 @@ export default function FloatingToolbar({
 		panelId,
 		show,
 		windowScrollPosition,
-		windowWidth
+		windowWidth,
 	]);
 
 	useEffect(() => {
@@ -198,7 +198,7 @@ export default function FloatingToolbar({
 				sideNavigation.on(
 					'closedStart.lexicon.sidenav',
 					handleTransitionStart
-				)
+				),
 			];
 		}
 
@@ -226,7 +226,7 @@ export default function FloatingToolbar({
 							'page-editor__floating-toolbar',
 							'position-fixed',
 							{
-								'page-editor__floating-toolbar--hidden': hidden
+								'page-editor__floating-toolbar--hidden': hidden,
 							}
 						)}
 						onMouseOver={event => {
@@ -247,7 +247,7 @@ export default function FloatingToolbar({
 												active:
 													button.panelId === panelId,
 												'lfr-portal-tooltip':
-													button.title
+													button.title,
 											}
 										)}
 										displayType="secondary"
@@ -281,7 +281,7 @@ export default function FloatingToolbar({
 								className={classNames(
 									'p-3 popover popover-scrollable position-static',
 									{
-										'page-editor__floating-toolbar--hidden': hidden
+										'page-editor__floating-toolbar--hidden': hidden,
 									}
 								)}
 							>
@@ -301,15 +301,15 @@ FloatingToolbar.propTypes = {
 			icon: PropTypes.string.isRequired,
 			id: PropTypes.string.isRequired,
 			panelId: PropTypes.string,
-			title: PropTypes.string.isRequired
+			title: PropTypes.string.isRequired,
 		})
 	),
 	item: PropTypes.oneOfType([
 		getEditableItemPropTypes(),
-		getLayoutDataItemPropTypes()
+		getLayoutDataItemPropTypes(),
 	]),
 	itemRef: PropTypes.shape({current: PropTypes.instanceOf(Element)}),
-	onButtonClick: PropTypes.func.isRequired
+	onButtonClick: PropTypes.func.isRequired,
 };
 
 /**
@@ -320,12 +320,12 @@ const ELEMENT_AVAILABLE_POSITIONS = {
 		Align.Bottom,
 		Align.BottomCenter,
 		Align.BottomLeft,
-		Align.BottomRight
+		Align.BottomRight,
 	],
 
 	left: [Align.BottomLeft, Align.Left, Align.LeftCenter, Align.TopRight],
 	right: [Align.BottomRight, Align.Right, Align.RightCenter, Align.TopRight],
-	top: [Align.Top, Align.TopCenter, Align.TopLeft, Align.TopRight]
+	top: [Align.Top, Align.TopCenter, Align.TopLeft, Align.TopRight],
 };
 
 /**
@@ -334,13 +334,13 @@ const ELEMENT_AVAILABLE_POSITIONS = {
 const ELEMENT_POSITION = {
 	bottom: {
 		left: Align.BottomLeft,
-		right: Align.BottomRight
+		right: Align.BottomRight,
 	},
 
 	top: {
 		left: Align.TopLeft,
-		right: Align.TopRight
-	}
+		right: Align.TopRight,
+	},
 };
 
 /**

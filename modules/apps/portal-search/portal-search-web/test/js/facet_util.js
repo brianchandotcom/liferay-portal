@@ -35,7 +35,7 @@ describe('liferay-search-facet-util', () => {
 			const parameters = [
 				'modifiedFrom=2018-01-01',
 				'modifiedTo=2018-01-31',
-				'q=test'
+				'q=test',
 			];
 
 			const newParameters = Liferay.Search.FacetUtil.removeURLParameters(
@@ -46,7 +46,7 @@ describe('liferay-search-facet-util', () => {
 			expect(newParameters).toEqual([
 				'modifiedFrom=2018-01-01',
 				'modifiedTo=2018-01-31',
-				'q=test'
+				'q=test',
 			]);
 		});
 

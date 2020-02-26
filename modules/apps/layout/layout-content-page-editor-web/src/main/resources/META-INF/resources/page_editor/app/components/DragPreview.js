@@ -18,7 +18,7 @@ import {useDragLayer} from 'react-dnd';
 const getItemStyles = (currentOffset, ref) => {
 	if (!currentOffset || !ref.current) {
 		return {
-			display: 'none'
+			display: 'none',
 		};
 	}
 
@@ -29,7 +29,7 @@ const getItemStyles = (currentOffset, ref) => {
 
 	return {
 		WebkitTransform: transform,
-		transform
+		transform,
 	};
 };
 
@@ -39,7 +39,7 @@ export default function DragPreview() {
 	const {currentOffset, isDragging, item} = useDragLayer(monitor => ({
 		currentOffset: monitor.getClientOffset(),
 		isDragging: monitor.isDragging(),
-		item: monitor.getItem()
+		item: monitor.getItem(),
 	}));
 
 	if (!isDragging) {

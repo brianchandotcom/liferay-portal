@@ -18,6 +18,6 @@ export default function loadReducer(reducer, key) {
 	return {
 		key,
 		reducer,
-		type: LOAD_REDUCER
+		type: LOAD_REDUCER,
 	};
 }

@@ -21,7 +21,7 @@ export default function addFragment({
 	parentItemId,
 	position,
 	selectItem = () => {},
-	store
+	store,
 }) {
 	return dispatch => {
 		const {segmentsExperienceId} = store;
@@ -32,12 +32,12 @@ export default function addFragment({
 			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
-			segmentsExperienceId
+			segmentsExperienceId,
 		}).then(({addedItemId, fragmentEntryLink, layoutData}) => {
 			dispatch(
 				addFragmentEntryLink({
 					fragmentEntryLink,
-					layoutData
+					layoutData,
 				})
 			);
 

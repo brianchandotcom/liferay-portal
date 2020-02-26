@@ -19,7 +19,7 @@ const spritemap = 'icons.svg';
 
 const defaultParagraphConfig = {
 	name: 'textField',
-	spritemap
+	spritemap,
 };
 
 describe('Field Paragraph', () => {
@@ -32,7 +32,7 @@ describe('Field Paragraph', () => {
 	it('is readOnly', () => {
 		component = new Paragraph({
 			...defaultParagraphConfig,
-			readOnly: true
+			readOnly: true,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -41,7 +41,7 @@ describe('Field Paragraph', () => {
 	it('has an id', () => {
 		component = new Paragraph({
 			...defaultParagraphConfig,
-			id: 'ID'
+			id: 'ID',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -50,7 +50,7 @@ describe('Field Paragraph', () => {
 	it('has a label', () => {
 		component = new Paragraph({
 			...defaultParagraphConfig,
-			label: 'label'
+			label: 'label',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -59,7 +59,7 @@ describe('Field Paragraph', () => {
 	it('has a placeholder', () => {
 		component = new Paragraph({
 			...defaultParagraphConfig,
-			placeholder: 'Placeholder'
+			placeholder: 'Placeholder',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -68,7 +68,7 @@ describe('Field Paragraph', () => {
 	it('is not required', () => {
 		component = new Paragraph({
 			...defaultParagraphConfig,
-			required: false
+			required: false,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -78,7 +78,7 @@ describe('Field Paragraph', () => {
 		component = new Paragraph({
 			...defaultParagraphConfig,
 			label: 'text',
-			showLabel: true
+			showLabel: true,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -93,7 +93,7 @@ describe('Field Paragraph', () => {
 	it('has a value', () => {
 		component = new Paragraph({
 			...defaultParagraphConfig,
-			value: 'value'
+			value: 'value',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -102,7 +102,7 @@ describe('Field Paragraph', () => {
 	it('has a key', () => {
 		component = new Paragraph({
 			...defaultParagraphConfig,
-			key: 'key'
+			key: 'key',
 		});
 
 		expect(component).toMatchSnapshot();

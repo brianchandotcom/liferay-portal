@@ -465,7 +465,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									var MAP_ROLE_TYPES = {
 										organization: 3,
 										regular: 1,
-										site: 2
+										site: 2,
 									};
 
 									<portlet:namespace />kaleoDesigner = new Liferay.KaleoDesigner({
@@ -499,7 +499,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
 											%>
 
-											kaleoProcessId: '<%= kaleoProcessId %>'
+											kaleoProcessId: '<%= kaleoProcessId %>',
 										},
 
 										<c:if test="<%= Validator.isNotNull(content) %>">
@@ -514,7 +514,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											on: {
 												save: Liferay.Util.getOpener()[
 													'<%= HtmlUtil.escapeJS(propertiesSaveCallback) %>'
-												]
+												],
 											},
 										</c:if>
 
@@ -526,7 +526,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 										portletResourceNamespace:
 											'<%= HtmlUtil.escapeJS(portletResourceNamespace) %>',
-										srcNode: '#<portlet:namespace />propertyBuilderContent'
+										srcNode: '#<portlet:namespace />propertyBuilderContent',
 									}).render();
 
 									<c:if test="<%= kaleoDesignerDisplayContext.isDefinitionInputDisabled(isPreviewBeforeRestoreState, kaleoDefinitionVersion, permissionChecker) %>">
@@ -576,7 +576,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									});
 
 									<portlet:namespace />kaleoDesigner.contentTabView.after({
-										selectionChange: <portlet:namespace />afterTabViewChange
+										selectionChange: <portlet:namespace />afterTabViewChange,
 									});
 
 									var fields = <portlet:namespace />kaleoDesigner.get('fields');
@@ -586,7 +586,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											{
 												name: 'StartNode',
 												type: 'start',
-												xy: [100, 40]
+												xy: [100, 40],
 											},
 
 											{
@@ -595,14 +595,14 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 													executionType: ['onEntry'],
 													name: [Liferay.KaleoDesignerStrings.approve],
 													script: [
-														'com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("approved"), workflowContext);'
+														'com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("approved"), workflowContext);',
 													],
-													scriptLanguage: ['groovy']
+													scriptLanguage: ['groovy'],
 												},
 												name: 'EndNode',
 												type: 'end',
-												xy: [100, 500]
-											}
+												xy: [100, 500],
+											},
 										]);
 
 										<portlet:namespace />kaleoDesigner.connect('StartNode', 'EndNode');

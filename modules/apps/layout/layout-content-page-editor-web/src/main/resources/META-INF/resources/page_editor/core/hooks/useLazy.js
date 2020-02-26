@@ -42,7 +42,7 @@ export default function useLazy(callback) {
 								else {
 									return null;
 								}
-							}
+							},
 						};
 					});
 				});

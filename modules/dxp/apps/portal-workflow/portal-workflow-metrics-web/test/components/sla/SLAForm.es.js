@@ -27,7 +27,7 @@ const errorState = {
 	errors: {},
 	setErrors(errors) {
 		errorState.errors = errors;
-	}
+	},
 };
 
 beforeEach(() => {
@@ -39,32 +39,32 @@ jest.useFakeTimers();
 
 const defaultSlaStore = () => ({
 	pauseNodeKeys: {
-		nodeKeys: []
+		nodeKeys: [],
 	},
 	startNodeKeys: {
 		nodeKeys: [
 			{
 				executionType: 'enter',
-				id: 13
+				id: 13,
 			},
 			{
 				executionType: 'enter',
-				id: 1545
-			}
-		]
+				id: 1545,
+			},
+		],
 	},
 	stopNodeKeys: {
 		nodeKeys: [
 			{
 				executionType: 'leave',
-				id: 13
+				id: 13,
 			},
 			{
 				executionType: 'leave',
-				id: 1545
-			}
-		]
-	}
+				id: 1545,
+			},
+		],
+	},
 });
 
 const onReloadNodesHandler = () => () => {};
@@ -72,7 +72,7 @@ const onReloadNodesHandler = () => () => {};
 const SLANodeState = () => ({
 	getPauseNodes: () => [],
 	getStartNodes: () => [],
-	getStopNodes: () => []
+	getStopNodes: () => [],
 });
 
 const SLAState = sla => ({
@@ -84,15 +84,15 @@ const SLAState = sla => ({
 	saveSLA: () => Promise.resolve(true),
 	sla: {
 		...defaultSlaStore(),
-		...sla
-	}
+		...sla,
+	},
 });
 
 test('Should display error on alert when receive a server error after submit', () => {
 	const error = {
 		response: {
-			data: [{message: 'Error during SLA creation.'}]
-		}
+			data: [{message: 'Error during SLA creation.'}],
+		},
 	};
 	const component = mount(
 		<Router client={fetchFailure(error)}>
@@ -100,9 +100,9 @@ test('Should display error on alert when receive a server error after submit', (
 				value={{
 					...SLAState({
 						days: 1,
-						name: 'New SLA'
+						name: 'New SLA',
 					}),
-					saveSLA: () => fetchFailure(error).get()
+					saveSLA: () => fetchFailure(error).get(),
 				}}
 			>
 				<Errors.Provider value={errorState}>
@@ -126,10 +126,10 @@ test('Should display error on field when receive a server error after submit', (
 			data: [
 				{
 					fieldName: 'name',
-					message: 'An SLA with the same name already exists.'
-				}
-			]
-		}
+					message: 'An SLA with the same name already exists.',
+				},
+			],
+		},
 	};
 
 	const component = mount(
@@ -138,9 +138,9 @@ test('Should display error on field when receive a server error after submit', (
 				value={{
 					...SLAState({
 						days: 1,
-						name: 'Test'
+						name: 'Test',
 					}),
-					saveSLA: () => fetchFailure(error).get()
+					saveSLA: () => fetchFailure(error).get(),
 				}}
 			>
 				<Errors.Provider value={errorState}>
@@ -188,7 +188,7 @@ test('Should display errors when duration was changed but keep empty', () => {
 			<SLA.Provider
 				value={SLAState({
 					days: '',
-					hours: ''
+					hours: '',
 				})}
 			>
 				<Errors.Provider value={errorState}>
@@ -216,7 +216,7 @@ test('Should display errors when input blur with invalid values', () => {
 			<SLA.Provider
 				value={SLAState({
 					days: 0,
-					hours: '99:99'
+					hours: '99:99',
 				})}
 			>
 				<Errors.Provider value={errorState}>
@@ -263,7 +263,7 @@ test('Should display errors when submitting the form with empty values', () => {
 test('Should edit the SLA with valid values', () => {
 	const data = {
 		duration: 1553879089,
-		name: 'Total resolution time'
+		name: 'Total resolution time',
 	};
 
 	const dataUpdated = {
@@ -272,7 +272,7 @@ test('Should edit the SLA with valid values', () => {
 		hours: '10:50',
 		id: 1234,
 		name: 'Total resolution time',
-		processId: '123'
+		processId: '123',
 	};
 
 	const component = mount(
@@ -301,7 +301,7 @@ test('Should redirect to SLA list', () => {
 		hours: '10:50',
 		id: 1234,
 		name: 'Total resolution time',
-		processId: '123'
+		processId: '123',
 	};
 
 	const component = mount(
@@ -331,22 +331,22 @@ test('Should redirect to SLA list with blocked nodes', () => {
 		id: 1234,
 		name: 'Total resolution time',
 		pauseNodeKeys: {
-			nodeKeys: []
+			nodeKeys: [],
 		},
 		processId: '123',
 		startNodeKeys: {
 			nodeKeys: [],
-			status: 2
+			status: 2,
 		},
 		stopNodeKeys: {
 			nodeKeys: [],
-			status: 2
-		}
+			status: 2,
+		},
 	};
 
 	const slaFormData = {
 		duration: 1553879089,
-		name: 'Total resolution time'
+		name: 'Total resolution time',
 	};
 
 	const component = mount(
@@ -388,7 +388,7 @@ test('Should render component in edit mode', () => {
 		pauseNodeKeys: {nodeKeys: []},
 		processId: '',
 		startNodeKeys: {nodeKeys: []},
-		stopNodeKeys: {nodeKeys: []}
+		stopNodeKeys: {nodeKeys: []},
 	};
 
 	const component = mount(
@@ -408,7 +408,7 @@ test('Should submit a new SLA with valid values', () => {
 	const data = {
 		description: 'Total time to complete the request.',
 		duration: 1553879089,
-		name: 'Total resolution time'
+		name: 'Total resolution time',
 	};
 
 	const component = mount(
@@ -417,7 +417,7 @@ test('Should submit a new SLA with valid values', () => {
 				value={SLAState({
 					days: 3,
 					hours: '10:50',
-					name: 'New SLA'
+					name: 'New SLA',
 				})}
 			>
 				<Errors.Provider value={errorState}>
@@ -462,7 +462,7 @@ test('Should test handler erros', () => {
 test('Should test handler erros at start node keys', () => {
 	errorState.errors = {
 		[PAUSE_NODE_KEYS]: 'test',
-		test: 'test'
+		test: 'test',
 	};
 
 	const component = mount(

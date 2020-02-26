@@ -67,7 +67,7 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 				alloyEditorInstances--;
 
 				cleanupAlloyEditorResources();
-			}
+			},
 		};
 
 		CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {

@@ -30,7 +30,7 @@ const ManageAllowedFragmentButton = ({item}) => {
 			if (isMounted()) {
 				setOpenModal(false);
 			}
-		}
+		},
 	});
 
 	const handleOpenModalClick = () => {
@@ -59,7 +59,7 @@ const ManageAllowedFragmentButton = ({item}) => {
 };
 
 ManageAllowedFragmentButton.propTypes = {
-	item: PropTypes.object
+	item: PropTypes.object,
 };
 
 export {ManageAllowedFragmentButton};

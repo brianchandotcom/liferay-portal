@@ -24,7 +24,7 @@ const Footer = ({currentIndex, title, totalItems}) => (
 		<div>
 			{sub(Liferay.Language.get('x-of-x'), [
 				currentIndex + 1,
-				totalItems
+				totalItems,
 			])}
 		</div>
 	</div>
@@ -33,7 +33,7 @@ const Footer = ({currentIndex, title, totalItems}) => (
 Footer.propTypes = {
 	currentIndex: PropTypes.number.isRequired,
 	title: PropTypes.string.isRequired,
-	totalItems: PropTypes.number.isRequired
+	totalItems: PropTypes.number.isRequired,
 };
 
 export default Footer;

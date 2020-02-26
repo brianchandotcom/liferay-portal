@@ -51,7 +51,7 @@ String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANA
 		if (themeDisplay.isSignedIn()) {
 			Analytics.setIdentity({
 				email: themeDisplay.getUserEmailAddress(),
-				name: themeDisplay.getUserName()
+				name: themeDisplay.getUserName(),
 			});
 		}
 
@@ -76,7 +76,7 @@ String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANA
 					if (themeDisplay.isSignedIn()) {
 						Analytics.setIdentity({
 							email: themeDisplay.getUserEmailAddress(),
-							name: themeDisplay.getUserName()
+							name: themeDisplay.getUserName(),
 						});
 					}
 

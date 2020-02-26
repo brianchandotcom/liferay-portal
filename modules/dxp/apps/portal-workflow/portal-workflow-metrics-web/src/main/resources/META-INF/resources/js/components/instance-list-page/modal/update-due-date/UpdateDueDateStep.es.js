@@ -127,7 +127,7 @@ const TimePickerInputWithOptions = ({format, isAmPm, setValue, value}) => {
 		if (isAmPm) {
 			const times = {
 				AM: ['12:00 AM', '12:30 AM'],
-				PM: ['12:00 PM', '12:30 PM']
+				PM: ['12:00 PM', '12:30 PM'],
 			};
 
 			Object.keys(times).forEach(type => {

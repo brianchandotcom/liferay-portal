@@ -29,7 +29,7 @@ const KEYS = {
 	RIGHT: 39,
 	SPACE: 32,
 	TAB: 9,
-	UP: 38
+	UP: 38,
 };
 
 const HANDLED_KEY_CODES = new Set(Object.values(KEYS));
@@ -51,7 +51,7 @@ const KEY_CODES_TO_ACTIONS = {
 	[KEYS.RIGHT]: 'EXPAND_AND_ENTER',
 	[KEYS.SPACE]: 'TOGGLE_SELECT',
 	[KEYS.TAB]: 'EXIT',
-	[KEYS.UP]: 'SELECT_PREVIOUS_VISIBLE'
+	[KEYS.UP]: 'SELECT_PREVIOUS_VISIBLE',
 };
 
 export default function useKeyboardNavigation(nodeId) {
@@ -73,7 +73,7 @@ export default function useKeyboardNavigation(nodeId) {
 
 				dispatch({
 					nodeId,
-					type: KEY_CODES_TO_ACTIONS[keyCode]
+					type: KEY_CODES_TO_ACTIONS[keyCode],
 				});
 			}
 		},

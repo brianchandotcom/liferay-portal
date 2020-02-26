@@ -52,7 +52,7 @@ export default ({isLoading, totalCount}) => {
 										onClick={() =>
 											dispatch({
 												keywords: '',
-												type: 'SEARCH'
+												type: 'SEARCH',
 											})
 										}
 									>

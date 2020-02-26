@@ -288,7 +288,7 @@ renderResponse.setTitle(headerTitle);
 													constrain: true,
 													destroyOnHide: true,
 													modal: true,
-													width: 680
+													width: 680,
 												},
 												id: '<portlet:namespace />selectFolder',
 												title:
@@ -298,14 +298,14 @@ renderResponse.setTitle(headerTitle);
 													<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
 												</liferay-portlet:renderURL>
 
-												uri: '<%= selectFolderURL.toString() %>'
+												uri: '<%= selectFolderURL.toString() %>',
 											},
 											function(event) {
 												var folderData = {
 													idString: 'folderId',
 													idValue: event.folderid,
 													nameString: 'folderName',
-													nameValue: event.foldername
+													nameValue: event.foldername,
 												};
 
 												Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
@@ -571,22 +571,22 @@ renderResponse.setTitle(headerTitle);
 	function <portlet:namespace />changeFileEntryType() {
 		Liferay.Util.postForm(form, {
 			data: {
-				<%= Constants.CMD %>: '<%= Constants.PREVIEW %>'
-			}
+				<%= Constants.CMD %>: '<%= Constants.PREVIEW %>',
+			},
 		});
 	}
 
 	function <portlet:namespace />cancelCheckOut() {
 		Liferay.Util.postForm(form, {
 			data: {
-				<%= Constants.CMD %>: '<%= Constants.CANCEL_CHECKOUT %>'
-			}
+				<%= Constants.CMD %>: '<%= Constants.CANCEL_CHECKOUT %>',
+			},
 		});
 	}
 
 	function <portlet:namespace />checkIn() {
 		Liferay.Util.setFormValues(form, {
-			<%= Constants.CMD %>: '<%= Constants.UPDATE_AND_CHECKIN %>'
+			<%= Constants.CMD %>: '<%= Constants.UPDATE_AND_CHECKIN %>',
 		});
 
 		if (<%= dlAdminDisplayContext.isVersioningStrategyOverridable() %>) {
@@ -600,8 +600,8 @@ renderResponse.setTitle(headerTitle);
 	function <portlet:namespace />checkOut() {
 		Liferay.Util.postForm(form, {
 			data: {
-				<%= Constants.CMD %>: '<%= Constants.CHECKOUT %>'
-			}
+				<%= Constants.CMD %>: '<%= Constants.CHECKOUT %>',
+			},
 		});
 	}
 
@@ -614,7 +614,7 @@ renderResponse.setTitle(headerTitle);
 
 		var data = {
 			<%= Constants.CMD %>:
-				'<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>'
+				'<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>',
 		};
 
 		if (draft) {
@@ -622,7 +622,7 @@ renderResponse.setTitle(headerTitle);
 		}
 
 		Liferay.Util.postForm(form, {
-			data: data
+			data: data,
 		});
 	}
 
@@ -635,8 +635,8 @@ renderResponse.setTitle(headerTitle);
 					data: {
 						changeLog: changeLog,
 						updateVersionDetails: true,
-						versionIncrease: versionIncrease
-					}
+						versionIncrease: versionIncrease,
+					},
 				});
 			});
 		});

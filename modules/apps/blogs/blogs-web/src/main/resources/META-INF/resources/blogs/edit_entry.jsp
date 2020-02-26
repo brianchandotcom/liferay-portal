@@ -465,7 +465,7 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 				ADD: '<%= Constants.ADD %>',
 				CMD: '<%= Constants.CMD %>',
 				STATUS_DRAFT: '<%= WorkflowConstants.STATUS_DRAFT %>',
-				UPDATE: '<%= Constants.UPDATE %>'
+				UPDATE: '<%= Constants.UPDATE %>',
 			},
 			descriptionLength: '<%= PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH %>',
 			editEntryURL: '<%= editEntryURL %>',
@@ -479,11 +479,11 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 					status: '<%= entry.getStatus() %>',
 					subtitle: '<%= UnicodeFormatter.toString(subtitle) %>',
 					title: '<%= UnicodeFormatter.toString(title) %>',
-					userId: '<%= entry.getUserId() %>'
+					userId: '<%= entry.getUserId() %>',
 				},
 			</c:if>
 
-			namespace: '<portlet:namespace />'
+			namespace: '<portlet:namespace />',
 		})
 	);
 

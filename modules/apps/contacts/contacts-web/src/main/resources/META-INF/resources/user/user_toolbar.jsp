@@ -175,7 +175,7 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 
 						if (!contactProfile.io) {
 							contactProfile.plug(A.Plugin.IO, {
-								autoLoad: false
+								autoLoad: false,
 							});
 						}
 

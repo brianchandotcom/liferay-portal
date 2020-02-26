@@ -44,7 +44,7 @@ class AssetEntryListDropdownDefaultEventHandler extends DefaultEventHandler {
 			mainFieldPlaceholder: Liferay.Language.get('title'),
 			mainFieldValue: itemData.assetListEntryTitle,
 			namespace: this.namespace,
-			spritemap: this.spritemap
+			spritemap: this.spritemap,
 		});
 	}
 
@@ -52,13 +52,13 @@ class AssetEntryListDropdownDefaultEventHandler extends DefaultEventHandler {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				modal: true
+				modal: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
 			title: Liferay.Language.get(label),
-			uri: url
+			uri: url,
 		});
 	}
 
@@ -68,7 +68,7 @@ class AssetEntryListDropdownDefaultEventHandler extends DefaultEventHandler {
 }
 
 AssetEntryListDropdownDefaultEventHandler.STATE = {
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export default AssetEntryListDropdownDefaultEventHandler;

@@ -102,7 +102,7 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 
 		if (tabs1Value) {
 			updateRedirectField({
-				id: tabs1Value
+				id: tabs1Value,
 			});
 		}
 

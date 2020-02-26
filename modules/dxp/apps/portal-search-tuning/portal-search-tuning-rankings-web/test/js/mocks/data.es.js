@@ -57,13 +57,13 @@ export function getMockResultsData(
 			pinned: hidden ? false : k < PINNED_AMOUNT,
 			title: `${k + LEVEL} This is a ${typeOfItem} Example`,
 			type: typeOfItem,
-			...properties
+			...properties,
 		});
 	}
 
 	return {
 		documents: mockData,
-		total: 100
+		total: 100,
 	};
 }
 
@@ -85,6 +85,6 @@ export function mockDocument(id = 1, properties) {
 		pinned: false,
 		title: 'Test Title',
 		type: 'Document',
-		...properties
+		...properties,
 	};
 }

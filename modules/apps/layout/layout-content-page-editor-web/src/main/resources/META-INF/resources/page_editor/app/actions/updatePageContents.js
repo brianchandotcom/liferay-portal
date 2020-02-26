@@ -17,6 +17,6 @@ import {UPDATE_PAGE_CONTENTS} from './types';
 export default function updateLayoutData({pageContents}) {
 	return {
 		pageContents,
-		type: UPDATE_PAGE_CONTENTS
+		type: UPDATE_PAGE_CONTENTS,
 	};
 }

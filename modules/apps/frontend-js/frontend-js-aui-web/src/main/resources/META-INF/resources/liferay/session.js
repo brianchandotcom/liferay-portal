@@ -24,13 +24,13 @@ AUI.add(
 		var DOC = CONFIG.doc;
 
 		var MAP_SESSION_STATE_EVENTS = {
-			active: 'activated'
+			active: 'activated',
 		};
 
 		var SRC = {};
 
 		var SRC_EVENT_OBJ = {
-			src: SRC
+			src: SRC,
 		};
 
 		var URL_BASE = themeDisplay.getPathMain() + '/portal/';
@@ -38,35 +38,35 @@ AUI.add(
 		var SessionBase = A.Component.create({
 			ATTRS: {
 				autoExtend: {
-					value: false
+					value: false,
 				},
 				redirectOnExpire: {
-					value: true
+					value: true,
 				},
 				redirectUrl: {
-					value: ''
+					value: '',
 				},
 				sessionLength: {
 					getter: '_getLengthInMillis',
-					value: 0
+					value: 0,
 				},
 				sessionState: {
-					value: 'active'
+					value: 'active',
 				},
 				timestamp: {
 					getter: '_getTimestamp',
 					setter: '_setTimestamp',
-					value: 0
+					value: 0,
 				},
 				warningLength: {
 					getter: '_getLengthInMillis',
 					setter: '_setWarningLength',
-					value: 0
+					value: 0,
 				},
 				warningTime: {
 					getter: '_getWarningTime',
-					value: 0
-				}
+					value: 0,
+				},
 			},
 			EXTENDS: A.Base,
 			NAME: 'liferaysession',
@@ -160,11 +160,11 @@ AUI.add(
 					var instance = this;
 
 					instance.publish('activated', {
-						defaultFn: A.bind('_defActivatedFn', instance)
+						defaultFn: A.bind('_defActivatedFn', instance),
 					});
 
 					instance.publish('expired', {
-						defaultFn: A.bind('_defExpiredFn', instance)
+						defaultFn: A.bind('_defExpiredFn', instance),
 					});
 
 					instance.publish('warned');
@@ -189,7 +189,7 @@ AUI.add(
 						}),
 						Liferay.once('screenLoad', () => {
 							instance.destroy();
-						})
+						}),
 					];
 				},
 
@@ -359,7 +359,7 @@ AUI.add(
 
 					instance._cookieOptions = {
 						path: '/',
-						secure: A.UA.secure
+						secure: A.UA.secure,
 					};
 
 					instance._registered = {};
@@ -411,8 +411,8 @@ AUI.add(
 					var instance = this;
 
 					instance.set('sessionState', 'warned', SRC_EVENT_OBJ);
-				}
-			}
+				},
+			},
 		});
 
 		SessionBase.SRC = SRC;
@@ -420,8 +420,8 @@ AUI.add(
 		var SessionDisplay = A.Component.create({
 			ATTRS: {
 				pageTitle: {
-					value: DOC.title
-				}
+					value: DOC.title,
+				},
 			},
 			EXTENDS: A.Plugin.Base,
 			NAME: 'liferaysessiondisplay',
@@ -567,7 +567,7 @@ AUI.add(
 							closeable: true,
 							delay: {
 								hide: 0,
-								show: 0
+								show: 0,
 							},
 							duration: 500,
 							message: instance._warningText,
@@ -587,10 +587,10 @@ AUI.add(
 										instance._destroyBanner();
 										instance._alertClosed = true;
 									}
-								}
+								},
 							},
 							title: Liferay.Language.get('warning'),
-							type: 'warning'
+							type: 'warning',
 						}).render('body');
 
 						instance._banner = banner;
@@ -629,7 +629,7 @@ AUI.add(
 					banner.setAttrs({
 						message: instance._expiredText,
 						title: Liferay.Language.get('danger'),
-						type: 'danger'
+						type: 'danger',
 					});
 
 					DOC.title = instance.get('pageTitle');
@@ -651,7 +651,7 @@ AUI.add(
 
 					DOC.title =
 						Lang.sub(Liferay.Language.get('session-expires-in-x'), [
-							remainingTime
+							remainingTime,
 						]) +
 						' | ' +
 						instance.get('pageTitle');
@@ -675,7 +675,7 @@ AUI.add(
 
 						instance._toggleText = {
 							hide: Liferay.Language.get('hide'),
-							show: Liferay.Language.get('show')
+							show: Liferay.Language.get('show'),
 						};
 
 						instance._expiredText = Liferay.Language.get(
@@ -692,7 +692,7 @@ AUI.add(
 								host.get('sessionLength') / 60000,
 								'<a class="alert-link" href="#">' +
 									Liferay.Language.get('extend') +
-									'</a>'
+									'</a>',
 							]
 						);
 
@@ -714,8 +714,8 @@ AUI.add(
 					else {
 						host.unplug(instance);
 					}
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.SessionBase = SessionBase;
@@ -723,6 +723,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-timer', 'cookie', 'liferay-notification']
+		requires: ['aui-timer', 'cookie', 'liferay-notification'],
 	}
 );

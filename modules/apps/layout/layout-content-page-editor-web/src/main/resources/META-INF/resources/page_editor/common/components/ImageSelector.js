@@ -23,7 +23,7 @@ export function ImageSelector({
 	imageTitle = Liferay.Language.get('none'),
 	label,
 	onClearButtonPressed,
-	onImageSelected
+	onImageSelected,
 }) {
 	return (
 		<>
@@ -70,5 +70,5 @@ ImageSelector.propTypes = {
 	imageTitle: PropTypes.string,
 	label: PropTypes.string,
 	onClearButtonPressed: PropTypes.func.isRequired,
-	onImageSelected: PropTypes.func.isRequired
+	onImageSelected: PropTypes.func.isRequired,
 };

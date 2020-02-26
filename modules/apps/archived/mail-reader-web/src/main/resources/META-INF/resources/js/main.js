@@ -60,12 +60,13 @@ AUI.add(
 						cssClass: 'mail-dialog',
 						destroyOnClose: true,
 						modal: true,
-						width: 600
+						width: 600,
 					},
-					title: Liferay.Language.get('add-account')
+					title: Liferay.Language.get('add-account'),
 				})
 					.plug(A.Plugin.IO, {
-						uri: themeDisplay.getLayoutURL() + '/-/mail/add_account'
+						uri:
+							themeDisplay.getLayoutURL() + '/-/mail/add_account',
 					})
 					.render();
 			},
@@ -82,7 +83,7 @@ AUI.add(
 					{
 						data: Liferay.Util.ns(instance.namespace, {
 							accountId: instance.accountId,
-							folderId: folderId
+							folderId: folderId,
 						}),
 						dataType: 'JSON',
 						method: 'POST',
@@ -109,8 +110,8 @@ AUI.add(
 										true
 									);
 								}
-							}
-						}
+							},
+						},
 					}
 				);
 			},
@@ -127,7 +128,7 @@ AUI.add(
 					themeDisplay.getLayoutURL() + '/-/mail/delete_messages',
 					{
 						data: Liferay.Util.ns(instance.namespace, {
-							messageIds: messageIds
+							messageIds: messageIds,
 						}),
 						dataType: 'JSON',
 						method: 'POST',
@@ -157,8 +158,8 @@ AUI.add(
 										instance.keywords
 									);
 								}
-							}
-						}
+							},
+						},
 					}
 				);
 			},
@@ -172,16 +173,17 @@ AUI.add(
 						cssClass: 'mail-dialog',
 						destroyOnClose: true,
 						modal: true,
-						width: 600
+						width: 600,
 					},
-					title: Liferay.Language.get('edit-account')
+					title: Liferay.Language.get('edit-account'),
 				})
 					.plug(A.Plugin.IO, {
 						data: Liferay.Util.ns(instance.namespace, {
-							accountId: accountId
+							accountId: accountId,
 						}),
 						uri:
-							themeDisplay.getLayoutURL() + '/-/mail/edit_account'
+							themeDisplay.getLayoutURL() +
+							'/-/mail/edit_account',
 					})
 					.render();
 			},
@@ -200,7 +202,7 @@ AUI.add(
 						data: Liferay.Util.ns(instance.namespace, {
 							flag: flag,
 							messageIds: messageIds,
-							value: value
+							value: value,
 						}),
 						dataType: 'JSON',
 						method: 'POST',
@@ -228,8 +230,8 @@ AUI.add(
 									instance.orderByType,
 									instance.keywords
 								);
-							}
-						}
+							},
+						},
 					}
 				);
 			},
@@ -244,7 +246,7 @@ AUI.add(
 					{
 						data: Liferay.Util.ns(instance.namespace, {
 							accountId: accountId,
-							inboxFolderId: inboxFolderId
+							inboxFolderId: inboxFolderId,
 						}),
 						method: 'POST',
 						on: {
@@ -278,8 +280,8 @@ AUI.add(
 										inboxFolderId
 									);
 								}
-							}
-						}
+							},
+						},
 					}
 				);
 
@@ -292,7 +294,7 @@ AUI.add(
 				instance.accountsContainer.io.set(
 					'data',
 					Liferay.Util.ns(instance.namespace, {
-						accountId: accountId
+						accountId: accountId,
 					})
 				);
 
@@ -315,7 +317,7 @@ AUI.add(
 						accountId: accountId,
 						messageId: messageId,
 						messageType: messageType,
-						replyMessageId: replyMessageId
+						replyMessageId: replyMessageId,
 					})
 				);
 
@@ -331,7 +333,7 @@ AUI.add(
 					instance.foldersContainer.io.set(
 						'data',
 						Liferay.Util.ns(instance.namespace, {
-							accountId: accountId
+							accountId: accountId,
 						})
 					);
 
@@ -349,7 +351,7 @@ AUI.add(
 				instance.manageFoldersContainer.io.set(
 					'data',
 					Liferay.Util.ns(instance.namespace, {
-						accountId: accountId
+						accountId: accountId,
 					})
 				);
 
@@ -379,7 +381,7 @@ AUI.add(
 						keywords: keywords,
 						messageNumber: messageNumber,
 						orderByField: orderByField,
-						orderByType: orderByType
+						orderByType: orderByType,
 					})
 				);
 
@@ -420,7 +422,7 @@ AUI.add(
 						keywords: keywords,
 						orderByField: orderByField,
 						orderByType: orderByType,
-						pageNumber: pageNumber
+						pageNumber: pageNumber,
 					})
 				);
 
@@ -442,7 +444,7 @@ AUI.add(
 					{
 						data: Liferay.Util.ns(instance.namespace, {
 							folderId: folderId,
-							messageIds: messageIds
+							messageIds: messageIds,
 						}),
 						dataType: 'JSON',
 						method: 'POST',
@@ -471,8 +473,8 @@ AUI.add(
 									instance.orderByType,
 									instance.keywords
 								);
-							}
-						}
+							},
+						},
 					}
 				);
 			},
@@ -486,18 +488,18 @@ AUI.add(
 						cssClass: 'mail-dialog',
 						destroyOnClose: true,
 						modal: true,
-						width: 600
+						width: 600,
 					},
-					title: Liferay.Language.get('password')
+					title: Liferay.Language.get('password'),
 				})
 					.plug(A.Plugin.IO, {
 						data: Liferay.Util.ns(instance.namespace, {
 							accountId: accountId,
-							inboxFolderId: inboxFolderId
+							inboxFolderId: inboxFolderId,
 						}),
 						uri:
 							themeDisplay.getLayoutURL() +
-							'/-/mail/password_prompt'
+							'/-/mail/password_prompt',
 					})
 					.render();
 			},
@@ -553,11 +555,11 @@ AUI.add(
 				instance.accountsContainer.plug(A.Plugin.IO, {
 					autoLoad: true,
 					data: Liferay.Util.ns(instance.namespace, {
-						accountId: instance.accountId
+						accountId: instance.accountId,
 					}),
 					method: 'POST',
 					showLoading: false,
-					uri: themeDisplay.getLayoutURL() + '/-/mail/view_accounts'
+					uri: themeDisplay.getLayoutURL() + '/-/mail/view_accounts',
 				});
 
 				instance.composeContainer.plug(A.Plugin.IO, {
@@ -571,27 +573,27 @@ AUI.add(
 								delete window[instance.namespace + 'editor'];
 							}
 							catch (e) {}
-						}
+						},
 					},
-					uri: themeDisplay.getLayoutURL() + '/-/mail/compose'
+					uri: themeDisplay.getLayoutURL() + '/-/mail/compose',
 				});
 
 				instance.foldersContainer.plug(A.Plugin.IO, {
 					autoLoad: false,
 					method: 'POST',
 					showLoading: false,
-					uri: themeDisplay.getLayoutURL() + '/-/mail/view_folders'
+					uri: themeDisplay.getLayoutURL() + '/-/mail/view_folders',
 				});
 
 				instance.messageContainer.plug(A.Plugin.IO, {
 					after: {
 						success: function() {
 							instance.loadFolders(instance.accountId);
-						}
+						},
 					},
 					autoLoad: false,
 					method: 'POST',
-					uri: themeDisplay.getLayoutURL() + '/-/mail/view_message'
+					uri: themeDisplay.getLayoutURL() + '/-/mail/view_message',
 				});
 
 				instance.messagesContainer.plug(A.Plugin.IO, {
@@ -629,11 +631,11 @@ AUI.add(
 
 									instance.moveMessages(folderId, messageIds);
 								});
-						}
+						},
 					},
 					autoLoad: false,
 					method: 'POST',
-					uri: themeDisplay.getLayoutURL() + '/-/mail/view_messages'
+					uri: themeDisplay.getLayoutURL() + '/-/mail/view_messages',
 				});
 
 				instance.accountsContainer.delegate(
@@ -773,7 +775,7 @@ AUI.add(
 				instance.manageFoldersContainer.plug(A.Plugin.IO, {
 					autoLoad: false,
 					method: 'POST',
-					uri: themeDisplay.getLayoutURL() + '/-/mail/manage_folders'
+					uri: themeDisplay.getLayoutURL() + '/-/mail/manage_folders',
 				});
 
 				instance.messageContainer.delegate(
@@ -933,7 +935,7 @@ AUI.add(
 			orderByField: 'sentDate',
 			orderByType: 'desc',
 			pageNumber: 1,
-			_pollInterval: 60000
+			_pollInterval: 60000,
 		};
 	},
 	'',
@@ -942,7 +944,7 @@ AUI.add(
 			'aui-base',
 			'aui-datatype',
 			'aui-io-deprecated',
-			'liferay-util-window'
-		]
+			'liferay-util-window',
+		],
 	}
 );

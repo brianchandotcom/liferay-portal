@@ -17,7 +17,7 @@ import {FilterContextProvider} from '../filter/FilterContext.es';
 export const withParams = (...components) => ({
 	history,
 	location: {search},
-	match: {params}
+	match: {params},
 }) => {
 	return (
 		<FilterContextProvider>

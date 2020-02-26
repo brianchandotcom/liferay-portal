@@ -54,16 +54,16 @@
 						deleteStructureIds: Liferay.Util.listCheckedExcept(
 							searchContainer,
 							'<portlet:namespace />allRowIds'
-						)
+						),
 					},
-					url: '<%= deleteStructuresURL %>'
+					url: '<%= deleteStructuresURL %>',
 				});
 			}
 		}
 	};
 
 	var ACTIONS = {
-		deleteStructures: deleteStructures
+		deleteStructures: deleteStructures,
 	};
 
 	Liferay.componentReady('ddmStructureManagementToolbar').then(function(

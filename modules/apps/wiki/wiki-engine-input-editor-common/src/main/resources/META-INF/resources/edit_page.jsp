@@ -60,9 +60,9 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 				var helpPageDialog = Liferay.Util.Window.getWindow({
 					dialog: {
 						bodyContent: '<%= HtmlUtil.escapeJS(helpPageHTML) %>',
-						destroyOnHide: true
+						destroyOnHide: true,
 					},
-					title: '<%= HtmlUtil.escapeJS(helpPageTitle) %>'
+					title: '<%= HtmlUtil.escapeJS(helpPageTitle) %>',
 				});
 
 				helpPageDialog.render();

@@ -24,7 +24,7 @@ class BooleanInput extends React.Component {
 		className: propTypes.string,
 		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
-		value: propTypes.string
+		value: propTypes.string,
 	};
 
 	_handleChange = event => {

@@ -43,7 +43,7 @@ AUI.add(
 		HistoryManager.VALUE_SEPARATOR = Liferay.History.VALUE_SEPARATOR;
 
 		HistoryManager.publish(EVENT_STATE_CHANGE, {
-			broadcast: 2
+			broadcast: 2,
 		});
 
 		HistoryManager.after('change', event => {
@@ -60,6 +60,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-history']
+		requires: ['liferay-history'],
 	}
 );

@@ -47,7 +47,7 @@ describe('ItemDropdown', () => {
 	`('shows option to $description', ({expected, hidden, pinned}) => {
 		const {getByText} = renderTestItemDropdown({
 			hidden,
-			pinned
+			pinned,
 		});
 
 		expect(getByText(expected)).not.toBeNull();
@@ -66,7 +66,7 @@ describe('ItemDropdown', () => {
 			const {getByText} = renderTestItemDropdown({
 				hidden,
 				itemCount,
-				pinned
+				pinned,
 			});
 
 			expect(getByText(`${expected}s`)).not.toBeNull();
@@ -84,7 +84,7 @@ describe('ItemDropdown', () => {
 	it('shows the dropdown buttons when clicked on', () => {
 		const {getByText, getByTitle} = renderTestItemDropdown({
 			hidden: false,
-			pinned: false
+			pinned: false,
 		});
 
 		fireEvent.click(getByTitle('actions'));
@@ -102,7 +102,7 @@ describe('ItemDropdown', () => {
 		({fcn, title}) => {
 			const {getByText} = renderTestItemDropdown({
 				hidden: false,
-				pinned: false
+				pinned: false,
 			});
 
 			fireEvent.click(getByText(title));

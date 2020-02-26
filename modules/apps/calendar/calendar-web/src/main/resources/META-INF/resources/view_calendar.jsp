@@ -36,7 +36,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 				userCalendarResourceId: <%= userCalendarResource.getCalendarResourceId() %>,
 			</c:if>
 
-			namespace: '<portlet:namespace />'
+			namespace: '<portlet:namespace />',
 		});
 
 		var destroyInstance = function(event) {
@@ -62,7 +62,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 				'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RESOURCE_PHASE) %>',
 			invokerURL: themeDisplay.getPathContext() + '/api/jsonws/invoke',
 			namespace: '<portlet:namespace />',
-			userId: themeDisplay.getUserId()
+			userId: themeDisplay.getUserId(),
 		});
 
 		var destroyInstance = function(event) {
@@ -249,7 +249,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 					syncCalendarsMap();
 
 					<portlet:namespace />refreshVisibleCalendarRenderingRules();
-				}
+				},
 			},
 			boundingBox: '#<portlet:namespace />myCalendarList',
 
@@ -261,7 +261,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			scheduler: <portlet:namespace />scheduler,
 			showCalendarResourceName: false,
 			simpleMenu: window.<portlet:namespace />calendarsMenu,
-			visible: <%= !displaySchedulerOnly && themeDisplay.isSignedIn() %>
+			visible: <%= !displaySchedulerOnly && themeDisplay.isSignedIn() %>,
 		}).render();
 
 		<c:if test="<%= userCalendarResource != null %>">
@@ -290,7 +290,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 					syncCalendarsMap();
 
 					<portlet:namespace />refreshVisibleCalendarRenderingRules();
-				}
+				},
 			},
 			boundingBox: '#<portlet:namespace />otherCalendarList',
 
@@ -301,7 +301,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			calendars: <%= otherCalendarsJSONArray %>,
 			scheduler: <portlet:namespace />scheduler,
 			simpleMenu: window.<portlet:namespace />calendarsMenu,
-			visible: <%= !displaySchedulerOnly %>
+			visible: <%= !displaySchedulerOnly %>,
 		}).render();
 	</c:if>
 
@@ -313,7 +313,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 					syncCalendarsMap();
 
 					<portlet:namespace />refreshVisibleCalendarRenderingRules();
-				}
+				},
 			},
 			boundingBox: '#<portlet:namespace />siteCalendarList',
 
@@ -325,7 +325,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			scheduler: <portlet:namespace />scheduler,
 			showCalendarResourceName: false,
 			simpleMenu: window.<portlet:namespace />calendarsMenu,
-			visible: <%= !displaySchedulerOnly %>
+			visible: <%= !displaySchedulerOnly %>,
 		}).render();
 
 		window.<portlet:namespace />calendarLists[
@@ -348,7 +348,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 						'Visible',
 					event.newVal
 				);
-			}
+			},
 		});
 	});
 </aui:script>
@@ -381,7 +381,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 	new Liferay.CalendarSessionListener({
 		calendars: calendarContainer.get('availableCalendars'),
-		scheduler: <portlet:namespace />scheduler
+		scheduler: <portlet:namespace />scheduler,
 	});
 </aui:script>
 

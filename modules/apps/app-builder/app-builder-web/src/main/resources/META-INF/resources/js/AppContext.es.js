@@ -28,7 +28,7 @@ const AppContextProvider = ({
 		<AppContext.Provider
 			value={{
 				getStandaloneURL,
-				...restProps
+				...restProps,
 			}}
 		>
 			{children}

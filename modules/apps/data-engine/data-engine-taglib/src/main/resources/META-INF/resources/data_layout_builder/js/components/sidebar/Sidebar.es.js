@@ -28,7 +28,7 @@ const Sidebar = React.forwardRef(
 			closeable = true,
 			closed = false,
 			onSearch = null,
-			onToggle = () => {}
+			onToggle = () => {},
 		},
 		ref
 	) => {
@@ -51,7 +51,7 @@ const Sidebar = React.forwardRef(
 						'data-layout-builder-sidebar',
 						'main',
 						{
-							closed: isClosed
+							closed: isClosed,
 						}
 					)}
 				>
@@ -76,7 +76,7 @@ const Sidebar = React.forwardRef(
 							'data-layout-builder-sidebar',
 							'mini',
 							{
-								closed: !isClosed
+								closed: !isClosed,
 							}
 						)}
 					>
@@ -188,5 +188,5 @@ export {
 	SidebarHeader,
 	SidebarSearchInput,
 	SidebarTab,
-	SidebarTabContent
+	SidebarTabContent,
 };

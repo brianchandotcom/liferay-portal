@@ -33,7 +33,7 @@ const STATUS_TO_TYPE = {
 	[STATUS_PAUSED]: 'warning',
 	[STATUS_RUNNING]: 'primary',
 	[STATUS_SCHEDULED]: 'warning',
-	[STATUS_TERMINATED]: 'danger'
+	[STATUS_TERMINATED]: 'danger',
 };
 
 export default function ExperimentsLabel({label, value}) {
@@ -52,5 +52,5 @@ export default function ExperimentsLabel({label, value}) {
 
 ExperimentsLabel.propTypes = {
 	label: PropTypes.string.isRequired,
-	value: PropTypes.string.isRequired
+	value: PropTypes.string.isRequired,
 };

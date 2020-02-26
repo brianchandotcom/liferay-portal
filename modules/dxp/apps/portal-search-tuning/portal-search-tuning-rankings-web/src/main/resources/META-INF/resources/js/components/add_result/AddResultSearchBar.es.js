@@ -22,7 +22,7 @@ const AddResultSearchBar = ({
 	onSearchKeyDown,
 	onSearchQueryChange,
 	onSearchSubmit,
-	searchQuery
+	searchQuery,
 }) => (
 	<div className="add-result-container container-fluid">
 		<div className="management-bar navbar-expand-md">
@@ -63,11 +63,11 @@ AddResultSearchBar.propTypes = {
 	onSearchKeyDown: PropTypes.func.isRequired,
 	onSearchQueryChange: PropTypes.func.isRequired,
 	onSearchSubmit: PropTypes.func.isRequired,
-	searchQuery: PropTypes.string
+	searchQuery: PropTypes.string,
 };
 
 AddResultSearchBar.defaultProps = {
-	searchQuery: ''
+	searchQuery: '',
 };
 
 export default AddResultSearchBar;

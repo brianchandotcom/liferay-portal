@@ -37,16 +37,16 @@ function LayoutFinder(props) {
 		newKeywords => {
 			fetch(props.findLayoutsURL, {
 				body: objectToFormData({
-					[`${props.namespace}keywords`]: newKeywords
+					[`${props.namespace}keywords`]: newKeywords,
 				}),
-				method: 'post'
+				method: 'post',
 			})
 				.then(response => {
 					return response.ok
 						? response.json()
 						: {
 								layouts: [],
-								totalCount: 0
+								totalCount: 0,
 						  };
 				})
 				.then(response => {
@@ -204,7 +204,7 @@ LayoutFinder.propTypes = {
 	administrationPortletURL: PropTypes.string,
 	findLayoutsURL: PropTypes.string,
 	namespace: PropTypes.string,
-	viewInPageAdministrationURL: PropTypes.string
+	viewInPageAdministrationURL: PropTypes.string,
 };
 
 export default function(props) {

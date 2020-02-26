@@ -58,7 +58,8 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 					'<%= assetPublisherDisplayContext.getSelectAssetListEventName() %>',
 				singleSelect: true,
 				title: '<liferay-ui:message key="select-content-set" />',
-				url: '<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>'
+				url:
+					'<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>',
 			});
 
 			itemSelectorDialog.on('selectedItemChange', function(event) {

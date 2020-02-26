@@ -41,7 +41,7 @@ class InfoPanel extends PortletBase {
 
 	_handleClipboardSuccess() {
 		openToast({
-			message: Liferay.Language.get('copied-link-to-the-clipboard')
+			message: Liferay.Language.get('copied-link-to-the-clipboard'),
 		});
 	}
 }

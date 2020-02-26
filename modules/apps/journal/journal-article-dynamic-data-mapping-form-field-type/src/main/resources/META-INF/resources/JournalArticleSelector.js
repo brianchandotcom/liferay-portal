@@ -32,7 +32,7 @@ class JournalArticleSelector extends Component {
 		this.emit(name, {
 			fieldInstance: this,
 			originalEvent: event,
-			value
+			value,
 		});
 	}
 
@@ -178,7 +178,7 @@ JournalArticleSelector.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.string()
+	value: Config.string(),
 };
 
 Soy.register(JournalArticleSelector, templates);

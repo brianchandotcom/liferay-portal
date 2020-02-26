@@ -63,7 +63,7 @@ const HeaderWithOptions = props => {
 		description,
 		elementClasses,
 		title,
-		tooltipPosition = 'right'
+		tooltipPosition = 'right',
 	} = props;
 
 	return (

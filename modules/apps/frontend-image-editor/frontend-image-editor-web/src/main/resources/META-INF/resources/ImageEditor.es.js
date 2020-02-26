@@ -72,15 +72,15 @@ class ImageEditor extends PortletBase {
 		 */
 		this.history_ = [
 			new ImageEditorHistoryEntry({
-				url: this.image
-			})
+				url: this.image,
+			}),
 		];
 
 		// Polyfill svg usage for lexicon icons
 
 		svg4everybody({
 			attributeName: 'data-href',
-			polyfill: true
+			polyfill: true,
 		});
 
 		// Load the first entry imageData and render it on the app.
@@ -134,7 +134,7 @@ class ImageEditor extends PortletBase {
 		this.historyIndex_++;
 		this.history_.length = this.historyIndex_ + 1;
 		this.history_[this.historyIndex_] = new ImageEditorHistoryEntry({
-			data: imageData
+			data: imageData,
 		});
 
 		return Promise.resolve();
@@ -241,7 +241,7 @@ class ImageEditor extends PortletBase {
 
 		if (result && result.success) {
 			Liferay.Util.getOpener().Liferay.fire(this.saveEventName, {
-				data: result
+				data: result,
 			});
 
 			Liferay.Util.getWindow().hide();
@@ -373,12 +373,12 @@ class ImageEditor extends PortletBase {
 			new Liferay.Alert({
 				delay: {
 					hide: 2000,
-					show: 0
+					show: 0,
 				},
 				duration: 3000,
 				icon: 'exclamation-circle',
 				message: message.message,
-				type: 'danger'
+				type: 'danger',
 			}).render(this.element);
 		});
 	}
@@ -424,7 +424,7 @@ class ImageEditor extends PortletBase {
 				this.history = {
 					canRedo: this.historyIndex_ < this.history_.length - 1,
 					canReset: this.history_.length > 1,
-					canUndo: this.historyIndex_ > 0
+					canUndo: this.historyIndex_ > 0,
 				};
 
 				resolve();
@@ -520,7 +520,7 @@ ImageEditor.STATE = {
 	 */
 	imageEditorReady: {
 		validator: core.isBoolean,
-		value: false
+		value: false,
 	},
 
 	/**
@@ -528,7 +528,7 @@ ImageEditor.STATE = {
 	 * @type {String}
 	 */
 	saveEventName: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -536,7 +536,7 @@ ImageEditor.STATE = {
 	 * @type {String}
 	 */
 	saveFileDescription: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -544,7 +544,7 @@ ImageEditor.STATE = {
 	 * @type {String}
 	 */
 	saveFileName: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -554,7 +554,7 @@ ImageEditor.STATE = {
 	 */
 	saveMimeType: {
 		setter: 'setterSaveMimeTypeFn_',
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -563,7 +563,7 @@ ImageEditor.STATE = {
 	 * @type {String}
 	 */
 	saveParamName: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -571,8 +571,8 @@ ImageEditor.STATE = {
 	 * @type {String}
 	 */
 	saveURL: {
-		validator: core.isString
-	}
+		validator: core.isString,
+	},
 };
 
 Soy.register(ImageEditor, templates);

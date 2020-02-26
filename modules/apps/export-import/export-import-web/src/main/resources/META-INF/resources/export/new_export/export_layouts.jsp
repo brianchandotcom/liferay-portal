@@ -204,7 +204,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 		setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>',
 		timeZoneOffset: <%= timeZoneOffset %>,
 		userPreferencesNode:
-			'#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
+			'#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>',
 	});
 
 	Liferay.component('<portlet:namespace />ExportImportComponent', exportImport);
@@ -258,8 +258,8 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 			errorMessage:
 				'<%= LanguageUtil.get(request, "the-following-are-invalid-characters") + HtmlUtil.escapeJS(Arrays.toString(PropsValues.DL_CHAR_BLACKLIST)) %>',
 			fieldName: '<portlet:namespace />name',
-			validatorName: 'custom_pageTemplateNameValidator'
-		}
+			validatorName: 'custom_pageTemplateNameValidator',
+		},
 	];
 
 	if (oldFieldRules) {
@@ -283,7 +283,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', [
 		'<portlet:namespace />startEndDate',
-		'<portlet:namespace />rangeLastInputs'
+		'<portlet:namespace />rangeLastInputs',
 	]);
 	Liferay.Util.toggleRadio(
 		'<portlet:namespace />rangeDateRange',

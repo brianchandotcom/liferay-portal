@@ -19,16 +19,16 @@ import {MockRouter} from '../../mock/MockRouter.es';
 const items = [
 	{
 		instancesCount: 0,
-		title: 'Single Approver 1'
+		title: 'Single Approver 1',
 	},
 	{
 		instancesCount: 0,
-		title: 'Single Approver 2'
+		title: 'Single Approver 2',
 	},
 	{
 		instancesCount: 0,
-		title: 'Single Approver 3'
-	}
+		title: 'Single Approver 3',
+	},
 ];
 
 const wrapper = ({children}) => (

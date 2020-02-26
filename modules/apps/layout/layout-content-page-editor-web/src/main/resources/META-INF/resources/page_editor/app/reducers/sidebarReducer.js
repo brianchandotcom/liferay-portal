@@ -18,7 +18,7 @@ const DEFAULT_PANEL_ID = 'fragments';
 
 export const INITIAL_STATE = {
 	open: false,
-	panelId: DEFAULT_PANEL_ID
+	panelId: DEFAULT_PANEL_ID,
 };
 
 export default function sidebarReducer(sidebarStatus = INITIAL_STATE, action) {
@@ -28,7 +28,7 @@ export default function sidebarReducer(sidebarStatus = INITIAL_STATE, action) {
 			panelId:
 				action.sidebarPanelId === undefined
 					? sidebarStatus.panelId
-					: action.sidebarPanelId
+					: action.sidebarPanelId,
 		};
 	}
 

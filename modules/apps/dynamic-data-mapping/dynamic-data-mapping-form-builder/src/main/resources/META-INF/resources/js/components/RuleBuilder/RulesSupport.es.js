@@ -82,5 +82,5 @@ export default {
 	clearOperatorValue,
 	clearSecondOperandValue,
 	clearTargetValue,
-	syncActions
+	syncActions,
 };

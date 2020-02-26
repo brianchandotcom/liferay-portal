@@ -201,7 +201,7 @@ DynamicInlineScroll.STATE = {
 	 */
 	cur: {
 		setter: 'getNumber_',
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -212,7 +212,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	curParam: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -223,7 +223,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {boolean}
 	 */
 	forcePost: {
-		validator: core.isBoolean
+		validator: core.isBoolean,
 	},
 
 	/**
@@ -234,7 +234,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	formName: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -247,7 +247,7 @@ DynamicInlineScroll.STATE = {
 	 */
 	initialPages: {
 		setter: 'getNumber_',
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -258,7 +258,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	jsCall: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -269,7 +269,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	namespace: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -281,7 +281,7 @@ DynamicInlineScroll.STATE = {
 	 */
 	pages: {
 		setter: 'getNumber_',
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -292,7 +292,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	randomNamespace: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -303,7 +303,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	url: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -314,8 +314,8 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	urlAnchor: {
-		validator: core.isString
-	}
+		validator: core.isString,
+	},
 };
 
 export default DynamicInlineScroll;

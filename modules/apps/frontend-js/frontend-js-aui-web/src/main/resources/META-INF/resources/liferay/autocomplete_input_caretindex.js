@@ -36,7 +36,7 @@ AUI.add(
 
 				return {
 					end: input.selectionStart,
-					start: input.selectionStart
+					start: input.selectionStart,
 				};
 			},
 
@@ -50,13 +50,13 @@ AUI.add(
 				Liferay.Util.focusFormField(input);
 
 				input.setSelectionRange(caretIndex, caretIndex);
-			}
+			},
 		};
 
 		A.Base.mix(Liferay.AutoCompleteTextarea, [AutcompleteInputCaretIndex]);
 	},
 	'',
 	{
-		requires: ['liferay-autocomplete-textarea']
+		requires: ['liferay-autocomplete-textarea'],
 	}
 );

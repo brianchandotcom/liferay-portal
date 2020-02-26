@@ -231,5 +231,5 @@ tinymce.addI18n('ja', {
 	Tools: '\u30c4\u30fc\u30eb',
 	View: '\u8868\u793a',
 	Table: '\u8868',
-	Format: '\u66f8\u5f0f'
+	Format: '\u66f8\u5f0f',
 });

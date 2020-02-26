@@ -20,7 +20,7 @@ import {unmountComponentAtNode} from 'react-dom';
 const DEFAULT_ALERT_CONTAINER_ID = 'alertContainer';
 
 const DEFAULT_RENDER_DATA = {
-	portletId: 'UNKNOWN_PORTLET_ID'
+	portletId: 'UNKNOWN_PORTLET_ID',
 };
 
 const TOAST_AUTO_CLOSE_INTERVAL = 5000;
@@ -73,7 +73,7 @@ function openToast({
 	title = Liferay.Language.get('success'),
 	toastProps = {},
 	type = 'success',
-	variant
+	variant,
 }) {
 	const container =
 		document.getElementById(containerId) || getDefaultAlertContainer();

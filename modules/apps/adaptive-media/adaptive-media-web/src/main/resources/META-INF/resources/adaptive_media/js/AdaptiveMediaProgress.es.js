@@ -30,7 +30,7 @@ const AdaptiveMediaProgress = ({
 	percentageUrl,
 	tooltip,
 	totalImages,
-	uuid
+	uuid,
 }) => {
 	const delay = useTimeout();
 	const isMounted = useIsMounted();
@@ -104,7 +104,7 @@ const AdaptiveMediaProgress = ({
 		namespace,
 		percentageUrl,
 		tooltip,
-		uuid
+		uuid,
 	]);
 
 	useEffect(() => {
@@ -117,10 +117,10 @@ const AdaptiveMediaProgress = ({
 		Liferay.component(
 			adaptiveMediaProgressComponentId,
 			{
-				startProgress
+				startProgress,
 			},
 			{
-				destroyOnNavigate: true
+				destroyOnNavigate: true,
 			}
 		);
 	}
@@ -156,7 +156,7 @@ AdaptiveMediaProgress.propTypes = {
 	showLoadingIndicator: PropTypes.bool,
 	tooltip: PropTypes.string,
 	totalImages: PropTypes.number,
-	uuid: PropTypes.string
+	uuid: PropTypes.string,
 };
 
 export default function(props) {

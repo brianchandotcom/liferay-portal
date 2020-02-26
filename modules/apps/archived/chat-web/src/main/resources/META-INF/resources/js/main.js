@@ -68,7 +68,7 @@ AUI().use(
 
 				return A.DataType.Date.format(time, {
 					format: '%X',
-					locale: themeDisplay.getLanguageId()
+					locale: themeDisplay.getLanguageId(),
 				});
 			},
 
@@ -174,7 +174,7 @@ AUI().use(
 				return offset;
 			},
 
-			TIMESTAMP_24: 24 * 60 * 60 * 1000
+			TIMESTAMP_24: 24 * 60 * 60 * 1000,
 		};
 
 		var Panel = function(options) {
@@ -345,7 +345,7 @@ AUI().use(
 				}
 
 				return html;
-			}
+			},
 		};
 
 		A.augment(Panel, A.Attribute);
@@ -482,13 +482,13 @@ AUI().use(
 							duration: 0.65,
 							easing: 'easeBoth',
 							from: {
-								backgroundColor: ChatUtil.getDefaultColor()
+								backgroundColor: ChatUtil.getDefaultColor(),
 							},
 							iterations: 'infinite',
 							node: panel,
 							to: {
-								backgroundColor: ChatUtil.getWaitingColor()
-							}
+								backgroundColor: ChatUtil.getWaitingColor(),
+							},
 						});
 
 						instance._waitingAnim = waitingAnim;
@@ -539,7 +539,7 @@ AUI().use(
 									instance._panelIcon
 								),
 								Lang.sub(STR_NEW_MESSAGE, [
-									instance._panelTitle
+									instance._panelTitle,
 								]),
 								content.replace(/\n/g, ' ')
 							);
@@ -647,7 +647,7 @@ AUI().use(
 						) {
 							instance.send({
 								content: '',
-								toUserId: userId
+								toUserId: userId,
 							});
 
 							instance._lastTypedTime = currentTime;
@@ -683,12 +683,12 @@ AUI().use(
 
 				instance.send({
 					content: content,
-					toUserId: userId
+					toUserId: userId,
 				});
 
 				instance._updateMessageWindow({
 					content: escapedHTML,
-					createDate: createDate
+					createDate: createDate,
 				});
 			},
 
@@ -782,7 +782,7 @@ AUI().use(
 					outputEl.scrollTop =
 						outputEl.scrollHeight - outputEl.clientHeight;
 				}, 1);
-			}
+			},
 		});
 
 		Liferay.Chat.Manager = {
@@ -881,7 +881,7 @@ AUI().use(
 							userDetails
 						);
 					},
-					name: 'chat-user-dashboard-service'
+					name: 'chat-user-dashboard-service',
 				});
 			},
 
@@ -900,7 +900,7 @@ AUI().use(
 				) {
 					var notification = new Notification(title, {
 						body: body,
-						icon: iconUrl
+						icon: iconUrl,
 					});
 
 					if (!NOTIFICATIONS_LIST.length) {
@@ -955,7 +955,7 @@ AUI().use(
 					}
 
 					styleSheet.set('.chat-bar .buddy-services .' + name, {
-						backgroundImage: 'url("' + icon + '")'
+						backgroundImage: 'url("' + icon + '")',
 					});
 				}
 			},
@@ -1027,7 +1027,7 @@ AUI().use(
 
 				var buddyListPanel = new Liferay.Chat.Panel({
 					fromMarkup: '.chat-tabs > .buddy-list',
-					panelId: 'buddylist'
+					panelId: 'buddylist',
 				});
 
 				instance._addPanel('buddylist', buddyListPanel);
@@ -1042,7 +1042,7 @@ AUI().use(
 						return node.one('.name').text();
 					},
 					input: searchBuddiesField,
-					nodes: '#chatBar .buddy-list .online-users li'
+					nodes: '#chatBar .buddy-list .online-users li',
 				});
 
 				searchBuddiesField.on(
@@ -1107,8 +1107,8 @@ AUI().use(
 						descendants: 'li',
 						keys: {
 							next: 'down:' + KeyMap.DOWN,
-							previous: 'down:' + KeyMap.UP
-						}
+							previous: 'down:' + KeyMap.UP,
+						},
 					});
 				}
 
@@ -1152,7 +1152,7 @@ AUI().use(
 					panelIcon: options.portraitURL,
 					panelId: options.userId,
 					panelTitle: options.fullName,
-					statusMessage: options.statusMessage
+					statusMessage: options.statusMessage,
 				});
 
 				instance._addChat(userId, chat);
@@ -1174,7 +1174,7 @@ AUI().use(
 							cache: entry.flag,
 							content: entry.content,
 							createDate: entry.createDate,
-							incoming: incomingEntry
+							incoming: incomingEntry,
 						});
 
 						entry.flag = 1;
@@ -1206,7 +1206,7 @@ AUI().use(
 								fullName: buddy.fullName,
 								portraitURL: buddy.portraitURL,
 								statusMessage: buddy.statusMessage,
-								userId: userId
+								userId: userId,
 							});
 						}
 					}
@@ -1218,7 +1218,7 @@ AUI().use(
 
 				var settings = new Liferay.Chat.Panel({
 					fromMarkup: '.chat-tabs > .chat-settings',
-					panelId: 'settings'
+					panelId: 'settings',
 				});
 
 				instance._addPanel('settings', settings);
@@ -1251,7 +1251,7 @@ AUI().use(
 					var attrs = {
 						checked:
 							notifyPermission ===
-							NOTIFICATIONS_PERMISSION_GRANTED
+							NOTIFICATIONS_PERMISSION_GRANTED,
 					};
 
 					if (notifyPermission === NOTIFICATIONS_PERMISSION_DEFAULT) {
@@ -1311,14 +1311,14 @@ AUI().use(
 
 				var activePanelIds = {
 					minimized: A.Object.keys(instance._minimizedPanelIds),
-					open: instance._openPanelId
+					open: instance._openPanelId,
 				};
 
 				return {
 					activePanelIds: JSON.stringify(activePanelIds),
 					online: instance._online,
 					playSound: instance._playSound,
-					statusMessage: instance._statusMessage
+					statusMessage: instance._statusMessage,
 				};
 			},
 
@@ -1333,7 +1333,7 @@ AUI().use(
 				catch (e) {
 					activePanelIds = {
 						minimized: [],
-						open: null
+						open: null,
 					};
 				}
 
@@ -1374,7 +1374,7 @@ AUI().use(
 					if (!entryCache[userId]) {
 						entryCache[userId] = {
 							entries: {},
-							newMessages: false
+							newMessages: false,
 						};
 					}
 
@@ -1503,7 +1503,7 @@ AUI().use(
 							open: false,
 							portraitURL: buddy.portraitURL,
 							statusMessage: buddy.statusMessage,
-							userId: item
+							userId: item,
 						});
 					}
 				});
@@ -1618,7 +1618,7 @@ AUI().use(
 					instance._liveSearch.refreshIndex();
 
 					instance._liveSearch.fire('search', {
-						liveSearch: {}
+						liveSearch: {},
 					});
 				}
 
@@ -1662,7 +1662,7 @@ AUI().use(
 								'liferay.chat.messages',
 								JSON.stringify({
 									entry: entry,
-									windowId: windowId
+									windowId: windowId,
 								})
 							);
 						}
@@ -1691,7 +1691,7 @@ AUI().use(
 									fullName: buddy.fullName,
 									portraitURL: buddy.portraitURL,
 									statusMessage: statusMessage,
-									userId: buddy.userId
+									userId: buddy.userId,
 								});
 							}
 
@@ -1701,7 +1701,7 @@ AUI().use(
 									createDate: entry.createDate,
 									entryId: entryId,
 									incoming: incoming,
-									statusMessage: statusMessage
+									statusMessage: statusMessage,
 								});
 							}
 
@@ -1717,7 +1717,7 @@ AUI().use(
 				var instance = this;
 
 				instance.send({
-					updatePresence: true
+					updatePresence: true,
 				});
 			},
 
@@ -1751,7 +1751,7 @@ AUI().use(
 
 						showNotificationsObj.attr({
 							checked: allowed,
-							disabled: allowed
+							disabled: allowed,
 						});
 
 						instance._notifyPermission = notifyPermission;
@@ -1787,7 +1787,7 @@ AUI().use(
 			_minimizedPanelIds: {},
 			_panels: {},
 			_settings: {},
-			_styleSheet: null
+			_styleSheet: null,
 		};
 
 		A.augment(Liferay.Chat.Manager, A.Attribute, true);
@@ -1796,7 +1796,7 @@ AUI().use(
 		Liferay.Chat.Conversation = Conversation;
 
 		Liferay.publish('chatPortletReady', {
-			defaultFn: A.bind('init', Liferay.Chat.Manager)
+			defaultFn: A.bind('init', Liferay.Chat.Manager),
 		});
 
 		Liferay.fire('chatPortletReady');

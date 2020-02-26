@@ -16,8 +16,8 @@ export const controlVariant = [
 		segmentsExperienceId: '0',
 		segmentsExperimentId: '0',
 		segmentsExperimentRelId: '123',
-		split: 0.0
-	}
+		split: 0.0,
+	},
 ];
 
 export const segmentsExperiment = {
@@ -27,7 +27,7 @@ export const segmentsExperiment = {
 	goal: {
 		label: 'Bounce Rate',
 		target: '',
-		value: 'bounce-rate'
+		value: 'bounce-rate',
 	},
 	name: 'Experiment 1',
 	segmentsEntryName: 'Segment name',
@@ -35,8 +35,8 @@ export const segmentsExperiment = {
 	segmentsExperimentId: '0',
 	status: {
 		label: 'Draft',
-		value: 0
-	}
+		value: 0,
+	},
 };
 
 export const segmentsExperiences = [
@@ -44,33 +44,33 @@ export const segmentsExperiences = [
 		description: 'Default',
 		name: 'Default',
 		segmentsExperienceId: '0',
-		segmentsExperiment
+		segmentsExperiment,
 	},
 	{
 		description: 'Experience 1 description',
 		name: 'Experience 1',
 		segmentsExperienceId: '1',
-		segmentsExperiment
-	}
+		segmentsExperiment,
+	},
 ];
 
 export const segmentsGoals = [
 	{
 		label: 'bounce-rate',
-		value: 'Bounce Rate'
+		value: 'Bounce Rate',
 	},
 	{
 		label: 'click',
-		value: 'Click'
+		value: 'Click',
 	},
 	{
 		label: 'max-scroll-depth',
-		value: 'Max Scroll Depth'
+		value: 'Max Scroll Depth',
 	},
 	{
 		label: 'time-on-page',
-		value: 'Time On Page'
-	}
+		value: 'Time On Page',
+	},
 ];
 
 export const segmentsVariants = [
@@ -81,7 +81,7 @@ export const segmentsVariants = [
 		segmentsExperimentId: '0',
 		segmentsExperimentRelId: '123',
 		split: 50.0,
-		winner: false
+		winner: false,
 	},
 	{
 		control: false,
@@ -90,8 +90,8 @@ export const segmentsVariants = [
 		segmentsExperimentId: '0',
 		segmentsExperimentRelId: '124',
 		split: 50.0,
-		winner: true
-	}
+		winner: true,
+	},
 ];
 
 /*
@@ -99,5 +99,5 @@ export const segmentsVariants = [
  */
 export const DEFAULT_ESTIMATED_DAYS = {
 	message: '14-days',
-	value: 14
+	value: 14,
 };

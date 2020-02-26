@@ -37,19 +37,19 @@ AUI.add(
 						'data',
 						A.mix(
 							{
-								data: obj
+								data: obj,
 							},
 							event
 						)
 					);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Service.DataSource = ServiceDataSource;
 	},
 	'',
 	{
-		requires: ['aui-base', 'datasource-local']
+		requires: ['aui-base', 'datasource-local'],
 	}
 );

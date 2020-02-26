@@ -14,7 +14,7 @@ import React from 'react';
 const LoadingState = ({
 	className = 'border-1 pb-6 pt-6 sheet',
 	message,
-	messageClassName = ''
+	messageClassName = '',
 }) => (
 	<div className={className} data-testid="loadingState">
 		<span aria-hidden="true" className="loading-animation" />

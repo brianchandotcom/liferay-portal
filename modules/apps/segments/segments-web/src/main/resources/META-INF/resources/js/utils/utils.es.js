@@ -29,7 +29,7 @@ const SPLIT_REGEX = /({\d+})/g;
 export const createNewGroup = items => ({
 	conjunctionName: CONJUNCTIONS.AND,
 	groupId: generateGroupId(),
-	items
+	items,
 });
 
 /**
@@ -137,7 +137,7 @@ export function removeAtIndex(list, index) {
  */
 export function replaceAtIndex(item, list, index) {
 	return Object.assign(list, {
-		[index]: item
+		[index]: item,
 	});
 }
 
@@ -185,7 +185,7 @@ export function dateToInternationalHuman(
 	const options = {
 		day: 'numeric',
 		month: 'long',
-		year: 'numeric'
+		year: 'numeric',
 	};
 
 	const intl = new Intl.DateTimeFormat(localeKey, options);

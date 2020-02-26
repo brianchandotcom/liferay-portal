@@ -48,13 +48,13 @@ function BasicInformation({authorName, publishDate, title}) {
 }
 
 Author.propTypes = {
-	authorName: PropTypes.string.isRequired
+	authorName: PropTypes.string.isRequired,
 };
 
 BasicInformation.propTypes = {
 	authorName: PropTypes.string.isRequired,
 	publishDate: PropTypes.string.isRequired,
-	title: PropTypes.string.isRequired
+	title: PropTypes.string.isRequired,
 };
 
 export default BasicInformation;

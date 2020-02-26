@@ -35,7 +35,7 @@ export default withRouter(({onDelete, onEdit, onNext, onPrev, page, total}) => {
 				<label>
 					{Lang.sub(Liferay.Language.get('x-of-x-entries'), [
 						page,
-						total
+						total,
 					])}
 				</label>
 			</UpperToolbar.Item>

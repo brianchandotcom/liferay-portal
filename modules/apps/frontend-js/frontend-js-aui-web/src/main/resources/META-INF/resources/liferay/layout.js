@@ -120,9 +120,9 @@ AUI.add(
 					cfg: {
 						horizontal: false,
 						scrollDelay: 30,
-						vertical: true
+						vertical: true,
 					},
-					fn: A.Plugin.DDWinScroll
+					fn: A.Plugin.DDWinScroll,
 				});
 			},
 
@@ -131,7 +131,7 @@ AUI.add(
 
 				nestedPortlets.each(portlet => {
 					Liferay.Portlet.close(portlet, true, {
-						nestedPortlet: true
+						nestedPortlet: true,
 					});
 				});
 			},
@@ -295,14 +295,14 @@ AUI.add(
 					Liferay.fire('portletMoved', {
 						portlet: portletNode,
 						portletId,
-						position
+						position,
 					});
 
 					Layout.saveLayout({
 						cmd: 'move',
 						p_p_col_id: currentColumnId,
 						p_p_col_pos: position,
-						p_p_id: portletId
+						p_p_id: portletId,
 					});
 				}
 			},
@@ -373,7 +373,9 @@ AUI.add(
 					node: dragNode,
 					originalIndex: Layout.findIndex(dragNode),
 					originalParent: dragNode.get('parentNode'),
-					siblingsPortlets: dragNode.siblings(options.portletBoundary)
+					siblingsPortlets: dragNode.siblings(
+						options.portletBoundary
+					),
 				};
 			},
 
@@ -396,7 +398,7 @@ AUI.add(
 				portletDropNodes.each(item => {
 					layoutHandler.addDropNode(item);
 				});
-			}
+			},
 		};
 
 		Layout.init = function(options) {
@@ -416,10 +418,10 @@ AUI.add(
 					container: layoutContainer,
 					dragConfig: {
 						clickPixelThresh: 0,
-						clickTimeThresh: 250
+						clickTimeThresh: 250,
 					},
 					handles: options.handles,
-					invalid: options.invalid
+					invalid: options.invalid,
 				},
 				dragNodes: options.dragNodes,
 				dropContainer(dropNode) {
@@ -428,8 +430,8 @@ AUI.add(
 				dropNodes: Layout.getActiveDropNodes(),
 				lazyStart: true,
 				proxy: {
-					resizeFrame: false
-				}
+					resizeFrame: false,
+				},
 			};
 
 			var eventHandles = [];
@@ -485,7 +487,7 @@ AUI.add(
 				var data = {
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					p_auth: Liferay.authToken,
-					p_l_id: themeDisplay.getPlid()
+					p_l_id: themeDisplay.getPlid(),
 				};
 
 				A.mix(data, options);
@@ -494,7 +496,7 @@ AUI.add(
 					themeDisplay.getPathMain() + '/portal/update_layout',
 					{
 						body: Liferay.Util.objectToFormData(data),
-						method: 'POST'
+						method: 'POST',
 					}
 				).then(response => {
 					if (response.ok) {
@@ -546,6 +548,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: []
+		requires: [],
 	}
 );

@@ -34,7 +34,7 @@ const getItemsMap = columns => {
 			map.set(item.id, {
 				...item,
 				columnIndex,
-				parentId
+				parentId,
 			});
 
 			if (item.active && item.hasChild) {
@@ -45,7 +45,7 @@ const getItemsMap = columns => {
 		if (parentId) {
 			map.set(parentId, {
 				...map.get(parentId),
-				childrenCount
+				childrenCount,
 			});
 		}
 
@@ -63,7 +63,7 @@ const MillerColumns = ({
 	namespace,
 	onColumnsChange = noop,
 	onItemMove = noop,
-	onItemStayHover
+	onItemStayHover,
 }) => {
 	const ref = useRef();
 
@@ -78,7 +78,7 @@ const MillerColumns = ({
 			if (!columns[item.columnIndex]) {
 				columns[item.columnIndex] = {
 					items: [],
-					parent: items.get(item.parentId)
+					parent: items.get(item.parentId),
 				};
 			}
 
@@ -94,7 +94,7 @@ const MillerColumns = ({
 		if (lastColumnActiveItem && !lastColumnActiveItem.hasChild) {
 			columns.push({
 				items: [],
-				parent: lastColumnActiveItem
+				parent: lastColumnActiveItem,
 			});
 		}
 
@@ -137,7 +137,7 @@ const MillerColumns = ({
 			...source,
 			active: newParentId === source.parentId && source.active,
 			columnIndex: parent.columnIndex + 1,
-			parentId: newParentId
+			parentId: newParentId,
 		};
 
 		let prevColumnIndex;
@@ -180,7 +180,7 @@ const MillerColumns = ({
 				item = {
 					...item,
 					childrenCount: newChildrenCount,
-					hasChild: true
+					hasChild: true,
 				};
 			}
 			else if (item.id === source.parentId) {
@@ -189,7 +189,7 @@ const MillerColumns = ({
 				item = {
 					...item,
 					childrenCount: newChildrenCount,
-					hasChild: newChildrenCount > 0
+					hasChild: newChildrenCount > 0,
 				};
 			}
 

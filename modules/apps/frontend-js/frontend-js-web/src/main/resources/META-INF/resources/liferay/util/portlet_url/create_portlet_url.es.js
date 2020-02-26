@@ -64,7 +64,7 @@ export default function createPortletURL(basePortletURL, parameters = {}) {
 		'refererGroupId',
 		'refererPlid',
 		'saveLastPath',
-		'scroll'
+		'scroll',
 	]);
 
 	if (

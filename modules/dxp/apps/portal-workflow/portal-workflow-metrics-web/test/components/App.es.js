@@ -20,8 +20,8 @@ const processItems = [
 	{
 		id: 1,
 		instancesCount: 5,
-		title: 'Single Approver'
-	}
+		title: 'Single Approver',
+	},
 ];
 
 const pending = {
@@ -30,7 +30,7 @@ const pending = {
 	onTimeInstanceCount: 0,
 	overdueInstanceCount: 0,
 	title: 'Single Approver',
-	untrackedInstanceCount: 0
+	untrackedInstanceCount: 0,
 };
 
 const empty = {items: [], totalCount: 0};
@@ -41,11 +41,11 @@ const client = {
 		.mockResolvedValueOnce({
 			data: {
 				items: processItems,
-				totalCount: processItems.length
-			}
+				totalCount: processItems.length,
+			},
 		})
 		.mockResolvedValueOnce({data: pending})
-		.mockResolvedValue({data: empty})
+		.mockResolvedValue({data: empty}),
 };
 
 const mockProps = {
@@ -56,7 +56,7 @@ const mockProps = {
 	getClient: jest.fn(() => client),
 	isAmPm: false,
 	maxPages: 15,
-	namespace: 'WorkflowMetricsPortlet'
+	namespace: 'WorkflowMetricsPortlet',
 };
 
 describe('The App component should', () => {

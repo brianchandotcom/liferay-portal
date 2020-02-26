@@ -43,10 +43,10 @@ export function mapDataLayoutColumns(dataLayoutPages, fn = () => {}) {
 										rowIndex,
 										pageIndex
 									)
-							)
+							),
 						};
 					}
-				)
+				),
 			};
 		}
 	);
@@ -60,7 +60,7 @@ export function deleteField(dataLayoutPages, fieldName) {
 				...dataLayoutColumn,
 				fieldNames: (fieldNames || []).filter(
 					name => name !== fieldName
-				)
+				),
 			};
 		}
 	);
@@ -85,7 +85,7 @@ export function getIndexesFromFieldName({dataLayoutPages}, fieldName) {
 						indexes = {
 							columnIndex,
 							pageIndex,
-							rowIndex
+							rowIndex,
 						};
 
 						return true;

@@ -28,8 +28,8 @@ describe('DropDown', () => {
 				actions={[
 					{
 						action: actionCallback,
-						name: 'action'
-					}
+						name: 'action',
+					},
 				]}
 			/>
 		);
@@ -73,13 +73,13 @@ describe('DropDown', () => {
 				actions={[
 					{
 						action: () => {},
-						name: 'action 1'
+						name: 'action 1',
 					},
 					{
 						action: () => {},
 						name: 'action 2',
-						show: () => false
-					}
+						show: () => false,
+					},
 				]}
 			/>
 		);
@@ -94,15 +94,15 @@ describe('DropDown', () => {
 				actions={[
 					{
 						action: () => {},
-						name: 'action 1'
+						name: 'action 1',
 					},
 					{
-						name: 'divider'
+						name: 'divider',
 					},
 					{
 						action: () => {},
-						name: 'action 2'
-					}
+						name: 'action 2',
+					},
 				]}
 			/>
 		);
@@ -117,8 +117,8 @@ describe('DropDown', () => {
 			<DropDown
 				actions={[
 					{
-						name: item => item.name
-					}
+						name: item => item.name,
+					},
 				]}
 				item={{name: 'action'}}
 			/>

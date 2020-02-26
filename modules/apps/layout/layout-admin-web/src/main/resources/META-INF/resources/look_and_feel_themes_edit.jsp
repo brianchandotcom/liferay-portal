@@ -64,14 +64,14 @@ else {
 				dialog: {
 					constrain: true,
 					destroyOnHide: true,
-					modal: true
+					modal: true,
 				},
 				eventName: '<portlet:namespace />selectTheme',
 				title: '<liferay-ui:message key="available-themes" />',
 				uri: Util.addParams(
 					'<portlet:namespace />themeId=' + selThemeId,
 					'<%= selectThemeURL %>'
-				)
+				),
 			},
 			function(event) {
 				var selectedItem = event.themeid;
@@ -80,14 +80,14 @@ else {
 					themeContainer.html('<div class="loading-animation"></div>');
 
 					var data = Util.ns('<portlet:namespace />', {
-						themeId: selectedItem
+						themeId: selectedItem,
 					});
 
 					Liferay.Util.fetch(
 						'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/look_and_feel_theme_details.jsp" /></portlet:renderURL>',
 						{
 							body: Liferay.Util.objectToFormData(data),
-							method: 'POST'
+							method: 'POST',
 						}
 					)
 						.then(function(response) {

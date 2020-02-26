@@ -34,7 +34,7 @@ class SourceEditor extends Component {
 	_handleContentChanged(event) {
 		this.emit('contentChanged', {
 			content: event.content,
-			valid: event.valid
+			valid: event.valid,
 		});
 	}
 }
@@ -57,7 +57,7 @@ SourceEditor.STATE = {
 	autocompleteTags: Config.arrayOf(
 		Config.shapeOf({
 			content: Config.string(),
-			name: Config.string()
+			name: Config.string(),
 		})
 	),
 
@@ -111,7 +111,7 @@ SourceEditor.STATE = {
 	 * @see {@link AceEditor.SYNTAX|SYNTAX}
 	 * @type {!string}
 	 */
-	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required()
+	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required(),
 };
 
 Soy.register(SourceEditor, templates);

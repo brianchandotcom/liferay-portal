@@ -53,11 +53,11 @@ AUI.add(
 						return val.toUpperCase();
 					},
 					validator: Lang.isString,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				host: {
-					value: null
+					value: null,
 				},
 
 				pallete: {
@@ -89,9 +89,9 @@ AUI.add(
 						'#c4a883',
 						'#c7561e',
 						'#b5515d',
-						'#c244ab'
-					]
-				}
+						'#c244ab',
+					],
+				},
 			},
 
 			NAME: 'simple-color-picker',
@@ -115,7 +115,7 @@ AUI.add(
 
 					instance.items = A.NodeList.create(
 						TPL_SIMPLE_COLOR_PICKER_ITEM.parse({
-							pallete: instance.get('pallete')
+							pallete: instance.get('pallete'),
 						})
 					);
 
@@ -163,14 +163,14 @@ AUI.add(
 					var instance = this;
 
 					instance._renderPallete();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.SimpleColorPicker = SimpleColorPicker;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-template-deprecated']
+		requires: ['aui-base', 'aui-template-deprecated'],
 	}
 );

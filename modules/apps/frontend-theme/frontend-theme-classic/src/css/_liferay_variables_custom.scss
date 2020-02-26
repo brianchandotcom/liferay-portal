@@ -2,7 +2,7 @@ $theme-color-palette: () !default;
 $theme-color-palette: map-merge(
 	(
 		lighter: $gray-100,
-		gray-dark: $gray-800
+		gray-dark: $gray-800,
 	),
 	$theme-color-palette
 );

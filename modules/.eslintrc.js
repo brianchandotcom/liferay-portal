@@ -33,17 +33,17 @@ config = {
 	...config,
 	globals: {
 		...config.globals,
-		MODULE_PATH: true
+		MODULE_PATH: true,
 	},
 	rules: {
 		'no-empty': ['error', {allowEmptyCatch: true}],
 		'notice/notice': [
 			'error',
 			{
-				templateFile: path.join(__dirname, 'copyright.js')
-			}
-		]
-	}
+				templateFile: path.join(__dirname, 'copyright.js'),
+			},
+		],
+	},
 };
 
 module.exports = config;

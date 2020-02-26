@@ -33,11 +33,11 @@ AUI.add(
 		var LiferayItemSelectorDialog = A.Component.create({
 			ATTRS: {
 				dialogClasses: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				eventName: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				selectedItem: {},
@@ -45,27 +45,27 @@ AUI.add(
 				strings: {
 					value: {
 						add: Liferay.Language.get('add'),
-						cancel: Liferay.Language.get('cancel')
-					}
+						cancel: Liferay.Language.get('cancel'),
+					},
 				},
 
 				title: {
 					validator: Lang.isString,
-					value: Liferay.Language.get('select-file')
+					value: Liferay.Language.get('select-file'),
 				},
 
 				url: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				visible: {
 					validator: Lang.isBoolean,
-					value: false
+					value: false,
 				},
 
 				zIndex: {
-					validator: Lang.isNumber
-				}
+					validator: Lang.isNumber,
+				},
 			},
 
 			NAME: 'item-selector-dialog',
@@ -130,7 +130,7 @@ AUI.add(
 										}
 
 										instance.set(STR_VISIBLE, event.newVal);
-									}
+									},
 								},
 								'toolbars.footer': [
 									{
@@ -140,8 +140,8 @@ AUI.add(
 										on: {
 											click() {
 												instance.close();
-											}
-										}
+											},
+										},
 									},
 									{
 										cssClass: 'btn-primary',
@@ -153,28 +153,28 @@ AUI.add(
 												instance._selectedItem =
 													instance._currentItem;
 												instance.close();
-											}
-										}
-									}
+											},
+										},
+									},
 								],
-								zIndex
+								zIndex,
 							},
 							eventName,
 							id: eventName,
 							stack: !zIndex,
 							title: instance.get('title'),
-							uri: instance.get('url')
+							uri: instance.get('url'),
 						},
 						A.bind(instance._onItemSelected, instance)
 					);
-				}
-			}
+				},
+			},
 		});
 
 		A.LiferayItemSelectorDialog = LiferayItemSelectorDialog;
 	},
 	'',
 	{
-		requires: ['aui-component']
+		requires: ['aui-component'],
 	}
 );

@@ -27,8 +27,8 @@ AUI.add(
 		var PortletDragDrop = A.Component.create({
 			ATTRS: {
 				srcNode: {
-					setter: A.one
-				}
+					setter: A.one,
+				},
 			},
 
 			EXTENDS: A.Plugin.Base,
@@ -46,15 +46,15 @@ AUI.add(
 							container: instance.get('srcNode'),
 							dragConfig: {
 								clickPixelThresh: 0,
-								clickTimeThresh: 0
+								clickTimeThresh: 0,
 							},
 							invalid: '.lfr-portlet-used',
-							target: false
+							target: false,
 						},
 						dragNodes: '[data-draggable]',
 						dropContainer(dropNode) {
 							return dropNode.one(Layout.options.dropContainer);
-						}
+						},
 					};
 
 					var defaultLayoutOptions = Layout.DEFAULT_LAYOUT_OPTIONS;
@@ -93,7 +93,7 @@ AUI.add(
 
 						instance.fire('dragEnd', {
 							appendNode,
-							portletNode
+							portletNode,
 						});
 					}
 				},
@@ -102,8 +102,8 @@ AUI.add(
 					var instance = this;
 
 					instance._bindUIDragDrop();
-				}
-			}
+				},
+			},
 		});
 
 		ControlMenu.PortletDragDrop = PortletDragDrop;
@@ -116,7 +116,7 @@ AUI.add(
 			'liferay-product-navigation-control-menu',
 			'liferay-layout',
 			'liferay-layout-column',
-			'liferay-portlet-base'
-		]
+			'liferay-portlet-base',
+		],
 	}
 );

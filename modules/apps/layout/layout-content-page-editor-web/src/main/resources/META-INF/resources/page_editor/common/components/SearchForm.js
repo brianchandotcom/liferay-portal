@@ -42,5 +42,5 @@ export default function SearchForm({onChange, value}) {
 
 SearchForm.propTypes = {
 	onChange: PropTypes.func.isRequired,
-	value: PropTypes.string.isRequired
+	value: PropTypes.string.isRequired,
 };

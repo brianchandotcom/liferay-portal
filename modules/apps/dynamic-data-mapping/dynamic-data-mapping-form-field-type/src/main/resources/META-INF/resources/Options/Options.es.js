@@ -47,7 +47,7 @@ class Options extends Component {
 		}
 
 		this.setState({
-			defaultOption
+			defaultOption,
 		});
 
 		this._createDragDrop();
@@ -61,7 +61,7 @@ class Options extends Component {
 				...value,
 				[languageId]: value[languageId].filter(
 					(option, currentIndex) => currentIndex !== deletedIndex
-				)
+				),
 			};
 		});
 
@@ -111,7 +111,7 @@ class Options extends Component {
 		const newItems = items.map(option => {
 			return {
 				...option,
-				generateKeyword: this.shouldGenerateOptionValue(items, option)
+				generateKeyword: this.shouldGenerateOptionValue(items, option),
 			};
 		});
 
@@ -120,7 +120,7 @@ class Options extends Component {
 		if (defaultLanguageId === editingLanguageId) {
 			newItems.push({
 				label: '',
-				value: ''
+				value: '',
 			});
 		}
 
@@ -135,7 +135,7 @@ class Options extends Component {
 
 			if (sourceIndex < options.length) {
 				options.splice(targetIndex, 0, {
-					...options[sourceIndex]
+					...options[sourceIndex],
 				});
 
 				value = {
@@ -144,7 +144,7 @@ class Options extends Component {
 						return sourceIndex > targetIndex
 							? index != sourceIndex + 1
 							: index != sourceIndex;
-					})
+					}),
 				};
 			}
 		});
@@ -181,7 +181,7 @@ class Options extends Component {
 
 		return {
 			...option,
-			value: normalizedValue
+			value: normalizedValue,
 		};
 	}
 
@@ -210,7 +210,7 @@ class Options extends Component {
 
 		return {
 			...state,
-			items: this.getItems(value[editingLanguageId])
+			items: this.getItems(value[editingLanguageId]),
 		};
 	}
 
@@ -269,15 +269,15 @@ class Options extends Component {
 					...this.value,
 					[editingLanguageId]: this.value[defaultLanguageId].filter(
 						({value}) => !!value
-					)
-				}
+					),
+				},
 			});
 		}
 	}
 
 	syncValue(value) {
 		this.setState({
-			items: this.getCurrentLocaleValue(value)
+			items: this.getCurrentLocaleValue(value),
 		});
 	}
 
@@ -288,7 +288,7 @@ class Options extends Component {
 			handles: '.ddm-options-drag:not(.disabled)',
 			sources: '.ddm-field-options',
 			targets: '.ddm-options-target',
-			useShim: false
+			useShim: false,
 		});
 
 		this._dragAndDrop.on(
@@ -328,7 +328,7 @@ class Options extends Component {
 		this.emit('fieldEdited', {
 			fieldInstance: this,
 			originalEvent,
-			value
+			value,
 		});
 	}
 
@@ -355,7 +355,7 @@ class Options extends Component {
 								(value &&
 									value !== option.value &&
 									property === 'value'),
-							[property]: value
+							[property]: value,
 					  }
 					: option;
 			});
@@ -365,8 +365,8 @@ class Options extends Component {
 				...options,
 				{
 					label: property === 'label' ? value : '',
-					value: property === 'value' ? value : ''
-				}
+					value: property === 'value' ? value : '',
+				},
 			];
 		}
 
@@ -374,7 +374,7 @@ class Options extends Component {
 
 		let newValue = {
 			...this.value,
-			[editingLanguageId]: options
+			[editingLanguageId]: options,
 		};
 
 		if (defaultLanguageId === editingLanguageId) {
@@ -389,7 +389,7 @@ class Options extends Component {
 					return {
 						...option,
 						label,
-						value
+						value,
 					};
 				});
 			};
@@ -401,14 +401,14 @@ class Options extends Component {
 
 				newValue = {
 					...newValue,
-					[languageId]: copyLanguageLabels(languageId, options)
+					[languageId]: copyLanguageLabels(languageId, options),
 				};
 			});
 		}
 
 		this.setState(
 			{
-				value: newValue
+				value: newValue,
 			},
 			() => this._handleFieldEdited(event, newValue)
 		);
@@ -419,7 +419,7 @@ class Options extends Component {
 			target.value = '';
 
 			this.setState({
-				defaultOption: false
+				defaultOption: false,
 			});
 		}
 	}
@@ -511,7 +511,7 @@ Options.STATE = {
 			disabled: Config.bool().value(false),
 			label: Config.string(),
 			name: Config.string(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	).internal(),
 
@@ -605,7 +605,7 @@ Options.STATE = {
 
 	value: Config.object()
 		.setter('_setValue')
-		.value({})
+		.value({}),
 };
 
 Soy.register(Options, templates);

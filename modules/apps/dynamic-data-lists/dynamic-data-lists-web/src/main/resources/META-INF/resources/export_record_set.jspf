@@ -100,8 +100,8 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 								on: {
 									click: function() {
 										dialog.hide();
-									}
-								}
+									},
+								},
 							},
 							{
 								cssClass: 'btn-primary',
@@ -111,15 +111,15 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 										submitForm(form, url, false);
 
 										dialog.hide();
-									}
+									},
 								},
-								primary: true
-							}
-						]
+								primary: true,
+							},
+						],
 					},
-					width: 600
+					width: 600,
 				},
-				title: '<%= UnicodeLanguageUtil.get(request, "export") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "export") %>',
 			});
 		},
 		['aui-alert', 'liferay-util-window']

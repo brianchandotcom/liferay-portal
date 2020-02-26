@@ -218,7 +218,7 @@ if (liveLayout != null) {
 		<aui:script use="liferay-staging">
 			Liferay.StagingBar.init({
 				namespace: '<portlet:namespace />',
-				portletId: '<%= portletDisplay.getId() %>'
+				portletId: '<%= portletDisplay.getId() %>',
 			});
 		</aui:script>
 	</c:if>
@@ -250,7 +250,7 @@ if (liveLayout != null) {
 					completed: false,
 					groupId: '<%= liveGroup.getGroupId() %>',
 					taskExecutorClassName:
-						'<%= BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR %>'
+						'<%= BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR %>',
 				},
 				function(obj) {
 					var incomplete = obj > 0;

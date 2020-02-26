@@ -24,12 +24,12 @@ const propertyShape = PropTypes.shape({
 	label: PropTypes.string,
 	name: PropTypes.string.isRequired,
 	options: PropTypes.array,
-	type: PropTypes.string.isRequired
+	type: PropTypes.string.isRequired,
 });
 
 const conjunctionShape = PropTypes.shape({
 	label: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired
+	name: PropTypes.string.isRequired,
 });
 
 /**
@@ -44,8 +44,8 @@ const criterionShape = PropTypes.shape({
 	value: PropTypes.oneOfType([
 		PropTypes.array,
 		PropTypes.number,
-		PropTypes.string
-	])
+		PropTypes.string,
+	]),
 });
 
 /**
@@ -54,7 +54,7 @@ const criterionShape = PropTypes.shape({
  */
 const criteriaShape = PropTypes.shape({
 	conjunctionName: PropTypes.string,
-	groupId: PropTypes.string
+	groupId: PropTypes.string,
 });
 
 criteriaShape.items = PropTypes.arrayOf(
@@ -77,10 +77,10 @@ const initialContributorShape = PropTypes.shape({
 	conjunctionInputId: PropTypes.string.isRequired,
 	initialQuery: PropTypes.oneOfType([
 		PropTypes.string,
-		PropTypes.shape(null)
+		PropTypes.shape(null),
 	]),
 	inputId: PropTypes.string.isRequired,
-	propertyKey: PropTypes.string.isRequired
+	propertyKey: PropTypes.string.isRequired,
 });
 
 /**
@@ -105,7 +105,7 @@ const contributorShape = PropTypes.shape({
 	modelLabel: PropTypes.string,
 	properties: PropTypes.arrayOf(propertyShape),
 	propertyKey: PropTypes.string,
-	query: PropTypes.string
+	query: PropTypes.string,
 });
 
 /**
@@ -115,7 +115,7 @@ const contributorShape = PropTypes.shape({
  */
 const operatorShape = PropTypes.shape({
 	label: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired
+	name: PropTypes.string.isRequired,
 });
 
 /**
@@ -126,7 +126,7 @@ const propertyGroupShape = PropTypes.shape({
 	entityName: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	properties: PropTypes.arrayOf(propertyShape).isRequired,
-	propertyKey: PropTypes.string.isRequired
+	propertyKey: PropTypes.string.isRequired,
 });
 
 /**
@@ -139,7 +139,7 @@ const propertyTypesShape = PropTypes.shape({
 	double: PropTypes.arrayOf(PropTypes.string).isRequired,
 	id: PropTypes.arrayOf(PropTypes.string).isRequired,
 	integer: PropTypes.arrayOf(PropTypes.string).isRequired,
-	string: PropTypes.arrayOf(PropTypes.string).isRequired
+	string: PropTypes.arrayOf(PropTypes.string).isRequired,
 });
 
 export {
@@ -151,5 +151,5 @@ export {
 	contributorShape,
 	operatorShape,
 	propertyGroupShape,
-	propertyShape
+	propertyShape,
 };

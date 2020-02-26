@@ -54,7 +54,7 @@ name = namespace + name;
 						MapControls.PAN,
 						MapControls.SEARCH,
 						MapControls.TYPE,
-						MapControls.ZOOM
+						MapControls.ZOOM,
 					],
 				</c:otherwise>
 			</c:choose>
@@ -70,9 +70,9 @@ name = namespace + name;
 			position: {
 				location: {
 					lat: <%= latitude %>,
-					lng: <%= longitude %>
-				}
-			}
+					lng: <%= longitude %>,
+				},
+			},
 		</c:if>
 	};
 

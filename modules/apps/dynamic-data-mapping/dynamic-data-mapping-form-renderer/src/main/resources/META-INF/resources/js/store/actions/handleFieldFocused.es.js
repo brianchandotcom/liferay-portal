@@ -24,7 +24,7 @@ export default (pages, properties) => {
 
 			return {
 				...field,
-				focused
+				focused,
 			};
 		})
 	);

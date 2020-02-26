@@ -23,7 +23,7 @@ import CommentForm from './CommentForm';
 export default function EditCommentForm({
 	comment,
 	fragmentEntryLinkId,
-	onCloseForm
+	onCloseForm,
 }) {
 	const [editingComment, setEditingComment] = useState(false);
 	const [textareaContent, setTextareaContent] = useState(comment.body);
@@ -37,7 +37,7 @@ export default function EditCommentForm({
 				body: textareaContent,
 				commentId: comment.commentId,
 				fragmentEntryLinkId,
-				parentCommentId: comment.parentCommentId
+				parentCommentId: comment.parentCommentId,
 			})
 		)
 			.then(() => {
@@ -51,7 +51,7 @@ export default function EditCommentForm({
 						'the-comment-could-not-be-edited'
 					),
 					title: Liferay.Language.get('error'),
-					type: 'danger'
+					type: 'danger',
 				});
 
 				setEditingComment(false);
@@ -76,7 +76,7 @@ export default function EditCommentForm({
 EditCommentForm.propTypes = {
 	comment: PropTypes.shape({
 		body: PropTypes.string.isRequired,
-		commentId: PropTypes.string.isRequired
+		commentId: PropTypes.string.isRequired,
 	}),
-	onCloseForm: PropTypes.func.isRequired
+	onCloseForm: PropTypes.func.isRequired,
 };

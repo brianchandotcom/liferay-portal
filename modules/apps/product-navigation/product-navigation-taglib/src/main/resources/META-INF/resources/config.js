@@ -23,7 +23,7 @@
 					'liferay-product-navigation-control-menu': {
 						path:
 							'control_menu/js/product_navigation_control_menu.js',
-						requires: ['aui-node', 'event-touch']
+						requires: ['aui-node', 'event-touch'],
 					},
 					'liferay-product-navigation-control-menu-add-application': {
 						path:
@@ -35,8 +35,8 @@
 							'liferay-portlet-base',
 							'liferay-product-navigation-control-menu',
 							'liferay-product-navigation-control-menu-add-base',
-							'liferay-toggler-interaction'
-						]
+							'liferay-toggler-interaction',
+						],
 					},
 					'liferay-product-navigation-control-menu-add-base': {
 						path:
@@ -48,8 +48,8 @@
 							'liferay-layout-column',
 							'liferay-notification',
 							'liferay-product-navigation-control-menu',
-							'transition'
-						]
+							'transition',
+						],
 					},
 					'liferay-product-navigation-control-menu-add-content': {
 						path:
@@ -59,8 +59,8 @@
 							'liferay-portlet-base',
 							'liferay-product-navigation-control-menu',
 							'liferay-product-navigation-control-menu-add-base',
-							'liferay-product-navigation-control-menu-add-content-search'
-						]
+							'liferay-product-navigation-control-menu-add-content-search',
+						],
 					},
 					'liferay-product-navigation-control-menu-add-content-drag-drop': {
 						path:
@@ -71,8 +71,8 @@
 							'liferay-layout',
 							'liferay-layout-column',
 							'liferay-portlet-base',
-							'liferay-product-navigation-control-menu'
-						]
+							'liferay-product-navigation-control-menu',
+						],
 					},
 					'liferay-product-navigation-control-menu-add-content-search': {
 						path:
@@ -80,8 +80,8 @@
 						requires: [
 							'aui-base',
 							'liferay-product-navigation-control-menu',
-							'liferay-search-filter'
-						]
+							'liferay-search-filter',
+						],
 					},
 					'liferay-product-navigation-control-menu-portlet-dd': {
 						condition: {
@@ -92,8 +92,8 @@
 							},
 							trigger: [
 								'liferay-product-navigation-control-menu-add-application',
-								'liferay-product-navigation-control-menu-add-content'
-							]
+								'liferay-product-navigation-control-menu-add-content',
+							],
 						},
 						path:
 							'control_menu/js/product_navigation_control_menu_portlet_dd.js',
@@ -103,12 +103,12 @@
 							'liferay-layout',
 							'liferay-layout-column',
 							'liferay-portlet-base',
-							'liferay-product-navigation-control-menu'
-						]
-					}
+							'liferay-product-navigation-control-menu',
+						],
+					},
 				},
-				root: MODULE_PATH + '/'
-			}
-		}
+				root: MODULE_PATH + '/',
+			},
+		},
 	});
 })();

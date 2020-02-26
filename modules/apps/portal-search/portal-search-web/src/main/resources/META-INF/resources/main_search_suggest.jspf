@@ -96,8 +96,8 @@
 	function <portlet:namespace />searchKeywords(newKeywords) {
 		Liferay.Util.postForm(document.<portlet:namespace />fm, {
 			data: {
-				keywords: newKeywords
-			}
+				keywords: newKeywords,
+			},
 		});
 	}
 </script>

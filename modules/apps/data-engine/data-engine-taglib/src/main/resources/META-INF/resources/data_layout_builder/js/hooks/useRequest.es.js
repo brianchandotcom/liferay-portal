@@ -20,7 +20,7 @@ export default endpoint => {
 	const [state, setState] = useState({
 		error: null,
 		isLoading: true,
-		response: {}
+		response: {},
 	});
 
 	useEffect(() => {
@@ -30,14 +30,14 @@ export default endpoint => {
 				setState({
 					error: null,
 					isLoading: false,
-					response
+					response,
 				});
 			})
 			.catch(error => {
 				setState({
 					error,
 					isLoading: false,
-					response: {}
+					response: {},
 				});
 			});
 	}, [endpoint]);

@@ -25,7 +25,7 @@ const CheckinModal = ({
 	observer,
 	onModalClose = noop,
 	callback = noop,
-	dlVersionNumberIncreaseValues
+	dlVersionNumberIncreaseValues,
 }) => {
 	const {MAJOR, MINOR, NONE} = dlVersionNumberIncreaseValues;
 	const [changeLog, setChangeLog] = useState('');
@@ -122,10 +122,10 @@ CheckinModal.propTypes = {
 	dlVersionNumberIncreaseValues: PropTypes.shape({
 		MAJOR: PropTypes.string.isRequired,
 		MINOR: PropTypes.string.isRequired,
-		NONE: PropTypes.string.isRequired
+		NONE: PropTypes.string.isRequired,
 	}).isRequired,
 	observer: PropTypes.object.isRequired,
-	onModalClose: PropTypes.func
+	onModalClose: PropTypes.func,
 };
 
 export default CheckinModal;

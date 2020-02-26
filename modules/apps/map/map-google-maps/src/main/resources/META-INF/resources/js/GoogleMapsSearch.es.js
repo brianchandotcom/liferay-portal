@@ -58,7 +58,7 @@ class GoogleMapsSearch extends State {
 				this._autocomplete,
 				'place_changed',
 				this._handlePlaceChanged
-			)
+			),
 		];
 	}
 
@@ -79,9 +79,9 @@ class GoogleMapsSearch extends State {
 					address: place.formatted_address,
 					location: {
 						lat: geolocation.lat(),
-						lng: geolocation.lng()
-					}
-				}
+						lng: geolocation.lng(),
+					},
+				},
 			});
 		}
 	}
@@ -99,7 +99,7 @@ GoogleMapsSearch.STATE = {
 	 * @review
 	 * @type {HTMLInputElement}
 	 */
-	inputNode: Config.validator(isInputNode).value(null)
+	inputNode: Config.validator(isInputNode).value(null),
 };
 
 export default GoogleMapsSearch;

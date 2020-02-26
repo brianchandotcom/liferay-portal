@@ -63,11 +63,11 @@ AUI().use(
 							cssClass: 'microblogs-portlet',
 							modal: true,
 							resizable: false,
-							width: 475
-						}
+							width: 475,
+						},
 					})
 						.plug(A.Plugin.IO, {
-							autoLoad: false
+							autoLoad: false,
 						})
 						.render();
 				}
@@ -80,7 +80,7 @@ AUI().use(
 
 				Liferay.Util.fetch(form.getAttribute('action'), {
 					body: new FormData(form.getDOM()),
-					method: 'POST'
+					method: 'POST',
 				}).then(function() {
 					instance.updateMicroblogsList(url, updateContainer);
 
@@ -95,7 +95,7 @@ AUI().use(
 
 				if (!instance._micrblogsEntries.io) {
 					instance._micrblogsEntries.plug(A.Plugin.IO, {
-						autoLoad: false
+						autoLoad: false,
 					});
 				}
 
@@ -123,9 +123,9 @@ AUI().use(
 				portletURL.setWindowState('normal');
 
 				Liferay.Util.fetch(portletURL.toString(), {
-					method: 'POST'
+					method: 'POST',
 				});
-			}
+			},
 		};
 
 		Liferay.on('sessionExpired', function(event) {

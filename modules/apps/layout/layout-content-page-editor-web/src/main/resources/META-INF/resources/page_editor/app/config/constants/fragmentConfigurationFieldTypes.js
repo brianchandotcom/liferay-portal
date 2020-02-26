@@ -25,5 +25,5 @@ export const FRAGMENT_CONFIGURATION_FIELD_TYPES = {
 	itemCollectionSelector: ItemCollectionSelectorField,
 	itemSelector: ItemSelectorField,
 	select: SelectField,
-	text: TextField
+	text: TextField,
 };

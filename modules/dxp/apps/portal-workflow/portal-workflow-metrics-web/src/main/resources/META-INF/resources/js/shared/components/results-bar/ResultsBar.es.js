@@ -19,7 +19,7 @@ import Icon from '../Icon.es';
 import {
 	removeFilters,
 	removeItem,
-	replaceHistory
+	replaceHistory,
 } from '../filter/util/filterUtil.es';
 
 const ResultsBar = ({children}) => {

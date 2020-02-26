@@ -143,7 +143,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 							constrain: true,
 							destroyOnHide: true,
 							modal: true,
-							width: 600
+							width: 600,
 						},
 						id: '<portlet:namespace />selectKBObject',
 						title: '<liferay-ui:message key="select-entry" />',
@@ -156,7 +156,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 							<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectKBObject" %>' />
 						</liferay-portlet:renderURL>
 
-						uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
+						uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>',
 					},
 					function(event) {
 						document.getElementById(
@@ -167,7 +167,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 							idString: 'resourcePrimKey',
 							idValue: event.resourceprimkey,
 							nameString: 'configurationKBObject',
-							nameValue: event.title
+							nameValue: event.title,
 						};
 
 						Liferay.Util.selectFolder(

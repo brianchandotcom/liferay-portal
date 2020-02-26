@@ -30,13 +30,13 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				modal: true
+				modal: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
 			title: Liferay.Language.get('permissions'),
-			uri: itemData.permissionsURL
+			uri: itemData.permissionsURL,
 		});
 	}
 
@@ -56,7 +56,7 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 }
 
 ElementsDefaultEventHandler.STATE = {
-	trashEnabled: Config.bool()
+	trashEnabled: Config.bool(),
 };
 
 export default ElementsDefaultEventHandler;

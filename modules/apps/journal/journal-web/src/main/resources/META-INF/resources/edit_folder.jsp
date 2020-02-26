@@ -169,7 +169,7 @@ renderResponse.setTitle(title);
 											<portlet:param name="parentFolderId" value="<%= String.valueOf(parentFolderId) %>" />
 										</portlet:renderURL>
 
-										url: '<%= selectFolderURL.toString() %>'
+										url: '<%= selectFolderURL.toString() %>',
 									});
 
 									itemSelectorDialog.open();
@@ -182,7 +182,7 @@ renderResponse.setTitle(title);
 												idString: 'parentFolderId',
 												idValue: selectedItem.folderId,
 												nameString: 'parentFolderName',
-												nameValue: selectedItem.folderName
+												nameValue: selectedItem.folderName,
 											};
 
 											Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
@@ -397,12 +397,12 @@ renderResponse.setTitle(title);
 				{
 					dialog: {
 						constrain: true,
-						modal: true
+						modal: true,
 					},
 					eventName: '<portlet:namespace />selectDDMStructure',
 					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
 					uri:
-						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>'
+						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
 				},
 				function(event) {
 					var ddmStructureLink =
@@ -455,7 +455,7 @@ renderResponse.setTitle(title);
 <aui:script>
 	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeInherit', '', [
 		'<portlet:namespace />restrictionTypeDefinedDiv',
-		'<portlet:namespace />restrictionTypeWorkflowDiv'
+		'<portlet:namespace />restrictionTypeWorkflowDiv',
 	]);
 	Liferay.Util.toggleRadio(
 		'<portlet:namespace />restrictionTypeDefined',

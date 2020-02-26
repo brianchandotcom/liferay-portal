@@ -23,7 +23,7 @@ import {
 	STATUS_PAUSED,
 	STATUS_RUNNING,
 	STATUS_SCHEDULED,
-	STATUS_TERMINATED
+	STATUS_TERMINATED,
 } from '../statuses';
 import {ExperimentStatusType} from '../types';
 
@@ -35,7 +35,7 @@ const STATUS_TO_TYPE = {
 	[STATUS_PAUSED]: 'warning',
 	[STATUS_RUNNING]: 'primary',
 	[STATUS_SCHEDULED]: 'warning',
-	[STATUS_TERMINATED]: 'danger'
+	[STATUS_TERMINATED]: 'danger',
 };
 
 const _statusToLabelDisplayType = status => STATUS_TO_TYPE[status];

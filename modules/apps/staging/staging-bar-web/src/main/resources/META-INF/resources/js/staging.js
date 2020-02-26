@@ -32,7 +32,7 @@ AUI.add(
 				instance.viewHistoryURL = config.viewHistoryURL;
 
 				Liferay.publish({
-					fireOnce: true
+					fireOnce: true,
 				});
 
 				Liferay.after('initStagingBar', () => {
@@ -52,13 +52,13 @@ AUI.add(
 				});
 
 				Liferay.fire('initStagingBar', config);
-			}
+			},
 		};
 
 		Liferay.StagingBar = StagingBar;
 	},
 	'',
 	{
-		requires: ['aui-io-plugin-deprecated', 'aui-modal']
+		requires: ['aui-io-plugin-deprecated', 'aui-modal'],
 	}
 );

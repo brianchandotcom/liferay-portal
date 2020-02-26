@@ -24,7 +24,7 @@ import {createQuestion} from '../../utils/client.es';
 import {
 	getCKEditorConfig,
 	onBeforeLoadCKEditor,
-	useDebounceCallback
+	useDebounceCallback,
 } from '../../utils/utils.es';
 
 export default withRouter(({history}) => {

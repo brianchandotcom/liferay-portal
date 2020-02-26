@@ -22,20 +22,20 @@ const VelocityUnitFilter = ({
 	filterKey = filterConstants.velocityUnit.key,
 	options = {},
 	prefixKey = '',
-	timeRange
+	timeRange,
 }) => {
 	const defaultOptions = {
 		hideControl: true,
 		multiple: false,
 		position: 'right',
 		withSelectionTitle: true,
-		withoutRouteParams: false
+		withoutRouteParams: false,
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
 
 	const velocityUnits = useMemo(() => getVelocityUnits(timeRange), [
-		timeRange
+		timeRange,
 	]);
 
 	const {items, selectedItems} = useFilterStatic(

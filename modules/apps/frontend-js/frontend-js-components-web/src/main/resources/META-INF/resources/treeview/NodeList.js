@@ -23,7 +23,7 @@ export default function NodeList({
 	onBlur,
 	onFocus,
 	role = 'group',
-	tabIndex = -1
+	tabIndex = -1,
 }) {
 	const rootNodeId = nodes[0] && nodes[0].id;
 
@@ -65,10 +65,10 @@ NodeList.propTypes = {
 		PropTypes.shape({
 			children: PropTypes.array,
 			id: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired
+			name: PropTypes.string.isRequired,
 		})
 	).isRequired,
 	onBlur: PropTypes.func,
 	onFocus: PropTypes.func,
-	tabIndex: PropTypes.number
+	tabIndex: PropTypes.number,
 };

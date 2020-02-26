@@ -53,7 +53,7 @@ export default (evaluatorContext, dispatch) => {
 			Liferay.fire('ddmFormPageShow', {
 				formId,
 				page: activePageUpdated,
-				title: pages[activePageUpdated].title
+				title: pages[activePageUpdated].title,
 			});
 		}
 		else {

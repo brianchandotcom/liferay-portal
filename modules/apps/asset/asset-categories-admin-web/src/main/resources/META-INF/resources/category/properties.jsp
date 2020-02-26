@@ -132,7 +132,7 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 	var autoFields = new Liferay.AutoFields({
 		contentBox: '#<portlet:namespace />categoryPropertiesId',
 		fieldIndexes: '<portlet:namespace />categoryPropertiesIndexes',
-		namespace: '<portlet:namespace />'
+		namespace: '<portlet:namespace />',
 	}).render();
 
 	var categoryPropertiesTrigger = A.one(

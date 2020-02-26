@@ -66,7 +66,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		eventName: '<portlet:namespace />selectedItem',
 		singleSelect: true,
 		title: '<liferay-ui:message key="select-web-content" />',
-		url: '<%= journalContentDisplayContext.getItemSelectorURL() %>'
+		url: '<%= journalContentDisplayContext.getItemSelectorURL() %>',
 	});
 
 	itemSelectorDialog.on('selectedItemChange', function(event) {

@@ -36,11 +36,11 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 				destroyOnHide: true,
 				modal: true,
 				height: 540,
-				width: 600
+				width: 600,
 			},
 			id: 'sharingDialog',
 			title: Liferay.Util.escapeHTML(title),
-			uri: uri
+			uri: uri,
 		});
 	}
 
@@ -52,7 +52,7 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 		function(classNameId, classPK, title) {
 			var sharingParameters = {
 				classNameId: classNameId,
-				classPK: classPK
+				classPK: classPK,
 			};
 
 			var sharingURL = Liferay.Util.PortletURL.createPortletURL(
@@ -71,7 +71,7 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 		function(classNameId, classPK) {
 			var manageCollaboratorsParameters = {
 				classNameId: classNameId,
-				classPK: classPK
+				classPK: classPK,
 			};
 
 			var manageCollaboratorsURL = Liferay.Util.PortletURL.createPortletURL(

@@ -32,40 +32,40 @@ AUI.add(
 		var DocumentLibrary = A.Component.create({
 			ATTRS: {
 				downloadEntryUrl: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				editEntryUrl: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				form: {
-					validator: Lang.isObject
+					validator: Lang.isObject,
 				},
 
 				openViewMoreFileEntryTypesURL: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				searchContainerId: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				selectFileEntryTypeURL: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				selectFolderURL: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				trashEnabled: {
-					validator: Lang.isBoolean
+					validator: Lang.isBoolean,
 				},
 
 				viewFileEntryURL: {
-					validator: Lang.isString
-				}
+					validator: Lang.isString,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -132,7 +132,7 @@ AUI.add(
 							newFolderId,
 							parameterName,
 							parameterValue,
-							redirectUrl
+							redirectUrl,
 						})
 					);
 
@@ -265,7 +265,7 @@ AUI.add(
 						redirect: config.redirect,
 						scopeGroupId: config.scopeGroupId,
 						uploadURL: config.uploadURL,
-						viewFileEntryURL: config.viewFileEntryURL
+						viewFileEntryURL: config.viewFileEntryURL,
 					});
 				},
 
@@ -387,11 +387,11 @@ AUI.add(
 					Liferay.Util.openWindow({
 						dialog: {
 							destroyOnHide: true,
-							modal: true
+							modal: true,
 						},
 						id: instance.ns('selectAddMenuItem'),
 						title: Liferay.Language.get('more'),
-						uri: instance.get('openViewMoreFileEntryTypesURL')
+						uri: instance.get('openViewMoreFileEntryTypesURL'),
 					});
 				},
 
@@ -415,7 +415,7 @@ AUI.add(
 										),
 										url: instance.get(
 											'selectFileEntryTypeURL'
-										)
+										),
 									}
 								);
 
@@ -540,11 +540,11 @@ AUI.add(
 								constrain: true,
 								destroyOnHide: true,
 								modal: true,
-								width: 680
+								width: 680,
 							},
 							id: namespace + 'selectFolder',
 							title: Lang.sub(dialogTitle, [selectedItems]),
-							uri: instance.get('selectFolderURL')
+							uri: instance.get('selectFolderURL'),
 						},
 						event => {
 							if (parameterName && parameterValue) {
@@ -559,8 +559,8 @@ AUI.add(
 							}
 						}
 					);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Portlet.DocumentLibrary = DocumentLibrary;
@@ -570,7 +570,7 @@ AUI.add(
 		requires: [
 			'document-library-upload',
 			'liferay-message',
-			'liferay-portlet-base'
-		]
+			'liferay-portlet-base',
+		],
 	}
 );

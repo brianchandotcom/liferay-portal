@@ -168,7 +168,7 @@
 		);
 
 		iframe.plug(A.Plugin.AutosizeIframe, {
-			monitorHeight: <%= iFramePortletInstanceConfiguration.resizeAutomatically() %>
+			monitorHeight: <%= iFramePortletInstanceConfiguration.resizeAutomatically() %>,
 		});
 
 		iframe.on('load', function() {
@@ -207,7 +207,7 @@
 			'<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>',
 			{
 				headers: headers,
-				mode: 'no-cors'
+				mode: 'no-cors',
 			}
 		);
 	</aui:script>

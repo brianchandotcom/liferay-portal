@@ -22,11 +22,11 @@ class PageToolbar extends Component {
 		onChangeActive: PropTypes.func,
 		onPublish: PropTypes.func.isRequired,
 		onSaveAsDraft: PropTypes.func,
-		submitDisabled: PropTypes.bool
+		submitDisabled: PropTypes.bool,
 	};
 
 	static defaultProps = {
-		submitDisabled: false
+		submitDisabled: false,
 	};
 
 	render() {
@@ -36,7 +36,7 @@ class PageToolbar extends Component {
 			onChangeActive,
 			onPublish,
 			onSaveAsDraft,
-			submitDisabled
+			submitDisabled,
 		} = this.props;
 
 		return (

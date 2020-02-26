@@ -59,7 +59,7 @@ SourceEditorToolbar.SYNTAX_LABEL = {
 	[AceEditor.SYNTAX.css]: 'CSS',
 	[AceEditor.SYNTAX.html]: 'HTML',
 	[AceEditor.SYNTAX.javascript]: 'JavaScript',
-	[AceEditor.SYNTAX.json]: 'JSON'
+	[AceEditor.SYNTAX.json]: 'JSON',
 };
 
 /**
@@ -90,7 +90,7 @@ SourceEditorToolbar.STATE = {
 	 * @memberOf SourceEditorToolbar
 	 * @type {!string}
 	 */
-	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required()
+	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required(),
 };
 
 Soy.register(SourceEditorToolbar, templates);

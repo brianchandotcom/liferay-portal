@@ -20,14 +20,14 @@ const ProcessStatusFilter = ({
 	className,
 	filterKey = filterConstants.processStatus.key,
 	options = {},
-	prefixKey = ''
+	prefixKey = '',
 }) => {
 	const defaultOptions = {
 		hideControl: false,
 		multiple: true,
 		position: 'left',
 		withSelectionTitle: false,
-		withoutRouteParams: false
+		withoutRouteParams: false,
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
@@ -63,18 +63,18 @@ const ProcessStatusFilter = ({
 
 const processStatusConstants = {
 	completed: 'Completed',
-	pending: 'Pending'
+	pending: 'Pending',
 };
 
 const processStatuses = [
 	{
 		key: processStatusConstants.completed,
-		name: Liferay.Language.get('completed')
+		name: Liferay.Language.get('completed'),
 	},
 	{
 		key: processStatusConstants.pending,
-		name: Liferay.Language.get('pending')
-	}
+		name: Liferay.Language.get('pending'),
+	},
 ];
 
 export default ProcessStatusFilter;

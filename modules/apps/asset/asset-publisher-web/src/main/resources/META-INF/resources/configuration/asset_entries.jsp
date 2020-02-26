@@ -211,8 +211,8 @@ for (long groupId : groupIds) {
 			data: {
 				assetEntryOrder: assetEntryOrder,
 				cmd: 'move-selection-down',
-				redirect: '<%= HtmlUtil.escapeJS(currentURL) %>'
-			}
+				redirect: '<%= HtmlUtil.escapeJS(currentURL) %>',
+			},
 		});
 	}
 
@@ -221,8 +221,8 @@ for (long groupId : groupIds) {
 			data: {
 				assetEntryOrder: assetEntryOrder,
 				cmd: 'move-selection-up',
-				redirect: '<%= HtmlUtil.escapeJS(currentURL) %>'
-			}
+				redirect: '<%= HtmlUtil.escapeJS(currentURL) %>',
+			},
 		});
 	}
 </script>
@@ -243,8 +243,8 @@ for (long groupId : groupIds) {
 				assetEntryIds: assetEntryIds.join(','),
 				assetEntryType: assetClassName,
 				cmd: 'add-selection',
-				redirect: '<%= HtmlUtil.escapeJS(currentURL) %>'
-			}
+				redirect: '<%= HtmlUtil.escapeJS(currentURL) %>',
+			},
 		});
 	}
 
@@ -260,7 +260,7 @@ for (long groupId : groupIds) {
 			var itemSelectorDialog = new ItemSelectorDialog.default({
 				eventName: '<%= eventName %>',
 				title: delegateTarget.dataset.title,
-				url: delegateTarget.dataset.href
+				url: delegateTarget.dataset.href,
 			});
 
 			itemSelectorDialog.open();

@@ -23,7 +23,7 @@ const EvaluatorComponent = WithEvaluator(() => <div>{'Liferay'}</div>);
 const fieldInstance = {
 	fieldName: 'Checkbox',
 	isDisposed: () => false,
-	value: false
+	value: false,
 };
 
 describe('Evaluator', () => {
@@ -43,7 +43,7 @@ describe('Evaluator', () => {
 	it('renders default markup', () => {
 		component = new EvaluatorComponent({
 			fieldType,
-			formContext: {}
+			formContext: {},
 		});
 
 		expect(component).toMatchSnapshot();
@@ -52,18 +52,18 @@ describe('Evaluator', () => {
 	it('continues propagating the fieldEdited event', () => {
 		component = new EvaluatorComponent({
 			fieldType,
-			formContext: {}
+			formContext: {},
 		});
 		const event = {
 			fieldInstance: {
 				...fieldInstance,
-				value: true
-			}
+				value: true,
+			},
 		};
 		const spy = jest.spyOn(component, 'emit');
 
 		fetch.mockResponse(JSON.stringify({}), {
-			status: 200
+			status: 200,
 		});
 
 		jest.runAllTimers();
@@ -77,20 +77,20 @@ describe('Evaluator', () => {
 		component = new EvaluatorComponent({
 			fieldType,
 			formContext: {
-				pages
-			}
+				pages,
+			},
 		});
 		const event = {
 			fieldInstance: {
 				...fieldInstance,
 				evaluable: true,
-				value: true
-			}
+				value: true,
+			},
 		};
 		const spy = jest.spyOn(component, 'emit');
 
 		fetch.mockResponse(JSON.stringify(pages), {
-			status: 200
+			status: 200,
 		});
 
 		component._handleFieldEdited(event);
@@ -111,26 +111,26 @@ describe('Evaluator', () => {
 									{
 										fieldName: 'radioField',
 										label: 'Radio',
-										type: 'radio'
-									}
+										type: 'radio',
+									},
 								],
-								size: 3
+								size: 3,
 							},
 							{
 								fields: [],
-								size: 9
-							}
-						]
-					}
-				]
-			}
+								size: 9,
+							},
+						],
+					},
+				],
+			},
 		];
 
 		component = new EvaluatorComponent({
 			fieldType,
 			formContext: {
-				pages
-			}
+				pages,
+			},
 		});
 
 		jest.runAllTimers();
@@ -140,9 +140,9 @@ describe('Evaluator', () => {
 		component.willReceiveProps({
 			formContext: {
 				newVal: {
-					pages: newPages
-				}
-			}
+					pages: newPages,
+				},
+			},
 		});
 
 		jest.runAllTimers();
@@ -154,8 +154,8 @@ describe('Evaluator', () => {
 		component = new EvaluatorComponent({
 			fieldType,
 			formContext: {
-				pages
-			}
+				pages,
+			},
 		});
 
 		jest.runAllTimers();
@@ -163,7 +163,7 @@ describe('Evaluator', () => {
 		jest.useFakeTimers();
 
 		component.willReceiveProps({
-			someProperty: true
+			someProperty: true,
 		});
 
 		jest.runAllTimers();

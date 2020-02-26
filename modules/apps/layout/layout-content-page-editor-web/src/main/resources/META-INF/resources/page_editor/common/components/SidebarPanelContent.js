@@ -22,12 +22,12 @@ export default function SidebarPanelContent({padded = true, ...props}) {
 			{...props}
 			className={classNames({
 				[props.className]: !!props.className,
-				'px-3': padded
+				'px-3': padded,
 			})}
 		/>
 	);
 }
 
 SidebarPanelContent.propTypes = {
-	padded: PropTypes.bool
+	padded: PropTypes.bool,
 };

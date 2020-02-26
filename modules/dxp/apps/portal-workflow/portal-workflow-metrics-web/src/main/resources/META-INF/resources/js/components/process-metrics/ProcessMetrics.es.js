@@ -16,7 +16,7 @@ import HeaderKebab from '../../shared/components/header/HeaderKebab.es';
 import {parse, stringify} from '../../shared/components/router/queryString.es';
 import {
 	getPathname,
-	withParams
+	withParams,
 } from '../../shared/components/router/routerUtil.es';
 import Tabs from '../../shared/components/tabs/Tabs.es';
 import {AppContext} from '../AppContext.es';
@@ -72,9 +72,9 @@ const ProcessMetrics = ({history, processId, query}) => {
 				page: 1,
 				pageSize: defaultDelta,
 				processId,
-				sort: encodeURIComponent('overdueInstanceCount:asc')
+				sort: encodeURIComponent('overdueInstanceCount:asc'),
 			},
-			path: '/metrics/:processId/dashboard/:pageSize/:page/:sort'
+			path: '/metrics/:processId/dashboard/:pageSize/:page/:sort',
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[processId]
@@ -85,7 +85,7 @@ const ProcessMetrics = ({history, processId, query}) => {
 			key: 'performance',
 			name: Liferay.Language.get('performance'),
 			params: {processId},
-			path: '/metrics/:processId/performance'
+			path: '/metrics/:processId/performance',
 		}),
 		[processId]
 	);
@@ -95,7 +95,7 @@ const ProcessMetrics = ({history, processId, query}) => {
 
 		const search = stringify({
 			...parse(query),
-			filters: {taskKeys: ['allSteps']}
+			filters: {taskKeys: ['allSteps']},
 		});
 
 		history.replace({pathname, search});
@@ -110,8 +110,8 @@ const ProcessMetrics = ({history, processId, query}) => {
 				kebabItems={[
 					{
 						label: Liferay.Language.get('sla-settings'),
-						link: `/slas/${processId}/${defaultDelta}/1`
-					}
+						link: `/slas/${processId}/${defaultDelta}/1`,
+					},
 				]}
 			/>
 

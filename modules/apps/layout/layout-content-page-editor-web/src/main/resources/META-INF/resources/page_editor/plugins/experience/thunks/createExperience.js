@@ -21,23 +21,23 @@ export default function createExperience({name, segmentsEntryId}) {
 		return ExperienceService.createExperience({
 			body: {
 				name,
-				segmentsEntryId
+				segmentsEntryId,
 			},
-			dispatch
+			dispatch,
 		}).then(({fragmentEntryLinks, layoutData, segmentsExperience}) => {
 			ExperienceService.selectExperience({
 				body: {
 					segmentsExperienceId:
-						segmentsExperience.segmentsExperienceId
+						segmentsExperience.segmentsExperienceId,
 				},
-				dispatch
+				dispatch,
 			})
 				.then(portletIds => {
 					return dispatch(
 						selectExperienceAction({
 							portletIds,
 							segmentsExperienceId:
-								segmentsExperience.segmentsExperienceId
+								segmentsExperience.segmentsExperienceId,
 						})
 					);
 				})
@@ -49,7 +49,7 @@ export default function createExperience({name, segmentsEntryId}) {
 				createExperienceAction({
 					fragmentEntryLinks,
 					layoutData,
-					segmentsExperience
+					segmentsExperience,
 				})
 			);
 		});

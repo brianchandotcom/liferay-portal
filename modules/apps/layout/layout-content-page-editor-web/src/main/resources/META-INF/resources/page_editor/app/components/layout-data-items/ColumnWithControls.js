@@ -17,7 +17,7 @@ import React, {useContext, useEffect, useMemo} from 'react';
 
 import {
 	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useSelector} from '../../store/index';
@@ -45,7 +45,7 @@ const ColumnWithControls = React.forwardRef(
 
 		const columnInfo = useMemo(() => getColumnInfo({item, layoutData}), [
 			item,
-			layoutData
+			layoutData,
 		]);
 
 		const onWindowMouseMove = event => {
@@ -108,7 +108,7 @@ const ColumnWithControls = React.forwardRef(
 
 ColumnWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default ColumnWithControls;
@@ -142,6 +142,6 @@ function getColumnInfo({item, layoutData}) {
 		nextColumn: nextColumn ? nextColumn : {},
 		nextColumnConfig: nextColumn ? nextColumnConfig : {},
 		nextColumnIndex: colIndex + 1,
-		rowColumns
+		rowColumns,
 	};
 }

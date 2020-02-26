@@ -27,18 +27,18 @@ import {confirmDelete, updateItem} from '../../utils/client.es';
 
 const DEPLOYMENT_ACTION = {
 	deploy: Liferay.Language.get('deploy'),
-	undeploy: Liferay.Language.get('undeploy')
+	undeploy: Liferay.Language.get('undeploy'),
 };
 
 const DEPLOYMENT_STATUS = {
 	deployed: Liferay.Language.get('deployed'),
-	undeployed: Liferay.Language.get('undeployed')
+	undeployed: Liferay.Language.get('undeployed'),
 };
 
 const DEPLOYMENT_TYPES = {
 	productMenu: Liferay.Language.get('product-menu'),
 	standalone: Liferay.Language.get('standalone'),
-	widget: Liferay.Language.get('widget')
+	widget: Liferay.Language.get('widget'),
 };
 
 const concatTypes = types => {
@@ -128,13 +128,13 @@ const showUndeployModal = (item, resolve, reject, undeployModalContext) => {
 					>
 						{DEPLOYMENT_ACTION.undeploy}
 					</ClayButton>
-				</ClayButton.Group>
+				</ClayButton.Group>,
 			],
 			header: DEPLOYMENT_ACTION.undeploy,
 			size: 'lg',
-			status: 'warning'
+			status: 'warning',
 		},
-		type: 1
+		type: 1,
 	});
 };
 
@@ -142,34 +142,34 @@ const COLUMNS = [
 	{
 		key: 'name',
 		sortable: true,
-		value: Liferay.Language.get('name')
+		value: Liferay.Language.get('name'),
 	},
 	{
 		key: 'type',
-		value: Liferay.Language.get('deployed-as')
+		value: Liferay.Language.get('deployed-as'),
 	},
 	{
 		key: 'dateCreated',
 		sortable: true,
-		value: Liferay.Language.get('create-date')
+		value: Liferay.Language.get('create-date'),
 	},
 	{
 		asc: false,
 		key: 'dateModified',
 		sortable: true,
-		value: Liferay.Language.get('modified-date')
+		value: Liferay.Language.get('modified-date'),
 	},
 	{
 		key: 'status',
-		value: Liferay.Language.get('status')
-	}
+		value: Liferay.Language.get('status'),
+	},
 ];
 
 export default ({
 	match: {
 		params: {dataDefinitionId},
-		url
-	}
+		url,
+	},
 }) => {
 	const {getStandaloneURL} = useContext(AppContext);
 	const undeployModalContext = useContext(Context);
@@ -193,7 +193,7 @@ export default ({
 			name: item =>
 				isDeployed(item.statusText)
 					? DEPLOYMENT_ACTION.undeploy
-					: DEPLOYMENT_ACTION.deploy
+					: DEPLOYMENT_ACTION.deploy,
 		},
 		{
 			action: item =>
@@ -204,12 +204,12 @@ export default ({
 			show: item =>
 				item.appDeployments.some(
 					deployment => deployment.type === 'standalone'
-				)
+				),
 		},
 		{
 			action: confirmDelete('/o/app-builder/v1.0/apps/'),
-			name: Liferay.Language.get('delete')
-		}
+			name: Liferay.Language.get('delete'),
+		},
 	];
 
 	const EMPTY_STATE = {
@@ -221,7 +221,7 @@ export default ({
 		description: Liferay.Language.get(
 			'select-the-form-and-table-view-you-want-and-deploy-your-app-as-a-widget-standalone-or-place-it-in-the-product-menu'
 		),
-		title: Liferay.Language.get('there-are-no-apps-yet')
+		title: Liferay.Language.get('there-are-no-apps-yet'),
 	};
 
 	return (
@@ -265,7 +265,7 @@ export default ({
 				statusText: item.status.toLowerCase(),
 				type: concatTypes(
 					item.appDeployments.map(deployment => deployment.type)
-				)
+				),
 			})}
 		</ListView>
 	);

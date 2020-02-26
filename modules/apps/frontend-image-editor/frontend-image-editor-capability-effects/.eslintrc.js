@@ -16,6 +16,6 @@ module.exports = {
 	extends: ['liferay/metal'],
 	globals: {
 		Lagrange: true,
-		importScripts: true
-	}
+		importScripts: true,
+	},
 };

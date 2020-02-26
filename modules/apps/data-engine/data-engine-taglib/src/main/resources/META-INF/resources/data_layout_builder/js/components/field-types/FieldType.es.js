@@ -30,7 +30,7 @@ const ICONS = {
 	document_library: 'upload',
 	numeric: 'caret-double',
 	radio: 'radio-button',
-	select: 'list'
+	select: 'list',
 };
 
 export default props => {
@@ -48,19 +48,19 @@ export default props => {
 		name,
 		onClick = () => {},
 		onDelete,
-		onDoubleClick = () => {}
+		onDoubleClick = () => {},
 	} = props;
 
 	const [{dragging}, drag, preview] = useDrag({
 		canDrag: _ => !disabled && draggable,
 		collect: monitor => ({
-			dragging: monitor.isDragging()
+			dragging: monitor.isDragging(),
 		}),
 		item: {
 			data: {...props},
 			preview: () => <FieldTypeDragPreview {...props} />,
-			type: dragType
-		}
+			type: dragType,
+		},
 	});
 
 	useEffect(() => {
@@ -98,7 +98,7 @@ export default props => {
 					active,
 					disabled,
 					dragging,
-					loading
+					loading,
 				}
 			)}
 			data-field-type-name={name}
@@ -114,7 +114,7 @@ export default props => {
 
 			<div
 				className={classnames('autofit-col', 'pr-2', {
-					'pl-2': dragAlignment === 'right'
+					'pl-2': dragAlignment === 'right',
 				})}
 			>
 				<ClaySticker

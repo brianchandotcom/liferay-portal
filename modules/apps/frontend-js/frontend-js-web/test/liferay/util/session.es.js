@@ -16,7 +16,7 @@
 
 import {
 	getSessionValue,
-	setSessionValue
+	setSessionValue,
 } from '../../../src/main/resources/META-INF/resources/liferay/util/session.es';
 
 describe('Session API', () => {
@@ -42,7 +42,7 @@ describe('Session API', () => {
 			getSessionValue('key').then(value => {
 				expect(value).toEqual({
 					key1: 'value1',
-					key2: 'value2'
+					key2: 'value2',
 				});
 			});
 		});
@@ -64,7 +64,7 @@ describe('Session API', () => {
 		it('POSTs a key/serializedValue to the session_click endpoint for object values', () => {
 			setSessionValue('key', {
 				key1: 'value1',
-				key2: 'value2'
+				key2: 'value2',
 			});
 
 			expect(fetch).toHaveBeenCalledTimes(1);

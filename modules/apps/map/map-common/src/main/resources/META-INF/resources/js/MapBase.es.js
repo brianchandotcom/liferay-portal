@@ -232,7 +232,7 @@ class MapBase extends State {
 			customControls[
 				this.constructor.CONTROLS.SEARCH
 			] = new this.constructor.SearchImpl({
-				inputNode: searchControl.querySelector('input')
+				inputNode: searchControl.querySelector('input'),
 			});
 			this.addControl(searchControl, this.constructor.POSITION.TOP_LEFT);
 		}
@@ -308,7 +308,7 @@ class MapBase extends State {
 	_getDialog() {
 		if (!this._dialog && this.constructor.DialogImpl) {
 			this._dialog = new this.constructor.DialogImpl({
-				map: this._map
+				map: this._map,
 			});
 		}
 
@@ -486,7 +486,7 @@ class MapBase extends State {
 			this.constructor.GeoJSONImpl !== GeoJSONBase
 		) {
 			this._geoJSONLayer = new this.constructor.GeoJSONImpl({
-				map: this._map
+				map: this._map,
 			});
 		}
 
@@ -557,7 +557,7 @@ class MapBase extends State {
 		) {
 			marker = new this.constructor.MarkerImpl({
 				location,
-				map: this._map
+				map: this._map,
 			});
 		}
 
@@ -621,8 +621,8 @@ class MapBase extends State {
 		this.emit('positionChange', {
 			newVal: {
 				address: position.address,
-				location: position.location
-			}
+				location: position.location,
+			},
 		});
 
 		return position;
@@ -722,7 +722,7 @@ MapBase.CONTROLS = {
 	SEARCH: 'search',
 	STREETVIEW: 'streetview',
 	TYPE: 'type',
-	ZOOM: 'zoom'
+	ZOOM: 'zoom',
 };
 
 /**
@@ -752,7 +752,7 @@ MapBase.POSITION = {
 	TOP: 2,
 	TOP_CENTER: 2,
 	TOP_LEFT: 1,
-	TOP_RIGHT: 3
+	TOP_RIGHT: 3,
 };
 
 /**
@@ -787,7 +787,7 @@ MapBase.STATE = {
 	).value([
 		MapBase.CONTROLS.PAN,
 		MapBase.CONTROLS.TYPE,
-		MapBase.CONTROLS.ZOOM
+		MapBase.CONTROLS.ZOOM,
 	]),
 
 	/**
@@ -813,11 +813,11 @@ MapBase.STATE = {
 	position: Config.shapeOf({
 		location: Config.shapeOf({
 			lat: Config.number().value(0),
-			lng: Config.number().value(0)
-		})
+			lng: Config.number().value(0),
+		}),
 	})
 		.value({
-			location: {lat: 0, lng: 0}
+			location: {lat: 0, lng: 0},
 		})
 		.setter('setPosition'),
 
@@ -826,7 +826,7 @@ MapBase.STATE = {
 	 * @review
 	 * @type {number}
 	 */
-	zoom: Config.number().value(11)
+	zoom: Config.number().value(11),
 };
 
 Liferay.MapBase = MapBase;

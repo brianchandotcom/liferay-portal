@@ -30,9 +30,9 @@ class AccountOrganizationsManagementToolbarDefaultEventHandler extends DefaultEv
 					accountOrganizationIds: Liferay.Util.listCheckedExcept(
 						form,
 						this.ns('allRowIds')
-					)
+					),
 				},
-				url: itemData.removeOrganizationsURL
+				url: itemData.removeOrganizationsURL,
 			});
 		}
 	}
@@ -45,7 +45,7 @@ class AccountOrganizationsManagementToolbarDefaultEventHandler extends DefaultEv
 				Liferay.Language.get('assign-organizations-to-x'),
 				itemData.accountEntryName
 			),
-			url: itemData.selectAccountOrganizationsURL
+			url: itemData.selectAccountOrganizationsURL,
 		});
 
 		itemSelectorDialog.open();
@@ -58,9 +58,9 @@ class AccountOrganizationsManagementToolbarDefaultEventHandler extends DefaultEv
 
 				Liferay.Util.postForm(form, {
 					data: {
-						accountOrganizationIds: selectedItem.value
+						accountOrganizationIds: selectedItem.value,
 					},
-					url: itemData.assignAccountOrganizationsURL
+					url: itemData.assignAccountOrganizationsURL,
 				});
 			}
 		});

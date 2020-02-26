@@ -62,18 +62,18 @@ function transformListOfStringsToObjects(list) {
 function trimListItems(list) {
 	return list.map(({label, value}) => ({
 		label: label.trim(),
-		value: value.trim()
+		value: value.trim(),
 	}));
 }
 
 class Alias extends Component {
 	static propTypes = {
 		keywords: PropTypes.arrayOf(String),
-		onChange: PropTypes.func.isRequired
+		onChange: PropTypes.func.isRequired,
 	};
 
 	state = {
-		inputValue: ''
+		inputValue: '',
 	};
 
 	_handleInputChange = value => {

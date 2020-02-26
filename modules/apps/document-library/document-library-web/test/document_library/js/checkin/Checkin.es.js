@@ -17,7 +17,7 @@ import {
 	cleanup,
 	fireEvent,
 	render,
-	waitForElement
+	waitForElement,
 } from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
@@ -28,7 +28,7 @@ const bridgeComponentId = '_portletNamespace_DocumentLibraryCheckinModal';
 const dlVersionNumberIncreaseValues = {
 	MAJOR: 'MAJOR',
 	MINOR: 'MINOR',
-	NONE: 'NONE'
+	NONE: 'NONE',
 };
 
 function _renderCheckinComponent({checkedOut = true} = {}) {
@@ -39,7 +39,7 @@ function _renderCheckinComponent({checkedOut = true} = {}) {
 			portletNamespace="portletNamespace"
 		/>,
 		{
-			baseElement: document.body
+			baseElement: document.body,
 		}
 	);
 }
@@ -112,7 +112,7 @@ describe('Checkin', () => {
 
 						act(() => {
 							fireEvent.change(changeLogField, {
-								target: {value: 'ChangeLog notes'}
+								target: {value: 'ChangeLog notes'},
 							});
 							fireEvent.click(minorVersionRadio);
 						});

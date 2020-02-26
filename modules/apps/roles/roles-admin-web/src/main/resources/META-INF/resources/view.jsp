@@ -116,20 +116,20 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 		) {
 			Liferay.Util.postForm(form, {
 				data: {
-					deleteRoleIds: deleteRoleIds
+					deleteRoleIds: deleteRoleIds,
 				},
 
 				<portlet:actionURL name="deleteRoles" var="deleteRolesURL">
 					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 				</portlet:actionURL>
 
-				url: '<%= deleteRolesURL %>'
+				url: '<%= deleteRolesURL %>',
 			});
 		}
 	};
 
 	var ACTIONS = {
-		deleteRoles: deleteRoles
+		deleteRoles: deleteRoles,
 	};
 
 	Liferay.componentReady('viewRolesManagementToolbar').then(function(

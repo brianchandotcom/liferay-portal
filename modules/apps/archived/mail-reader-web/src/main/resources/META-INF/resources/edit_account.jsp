@@ -103,7 +103,7 @@ Account mailAccount = AccountLocalServiceUtil.getAccount(accountId);
 		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/update_account', {
 			dataType: 'JSON',
 			form: {
-				id: form.getDOMNode()
+				id: form.getDOMNode(),
 			},
 			on: {
 				failure: function(event, id, obj) {
@@ -119,8 +119,8 @@ Account mailAccount = AccountLocalServiceUtil.getAccount(accountId);
 						responseData.status,
 						responseData.message
 					);
-				}
-			}
+				},
+			},
 		});
 	});
 
@@ -140,7 +140,7 @@ Account mailAccount = AccountLocalServiceUtil.getAccount(accountId);
 
 		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/delete_account', {
 			data: Liferay.Util.ns('<portlet:namespace />', {
-				accountId: <%= accountId %>
+				accountId: <%= accountId %>,
 			}),
 			dataType: 'JSON',
 			method: 'POST',
@@ -162,15 +162,15 @@ Account mailAccount = AccountLocalServiceUtil.getAccount(accountId);
 					if (responseData.status == 'success') {
 						Liferay.Mail.reset();
 					}
-				}
-			}
+				},
+			},
 		});
 	});
 
 	A.one('.mail-dialog .synchronize-account').on('click', function(event) {
 		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/synchronize_account', {
 			data: Liferay.Util.ns('<portlet:namespace />', {
-				accountId: <%= accountId %>
+				accountId: <%= accountId %>,
 			}),
 			dataType: 'JSON',
 			method: 'POST',
@@ -186,8 +186,8 @@ Account mailAccount = AccountLocalServiceUtil.getAccount(accountId);
 						'success',
 						'<liferay-ui:message key="synchronizing-messages-in-the-background" />'
 					);
-				}
-			}
+				},
+			},
 		});
 	});
 </aui:script>

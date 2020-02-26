@@ -20,7 +20,7 @@ import {Link} from 'react-router-dom';
 
 import {
 	deleteMessage,
-	markAsAnswerMessageBoardMessage
+	markAsAnswerMessageBoardMessage,
 } from '../utils/client.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Comments from './Comments.es';
@@ -62,7 +62,7 @@ export default ({answer, answerChange, deleteAnswer}) => {
 		<>
 			<div
 				className={classnames('question-answer c-p-3', {
-					'question-answer-success': showAsAnswer
+					'question-answer-success': showAsAnswer,
 				})}
 			>
 				<div className="row">

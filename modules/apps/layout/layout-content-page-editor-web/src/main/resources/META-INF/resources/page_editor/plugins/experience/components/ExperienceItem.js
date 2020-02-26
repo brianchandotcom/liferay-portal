@@ -33,7 +33,7 @@ const ExperienceItem = ({
 	onEditExperience,
 	onPriorityDecrease,
 	onPriorityIncrease,
-	onSelect
+	onSelect,
 }) => {
 	const iconRef = React.useRef();
 	const [showtoolTip, setShowtoolTip] = React.useState(false);
@@ -82,7 +82,7 @@ const ExperienceItem = ({
 	};
 
 	const itemClassName = classNames('d-flex dropdown-menu__experience', {
-		'dropdown-menu__experience--active': active
+		'dropdown-menu__experience--active': active,
 	});
 
 	return (
@@ -233,7 +233,7 @@ ExperienceItem.propTypes = {
 	onEditExperience: PropTypes.func.isRequired,
 	onPriorityDecrease: PropTypes.func.isRequired,
 	onPriorityIncrease: PropTypes.func.isRequired,
-	onSelect: PropTypes.func.isRequired
+	onSelect: PropTypes.func.isRequired,
 };
 
 export default ExperienceItem;

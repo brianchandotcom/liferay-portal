@@ -174,7 +174,7 @@ name = HtmlUtil.escapeJS(name);
 	var eventHandles = [
 		Liferay.on('inputLocalized:localeChanged', onLocaleChangedHandler),
 		preventImageDragoverHandler,
-		preventImageDropHandler
+		preventImageDropHandler,
 	];
 
 	window['<%= name %>'] = {
@@ -309,7 +309,7 @@ name = HtmlUtil.escapeJS(name);
 			else {
 				instancePendingData = value;
 			}
-		}
+		},
 	};
 
 	var addAUIClass = function(iframe) {
@@ -356,7 +356,7 @@ name = HtmlUtil.escapeJS(name);
 
 	Liferay.fire('editorAPIReady', {
 		editor: window['<%= name %>'],
-		editorName: '<%= name %>'
+		editorName: '<%= name %>',
 	});
 
 	<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
@@ -450,7 +450,7 @@ name = HtmlUtil.escapeJS(name);
 			window['<%= name %>'].instanceReady = true;
 
 			Liferay.component('<%= name %>', window['<%= name %>'], {
-				portletId: '<%= portletId %>'
+				portletId: '<%= portletId %>',
 			});
 		}
 
@@ -462,7 +462,7 @@ name = HtmlUtil.escapeJS(name);
 			filebrowserImageBrowseLinkUrl: '',
 			filebrowserImageBrowseUrl: '',
 			filebrowserUploadUrl: null,
-			toolbar: currentToolbarSet
+			toolbar: currentToolbarSet,
 		};
 
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;
@@ -486,7 +486,7 @@ name = HtmlUtil.escapeJS(name);
 				editor: ckEditor,
 				editorName: '<%= name %>',
 				namespace: '<portlet:namespace />',
-				saveURL: '<%= inlineEditSaveURL %>'
+				saveURL: '<%= inlineEditSaveURL %>',
 			});
 		</c:if>
 

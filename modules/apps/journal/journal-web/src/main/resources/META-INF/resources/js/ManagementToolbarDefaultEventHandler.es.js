@@ -32,7 +32,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				redirect: Liferay.Util.addParams(
 					namespace + 'ddmStructureKey=' + event.ddmStructureKey,
 					addArticleURL
-				)
+				),
 			});
 		});
 	}
@@ -52,14 +52,14 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			Liferay.fire(this.ns('editEntry'), {
 				action: this.trashEnabled
 					? '/journal/move_entries_to_trash'
-					: '/journal/delete_entries'
+					: '/journal/delete_entries',
 			});
 		}
 	}
 
 	expireEntries() {
 		Liferay.fire(this.ns('editEntry'), {
-			action: '/journal/expire_entries'
+			action: '/journal/expire_entries',
 		});
 	}
 
@@ -73,14 +73,14 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 						if (event.target.get('destroyOnHide')) {
 							window.location.reload();
 						}
-					}
+					},
 				},
 				destroyOnHide: true,
-				modal: true
+				modal: true,
 			},
 			id: this.ns('selectAddMenuItem'),
 			title: Liferay.Language.get('more'),
-			uri: this.openViewMoreStructuresURL
+			uri: this.openViewMoreStructuresURL,
 		});
 	}
 
@@ -115,11 +115,11 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			{
 				dialog: {
 					constrain: true,
-					modal: true
+					modal: true,
 				},
 				eventName: this.ns('selectDDMStructure'),
 				title: Liferay.Language.get('structures'),
-				uri: this.selectEntityURL
+				uri: this.selectEntityURL,
 			},
 			event => {
 				Liferay.Util.navigate(
@@ -141,7 +141,7 @@ ManagementToolbarDefaultEventHandler.STATE = {
 	openViewMoreStructuresURL: Config.string(),
 	selectEntityURL: Config.string(),
 	trashEnabled: Config.bool(),
-	viewDDMStructureArticlesURL: Config.string()
+	viewDDMStructureArticlesURL: Config.string(),
 };
 
 export default ManagementToolbarDefaultEventHandler;

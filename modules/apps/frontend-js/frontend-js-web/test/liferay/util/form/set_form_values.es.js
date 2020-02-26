@@ -32,7 +32,7 @@ describe('Liferay.Util.setFormValues', () => {
 
 		setFormValues(form, {
 			bar: '456',
-			foo: 'def'
+			foo: 'def',
 		});
 
 		const barElement = getFormElement(form, 'bar');

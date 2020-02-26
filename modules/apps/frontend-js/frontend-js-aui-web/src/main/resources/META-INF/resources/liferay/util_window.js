@@ -38,23 +38,23 @@ AUI.add(
 		var LiferayModal = A.Component.create({
 			ATTRS: {
 				autoHeight: {
-					value: false
+					value: false,
 				},
 
 				autoHeightRatio: {
-					value: 0.95
+					value: 0.95,
 				},
 
 				autoSizeNode: {
-					setter: A.one
+					setter: A.one,
 				},
 
 				autoWidth: {
-					value: false
+					value: false,
 				},
 
 				autoWidthRatio: {
-					value: 0.95
+					value: 0.95,
 				},
 
 				toolbars: {
@@ -77,21 +77,21 @@ AUI.add(
 											instance.hide();
 
 											event.domEvent.stopPropagation();
-										}
+										},
 									},
-									render: true
-								}
-							]
+									render: true,
+								},
+							],
 						};
-					}
-				}
+					},
+				},
 			},
 
 			EXTENDS: A.Modal,
 
 			NAME: A.Modal.NAME,
 
-			prototype: {}
+			prototype: {},
 		});
 
 		A.mix(Window, {
@@ -224,7 +224,7 @@ AUI.add(
 					uri = iframeURL.toString();
 
 					var defaultDialogIframeConfig = {
-						bodyCssClass: ''
+						bodyCssClass: '',
 					};
 
 					dialogIframeConfig = A.merge(
@@ -252,7 +252,7 @@ AUI.add(
 									instance.node.on('load', () => {
 										if (!popupReady) {
 											Liferay.fire('popupReady', {
-												windowName: iframeId
+												windowName: iframeId,
 											});
 										}
 
@@ -263,7 +263,7 @@ AUI.add(
 
 							iframeId,
 							iframeTitle: config.title || '',
-							uri
+							uri,
 						}
 					);
 				}
@@ -289,7 +289,7 @@ AUI.add(
 
 					if (config.stack !== false) {
 						A.mix(modalConfig, {
-							plugins: [Liferay.WidgetZIndex]
+							plugins: [Liferay.WidgetZIndex],
 						});
 					}
 
@@ -298,7 +298,7 @@ AUI.add(
 							{
 								cssClass: 'modal-full-screen',
 								headerContent: titleNode,
-								id
+								id,
 							},
 							modalConfig
 						)
@@ -492,7 +492,7 @@ AUI.add(
 				centered: true,
 				modal: true,
 				visible: true,
-				zIndex: Liferay.zIndex.WINDOW
+				zIndex: Liferay.zIndex.WINDOW,
 			},
 
 			IFRAME_SUFFIX: '_iframe_',
@@ -546,7 +546,7 @@ AUI.add(
 				if (dialog && dialog.io) {
 					dialog.io.start();
 				}
-			}
+			},
 		});
 	},
 	'',
@@ -556,7 +556,7 @@ AUI.add(
 			'aui-modal',
 			'aui-url',
 			'event-resize',
-			'liferay-widget-zindex'
-		]
+			'liferay-widget-zindex',
+		],
 	}
 );

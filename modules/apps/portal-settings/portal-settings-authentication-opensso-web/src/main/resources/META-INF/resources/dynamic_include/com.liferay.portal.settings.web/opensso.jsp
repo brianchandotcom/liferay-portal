@@ -99,14 +99,14 @@ String version = openSSOConfiguration.version();
 
 			var dialog = Liferay.Util.Window.getWindow({
 				dialog: {
-					destroyOnHide: true
+					destroyOnHide: true,
 				},
-				title: '<%= UnicodeLanguageUtil.get(request, "opensso") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "opensso") %>',
 			});
 
 			dialog.plug(A.Plugin.IO, {
 				data: data,
-				uri: url
+				uri: url,
 			});
 		},
 		['aui-io-plugin-deprecated', 'liferay-util-window']

@@ -26,7 +26,7 @@
 					var liferayAutoCompleteCKEditor = new Liferay.AutoCompleteCKEditor(
 						A.merge(editor.config.autocomplete, {
 							editor,
-							width: 300
+							width: 300,
 						})
 					);
 
@@ -35,6 +35,6 @@
 					liferayAutoCompleteCKEditor.detach('valueChange');
 				});
 			});
-		}
+		},
 	});
 })();

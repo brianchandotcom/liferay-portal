@@ -134,9 +134,9 @@ renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x"
 									on: {
 										click: function() {
 											databaseConnectionModal.hide();
-										}
-									}
-								}
+										},
+									},
+								},
 							],
 							header: [
 								{
@@ -148,14 +148,14 @@ renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x"
 									on: {
 										click: function() {
 											databaseConnectionModal.hide();
-										}
-									}
-								}
-							]
+										},
+									},
+								},
+							],
 						},
-						width: 600
+						width: 600,
 					},
-					title: '<liferay-ui:message key="source" />'
+					title: '<liferay-ui:message key="source" />',
 				});
 
 				databaseConnectionModal.render();
@@ -167,9 +167,9 @@ renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x"
 
 							databaseConnectionModal.bodyNode.append(response);
 							databaseConnectionModal.show();
-						}
+						},
 					},
-					data: data
+					data: data,
 				});
 			}
 		},

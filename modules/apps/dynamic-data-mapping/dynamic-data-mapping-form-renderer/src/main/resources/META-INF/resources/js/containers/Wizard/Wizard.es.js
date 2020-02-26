@@ -24,14 +24,14 @@ class Wizard extends Component {
 		const {pageIndex} = dataset;
 
 		dispatch('paginationItemClicked', {
-			pageIndex: Number(pageIndex)
+			pageIndex: Number(pageIndex),
 		});
 	}
 }
 
 Wizard.STATE = {
 	activePage: Config.number(),
-	pages: Config.array()
+	pages: Config.array(),
 };
 
 Soy.register(Wizard, templates);

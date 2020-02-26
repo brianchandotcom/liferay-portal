@@ -29,13 +29,13 @@ class DDMTemplateElementsDefaultEventHandler extends DefaultEventHandler {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				modal: true
+				modal: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
 			title: Liferay.Language.get('permissions'),
-			uri: itemData.permissionsDDMTemplateURL
+			uri: itemData.permissionsDDMTemplateURL,
 		});
 	}
 }

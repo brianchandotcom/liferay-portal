@@ -81,11 +81,11 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 				method: Liferay.Service.bind('/layout/get-temp-file-names'),
 				params: {
 					folderName: '<%= ExportImportHelper.TEMP_FOLDER_NAME %>',
-					groupId: <%= groupId %>
-				}
+					groupId: <%= groupId %>,
+				},
 			},
 			uploadFile:
-				'<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="importLayouts"><portlet:param name="mvcRenderCommandName" value="importLayouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />'
+				'<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="importLayouts"><portlet:param name="mvcRenderCommandName" value="importLayouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
 		});
 
 		var continueButton = A.one('#<portlet:namespace />continueButton');
@@ -125,7 +125,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 		exportImportOptions.plug(A.Plugin.IO, {
 			form: {
-				id: '<portlet:namespace />fm1'
+				id: '<portlet:namespace />fm1',
 			},
 
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="importLayouts" var="importPagesURL">
@@ -135,7 +135,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 				<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
 			</liferay-portlet:resourceURL>
 
-			uri: '<%= importPagesURL %>'
+			uri: '<%= importPagesURL %>',
 		});
 	});
 </aui:script>

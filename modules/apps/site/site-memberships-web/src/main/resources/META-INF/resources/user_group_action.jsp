@@ -107,14 +107,14 @@ UserGroup userGroup = (UserGroup)row.getObject();
 				document.<portlet:namespace />addUserGroupGroupRoleFm;
 
 			Liferay.Util.setFormValues(addUserGroupGroupRoleFm, {
-				userGroupId: target.dataset.usergroupid
+				userGroupId: target.dataset.usergroupid,
 			});
 
 			var itemSelectorDialog = new ItemSelectorDialog.default({
 				buttonAddLabel: '<liferay-ui:message key="done" />',
 				eventName: '<portlet:namespace />selectUserGroupsRoles',
 				title: '<liferay-ui:message key="assign-roles" />',
-				url: target.dataset.href
+				url: target.dataset.href,
 			});
 
 			itemSelectorDialog.on('selectedItemChange', function(event) {
@@ -154,14 +154,14 @@ UserGroup userGroup = (UserGroup)row.getObject();
 				document.<portlet:namespace />unassignUserGroupGroupRoleFm;
 
 			Liferay.Util.setFormValues(unassignUserGroupGroupRoleFm, {
-				userGroupId: target.dataset.usergroupid
+				userGroupId: target.dataset.usergroupid,
 			});
 
 			var itemSelectorDialog = new ItemSelectorDialog.default({
 				buttonAddLabel: '<liferay-ui:message key="done" />',
 				eventName: '<portlet:namespace />selectUserGroupsRoles',
 				title: '<liferay-ui:message key="unassign-roles" />',
-				url: target.dataset.href
+				url: target.dataset.href,
 			});
 
 			itemSelectorDialog.on('selectedItemChange', function(event) {

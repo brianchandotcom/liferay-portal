@@ -91,7 +91,7 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 	var autoFields = new Liferay.AutoFields({
 		contentBox: 'fieldset#<portlet:namespace />fieldsId',
 		fieldIndexes: '<portlet:namespace />fieldsIndexes',
-		namespace: '<portlet:namespace />'
+		namespace: '<portlet:namespace />',
 	}).render();
 </aui:script>
 

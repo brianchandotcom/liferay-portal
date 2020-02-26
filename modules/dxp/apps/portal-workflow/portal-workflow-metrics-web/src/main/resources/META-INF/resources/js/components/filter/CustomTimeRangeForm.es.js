@@ -16,7 +16,7 @@ import Icon from '../../shared/components/Icon.es';
 import {
 	addClickOutsideListener,
 	handleClickOutside,
-	removeClickOutsideListener
+	removeClickOutsideListener,
 } from '../../shared/components/filter/util/filterEvents.es';
 import {sub} from '../../shared/util/lang.es';
 import {useCustomTimeRange} from './hooks/useCustomTimeRange.es';
@@ -26,7 +26,7 @@ const CustomTimeRangeForm = ({
 	items,
 	prefixKey = '',
 	setFormVisible,
-	withoutRouteParams
+	withoutRouteParams,
 }) => {
 	const {
 		applyCustomFilter,
@@ -35,7 +35,7 @@ const CustomTimeRangeForm = ({
 		errors = {},
 		setDateEnd,
 		setDateStart,
-		validate
+		validate,
 	} = useCustomTimeRange(filterKey, prefixKey, withoutRouteParams);
 	const wrapperRef = useRef();
 
@@ -91,7 +91,7 @@ const CustomTimeRangeForm = ({
 
 				<span className="form-text mb-3 text-semi-bold">
 					{sub(Liferay.Language.get('default-date-format-is-x'), [
-						dateFormat
+						dateFormat,
 					])}
 				</span>
 

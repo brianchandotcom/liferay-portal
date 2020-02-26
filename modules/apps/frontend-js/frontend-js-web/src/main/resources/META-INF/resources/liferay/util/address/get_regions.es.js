@@ -33,7 +33,7 @@ export default function getRegions(callback, selectKey) {
 		'/region/get-regions',
 		{
 			active: true,
-			countryId: parseInt(selectKey, 10)
+			countryId: parseInt(selectKey, 10),
 		},
 		callback
 	);

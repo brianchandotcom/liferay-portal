@@ -18,13 +18,13 @@ describe('The velocityUnitUtil should', () => {
 				active: true,
 				defaultVelocityUnit: true,
 				key: 'Days',
-				name: 'inst-day'
+				name: 'inst-day',
 			},
-			{key: 'Weeks', name: 'inst-week'}
+			{key: 'Weeks', name: 'inst-week'},
 		];
 		const velocityUnits = getVelocityUnits({
 			dateEnd: new Date('12/31/2019'),
-			dateStart: new Date('12/23/2019')
+			dateStart: new Date('12/23/2019'),
 		});
 
 		expect(velocityUnits).toEqual(expectedValue);
@@ -36,12 +36,12 @@ describe('The velocityUnitUtil should', () => {
 				active: true,
 				defaultVelocityUnit: true,
 				key: 'Years',
-				name: 'inst-year'
-			}
+				name: 'inst-year',
+			},
 		];
 		const velocityUnits = getVelocityUnits({
 			dateEnd: new Date('12/31/2019'),
-			dateStart: new Date('31/23/2018')
+			dateStart: new Date('31/23/2018'),
 		});
 
 		expect(velocityUnits).toEqual(expectedValue);

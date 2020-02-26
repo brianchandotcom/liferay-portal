@@ -17,14 +17,14 @@ import {UPDATE_SEGMENTS_EXPERIENCE} from './types';
 export default function updateExperience({
 	name,
 	segmentsEntryId,
-	segmentsExperienceId
+	segmentsExperienceId,
 }) {
 	return {
 		payload: {
 			name,
 			segmentsEntryId,
-			segmentsExperienceId
+			segmentsExperienceId,
 		},
-		type: UPDATE_SEGMENTS_EXPERIENCE
+		type: UPDATE_SEGMENTS_EXPERIENCE,
 	};
 }

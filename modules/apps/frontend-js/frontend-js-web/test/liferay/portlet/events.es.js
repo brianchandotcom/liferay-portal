@@ -35,7 +35,7 @@ describe('PortletHub', () => {
 			const handle = hub.addEventListener('clientEvent', stub);
 
 			const total = hub.dispatchClientEvent('clientEvent', {
-				name: 'PortletA'
+				name: 'PortletA',
 			});
 
 			expect(total).toBe(1);
@@ -68,7 +68,7 @@ describe('PortletHub', () => {
 			hub.removeEventListener(handle);
 
 			const total = hub.dispatchClientEvent('toBeRemoved', {
-				name: 'PortletA'
+				name: 'PortletA',
 			});
 
 			expect(stub.mock.calls.length).toBe(0);
@@ -121,7 +121,7 @@ describe('PortletHub', () => {
 			const handle = hub.addEventListener('awesome\\w+Event$', stub);
 
 			const total = hub.dispatchClientEvent('awesomeClientEvent', {
-				name: 'PortletA'
+				name: 'PortletA',
 			});
 
 			expect(stub.mock.calls.length).toBe(1);
@@ -1047,7 +1047,7 @@ describe('PortletHub', () => {
 				register(portletA),
 				register(portletB),
 				register(portletC),
-				register(portletD)
+				register(portletD),
 			]).then(values => {
 				hubA = values[0];
 				hubB = values[1];
@@ -1216,7 +1216,7 @@ describe('PortletHub', () => {
 
 				const payload = {
 					addr: 'Stgt',
-					name: 'Scott'
+					name: 'Scott',
 				};
 
 				const type = 'event';

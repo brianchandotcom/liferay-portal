@@ -23,7 +23,7 @@ import {Table} from './BulkReassignSelectAssigneesStepTable.es';
 const Body = ({data, setRetry, tasks}) => {
 	const {paginatedItems, pagination} = usePaginationState({
 		initialPageSize: 5,
-		items: tasks
+		items: tasks,
 	});
 
 	return (

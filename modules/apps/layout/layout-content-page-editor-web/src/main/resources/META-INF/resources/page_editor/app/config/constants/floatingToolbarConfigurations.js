@@ -24,7 +24,7 @@ import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from './layoutDataFloatingToolbarB
 const {
 	containerConfiguration,
 	fragmentConfiguration,
-	rowConfiguration
+	rowConfiguration,
 } = LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS;
 
 const {imageProperties, link, map} = EDITABLE_FLOATING_TOOLBAR_BUTTONS;
@@ -35,5 +35,5 @@ export const FLOATING_TOOLBAR_CONFIGURATIONS = {
 	[imageProperties.panelId]: ImagePropertiesPanel,
 	[link.panelId]: LinkPanel,
 	[map.panelId]: MappingPanel,
-	[rowConfiguration.panelId]: RowConfigurationPanel
+	[rowConfiguration.panelId]: RowConfigurationPanel,
 };

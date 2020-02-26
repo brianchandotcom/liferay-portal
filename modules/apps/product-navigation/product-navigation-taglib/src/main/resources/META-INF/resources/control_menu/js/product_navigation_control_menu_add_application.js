@@ -110,7 +110,7 @@ AUI.add(
 					if (togglerDelegate) {
 						togglerDelegate.plug(Liferay.TogglerInteraction, {
 							children: '.lfr-content-item',
-							parents: '.lfr-content-category'
+							parents: '.lfr-content-category',
 						});
 					}
 
@@ -120,12 +120,12 @@ AUI.add(
 						nodeContainerSelector: '.lfr-content-item',
 						nodeList: config.nodeList,
 						nodeSelector: '.drag-content-item',
-						togglerId: togglerSelector
+						togglerId: togglerSelector,
 					});
 
 					instance._bindUI();
-				}
-			}
+				},
+			},
 		});
 
 		ControlMenu.AddApplication = AddApplication;
@@ -139,7 +139,7 @@ AUI.add(
 			'liferay-product-navigation-control-menu-add-base',
 			'liferay-panel-search',
 			'liferay-portlet-base',
-			'liferay-toggler-interaction'
-		]
+			'liferay-toggler-interaction',
+		],
 	}
 );

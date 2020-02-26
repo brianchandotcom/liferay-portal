@@ -25,7 +25,7 @@ class DepotAdminManagementToolbarDefaultEventHandler extends DefaultEventHandler
 			mainFieldLabel: Liferay.Language.get('name'),
 			mainFieldName: 'name',
 			namespace: this.namespace,
-			spritemap: this.spritemap
+			spritemap: this.spritemap,
 		});
 	}
 
@@ -38,9 +38,9 @@ class DepotAdminManagementToolbarDefaultEventHandler extends DefaultEventHandler
 					deleteEntryIds: Liferay.Util.listCheckedExcept(
 						form,
 						this.ns('allRowIds')
-					)
+					),
 				},
-				url: this.deleteDepotEntriesURL
+				url: this.deleteDepotEntriesURL,
 			});
 		}
 	}
@@ -48,7 +48,7 @@ class DepotAdminManagementToolbarDefaultEventHandler extends DefaultEventHandler
 
 DepotAdminManagementToolbarDefaultEventHandler.STATE = {
 	deleteDepotEntriesURL: Config.string(),
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export default DepotAdminManagementToolbarDefaultEventHandler;

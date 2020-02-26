@@ -24,46 +24,46 @@ const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 		LAYOUT_DATA_ITEM_TYPES.dropZone,
 		LAYOUT_DATA_ITEM_TYPES.container,
 		LAYOUT_DATA_ITEM_TYPES.row,
-		LAYOUT_DATA_ITEM_TYPES.fragment
+		LAYOUT_DATA_ITEM_TYPES.fragment,
 	],
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: [],
 	[LAYOUT_DATA_ITEM_TYPES.container]: [
 		LAYOUT_DATA_ITEM_TYPES.dropZone,
 		LAYOUT_DATA_ITEM_TYPES.row,
-		LAYOUT_DATA_ITEM_TYPES.fragment
+		LAYOUT_DATA_ITEM_TYPES.fragment,
 	],
 	[LAYOUT_DATA_ITEM_TYPES.row]: [LAYOUT_DATA_ITEM_TYPES.column],
 	[LAYOUT_DATA_ITEM_TYPES.column]: [
 		LAYOUT_DATA_ITEM_TYPES.dropZone,
 		LAYOUT_DATA_ITEM_TYPES.container,
 		LAYOUT_DATA_ITEM_TYPES.row,
-		LAYOUT_DATA_ITEM_TYPES.fragment
+		LAYOUT_DATA_ITEM_TYPES.fragment,
 	],
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: []
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: [],
 };
 
 export const TARGET_POSITION = {
 	BOTTOM: 0,
 	MIDDLE: 1,
-	TOP: 2
+	TOP: 2,
 };
 
 const RULES_TYPE = {
 	ELEVATE: 3,
 	MIDDLE: 1,
-	VALID_MOVE: 4
+	VALID_MOVE: 4,
 };
 
 const RULES = {
 	[RULES_TYPE.MIDDLE]: ({hoverClientY, hoverMiddleY, ...args}) =>
 		isValidMoveToMiddle(args) && isMiddle(hoverClientY, hoverMiddleY),
 	[RULES_TYPE.ELEVATE]: checkElevate,
-	[RULES_TYPE.VALID_MOVE]: isValidMoveToTargetPosition
+	[RULES_TYPE.VALID_MOVE]: isValidMoveToTargetPosition,
 };
 
 const initialDragDrop = {
 	dropTargetItemId: null,
-	targetPosition: null
+	targetPosition: null,
 };
 
 export const DragDropManagerImpl = React.createContext(initialDragDrop);
@@ -98,16 +98,16 @@ export default function useDragAndDrop({
 	containerRef,
 	item,
 	layoutData,
-	onDragEnd
+	onDragEnd,
 }) {
 	const {
 		dispatch,
-		store: {dropTargetItemId, targetPosition}
+		store: {dropTargetItemId, targetPosition},
 	} = useContext(DragDropManagerImpl);
 
 	const [dragOptions, drag, preview] = useDrag({
 		collect: _monitor => ({
-			isDragging: _monitor.isDragging()
+			isDragging: _monitor.isDragging(),
 		}),
 		end(_item, _monitor) {
 			const result = _monitor.getDropResult();
@@ -119,11 +119,11 @@ export default function useDragAndDrop({
 				onDragEnd({
 					itemId,
 					parentItemId: parentId,
-					position
+					position,
 				});
 			}
 		},
-		item
+		item,
 	});
 
 	const [dropOptions, drop] = useDrop({
@@ -132,7 +132,7 @@ export default function useDragAndDrop({
 		collect(_monitor) {
 			return {
 				canDrop: _monitor.canDrop(),
-				isOver: _monitor.isOver({shallow: true})
+				isOver: _monitor.isOver({shallow: true}),
 			};
 		},
 		drop(_item, _monitor) {
@@ -141,14 +141,14 @@ export default function useDragAndDrop({
 					item: _item,
 					items: layoutData.items,
 					siblingOrParentId: dropTargetItemId,
-					targetPosition
+					targetPosition,
 				});
 
 				return {
 					itemId: _item.itemId,
 					itemType: _monitor.getItemType(),
 					parentId,
-					position
+					position,
 				};
 			}
 		},
@@ -162,7 +162,7 @@ export default function useDragAndDrop({
 			if (rootVoid(item)) {
 				dispatch({
 					dropTargetItemId: item.itemId,
-					targetPosition: TARGET_POSITION.MIDDLE
+					targetPosition: TARGET_POSITION.MIDDLE,
 				});
 
 				return;
@@ -194,14 +194,14 @@ export default function useDragAndDrop({
 				item: _item,
 				items: layoutData.items,
 				siblingOrParent: item,
-				targetPosition: newTargetPosition
+				targetPosition: newTargetPosition,
 			});
 
 			switch (result) {
 				case RULES_TYPE.MIDDLE:
 					dispatch({
 						dropTargetItemId: item.itemId,
-						targetPosition: TARGET_POSITION.MIDDLE
+						targetPosition: TARGET_POSITION.MIDDLE,
 					});
 					break;
 				case RULES_TYPE.ELEVATE: {
@@ -213,28 +213,28 @@ export default function useDragAndDrop({
 							parent.children.length
 								? parent.parentId
 								: item.parentId,
-						targetPosition: newTargetPosition
+						targetPosition: newTargetPosition,
 					});
 					break;
 				}
 				case RULES_TYPE.VALID_MOVE:
 					dispatch({
 						dropTargetItemId: item.itemId,
-						targetPosition: newTargetPosition
+						targetPosition: newTargetPosition,
 					});
 					break;
 				default:
 					dispatch(initialDragDrop);
 					break;
 			}
-		}
+		},
 	});
 
 	useEffect(() => {
 		if (!dropOptions.isOver || !dragOptions.isDragging) {
 			dispatch({
 				dropTargetItemId: null,
-				targetPosition: null
+				targetPosition: null,
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -248,7 +248,7 @@ export default function useDragAndDrop({
 		...dragOptions,
 		...dropOptions,
 		drag,
-		drop
+		drop,
 	};
 }
 
@@ -284,7 +284,7 @@ function checkElevate({
 	clientOffset,
 	hoverBoundingRect,
 	items,
-	siblingOrParent
+	siblingOrParent,
 }) {
 	const parent = items[siblingOrParent.parentId];
 
@@ -330,7 +330,7 @@ function isValidMoveToTargetPosition({
 	item,
 	items,
 	siblingOrParent,
-	targetPosition
+	targetPosition,
 }) {
 	const {children} = items[
 		siblingOrParent.parentId !== ''
@@ -415,7 +415,7 @@ function getParentItemIdAndPositon({
 	item,
 	items,
 	siblingOrParentId,
-	targetPosition
+	targetPosition,
 }) {
 	const siblingOrParent = items[siblingOrParentId];
 
@@ -425,7 +425,7 @@ function getParentItemIdAndPositon({
 			position:
 				targetPosition !== TARGET_POSITION.TOP
 					? siblingOrParent.children.length
-					: 0
+					: 0,
 		};
 	}
 
@@ -449,7 +449,7 @@ function getParentItemIdAndPositon({
 
 		return {
 			parentId: parent.itemId,
-			position
+			position,
 		};
 	}
 }

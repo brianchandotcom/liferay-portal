@@ -26,7 +26,7 @@ const DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS = [
 	'fileEntryTypeId',
 	'folderId',
 	'navigation',
-	'status'
+	'status',
 ];
 
 const LIFERAY_COMPONENT = 'liferay.component';
@@ -37,7 +37,7 @@ const _createPromiseWrapper = function(value) {
 	if (value) {
 		promiseWrapper = {
 			promise: Promise.resolve(value),
-			resolve() {}
+			resolve() {},
 		};
 	}
 	else {
@@ -49,7 +49,7 @@ const _createPromiseWrapper = function(value) {
 
 		promiseWrapper = {
 			promise,
-			resolve: promiseResolve
+			resolve: promiseResolve,
 		};
 	}
 
@@ -161,7 +161,7 @@ const _onStartNavigate = function(event) {
 
 			cache[componentId] = {
 				html: component.element.innerHTML,
-				state: componentCache
+				state: componentCache,
 			};
 
 			return cache;
@@ -169,12 +169,12 @@ const _onStartNavigate = function(event) {
 
 		Liferay.DOMTaskRunner.addTask({
 			action: _restoreTask,
-			condition: state => state.owner === LIFERAY_COMPONENT
+			condition: state => state.owner === LIFERAY_COMPONENT,
 		});
 
 		Liferay.DOMTaskRunner.addTaskState({
 			data: componentsCache,
-			owner: LIFERAY_COMPONENT
+			owner: LIFERAY_COMPONENT,
 		});
 	}
 	else {
@@ -371,6 +371,6 @@ export {
 	destroyComponents,
 	destroyUnfulfilledPromises,
 	getComponentCache,
-	initComponentCache
+	initComponentCache,
 };
 export default component;

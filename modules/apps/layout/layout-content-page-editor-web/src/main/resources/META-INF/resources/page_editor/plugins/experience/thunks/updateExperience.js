@@ -18,7 +18,7 @@ import updateExperienceAction from '../actions/updateExperience';
 export default function updateExperience({
 	name,
 	segmentsEntryId,
-	segmentsExperienceId
+	segmentsExperienceId,
 }) {
 	return dispatch => {
 		return ExperienceService.updateExperience({
@@ -26,15 +26,15 @@ export default function updateExperience({
 				active: true,
 				name,
 				segmentsEntryId,
-				segmentsExperienceId
+				segmentsExperienceId,
 			},
-			dispatch
+			dispatch,
 		}).then(() => {
 			return dispatch(
 				updateExperienceAction({
 					name,
 					segmentsEntryId,
-					segmentsExperienceId
+					segmentsExperienceId,
 				})
 			);
 		});

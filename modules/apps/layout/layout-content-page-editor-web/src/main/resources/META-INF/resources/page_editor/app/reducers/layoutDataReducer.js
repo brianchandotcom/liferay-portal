@@ -15,11 +15,11 @@
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
 	UPDATE_COL_SIZE,
-	UPDATE_LAYOUT_DATA
+	UPDATE_LAYOUT_DATA,
 } from '../actions/types';
 
 export const INITIAL_STATE = {
-	items: {}
+	items: {},
 };
 
 export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
@@ -34,9 +34,9 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 						...items[action.itemId],
 						config: {
 							...items[action.itemId].config,
-							size: action.size
-						}
-					}
+							size: action.size,
+						},
+					},
 				};
 
 				if (action.nextColumnItemId in items) {
@@ -46,16 +46,16 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 							...items[action.nextColumnItemId],
 							config: {
 								...items[action.nextColumnItemId].config,
-								size: action.nextColumnSize
-							}
-						}
+								size: action.nextColumnSize,
+							},
+						},
 					};
 				}
 			}
 
 			return {
 				...layoutData,
-				items
+				items,
 			};
 		}
 

@@ -40,7 +40,7 @@ describe('IntegerInput', () => {
 			element,
 			mockFunc: mockOnChange,
 			newValue: '2',
-			value: defaultNumberValue
+			value: defaultNumberValue,
 		});
 	});
 });

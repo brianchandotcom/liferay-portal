@@ -35,7 +35,7 @@ const parseProps = ({
 	dataDefinitionId: Number(dataDefinitionId),
 	dataLayoutId: Number(dataLayoutId),
 	fieldTypesModules: fieldTypesModules.split(','),
-	groupId: Number(groupId)
+	groupId: Number(groupId),
 });
 
 const AppContent = ({dataLayoutBuilder, setDataLayoutBuilder, ...props}) => {

@@ -68,36 +68,36 @@
 	var simulationDevice = new Liferay.SimulationDevice({
 		devices: {
 			autosize: {
-				skin: 'autosize'
+				skin: 'autosize',
 			},
 			custom: {
 				height: '#<portlet:namespace />height',
 				resizable: true,
-				width: '#<portlet:namespace />width'
+				width: '#<portlet:namespace />width',
 			},
 			desktop: {
 				height: 1050,
 				selected: true,
-				width: 1300
+				width: 1300,
 			},
 			smartphone: {
 				height: 640,
 				preventTransition: true,
 				rotation: true,
 				skin: 'smartphone',
-				width: 400
+				width: 400,
 			},
 			tablet: {
 				height: 900,
 				preventTransition: true,
 				rotation: true,
 				skin: 'tablet',
-				width: 760
-			}
+				width: 760,
+			},
 		},
 		inputHeight: '#<portlet:namespace />height',
 		inputWidth: '#<portlet:namespace />width',
-		namespace: '<portlet:namespace />'
+		namespace: '<portlet:namespace />',
 	});
 
 	Liferay.once('screenLoad', function() {

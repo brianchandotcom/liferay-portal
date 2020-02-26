@@ -36,7 +36,7 @@ const ExperienceModal = ({
 	onNewSegmentClick,
 	onSubmit,
 	segmentId,
-	segments = []
+	segments = [],
 }) => {
 	const [selectedSegmentId, setSelectedSegmentId] = useState(
 		segmentId !== undefined
@@ -71,7 +71,7 @@ const ExperienceModal = ({
 			onSubmit({
 				name,
 				segmentsEntryId: selectedSegmentId,
-				segmentsExperienceId: experienceId
+				segmentsExperienceId: experienceId,
 			}).finally(() => {
 				if (isMounted()) {
 					setLoading(false);
@@ -109,7 +109,7 @@ const ExperienceModal = ({
 		onNewSegmentClick({
 			experienceId,
 			experienceName: name,
-			segmentId: selectedSegmentId
+			segmentId: selectedSegmentId,
 		});
 	};
 
@@ -117,10 +117,10 @@ const ExperienceModal = ({
 	const segmentSelectId = `${config.portletNamespace}segmentsExperienceSegment`;
 
 	const nameGroupClassName = classNames('my-2', {
-		'has-error': requiredNameError
+		'has-error': requiredNameError,
 	});
 	const segmentGroupClassName = classNames('my-2', {
-		'has-error': requiredSegmentError
+		'has-error': requiredSegmentError,
 	});
 
 	const modalTitle = experienceId
@@ -282,7 +282,7 @@ ExperienceModal.propTypes = {
 	onNewSegmentClick: PropTypes.func.isRequired,
 	onSubmit: PropTypes.func.isRequired,
 	segmentId: PropTypes.string,
-	segments: PropTypes.array.isRequired
+	segments: PropTypes.array.isRequired,
 };
 
 function _getValidValue(value) {

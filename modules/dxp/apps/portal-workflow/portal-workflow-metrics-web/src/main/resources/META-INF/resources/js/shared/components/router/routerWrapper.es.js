@@ -39,7 +39,7 @@ const ChildLink = ({children, query, to, ...otherProps}) => {
 			{...otherProps}
 			to={{
 				pathname: to,
-				search: stringify({backPath: currentPath, ...query})
+				search: stringify({backPath: currentPath, ...query}),
 			}}
 		>
 			{children}
@@ -49,7 +49,7 @@ const ChildLink = ({children, query, to, ...otherProps}) => {
 
 const useParams = () => {
 	const {
-		location: {pathname, search}
+		location: {pathname, search},
 	} = useRouter();
 
 	const {backPath} = parse(search);

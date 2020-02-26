@@ -215,5 +215,5 @@ tinymce.addI18n('tr_TR', {
 	Tools: 'Ara\u00e7lar',
 	View: 'G\u00f6r\u00fcnt\u00fcle',
 	Table: 'Tablo',
-	Format: 'Bi\u00e7im'
+	Format: 'Bi\u00e7im',
 });

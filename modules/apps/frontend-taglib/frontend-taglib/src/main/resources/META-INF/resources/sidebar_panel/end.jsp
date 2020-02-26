@@ -26,7 +26,7 @@
 			namespace: '<%= namespace %>',
 			resourceUrl: '<%= resourceURL %>',
 			searchContainerId: '<%= namespace + searchContainerId %>',
-			targetNode: '#<%= namespace %>sidebarPanel'
+			targetNode: '#<%= namespace %>sidebarPanel',
 		});
 	</aui:script>
 </c:if>

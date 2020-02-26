@@ -20,7 +20,7 @@ function SegmentsExperimentsDetails({segmentsExperiment}) {
 		confidenceLevel,
 		goal,
 		segmentsEntryName,
-		status
+		status,
 	} = segmentsExperiment;
 
 	return (
@@ -56,7 +56,7 @@ function SegmentsExperimentsDetails({segmentsExperiment}) {
 }
 
 SegmentsExperimentsDetails.propTypes = {
-	segmentsExperiment: SegmentsExperimentType
+	segmentsExperiment: SegmentsExperimentType,
 };
 
 export default SegmentsExperimentsDetails;

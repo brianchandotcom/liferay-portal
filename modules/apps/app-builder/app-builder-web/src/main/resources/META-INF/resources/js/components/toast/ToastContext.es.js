@@ -23,7 +23,7 @@ const ToastContextProvider = ({autoClose = 5000, children}) => {
 	const addToast = toast => {
 		toast = {
 			...toast,
-			id: Math.floor(Math.random() * 1000)
+			id: Math.floor(Math.random() * 1000),
 		};
 
 		setToasts(prevToasts => prevToasts.concat(toast));

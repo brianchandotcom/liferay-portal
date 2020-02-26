@@ -22,7 +22,7 @@ const CompletedItemsCard = ({routeParams}) => {
 
 	const {
 		filterState: {completedTimeRange = []},
-		filtersError
+		filtersError,
 	} = useFilter({filterKeys, prefixKeys});
 
 	const timeRange = completedTimeRange[0] || {};

@@ -32,7 +32,7 @@ function ProcessItemsCard({
 	filtersError,
 	processId,
 	timeRange,
-	title
+	title,
 }) {
 	const {setTitle} = useContext(AppContext);
 
@@ -42,16 +42,16 @@ function ProcessItemsCard({
 	if (isValidDate(dateEnd) && isValidDate(dateStart)) {
 		timeRangeParams = {
 			dateEnd: dateEnd.toISOString(),
-			dateStart: dateStart.toISOString()
+			dateStart: dateStart.toISOString(),
 		};
 	}
 
 	const {data, fetchData} = useFetch({
 		params: {
 			completed,
-			...timeRangeParams
+			...timeRangeParams,
 		},
-		url: `/processes/${processId}`
+		url: `/processes/${processId}`,
 	});
 
 	useEffect(() => {
@@ -71,7 +71,7 @@ function ProcessItemsCard({
 		fetchData,
 		filtersError,
 		timeRangeParams.dateEnd,
-		timeRangeParams.dateStart
+		timeRangeParams.dateStart,
 	]);
 
 	return (

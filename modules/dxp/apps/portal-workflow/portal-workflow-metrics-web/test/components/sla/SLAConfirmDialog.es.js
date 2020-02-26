@@ -37,7 +37,7 @@ test('Should cancel dialog', () => {
 	const dialog = component.find(SLAConfirmDialog).instance();
 
 	dialog.context = {
-		hideConfirmDialog: () => {}
+		hideConfirmDialog: () => {},
 	};
 
 	dialog.cancel();
@@ -52,10 +52,10 @@ test('Should cancel dialog through SLA List', () => {
 				description: 'Total time to complete the request.',
 				duration: 1553879089,
 				id: 1234,
-				name: 'Total resolution time'
-			}
+				name: 'Total resolution time',
+			},
 		],
-		totalCount: 0
+		totalCount: 0,
 	};
 
 	const component = mount(
@@ -85,7 +85,7 @@ test('Should remove item', () => {
 	const dialog = component.find(SLAConfirmDialog).instance();
 
 	dialog.context = {
-		removeItem: () => {}
+		removeItem: () => {},
 	};
 
 	dialog.removeItem();

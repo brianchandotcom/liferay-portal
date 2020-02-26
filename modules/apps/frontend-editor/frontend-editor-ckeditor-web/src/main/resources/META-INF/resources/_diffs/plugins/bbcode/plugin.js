@@ -27,7 +27,7 @@
 			var elementAction = 'apply';
 
 			var preElement = new CKEDITOR.style({
-				element: 'pre'
+				element: 'pre',
 			});
 
 			preElement._.enterMode = editor.config.enterMode;
@@ -61,7 +61,7 @@
 			}
 
 			this.setState(buttonState);
-		}
+		},
 	};
 
 	CKEDITOR.plugins.add('bbcode', {
@@ -72,7 +72,7 @@
 
 			var dependencies = [
 				CKEDITOR.getUrl(path + 'bbcode_data_processor.js'),
-				CKEDITOR.getUrl(path + 'bbcode_parser.js')
+				CKEDITOR.getUrl(path + 'bbcode_parser.js'),
 			];
 
 			CKEDITOR.scriptLoader.load(dependencies, () => {
@@ -84,6 +84,6 @@
 			});
 
 			editor.addCommand('bbcode', commandObject);
-		}
+		},
 	});
 })();

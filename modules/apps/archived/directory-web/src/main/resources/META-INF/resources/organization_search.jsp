@@ -97,7 +97,7 @@ if (displayTerms.getParentOrganizationId() > 0) {
 			selectDesc: 'nameCurrentValue',
 			selectId: 'countryId',
 			selectSort: '<%= true %>',
-			selectVal: '<%= displayTerms.getCountryId() %>'
+			selectVal: '<%= displayTerms.getCountryId() %>',
 		},
 		{
 			select:
@@ -105,7 +105,7 @@ if (displayTerms.getParentOrganizationId() > 0) {
 			selectData: Liferay.Address.getRegions,
 			selectDesc: 'name',
 			selectId: 'regionId',
-			selectVal: '<%= displayTerms.getRegionId() %>'
-		}
+			selectVal: '<%= displayTerms.getRegionId() %>',
+		},
 	]);
 </aui:script>

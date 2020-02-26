@@ -20,24 +20,24 @@ AUI.add(
 		var ExportImportManagementBarButton = A.Component.create({
 			ATTRS: {
 				actionNamespace: {
-					validator: Lang.isString()
+					validator: Lang.isString(),
 				},
 
 				cmd: {
-					validator: Lang.isString()
+					validator: Lang.isString(),
 				},
 
 				exportImportEntityUrl: {
-					validator: Lang.isString()
+					validator: Lang.isString(),
 				},
 
 				searchContainerId: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				searchContainerMappingId: {
-					validator: Lang.isString
-				}
+					validator: Lang.isString,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -55,7 +55,7 @@ AUI.add(
 							instance.ns(instance.get('cmd')),
 							instance._exportImportEntity,
 							instance
-						)
+						),
 					];
 				},
 
@@ -125,8 +125,8 @@ AUI.add(
 					instance._searchContainer = searchContainer;
 
 					instance._bindUI();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.ExportImportManagementBarButton = ExportImportManagementBarButton;
@@ -136,7 +136,7 @@ AUI.add(
 		requires: [
 			'aui-component',
 			'liferay-search-container',
-			'liferay-search-container-select'
-		]
+			'liferay-search-container-select',
+		],
 	}
 );

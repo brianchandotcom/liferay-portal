@@ -215,5 +215,5 @@ tinymce.addI18n('sk', {
 	Tools: 'N\u00e1stroje',
 	View: 'Zobrazi\u0165',
 	Table: 'Tabu\u013eka',
-	Format: 'Form\u00e1t'
+	Format: 'Form\u00e1t',
 });

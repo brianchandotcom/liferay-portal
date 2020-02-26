@@ -20,7 +20,7 @@ import React, {useEffect, useState} from 'react';
 import {
 	getDataDefinitionField,
 	getFieldLabel,
-	getOptionLabel
+	getOptionLabel,
 } from '../../utils/dataDefinition.es';
 
 const createFileEntryPreviewURL = (groupId, fileEntryId) => {
@@ -78,10 +78,10 @@ const DocumentRenderer = ({displayType, value = {}}) => {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				modal: true
+				modal: true,
 			},
 			title: Liferay.Language.get('file-preview'),
-			uri: previewURL
+			uri: previewURL,
 		});
 	};
 
@@ -199,7 +199,7 @@ export const FieldValuePreview = ({
 	dataDefinition,
 	dataRecordValues,
 	displayType = 'form',
-	fieldName
+	fieldName,
 }) => {
 	const dataDefinitionField = getDataDefinitionField(
 		dataDefinition,

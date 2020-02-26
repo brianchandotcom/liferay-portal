@@ -19,7 +19,7 @@ import {
 	LineChart,
 	Tooltip,
 	XAxis,
-	YAxis
+	YAxis,
 } from 'recharts';
 
 import {numberFormat} from '../utils/numberFormat';
@@ -60,12 +60,12 @@ function mergeDataSets(newData, previousDataSet, key) {
 
 	resultDataSet.totals = {
 		...previousDataSet.totals,
-		[key]: newData.value
+		[key]: newData.value,
 	};
 
 	const newFormattedHistogram = newData.histogram.map(h => ({
 		[key]: h.value,
-		label: h.key
+		label: h.key,
 	}));
 
 	let start = 0;
@@ -74,7 +74,7 @@ function mergeDataSets(newData, previousDataSet, key) {
 	while (start < newData.histogram.length) {
 		if (!previousDataSet.histogram[start]) {
 			mergeHistogram.push({
-				...newFormattedHistogram[start]
+				...newFormattedHistogram[start],
 			});
 		}
 		else if (
@@ -83,7 +83,7 @@ function mergeDataSets(newData, previousDataSet, key) {
 		) {
 			mergeHistogram.push({
 				...newFormattedHistogram[start],
-				...previousDataSet.histogram[start]
+				...previousDataSet.histogram[start],
 			});
 		}
 
@@ -136,7 +136,7 @@ const generateDateFormatters = key => {
 			options = {
 				day: 'numeric',
 				month: 'short',
-				year: 'numeric'
+				year: 'numeric',
 			}
 		) => Intl.DateTimeFormat([key], options).format(date);
 
@@ -146,7 +146,7 @@ const generateDateFormatters = key => {
 		const initialDateOptions = {
 			day: 'numeric',
 			month: equalMonth && equalYear ? undefined : 'short',
-			year: equalYear ? undefined : 'numeric'
+			year: equalYear ? undefined : 'numeric',
 		};
 
 		return `${dateFormatter(
@@ -173,14 +173,14 @@ const generateDateFormatters = key => {
 	 */
 	function formatNumericDay(value) {
 		return Intl.DateTimeFormat([key], {
-			day: 'numeric'
+			day: 'numeric',
 		}).format(new Date(value));
 	}
 
 	return {
 		formatChartTitle,
 		formatLongDate,
-		formatNumericDay
+		formatNumericDay,
 	};
 };
 
@@ -219,7 +219,7 @@ export default function Chart({languageTag, dataProviders = []}) {
 					Object.keys(data).map(key => {
 						setDataSet({
 							payload: {dataSet: data[key], key},
-							type: 'add-data-key'
+							type: 'add-data-key',
 						});
 					});
 				}
@@ -229,7 +229,7 @@ export default function Chart({languageTag, dataProviders = []}) {
 	}, [dataProviders]);
 
 	const dateFormatters = useMemo(() => generateDateFormatters(languageTag), [
-		languageTag
+		languageTag,
 	]);
 
 	const title = useMemo(() => {
@@ -240,7 +240,7 @@ export default function Chart({languageTag, dataProviders = []}) {
 
 			return dateFormatters.formatChartTitle([
 				new Date(firstDateLabel),
-				new Date(lastDateLabel)
+				new Date(lastDateLabel),
 			]);
 		}
 	}, [dataSet, dateFormatters]);
@@ -287,7 +287,7 @@ export default function Chart({languageTag, dataProviders = []}) {
 						formatter={(value, name) => {
 							return [
 								numberFormat(languageTag, value),
-								keyToTranslatedLabelValue(name)
+								keyToTranslatedLabelValue(name),
 							];
 						}}
 						labelFormatter={dateFormatters.formatLongDate}
@@ -317,5 +317,5 @@ export default function Chart({languageTag, dataProviders = []}) {
 
 Chart.propTypes = {
 	dataProviders: PropTypes.arrayOf(PropTypes.func).isRequired,
-	languageTag: PropTypes.string.isRequired
+	languageTag: PropTypes.string.isRequired,
 };

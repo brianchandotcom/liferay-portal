@@ -145,7 +145,7 @@
 					type: method || $.ajaxSettings.type,
 					iframeSrc: /^https/i.test(window.location.href || '')
 						? 'javascript:false'
-						: 'about:blank'
+						: 'about:blank',
 				},
 				options
 			);
@@ -245,7 +245,7 @@
 						data,
 						status,
 						xhr || $form,
-						$form
+						$form,
 					]);
 				}
 			};
@@ -337,7 +337,7 @@
 					// #278; use array instead of object storage, favoring array serializations
 					result.push([
 						decodeURIComponent(part[0]),
-						decodeURIComponent(part[1])
+						decodeURIComponent(part[1]),
 					]);
 				}
 				return result;
@@ -369,7 +369,7 @@
 					contentType: false,
 					processData: false,
 					cache: false,
-					type: method || 'POST'
+					type: method || 'POST',
 				});
 
 				if (options.uploadProgress) {
@@ -476,7 +476,7 @@
 					$io.css({
 						position: 'absolute',
 						top: '-1000px',
-						left: '-1000px'
+						left: '-1000px',
 					});
 				}
 				io = $io[0];
@@ -515,7 +515,7 @@
 						if (s.complete) {
 							s.complete.call(s.context, xhr, e);
 						}
-					}
+					},
 				};
 
 				g = s.global;
@@ -634,7 +634,7 @@
 					) {
 						$form.attr({
 							encoding: 'multipart/form-data',
-							enctype: 'multipart/form-data'
+							enctype: 'multipart/form-data',
 						});
 					}
 
@@ -1236,7 +1236,7 @@
 						name: n,
 						value: v,
 						type: el.type,
-						required: el.required
+						required: el.required,
 					});
 				}
 			}

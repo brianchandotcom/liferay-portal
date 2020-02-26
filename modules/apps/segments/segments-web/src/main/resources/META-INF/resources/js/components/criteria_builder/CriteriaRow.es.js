@@ -29,7 +29,7 @@ import {
 	createNewGroup,
 	dateToInternationalHuman,
 	getSupportedOperatorsFromType,
-	objectToFormData
+	objectToFormData,
 } from '../../utils/utils.es';
 import BooleanInput from '../inputs/BooleanInput.es';
 import CollectionInput from '../inputs/CollectionInput.es';
@@ -56,13 +56,13 @@ function canDrop(props, monitor) {
 	const {
 		groupId: destGroupId,
 		index: destIndex,
-		propertyKey: contributorPropertyKey
+		propertyKey: contributorPropertyKey,
 	} = props;
 
 	const {
 		groupId: startGroupId,
 		index: startIndex,
-		propertyKey: sidebarItemPropertyKey
+		propertyKey: sidebarItemPropertyKey,
 	} = monitor.getItem();
 
 	return (
@@ -86,13 +86,13 @@ function drop(props, monitor) {
 		onChange,
 		onMove,
 		supportedOperators,
-		supportedPropertyTypes
+		supportedPropertyTypes,
 	} = props;
 
 	const {
 		criterion: droppedCriterion,
 		groupId: startGroupId,
-		index: startIndex
+		index: startIndex,
 	} = monitor.getItem();
 
 	const {
@@ -101,7 +101,7 @@ function drop(props, monitor) {
 		operatorName,
 		propertyName,
 		type,
-		value
+		value,
 	} = droppedCriterion;
 
 	const droppedCriterionValue = value || defaultValue;
@@ -116,7 +116,7 @@ function drop(props, monitor) {
 		displayValue,
 		operatorName: operatorName ? operatorName : operators[0].name,
 		propertyName,
-		value: droppedCriterionValue
+		value: droppedCriterionValue,
 	};
 
 	const itemType = monitor.getItemType();
@@ -171,7 +171,7 @@ class CriteriaRow extends Component {
 		propertyKey: PropTypes.string.isRequired,
 		supportedOperators: PropTypes.array,
 		supportedProperties: PropTypes.array,
-		supportedPropertyTypes: PropTypes.object
+		supportedPropertyTypes: PropTypes.object,
 	};
 
 	static defaultProps = {
@@ -179,13 +179,13 @@ class CriteriaRow extends Component {
 		editing: true,
 		supportedOperators: [],
 		supportedProperties: [],
-		supportedPropertyTypes: {}
+		supportedPropertyTypes: {},
 	};
 
 	componentDidMount() {
 		const {
 			criterion: {displayValue, propertyName, value},
-			supportedProperties
+			supportedProperties,
 		} = this.props;
 
 		this._selectedProperty = this._getSelectedItem(
@@ -210,12 +210,12 @@ class CriteriaRow extends Component {
 		const data = Liferay.Util.ns(this.context.namespace, {
 			entityName,
 			fieldName: propertyName,
-			fieldValue: value
+			fieldValue: value,
 		});
 
 		fetch(this.context.requestFieldValueNameURL, {
 			body: objectToFormData(data),
-			method: 'POST'
+			method: 'POST',
 		})
 			.then(response => response.json())
 			.then(({fieldValueName: displayValue}) => {
@@ -230,7 +230,7 @@ class CriteriaRow extends Component {
 					onChange({
 						...criterion,
 						displayValue: value,
-						unknownEntity: true
+						unknownEntity: true,
 					});
 				}
 				else {
@@ -243,7 +243,7 @@ class CriteriaRow extends Component {
 		operatorLabel,
 		propertyLabel,
 		type,
-		value
+		value,
 	}) => {
 		const parsedValue =
 			type === PROPERTY_TYPES.DATE || type === PROPERTY_TYPES.DATE_TIME
@@ -276,7 +276,7 @@ class CriteriaRow extends Component {
 					label: idSelected,
 					name: idSelected,
 					notFound: true,
-					type: PROPERTY_TYPES.STRING
+					type: PROPERTY_TYPES.STRING,
 			  };
 	};
 
@@ -301,7 +301,7 @@ class CriteriaRow extends Component {
 
 		onChange({
 			...criterion,
-			[propertyName]: event.target.value
+			[propertyName]: event.target.value,
 		});
 	};
 
@@ -319,7 +319,7 @@ class CriteriaRow extends Component {
 		if (Array.isArray(value)) {
 			const items = value.map(item => ({
 				...criterion,
-				...item
+				...item,
 			}));
 
 			onChange(createNewGroup(items));
@@ -327,7 +327,7 @@ class CriteriaRow extends Component {
 		else {
 			onChange({
 				...criterion,
-				...value
+				...value,
 			});
 		}
 	};
@@ -341,7 +341,7 @@ class CriteriaRow extends Component {
 			[PROPERTY_TYPES.DOUBLE]: DecimalInput,
 			[PROPERTY_TYPES.ID]: SelectEntityInput,
 			[PROPERTY_TYPES.INTEGER]: IntegerInput,
-			[PROPERTY_TYPES.STRING]: StringInput
+			[PROPERTY_TYPES.STRING]: StringInput,
 		};
 
 		const InputComponent =
@@ -369,7 +369,7 @@ class CriteriaRow extends Component {
 				: Liferay.Language.get('criteria-error-message-view');
 
 			errors.push({
-				message
+				message,
 			});
 		}
 
@@ -379,7 +379,7 @@ class CriteriaRow extends Component {
 				: Liferay.Language.get('unknown-element-message-view');
 
 			errors.push({
-				message
+				message,
 			});
 		}
 
@@ -402,12 +402,12 @@ class CriteriaRow extends Component {
 		propertyLabel,
 		selectedOperator,
 		selectedProperty,
-		value
+		value,
 	}) {
 		const {
 			connectDragSource,
 			supportedOperators,
-			supportedPropertyTypes
+			supportedPropertyTypes,
 		} = this.props;
 
 		const propertyType = selectedProperty ? selectedProperty.type : '';
@@ -439,7 +439,7 @@ class CriteriaRow extends Component {
 					options={filteredSupportedOperators.map(
 						({label, name}) => ({
 							label,
-							value: name
+							value: name,
 						})
 					)}
 					value={selectedOperator && selectedOperator.name}
@@ -490,7 +490,7 @@ class CriteriaRow extends Component {
 			editing,
 			hover,
 			supportedOperators,
-			supportedProperties
+			supportedProperties,
 		} = this.props;
 
 		const {unknownEntity} = criterion;
@@ -515,7 +515,7 @@ class CriteriaRow extends Component {
 		const classes = getCN('criterion-row-root', {
 			'criterion-row-root-error': error,
 			'dnd-drag': dragging,
-			'dnd-hover': hover && canDrop
+			'dnd-hover': hover && canDrop,
 		});
 
 		return (
@@ -529,7 +529,7 @@ class CriteriaRow extends Component {
 									propertyLabel,
 									selectedOperator,
 									selectedProperty,
-									value
+									value,
 								})
 							) : (
 								<span className="criterion-string">
@@ -538,7 +538,7 @@ class CriteriaRow extends Component {
 										operatorLabel,
 										propertyLabel,
 										type: selectedProperty.type,
-										value: criterion.displayValue || value
+										value: criterion.displayValue || value,
 									})}
 								</span>
 							)}
@@ -548,7 +548,7 @@ class CriteriaRow extends Component {
 				{error &&
 					this._renderErrorMessages({
 						errorOnProperty,
-						unknownEntityError: unknownEntity
+						unknownEntityError: unknownEntity,
 					})}
 			</>
 		);
@@ -558,12 +558,12 @@ class CriteriaRow extends Component {
 const CriteriaRowWithDrag = dragSource(
 	DragTypes.CRITERIA_ROW,
 	{
-		beginDrag
+		beginDrag,
 	},
 	(connect, monitor) => ({
 		connectDragPreview: connect.dragPreview(),
 		connectDragSource: connect.dragSource(),
-		dragging: monitor.isDragging()
+		dragging: monitor.isDragging(),
 	})
 )(CriteriaRow);
 
@@ -571,11 +571,11 @@ export default dropTarget(
 	acceptedDragTypes,
 	{
 		canDrop,
-		drop
+		drop,
 	},
 	(connect, monitor) => ({
 		canDrop: monitor.canDrop(),
 		connectDropTarget: connect.dropTarget(),
-		hover: monitor.isOver()
+		hover: monitor.isOver(),
 	})
 )(CriteriaRowWithDrag);

@@ -16,6 +16,6 @@ module.exports = {
 	globals: {
 		bootstrap: true,
 		define: true,
-		jQuery: true
-	}
+		jQuery: true,
+	},
 };

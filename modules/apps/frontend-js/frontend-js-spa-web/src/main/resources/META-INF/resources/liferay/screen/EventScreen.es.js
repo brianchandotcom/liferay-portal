@@ -45,7 +45,7 @@ class EventScreen extends HtmlScreen {
 
 		Liferay.fire('screenDispose', {
 			app: Liferay.SPA.app,
-			screen: this
+			screen: this,
 		});
 	}
 
@@ -59,7 +59,7 @@ class EventScreen extends HtmlScreen {
 
 		Liferay.fire('screenActivate', {
 			app: Liferay.SPA.app,
-			screen: this
+			screen: this,
 		});
 	}
 
@@ -96,7 +96,7 @@ class EventScreen extends HtmlScreen {
 
 		Liferay.fire('screenDeactivate', {
 			app: Liferay.SPA.app,
-			screen: this
+			screen: this,
 		});
 	}
 
@@ -107,7 +107,7 @@ class EventScreen extends HtmlScreen {
 	beforeScreenFlip() {
 		Liferay.fire('beforeScreenFlip', {
 			app: Liferay.SPA.app,
-			screen: this
+			screen: this,
 		});
 	}
 
@@ -173,7 +173,7 @@ class EventScreen extends HtmlScreen {
 
 				Liferay.fire('screenFlip', {
 					app: Liferay.SPA.app,
-					screen: this
+					screen: this,
 				});
 			});
 	}
@@ -235,7 +235,7 @@ class EventScreen extends HtmlScreen {
 			Liferay.fire('screenLoad', {
 				app: Liferay.SPA.app,
 				content,
-				screen: this
+				screen: this,
 			});
 
 			return content;

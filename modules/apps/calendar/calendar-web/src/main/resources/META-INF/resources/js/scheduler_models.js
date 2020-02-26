@@ -61,7 +61,7 @@ AUI.add(
 				if (isFunction(actionMethod)) {
 					actionMethod.apply(instance, [options, callback]);
 				}
-			}
+			},
 		};
 
 		Liferay.SchedulerModelSync = SchedulerModelSync;
@@ -70,12 +70,12 @@ AUI.add(
 			ATTRS: {
 				calendarBookingId: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				calendarId: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				content: {
@@ -96,71 +96,71 @@ AUI.add(
 						}
 
 						return content;
-					}
+					},
 				},
 
 				description: {
 					setter: String,
 					validator: isValue,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				editingEvent: {
 					validator: isBoolean,
-					value: false
+					value: false,
 				},
 
 				firstReminder: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				firstReminderType: {
 					setter: String,
 					validator: isValue,
-					value: CalendarUtil.NOTIFICATION_DEFAULT_TYPE
+					value: CalendarUtil.NOTIFICATION_DEFAULT_TYPE,
 				},
 
 				hasChildCalendarBookings: {
 					validator: isBoolean,
-					value: false
+					value: false,
 				},
 
 				hasWorkflowInstanceLink: {
 					validator: isBoolean,
-					value: false
+					value: false,
 				},
 
 				instanceIndex: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				loading: {
 					validator: isBoolean,
-					value: false
+					value: false,
 				},
 
 				location: {
 					setter: String,
 					validator: isValue,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				parentCalendarBookingId: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				recurrence: {
 					setter: String,
 					validator: isValue,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				recurringCalendarBookingId: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				reminder: {
@@ -171,28 +171,28 @@ AUI.add(
 							instance.get('firstReminder') > 0 ||
 							instance.get('secondReminder') > 0
 						);
-					}
+					},
 				},
 
 				repeated: {
-					getter: 'isRecurring'
+					getter: 'isRecurring',
 				},
 
 				secondReminder: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				secondReminderType: {
 					setter: String,
 					validator: isValue,
-					value: CalendarUtil.NOTIFICATION_DEFAULT_TYPE
+					value: CalendarUtil.NOTIFICATION_DEFAULT_TYPE,
 				},
 
 				status: {
 					setter: toInt,
-					value: 0
-				}
+					value: 0,
+				},
 			},
 
 			EXTENDS: A.SchedulerEvent,
@@ -206,7 +206,7 @@ AUI.add(
 				'parentCalendarBookingId',
 				'recurrence',
 				'recurringCalendarBookingId',
-				'status'
+				'status',
 			]),
 
 			prototype: {
@@ -416,7 +416,7 @@ AUI.add(
 								backgroundColor: instance.get('color'),
 								border: 'none',
 								color: '#111',
-								padding: '0 2px'
+								padding: '0 2px',
 							});
 						}
 					}
@@ -477,8 +477,8 @@ AUI.add(
 							schedulerEvents
 						)
 					);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.SchedulerEvent = SchedulerEvent;
@@ -487,43 +487,43 @@ AUI.add(
 			ATTRS: {
 				calendarId: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				calendarResourceId: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				calendarResourceName: {
 					setter: String,
 					validator: isValue,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				classNameId: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				classPK: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				defaultCalendar: {
 					setter: A.DataType.Boolean.parse,
-					value: false
+					value: false,
 				},
 
 				groupId: {
 					setter: toInt,
-					value: 0
+					value: 0,
 				},
 
 				manageable: {
 					setter: A.DataType.Boolean.parse,
-					value: true
+					value: true,
 				},
 
 				permissions: {
@@ -536,12 +536,12 @@ AUI.add(
 						return val;
 					},
 					validator: isObject,
-					value: {}
+					value: {},
 				},
 
 				showCalendarResourceName: {
-					value: true
-				}
+					value: true,
+				},
 			},
 
 			EXTENDS: A.SchedulerCalendar,
@@ -612,8 +612,8 @@ AUI.add(
 					}
 
 					return name;
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.SchedulerCalendar = Calendar;
@@ -653,7 +653,7 @@ AUI.add(
 							CalendarWorkflow.STATUS_DENIED,
 							CalendarWorkflow.STATUS_DRAFT,
 							CalendarWorkflow.STATUS_MAYBE,
-							CalendarWorkflow.STATUS_PENDING
+							CalendarWorkflow.STATUS_PENDING,
 						],
 						calendarBookings => {
 							if (filterCalendarBookings) {
@@ -709,13 +709,13 @@ AUI.add(
 					}
 
 					return date;
-				}
+				},
 			},
 			{}
 		);
 	},
 	'',
 	{
-		requires: ['aui-datatype', 'dd-plugin', 'liferay-calendar-util']
+		requires: ['aui-datatype', 'dd-plugin', 'liferay-calendar-util'],
 	}
 );

@@ -431,7 +431,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 <aui:script>
 	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '', [
-		'<portlet:namespace />selectApplications'
+		'<portlet:namespace />selectApplications',
 	]);
 	Liferay.Util.toggleRadio(
 		'<portlet:namespace />chooseApplications',
@@ -458,6 +458,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 		themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>',
 		timeZoneOffset: <%= timeZoneOffset %>,
 		userPreferencesNode:
-			'#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
+			'#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>',
 	});
 </aui:script>

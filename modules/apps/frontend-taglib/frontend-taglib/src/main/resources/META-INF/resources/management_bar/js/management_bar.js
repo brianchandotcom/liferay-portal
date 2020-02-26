@@ -31,26 +31,26 @@ AUI.add(
 			ATTRS: {
 				checkBoxesSelector: {
 					validator: Lang.isString,
-					value: 'input[type=checkbox]'
+					value: 'input[type=checkbox]',
 				},
 
 				itemsCountContainer: {
 					setter: 'all',
-					value: '.selected-items-count'
+					value: '.selected-items-count',
 				},
 
 				searchContainerId: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				secondaryBar: {
-					setter: 'one'
+					setter: 'one',
 				},
 
 				selectAllCheckBoxesSelector: {
 					validator: Lang.isString,
-					value: '.select-all-checkboxes'
-				}
+					value: '.select-all-checkboxes',
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -83,7 +83,7 @@ AUI.add(
 							'startNavigate',
 							instance._onSurfaceStartNavigate,
 							instance
-						)
+						),
 					];
 				},
 
@@ -185,8 +185,8 @@ AUI.add(
 								.attr('id'),
 							selectAllCheckBoxesSelector: instance.get(
 								'selectAllCheckBoxesSelector'
-							)
-						}
+							),
+						},
 					});
 				},
 
@@ -259,7 +259,7 @@ AUI.add(
 						instance._onSearchContainerRegistered,
 						instance
 					);
-				}
+				},
 			},
 
 			restoreTask(state, params, node) {
@@ -351,13 +351,13 @@ AUI.add(
 				}
 
 				return returnNode;
-			}
+			},
 		});
 
 		Liferay.ManagementBar = ManagementBar;
 	},
 	'',
 	{
-		requires: ['aui-component', 'liferay-portlet-base']
+		requires: ['aui-component', 'liferay-portlet-base'],
 	}
 );

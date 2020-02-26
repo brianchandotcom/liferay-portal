@@ -258,7 +258,7 @@ if (Validator.isNotNull(keywords)) {
 			var delta = event.currentTarget.attr('data-delta');
 
 			Liferay.fire('AddContent:refreshContentList', {
-				delta: delta
+				delta: delta,
 			});
 		},
 		'.num-item'
@@ -270,7 +270,7 @@ if (Validator.isNotNull(keywords)) {
 			var displayStyle = event.currentTarget.attr('data-displaystyle');
 
 			Liferay.fire('AddContent:refreshContentList', {
-				displayStyle: displayStyle
+				displayStyle: displayStyle,
 			});
 		},
 		'.display-style'

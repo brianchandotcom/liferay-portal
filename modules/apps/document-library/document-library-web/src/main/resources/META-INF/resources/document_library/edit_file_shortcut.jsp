@@ -75,7 +75,7 @@ renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 			eventName: '<portlet:namespace />toFileEntrySelectedItem',
 			singleSelect: true,
 			title: '<liferay-ui:message arguments="file" key="select-x" />',
-			url: '<%= dlEditFileShortcutDisplayContext.getItemSelectorURL() %>'
+			url: '<%= dlEditFileShortcutDisplayContext.getItemSelectorURL() %>',
 		});
 
 		itemSelectorDialog.on('selectedItemChange', function(event) {

@@ -172,9 +172,9 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 		Liferay.Util.postForm(form, {
 			data: {
 				deleteUserGroupIds: userGroupIds,
-				redirect: '<%= userGroupsRenderURL %>'
+				redirect: '<%= userGroupsRenderURL %>',
 			},
-			url: '<portlet:actionURL name="deleteUserGroups" />'
+			url: '<portlet:actionURL name="deleteUserGroups" />',
 		});
 	}
 

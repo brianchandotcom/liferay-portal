@@ -16,7 +16,7 @@ import SearchBar from '../../../../src/main/resources/META-INF/resources/js/comp
 import {resultsDataToMap} from '../../../../src/main/resources/META-INF/resources/js/utils/util.es';
 import {
 	FETCH_SEARCH_DOCUMENTS_URL,
-	getMockResultsData
+	getMockResultsData,
 } from '../../mocks/data.es';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -57,7 +57,7 @@ describe('SearchBar', () => {
 	it('hides the add result button with selectedIds', () => {
 		const {queryByText} = renderTestSearchBar({
 			onAddResultSubmit: jest.fn(),
-			selectedIds: [102]
+			selectedIds: [102],
 		});
 
 		expect(queryByText('add-result')).toBeNull();
@@ -65,7 +65,7 @@ describe('SearchBar', () => {
 
 	it('shows what is selected with selectedIds', () => {
 		const {getByText} = renderTestSearchBar({
-			selectedIds: [102, 103]
+			selectedIds: [102, 103],
 		});
 
 		expect(getByText('x-items-selected')).toBeInTheDocument();
@@ -73,7 +73,7 @@ describe('SearchBar', () => {
 
 	it('shows only one selected with selectedIds', () => {
 		const {getByText} = renderTestSearchBar({
-			selectedIds: [102]
+			selectedIds: [102],
 		});
 
 		expect(getByText('x-item-selected')).toBeInTheDocument();

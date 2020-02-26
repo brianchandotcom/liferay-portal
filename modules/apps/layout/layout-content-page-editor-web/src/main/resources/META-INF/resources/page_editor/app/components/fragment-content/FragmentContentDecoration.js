@@ -32,7 +32,7 @@ export default function FragmentContentDecoration({
 	editableElement,
 	element,
 	fragmentEntryLinkId,
-	itemId
+	itemId,
 }) {
 	const hoveredItemId = useHoveredItemId();
 	const hoveredItemType = useHoveredItemType();
@@ -58,7 +58,7 @@ export default function FragmentContentDecoration({
 	const {
 		registerElement,
 		unregisterElement,
-		updateClassName
+		updateClassName,
 	} = useEditableDecoration();
 
 	const className = classNames({
@@ -97,7 +97,7 @@ export default function FragmentContentDecoration({
 							fragmentEntryLinkId,
 							getEditableElementId(editableElement)
 						)
-					)
+					),
 				].some(_itemId => isActive(_itemId)),
 			[element, fragmentEntryLinkId, isActive, itemId]
 		),
@@ -109,7 +109,7 @@ export default function FragmentContentDecoration({
 					(editableValue[segmentsExperienceId] &&
 						editableValue[segmentsExperienceId][languageId])),
 			[editableValue, languageId, segmentsExperienceId]
-		)
+		),
 	});
 
 	useLayoutEffect(() => {
@@ -126,7 +126,7 @@ export default function FragmentContentDecoration({
 		editableUniqueId,
 		registerElement,
 		unregisterElement,
-		updateClassName
+		updateClassName,
 	]);
 
 	useLayoutEffect(
@@ -143,5 +143,5 @@ FragmentContentDecoration.propTypes = {
 	editableElement: PropTypes.instanceOf(HTMLElement).isRequired,
 	element: PropTypes.instanceOf(HTMLElement).isRequired,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	itemId: PropTypes.string.isRequired
+	itemId: PropTypes.string.isRequired,
 };

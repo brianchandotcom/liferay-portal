@@ -24,7 +24,7 @@ function onload(analytics) {
 	const pageLoadTime = perfData.loadEventStart - perfData.navigationStart;
 
 	const props = {
-		pageLoadTime
+		pageLoadTime,
 	};
 
 	analytics.send('pageLoaded', applicationId, props);
@@ -39,7 +39,7 @@ function unload(analytics) {
 	const viewDuration = new Date().getTime() - perfData.navigationStart;
 
 	const props = {
-		viewDuration
+		viewDuration,
 	};
 
 	analytics.send('pageUnloaded', applicationId, props);

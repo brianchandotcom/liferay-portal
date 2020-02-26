@@ -26,7 +26,7 @@ import {useActiveItemId} from '../Controls';
 import {
 	useEditableProcessorClickPosition,
 	useEditableProcessorUniqueId,
-	useSetEditableProcessorUniqueId
+	useSetEditableProcessorUniqueId,
 } from './EditableProcessorContext';
 import getAllEditables from './getAllEditables';
 import getEditableElementId from './getEditableElementId';
@@ -34,7 +34,7 @@ import getEditableUniqueId from './getEditableUniqueId';
 
 export default function FragmentContentProcessor({
 	element,
-	fragmentEntryLinkId
+	fragmentEntryLinkId,
 }) {
 	const activeItemId = useActiveItemId();
 	const dispatch = useDispatch();
@@ -94,7 +94,7 @@ export default function FragmentContentProcessor({
 			editableElement,
 			value => {
 				let nextEditableValue = {
-					...editableValue
+					...editableValue,
 				};
 
 				if (segmentsExperienceId) {
@@ -103,14 +103,14 @@ export default function FragmentContentProcessor({
 
 						[segmentsExperienceId]: {
 							...(nextEditableValue[segmentsExperienceId] || {}),
-							[languageId]: value
-						}
+							[languageId]: value,
+						},
 					};
 				}
 				else {
 					nextEditableValue = {
 						...nextEditableValue,
-						[languageId]: value
+						[languageId]: value,
 					};
 				}
 
@@ -122,11 +122,11 @@ export default function FragmentContentProcessor({
 								...editableValues[
 									EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 								],
-								[editableId]: nextEditableValue
-							}
+								[editableId]: nextEditableValue,
+							},
 						},
 						fragmentEntryLinkId,
-						segmentsExperienceId
+						segmentsExperienceId,
 					})
 				);
 			},
@@ -151,7 +151,7 @@ export default function FragmentContentProcessor({
 		fragmentEntryLinkId,
 		languageId,
 		segmentsExperienceId,
-		setEditableProcessorUniqueId
+		setEditableProcessorUniqueId,
 	]);
 
 	return null;

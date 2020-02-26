@@ -22,7 +22,7 @@ function reducer(state = INITIAL_STATE, action) {
 	if (action.type === SET_EDITABLE_UNIQUE_ID) {
 		return {
 			editableClickPosition: action.editableClickPosition,
-			editableUniqueId: action.editableUniqueId
+			editableUniqueId: action.editableUniqueId,
 		};
 	}
 
@@ -59,7 +59,7 @@ export function useSetEditableProcessorUniqueId() {
 			dispatch({
 				editableClickPosition,
 				editableUniqueId: editableUniqueIdOrNull,
-				type: SET_EDITABLE_UNIQUE_ID
+				type: SET_EDITABLE_UNIQUE_ID,
 			});
 		},
 		[dispatch]

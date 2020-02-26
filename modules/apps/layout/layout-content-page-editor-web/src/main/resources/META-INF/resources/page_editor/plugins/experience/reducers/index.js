@@ -17,7 +17,7 @@ import {
 	DELETE_SEGMENTS_EXPERIENCE,
 	SELECT_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE,
-	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
+	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
 } from '../actions';
 import createExperienceReducer from './createExperience';
 import deleteExperienceReducer from './deleteExperience';

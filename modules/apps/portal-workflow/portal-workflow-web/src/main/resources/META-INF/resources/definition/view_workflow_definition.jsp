@@ -122,7 +122,7 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 		mode: 'xml',
 		readOnly: 'true',
 		tabSize: 4,
-		width: '100%'
+		width: '100%',
 	}).render();
 
 	var editorContentElement = document.getElementById(

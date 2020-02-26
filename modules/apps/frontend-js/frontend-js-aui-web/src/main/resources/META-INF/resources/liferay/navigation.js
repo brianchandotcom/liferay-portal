@@ -45,8 +45,8 @@ AUI.add(
 
 						return value;
 					},
-					value: null
-				}
+					value: null,
+				},
 			},
 
 			EXTENDS: A.Base,
@@ -57,7 +57,7 @@ AUI.add(
 				_createTempTab(tpl) {
 					var tempLink = Lang.sub(tpl, {
 						pageTitle: STR_EMPTY,
-						url: '#'
+						url: '#',
 					});
 
 					var tempTab = ANode.create('<li>');
@@ -99,14 +99,14 @@ AUI.add(
 							TPL_LINK
 						);
 					}
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Navigation = Navigation;
 	},
 	'',
 	{
-		requires: ['aui-component', 'event-mouseenter']
+		requires: ['aui-component', 'event-mouseenter'],
 	}
 );

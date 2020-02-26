@@ -178,7 +178,7 @@ AUI.add(
 			ATTRS: {
 				appViewEntryTemplates: {
 					validator: A.one,
-					value: {}
+					value: {},
 				},
 
 				columnNames: {
@@ -189,21 +189,21 @@ AUI.add(
 						return val;
 					},
 					validator: Array.isArray,
-					value: []
+					value: [],
 				},
 
 				dimensions: {
-					value: {}
+					value: {},
 				},
 
 				displayStyle: {
 					validator: isString,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				entriesContainer: {
 					validator: A.one,
-					value: {}
+					value: {},
 				},
 
 				folderId: {
@@ -215,7 +215,7 @@ AUI.add(
 					readonly: true,
 					setter: Lang.toInt,
 					validator: isNumber || isString,
-					value: null
+					value: null,
 				},
 
 				maxFileSize: {
@@ -223,30 +223,31 @@ AUI.add(
 						return isNumber(val) && val > 0;
 					},
 					value:
-						Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE
+						Liferay.PropsValues
+							.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 				},
 
 				redirect: {
 					validator: isString,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				scopeGroupId: {
 					validator: isNumber,
-					value: null
+					value: null,
 				},
 
 				uploadURL: {
 					setter: '_decodeURI',
 					validator: isString,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				viewFileEntryURL: {
 					setter: '_decodeURI',
 					validator: isString,
-					value: STR_BLANK
-				}
+					value: STR_BLANK,
+				},
 			},
 			EXTENDS: A.Plugin.Base,
 
@@ -466,7 +467,7 @@ AUI.add(
 						onDragOverHandle,
 						onDropHandle,
 						entriesDragDelegateHandle,
-						entriesClickDelegateHandle
+						entriesClickDelegateHandle,
 					];
 				},
 
@@ -497,7 +498,7 @@ AUI.add(
 
 					var entriesContainer = ANode.create(
 						Lang.sub(TPL_ENTRIES_CONTAINER, {
-							cssClass: containerClasses
+							cssClass: containerClasses,
 						})
 					);
 
@@ -544,7 +545,7 @@ AUI.add(
 							instance._invisibleDescriptiveEntry;
 
 						var hiddenCheckbox = sub(TPL_HIDDEN_CHECK_BOX, [
-							instance.get(STR_HOST).ns('rowIdsFileEntry')
+							instance.get(STR_HOST).ns('rowIdsFileEntry'),
 						]);
 
 						if (displayStyle === CSS_ICON) {
@@ -576,13 +577,13 @@ AUI.add(
 
 					entryNode.attr({
 						'data-title': name,
-						id: A.guid()
+						id: A.guid(),
 					});
 
 					if (displayStyle == CSS_ICON) {
 						var entryNodeWrapper = ANode.create(
 							Lang.sub(TPL_ENTRY_WRAPPER, {
-								title: name
+								title: name,
 							})
 						);
 
@@ -624,7 +625,9 @@ AUI.add(
 							}
 							else if (index === 0) {
 								value = sub(TPL_HIDDEN_CHECK_BOX, [
-									instance.get(STR_HOST).ns('rowIdsFileEntry')
+									instance
+										.get(STR_HOST)
+										.ns('rowIdsFileEntry'),
 								]);
 							}
 
@@ -642,7 +645,7 @@ AUI.add(
 				_createOverlay(target, background) {
 					var overlay = new A.OverlayMask({
 						background: background || null,
-						target
+						target,
 					}).render();
 
 					overlay
@@ -665,9 +668,9 @@ AUI.add(
 							},
 							valueChange(event) {
 								this.set(STR_LABEL, event.newVal + '%');
-							}
+							},
 						},
-						width
+						width,
 					});
 				},
 
@@ -767,7 +770,7 @@ AUI.add(
 								return instance._formatTooltip(val, this);
 							},
 							trigger: '.app-view-entry.upload-error',
-							visible: false
+							visible: false,
 						});
 
 						instance._tooltipDelegate = tooltipDelegate;
@@ -898,7 +901,7 @@ AUI.add(
 						thumbnailName = sub(TPL_IMAGE_THUMBNAIL, [
 							instance._scopeGroupId,
 							instance.get(STR_FOLDER_ID),
-							fileName
+							fileName,
 						]);
 					}
 					else {
@@ -1003,7 +1006,7 @@ AUI.add(
 
 					return {
 						error,
-						message
+						message,
 					};
 				},
 
@@ -1028,14 +1031,14 @@ AUI.add(
 						instance._uploadURL = Liferay.Util.addParams(
 							{
 								redirect,
-								ts: Date.now()
+								ts: Date.now(),
 							},
 							uploadURL
 						);
 					}
 
 					return sub(uploadURL, {
-						folderId
+						folderId,
 					});
 				},
 
@@ -1049,7 +1052,7 @@ AUI.add(
 							appendNewFiles: false,
 							fileFieldName: 'file',
 							multipleFiles: true,
-							simLimit: 1
+							simLimit: 1,
 						});
 
 						var navigationOverlays = instance._getNavigationOverlays();
@@ -1168,7 +1171,7 @@ AUI.add(
 							folder,
 							folderId: key,
 							invalidFiles: filesPartition.rejects,
-							target: folderNode
+							target: folderNode,
 						});
 					}
 
@@ -1288,7 +1291,7 @@ AUI.add(
 								invalidFiles,
 								invalidFilesLength,
 								validFilesLength:
-									totalFilesLength - invalidFilesLength
+									totalFilesLength - invalidFilesLength,
 							})
 						);
 					}
@@ -1501,7 +1504,7 @@ AUI.add(
 							errorMessage = sub(strings.invalidFileSize, [
 								Liferay.Util.formatStorage(
 									instance._maxFileSize
-								)
+								),
 							]);
 						}
 						else if (size === 0) {
@@ -1572,12 +1575,12 @@ AUI.add(
 						),
 						zeroByteFile: Liferay.Language.get(
 							'the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader'
-						)
+						),
 					};
 
 					instance._bindDragDropUI();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.DocumentLibraryUpload = DocumentLibraryUpload;
@@ -1595,7 +1598,7 @@ AUI.add(
 			'aui-tooltip',
 			'liferay-search-container',
 			'querystring-parse-simple',
-			'uploader'
-		]
+			'uploader',
+		],
 	}
 );

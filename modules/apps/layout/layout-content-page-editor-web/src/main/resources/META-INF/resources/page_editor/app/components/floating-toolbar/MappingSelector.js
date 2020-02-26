@@ -26,12 +26,12 @@ import {useDispatch, useSelector} from '../../store/index';
 
 const MAPPING_SOURCE_TYPE_IDS = {
 	content: 'content',
-	structure: 'structure'
+	structure: 'structure',
 };
 
 const UNMAPPED_OPTION = {
 	label: `-- ${Liferay.Language.get('unmapped')} --`,
-	value: 'unmapped'
+	value: 'unmapped',
 };
 
 function loadFields({
@@ -39,7 +39,7 @@ function loadFields({
 	fieldType,
 	selectedItem,
 	selectedMappingTypes,
-	selectedSourceTypeId
+	selectedSourceTypeId,
 }) {
 	let promise;
 
@@ -47,7 +47,7 @@ function loadFields({
 		promise = InfoItemService.getAvailableStructureMappingFields({
 			classNameId: selectedMappingTypes.type.id,
 			classTypeId: selectedMappingTypes.subtype.id,
-			onNetworkStatus: dispatch
+			onNetworkStatus: dispatch,
 		});
 	}
 	else if (
@@ -58,7 +58,7 @@ function loadFields({
 		promise = InfoItemService.getAvailableAssetMappingFields({
 			classNameId: selectedItem.classNameId,
 			classPK: selectedItem.classPK,
-			onNetworkStatus: dispatch
+			onNetworkStatus: dispatch,
 		});
 	}
 
@@ -81,7 +81,7 @@ function loadFields({
 export default function MappingSelector({
 	fieldType,
 	mappedItem,
-	onMappingSelect
+	onMappingSelect,
 }) {
 	const dispatch = useDispatch();
 	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
@@ -103,9 +103,9 @@ export default function MappingSelector({
 				className: selectedItem.className,
 				classNameId: selectedItem.classNameId,
 				classPK: selectedItem.classPK,
-				title: selectedItem.title
+				title: selectedItem.title,
 			},
-			selectedSourceTypeId
+			selectedSourceTypeId,
 		}).then(newFields => {
 			setFields(newFields);
 		});
@@ -120,13 +120,13 @@ export default function MappingSelector({
 						classNameId: '',
 						classPK: '',
 						fieldId: '',
-						mappedField: ''
+						mappedField: '',
 				  }
 				: selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content
 				? {
 						classNameId: selectedItem.classNameId,
 						classPK: selectedItem.classPK,
-						fieldId: event.target.value
+						fieldId: event.target.value,
 				  }
 				: {mappedField: event.target.value};
 
@@ -176,13 +176,13 @@ export default function MappingSelector({
 						dispatch,
 						fieldType,
 						selectedMappingTypes,
-						selectedSourceTypeId
+						selectedSourceTypeId,
 				  }
 				: {
 						dispatch,
 						fieldType,
 						selectedItem,
-						selectedSourceTypeId
+						selectedSourceTypeId,
 				  };
 
 		loadFields(data).then(newFields => {
@@ -193,7 +193,7 @@ export default function MappingSelector({
 		fieldType,
 		selectedItem,
 		selectedMappingTypes,
-		selectedSourceTypeId
+		selectedSourceTypeId,
 	]);
 
 	return (
@@ -217,12 +217,12 @@ export default function MappingSelector({
 										? selectedMappingTypes.subtype.label
 										: selectedMappingTypes.type.label
 								),
-								value: MAPPING_SOURCE_TYPE_IDS.structure
+								value: MAPPING_SOURCE_TYPE_IDS.structure,
 							},
 							{
 								label: Liferay.Language.get('specific-content'),
-								value: MAPPING_SOURCE_TYPE_IDS.content
-							}
+								value: MAPPING_SOURCE_TYPE_IDS.content,
+							},
 						]}
 						value={selectedSourceTypeId}
 					/>
@@ -254,8 +254,8 @@ export default function MappingSelector({
 									UNMAPPED_OPTION,
 									...fields.map(({key, label}) => ({
 										label,
-										value: key
-									}))
+										value: key,
+									})),
 							  ]
 							: [UNMAPPED_OPTION]
 					}
@@ -272,9 +272,9 @@ MappingSelector.propTypes = {
 		PropTypes.shape({
 			classNameId: PropTypes.string,
 			classPK: PropTypes.string,
-			fieldId: PropTypes.string
+			fieldId: PropTypes.string,
 		}),
-		PropTypes.shape({mappedField: PropTypes.string})
+		PropTypes.shape({mappedField: PropTypes.string}),
 	]),
-	onMappingSelect: PropTypes.func.isRequired
+	onMappingSelect: PropTypes.func.isRequired,
 };

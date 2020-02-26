@@ -87,8 +87,8 @@
 		if (currentLanguageIdsInput) {
 			Liferay.Util.postForm(form, {
 				data: {
-					languageIds: Liferay.Util.listSelect(currentLanguageIdsInput)
-				}
+					languageIds: Liferay.Util.listSelect(currentLanguageIdsInput),
+				},
 			});
 		}
 	}

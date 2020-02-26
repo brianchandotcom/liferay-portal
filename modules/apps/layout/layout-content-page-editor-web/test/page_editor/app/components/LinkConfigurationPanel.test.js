@@ -18,7 +18,7 @@ import {
 	cleanup,
 	fireEvent,
 	getByLabelText,
-	render
+	render,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -58,14 +58,14 @@ function getStateWithConfig(config = {}) {
 				editableValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
 						'editable-id-0': {
-							config
-						}
-					}
-				}
-			}
+							config,
+						},
+					},
+				},
+			},
 		},
 		mappedInfoItems: [],
-		segmentsExperienceId: 0
+		segmentsExperienceId: 0,
 	};
 }
 
@@ -79,12 +79,12 @@ function renderLinkPanel(
 				item={{
 					editableId: 'editable-id-0',
 					fragmentEntryLinkId: '0',
-					itemId: ''
+					itemId: '',
 				}}
 			/>
 		</StoreAPIContextProvider>,
 		{
-			baseElement: document.body
+			baseElement: document.body,
 		}
 	);
 }
@@ -114,7 +114,7 @@ describe('LinkPanel', () => {
 
 		await act(async () => {
 			fireEvent.change(sourceTypeInput, {
-				target: {value: 'fromContentField'}
+				target: {value: 'fromContentField'},
 			});
 		});
 
@@ -127,8 +127,8 @@ describe('LinkPanel', () => {
 		const {getByLabelText} = renderLinkPanel({
 			state: getStateWithConfig({
 				href: 'http://liferay.com',
-				target: '_blank'
-			})
+				target: '_blank',
+			}),
 		});
 
 		expect(getByLabelText('url')).toHaveValue('http://liferay.com');
@@ -142,8 +142,8 @@ describe('LinkPanel', () => {
 					classNameId: 1,
 					classPK: 1,
 					fieldId: 'text',
-					target: '_blank'
-				})
+					target: '_blank',
+				}),
 			});
 		});
 
@@ -158,8 +158,8 @@ describe('LinkPanel', () => {
 					classNameId: 1,
 					classPK: 1,
 					fieldId: 'text',
-					target: '_blank'
-				})
+					target: '_blank',
+				}),
 			});
 		});
 
@@ -178,8 +178,8 @@ describe('LinkPanel', () => {
 					classNameId: 1,
 					classPK: 1,
 					fieldId: 'text',
-					target: '_blank'
-				})
+					target: '_blank',
+				}),
 			});
 		});
 
@@ -201,15 +201,15 @@ describe('LinkPanel', () => {
 					classNameId: 1,
 					classPK: 1,
 					fieldId: 'text',
-					target: '_blank'
-				})
+					target: '_blank',
+				}),
 			});
 		});
 
 		const sourceTypeInput = getByLabelText(document.body, 'link');
 
 		fireEvent.change(sourceTypeInput, {
-			target: {value: 'manual'}
+			target: {value: 'manual'},
 		});
 
 		expect(editableConfig).toEqual({});
@@ -225,7 +225,7 @@ describe('LinkPanel', () => {
 		});
 
 		const {getByLabelText} = renderLinkPanel({
-			state: getStateWithConfig({})
+			state: getStateWithConfig({}),
 		});
 
 		const hrefInput = getByLabelText('url');

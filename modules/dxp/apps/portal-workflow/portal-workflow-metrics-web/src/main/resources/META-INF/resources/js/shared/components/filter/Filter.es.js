@@ -20,12 +20,12 @@ import {FilterSearch} from './FilterSearch.es';
 import {
 	addClickOutsideListener,
 	handleClickOutside,
-	removeClickOutsideListener
+	removeClickOutsideListener,
 } from './util/filterEvents.es';
 import {
 	getCapitalizedFilterKey,
 	getSelectedItemsQuery,
-	replaceHistory
+	replaceHistory,
 } from './util/filterUtil.es';
 
 const Filter = ({
@@ -45,7 +45,7 @@ const Filter = ({
 	position = 'left',
 	prefixKey = '',
 	style,
-	withoutRouteParams
+	withoutRouteParams,
 }) => {
 	const {dispatchFilter} = useFilter({withoutRouteParams});
 	const [expanded, setExpanded] = useState(false);
@@ -77,7 +77,7 @@ const Filter = ({
 				'dropdown-menu',
 				expanded && 'show',
 				position && `dropdown-menu-${position}`
-			)
+			),
 		}),
 		[buttonClassName, children, elementClasses, expanded, position]
 	);

@@ -17,51 +17,51 @@ import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {
 	AssetTagsSelector,
-	AssetVocabularyCategoriesSelector
+	AssetVocabularyCategoriesSelector,
 } from 'asset-taglib';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
 const DEFAULT_RULE = {
 	queryContains: true,
-	type: 'assetTags'
+	type: 'assetTags',
 };
 
 const QUERY_AND_OPERATOR_OPTIONS = [
 	{
 		label: Liferay.Language.get('all'),
-		value: true
+		value: true,
 	},
 	{
 		label: Liferay.Language.get('any'),
-		value: false
-	}
+		value: false,
+	},
 ];
 
 const QUERY_CONTAINS_OPTIONS = [
 	{
 		label: Liferay.Language.get('contains'),
-		value: true
+		value: true,
 	},
 	{
 		label: Liferay.Language.get('does-not-contain'),
-		value: false
-	}
+		value: false,
+	},
 ];
 
 const RULE_TYPE_OPTIONS = [
 	{
 		label: Liferay.Language.get('categories'),
-		value: 'assetCategories'
+		value: 'assetCategories',
 	},
 	{
 		label: Liferay.Language.get('keywords'),
-		value: 'keywords'
+		value: 'keywords',
 	},
 	{
 		label: Liferay.Language.get('tags'),
-		value: 'assetTags'
-	}
+		value: 'assetTags',
+	},
 ];
 
 function AssetCategories({
@@ -70,7 +70,7 @@ function AssetCategories({
 	index,
 	namespace,
 	rule,
-	vocabularyIds
+	vocabularyIds,
 }) {
 	const [selectedItems, setSelectedItems] = useState(
 		rule.selectedItems || []
@@ -145,7 +145,7 @@ function Rule({
 	onRuleChange,
 	rule,
 	tagSelectorURL,
-	vocabularyIds
+	vocabularyIds,
 }) {
 	return (
 		<>
@@ -255,7 +255,7 @@ function AutoField({
 	namespace,
 	rules,
 	tagSelectorURL,
-	vocabularyIds
+	vocabularyIds,
 }) {
 	const [currentRules, setCurrentRules] = useState(rules);
 
@@ -269,7 +269,7 @@ function AutoField({
 
 			setCurrentRules([
 				...currentRules.slice(0, index),
-				...currentRules.slice(index + 1, currentRules.length)
+				...currentRules.slice(index + 1, currentRules.length),
 			]);
 		},
 
@@ -290,9 +290,9 @@ function AutoField({
 				...currentRules.slice(0, index),
 				{
 					...rule,
-					[property]: event.currentTarget.value
+					[property]: event.currentTarget.value,
 				},
-				...currentRules.slice(index + 1, currentRules.length)
+				...currentRules.slice(index + 1, currentRules.length),
 			]);
 		},
 		[currentRules]
@@ -369,16 +369,16 @@ AutoField.propTypes = {
 						label: PropTypes.string,
 						value: PropTypes.oneOfType([
 							PropTypes.number,
-							PropTypes.string
-						])
+							PropTypes.string,
+						]),
 					})
-				)
+				),
 			]),
-			type: PropTypes.string
+			type: PropTypes.string,
 		})
 	),
 	tagSelectorURL: PropTypes.string,
-	vocabularyIds: PropTypes.arrayOf(PropTypes.string)
+	vocabularyIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default function(props) {

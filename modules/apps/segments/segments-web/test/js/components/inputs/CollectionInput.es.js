@@ -97,7 +97,7 @@ describe('CollectionInput', () => {
 			mockFunc: mockOnChange,
 			newValue: 'newKey',
 			newValueExpected: `newKey=${startingValue}`,
-			value: startingKey
+			value: startingKey,
 		});
 	});
 
@@ -121,7 +121,7 @@ describe('CollectionInput', () => {
 			mockFunc: mockOnChange,
 			newValue: 'newValue',
 			newValueExpected: `${startingKey}=newValue`,
-			value: startingValue
+			value: startingValue,
 		});
 	});
 });

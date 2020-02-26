@@ -27,7 +27,7 @@ export default function({context, props}) {
 		editSegmentsExperimentURL,
 		editSegmentsVariantLayoutURL,
 		editSegmentsVariantURL,
-		runSegmentsExperimentURL
+		runSegmentsExperimentURL,
 	} = endpoints;
 
 	return (
@@ -45,13 +45,13 @@ export default function({context, props}) {
 						editSegmentsExperimentStatusURL,
 						editSegmentsExperimentURL,
 						editSegmentsVariantURL,
-						runSegmentsExperimentURL
+						runSegmentsExperimentURL,
 					},
-					namespace: context.namespace
+					namespace: context.namespace,
 				}),
 				assetsPath,
 				editVariantLayoutURL: editSegmentsVariantLayoutURL,
-				page
+				page,
 			}}
 		>
 			<SegmentsExperimentsSidebar

@@ -19,7 +19,7 @@ export default function LocaleSelector({
 	locales,
 	onChange,
 	portletNamespace,
-	selectedLanguageId
+	selectedLanguageId,
 }) {
 	return (
 		<ClayForm.Group>

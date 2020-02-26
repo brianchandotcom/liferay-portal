@@ -41,7 +41,7 @@ export default function TreeviewCard({node}) {
 				'form-check': true,
 				'form-check-card': true,
 				'form-check-middle-left': true,
-				selected: node.selected
+				selected: node.selected,
 			})}
 		>
 			<div className="card card-horizontal">
@@ -70,6 +70,6 @@ TreeviewCard.propTypes = {
 	node: PropTypes.shape({
 		icon: PropTypes.string,
 		name: PropTypes.string.isRequired,
-		nodePath: PropTypes.string
-	}).isRequired
+		nodePath: PropTypes.string,
+	}).isRequired,
 };

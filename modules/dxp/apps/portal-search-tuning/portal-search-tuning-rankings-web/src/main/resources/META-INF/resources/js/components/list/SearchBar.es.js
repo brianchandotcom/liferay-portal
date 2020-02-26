@@ -43,12 +43,12 @@ class SearchBar extends Component {
 		onUpdateSearchBarTerm: PropTypes.func,
 		resultIds: PropTypes.arrayOf(String),
 		searchBarTerm: PropTypes.string,
-		selectedIds: PropTypes.arrayOf(String)
+		selectedIds: PropTypes.arrayOf(String),
 	};
 
 	static defaultProps = {
 		resultIds: [],
-		selectedIds: []
+		selectedIds: [],
 	};
 
 	_handleAllCheckbox = () => {
@@ -116,7 +116,7 @@ class SearchBar extends Component {
 			fetchDocumentsSearchUrl,
 			onAddResultSubmit,
 			resultIds,
-			selectedIds
+			selectedIds,
 		} = this.props;
 
 		const classManagementBar = getCN(

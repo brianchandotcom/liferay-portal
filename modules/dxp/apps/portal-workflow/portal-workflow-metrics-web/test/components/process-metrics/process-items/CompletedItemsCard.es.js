@@ -13,7 +13,7 @@ import {
 	cleanup,
 	findAllByTestId,
 	findByTestId,
-	render
+	render,
 } from '@testing-library/react';
 import React from 'react';
 
@@ -25,7 +25,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 const {processId, query} = {
 	processId: 12345,
-	query: '?filters.completedTimeRange%5B0%5D=7'
+	query: '?filters.completedTimeRange%5B0%5D=7',
 };
 
 const data = {
@@ -34,7 +34,7 @@ const data = {
 	onTimeInstanceCount: 2,
 	overdueInstanceCount: 1,
 	title: 'Single Approver',
-	untrackedInstanceCount: 3
+	untrackedInstanceCount: 3,
 };
 
 const timeRangeData = {
@@ -44,17 +44,17 @@ const timeRangeData = {
 			dateStart: '2019-12-03T00:00:00Z',
 			defaultTimeRange: false,
 			id: 7,
-			name: 'Last 7 Days'
+			name: 'Last 7 Days',
 		},
 		{
 			dateEnd: '2019-12-09T00:00:00Z',
 			dateStart: '2019-11-10T00:00:00Z',
 			defaultTimeRange: true,
 			id: 30,
-			name: 'Last 30 Days'
-		}
+			name: 'Last 30 Days',
+		},
 	],
-	totalCount: 2
+	totalCount: 2,
 };
 
 describe('The completed items card component should', () => {
@@ -68,7 +68,7 @@ describe('The completed items card component should', () => {
 
 	beforeEach(() => {
 		const clientMock = {
-			get: jest.fn().mockResolvedValue({data})
+			get: jest.fn().mockResolvedValue({data}),
 		};
 
 		const wrapper = ({children}) => (

@@ -25,7 +25,7 @@ const deleteLanguageId = (languageId, pages) => {
 
 		return {
 			...field,
-			localizedValue: newLocalizedValue
+			localizedValue: newLocalizedValue,
 		};
 	});
 };
@@ -39,8 +39,8 @@ export const handleLanguageIdDeleted = (focusedField, pages, languageId) => {
 				pages: deleteLanguageId(
 					languageId,
 					focusedField.settingsContext.pages
-				)
-			}
+				),
+			},
 		};
 	}
 
@@ -55,7 +55,7 @@ export const handleLanguageIdDeleted = (focusedField, pages, languageId) => {
 		return {
 			...page,
 			localizedDescription,
-			localizedTitle
+			localizedTitle,
 		};
 	});
 
@@ -68,14 +68,14 @@ export const handleLanguageIdDeleted = (focusedField, pages, languageId) => {
 			...field,
 			settingsContext: {
 				...settingsContext,
-				pages: deleteLanguageId(languageId, settingsContext.pages)
-			}
+				pages: deleteLanguageId(languageId, settingsContext.pages),
+			},
 		};
 	});
 
 	return {
 		focusedField,
-		pages
+		pages,
 	};
 };
 

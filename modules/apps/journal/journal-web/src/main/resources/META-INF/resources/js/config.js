@@ -25,8 +25,8 @@
 						requires: [
 							'aui-component',
 							'liferay-portlet-base',
-							'liferay-search-container'
-						]
+							'liferay-search-container',
+						],
 					},
 					'liferay-portlet-journal': {
 						path: 'main.js',
@@ -34,12 +34,12 @@
 							'aui-base',
 							'aui-dialog-iframe-deprecated',
 							'liferay-portlet-base',
-							'liferay-util-window'
-						]
-					}
+							'liferay-util-window',
+						],
+					},
 				},
-				root: MODULE_PATH + '/js/'
-			}
-		}
+				root: MODULE_PATH + '/js/',
+			},
+		},
 	});
 })();

@@ -19,7 +19,7 @@ import {ITEM_TYPES} from '../config/constants/itemTypes';
 const INITIAL_STATE = {
 	activeItemId: null,
 	hoveredItemId: null,
-	selectedItemsIds: []
+	selectedItemsIds: [],
 };
 
 const HOVER_ITEM = 'HOVER_ITEM';
@@ -36,7 +36,7 @@ const reducer = (state, action) => {
 		nextState = {
 			...nextState,
 			hoveredItemId: itemId,
-			hoveredItemType: itemType
+			hoveredItemType: itemType,
 		};
 	}
 	else if (type === SELECT_ITEM) {
@@ -49,7 +49,7 @@ const reducer = (state, action) => {
 				activeItemType: itemType,
 				selectedItemsIds: wasSelected
 					? state.selectedItemsIds.filter(id => id !== itemId)
-					: state.selectedItemsIds.concat([itemId])
+					: state.selectedItemsIds.concat([itemId]),
 			};
 		}
 		else if (itemId && itemId !== nextState.activeItemId) {
@@ -57,7 +57,7 @@ const reducer = (state, action) => {
 				...nextState,
 				activeItemId: itemId,
 				activeItemType: itemType,
-				selectedItemsIds: [itemId]
+				selectedItemsIds: [itemId],
 			};
 		}
 		else if (
@@ -68,7 +68,7 @@ const reducer = (state, action) => {
 				...nextState,
 				activeItemId: null,
 				activeItemType: null,
-				selectedItemsIds: []
+				selectedItemsIds: [],
 			};
 		}
 	}
@@ -111,13 +111,13 @@ const useHoverItem = () => {
 		(
 			itemId,
 			{itemType = ITEM_TYPES.layoutDataItem} = {
-				itemType: ITEM_TYPES.layoutDataItem
+				itemType: ITEM_TYPES.layoutDataItem,
 			}
 		) =>
 			dispatch({
 				itemId,
 				itemType,
-				type: HOVER_ITEM
+				type: HOVER_ITEM,
 			}),
 		[dispatch]
 	);
@@ -127,7 +127,7 @@ const useIsActive = () => {
 	const [state] = useContext(ControlsContext);
 
 	return useCallback(itemId => state.activeItemId === itemId, [
-		state.activeItemId
+		state.activeItemId,
 	]);
 };
 
@@ -135,7 +135,7 @@ const useIsHovered = () => {
 	const [state] = useContext(ControlsContext);
 
 	return useCallback(itemId => state.hoveredItemId === itemId, [
-		state.hoveredItemId
+		state.hoveredItemId,
 	]);
 };
 
@@ -143,7 +143,7 @@ const useIsSelected = () => {
 	const [state] = useContext(ControlsContext);
 
 	return useCallback(itemId => state.selectedItemsIds.includes(itemId), [
-		state.selectedItemsIds
+		state.selectedItemsIds,
 	]);
 };
 
@@ -155,14 +155,14 @@ const useSelectItem = () => {
 			itemId,
 			{multiSelect = false, itemType = ITEM_TYPES.layoutDataItem} = {
 				itemType: ITEM_TYPES.layoutDataItem,
-				multiSelect: false
+				multiSelect: false,
 			}
 		) =>
 			dispatch({
 				itemId,
 				itemType,
 				multiSelect,
-				type: SELECT_ITEM
+				type: SELECT_ITEM,
 			}),
 		[dispatch]
 	);
@@ -178,5 +178,5 @@ export {
 	useIsActive,
 	useIsHovered,
 	useIsSelected,
-	useSelectItem
+	useSelectItem,
 };

@@ -25,7 +25,7 @@ AUI.add(
 			'error-field',
 			'has-error',
 			'success',
-			'success-field'
+			'success-field',
 		];
 
 		var TPL_ADD_BUTTON =
@@ -289,7 +289,7 @@ AUI.add(
 					contentBox.plug(A.Plugin.ParseContent);
 
 					var data = {
-						index: guid
+						index: guid,
 					};
 
 					var namespace = instance.urlNamespace
@@ -300,7 +300,7 @@ AUI.add(
 
 					Liferay.Util.fetch(instance.url, {
 						body: Liferay.Util.objectToFormData(namespacedData),
-						method: 'POST'
+						method: 'POST',
 					})
 						.then(response => response.text())
 						.then(response => contentBox.setContent(response));
@@ -339,7 +339,7 @@ AUI.add(
 						container: instance._contentBox,
 						handles: [sortableHandle],
 						nodes: '.lfr-form-row',
-						opacity: 0
+						opacity: 0,
 					});
 
 					instance._undoManager.on('clearList', () => {
@@ -382,7 +382,7 @@ AUI.add(
 						toggleSelection: inputLocalized.get('toggleSelection'),
 						translatedLanguages: inputLocalized.get(
 							'translatedLanguages'
-						)
+						),
 					});
 				},
 
@@ -425,7 +425,7 @@ AUI.add(
 					instance.fire('clone', {
 						guid: instance._guid,
 						originalRow: node,
-						row: clone
+						row: clone,
 					});
 
 					if (instance._sortable) {
@@ -517,7 +517,7 @@ AUI.add(
 
 						instance.fire('delete', {
 							deletedRow: node,
-							guid: instance._guid
+							guid: instance._guid,
 						});
 
 						if (form) {
@@ -702,8 +702,8 @@ AUI.add(
 					}
 
 					return serializedData.join();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.AutoFields = AutoFields;
@@ -718,7 +718,7 @@ AUI.add(
 			'liferay-form',
 			'liferay-portlet-base',
 			'liferay-undo-manager',
-			'sortable'
-		]
+			'sortable',
+		],
 	}
 );

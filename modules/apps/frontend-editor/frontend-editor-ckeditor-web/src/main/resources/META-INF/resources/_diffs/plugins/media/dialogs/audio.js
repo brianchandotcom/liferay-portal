@@ -46,7 +46,7 @@ CKEDITOR.dialog.add('audio', editor => {
 
 			textScript = scriptTPL.output({
 				oggUrl: audioOggUrl,
-				url: audioUrl
+				url: audioUrl,
 			});
 
 			editor.plugins.media.applyMediaScript(
@@ -86,27 +86,28 @@ CKEDITOR.dialog.add('audio', editor => {
 								id: 'url',
 								label: Liferay.Language.get('audio'),
 								setup: loadValue,
-								type: 'text'
+								type: 'text',
 							},
 							{
 								filebrowser: {
 									action: 'Browse',
 									target: 'info:url',
-									url: editor.config.filebrowserAudioBrowseUrl
+									url:
+										editor.config.filebrowserAudioBrowseUrl,
 								},
 								hidden: 'true',
 								id: 'browse',
 								label: editor.lang.common.browseServer,
 								style: 'display:inline-block;margin-top:10px;',
-								type: 'button'
-							}
+								type: 'button',
+							},
 						],
 						type: 'hbox',
-						widths: ['', '100px']
-					}
+						widths: ['', '100px'],
+					},
 				],
-				id: 'info'
-			}
+				id: 'info',
+			},
 		],
 
 		minHeight: 200,
@@ -124,6 +125,6 @@ CKEDITOR.dialog.add('audio', editor => {
 			editor.plugins.media.onShowCallback(instance, editor, 'audio');
 		},
 
-		title: Liferay.Language.get('audio-properties')
+		title: Liferay.Language.get('audio-properties'),
 	};
 });

@@ -166,7 +166,7 @@ AUI.add(
 
 						var align = {
 							node: WIN,
-							points: POINTS_WINDOW_CENTER
+							points: POINTS_WINDOW_CENTER,
 						};
 
 						if (editorToolbarVisible) {
@@ -202,7 +202,7 @@ AUI.add(
 							instance._restoreContent,
 							instance
 						),
-						editor.on('saveContent', A.fn(0, 'save', instance))
+						editor.on('saveContent', A.fn(0, 'save', instance)),
 					];
 
 					instance.after('destroy', instance._destructor, instance);
@@ -238,8 +238,8 @@ AUI.add(
 					var instance = this;
 
 					instance.get(EDITOR).resetDirty();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.CKEditorInline = CKEditorInline;
@@ -251,7 +251,7 @@ AUI.add(
 			'liferay-inline-editor-base',
 			'node-event-simulate',
 			'overlay',
-			'yui-later'
-		]
+			'yui-later',
+		],
 	}
 );

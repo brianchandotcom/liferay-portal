@@ -267,12 +267,12 @@ if (portletTitleBasedNavigation) {
 					constrain: true,
 					destroyOnHide: true,
 					modal: true,
-					width: 680
+					width: 680,
 				},
 				id: namespace + 'selectFolder',
 				title:
 					'<liferay-ui:message arguments="<%= 1 %>" key="select-destination-folder-for-x-items" translateArguments="<%= false %>" />',
-				uri: '<%= selectFolderURL.toString() %>'
+				uri: '<%= selectFolderURL.toString() %>',
 			},
 			function(event) {
 				var form = document.getElementById(namespace + 'fm');

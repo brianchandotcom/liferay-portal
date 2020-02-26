@@ -146,7 +146,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 	};
 
 	var ACTIONS = {
-		deleteImages: deleteImages
+		deleteImages: deleteImages,
 	};
 
 	Liferay.componentReady('blogImagesManagementToolbar').then(function(

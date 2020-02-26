@@ -40,7 +40,7 @@ describe('BooleanInput', () => {
 			element,
 			mockFunc: mockOnChange,
 			newValue: 'false',
-			value: defaultBoolValue
+			value: defaultBoolValue,
 		});
 	});
 });

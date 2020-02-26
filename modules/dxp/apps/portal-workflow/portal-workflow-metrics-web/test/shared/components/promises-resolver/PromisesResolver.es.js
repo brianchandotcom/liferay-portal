@@ -13,7 +13,7 @@ import {cleanup, render, waitForElement} from '@testing-library/react';
 import React from 'react';
 
 import PromisesResolver, {
-	PromisesResolverContext
+	PromisesResolverContext,
 } from '../../../../src/main/resources/META-INF/resources/js/shared/components/promises-resolver/PromisesResolver.es';
 
 describe('The pending view should', () => {
@@ -134,7 +134,7 @@ describe('The rejected view should', () => {
 			<PromisesResolverContext.Provider
 				value={{
 					error: new Error('Rejected instance mock'),
-					loading: false
+					loading: false,
 				}}
 			>
 				<PromisesResolver.Rejected>
@@ -157,7 +157,7 @@ describe('The resolved view should', () => {
 			<PromisesResolverContext.Provider
 				value={{
 					error: new Error('Rejected instance mock'),
-					loading: false
+					loading: false,
 				}}
 			>
 				<PromisesResolver.Resolved>

@@ -115,7 +115,7 @@ refererURL.setParameter("updateLayout", "true");
 			namespace: '<portlet:namespace />',
 			nodeList: A.one('#<portlet:namespace />applicationList'),
 			nodeSelector: '.drag-content-item',
-			panelBody: addApplicationCollapse
+			panelBody: addApplicationCollapse,
 		});
 
 		if (ControlMenu.PortletDragDrop) {
@@ -123,11 +123,11 @@ refererURL.setParameter("updateLayout", "true");
 				on: {
 					dragEnd: function(event) {
 						addApplication.addPortlet(event.portletNode, {
-							item: event.appendNode
+							item: event.appendNode,
 						});
-					}
+					},
 				},
-				srcNode: '#<portlet:namespace />applicationList'
+				srcNode: '#<portlet:namespace />applicationList',
 			});
 		}
 

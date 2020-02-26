@@ -16,7 +16,7 @@
 
 import {
 	applyTabSelectionDOMChanges,
-	showTab
+	showTab,
 } from '../../../src/main/resources/META-INF/resources/liferay/portal/tabs.es';
 import toCharCode from '../../../src/main/resources/META-INF/resources/liferay/util/to_char_code.es';
 
@@ -58,7 +58,7 @@ describe('Liferay.Portal.Tabs.applyTabSelectionDOMChanges', () => {
 		const ids = [
 			namespace + toCharCode(names[0]),
 			namespace + toCharCode(names[1]),
-			namespace + toCharCode(names[2])
+			namespace + toCharCode(names[2]),
 		];
 
 		document.body.innerHTML = `
@@ -86,7 +86,7 @@ describe('Liferay.Portal.Tabs.applyTabSelectionDOMChanges', () => {
 			names,
 			namespace,
 			selectedTab: document.getElementById(`${ids[1]}TabsId`),
-			selectedTabSection: document.getElementById(`${ids[1]}TabsSection`)
+			selectedTabSection: document.getElementById(`${ids[1]}TabsSection`),
 		});
 
 		const link1 = document.querySelector(`#${ids[0]}TabsId a`);

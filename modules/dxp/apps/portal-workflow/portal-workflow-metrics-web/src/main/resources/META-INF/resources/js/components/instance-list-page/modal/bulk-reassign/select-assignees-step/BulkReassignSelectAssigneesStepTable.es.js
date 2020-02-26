@@ -23,7 +23,7 @@ const Item = ({
 	id,
 	label,
 	objectReviewed: {assetTitle, assetType},
-	workflowInstanceId
+	workflowInstanceId,
 }) => {
 	const {bulkModal, setBulkModal} = useContext(ModalContext);
 	const {reassignedTasks, reassigning, useSameAssignee} = bulkModal;
@@ -61,13 +61,13 @@ const Item = ({
 			if (newAssignee) {
 				filteredTasks.push({
 					assigneeId: newAssignee.id,
-					workflowTaskId: id
+					workflowTaskId: id,
 				});
 			}
 
 			setBulkModal({
 				...bulkModal,
-				reassignedTasks: filteredTasks
+				reassignedTasks: filteredTasks,
 			});
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -112,7 +112,7 @@ const Table = ({data, items}) => {
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '10%'
+							width: '10%',
 						}}
 					>
 						{Liferay.Language.get('id')}
@@ -123,7 +123,7 @@ const Table = ({data, items}) => {
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '25%'
+							width: '25%',
 						}}
 					>
 						{Liferay.Language.get('item-subject')}
@@ -134,7 +134,7 @@ const Table = ({data, items}) => {
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '20%'
+							width: '20%',
 						}}
 					>
 						{Liferay.Language.get('process-step')}
@@ -144,7 +144,7 @@ const Table = ({data, items}) => {
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '20%'
+							width: '20%',
 						}}
 					>
 						{Liferay.Language.get('current-assignee')}
@@ -154,7 +154,7 @@ const Table = ({data, items}) => {
 						style={{
 							color: 'inherit',
 							fontWeight: 'bold',
-							width: '25%'
+							width: '25%',
 						}}
 					>
 						{`${Liferay.Language.get('new-assignee')} `}

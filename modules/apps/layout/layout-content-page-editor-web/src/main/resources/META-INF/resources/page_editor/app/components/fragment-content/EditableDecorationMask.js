@@ -27,7 +27,7 @@ export const EDITABLE_DECORATION_CLASS_NAMES = {
 	highlighted: 'page-editor__editable-decoration-mask-rect--highlighted',
 	hovered: 'page-editor__editable-decoration-mask-rect--hovered',
 	mapped: 'page-editor__editable-decoration-mask-rect--mapped',
-	translated: 'page-editor__editable-decoration-mask-rect--translated'
+	translated: 'page-editor__editable-decoration-mask-rect--translated',
 };
 
 function EditableDecorationMask({classNames: elementsClassNames, elements}) {
@@ -62,7 +62,7 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 					height: rect.height,
 					width: rect.width,
 					x: rect.x,
-					y: rect.y
+					y: rect.y,
 				};
 			}
 		});
@@ -95,7 +95,7 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 		editableProcessorUniqueId,
 		fragmentEntryLinks,
 		layoutData,
-		requestComputeRects
+		requestComputeRects,
 	]);
 
 	// - Any editable added or removed
@@ -174,7 +174,7 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 					'closed.lexicon.sidenav',
 					requestComputeRects
 				),
-				sideNavigation.on('closedStart.lexicon.sidenav', hideMask)
+				sideNavigation.on('closedStart.lexicon.sidenav', hideMask),
 			];
 		}
 
@@ -195,7 +195,7 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 					left: 0,
 					pointerEvents: 'none',
 					position: 'fixed',
-					top: 0
+					top: 0,
 				}}
 				viewBox={`0 0 ${window.innerWidth} ${window.innerHeight}`}
 				width={window.innerWidth}
@@ -223,7 +223,7 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 
 EditableDecorationMask.propTypes = {
 	classNames: PropTypes.objectOf(PropTypes.string),
-	elements: PropTypes.objectOf(PropTypes.instanceOf(HTMLElement))
+	elements: PropTypes.objectOf(PropTypes.instanceOf(HTMLElement)),
 };
 
 export default React.memo(EditableDecorationMask);

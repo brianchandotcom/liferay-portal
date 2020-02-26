@@ -93,8 +93,8 @@
 			Liferay.Util.postForm(document.<portlet:namespace />publishPagesFm, {
 				data: {
 					<%= Constants.CMD %>: '<%= scheduleCMD %>',
-					redirect: '<%= scheduledEventsURL %>'
-				}
+					redirect: '<%= scheduledEventsURL %>',
+				},
 			});
 		}
 		else {
@@ -112,8 +112,8 @@
 				data: {
 					<%= Constants.CMD %>: '<%= unscheduleCMD %>',
 					jobName: jobName,
-					redirect: '<%= scheduledEventsURL %>'
-				}
+					redirect: '<%= scheduledEventsURL %>',
+				},
 			});
 		}
 	}

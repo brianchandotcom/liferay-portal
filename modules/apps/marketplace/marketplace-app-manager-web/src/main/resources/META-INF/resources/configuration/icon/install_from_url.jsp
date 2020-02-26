@@ -26,12 +26,12 @@
 	function <portlet:namespace />openInstallFromURLView() {
 		Liferay.Util.openWindow({
 			dialog: {
-				destroyOnHide: true
+				destroyOnHide: true,
 			},
 			id: '<portlet:namespace />openInstallFromURLView',
 			title: '<liferay-ui:message key="install-from-url" />',
 			uri:
-				'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/install_remote_app.jsp" /><portlet:param name="redirect" value="<%= String.valueOf(renderResponse.createRenderURL()) %>" /></liferay-portlet:renderURL>'
+				'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/install_remote_app.jsp" /><portlet:param name="redirect" value="<%= String.valueOf(renderResponse.createRenderURL()) %>" /></liferay-portlet:renderURL>',
 		});
 	}
 </aui:script>

@@ -26,7 +26,7 @@ describe('FieldBase', () => {
 
 	it('renders the default markup', () => {
 		component = new FieldBase({
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -35,7 +35,7 @@ describe('FieldBase', () => {
 	it('renders the FieldBase with required', () => {
 		component = new FieldBase({
 			required: true,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -44,7 +44,7 @@ describe('FieldBase', () => {
 	it('renders the FieldBase with id', () => {
 		component = new FieldBase({
 			id: 'Id',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -53,7 +53,7 @@ describe('FieldBase', () => {
 	it('renders the FieldBase with help text', () => {
 		component = new FieldBase({
 			spritemap,
-			tip: 'Type something!'
+			tip: 'Type something!',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -62,7 +62,7 @@ describe('FieldBase', () => {
 	it('renders the FieldBase with label', () => {
 		component = new FieldBase({
 			label: 'Text',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -72,7 +72,7 @@ describe('FieldBase', () => {
 		component = new FieldBase({
 			label: 'Text',
 			showLabel: false,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -85,7 +85,7 @@ describe('FieldBase', () => {
                     <h1>Foo bar</h1>
                 </div>
             `,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();

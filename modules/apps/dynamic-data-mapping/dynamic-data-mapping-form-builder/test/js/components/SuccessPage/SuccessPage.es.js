@@ -26,7 +26,7 @@ const withStore = context => {
 		getChildContext() {
 			return {
 				store: this,
-				...context
+				...context,
 			};
 		}
 
@@ -59,7 +59,7 @@ describe('SuccessPage', () => {
 		component = new Component({
 			contentLabel: 'Content',
 			successPageSettings,
-			titleLabel: 'Title'
+			titleLabel: 'Title',
 		});
 
 		jest.runAllTimers();
@@ -74,7 +74,7 @@ describe('SuccessPage', () => {
 
 		component = new Component({
 			editingLanguageId: 'en_US',
-			successPageSettings: {}
+			successPageSettings: {},
 		});
 
 		const titleNode = component.element.querySelector(
@@ -86,8 +86,8 @@ describe('SuccessPage', () => {
 
 		expect(dispatch).toHaveBeenCalledWith('successPageChanged', {
 			title: {
-				en_US: 'Some title'
-			}
+				en_US: 'Some title',
+			},
 		});
 	});
 
@@ -98,7 +98,7 @@ describe('SuccessPage', () => {
 
 		component = new Component({
 			editingLanguageId: 'en_US',
-			successPageSettings: {}
+			successPageSettings: {},
 		});
 
 		const bodyNode = component.element.querySelector(
@@ -110,8 +110,8 @@ describe('SuccessPage', () => {
 
 		expect(dispatch).toHaveBeenCalledWith('successPageChanged', {
 			body: {
-				en_US: 'Some description'
-			}
+				en_US: 'Some description',
+			},
 		});
 	});
 });

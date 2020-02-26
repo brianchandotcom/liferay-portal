@@ -36,10 +36,10 @@ jest.mock(
 					classPK: 'pk',
 					name: 'contents',
 					title: 'title',
-					usagesCount: 1
-				}
+					usagesCount: 1,
+				},
 			])
-		)
+		),
 	})
 );
 
@@ -59,7 +59,7 @@ describe('updateItemConfig', () => {
 			config: {},
 			itemConfig: {},
 			itemId: '0',
-			segmentsExperienceId: '0'
+			segmentsExperienceId: '0',
 		})(() => {});
 
 	it('calls LayoutService.updateItemConfig with the given information', () => {
@@ -75,7 +75,7 @@ describe('updateItemConfig', () => {
 		LayoutService.updateItemConfig.mockImplementation(() =>
 			Promise.resolve({
 				items: {},
-				version: 1
+				version: 1,
 			})
 		);
 
@@ -84,8 +84,8 @@ describe('updateItemConfig', () => {
 		expect(updateLayoutData).toHaveBeenCalledWith({
 			layoutData: {
 				items: {},
-				version: 1
-			}
+				version: 1,
+			},
 		});
 
 		expect(updatePageContents).toHaveBeenCalledWith({
@@ -94,9 +94,9 @@ describe('updateItemConfig', () => {
 					classPK: 'pk',
 					name: 'contents',
 					title: 'title',
-					usagesCount: 1
-				}
-			]
+					usagesCount: 1,
+				},
+			],
 		});
 	});
 });

@@ -87,7 +87,7 @@ catch (Exception e) {
 	form.on('submit', function(event) {
 		Liferay.Util.fetch(form.getAttribute('action'), {
 			body: new FormData(form.getDOM()),
-			method: 'POST'
+			method: 'POST',
 		})
 			.then(function(response) {
 				return response.text();

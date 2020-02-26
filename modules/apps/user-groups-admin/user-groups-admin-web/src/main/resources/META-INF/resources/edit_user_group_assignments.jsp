@@ -151,7 +151,7 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 			eventName: '<portlet:namespace />selectUsers',
 			title:
 				'<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="add-users-to-x" />',
-			url: '<%= selectUsersURL %>'
+			url: '<%= selectUsersURL %>',
 		});
 
 		itemSelectorDialog.on('selectedItemChange', function(event) {
@@ -160,9 +160,9 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 			if (selectedItem) {
 				Liferay.Util.postForm(form, {
 					data: {
-						addUserIds: selectedItem
+						addUserIds: selectedItem,
 					},
-					url: '<portlet:actionURL name="editUserGroupAssignments" />'
+					url: '<portlet:actionURL name="editUserGroupAssignments" />',
 				});
 			}
 		});
@@ -177,9 +177,9 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 				removeUserIds: Liferay.Util.listCheckedExcept(
 					form,
 					'<portlet:namespace />allRowIds'
-				)
+				),
 			},
-			url: '<portlet:actionURL name="editUserGroupAssignments" />'
+			url: '<portlet:actionURL name="editUserGroupAssignments" />',
 		});
 	}
 

@@ -201,7 +201,7 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 			Liferay.Util.setFormValues(form, {
 				<%= PropsKeys.LOCALES %>: Liferay.Util.listSelect(
 					currentLanguageIds
-				)
+				),
 			});
 		}
 	}
@@ -219,7 +219,7 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 			var selectedOption = select.options[select.selectedIndex];
 
 			Liferay.fire('inputLocalized:defaultLocaleChanged', {
-				item: selectedOption
+				item: selectedOption,
 			});
 
 			var defaultLanguage = languageSelectInput.val();
@@ -237,7 +237,7 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 				closeable: true,
 				cssClass: 'alert-warning',
 				destroyOnHide: false,
-				render: true
+				render: true,
 			});
 
 			if (!defaultLanguageSiteName && <%= !liveGroup.isGuest() %>) {
@@ -249,7 +249,7 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 					closeable: true,
 					cssClass: 'alert-warning',
 					destroyOnHide: false,
-					render: true
+					render: true,
 				});
 
 				nameInput.updateInput('<liferay-ui:message key="unnamed-site" />');

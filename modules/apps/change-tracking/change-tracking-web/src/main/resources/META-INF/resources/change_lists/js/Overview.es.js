@@ -59,7 +59,7 @@ Overview.STATE = {
 		deletionCount: Config.number().value(0),
 		description: Config.string(),
 		modifiedCount: Config.number().value(0),
-		name: Config.string()
+		name: Config.string(),
 	}).required(),
 
 	/**
@@ -77,7 +77,7 @@ Overview.STATE = {
 			diffURL: Config.string(),
 			editURL: Config.string(),
 			lastEdited: Config.string(),
-			userName: Config.string()
+			userName: Config.string(),
 		})
 	).required(),
 
@@ -92,7 +92,7 @@ Overview.STATE = {
 	changeListsDropdownMenu: Config.arrayOf(
 		Config.shapeOf({
 			checkoutURL: Config.string(),
-			label: Config.string()
+			label: Config.string(),
 		})
 	).required(),
 
@@ -130,7 +130,7 @@ Overview.STATE = {
 		name: Config.string(),
 		userInitials: Config.string(),
 		userName: Config.string(),
-		userPortraitURL: Config.string()
+		userPortraitURL: Config.string(),
 	}).required(),
 
 	/**
@@ -161,7 +161,7 @@ Overview.STATE = {
 	 * @memberOf Overview
 	 * @type {!string}
 	 */
-	urlProductionView: Config.string().required()
+	urlProductionView: Config.string().required(),
 };
 
 Soy.register(Overview, templates);

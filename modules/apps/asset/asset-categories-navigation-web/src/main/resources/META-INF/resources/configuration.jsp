@@ -79,8 +79,8 @@
 			data: {
 				assetVocabularyIds: Liferay.Util.listSelect(
 					Liferay.Util.getFormElement(form, 'currentAssetVocabularyIds')
-				)
-			}
+				),
+			},
 		});
 	}
 

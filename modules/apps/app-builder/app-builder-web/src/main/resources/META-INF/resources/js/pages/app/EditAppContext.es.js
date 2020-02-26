@@ -31,8 +31,8 @@ const uppdateAppDeployment = (state, appDeploymentType, appDeployment) => ({
 		...state.app,
 		appDeployments: state.app.appDeployments
 			.filter(appDeployment => appDeployment.type !== appDeploymentType)
-			.concat(appDeployment)
-	}
+			.concat(appDeployment),
+	},
 });
 
 const reducer = (state, action) => {
@@ -42,7 +42,7 @@ const reducer = (state, action) => {
 
 			if (action.deploymentType == PRODUCT_MENU) {
 				settings = {
-					scope: ['control_panel']
+					scope: ['control_panel'],
 				};
 			}
 
@@ -52,9 +52,9 @@ const reducer = (state, action) => {
 					...state.app,
 					appDeployments: state.app.appDeployments.concat({
 						settings,
-						type: action.deploymentType
-					})
-				}
+						type: action.deploymentType,
+					}),
+				},
 			};
 		}
 		case REMOVE_DEPLOYMENT: {
@@ -65,8 +65,8 @@ const reducer = (state, action) => {
 					appDeployments: state.app.appDeployments.filter(
 						appDeployment =>
 							appDeployment.type !== action.deploymentType
-					)
-				}
+					),
+				},
 			};
 		}
 		case TOGGLE_SETTINGS_SITE_ID: {
@@ -75,7 +75,7 @@ const reducer = (state, action) => {
 			);
 
 			let {
-				settings: {siteIds = []}
+				settings: {siteIds = []},
 			} = appDeployment;
 
 			const {siteId} = action;
@@ -93,8 +93,8 @@ const reducer = (state, action) => {
 				...appDeployment,
 				settings: {
 					...appDeployment.settings,
-					siteIds
-				}
+					siteIds,
+				},
 			};
 
 			return uppdateAppDeployment(state, PRODUCT_MENU, newAppDeployment);
@@ -104,8 +104,8 @@ const reducer = (state, action) => {
 				...state,
 				app: {
 					...state.app,
-					...action.app
-				}
+					...action.app,
+				},
 			};
 		}
 		case UPDATE_DATA_LAYOUT_ID: {
@@ -113,8 +113,8 @@ const reducer = (state, action) => {
 				...state,
 				app: {
 					...state.app,
-					dataLayoutId: action.id
-				}
+					dataLayoutId: action.id,
+				},
 			};
 		}
 		case UPDATE_DATA_LIST_VIEW_ID: {
@@ -122,8 +122,8 @@ const reducer = (state, action) => {
 				...state,
 				app: {
 					...state.app,
-					dataListViewId: action.id
-				}
+					dataListViewId: action.id,
+				},
 			};
 		}
 		case UPDATE_NAME: {
@@ -132,9 +132,9 @@ const reducer = (state, action) => {
 				app: {
 					...state.app,
 					name: {
-						en_US: action.appName
-					}
-				}
+						en_US: action.appName,
+					},
+				},
 			};
 		}
 		case UPDATE_SETTINGS_SCOPE: {
@@ -146,8 +146,8 @@ const reducer = (state, action) => {
 				...appDeployment,
 				settings: {
 					...appDeployment.settings,
-					scope: action.scope
-				}
+					scope: action.scope,
+				},
 			};
 
 			return uppdateAppDeployment(state, PRODUCT_MENU, newAppDeployment);

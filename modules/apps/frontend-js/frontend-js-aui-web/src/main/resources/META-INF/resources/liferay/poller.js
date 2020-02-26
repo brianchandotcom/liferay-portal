@@ -41,7 +41,7 @@ AUI.add(
 			browserKey: _browserKey,
 			companyId: themeDisplay.getCompanyId(),
 			portletIdsMap: _portletIdsMap,
-			startPolling: true
+			startPolling: true,
 		};
 
 		var _customDelay = null;
@@ -168,7 +168,7 @@ AUI.add(
 
 				Liferay.Util.fetch(_getReceiveUrl(), {
 					body,
-					method: 'POST'
+					method: 'POST',
 				})
 					.then(response => {
 						return response.text();
@@ -212,7 +212,7 @@ AUI.add(
 
 				Liferay.Util.fetch(_getSendUrl(), {
 					body,
-					method: 'POST'
+					method: 'POST',
 				})
 					.then(response => {
 						return response.text();
@@ -236,7 +236,7 @@ AUI.add(
 				_portlets[key] = {
 					initialRequest: true,
 					listener,
-					scope
+					scope,
 				};
 
 				if (!_enabled) {
@@ -349,7 +349,7 @@ AUI.add(
 
 					var requestData = {
 						data,
-						portletId: key
+						portletId: key,
 					};
 
 					if (chunkId) {
@@ -368,7 +368,7 @@ AUI.add(
 				_suspended = true;
 			},
 
-			url: _url
+			url: _url,
 		};
 
 		A.getWin().on('focus', () => {
@@ -381,6 +381,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'json']
+		requires: ['aui-base', 'json'],
 	}
 );

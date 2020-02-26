@@ -24,32 +24,32 @@ const items = [
 		assetType: 'Blog',
 		dateCreated: new Date('2019-01-01'),
 		id: 1,
-		taskNames: []
+		taskNames: [],
 	},
 	{
 		assetTitle: 'New Post 2',
 		assetType: 'Blog',
 		creatorUser: {
-			name: 'User 1'
+			name: 'User 1',
 		},
 		dateCreated: new Date('2019-01-03'),
 		id: 2,
-		taskNames: ['Update']
-	}
+		taskNames: ['Update'],
+	},
 ];
 
 const routeParams = {
 	page: 1,
 	pageSize: 2,
 	query: '',
-	sort: 'overdueInstanceCount%3Adesc'
+	sort: 'overdueInstanceCount%3Adesc',
 };
 
 describe('The instance list card should', () => {
 	const clientMock = {
 		get: jest
 			.fn()
-			.mockResolvedValue({data: {items, totalCount: items.length + 1}})
+			.mockResolvedValue({data: {items, totalCount: items.length + 1}}),
 	};
 	let getByTestId, getAllByTestId;
 

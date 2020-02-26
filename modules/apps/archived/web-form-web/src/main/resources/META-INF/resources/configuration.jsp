@@ -310,7 +310,7 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 			</liferay-portlet:renderURL>
 
-			url: '<%= editFieldURL %>'
+			url: '<%= editFieldURL %>',
 		}).render();
 	</aui:script>
 </c:if>

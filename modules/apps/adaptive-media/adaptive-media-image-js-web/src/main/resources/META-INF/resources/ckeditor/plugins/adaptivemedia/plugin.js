@@ -106,7 +106,7 @@
 
 					sources += Lang.sub(TPL_SOURCE_TAG, {
 						media: mediaText,
-						srcset: source.src
+						srcset: source.src,
 					});
 				});
 
@@ -114,7 +114,7 @@
 					defaultSrc: itemValue.defaultSource,
 					fileEntryAttributeName,
 					fileEntryId: itemValue.fileEntryId,
-					sources
+					sources,
 				});
 
 				pictureEl = CKEDITOR.dom.element.createFromHtml(pictureHtml);
@@ -186,8 +186,8 @@
 						nativeEvent: {},
 						selectionData: {
 							element,
-							region: element.getClientRect()
-						}
+							region: element.getClientRect(),
+						},
 					});
 				}
 				else {
@@ -200,6 +200,6 @@
 			var instance = this;
 
 			instance._bindEvent(editor);
-		}
+		},
 	});
 })();

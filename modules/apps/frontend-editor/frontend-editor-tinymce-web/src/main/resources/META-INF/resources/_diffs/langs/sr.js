@@ -196,5 +196,5 @@ tinymce.addI18n('sr', {
 	Tools: 'Alatke',
 	View: 'Prikaz',
 	Table: 'Tabela',
-	Format: 'Format'
+	Format: 'Format',
 });

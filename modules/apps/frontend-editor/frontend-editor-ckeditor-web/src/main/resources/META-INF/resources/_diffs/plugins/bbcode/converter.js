@@ -31,7 +31,7 @@
 		6: 24,
 		7: 32,
 		8: 48,
-		defaultSize: 14
+		defaultSize: 14,
 	};
 
 	var MAP_HANDLERS = {
@@ -58,7 +58,7 @@
 		td: '_handleTableCell',
 		th: '_handleTableHeader',
 		tr: '_handleTableRow',
-		url: '_handleURL'
+		url: '_handleURL',
 	};
 
 	var MAP_IMAGE_ATTRIBUTES = {
@@ -71,7 +71,7 @@
 		longdesc: 1,
 		style: 1,
 		title: 1,
-		width: 1
+		width: 1,
 	};
 
 	var MAP_ORDERED_LIST_STYLES = {
@@ -79,7 +79,7 @@
 		A: 'list-style-type: upper-alpha;',
 		I: 'list-style-type: upper-roman;',
 		a: 'list-style-type: lower-alpha;',
-		i: 'list-style-type: lower-roman;'
+		i: 'list-style-type: lower-roman;',
 	};
 
 	var MAP_TOKENS_EXCLUDE_NEW_LINE = {
@@ -88,13 +88,13 @@
 		table: 2,
 		td: 3,
 		th: 3,
-		tr: 3
+		tr: 3,
 	};
 
 	var MAP_UNORDERED_LIST_STYLES = {
 		circle: 'list-style-type: circle;',
 		disc: 'list-style-type: disc;',
-		square: 'list-style-type: square;'
+		square: 'list-style-type: square;',
 	};
 
 	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
@@ -255,7 +255,7 @@
 
 				for (var i = 0; i < length; i++) {
 					var image = tplImage.output({
-						imageSrc: emoticonPath + emoticonImages[i]
+						imageSrc: emoticonPath + emoticonImages[i],
 					});
 
 					var escapedSymbol = emoticonSymbols[i].replace(
@@ -332,7 +332,7 @@
 
 			var result = tplImage.output({
 				attributes: instance._handleImageAttributes(token, token.value),
-				imageSrc
+				imageSrc,
 			});
 
 			instance._result.push(result);
@@ -665,7 +665,7 @@
 
 			instance._result = [];
 			instance._stack = [];
-		}
+		},
 	};
 
 	CKEDITOR.BBCode2HTML = Converter;

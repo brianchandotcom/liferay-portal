@@ -24,7 +24,7 @@ import CommentForm from './CommentForm';
 export default function ReplyCommentForm({
 	disabled,
 	fragmentEntryLinkId,
-	parentCommentId
+	parentCommentId,
 }) {
 	const [addingComment, setAddingComment] = useState(false);
 	const [showForm, setShowForm] = useState(false);
@@ -38,7 +38,7 @@ export default function ReplyCommentForm({
 			addFragmentComment({
 				body: textareaContent,
 				fragmentEntryLinkId,
-				parentCommentId
+				parentCommentId,
 			})
 		)
 			.then(() => {
@@ -52,7 +52,7 @@ export default function ReplyCommentForm({
 						'the-reply-could-not-be-saved'
 					),
 					title: Liferay.Language.get('error'),
-					type: 'danger'
+					type: 'danger',
 				});
 
 				setAddingComment(false);
@@ -96,5 +96,5 @@ export default function ReplyCommentForm({
 ReplyCommentForm.propTypes = {
 	disabled: PropTypes.bool,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	parentCommentId: PropTypes.string.isRequired
+	parentCommentId: PropTypes.string.isRequired,
 };

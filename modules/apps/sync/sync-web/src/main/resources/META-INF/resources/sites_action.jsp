@@ -83,8 +83,8 @@ String groupId = String.valueOf(group.getGroupId());
 				on: {
 					destroy: function() {
 						Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
-					}
-				}
+					},
+				},
 			},
 			id: '<portlet:namespace />editDefaultFilePermissionsDialog',
 			title: '<liferay-ui:message key="default-file-permissions" />',
@@ -97,9 +97,9 @@ String groupId = String.valueOf(group.getGroupId());
 			uri: A.Lang.sub(
 				decodeURIComponent('<%= editDefaultFilePermissionsURL %>'),
 				{
-					groupId: groupId
+					groupId: groupId,
 				}
-			)
+			),
 		});
 	}
 </aui:script>

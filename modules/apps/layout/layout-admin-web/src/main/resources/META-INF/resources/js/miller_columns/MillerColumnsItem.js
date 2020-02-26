@@ -27,7 +27,7 @@ import {ACCEPTING_TYPES, ITEM_HOVER_BORDER_LIMIT} from './constants';
 const DROP_ZONES = {
 	BOTTOM: 'BOTTOM',
 	ELEMENT: 'ELEMENT',
-	TOP: 'TOP'
+	TOP: 'TOP',
 };
 
 const ITEM_HOVER_TIMEOUT = 500;
@@ -35,7 +35,7 @@ const ITEM_HOVER_TIMEOUT = 500;
 const ITEM_STATES_COLORS = {
 	'conversion-draft': 'info',
 	draft: 'secondary',
-	pending: 'info'
+	pending: 'info',
 };
 
 const isValidTarget = (source, target, dropZone) => {
@@ -100,12 +100,12 @@ const MillerColumnsItem = ({
 		selectable,
 		states = [],
 		title,
-		url
+		url,
 	},
 	actionHandlers = {},
 	namespace,
 	onItemDrop = noop,
-	onItemStayHover = noop
+	onItemStayHover = noop,
 }) => {
 	const ref = useRef();
 	const timeoutRef = useRef();
@@ -120,7 +120,8 @@ const MillerColumnsItem = ({
 			if (!action.quickAction && action.url) {
 				dropdownActions.push({
 					...action,
-					handler: action.handler || actionHandlers[action.id] || noop
+					handler:
+						action.handler || actionHandlers[action.id] || noop,
 				});
 			}
 		});
@@ -135,7 +136,8 @@ const MillerColumnsItem = ({
 			if (action.quickAction && action.url) {
 				quickActions.push({
 					...action,
-					handler: action.handler || actionHandlers[action.id] || noop
+					handler:
+						action.handler || actionHandlers[action.id] || noop,
 				});
 			}
 		});
@@ -145,7 +147,7 @@ const MillerColumnsItem = ({
 
 	const [{isDragging}, drag] = useDrag({
 		collect: monitor => ({
-			isDragging: !!monitor.isDragging()
+			isDragging: !!monitor.isDragging(),
 		}),
 		item: {
 			active,
@@ -153,8 +155,8 @@ const MillerColumnsItem = ({
 			id: itemId,
 			itemIndex,
 			parentId,
-			type: ACCEPTING_TYPES.ITEM
-		}
+			type: ACCEPTING_TYPES.ITEM,
+		},
 	});
 
 	const [{isOver}, drop] = useDrop({
@@ -169,7 +171,7 @@ const MillerColumnsItem = ({
 			);
 		},
 		collect: monitor => ({
-			isOver: !!monitor.isOver()
+			isOver: !!monitor.isOver(),
 		}),
 		drop(source, monitor) {
 			if (monitor.canDrop()) {
@@ -195,7 +197,7 @@ const MillerColumnsItem = ({
 			}
 
 			setDropZone(dropZone);
-		}
+		},
 	});
 
 	useEffect(() => {
@@ -226,7 +228,7 @@ const MillerColumnsItem = ({
 					dragging: isDragging,
 					'drop-bottom': isOver && dropZone === DROP_ZONES.BOTTOM,
 					'drop-element': isOver && dropZone === DROP_ZONES.ELEMENT,
-					'drop-top': isOver && dropZone === DROP_ZONES.TOP
+					'drop-top': isOver && dropZone === DROP_ZONES.TOP,
 				}
 			)}
 			data-actions={bulkActions}

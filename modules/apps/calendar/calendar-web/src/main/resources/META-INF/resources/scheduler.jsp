@@ -46,21 +46,21 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 
 	var showMoreStrings = {
 		close: '<liferay-ui:message key="close" />',
-		showMore: '<liferay-ui:message key="show-x-more" />'
+		showMore: '<liferay-ui:message key="show-x-more" />',
 	};
 
 	<c:if test="<%= !hideDayView %>">
 		window.<portlet:namespace />dayView = new Liferay.SchedulerDayView({
 			headerViewConfig: {
 				eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
-				strings: showMoreStrings
+				strings: showMoreStrings,
 			},
 			height: 700,
 			isoTime: <%= useIsoTimeFormat %>,
 			readOnly: <%= readOnly %>,
 			strings: {
-				allDay: '<liferay-ui:message key="all-day" />'
-			}
+				allDay: '<liferay-ui:message key="all-day" />',
+			},
 		});
 	</c:if>
 
@@ -69,14 +69,14 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			headerViewConfig: {
 				displayDaysInterval: A.DataType.DateMath.WEEK_LENGTH,
 				eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
-				strings: showMoreStrings
+				strings: showMoreStrings,
 			},
 			height: 700,
 			isoTime: <%= useIsoTimeFormat %>,
 			readOnly: <%= readOnly %>,
 			strings: {
-				allDay: '<liferay-ui:message key="all-day" />'
-			}
+				allDay: '<liferay-ui:message key="all-day" />',
+			},
 		});
 	</c:if>
 
@@ -86,7 +86,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			height: 'auto',
 			isoTime: <%= useIsoTimeFormat %>,
 			readOnly: <%= readOnly %>,
-			strings: showMoreStrings
+			strings: showMoreStrings,
 		});
 	</c:if>
 
@@ -97,8 +97,8 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			isoTime: <%= useIsoTimeFormat %>,
 			readOnly: <%= readOnly %>,
 			strings: {
-				noEvents: '<liferay-ui:message key="no-events" />'
-			}
+				noEvents: '<liferay-ui:message key="no-events" />',
+			},
 		});
 	</c:if>
 
@@ -120,15 +120,15 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			permissionsCalendarBookingURL:
 				'<%= HtmlUtil.escapeJS(permissionsCalendarBookingURL) %>',
 			popover: {
-				width: width
+				width: width,
 			},
 			portletNamespace: '<portlet:namespace />',
 			remoteServices: remoteServices,
 			showHeader: <%= showSchedulerHeader %>,
 			strings: {
-				'description-hint': '<liferay-ui:message key="description-hint" />'
+				'description-hint': '<liferay-ui:message key="description-hint" />',
 			},
-			viewCalendarBookingURL: '<%= HtmlUtil.escapeJS(viewCalendarBookingURL) %>'
+			viewCalendarBookingURL: '<%= HtmlUtil.escapeJS(viewCalendarBookingURL) %>',
 		});
 	</c:if>
 
@@ -161,7 +161,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			previous: '<liferay-ui:message key="previous" />',
 			today: '<liferay-ui:message key="today-view" />',
 			week: '<liferay-ui:message key="week-view" />',
-			year: '<liferay-ui:message key="year-view" />'
+			year: '<liferay-ui:message key="year-view" />',
 		},
 		boundingBox: '#<portlet:namespace />scheduler',
 		calendarContainer: calendarContainer,
@@ -220,7 +220,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			month: '<liferay-ui:message key="month" />',
 			today: '<liferay-ui:message key="today" />',
 			week: '<liferay-ui:message key="week" />',
-			year: '<liferay-ui:message key="year" />'
+			year: '<liferay-ui:message key="year" />',
 		},
 
 		<%
@@ -232,7 +232,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		%>
 
 		todayDate: new Date(<%= todayYear %>, <%= todayMonth %>, <%= todayDay %>),
-		views: views
+		views: views,
 	});
 
 	var destroySchedulers = function(event) {

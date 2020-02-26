@@ -64,8 +64,8 @@
 					<portlet:param name="tabs1" value="scheduled" />
 				</portlet:renderURL>
 
-				redirect: '<%= scheduledPublicationRedirectURL %>'
-			}
+				redirect: '<%= scheduledPublicationRedirectURL %>',
+			},
 		});
 	}
 </script>

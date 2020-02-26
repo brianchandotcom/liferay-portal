@@ -214,5 +214,5 @@ tinymce.addI18n('lt', {
 	Tools: '\u012erankiai',
 	View: 'Per\u017ei\u016bra',
 	Table: 'Lentel\u0117',
-	Format: 'Formatas'
+	Format: 'Formatas',
 });

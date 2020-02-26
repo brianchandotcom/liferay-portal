@@ -91,17 +91,17 @@ AUI.add(
 			ATTRS: {
 				assetAddonEntries: {
 					setter: '_setAssetAddonEntries',
-					validator: Array.isArray
+					validator: Array.isArray,
 				},
 
 				dialogTitle: {
 					validator: Lang.isString,
-					value: Liferay.Language.get('select-entries')
+					value: Liferay.Language.get('select-entries'),
 				},
 
 				selectedAssetAddonEntries: {
-					validator: Array.isArray
-				}
+					validator: Array.isArray,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -130,7 +130,7 @@ AUI.add(
 								instance._onSummaryItemRemove,
 								'.remove-button',
 								instance
-							)
+							),
 					];
 				},
 
@@ -143,14 +143,14 @@ AUI.add(
 						var dialogConfig = {
 							autoHeightRatio: 0.5,
 							'toolbars.footer': instance._getSelectDialogFooterToolbar(),
-							width: 540
+							width: 540,
 						};
 
 						dialog = Liferay.Util.getTop().Liferay.Util.Window.getWindow(
 							{
 								dialog: dialogConfig,
 								id: instance._dialogId,
-								title: instance.get('dialogTitle')
+								title: instance.get('dialogTitle'),
 							}
 						);
 
@@ -192,7 +192,7 @@ AUI.add(
 						}, STR_BLANK);
 
 					var content = Lang.sub(TPL_SELECT_LIST, {
-						entries: entriesContent
+						entries: entriesContent,
 					});
 
 					return A.Node.create(content);
@@ -205,8 +205,8 @@ AUI.add(
 						{
 							label: Liferay.Language.get('cancel'),
 							on: {
-								click: A.bind('_hideSelectDialog', instance)
-							}
+								click: A.bind('_hideSelectDialog', instance),
+							},
 						},
 						{
 							cssClass: 'btn-primary',
@@ -215,9 +215,9 @@ AUI.add(
 								click: A.bind(
 									'_updateSelectedEntries',
 									instance
-								)
-							}
-						}
+								),
+							},
+						},
 					];
 
 					return footerToolbar;
@@ -346,8 +346,8 @@ AUI.add(
 					instance._selectDialogContent = instance._getSelectDialogContent();
 
 					instance._bindUI();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.AssetAddonEntrySelector = AssetAddonEntrySelector;
@@ -357,7 +357,7 @@ AUI.add(
 		requires: [
 			'aui-component',
 			'liferay-portlet-base',
-			'liferay-util-window'
-		]
+			'liferay-util-window',
+		],
 	}
 );

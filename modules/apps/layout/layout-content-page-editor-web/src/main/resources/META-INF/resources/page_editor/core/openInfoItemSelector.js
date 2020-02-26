@@ -24,7 +24,7 @@ export function openInfoItemSelector(
 		eventName,
 		singleSelect: true,
 		title: Liferay.Language.get('select'),
-		url: itemSelectorURL
+		url: itemSelectorURL,
 	});
 
 	itemSelectorDialog.on('selectedItemChange', event => {

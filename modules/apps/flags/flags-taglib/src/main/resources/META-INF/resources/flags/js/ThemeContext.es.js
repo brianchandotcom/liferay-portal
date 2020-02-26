@@ -16,13 +16,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const ThemeContext = React.createContext({
-	namespace: ''
+	namespace: '',
 });
 
 ThemeContext.Provider.propTypes = {
 	value: PropTypes.shape({
-		namespace: PropTypes.string
-	})
+		namespace: PropTypes.string,
+	}),
 };
 
 export default ThemeContext;

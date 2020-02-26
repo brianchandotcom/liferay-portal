@@ -37,7 +37,7 @@ const generateItem = columns =>
 	columns.reduce(
 		(acc, column) => ({
 			...acc,
-			[column]: `-`
+			[column]: `-`,
 		}),
 		{}
 	);
@@ -47,11 +47,11 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 		accept: DragTypes.DRAG_FIELD_TYPE,
 		collect: monitor => ({
 			canDrop: monitor.canDrop(),
-			overTarget: monitor.isOver()
+			overTarget: monitor.isOver(),
 		}),
 		drop: ({data: {name}}) => {
 			onAddFieldName(name);
-		}
+		},
 	});
 
 	const [container, setContainer] = useState();
@@ -66,8 +66,8 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 
 	const [
 		{
-			dataListView: {appliedFilters}
-		}
+			dataListView: {appliedFilters},
+		},
 	] = useContext(EditTableViewContext);
 
 	if (empty) {
@@ -77,7 +77,7 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 				<div
 					className={classNames('empty-drop-zone', {
 						'target-droppable': canDrop,
-						'target-over': overTarget
+						'target-over': overTarget,
 					})}
 					ref={drop}
 				>
@@ -114,7 +114,7 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 								)}
 							</div>
 						</div>
-					)
+					),
 				}))}
 				items={generateItems(
 					fields.map(({label}) => (label ? label.en_US : ''))

@@ -14,9 +14,9 @@
 
 module.exports = {
 	globals: {
-		global: true
+		global: true,
 	},
 	rules: {
-		'liferay-portal/no-global-fetch': 'off'
-	}
+		'liferay-portal/no-global-fetch': 'off',
+	},
 };

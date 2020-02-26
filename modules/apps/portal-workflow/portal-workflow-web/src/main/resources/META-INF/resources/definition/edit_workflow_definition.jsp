@@ -310,7 +310,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		height: 600,
 		mode: 'xml',
 		tabSize: 4,
-		width: '100%'
+		width: '100%',
 	}).render();
 
 	contentEditor.set(
@@ -372,16 +372,16 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 		if (!titleElement) {
 			Liferay.Util.setFormValues(form, {
-				titleElement: ''
+				titleElement: '',
 			});
 		}
 
 		Liferay.Util.postForm(form, {
 			data: {
 				content: contentEditor.get(STR_VALUE),
-				titleValue: untitledWorkflowTitle
+				titleValue: untitledWorkflowTitle,
 			},
-			url: '<%= deployWorkflowDefinitionURL %>'
+			url: '<%= deployWorkflowDefinitionURL %>',
 		});
 	});
 
@@ -393,16 +393,16 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 		if (!titleElement) {
 			Liferay.Util.setFormValues(form, {
-				titleElement: ''
+				titleElement: '',
 			});
 		}
 
 		Liferay.Util.postForm(form, {
 			data: {
 				content: contentEditor.get(STR_VALUE),
-				titleValue: untitledWorkflowTitle
+				titleValue: untitledWorkflowTitle,
 			},
-			url: '<%= saveWorkflowDefinitionURL %>'
+			url: '<%= saveWorkflowDefinitionURL %>',
 		});
 	});
 

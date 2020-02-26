@@ -36,22 +36,22 @@ AUI.add(
 		var SearchContainerMove = A.Component.create({
 			ATTRS: {
 				ddConfig: {
-					valueFn: '_valueDDConfig'
+					valueFn: '_valueDDConfig',
 				},
 
 				dropTargets: {
-					validator: Lang.isArray
+					validator: Lang.isArray,
 				},
 
 				rowSelector: {
 					validator: Lang.isString,
-					value: 'li,tr'
+					value: 'li,tr',
 				},
 
 				tooltipClass: {
 					validator: Lang.isString,
-					value: 'btn btn-group btn-secondary'
-				}
+					value: 'btn btn-group btn-secondary',
+				},
 			},
 
 			EXTENDS: A.Plugin.Base,
@@ -103,25 +103,25 @@ AUI.add(
 							'drag:drophit': A.bind('_onDragDropHit', instance),
 							'drag:enter': A.bind('_onDragEnter', instance),
 							'drag:exit': A.bind('_onDragExit', instance),
-							'drag:start': A.bind('_onDragStart', instance)
-						}
+							'drag:start': A.bind('_onDragStart', instance),
+						},
 					});
 
 					instance._ddHandler.dd.plug([
 						{
 							cfg: {
-								moveOnEnd: false
+								moveOnEnd: false,
 							},
-							fn: A.Plugin.DDProxy
+							fn: A.Plugin.DDProxy,
 						},
 						{
 							cfg: {
 								horizontal: false,
 								scrollDelay: 100,
-								vertical: true
+								vertical: true,
 							},
-							fn: A.Plugin.DDWinScroll
-						}
+							fn: A.Plugin.DDWinScroll,
+						},
 					]);
 				},
 
@@ -142,7 +142,7 @@ AUI.add(
 
 							targetNodes.each(item => {
 								item.plug(A.Plugin.Drop, {
-									groups: [host.get('id')]
+									groups: [host.get('id')],
 								}).drop.on({
 									'drop:enter'() {
 										item.addClass(target.activeCssClass);
@@ -165,9 +165,9 @@ AUI.add(
 
 										host.executeAction(target.action, {
 											selectedItems,
-											targetItem: dropTarget
+											targetItem: dropTarget,
 										});
-									}
+									},
 								});
 							});
 
@@ -221,7 +221,7 @@ AUI.add(
 						proxyNode.html(
 							Lang.sub(moveText, [
 								selectedItemsCount,
-								A.Lang.String.escapeHTML(itemTitle)
+								A.Lang.String.escapeHTML(itemTitle),
 							])
 						);
 					}
@@ -261,7 +261,7 @@ AUI.add(
 							searchContainerSelect.toggleAllRows(false);
 							searchContainerSelect.toggleRow(
 								{
-									toggleCheckbox: true
+									toggleCheckbox: true,
 								},
 								node
 							);
@@ -277,14 +277,14 @@ AUI.add(
 
 					dd.set(STR_DATA, {
 						selectedItems,
-						selectedItemsCount
+						selectedItemsCount,
 					});
 
 					var proxyNode = target.get(STR_DRAG_NODE);
 
 					proxyNode.setStyles({
 						height: STR_BLANK,
-						width: STR_BLANK
+						width: STR_BLANK,
 					});
 
 					var moveText = instance._getMoveText(selectedItemsCount);
@@ -303,7 +303,7 @@ AUI.add(
 						clickPixelThresh: TOUCH_ENABLED ? 100000 : 50,
 						clickTimeThresh: TOUCH_ENABLED ? 150000 : 1000,
 						groups: [host.get('id')],
-						offsetNode: false
+						offsetNode: false,
 					};
 				},
 
@@ -319,8 +319,8 @@ AUI.add(
 					instance._initDragAndDrop();
 
 					instance._initDropTargets();
-				}
-			}
+				},
+			},
 		});
 
 		A.Plugin.SearchContainerMove = SearchContainerMove;
@@ -334,7 +334,7 @@ AUI.add(
 			'dd-drag',
 			'dd-drop',
 			'dd-proxy',
-			'plugin'
-		]
+			'plugin',
+		],
 	}
 );

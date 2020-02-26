@@ -43,7 +43,7 @@ describe('AddResult', () => {
 		const onSearchKeyDown = jest.fn();
 
 		const {getByPlaceholderText} = renderTestAddResultSearchBar({
-			onSearchKeyDown
+			onSearchKeyDown,
 		});
 
 		const input = getByPlaceholderText('search-the-engine');
@@ -59,7 +59,7 @@ describe('AddResult', () => {
 		const onSearchQueryChange = jest.fn();
 
 		const {getByPlaceholderText} = renderTestAddResultSearchBar({
-			onSearchQueryChange
+			onSearchQueryChange,
 		});
 
 		const input = getByPlaceholderText('search-the-engine');

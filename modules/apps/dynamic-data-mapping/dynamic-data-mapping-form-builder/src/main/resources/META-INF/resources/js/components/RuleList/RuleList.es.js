@@ -84,19 +84,19 @@ class RuleList extends Component {
 							newAction = {
 								...action,
 								inputLabel,
-								outputLabel
+								outputLabel,
 							};
 						}
 						else if (action.action == 'jump-to-page') {
 							newAction = {
 								...action,
-								label: this._getJumpToPageLabel(rule, action)
+								label: this._getJumpToPageLabel(rule, action),
 							};
 						}
 						else {
 							newAction = {
 								...action,
-								label: this._getFieldLabel(action.target)
+								label: this._getFieldLabel(action.target),
 							};
 						}
 
@@ -112,12 +112,12 @@ class RuleList extends Component {
 									label: 'user',
 									repeatable: false,
 									type: 'user',
-									value: 'user'
+									value: 'user',
 								},
 								{
 									...condition.operands[0],
-									label: condition.operands[0].value
-								}
+									label: condition.operands[0].value,
+								},
 							];
 						}
 
@@ -133,16 +133,16 @@ class RuleList extends Component {
 									return {
 										...operand,
 										label,
-										value: label
+										value: label,
 									};
 								}
-							)
+							),
 						};
 					}),
-					logicalOperator
+					logicalOperator,
 				};
 			}),
-			rulesCardOptions: this._getRulesCardOptions()
+			rulesCardOptions: this._getRulesCardOptions(),
 		};
 	}
 
@@ -243,12 +243,12 @@ class RuleList extends Component {
 		const rulesCardOptions = [
 			{
 				label: Liferay.Language.get('edit'),
-				settingsItem: 'edit'
+				settingsItem: 'edit',
 			},
 			{
 				label: Liferay.Language.get('delete'),
-				settingsItem: 'delete'
-			}
+				settingsItem: 'delete',
+			},
 		];
 
 		return rulesCardOptions;
@@ -262,7 +262,7 @@ class RuleList extends Component {
 		}
 
 		this.setState({
-			dropdownExpandedIndex: -1
+			dropdownExpandedIndex: -1,
 		});
 	}
 
@@ -279,7 +279,7 @@ class RuleList extends Component {
 		}
 
 		this.setState({
-			dropdownExpandedIndex: ruleIndex
+			dropdownExpandedIndex: ruleIndex,
 		});
 	}
 
@@ -289,12 +289,12 @@ class RuleList extends Component {
 
 		if (data.item.settingsItem == 'edit') {
 			this.emit('ruleEdited', {
-				ruleId: cardId
+				ruleId: cardId,
 			});
 		}
 		else if (data.item.settingsItem == 'delete') {
 			this.emit('ruleDeleted', {
-				ruleId: cardId
+				ruleId: cardId,
 			});
 		}
 	}
@@ -327,7 +327,7 @@ RuleList.STATE = {
 		Config.shapeOf({
 			id: Config.string(),
 			name: Config.string(),
-			uuid: Config.string()
+			uuid: Config.string(),
 		})
 	),
 
@@ -338,7 +338,7 @@ RuleList.STATE = {
 	roles: Config.arrayOf(
 		Config.shapeOf({
 			id: Config.string(),
-			name: Config.string()
+			name: Config.string(),
 		})
 	).value([]),
 
@@ -359,7 +359,7 @@ RuleList.STATE = {
 					inputs: Config.object(),
 					label: Config.string(),
 					outputs: Config.object(),
-					target: Config.string()
+					target: Config.string(),
 				})
 			),
 			conditions: Config.arrayOf(
@@ -369,13 +369,13 @@ RuleList.STATE = {
 							label: Config.string(),
 							repeatable: Config.bool(),
 							type: Config.string(),
-							value: Config.string()
+							value: Config.string(),
 						})
 					),
-					operator: Config.string()
+					operator: Config.string(),
 				})
 			),
-			['logical-operator']: Config.string()
+			['logical-operator']: Config.string(),
 		})
 	).value([]),
 
@@ -409,8 +409,8 @@ RuleList.STATE = {
 		'less-than-equals': Liferay.Language.get('is-less-than-or-equal-to'),
 		'not-contains': Liferay.Language.get('does-not-contain'),
 		'not-equals-to': Liferay.Language.get('is-not-equal-to'),
-		'not-is-empty': Liferay.Language.get('is-not-empty')
-	})
+		'not-is-empty': Liferay.Language.get('is-not-empty'),
+	}),
 };
 
 Soy.register(RuleList, templates);

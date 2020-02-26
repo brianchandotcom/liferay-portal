@@ -28,48 +28,48 @@ AUI.add(
 			ATTRS: {
 				contents: {
 					validator: Lang.isString,
-					value: ''
+					value: '',
 				},
 
 				editorConfig: {
 					validator: Lang.isObject,
-					value: {}
+					value: {},
 				},
 
 				onBlurMethod: {
 					getter: '_getEditorMethod',
-					validator: '_validateEditorMethod'
+					validator: '_validateEditorMethod',
 				},
 
 				onChangeMethod: {
 					getter: '_getEditorMethod',
-					validator: '_validateEditorMethod'
+					validator: '_validateEditorMethod',
 				},
 
 				onFocusMethod: {
 					getter: '_getEditorMethod',
-					validator: '_validateEditorMethod'
+					validator: '_validateEditorMethod',
 				},
 
 				onInitMethod: {
 					getter: '_getEditorMethod',
-					validator: '_validateEditorMethod'
+					validator: '_validateEditorMethod',
 				},
 
 				portletId: {
 					validator: Lang.isString,
-					value: ''
+					value: '',
 				},
 
 				textMode: {
 					validator: Lang.isBoolean,
-					value: {}
+					value: {},
 				},
 
 				useCustomDataProcessor: {
 					validator: Lang.isBoolean,
-					value: false
-				}
+					value: false,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -218,12 +218,12 @@ AUI.add(
 						closeable: true,
 						delay: {
 							hide: 5000,
-							show: 0
+							show: 0,
 						},
 						duration: 500,
 						message: event.data,
 						title: Liferay.Language.get('error'),
-						type: 'danger'
+						type: 'danger',
 					}).render();
 				},
 
@@ -270,7 +270,7 @@ AUI.add(
 						editorNamespace,
 						window[editorNamespace],
 						{
-							portletId: instance.get('portletId')
+							portletId: instance.get('portletId'),
 						}
 					);
 
@@ -351,7 +351,7 @@ AUI.add(
 
 					var localeChange = {
 						dir: contentsLanguageDir,
-						lang: contentsLanguage
+						lang: contentsLanguage,
 					};
 
 					if (instance.instanceReady) {
@@ -387,7 +387,7 @@ AUI.add(
 							instance._srcNode,
 							'val',
 							instance
-						)
+						),
 					];
 
 					// LPS-84186
@@ -567,8 +567,8 @@ AUI.add(
 					else {
 						instance.set('contents', value);
 					}
-				}
-			}
+				},
+			},
 		});
 
 		A.LiferayAlloyEditor = LiferayAlloyEditor;
@@ -579,7 +579,7 @@ AUI.add(
 			'aui-component',
 			'liferay-notification',
 			'liferay-portlet-base',
-			'timers'
-		]
+			'timers',
+		],
 	}
 );

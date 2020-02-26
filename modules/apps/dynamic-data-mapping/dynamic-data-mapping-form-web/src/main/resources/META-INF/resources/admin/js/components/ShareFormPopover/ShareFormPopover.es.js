@@ -39,18 +39,18 @@ class ShareFormPopover extends Component {
 
 		const buttonClasses = getCN('btn ddm-copy-clipboard', {
 			'btn-secondary': !success,
-			'btn-success': success
+			'btn-success': success,
 		});
 
 		const formClasses = getCN('form-group m-0', {
-			'has-success': success
+			'has-success': success,
 		});
 
 		return (
 			<Popover
 				alignElement={alignElement}
 				events={{
-					popoverClosed: this._handlePopoverClosed.bind(this)
+					popoverClosed: this._handlePopoverClosed.bind(this),
 				}}
 				placement={Align.LeftCenter}
 				portalElement={document.body}
@@ -124,13 +124,13 @@ class ShareFormPopover extends Component {
 
 	_handleClipboardSuccess() {
 		this.setState({
-			success: true
+			success: true,
 		});
 	}
 
 	_handlePopoverClosed() {
 		this.setState({
-			success: false
+			success: false,
 		});
 
 		this.emit('popoverClosed');
@@ -166,11 +166,11 @@ ShareFormPopover.PROPS = {
 	 * @type {string}
 	 */
 
-	url: Config.string().required()
+	url: Config.string().required(),
 };
 
 ShareFormPopover.STATE = {
-	success: Config.bool().value(false)
+	success: Config.bool().value(false),
 };
 
 export default ShareFormPopover;

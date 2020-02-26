@@ -81,15 +81,15 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 						on: {
 							visibleChange: function(event) {
 								<portlet:namespace />updateRuleGroupInstances();
-							}
-						}
+							},
+						},
 					},
 					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
+						bodyCssClass: 'dialog-with-footer',
 					},
 					title:
 						'<liferay-ui:message arguments="<%= HtmlUtil.escape(mdrRuleGroup.getName(locale)) %>" key="actions-for-x" translateArguments="<%= false %>" />',
-					uri: '<%= viewRuleGroupInstanceActionsURL.toString() %>'
+					uri: '<%= viewRuleGroupInstanceActionsURL.toString() %>',
 				});
 			}
 		);

@@ -61,8 +61,8 @@ AUI.add(
 				 */
 
 				contentBox: {
-					setter: A.one
-				}
+					setter: A.one,
+				},
 			},
 
 			/**
@@ -119,7 +119,7 @@ AUI.add(
 										WIN.get('innerHeight') / 2 -
 										SHARE_WINDOW_HEIGHT / 2,
 									'status=0',
-									'width=' + SHARE_WINDOW_WIDTH
+									'width=' + SHARE_WINDOW_WIDTH,
 								];
 
 								var url = event.currentTarget.attr('href');
@@ -133,16 +133,16 @@ AUI.add(
 
 						SocialBookmarks.registered[id] = true;
 					}
-				}
+				},
 			},
 
-			registered: {}
+			registered: {},
 		});
 
 		Liferay.SocialBookmarks = SocialBookmarks;
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-node']
+		requires: ['aui-component', 'aui-node'],
 	}
 );

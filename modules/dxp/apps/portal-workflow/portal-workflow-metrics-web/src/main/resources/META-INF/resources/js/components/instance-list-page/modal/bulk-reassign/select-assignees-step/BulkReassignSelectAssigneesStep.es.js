@@ -19,7 +19,7 @@ import {Header} from './BulkReassignSelectAssigneesStepHeader.es';
 
 const BulkReassignSelectAssigneesStep = ({setErrorToast}) => {
 	const {
-		bulkModal: {selectedTasks}
+		bulkModal: {selectedTasks},
 	} = useContext(ModalContext);
 
 	const [retry, setRetry] = useState(0);
@@ -27,9 +27,9 @@ const BulkReassignSelectAssigneesStep = ({setErrorToast}) => {
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params: {
-			workflowTaskIds: selectedTasks.map(task => task.id)
+			workflowTaskIds: selectedTasks.map(task => task.id),
 		},
-		url: '/workflow-tasks/assignable-users'
+		url: '/workflow-tasks/assignable-users',
 	});
 
 	const promises = useMemo(() => {
@@ -40,7 +40,7 @@ const BulkReassignSelectAssigneesStep = ({setErrorToast}) => {
 				setErrorToast(Liferay.Language.get('your-request-has-failed'));
 
 				return Promise.reject(err);
-			})
+			}),
 		];
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fetchData, retry]);

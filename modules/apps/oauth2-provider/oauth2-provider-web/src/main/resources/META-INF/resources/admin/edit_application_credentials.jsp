@@ -230,7 +230,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		Liferay.Util.fetch(
 			'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/admin/generate_random_secret" />',
 			{
-				method: 'POST'
+				method: 'POST',
 			}
 		)
 			.then(function(response) {
@@ -378,7 +378,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			footerContent: footerContent,
 			headerContent: title,
 			modal: true,
-			plugins: [Liferay.WidgetZIndex]
+			plugins: [Liferay.WidgetZIndex],
 		}).render();
 
 		modal.on('render', function(event) {
@@ -396,8 +396,8 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 						);
 
 						modal.hide();
-					}
-				}
+					},
+				},
 			},
 			{
 				cssClass: 'btn-primary',
@@ -410,9 +410,9 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 						);
 
 						modal.hide();
-					}
-				}
-			}
+					},
+				},
+			},
 		]);
 
 		modal.show();
@@ -514,7 +514,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			},
 			custom: false,
 			fieldName: '<portlet:namespace />clientSecret',
-			validatorName: 'required'
+			validatorName: 'required',
 		},
 		{
 			body: function(val, fieldNode, ruleValue) {
@@ -522,8 +522,8 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			},
 			custom: false,
 			fieldName: '<portlet:namespace />redirectURIs',
-			validatorName: 'required'
-		}
+			validatorName: 'required',
+		},
 	];
 
 	var fieldRules = oldFieldRules.concat(newFieldRules);

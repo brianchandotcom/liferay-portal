@@ -116,8 +116,8 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 				data: {
 					mergeLayoutSetBranchId: layoutSetBranch.getAttribute(
 						'data-layoutSetBranchId'
-					)
-				}
+					),
+				},
 			});
 		}
 	}

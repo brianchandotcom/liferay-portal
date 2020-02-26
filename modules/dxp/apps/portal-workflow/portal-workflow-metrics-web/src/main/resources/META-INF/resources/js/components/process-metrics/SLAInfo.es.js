@@ -43,7 +43,7 @@ const SLAInfo = ({processId}) => {
 				openErrorToast({
 					message: Liferay.Language.get(
 						'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
-					)
+					),
 				});
 			});
 
@@ -61,7 +61,7 @@ const SLAInfo = ({processId}) => {
 				<AlertMessage className="mb-0" iconName="exclamation-full">
 					<>
 						{`${sub(blockedSLAText, [
-							blockedSLACount
+							blockedSLACount,
 						])} ${Liferay.Language.get(
 							'fix-the-sla-configuration-to-resume-accurate-reporting'
 						)} `}

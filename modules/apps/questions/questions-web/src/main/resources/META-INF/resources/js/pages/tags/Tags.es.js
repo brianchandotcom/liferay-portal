@@ -54,7 +54,7 @@ export default () => {
 														'used-x-times'
 													),
 													[
-														tag.taxonomyCategoryUsageCount
+														tag.taxonomyCategoryUsageCount,
 													]
 												)}
 											</ClayCard.Description>
@@ -66,7 +66,7 @@ export default () => {
 													[
 														dateToInternationalHuman(
 															tag.dateCreated
-														)
+														),
 													]
 												)}
 											</ClayCard.Description>

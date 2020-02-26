@@ -35,7 +35,7 @@ export default function Collapse(props) {
 			<button
 				aria-expanded={open}
 				className={classNames('collapse-icon', 'sheet-subtitle', {
-					collapsed: !open
+					collapsed: !open,
 				})}
 				onClick={handleClick}
 			>
@@ -51,5 +51,5 @@ export default function Collapse(props) {
 
 Collapse.propTypes = {
 	children: PropTypes.node.isRequired,
-	open: PropTypes.bool
+	open: PropTypes.bool,
 };

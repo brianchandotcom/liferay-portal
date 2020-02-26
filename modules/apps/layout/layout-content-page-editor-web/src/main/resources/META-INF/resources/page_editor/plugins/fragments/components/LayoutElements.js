@@ -26,13 +26,13 @@ const layoutElements = [
 	{
 		columns: ['12'],
 		label: Liferay.Language.get('section'),
-		type: 'container'
+		type: 'container',
 	},
 	{
 		columns: ['4', '4', '4'],
 		label: Liferay.Language.get('row'),
-		type: 'row'
-	}
+		type: 'row',
+	},
 ];
 
 const LayoutElementCard = ({label, layoutColumns, type}) => {
@@ -56,14 +56,14 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 					parentItemId: parentId,
 					position,
 					selectItem,
-					store
+					store,
 				})
 			);
 		},
 		item: {
 			name: label,
-			type
-		}
+			type,
+		},
 	});
 
 	useEffect(() => {

@@ -55,7 +55,7 @@ class PagesVisitor {
 				if (merge) {
 					return {
 						...field,
-						...mapper(field, fieldIndex, ...args)
+						...mapper(field, fieldIndex, ...args),
 					};
 				}
 
@@ -80,7 +80,7 @@ class PagesVisitor {
 		return this._pages.map((page, pageIndex) => {
 			const newPage = {
 				...page,
-				...pageMapper(page, pageIndex)
+				...pageMapper(page, pageIndex),
 			};
 
 			return {
@@ -88,7 +88,7 @@ class PagesVisitor {
 				rows: newPage.rows.map((row, rowIndex) => {
 					const newRow = {
 						...row,
-						...rowMapper(row, rowIndex, pageIndex)
+						...rowMapper(row, rowIndex, pageIndex),
 					};
 
 					return {
@@ -101,7 +101,7 @@ class PagesVisitor {
 									columnIndex,
 									rowIndex,
 									pageIndex
-								)
+								),
 							};
 
 							return {
@@ -111,11 +111,11 @@ class PagesVisitor {
 									columnIndex,
 									rowIndex,
 									pageIndex
-								)
+								),
 							};
-						})
+						}),
 					};
-				})
+				}),
 			};
 		});
 	}
@@ -158,7 +158,7 @@ class RulesVisitor {
 		return this._rules.map(rule => {
 			return {
 				...rule,
-				actions: rule.actions.map(actionMapper)
+				actions: rule.actions.map(actionMapper),
 			};
 		});
 	}
@@ -167,7 +167,7 @@ class RulesVisitor {
 		return this._rules.map(rule => {
 			return {
 				...rule,
-				conditions: rule.conditions.map(conditionMapper)
+				conditions: rule.conditions.map(conditionMapper),
 			};
 		});
 	}

@@ -18,9 +18,9 @@ test('Should fetch calendars', () => {
 			{
 				defaultCalendar: true,
 				key: 'working-hours',
-				title: 'Working Hours'
-			}
-		]
+				title: 'Working Hours',
+			},
+		],
 	};
 
 	const calendarStore = new CalendarStore(client(data));
@@ -37,13 +37,13 @@ test('Should get default calendar', () => {
 		{
 			defaultCalendar: true,
 			key: 'full-hours',
-			title: 'Full Hours'
+			title: 'Full Hours',
 		},
 		{
 			defaultCalendar: false,
 			key: 'working-hours',
-			title: 'Working Hours'
-		}
+			title: 'Working Hours',
+		},
 	];
 
 	calendarStore.setState({calendars});
@@ -55,7 +55,7 @@ test('Should init with default state', () => {
 	const calendarStore = new CalendarStore(client());
 
 	const defaultState = {
-		calendars: []
+		calendars: [],
 	};
 
 	expect(calendarStore.getState()).toMatchObject(defaultState);
@@ -68,8 +68,8 @@ test('Should return empty json when there is no default calendar', () => {
 		{
 			defaultCalendar: false,
 			key: 'working-hours',
-			title: 'Working Hours'
-		}
+			title: 'Working Hours',
+		},
 	];
 
 	calendarStore.setState({calendars});
@@ -85,9 +85,9 @@ test('Should set state', () => {
 			{
 				defaultCalendar: true,
 				key: 'working-hours',
-				title: 'Working Hours'
-			}
-		]
+				title: 'Working Hours',
+			},
+		],
 	};
 
 	calendarStore.setState(newState);

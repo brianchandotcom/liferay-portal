@@ -250,12 +250,12 @@ String navigation = ParamUtil.getString(request, "navigation");
 							height:
 								'<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>',
 							width:
-								'<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>'
-						}
+								'<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>',
+						},
 					},
 					form: {
 						method: 'POST',
-						node: A.one(document.<portlet:namespace />fm2)
+						node: A.one(document.<portlet:namespace />fm2),
 					},
 					maxFileSize: <%= dlConfiguration.fileMaxSize() %>,
 					namespace: '<portlet:namespace />',
@@ -274,11 +274,11 @@ String navigation = ParamUtil.getString(request, "navigation");
 					uploadURL: '<%= uploadURL %>',
 					viewFileEntryURL:
 						'<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
-					viewFileEntryTypeURL: '<%= viewFileEntryTypeURL %>'
+					viewFileEntryTypeURL: '<%= viewFileEntryTypeURL %>',
 				}),
 				{
 					destroyOnNavigate: true,
-					portletId: '<%= HtmlUtil.escapeJS(portletId) %>'
+					portletId: '<%= HtmlUtil.escapeJS(portletId) %>',
 				}
 			);
 

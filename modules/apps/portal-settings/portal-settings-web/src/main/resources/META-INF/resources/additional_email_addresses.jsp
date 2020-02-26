@@ -113,7 +113,7 @@
 			new Liferay.AutoFields({
 				contentBox: '#<portlet:namespace />additionalEmailAddresses',
 				fieldIndexes: '<portlet:namespace />emailAddressesIndexes',
-				namespace: '<portlet:namespace />'
+				namespace: '<portlet:namespace />',
 			}).render();
 		</aui:script>
 	</c:when>

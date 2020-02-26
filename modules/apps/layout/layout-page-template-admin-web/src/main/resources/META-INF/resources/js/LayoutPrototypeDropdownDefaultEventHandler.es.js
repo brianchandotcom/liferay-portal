@@ -41,13 +41,13 @@ class LayoutPrototypeDropdownDefaultEventHandler extends DefaultEventHandler {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				modal: true
+				modal: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
 			title: Liferay.Language.get(label),
-			uri: url
+			uri: url,
 		});
 	}
 

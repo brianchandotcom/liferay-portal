@@ -22,14 +22,14 @@ const RoleFilter = ({
 	filterKey = filterConstants.roles.key,
 	options = {},
 	prefixKey = '',
-	processId
+	processId,
 }) => {
 	const defaultOptions = {
 		hideControl: false,
 		multiple: true,
 		position: 'left',
 		withSelectionTitle: false,
-		withoutRouteParams: false
+		withoutRouteParams: false,
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
@@ -38,7 +38,7 @@ const RoleFilter = ({
 		filterKey,
 		prefixKey,
 		requestUrl: `/processes/${processId}/roles?completed=${completed}`,
-		withoutRouteParams: options.withoutRouteParams
+		withoutRouteParams: options.withoutRouteParams,
 	});
 
 	const filterName = useFilterName(

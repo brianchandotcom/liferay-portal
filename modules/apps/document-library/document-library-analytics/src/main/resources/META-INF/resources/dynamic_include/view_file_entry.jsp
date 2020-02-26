@@ -33,7 +33,7 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 			groupId: '<%= fileEntry.getGroupId() %>',
 			fileEntryUUID: '<%= fileEntry.getUuid() %>',
 			title: '<%= HtmlUtil.escapeJS(fileEntry.getTitle()) %>',
-			version: '<%= fileEntry.getVersion() %>'
+			version: '<%= fileEntry.getVersion() %>',
 		});
 	}
 </aui:script>

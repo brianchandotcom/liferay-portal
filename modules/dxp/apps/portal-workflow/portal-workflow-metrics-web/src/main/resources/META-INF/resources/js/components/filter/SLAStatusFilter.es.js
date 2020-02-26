@@ -20,14 +20,14 @@ const SLAStatusFilter = ({
 	className,
 	filterKey = filterConstants.slaStatus.key,
 	options = {},
-	prefixKey = ''
+	prefixKey = '',
 }) => {
 	const defaultOptions = {
 		hideControl: false,
 		multiple: true,
 		position: 'left',
 		withSelectionTitle: true,
-		withoutRouteParams: false
+		withoutRouteParams: false,
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
@@ -65,22 +65,22 @@ const SLAStatusFilter = ({
 const slaStatusConstants = {
 	onTime: 'OnTime',
 	overdue: 'Overdue',
-	untracked: 'Untracked'
+	untracked: 'Untracked',
 };
 
 const slaStatuses = [
 	{
 		key: slaStatusConstants.onTime,
-		name: Liferay.Language.get('on-time')
+		name: Liferay.Language.get('on-time'),
 	},
 	{
 		key: slaStatusConstants.overdue,
-		name: Liferay.Language.get('overdue')
+		name: Liferay.Language.get('overdue'),
 	},
 	{
 		key: slaStatusConstants.untracked,
-		name: Liferay.Language.get('untracked')
-	}
+		name: Liferay.Language.get('untracked'),
+	},
 ];
 
 export default SLAStatusFilter;

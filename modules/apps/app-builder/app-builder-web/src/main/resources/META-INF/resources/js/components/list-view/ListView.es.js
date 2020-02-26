@@ -20,7 +20,7 @@ import useQuery from '../../hooks/useQuery.es';
 import {getURL} from '../../utils/client.es';
 import {ManagementToolbar, SearchBar} from '../management-toolbar/index.es';
 import SearchContext, {
-	reducer
+	reducer,
 } from '../management-toolbar/search/SearchContext.es';
 import SearchSubnavigationBar from '../management-toolbar/search/SearchSubnavigationBar.es';
 import TableWithPagination from '../table/TableWithPagination.es';
@@ -34,14 +34,14 @@ export default withRouter(
 		emptyState,
 		endpoint,
 		history,
-		queryParams
+		queryParams,
 	}) => {
 		const [query, setQuery] = useQuery(history, {
 			keywords: '',
 			page: 1,
 			pageSize: 20,
 			sort: '',
-			...queryParams
+			...queryParams,
 		});
 
 		const dispatch = action => setQuery(reducer(query, action));
@@ -50,11 +50,11 @@ export default withRouter(
 			fetchDelay: 0,
 			fetchOptions: {
 				credentials: 'same-origin',
-				method: 'GET'
+				method: 'GET',
 			},
 			link: getURL(endpoint),
 			onNetworkStatusChange: status => setLoading(status < 4),
-			variables: {...query}
+			variables: {...query},
 		});
 
 		let items = [];
@@ -87,7 +87,7 @@ export default withRouter(
 
 							refetch();
 						});
-					}
+					},
 				};
 			});
 		}

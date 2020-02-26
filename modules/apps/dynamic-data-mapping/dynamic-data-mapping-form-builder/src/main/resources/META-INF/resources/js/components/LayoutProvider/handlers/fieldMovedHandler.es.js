@@ -52,6 +52,6 @@ export default (props, state, {addedToPlaceholder, source, target}) => {
 	pages[pageIndex].rows = FormSupport.removeEmptyRows(pages, pageIndex);
 
 	return {
-		pages
+		pages,
 	};
 };

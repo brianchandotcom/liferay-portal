@@ -93,7 +93,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 		processesNode: '#importProcessesSearchContainer',
 		processesResourceURL:
 			'<%= HtmlUtil.escapeJS(importProcessesURL.toString()) %>',
-		timeZoneOffset: <%= timeZoneOffset %>
+		timeZoneOffset: <%= timeZoneOffset %>,
 	});
 
 	var destroyInstance = function(event) {

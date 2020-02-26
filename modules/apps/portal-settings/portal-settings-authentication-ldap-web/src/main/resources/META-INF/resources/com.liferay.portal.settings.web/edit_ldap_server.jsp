@@ -315,7 +315,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			'portrait',
 			'screenName',
 			'status',
-			'uuid'
+			'uuid',
 		];
 		var userMappingFieldValues = [
 			'userMappingEmailAddress',
@@ -329,7 +329,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			'userMappingPortrait',
 			'userMappingScreenName',
 			'userMappingStatus',
-			'userMappingUuid'
+			'userMappingUuid',
 		];
 
 		var form = document.<portlet:namespace />fm;
@@ -343,7 +343,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 		var groupMappingFieldValues = [
 			'groupMappingDescription',
 			'groupMappingGroupName',
-			'groupMappingUser'
+			'groupMappingUser',
 		];
 
 		var groupMapping = <portlet:namespace />mapValues(
@@ -356,8 +356,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 				<%= Constants.CMD %>:
 					'<%= (ldapServerId <= 0) ? Constants.ADD : Constants.UPDATE %>',
 				'ldap--<%= LDAPConstants.USER_MAPPINGS %>--': userMapping,
-				'ldap--<%= LDAPConstants.GROUP_MAPPINGS %>--': groupMapping
-			}
+				'ldap--<%= LDAPConstants.GROUP_MAPPINGS %>--': groupMapping,
+			},
 		});
 	}
 
@@ -499,7 +499,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			'ldap--<%= LDAPConstants.USERS_DN %>--': baseDN,
 			'ldap--<%= LDAPConstants.USER_DEFAULT_OBJECT_CLASSES %>--': exportMappingUserDefaultObjectClass,
 			'ldap--<%= LDAPConstants.GROUPS_DN %>--': baseDN,
-			'ldap--<%= LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES %>--': exportMappingGroupDefaultObjectClass
+			'ldap--<%= LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES %>--': exportMappingGroupDefaultObjectClass,
 		});
 	}
 
@@ -512,7 +512,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			var url = null;
 
 			var data = {
-				p_auth: '<%= AuthTokenUtil.getToken(request) %>'
+				p_auth: '<%= AuthTokenUtil.getToken(request) %>',
 			};
 
 			if (type === 'ldapConnection') {
@@ -622,14 +622,14 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 
 				var dialog = Liferay.Util.Window.getWindow({
 					dialog: {
-						destroyOnHide: true
+						destroyOnHide: true,
 					},
-					title: '<%= UnicodeLanguageUtil.get(request, "ldap") %>'
+					title: '<%= UnicodeLanguageUtil.get(request, "ldap") %>',
 				});
 
 				dialog.plug(A.Plugin.IO, {
 					data: data,
-					uri: url
+					uri: url,
 				});
 			}
 		},

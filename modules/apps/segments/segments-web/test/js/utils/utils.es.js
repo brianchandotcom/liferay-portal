@@ -24,7 +24,7 @@ describe('utils', () => {
 			expect(Utils.createNewGroup([])).toEqual({
 				conjunctionName: CONJUNCTIONS.AND,
 				groupId: GROUP_ID,
-				items: []
+				items: [],
 			});
 		});
 	});
@@ -39,7 +39,7 @@ describe('utils', () => {
 			expect(Utils.getChildGroupIds(mockCriteriaNested())).toEqual([
 				'group_02',
 				'group_03',
-				'group_04'
+				'group_04',
 			]);
 		});
 	});
@@ -49,24 +49,24 @@ describe('utils', () => {
 			const operators = [
 				{
 					label: Liferay.Language.get('equals'),
-					name: 'eq'
+					name: 'eq',
 				},
 				{
 					label: Liferay.Language.get('greater-than-or-equals'),
-					name: 'ge'
+					name: 'ge',
 				},
 				{
 					label: Liferay.Language.get('greater-than'),
-					name: 'gt'
+					name: 'gt',
 				},
 				{
 					label: Liferay.Language.get('not-equals'),
-					name: 'not-eq'
-				}
+					name: 'not-eq',
+				},
 			];
 
 			const propertyTypes = {
-				boolean: ['eq', 'not-eq']
+				boolean: ['eq', 'not-eq'],
 			};
 
 			const supportedOperators = Utils.getSupportedOperatorsFromType(
@@ -78,12 +78,12 @@ describe('utils', () => {
 			expect(supportedOperators).toEqual([
 				{
 					label: 'equals',
-					name: 'eq'
+					name: 'eq',
 				},
 				{
 					label: 'not-equals',
-					name: 'not-eq'
-				}
+					name: 'not-eq',
+				},
 			]);
 		});
 	});
@@ -93,7 +93,7 @@ describe('utils', () => {
 			expect(Utils.insertAtIndex('c', ['a', 'b'], 0)).toEqual([
 				'c',
 				'a',
-				'b'
+				'b',
 			]);
 		});
 
@@ -101,7 +101,7 @@ describe('utils', () => {
 			expect(Utils.insertAtIndex('c', ['a', 'b'], 1)).toEqual([
 				'a',
 				'c',
-				'b'
+				'b',
 			]);
 		});
 
@@ -109,7 +109,7 @@ describe('utils', () => {
 			expect(Utils.insertAtIndex('c', ['a', 'b'], 2)).toEqual([
 				'a',
 				'b',
-				'c'
+				'c',
 			]);
 		});
 	});
@@ -118,7 +118,7 @@ describe('utils', () => {
 		it('takes an object of key value pairs and return a form data object with the same values', () => {
 			const testData = {
 				bar: 'bar',
-				foo: 'foo'
+				foo: 'foo',
 			};
 
 			const formData = Utils.objectToFormData(testData);
@@ -147,7 +147,7 @@ describe('utils', () => {
 			expect(Utils.replaceAtIndex('x', ['a', 'b', 'c'], 0)).toEqual([
 				'x',
 				'b',
-				'c'
+				'c',
 			]);
 		});
 
@@ -155,7 +155,7 @@ describe('utils', () => {
 			expect(Utils.replaceAtIndex('x', ['a', 'b', 'c'], 1)).toEqual([
 				'a',
 				'x',
-				'c'
+				'c',
 			]);
 		});
 
@@ -163,7 +163,7 @@ describe('utils', () => {
 			expect(Utils.replaceAtIndex('x', ['a', 'b', 'c'], 2)).toEqual([
 				'a',
 				'b',
-				'x'
+				'x',
 			]);
 		});
 	});

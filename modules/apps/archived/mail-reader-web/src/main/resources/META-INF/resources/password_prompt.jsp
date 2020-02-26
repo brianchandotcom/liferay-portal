@@ -46,7 +46,7 @@ long inboxFolderId = ParamUtil.getLong(request, "inboxFolderId");
 		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/store_password', {
 			dataType: 'JSON',
 			form: {
-				id: form.getDOMNode()
+				id: form.getDOMNode(),
 			},
 			method: 'POST',
 			on: {
@@ -70,8 +70,8 @@ long inboxFolderId = ParamUtil.getLong(request, "inboxFolderId");
 							<%= inboxFolderId %>
 						);
 					}
-				}
-			}
+				},
+			},
 		});
 	});
 </aui:script>

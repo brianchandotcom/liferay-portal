@@ -24,7 +24,7 @@ export default function ResolveButton({
 	disabled = false,
 	loading,
 	onClick,
-	resolved
+	resolved,
 }) {
 	let icon = (
 		<span className="text-lowercase">
@@ -50,7 +50,7 @@ export default function ResolveButton({
 		<ClayButton
 			borderless
 			className={classNames('flex-shrink-0', {
-				'lfr-portal-tooltip': !!title
+				'lfr-portal-tooltip': !!title,
 			})}
 			data-title={title}
 			disabled={disabled || loading}
@@ -69,5 +69,5 @@ ResolveButton.propTypes = {
 	disabled: PropTypes.bool,
 	loading: PropTypes.bool.isRequired,
 	onClick: PropTypes.func.isRequired,
-	resolved: PropTypes.bool.isRequired
+	resolved: PropTypes.bool.isRequired,
 };

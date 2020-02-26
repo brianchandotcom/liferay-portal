@@ -30,7 +30,7 @@ import React, {useMemo} from 'react';
 
 import {
 	LayoutDataPropTypes,
-	getLayoutDataItemPropTypes
+	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
@@ -58,7 +58,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 				duplicateItem({
 					itemId: item.itemId,
 					selectItem,
-					store: state
+					store: state,
 				})
 			);
 		}
@@ -91,7 +91,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	}, [
 		fragmentEntryLink.configuration,
 		fragmentEntryLink.editableValues.portletId,
-		state.widgets
+		state.widgets,
 	]);
 
 	const content = (
@@ -146,7 +146,7 @@ function getWidget(widgets, portletId) {
 
 FragmentWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes().isRequired,
-	layoutData: LayoutDataPropTypes.isRequired
+	layoutData: LayoutDataPropTypes.isRequired,
 };
 
 export default FragmentWithControls;

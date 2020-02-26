@@ -67,7 +67,7 @@ const withResizeableColumns = ChildComponent => {
 			this._resizeDrag = new Drag({
 				axis: 'x',
 				sources: '.resizeable .ddm-resize-handle',
-				useShim: true
+				useShim: true,
 			});
 
 			this._resizeDrag.on(
@@ -139,7 +139,7 @@ const withResizeableColumns = ChildComponent => {
 					store.emit('columnResized', {
 						column,
 						direction,
-						source
+						source,
 					});
 				}
 			}
@@ -253,7 +253,7 @@ const withResizeableColumns = ChildComponent => {
 		successPageSettings: Config.shapeOf({
 			body: Config.object(),
 			enabled: Config.bool(),
-			title: Config.object()
+			title: Config.object(),
 		}).value({}),
 
 		/**
@@ -263,7 +263,7 @@ const withResizeableColumns = ChildComponent => {
 		 * @type {?string}
 		 */
 
-		view: Config.string()
+		view: Config.string(),
 	};
 
 	return ResizeableColumns;

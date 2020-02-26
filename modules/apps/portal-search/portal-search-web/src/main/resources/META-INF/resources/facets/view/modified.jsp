@@ -339,7 +339,7 @@ int index = 0;
 		DEFAULTS_FORM_VALIDATOR.STRINGS,
 		{
 			<portlet:namespace />dateRange:
-				'<%= UnicodeLanguageUtil.get(request, "search-custom-range-invalid-date-range") %>'
+				'<%= UnicodeLanguageUtil.get(request, "search-custom-range-invalid-date-range") %>',
 		},
 		true
 	);
@@ -352,7 +352,7 @@ int index = 0;
 					customRangeTo.getDate(),
 					customRangeFrom.getDate()
 				);
-			}
+			},
 		},
 		true
 	);
@@ -366,16 +366,16 @@ int index = 0;
 			},
 			validField: function(event) {
 				Util.toggleDisabled(searchButton, false);
-			}
+			},
 		},
 		rules: {
 			<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from: {
-				<portlet:namespace />dateRange: true
+				<portlet:namespace />dateRange: true,
 			},
 			<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to: {
-				<portlet:namespace />dateRange: true
-			}
-		}
+				<portlet:namespace />dateRange: true,
+			},
+		},
 	});
 
 	var onRangeSelectionChange = function(event) {

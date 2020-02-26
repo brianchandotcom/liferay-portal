@@ -32,13 +32,13 @@ class Checkbox extends Component {
 		const value = event.delegateTarget.checked;
 
 		this.setState({
-			value
+			value,
 		});
 
 		this.emit('fieldEdited', {
 			fieldInstance: this,
 			originalEvent: event,
-			value
+			value,
 		});
 	}
 }
@@ -170,7 +170,7 @@ Checkbox.STATE = {
 	 * @type {?(bool)}
 	 */
 
-	value: Config.bool().value(true)
+	value: Config.bool().value(true),
 };
 
 export default Checkbox;

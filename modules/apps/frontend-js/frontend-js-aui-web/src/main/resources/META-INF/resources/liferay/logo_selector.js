@@ -20,17 +20,17 @@ AUI.add(
 		var DELETE_LOGO = 'DELETE_LOGO';
 
 		var MAP_DELETE_LOGO = {
-			src: DELETE_LOGO
+			src: DELETE_LOGO,
 		};
 
 		var LogoSelector = A.Component.create({
 			ATTRS: {
 				defaultLogo: {
-					value: false
+					value: false,
 				},
 
 				defaultLogoURL: {
-					value: ''
+					value: '',
 				},
 
 				editLogoFn: {
@@ -44,28 +44,28 @@ AUI.add(
 						return fn;
 					},
 					validator: A.Lang.isString,
-					value: ''
+					value: '',
 				},
 
 				editLogoURL: {
-					value: ''
+					value: '',
 				},
 
 				logoDisplaySelector: {
-					value: ''
+					value: '',
 				},
 
 				logoURL: {
-					value: ''
+					value: '',
 				},
 
 				portletNamespace: {
-					value: ''
+					value: '',
 				},
 
 				randomNamespace: {
-					value: ''
-				}
+					value: '',
+				},
 			},
 
 			BIND_UI_ATTRS: ['logoURL'],
@@ -105,14 +105,14 @@ AUI.add(
 					Liferay.Util.openWindow({
 						cache: false,
 						dialog: {
-							destroyOnHide: true
+							destroyOnHide: true,
 						},
 						dialogIframe: {
-							bodyCssClass: 'dialog-with-footer'
+							bodyCssClass: 'dialog-with-footer',
 						},
 						id: instance._portletNamespace + 'changeLogo',
 						title: Liferay.Language.get('upload-image'),
-						uri: editLogoURL
+						uri: editLogoURL,
 					});
 
 					event.preventDefault();
@@ -216,14 +216,14 @@ AUI.add(
 					instance._fileEntryIdInput = contentBox.one(
 						'#' + portletNamespace + 'fileEntryId'
 					);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.LogoSelector = LogoSelector;
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-util-window']
+		requires: ['aui-base', 'liferay-util-window'],
 	}
 );

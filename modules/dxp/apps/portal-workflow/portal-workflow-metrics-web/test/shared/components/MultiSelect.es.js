@@ -26,8 +26,8 @@ const data = [
 	{desc: 'to do any', id: '10'},
 	{
 		desc: 'a long component text example to test its overflow behavior.',
-		id: '11'
-	}
+		id: '11',
+	},
 ];
 const selectedTagsId = ['5', '2', '6', '7'];
 
@@ -40,8 +40,8 @@ test('Should add a tag', () => {
 
 	instance.addTag({
 		currentTarget: {
-			getAttribute: () => 'test'
-		}
+			getAttribute: () => 'test',
+		},
 	});
 	expect(component).toMatchSnapshot();
 });
@@ -66,8 +66,8 @@ test('Should remove a tag', () => {
 
 	instance.removeTag({
 		currentTarget: {
-			getAttribute: () => '0'
-		}
+			getAttribute: () => '0',
+		},
 	});
 	expect(component).toMatchSnapshot();
 });
@@ -81,7 +81,7 @@ test('Should search', () => {
 
 	instance.onSearch({
 		keyCode: 84,
-		target: {value: 'test'}
+		target: {value: 'test'},
 	});
 	expect(component).toMatchSnapshot();
 });
@@ -114,7 +114,7 @@ test('Should test keydown press', () => {
 
 	instance.onSearch({
 		keyCode: 38,
-		target: {value: ''}
+		target: {value: ''},
 	});
 	expect(component).toMatchSnapshot();
 });
@@ -128,11 +128,11 @@ test('Should test keyenter press', () => {
 
 	instance.onSearch({
 		keyCode: 38,
-		target: {value: ''}
+		target: {value: ''},
 	});
 	instance.onSearch({
 		keyCode: 13,
-		target: {value: ''}
+		target: {value: ''},
 	});
 	expect(component).toMatchSnapshot();
 });
@@ -146,7 +146,7 @@ test('Should test keyup press', () => {
 
 	instance.onSearch({
 		keyCode: 40,
-		target: {value: ''}
+		target: {value: ''},
 	});
 	expect(component).toMatchSnapshot();
 });

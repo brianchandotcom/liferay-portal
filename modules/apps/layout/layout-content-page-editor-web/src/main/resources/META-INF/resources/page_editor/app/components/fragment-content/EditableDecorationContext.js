@@ -69,7 +69,7 @@ export function EditableDecorationProvider({children}) {
 
 			updateClassName: (editableId, className) => {
 				setClassName(editableId, className);
-			}
+			},
 		}),
 		[removeClassName, removeElement, setClassName, setElement]
 	);
@@ -89,7 +89,7 @@ export function EditableDecorationProvider({children}) {
 }
 
 EditableDecorationProvider.propTypes = {
-	children: PropTypes.node
+	children: PropTypes.node,
 };
 
 export function useEditableDecoration() {
@@ -101,7 +101,7 @@ export function useEditableDecoration() {
 		() => ({
 			registerElement,
 			unregisterElement,
-			updateClassName
+			updateClassName,
 		}),
 		[registerElement, unregisterElement, updateClassName]
 	);

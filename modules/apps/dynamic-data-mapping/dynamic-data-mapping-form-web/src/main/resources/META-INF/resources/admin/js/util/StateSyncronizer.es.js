@@ -39,7 +39,7 @@ class StateSyncronizer extends Component {
 				),
 				translationManager.on('editingLocale', ({newValue}) => {
 					this.syncEditors(newValue);
-				})
+				}),
 			];
 		}
 	}
@@ -109,7 +109,7 @@ class StateSyncronizer extends Component {
 			pages: store.state.pages,
 			paginationMode: store.state.paginationMode,
 			rules: store.getRules(),
-			successPageSettings: store.state.successPageSettings
+			successPageSettings: store.state.successPageSettings,
 		};
 
 		return state;
@@ -140,7 +140,7 @@ class StateSyncronizer extends Component {
 			descriptionEditor,
 			localizedDescription,
 			localizedName,
-			nameEditor
+			nameEditor,
 		} = this.props;
 
 		let description = localizedDescription[editingLanguageId];
@@ -179,7 +179,7 @@ class StateSyncronizer extends Component {
 			document.querySelector(
 				`#${namespace}serializedSettingsContext`
 			).value = JSON.stringify({
-				pages: settingsDDMForm.pages
+				pages: settingsDDMForm.pages,
 			});
 		}
 
@@ -203,7 +203,7 @@ class StateSyncronizer extends Component {
 			return {
 				...page,
 				description: page.localizedDescription,
-				title: page.localizedTitle
+				title: page.localizedTitle,
 			};
 		});
 
@@ -220,10 +220,10 @@ class StateSyncronizer extends Component {
 						defaultLanguageId: this.getDefaultLanguageId(),
 						pages: this._getSerializedSettingsContextPages(
 							field.settingsContext.pages
-						)
-					}
+						),
+					},
 				};
-			})
+			}),
 		});
 	}
 
@@ -248,7 +248,7 @@ class StateSyncronizer extends Component {
 
 				field = {
 					...field,
-					value: newValue
+					value: newValue,
 				};
 			}
 
@@ -280,7 +280,7 @@ StateSyncronizer.PROPS = {
 	published: Config.bool(),
 	settingsDDMForm: Config.any(),
 	store: Config.any(),
-	translationManager: Config.any()
+	translationManager: Config.any(),
 };
 
 export default StateSyncronizer;

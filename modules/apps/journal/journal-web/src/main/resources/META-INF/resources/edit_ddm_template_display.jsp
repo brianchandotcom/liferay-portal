@@ -168,8 +168,8 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 
 						instance._bindUIACBase();
 						instance._syncUIACBase();
-					}
-				}
+					},
+				},
 			});
 
 			var getItems = function() {
@@ -178,7 +178,7 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 				paletteItems.each(function(item, index) {
 					results.push({
 						data: item.text().trim(),
-						node: item.ancestor()
+						node: item.ancestor(),
 					});
 				});
 
@@ -206,7 +206,7 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 				nodes: '.palette-item-container',
 				resultFilters: 'phraseMatch',
 				resultTextLocator: 'data',
-				source: getItems()
+				source: getItems(),
 			});
 
 			paletteSearch.on('results', function(event) {
@@ -319,7 +319,7 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 
 		if (AutoComplete) {
 			var processor = new AutoComplete({
-				variables: <%= journalEditDDMTemplateDisplayContext.getAutocompleteJSON() %>
+				variables: <%= journalEditDDMTemplateDisplayContext.getAutocompleteJSON() %>,
 			});
 
 			if (processor) {
@@ -329,7 +329,7 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 					processor: processor,
 					render: true,
 					visible: false,
-					zIndex: 10000
+					zIndex: 10000,
 				});
 			}
 			else {
@@ -349,15 +349,15 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 				boundingBox: editorNode,
 				height: 400,
 				mode: '<%= journalEditDDMTemplateDisplayContext.getEditorMode() %>',
-				width: '100%'
+				width: '100%',
 			}).render();
 
 			new A.Resize({
 				handles: ['br'],
 				node: editorNode,
 				on: {
-					resize: resizeEditor
-				}
+					resize: resizeEditor,
+				},
 			});
 
 			if (editorContentElement) {
@@ -385,12 +385,12 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 					animated: true,
 					container: paletteDataContainer,
 					content: '.palette-item-content',
-					header: '.palette-item-header'
+					header: '.palette-item-header',
 				});
 
 				new A.TooltipDelegate({
 					align: {
-						points: [A.WidgetPositionAlign.LC, A.WidgetPositionAlign.RC]
+						points: [A.WidgetPositionAlign.LC, A.WidgetPositionAlign.RC],
 					},
 					duration: 0.5,
 					html: true,
@@ -398,7 +398,7 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 					trigger:
 						'#<portlet:namespace />templatePaletteContainer .palette-item',
 					visible: false,
-					zIndex: 6
+					zIndex: 6,
 				});
 
 				createLiveSearch();

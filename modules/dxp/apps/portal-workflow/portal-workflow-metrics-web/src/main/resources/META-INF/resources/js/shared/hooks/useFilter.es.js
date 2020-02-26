@@ -17,21 +17,21 @@ import {
 	getCapitalizedFilterKey,
 	getFilterResults,
 	getFilterValues,
-	getSelectedItems
+	getSelectedItems,
 } from '../components/filter/util/filterUtil.es';
 import {useRouterParams} from './useRouterParams.es';
 
 const useFilter = ({
 	filterKeys = [],
 	prefixKeys = [''],
-	withoutRouteParams
+	withoutRouteParams,
 }) => {
 	const {
 		dispatch,
 		dispatchFilter,
 		filterState,
 		filterValues,
-		setFilterValues
+		setFilterValues,
 	} = useContext(FilterContext);
 
 	const {filters} = useRouterParams();
@@ -73,7 +73,7 @@ const useFilter = ({
 	);
 
 	const selectedFilters = useMemo(() => getSelectedItems(filterResults), [
-		filterResults
+		filterResults,
 	]);
 
 	useEffect(() => {
@@ -90,7 +90,7 @@ const useFilter = ({
 		filtersError,
 		hasFilterError,
 		prefixedKeys,
-		selectedFilters
+		selectedFilters,
 	};
 };
 

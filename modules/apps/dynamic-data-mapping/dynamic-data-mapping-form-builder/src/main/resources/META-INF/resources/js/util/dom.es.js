@@ -108,7 +108,7 @@ const KeyMap = {
 	X: 88,
 	Y: 89,
 	Z: 90,
-	ZERO: 48
+	ZERO: 48,
 };
 
 const NON_MODIFYING_KEYS = [
@@ -141,7 +141,7 @@ const NON_MODIFYING_KEYS = [
 	'SHIFT',
 	'SPACE',
 	'UP',
-	'WIN_KEY'
+	'WIN_KEY',
 ];
 
 export function isModifyingKey(keyCode) {

@@ -27,7 +27,7 @@ import {
 	addItem,
 	confirmDelete,
 	getItem,
-	updateItem
+	updateItem,
 } from '../../utils/client.es';
 import {ACTIONS} from '../entry/PermissionsContext.es';
 import CustomObjectPopover from './CustomObjectPopover.es';
@@ -36,19 +36,19 @@ const COLUMNS = [
 	{
 		key: 'name',
 		sortable: true,
-		value: Liferay.Language.get('name')
+		value: Liferay.Language.get('name'),
 	},
 	{
 		key: 'dateCreated',
 		sortable: true,
-		value: Liferay.Language.get('create-date')
+		value: Liferay.Language.get('create-date'),
 	},
 	{
 		asc: false,
 		key: 'dateModified',
 		sortable: true,
-		value: Liferay.Language.get('modified-date')
-	}
+		value: Liferay.Language.get('modified-date'),
+	},
 ];
 
 export default ({history}) => {
@@ -62,10 +62,10 @@ export default ({history}) => {
 
 	const [
 		customObjectPermissionsModalState,
-		setCustomObjectPermissionsModalState
+		setCustomObjectPermissionsModalState,
 	] = useState({
 		dataDefinitionId: null,
-		endpoint: null
+		endpoint: null,
 	});
 
 	const onClickAddButton = ({currentTarget}) => {
@@ -87,15 +87,15 @@ export default ({history}) => {
 			availableLanguageIds: ['en_US'],
 			dataDefinitionFields: [],
 			name: {
-				value: name
-			}
+				value: name,
+			},
 		}).then(({id}) => {
 			if (isAddFormView) {
 				Liferay.Util.navigate(
 					Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
 						dataDefinitionId: id,
 						mvcRenderCommandName: '/edit_form_view',
-						newCustomObject: true
+						newCustomObject: true,
 					})
 				);
 			}
@@ -124,7 +124,7 @@ export default ({history}) => {
 		).then(({id: dataRecordCollectionId}) => {
 			setCustomObjectPermissionsModalState(prevState => ({
 				...prevState,
-				endpoint: `/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/permissions`
+				endpoint: `/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/permissions`,
 			}));
 		});
 	}, [dataDefinitionId]);
@@ -172,24 +172,24 @@ export default ({history}) => {
 							Promise.resolve(
 								history.push(`/custom-object/${id}/form-views`)
 							),
-						name: Liferay.Language.get('form-views')
+						name: Liferay.Language.get('form-views'),
 					},
 					{
 						action: ({id}) =>
 							Promise.resolve(
 								history.push(`/custom-object/${id}/table-views`)
 							),
-						name: Liferay.Language.get('table-views')
+						name: Liferay.Language.get('table-views'),
 					},
 					{
 						action: ({id}) =>
 							Promise.resolve(
 								history.push(`/custom-object/${id}/apps`)
 							),
-						name: Liferay.Language.get('apps')
+						name: Liferay.Language.get('apps'),
 					},
 					{
-						name: 'divider'
+						name: 'divider',
 					},
 					{
 						action: ({id}) =>
@@ -197,21 +197,21 @@ export default ({history}) => {
 								setCustomObjectPermissionsModalState(
 									prevState => ({
 										...prevState,
-										dataDefinitionId: id
+										dataDefinitionId: id,
 									})
 								)
 							),
-						name: Liferay.Language.get('app-permissions')
+						name: Liferay.Language.get('app-permissions'),
 					},
 					{
-						name: 'divider'
+						name: 'divider',
 					},
 					{
 						action: confirmDelete(
 							'/o/data-engine/v2.0/data-definitions/'
 						),
-						name: Liferay.Language.get('delete')
-					}
+						name: Liferay.Language.get('delete'),
+					},
 				]}
 				addButton={() => (
 					<div ref={addButtonRef}>
@@ -239,7 +239,7 @@ export default ({history}) => {
 					),
 					title: Liferay.Language.get(
 						'there-are-no-custom-objects-yet'
-					)
+					),
 				}}
 				endpoint={`/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`}
 			>
@@ -251,7 +251,7 @@ export default ({history}) => {
 						<Link to={`/custom-object/${item.id}/form-views`}>
 							{item.name.en_US}
 						</Link>
-					)
+					),
 				})}
 			</ListView>
 
@@ -268,30 +268,30 @@ export default ({history}) => {
 					{
 						key: ACTIONS.ADD_DATA_RECORD,
 						sortable: false,
-						value: Liferay.Language.get('add-entry')
+						value: Liferay.Language.get('add-entry'),
 					},
 					{
 						key: ACTIONS.DELETE_DATA_RECORD,
 						sortable: false,
-						value: Liferay.Language.get('delete-entry')
+						value: Liferay.Language.get('delete-entry'),
 					},
 					{
 						key: ACTIONS.UPDATE_DATA_RECORD,
 						sortable: false,
-						value: Liferay.Language.get('update-entry')
+						value: Liferay.Language.get('update-entry'),
 					},
 					{
 						key: ACTIONS.VIEW_DATA_RECORD,
 						sortable: false,
-						value: Liferay.Language.get('view-entries')
-					}
+						value: Liferay.Language.get('view-entries'),
+					},
 				]}
 				endpoint={customObjectPermissionsModalState.endpoint}
 				isOpen={dataDefinitionId !== null}
 				onClose={() =>
 					setCustomObjectPermissionsModalState({
 						dataDefinitionId: null,
-						endpoint: null
+						endpoint: null,
 					})
 				}
 				onSave={permissions => {
@@ -302,7 +302,7 @@ export default ({history}) => {
 							if (actionIds.length > 0) {
 								dataDefinitionPermissions.push({
 									actionIds: [ACTIONS.VIEW],
-									roleName
+									roleName,
 								});
 							}
 						}

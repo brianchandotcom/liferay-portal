@@ -113,7 +113,7 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{
-				data: arr
+				data: arr,
 			}
 		);
 	});

@@ -59,17 +59,17 @@ AUI.add(
 		var InviteMembers = A.Component.create({
 			ATTRS: {
 				availableUsersURL: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				form: {
-					validator: Lang.isObject
+					validator: Lang.isObject,
 				},
 
 				pageDelta: {
 					validator: Lang.isInteger,
-					value: 50
-				}
+					value: 50,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -88,7 +88,7 @@ AUI.add(
 
 					if (emailAddress) {
 						var emailRow = Lang.sub(TPL_EMAIL_ROW, {
-							emailAddress
+							emailAddress,
 						});
 
 						var invitedEmailList = instance.one(
@@ -144,7 +144,7 @@ AUI.add(
 							STR_KEYPRESS,
 							instance._onEmailKeypress,
 							instance
-						)
+						),
 					];
 				},
 
@@ -153,7 +153,7 @@ AUI.add(
 
 					return new A.DataSource.IO({
 						ioConfig: {
-							method: 'post'
+							method: 'post',
 						},
 						on: {
 							request(event) {
@@ -162,11 +162,11 @@ AUI.add(
 								event.cfg.data = instance.ns({
 									end: data.end || instance.get('pageDelta'),
 									keywords: data.keywords || STR_BLANK,
-									start: data.start || 0
+									start: data.start || 0,
 								});
-							}
+							},
 						},
-						source: url
+						source: url,
 					});
 				},
 
@@ -234,13 +234,13 @@ AUI.add(
 						instance.ns({
 							end,
 							keywords: instance._inviteUserSearch.get('value'),
-							start
+							start,
 						})
 					);
 
 					Liferay.Util.fetch(instance.get(STR_AVAILABLE_USERS_URL), {
 						body,
-						method: 'POST'
+						method: 'POST',
 					})
 						.then(response => {
 							return response.json();
@@ -302,7 +302,7 @@ AUI.add(
 								{
 									message: Language.get(
 										'there-are-no-users-to-invite'
-									)
+									),
 								}
 							);
 
@@ -335,7 +335,7 @@ AUI.add(
 									userFullName: LString.escapeHTML(
 										result.userFullName
 									),
-									userId: result.userId
+									userId: result.userId,
 								});
 							}).join(STR_BLANK)
 						);
@@ -343,7 +343,7 @@ AUI.add(
 						if (count > results.length) {
 							var moreResults = Lang.sub(TPL_MORE_RESULTS, {
 								end: options.end,
-								message: Language.get('view-more')
+								message: Language.get('view-more'),
 							});
 
 							buffer.push(moreResults);
@@ -462,7 +462,7 @@ AUI.add(
 							return {
 								end: instance.get('pageDelta'),
 								keywords: query,
-								start: 0
+								start: 0,
 							};
 						},
 						resultTextLocator(response) {
@@ -481,14 +481,14 @@ AUI.add(
 						},
 						source: instance._createDataSource(
 							instance.get(STR_AVAILABLE_USERS_URL)
-						)
+						),
 					});
 
 					instance._inviteMembersList.sendRequest();
 
 					instance._bindUI();
-				}
-			}
+				},
+			},
 		});
 
 		var InviteMembersList = A.Component.create({
@@ -504,8 +504,8 @@ AUI.add(
 
 					instance._bindUIACBase();
 					instance._syncUIACBase();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Portlet.InviteMembers = InviteMembers;
@@ -519,7 +519,7 @@ AUI.add(
 			'datatype-number',
 			'liferay-portlet-base',
 			'liferay-util-window',
-			'node-core'
-		]
+			'node-core',
+		],
 	}
 );

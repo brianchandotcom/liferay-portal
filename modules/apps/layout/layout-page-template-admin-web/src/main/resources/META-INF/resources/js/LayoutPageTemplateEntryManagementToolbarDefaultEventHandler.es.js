@@ -24,7 +24,7 @@ class LayoutPageTemplateEntryManagementToolbarDefaultEventHandler extends Defaul
 			mainFieldName: 'name',
 			mainFieldPlaceholder: Liferay.Language.get('name'),
 			namespace: this.namespace,
-			spritemap: this.spritemap
+			spritemap: this.spritemap,
 		});
 	}
 
@@ -44,7 +44,7 @@ class LayoutPageTemplateEntryManagementToolbarDefaultEventHandler extends Defaul
 }
 
 LayoutPageTemplateEntryManagementToolbarDefaultEventHandler.STATE = {
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export default LayoutPageTemplateEntryManagementToolbarDefaultEventHandler;

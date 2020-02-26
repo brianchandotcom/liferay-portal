@@ -19,11 +19,11 @@ const query = '?filters.assigneeUserIds%5B0%5D=1';
 
 const items = [
 	{id: 1, name: 'User 1'},
-	{id: 2, name: 'User 2'}
+	{id: 2, name: 'User 2'},
 ];
 
 const clientMock = {
-	get: jest.fn().mockResolvedValue({data: {items, totalCount: items.length}})
+	get: jest.fn().mockResolvedValue({data: {items, totalCount: items.length}}),
 };
 
 const wrapper = ({children}) => (
@@ -39,7 +39,7 @@ describe('The assignee filter component should', () => {
 
 	beforeEach(() => {
 		const renderResult = render(<AssigneeFilter processId={12345} />, {
-			wrapper
+			wrapper,
 		});
 
 		getAllByTestId = renderResult.getAllByTestId;

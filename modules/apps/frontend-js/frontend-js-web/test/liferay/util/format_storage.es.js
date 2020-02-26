@@ -38,7 +38,7 @@ describe('Liferay.Util.formatStorage', () => {
 			formatStorage(1048576, {
 				addSpaceBeforeSuffix: true,
 				decimalSeparator: ',',
-				suffixMB: 'megabytes'
+				suffixMB: 'megabytes',
 			})
 		).toEqual('1,0 megabytes');
 	});

@@ -24,12 +24,12 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 				dialog: {
 					constrain: true,
 					destroyOnHide: true,
-					modal: true
+					modal: true,
 				},
 				eventName: this.ns('selectVersionFm'),
 				id: this.ns('compareVersions'),
 				title: Liferay.Language.get('compare-versions'),
-				uri: itemData.compareVersionsURL
+				uri: itemData.compareVersionsURL,
 			},
 			event => {
 				let uri = itemData.redirectURL;
@@ -102,13 +102,13 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				modal: true
+				modal: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
 			title: Liferay.Language.get('permissions'),
-			uri: itemData.permissionsURL
+			uri: itemData.permissionsURL,
 		});
 	}
 
@@ -116,13 +116,13 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				modal: true
+				modal: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
 			title: itemData.title,
-			uri: itemData.previewURL
+			uri: itemData.previewURL,
 		});
 	}
 
@@ -166,7 +166,7 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 			buttonAddLabel: dialogButtonLabel,
 			eventName: this.ns('selectTranslations'),
 			title: dialogTitle,
-			url: selectArticleTranslationsURL
+			url: selectArticleTranslationsURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {
@@ -184,7 +184,7 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 }
 
 ElementsDefaultEventHandler.STATE = {
-	trashEnabled: Config.bool()
+	trashEnabled: Config.bool(),
 };
 
 export default ElementsDefaultEventHandler;

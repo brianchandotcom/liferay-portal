@@ -15,7 +15,7 @@ import {
 	move,
 	resultsDataToMap,
 	toggleListItem,
-	updateDataMap
+	updateDataMap,
 } from '../../../src/main/resources/META-INF/resources/js/utils/util.es';
 
 const RESULTS_LIST = [
@@ -28,7 +28,7 @@ const RESULTS_LIST = [
 		icon: 'web-content',
 		id: 102,
 		title: 'This is a Web Content Example with Long Title',
-		type: 'Web Content'
+		type: 'Web Content',
 	},
 	{
 		author: 'Test Test',
@@ -37,8 +37,8 @@ const RESULTS_LIST = [
 		icon: 'documents-and-media',
 		id: 103,
 		title: 'This is an Image Example',
-		type: 'Document'
-	}
+		type: 'Document',
+	},
 ];
 
 const TEST_BASE_URL = 'https://liferay.com/';
@@ -57,7 +57,7 @@ describe('utils', () => {
 			expect(
 				buildUrl(TEST_BASE_URL, {
 					testParam1: 'testValue1',
-					testParam2: 'testValue2'
+					testParam2: 'testValue2',
 				})
 			).toEqual(
 				TEST_BASE_URL + '?testParam1=testValue1&testParam2=testValue2'
@@ -105,7 +105,7 @@ describe('utils', () => {
 				{id: 1},
 				{id: 3},
 				{id: 4},
-				{id: 5}
+				{id: 5},
 			]);
 
 			expect(move(TEST_LIST, 1, 4)).toEqual([
@@ -113,7 +113,7 @@ describe('utils', () => {
 				{id: 3},
 				{id: 4},
 				{id: 2},
-				{id: 5}
+				{id: 5},
 			]);
 		});
 
@@ -123,7 +123,7 @@ describe('utils', () => {
 				{id: 1},
 				{id: 2},
 				{id: 4},
-				{id: 5}
+				{id: 5},
 			]);
 
 			expect(move(TEST_LIST, 4, 2)).toEqual([
@@ -131,7 +131,7 @@ describe('utils', () => {
 				{id: 2},
 				{id: 5},
 				{id: 3},
-				{id: 4}
+				{id: 4},
 			]);
 		});
 
@@ -139,7 +139,7 @@ describe('utils', () => {
 			expect(move(['one', 'two', 'three'], 0, 2)).toEqual([
 				'two',
 				'one',
-				'three'
+				'three',
 			]);
 		});
 
@@ -153,7 +153,7 @@ describe('utils', () => {
 				{id: 3},
 				{id: 4},
 				{id: 5},
-				{id: 1}
+				{id: 1},
 			]);
 
 			expect(move(TEST_LIST, 3, 10)).toEqual([
@@ -161,7 +161,7 @@ describe('utils', () => {
 				{id: 2},
 				{id: 3},
 				{id: 5},
-				{id: 4}
+				{id: 4},
 			]);
 		});
 	});
@@ -170,7 +170,7 @@ describe('utils', () => {
 		it('returns a mapped set of data', () => {
 			expect(resultsDataToMap(RESULTS_LIST)).toEqual({
 				102: RESULTS_LIST.filter(({id}) => id === 102)[0],
-				103: RESULTS_LIST.filter(({id}) => id === 103)[0]
+				103: RESULTS_LIST.filter(({id}) => id === 103)[0],
 			});
 		});
 
@@ -179,8 +179,8 @@ describe('utils', () => {
 				{
 					id: 103,
 					pinned: true,
-					title: 'Different Title'
-				}
+					title: 'Different Title',
+				},
 			];
 
 			const originalDataMap = resultsDataToMap(RESULTS_LIST);
@@ -203,7 +203,7 @@ describe('utils', () => {
 				102,
 				103,
 				104,
-				105
+				105,
 			]);
 		});
 	});
@@ -213,23 +213,23 @@ describe('utils', () => {
 			const initialDataMap = {
 				101: {
 					id: 101,
-					pinned: false
+					pinned: false,
 				},
 				102: {
 					id: 102,
-					pinned: false
-				}
+					pinned: false,
+				},
 			};
 
 			const updatedDataMap = {
 				101: {
 					id: 101,
-					pinned: false
+					pinned: false,
 				},
 				102: {
 					id: 102,
-					pinned: true
-				}
+					pinned: true,
+				},
 			};
 
 			expect(
@@ -241,23 +241,23 @@ describe('utils', () => {
 			const initialDataMap = {
 				101: {
 					id: 101,
-					pinned: false
+					pinned: false,
 				},
 				102: {
 					id: 102,
-					pinned: false
-				}
+					pinned: false,
+				},
 			};
 
 			const updatedDataMap = {
 				101: {
 					id: 101,
-					pinned: true
+					pinned: true,
 				},
 				102: {
 					id: 102,
-					pinned: true
-				}
+					pinned: true,
+				},
 			};
 
 			expect(
@@ -270,32 +270,32 @@ describe('utils', () => {
 				101: {
 					hidden: false,
 					id: 101,
-					pinned: false
+					pinned: false,
 				},
 				102: {
 					hidden: false,
 					id: 102,
-					pinned: false
-				}
+					pinned: false,
+				},
 			};
 
 			const updatedDataMap = {
 				101: {
 					hidden: false,
 					id: 101,
-					pinned: false
+					pinned: false,
 				},
 				102: {
 					hidden: true,
 					id: 102,
-					pinned: true
-				}
+					pinned: true,
+				},
 			};
 
 			expect(
 				updateDataMap(initialDataMap, [102], {
 					hidden: true,
-					pinned: true
+					pinned: true,
 				})
 			).toEqual(updatedDataMap);
 		});
@@ -305,31 +305,31 @@ describe('utils', () => {
 				101: {
 					addedResult: false,
 					hidden: false,
-					id: 101
+					id: 101,
 				},
 				102: {
 					addedResult: true,
 					hidden: false,
-					id: 102
-				}
+					id: 102,
+				},
 			};
 
 			const updatedDataMap = {
 				101: {
 					addedResult: false,
 					hidden: false,
-					id: 101
+					id: 101,
 				},
 				102: {
 					addedResult: false,
 					hidden: false,
-					id: 102
-				}
+					id: 102,
+				},
 			};
 
 			expect(
 				updateDataMap(initialDataMap, [102, 103], {
-					addedResult: false
+					addedResult: false,
 				})
 			).toEqual(updatedDataMap);
 		});

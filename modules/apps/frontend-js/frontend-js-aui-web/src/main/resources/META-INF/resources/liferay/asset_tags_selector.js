@@ -55,7 +55,7 @@ AUI.add(
 			'{',
 			'|',
 			'}',
-			'~'
+			'~',
 		]);
 
 		var NAME = 'tagselector';
@@ -106,15 +106,15 @@ AUI.add(
 		var AssetTagsSelector = A.Component.create({
 			ATTRS: {
 				allowAddEntry: {
-					value: true
+					value: true,
 				},
 
 				allowAnyEntry: {
-					value: true
+					value: true,
 				},
 
 				className: {
-					value: null
+					value: null,
 				},
 
 				curEntries: {
@@ -125,7 +125,7 @@ AUI.add(
 
 						return value;
 					},
-					value: ''
+					value: '',
 				},
 
 				dataSource: {
@@ -133,16 +133,16 @@ AUI.add(
 						var instance = this;
 
 						return instance._getTagsDataSource();
-					}
+					},
 				},
 
 				groupIds: {
 					setter: '_setGroupIds',
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				guid: {
-					value: ''
+					value: '',
 				},
 
 				hiddenInput: {
@@ -150,26 +150,26 @@ AUI.add(
 						var instance = this;
 
 						return A.one(value + instance.get('guid'));
-					}
+					},
 				},
 
 				instanceVar: {
-					value: ''
+					value: '',
 				},
 
 				matchKey: {
-					value: 'value'
+					value: 'value',
 				},
 
 				portalModelResource: {
-					value: false
+					value: false,
 				},
 
 				schema: {
 					value: {
-						resultFields: ['text', 'value']
-					}
-				}
+						resultFields: ['text', 'value'],
+					},
+				},
 			},
 
 			EXTENDS: A.TextboxList,
@@ -221,7 +221,7 @@ AUI.add(
 					Liferay.Service(
 						'/assettag/get-groups-tags',
 						{
-							groupIds: instance.get('groupIds')
+							groupIds: instance.get('groupIds'),
 						},
 						callback
 					);
@@ -236,8 +236,8 @@ AUI.add(
 								dialog: {
 									cssClass: CSS_POPUP,
 									hideClass: 'hide-accessible',
-									width: 600
-								}
+									width: 600,
+								},
 							}
 						);
 
@@ -247,7 +247,7 @@ AUI.add(
 
 						var searchForm = A.Node.create(
 							Lang.sub(TPL_SEARCH_FORM, [
-								Liferay.Language.get('search')
+								Liferay.Language.get('search'),
 							])
 						);
 
@@ -311,18 +311,18 @@ AUI.add(
 										groupIds: instance.get('groupIds'),
 										name: '%' + term + '%',
 										start: 0,
-										tagProperties: STR_BLANK
+										tagProperties: STR_BLANK,
 									};
 
 									serviceQueryCache[key] = serviceQueryObj;
 								}
 
 								event.request = serviceQueryObj;
-							}
+							},
 						},
-						source: AssetTagSearch
+						source: AssetTagSearch,
 					}).plug(A.Plugin.DataSourceCache, {
-						max: 500
+						max: 500,
 					});
 
 					return dataSource;
@@ -353,7 +353,7 @@ AUI.add(
 
 									item[action](CSS_NO_MATCHES);
 								});
-							}
+							},
 						},
 						data(node) {
 							var value = node.attr('title');
@@ -361,7 +361,7 @@ AUI.add(
 							return value.toLowerCase();
 						},
 						input: popup.searchField,
-						nodes: '.' + CSS_TAGS_LIST + ' label'
+						nodes: '.' + CSS_TAGS_LIST + ' label',
 					});
 				},
 
@@ -429,24 +429,24 @@ AUI.add(
 						{
 							label: Liferay.Language.get('select'),
 							on: {
-								click: A.bind('_showSelectPopup', instance)
+								click: A.bind('_showSelectPopup', instance),
 							},
-							title: Liferay.Language.get('select-tags')
-						}
+							title: Liferay.Language.get('select-tags'),
+						},
 					];
 
 					if (instance.get('allowAddEntry')) {
 						buttonGroup.unshift({
 							label: Liferay.Language.get('add'),
 							on: {
-								click: A.bind('_onAddEntryClick', instance)
+								click: A.bind('_onAddEntryClick', instance),
 							},
-							title: Liferay.Language.get('add-tags')
+							title: Liferay.Language.get('add-tags'),
 						});
 					}
 
 					instance.icons = new A.Toolbar({
-						children: [buttonGroup]
+						children: [buttonGroup],
 					}).render(contentBox);
 
 					var iconsBoundingBox = instance.icons.get('boundingBox');
@@ -464,7 +464,7 @@ AUI.add(
 							checked: data.checked,
 							message: Liferay.Language.get('no-tags-were-found'),
 							name: data.name,
-							tags: data
+							tags: data,
 						},
 						popup.entriesNode
 					);
@@ -599,8 +599,8 @@ AUI.add(
 					var curEntries = instance.get('curEntries');
 
 					curEntries.forEach(instance.add, instance);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.AssetTagsSelector = AssetTagsSelector;
@@ -617,7 +617,7 @@ AUI.add(
 			'aui-textboxlist',
 			'datasource-cache',
 			'liferay-service-datasource',
-			'liferay-util-window'
-		]
+			'liferay-util-window',
+		],
 	}
 );

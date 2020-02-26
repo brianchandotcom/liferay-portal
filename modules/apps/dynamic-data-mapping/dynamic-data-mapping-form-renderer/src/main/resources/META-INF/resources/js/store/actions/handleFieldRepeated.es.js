@@ -15,7 +15,7 @@
 import {
 	generateInstanceId,
 	generateName,
-	generateNestedFieldName
+	generateNestedFieldName,
 } from '../../util/repeatable.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
@@ -41,7 +41,7 @@ export default (pages, name) => {
 			const newField = {
 				...field,
 				instanceId: generateInstanceId(),
-				name: generateName(name, indexToAddField)
+				name: generateName(name, indexToAddField),
 			};
 
 			newField.localizedValue = {};
@@ -51,7 +51,7 @@ export default (pages, name) => {
 			const newFields = [
 				...fields.slice(0, indexToAddField),
 				newField,
-				...fields.slice(indexToAddField)
+				...fields.slice(indexToAddField),
 			];
 
 			let currentRepeatedIndex = 0;
@@ -67,7 +67,7 @@ export default (pages, name) => {
 
 						currentField = {
 							...currentField,
-							name
+							name,
 						};
 
 						if (currentField.nestedFields) {
@@ -80,7 +80,7 @@ export default (pages, name) => {
 											name: generateNestedFieldName(
 												nestedField.name,
 												name
-											)
+											),
 										};
 
 										if (index === indexToAddField) {
@@ -91,13 +91,13 @@ export default (pages, name) => {
 
 										return newNestedField;
 									}
-								)
+								),
 							};
 						}
 					}
 
 					return currentField;
-				})
+				}),
 			};
 		}
 

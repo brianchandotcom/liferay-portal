@@ -131,7 +131,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 					modal: true,
 					bodyContent: '<div id="<portlet:namespace />modalBody"/>',
 					headerContent:
-						'<%= UnicodeLanguageUtil.get(request, "choose-one-of-the-following-global-scopes-that-include-this-resource-scope") %>'
+						'<%= UnicodeLanguageUtil.get(request, "choose-one-of-the-following-global-scopes-that-include-this-resource-scope") %>',
 				}).render();
 
 				modal.on('visibleChange', function(event) {
@@ -166,9 +166,9 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 						on: {
 							click: function() {
 								modal.hide();
-							}
-						}
-					}
+							},
+						},
+					},
 				]);
 
 				var scopeAliases = currentTarget.attr('data-slave').split(' ');

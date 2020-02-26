@@ -160,10 +160,10 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 					oAuth2ApplicationIds: Liferay.Util.listCheckedExcept(
 						form,
 						'<portlet:namespace />allRowIds'
-					)
+					),
 				},
 				url:
-					'<portlet:actionURL name="/admin/delete_oauth2_applications" />'
+					'<portlet:actionURL name="/admin/delete_oauth2_applications" />',
 			});
 		}
 	}

@@ -190,7 +190,7 @@ const generateActionUrl = function(portletId, url, form) {
 	const request = {
 		credentials: 'same-origin',
 		method: 'POST',
-		url
+		url,
 	};
 
 	if (form) {
@@ -218,7 +218,7 @@ const generateActionUrl = function(portletId, url, form) {
 			else {
 				request.body = formAsString;
 				request.headers = {
-					'Content-Type': 'application/x-www-form-urlencoded'
+					'Content-Type': 'application/x-www-form-urlencoded',
 				};
 			}
 		}
@@ -920,5 +920,5 @@ export {
 	validateForm,
 	validateParameters,
 	validatePortletId,
-	validateState
+	validateState,
 };

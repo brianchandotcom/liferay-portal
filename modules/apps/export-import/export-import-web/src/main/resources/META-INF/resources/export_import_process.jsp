@@ -216,7 +216,7 @@ if ((backgroundTask != null) && backgroundTask.isInProgress()) {
 
 		Liferay.fire('<portlet:namespace />viewBackgroundTaskDetails', {
 			nodeId: 'backgroundTaskStatusMessage' + backgroundTaskId,
-			title: title
+			title: title,
 		});
 	}
 </script>

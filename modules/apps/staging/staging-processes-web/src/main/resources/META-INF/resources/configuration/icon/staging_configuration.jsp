@@ -41,13 +41,13 @@ PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, liveGroup,
 							document.location.href =
 								'<%= HtmlUtil.escapeJS(portletURL.toString()) %>';
 						}
-					}
-				}
+					},
+				},
 			},
 			id: 'stagingConfiguration',
 			title: '<liferay-ui:message key="staging-configuration" />',
 			uri:
-				'<%= HtmlUtil.escapeJS(stagingConfigurationPortletURL.toString()) %>'
+				'<%= HtmlUtil.escapeJS(stagingConfigurationPortletURL.toString()) %>',
 		});
 	}
 </aui:script>

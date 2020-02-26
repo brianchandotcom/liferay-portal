@@ -109,7 +109,7 @@ data.put("qa-id", "info");
 	var popover = new A.Popover({
 		align: {
 			node: trigger,
-			points: [A.WidgetPositionAlign.TC, A.WidgetPositionAlign.BC]
+			points: [A.WidgetPositionAlign.TC, A.WidgetPositionAlign.BC],
 		},
 		bodyContent: A.one('#<%= portletNamespace %>infoContainer'),
 		constrain: true,
@@ -117,18 +117,18 @@ data.put("qa-id", "info");
 			{
 				eventName: 'key',
 				keyCode: 'esc',
-				node: DOC
+				node: DOC,
 			},
 			{
 				eventName: 'clickoutside',
-				node: DOC
-			}
+				node: DOC,
+			},
 		],
 		position: 'bottom',
 		trigger: trigger,
 		visible: false,
 		width: 300,
-		zIndex: Liferay.zIndex.POPOVER
+		zIndex: Liferay.zIndex.POPOVER,
 	});
 
 	popover.render();

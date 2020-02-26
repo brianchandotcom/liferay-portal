@@ -115,11 +115,11 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 			events: {
 				popoverClosed: function() {
 					popover.dispose();
-				}
+				},
 			},
 			spritemap: spritemap,
 			url: url,
-			visible: true
+			visible: true,
 		});
 	});
 </aui:script>

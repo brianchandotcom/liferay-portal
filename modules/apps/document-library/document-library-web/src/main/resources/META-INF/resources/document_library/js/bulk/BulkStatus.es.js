@@ -29,7 +29,7 @@ function BulkStatus({
 	bulkStatusUrl = '/bulk/v1.0/status',
 	intervalSpeed = 1000,
 	pathModule,
-	waitingTime = 1000
+	waitingTime = 1000,
 }) {
 	const delay = useTimeout();
 
@@ -85,10 +85,10 @@ function BulkStatus({
 			{
 				startWatch: () => {
 					dispatch({type: 'start'});
-				}
+				},
 			},
 			{
-				destroyOnNavigate: true
+				destroyOnNavigate: true,
 			}
 		);
 	}
@@ -111,7 +111,7 @@ BulkStatus.propTypes = {
 	bulkStatusUrl: PropTypes.string,
 	intervalSpeed: PropTypes.number,
 	pathModule: PropTypes.string.isRequired,
-	waitingTime: PropTypes.number
+	waitingTime: PropTypes.number,
 };
 
 export default props => <BulkStatus {...props} />;

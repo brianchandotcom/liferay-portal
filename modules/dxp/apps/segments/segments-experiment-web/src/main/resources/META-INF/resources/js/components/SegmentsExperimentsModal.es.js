@@ -32,7 +32,7 @@ function SegmentsExperimentsModal({
 	onSave,
 	segmentsExperienceId,
 	segmentsExperimentId,
-	title
+	title,
 }) {
 	const [busy, setBusy] = useState(false);
 	const [inputDescription, setInputDescription] = useState(description);
@@ -168,7 +168,7 @@ function SegmentsExperimentsModal({
 				goalTarget,
 				name: inputName,
 				segmentsExperienceId,
-				segmentsExperimentId
+				segmentsExperimentId,
 			}).finally(() => {
 				if (isMounted()) {
 					setBusy(false);
@@ -194,7 +194,7 @@ SegmentsExperimentsModal.propTypes = {
 	onSave: PropTypes.func.isRequired,
 	segmentsExperienceId: PropTypes.string,
 	segmentsExperimentId: PropTypes.string,
-	title: PropTypes.string.isRequired
+	title: PropTypes.string.isRequired,
 };
 
 export default SegmentsExperimentsModal;

@@ -52,7 +52,7 @@
 				if ('visible' !== popover.get('visibility')) {
 					popover.setXY([
 						iconHolderNode.getX() + iconHolderNode.width() + dx,
-						iconHolderNode.getY() - dy
+						iconHolderNode.getY() - dy,
 					]);
 				}
 			});

@@ -19,11 +19,11 @@ const query = '?filters.taskKeys%5B0%5D=update';
 
 const items = [
 	{key: 'review', name: 'Review'},
-	{key: 'update', name: 'Update'}
+	{key: 'update', name: 'Update'},
 ];
 
 const clientMock = {
-	get: jest.fn().mockResolvedValue({data: {items, totalCount: items.length}})
+	get: jest.fn().mockResolvedValue({data: {items, totalCount: items.length}}),
 };
 
 const wrapper = ({children}) => (
@@ -39,7 +39,7 @@ describe('The process step filter component should', () => {
 
 	beforeEach(() => {
 		const renderResult = render(<ProcessStepFilter processId={12345} />, {
-			wrapper
+			wrapper,
 		});
 
 		getAllByTestId = renderResult.getAllByTestId;

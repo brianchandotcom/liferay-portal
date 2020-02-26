@@ -72,11 +72,11 @@ if (message != null) {
 			method: Liferay.Service.bind('/mb.mbmessage/get-temp-attachment-names'),
 			params: {
 				groupId: <%= scopeGroupId %>,
-				folderName: '<%= MBMessageConstants.TEMP_FOLDER_NAME %>'
-			}
+				folderName: '<%= MBMessageConstants.TEMP_FOLDER_NAME %>',
+			},
 		},
 		tempRandomSuffix: '<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
 		uploadFile:
-			'<liferay-portlet:actionURL name="/message_boards/edit_message_attachments"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" /></liferay-portlet:actionURL>'
+			'<liferay-portlet:actionURL name="/message_boards/edit_message_attachments"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" /></liferay-portlet:actionURL>',
 	});
 </aui:script>

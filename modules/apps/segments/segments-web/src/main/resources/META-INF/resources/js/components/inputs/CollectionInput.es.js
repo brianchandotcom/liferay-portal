@@ -26,7 +26,7 @@ class CollectionInput extends React.Component {
 	static propTypes = {
 		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
-		value: propTypes.string
+		value: propTypes.string,
 	};
 
 	/**
@@ -71,7 +71,7 @@ class CollectionInput extends React.Component {
 
 		return {
 			key,
-			value
+			value,
 		};
 	};
 

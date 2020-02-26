@@ -30,7 +30,7 @@ export default function PageContents(props) {
 PageContents.propTypes = {
 	pageContents: PropTypes.arrayOf(
 		PropTypes.shape({
-			classPK: PropTypes.string
+			classPK: PropTypes.string,
 		})
-	)
+	),
 };

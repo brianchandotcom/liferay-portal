@@ -23,11 +23,11 @@ describe('LayoutProvider/handlers/fieldDeletedHandler', () => {
 			const event = {
 				columnIndex: 0,
 				pageIndex: 0,
-				rowIndex: 0
+				rowIndex: 0,
 			};
 			const state = {
 				pages: mockPages,
-				rules: []
+				rules: [],
 			};
 
 			const removeRowSpy = jest.spyOn(FormSupport, 'removeRow');
@@ -45,7 +45,7 @@ describe('LayoutProvider/handlers/fieldDeletedHandler', () => {
 			const event = {
 				columnIndex: 0,
 				pageIndex: 0,
-				rowIndex: 0
+				rowIndex: 0,
 			};
 			const state = {
 				pages: mockPages,
@@ -56,13 +56,13 @@ describe('LayoutProvider/handlers/fieldDeletedHandler', () => {
 							{
 								operands: [
 									{
-										value: 'radio'
-									}
-								]
-							}
-						]
-					}
-				]
+										value: 'radio',
+									},
+								],
+							},
+						],
+					},
+				],
 			};
 
 			const clearAllConditionFieldValuesSpy = jest.spyOn(

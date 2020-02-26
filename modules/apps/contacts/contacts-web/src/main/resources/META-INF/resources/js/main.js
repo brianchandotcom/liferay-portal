@@ -232,7 +232,7 @@ AUI.add(
 
 							return result;
 						},
-						source: instance._createDataSource(contactsResultURL)
+						source: instance._createDataSource(contactsResultURL),
 					});
 
 					contactList.on(
@@ -248,7 +248,7 @@ AUI.add(
 
 					return new A.DataSource.IO({
 						ioConfig: {
-							method: 'POST'
+							method: 'POST',
 						},
 						on: {
 							request(event) {
@@ -279,9 +279,9 @@ AUI.add(
 									data[instance._namespace + 'start'] || 0;
 
 								event.cfg.data = eventData;
-							}
+							},
 						},
-						source: url
+						source: url,
 					});
 				},
 
@@ -303,7 +303,7 @@ AUI.add(
 							{
 								entryId: contact.entryId,
 								'javax.portlet.action': 'deleteEntry',
-								p_p_state: 'NORMAL'
+								p_p_state: 'NORMAL',
 							}
 						);
 
@@ -331,7 +331,7 @@ AUI.add(
 							entryId: contact.entryId,
 							mvcPath: '/contacts_center/edit_entry.jsp',
 							p_p_state: 'EXCLUSIVE',
-							redirect: contact.redirect
+							redirect: contact.redirect,
 						}
 					);
 
@@ -351,17 +351,17 @@ AUI.add(
 							dialog: {
 								align: {
 									node: contactsPortlet,
-									points: ['tc', 'tc']
+									points: ['tc', 'tc'],
 								},
 								constrain2view: true,
 								cssClass: 'contact-dialog',
 								modal: true,
 								resizable: false,
-								width: 500
-							}
+								width: 500,
+							},
 						})
 							.plug(A.Plugin.IO, {
-								autoLoad: false
+								autoLoad: false,
 							})
 							.render();
 					}
@@ -457,7 +457,7 @@ AUI.add(
 						lastName: user.lastName,
 						portraitURL: user.portraitURL,
 						userId: user.userId,
-						viewSummaryURL: user.viewSummaryURL
+						viewSummaryURL: user.viewSummaryURL,
 					});
 				},
 
@@ -469,7 +469,7 @@ AUI.add(
 					if (instance._showIcon) {
 						icon = Lang.sub(TPL_ICON, {
 							fullName: contact.fullName,
-							portraitURL: contact.portraitURL
+							portraitURL: contact.portraitURL,
 						});
 					}
 
@@ -478,7 +478,7 @@ AUI.add(
 						cssClass: instance._showIcon ? '' : 'no-icon',
 						emailAddress: contact.emailAddress,
 						fullName: contact.fullName,
-						icon: instance._showIcon ? icon : ''
+						icon: instance._showIcon ? icon : '',
 					});
 
 					instance._detailUserView.setContent(contactSummary);
@@ -499,8 +499,8 @@ AUI.add(
 								on: {
 									click() {
 										instance._editEntry(contact);
-									}
-								}
+									},
+								},
 							},
 							{
 								icon: 'icon-remove',
@@ -508,10 +508,10 @@ AUI.add(
 								on: {
 									click() {
 										instance._deleteEntry(contact);
-									}
-								}
-							}
-						]
+									},
+								},
+							},
+						],
 					}).render();
 				},
 
@@ -608,7 +608,7 @@ AUI.add(
 											userId: result.userId,
 											viewSummaryURL: result.viewSummaryURL
 												? result.viewSummaryURL
-												: ''
+												: '',
 										});
 									}
 									else {
@@ -630,7 +630,7 @@ AUI.add(
 												: '',
 											viewSummaryURL: result.viewSummaryURL
 												? result.viewSummaryURL
-												: ''
+												: '',
 										});
 									}
 
@@ -1320,8 +1320,8 @@ AUI.add(
 							instance._getRequestTemplate(filterBy)
 						);
 					}
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.ContactsCenter = ContactsCenter;
@@ -1336,7 +1336,7 @@ AUI.add(
 
 					this._bindUIACBase();
 					this._syncUIACBase();
-				}
+				},
 			}
 		);
 	},
@@ -1349,7 +1349,7 @@ AUI.add(
 			'datasource-io',
 			'json-parse',
 			'liferay-portlet-base',
-			'liferay-util-window'
-		]
+			'liferay-util-window',
+		],
 	}
 );

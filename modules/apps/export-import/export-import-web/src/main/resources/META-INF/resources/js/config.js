@@ -31,12 +31,12 @@
 							'aui-tree-view',
 							'liferay-notice',
 							'liferay-portlet-base',
-							'liferay-util-window'
-						]
-					}
+							'liferay-util-window',
+						],
+					},
 				},
-				root: MODULE_PATH + '/'
-			}
-		}
+				root: MODULE_PATH + '/',
+			},
+		},
 	});
 })();

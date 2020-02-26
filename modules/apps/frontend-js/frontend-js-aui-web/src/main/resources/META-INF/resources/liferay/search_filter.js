@@ -28,43 +28,43 @@ AUI.add(
 				initializer() {
 					this._bindUIACBase();
 					this._syncUIACBase();
-				}
-			}
+				},
+			},
 		});
 
 		var SearchFilter = A.Component.create({
 			ATTRS: {
 				minQueryLength: {
 					validator: Lang.isNumber,
-					value: 0
+					value: 0,
 				},
 
 				nodeList: {
-					setter: A.one
+					setter: A.one,
 				},
 
 				nodeSelector: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				queryDelay: {
 					validator: Lang.isNumber,
-					value: 300
+					value: 300,
 				},
 
 				resultFilters: {
 					setter: '_setResultFilters',
-					value: 'phraseMatch'
+					value: 'phraseMatch',
 				},
 
 				resultTextLocator: {
 					setter: '_setLocator',
-					value: 'search'
+					value: 'search',
 				},
 
 				searchDataLocator: {
-					value: 'data-search'
-				}
+					value: 'data-search',
+				},
 			},
 
 			EXTENDS: SearchImpl,
@@ -91,7 +91,7 @@ AUI.add(
 						nodes.each(item => {
 							searchData.push({
 								node: item,
-								search: item.attr(searchDataLocator)
+								search: item.attr(searchDataLocator),
 							});
 						});
 
@@ -100,14 +100,14 @@ AUI.add(
 						instance._nodes = nodes;
 						instance._searchData = searchData;
 					}
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.SearchFilter = SearchFilter;
 	},
 	'',
 	{
-		requires: ['aui-base', 'autocomplete-base', 'autocomplete-filters']
+		requires: ['aui-base', 'autocomplete-base', 'autocomplete-filters'],
 	}
 );

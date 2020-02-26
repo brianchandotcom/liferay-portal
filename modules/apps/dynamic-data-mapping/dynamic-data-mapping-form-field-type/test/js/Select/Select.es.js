@@ -31,7 +31,7 @@ describe('Select', () => {
 	it('is not editable', () => {
 		component = new Select({
 			readOnly: false,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -40,7 +40,7 @@ describe('Select', () => {
 	it('has a helptext', () => {
 		component = new Select({
 			spritemap,
-			tip: 'Type something'
+			tip: 'Type something',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -49,7 +49,7 @@ describe('Select', () => {
 	it('has an id', () => {
 		component = new Select({
 			id: 'ID',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -66,10 +66,10 @@ describe('Select', () => {
 					label: 'label',
 					name: 'name',
 					showLabel: true,
-					value: 'item'
-				}
+					value: 'item',
+				},
 			],
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -78,7 +78,7 @@ describe('Select', () => {
 	it('renders no options when options come empty', () => {
 		component = new Select({
 			options: [],
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -87,7 +87,7 @@ describe('Select', () => {
 	it('has a label', () => {
 		component = new Select({
 			label: 'label',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -96,7 +96,7 @@ describe('Select', () => {
 	it('is closed by default', () => {
 		component = new Select({
 			open: false,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -105,7 +105,7 @@ describe('Select', () => {
 	it("has class dropdown-opened when it's opened", () => {
 		component = new Select({
 			open: true,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -114,7 +114,7 @@ describe('Select', () => {
 	it('has a placeholder', () => {
 		component = new Select({
 			placeholder: 'Placeholder',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -123,7 +123,7 @@ describe('Select', () => {
 	it('has a predefinedValue', () => {
 		component = new Select({
 			predefinedValue: ['Select'],
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -132,7 +132,7 @@ describe('Select', () => {
 	it('is not required', () => {
 		component = new Select({
 			required: false,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -142,7 +142,7 @@ describe('Select', () => {
 		component = new Select({
 			label: 'This is the label',
 			required: true,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -152,7 +152,7 @@ describe('Select', () => {
 		component = new Select({
 			label: 'text',
 			showLabel: true,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -160,7 +160,7 @@ describe('Select', () => {
 
 	it('has a spritemap', () => {
 		component = new Select({
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -169,7 +169,7 @@ describe('Select', () => {
 	it('has a value', () => {
 		component = new Select({
 			spritemap,
-			value: ['value']
+			value: ['value'],
 		});
 
 		expect(component).toMatchSnapshot();
@@ -178,7 +178,7 @@ describe('Select', () => {
 	it('has a key', () => {
 		component = new Select({
 			key: 'key',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -203,10 +203,10 @@ describe('Select', () => {
 					label: 'label',
 					name: 'name',
 					showLabel: true,
-					value: 'item'
-				}
+					value: 'item',
+				},
 			],
-			spritemap
+			spritemap,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
@@ -216,10 +216,10 @@ describe('Select', () => {
 		component._handleItemClicked({
 			data: {
 				item: {
-					value: 'Liferay'
-				}
+					value: 'Liferay',
+				},
 			},
-			preventDefault: () => 0
+			preventDefault: () => 0,
 		});
 
 		expect(spy).toHaveBeenCalled();
@@ -232,40 +232,40 @@ describe('Select', () => {
 				{
 					label: 'label',
 					name: 'name',
-					value: 'item'
+					value: 'item',
 				},
 				{
 					label: 'label',
 					name: 'name',
-					value: 'item'
+					value: 'item',
 				},
 				{
 					label: 'label',
 					name: 'name',
-					value: 'item'
+					value: 'item',
 				},
 				{
 					label: 'label',
 					name: 'name',
-					value: 'item'
+					value: 'item',
 				},
 				{
 					label: 'label',
 					name: 'name',
-					value: 'item'
+					value: 'item',
 				},
 				{
 					label: 'label',
 					name: 'name',
-					value: 'item'
+					value: 'item',
 				},
 				{
 					label: 'label',
 					name: 'name',
-					value: 'item'
-				}
+					value: 'item',
+				},
 			],
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();

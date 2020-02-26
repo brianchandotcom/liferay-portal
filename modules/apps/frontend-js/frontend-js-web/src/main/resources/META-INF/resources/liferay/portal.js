@@ -62,7 +62,7 @@
 						opacity: 1,
 						stickDuration: 100,
 						visible: false,
-						zIndex: Liferay.zIndex.TOOLTIP
+						zIndex: Liferay.zIndex.TOOLTIP,
 					},
 					tooltipConfig
 				);

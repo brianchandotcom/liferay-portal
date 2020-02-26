@@ -319,8 +319,8 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 					data: {
 						returnType:
 							'<%= InfoItemItemSelectorReturnType.class.getName() %>',
-						value: event.delegateTarget.dataset.value
-					}
+						value: event.delegateTarget.dataset.value,
+					},
 				}
 			);
 		}

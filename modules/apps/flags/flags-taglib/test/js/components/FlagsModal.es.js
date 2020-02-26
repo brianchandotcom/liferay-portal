@@ -20,7 +20,7 @@ import {
 	STATUS_ERROR,
 	STATUS_LOGIN,
 	STATUS_REPORT,
-	STATUS_SUCCESS
+	STATUS_SUCCESS,
 } from '../../../src/main/resources/META-INF/resources/flags/js/constants.es';
 
 function _renderFlagsModalComponent({
@@ -33,11 +33,11 @@ function _renderFlagsModalComponent({
 	selectedReason = 'value',
 	reasons = {value: 'text', value2: 'text2'},
 	signedIn = true,
-	status = STATUS_REPORT
+	status = STATUS_REPORT,
 } = {}) {
 	const observer = {
 		dispatch: () => {},
-		mutation: [1, 1]
+		mutation: [1, 1],
 	};
 
 	return render(
@@ -55,7 +55,7 @@ function _renderFlagsModalComponent({
 			status={status}
 		/>,
 		{
-			baseElement: document.body
+			baseElement: document.body,
 		}
 	);
 }
@@ -72,7 +72,7 @@ describe('FlagsModal', () => {
 
 	it('renders as guess and render email field', async () => {
 		const {getByLabelText} = _renderFlagsModalComponent({
-			signedIn: false
+			signedIn: false,
 		});
 
 		await waitForElement(() => getByLabelText('email', {exact: false}));
@@ -94,7 +94,7 @@ describe('FlagsModal', () => {
 
 	it('renders success', async () => {
 		const {getByText} = _renderFlagsModalComponent({
-			status: STATUS_SUCCESS
+			status: STATUS_SUCCESS,
 		});
 
 		await waitForElement(() => getByText('thank-you', {exact: false}));

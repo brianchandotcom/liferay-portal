@@ -32,14 +32,14 @@ AUI.add(
 						activateFirstItem: true,
 						maxResults: 20,
 						on: {
-							select: selectFn
+							select: selectFn,
 						},
 						requestTemplate:
 							requestTemplate ||
 							'&' + portletNamespace + 'keywords={query}',
 						resultHighlighter: 'wordMatch',
 						resultTextLocator: resultTextLocator || 'name',
-						source: url
+						source: url,
 					});
 
 					instance._INSTANCES.push(inputNode.ac);
@@ -56,13 +56,13 @@ AUI.add(
 				AArray.invoke(INSTANCES, 'destroy');
 
 				INSTANCES.length = 0;
-			}
+			},
 		};
 
 		Liferay.KaleoDesignerAutoCompleteUtil = AutoCompleteUtil;
 	},
 	'',
 	{
-		requires: ['autocomplete', 'autocomplete-highlighters', 'datasource']
+		requires: ['autocomplete', 'autocomplete-highlighters', 'datasource'],
 	}
 );

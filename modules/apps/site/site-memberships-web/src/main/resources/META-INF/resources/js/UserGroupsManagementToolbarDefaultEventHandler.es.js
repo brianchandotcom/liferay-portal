@@ -38,11 +38,11 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 				dialog: {
 					constrain: true,
 					destroyOnHide: true,
-					modal: true
+					modal: true,
 				},
 				eventName: this.ns('selectRole'),
 				title: Liferay.Language.get('select-role'),
-				uri: itemData.selectRolesURL
+				uri: itemData.selectRolesURL,
 			},
 			event => {
 				location.href = Liferay.Util.addParams(
@@ -58,7 +58,7 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 			buttonAddLabel: Liferay.Language.get('done'),
 			eventName: this.ns('selectRole'),
 			title: Liferay.Language.get('assign-roles'),
-			url: itemData.selectRoleURL
+			url: itemData.selectRoleURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {
@@ -86,7 +86,7 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 				Liferay.Language.get('assign-user-groups-to-this-x'),
 				itemData.groupTypeLabel
 			),
-			url: itemData.selectUserGroupsURL
+			url: itemData.selectUserGroupsURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {

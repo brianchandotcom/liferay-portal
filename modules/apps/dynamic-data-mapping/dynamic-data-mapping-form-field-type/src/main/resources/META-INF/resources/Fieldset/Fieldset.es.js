@@ -171,7 +171,7 @@ Fieldset.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.string().value('')
+	value: Config.string().value(''),
 };
 
 Soy.register(Fieldset, templates);

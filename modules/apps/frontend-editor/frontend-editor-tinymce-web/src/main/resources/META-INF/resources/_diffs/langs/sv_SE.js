@@ -214,5 +214,5 @@ tinymce.addI18n('sv_SE', {
 	Tools: 'Verktyg',
 	View: 'Visa',
 	Table: 'Tabell',
-	Format: 'Format'
+	Format: 'Format',
 });

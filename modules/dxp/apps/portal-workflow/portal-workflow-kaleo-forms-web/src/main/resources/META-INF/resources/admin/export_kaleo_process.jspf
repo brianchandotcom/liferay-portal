@@ -57,9 +57,9 @@
 										submitForm(form, url, false);
 
 										dialog.hide();
-									}
+									},
 								},
-								primary: true
+								primary: true,
 							},
 							{
 								label:
@@ -67,9 +67,9 @@
 								on: {
 									click: function() {
 										dialog.hide();
-									}
-								}
-							}
+									},
+								},
+							},
 						],
 						header: [
 							{
@@ -78,14 +78,14 @@
 								on: {
 									click: function(event) {
 										dialog.hide();
-									}
-								}
-							}
-						]
+									},
+								},
+							},
+						],
 					},
-					width: 350
+					width: 350,
 				},
-				title: '<%= UnicodeLanguageUtil.get(request, "export") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "export") %>',
 			});
 		},
 		['liferay-util-window']

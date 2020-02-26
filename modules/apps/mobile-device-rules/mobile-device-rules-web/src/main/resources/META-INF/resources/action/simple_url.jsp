@@ -38,7 +38,7 @@ String url = GetterUtil.getString(typeSettingsProperties.get("url"));
 			if (!(fieldName in rules)) {
 				rules[fieldName] = {
 					custom: false,
-					required: true
+					required: true,
 				};
 			}
 		}

@@ -38,15 +38,15 @@ const withMultiplePages = ChildComponent => {
 						contentRenderer: 'success',
 						paginationItemRenderer: `${paginationMode}_success`,
 						rows: [],
-						successPageSettings
-					}
+						successPageSettings,
+					},
 				];
 			}
 
 			return pages.map(page => {
 				return {
 					...page,
-					enabled: true
+					enabled: true,
 				};
 			});
 		}
@@ -84,7 +84,7 @@ const withMultiplePages = ChildComponent => {
 								),
 								itemClicked: this._handleDropdownItemClicked.bind(
 									this
-								)
+								),
 							}}
 							expanded={dropdownExpanded}
 							items={this._getPageSettingsItems()}
@@ -110,7 +110,7 @@ const withMultiplePages = ChildComponent => {
 					'your-information-was-successfully-received-thanks-for-fill-out'
 				),
 				enabled: true,
-				title: Liferay.Language.get('done')
+				title: Liferay.Language.get('done'),
 			});
 
 			dispatch('activePageUpdated', pages.length);
@@ -126,7 +126,7 @@ const withMultiplePages = ChildComponent => {
 			const {dispatch} = this.context;
 
 			this._updateSuccessPage({
-				enabled: false
+				enabled: false,
 			});
 
 			dispatch('activePageUpdated', this.props.pages.length - 1);
@@ -137,27 +137,27 @@ const withMultiplePages = ChildComponent => {
 			const pageSettingsItems = [
 				{
 					label: Liferay.Language.get('add-new-page'),
-					settingsItem: 'add-page'
-				}
+					settingsItem: 'add-page',
+				},
 			];
 
 			if (this.getPages().length === 1) {
 				pageSettingsItems.push({
 					label: Liferay.Language.get('reset-page'),
-					settingsItem: 'reset-page'
+					settingsItem: 'reset-page',
 				});
 			}
 			else {
 				pageSettingsItems.push({
 					label: Liferay.Language.get('delete-current-page'),
-					settingsItem: 'delete-page'
+					settingsItem: 'delete-page',
 				});
 			}
 
 			if (!successPageSettings.enabled) {
 				pageSettingsItems.push({
 					label: Liferay.Language.get('add-success-page'),
-					settingsItem: 'add-success-page'
+					settingsItem: 'add-success-page',
 				});
 			}
 
@@ -170,7 +170,7 @@ const withMultiplePages = ChildComponent => {
 
 				pageSettingsItems.push({
 					label,
-					settingsItem: 'switch-pagination-mode'
+					settingsItem: 'switch-pagination-mode',
 				});
 			}
 
@@ -182,7 +182,7 @@ const withMultiplePages = ChildComponent => {
 			const {settingsItem} = data.item;
 
 			this.setState({
-				dropdownExpanded: false
+				dropdownExpanded: false,
 			});
 
 			if (settingsItem == 'add-page') {
@@ -212,7 +212,7 @@ const withMultiplePages = ChildComponent => {
 
 		_handleExpandedChanged({newVal}) {
 			this.setState({
-				dropdownExpanded: newVal
+				dropdownExpanded: newVal,
 			});
 		}
 
@@ -234,7 +234,7 @@ const withMultiplePages = ChildComponent => {
 			const successPageSettings = {
 				body: {},
 				enabled,
-				title: {}
+				title: {},
 			};
 
 			setValue(successPageSettings, editingLanguageId, 'body', body);
@@ -351,7 +351,7 @@ const withMultiplePages = ChildComponent => {
 		successPageSettings: Config.shapeOf({
 			body: Config.object(),
 			enabled: Config.bool(),
-			title: Config.object()
+			title: Config.object(),
 		}).value({}),
 
 		/**
@@ -361,7 +361,7 @@ const withMultiplePages = ChildComponent => {
 		 * @type {?string}
 		 */
 
-		view: Config.string()
+		view: Config.string(),
 	};
 
 	MultiplePages.STATE = {
@@ -374,7 +374,7 @@ const withMultiplePages = ChildComponent => {
 
 		dropdownExpanded: Config.bool()
 			.value(false)
-			.internal()
+			.internal(),
 	};
 
 	return MultiplePages;

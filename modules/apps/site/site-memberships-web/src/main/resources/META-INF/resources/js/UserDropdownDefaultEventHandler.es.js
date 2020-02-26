@@ -31,7 +31,7 @@ class UserDropdownDefaultEventHandler extends DefaultEventHandler {
 			buttonAddLabel: Liferay.Language.get('done'),
 			eventName: this.ns('selectUsersRoles'),
 			title: Liferay.Language.get('assign-roles'),
-			url: itemData.assignRolesURL
+			url: itemData.assignRolesURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {

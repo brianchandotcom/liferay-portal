@@ -21,14 +21,14 @@ const SegmentsExperimentsContext = React.createContext({
 		editExperiment: () => {},
 		editExperimentStatus: () => {},
 		editVariant: () => {},
-		runExperiment: () => {}
+		runExperiment: () => {},
 	},
 	assetsPath: '',
 	page: {
 		classNameId: '',
 		classPK: '',
-		type: ''
-	}
+		type: '',
+	},
 });
 
 SegmentsExperimentsContext.Provider.propTypes = {
@@ -41,16 +41,16 @@ SegmentsExperimentsContext.Provider.propTypes = {
 			editExperiment: PropTypes.func,
 			editExperimentStatus: PropTypes.func,
 			editVariant: PropTypes.func,
-			runExperiment: PropTypes.func
+			runExperiment: PropTypes.func,
 		}),
 		assetsPath: PropTypes.string.isRequired,
 		editVariantLayoutURL: PropTypes.string,
 		page: PropTypes.shape({
 			classNameId: PropTypes.string.isRequired,
 			classPK: PropTypes.string.isRequired,
-			type: PropTypes.string.isRequired
-		})
-	})
+			type: PropTypes.string.isRequired,
+		}),
+	}),
 };
 
 export default SegmentsExperimentsContext;

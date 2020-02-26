@@ -41,14 +41,14 @@ String taglibOnClick = liferayPortletResponse.getNamespace() + "showProcessSumma
 	) {
 		Liferay.Util.openWindow({
 			dialog: {
-				destroyOnHide: true
+				destroyOnHide: true,
 			},
 			id: '<portlet:namespace />showSummary_' + backgroundTaskId,
 			title: backgroundTaskName,
 			uri:
 				processSummaryURL +
 				'&<portlet:namespace />backgroundTaskId=' +
-				backgroundTaskId
+				backgroundTaskId,
 		});
 	}
 </aui:script>

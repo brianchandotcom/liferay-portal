@@ -52,7 +52,7 @@ const InstanceDetailsModal = () => {
 		slaResults = [],
 		slaStatus,
 		status,
-		taskNames = []
+		taskNames = [],
 	} = instance;
 
 	const completed = status === 'Completed';
@@ -88,9 +88,9 @@ const InstanceDetailsModal = () => {
 		onClose: () => {
 			setInstanceDetailsModal({
 				...instanceDetailsModal,
-				visible: false
+				visible: false,
 			});
-		}
+		},
 	});
 
 	return (

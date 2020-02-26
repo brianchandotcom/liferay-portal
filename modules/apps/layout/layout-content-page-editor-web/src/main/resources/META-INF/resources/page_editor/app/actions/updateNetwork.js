@@ -17,6 +17,6 @@ import {UPDATE_NETWORK} from './types';
 export default function updateNetwork(network) {
 	return {
 		network,
-		type: UPDATE_NETWORK
+		type: UPDATE_NETWORK,
 	};
 }

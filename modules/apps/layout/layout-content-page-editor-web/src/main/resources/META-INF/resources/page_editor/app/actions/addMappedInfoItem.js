@@ -26,13 +26,13 @@ export default function addMappedInfoItem({
 	className,
 	classNameId,
 	classPK,
-	title
+	title,
 }) {
 	return {
 		className,
 		classNameId,
 		classPK,
 		title,
-		type: ADD_MAPPED_INFO_ITEM
+		type: ADD_MAPPED_INFO_ITEM,
 	};
 }

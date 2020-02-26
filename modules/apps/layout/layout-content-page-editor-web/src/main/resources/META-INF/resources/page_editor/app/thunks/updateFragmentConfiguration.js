@@ -20,7 +20,7 @@ import FragmentService from '../services/FragmentService';
 export default function updateFragmentConfiguration({
 	configurationValues,
 	fragmentEntryLink,
-	segmentsExperienceId
+	segmentsExperienceId,
 }) {
 	const {editableValues, fragmentEntryLinkId} = fragmentEntryLink;
 
@@ -28,22 +28,22 @@ export default function updateFragmentConfiguration({
 		...editableValues,
 		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: segmentsExperienceId
 			? {
-					[segmentsExperienceId]: configurationValues
+					[segmentsExperienceId]: configurationValues,
 			  }
-			: configurationValues
+			: configurationValues,
 	};
 
 	return dispatch => {
 		return FragmentService.updateEditableValues({
 			editableValues: nextEditableValues,
 			fragmentEntryLinkId,
-			onNetworkStatus: dispatch
+			onNetworkStatus: dispatch,
 		})
 			.then(() => {
 				return FragmentService.renderFragmentEntryLinkContent({
 					fragmentEntryLinkId,
 					onNetworkStatus: dispatch,
-					segmentsExperienceId
+					segmentsExperienceId,
 				});
 			})
 			.then(({content}) => {
@@ -51,14 +51,14 @@ export default function updateFragmentConfiguration({
 					updateEditableValues({
 						editableValues: nextEditableValues,
 						fragmentEntryLinkId,
-						segmentsExperienceId
+						segmentsExperienceId,
 					})
 				);
 
 				dispatch(
 					updateFragmentEntryLinkContent({
 						content,
-						fragmentEntryLinkId
+						fragmentEntryLinkId,
 					})
 				);
 			});

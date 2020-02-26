@@ -117,7 +117,7 @@ renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
 		mode: 'xml',
 		readOnly: 'true',
 		tabSize: 4,
-		width: '100%'
+		width: '100%',
 	}).render();
 
 	var xmlFormatter = new Liferay.XMLFormatter();

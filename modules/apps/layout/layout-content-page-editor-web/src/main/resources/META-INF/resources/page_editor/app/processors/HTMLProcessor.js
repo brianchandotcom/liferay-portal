@@ -34,7 +34,7 @@ function createEditor(element, changeCallback, destroyCallback) {
 				after: {
 					destroy() {
 						destroyCallback();
-					}
+					},
 				},
 				constrain: true,
 				cssClass:
@@ -47,8 +47,8 @@ function createEditor(element, changeCallback, destroyCallback) {
 						on: {
 							click() {
 								dialog.hide();
-							}
-						}
+							},
+						},
 					},
 					{
 						cssClass: 'btn-primary',
@@ -71,19 +71,19 @@ function createEditor(element, changeCallback, destroyCallback) {
 									openToast({
 										message: errorMessage,
 										title: Liferay.Language.get('error'),
-										type: 'danger'
+										type: 'danger',
 									});
 								}
 								else {
 									changeCallback(editor.get('value'));
 									dialog.hide();
 								}
-							}
-						}
-					}
-				]
+							},
+						},
+					},
+				],
 			},
-			title: Liferay.Language.get('edit-content')
+			title: Liferay.Language.get('edit-content'),
 		},
 		_dialog => {
 			dialog = _dialog;
@@ -97,7 +97,7 @@ function createEditor(element, changeCallback, destroyCallback) {
 							.appendChild('<div></div>'),
 						previewCssClass:
 							'alloy-editor alloy-editor-placeholder',
-						value: element.innerHTML
+						value: element.innerHTML,
 					}).render();
 				});
 		}
@@ -120,5 +120,5 @@ function render(element, value) {
 export default {
 	createEditor,
 	destroyEditor,
-	render
+	render,
 };

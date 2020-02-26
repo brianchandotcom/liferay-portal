@@ -58,7 +58,7 @@
 		}, 1000);
 
 		var data = {
-			p_auth: Liferay.authToken
+			p_auth: Liferay.authToken,
 		};
 
 		var setupEmail = A.one('#<portlet:namespace />setupEmail');
@@ -99,8 +99,8 @@
 
 					var phaseTwo = A.one('#<portlet:namespace />phaseTwo');
 					phaseTwo.disabled = false;
-				}
-			}
+				},
+			},
 		});
 	});
 </aui:script>

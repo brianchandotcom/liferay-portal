@@ -32,7 +32,7 @@ class PopoverBase extends Component {
 		const {children, placement, visible} = this.props;
 		const classes = getCN('popover', {
 			[`clay-popover-${placement}`]: placement,
-			['hide']: !visible
+			['hide']: !visible,
 		});
 
 		return (
@@ -57,7 +57,7 @@ PopoverBase.PROPS = {
 	 * @type {boolean}
 	 * @default false
 	 */
-	visible: Config.bool().value(false)
+	visible: Config.bool().value(false),
 };
 
 PopoverBase.Header = Header;

@@ -17,7 +17,7 @@ import {setLocalizedValue} from '../../../src/main/resources/META-INF/resources/
 describe('Internationlization', () => {
 	it('creates a localized property for a specific object string value', () => {
 		const obj = {
-			title: ''
+			title: '',
 		};
 		const value = 'the title will be localized';
 
@@ -25,18 +25,18 @@ describe('Internationlization', () => {
 
 		expect(obj).toMatchObject({
 			localizedTitle: {
-				en_US: value
+				en_US: value,
 			},
-			title: value
+			title: value,
 		});
 	});
 
 	it('replaces a localized value for a specific object string', () => {
 		const obj = {
 			localizedTitle: {
-				en_US: ''
+				en_US: '',
 			},
-			title: ''
+			title: '',
 		};
 		const value = 'the title will be localized';
 
@@ -44,9 +44,9 @@ describe('Internationlization', () => {
 
 		expect(obj).toMatchObject({
 			localizedTitle: {
-				en_US: value
+				en_US: value,
 			},
-			title: value
+			title: value,
 		});
 	});
 });

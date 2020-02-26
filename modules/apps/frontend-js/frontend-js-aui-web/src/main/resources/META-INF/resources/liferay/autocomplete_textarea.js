@@ -46,7 +46,7 @@ AUI.add(
 						'key',
 						A.bind('_onKeyUp', instance),
 						'up:' + KEY_LIST
-					)
+					),
 				];
 			},
 
@@ -92,7 +92,7 @@ AUI.add(
 
 				return {
 					index: result,
-					value: trigger
+					value: trigger,
 				};
 			},
 
@@ -222,7 +222,7 @@ AUI.add(
 				var instance = this;
 
 				instance._bindUIACTextarea();
-			}
+			},
 		};
 
 		Liferay.AutoCompleteTextarea = A.Base.create(
@@ -231,12 +231,12 @@ AUI.add(
 			[Liferay.AutoCompleteInputBase, AutoCompleteTextarea],
 			{},
 			{
-				CSS_PREFIX: A.ClassNameManager.getClassName('aclist')
+				CSS_PREFIX: A.ClassNameManager.getClassName('aclist'),
 			}
 		);
 	},
 	'',
 	{
-		requires: ['liferay-autocomplete-input']
+		requires: ['liferay-autocomplete-input'],
 	}
 );

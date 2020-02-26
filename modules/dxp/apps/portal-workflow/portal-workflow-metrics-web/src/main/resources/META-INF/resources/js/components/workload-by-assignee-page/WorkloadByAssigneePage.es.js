@@ -30,7 +30,7 @@ const WorkloadByAssigneePage = ({query, routeParams}) => {
 	const {
 		filterValues: {roleIds, taskKeys},
 		prefixedKeys,
-		selectedFilters
+		selectedFilters,
 	} = useFilter({filterKeys});
 
 	const filtered = search || selectedFilters.length > 0;
@@ -40,9 +40,9 @@ const WorkloadByAssigneePage = ({query, routeParams}) => {
 			keywords: search,
 			roleIds,
 			taskKeys,
-			...routeParams
+			...routeParams,
 		},
-		url: `/processes/${processId}/assignee-users`
+		url: `/processes/${processId}/assignee-users`,
 	});
 
 	const promises = useMemo(() => [fetchData()], [fetchData]);

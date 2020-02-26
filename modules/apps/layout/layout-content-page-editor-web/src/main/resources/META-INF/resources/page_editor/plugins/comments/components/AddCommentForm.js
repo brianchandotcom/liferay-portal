@@ -41,7 +41,7 @@ export default function AddCommentForm({fragmentEntryLinkId}) {
 		dispatch(
 			addFragmentComment({
 				body: textareaContent,
-				fragmentEntryLinkId
+				fragmentEntryLinkId,
 			})
 		)
 			.then(() => {
@@ -55,7 +55,7 @@ export default function AddCommentForm({fragmentEntryLinkId}) {
 						'the-comment-could-not-be-saved'
 					),
 					title: Liferay.Language.get('error'),
-					type: 'danger'
+					type: 'danger',
 				});
 
 				setAddingComment(false);
@@ -86,5 +86,5 @@ export default function AddCommentForm({fragmentEntryLinkId}) {
 }
 
 AddCommentForm.propTypes = {
-	fragmentEntryLinkId: PropTypes.string.isRequired
+	fragmentEntryLinkId: PropTypes.string.isRequired,
 };

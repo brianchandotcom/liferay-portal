@@ -15,7 +15,7 @@
 import {
 	FormSupport,
 	PagesVisitor,
-	RulesVisitor
+	RulesVisitor,
 } from 'dynamic-data-mapping-form-renderer';
 import handlePaginationItemClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationItemClicked.es';
 import Component from 'metal-jsx';
@@ -50,7 +50,7 @@ class LayoutProvider extends Component {
 			enabled: true,
 			rows: [FormSupport.implAddRow(12, [])],
 			showRequiredFieldsWarning: true,
-			title: ''
+			title: '',
 		};
 
 		setLocalizedValue(page, languageId, 'title', '');
@@ -66,7 +66,7 @@ class LayoutProvider extends Component {
 	getChildContext() {
 		return {
 			dispatch: this.dispatch.bind(this),
-			store: this
+			store: this,
 		};
 	}
 
@@ -99,7 +99,7 @@ class LayoutProvider extends Component {
 			ruleDeleted: this._handleRuleDeleted.bind(this),
 			ruleSaved: this._handleRuleSaved.bind(this),
 			sidebarFieldBlurred: this._handleSidebarFieldBlurred.bind(this),
-			successPageChanged: this._handleSuccessPageChanged.bind(this)
+			successPageChanged: this._handleSuccessPageChanged.bind(this),
 		};
 	}
 
@@ -112,7 +112,7 @@ class LayoutProvider extends Component {
 				...focusedField.settingsContext,
 				pages: this.getLocalizedPages(
 					focusedField.settingsContext.pages
-				)
+				),
 			};
 
 			focusedField = {
@@ -122,7 +122,7 @@ class LayoutProvider extends Component {
 					defaultLanguageId,
 					editingLanguageId
 				),
-				settingsContext
+				settingsContext,
 			};
 		}
 
@@ -161,8 +161,8 @@ class LayoutProvider extends Component {
 					...settingsContext,
 					availableLanguageIds,
 					defaultLanguageId,
-					pages: this.getLocalizedPages(settingsContext.pages)
-				}
+					pages: this.getLocalizedPages(settingsContext.pages),
+				},
 			};
 		});
 
@@ -188,7 +188,7 @@ class LayoutProvider extends Component {
 			return {
 				...page,
 				description,
-				title
+				title,
 			};
 		});
 	}
@@ -208,13 +208,13 @@ class LayoutProvider extends Component {
 								label: 'user',
 								repeatable: false,
 								type: 'user',
-								value: 'user'
+								value: 'user',
 							},
 							{
 								...condition.operands[0],
-								label: condition.operands[0].value
-							}
-						]
+								label: condition.operands[0].value,
+							},
+						],
 					};
 				}
 
@@ -231,13 +231,13 @@ class LayoutProvider extends Component {
 			defaultLanguageId,
 			editingLanguageId,
 			fieldActions,
-			spritemap
+			spritemap,
 		} = this.props;
 		const {
 			activePage,
 			paginationMode,
 			rules,
-			successPageSettings
+			successPageSettings,
 		} = this.state;
 
 		if (children.length) {
@@ -255,7 +255,7 @@ class LayoutProvider extends Component {
 					paginationMode,
 					rules,
 					spritemap,
-					successPageSettings
+					successPageSettings,
 				});
 			}
 		}
@@ -267,12 +267,12 @@ class LayoutProvider extends Component {
 		return [
 			{
 				action: indexes => this.dispatch('fieldDuplicated', {indexes}),
-				label: Liferay.Language.get('duplicate')
+				label: Liferay.Language.get('duplicate'),
 			},
 			{
 				action: indexes => this.dispatch('fieldDeleted', {indexes}),
-				label: Liferay.Language.get('delete')
-			}
+				label: Liferay.Language.get('delete'),
+			},
 		];
 	}
 
@@ -286,7 +286,7 @@ class LayoutProvider extends Component {
 
 	_handleActivePageUpdated(activePage) {
 		this.setState({
-			activePage
+			activePage,
 		});
 	}
 
@@ -313,7 +313,7 @@ class LayoutProvider extends Component {
 		visitor.mapFields(({fieldName, value}) => {
 			this._handleFieldEdited({
 				propertyName: fieldName,
-				propertyValue: value
+				propertyValue: value,
 			});
 		});
 
@@ -325,12 +325,12 @@ class LayoutProvider extends Component {
 				if (field.fieldName === focusedField.fieldName) {
 					return {
 						...field,
-						settingsContext
+						settingsContext,
 					};
 				}
 
 				return field;
-			})
+			}),
 		});
 	}
 
@@ -369,10 +369,10 @@ class LayoutProvider extends Component {
 				{
 					columnIndex,
 					pageIndex,
-					rowIndex
+					rowIndex,
 				},
 				[focusedField]
-			)
+			),
 		});
 	}
 
@@ -387,7 +387,7 @@ class LayoutProvider extends Component {
 
 		this.setState({
 			activePage: pages.length,
-			pages: [...pages, this.createNewPage()]
+			pages: [...pages, this.createNewPage()],
 		});
 	}
 
@@ -396,19 +396,19 @@ class LayoutProvider extends Component {
 
 		this.setState({
 			activePage: Math.max(0, pageIndex - 1),
-			pages: pages.filter((page, index) => index != pageIndex)
+			pages: pages.filter((page, index) => index != pageIndex),
 		});
 	}
 
 	_handlePageReset() {
 		this.setState({
-			pages: [this.createNewPage()]
+			pages: [this.createNewPage()],
 		});
 	}
 
 	_handlePagesUpdated(pages) {
 		this.setState({
-			pages: [...pages]
+			pages: [...pages],
 		});
 	}
 
@@ -425,7 +425,7 @@ class LayoutProvider extends Component {
 		}
 
 		this.setState({
-			paginationMode: newMode
+			paginationMode: newMode,
 		});
 	}
 
@@ -443,7 +443,7 @@ class LayoutProvider extends Component {
 
 	_handleRuleAdded(rule) {
 		this.setState({
-			rules: [...this.state.rules, rule]
+			rules: [...this.state.rules, rule],
 		});
 
 		this.emit('rulesModified');
@@ -453,7 +453,7 @@ class LayoutProvider extends Component {
 		const {rules} = this.state;
 
 		this.setState({
-			rules: rules.filter((rule, index) => index !== ruleId)
+			rules: rules.filter((rule, index) => index !== ruleId),
 		});
 
 		this.emit('rulesModified');
@@ -467,13 +467,13 @@ class LayoutProvider extends Component {
 		const newRule = {
 			actions,
 			conditions,
-			'logical-operator': logicalOperator
+			'logical-operator': logicalOperator,
 		};
 
 		rules.splice(ruleEditedIndex, 1, newRule);
 
 		this.setState({
-			rules
+			rules,
 		});
 
 		this.emit('rulesModified');
@@ -481,13 +481,13 @@ class LayoutProvider extends Component {
 
 	_handleSidebarFieldBlurred() {
 		this.setState({
-			focusedField: {}
+			focusedField: {},
 		});
 	}
 
 	_handleSuccessPageChanged(successPageSettings) {
 		this.setState({
-			successPageSettings
+			successPageSettings,
 		});
 	}
 
@@ -522,7 +522,7 @@ class LayoutProvider extends Component {
 	_setEvents(value) {
 		return {
 			...this.getEvents(),
-			...value
+			...value,
 		};
 	}
 
@@ -537,10 +537,10 @@ class LayoutProvider extends Component {
 				localizedValue: {},
 				readOnly: true,
 				settingsContext: {
-					...this._setInitialSettingsContext(settingsContext)
+					...this._setInitialSettingsContext(settingsContext),
 				},
 				value: undefined,
-				visible: true
+				visible: true,
 			};
 		});
 	}
@@ -556,7 +556,7 @@ class LayoutProvider extends Component {
 						return field.value[languageId].map(option => {
 							return {
 								...option,
-								edited: true
+								edited: true,
 							};
 						});
 					};
@@ -566,14 +566,14 @@ class LayoutProvider extends Component {
 							...field,
 							value: {
 								...field.value,
-								[languageId]: getOptions(languageId, field)
-							}
+								[languageId]: getOptions(languageId, field),
+							},
 						};
 					});
 				}
 
 				return field;
-			})
+			}),
 		};
 	}
 
@@ -681,7 +681,7 @@ LayoutProvider.PROPS = {
 	initialSuccessPageSettings: Config.shapeOf({
 		body: Config.object(),
 		enabled: Config.bool(),
-		title: Config.object()
+		title: Config.object(),
 	}),
 
 	/**
@@ -709,7 +709,7 @@ LayoutProvider.PROPS = {
 	 * @type {?string}
 	 */
 
-	view: Config.string()
+	view: Config.string(),
 };
 
 LayoutProvider.STATE = {
@@ -731,11 +731,11 @@ LayoutProvider.STATE = {
 	focusedField: Config.shapeOf({
 		columnIndex: Config.oneOfType([
 			Config.bool().value(false),
-			Config.number()
+			Config.number(),
 		]).required(),
 		pageIndex: Config.number().required(),
 		rowIndex: Config.number().required(),
-		type: Config.string().required()
+		type: Config.string().required(),
 	}).value({}),
 
 	/**
@@ -767,11 +767,11 @@ LayoutProvider.STATE = {
 	previousFocusedField: Config.shapeOf({
 		columnIndex: Config.oneOfType([
 			Config.bool().value(false),
-			Config.number()
+			Config.number(),
 		]).required(),
 		pageIndex: Config.number().required(),
 		rowIndex: Config.number().required(),
-		type: Config.string().required()
+		type: Config.string().required(),
 	}).value({}),
 
 	/**
@@ -790,7 +790,7 @@ LayoutProvider.STATE = {
 	 * @type {?(object|undefined)}
 	 */
 
-	successPageSettings: Config.object().valueFn('_successPageSettingsValueFn')
+	successPageSettings: Config.object().valueFn('_successPageSettingsValueFn'),
 };
 
 export default LayoutProvider;

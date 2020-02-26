@@ -21,7 +21,7 @@ export default function addFragment({
 	itemId,
 	name,
 	previewImageURL,
-	store
+	store,
 }) {
 	return dispatch => {
 		const {segmentsExperienceId} = store;
@@ -33,12 +33,12 @@ export default function addFragment({
 			name,
 			onNetworkStatus: dispatch,
 			previewImageURL,
-			segmentsExperienceId
+			segmentsExperienceId,
 		}).then(({fragmentComposition, layoutData}) => {
 			dispatch(
 				addFragmentComposition({
 					fragmentComposition,
-					layoutData
+					layoutData,
 				})
 			);
 		});

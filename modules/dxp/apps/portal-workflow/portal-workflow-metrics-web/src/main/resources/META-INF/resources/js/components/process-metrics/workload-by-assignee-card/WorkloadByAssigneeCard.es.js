@@ -37,7 +37,7 @@ const Header = ({processId}) => (
 						hideControl: true,
 						multiple: false,
 						withAllSteps: true,
-						withSelectionTitle: true
+						withSelectionTitle: true,
 					}}
 					processId={processId}
 				/>
@@ -56,7 +56,7 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 	const params = getParams(currentTab, filterValues.taskKeys);
 	const {data, fetchData} = useFetch({
 		params,
-		url: `/processes/${processId}/assignee-users`
+		url: `/processes/${processId}/assignee-users`,
 	});
 
 	const promises = useMemo(() => [fetchData()], [fetchData]);
@@ -85,7 +85,7 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 const getParams = (currentTab, taskKeys) => {
 	const params = {
 		page: 1,
-		pageSize: 10
+		pageSize: 10,
 	};
 
 	if (taskKeys && taskKeys.length) {

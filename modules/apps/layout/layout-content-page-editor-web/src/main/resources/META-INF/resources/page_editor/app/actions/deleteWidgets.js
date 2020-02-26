@@ -17,6 +17,6 @@ import {DELETE_WIDGETS} from './types';
 export default function deleteWidgets(fragmentEntryLinks = []) {
 	return {
 		fragmentEntryLinks,
-		type: DELETE_WIDGETS
+		type: DELETE_WIDGETS,
 	};
 }

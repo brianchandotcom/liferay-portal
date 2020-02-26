@@ -117,8 +117,8 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 						on: {
 							click: function() {
 								document.<portlet:namespace />fm.submit();
-							}
-						}
+							},
+						},
 					},
 					{
 						cssClass: 'btn-link',
@@ -126,9 +126,9 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 						on: {
 							click: function() {
 								location.href = '<%= viewDataProviderURL.toString() %>';
-							}
-						}
-					}
+							},
+						},
+					},
 				],
 				'footer'
 			);

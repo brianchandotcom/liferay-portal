@@ -43,7 +43,7 @@ class RuleBuilder extends Component {
 			functionsMetadata,
 			functionsURL,
 			pages,
-			spritemap
+			spritemap,
 		} = this.props;
 
 		const {dataProvider, index, mode, roles, rules} = this.state;
@@ -63,7 +63,7 @@ class RuleBuilder extends Component {
 							ruleAdded: this._handleRuleAdded.bind(this),
 							ruleCancelled: this._handleRuleCancelled.bind(this),
 							ruleDeleted: this._handleRuleDeleted.bind(this),
-							ruleEdited: this._handleRuleEdited.bind(this)
+							ruleEdited: this._handleRuleEdited.bind(this),
 						}}
 						functionsMetadata={functionsMetadata}
 						functionsURL={functionsURL}
@@ -83,7 +83,7 @@ class RuleBuilder extends Component {
 						dataProviderInstancesURL={dataProviderInstancesURL}
 						events={{
 							ruleAdded: this._handleRuleSaved.bind(this),
-							ruleCancelled: this._handleRuleCancelled.bind(this)
+							ruleCancelled: this._handleRuleCancelled.bind(this),
 						}}
 						functionsMetadata={functionsMetadata}
 						functionsURL={functionsURL}
@@ -103,7 +103,7 @@ class RuleBuilder extends Component {
 							ruleAdded: this._handleRuleAdded.bind(this),
 							ruleCancelled: this._handleRuleCancelled.bind(this),
 							ruleDeleted: this._handleRuleDeleted.bind(this),
-							ruleEdited: this._handleRuleEdited.bind(this)
+							ruleEdited: this._handleRuleEdited.bind(this),
 						}}
 						pages={pages}
 						ref="RuleList"
@@ -118,20 +118,20 @@ class RuleBuilder extends Component {
 
 	showRuleCreation() {
 		this.setState({
-			mode: 'create'
+			mode: 'create',
 		});
 	}
 
 	showRuleList() {
 		this.setState({
-			mode: 'view'
+			mode: 'view',
 		});
 	}
 
 	willReceiveProps({rules}) {
 		if (rules && rules.newVal) {
 			this.setState({
-				rules: rules.newVal
+				rules: rules.newVal,
 			});
 		}
 	}
@@ -141,7 +141,7 @@ class RuleBuilder extends Component {
 
 		makeFetch({
 			method: 'GET',
-			url: `${dataProviderInstancesURL}?languageId=${themeDisplay.getLanguageId()}&scopeGroupId=${themeDisplay.getScopeGroupId()}`
+			url: `${dataProviderInstancesURL}?languageId=${themeDisplay.getLanguageId()}&scopeGroupId=${themeDisplay.getScopeGroupId()}`,
 		})
 			.then(responseData => {
 				if (!this.isDisposed()) {
@@ -150,9 +150,9 @@ class RuleBuilder extends Component {
 							return {
 								...data,
 								label: data.name,
-								value: data.id
+								value: data.id,
 							};
-						})
+						}),
 					});
 				}
 			})
@@ -166,7 +166,7 @@ class RuleBuilder extends Component {
 
 		makeFetch({
 			method: 'GET',
-			url: rolesURL
+			url: rolesURL,
 		})
 			.then(responseData => {
 				if (!this.isDisposed()) {
@@ -175,9 +175,9 @@ class RuleBuilder extends Component {
 							return {
 								...data,
 								label: data.name,
-								value: data.id
+								value: data.id,
 							};
-						})
+						}),
 					});
 				}
 			})
@@ -203,7 +203,7 @@ class RuleBuilder extends Component {
 
 		this.setState({
 			mode: 'view',
-			rules
+			rules,
 		});
 
 		dispatch('ruleCancelled');
@@ -213,7 +213,7 @@ class RuleBuilder extends Component {
 		const {dispatch} = this.context;
 
 		dispatch('ruleDeleted', {
-			ruleId
+			ruleId,
 		});
 	}
 
@@ -225,7 +225,7 @@ class RuleBuilder extends Component {
 		this.setState({
 			index: ruleId,
 			mode: 'edit',
-			originalRule: JSON.parse(JSON.stringify(rules[ruleId]))
+			originalRule: JSON.parse(JSON.stringify(rules[ruleId])),
 		});
 	}
 
@@ -234,7 +234,7 @@ class RuleBuilder extends Component {
 
 		dispatch('ruleSaved', {
 			...event,
-			ruleId: event.ruleEditedIndex
+			ruleId: event.ruleEditedIndex,
 		});
 
 		this.showRuleList();
@@ -256,7 +256,7 @@ RuleBuilder.PROPS = {
 				label: Config.string(),
 				name: Config.string(),
 				parameterTypes: Config.array(),
-				returnType: Config.string()
+				returnType: Config.string(),
 			})
 		),
 		text: Config.arrayOf(
@@ -264,7 +264,7 @@ RuleBuilder.PROPS = {
 				label: Config.string(),
 				name: Config.string(),
 				parameterTypes: Config.array(),
-				returnType: Config.string()
+				returnType: Config.string(),
 			})
 		),
 		user: Config.arrayOf(
@@ -272,9 +272,9 @@ RuleBuilder.PROPS = {
 				label: Config.string(),
 				name: Config.string(),
 				parameterTypes: Config.array(),
-				returnType: Config.string()
+				returnType: Config.string(),
 			})
-		)
+		),
 	}),
 
 	functionsURL: Config.string().required(),
@@ -289,7 +289,7 @@ RuleBuilder.PROPS = {
 				Config.shapeOf({
 					action: Config.string(),
 					label: Config.string(),
-					target: Config.string()
+					target: Config.string(),
 				})
 			),
 			conditions: Config.arrayOf(
@@ -299,13 +299,13 @@ RuleBuilder.PROPS = {
 							label: Config.string(),
 							repeatable: Config.bool(),
 							type: Config.string(),
-							value: Config.string()
+							value: Config.string(),
 						})
 					),
-					operator: Config.string()
+					operator: Config.string(),
 				})
 			),
-			logicalOperator: Config.string()
+			logicalOperator: Config.string(),
 		})
 	).value([]),
 
@@ -317,7 +317,7 @@ RuleBuilder.PROPS = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
 };
 
 RuleBuilder.STATE = {
@@ -325,7 +325,7 @@ RuleBuilder.STATE = {
 		Config.shapeOf({
 			id: Config.string(),
 			name: Config.string(),
-			uuid: Config.string()
+			uuid: Config.string(),
 		})
 	).internal(),
 
@@ -345,7 +345,7 @@ RuleBuilder.STATE = {
 	roles: Config.arrayOf(
 		Config.shapeOf({
 			id: Config.string(),
-			name: Config.string()
+			name: Config.string(),
 		})
 	).internal(),
 
@@ -355,7 +355,7 @@ RuleBuilder.STATE = {
 				Config.shapeOf({
 					action: Config.string(),
 					label: Config.string(),
-					target: Config.string()
+					target: Config.string(),
 				})
 			),
 			conditions: Config.arrayOf(
@@ -365,15 +365,15 @@ RuleBuilder.STATE = {
 							label: Config.string(),
 							repeatable: Config.bool(),
 							type: Config.string(),
-							value: Config.string()
+							value: Config.string(),
 						})
 					),
-					operator: Config.string()
+					operator: Config.string(),
 				})
 			),
-			logicalOperator: Config.string()
+			logicalOperator: Config.string(),
 		})
-	).valueFn('_setRulesValueFn')
+	).valueFn('_setRulesValueFn'),
 };
 
 export default RuleBuilder;

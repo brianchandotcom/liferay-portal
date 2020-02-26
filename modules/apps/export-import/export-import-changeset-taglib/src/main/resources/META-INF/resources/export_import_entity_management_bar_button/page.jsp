@@ -51,7 +51,7 @@ scopeGroup = themeDisplay.getScopeGroup();
 				exportImportEntityUrl: '<%= portletURL.toString() %>',
 				namespace: '<portlet:namespace />',
 				searchContainerId: '<%= searchContainerId %>',
-				searchContainerMappingId: '<%= searchContainerMappingId %>'
+				searchContainerMappingId: '<%= searchContainerMappingId %>',
 			}
 		);
 	</aui:script>

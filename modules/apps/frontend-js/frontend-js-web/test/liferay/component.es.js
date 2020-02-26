@@ -19,7 +19,7 @@ import {
 	componentReady,
 	destroyComponent,
 	destroyComponents,
-	destroyUnfulfilledPromises
+	destroyUnfulfilledPromises,
 } from '../../src/main/resources/META-INF/resources/liferay/component.es';
 
 describe('Liferay', () => {
@@ -138,7 +138,7 @@ describe('Liferay', () => {
 			const destroyFn = jest.fn();
 
 			component(componentId, {
-				destroy: destroyFn
+				destroy: destroyFn,
 			});
 
 			destroyComponent(componentId);
@@ -151,7 +151,7 @@ describe('Liferay', () => {
 			const disposeFn = jest.fn();
 
 			component(componentId, {
-				dispose: disposeFn
+				dispose: disposeFn,
 			});
 
 			destroyComponent(componentId);

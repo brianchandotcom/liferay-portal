@@ -14,7 +14,7 @@ import {createContext, useCallback, useEffect, useState} from 'react';
 import {
 	durationAsMilliseconds,
 	formatHours,
-	getDurationValues
+	getDurationValues,
 } from '../../../shared/util/duration.es';
 import {START_NODE_KEYS, STOP_NODE_KEYS} from '../Constants.es';
 
@@ -32,18 +32,18 @@ const useSLA = (
 		name: '',
 		pauseNodeKeys: {
 			nodeKeys: [],
-			status: 0
+			status: 0,
 		},
 		processId,
 		startNodeKeys: {
 			nodeKeys: [],
-			status: 0
+			status: 0,
 		},
 		status: 0,
 		stopNodeKeys: {
 			nodeKeys: [],
-			status: 0
-		}
+			status: 0,
+		},
 	});
 
 	const changeNodesKeys = (type, nodeKeys, callback) => selectedNodeKeys => {
@@ -82,7 +82,7 @@ const useSLA = (
 					description = '',
 					duration,
 					name,
-					status
+					status,
 				} = data;
 
 				const {days, hours, minutes} = getDurationValues(duration);
@@ -92,7 +92,7 @@ const useSLA = (
 				const [pauseNodeKeys, startNodeKeys, stopNodeKeys] = [
 					data.pauseNodeKeys,
 					data.startNodeKeys,
-					data.stopNodeKeys
+					data.stopNodeKeys,
 				].map(node => {
 					if (!node || !node.nodeKeys) {
 						return {nodeKeys: []};
@@ -126,7 +126,7 @@ const useSLA = (
 					pauseNodeKeys,
 					startNodeKeys,
 					status,
-					stopNodeKeys
+					stopNodeKeys,
 				});
 			});
 		},
@@ -156,16 +156,16 @@ const useSLA = (
 		setSLA({
 			pauseNodeKeys: {
 				nodeKeys: [],
-				status: 0
+				status: 0,
 			},
 			startNodeKeys: {
 				nodeKeys: [],
-				status: 0
+				status: 0,
 			},
 			stopNodeKeys: {
 				nodeKeys: [],
-				status: 0
-			}
+				status: 0,
+			},
 		});
 	};
 
@@ -178,7 +178,7 @@ const useSLA = (
 			name,
 			pauseNodeKeys,
 			startNodeKeys,
-			stopNodeKeys
+			stopNodeKeys,
 		} = sla;
 
 		const duration = durationAsMilliseconds(days, hours);
@@ -198,26 +198,26 @@ const useSLA = (
 			pauseNodeKeys: {
 				nodeKeys: pauseNodeKeys.nodeKeys.map(({executionType, id}) => ({
 					executionType,
-					id
+					id,
 				})),
-				status: 0
+				status: 0,
 			},
 			processId,
 			startNodeKeys: {
 				nodeKeys: startNodeKeys.nodeKeys.map(({executionType, id}) => ({
 					executionType,
-					id
+					id,
 				})),
-				status: 0
+				status: 0,
 			},
 			status: 0,
 			stopNodeKeys: {
 				nodeKeys: stopNodeKeys.nodeKeys.map(({executionType, id}) => ({
 					executionType,
-					id
+					id,
 				})),
-				status: 0
-			}
+				status: 0,
+			},
 		});
 	};
 
@@ -236,7 +236,7 @@ const useSLA = (
 		pauseNodeTagIds,
 		resetNodes,
 		saveSLA,
-		sla
+		sla,
 	};
 };
 

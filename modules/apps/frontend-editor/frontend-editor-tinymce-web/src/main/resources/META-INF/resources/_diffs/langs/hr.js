@@ -196,5 +196,5 @@ tinymce.addI18n('hr', {
 	Tools: 'Alati',
 	View: 'Pogled',
 	Table: 'Tablica',
-	Format: 'Oblikuj'
+	Format: 'Oblikuj',
 });

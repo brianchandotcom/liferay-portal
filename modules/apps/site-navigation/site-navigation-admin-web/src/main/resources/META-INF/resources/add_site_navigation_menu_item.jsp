@@ -92,7 +92,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 
 			Liferay.Util.fetch(form.action, {
 				body: formData,
-				method: 'POST'
+				method: 'POST',
 			})
 				.then(function(response) {
 					return response.json();
@@ -109,19 +109,19 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 								'_<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>_addMenuItem',
 							portletAjaxable: <%= selPortlet.isAjaxable() %>,
 							refresh:
-								'<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>'
+								'<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>',
 						});
 					}
 					else {
 						new Liferay.Alert({
 							delay: {
 								hide: 500,
-								show: 0
+								show: 0,
 							},
 							duration: 500,
 							icon: 'exclamation-circle',
 							message: response.errorMessage,
-							type: 'danger'
+							type: 'danger',
 						}).render();
 					}
 				});

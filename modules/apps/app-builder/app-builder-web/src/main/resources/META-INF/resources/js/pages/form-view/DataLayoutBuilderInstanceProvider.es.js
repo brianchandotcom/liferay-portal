@@ -37,7 +37,7 @@ export default ({children, dataLayoutBuilder}) => {
 			{
 				action: indexes =>
 					dataLayoutBuilder.dispatch('fieldDuplicated', {indexes}),
-				label: Liferay.Language.get('duplicate')
+				label: Liferay.Language.get('duplicate'),
 			},
 			{
 				action: indexes => {
@@ -48,13 +48,13 @@ export default ({children, dataLayoutBuilder}) => {
 
 					dispatch({
 						payload: {fieldName},
-						type: DataLayoutBuilderActions.DELETE_DATA_LAYOUT_FIELD
+						type: DataLayoutBuilderActions.DELETE_DATA_LAYOUT_FIELD,
 					});
 
 					dataLayoutBuilder.dispatch('fieldDeleted', {indexes});
 				},
 				label: Liferay.Language.get('remove'),
-				separator: true
+				separator: true,
 			},
 			{
 				action: indexes => {
@@ -66,8 +66,8 @@ export default ({children, dataLayoutBuilder}) => {
 					onDeleteDefinitionField(fieldName);
 				},
 				label: Liferay.Language.get('delete-from-object'),
-				style: 'danger'
-			}
+				style: 'danger',
+			},
 		];
 	}, [dataLayout, dataLayoutBuilder, dispatch, onDeleteDefinitionField]);
 

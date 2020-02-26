@@ -26,6 +26,6 @@ Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId
 	Liferay.fire('closeWindow', {
 		id: '_<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>_addMenuItem',
 		portletAjaxable: <%= selPortlet.isAjaxable() %>,
-		refresh: '<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>'
+		refresh: '<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>',
 	});
 </aui:script>

@@ -26,7 +26,7 @@ AUI.add(
 			var instance = this;
 
 			instance.definition = new XMLDefinition({
-				value: content
+				value: content,
 			});
 
 			instance.canvas = canvas;
@@ -40,7 +40,7 @@ AUI.add(
 
 				return [
 					uniformRandomInt(0, region.width - 100),
-					uniformRandomInt(0, region.height - 100)
+					uniformRandomInt(0, region.height - 100),
 				];
 			},
 
@@ -55,10 +55,10 @@ AUI.add(
 							connectors.push({
 								connector: {
 									default: item2.default,
-									name: item2.name
+									name: item2.name,
 								},
 								source: item1.name,
-								target: item2.target
+								target: item2.target,
 							});
 						});
 					});
@@ -89,7 +89,7 @@ AUI.add(
 						}
 						else {
 							metadata = {
-								xy: instance._getRandomXY()
+								xy: instance._getRandomXY(),
 							};
 						}
 
@@ -115,7 +115,7 @@ AUI.add(
 								item.taskTimers
 							),
 							type,
-							xy: metadata.xy
+							xy: metadata.xy,
 						});
 					});
 				});
@@ -131,11 +131,11 @@ AUI.add(
 					instance.definition.getAttrs([
 						'description',
 						'name',
-						'version'
+						'version',
 					]),
 					json
 				);
-			}
+			},
 		};
 
 		Liferay.KaleoDesignerDefinitionDiagramController = DefinitionDiagramController;
@@ -146,7 +146,7 @@ AUI.add(
 			'liferay-kaleo-designer-field-normalizer',
 			'liferay-kaleo-designer-utils',
 			'liferay-kaleo-designer-xml-definition',
-			'liferay-kaleo-designer-xml-definition-serializer'
-		]
+			'liferay-kaleo-designer-xml-definition-serializer',
+		],
 	}
 );

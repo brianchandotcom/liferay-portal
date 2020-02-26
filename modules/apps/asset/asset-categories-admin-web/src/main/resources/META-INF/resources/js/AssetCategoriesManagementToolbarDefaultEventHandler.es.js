@@ -32,7 +32,7 @@ class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHa
 			eventName: this.ns('selectCategory'),
 			singleSelect: true,
 			title: Liferay.Language.get('select-category'),
-			url: itemData.categoriesSelectorURL
+			url: itemData.categoriesSelectorURL,
 		});
 
 		itemSelectorDialog.open();

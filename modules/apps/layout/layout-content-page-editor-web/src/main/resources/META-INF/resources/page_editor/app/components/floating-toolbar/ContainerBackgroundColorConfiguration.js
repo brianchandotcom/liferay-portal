@@ -22,13 +22,13 @@ const CONTAINER_BACKGROUND_COLOR_IDENTIFIER = 'backgroundColorCssClass';
 
 export const ContainerBackgroundColorConfiguration = ({
 	backgroundColor,
-	onValueChange
+	onValueChange,
 }) => (
 	<ClayForm.Group>
 		<ColorPalette
 			onClear={() =>
 				onValueChange({
-					[CONTAINER_BACKGROUND_COLOR_IDENTIFIER]: ''
+					[CONTAINER_BACKGROUND_COLOR_IDENTIFIER]: '',
 				})
 			}
 			onColorSelect={value =>
@@ -41,5 +41,5 @@ export const ContainerBackgroundColorConfiguration = ({
 
 ContainerBackgroundColorConfiguration.propTypes = {
 	backgroundColor: PropTypes.string,
-	onValueChange: PropTypes.func.isRequired
+	onValueChange: PropTypes.func.isRequired,
 };

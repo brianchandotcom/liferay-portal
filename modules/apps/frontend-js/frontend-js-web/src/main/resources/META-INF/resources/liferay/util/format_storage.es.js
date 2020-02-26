@@ -20,7 +20,7 @@ const DEFAULT_OPTIONS = {
 	denominator: 1024.0,
 	suffixGB: 'GB',
 	suffixKB: 'KB',
-	suffixMB: 'MB'
+	suffixMB: 'MB',
 };
 
 /**
@@ -38,10 +38,10 @@ export default function formatStorage(size, options = {}) {
 		denominator,
 		suffixGB,
 		suffixKB,
-		suffixMB
+		suffixMB,
 	} = {
 		...DEFAULT_OPTIONS,
-		...options
+		...options,
 	};
 
 	if (!isNumber(size)) {

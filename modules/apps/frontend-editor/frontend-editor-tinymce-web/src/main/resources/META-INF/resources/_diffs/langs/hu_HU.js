@@ -216,5 +216,5 @@ tinymce.addI18n('hu_HU', {
 	Tools: 'Eszk\u00f6z\u00f6k',
 	View: 'N\u00e9zet',
 	Table: 'T\u00e1bl\u00e1zat',
-	Format: 'Form\u00e1tum'
+	Format: 'Form\u00e1tum',
 });

@@ -52,5 +52,5 @@ export {
 	validateDuration,
 	validateHours,
 	validateName,
-	validateNodeKeys
+	validateNodeKeys,
 };

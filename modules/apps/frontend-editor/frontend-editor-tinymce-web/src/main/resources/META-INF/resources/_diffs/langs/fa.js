@@ -260,5 +260,5 @@ tinymce.addI18n('fa', {
 	View: '\u0646\u0645\u0627\u06cc\u0634',
 	Table: '\u062c\u062f\u0648\u0644',
 	Format: '\u0642\u0627\u0644\u0628',
-	_dir: 'rtl'
+	_dir: 'rtl',
 });

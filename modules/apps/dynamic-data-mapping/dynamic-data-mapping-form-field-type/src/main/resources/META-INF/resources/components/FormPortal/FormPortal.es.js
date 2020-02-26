@@ -29,7 +29,7 @@ FormPortal.STATE = {
 	 * @type {?html}
 	 */
 
-	contentRenderer: Config.any()
+	contentRenderer: Config.any(),
 };
 
 Soy.register(FormPortal, templates);

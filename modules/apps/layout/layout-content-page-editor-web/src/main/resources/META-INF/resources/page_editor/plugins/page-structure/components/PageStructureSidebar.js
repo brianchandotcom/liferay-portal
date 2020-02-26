@@ -75,7 +75,7 @@ export default function PageStructureSidebar() {
 					expanded: childId === activeItemId,
 					id: childId,
 					name: editableId,
-					removable: false
+					removable: false,
 				});
 			});
 		}
@@ -107,7 +107,7 @@ export default function PageStructureSidebar() {
 			expanded: item.itemId === activeItemId,
 			id: item.itemId,
 			name: getName(item, fragmentEntryLinks),
-			removable: !itemInMasterLayout && isRemovable(item, layoutData)
+			removable: !itemInMasterLayout && isRemovable(item, layoutData),
 		};
 
 		return node;

@@ -140,7 +140,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
-						destroyOnHide: true
+						destroyOnHide: true,
 					},
 					eventName:
 						'<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
@@ -148,7 +148,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 						'<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
 					title: '<liferay-ui:message key="scopes" />',
 					uri:
-						'<%= editAssetListDisplayContext.getGroupItemSelectorURL() %>'
+						'<%= editAssetListDisplayContext.getGroupItemSelectorURL() %>',
 				},
 				function(event) {
 					var entityId = event.groupid;

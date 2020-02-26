@@ -26,17 +26,17 @@ export const UPDATE_FOCUSED_COLUMN = 'UPDATE_FOCUSED_COLUMN';
 
 export const initialState = {
 	dataDefinition: {
-		dataDefinitionFields: []
+		dataDefinitionFields: [],
 	},
 	dataListView: {
 		appliedFilters: {},
 		fieldNames: [],
 		name: {
-			en_US: ''
-		}
+			en_US: '',
+		},
 	},
 	fieldTypes: [],
-	focusedColumn: null
+	focusedColumn: null,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -54,10 +54,10 @@ export const reducer = (state = initialState, action) => {
 						? [
 								...fieldNames.slice(0, index),
 								fieldName,
-								...fieldNames.slice(index)
+								...fieldNames.slice(index),
 						  ]
-						: [fieldName]
-				}
+						: [fieldName],
+				},
 			};
 		}
 		case REMOVE_DATA_LIST_VIEW_FIELD: {
@@ -70,9 +70,9 @@ export const reducer = (state = initialState, action) => {
 					...dataListView,
 					fieldNames: dataListView.fieldNames.filter(
 						name => name != fieldName
-					)
+					),
 				},
-				focusedColumn: null
+				focusedColumn: null,
 			};
 		}
 		case REMOVE_FILTER_VALUE: {
@@ -86,8 +86,8 @@ export const reducer = (state = initialState, action) => {
 				...state,
 				dataListView: {
 					...dataListView,
-					appliedFilters
-				}
+					appliedFilters,
+				},
 			};
 		}
 		case UPDATE_DATA_DEFINITION: {
@@ -95,7 +95,7 @@ export const reducer = (state = initialState, action) => {
 
 			return {
 				...state,
-				dataDefinition
+				dataDefinition,
 			};
 		}
 		case UPDATE_DATA_LIST_VIEW: {
@@ -103,7 +103,7 @@ export const reducer = (state = initialState, action) => {
 
 			return {
 				...state,
-				dataListView
+				dataListView,
 			};
 		}
 		case UPDATE_DATA_LIST_VIEW_NAME: {
@@ -114,9 +114,9 @@ export const reducer = (state = initialState, action) => {
 				dataListView: {
 					...state.dataListView,
 					name: {
-						[themeDisplay.getLanguageId()]: name
-					}
-				}
+						[themeDisplay.getLanguageId()]: name,
+					},
+				},
 			};
 		}
 		case UPDATE_FIELD_TYPES: {
@@ -124,7 +124,7 @@ export const reducer = (state = initialState, action) => {
 
 			return {
 				...state,
-				fieldTypes
+				fieldTypes,
 			};
 		}
 		case UPDATE_FILTER_VALUE: {
@@ -136,9 +136,9 @@ export const reducer = (state = initialState, action) => {
 					...state.dataListView,
 					appliedFilters: {
 						...state.dataListView.appliedFilters,
-						[fieldName]: value
-					}
-				}
+						[fieldName]: value,
+					},
+				},
 			};
 		}
 		case UPDATE_FOCUSED_COLUMN: {
@@ -146,7 +146,7 @@ export const reducer = (state = initialState, action) => {
 
 			return {
 				...state,
-				focusedColumn: fieldName
+				focusedColumn: fieldName,
 			};
 		}
 		default: {

@@ -76,13 +76,13 @@ beforeEach(() => {
 		Language: {
 			get(key) {
 				return key;
-			}
+			},
 		},
 
 		namespace(name) {
 			Liferay[name] = {};
 
 			return Liferay[name];
-		}
+		},
 	};
 });

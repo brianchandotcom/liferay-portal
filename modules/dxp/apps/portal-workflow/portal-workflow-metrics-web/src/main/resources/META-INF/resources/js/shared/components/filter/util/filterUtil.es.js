@@ -18,20 +18,20 @@ const asFilterObject = (items, key, name, pinned) => ({
 	items,
 	key,
 	name,
-	pinned
+	pinned,
 });
 
 const buildFilterItem = data => {
 	if (typeof data === 'string') {
 		return {
 			active: true,
-			key: data
+			key: data,
 		};
 	}
 
 	return {
 		...data,
-		active: true
+		active: true,
 	};
 };
 
@@ -43,7 +43,7 @@ const buildFilterItems = (items, selectedKeys) => {
 			...item,
 			active: selectedKeys && selectedKeys.includes(key),
 			dividerAfter: item.dividerAfter && !!items[index + 1],
-			key
+			key,
 		};
 	});
 };
@@ -98,7 +98,7 @@ const getSelectedItemsQuery = (items, key, queryString) => {
 
 	queryParams.filters = {
 		...filtersParam,
-		[key]: items.filter(item => item.active).map(item => item.key)
+		[key]: items.filter(item => item.active).map(item => item.key),
 	};
 
 	return stringify(queryParams);
@@ -124,7 +124,7 @@ const pushToHistory = (filterQuery, routerProps) => {
 	const {
 		history,
 		location: {search},
-		match: {params, path}
+		match: {params, path},
 	} = routerProps;
 
 	const pathname = pathToRegexp.compile(path)({...params, page: 1});
@@ -132,7 +132,7 @@ const pushToHistory = (filterQuery, routerProps) => {
 	if (filterQuery !== search) {
 		history.push({
 			pathname,
-			search: filterQuery
+			search: filterQuery,
 		});
 	}
 };
@@ -173,7 +173,7 @@ const replaceHistory = (filterQuery, routerProps) => {
 	const {
 		history,
 		location: {search},
-		match: {params, path}
+		match: {params, path},
 	} = routerProps;
 
 	const pathname = pathToRegexp.compile(path)({...params, page: 1});
@@ -181,7 +181,7 @@ const replaceHistory = (filterQuery, routerProps) => {
 	if (filterQuery !== search) {
 		history.replace({
 			pathname,
-			search: filterQuery
+			search: filterQuery,
 		});
 	}
 };
@@ -202,5 +202,5 @@ export {
 	reduceFilters,
 	removeFilters,
 	removeItem,
-	replaceHistory
+	replaceHistory,
 };

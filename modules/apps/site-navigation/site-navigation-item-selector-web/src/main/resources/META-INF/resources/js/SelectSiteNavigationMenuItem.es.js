@@ -36,11 +36,11 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 
 			const data = {
 				selectSiteNavigationMenuItemId: id,
-				selectSiteNavigationMenuItemName: name
+				selectSiteNavigationMenuItemName: name,
 			};
 
 			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
-				data
+				data,
 			});
 		}
 	};

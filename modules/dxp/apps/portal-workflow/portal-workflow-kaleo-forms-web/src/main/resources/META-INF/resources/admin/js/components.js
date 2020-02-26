@@ -19,16 +19,16 @@ AUI.add(
 		var KaleoFormWizard = A.Component.create({
 			ATTRS: {
 				currentStep: {
-					valueFn: '_valueCurrentStep'
+					valueFn: '_valueCurrentStep',
 				},
 
 				form: {
-					value: null
+					value: null,
 				},
 
 				tabView: {
-					value: null
-				}
+					value: null,
+				},
 			},
 
 			EXTENDS: A.Base,
@@ -187,8 +187,8 @@ AUI.add(
 					});
 
 					return valid;
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.KaleoFormWizard = KaleoFormWizard;
@@ -198,8 +198,8 @@ AUI.add(
 		ReadOnlyFormBuilderSupport.ATTRS = {
 			formBuilder: {
 				setter: '_setFormBuilder',
-				valueFn: '_valueFormBuilder'
-			}
+				valueFn: '_valueFormBuilder',
+			},
 		};
 
 		A.mix(ReadOnlyFormBuilderSupport.prototype, {
@@ -237,12 +237,12 @@ AUI.add(
 					enableEditing: false,
 					portletNamespace: instance.get('namespace'),
 					tabView: {
-						render: false
+						render: false,
 					},
 					translationManager: {
-						visible: false
+						visible: false,
 					},
-					visible: false
+					visible: false,
 				};
 			},
 
@@ -266,7 +266,7 @@ AUI.add(
 					instance._onMouseOverFieldReadOnlyFormBuilder,
 					'.form-builder-field'
 				);
-			}
+			},
 		});
 
 		var TPL_MESSAGE = '<div class="alert alert-info">{message}</div>';
@@ -274,19 +274,19 @@ AUI.add(
 		var KaleoDefinitionPreview = A.Component.create({
 			ATTRS: {
 				availableDefinitions: {
-					value: []
+					value: [],
 				},
 
 				dialog: {
 					setter: '_setDialog',
-					valueFn: '_valueDialog'
+					valueFn: '_valueDialog',
 				},
 
 				height: {},
 
 				selectedDefinitionId: {},
 
-				width: {}
+				width: {},
 			},
 
 			AUGMENTS: [Liferay.PortletBase, ReadOnlyFormBuilderSupport],
@@ -380,17 +380,17 @@ AUI.add(
 										on: {
 											click() {
 												instance.choose();
-											}
-										}
+											},
+										},
 									},
 									{
 										label: Liferay.Language.get('cancel'),
 										on: {
 											click() {
 												instance.get('dialog').hide();
-											}
-										}
-									}
+											},
+										},
+									},
 								],
 								header: [
 									{
@@ -399,15 +399,15 @@ AUI.add(
 										on: {
 											click() {
 												instance.get('dialog').hide();
-											}
-										}
-									}
-								]
+											},
+										},
+									},
+								],
 							},
 							visible: false,
-							width: instance.get('width')
+							width: instance.get('width'),
 						},
-						title: Liferay.Language.get('preview')
+						title: Liferay.Language.get('preview'),
 					};
 				},
 
@@ -462,7 +462,7 @@ AUI.add(
 						Lang.sub(TPL_MESSAGE, {
 							message: Liferay.Language.get(
 								'press-enter-to-choose-this-field-set-or-use-arrow-keys-to-navigate-through-the-available-field-sets.-press-esc-at-anytime-to-close-this-dialog'
-							)
+							),
 						})
 					);
 
@@ -506,8 +506,8 @@ AUI.add(
 					});
 
 					instance.set('selectedDefinitionId', selectedDefinitionId);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.KaleoDefinitionPreview = KaleoDefinitionPreview;
@@ -520,7 +520,7 @@ AUI.add(
 			'aui-tabview',
 			'liferay-portlet-base',
 			'liferay-portlet-dynamic-data-mapping-custom-fields',
-			'liferay-util-window'
-		]
+			'liferay-util-window',
+		],
 	}
 );

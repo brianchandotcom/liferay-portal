@@ -130,7 +130,7 @@ renderResponse.setTitle(role.getTitle(locale));
 				<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 			</portlet:renderURL>
 
-			url: '<%= selectAssigneesURL %>'
+			url: '<%= selectAssigneesURL %>',
 		});
 
 		itemSelectorDialog.on('selectedItemChange', function(event) {
@@ -140,12 +140,12 @@ renderResponse.setTitle(role.getTitle(locale));
 				var assignmentsRedirect = Liferay.Util.PortletURL.createPortletURL(
 					'<%= portletURL.toString() %>',
 					{
-						tabs2: selectedItem.type
+						tabs2: selectedItem.type,
 					}
 				);
 
 				var data = {
-					redirect: assignmentsRedirect.toString()
+					redirect: assignmentsRedirect.toString(),
 				};
 
 				if (selectedItem.type == 'segments') {
@@ -160,7 +160,7 @@ renderResponse.setTitle(role.getTitle(locale));
 
 				Liferay.Util.postForm(form, {
 					data: data,
-					url: '<%= editRoleAssignmentsURL %>'
+					url: '<%= editRoleAssignmentsURL %>',
 				});
 			}
 		});
@@ -176,7 +176,7 @@ renderResponse.setTitle(role.getTitle(locale));
 		);
 
 		var data = {
-			assignmentsRedirect: '<%= portletURL.toString() %>'
+			assignmentsRedirect: '<%= portletURL.toString() %>',
 		};
 
 		if (assigneeType == 'segments') {
@@ -191,7 +191,7 @@ renderResponse.setTitle(role.getTitle(locale));
 
 		Liferay.Util.postForm(form, {
 			data: data,
-			url: '<%= editRoleAssignmentsURL %>'
+			url: '<%= editRoleAssignmentsURL %>',
 		});
 	};
 

@@ -41,7 +41,7 @@ AUI.add(
 			'textIndent',
 			'textTransform',
 			'width',
-			'wordSpacing'
+			'wordSpacing',
 		];
 
 		var STR_INPUT_NODE = 'inputNode';
@@ -124,20 +124,20 @@ AUI.add(
 
 				return {
 					x: inputCaretEl.offsetLeft + scrollLeft,
-					y: inputCaretEl.offsetTop - scrollTop
+					y: inputCaretEl.offsetTop - scrollTop,
 				};
 			},
 
 			TPL_CARET: '<span class="input-caret">&nbsp</span>',
 
 			TPL_INPUT_MIRROR:
-				'<div class="liferay-autocomplete-input-mirror"></div>'
+				'<div class="liferay-autocomplete-input-mirror"></div>',
 		};
 
 		A.Base.mix(Liferay.AutoCompleteTextarea, [AutcompleteInputCaretOffset]);
 	},
 	'',
 	{
-		requires: ['liferay-autocomplete-textarea']
+		requires: ['liferay-autocomplete-textarea'],
 	}
 );

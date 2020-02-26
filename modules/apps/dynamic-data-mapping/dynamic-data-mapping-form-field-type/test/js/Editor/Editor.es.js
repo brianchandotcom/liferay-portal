@@ -19,7 +19,7 @@ const spritemap = 'icons.svg';
 
 const defaultEditorConfig = {
 	name: 'textField',
-	spritemap
+	spritemap,
 };
 
 describe('Field Editor', () => {
@@ -32,7 +32,7 @@ describe('Field Editor', () => {
 	it('is readOnly', () => {
 		component = new Editor({
 			...defaultEditorConfig,
-			readOnly: true
+			readOnly: true,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -41,7 +41,7 @@ describe('Field Editor', () => {
 	it('has a helptext', () => {
 		component = new Editor({
 			...defaultEditorConfig,
-			tip: 'Type something'
+			tip: 'Type something',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -50,7 +50,7 @@ describe('Field Editor', () => {
 	it('has an id', () => {
 		component = new Editor({
 			...defaultEditorConfig,
-			id: 'ID'
+			id: 'ID',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -59,7 +59,7 @@ describe('Field Editor', () => {
 	it('has a label', () => {
 		component = new Editor({
 			...defaultEditorConfig,
-			label: 'label'
+			label: 'label',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -68,7 +68,7 @@ describe('Field Editor', () => {
 	it('has a placeholder', () => {
 		component = new Editor({
 			...defaultEditorConfig,
-			placeholder: 'Placeholder'
+			placeholder: 'Placeholder',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -77,7 +77,7 @@ describe('Field Editor', () => {
 	it('is not required', () => {
 		component = new Editor({
 			...defaultEditorConfig,
-			required: false
+			required: false,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -87,7 +87,7 @@ describe('Field Editor', () => {
 		component = new Editor({
 			...defaultEditorConfig,
 			label: 'text',
-			showLabel: true
+			showLabel: true,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -102,7 +102,7 @@ describe('Field Editor', () => {
 	it('has a value', () => {
 		component = new Editor({
 			...defaultEditorConfig,
-			value: 'value'
+			value: 'value',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -111,7 +111,7 @@ describe('Field Editor', () => {
 	it('has a key', () => {
 		component = new Editor({
 			...defaultEditorConfig,
-			key: 'key'
+			key: 'key',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -119,7 +119,7 @@ describe('Field Editor', () => {
 
 	it('emits a change value when onChangeEditor method is triggered', () => {
 		component = new Editor({
-			...defaultEditorConfig
+			...defaultEditorConfig,
 		});
 		const event = {};
 		const spy = jest.spyOn(component, 'emit');
@@ -131,20 +131,20 @@ describe('Field Editor', () => {
 
 	it('triggers AlloyEditor actionPerformed method', () => {
 		component = new Editor({
-			...defaultEditorConfig
+			...defaultEditorConfig,
 		});
 
 		component._onActionPerformed({
 			data: {
-				props: {}
-			}
+				props: {},
+			},
 		});
 
 		component.willReceiveState({
 			children: true,
 			value: {
-				newVal: '<p>test</p>'
-			}
+				newVal: '<p>test</p>',
+			},
 		});
 
 		expect(component).toMatchSnapshot();

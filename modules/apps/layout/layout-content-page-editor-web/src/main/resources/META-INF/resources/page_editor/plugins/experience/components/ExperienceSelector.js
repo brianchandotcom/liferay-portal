@@ -29,7 +29,7 @@ import updateExperiencePriority from '../thunks/updateExperiencePriority';
 import {
 	recoverModalExperienceState,
 	storeModalExperienceState,
-	useDebounceCallback
+	useDebounceCallback,
 } from '../utils';
 import ExperienceModal from './ExperienceModal';
 import ExperiencesList from './ExperiencesList';
@@ -62,12 +62,12 @@ function getUpdateExperiencePriorityTargets(
 	return {
 		subtarget: {
 			priority: targetExperience.priority,
-			segmentsExperienceId: subtargetExperience.segmentsExperienceId
+			segmentsExperienceId: subtargetExperience.segmentsExperienceId,
 		},
 		target: {
 			priority: subtargetExperience.priority,
-			segmentsExperienceId: targetExperience.segmentsExperienceId
-		}
+			segmentsExperienceId: targetExperience.segmentsExperienceId,
+		},
 	};
 }
 
@@ -75,7 +75,7 @@ const ExperienceSelector = ({
 	experiences,
 	segments,
 	selectId,
-	selectedExperience
+	selectedExperience,
 }) => {
 	const dispatch = useDispatch();
 	const layoutData = useSelector(state => state.layoutData);
@@ -97,7 +97,7 @@ const ExperienceSelector = ({
 	const {observer: modalObserver, onClose: onModalClose} = useModal({
 		onClose: () => {
 			setOpenModal(false);
-		}
+		},
 	});
 
 	const [debouncedSetOpen] = useDebounceCallback(value => {
@@ -114,13 +114,13 @@ const ExperienceSelector = ({
 	const handleNewSegmentClick = ({
 		experienceId,
 		experienceName,
-		segmentId
+		segmentId,
 	}) => {
 		storeModalExperienceState({
 			experienceId,
 			experienceName,
 			plid: config.plid,
-			segmentId
+			segmentId,
 		});
 
 		Liferay.Util.navigate(config.editSegmentsEntryURL);
@@ -140,7 +140,7 @@ const ExperienceSelector = ({
 					segmentsEntryId:
 						config.selectedSegmentsEntryId ||
 						modalExperienceState.segmentId,
-					segmentsExperienceId: modalExperienceState.experienceId
+					segmentsExperienceId: modalExperienceState.experienceId,
 				});
 			}
 		}
@@ -149,7 +149,7 @@ const ExperienceSelector = ({
 	const handleExperienceCreation = ({
 		name,
 		segmentsEntryId,
-		segmentsExperienceId
+		segmentsExperienceId,
 	}) => {
 		if (segmentsExperienceId) {
 			return dispatch(
@@ -165,7 +165,7 @@ const ExperienceSelector = ({
 						title: Liferay.Language.get(
 							'the-experience-was-updated-successfully'
 						),
-						type: 'success'
+						type: 'success',
 					});
 				})
 				.catch(() => {
@@ -176,7 +176,7 @@ const ExperienceSelector = ({
 							),
 							name,
 							segmentsEntryId,
-							segmentsExperienceId
+							segmentsExperienceId,
 						});
 					}
 				});
@@ -185,7 +185,7 @@ const ExperienceSelector = ({
 			return dispatch(
 				createExperience({
 					name,
-					segmentsEntryId
+					segmentsEntryId,
 				})
 			)
 				.then(() => {
@@ -197,7 +197,7 @@ const ExperienceSelector = ({
 						title: Liferay.Language.get(
 							'the-experience-was-created-successfully'
 						),
-						type: 'success'
+						type: 'success',
 					});
 				})
 				.catch(_error => {
@@ -208,7 +208,7 @@ const ExperienceSelector = ({
 							),
 							name,
 							segmentsEntryId,
-							segmentsExperienceId
+							segmentsExperienceId,
 						});
 					}
 				});
@@ -225,7 +225,7 @@ const ExperienceSelector = ({
 		setEditingExperience({
 			name,
 			segmentsEntryId,
-			segmentsExperienceId
+			segmentsExperienceId,
 		});
 	};
 
@@ -243,7 +243,7 @@ const ExperienceSelector = ({
 			)
 			.concat({
 				layoutData,
-				segmentsExperienceId: selectedExperience.segmentsExperienceId
+				segmentsExperienceId: selectedExperience.segmentsExperienceId,
 			});
 
 		const otherExperiencesFragmentEntryLinkIds = upToDateLayoutDataList
@@ -271,7 +271,7 @@ const ExperienceSelector = ({
 			removeExperience({
 				fragmentEntryLinkIds: uniqueFragmentEntryLinks,
 				segmentsExperienceId: id,
-				selectedExperienceId: selectedExperience.segmentsExperienceId
+				selectedExperienceId: selectedExperience.segmentsExperienceId,
 			})
 		).catch(_error => {
 			// TODO handle error
@@ -288,7 +288,7 @@ const ExperienceSelector = ({
 		dispatch(
 			updateExperiencePriority({
 				subtarget,
-				target
+				target,
 			})
 		);
 	};
@@ -302,7 +302,7 @@ const ExperienceSelector = ({
 		dispatch(
 			updateExperiencePriority({
 				subtarget,
-				target
+				target,
 			})
 		);
 	};
@@ -380,7 +380,7 @@ const ExperienceSelector = ({
 const ExperiencesSelectorHeader = ({
 	canCreateExperiences,
 	onNewExperience,
-	showEmptyStateMessage
+	showEmptyStateMessage,
 }) => {
 	return (
 		<>

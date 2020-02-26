@@ -36,7 +36,7 @@ class GeoJSONBase extends State {
 
 		if (nativeFeatures.length > 0) {
 			this.emit('featuresAdded', {
-				features: nativeFeatures.map(this._wrapNativeFeature)
+				features: nativeFeatures.map(this._wrapNativeFeature),
 			});
 		}
 	}
@@ -51,7 +51,7 @@ class GeoJSONBase extends State {
 	 */
 	_handleFeatureClicked(nativeFeature) {
 		this.emit('featureClick', {
-			feature: this._wrapNativeFeature(nativeFeature)
+			feature: this._wrapNativeFeature(nativeFeature),
 		});
 	}
 
@@ -102,7 +102,7 @@ GeoJSONBase.STATE = {
 	 * @review
 	 * @type {Object}
 	 */
-	map: Config.object()
+	map: Config.object(),
 };
 
 window.Liferay = window.Liferay || {};

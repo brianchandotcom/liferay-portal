@@ -23,7 +23,7 @@ AUI.add(
 			'join',
 			'join-xor',
 			'state',
-			'task'
+			'task',
 		];
 
 		var STR_BLANK = '';
@@ -32,18 +32,18 @@ AUI.add(
 			ATTRS: {
 				description: {
 					validator: isString,
-					value: STR_BLANK
+					value: STR_BLANK,
 				},
 
 				name: {
-					validator: isString
+					validator: isString,
 				},
 
 				value: {},
 
 				version: {
 					validator: isNumber,
-					value: 1
+					value: 1,
 				},
 
 				xmlNamespace: {
@@ -52,9 +52,9 @@ AUI.add(
 						'xmlns:xsi':
 							'http://www.w3.org/2001/XMLSchema-instance',
 						'xsi:schemaLocation':
-							'urn:liferay.com:liferay-workflow_7.1.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_1_0.xsd'
-					}
-				}
+							'urn:liferay.com:liferay-workflow_7.1.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_1_0.xsd',
+					},
+				},
 			},
 
 			EXTENDS: A.Base,
@@ -69,31 +69,31 @@ AUI.add(
 							resultFields: [
 								{
 									key: 'description',
-									locator: 'description'
+									locator: 'description',
 								},
 								{
 									key: 'executionType',
-									locator: 'execution-type'
+									locator: 'execution-type',
 								},
 								{
 									key: 'name',
-									locator: 'name'
+									locator: 'name',
 								},
 								{
 									key: 'priority',
-									locator: 'priority'
+									locator: 'priority',
 								},
 								{
 									key: 'script',
-									locator: 'script'
+									locator: 'script',
 								},
 								{
 									key: 'scriptLanguage',
-									locator: 'script-language'
-								}
+									locator: 'script-language',
+								},
 							],
-							resultListLocator: tagName || 'action'
-						}
+							resultListLocator: tagName || 'action',
+						},
 					};
 				},
 
@@ -104,7 +104,7 @@ AUI.add(
 							resultFields: [
 								{
 									key: 'address',
-									locator: 'address'
+									locator: 'address',
 								},
 								{
 									key: 'resourceActions',
@@ -112,11 +112,11 @@ AUI.add(
 										resultFields: [
 											{
 												key: 'resourceAction',
-												locator: 'resource-action'
-											}
+												locator: 'resource-action',
+											},
 										],
-										resultListLocator: 'resource-actions'
-									}
+										resultListLocator: 'resource-actions',
+									},
 								},
 								{
 									key: 'roleId',
@@ -124,15 +124,15 @@ AUI.add(
 										resultFields: [
 											{
 												key: 'roleId',
-												locator: 'role-id'
+												locator: 'role-id',
 											},
 											{
 												key: 'roleNameAC',
-												locator: 'role-name-ac'
-											}
+												locator: 'role-name-ac',
+											},
 										],
-										resultListLocator: 'role'
-									}
+										resultListLocator: 'role',
+									},
 								},
 								{
 									key: 'roleType',
@@ -140,19 +140,19 @@ AUI.add(
 										resultFields: [
 											{
 												key: 'autoCreate',
-												locator: 'auto-create'
+												locator: 'auto-create',
 											},
 											{
 												key: 'roleName',
-												locator: 'name'
+												locator: 'name',
 											},
 											{
 												key: 'roleType',
-												locator: 'role-type'
-											}
+												locator: 'role-type',
+											},
 										],
-										resultListLocator: 'role'
-									}
+										resultListLocator: 'role',
+									},
 								},
 								{
 									key: 'scriptedAssignment',
@@ -160,15 +160,16 @@ AUI.add(
 										resultFields: [
 											{
 												key: 'script',
-												locator: 'script'
+												locator: 'script',
 											},
 											{
 												key: 'scriptLanguage',
-												locator: 'script-language'
-											}
+												locator: 'script-language',
+											},
 										],
-										resultListLocator: 'scripted-assignment'
-									}
+										resultListLocator:
+											'scripted-assignment',
+									},
 								},
 								{
 									key: 'scriptedRecipient',
@@ -176,19 +177,19 @@ AUI.add(
 										resultFields: [
 											{
 												key: 'script',
-												locator: 'script'
+												locator: 'script',
 											},
 											{
 												key: 'scriptLanguage',
-												locator: 'script-language'
-											}
+												locator: 'script-language',
+											},
 										],
-										resultListLocator: 'scripted-recipient'
-									}
+										resultListLocator: 'scripted-recipient',
+									},
 								},
 								{
 									key: 'taskAssignees',
-									locator: 'assignees'
+									locator: 'assignees',
 								},
 								{
 									key: 'user',
@@ -196,31 +197,31 @@ AUI.add(
 										resultFields: [
 											{
 												key: 'emailAddress',
-												locator: 'email-address'
+												locator: 'email-address',
 											},
 											{
 												key: 'fullName',
-												locator: 'full-name'
+												locator: 'full-name',
 											},
 											{
 												key: 'screenName',
-												locator: 'screen-name'
+												locator: 'screen-name',
 											},
 											{
 												key: 'userId',
-												locator: 'user-id'
-											}
+												locator: 'user-id',
+											},
 										],
-										resultListLocator: 'user'
-									}
+										resultListLocator: 'user',
+									},
 								},
 								{
 									key: 'receptionType',
-									locator: '@receptionType'
-								}
+									locator: '@receptionType',
+								},
 							],
-							resultListLocator: tagName || 'assignments'
-						}
+							resultListLocator: tagName || 'assignments',
+						},
 					};
 				},
 
@@ -241,15 +242,15 @@ AUI.add(
 							resultFields: [
 								{
 									key: 'description',
-									locator: 'description'
+									locator: 'description',
 								},
 								{
 									key: 'executionType',
-									locator: 'execution-type'
+									locator: 'execution-type',
 								},
 								{
 									key: 'name',
-									locator: 'name'
+									locator: 'name',
 								},
 								{
 									key: 'notificationTypes',
@@ -257,27 +258,27 @@ AUI.add(
 										resultFields: [
 											{
 												key: 'notificationType',
-												locator: '.'
-											}
+												locator: '.',
+											},
 										],
-										resultListLocator: 'notification-type'
-									}
+										resultListLocator: 'notification-type',
+									},
 								},
 								{
 									key: 'template',
-									locator: 'template'
+									locator: 'template',
 								},
 								{
 									key: 'templateLanguage',
-									locator: 'template-language'
+									locator: 'template-language',
 								},
 								instance._getSchemaAssignments(
 									assignmentKey,
 									assignmentTagName
-								)
+								),
 							],
-							resultListLocator: tagName || 'notification'
-						}
+							resultListLocator: tagName || 'notification',
+						},
 					};
 				},
 
@@ -290,7 +291,7 @@ AUI.add(
 							resultFields: [
 								{
 									key: 'blocking',
-									locator: 'blocking'
+									locator: 'blocking',
 								},
 								{
 									key: 'delay',
@@ -298,23 +299,23 @@ AUI.add(
 										resultFields: [
 											{
 												key: 'duration',
-												locator: 'duration'
+												locator: 'duration',
 											},
 											{
 												key: 'scale',
-												locator: 'scale'
-											}
+												locator: 'scale',
+											},
 										],
-										resultListLocator: 'delay'
-									}
+										resultListLocator: 'delay',
+									},
 								},
 								{
 									key: 'description',
-									locator: 'description'
+									locator: 'description',
 								},
 								{
 									key: 'name',
-									locator: 'name'
+									locator: 'name',
 								},
 								{
 									key: 'recurrence',
@@ -322,15 +323,15 @@ AUI.add(
 										resultFields: [
 											{
 												key: 'duration',
-												locator: 'duration'
+												locator: 'duration',
 											},
 											{
 												key: 'scale',
-												locator: 'scale'
-											}
+												locator: 'scale',
+											},
 										],
-										resultListLocator: 'recurrence'
-									}
+										resultListLocator: 'recurrence',
+									},
 								},
 								instance._getSchemaActions(
 									'timerActions',
@@ -343,10 +344,10 @@ AUI.add(
 								instance._getSchemaNotifications(
 									'timerNotifications',
 									'timer-notification'
-								)
+								),
 							],
-							resultListLocator: tagNode || 'task-timer'
-						}
+							resultListLocator: tagNode || 'task-timer',
+						},
 					};
 				},
 
@@ -357,19 +358,19 @@ AUI.add(
 							resultFields: [
 								{
 									key: 'default',
-									locator: 'default'
+									locator: 'default',
 								},
 								{
 									key: 'name',
-									locator: 'name'
+									locator: 'name',
 								},
 								{
 									key: 'target',
-									locator: 'target'
-								}
+									locator: 'target',
+								},
 							],
-							resultListLocator: tagName || 'transition'
-						}
+							resultListLocator: tagName || 'transition',
+						},
 					};
 				},
 
@@ -409,7 +410,7 @@ AUI.add(
 							instance.set('xmlNamespace', {
 								xmlns: xmlns[1],
 								'xmlns:xsi': xmlnsXsi[1],
-								'xsi:schemaLocation': xsiSchemaLocation[1]
+								'xsi:schemaLocation': xsiSchemaLocation[1],
 							});
 						}
 					}
@@ -436,8 +437,8 @@ AUI.add(
 								description:
 									'//workflow-definition/description',
 								name: '//workflow-definition/name',
-								version: '//workflow-definition/version'
-							}
+								version: '//workflow-definition/version',
+							},
 						},
 						instance.definitionDoc
 					);
@@ -471,23 +472,23 @@ AUI.add(
 							'script',
 							{
 								key: 'scriptLanguage',
-								locator: 'script-language'
+								locator: 'script-language',
 							},
 							instance._getSchemaActions(),
 							instance._getSchemaAssignments(),
 							instance._getSchemaNotifications(),
 							instance._getSchemaTaskTimers(),
-							instance._getSchemaTransitions()
+							instance._getSchemaTransitions(),
 						],
-						resultListLocator: tagName
+						resultListLocator: tagName,
 					};
 
 					return A.DataSchema.XML.apply(
 						schema,
 						instance.definitionDoc
 					);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.KaleoDesignerXMLDefinition = XMLDefinition;
@@ -499,7 +500,7 @@ AUI.add(
 			'aui-component',
 			'dataschema-xml',
 			'datatype-xml',
-			'liferay-kaleo-designer-utils'
-		]
+			'liferay-kaleo-designer-utils',
+		],
 	}
 );

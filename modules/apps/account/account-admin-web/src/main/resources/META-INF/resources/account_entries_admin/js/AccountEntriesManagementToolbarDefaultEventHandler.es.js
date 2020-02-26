@@ -47,9 +47,9 @@ class AccountEntriesManagementToolbarDefaultEventHandler extends DefaultEventHan
 				accountEntryIds: Liferay.Util.listCheckedExcept(
 					form,
 					this.ns('allRowIds')
-				)
+				),
 			},
-			url
+			url,
 		});
 	}
 }

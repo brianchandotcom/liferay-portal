@@ -63,7 +63,7 @@ describe('Custom Asset Plugin', () => {
 		// Force attaching DOM Content Loaded event
 		Object.defineProperty(document, 'readyState', {
 			value: 'loading',
-			writable: false
+			writable: false,
 		});
 
 		fetchMock.mock('*', () => 200);
@@ -97,8 +97,8 @@ describe('Custom Asset Plugin', () => {
 					applicationId,
 					eventId: 'assetViewed',
 					properties: expect.objectContaining({
-						assetId: 'assetId'
-					})
+						assetId: 'assetId',
+					}),
 				})
 			);
 
@@ -124,8 +124,8 @@ describe('Custom Asset Plugin', () => {
 					eventId: 'assetViewed',
 					properties: expect.objectContaining({
 						assetId: 'assetId',
-						formEnabled: true
-					})
+						formEnabled: true,
+					}),
 				})
 			);
 
@@ -152,9 +152,9 @@ describe('Custom Asset Plugin', () => {
 					properties: expect.objectContaining({
 						assetId: 'assetId',
 						src: googleUrl,
-						tagName: 'img'
-					})
-				})
+						tagName: 'img',
+					}),
+				}),
 			]);
 
 			document.body.removeChild(customAssetElement);
@@ -183,9 +183,9 @@ describe('Custom Asset Plugin', () => {
 						assetId: 'assetId',
 						href: googleUrl,
 						tagName: 'a',
-						text
-					})
-				})
+						text,
+					}),
+				}),
 			]);
 
 			document.body.removeChild(customAssetElement);
@@ -213,9 +213,9 @@ describe('Custom Asset Plugin', () => {
 					eventId: 'assetClicked',
 					properties: expect.objectContaining({
 						assetId: 'assetId',
-						tagName: 'p'
-					})
-				})
+						tagName: 'p',
+					}),
+				}),
 			]);
 
 			document.body.removeChild(customAssetElement);
@@ -248,7 +248,7 @@ describe('Custom Asset Plugin', () => {
 			expect(Analytics.events[1]).toEqual(
 				expect.objectContaining({
 					applicationId,
-					eventId: 'assetDownloaded'
+					eventId: 'assetDownloaded',
 				})
 			);
 

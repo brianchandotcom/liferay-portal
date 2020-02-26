@@ -158,7 +158,7 @@ name = HtmlUtil.escapeJS(name);
 					eventName: editor.name + 'selectDocument',
 					singleSelect: true,
 					title: '<liferay-ui:message key="select-item" />',
-					url: linkHref
+					url: linkHref,
 				});
 
 				itemSelectorDialog.open();
@@ -233,7 +233,7 @@ name = HtmlUtil.escapeJS(name);
 				htmlEncodeOutput: true,
 				spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 				title: false,
-				uiNode: uiNode
+				uiNode: uiNode,
 			},
 			editorConfig
 		);
@@ -245,9 +245,9 @@ name = HtmlUtil.escapeJS(name);
 				cfg: {
 					uploadItemReturnType:
 						'<%= editorOptions.getUploadItemReturnType() %>',
-					uploadUrl: '<%= uploadURL %>'
+					uploadUrl: '<%= uploadURL %>',
 				},
-				fn: A.Plugin.LiferayEditorImageUploader
+				fn: A.Plugin.LiferayEditorImageUploader,
 			});
 		</c:if>
 
@@ -284,7 +284,7 @@ name = HtmlUtil.escapeJS(name);
 			boolean useCustomDataProcessor = (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor"));
 			%>
 
-			useCustomDataProcessor: <%= useCustomDataProcessor %>
+			useCustomDataProcessor: <%= useCustomDataProcessor %>,
 		}).render();
 
 		CKEDITOR.dom.selection.prototype.selectElement = function(element) {
@@ -411,12 +411,12 @@ name = HtmlUtil.escapeJS(name);
 			if (alloyEditor) {
 				alloyEditor.setHTML(value);
 			}
-		}
+		},
 	};
 
 	Liferay.fire('editorAPIReady', {
 		editor: window['<%= name %>'],
-		editorName: '<%= name %>'
+		editorName: '<%= name %>',
 	});
 
 	<c:if test="<%= autoCreate %>">

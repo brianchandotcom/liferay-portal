@@ -37,7 +37,7 @@ export default function FragmentsSidebar() {
 							fragmentEntry.name
 								.toLowerCase()
 								.indexOf(searchValueLowerCase) !== -1
-					)
+					),
 				};
 			})
 			.filter(fragmentCollection => {

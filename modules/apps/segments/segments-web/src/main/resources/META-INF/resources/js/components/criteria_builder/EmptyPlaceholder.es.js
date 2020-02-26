@@ -23,7 +23,7 @@ export default function EmptyPlaceholder() {
 			<div className="sheet-text text-center">
 				<h1 className="mb-3 mt-4">
 					{sub(Liferay.Language.get('no-x-yet'), [
-						Liferay.Language.get('conditions')
+						Liferay.Language.get('conditions'),
 					])}
 				</h1>
 				<p>{Liferay.Language.get('empty-conditions-message')}</p>

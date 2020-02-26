@@ -21,15 +21,15 @@ import EditTableViewContext, {
 	UPDATE_DATA_LIST_VIEW,
 	UPDATE_FIELD_TYPES,
 	initialState,
-	reducer
+	reducer,
 } from './EditTableViewContext.es';
 
 export default withRouter(
 	({
 		children,
 		match: {
-			params: {dataDefinitionId, dataListViewId}
-		}
+			params: {dataDefinitionId, dataListViewId},
+		},
 	}) => {
 		const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -47,7 +47,7 @@ export default withRouter(
 			).then(dataDefinition => {
 				dispatch({
 					payload: {dataDefinition},
-					type: UPDATE_DATA_DEFINITION
+					type: UPDATE_DATA_DEFINITION,
 				});
 			});
 		}, [dataDefinitionId]);
@@ -59,7 +59,7 @@ export default withRouter(
 				).then(dataListView => {
 					dispatch({
 						payload: {dataListView},
-						type: UPDATE_DATA_LIST_VIEW
+						type: UPDATE_DATA_LIST_VIEW,
 					});
 				});
 			}

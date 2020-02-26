@@ -115,10 +115,10 @@ int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2
 					oAuth2AuthorizationIds: Liferay.Util.listCheckedExcept(
 						form,
 						'<portlet:namespace />allRowIds'
-					)
+					),
 				},
 				url:
-					'<portlet:actionURL name="/connected_applications/revoke_oauth2_authorizations" />'
+					'<portlet:actionURL name="/connected_applications/revoke_oauth2_authorizations" />',
 			});
 		}
 	}

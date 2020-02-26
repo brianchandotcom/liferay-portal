@@ -214,5 +214,5 @@ tinymce.addI18n('it', {
 	Tools: 'Strumenti',
 	View: 'Visualiza',
 	Table: 'Tabella',
-	Format: 'Formato'
+	Format: 'Formato',
 });

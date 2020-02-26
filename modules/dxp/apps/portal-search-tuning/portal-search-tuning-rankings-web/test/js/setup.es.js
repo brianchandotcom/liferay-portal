@@ -42,7 +42,7 @@ APIUtil.fetchDocuments = jest.fn((url, config) => {
 		)
 	).then(data => ({
 		items: data.documents,
-		total: data.total
+		total: data.total,
 	}));
 
 	return p;

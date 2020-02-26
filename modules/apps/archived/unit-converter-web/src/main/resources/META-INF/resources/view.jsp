@@ -191,7 +191,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 		'<liferay-ui:message key="mile" />',
 		'<liferay-ui:message key="cubit" />',
 		'<liferay-ui:message key="talent" />',
-		'<liferay-ui:message key="handbreath" />'
+		'<liferay-ui:message key="handbreath" />',
 	];
 
 	var areaArray = [
@@ -204,7 +204,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 		'<liferay-ui:message key="square-yard" />',
 		'<liferay-ui:message key="square-mile" />',
 		'<liferay-ui:message key="hectare" />',
-		'<liferay-ui:message key="acre" />'
+		'<liferay-ui:message key="acre" />',
 	];
 
 	var volumeArray = [
@@ -220,7 +220,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 		'<liferay-ui:message key="cab" />',
 		'<liferay-ui:message key="bath" />',
 		'<liferay-ui:message key="hin" />',
-		'<liferay-ui:message key="log" />'
+		'<liferay-ui:message key="log" />',
 	];
 
 	var massArray = [
@@ -232,7 +232,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 		'<liferay-ui:message key="shekel" />',
 		'<liferay-ui:message key="pim" />',
 		'<liferay-ui:message key="beka" />',
-		'<liferay-ui:message key="gerah" />'
+		'<liferay-ui:message key="gerah" />',
 	];
 
 	var temperatureArray = [
@@ -240,7 +240,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 		'<liferay-ui:message key="celsius" />',
 		'<liferay-ui:message key="fahrenheit" />',
 		'<liferay-ui:message key="rankine" />',
-		'<liferay-ui:message key="reaumure" />'
+		'<liferay-ui:message key="reaumure" />',
 	];
 
 	var unitConverterTypes = [
@@ -248,7 +248,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 		areaArray,
 		volumeArray,
 		massArray,
-		temperatureArray
+		temperatureArray,
 	];
 
 	var changeUnitType = function(unitTypeSelect, newUnitTypes) {
@@ -299,7 +299,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 
 				Liferay.Util.fetch('<%= unitURL.toString() %>', {
 					body: new FormData(form),
-					method: 'POST'
+					method: 'POST',
 				})
 					.then(function(response) {
 						return response.text();

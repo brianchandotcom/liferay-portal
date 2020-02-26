@@ -20,7 +20,7 @@ export default function Textarea({autoFocus = false, value = '', ...props}) {
 	return (
 		<textarea
 			className={classNames('form-control', 'page-editor__textarea', {
-				'page-editor__textarea--empty': !value
+				'page-editor__textarea--empty': !value,
 			})}
 			ref={textarea => autoFocus && textarea && textarea.focus()}
 			{...props}
@@ -30,5 +30,5 @@ export default function Textarea({autoFocus = false, value = '', ...props}) {
 
 Textarea.propTypes = {
 	autoFocus: PropTypes.bool,
-	value: PropTypes.string
+	value: PropTypes.string,
 };

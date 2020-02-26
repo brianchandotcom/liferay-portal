@@ -53,7 +53,7 @@ export function getWeekArray(d, firstDayOfWeek = 0) {
 		dayArray.push({
 			date: genDay,
 			dateString: setDateSelected(genDay),
-			number: genDay.getDate()
+			number: genDay.getDate(),
 		});
 	}
 
@@ -78,7 +78,7 @@ export function getWeekArray(d, firstDayOfWeek = 0) {
 			date: outsideDate,
 			dateString: setDateSelected(outsideDate),
 			number: outsideDate.getDate(),
-			outside: true
+			outside: true,
 		});
 	}
 
@@ -92,7 +92,7 @@ export function getWeekArray(d, firstDayOfWeek = 0) {
 			date: outsideDate,
 			dateString: setDateSelected(outsideDate),
 			number: outsideDate.getDate(),
-			outside: true
+			outside: true,
 		});
 	}
 

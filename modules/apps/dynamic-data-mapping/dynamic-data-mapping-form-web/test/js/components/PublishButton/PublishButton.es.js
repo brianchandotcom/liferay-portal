@@ -27,12 +27,12 @@ const props = {
 		new Promise(resolve =>
 			resolve({
 				formInstanceId,
-				publishURL: 'published/form'
+				publishURL: 'published/form',
 			})
 		),
 	spritemap,
 	submitForm: () => false,
-	url
+	url,
 };
 
 const mockEvent = {preventDefault: () => false};
@@ -60,7 +60,7 @@ describe('PublishButton', () => {
 	it('renders unpublished', () => {
 		component = new PublishButton({
 			...props,
-			published: false
+			published: false,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -72,7 +72,7 @@ describe('PublishButton', () => {
 
 			component = new PublishButton({
 				...props,
-				submitForm
+				submitForm,
 			});
 
 			return component
@@ -87,7 +87,7 @@ describe('PublishButton', () => {
 
 			component = new PublishButton({
 				...props,
-				submitForm
+				submitForm,
 			});
 
 			return component
@@ -100,7 +100,7 @@ describe('PublishButton', () => {
 		it('calls publish() when props.published=false', () => {
 			component = new PublishButton({
 				...props,
-				published: false
+				published: false,
 			});
 
 			const publishSpy = jest.spyOn(component, 'publish');
@@ -115,7 +115,7 @@ describe('PublishButton', () => {
 		it('calls unpublish() when props.published=true', () => {
 			component = new PublishButton({
 				...props,
-				published: true
+				published: true,
 			});
 
 			const unpublishSpy = jest.spyOn(component, 'unpublish');
@@ -130,7 +130,7 @@ describe('PublishButton', () => {
 		it('is called when button is clicked', () => {
 			component = new PublishButton({
 				...props,
-				published: true
+				published: true,
 			});
 
 			const toggleSpy = jest.spyOn(component, 'toggle');

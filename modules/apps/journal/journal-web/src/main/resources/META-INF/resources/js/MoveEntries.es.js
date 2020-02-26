@@ -69,7 +69,7 @@ class MoveEntries extends PortletBase {
 			eventName: this.ns('selectFolder'),
 			singleSelect: true,
 			title: Liferay.Language.get('select-folder'),
-			url: this.selectFolderURL
+			url: this.selectFolderURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {
@@ -80,7 +80,7 @@ class MoveEntries extends PortletBase {
 					idString: 'newFolderId',
 					idValue: selectedItem.folderId,
 					nameString: 'folderName',
-					nameValue: selectedItem.folderName
+					nameValue: selectedItem.folderName,
 				};
 
 				Liferay.Util.selectFolder(
@@ -107,7 +107,7 @@ MoveEntries.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	selectFolderURL: Config.string().required()
+	selectFolderURL: Config.string().required(),
 };
 
 export default MoveEntries;

@@ -41,12 +41,12 @@ describe('The HeaderKebab component should', () => {
 		const kebabItems = [
 			{
 				action: mockAction,
-				label: 'test'
+				label: 'test',
 			},
 			{
 				label: 'test1',
-				link: '/'
-			}
+				link: '/',
+			},
 		];
 
 		const {getAllByTestId, getByTestId} = render(

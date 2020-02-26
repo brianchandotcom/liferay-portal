@@ -23,7 +23,7 @@ import {
 	TODAY,
 	WEEKS,
 	YEARS,
-	YESTERDAY
+	YESTERDAY,
 } from './chartConstants.es';
 
 export const formatMonthDate = (date, timeRange) => {
@@ -212,7 +212,7 @@ export const getAxisMeasures = value => {
 		intervalCount,
 		intervalValue,
 		intervals,
-		maxValue
+		maxValue,
 	};
 };
 
@@ -238,7 +238,7 @@ export const getRangeKey = timeRange => {
 		LAST_30_DAYS,
 		LAST_90_DAYS,
 		LAST_180_DAYS,
-		LAST_YEAR
+		LAST_YEAR,
 	];
 
 	const diffItem = diffList.find(key => key >= diff);
@@ -274,14 +274,14 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 			return {
 				offset: 4,
 				padLeft: 0,
-				padRight: 0
+				padRight: 0,
 			};
 		},
 		[YESTERDAY]: () => {
 			return {
 				offset: 6,
 				padLeft: 0,
-				padRight: 0
+				padRight: 0,
 			};
 		},
 		// eslint-disable-next-line sort-keys
@@ -289,7 +289,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 			return {
 				offset: 1,
 				padLeft: 0,
-				padRight: 0
+				padRight: 0,
 			};
 		},
 		[LAST_30_DAYS]: type => {
@@ -297,14 +297,14 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				return {
 					offset: 6,
 					padLeft: 0,
-					padRight: diffRightDays < 2 ? diffRightDays + 2 : 0
+					padRight: diffRightDays < 2 ? diffRightDays + 2 : 0,
 				};
 			}
 
 			return {
 				offset: 1,
 				padLeft: 0,
-				padRight: 0
+				padRight: 0,
 			};
 		},
 		[LAST_90_DAYS]: type => {
@@ -312,21 +312,21 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				return {
 					offset: 11,
 					padLeft: 0,
-					padRight: 3
+					padRight: 3,
 				};
 			}
 			else if (type === WEEKS) {
 				return {
 					offset: 2,
 					padLeft: 0,
-					padRight: 0
+					padRight: 0,
 				};
 			}
 
 			return {
 				offset: 1,
 				padLeft: 0,
-				padRight: 0
+				padRight: 0,
 			};
 		},
 		[LAST_180_DAYS]: type => {
@@ -334,14 +334,14 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				return {
 					offset: 4,
 					padLeft: 0,
-					padRight: 3
+					padRight: 3,
 				};
 			}
 
 			return {
 				offset: 1,
 				padLeft: diffLeftDays < 14 ? 1 : 0,
-				padRight: 0
+				padRight: 0,
 			};
 		},
 		[LAST_YEAR]: type => {
@@ -351,7 +351,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				return {
 					offset: parseInt(lengthKeys / lengthWeek),
 					padLeft: 0,
-					padRight: 6
+					padRight: 6,
 				};
 			}
 			else if (type === YEARS) {
@@ -362,16 +362,16 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 						diffLeftMonths < 2
 							? 1
 							: 0,
-					padRight: 0
+					padRight: 0,
 				};
 			}
 
 			return {
 				offset: parseInt(lengthKeys / 5),
 				padLeft: 0,
-				padRight: 0
+				padRight: 0,
 			};
-		}
+		},
 	};
 	const diffMapKey = getRangeKey(timeRange);
 

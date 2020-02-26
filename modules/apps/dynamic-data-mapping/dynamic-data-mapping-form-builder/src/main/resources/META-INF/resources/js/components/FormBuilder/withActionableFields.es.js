@@ -46,7 +46,7 @@ const getFieldContainer = (pages, fieldName) => {
 			`[data-ddm-field-column="${columnIndex}"]`,
 			`[data-ddm-field-page="${pageIndex}"]`,
 			`[data-ddm-field-row="${rowIndex}"]`,
-			' .ddm-field-container'
+			' .ddm-field-container',
 		].join('')
 	);
 };
@@ -73,7 +73,7 @@ class Actions extends Component {
 					disabled={disabled}
 					events={{
 						expandedChanged: this._handleExpandedChanged.bind(this),
-						itemClicked: this._handleItemClicked.bind(this)
+						itemClicked: this._handleItemClicked.bind(this),
 					}}
 					expanded={expanded}
 					items={items}
@@ -141,8 +141,8 @@ class Actions extends Component {
 
 	_handleItemClicked({
 		data: {
-			item: {action}
-		}
+			item: {action},
+		},
 	}) {
 		const {fieldName} = this.state;
 		const {pages} = this.props;
@@ -189,7 +189,7 @@ Actions.PROPS = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
 };
 
 Actions.STATE = {
@@ -200,7 +200,7 @@ Actions.STATE = {
 	 * @type {!Object}
 	 */
 
-	fieldName: Config.string()
+	fieldName: Config.string(),
 };
 
 const withActionableFields = ChildComponent => {
@@ -472,7 +472,7 @@ const withActionableFields = ChildComponent => {
 		successPageSettings: Config.shapeOf({
 			body: Config.object(),
 			enabled: Config.bool(),
-			title: Config.object()
+			title: Config.object(),
 		}).value({}),
 
 		/**
@@ -482,7 +482,7 @@ const withActionableFields = ChildComponent => {
 		 * @type {?string}
 		 */
 
-		view: Config.string()
+		view: Config.string(),
 	};
 
 	return ActionableFields;

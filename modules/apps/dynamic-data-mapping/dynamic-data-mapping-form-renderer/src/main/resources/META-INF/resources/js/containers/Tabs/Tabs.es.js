@@ -23,7 +23,7 @@ class Tabs extends Component {
 		const {pageIndex} = dataset;
 
 		dispatch('paginationItemClicked', {
-			pageIndex: Number(pageIndex)
+			pageIndex: Number(pageIndex),
 		});
 	}
 }

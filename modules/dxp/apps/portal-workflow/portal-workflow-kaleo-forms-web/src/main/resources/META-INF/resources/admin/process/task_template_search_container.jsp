@@ -121,7 +121,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 					classNameId: <%= PortalUtil.getClassNameId(DDMStructure.class) %>,
 					classPK: classPK,
 					dialog: {
-						destroyOnHide: true
+						destroyOnHide: true,
 					},
 					id: 'ddmDialog',
 					mode: mode,
@@ -136,7 +136,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 					showHeader: false,
 					structureAvailableFields:
 						'<%= renderResponse.getNamespace() + "getAvailableFields" %>',
-					title: '<liferay-ui:message key="form" />'
+					title: '<liferay-ui:message key="form" />',
 				},
 				function(event) {
 					var A = AUI();
@@ -153,9 +153,9 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 									window.location = decodeURIComponent(
 										'<%= HtmlUtil.escapeURL(backURL) %>'
 									);
-								}
+								},
 							},
-							data: data
+							data: data,
 						}
 					);
 				}
@@ -176,7 +176,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 				id: A.guid(),
 				refreshWindow: WIN,
 				title: '<liferay-ui:message key="forms" />',
-				uri: uri
+				uri: uri,
 			});
 		},
 		['liferay-util']
@@ -200,9 +200,9 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 						window.location = decodeURIComponent(
 							'<%= HtmlUtil.escapeURL(backURL) %>'
 						);
-					}
+					},
 				},
-				data: data
+				data: data,
 			});
 		},
 		['aui-base']

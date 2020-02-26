@@ -25,7 +25,7 @@ const Layout = ({
 	initialLayoutColumns,
 	moveItemURL,
 	namespace,
-	searchContainerId
+	searchContainerId,
 }) => {
 	const layoutRef = useRef();
 	const searchContainer = useRef();
@@ -45,10 +45,10 @@ const Layout = ({
 				const plugins = [
 					{
 						cfg: {
-							rowSelector: '.miller-columns-item'
+							rowSelector: '.miller-columns-item',
 						},
-						fn: A.Plugin.SearchContainerSelect
-					}
+						fn: A.Plugin.SearchContainerSelect,
+					},
 				];
 
 				if (searchContainer.current) {
@@ -58,7 +58,7 @@ const Layout = ({
 				searchContainer.current = new Liferay.SearchContainer({
 					contentBox: layoutRef.current,
 					id: `${namespace}${searchContainerId}`,
-					plugins
+					plugins,
 				});
 			}
 		);
@@ -71,7 +71,7 @@ const Layout = ({
 
 		fetch(getItemChildrenURL, {
 			body: formData,
-			method: 'POST'
+			method: 'POST',
 		})
 			.then(response => response.json())
 			.then(({children}) => {
@@ -121,7 +121,7 @@ const Layout = ({
 
 		fetch(moveItemURL, {
 			body: formData,
-			method: 'POST'
+			method: 'POST',
 		});
 	};
 
@@ -134,7 +134,7 @@ const Layout = ({
 			if (item) {
 				newBreadcrumbEntries.push({
 					title: item.title,
-					url: item.url
+					url: item.url,
 				});
 			}
 		}
@@ -164,8 +164,8 @@ export default function({
 		getItemChildrenURL,
 		layoutColumns,
 		moveItemURL,
-		searchContainerId
-	}
+		searchContainerId,
+	},
 }) {
 	return (
 		<Layout

@@ -19,7 +19,7 @@ import {parse} from '../router/queryString.es';
 
 const HeaderBackButton = ({basePath, container}) => {
 	const {
-		location: {pathname, search}
+		location: {pathname, search},
 	} = useRouter();
 
 	const {backPath} = parse(search);

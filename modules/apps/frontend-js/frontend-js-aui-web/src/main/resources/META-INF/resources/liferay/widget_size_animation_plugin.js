@@ -30,19 +30,19 @@ AUI.add(
 		var SizeAnim = A.Component.create({
 			ATTRS: {
 				align: {
-					validator: Lang.isBoolean
+					validator: Lang.isBoolean,
 				},
 				duration: {
 					validator: Lang.isNumber,
-					value: 0.3
+					value: 0.3,
 				},
 				easing: {
 					validator: Lang.isString,
-					value: 'easeBoth'
+					value: 'easeBoth',
 				},
 				preventTransition: {
-					validator: Lang.isBoolean
-				}
+					validator: Lang.isBoolean,
+				},
 			},
 
 			EXTENDS: A.Plugin.Base,
@@ -69,7 +69,7 @@ AUI.add(
 
 					var attrs = {
 						height: size.height,
-						width: size.width
+						width: size.width,
 					};
 
 					if (!instance.get('preventTransition')) {
@@ -102,13 +102,13 @@ AUI.add(
 					var host = instance.get(STR_HOST);
 
 					host.addAttr(STR_SIZE, {
-						setter: A.bind('_animWidgetSize', instance)
+						setter: A.bind('_animWidgetSize', instance),
 					});
 
 					instance._anim = new A.Anim({
 						duration: instance.get('duration'),
 						easing: instance.get('easing'),
-						node: host
+						node: host,
 					});
 
 					var eventHandles = [
@@ -124,18 +124,18 @@ AUI.add(
 							'tween',
 							instance._alignWidget,
 							instance
-						)
+						),
 					];
 
 					instance._eventHandles = eventHandles;
-				}
-			}
+				},
+			},
 		});
 
 		A.Plugin.SizeAnim = SizeAnim;
 	},
 	'',
 	{
-		requires: ['anim-easing', 'plugin', 'widget']
+		requires: ['anim-easing', 'plugin', 'widget'],
 	}
 );

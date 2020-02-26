@@ -18,7 +18,7 @@ const FilterSearch = ({
 	filteredItems,
 	onChange,
 	searchTerm,
-	totalCount
+	totalCount,
 }) => {
 	const emptyResults = filteredItems.length === 0;
 	const searchEnabled = totalCount > 12;

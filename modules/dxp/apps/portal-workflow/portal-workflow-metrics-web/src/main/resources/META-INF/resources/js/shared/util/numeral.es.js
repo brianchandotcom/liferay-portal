@@ -17,12 +17,12 @@ function setupLocale(locale) {
 			billion: Liferay.Language.get('billion-abbreviation'),
 			million: Liferay.Language.get('million-abbreviation'),
 			thousand: Liferay.Language.get('thousand-abbreviation'),
-			trillion: Liferay.Language.get('trillion-abbreviation')
+			trillion: Liferay.Language.get('trillion-abbreviation'),
 		},
 		delimiters: {
 			decimal: Liferay.Language.get('decimal-delimiter'),
-			thousands: Liferay.Language.get('thousands-delimiter')
-		}
+			thousands: Liferay.Language.get('thousands-delimiter'),
+		},
 	});
 
 	numeral.locale(locale);

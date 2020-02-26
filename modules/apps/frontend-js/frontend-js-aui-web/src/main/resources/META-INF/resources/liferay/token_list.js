@@ -40,7 +40,7 @@ AUI().add(
 					}
 
 					return str;
-				}
+				},
 			}
 		);
 
@@ -48,11 +48,11 @@ AUI().add(
 			ATTRS: {
 				children: {
 					validator: Array.isArray,
-					value: []
+					value: [],
 				},
 				cssClass: {
-					value: 'lfr-token-list'
-				}
+					value: 'lfr-token-list',
+				},
 			},
 
 			NAME: 'liferaytokenlist',
@@ -76,7 +76,7 @@ AUI().add(
 					var instance = this;
 
 					instance.fire('close', {
-						item: event.currentTarget.ancestor('.lfr-token')
+						item: event.currentTarget.ancestor('.lfr-token'),
 					});
 				},
 
@@ -110,7 +110,7 @@ AUI().add(
 					);
 
 					instance.publish('close', {
-						defaultFn: A.bind('_defCloseFn', instance)
+						defaultFn: A.bind('_defCloseFn', instance),
 					});
 				},
 
@@ -129,14 +129,14 @@ AUI().add(
 					var instance = this;
 
 					instance.add(instance.get('children'));
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.TokenList = TokenList;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-template-deprecated', 'escape']
+		requires: ['aui-base', 'aui-template-deprecated', 'escape'],
 	}
 );

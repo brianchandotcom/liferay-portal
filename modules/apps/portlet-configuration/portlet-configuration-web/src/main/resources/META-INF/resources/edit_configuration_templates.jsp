@@ -139,11 +139,11 @@ PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfiguratio
 	Liferay.component(
 		'<%= PortletConfigurationWebKeys.ARCHIVED_SETUPS_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
 		new ArchivedSetuptsDropdownDefaultEventHandler.default({
-			namespace: '<portlet:namespace />'
+			namespace: '<portlet:namespace />',
 		}),
 		{
 			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
 		}
 	);
 </aui:script>
@@ -152,11 +152,11 @@ PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfiguratio
 	Liferay.component(
 		'<%= portletConfigurationTemplatesManagementToolbarDisplayContext.getDefaultEventHandler() %>',
 		new ManagementToolbarDefaultEventHandler.default({
-			namespace: '<portlet:namespace />'
+			namespace: '<portlet:namespace />',
 		}),
 		{
 			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
 		}
 	);
 </aui:script>

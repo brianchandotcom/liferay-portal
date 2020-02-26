@@ -23,7 +23,7 @@ jest.mock(
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/core/openImageSelector',
 	() => ({
-		openImageSelector: jest.fn()
+		openImageSelector: jest.fn(),
 	})
 );
 
@@ -88,7 +88,7 @@ describe('ImageProcessor', () => {
 
 			ImageProcessor.render(anchor, 'apple-pie.webp', {
 				href: 'http://localpie',
-				target: '_blank'
+				target: '_blank',
 			});
 
 			expect(anchor.getAttribute('href')).toBe('http://localpie');
@@ -104,7 +104,7 @@ describe('ImageProcessor', () => {
 
 			ImageProcessor.render(element, 'apple-pie.webp', {
 				href: 'http://localpie',
-				target: '_blank'
+				target: '_blank',
 			});
 
 			expect(image.parentElement instanceof HTMLAnchorElement).toBe(true);

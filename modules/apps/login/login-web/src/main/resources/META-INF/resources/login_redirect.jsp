@@ -90,9 +90,9 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 				Liferay.Util.fetch('<%= updateIncompleteUserURL %>', {
 					body: new FormData(form),
 					headers: new Headers({
-						'Content-Type': 'application/json'
+						'Content-Type': 'application/json',
 					}),
-					method: 'POST'
+					method: 'POST',
 				})
 					.then(function(response) {
 						return response.ok ? response.json() : Promise.reject();
@@ -133,7 +133,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 <aui:script sandbox="<%= true %>">
 	window.<portlet:namespace />closeDialog = function(namespace) {
 		Liferay.fire('closeWindow', {
-			id: namespace + 'signInDialog'
+			id: namespace + 'signInDialog',
 		});
 	};
 

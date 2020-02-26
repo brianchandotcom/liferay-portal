@@ -46,9 +46,9 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 	<c:if test="<%= selectableTree %>">
 		plugins.push({
 			cfg: {
-				default: <%= defaultStateChecked %>
+				default: <%= defaultStateChecked %>,
 			},
-			fn: A.Plugin.LayoutsTreeSelectable
+			fn: A.Plugin.LayoutsTreeSelectable,
 		});
 	</c:if>
 
@@ -60,9 +60,9 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 		plugins.push({
 			cfg: {
 				checkedNodes: <%= checkedNodes %>,
-				rootNodeExpanded: <%= GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.frontend.js.web_" + treeId + "RootNode", null), true) %>
+				rootNodeExpanded: <%= GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.frontend.js.web_" + treeId + "RootNode", null), true) %>,
 			},
-			fn: A.Plugin.LayoutsTreeState
+			fn: A.Plugin.LayoutsTreeState,
 		});
 	</c:if>
 
@@ -94,9 +94,9 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 		on: {
 			'*:select': function(event) {
 				Liferay.fire('<%= namespace + treeId %>:selectedNode', {
-					selectedNode: event.target
+					selectedNode: event.target,
 				});
-			}
+			},
 		},
 		plugins: plugins,
 		root: {
@@ -109,14 +109,14 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 				linkTemplate: '<%= HtmlUtil.escapeJS(rootLinkTemplate) %>',
 			</c:if>
 
-			privateLayout: <%= privateLayout %>
+			privateLayout: <%= privateLayout %>,
 		},
 
 		<c:if test="<%= selPlid != null %>">
 			selPlid: '<%= selPlid %>',
 		</c:if>
 
-		urls: <%= portletURLsJSONArray.toString() %>
+		urls: <%= portletURLsJSONArray.toString() %>,
 	}).render();
 
 	Liferay.component('<%= namespace + treeId %>', treeview);

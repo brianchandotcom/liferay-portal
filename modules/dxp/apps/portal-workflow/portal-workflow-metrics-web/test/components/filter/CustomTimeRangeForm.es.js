@@ -29,7 +29,7 @@ describe('The performance by assignee card component should', () => {
 		);
 
 		const renderResult = render(<CustomTimeRangeForm />, {
-			wrapper
+			wrapper,
 		});
 
 		getByTestId = renderResult.getByTestId;

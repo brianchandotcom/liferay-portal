@@ -26,7 +26,7 @@ class Grid extends Component {
 	_handleFieldBlurred(event) {
 		this.emit('fieldBlurred', {
 			fieldInstance: this,
-			originalEvent: event
+			originalEvent: event,
 		});
 	}
 
@@ -34,18 +34,18 @@ class Grid extends Component {
 		const {target} = event;
 		const value = {
 			...this.value,
-			[target.name]: target.value
+			[target.name]: target.value,
 		};
 
 		this.setState(
 			{
-				value
+				value,
 			},
 			() => {
 				this.emit('fieldEdited', {
 					fieldInstance: this,
 					originalEvent: event,
-					value
+					value,
 				});
 			}
 		);
@@ -54,7 +54,7 @@ class Grid extends Component {
 	_handleFieldFocused(event) {
 		this.emit('fieldFocused', {
 			fieldInstance: this,
-			originalEvent: event
+			originalEvent: event,
 		});
 	}
 }
@@ -69,13 +69,13 @@ Grid.STATE = {
 	columns: Config.arrayOf(
 		Config.shapeOf({
 			label: Config.string(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	).value([
 		{
 			label: 'col1',
-			value: 'fieldId'
-		}
+			value: 'fieldId',
+		},
 	]),
 
 	/**
@@ -129,13 +129,13 @@ Grid.STATE = {
 	rows: Config.arrayOf(
 		Config.shapeOf({
 			label: Config.string(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	).value([
 		{
 			label: 'row',
-			value: 'jehf'
-		}
+			value: 'jehf',
+		},
 	]),
 
 	/**
@@ -176,7 +176,7 @@ Grid.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.object().value({})
+	value: Config.object().value({}),
 };
 
 Soy.register(Grid, templates);

@@ -166,8 +166,8 @@ String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPor
 				{
 					data: {
 						title: linkItem.attr('data-title'),
-						value: linkItem.attr('data-value')
-					}
+						value: linkItem.attr('data-value'),
+					},
 				}
 			);
 

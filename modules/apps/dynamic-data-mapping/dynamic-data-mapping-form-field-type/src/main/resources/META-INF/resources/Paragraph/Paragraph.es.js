@@ -140,7 +140,7 @@ Paragraph.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	type: Config.string().value('paragraph')
+	type: Config.string().value('paragraph'),
 };
 
 Soy.register(Paragraph, templates);

@@ -17,7 +17,7 @@ import {fetch} from 'frontend-js-web';
 const HEADERS = {
 	Accept: 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-	'Content-Type': 'text/plain; charset=utf-8'
+	'Content-Type': 'text/plain; charset=utf-8',
 };
 
 function escape(x) {
@@ -46,7 +46,7 @@ export const request = query =>
 	fetch(getURL(), {
 		body: `{"query": "${query}"}`,
 		headers: HEADERS,
-		method: 'POST'
+		method: 'POST',
 	})
 		.then(response => response.json())
 		.then(json => {
@@ -63,7 +63,7 @@ export const getURL = params => {
 	params = {
 		['p_auth']: Liferay.authToken,
 		t: Date.now(),
-		...params
+		...params,
 	};
 
 	const uri = new URL(`${window.location.origin}/o/graphql`);
@@ -313,7 +313,7 @@ export const getThreads = ({
 	search = '',
 	siteKey,
 	sort = 'dateModified:desc',
-	tag = ''
+	tag = '',
 }) => {
 	let filter = '';
 	if (tag) {

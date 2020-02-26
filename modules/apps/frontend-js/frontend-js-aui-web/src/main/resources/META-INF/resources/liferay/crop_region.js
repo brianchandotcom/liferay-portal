@@ -57,7 +57,7 @@ AUI.add(
 						height: regionHeight,
 						width: regionWidth,
 						x: regionX,
-						y: regionY
+						y: regionY,
 					};
 				}
 
@@ -82,15 +82,15 @@ AUI.add(
 
 				return {
 					height: imageHeight,
-					width: imageWidth
+					width: imageWidth,
 				};
-			}
+			},
 		};
 
 		Liferay.CropRegion = CropRegion;
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base'],
 	}
 );

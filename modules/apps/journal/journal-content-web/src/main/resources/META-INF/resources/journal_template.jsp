@@ -109,14 +109,14 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true
+						modal: true,
 					},
 					eventName:
 						'<%= PortalUtil.getPortletNamespace(portletId) + "selectDDMTemplate" %>',
 					id:
 						'<%= PortalUtil.getPortletNamespace(portletId) + "selectDDMTemplate" %>',
 					title: '<liferay-ui:message key="templates" />',
-					uri: '<%= selectDDMTemplateURL %>'
+					uri: '<%= selectDDMTemplateURL %>',
 				},
 				function(event) {
 					templateKeyInput.setAttribute('value', event.ddmtemplatekey);
@@ -127,7 +127,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 						Liferay.Util.ns(
 							'<%= PortalUtil.getPortletNamespace(JournalContentPortletKeys.JOURNAL_CONTENT) %>',
 							{
-								ddmTemplateKey: event.ddmtemplatekey
+								ddmTemplateKey: event.ddmtemplatekey,
 							}
 						)
 					);
@@ -136,7 +136,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 						'<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/journal_template_resources.jsp" /><portlet:param name="articleResourcePrimKey" value="<%= String.valueOf(assetRenderer.getClassPK()) %>" /></liferay-portlet:resourceURL>',
 						{
 							body: data,
-							method: 'POST'
+							method: 'POST',
 						}
 					)
 						.then(function(response) {
@@ -157,7 +157,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 						closeable: true,
 						delay: {
 							hide: 0,
-							show: 0
+							show: 0,
 						},
 						duration: 500,
 						icon: 'info-circle',
@@ -165,7 +165,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 							'<%= HtmlUtil.escapeJS(LanguageUtil.get(resourceBundle, "changing-the-template-will-not-affect-the-original-web-content-defautl-template.-the-change-only-applies-to-this-web-content-display")) %>',
 						namespace: '<portlet:namespace />',
 						title: '',
-						type: 'info'
+						type: 'info',
 					}).render(form);
 
 					instance._alert = alert;

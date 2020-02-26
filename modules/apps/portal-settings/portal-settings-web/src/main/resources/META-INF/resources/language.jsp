@@ -120,7 +120,7 @@
 				closeable: true,
 				cssClass: 'alert-warning',
 				destroyOnHide: false,
-				render: true
+				render: true,
 			});
 		});
 	}
@@ -137,7 +137,7 @@
 			Liferay.Util.setFormValues(form, {
 				<%= PropsKeys.LOCALES %>: Liferay.Util.listSelect(
 					currentLanguageIdsElement
-				)
+				),
 			});
 		}
 	}

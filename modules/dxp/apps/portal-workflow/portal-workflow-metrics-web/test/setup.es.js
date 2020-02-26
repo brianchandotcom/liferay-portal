@@ -13,7 +13,7 @@ const enzyme = require('enzyme');
 const EnzymeAdapter = require('enzyme-adapter-react-16');
 
 window.AUI = () => ({
-	use: (module, callback) => callback()
+	use: (module, callback) => callback(),
 });
 
 const languageMap = {
@@ -27,7 +27,7 @@ const languageMap = {
 	'mmm-dd-lt': 'MMM DD, LT',
 	'mmm-dd-yyyy': 'MMM DD, YYYY',
 	'mmm-dd-yyyy-lt': 'MMM DD, YYYY, LT',
-	'thousand-abbreviation': 'K'
+	'thousand-abbreviation': 'K',
 };
 
 window.Liferay = {
@@ -38,19 +38,19 @@ window.Liferay = {
 			}
 
 			return key;
-		}
+		},
 	},
 	Session: {
-		extend: () => {}
+		extend: () => {},
 	},
 	ThemeDisplay: {
 		getBCP47LanguageId: () => 'en-US',
 		getLanguageId: () => 'en_US',
 		getPathThemeImages: () => 'http://localhost:8080/o/admin-theme/images',
 		getUserId: () => '123',
-		getUserName: () => 'Test Test'
+		getUserName: () => 'Test Test',
 	},
-	authToken: 'auth'
+	authToken: 'auth',
 };
 
 // eslint-disable-next-line no-console
@@ -68,7 +68,7 @@ global.localStorage = (() => {
 		},
 		setItem(key, value) {
 			store[key] = value.toString();
-		}
+		},
 	};
 })();
 

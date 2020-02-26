@@ -20,7 +20,7 @@ const DEFAULT_STATE = {
 	experimentHistory: [],
 	reviewExperimentModal: {active: false},
 	selectedExperienceId: null,
-	variants: []
+	variants: [],
 };
 
 export function getInitialState(firstState) {
@@ -30,7 +30,7 @@ export function getInitialState(firstState) {
 		initialSegmentsVariants,
 		initialSelectedSegmentsExperienceId,
 		viewSegmentsExperimentDetailsURL,
-		winnerSegmentsVariantId
+		winnerSegmentsVariantId,
 	} = firstState;
 
 	const state = {
@@ -46,12 +46,12 @@ export function getInitialState(firstState) {
 
 			return initialVariant;
 		}),
-		viewExperimentURL: viewSegmentsExperimentDetailsURL
+		viewExperimentURL: viewSegmentsExperimentDetailsURL,
 	};
 
 	return {
 		...DEFAULT_STATE,
-		...state
+		...state,
 	};
 }
 

@@ -14,6 +14,6 @@
 
 module.exports = {
 	globals: {
-		setInnerHTML: true
-	}
+		setInnerHTML: true,
+	},
 };

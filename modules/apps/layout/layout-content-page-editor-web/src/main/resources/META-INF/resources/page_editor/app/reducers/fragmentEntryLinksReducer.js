@@ -19,7 +19,7 @@ import {
 	EDIT_FRAGMENT_ENTRY_LINK_COMMENT,
 	UPDATE_EDITABLE_VALUES,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
-	UPDATE_LAYOUT_DATA
+	UPDATE_LAYOUT_DATA,
 } from '../actions/types';
 
 export const INITIAL_STATE = {};
@@ -33,7 +33,7 @@ export default function fragmentEntryLinksReducer(
 			return {
 				...fragmentEntryLinks,
 				[action.fragmentEntryLink.fragmentEntryLinkId]:
-					action.fragmentEntryLink
+					action.fragmentEntryLink,
 			};
 
 		case ADD_FRAGMENT_ENTRY_LINK_COMMENT: {
@@ -51,8 +51,8 @@ export default function fragmentEntryLinksReducer(
 								...comment,
 								children: [
 									...(comment.children || []),
-									action.fragmentEntryLinkComment
-								]
+									action.fragmentEntryLinkComment,
+								],
 						  }
 						: comment
 				);
@@ -65,8 +65,8 @@ export default function fragmentEntryLinksReducer(
 				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
 					...fragmentEntryLink,
-					comments: nextComments
-				}
+					comments: nextComments,
+				},
 			};
 		}
 
@@ -87,7 +87,7 @@ export default function fragmentEntryLinksReducer(
 									childComment =>
 										childComment.commentId !==
 										action.commentId
-								)
+								),
 						  }
 						: comment
 				);
@@ -102,8 +102,8 @@ export default function fragmentEntryLinksReducer(
 				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
 					...fragmentEntryLink,
-					comments: nextComments
-				}
+					comments: nextComments,
+				},
 			};
 		}
 
@@ -125,7 +125,7 @@ export default function fragmentEntryLinksReducer(
 									action.fragmentEntryLinkComment.commentId
 										? action.fragmentEntryLinkComment
 										: childComment
-								)
+								),
 						  }
 						: comment
 				);
@@ -143,8 +143,8 @@ export default function fragmentEntryLinksReducer(
 				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
 					...fragmentEntryLink,
-					comments: nextComments
-				}
+					comments: nextComments,
+				},
 			};
 		}
 
@@ -153,8 +153,8 @@ export default function fragmentEntryLinksReducer(
 				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
 					...fragmentEntryLinks[action.fragmentEntryLinkId],
-					editableValues: action.editableValues
-				}
+					editableValues: action.editableValues,
+				},
 			};
 
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONTENT:
@@ -162,8 +162,8 @@ export default function fragmentEntryLinksReducer(
 				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
 					...fragmentEntryLinks[action.fragmentEntryLinkId],
-					content: action.content
-				}
+					content: action.content,
+				},
 			};
 
 		case UPDATE_LAYOUT_DATA: {

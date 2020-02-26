@@ -58,13 +58,13 @@ const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 
 		onSelectedFragment({
 			allowNewFragmentEntries,
-			selectedFragments: newFragmentEntryKeys
+			selectedFragments: newFragmentEntryKeys,
 		});
 	}, [
 		fragmentEntryKeys,
 		allowNewFragmentEntries,
 		fragmentEntryKeysArray,
-		onSelectedFragment
+		onSelectedFragment,
 	]);
 
 	return (
@@ -111,9 +111,9 @@ const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 AllowedFragmentSelector.propTypes = {
 	dropZoneConfig: PropTypes.shape({
 		allowNewFragmentEntries: PropTypes.bool,
-		fragmentEntryKeys: PropTypes.array
+		fragmentEntryKeys: PropTypes.array,
 	}).isRequired,
-	onSelectedFragment: PropTypes.func.isRequired
+	onSelectedFragment: PropTypes.func.isRequired,
 };
 
 export {AllowedFragmentSelector};
@@ -139,7 +139,7 @@ const toNodes = collections => {
 				const children = collection.fragmentEntries.map(
 					fragmentEntry => ({
 						id: fragmentEntry.fragmentEntryKey,
-						name: fragmentEntry.name
+						name: fragmentEntry.name,
 					})
 				);
 
@@ -147,13 +147,13 @@ const toNodes = collections => {
 					children,
 					expanded: false,
 					id: collection.fragmentCollectionId,
-					name: collection.name
+					name: collection.name,
 				};
 			}),
 			expanded: true,
 			id: 'lfr-all-fragments-id',
-			name: Liferay.Language.get('all-fragments')
-		}
+			name: Liferay.Language.get('all-fragments'),
+		},
 	];
 };
 

@@ -47,13 +47,13 @@ class ItemSelectorDialog extends Component {
 						this.selectedItem = this._selectedItem;
 
 						this.emit('selectedItemChange', {
-							selectedItem: this.selectedItem
+							selectedItem: this.selectedItem,
 						});
 					}
 
 					this.emit('visibleChange', {visible: event.newVal});
-				}
-			}
+				},
+			},
 		};
 
 		Liferay.Util.selectEntity(
@@ -63,7 +63,7 @@ class ItemSelectorDialog extends Component {
 				id: eventName,
 				stack: !this.zIndex,
 				title: this.title,
-				uri: this.url
+				uri: this.url,
 			},
 			this._onItemSelected.bind(this)
 		);
@@ -75,7 +75,7 @@ class ItemSelectorDialog extends Component {
 			cssClass: this.dialogClasses,
 			destroyOnHide: true,
 			modal: true,
-			zIndex: this.zIndex
+			zIndex: this.zIndex,
 		};
 
 		if (!this.singleSelect) {
@@ -87,8 +87,8 @@ class ItemSelectorDialog extends Component {
 					on: {
 						click: () => {
 							this.close();
-						}
-					}
+						},
+					},
 				},
 				{
 					cssClass: 'btn-primary',
@@ -99,9 +99,9 @@ class ItemSelectorDialog extends Component {
 						click: () => {
 							this._selectedItem = this._currentItem;
 							this.close();
-						}
-					}
-				}
+						},
+					},
+				},
 			];
 
 			dialogConfig['toolbars.footer'] = dialogFooter;
@@ -191,7 +191,7 @@ ItemSelectorDialog.STATE = {
 	 */
 	selectedItem: Config.oneOfType([
 		Config.object(),
-		Config.arrayOf(Config.object())
+		Config.arrayOf(Config.object()),
 	]),
 
 	/**
@@ -226,7 +226,7 @@ ItemSelectorDialog.STATE = {
 	 * @memberof ItemSelectorDialog
 	 * @type {Number}
 	 */
-	zIndex: Config.number()
+	zIndex: Config.number(),
 };
 
 export default ItemSelectorDialog;

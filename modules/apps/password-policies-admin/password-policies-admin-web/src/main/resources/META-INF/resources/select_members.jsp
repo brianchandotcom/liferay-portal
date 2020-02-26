@@ -98,8 +98,8 @@ SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbar
 			result = {
 				data: {
 					item: selectedItems.attr('value').join(','),
-					memberType: '<%= HtmlUtil.escapeJS(tabs2) %>'
-				}
+					memberType: '<%= HtmlUtil.escapeJS(tabs2) %>',
+				},
 			};
 		}
 

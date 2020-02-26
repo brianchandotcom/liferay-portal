@@ -36,7 +36,7 @@ const FormValueDebugger = ({values}) => (
 		className="alert alert-dark"
 		style={{
 			margin: '0 auto',
-			maxWidth: '1000px'
+			maxWidth: '1000px',
 		}}
 	>
 		<p>

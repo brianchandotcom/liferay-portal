@@ -22,11 +22,11 @@
 				modules: {
 					'liferay-workflow-tasks': {
 						path: 'main.js',
-						requires: ['liferay-util-window']
-					}
+						requires: ['liferay-util-window'],
+					},
 				},
-				root: MODULE_PATH + '/js/'
-			}
-		}
+				root: MODULE_PATH + '/js/',
+			},
+		},
 	});
 })();

@@ -17,7 +17,7 @@ import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {
 	generateInstanceId,
 	getFieldProperties,
-	normalizeSettingsContextPages
+	normalizeSettingsContextPages,
 } from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
@@ -26,7 +26,7 @@ const handleFieldAdded = (props, state, event) => {
 		defaultLanguageId,
 		editingLanguageId,
 		fieldNameGenerator,
-		spritemap
+		spritemap,
 	} = props;
 	let newFieldName;
 
@@ -55,8 +55,8 @@ const handleFieldAdded = (props, state, event) => {
 				fieldType,
 				newFieldName
 			),
-			type: fieldType.name
-		}
+			type: fieldType.name,
+		},
 	};
 
 	const {fieldName, name, settingsContext} = focusedField;
@@ -75,7 +75,7 @@ const handleFieldAdded = (props, state, event) => {
 		name,
 		settingsContext,
 		spritemap,
-		type: fieldType.name
+		type: fieldType.name,
 	};
 
 	return {
@@ -83,7 +83,7 @@ const handleFieldAdded = (props, state, event) => {
 			...fieldProperties,
 			columnIndex,
 			pageIndex,
-			rowIndex
+			rowIndex,
 		},
 		pages: FormSupport.addFieldToColumn(
 			pages,
@@ -92,7 +92,7 @@ const handleFieldAdded = (props, state, event) => {
 			columnIndex,
 			fieldProperties
 		),
-		previousFocusedField: fieldProperties
+		previousFocusedField: fieldProperties,
 	};
 };
 

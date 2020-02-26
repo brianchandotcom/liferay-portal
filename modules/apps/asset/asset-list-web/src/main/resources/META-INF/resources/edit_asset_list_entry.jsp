@@ -145,20 +145,20 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 			{
 				dialog: {
 					constrain: true,
-					modal: true
+					modal: true,
 				},
 				id: '<portlet:namespace />selectEntity',
 				title:
 					'<liferay-ui:message arguments="personalized-variation" key="new-x" />',
 				uri:
-					'<%= editAssetListDisplayContext.getSelectSegmentsEntryURL() %>'
+					'<%= editAssetListDisplayContext.getSelectSegmentsEntryURL() %>',
 			},
 			function(event) {
 				Liferay.Util.postForm(document.<portlet:namespace />fm, {
 					data: {
-						segmentsEntryId: event.entityid
+						segmentsEntryId: event.entityid,
 					},
-					url: '<%= addAssetListEntryVariationURL %>'
+					url: '<%= addAssetListEntryVariationURL %>',
 				});
 			}
 		);

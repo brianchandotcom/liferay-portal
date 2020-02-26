@@ -24,7 +24,7 @@ export default function moveItem({itemId, parentItemId, position, store}) {
 			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
-			segmentsExperienceId
+			segmentsExperienceId,
 		}).then(layoutData => {
 			dispatch(updateLayoutData({layoutData}));
 		});

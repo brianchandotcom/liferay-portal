@@ -30,7 +30,7 @@ export default function CommentForm({
 	onTextareaChange,
 	showButtons = false,
 	submitButtonLabel,
-	textareaContent
+	textareaContent,
 }) {
 	return (
 		<form onFocus={onFormFocus}>
@@ -89,5 +89,5 @@ CommentForm.propTypes = {
 	onTextareaChange: PropTypes.func.isRequired,
 	showButtons: PropTypes.bool,
 	submitButtonLabel: PropTypes.string.isRequired,
-	textareaContent: PropTypes.string.isRequired
+	textareaContent: PropTypes.string.isRequired,
 };

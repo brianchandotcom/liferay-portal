@@ -23,11 +23,11 @@ class CriteriaSidebar extends Component {
 	static propTypes = {
 		onTitleClicked: PropTypes.func,
 		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
-		propertyKey: PropTypes.string
+		propertyKey: PropTypes.string,
 	};
 
 	state = {
-		searchValue: ''
+		searchValue: '',
 	};
 
 	_handleOnSearchChange = value => {

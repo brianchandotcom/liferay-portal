@@ -110,7 +110,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 	for (var i = 0; i < categories.length; i++) {
 		data.push({
 			category: categories[i],
-			values: values[i]
+			values: values[i],
 		});
 	}
 
@@ -131,8 +131,8 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 			borderWidth: 1,
 			color: '#000',
 			textAlign: 'center',
-			width: 30
-		}
+			width: 30,
+		},
 	};
 
 	var chartType;
@@ -150,21 +150,21 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 						values: {
 							area: {
 								alpha: 0.4,
-								color: '#5CC0FF'
+								color: '#5CC0FF',
 							},
 							line: {
 								color: '#4572A7',
-								weight: 2
+								weight: 2,
 							},
 							marker: {
 								fill: {
-									color: '#3CCFFF'
+									color: '#3CCFFF',
 								},
-								height: 6
-							}
-						}
-					}
-				}
+								height: 6,
+							},
+						},
+					},
+				},
 			};
 		</c:when>
 		<c:otherwise>
@@ -172,7 +172,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 
 			customConfig = {
 				showAreaFill: true,
-				showMarkers: true
+				showMarkers: true,
 			};
 		</c:otherwise>
 	</c:choose>
@@ -186,24 +186,24 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 			category: {
 				styles: {
 					label: {
-						display: 'none'
-					}
-				}
+						display: 'none',
+					},
+				},
 			},
 			values: {
 				styles: {
 					majorUnit: {
-						count: 6
-					}
-				}
-			}
+						count: 6,
+					},
+				},
+			},
 		},
 		dataProvider: data,
 		height: <%= displayHeight - 2 %>,
 		horizontalGridlines: true,
 		tooltip: tooltip,
 		type: chartType,
-		width: chartContainer.width()
+		width: chartContainer.width(),
 	};
 
 	A.mix(defaultConfig, customConfig);

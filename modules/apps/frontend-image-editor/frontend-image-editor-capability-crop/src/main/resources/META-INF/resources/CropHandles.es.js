@@ -206,13 +206,13 @@ class CropHandles extends Component {
 		this.selectionDrag_ = new Drag({
 			constrain: canvas,
 			handles: this.element,
-			sources: this.element
+			sources: this.element,
 		});
 
 		this.sizeDrag_ = new Drag({
 			constrain: this.getSizeDragConstrain_.bind(this),
 			handles: this.resizer,
-			sources: this.resizer
+			sources: this.resizer,
 		});
 
 		this.bindDrags_();
@@ -266,8 +266,8 @@ CropHandles.STATE = {
 	 * @type {Function}
 	 */
 	getImageEditorCanvas: {
-		validator: core.isFunction
-	}
+		validator: core.isFunction,
+	},
 };
 
 Soy.register(CropHandles, handlesTemplates);

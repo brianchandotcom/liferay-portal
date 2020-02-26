@@ -181,14 +181,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 					destroyOnHide: true,
 					height: 480,
 					resizable: false,
-					width: 640
+					width: 640,
 				},
 				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
+					bodyCssClass: 'dialog-with-footer',
 				},
 				id: '<portlet:namespace />addLayoutDialog',
 				title: '<liferay-ui:message key="add-page" />',
-				uri: actionElement.dataset.addLayoutUrl
+				uri: actionElement.dataset.addLayoutUrl,
 			});
 		}
 	);

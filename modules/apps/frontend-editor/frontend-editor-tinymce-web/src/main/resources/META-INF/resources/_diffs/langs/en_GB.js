@@ -196,5 +196,5 @@ tinymce.addI18n('en_GB', {
 	Tools: 'Tools',
 	View: 'View',
 	Table: 'Table',
-	Format: 'Format'
+	Format: 'Format',
 });

@@ -30,9 +30,9 @@ import {dateToInternationalHuman, normalizeRating} from '../../utils/utils.es';
 
 export default ({
 	match: {
-		params: {creatorId, tag}
+		params: {creatorId, tag},
 	},
-	search
+	search,
 }) => {
 	const context = useContext(AppContext);
 
@@ -66,7 +66,7 @@ export default ({
 				search,
 				siteKey: context.siteKey,
 				sort,
-				tag
+				tag,
 			}),
 		[context.siteKey, creatorId, page, pageSize, search, tag]
 	);

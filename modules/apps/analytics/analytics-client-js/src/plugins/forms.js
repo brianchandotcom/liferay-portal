@@ -39,7 +39,7 @@ function getFormKey(form) {
 function getFieldPayload({form, name}) {
 	return {
 		fieldName: name,
-		formId: getFormKey(form)
+		formId: getFormKey(form),
 	};
 }
 
@@ -50,13 +50,13 @@ function getFieldPayload({form, name}) {
  */
 function getFormPayload(form) {
 	let payload = {
-		formId: getFormKey(form)
+		formId: getFormKey(form),
 	};
 
 	if (form.dataset.analyticsAssetTitle) {
 		payload = {
 			...payload,
-			title: form.dataset.analyticsAssetTitle
+			title: form.dataset.analyticsAssetTitle,
 		};
 	}
 
@@ -103,7 +103,7 @@ function trackFieldBlurred(analytics) {
 
 		analytics.send('fieldBlurred', applicationId, {
 			...payload,
-			focusDuration
+			focusDuration,
 		});
 
 		performance.clearMarks('focusDuration');

@@ -43,7 +43,7 @@ const SelectLayout = ({
 	itemSelectorSaveEvent,
 	multiSelection,
 	namespace,
-	nodes
+	nodes,
 }) => {
 	const [filterQuery, setFilterQuery] = useState();
 
@@ -62,7 +62,7 @@ const SelectLayout = ({
 					layoutId: node.layoutId,
 					name: node.value,
 					privateLayout: node.privateLayout,
-					value: node.url
+					value: node.url,
 				});
 			}
 		});
@@ -76,11 +76,11 @@ const SelectLayout = ({
 		}
 		else {
 			Liferay.fire(itemSelectorSaveEvent, {
-				data
+				data,
 			});
 
 			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
-				data
+				data,
 			});
 		}
 	};
@@ -151,7 +151,7 @@ SelectLayout.propTypes = {
 	itemSelectorSaveEvent: PropTypes.string,
 	multiSelection: PropTypes.bool,
 	namespace: PropTypes.string,
-	nodes: PropTypes.array.isRequired
+	nodes: PropTypes.array.isRequired,
 };
 
 export default function(props) {

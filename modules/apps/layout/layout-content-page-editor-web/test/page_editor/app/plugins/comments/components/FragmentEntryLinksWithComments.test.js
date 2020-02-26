@@ -18,7 +18,7 @@ import React from 'react';
 
 import {
 	useHoverItem,
-	useSelectItem
+	useSelectItem,
 } from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
@@ -37,13 +37,13 @@ jest.mock(
 
 		return {
 			useHoverItem: () => hoverItem,
-			useSelectItem: () => selectItem
+			useSelectItem: () => selectItem,
 		};
 	}
 );
 
 const NO_COMMENTS_STATE = {
-	layoutData: {items: {}}
+	layoutData: {items: {}},
 };
 
 const COMMENTS_STATE = {
@@ -51,20 +51,20 @@ const COMMENTS_STATE = {
 		'sandro-fragment': {
 			comments: [{resolved: false}],
 			fragmentEntryLinkId: 'sandro-fragment',
-			name: 'Sandro Fragment'
+			name: 'Sandro Fragment',
 		},
 
 		'veronica-fragment': {
 			comments: [{resolved: false}],
 			fragmentEntryLinkId: 'veronica-fragment',
-			name: 'Verónica Fragment'
+			name: 'Verónica Fragment',
 		},
 
 		'victor-fragment': {
 			comments: [{resolved: true}],
 			fragmentEntryLinkId: 'victor-fragment',
-			name: 'Víctor Fragment'
-		}
+			name: 'Víctor Fragment',
+		},
 	},
 
 	layoutData: {
@@ -72,22 +72,22 @@ const COMMENTS_STATE = {
 			'sandro-item': {
 				config: {fragmentEntryLinkId: 'sandro-fragment'},
 				itemId: 'sandro-item',
-				type: LAYOUT_DATA_ITEM_TYPES.fragment
+				type: LAYOUT_DATA_ITEM_TYPES.fragment,
 			},
 
 			'veronica-item': {
 				config: {fragmentEntryLinkId: 'veronica-fragment'},
 				itemId: 'veronica-item',
-				type: LAYOUT_DATA_ITEM_TYPES.fragment
+				type: LAYOUT_DATA_ITEM_TYPES.fragment,
 			},
 
 			'victor-item': {
 				config: {fragmentEntryLinkId: 'victor-fragment'},
 				itemId: 'victor-item',
-				type: LAYOUT_DATA_ITEM_TYPES.fragment
-			}
-		}
-	}
+				type: LAYOUT_DATA_ITEM_TYPES.fragment,
+			},
+		},
+	},
 };
 
 const renderComponent = (state, dispatch) =>
@@ -116,7 +116,7 @@ describe('FragmentEntryLinksWithComments', () => {
 	it('includes resolved comments if showResolvedComments is true', () => {
 		const {getByText} = renderComponent({
 			...COMMENTS_STATE,
-			showResolvedComments: true
+			showResolvedComments: true,
 		});
 
 		expect(getByText('Sandro Fragment')).toBeInTheDocument();
@@ -129,7 +129,7 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		const {getAllByRole} = renderComponent({
 			...COMMENTS_STATE,
-			showResolvedComments: true
+			showResolvedComments: true,
 		});
 
 		const [sandroFragment] = getAllByRole('link');
@@ -148,7 +148,7 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		const {getAllByRole} = renderComponent({
 			...COMMENTS_STATE,
-			showResolvedComments: true
+			showResolvedComments: true,
 		});
 
 		const [sandroFragment] = getAllByRole('link');
@@ -166,7 +166,7 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		const {getAllByRole} = renderComponent({
 			...COMMENTS_STATE,
-			showResolvedComments: true
+			showResolvedComments: true,
 		});
 
 		const [sandroFragment] = getAllByRole('link');
@@ -184,7 +184,7 @@ describe('FragmentEntryLinksWithComments', () => {
 
 		const {getAllByRole} = renderComponent({
 			...COMMENTS_STATE,
-			showResolvedComments: true
+			showResolvedComments: true,
 		});
 
 		const [sandroFragment] = getAllByRole('link');

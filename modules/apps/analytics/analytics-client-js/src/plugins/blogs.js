@@ -29,13 +29,13 @@ function getBlogPayload(blog) {
 	const {dataset} = blog;
 
 	let payload = {
-		entryId: dataset.analyticsAssetId
+		entryId: dataset.analyticsAssetId,
 	};
 
 	if (dataset.analyticsAssetTitle) {
 		payload = {
 			...payload,
-			title: dataset.analyticsAssetTitle
+			title: dataset.analyticsAssetTitle,
 		};
 	}
 
@@ -65,7 +65,7 @@ function trackBlogsScroll(analytics, blogElements) {
 				analytics.send('blogDepthReached', applicationId, {
 					...getBlogPayload(element),
 					depth,
-					sessionId: scrollSessionId
+					sessionId: scrollSessionId,
 				});
 			}, element);
 		});
@@ -97,7 +97,7 @@ function trackBlogViewed(analytics) {
 
 				payload = {
 					numberOfWords,
-					...payload
+					...payload,
 				};
 
 				blogElements.push(element);
@@ -124,7 +124,7 @@ function trackBlogClicked(analytics) {
 		eventType: 'blogClicked',
 		getPayload: getBlogPayload,
 		isTrackable: isTrackableBlog,
-		type: 'blog'
+		type: 'blog',
 	});
 }
 

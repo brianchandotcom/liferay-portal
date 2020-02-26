@@ -56,7 +56,7 @@ test('Should render component', () => {
 	const instance = component.find(SLAListItem).instance();
 
 	instance.context = {
-		showConfirmDialog: () => {}
+		showConfirmDialog: () => {},
 	};
 
 	instance.showConfirmDialog();
@@ -84,7 +84,7 @@ test('Should render component blocked', () => {
 	const instance = component.find(SLAListItem).instance();
 
 	instance.context = {
-		showConfirmDialog: () => {}
+		showConfirmDialog: () => {},
 	};
 
 	instance.showConfirmDialog();

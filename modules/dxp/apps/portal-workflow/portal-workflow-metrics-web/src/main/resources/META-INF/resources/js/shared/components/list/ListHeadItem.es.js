@@ -25,7 +25,7 @@ const ListHeadItem = ({
 	location: {search},
 	match: {params, path},
 	name,
-	title
+	title,
 }) => {
 	const sort = params && params.sort ? params.sort : `${name}:asc`;
 
@@ -39,7 +39,7 @@ const ListHeadItem = ({
 
 	const pathname = pathToRegexp.compile(path)({
 		...params,
-		sort: nextSort
+		sort: nextSort,
 	});
 
 	return (

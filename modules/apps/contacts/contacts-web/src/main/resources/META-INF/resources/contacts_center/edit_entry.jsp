@@ -101,7 +101,7 @@ if (entryId > 0) {
 
 		Liferay.Util.fetch(url, {
 			body: new FormData(form.getDOM()),
-			method: 'POST'
+			method: 'POST',
 		})
 			.then(function(response) {
 				return response.json();

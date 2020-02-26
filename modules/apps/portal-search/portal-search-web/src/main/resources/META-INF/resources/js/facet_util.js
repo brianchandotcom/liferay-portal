@@ -203,13 +203,13 @@ AUI.add(
 				}
 
 				return search;
-			}
+			},
 		};
 
 		Liferay.namespace('Search').FacetUtil = FacetUtil;
 	},
 	'',
 	{
-		requires: []
+		requires: [],
 	}
 );

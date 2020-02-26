@@ -35,7 +35,7 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 							className: item.className,
 							classNameId: item.classNameId,
 							classPK: item.classPK,
-							title: item.title
+							title: item.title,
 						});
 					}}
 					selectedItemTitle={value.title}
@@ -61,11 +61,11 @@ ItemSelectorField.propTypes = {
 	field: PropTypes.shape({
 		...ConfigurationFieldPropTypes,
 		typeOptions: PropTypes.shape({
-			enableSelectTemplate: PropTypes.bool
-		})
+			enableSelectTemplate: PropTypes.bool,
+		}),
 	}),
 	onValueSelect: PropTypes.func.isRequired,
-	value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
@@ -78,7 +78,7 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 			InfoItemService.getAvailableTemplates({
 				className: item.className,
 				classPK: item.classPK,
-				onNetworkStatus: dispatch
+				onNetworkStatus: dispatch,
 			}).then(response => {
 				setAvailableTemplates(response);
 			});
@@ -160,6 +160,6 @@ TemplateSelector.propTypes = {
 	onTemplateSelect: PropTypes.func.isRequired,
 	selectedTemplate: PropTypes.shape({
 		infoItemRendererKey: PropTypes.string,
-		templateKey: PropTypes.string
-	})
+		templateKey: PropTypes.string,
+	}),
 };

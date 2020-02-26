@@ -51,7 +51,7 @@ Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/rename_folder', {
 			dataType: 'JSON',
 			form: {
-				id: form.getDOMNode()
+				id: form.getDOMNode(),
 			},
 			on: {
 				failure: function(event, id, obj) {
@@ -71,8 +71,8 @@ Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 					if (responseData.status == 'success') {
 						Liferay.Mail.loadFolders(Liferay.Mail.accountId);
 					}
-				}
-			}
+				},
+			},
 		});
 	});
 </aui:script>

@@ -196,5 +196,5 @@ tinymce.addI18n('et', {
 	Tools: 'T\u00f6\u00f6riistad',
 	View: 'Vaade',
 	Table: 'Tabel',
-	Format: 'Vorming'
+	Format: 'Vorming',
 });

@@ -22,21 +22,21 @@ describe('The SingleReassignModalTable component should', () => {
 	const clientMock = {
 		get: jest
 			.fn()
-			.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}})
+			.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}}),
 	};
 	const data = {
 		items: [
 			{
 				assigneePerson: {
 					id: 20124,
-					name: 'Test Test'
+					name: 'Test Test',
 				},
 				completed: true,
 				id: 40336,
 				instanceId: 40330,
-				name: 'review'
-			}
-		]
+				name: 'review',
+			},
+		],
 	};
 
 	const mockItem = {
@@ -48,13 +48,13 @@ describe('The SingleReassignModalTable component should', () => {
 		id: 40330,
 		slaStatus: 'Overdue',
 		status: 'Completed',
-		taskNames: ['Update']
+		taskNames: ['Update'],
 	};
 
 	const setSingleModal = jest.fn();
 	const singleModal = {
 		selectedItem: {...mockItem},
-		visible: true
+		visible: true,
 	};
 
 	const setAssigneeId = jest.fn();
@@ -135,10 +135,10 @@ describe('The SingleReassignModalTable component should', () => {
 					name: 'review',
 					objectReviewed: {
 						id: 40324,
-						resourceType: 'BlogPosting'
-					}
-				}
-			]
+						resourceType: 'BlogPosting',
+					},
+				},
+			],
 		};
 
 		const {getAllByTestId} = render(
@@ -166,7 +166,7 @@ describe('The AssigneeInput component should', () => {
 	const clientMock = {
 		get: jest
 			.fn()
-			.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}})
+			.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}}),
 	};
 
 	test('Render change assignee input text to Test', () => {
@@ -176,7 +176,7 @@ describe('The AssigneeInput component should', () => {
 			<MockRouter client={clientMock}>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{
-						tasks: [{assigneeId: 20124, id: 39347}]
+						tasks: [{assigneeId: 20124, id: 39347}],
 					}}
 					setReassignedTasks={setReassignMock}
 					taskId={39347}
@@ -195,14 +195,14 @@ describe('The AssigneeInput component should', () => {
 		const clientMock = {
 			get: jest
 				.fn()
-				.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}})
+				.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}}),
 		};
 
 		render(
 			<MockRouter client={clientMock}>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{
-						tasks: [{assigneeId: 20124, id: 39347}]
+						tasks: [{assigneeId: 20124, id: 39347}],
 					}}
 					setReassignedTasks={setReassignMock}
 					taskId={39347}

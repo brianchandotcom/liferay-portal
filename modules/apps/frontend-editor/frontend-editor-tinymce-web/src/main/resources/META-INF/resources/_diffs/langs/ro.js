@@ -214,5 +214,5 @@ tinymce.addI18n('ro', {
 	Tools: 'Unelte',
 	View: 'Vezi',
 	Table: 'Tabel\u0103',
-	Format: 'Formateaz\u0103'
+	Format: 'Formateaz\u0103',
 });

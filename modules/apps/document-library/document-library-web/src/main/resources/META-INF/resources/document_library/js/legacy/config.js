@@ -34,20 +34,20 @@
 							'liferay-history-manager',
 							'liferay-search-container',
 							'querystring-parse-simple',
-							'uploader'
-						]
+							'uploader',
+						],
 					},
 					'liferay-document-library': {
 						path: 'main.js',
 						requires: [
 							'document-library-upload',
 							'liferay-message',
-							'liferay-portlet-base'
-						]
-					}
+							'liferay-portlet-base',
+						],
+					},
 				},
-				root: MODULE_PATH + '/document_library/js/legacy/'
-			}
-		}
+				root: MODULE_PATH + '/document_library/js/legacy/',
+			},
+		},
 	});
 })();

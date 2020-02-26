@@ -123,13 +123,13 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 							dialog: {
 								constrain: true,
 								destroyOnHide: true,
-								modal: true
+								modal: true,
 							},
 							eventName: '<%= eventName %>',
 							id: '<portlet:namespace />selectSite',
 							title:
 								'<liferay-ui:message key="select-site-or-asset-library" />',
-							uri: '<%= itemSelectorURL.toString() %>'
+							uri: '<%= itemSelectorURL.toString() %>',
 						},
 						function(event) {
 							location.href = event.url;

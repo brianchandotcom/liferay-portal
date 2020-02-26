@@ -78,7 +78,7 @@ String searchContainerId = "publishLayoutProcesses";
 		processesNode: '#publishProcessesSearchContainer',
 		processesResourceURL:
 			'<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>',
-		timeZoneOffset: <%= timeZoneOffset %>
+		timeZoneOffset: <%= timeZoneOffset %>,
 	});
 
 	Liferay.once('destroyPortlet', function() {

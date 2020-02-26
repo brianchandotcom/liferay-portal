@@ -46,7 +46,7 @@ class FormBuilderBase extends Component {
 
 	getFormRendererEvents() {
 		return {
-			fieldClicked: this._handleFieldClicked.bind(this)
+			fieldClicked: this._handleFieldClicked.bind(this),
 		};
 	}
 
@@ -65,16 +65,16 @@ class FormBuilderBase extends Component {
 							label: Liferay.Language.get(
 								'dynamically-loaded-data'
 							),
-							value: 'dynamic'
-						}
+							value: 'dynamic',
+						},
 					],
-					value: 'dynamic'
+					value: 'dynamic',
 				};
 			}
 
 			return {
 				...field,
-				readOnly: true
+				readOnly: true,
 			};
 		});
 	}
@@ -87,7 +87,7 @@ class FormBuilderBase extends Component {
 			pages,
 			paginationMode,
 			portletNamespace,
-			spritemap
+			spritemap,
 		} = props;
 
 		return (
@@ -189,7 +189,7 @@ FormBuilderBase.PROPS = {
 	successPageSettings: Config.shapeOf({
 		body: Config.object(),
 		enabled: Config.bool(),
-		title: Config.object()
+		title: Config.object(),
 	}).value({}),
 
 	/**
@@ -199,7 +199,7 @@ FormBuilderBase.PROPS = {
 	 * @type {?string}
 	 */
 
-	view: Config.string()
+	view: Config.string(),
 };
 
 export default compose(

@@ -53,7 +53,7 @@ viewURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 	var frame = document.getElementById('<portlet:namespace />frame');
 
 	Liferay.MarketplaceMessenger.init({
-		targetFrame: frame
+		targetFrame: frame,
 	});
 
 	Liferay.MarketplaceMessenger.receiveMessage(

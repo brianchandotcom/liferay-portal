@@ -38,7 +38,7 @@ export const ContainerTypeConfiguration = ({containerType, onValueChange}) => (
 							LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
 								LAYOUT_DATA_ITEM_TYPES.container
 							].paddingHorizontal,
-						[CONTAINER_TYPE_IDENTIFIER]: value
+						[CONTAINER_TYPE_IDENTIFIER]: value,
 					});
 				}
 				else {
@@ -48,12 +48,12 @@ export const ContainerTypeConfiguration = ({containerType, onValueChange}) => (
 			options={[
 				{
 					label: Liferay.Language.get('fixed-width'),
-					value: CONTAINER_TYPES.fixed
+					value: CONTAINER_TYPES.fixed,
 				},
 				{
 					label: Liferay.Language.get('fluid'),
-					value: CONTAINER_TYPES.fluid
-				}
+					value: CONTAINER_TYPES.fluid,
+				},
 			]}
 			value={containerType}
 		/>
@@ -62,5 +62,5 @@ export const ContainerTypeConfiguration = ({containerType, onValueChange}) => (
 
 ContainerTypeConfiguration.propTypes = {
 	containerType: PropTypes.string.isRequired,
-	onValueChange: PropTypes.func.isRequired
+	onValueChange: PropTypes.func.isRequired,
 };

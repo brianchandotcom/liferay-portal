@@ -22,7 +22,7 @@ const LAYER_STYLES = {
 	position: 'fixed',
 	top: 0,
 	width: '100%',
-	zIndex: 100
+	zIndex: 100,
 };
 
 const OFFSET_X = 8;
@@ -38,11 +38,11 @@ function getItemStyles(props) {
 
 	return !initialOffset || !currentOffset
 		? {
-				display: 'none'
+				display: 'none',
 		  }
 		: {
 				WebkitTransform: transform,
-				transform
+				transform,
 		  };
 }
 
@@ -67,5 +67,5 @@ export default DndDragLayer(monitor => ({
 	dragging: monitor.isDragging(),
 	initialOffset: monitor.getInitialSourceClientOffset(),
 	item: monitor.getItem(),
-	itemType: monitor.getItemType()
+	itemType: monitor.getItemType(),
 }))(ItemDragLayer);

@@ -39,7 +39,7 @@ export const updateField = (props, state, fieldName, fieldValue) => {
 			rules || [],
 			focusedField,
 			updatedFocusedField
-		)
+		),
 	};
 };
 

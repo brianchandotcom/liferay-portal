@@ -71,7 +71,7 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= assetDisplayPagesItemSelectorViewDisplayContext.getItemSelectedEventName() %>',
 				{
-					data: event.delegateTarget.dataset
+					data: event.delegateTarget.dataset,
 				}
 			);
 		}

@@ -19,7 +19,7 @@
 		DAILY: 'days',
 		MONTHLY: 'months',
 		WEEKLY: 'weeks',
-		YEARLY: 'years'
+		YEARLY: 'years',
 	};
 
 	Liferay.RecurrenceUtil.MONTH_LABELS = [
@@ -34,7 +34,7 @@
 		'<liferay-ui:message key="september" />',
 		'<liferay-ui:message key="october" />',
 		'<liferay-ui:message key="november" />',
-		'<liferay-ui:message key="december" />'
+		'<liferay-ui:message key="december" />',
 	];
 
 	Liferay.RecurrenceUtil.POSITION_LABELS = {
@@ -42,7 +42,7 @@
 		'1': '<liferay-ui:message key="position.first" />',
 		'2': '<liferay-ui:message key="position.second" />',
 		'3': '<liferay-ui:message key="position.third" />',
-		'4': '<liferay-ui:message key="position.fourth" />'
+		'4': '<liferay-ui:message key="position.fourth" />',
 	};
 
 	Liferay.RecurrenceUtil.RECURRENCE_SUMMARIES = {
@@ -116,7 +116,7 @@
 		'yearly-until-x-x-x': '<liferay-ui:message key="yearly-until-x-x-x" />',
 		'yearly-x-times': '<liferay-ui:message key="yearly-x-times" />',
 		'you-are-about-to-make-changes-that-will-only-affect-your-calendar-x':
-			'<liferay-ui:message key="you-are-about-to-make-changes-that-will-only-affect-your-calendar-x" />'
+			'<liferay-ui:message key="you-are-about-to-make-changes-that-will-only-affect-your-calendar-x" />',
 	};
 
 	Liferay.RecurrenceUtil.WEEKDAY_LABELS = {
@@ -126,6 +126,6 @@
 		SU: '<liferay-ui:message key="weekday.SU" />',
 		TH: '<liferay-ui:message key="weekday.TH" />',
 		TU: '<liferay-ui:message key="weekday.TU" />',
-		WE: '<liferay-ui:message key="weekday.WE" />'
+		WE: '<liferay-ui:message key="weekday.WE" />',
 	};
 </aui:script>

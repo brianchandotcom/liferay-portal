@@ -30,7 +30,7 @@
 			function(openerOnedrive) {
 				openerOnedrive.createWithName({
 					dialogTitle: dialogTitle,
-					formSubmitURL: formSubmitURL
+					formSubmitURL: formSubmitURL,
 				});
 			}
 		);
@@ -43,7 +43,7 @@
 		Liferay.componentReady('<portlet:namespace />DocumentLibraryOpener').then(
 			function(openerOnedrive) {
 				openerOnedrive.edit({
-					formSubmitURL: formSubmitURL
+					formSubmitURL: formSubmitURL,
 				});
 			}
 		);
@@ -59,7 +59,7 @@
 			function(openerOnedrive) {
 				openerOnedrive.open({
 					dialogMessage: '<%= dialogMessage %>',
-					statusURL: '<%= oneDriveBackgroundTaskStatusURL %>'
+					statusURL: '<%= oneDriveBackgroundTaskStatusURL %>',
 				});
 			}
 		);

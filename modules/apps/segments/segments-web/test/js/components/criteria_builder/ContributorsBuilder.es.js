@@ -20,7 +20,7 @@ import {
 	CONJUNCTIONS,
 	SUPPORTED_CONJUNCTIONS,
 	SUPPORTED_OPERATORS,
-	SUPPORTED_PROPERTY_TYPES
+	SUPPORTED_PROPERTY_TYPES,
 } from '../../../../src/main/resources/META-INF/resources/js/utils/constants.es';
 
 const initialContributors = [
@@ -29,8 +29,8 @@ const initialContributors = [
 		conjunctionInputId: 'conjunction_input_test_id',
 		initialQuery: '',
 		inputId: 'input_test_id',
-		propertyKey: 'user'
-	}
+		propertyKey: 'user',
+	},
 ];
 
 const propertyGroups = [
@@ -41,95 +41,95 @@ const propertyGroups = [
 			{
 				label: 'Ancestor Organization IDs',
 				name: 'ancestorOrganizationIds',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Class PK',
 				name: 'classPK',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Company ID',
 				name: 'companyId',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Date Modified',
 				name: 'dateModified',
-				type: 'date'
+				type: 'date',
 			},
 			{
 				label: 'Email Address',
 				name: 'emailAddress',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'First Name',
 				name: 'firstName',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Group ID',
 				name: 'groupId',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Group IDs',
 				name: 'groupIds',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Job Title',
 				name: 'jobTitle',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Last Name',
 				name: 'lastName',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Organization IDs',
 				name: 'organizationIds',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Role IDs',
 				name: 'roleIds',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Scope Group ID',
 				name: 'scopeGroupId',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Screen Name',
 				name: 'screenName',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Team IDs',
 				name: 'teamIds',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'User Group IDs',
 				name: 'userGroupIds',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'User ID',
 				name: 'userId',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'User Name',
 				name: 'userName',
-				type: 'string'
-			}
+				type: 'string',
+			},
 		],
-		propertyKey: 'user'
+		propertyKey: 'user',
 	},
 	{
 		entityName: 'User Organization',
@@ -138,46 +138,46 @@ const propertyGroups = [
 			{
 				label: 'Class PK',
 				name: 'classPK',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Company ID',
 				name: 'companyId',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Date Modified',
 				name: 'dateModified',
-				type: 'date'
+				type: 'date',
 			},
 			{
 				label: 'Name',
 				name: 'name',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Name Tree Path',
 				name: 'nameTreePath',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Organization ID',
 				name: 'organizationId',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Parent Organization ID',
 				name: 'parentOrganizationId',
-				type: 'string'
+				type: 'string',
 			},
 			{
 				label: 'Type',
 				name: 'type',
-				type: 'string'
-			}
+				type: 'string',
+			},
 		],
-		propertyKey: 'user-organization'
-	}
+		propertyKey: 'user-organization',
+	},
 ];
 
 describe('ContributorsBuilder', () => {

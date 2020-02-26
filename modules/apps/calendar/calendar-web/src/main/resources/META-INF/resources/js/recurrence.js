@@ -35,174 +35,174 @@ AUI.add(
 			ATTRS: {
 				container: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				currentSavedState: {
-					value: null
+					value: null,
 				},
 
 				dayOfWeekInput: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				daysOfWeek: {
 					getter: '_getDaysOfWeek',
-					setter: '_setDaysOfWeek'
+					setter: '_setDaysOfWeek',
 				},
 
 				daysOfWeekCheckboxes: {
-					getter: '_getDaysOfWeekCheckboxes'
+					getter: '_getDaysOfWeekCheckboxes',
 				},
 
 				frequency: {
 					getter: '_getFrequency',
-					setter: '_setFrequency'
+					setter: '_setFrequency',
 				},
 
 				frequencySelect: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				interval: {
 					getter: '_getInterval',
-					setter: '_setInterval'
+					setter: '_setInterval',
 				},
 
 				intervalSelect: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				lastPositionCheckbox: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				limitCount: {
 					getter: '_getLimitCount',
-					setter: '_setLimitCount'
+					setter: '_setLimitCount',
 				},
 
 				limitCountInput: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				limitCountRadioButton: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				limitDate: {
 					getter: '_getLimitDate',
-					setter: '_setLimitDate'
+					setter: '_setLimitDate',
 				},
 
 				limitDateDatePicker: {
 					setter: '_setDatePicker',
-					value: null
+					value: null,
 				},
 
 				limitDateRadioButton: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				limitRadioButtons: {
-					getter: '_getLimitRadioButtons'
+					getter: '_getLimitRadioButtons',
 				},
 
 				limitType: {
 					getter: '_getLimitType',
-					setter: '_setLimitType'
+					setter: '_setLimitType',
 				},
 
 				monthlyRecurrenceOptions: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				noLimitRadioButton: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				position: {
-					getter: '_getPosition'
+					getter: '_getPosition',
 				},
 
 				positionInput: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				positionSelect: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				positionalDayOfWeek: {
 					getter: '_getPositionalDayOfWeek',
-					setter: '_setPositionalDayOfWeek'
+					setter: '_setPositionalDayOfWeek',
 				},
 
 				positionalDayOfWeekOptions: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				recurrence: {
 					getter: '_getRecurrence',
-					setter: '_setRecurrence'
+					setter: '_setRecurrence',
 				},
 
 				repeatCheckbox: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				repeatOnDayOfMonthRadioButton: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				repeatOnDayOfWeekRadioButton: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				startDate: {
-					getter: '_getStartDate'
+					getter: '_getStartDate',
 				},
 
 				startDateDatePicker: {
-					value: null
+					value: null,
 				},
 
 				startDatePosition: {
-					getter: '_getStartDatePosition'
+					getter: '_getStartDatePosition',
 				},
 
 				startTimeDayOfWeekInput: {
-					getter: '_getStartTimeDayOfWeekInput'
+					getter: '_getStartTimeDayOfWeekInput',
 				},
 
 				summary: {
-					getter: '_getSummary'
+					getter: '_getSummary',
 				},
 
 				summaryNode: {
 					setter: A.one,
-					value: null
+					value: null,
 				},
 
 				weeklyRecurrenceOptions: {
 					setter: A.one,
-					value: null
-				}
+					value: null,
+				},
 			},
 
 			NAME: 'recurrence-dialog',
@@ -332,7 +332,7 @@ AUI.add(
 					return [
 						instance.get('limitCountRadioButton'),
 						instance.get('limitDateRadioButton'),
-						instance.get('noLimitRadioButton')
+						instance.get('noLimitRadioButton'),
 					];
 				},
 
@@ -379,7 +379,7 @@ AUI.add(
 						positionalDayOfWeek = {
 							month: startDate.getMonth(),
 							position: instance.get('position'),
-							weekday: dayOfWeekInput.val()
+							weekday: dayOfWeekInput.val(),
 						};
 					}
 
@@ -396,7 +396,7 @@ AUI.add(
 						interval: instance.get('interval'),
 						positionalWeekday: instance.get('positionalDayOfWeek'),
 						untilDate: instance.get('limitDate'),
-						weekdays: instance.get('daysOfWeek')
+						weekdays: instance.get('daysOfWeek'),
 					};
 				},
 
@@ -824,8 +824,8 @@ AUI.add(
 						.get('checked');
 
 					instance.set('currentSavedState', currentSavedState);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.RecurrenceDialogController = RecurrenceDialogController;
@@ -835,7 +835,7 @@ AUI.add(
 		requires: [
 			'aui-base',
 			'aui-datatype',
-			'liferay-calendar-recurrence-util'
-		]
+			'liferay-calendar-recurrence-util',
+		],
 	}
 );

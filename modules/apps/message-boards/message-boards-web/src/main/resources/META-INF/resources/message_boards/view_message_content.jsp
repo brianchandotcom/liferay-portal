@@ -323,7 +323,7 @@ if (portletTitleBasedNavigation) {
 
 			Liferay.Util.fetch('<%= getMessagesURL.toString() %>', {
 				body: formData,
-				method: 'POST'
+				method: 'POST',
 			})
 				.then(function(response) {
 					return response.text();

@@ -18,7 +18,7 @@ const ToasterContext = createContext();
 const ACTION_TYPES = {
 	ADD: 'ADD_TOASTER',
 	CLEAR_ALL: 'CLEAR_ALL_TOASTERS',
-	REMOVE: 'REMOVE_TOASTER'
+	REMOVE: 'REMOVE_TOASTER',
 };
 
 const toasterReducer = ({toasts = []}, {type, value}) => {
@@ -59,7 +59,7 @@ const ToasterProvider = ({children}) => {
 				clearAll,
 				dispatch,
 				removeToast,
-				toasts
+				toasts,
 			}}
 		>
 			<Toaster removeToast={removeToast} toasts={toasts} />

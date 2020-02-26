@@ -142,8 +142,8 @@ if (vocabulary != null) {
 		on: {
 			clone: function(event) {
 				event.row.all('.subtype-select').hide();
-			}
-		}
+			},
+		},
 	}).render();
 
 	extraFields.setData('autoFieldsInstance', autoFields);

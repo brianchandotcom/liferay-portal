@@ -14,7 +14,7 @@
 
 import {
 	renameFieldInsideExpression,
-	updateRulesFieldName
+	updateRulesFieldName,
 } from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/rules.es';
 
 describe('LayoutProvider/util/rules', () => {
@@ -49,24 +49,24 @@ describe('LayoutProvider/util/rules', () => {
 							operands: [
 								{
 									type: 'field',
-									value: 'FieldName1'
-								}
-							]
+									value: 'FieldName1',
+								},
+							],
 						},
 						{
 							operands: [
 								{
 									type: 'field',
-									value: 'FieldName2'
+									value: 'FieldName2',
 								},
 								{
 									type: 'value',
-									value: 'FieldName1'
-								}
-							]
-						}
-					]
-				}
+									value: 'FieldName1',
+								},
+							],
+						},
+					],
+				},
 			];
 
 			const updatedRules = updateRulesFieldName(
@@ -88,14 +88,14 @@ describe('LayoutProvider/util/rules', () => {
 				{
 					actions: [
 						{
-							target: 'FieldName1'
+							target: 'FieldName1',
 						},
 						{
-							target: 'FieldName2'
-						}
+							target: 'FieldName2',
+						},
 					],
-					conditions: []
-				}
+					conditions: [],
+				},
 			];
 
 			const updatedRules = updateRulesFieldName(
@@ -115,14 +115,14 @@ describe('LayoutProvider/util/rules', () => {
 						{
 							action: 'calculate',
 							expression: '2*[FieldName2]',
-							target: 'FieldName1'
+							target: 'FieldName1',
 						},
 						{
-							target: 'FieldName2'
-						}
+							target: 'FieldName2',
+						},
 					],
-					conditions: []
-				}
+					conditions: [],
+				},
 			];
 
 			const updatedRules = updateRulesFieldName(

@@ -260,7 +260,7 @@ else {
 		);
 
 		var data = {
-			preview: true
+			preview: true,
 		};
 
 		if (
@@ -337,7 +337,7 @@ else {
 				singleSelect: true,
 				title:
 					'<liferay-ui:message key="select-site-navigation-menu-item" />',
-				url: uri
+				url: uri,
 			});
 
 			itemSelectorDialog.on('selectedItemChange', function(event) {
@@ -381,7 +381,7 @@ else {
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true
+						modal: true,
 					},
 					eventName:
 						'<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuEventName() %>',
@@ -389,7 +389,7 @@ else {
 					title:
 						'<liferay-ui:message key="select-site-navigation-menu" />',
 					uri:
-						'<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL() %>'
+						'<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL() %>',
 				},
 				function(selectedItem) {
 					if (selectedItem) {

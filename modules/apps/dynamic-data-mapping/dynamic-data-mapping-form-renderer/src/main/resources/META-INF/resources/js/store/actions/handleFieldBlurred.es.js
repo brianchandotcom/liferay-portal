@@ -28,7 +28,7 @@ export default (pages, properties) => {
 			return {
 				...field,
 				displayErrors: !!field.displayErrors || matches,
-				focused: matches ? false : field.focused
+				focused: matches ? false : field.focused,
 			};
 		})
 	);

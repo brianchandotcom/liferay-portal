@@ -142,8 +142,8 @@
 			Liferay.Util.postForm(form, {
 				data: {
 					hiddenNodes: Liferay.Util.listSelect(availableVisibleNodes),
-					visibleNodes: Liferay.Util.listSelect(currentVisibleNodes)
-				}
+					visibleNodes: Liferay.Util.listSelect(currentVisibleNodes),
+				},
 			});
 		}
 	}

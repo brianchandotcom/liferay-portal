@@ -112,9 +112,9 @@ if (category != null) {
 			Liferay.Util.postForm(form, {
 				data: {
 					<%= Constants.CMD %>:
-						'<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>'
+						'<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>',
 				},
-				url: '<%= editEntryURL %>'
+				url: '<%= editEntryURL %>',
 			});
 		}
 	};
@@ -122,25 +122,25 @@ if (category != null) {
 	var lockEntries = function() {
 		Liferay.Util.postForm(form, {
 			data: {
-				<%= Constants.CMD %>: '<%= Constants.LOCK %>'
+				<%= Constants.CMD %>: '<%= Constants.LOCK %>',
 			},
-			url: '<%= editEntryURL %>'
+			url: '<%= editEntryURL %>',
 		});
 	};
 
 	var unlockEntries = function() {
 		Liferay.Util.postForm(form, {
 			data: {
-				<%= Constants.CMD %>: '<%= Constants.UNLOCK %>'
+				<%= Constants.CMD %>: '<%= Constants.UNLOCK %>',
 			},
-			url: '<%= editEntryURL %>'
+			url: '<%= editEntryURL %>',
 		});
 	};
 
 	var ACTIONS = {
 		deleteEntries: deleteEntries,
 		lockEntries: lockEntries,
-		unlockEntries: unlockEntries
+		unlockEntries: unlockEntries,
 	};
 
 	Liferay.componentReady('mbEntriesManagementToolbar').then(function(

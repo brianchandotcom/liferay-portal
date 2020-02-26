@@ -22,7 +22,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 const ContainerMock = ({children}) => {
 	const [updateDueDate, setUpdateDueDate] = useState({
-		visible: true
+		visible: true,
 	});
 
 	return (
@@ -47,7 +47,7 @@ describe('The SingleUpdateDueDateModal component should', () => {
 		post: jest
 			.fn()
 			.mockRejectedValueOnce(new Error('Request failed'))
-			.mockResolvedValue({data: {items: []}})
+			.mockResolvedValue({data: {items: []}}),
 	};
 
 	beforeAll(() => {
@@ -56,7 +56,7 @@ describe('The SingleUpdateDueDateModal component should', () => {
 				<SingleUpdateDueDateModal />
 			</MockRouter>,
 			{
-				wrapper: ContainerMock
+				wrapper: ContainerMock,
 			}
 		);
 		getByTestId = renderResult.getByTestId;

@@ -34,7 +34,7 @@ class CheckboxMultiple extends Component {
 		this.emit('fieldBlurred', {
 			fieldInstance: this,
 			originalEvent: event,
-			value: event.target.value
+			value: event.target.value,
 		});
 	}
 
@@ -50,13 +50,13 @@ class CheckboxMultiple extends Component {
 
 		this.setState(
 			{
-				value
+				value,
 			},
 			() => {
 				this.emit('fieldEdited', {
 					fieldInstance: this,
 					originalEvent: event,
-					value
+					value,
 				});
 			}
 		);
@@ -65,7 +65,7 @@ class CheckboxMultiple extends Component {
 	_handleFieldFocused(event) {
 		this.emit('fieldFocused', {
 			fieldInstance: this,
-			originalEvent: event
+			originalEvent: event,
 		});
 	}
 }
@@ -129,15 +129,15 @@ CheckboxMultiple.STATE = {
 		Config.shapeOf({
 			label: Config.string(),
 			name: Config.string(),
-			value: Config.string()
+			value: Config.string(),
 		})
 	).value([
 		{
-			label: 'Option 1'
+			label: 'Option 1',
 		},
 		{
-			label: 'Option 2'
-		}
+			label: 'Option 2',
+		},
 	]),
 
 	/**
@@ -230,7 +230,7 @@ CheckboxMultiple.STATE = {
 
 	value: Config.oneOfType([Config.array(), Config.object()]).setter(
 		setJSONArrayValue
-	)
+	),
 };
 
 export default CheckboxMultiple;

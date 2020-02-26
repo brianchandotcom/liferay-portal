@@ -55,7 +55,7 @@ GoogleMapsDialog.STATE = {
 	 * @review
 	 * @type {Object}
 	 */
-	map: Config.object()
+	map: Config.object(),
 };
 
 export default GoogleMapsDialog;

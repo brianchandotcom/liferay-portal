@@ -36,7 +36,7 @@ function AssetTagsSelector({
 	portletURL,
 	removeCallback,
 	selectedItems = [],
-	showSelectButton
+	showSelectButton,
 }) {
 	const {refetch, resource} = useResource({
 		fetchOptions: {
@@ -47,17 +47,17 @@ function AssetTagsSelector({
 						groupIds,
 						name: `%${inputValue === '*' ? '' : inputValue}%`,
 						start: 0,
-						tagProperties: ''
-					}
+						tagProperties: '',
+					},
 				}),
-				p_auth: Liferay.authToken
+				p_auth: Liferay.authToken,
 			}),
 			credentials: 'include',
 			method: 'POST',
-			'x-csrf-token': Liferay.authToken
+			'x-csrf-token': Liferay.authToken,
 		},
 		link: `${window.location.origin}${themeDisplay.getPathContext()}
-				/api/jsonws/invoke`
+				/api/jsonws/invoke`,
 	});
 
 	const previousInputValue = usePrevious(inputValue);
@@ -83,7 +83,7 @@ function AssetTagsSelector({
 					onSelectedItemsChange(
 						selectedItems.concat({
 							label: inputValue,
-							value: inputValue
+							value: inputValue,
 						})
 					);
 				}
@@ -123,14 +123,14 @@ function AssetTagsSelector({
 		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
 		const url = sub(decodeURIComponent(portletURL), {
-			selectedTagNames: selectedItems.map(item => item.value).join()
+			selectedTagNames: selectedItems.map(item => item.value).join(),
 		});
 
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
 			eventName,
 			title: Liferay.Language.get('tags'),
-			url
+			url,
 		});
 
 		itemSelectorDialog.open();
@@ -144,7 +144,7 @@ function AssetTagsSelector({
 					.map(value => {
 						return {
 							label: value,
-							value
+							value,
 						};
 					});
 
@@ -195,7 +195,7 @@ function AssetTagsSelector({
 									? resource.map(tag => {
 											return {
 												label: tag.text,
-												value: tag.value
+												value: tag.value,
 											};
 									  })
 									: []
@@ -231,7 +231,7 @@ AssetTagsSelector.propTypes = {
 	onSelectedItemsChange: PropTypes.func,
 	portletURL: PropTypes.string,
 	removeCallback: PropTypes.string,
-	selectedItems: PropTypes.array
+	selectedItems: PropTypes.array,
 };
 
 export default AssetTagsSelector;

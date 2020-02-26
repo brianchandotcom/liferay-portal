@@ -26,12 +26,12 @@ describe('Segments Experiments with Click Goal', () => {
 			...segmentsExperiment,
 			goal: {
 				label: 'Click',
-				value: 'click'
-			}
+				value: 'click',
+			},
 		};
 
 		const {getByText} = renderApp({
-			initialSegmentsExperiment: segmentsExperiment
+			initialSegmentsExperiment: segmentsExperiment,
 		});
 
 		getByText(experiment.name);
@@ -43,8 +43,8 @@ describe('Segments Experiments with Click Goal', () => {
 			...segmentsExperiment,
 			goal: {
 				label: 'Click',
-				value: 'click'
-			}
+				value: 'click',
+			},
 		};
 
 		const {getByText} = render(
@@ -65,8 +65,8 @@ describe('Segments Experiments with Click Goal', () => {
 			...segmentsExperiment,
 			goal: {
 				label: 'Click',
-				value: 'click'
-			}
+				value: 'click',
+			},
 		};
 
 		const {getByText} = render(
@@ -87,8 +87,8 @@ describe('Segments Experiments with Click Goal', () => {
 			goal: {
 				label: 'Click',
 				target: '#myButtonId',
-				value: 'click'
-			}
+				value: 'click',
+			},
 		};
 
 		const {getByText} = render(
@@ -106,8 +106,8 @@ describe('Segments Experiments with Click Goal', () => {
 			goal: {
 				label: 'Click',
 				target: '#myButtonId',
-				value: 'click'
-			}
+				value: 'click',
+			},
 		};
 
 		const {getByText} = render(

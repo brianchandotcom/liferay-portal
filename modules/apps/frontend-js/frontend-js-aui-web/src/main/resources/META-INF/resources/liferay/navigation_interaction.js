@@ -46,7 +46,7 @@ AUI.add(
 
 					if (instance._isTriggerVisible()) {
 						Liferay.fire('exitNavigation', {
-							navigation: instance.get('host')
+							navigation: instance.get('host'),
 						});
 					}
 				},
@@ -90,7 +90,7 @@ AUI.add(
 					else {
 						Liferay.fire('exitNavigation', {
 							direction,
-							navigation: instance.get('host')
+							navigation: instance.get('host'),
 						});
 					}
 				},
@@ -180,7 +180,7 @@ AUI.add(
 							if (exitDirection) {
 								Liferay.fire('exitNavigation', {
 									direction: exitDirection,
-									navigation: instance.get('host')
+									navigation: instance.get('host'),
 								});
 							}
 						}
@@ -229,8 +229,8 @@ AUI.add(
 						focusClass: 'active',
 						keys: {
 							next: 'down:40',
-							previous: 'down:38'
-						}
+							previous: 'down:38',
+						},
 					});
 
 					var focusManager = host.focusManager;
@@ -362,8 +362,8 @@ AUI.add(
 					instance._initChildMenuHandlers(navigation);
 
 					instance._initNodeFocusManager();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.NavigationInteraction = NavigationInteraction;
@@ -375,7 +375,7 @@ AUI.add(
 			'aui-component',
 			'event-mouseenter',
 			'node-focusmanager',
-			'plugin'
-		]
+			'plugin',
+		],
 	}
 );

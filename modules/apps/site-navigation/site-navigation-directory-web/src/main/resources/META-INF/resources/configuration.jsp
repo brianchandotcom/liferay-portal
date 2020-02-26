@@ -78,7 +78,7 @@
 	function refreshPreview(displayStyle, sites) {
 		var data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', {
 			displayStyle: displayStyle,
-			sites: sites
+			sites: sites,
 		});
 
 		Liferay.Portlet.refresh(

@@ -22,20 +22,20 @@ AUI.add(
 		var IntervalSelector = A.Component.create({
 			ATTRS: {
 				endDatePicker: {
-					value: null
+					value: null,
 				},
 
 				endTimePicker: {
-					value: null
+					value: null,
 				},
 
 				startDatePicker: {
-					value: null
+					value: null,
 				},
 
 				startTimePicker: {
-					value: null
-				}
+					value: null,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -359,14 +359,14 @@ AUI.add(
 					var instance = this;
 
 					AArray.invoke(instance.eventHandlers, 'detach');
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.IntervalSelector = IntervalSelector;
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-portlet-base']
+		requires: ['aui-base', 'liferay-portlet-base'],
 	}
 );

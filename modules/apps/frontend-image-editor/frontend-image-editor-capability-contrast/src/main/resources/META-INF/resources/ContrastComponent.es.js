@@ -72,7 +72,7 @@ class ContrastComponent extends Component {
 		if (!promise) {
 			promise = this.spawnWorker_({
 				contrastValue,
-				imageData
+				imageData,
 			});
 
 			this.cache_[contrastValue] = promise;
@@ -119,7 +119,7 @@ ContrastComponent.STATE = {
 	 * @type {String}
 	 */
 	modulePath: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -129,8 +129,8 @@ ContrastComponent.STATE = {
 	 * @type {Function}
 	 */
 	requestImageEditorPreview: {
-		validator: core.isFunction
-	}
+		validator: core.isFunction,
+	},
 };
 
 Soy.register(ContrastComponent, componentTemplates);

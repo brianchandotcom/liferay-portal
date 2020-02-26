@@ -180,6 +180,6 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 		namespace: '<portlet:namespace />',
 		redirectUrl: '<%= redirectURL %>',
 		submitButton: '.save-server-button',
-		url: '<%= searchAdminEditURL %>'
+		url: '<%= searchAdminEditURL %>',
 	});
 </aui:script>

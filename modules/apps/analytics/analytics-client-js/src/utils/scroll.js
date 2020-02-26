@@ -28,7 +28,7 @@ function getDocumentHeight() {
 	const heights = [
 		document.body.clientHeight,
 		document.documentElement.clientHeight,
-		document.documentElement.scrollHeight
+		document.documentElement.scrollHeight,
 	];
 
 	return Math.max(...heights);
@@ -40,7 +40,7 @@ function getDimensions(element) {
 
 	let positions = {
 		height,
-		top
+		top,
 	};
 
 	if (element) {
@@ -50,7 +50,7 @@ function getDimensions(element) {
 		positions = {
 			bottom,
 			height,
-			top
+			top,
 		};
 	}
 

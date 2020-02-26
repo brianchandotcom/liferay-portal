@@ -61,7 +61,7 @@ long actionGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("grou
 			if (!(groupIdFieldName in rules)) {
 				rules[groupIdFieldName] = {
 					custom: false,
-					required: true
+					required: true,
 				};
 			}
 
@@ -70,7 +70,7 @@ long actionGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("grou
 			if (!(plidFieldName in rules)) {
 				rules[plidFieldName] = {
 					custom: false,
-					required: true
+					required: true,
 				};
 			}
 		}

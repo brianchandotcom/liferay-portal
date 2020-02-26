@@ -28,7 +28,7 @@ const ManageLanguages = ({
 	customLocales,
 	observer,
 	onModalClose = noop,
-	onModalDone = noop
+	onModalDone = noop,
 }) => {
 	const [selectedLocales, setSelectedLocales] = useState(customLocales);
 
@@ -41,7 +41,7 @@ const ManageLanguages = ({
 			setSelectedLocales(
 				selectedLocales.concat({
 					displayName,
-					localeId: selectedLocaleId
+					localeId: selectedLocaleId,
 				})
 			);
 		}
@@ -135,19 +135,19 @@ ManageLanguages.propTypes = {
 	availableLocales: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,
-			localeId: PropTypes.string
+			localeId: PropTypes.string,
 		})
 	).isRequired,
 	customDefaultLocaleId: PropTypes.string.isRequired,
 	customLocales: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,
-			localeId: PropTypes.string
+			localeId: PropTypes.string,
 		})
 	).isRequired,
 	observer: PropTypes.object.isRequired,
 	onModalClose: PropTypes.func,
-	onModalDone: PropTypes.func
+	onModalDone: PropTypes.func,
 };
 
 export default function(props) {

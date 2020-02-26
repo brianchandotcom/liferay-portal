@@ -25,7 +25,7 @@ import Sidebar from 'dynamic-data-mapping-form-builder/js/components/Sidebar/Sid
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {
 	isKeyInSet,
-	isModifyingKey
+	isModifyingKey,
 } from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 import {PagesVisitor, compose} from 'dynamic-data-mapping-form-renderer';
@@ -55,7 +55,7 @@ class Form extends Component {
 			localizedName,
 			namespace,
 			published,
-			showPublishAlert
+			showPublishAlert,
 		} = this.props;
 		const {paginationMode} = this.state;
 
@@ -84,7 +84,7 @@ class Form extends Component {
 				return editor;
 			}),
 			this._createEditor('descriptionEditor'),
-			Liferay.componentReady('translationManager')
+			Liferay.componentReady('translationManager'),
 		];
 
 		if (this.isFormBuilderView()) {
@@ -96,7 +96,7 @@ class Form extends Component {
 				nameEditor,
 				descriptionEditor,
 				translationManager,
-				settingsDDMForm
+				settingsDDMForm,
 			]) => {
 				if (translationManager) {
 					this.props.defaultLanguageId = translationManager.get(
@@ -124,7 +124,7 @@ class Form extends Component {
 						translationManager.on(
 							'availableLocales',
 							this.onAvailableLocalesRemoved.bind(this)
-						)
+						),
 					];
 				}
 
@@ -139,7 +139,7 @@ class Form extends Component {
 						published,
 						settingsDDMForm,
 						store,
-						translationManager
+						translationManager,
 					},
 					this.element
 				);
@@ -150,7 +150,7 @@ class Form extends Component {
 						interval: Liferay.DDM.FormSettings.autosaveInterval,
 						namespace,
 						stateSyncronizer: this._stateSyncronizer,
-						url: Liferay.DDM.FormSettings.autosaveURL
+						url: Liferay.DDM.FormSettings.autosaveURL,
 					},
 					this.element
 				);
@@ -345,7 +345,7 @@ class Form extends Component {
 
 		if (removedItems.size > 0) {
 			store.emit('languageIdDeleted', {
-				locale: removedItems.keys().next().value
+				locale: removedItems.keys().next().value,
 			});
 		}
 	}
@@ -391,7 +391,7 @@ class Form extends Component {
 			rolesURL,
 			rules,
 			spritemap,
-			view
+			view,
 		} = this.props;
 		const {saveButtonLabel} = this.state;
 
@@ -402,7 +402,7 @@ class Form extends Component {
 			initialPages: context.pages,
 			initialPaginationMode: context.paginationMode,
 			initialSuccessPageSettings: context.successPageSettings,
-			ref: 'store'
+			ref: 'store',
 		};
 
 		const LayoutProviderTag = LayoutProvider;
@@ -511,14 +511,14 @@ class Form extends Component {
 								alignment: 'right',
 								label: Liferay.Language.get('leave'),
 								style: 'secondary',
-								type: 'close'
+								type: 'close',
 							},
 							{
 								alignment: 'right',
 								label: Liferay.Language.get('stay'),
 								style: 'primary',
-								type: 'button'
-							}
+								type: 'button',
+							},
 						]}
 						ref={'discardChangesModal'}
 						size={'sm'}
@@ -559,7 +559,7 @@ class Form extends Component {
 			defaultLanguageId,
 			editingLanguageId,
 			published,
-			saved
+			saved,
 		} = this.props;
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
 		const formBuilderButtons = document.querySelector(
@@ -669,7 +669,7 @@ class Form extends Component {
 			withActionableFields,
 			withMoveableFields,
 			withMultiplePages,
-			withResizeableColumns
+			withResizeableColumns,
 		];
 
 		if (this.isFormBuilderView()) {
@@ -767,7 +767,7 @@ class Form extends Component {
 		const navLink = navItem.querySelector('.nav-link');
 
 		this.setState({
-			ruleBuilderVisible: navItemIndex === 1
+			ruleBuilderVisible: navItemIndex === 1,
 		});
 
 		document
@@ -788,7 +788,7 @@ class Form extends Component {
 
 	_handlePaginationModeChanded({newVal}) {
 		this.setState({
-			paginationMode: newVal
+			paginationMode: newVal,
 		});
 	}
 
@@ -802,7 +802,7 @@ class Form extends Component {
 		event.preventDefault();
 
 		this.setState({
-			saveButtonLabel: Liferay.Language.get('saving')
+			saveButtonLabel: Liferay.Language.get('saving'),
 		});
 
 		this.submitForm();
@@ -867,7 +867,7 @@ class Form extends Component {
 		}
 
 		const emptyLocalizableValue = {
-			[themeDisplay.getLanguageId()]: ''
+			[themeDisplay.getLanguageId()]: '',
 		};
 
 		if (!context.pages.length) {
@@ -883,16 +883,16 @@ class Form extends Component {
 								columns: [
 									{
 										fields: [],
-										size: 12
-									}
-								]
-							}
+										size: 12,
+									},
+								],
+							},
 						],
-						title: ''
-					}
+						title: '',
+					},
 				],
 				paginationMode: 'wizard',
-				successPageSettings
+				successPageSettings,
 			};
 		}
 
@@ -903,20 +903,20 @@ class Form extends Component {
 					description,
 					localizedDescription,
 					localizedTitle,
-					title
+					title,
 				} = page;
 
 				if (!core.isString(description)) {
 					description = description[themeDisplay.getLanguageId()];
 					localizedDescription = {
-						[themeDisplay.getLanguageId()]: description
+						[themeDisplay.getLanguageId()]: description,
 					};
 				}
 
 				if (!core.isString(title)) {
 					title = title[themeDisplay.getLanguageId()];
 					localizedTitle = {
-						[themeDisplay.getLanguageId()]: title
+						[themeDisplay.getLanguageId()]: title,
 					};
 				}
 
@@ -925,9 +925,9 @@ class Form extends Component {
 					description,
 					localizedDescription,
 					localizedTitle,
-					title
+					title,
 				};
-			})
+			}),
 		};
 	}
 
@@ -1005,7 +1005,7 @@ Form.PROPS = {
 		pages: Config.arrayOf(Config.object()),
 		paginationMode: Config.string(),
 		rules: Config.array(),
-		successPageSettings: Config.object()
+		successPageSettings: Config.object(),
 	})
 		.required()
 		.setter('_setContext'),
@@ -1212,7 +1212,7 @@ Form.PROPS = {
 
 	spritemap: Config.string().required(),
 
-	view: Config.string()
+	view: Config.string(),
 };
 
 Form.STATE = {
@@ -1253,7 +1253,7 @@ Form.STATE = {
 	 * @type {!string}
 	 */
 
-	saveButtonLabel: Config.string().valueFn('_saveButtonLabelValueFn')
+	saveButtonLabel: Config.string().valueFn('_saveButtonLabelValueFn'),
 };
 
 export default Form;

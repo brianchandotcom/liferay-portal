@@ -86,7 +86,7 @@ const Carousel = ({
 	currentItem,
 	handleClickNext,
 	handleClickPrevious,
-	showArrows = true
+	showArrows = true,
 }) => (
 	<div className="carousel closed sidenav-container">
 		<InfoPanel metadata={currentItem.metadata} />

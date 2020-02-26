@@ -20,7 +20,7 @@ import MultiSelect from '../../shared/components/MultiSelect.es';
 import LoadingState from '../../shared/components/loading/LoadingState.es';
 import {
 	BackLink,
-	BackRedirect
+	BackRedirect,
 } from '../../shared/components/router/routerWrapper.es';
 import {openErrorToast} from '../../shared/util/toast.es';
 import {AppContext, AppStatus} from '../AppContext.es';
@@ -33,7 +33,7 @@ import {
 	NAME,
 	PAUSE_NODE_KEYS,
 	START_NODE_KEYS,
-	STOP_NODE_KEYS
+	STOP_NODE_KEYS,
 } from './Constants.es';
 import FieldError from './form/fieldError.es';
 import FieldLabel from './form/fieldLabel.es';
@@ -46,7 +46,7 @@ import {
 	validateDuration,
 	validateHours,
 	validateName,
-	validateNodeKeys
+	validateNodeKeys,
 } from './util/slaFormUtil.es';
 
 const {useContext, useState} = React;
@@ -137,8 +137,8 @@ const Body = ({id, processId, query}) => {
 			pauseNodeKeys: {nodeKeys: pauseNodeKeys},
 			startNodeKeys: {nodeKeys: startNodeKeys},
 			status,
-			stopNodeKeys: {nodeKeys: stopNodeKeys}
-		}
+			stopNodeKeys: {nodeKeys: stopNodeKeys},
+		},
 	} = useContext(SLA);
 	const {errors, setErrors} = useContext(Errors);
 	const {getPauseNodes, getStartNodes, getStopNodes, nodes} = useContext(
@@ -152,7 +152,7 @@ const Body = ({id, processId, query}) => {
 		allowLeadingZeroes: true,
 		includeThousandsSeparator: false,
 		integerLimit: 4,
-		prefix: ''
+		prefix: '',
 	});
 
 	const checkNodeErrors = type => filteredNodeKeys => {
@@ -168,7 +168,7 @@ const Body = ({id, processId, query}) => {
 	};
 
 	const onChangeHandler = (saveFunc, validationFunc) => ({
-		target: {name, value = ''}
+		target: {name, value = ''},
 	}) => {
 		saveFunc(name, value);
 		if (typeof validationFunc === 'function') {
@@ -579,7 +579,7 @@ const Footer = ({id, onReloadNodes, processId, query}) => {
 		}
 		else {
 			openErrorToast({
-				message: Liferay.Language.get('your-request-has-failed')
+				message: Liferay.Language.get('your-request-has-failed'),
 			});
 		}
 	};
@@ -632,7 +632,7 @@ const Footer = ({id, onReloadNodes, processId, query}) => {
 				<Redirect
 					to={{
 						pathname: `/slas/${processId}/${defaultDelta}/1`,
-						search: query
+						search: query,
 					}}
 				/>
 			) : null}

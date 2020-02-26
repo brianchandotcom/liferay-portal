@@ -27,7 +27,7 @@ import {
 	DEFAULT_DELTA,
 	DELTAS,
 	FETCH_OPTIONS,
-	KEY_CODES
+	KEY_CODES,
 } from '../../utils/constants.es';
 import {getPluralMessage} from '../../utils/language.es';
 import {buildUrl, resultsDataToMap, toggleListItem} from '../../utils/util.es';
@@ -41,7 +41,7 @@ import AddResultSearchBar from './AddResultSearchBar.es';
 function AddResultModal({
 	fetchDocumentsSearchUrl,
 	onAddResultSubmit,
-	onCloseModal
+	onCloseModal,
 }) {
 	const {companyId, namespace, spritemap} = useContext(ThemeContext);
 
@@ -51,7 +51,7 @@ function AddResultModal({
 	 */
 	const [resourceState, setResourceState] = useState(() => ({
 		error: false,
-		loading: false
+		loading: false,
 	}));
 
 	const {error, loading} = resourceState;
@@ -73,7 +73,7 @@ function AddResultModal({
 	const [dataMap, setDataMap] = useState(false);
 
 	const {observer, onClose} = useModal({
-		onClose: _handleCloseModal
+		onClose: _handleCloseModal,
 	});
 
 	const {refetch, resource} = useResource({
@@ -82,13 +82,13 @@ function AddResultModal({
 			[`${namespace}companyId`]: companyId,
 			[`${namespace}from`]: page * delta - delta,
 			[`${namespace}keywords`]: searchQuery,
-			[`${namespace}size`]: delta
+			[`${namespace}size`]: delta,
 		}),
 		onNetworkStatusChange: status =>
 			setResourceState({
 				error: status === 5,
-				loading: status < 4
-			})
+				loading: status < 4,
+			}),
 	});
 
 	/**
@@ -409,7 +409,7 @@ function AddResultModal({
 								'showing-x-to-x-of-x-entries'
 							),
 							perPageItems: Liferay.Language.get('x-items'),
-							selectPerPageItems: Liferay.Language.get('x-items')
+							selectPerPageItems: Liferay.Language.get('x-items'),
 						}}
 						onDeltaChange={_handleDeltaChange}
 						onPageChange={_handlePageChange}
@@ -504,7 +504,7 @@ function AddResultModal({
 AddResultModal.propTypes = {
 	fetchDocumentsSearchUrl: PropTypes.string.isRequired,
 	onAddResultSubmit: PropTypes.func.isRequired,
-	onCloseModal: PropTypes.func.isRequired
+	onCloseModal: PropTypes.func.isRequired,
 };
 
 export default AddResultModal;

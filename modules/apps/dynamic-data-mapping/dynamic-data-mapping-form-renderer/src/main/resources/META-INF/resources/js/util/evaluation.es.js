@@ -28,7 +28,7 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 		defaultLanguageId,
 		editingLanguageId,
 		pages,
-		portletNamespace
+		portletNamespace,
 	} = evaluatorContext;
 
 	if (controller) {
@@ -47,12 +47,12 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 			serializedFormContext: JSON.stringify({
 				...evaluatorContext,
 				groupId: themeDisplay.getScopeGroupId(),
-				portletNamespace
+				portletNamespace,
 			}),
-			trigger: fieldName
+			trigger: fieldName,
 		}),
 		signal: controller && controller.signal,
-		url: EVALUATOR_URL
+		url: EVALUATOR_URL,
 	})
 		.then(newPages => {
 			const mergedPages = mergePages(
@@ -93,9 +93,9 @@ export const mergeFieldOptions = (field, newField) => {
 
 				return {
 					...option,
-					edited: existingOption && existingOption.edited
+					edited: existingOption && existingOption.edited,
 				};
-			})
+			}),
 		};
 	});
 
@@ -126,7 +126,7 @@ export const mergePages = (
 				defaultLanguageId,
 				displayErrors,
 				editingLanguageId,
-				valid: field.valid !== false
+				valid: field.valid !== false,
 			};
 
 			if (sourceField.nestedFields && newField.nestedFields) {
@@ -137,16 +137,16 @@ export const mergePages = (
 							...nestedField,
 							...(newField.nestedFields.find(({fieldName}) => {
 								return fieldName === nestedField.fieldName;
-							}) || {})
+							}) || {}),
 						};
-					})
+					}),
 				};
 			}
 
 			if (newField.type === 'options') {
 				newField = {
 					...newField,
-					value: mergeFieldOptions(sourceField, newField)
+					value: mergeFieldOptions(sourceField, newField),
 				};
 			}
 
@@ -154,8 +154,8 @@ export const mergePages = (
 				newField = {
 					...newField,
 					localizedValue: {
-						...sourceField.localizedValue
-					}
+						...sourceField.localizedValue,
+					},
 				};
 			}
 

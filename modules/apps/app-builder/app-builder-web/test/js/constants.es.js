@@ -20,7 +20,7 @@ const createItems = size => {
 			dateCreated: '01/01/2019',
 			dateModified: '01/02/2019',
 			id: i + 1,
-			name: `Name ${i + 1}`
+			name: `Name ${i + 1}`,
 		});
 	}
 
@@ -30,34 +30,34 @@ const createItems = size => {
 export const ACTIONS = [
 	{
 		action: () => {},
-		name: 'Delete'
-	}
+		name: 'Delete',
+	},
 ];
 
 export const BODY = item => item;
 
 export const COLUMNS = [
 	{
-		name: 'Name'
+		name: 'Name',
 	},
 	{
-		dateCreated: 'Created Date'
+		dateCreated: 'Created Date',
 	},
 	{
-		dateModified: 'Modified Date'
-	}
+		dateModified: 'Modified Date',
+	},
 ];
 
 export const EMPTY_STATE = {
 	description: 'description',
-	title: 'title'
+	title: 'title',
 };
 
 export const ENDPOINT = '/endpoint';
 
 export const ITEMS = {
 	ONE: createItems(1),
-	TWENTY: createItems(20)
+	TWENTY: createItems(20),
 };
 
 export const RESPONSES = {
@@ -66,20 +66,20 @@ export const RESPONSES = {
 		lastPage: 1,
 		page: 1,
 		pageSize: 20,
-		totalCount: 0
+		totalCount: 0,
 	},
 	ONE_ITEM: {
 		items: ITEMS.ONE,
 		lastPage: 1,
 		page: 1,
 		pageSize: 20,
-		totalCount: ITEMS.ONE.length
+		totalCount: ITEMS.ONE.length,
 	},
 	TWENTY_ONE_ITEMS: {
 		items: ITEMS.TWENTY,
 		lastPage: 2,
 		page: 1,
 		pageSize: 20,
-		totalCount: ITEMS.TWENTY.length + 1
-	}
+		totalCount: ITEMS.TWENTY.length + 1,
+	},
 };

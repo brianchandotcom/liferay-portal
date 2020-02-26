@@ -181,8 +181,8 @@ if (Validator.isNotNull(scriptContent)) {
 
 						instance._bindUIACBase();
 						instance._syncUIACBase();
-					}
-				}
+					},
+				},
 			});
 
 			var getItems = function() {
@@ -191,7 +191,7 @@ if (Validator.isNotNull(scriptContent)) {
 				paletteItems.each(function(item, index) {
 					results.push({
 						data: item.text().trim(),
-						node: item.ancestor()
+						node: item.ancestor(),
 					});
 				});
 
@@ -219,7 +219,7 @@ if (Validator.isNotNull(scriptContent)) {
 				nodes: '.palette-item-container',
 				resultFilters: 'phraseMatch',
 				resultTextLocator: 'data',
-				source: getItems()
+				source: getItems(),
 			});
 
 			paletteSearch.on('results', function(event) {
@@ -334,7 +334,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 		if (AutoComplete) {
 			var processor = new AutoComplete({
-				variables: <%= ddmDisplayContext.getAutocompleteJSON(request, language) %>
+				variables: <%= ddmDisplayContext.getAutocompleteJSON(request, language) %>,
 			});
 
 			if (processor) {
@@ -344,7 +344,7 @@ if (Validator.isNotNull(scriptContent)) {
 					processor: processor,
 					render: true,
 					visible: false,
-					zIndex: 10000
+					zIndex: 10000,
 				});
 			}
 			else {
@@ -368,15 +368,15 @@ if (Validator.isNotNull(scriptContent)) {
 				boundingBox: editorNode,
 				height: 400,
 				mode: '<%= EditorModeUtil.getEditorMode(langType) %>',
-				width: '100%'
+				width: '100%',
 			}).render();
 
 			new A.Resize({
 				handles: ['br'],
 				node: editorNode,
 				on: {
-					resize: resizeEditor
-				}
+					resize: resizeEditor,
+				},
 			});
 
 			if (editorContentElement) {
@@ -404,12 +404,12 @@ if (Validator.isNotNull(scriptContent)) {
 					animated: true,
 					container: paletteDataContainer,
 					content: '.palette-item-content',
-					header: '.palette-item-header'
+					header: '.palette-item-header',
 				});
 
 				new A.TooltipDelegate({
 					align: {
-						points: [A.WidgetPositionAlign.LC, A.WidgetPositionAlign.RC]
+						points: [A.WidgetPositionAlign.LC, A.WidgetPositionAlign.RC],
 					},
 					duration: 0.5,
 					html: true,
@@ -417,7 +417,7 @@ if (Validator.isNotNull(scriptContent)) {
 					trigger:
 						'#<portlet:namespace />templatePaletteContainer .palette-item',
 					visible: false,
-					zIndex: 6
+					zIndex: 6,
 				});
 
 				createLiveSearch();

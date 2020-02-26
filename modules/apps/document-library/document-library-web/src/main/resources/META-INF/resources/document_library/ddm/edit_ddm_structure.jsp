@@ -212,21 +212,21 @@ renderResponse.setTitle(title);
 			{
 				dialog: {
 					constrain: true,
-					modal: true
+					modal: true,
 				},
 				eventName: '<portlet:namespace />selectDDMStructure',
 				id: '<portlet:namespace />selectDDMStructure',
 				title:
 					'<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
 				uri:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(dlEditDDMStructureDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>'
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(dlEditDDMStructureDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>',
 			},
 			function(event) {
 				var form = document.<portlet:namespace />fm;
 
 				Liferay.Util.setFormValues(form, {
 					parentDDMStructureId: event.ddmstructureid,
-					parentDDMStructureName: Liferay.Util.unescape(event.name)
+					parentDDMStructureName: Liferay.Util.unescape(event.name),
 				});
 
 				var removeParentDDMStructureButton = Liferay.Util.getFormElement(
@@ -249,7 +249,7 @@ renderResponse.setTitle(title);
 
 		Liferay.Util.setFormValues(form, {
 			parentDDMStructureId: '',
-			parentDDMStructureName: ''
+			parentDDMStructureName: '',
 		});
 
 		var removeParentDDMStructureButton = Liferay.Util.getFormElement(
@@ -280,20 +280,20 @@ renderResponse.setTitle(title);
 						.save({
 							dataDefinition: {
 								description: {
-									value: description
+									value: description,
 								},
 								name: {
-									value: name
-								}
+									value: name,
+								},
 							},
 							dataLayout: {
 								description: {
-									value: description
+									value: description,
 								},
 								name: {
-									value: name
-								}
-							}
+									value: name,
+								},
+							},
 						})
 						.then(function(dataLayout) {
 							document.<portlet:namespace />fm[
@@ -306,8 +306,8 @@ renderResponse.setTitle(title);
 			<c:otherwise>
 				Liferay.Util.postForm(document.<portlet:namespace />fm, {
 					data: {
-						definition: <portlet:namespace />formBuilder.getContentValue()
-					}
+						definition: <portlet:namespace />formBuilder.getContentValue(),
+					},
 				});
 			</c:otherwise>
 		</c:choose>

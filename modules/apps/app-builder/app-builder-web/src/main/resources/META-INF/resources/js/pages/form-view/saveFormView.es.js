@@ -18,7 +18,7 @@ export default ({
 	dataDefinition,
 	dataDefinitionId,
 	dataLayout,
-	dataLayoutId
+	dataLayoutId,
 }) => {
 	const normalizedDataLayout = {
 		...dataLayout,
@@ -31,17 +31,17 @@ export default ({
 						dataLayoutRow.dataLayoutColumns || []
 					).map(dataLayoutColumn => ({
 						...dataLayoutColumn,
-						fieldNames: dataLayoutColumn.fieldNames || []
-					}))
+						fieldNames: dataLayoutColumn.fieldNames || [],
+					})),
 				})
 			),
 			description: dataLayoutPage.description || {
-				[themeDisplay.getLanguageId()]: ''
+				[themeDisplay.getLanguageId()]: '',
 			},
 			title: dataLayoutPage.title || {
-				[themeDisplay.getLanguageId()]: ''
-			}
-		}))
+				[themeDisplay.getLanguageId()]: '',
+			},
+		})),
 	};
 
 	const updateDefinition = () =>

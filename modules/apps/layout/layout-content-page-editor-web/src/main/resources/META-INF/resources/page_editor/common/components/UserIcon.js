@@ -45,5 +45,5 @@ export default function UserIcon({fullName = '', portraitURL = '', userId}) {
 UserIcon.propTypes = {
 	fullName: PropTypes.string,
 	portraitURL: PropTypes.string,
-	userId: PropTypes.string.isRequired
+	userId: PropTypes.string.isRequired,
 };

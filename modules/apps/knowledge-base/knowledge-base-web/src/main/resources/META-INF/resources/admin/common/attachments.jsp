@@ -105,11 +105,11 @@ if (kbArticle != null) {
 			method: Liferay.Service.bind('/kb.kbarticle/get-temp-attachment-names'),
 			params: {
 				groupId: <%= scopeGroupId %>,
-				tempFolderName: '<%= KBWebKeys.TEMP_FOLDER_NAME %>'
-			}
+				tempFolderName: '<%= KBWebKeys.TEMP_FOLDER_NAME %>',
+			},
 		},
 		uploadFile:
-			'<liferay-portlet:actionURL name="addTempAttachment"><portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" /></liferay-portlet:actionURL>'
+			'<liferay-portlet:actionURL name="addTempAttachment"><portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" /></liferay-portlet:actionURL>',
 	});
 </aui:script>
 

@@ -28,7 +28,7 @@ const DEFAULT_WHITELIST = [
 	DEFAULT_DISABLED_AREA_CLASS,
 	'control-menu',
 	'lfr-add-panel',
-	'lfr-product-menu-panel'
+	'lfr-product-menu-panel',
 ];
 const POPOVER_POSITIONS = {
 	[Align.Bottom]: 'bottom',
@@ -38,7 +38,7 @@ const POPOVER_POSITIONS = {
 	[Align.Right]: 'right',
 	[Align.Top]: 'top',
 	[Align.TopLeft]: 'top',
-	[Align.TopRight]: 'top'
+	[Align.TopRight]: 'top',
 };
 const STATIC_POSITIONS = ['', 'static', 'relative'];
 

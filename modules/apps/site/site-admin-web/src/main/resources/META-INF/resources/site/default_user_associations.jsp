@@ -188,12 +188,12 @@ for (long defaultTeamId : defaultTeamIds) {
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true
+						modal: true,
 					},
 					id: config.id,
 					selectedData: searchContainerData,
 					title: config.title,
-					uri: uri
+					uri: uri,
 				},
 				function(event) {
 					var entityId = event.entityid;
@@ -202,7 +202,7 @@ for (long defaultTeamId : defaultTeamIds) {
 						A.Escape.html(event.entityname),
 						'<a class="modify-link" data-rowId="' +
 							entityId +
-							'" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
+							'" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>',
 					];
 
 					searchContainer.addRow(rowColumns, entityId);
@@ -237,7 +237,7 @@ for (long defaultTeamId : defaultTeamIds) {
 		titleAttr: 'roletitle',
 		uri: '<%= selectSiteRoleURL.toString() %>',
 		urlParam:
-			'<%= PortalUtil.getPortletNamespace(selectSiteRolePortletId) %>roleIds'
+			'<%= PortalUtil.getPortletNamespace(selectSiteRolePortletId) %>roleIds',
 	};
 
 	bindModifyLink(siteRolesConfig);
@@ -265,7 +265,7 @@ for (long defaultTeamId : defaultTeamIds) {
 		titleAttr: 'teamname',
 		uri: '<%= selectTeamURL.toString() %>',
 		urlParam:
-			'<%= PortalUtil.getPortletNamespace(selectTeamPortletId) %>teamIds'
+			'<%= PortalUtil.getPortletNamespace(selectTeamPortletId) %>teamIds',
 	};
 
 	bindModifyLink(teamsConfig);

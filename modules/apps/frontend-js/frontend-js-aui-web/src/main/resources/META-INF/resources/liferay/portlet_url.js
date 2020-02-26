@@ -57,7 +57,7 @@ AUI.add(
 				refererGroupId: null,
 				refererPlid: null,
 				saveLastPath: null,
-				scroll: null
+				scroll: null,
 			};
 
 			if (!basePortletURL) {
@@ -71,7 +71,7 @@ AUI.add(
 			instance.options = {
 				basePortletURL,
 				escapeXML: null,
-				secure: null
+				secure: null,
 			};
 
 			A.each(params, (item, index) => {
@@ -278,7 +278,7 @@ AUI.add(
 
 				var parameters = {
 					...instance.params,
-					...reservedParameters
+					...reservedParameters,
 				};
 
 				var portletURL = Liferay.Util.PortletURL.createPortletURL(
@@ -295,7 +295,7 @@ AUI.add(
 				}
 
 				return portletURL.toString();
-			}
+			},
 		};
 
 		A.mix(PortletURL, {
@@ -319,13 +319,13 @@ AUI.add(
 
 			createURL(basePortletURL, params) {
 				return new PortletURL(null, params, basePortletURL);
-			}
+			},
 		});
 
 		Liferay.PortletURL = PortletURL;
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base'],
 	}
 );

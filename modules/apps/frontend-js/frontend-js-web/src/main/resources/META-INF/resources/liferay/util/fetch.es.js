@@ -13,7 +13,7 @@
  */
 
 const DEFAULT_INIT = {
-	credentials: 'include'
+	credentials: 'include',
 };
 
 /**
@@ -34,7 +34,7 @@ export default function defaultFetch(resource, init = {}) {
 
 	const mergedInit = {
 		...DEFAULT_INIT,
-		...init
+		...init,
 	};
 
 	mergedInit.headers = headers;

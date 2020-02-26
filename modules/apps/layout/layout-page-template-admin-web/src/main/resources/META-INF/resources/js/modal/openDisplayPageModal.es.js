@@ -37,7 +37,7 @@ export default function openDisplayPageModal({
 	mappingTypes,
 	namespace,
 	spritemap,
-	title
+	title,
 }) {
 	if (container) {
 		cleanUp();

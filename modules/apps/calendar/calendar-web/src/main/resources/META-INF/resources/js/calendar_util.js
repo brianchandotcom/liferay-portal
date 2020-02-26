@@ -51,7 +51,7 @@ AUI.add(
 						Time.WEEK,
 						Time.DAY,
 						Time.HOUR,
-						Time.MINUTE
+						Time.MINUTE,
 					];
 
 					timeArray.some((item, index) => {
@@ -64,9 +64,9 @@ AUI.add(
 
 				return {
 					desc,
-					value
+					value,
 				};
-			}
+			},
 		};
 
 		Liferay.Time = Time;
@@ -113,7 +113,7 @@ AUI.add(
 					secondReminder: calendarBooking.secondReminder,
 					secondReminderType: calendarBooking.secondReminderType,
 					startDate: startDate.getTime(),
-					status: calendarBooking.status
+					status: calendarBooking.status,
 				});
 
 				return schedulerEvent;
@@ -210,10 +210,10 @@ AUI.add(
 							recurrence: data.recurrence,
 							recurringCalendarBookingId:
 								data.recurringCalendarBookingId,
-							status: data.status
+							status: data.status,
 						},
 						{
-							silent: true
+							silent: true,
 						}
 					);
 
@@ -255,13 +255,13 @@ AUI.add(
 
 					schedulerEvent.set('status', calendarBooking.status);
 				});
-			}
+			},
 		};
 
 		Liferay.CalendarUtil = CalendarUtil;
 
 		var CalendarWorkflow = {
-			STATUS_MAYBE: 9
+			STATUS_MAYBE: 9,
 		};
 
 		A.mix(CalendarWorkflow, Workflow);
@@ -275,7 +275,7 @@ AUI.add(
 			'aui-scheduler',
 			'aui-toolbar',
 			'autocomplete',
-			'autocomplete-highlighters'
-		]
+			'autocomplete-highlighters',
+		],
 	}
 );

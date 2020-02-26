@@ -200,7 +200,7 @@ class LiferayApp extends App {
 		Liferay.fire('beforeNavigate', {
 			app: this,
 			originalEvent: event,
-			path: data.path
+			path: data.path,
 		});
 	}
 
@@ -259,7 +259,7 @@ class LiferayApp extends App {
 		Liferay.fire('endNavigate', {
 			app: this,
 			error: event.error,
-			path: event.path
+			path: event.path,
 		});
 
 		if (!this.pendingNavigate) {
@@ -330,7 +330,7 @@ class LiferayApp extends App {
 			this._createNotification({
 				message,
 				title: Liferay.Language.get('error'),
-				type: 'danger'
+				type: 'danger',
 			});
 		}
 	}
@@ -344,7 +344,7 @@ class LiferayApp extends App {
 	onStartNavigate(event) {
 		Liferay.fire('startNavigate', {
 			app: this,
-			path: event.path
+			path: event.path,
 		});
 
 		this._startRequestTimer(event.path);
@@ -408,7 +408,7 @@ class LiferayApp extends App {
 			resolve(
 				openToast({
 					type: 'warning',
-					...config
+					...config,
 				})
 			);
 		});
@@ -462,7 +462,7 @@ class LiferayApp extends App {
 		if (Liferay.SPA.userNotification.timeout > 0) {
 			this.requestTimer = setTimeout(() => {
 				Liferay.fire('spaRequestTimeout', {
-					path
+					path,
 				});
 
 				this._hideTimeoutAlert();
@@ -470,7 +470,7 @@ class LiferayApp extends App {
 				this._createNotification({
 					message: Liferay.SPA.userNotification.message,
 					title: Liferay.SPA.userNotification.title,
-					type: 'warning'
+					type: 'warning',
 				}).then(alert => {
 					this.timeoutAlert = alert;
 				});

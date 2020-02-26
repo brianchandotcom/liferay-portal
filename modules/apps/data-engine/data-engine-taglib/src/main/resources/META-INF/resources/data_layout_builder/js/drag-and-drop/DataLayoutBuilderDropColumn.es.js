@@ -41,7 +41,7 @@ export default ({dataLayoutBuilder, node}) => {
 						addedToPlaceholder,
 						dataLayoutBuilder,
 						fieldTypeName: data.name,
-						indexes
+						indexes,
 					})
 				);
 			}
@@ -54,7 +54,7 @@ export default ({dataLayoutBuilder, node}) => {
 						dataDefinitionFieldName: data.name,
 						dataLayoutBuilder,
 						indexes,
-						skipFieldNameGeneration: true
+						skipFieldNameGeneration: true,
 					})
 				);
 			}
@@ -65,9 +65,9 @@ export default ({dataLayoutBuilder, node}) => {
 		accept: [DRAG_DATA_DEFINITION_FIELD, DRAG_FIELD_TYPE],
 		collect: monitor => ({
 			canDrop: monitor.canDrop(),
-			overTarget: monitor.isOver()
+			overTarget: monitor.isOver(),
 		}),
-		drop: onDrop
+		drop: onDrop,
 	});
 
 	useEffect(() => {

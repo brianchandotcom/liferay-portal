@@ -28,7 +28,7 @@ describe('The process status filter component should', () => {
 
 	beforeEach(() => {
 		const renderResult = render(<ProcessStatusFilter processId={12345} />, {
-			wrapper
+			wrapper,
 		});
 
 		getAllByTestId = renderResult.getAllByTestId;

@@ -24,13 +24,13 @@ class EmptyResultMessageDefaultEventHandler extends DefaultEventHandler {
 			mainFieldName: 'title',
 			mainFieldPlaceholder: Liferay.Language.get('title'),
 			namespace: this.namespace,
-			spritemap: this.spritemap
+			spritemap: this.spritemap,
 		});
 	}
 }
 
 EmptyResultMessageDefaultEventHandler.STATE = {
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export default EmptyResultMessageDefaultEventHandler;

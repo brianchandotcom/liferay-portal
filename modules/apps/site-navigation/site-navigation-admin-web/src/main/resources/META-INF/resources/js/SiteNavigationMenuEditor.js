@@ -22,7 +22,7 @@ import {
 	getNearestMenuItem,
 	insertAtPosition,
 	isOver,
-	shouldBeNested
+	shouldBeNested,
 } from './SiteNavigationMenuDOMHandler';
 import {
 	MENU_ITEM_CLASSNAME,
@@ -37,7 +37,7 @@ import {
 	isMenuItem,
 	setDragging,
 	setSelected,
-	unselectAll
+	unselectAll,
 } from './SiteNavigationMenuItemDOMHandler';
 
 /**
@@ -49,7 +49,7 @@ const KEYS = {
 	ARROW_RIGHT: 'ArrowRight',
 	ARROW_UP: 'ArrowUp',
 	ENTER: 'Enter',
-	SPACEBAR: ' '
+	SPACEBAR: ' ',
 };
 
 /**
@@ -77,7 +77,7 @@ class SiteNavigationMenuEditor extends State {
 			dragPlaceholder: Drag.Placeholder.CLONE,
 			handles: `.${MENU_ITEM_DRAG_ICON_CLASSNAME}`,
 			sources: `.${MENU_ITEM_CLASSNAME}`,
-			targets: `.${MENU_ITEM_CLASSNAME}`
+			targets: `.${MENU_ITEM_CLASSNAME}`,
 		});
 
 		this._dragDrop.on(
@@ -220,7 +220,7 @@ class SiteNavigationMenuEditor extends State {
 		this._updateParentAndOrder({
 			dragOrder: menuItemIndex,
 			parentId: menuItemParentId,
-			siteNavigationMenuItemId: menuItemId
+			siteNavigationMenuItemId: menuItemId,
 		});
 
 		setDragging(menuItem, false);
@@ -300,7 +300,7 @@ class SiteNavigationMenuEditor extends State {
 
 				parentId: getId(getParent(menuItem)),
 
-				siteNavigationMenuItemId
+				siteNavigationMenuItemId,
 			});
 
 			requestAnimationFrame(() => {
@@ -354,7 +354,7 @@ class SiteNavigationMenuEditor extends State {
 
 		return fetch(this.editSiteNavigationMenuItemParentURL, {
 			body: formData,
-			method: 'POST'
+			method: 'POST',
 		});
 	}
 }
@@ -452,7 +452,7 @@ SiteNavigationMenuEditor.STATE = {
 	 * @memberOf SiteNavigationMenuEditor
 	 * @type {HTMLElement}
 	 */
-	selectedMenuItem: Config.object().value(null)
+	selectedMenuItem: Config.object().value(null),
 };
 
 export {SiteNavigationMenuEditor};

@@ -496,18 +496,18 @@
 		'<portlet:namespace />schedulerEndDateType'
 	);
 	Liferay.Util.toggleRadio('<portlet:namespace />schedulerNoEndDate', '', [
-		'<portlet:namespace />schedulerEndDateType'
+		'<portlet:namespace />schedulerEndDateType',
 	]);
 
 	Liferay.Util.toggleRadio(
 		'<portlet:namespace />monthlyTypeDayOfMonth',
 		[
 			'<portlet:namespace />schedulerMonthlyDayOfMonthTypeDay',
-			'<portlet:namespace />schedulerMonthlyDayOfMonthTypeMonth'
+			'<portlet:namespace />schedulerMonthlyDayOfMonthTypeMonth',
 		],
 		[
 			'<portlet:namespace />schedulerMonthlyDayOfWeekTypeDay',
-			'<portlet:namespace />schedulerMonthlyDayOfWeekTypeMonth'
+			'<portlet:namespace />schedulerMonthlyDayOfWeekTypeMonth',
 		]
 	);
 
@@ -515,11 +515,11 @@
 		'<portlet:namespace />monthlyTypeDayOfWeek',
 		[
 			'<portlet:namespace />schedulerMonthlyDayOfWeekTypeDay',
-			'<portlet:namespace />schedulerMonthlyDayOfWeekTypeMonth'
+			'<portlet:namespace />schedulerMonthlyDayOfWeekTypeMonth',
 		],
 		[
 			'<portlet:namespace />schedulerMonthlyDayOfMonthTypeDay',
-			'<portlet:namespace />schedulerMonthlyDayOfMonthTypeMonth'
+			'<portlet:namespace />schedulerMonthlyDayOfMonthTypeMonth',
 		]
 	);
 
@@ -528,12 +528,12 @@
 		[
 			'<portlet:namespace />schedulerYearlyDayOfMonthTypeDay',
 			'<portlet:namespace />schedulerYearlyDayOfMonthTypeMonth',
-			'<portlet:namespace />schedulerYearlyDayOfMonthTypeYear'
+			'<portlet:namespace />schedulerYearlyDayOfMonthTypeYear',
 		],
 		[
 			'<portlet:namespace />schedulerYearlyDayOfWeekTypeDay',
 			'<portlet:namespace />schedulerYearlyDayOfWeekTypeMonth',
-			'<portlet:namespace />schedulerYearlyDayOfWeekTypeYear'
+			'<portlet:namespace />schedulerYearlyDayOfWeekTypeYear',
 		]
 	);
 
@@ -542,12 +542,12 @@
 		[
 			'<portlet:namespace />schedulerYearlyDayOfWeekTypeDay',
 			'<portlet:namespace />schedulerYearlyDayOfWeekTypeMonth',
-			'<portlet:namespace />schedulerYearlyDayOfWeekTypeYear'
+			'<portlet:namespace />schedulerYearlyDayOfWeekTypeYear',
 		],
 		[
 			'<portlet:namespace />schedulerYearlyDayOfMonthTypeDay',
 			'<portlet:namespace />schedulerYearlyDayOfMonthTypeMonth',
-			'<portlet:namespace />schedulerYearlyDayOfMonthTypeYear'
+			'<portlet:namespace />schedulerYearlyDayOfMonthTypeYear',
 		]
 	);
 </aui:script>

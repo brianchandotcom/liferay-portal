@@ -38,7 +38,7 @@ const Header = ({disableFilters, prefixKey, processId}) => {
 							multiple: false,
 							position: 'right',
 							withAllSteps: true,
-							withSelectionTitle: true
+							withSelectionTitle: true,
 						}}
 						prefixKey={prefixKey}
 						processId={processId}
@@ -64,14 +64,14 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 	const prefixKeys = [prefixKey];
 	const {filterState = {}, filterValues, filtersError} = useFilter({
 		filterKeys,
-		prefixKeys
+		prefixKeys,
 	});
 
 	const params = {
 		completed: true,
 		page: 1,
 		pageSize: 10,
-		sort: 'durationTaskAvg:desc'
+		sort: 'durationTaskAvg:desc',
 	};
 
 	const processStep = filterValues.assigneeTaskKeys || [];
@@ -90,7 +90,7 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 
 	const {data, fetchData} = useFetch({
 		params,
-		url: `/processes/${processId}/assignee-users`
+		url: `/processes/${processId}/assignee-users`,
 	});
 
 	const promises = useMemo(() => {

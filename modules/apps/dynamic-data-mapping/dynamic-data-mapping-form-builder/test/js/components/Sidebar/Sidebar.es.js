@@ -25,9 +25,9 @@ const focusedField = {
 	pageIndex: 0,
 	rowIndex: 0,
 	settingsContext: {
-		pages: []
+		pages: [],
 	},
-	type: 'date'
+	type: 'date',
 };
 const spritemap = 'icons.svg';
 
@@ -51,7 +51,7 @@ const fillField = (pages, fieldName, value) => {
 		if (field.fieldName === fieldName) {
 			field = {
 				...field,
-				value
+				value,
 			};
 		}
 
@@ -63,7 +63,7 @@ const mockFieldType = {
 	description: 'Single line or multiline text area.',
 	icon: 'text',
 	initialConfig_: {
-		locale: 'en_US'
+		locale: 'en_US',
 	},
 	label: 'Text Field',
 	name: 'text',
@@ -80,45 +80,45 @@ const mockFieldType = {
 										localizable: true,
 										type: 'text',
 										value: 'Mock Field',
-										visible: true
+										visible: true,
 									},
 									{
 										fieldName: 'name',
 										type: 'text',
-										visible: true
+										visible: true,
 									},
 									{
 										fieldName: 'showLabel',
 										type: 'checkbox',
 										value: true,
-										visible: true
+										visible: true,
 									},
 									{
 										fieldName: 'required',
 										type: 'checkbox',
-										visible: true
+										visible: true,
 									},
 									{
 										fieldName: 'type',
 										type: 'text',
 										value: 'text',
-										visible: false
+										visible: false,
 									},
 									{
 										fieldName: 'validation',
 										type: 'validation',
 										value: 'expression=1',
-										visible: false
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		]
+										visible: false,
+									},
+								],
+							},
+						],
+					},
+				],
+			},
+		],
 	},
-	type: 'text'
+	type: 'text',
 };
 
 const fieldTypes = [
@@ -127,46 +127,46 @@ const fieldTypes = [
 		group: 'basic',
 		icon: 'calendar',
 		label: 'Date',
-		name: 'date'
+		name: 'date',
 	},
 	{
 		description: 'Single line or multiline text area.',
 		group: 'basic',
 		icon: 'text',
 		label: 'Text Field',
-		name: 'text'
+		name: 'text',
 	},
 	{
 		description: 'Select only one item with a radio button.',
 		group: 'basic',
 		icon: 'radio-button',
 		label: 'Single Selection',
-		name: 'radio'
+		name: 'radio',
 	},
 	{
 		description: 'Choose one or more options from a list.',
 		group: 'basic',
 		icon: 'list',
 		label: 'Select from list',
-		name: 'select'
+		name: 'select',
 	},
 	{
 		description: 'Select options from a matrix.',
 		group: 'basic',
 		icon: 'grid',
 		label: 'Grid',
-		name: 'grid'
+		name: 'grid',
 	},
 	{
 		description: 'Select multiple options using a checkbox.',
 		group: 'basic',
 		icon: 'select-from-list',
 		label: 'Multiple Selection',
-		name: 'checkbox'
-	}
+		name: 'checkbox',
+	},
 ].map(fieldType => ({
 	...mockFieldType,
-	...fieldType
+	...fieldType,
 }));
 
 describe('Sidebar', () => {
@@ -181,7 +181,7 @@ describe('Sidebar', () => {
 	it('renders the default markup', () => {
 		component = new Sidebar({
 			fieldTypes,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -190,7 +190,7 @@ describe('Sidebar', () => {
 	it('renders a Sidebar open', () => {
 		component = new Sidebar({
 			fieldTypes,
-			spritemap
+			spritemap,
 		});
 		component.open();
 
@@ -202,7 +202,7 @@ describe('Sidebar', () => {
 	it('renders a Sidebar closed', () => {
 		component = new Sidebar({
 			fieldTypes,
-			spritemap
+			spritemap,
 		});
 
 		component.open();
@@ -214,7 +214,7 @@ describe('Sidebar', () => {
 	it('renders a Sidebar with fieldTypes', () => {
 		component = new Sidebar({
 			fieldTypes,
-			spritemap
+			spritemap,
 		});
 
 		component.open();
@@ -227,7 +227,7 @@ describe('Sidebar', () => {
 	it('closes the sidebar when the mouse down event is not on it', () => {
 		component = new Sidebar({
 			fieldTypes,
-			spritemap
+			spritemap,
 		});
 
 		jest.runAllTimers();
@@ -235,7 +235,7 @@ describe('Sidebar', () => {
 		component.open();
 
 		component._handleDocumentMouseDown({
-			target: null
+			target: null,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -244,30 +244,30 @@ describe('Sidebar', () => {
 	it('emits fieldMoved when the dragEnd method is called', () => {
 		component = new Sidebar({
 			fieldTypes,
-			spritemap
+			spritemap,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
 
 		const event = {
-			preventDefault: jest.fn()
+			preventDefault: jest.fn(),
 		};
 
 		const data = {
 			source: {
 				dataset: {
-					fieldTypeName: 'paragraph'
-				}
+					fieldTypeName: 'paragraph',
+				},
 			},
 			target: {
 				parentElement: {
 					dataset: {
 						ddmFieldColumn: 0,
 						ddmFieldPage: 0,
-						ddmFieldRow: 0
-					}
-				}
-			}
+						ddmFieldRow: 0,
+					},
+				},
+			},
 		};
 
 		jest.runAllTimers();
@@ -287,15 +287,15 @@ describe('Sidebar', () => {
 		component = new Sidebar({
 			fieldTypes,
 			focusedField,
-			spritemap
+			spritemap,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
 
 		const data = {
 			item: {
-				settingsItem: 'duplicate-field'
-			}
+				settingsItem: 'duplicate-field',
+			},
 		};
 
 		jest.runAllTimers();
@@ -311,15 +311,15 @@ describe('Sidebar', () => {
 		component = new Sidebar({
 			fieldTypes,
 			focusedField,
-			spritemap
+			spritemap,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
 
 		const data = {
 			item: {
-				settingsItem: 'delete-field'
-			}
+				settingsItem: 'delete-field',
+			},
 		};
 
 		jest.runAllTimers();
@@ -335,15 +335,15 @@ describe('Sidebar', () => {
 		component = new Sidebar({
 			fieldTypes,
 			focusedField,
-			spritemap
+			spritemap,
 		});
 
 		const spy = jest.spyOn(component, 'emit');
 
 		const data = {
 			item: {
-				settingsItem: 'cancel-field-changes'
-			}
+				settingsItem: 'cancel-field-changes',
+			},
 		};
 
 		jest.runAllTimers();
@@ -358,7 +358,7 @@ describe('Sidebar', () => {
 	it('renders a Sidebar with spritemap', () => {
 		component = new Sidebar({
 			fieldTypes,
-			spritemap
+			spritemap,
 		});
 
 		component.open();
@@ -374,7 +374,7 @@ describe('Sidebar', () => {
 		component = new Sidebar({
 			fieldTypes,
 			focusedField,
-			spritemap
+			spritemap,
 		});
 
 		component.open();
@@ -390,7 +390,7 @@ describe('Sidebar', () => {
 		component = new Sidebar({
 			fieldTypes,
 			focusedField,
-			spritemap
+			spritemap,
 		});
 
 		component.open();
@@ -415,7 +415,7 @@ describe('Sidebar', () => {
 		component = new Sidebar({
 			fieldTypes,
 			focusedField,
-			spritemap
+			spritemap,
 		});
 
 		component.open();
@@ -426,7 +426,7 @@ describe('Sidebar', () => {
 		const spy = jest.spyOn(component, 'emit');
 
 		FormRenderer.emit('evaluated', {
-			focusedField
+			focusedField,
 		});
 
 		expect(spy).toHaveBeenCalled();
@@ -438,7 +438,7 @@ describe('Sidebar', () => {
 		component = new Sidebar({
 			fieldTypes,
 			focusedField,
-			spritemap
+			spritemap,
 		});
 
 		component.open();
@@ -457,7 +457,7 @@ describe('Sidebar', () => {
 		it('closes Sidebar when click the button close', () => {
 			component = new Sidebar({
 				fieldTypes,
-				spritemap
+				spritemap,
 			});
 
 			component.open();
@@ -481,7 +481,7 @@ describe('Sidebar', () => {
 			component = new Sidebar({
 				fieldTypes,
 				focusedField: mockFieldType,
-				spritemap
+				spritemap,
 			});
 
 			jest.runAllTimers();
@@ -502,10 +502,10 @@ describe('Sidebar', () => {
 					...mockFieldType,
 					settingsContext: {
 						...mockFieldType.settingsContext,
-						pages
-					}
+						pages,
+					},
 				},
-				spritemap
+				spritemap,
 			});
 
 			jest.runAllTimers();
@@ -542,10 +542,10 @@ describe('Sidebar', () => {
 					...mockFieldType,
 					settingsContext: {
 						...mockFieldType.settingsContext,
-						pages
-					}
+						pages,
+					},
 				},
-				spritemap
+				spritemap,
 			});
 
 			jest.runAllTimers();
@@ -565,7 +565,7 @@ describe('Sidebar', () => {
 			component = new Sidebar({
 				fieldTypes,
 				focusedField: mockFieldType,
-				spritemap
+				spritemap,
 			});
 
 			jest.runAllTimers();

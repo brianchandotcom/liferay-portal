@@ -13,11 +13,11 @@ import {useState} from 'react';
 
 import {
 	getCapitalizedFilterKey,
-	replaceHistory
+	replaceHistory,
 } from '../../../shared/components/filter/util/filterUtil.es';
 import {
 	parse,
-	stringify
+	stringify,
 } from '../../../shared/components/router/queryString.es';
 import {useFilter} from '../../../shared/hooks/useFilter.es';
 import {useRouter} from '../../../shared/hooks/useRouter.es';
@@ -27,7 +27,7 @@ import moment from '../../../shared/util/moment.es';
 import {
 	formatDateEnLocale,
 	formatQueryDate,
-	parseDateMomentEnLocale
+	parseDateMomentEnLocale,
 } from '../util/timeRangeUtil.es';
 
 const getInitialDate = (timeRanges = [], timeRange, endDate) => {
@@ -114,14 +114,14 @@ const validateRangeConsistency = (dateEndMoment, dateStartMoment) => {
 
 const updateErrors = (errors, fieldName, message) => ({
 	...(errors || {}),
-	[fieldName]: message
+	[fieldName]: message,
 });
 
 const useCustomTimeRange = (filterKey, prefixKey = '', withoutRouteParams) => {
 	const [errors, setErrors] = useState(undefined);
 	const {filters} = useRouterParams();
 	const {dispatch, filterState, filterValues} = useFilter({
-		withoutRouteParams
+		withoutRouteParams,
 	});
 	const [storedTimeRanges = {}] = useSessionStorage('timeRanges');
 
@@ -153,7 +153,7 @@ const useCustomTimeRange = (filterKey, prefixKey = '', withoutRouteParams) => {
 			const newValue = {
 				[dateEndKey]: formatQueryDate(dateEnd, true),
 				[dateStartKey]: formatQueryDate(dateStart),
-				[prefixedFilterKey]: ['custom']
+				[prefixedFilterKey]: ['custom'],
 			};
 
 			if (!withoutRouteParams) {
@@ -161,7 +161,7 @@ const useCustomTimeRange = (filterKey, prefixKey = '', withoutRouteParams) => {
 
 				query.filters = {
 					...query.filters,
-					...newValue
+					...newValue,
 				};
 
 				replaceHistory(stringify(query), routerProps);
@@ -179,7 +179,7 @@ const useCustomTimeRange = (filterKey, prefixKey = '', withoutRouteParams) => {
 		const errors = {
 			...validateDate(dateEndMoment, dateStartMoment),
 			...validateEarlierDate(dateEndMoment, dateStartMoment),
-			...validateRangeConsistency(dateEndMoment, dateStartMoment)
+			...validateRangeConsistency(dateEndMoment, dateStartMoment),
 		};
 
 		setErrors(errors);
@@ -194,7 +194,7 @@ const useCustomTimeRange = (filterKey, prefixKey = '', withoutRouteParams) => {
 		errors,
 		setDateEnd,
 		setDateStart,
-		validate
+		validate,
 	};
 };
 

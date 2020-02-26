@@ -51,19 +51,19 @@ export const handleResizeRight = (
 		if (targetColumn < currentPosition && currentColumn.size > newSize) {
 			newCurrentColumn = {
 				...currentColumn,
-				size: Math.max(currentColumn.size - newSize, 1)
+				size: Math.max(currentColumn.size - newSize, 1),
 			};
 
 			newNextColumn = {
 				...nextColumn,
-				size: Math.min(nextColumn.size + newSize, 12)
+				size: Math.min(nextColumn.size + newSize, 12),
 			};
 		}
 		else if (targetColumn > currentPosition) {
 			if (nextColumn.size === 1 && nextColumn.fields.length === 0) {
 				newCurrentColumn = {
 					...currentColumn,
-					size: currentColumn.size + newSize
+					size: currentColumn.size + newSize,
 				};
 
 				newPages = FormSupport.removeColumn(
@@ -76,12 +76,12 @@ export const handleResizeRight = (
 			else if (nextColumn.size > newSize) {
 				newCurrentColumn = {
 					...currentColumn,
-					size: currentColumn.size + newSize
+					size: currentColumn.size + newSize,
 				};
 
 				newNextColumn = {
 					...nextColumn,
-					size: nextColumn.size - newSize
+					size: nextColumn.size - newSize,
 				};
 			}
 		}
@@ -104,7 +104,7 @@ export const handleResizeRight = (
 
 		newCurrentColumn = {
 			...currentColumn,
-			size: currentColumn.size - newSize
+			size: currentColumn.size - newSize,
 		};
 
 		newPages = FormSupport.addColumn(
@@ -114,7 +114,7 @@ export const handleResizeRight = (
 			rowIndex,
 			{
 				fields: [],
-				size: newSize
+				size: newSize,
 			}
 		);
 	}
@@ -179,7 +179,7 @@ export const handleResizeLeft = (state, source, targetColumn) => {
 			columnIndex - 1,
 			{
 				...currentColumn,
-				size: currentColumn.size + 1
+				size: currentColumn.size + 1,
 			}
 		);
 	}
@@ -225,7 +225,7 @@ export const handleResizeLeft = (state, source, targetColumn) => {
 			rowIndex,
 			{
 				fields: [],
-				size: targetColumn
+				size: targetColumn,
 			}
 		);
 
@@ -236,7 +236,7 @@ export const handleResizeLeft = (state, source, targetColumn) => {
 			columnIndex + 1,
 			{
 				...currentColumn,
-				size: currentColumn.size - targetColumn
+				size: currentColumn.size - targetColumn,
 			}
 		);
 
@@ -271,7 +271,7 @@ export const handleColumnResized = (state, source, column, direction) => {
 	newPages[pageIndex].rows = FormSupport.removeEmptyRows(newPages, pageIndex);
 
 	return {
-		pages: newPages
+		pages: newPages,
 	};
 };
 

@@ -41,7 +41,7 @@ describe('HiddenInputs', () => {
 				valueMap={{
 					testKey1: 'testValue',
 					testKey2: 'testValue',
-					testKey3: 'testValue'
+					testKey3: 'testValue',
 				}}
 			/>
 		);

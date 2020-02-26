@@ -31,7 +31,7 @@ AUI.add(
 			'scriptedRecipient',
 			'taskAssignees',
 			'user',
-			'userId'
+			'userId',
 		];
 
 		var populateRole = function(assignments) {
@@ -248,13 +248,13 @@ AUI.add(
 				});
 
 				return taskTimers;
-			}
+			},
 		};
 
 		Liferay.KaleoDesignerFieldNormalizer = FieldNormalizer;
 	},
 	'',
 	{
-		requires: ['liferay-kaleo-designer-remote-services']
+		requires: ['liferay-kaleo-designer-remote-services'],
 	}
 );

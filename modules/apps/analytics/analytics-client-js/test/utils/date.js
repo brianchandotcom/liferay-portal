@@ -14,7 +14,7 @@
 
 import {
 	convertUTCDateToLocalDate,
-	getTimezoneOffsetHour
+	getTimezoneOffsetHour,
 } from '../../src/utils/date';
 
 describe('convertUTCDateToLocalDate()', () => {

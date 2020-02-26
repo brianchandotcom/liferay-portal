@@ -51,8 +51,8 @@ const handleFieldClicked = (props, state, event) => {
 						...field,
 						validation: {
 							...field.validation,
-							fieldName: fieldProperties.fieldName
-						}
+							fieldName: fieldProperties.fieldName,
+						},
 					};
 				}
 
@@ -61,8 +61,8 @@ const handleFieldClicked = (props, state, event) => {
 					defaultLanguageId,
 					editingLanguageId
 				);
-			})
-		}
+			}),
+		},
 	};
 
 	return {
@@ -70,9 +70,9 @@ const handleFieldClicked = (props, state, event) => {
 			...focusedField,
 			columnIndex,
 			pageIndex,
-			rowIndex
+			rowIndex,
 		},
-		previousFocusedField: focusedField
+		previousFocusedField: focusedField,
 	};
 };
 

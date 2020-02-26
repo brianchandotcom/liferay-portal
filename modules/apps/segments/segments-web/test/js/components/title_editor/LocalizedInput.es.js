@@ -46,7 +46,7 @@ describe('LocalizedInput', () => {
 				<LocalizedInput
 					availableLanguages={{
 						en_US: '',
-						es_ES: ''
+						es_ES: '',
 					}}
 					initialLanguageId="en_US"
 				/>
@@ -98,12 +98,12 @@ describe('LocalizedInput', () => {
 				<LocalizedInput
 					availableLanguages={{
 						en_US: '',
-						es_ES: ''
+						es_ES: '',
 					}}
 					initialLanguageId="en_US"
 					initialValues={{
 						en_US: PRE_EXISTING_VALUE,
-						es_ES: PRE_EXISTING_VALUE_ALT
+						es_ES: PRE_EXISTING_VALUE_ALT,
 					}}
 				/>
 			);

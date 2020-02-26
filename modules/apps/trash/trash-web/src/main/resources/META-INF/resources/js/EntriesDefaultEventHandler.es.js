@@ -24,12 +24,12 @@ class EntriesDefaultEventHandler extends DefaultEventHandler {
 					constrain: true,
 					destroyOnHide: true,
 					modal: true,
-					width: 1024
+					width: 1024,
 				},
 				eventName: this.ns('selectContainer'),
 				id: this.ns('selectContainer'),
 				title: Liferay.Language.get('warning'),
-				uri: itemData.moveEntryURL
+				uri: itemData.moveEntryURL,
 			},
 			event => {
 				const selectContainerForm = document.getElementById(

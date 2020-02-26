@@ -15,7 +15,7 @@
 import {
 	DefaultEventHandler,
 	ItemSelectorDialog,
-	openSimpleInputModal
+	openSimpleInputModal,
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
 
@@ -33,12 +33,12 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 				dialog: {
 					constrain: true,
 					destroyOnHide: true,
-					modal: true
+					modal: true,
 				},
 				eventName: this.ns('selectFragmentCollection'),
 				id: this.ns('selectFragmentCollection'),
 				title: Liferay.Language.get('select-collection'),
-				uri: itemData.selectFragmentCollectionURL
+				uri: itemData.selectFragmentCollectionURL,
 			},
 			selectedItem => {
 				if (selectedItem) {
@@ -96,7 +96,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 			mainFieldPlaceholder: Liferay.Language.get('name'),
 			mainFieldValue: itemData.fragmentEntryName,
 			namespace: this.namespace,
-			spritemap: this.spritemap
+			spritemap: this.spritemap,
 		});
 	}
 
@@ -105,7 +105,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 			eventName: this.ns('changePreview'),
 			singleSelect: true,
 			title: Liferay.Language.get('fragment-thumbnail'),
-			url: itemData.itemSelectorURL
+			url: itemData.itemSelectorURL,
 		});
 
 		itemSelectorDialog.open();
@@ -134,12 +134,12 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 				dialog: {
 					constrain: true,
 					destroyOnHide: true,
-					modal: true
+					modal: true,
 				},
 				eventName: this.ns('selectFragmentCollection'),
 				id: this.ns('selectFragmentCollection'),
 				title: Liferay.Language.get('select-collection'),
-				uri: selectFragmentCollectionURL
+				uri: selectFragmentCollectionURL,
 			},
 			selectedItem => {
 				if (selectedItem) {
@@ -164,7 +164,7 @@ FragmentEntryDropdownDefaultEventHandler.STATE = {
 	copyFragmentEntryURL: Config.string(),
 	fragmentCollectionId: Config.string(),
 	moveFragmentEntryURL: Config.string(),
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export default FragmentEntryDropdownDefaultEventHandler;

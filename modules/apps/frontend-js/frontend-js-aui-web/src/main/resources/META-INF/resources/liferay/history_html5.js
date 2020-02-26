@@ -74,7 +74,7 @@ AUI.add(
 
 					var uriData = [
 						LOCATION.search.substr(1),
-						LOCATION.hash.substr(1)
+						LOCATION.hash.substr(1),
 					];
 
 					var hash = uriData[1];
@@ -122,7 +122,7 @@ AUI.add(
 
 					uriData[0] = QueryString.stringify(queryMap, {
 						eq: History.VALUE_SEPARATOR,
-						sep: History.PAIR_SEPARATOR
+						sep: History.PAIR_SEPARATOR,
 					});
 
 					uriData.unshift(
@@ -152,7 +152,7 @@ AUI.add(
 						state,
 						options
 					);
-				}
+				},
 			},
 			true
 		);
@@ -162,7 +162,7 @@ AUI.add(
 		requires: [
 			'history-html5',
 			'liferay-history',
-			'querystring-stringify-simple'
-		]
+			'querystring-stringify-simple',
+		],
 	}
 );

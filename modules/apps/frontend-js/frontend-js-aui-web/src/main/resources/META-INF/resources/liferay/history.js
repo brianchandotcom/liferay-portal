@@ -67,14 +67,14 @@ AUI.add(
 					}
 
 					return value;
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.History = History;
 	},
 	'',
 	{
-		requires: ['querystring-parse-simple']
+		requires: ['querystring-parse-simple'],
 	}
 );

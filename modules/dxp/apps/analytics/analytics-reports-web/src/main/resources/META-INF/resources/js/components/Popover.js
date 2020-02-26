@@ -44,7 +44,7 @@ const PopoverComponent = ({anchor, children, ...rest}) => {
 };
 
 Popover.proptypes = {
-	anchor: Proptypes.instanceOf(Element)
+	anchor: Proptypes.instanceOf(Element),
 };
 
 export default Popover;

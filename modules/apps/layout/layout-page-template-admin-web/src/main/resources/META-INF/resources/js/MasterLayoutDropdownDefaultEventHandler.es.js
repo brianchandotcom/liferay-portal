@@ -15,7 +15,7 @@
 import {
 	DefaultEventHandler,
 	ItemSelectorDialog,
-	openSimpleInputModal
+	openSimpleInputModal,
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
 
@@ -53,13 +53,13 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
-				modal: true
+				modal: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
 			title: Liferay.Language.get('permissions'),
-			uri: itemData.permissionsMasterLayoutURL
+			uri: itemData.permissionsMasterLayoutURL,
 		});
 	}
 
@@ -74,7 +74,7 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 			mainFieldPlaceholder: Liferay.Language.get('name'),
 			mainFieldValue: itemData.layoutPageTemplateEntryName,
 			namespace: this.namespace,
-			spritemap: this.spritemap
+			spritemap: this.spritemap,
 		});
 	}
 
@@ -83,7 +83,7 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 			eventName: this.ns('changePreview'),
 			singleSelect: true,
 			title: Liferay.Language.get('master-page-thumbnail'),
-			url: itemData.itemSelectorURL
+			url: itemData.itemSelectorURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {
@@ -109,7 +109,7 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 }
 
 MasterLayoutDropdownDefaultEventHandler.STATE = {
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export default MasterLayoutDropdownDefaultEventHandler;

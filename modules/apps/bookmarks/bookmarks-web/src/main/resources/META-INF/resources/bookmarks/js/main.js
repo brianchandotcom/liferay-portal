@@ -20,20 +20,20 @@ AUI.add(
 		var Bookmarks = A.Component.create({
 			ATTRS: {
 				editEntryUrl: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				form: {
-					validator: Lang.isObject
+					validator: Lang.isObject,
 				},
 
 				moveEntryUrl: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				searchContainerId: {
-					validator: Lang.isString
-				}
+					validator: Lang.isString,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -126,14 +126,14 @@ AUI.add(
 					);
 
 					instance._searchContainer = searchContainer;
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Portlet.Bookmarks = Bookmarks;
 	},
 	'',
 	{
-		requires: ['liferay-portlet-base']
+		requires: ['liferay-portlet-base'],
 	}
 );

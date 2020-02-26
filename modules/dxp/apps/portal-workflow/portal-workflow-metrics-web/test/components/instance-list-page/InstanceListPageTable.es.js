@@ -22,18 +22,18 @@ const instances = [
 		assetType: 'Blog',
 		dateCreated: new Date('2019-01-01'),
 		id: 1,
-		taskNames: []
+		taskNames: [],
 	},
 	{
 		assetTitle: 'New Post 2',
 		assetType: 'Blog',
 		creatorUser: {
-			name: 'User 1'
+			name: 'User 1',
 		},
 		dateCreated: new Date('2019-01-03'),
 		id: 1,
-		taskNames: ['Update']
-	}
+		taskNames: ['Update'],
+	},
 ];
 
 describe('The instance list table should', () => {

@@ -31,7 +31,7 @@ export default function(
 			classNameId: editableValue.classNameId,
 			classPK: editableValue.classPK,
 			fieldId: editableValue.fieldId,
-			languageId
+			languageId,
 		});
 	}
 	else {
@@ -50,7 +50,7 @@ export default function(
 		configPromise = getMappingValue({
 			classNameId: editableValue.config.classNameId,
 			classPK: editableValue.config.classPK,
-			fieldId: editableValue.config.fieldId
+			fieldId: editableValue.config.fieldId,
 		}).then(href => {
 			return {...editableValue.config, href};
 		});
@@ -103,14 +103,14 @@ function getMappingValue({
 	classNameId,
 	classPK,
 	fieldId,
-	languageId = undefined
+	languageId = undefined,
 }) {
 	return InfoItemService.getAssetFieldValue({
 		classNameId,
 		classPK,
 		fieldId,
 		languageId,
-		onNetworkStatus: () => {}
+		onNetworkStatus: () => {},
 	}).then(response => {
 		const {fieldValue = ''} = response;
 

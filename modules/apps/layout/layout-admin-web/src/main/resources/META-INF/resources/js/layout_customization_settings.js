@@ -60,7 +60,7 @@ AUI.add(
 										);
 									}
 								});
-							}
+							},
 						});
 					}
 				},
@@ -83,7 +83,7 @@ AUI.add(
 					var overlayMask = new A.OverlayMask({
 						cssClass,
 						target: column,
-						zIndex: 10
+						zIndex: 10,
 					}).render();
 
 					var boundingBox = overlayMask.get(BOUNDING_BOX);
@@ -117,7 +117,7 @@ AUI.add(
 						input.attr({
 							checked: customizable,
 							id: newName,
-							name: newName
+							name: newName,
 						});
 
 						boundingBox.prepend(columnControls);
@@ -161,7 +161,7 @@ AUI.add(
 						doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 						p_auth: Liferay.authToken,
 						p_l_id: themeDisplay.getPlid(),
-						p_v_l_s_g_id: themeDisplay.getSiteGroupId()
+						p_v_l_s_g_id: themeDisplay.getSiteGroupId(),
 					};
 
 					data[checkbox.attr('name')] = checkbox.attr('checked');
@@ -170,7 +170,7 @@ AUI.add(
 						themeDisplay.getPathMain() + '/portal/update_layout',
 						{
 							body: Liferay.Util.objectToFormData(data),
-							method: 'POST'
+							method: 'POST',
 						}
 					);
 				},
@@ -244,8 +244,8 @@ AUI.add(
 					);
 
 					instance._bindUI();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.LayoutCustomizationSettings = LayoutCustomizationSettings;
@@ -255,7 +255,7 @@ AUI.add(
 		requires: [
 			'aui-base',
 			'aui-overlay-mask-deprecated',
-			'liferay-portlet-base'
-		]
+			'liferay-portlet-base',
+		],
 	}
 );

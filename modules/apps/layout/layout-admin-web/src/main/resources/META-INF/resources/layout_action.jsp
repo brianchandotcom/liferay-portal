@@ -108,15 +108,15 @@ Layout curLayout = (Layout)row.getObject();
 					destroyOnHide: true,
 					height: 480,
 					resizable: false,
-					width: 640
+					width: 640,
 				},
 				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
+					bodyCssClass: 'dialog-with-footer',
 				},
 				id: '<portlet:namespace />copyLayoutDialog',
 				title: '<liferay-ui:message key="copy-page" />',
 				uri:
-					'<%= layoutsAdminDisplayContext.getCopyLayoutRenderURL(layout) %>'
+					'<%= layoutsAdminDisplayContext.getCopyLayoutRenderURL(layout) %>',
 			});
 		}
 	);

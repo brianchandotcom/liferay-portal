@@ -222,12 +222,12 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 	new MBPortlet.default({
 		constants: {
 			ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
-			CMD: '<%= Constants.CMD %>'
+			CMD: '<%= Constants.CMD %>',
 		},
 		currentAction: '<%= Constants.ADD %>',
 		namespace: '<portlet:namespace />',
 		replyToMessageId: '<%= parentMessageId %>',
-		rootNode: '#<portlet:namespace />addQuickReply<%= parentMessageId %>'
+		rootNode: '#<portlet:namespace />addQuickReply<%= parentMessageId %>',
 	});
 </aui:script>
 

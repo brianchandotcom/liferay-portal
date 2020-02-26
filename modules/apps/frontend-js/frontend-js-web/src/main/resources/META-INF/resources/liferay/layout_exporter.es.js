@@ -39,7 +39,7 @@ export function hideLayoutPane(options) {
 export function getLayoutIcons() {
 	return {
 		minus: themeDisplay.getPathThemeImages() + '/arrows/01_minus.png',
-		plus: themeDisplay.getPathThemeImages() + '/arrows/01_plus.png'
+		plus: themeDisplay.getPathThemeImages() + '/arrows/01_plus.png',
 	};
 }
 
@@ -95,9 +95,9 @@ export function proposeLayout(options) {
 
 	Liferay.Util.openWindow({
 		dialog: {
-			destroyOnHide: true
+			destroyOnHide: true,
 		},
-		title: contents
+		title: contents,
 	});
 }
 
@@ -120,11 +120,11 @@ export function publishToLive(options) {
 					if (!event.newVal) {
 						instance.destroy();
 					}
-				}
-			}
+				},
+			},
 		},
 		title: options.title,
-		uri: options.url
+		uri: options.url,
 	});
 }
 

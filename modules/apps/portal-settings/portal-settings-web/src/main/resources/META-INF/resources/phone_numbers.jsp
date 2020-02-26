@@ -118,7 +118,7 @@
 			new Liferay.AutoFields({
 				contentBox: '#<portlet:namespace />phoneNumbers',
 				fieldIndexes: '<portlet:namespace />phonesIndexes',
-				namespace: '<portlet:namespace />'
+				namespace: '<portlet:namespace />',
 			}).render();
 		</aui:script>
 	</c:when>

@@ -19,9 +19,9 @@ import getLayoutDataItemPropTypes from './getLayoutDataItemPropTypes';
 const LayoutDataPropTypes = PropTypes.shape({
 	items: PropTypes.objectOf(getLayoutDataItemPropTypes()),
 	rootItems: PropTypes.shape({
-		main: PropTypes.string
+		main: PropTypes.string,
 	}),
-	version: PropTypes.number
+	version: PropTypes.number,
 });
 
 export default LayoutDataPropTypes;

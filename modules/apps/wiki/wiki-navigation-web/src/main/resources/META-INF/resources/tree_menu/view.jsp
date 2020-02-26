@@ -36,7 +36,7 @@ List<MenuItem> menuItems = MenuItem.fromWikiNode(selNodeId, depth, viewURL);
 			var wikiPageList = A.one('.wiki-navigation-portlet-tree-menu .tree-menu');
 
 			var treeView = new A.TreeView({
-				contentBox: wikiPageList
+				contentBox: wikiPageList,
 			}).render();
 
 			var selected = wikiPageList.one('.tree-node .tag-selected');

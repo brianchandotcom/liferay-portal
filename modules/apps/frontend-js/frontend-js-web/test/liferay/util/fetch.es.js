@@ -29,8 +29,8 @@ describe('Liferay.Util.fetch', () => {
 		const init = {
 			credentials: 'include',
 			headers: new Headers({
-				'x-csrf-token': 'default-mocked-auth-token'
-			})
+				'x-csrf-token': 'default-mocked-auth-token',
+			}),
 		};
 
 		expect(fetch).toHaveBeenCalledWith(sampleUrl, init);
@@ -40,8 +40,8 @@ describe('Liferay.Util.fetch', () => {
 		const init = {
 			credentials: 'omit',
 			headers: {
-				'x-csrf-token': 'efgh'
-			}
+				'x-csrf-token': 'efgh',
+			},
 		};
 
 		fetchWrapper(sampleUrl, init);
@@ -49,8 +49,8 @@ describe('Liferay.Util.fetch', () => {
 		const mergedInit = {
 			credentials: 'omit',
 			headers: new Headers({
-				'x-csrf-token': 'efgh'
-			})
+				'x-csrf-token': 'efgh',
+			}),
 		};
 
 		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
@@ -59,9 +59,9 @@ describe('Liferay.Util.fetch', () => {
 	it('merges default settings with given different settings', () => {
 		const init = {
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
 			},
-			method: 'GET'
+			method: 'GET',
 		};
 
 		fetchWrapper(sampleUrl, init);
@@ -70,9 +70,9 @@ describe('Liferay.Util.fetch', () => {
 			credentials: 'include',
 			headers: new Headers({
 				'content-type': 'application/json',
-				'x-csrf-token': 'default-mocked-auth-token'
+				'x-csrf-token': 'default-mocked-auth-token',
 			}),
-			method: 'GET'
+			method: 'GET',
 		};
 
 		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
@@ -82,8 +82,8 @@ describe('Liferay.Util.fetch', () => {
 		const init = {
 			headers: {
 				'Content-Type': 'application/json',
-				'X-CSRF-token': 'efgh'
-			}
+				'X-CSRF-token': 'efgh',
+			},
 		};
 
 		fetchWrapper(sampleUrl, init);
@@ -92,8 +92,8 @@ describe('Liferay.Util.fetch', () => {
 			credentials: 'include',
 			headers: new Headers({
 				'content-type': 'application/json',
-				'x-csrf-token': 'efgh'
-			})
+				'x-csrf-token': 'efgh',
+			}),
 		};
 
 		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
@@ -103,8 +103,8 @@ describe('Liferay.Util.fetch', () => {
 		const init = {
 			headers: {
 				'Content-Type': 'application/json',
-				'Content-type': 'multipart/form-data'
-			}
+				'Content-type': 'multipart/form-data',
+			},
 		};
 
 		fetchWrapper(sampleUrl, init);
@@ -113,8 +113,8 @@ describe('Liferay.Util.fetch', () => {
 			credentials: 'include',
 			headers: new Headers({
 				'content-type': 'application/json, multipart/form-data',
-				'x-csrf-token': 'default-mocked-auth-token'
-			})
+				'x-csrf-token': 'default-mocked-auth-token',
+			}),
 		};
 
 		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
@@ -124,8 +124,8 @@ describe('Liferay.Util.fetch', () => {
 		const init = {
 			headers: [
 				['content-type', 'application/json'],
-				['x-csrf-token', 'efgh']
-			]
+				['x-csrf-token', 'efgh'],
+			],
 		};
 
 		fetchWrapper(sampleUrl, init);
@@ -134,8 +134,8 @@ describe('Liferay.Util.fetch', () => {
 			credentials: 'include',
 			headers: new Headers({
 				'content-type': 'application/json',
-				'x-csrf-token': 'efgh'
-			})
+				'x-csrf-token': 'efgh',
+			}),
 		};
 
 		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
@@ -145,8 +145,8 @@ describe('Liferay.Util.fetch', () => {
 		const init = {
 			headers: new Headers({
 				'content-type': 'application/json',
-				'x-csrf-token': 'efgh'
-			})
+				'x-csrf-token': 'efgh',
+			}),
 		};
 
 		fetchWrapper(sampleUrl, init);
@@ -155,8 +155,8 @@ describe('Liferay.Util.fetch', () => {
 			credentials: 'include',
 			headers: new Headers({
 				'content-type': 'application/json',
-				'x-csrf-token': 'efgh'
-			})
+				'x-csrf-token': 'efgh',
+			}),
 		};
 
 		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);

@@ -126,7 +126,7 @@ if (organization != null) {
 			selectDesc: 'nameCurrentValue',
 			selectId: 'countryId',
 			selectSort: '<%= true %>',
-			selectVal: '<%= countryId %>'
+			selectVal: '<%= countryId %>',
 		},
 		{
 			select: '<portlet:namespace />regionId',
@@ -134,8 +134,8 @@ if (organization != null) {
 			selectDesc: 'name',
 			selectDisableOnEmpty: true,
 			selectId: 'regionId',
-			selectVal: '<%= regionId %>'
-		}
+			selectVal: '<%= regionId %>',
+		},
 	]);
 </aui:script>
 

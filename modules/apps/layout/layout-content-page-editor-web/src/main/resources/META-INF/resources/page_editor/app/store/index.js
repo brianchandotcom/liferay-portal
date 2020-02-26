@@ -19,7 +19,7 @@ import React, {
 	useMemo,
 	useReducer,
 	useRef,
-	useState
+	useState,
 } from 'react';
 
 import useThunk from '../../core/hooks/useThunk';
@@ -38,7 +38,7 @@ const StoreContext = React.createContext(null);
 export const StoreAPIContextProvider = ({
 	children,
 	dispatch = () => {},
-	getState = () => ({})
+	getState = () => ({}),
 }) => {
 	const subscribers = useRef([]);
 
@@ -65,7 +65,7 @@ export const StoreAPIContextProvider = ({
 		dispatch,
 		getState,
 		subscribe,
-		unsubscribe
+		unsubscribe,
 	});
 
 	return (

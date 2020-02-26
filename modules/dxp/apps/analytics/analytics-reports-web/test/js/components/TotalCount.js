@@ -29,7 +29,7 @@ describe('TotalCount', () => {
 			label: 'Total Views',
 			popoverHeader: 'Total Views',
 			popoverMessage:
-				'This number refers to the total number of views since the content was published.'
+				'This number refers to the total number of views since the content was published.',
 		};
 
 		const {getByText} = render(
@@ -64,7 +64,7 @@ describe('TotalCount', () => {
 			label: 'Total Views',
 			popoverHeader: 'Total Views',
 			popoverMessage:
-				'This number refers to the total number of views since the content was published.'
+				'This number refers to the total number of views since the content was published.',
 		};
 
 		const {getByText} = render(

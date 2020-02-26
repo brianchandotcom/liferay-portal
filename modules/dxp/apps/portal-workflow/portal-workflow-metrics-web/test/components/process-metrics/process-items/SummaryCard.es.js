@@ -22,7 +22,7 @@ test('Should format percentage', () => {
 		processId: 12345,
 		total: false,
 		totalValue: 858000,
-		value: 156403
+		value: 156403,
 	};
 
 	const component = mount(
@@ -44,7 +44,7 @@ test('Should format value for values with more than 3 digits', () => {
 		processId: 12345,
 		total: false,
 		totalValue: 858000,
-		value: 156403
+		value: 156403,
 	};
 
 	const component = mount(
@@ -64,7 +64,7 @@ test('Should not format percentage for total item', () => {
 		processId: 12345,
 		total: true,
 		totalValue: 858000,
-		value: 858000
+		value: 858000,
 	};
 
 	const component = mount(
@@ -86,7 +86,7 @@ test('Should not format value for values with 3 or less digits', () => {
 		processId: 12345,
 		total: false,
 		totalValue: 3500,
-		value: 310
+		value: 310,
 	};
 
 	const component = mount(
@@ -108,7 +108,7 @@ test('Should render component', () => {
 		processId: 12345,
 		total: false,
 		totalValue: 55,
-		value: 31
+		value: 31,
 	};
 
 	const component = mount(
@@ -128,7 +128,7 @@ test('Should render component with disabled state', () => {
 		processId: 12345,
 		total: false,
 		totalValue: 55,
-		value: undefined
+		value: undefined,
 	};
 
 	const component = mount(
@@ -148,7 +148,7 @@ test('Should test mouse over', () => {
 		processId: 12345,
 		total: false,
 		totalValue: 55,
-		value: 31
+		value: 31,
 	};
 
 	const component = mount(

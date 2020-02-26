@@ -17,7 +17,7 @@ import {useRouter} from './useRouter.es';
 const useRouterParams = () => {
 	const {
 		location: {search},
-		match: {params}
+		match: {params},
 	} = useRouter();
 
 	const filters = useMemo(() => getFiltersParam(search), [search]);
@@ -25,7 +25,7 @@ const useRouterParams = () => {
 	const routerParams = useMemo(
 		() => ({
 			...params,
-			filters
+			filters,
 		}),
 		[filters, params]
 	);

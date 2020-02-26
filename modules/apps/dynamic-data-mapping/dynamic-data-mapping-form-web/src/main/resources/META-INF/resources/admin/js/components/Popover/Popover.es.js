@@ -74,7 +74,7 @@ class Popover extends Component {
 		const {displayed, position, width} = this.state;
 
 		const classes = getCN(CLASSNAME, {
-			'popover-large': width > 600
+			'popover-large': width > 600,
 		});
 
 		return (
@@ -90,9 +90,9 @@ class Popover extends Component {
 								this.refs.popover.element,
 								alignElement,
 								placement
-							)
+							),
 						});
-					}
+					},
 				}}
 				placement={position}
 				ref="popover"
@@ -121,14 +121,14 @@ class Popover extends Component {
 		element.style.display = 'none';
 
 		this.setState({
-			width
+			width,
 		});
 	}
 
 	willReceiveProps({visible}) {
 		if (visible) {
 			this.setState({
-				displayed: !!visible.newVal
+				displayed: !!visible.newVal,
 			});
 		}
 	}
@@ -141,7 +141,7 @@ class Popover extends Component {
 		}
 
 		this.setState({
-			displayed: !displayed
+			displayed: !displayed,
 		});
 	}
 
@@ -155,7 +155,7 @@ class Popover extends Component {
 			displayed
 		) {
 			this.setState({
-				displayed: false
+				displayed: false,
 			});
 
 			this.emit('popoverClosed');
@@ -172,13 +172,13 @@ Popover.PROPS = {
 	content: Config.string(),
 	placement: Config.number(),
 	title: Config.string(),
-	visible: Config.bool()
+	visible: Config.bool(),
 };
 
 Popover.STATE = {
 	displayed: Config.bool().valueFn('_visibleValueFn'),
 	position: Config.string(),
-	width: Config.number().value(240)
+	width: Config.number().value(240),
 };
 
 export default Popover;

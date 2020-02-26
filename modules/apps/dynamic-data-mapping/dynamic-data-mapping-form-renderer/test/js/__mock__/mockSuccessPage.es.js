@@ -14,10 +14,10 @@
 
 export default {
 	body: {
-		en_US: ''
+		en_US: '',
 	},
 	enabled: false,
 	title: {
-		en_US: ''
-	}
+		en_US: '',
+	},
 };

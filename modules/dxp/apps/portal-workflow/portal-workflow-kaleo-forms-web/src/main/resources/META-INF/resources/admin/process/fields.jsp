@@ -181,7 +181,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 			kaleoFormsAdmin.saveInPortletSession(
 				{
 					ddmStructureId: ddmStructureId,
-					ddmStructureName: ddmStructureName
+					ddmStructureName: ddmStructureName,
 				},
 				event.dialogId
 			);
@@ -203,7 +203,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 				id: A.guid(),
 				refreshWindow: WIN,
 				title: title,
-				uri: uri
+				uri: uri,
 			});
 		},
 		['liferay-util']
@@ -219,11 +219,11 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 			choose: function(event) {
 				Liferay.fire('<portlet:namespace />chooseDefinition', {
 					ddmStructureId: event.definitionId,
-					name: event.definitionName
+					name: event.definitionName,
 				});
-			}
+			},
 		},
-		width: 700
+		width: 700,
 	});
 
 	A.one('#p_p_id<portlet:namespace />').delegate(

@@ -14,14 +14,14 @@ import React from 'react';
 import {formatDuration} from '../../../shared/util/duration.es';
 import {
 	getFormattedPercentage,
-	isValidNumber
+	isValidNumber,
 } from '../../../shared/util/util.es';
 
 const Item = ({
 	breachedInstanceCount,
 	breachedInstancePercentage,
 	durationAvg,
-	name
+	name,
 }) => {
 	const formattedDuration = formatDuration(durationAvg);
 	const formattedPercentage = getFormattedPercentage(

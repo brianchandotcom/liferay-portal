@@ -25,7 +25,7 @@ class SummaryCard extends React.Component {
 		super(props);
 
 		this.state = {
-			hovered: false
+			hovered: false,
 		};
 	}
 
@@ -52,9 +52,9 @@ class SummaryCard extends React.Component {
 			[filterConstants.processStatus.key]: [
 				completed
 					? processStatusConstants.completed
-					: processStatusConstants.pending
+					: processStatusConstants.pending,
 			],
-			[filterConstants.slaStatus.key]: [slaStatusFilter]
+			[filterConstants.slaStatus.key]: [slaStatusFilter],
 		};
 
 		if (timeRange) {
@@ -84,7 +84,7 @@ class SummaryCard extends React.Component {
 			processId,
 			slaStatusFilter,
 			total,
-			value
+			value,
 		} = this.props;
 		const {defaultDelta} = this.context;
 		const {hovered} = this.state;

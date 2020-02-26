@@ -221,7 +221,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 					positionalWeekday = {
 						month: <%= startTimeJCalendar.get(java.util.Calendar.MONTH) %>,
 						position: <%= positionalWeekday.getPosition() %>,
-						weekday: '<%= positionalWeekday.getWeekday() %>'
+						weekday: '<%= positionalWeekday.getWeekday() %>',
 					};
 				</c:if>
 
@@ -232,7 +232,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 					interval: <%= recurrence.getInterval() %>,
 					positionalWeekday: positionalWeekday,
 					untilDate: untilDate,
-					weekdays: <%= jsonSerializer.serialize(weekdayValues) %>
+					weekdays: <%= jsonSerializer.serialize(weekdayValues) %>,
 				};
 
 				var recurrenceSummary = Liferay.RecurrenceUtil.getSummary(recurrence);

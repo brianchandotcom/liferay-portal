@@ -13,7 +13,7 @@
  */
 
 const DEFAULT_CONFIG = {
-	toolbarId: 'pageEditorToolbar'
+	toolbarId: 'pageEditorToolbar',
 };
 
 /** @type {import('../../types/config').Config} */
@@ -36,13 +36,13 @@ export function initializeConfig(backendConfig) {
 		panels: generatePanels(augmentedPanels),
 		sidebarPanels: partitionPanels(augmentedPanels),
 		toolbarId,
-		toolbarPlugins: getToolbarPlugins(pluginsRootPath, toolbarId)
+		toolbarPlugins: getToolbarPlugins(pluginsRootPath, toolbarId),
 	};
 
 	config = {
 		...DEFAULT_CONFIG,
 		...backendConfig,
-		...syntheticItems
+		...syntheticItems,
 	};
 
 	return config;
@@ -54,7 +54,7 @@ export function initializeConfig(backendConfig) {
  * plugin names.
  */
 const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
-	elements: 'fragments'
+	elements: 'fragments',
 };
 
 function augmentPanelData(pluginsRootPath, sidebarPanels) {
@@ -73,7 +73,7 @@ function augmentPanelData(pluginsRootPath, sidebarPanels) {
 			// https://github.com/liferay/liferay-js-toolkit/issues/324
 			pluginEntryPoint: `${pluginsRootPath}/${sidebarPanelId}/index`,
 
-			sidebarPanelId
+			sidebarPanelId,
 		};
 	});
 }
@@ -116,8 +116,8 @@ function getToolbarPlugins(pluginsRootPath, toolbarId) {
 				</div>
 			`,
 			pluginEntryPoint: `${pluginsRootPath}/experience/index`,
-			toolbarPluginId: 'experience'
-		}
+			toolbarPluginId: 'experience',
+		},
 	];
 }
 

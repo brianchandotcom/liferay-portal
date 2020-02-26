@@ -20,7 +20,7 @@ const Item = ({
 	instanceCount,
 	onTimeInstanceCount,
 	overdueInstanceCount,
-	title
+	title,
 }) => {
 	return (
 		<ClayTable.Row>

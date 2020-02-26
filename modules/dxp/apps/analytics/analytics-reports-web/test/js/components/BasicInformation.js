@@ -23,7 +23,7 @@ describe('BasicInformation', () => {
 		const testProps = {
 			authorName: 'John Tester',
 			publishDate: '13, July 2019',
-			title: 'A testing page'
+			title: 'A testing page',
 		};
 
 		const {getByText} = render(

@@ -64,7 +64,7 @@ export default function Sidebar() {
 		Actions,
 		config,
 		dispatch,
-		store
+		store,
 	};
 
 	let registerPanel;
@@ -82,7 +82,7 @@ export default function Sidebar() {
 				dispatch(
 					Actions.switchSidebarPanel({
 						sidebarOpen: false,
-						sidebarPanelId: null
+						sidebarPanelId: null,
 					})
 				);
 			}
@@ -99,7 +99,7 @@ export default function Sidebar() {
 		const onHandleSidebar = open => {
 			dispatch(
 				Actions.switchSidebarPanel({
-					sidebarOpen: open
+					sidebarOpen: open,
 				})
 			);
 		};
@@ -149,7 +149,7 @@ export default function Sidebar() {
 		dispatch(
 			Actions.switchSidebarPanel({
 				sidebarOpen: open,
-				sidebarPanelId: panel.sidebarPanelId
+				sidebarPanelId: panel.sidebarPanelId,
 			})
 		);
 	};
@@ -193,7 +193,7 @@ export default function Sidebar() {
 								isLink,
 								label,
 								pluginEntryPoint,
-								url
+								url,
 							} = panel;
 
 							if (isLink) {
@@ -240,7 +240,7 @@ export default function Sidebar() {
 						else {
 							return elements.concat([
 								...buttons,
-								<hr key={`separator-${groupIndex}`} />
+								<hr key={`separator-${groupIndex}`} />,
 							]);
 						}
 					}, [])}
@@ -248,7 +248,7 @@ export default function Sidebar() {
 				<div
 					className={classNames({
 						'page-editor__sidebar__content': true,
-						'page-editor__sidebar__content--open': sidebarOpen
+						'page-editor__sidebar__content--open': sidebarOpen,
 					})}
 					onClick={deselectItem}
 				>
@@ -262,7 +262,7 @@ export default function Sidebar() {
 										Actions.switchSidebarPanel({
 											sidebarOpen: false,
 											sidebarPanelId:
-												panels[0] && panels[0][0]
+												panels[0] && panels[0][0],
 										})
 									);
 									setHasError(false);

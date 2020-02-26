@@ -24,7 +24,7 @@ import {
 	COLUMNS,
 	EMPTY_STATE,
 	ENDPOINT,
-	RESPONSES
+	RESPONSES,
 } from '../../constants.es';
 
 describe('ListView', () => {

@@ -14,20 +14,20 @@
  */
 export const DELTAS = [
 	{
-		label: 5
+		label: 5,
 	},
 	{
-		label: 10
+		label: 10,
 	},
 	{
-		label: 20
+		label: 20,
 	},
 	{
-		label: 40
+		label: 40,
 	},
 	{
-		label: 50
-	}
+		label: 50,
+	},
 ];
 
 /**
@@ -46,7 +46,7 @@ export const KEY_CODES = {
 	P: 'p',
 	S: 's',
 	SPACE: ' ',
-	TAB: 'Tab'
+	TAB: 'Tab',
 };
 
 /**
@@ -57,8 +57,8 @@ export const KEY_CODES = {
 export const FETCH_OPTIONS = {
 	credentials: 'include',
 	...(typeof Liferay !== 'undefined' && {
-		headers: new Headers({'x-csrf-token': Liferay.authToken})
-	})
+		headers: new Headers({'x-csrf-token': Liferay.authToken}),
+	}),
 };
 
 /**

@@ -165,11 +165,11 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 				maxFileSize: <%= maxFileSize %>,
 				namespace: '<portlet:namespace />',
 				on: {
-					uploadComplete: A.bind('val', imageUploadedInput, true)
+					uploadComplete: A.bind('val', imageUploadedInput, true),
 				},
 				preserveRatio: <%= preserveRatio %>,
 				previewURL: '<%= previewURL %>',
-				uploadURL: '<%= addTempImageURL %>'
+				uploadURL: '<%= addTempImageURL %>',
 			});
 
 			if (Liferay.Util.getTop() !== A.config.win) {

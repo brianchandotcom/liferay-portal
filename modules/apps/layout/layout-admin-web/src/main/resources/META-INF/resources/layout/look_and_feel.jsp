@@ -179,7 +179,7 @@ else {
 					eventName: '<portlet:namespace />selectMasterLayout',
 					title: '<liferay-ui:message key="select-master" />',
 					url:
-						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_master_layout.jsp" /></portlet:renderURL>'
+						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_master_layout.jsp" /></portlet:renderURL>',
 				});
 
 				itemSelectorDialog.open();

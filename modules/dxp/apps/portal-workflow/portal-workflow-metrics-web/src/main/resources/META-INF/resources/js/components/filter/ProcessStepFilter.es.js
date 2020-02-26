@@ -19,7 +19,7 @@ import filterConstants from '../../shared/components/filter/util/filterConstants
 const allStepsItem = {
 	dividerAfter: true,
 	key: 'allSteps',
-	name: Liferay.Language.get('all-steps')
+	name: Liferay.Language.get('all-steps'),
 };
 
 const ProcessStepFilter = ({
@@ -28,7 +28,7 @@ const ProcessStepFilter = ({
 	filterKey = filterConstants.processStep.key,
 	options = {},
 	prefixKey = '',
-	processId
+	processId,
 }) => {
 	const defaultOptions = {
 		hideControl: false,
@@ -36,7 +36,7 @@ const ProcessStepFilter = ({
 		position: 'left',
 		withAllSteps: false,
 		withSelectionTitle: false,
-		withoutRouteParams: false
+		withoutRouteParams: false,
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
@@ -51,7 +51,7 @@ const ProcessStepFilter = ({
 		prefixKey,
 		requestUrl: `/processes/${processId}/tasks?page=0&pageSize=0`,
 		staticItems,
-		withoutRouteParams: options.withoutRouteParams
+		withoutRouteParams: options.withoutRouteParams,
 	});
 
 	const defaultItem = useMemo(() => items[0], [items]);

@@ -13,7 +13,7 @@
  */
 
 export const ACCEPTING_TYPES = {
-	ITEM: 'ITEM'
+	ITEM: 'ITEM',
 };
 
 // Defines the distance in px from the border to the center of an item where

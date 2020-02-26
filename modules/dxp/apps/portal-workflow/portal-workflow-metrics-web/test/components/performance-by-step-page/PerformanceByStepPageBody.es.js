@@ -24,7 +24,7 @@ const items = [
 		key: 'review',
 		name: 'Review',
 		onTimeInstanceCount: 4,
-		overdueInstanceCount: 4
+		overdueInstanceCount: 4,
 	},
 	{
 		breachedInstanceCount: 2,
@@ -33,8 +33,8 @@ const items = [
 		key: 'update',
 		name: 'Update',
 		onTimeInstanceCount: 2,
-		overdueInstanceCount: 2
-	}
+		overdueInstanceCount: 2,
+	},
 ];
 
 const wrapper = ({children}) => (

@@ -11,14 +11,14 @@
 
 const METADATA = {
 	name: 'definition',
-	version: 1
+	version: 1,
 };
 
 const XML_NAMESPACE = {
 	xmlns: 'urn:liferay.com:liferay-workflow_7.1.0',
 	'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
 	'xsi:schemaLocation':
-		'urn:liferay.com:liferay-workflow_7.1.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_1_0.xsd'
+		'urn:liferay.com:liferay-workflow_7.1.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_1_0.xsd',
 };
 
 describe('liferay-kaleo-designer-xml-definition-serializer', () => {
@@ -49,12 +49,12 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 
 								get(key) {
 									return ATTRS[key].value;
-								}
+								},
 							}
 						);
 
 						return constructor;
-					}
+					},
 				};
 
 				AUI().use(
@@ -79,13 +79,13 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 						name: ['notification1'],
 						recipients: [
 							{
-								receptionType: [null]
-							}
-						]
+								receptionType: [null],
+							},
+						],
 					},
-					xmlType: 'task'
-				}
-			]
+					xmlType: 'task',
+				},
+			],
 		};
 
 		const definition = serializeDefinition(
@@ -106,13 +106,13 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 						name: ['notification1'],
 						recipients: [
 							{
-								receptionType: ['']
-							}
-						]
+								receptionType: [''],
+							},
+						],
 					},
-					xmlType: 'task'
-				}
-			]
+					xmlType: 'task',
+				},
+			],
 		};
 
 		const definition = serializeDefinition(
@@ -130,9 +130,9 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 				{
 					assignments: {},
 					name: 'task1',
-					xmlType: 'task'
-				}
-			]
+					xmlType: 'task',
+				},
+			],
 		};
 
 		const definition = serializeDefinition(
@@ -153,13 +153,13 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 						name: ['notification1'],
 						recipients: [
 							{
-								receptionType: 'bcc'
-							}
-						]
+								receptionType: 'bcc',
+							},
+						],
 					},
-					xmlType: 'task'
-				}
-			]
+					xmlType: 'task',
+				},
+			],
 		};
 
 		const definition = serializeDefinition(
@@ -183,13 +183,13 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 								assignmentType: ['user'],
 								emailAddress: [null],
 								screenName: [null],
-								userId: [null]
-							}
-						]
+								userId: [null],
+							},
+						],
 					},
-					xmlType: 'task'
-				}
-			]
+					xmlType: 'task',
+				},
+			],
 		};
 
 		const definition = serializeDefinition(
@@ -210,13 +210,13 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 						name: ['notification1'],
 						recipients: [
 							{
-								assignmentType: ['user']
-							}
-						]
+								assignmentType: ['user'],
+							},
+						],
 					},
-					xmlType: 'task'
-				}
-			]
+					xmlType: 'task',
+				},
+			],
 		};
 
 		const definition = serializeDefinition(
@@ -233,12 +233,12 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 			nodes: [
 				{
 					assignments: {
-						assignmentType: 'taskAssignees'
+						assignmentType: 'taskAssignees',
 					},
 					name: 'task1',
-					xmlType: 'task'
-				}
-			]
+					xmlType: 'task',
+				},
+			],
 		};
 
 		const definition = serializeDefinition(

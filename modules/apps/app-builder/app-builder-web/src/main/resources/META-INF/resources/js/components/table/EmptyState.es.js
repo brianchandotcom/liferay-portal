@@ -19,7 +19,7 @@ import lang from '../../utils/lang.es';
 const EmptyState = ({emptyState, keywords = ''}) => {
 	const defaultEmpty = {
 		description: null,
-		title: Liferay.Language.get('there-are-no-entries')
+		title: Liferay.Language.get('there-are-no-entries'),
 	};
 
 	const defaultSearch = {
@@ -27,17 +27,17 @@ const EmptyState = ({emptyState, keywords = ''}) => {
 			Liferay.Language.get('there-are-no-results-for-x'),
 			[keywords]
 		),
-		title: Liferay.Language.get('no-results-were-found')
+		title: Liferay.Language.get('no-results-were-found'),
 	};
 
 	emptyState = {
 		...defaultEmpty,
-		...emptyState
+		...emptyState,
 	};
 
 	const search = {
 		...defaultSearch,
-		...emptyState.search
+		...emptyState.search,
 	};
 
 	const isSearch = keywords !== '';

@@ -31,26 +31,26 @@ export default ({
 	onClose,
 	onSave = () => Promise.resolve(),
 	rolesFilter = () => true,
-	title
+	title,
 }) => {
 	const {observer} = useModal({
-		onClose
+		onClose,
 	});
 
 	const columns = [
 		{
 			key: 'name',
 			sortable: false,
-			value: Liferay.Language.get('role')
+			value: Liferay.Language.get('role'),
 		},
-		...actions
+		...actions,
 	];
 
 	const [state, setState] = useState({
 		isLoading: true,
 		permissions: [],
 		roles: [],
-		searchText: ''
+		searchText: '',
 	});
 
 	useEffect(() => {
@@ -62,7 +62,7 @@ export default ({
 			isLoading: true,
 			permissions: [],
 			roles: [],
-			searchText: ''
+			searchText: '',
 		});
 
 		getItem('/o/headless-admin-user/v1.0/roles')
@@ -71,7 +71,7 @@ export default ({
 
 				setState(prevState => ({
 					...prevState,
-					roles
+					roles,
 				}));
 
 				const roleNames = roles.map(({name}) => name);
@@ -82,13 +82,13 @@ export default ({
 				setState(prevState => ({
 					...prevState,
 					isLoading: false,
-					permissions
+					permissions,
 				}));
 			})
 			.catch(_ =>
 				setState(prevState => ({
 					...prevState,
-					isLoading: false
+					isLoading: false,
 				}))
 			);
 	}, [endpoint, isOpen, rolesFilter]);
@@ -108,7 +108,7 @@ export default ({
 	const handleOnSave = () =>
 		Promise.all([
 			updateItem(endpoint, permissions),
-			onSave(permissions)
+			onSave(permissions),
 		]).then(() => onClose());
 
 	const togglePermission = (roleName, actionId) => {
@@ -131,13 +131,13 @@ export default ({
 				...permission,
 				actionIds: actionIds.includes(actionId)
 					? actionIds.filter(id => id !== actionId)
-					: actionIds.concat(actionId)
+					: actionIds.concat(actionId),
 			};
 		});
 
 		setState(prevState => ({
 			...prevState,
-			permissions: newPermissions
+			permissions: newPermissions,
 		}));
 	};
 
@@ -150,7 +150,7 @@ export default ({
 					<>
 						<ClayIcon symbol="user" /> {name}
 					</>
-				)
+				),
 			};
 
 			actions.forEach(({key}) => {
@@ -164,7 +164,7 @@ export default ({
 							onChange={() => togglePermission(name, key)}
 							type="checkbox"
 						/>
-					)
+					),
 				};
 			});
 
@@ -182,7 +182,7 @@ export default ({
 						onChange={searchText =>
 							setState(prevState => ({
 								...prevState,
-								searchText
+								searchText,
 							}))
 						}
 						searchText={searchText}

@@ -190,7 +190,7 @@ if (organization != null) {
 
 		if (organizationsRedirect) {
 			Liferay.Util.setFormValues(form, {
-				redirect: organizationsRedirect
+				redirect: organizationsRedirect,
 			});
 		}
 
@@ -201,10 +201,10 @@ if (organization != null) {
 					form,
 					'<portlet:namespace />allRowIds',
 					'<portlet:namespace />rowIdsUser'
-				)
+				),
 			},
 			url:
-				'<portlet:actionURL name="/users_admin/delete_organizations_and_users" />'
+				'<portlet:actionURL name="/users_admin/delete_organizations_and_users" />',
 		});
 	};
 
@@ -227,9 +227,9 @@ if (organization != null) {
 					form,
 					'<portlet:namespace />allRowIds',
 					'<portlet:namespace />rowIdsUser'
-				)
+				),
 			},
-			url: '<%= removeOrganizationsAndUsersURL.toString() %>'
+			url: '<%= removeOrganizationsAndUsersURL.toString() %>',
 		});
 	}
 
@@ -238,7 +238,7 @@ if (organization != null) {
 	};
 
 	var ACTIONS = {
-		selectUsers: selectUsers
+		selectUsers: selectUsers,
 	};
 
 	Liferay.componentReady('viewTreeManagementToolbar').then(function(

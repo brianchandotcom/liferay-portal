@@ -15,7 +15,7 @@ import {
 	cleanup,
 	render,
 	wait,
-	waitForElement
+	waitForElement,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -33,7 +33,7 @@ const variants = [
 		segmentsExperienceId: 'experience-001',
 		segmentsExperimentId: 'experiment-001',
 		segmentsExperimentRelId: 'experiment-rel-001',
-		split: 0
+		split: 0,
 	},
 	{
 		control: true,
@@ -41,7 +41,7 @@ const variants = [
 		segmentsExperienceId: 'experience-002',
 		segmentsExperimentId: 'experiment-001',
 		segmentsExperimentRelId: 'experiment-rel-002',
-		split: 0
+		split: 0,
 	},
 	{
 		control: true,
@@ -49,7 +49,7 @@ const variants = [
 		segmentsExperienceId: 'experience-003',
 		segmentsExperimentId: 'experiment-001',
 		segmentsExperimentRelId: 'experiment-rel-003',
-		split: 0
+		split: 0,
 	},
 	{
 		control: true,
@@ -57,8 +57,8 @@ const variants = [
 		segmentsExperienceId: 'experience-004',
 		segmentsExperimentId: 'experiment-001',
 		segmentsExperimentRelId: 'experiment-rel-004',
-		split: 0
-	}
+		split: 0,
+	},
 ];
 const onRun = jest.fn();
 
@@ -71,7 +71,7 @@ const experiment = {
 	goal: {
 		label: 'click',
 		target: 'click',
-		value: '#element'
+		value: '#element',
 	},
 	name: 'Experiment name',
 	segmentsEntryName: 'Experience Segment',
@@ -79,13 +79,13 @@ const experiment = {
 	segmentsExperimentId: 'experiment-001',
 	status: {
 		label: 'draft',
-		value: '0'
-	}
+		value: '0',
+	},
 };
 
 const ModalWrapper = ({onCloseMock, onRun, variants}) => {
 	const {observer: modalObserver, onClose: onModalClose} = useModal({
-		onClose: onCloseMock
+		onClose: onCloseMock,
 	});
 
 	return (
@@ -102,20 +102,20 @@ const ModalWrapper = ({onCloseMock, onRun, variants}) => {
 
 const renderReviewExperimentModal = ({
 	getEstimatedTimeMock,
-	onCloseMock = () => {}
+	onCloseMock = () => {},
 }) => {
 	return render(
 		<SegmentsExperimentContext.Provider
 			value={{
 				APIService: {
-					getEstimatedTime: getEstimatedTimeMock
+					getEstimatedTime: getEstimatedTimeMock,
 				},
-				assetsPath
+				assetsPath,
 			}}
 		>
 			<StateContext.Provider
 				value={{
-					experiment
+					experiment,
 				}}
 			>
 				<ModalWrapper
@@ -126,7 +126,7 @@ const renderReviewExperimentModal = ({
 			</StateContext.Provider>
 		</SegmentsExperimentContext.Provider>,
 		{
-			baseElement: document.body
+			baseElement: document.body,
 		}
 	);
 };
@@ -159,7 +159,7 @@ describe('ReviewExperimentModal', () => {
 			);
 
 			renderReviewExperimentModal({
-				getEstimatedTimeMock
+				getEstimatedTimeMock,
 			});
 
 			act(() => jest.runAllTimers());
@@ -170,7 +170,7 @@ describe('ReviewExperimentModal', () => {
 
 			expect(getEstimatedTimeMock).toHaveBeenCalledWith(
 				expect.objectContaining({
-					confidenceLevel: 95
+					confidenceLevel: 95,
 				})
 			);
 		});
@@ -180,7 +180,7 @@ describe('ReviewExperimentModal', () => {
 				getEstimatedTimeMockFactory(10)
 			);
 			const {getByDisplayValue} = renderReviewExperimentModal({
-				getEstimatedTimeMock
+				getEstimatedTimeMock,
 			});
 
 			act(() => jest.runAllTimers());
@@ -207,7 +207,7 @@ describe('ReviewExperimentModal', () => {
 				getEstimatedTimeMockFactory(9)
 			);
 			const {getAllByDisplayValue} = renderReviewExperimentModal({
-				getEstimatedTimeMock
+				getEstimatedTimeMock,
 			});
 
 			act(() => jest.runAllTimers());
@@ -237,7 +237,7 @@ describe('ReviewExperimentModal', () => {
 			const getEstimatedTimeMock = jest.fn(() => Promise.reject());
 
 			const {getByText} = renderReviewExperimentModal({
-				getEstimatedTimeMock
+				getEstimatedTimeMock,
 			});
 
 			act(() => jest.runAllTimers());
@@ -255,7 +255,7 @@ describe('ReviewExperimentModal', () => {
 			);
 
 			const {getByText} = renderReviewExperimentModal({
-				getEstimatedTimeMock
+				getEstimatedTimeMock,
 			});
 
 			act(() => jest.runAllTimers());

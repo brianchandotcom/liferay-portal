@@ -206,21 +206,21 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 			{
 				dialog: {
 					constrain: true,
-					modal: true
+					modal: true,
 				},
 				eventName: '<portlet:namespace />selectDDMStructure',
 				id: '<portlet:namespace />selectDDMStructure',
 				title:
 					'<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
 				uri:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /><portlet:param name="classPK" value="<%= String.valueOf(journalEditDDMStructuresDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>'
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /><portlet:param name="classPK" value="<%= String.valueOf(journalEditDDMStructuresDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>',
 			},
 			function(event) {
 				var form = document.<portlet:namespace />fm;
 
 				Liferay.Util.setFormValues(form, {
 					parentDDMStructureId: event.ddmstructureid,
-					parentDDMStructureName: Liferay.Util.unescape(event.name)
+					parentDDMStructureName: Liferay.Util.unescape(event.name),
 				});
 
 				var removeParentDDMStructureButton = Liferay.Util.getFormElement(
@@ -243,7 +243,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 
 		Liferay.Util.setFormValues(form, {
 			parentDDMStructureId: '',
-			parentDDMStructureName: ''
+			parentDDMStructureName: '',
 		});
 
 		var removeParentDDMStructureButton = Liferay.Util.getFormElement(
@@ -285,12 +285,12 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 						.save({
 							dataDefinition: {
 								description: description,
-								name: name
+								name: name,
 							},
 							dataLayout: {
 								description: description,
-								name: name
-							}
+								name: name,
+							},
 						})
 						.then(function(dataLayout) {
 							Liferay.Util.navigate('<%= HtmlUtil.escapeJS(redirect) %>');
@@ -300,8 +300,8 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 			<c:otherwise>
 				Liferay.Util.postForm(document.<portlet:namespace />fm, {
 					data: {
-						definition: <portlet:namespace />formBuilder.getContentValue()
-					}
+						definition: <portlet:namespace />formBuilder.getContentValue(),
+					},
 				});
 			</c:otherwise>
 		</c:choose>

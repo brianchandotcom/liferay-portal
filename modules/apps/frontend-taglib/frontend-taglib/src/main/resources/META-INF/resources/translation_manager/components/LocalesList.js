@@ -36,7 +36,7 @@ export default function LocalesList({
 	defaultLocale,
 	editingLocale,
 	onLocaleClicked,
-	onLocaleRemoved
+	onLocaleRemoved,
 }) {
 	return (
 		<>

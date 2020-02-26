@@ -41,6 +41,6 @@ export function fetchResponse(url, params) {
 export function fetchDocuments(url, params) {
 	return fetchResponse(url, params).then(data => ({
 		items: data.documents,
-		total: data.total
+		total: data.total,
 	}));
 }

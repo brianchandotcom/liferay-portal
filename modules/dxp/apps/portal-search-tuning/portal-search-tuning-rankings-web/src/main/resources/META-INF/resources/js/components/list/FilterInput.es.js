@@ -21,10 +21,10 @@ class FilterInput extends Component {
 		disableSearch: PropTypes.bool,
 		onChange: PropTypes.func,
 		onSubmit: PropTypes.func,
-		searchBarTerm: PropTypes.string
+		searchBarTerm: PropTypes.string,
 	};
 	static defaultProps = {
-		disableSearch: false
+		disableSearch: false,
 	};
 
 	_handleChange = event => {

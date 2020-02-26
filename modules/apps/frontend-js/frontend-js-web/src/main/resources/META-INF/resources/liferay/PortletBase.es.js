@@ -64,7 +64,7 @@ class PortletBase extends Component {
 		return fetch(url, {
 			body: requestBody,
 			credentials: 'include',
-			method: 'POST'
+			method: 'POST',
 		});
 	}
 
@@ -173,7 +173,7 @@ PortletBase.STATE = {
 	 * @type {string}
 	 */
 	namespace: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -184,7 +184,7 @@ PortletBase.STATE = {
 	 * @type {string}
 	 */
 	portletNamespace: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -196,8 +196,8 @@ PortletBase.STATE = {
 	 */
 	rootNode: {
 		setter: dom.toElement,
-		valueFn: 'rootNodeValueFn_'
-	}
+		valueFn: 'rootNodeValueFn_',
+	},
 };
 
 export default PortletBase;

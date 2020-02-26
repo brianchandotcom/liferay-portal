@@ -28,8 +28,8 @@ AUI.add(
 
 			ATTRS: {
 				id: {
-					value: STR_BLANK
-				}
+					value: STR_BLANK,
+				},
 			},
 
 			NAME: 'searchcontainer',
@@ -54,7 +54,7 @@ AUI.add(
 				}
 				else {
 					searchContainer = new SearchContainer({
-						id
+						id,
 					}).render();
 				}
 
@@ -124,7 +124,7 @@ AUI.add(
 							id,
 							ids: instance._ids,
 							row,
-							rowData: arr
+							rowData: arr,
 						});
 					}
 
@@ -135,11 +135,11 @@ AUI.add(
 					var instance = this;
 
 					instance.publish('addRow', {
-						defaultFn: instance._addRow
+						defaultFn: instance._addRow,
 					});
 
 					instance.publish('deleteRow', {
-						defaultFn: instance._deleteRow
+						defaultFn: instance._deleteRow,
 					});
 				},
 
@@ -176,7 +176,7 @@ AUI.add(
 					instance.fire('deleteRow', {
 						id,
 						ids: instance._ids,
-						row: obj
+						row: obj,
 					});
 
 					if (obj) {
@@ -309,7 +309,7 @@ AUI.add(
 					if (dataStore) {
 						dataStore.val(instance._ids.join(','));
 					}
-				}
+				},
 			},
 
 			register(obj) {
@@ -320,19 +320,19 @@ AUI.add(
 				instance._cache[id] = obj;
 
 				Liferay.component(id, obj, {
-					destroyOnNavigate: true
+					destroyOnNavigate: true,
 				});
 
 				Liferay.fire('search-container:registered', {
-					searchContainer: obj
+					searchContainer: obj,
 				});
-			}
+			},
 		});
 
 		Liferay.SearchContainer = SearchContainer;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-component']
+		requires: ['aui-base', 'aui-component'],
 	}
 );

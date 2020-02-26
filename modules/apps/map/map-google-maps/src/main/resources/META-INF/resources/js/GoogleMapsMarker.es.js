@@ -39,7 +39,7 @@ class GoogleMapsMarker extends MarkerBase {
 			this._nativeMarker = new google.maps.Marker({
 				draggable: true,
 				map,
-				position: location
+				position: location,
 			});
 
 			google.maps.event.addListener(
@@ -102,8 +102,8 @@ class GoogleMapsMarker extends MarkerBase {
 		return {
 			location: {
 				lat: nativeEvent.latLng.lat(),
-				lng: nativeEvent.latLng.lng()
-			}
+				lng: nativeEvent.latLng.lng(),
+			},
 		};
 	}
 }

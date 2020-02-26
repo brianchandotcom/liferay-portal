@@ -28,7 +28,7 @@ import {
 	STATUS_COMPLETED,
 	STATUS_DRAFT,
 	STATUS_FINISHED_WINNER,
-	statusToLabelDisplayType
+	statusToLabelDisplayType,
 } from '../util/statuses.es';
 import {openErrorToast, openSuccessToast} from '../util/toasts.es';
 import ClickGoalPicker from './ClickGoalPicker/ClickGoalPicker.es';
@@ -39,7 +39,7 @@ import Variants from './Variants/Variants.es';
 
 const TABS_STATES = {
 	ACTIVE: 0,
-	HISTORY: 1
+	HISTORY: 1,
 };
 
 function SegmentsExperiments({
@@ -49,7 +49,7 @@ function SegmentsExperiments({
 	onEditSegmentsExperimentStatus,
 	onSelectSegmentsExperienceChange,
 	onTargetChange,
-	segmentsExperiences = []
+	segmentsExperiences = [],
 }) {
 	const [dropdown, setDropdown] = useState(false);
 	const [activeTab, setActiveTab] = useState(TABS_STATES.ACTIVE);
@@ -57,7 +57,7 @@ function SegmentsExperiments({
 		experiment,
 		experimentHistory,
 		selectedExperienceId,
-		variants
+		variants,
 	} = useContext(StateContext);
 	const {APIService, assetsPath} = useContext(SegmentsExperimentsContext);
 	const dispatch = useContext(DispatchContext);
@@ -188,7 +188,7 @@ function SegmentsExperiments({
 												'<strong>',
 												winnerVariant.name,
 												'</strong>'
-											)
+											),
 										}}
 									/>
 
@@ -305,7 +305,7 @@ function SegmentsExperiments({
 		const body = {
 			segmentsExperimentId: experiment.segmentsExperimentId,
 			status: STATUS_COMPLETED,
-			winnerSegmentsExperienceId: experienceId
+			winnerSegmentsExperienceId: experienceId,
 		};
 
 		const confirmed = confirm(
@@ -321,7 +321,7 @@ function SegmentsExperiments({
 
 					dispatch(
 						archiveExperiment({
-							status: segmentsExperiment.status
+							status: segmentsExperiment.status,
 						})
 					);
 				})
@@ -339,7 +339,7 @@ SegmentsExperiments.propTypes = {
 	onEditSegmentsExperimentStatus: PropTypes.func.isRequired,
 	onSelectSegmentsExperienceChange: PropTypes.func.isRequired,
 	onTargetChange: PropTypes.func.isRequired,
-	segmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType)
+	segmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),
 };
 
 export default SegmentsExperiments;

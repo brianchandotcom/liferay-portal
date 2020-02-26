@@ -113,8 +113,8 @@ PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPo
 			result = {
 				data: {
 					type: '<%= HtmlUtil.escapeJS(tabs2) %>',
-					value: <portlet:namespace />assigneeIds.join(',')
-				}
+					value: <portlet:namespace />assigneeIds.join(','),
+				},
 			};
 		}
 

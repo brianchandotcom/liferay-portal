@@ -44,12 +44,12 @@ SelectField.propTypes = {
 			validValues: PropTypes.arrayOf(
 				PropTypes.shape({
 					label: PropTypes.string.isRequired,
-					value: PropTypes.string.isRequired
+					value: PropTypes.string.isRequired,
 				})
-			).isRequired
-		}).isRequired
+			).isRequired,
+		}).isRequired,
 	}),
 
 	onValueSelect: PropTypes.func.isRequired,
-	value: PropTypes.string
+	value: PropTypes.string,
 };

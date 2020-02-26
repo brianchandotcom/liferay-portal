@@ -29,14 +29,14 @@ describe('Grid', () => {
 			columns: [
 				{
 					label: 'col1',
-					value: 'fieldId'
+					value: 'fieldId',
 				},
 				{
 					label: 'col2',
-					value: 'fieldId'
-				}
+					value: 'fieldId',
+				},
 			],
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -45,7 +45,7 @@ describe('Grid', () => {
 	it('renders no columns when columns comes empty', () => {
 		component = new Grid({
 			columns: [],
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -54,7 +54,7 @@ describe('Grid', () => {
 	it('is not edidable', () => {
 		component = new Grid({
 			readOnly: false,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -63,7 +63,7 @@ describe('Grid', () => {
 	it('has a tip', () => {
 		component = new Grid({
 			spritemap,
-			tip: 'Type something'
+			tip: 'Type something',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -72,7 +72,7 @@ describe('Grid', () => {
 	it('has an id', () => {
 		component = new Grid({
 			id: 'ID',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -81,7 +81,7 @@ describe('Grid', () => {
 	it('has a label', () => {
 		component = new Grid({
 			label: 'label',
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -90,7 +90,7 @@ describe('Grid', () => {
 	it('is not required', () => {
 		component = new Grid({
 			required: false,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -101,14 +101,14 @@ describe('Grid', () => {
 			rows: [
 				{
 					label: 'row1',
-					value: 'fieldId'
+					value: 'fieldId',
 				},
 				{
 					label: 'row2',
-					value: 'fieldId'
-				}
+					value: 'fieldId',
+				},
 			],
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -117,7 +117,7 @@ describe('Grid', () => {
 	it('renders no rows when row comes empty', () => {
 		component = new Grid({
 			rows: [],
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -127,7 +127,7 @@ describe('Grid', () => {
 		component = new Grid({
 			label: 'text',
 			showLabel: true,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -135,7 +135,7 @@ describe('Grid', () => {
 
 	it('has a spritemap', () => {
 		component = new Grid({
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();

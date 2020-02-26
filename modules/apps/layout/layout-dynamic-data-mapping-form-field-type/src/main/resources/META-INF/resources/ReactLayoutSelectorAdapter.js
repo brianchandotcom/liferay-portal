@@ -26,13 +26,13 @@ const LayoutSelectorWithState = ({
 	itemSelectorURL,
 	name,
 	portletNamespace,
-	readOnly
+	readOnly,
 }) => {
 	const [layout, setLayout] = useState({});
 
 	useEffect(() => {
 		setLayout({
-			...JSON.parse(inputValue || '{}')
+			...JSON.parse(inputValue || '{}'),
 		});
 	}, [inputValue]);
 
@@ -40,7 +40,7 @@ const LayoutSelectorWithState = ({
 		setLayout(() => {
 			dispatch({
 				payload: clear ? '' : JSON.stringify(value),
-				type: 'value'
+				type: 'value',
 			});
 
 			return value;
@@ -58,7 +58,7 @@ const LayoutSelectorWithState = ({
 			setLayout(() => {
 				dispatch({
 					payload: JSON.stringify(selectedItem),
-					type: 'value'
+					type: 'value',
 				});
 
 				return selectedItem;
@@ -73,7 +73,7 @@ const LayoutSelectorWithState = ({
 			eventName: `${portletNamespace}selectLayout`,
 			singleSelect: true,
 			title: Liferay.Language.get('page'),
-			url: itemSelectorURL
+			url: itemSelectorURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', _handleFieldChanged);

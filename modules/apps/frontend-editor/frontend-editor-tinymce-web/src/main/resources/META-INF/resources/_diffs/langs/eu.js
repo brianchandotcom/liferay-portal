@@ -213,5 +213,5 @@ tinymce.addI18n('eu', {
 	Tools: 'Tresnak',
 	View: 'Ikusi',
 	Table: 'Taula',
-	Format: 'Formatua'
+	Format: 'Formatua',
 });

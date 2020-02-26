@@ -27,9 +27,9 @@ AUI.add(
 					on: {
 						success() {
 							params.callback(this.get('responseData'));
-						}
+						},
 					},
-					sync: params.sync
+					sync: params.sync,
 				});
 			},
 
@@ -39,10 +39,10 @@ AUI.add(
 				instance._invokeResourceURL({
 					callback,
 					queryParameters: {
-						roleIds: roleId
+						roleIds: roleId,
 					},
 					resourceId: 'roles',
-					sync: false
+					sync: false,
 				});
 			},
 
@@ -53,7 +53,7 @@ AUI.add(
 					callback,
 					queryParameters: {},
 					resourceId: 'scriptLanguages',
-					sync: true
+					sync: true,
 				});
 			},
 
@@ -63,18 +63,18 @@ AUI.add(
 				instance._invokeResourceURL({
 					callback,
 					queryParameters: {
-						userIds: userId
+						userIds: userId,
 					},
 					resourceId: 'users',
-					sync: false
+					sync: false,
 				});
-			}
+			},
 		};
 
 		Liferay.KaleoDesignerRemoteServices = KaleoDesignerRemoteServices;
 	},
 	'',
 	{
-		requires: ['aui-io', 'liferay-portlet-url']
+		requires: ['aui-io', 'liferay-portlet-url'],
 	}
 );

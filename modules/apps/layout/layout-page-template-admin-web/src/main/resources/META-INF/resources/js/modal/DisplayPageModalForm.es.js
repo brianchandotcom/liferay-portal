@@ -145,13 +145,13 @@ DisplayPageModalForm.propTypes = {
 			subtypes: PropTypes.arrayOf(
 				PropTypes.shape({
 					id: PropTypes.string,
-					label: PropTypes.string
+					label: PropTypes.string,
 				})
-			)
+			),
 		})
 	),
 	namespace: PropTypes.string.isRequired,
-	onSubmit: PropTypes.func.isRequire
+	onSubmit: PropTypes.func.isRequire,
 };
 
 export {DisplayPageModalForm};

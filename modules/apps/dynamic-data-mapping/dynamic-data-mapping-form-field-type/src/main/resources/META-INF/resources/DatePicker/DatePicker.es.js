@@ -168,7 +168,7 @@ class DatePicker extends Component {
 			...state,
 			formattedValue: state.value,
 			value: moment(value).format('YYYY-MM-DD'),
-			years: this.getYears()
+			years: this.getYears(),
 		};
 	}
 
@@ -196,7 +196,7 @@ class DatePicker extends Component {
 
 			this.emit('fieldFocused', {
 				fieldInstance: this,
-				originalEvent: window.event
+				originalEvent: window.event,
 			});
 		}
 		else {
@@ -204,7 +204,7 @@ class DatePicker extends Component {
 
 			this.emit('fieldBlurred', {
 				fieldInstance: this,
-				originalEvent: window.event
+				originalEvent: window.event,
 			});
 		}
 	}
@@ -221,7 +221,7 @@ class DatePicker extends Component {
 				keepCharPositions: true,
 				mask: this.getInputMask(),
 				pipe: createAutoCorrectedDatePipe(dateMask),
-				showMask: true
+				showMask: true,
 			});
 		}
 		else if (this._vanillaTextMask) {
@@ -277,7 +277,7 @@ class DatePicker extends Component {
 			{
 				_daySelected: ariaLabel,
 				expanded: false,
-				value: selectedDate
+				value: selectedDate,
 			},
 			() => {
 				this._handleFieldEdited();
@@ -312,7 +312,7 @@ class DatePicker extends Component {
 
 		this.emit('fieldEdited', {
 			fieldInstance: this,
-			value: this._setValue(value)
+			value: this._setValue(value),
 		});
 	}
 
@@ -595,7 +595,7 @@ DatePicker.STATE = {
 		'September',
 		'October',
 		'November',
-		'December'
+		'December',
 	]),
 
 	/**
@@ -627,7 +627,7 @@ DatePicker.STATE = {
 
 	predefinedValue: Config.oneOfType([
 		Config.instanceOf(Date),
-		Config.string()
+		Config.string(),
 	]).setter('_setValue'),
 
 	/**
@@ -731,8 +731,8 @@ DatePicker.STATE = {
 		'2021',
 		'2022',
 		'2023',
-		'2024'
-	])
+		'2024',
+	]),
 };
 
 Soy.register(DatePicker, templates);

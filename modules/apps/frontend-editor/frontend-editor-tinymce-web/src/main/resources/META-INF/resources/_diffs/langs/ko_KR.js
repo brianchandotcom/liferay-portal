@@ -216,5 +216,5 @@ tinymce.addI18n('ko_KR', {
 	Tools: '\ub3c4\uad6c',
 	View: '\ubcf4\uae30',
 	Table: '\ud14c\uc774\ube14',
-	Format: '\ud3ec\ub9f7'
+	Format: '\ud3ec\ub9f7',
 });

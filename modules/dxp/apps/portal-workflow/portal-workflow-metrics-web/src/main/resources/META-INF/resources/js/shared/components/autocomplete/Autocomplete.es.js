@@ -24,7 +24,7 @@ const Autocomplete = ({
 	onChange,
 	onSelect,
 	placeholder = '',
-	promises = []
+	promises = [],
 }) => {
 	const [activeItem, setActiveItem] = useState(-1);
 	const [dropDownItems, setDropDownItems] = useState([]);

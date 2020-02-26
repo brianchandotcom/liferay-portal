@@ -24,7 +24,7 @@ export default class MultiSelect extends React.Component {
 		this.state = {
 			active: false,
 			searchKey: '',
-			verticalIndex: -1
+			verticalIndex: -1,
 		};
 	}
 
@@ -61,12 +61,12 @@ export default class MultiSelect extends React.Component {
 
 	changeSearch(event) {
 		const {
-			target: {value: searchKey}
+			target: {value: searchKey},
 		} = event;
 
 		this.setState({
 			searchKey,
-			verticalIndex: -1
+			verticalIndex: -1,
 		});
 	}
 
@@ -74,7 +74,7 @@ export default class MultiSelect extends React.Component {
 		this.setState(
 			{
 				searchKey: '',
-				verticalIndex: -1
+				verticalIndex: -1,
 			},
 			callback
 		);
@@ -190,7 +190,7 @@ export default class MultiSelect extends React.Component {
 		const {active, highlighted, searchKey, verticalIndex} = this.state;
 		const {
 			dataFiltered,
-			dataFiltered: {length: dataFilteredLength}
+			dataFiltered: {length: dataFilteredLength},
 		} = this;
 		const {fieldId = 'id'} = this.props;
 		const selectedTags = this.getSelectedTags();
@@ -285,7 +285,7 @@ export default class MultiSelect extends React.Component {
 											? {
 													onBlur: this.hideDropList.bind(
 														this
-													)
+													),
 											  }
 											: {})}
 										tabIndex="-1"

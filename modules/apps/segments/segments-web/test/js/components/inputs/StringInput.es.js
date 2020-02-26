@@ -47,7 +47,7 @@ describe('StringInput', () => {
 		testControlledInput({
 			element,
 			mockFunc: mockOnChange,
-			value: defaultValue
+			value: defaultValue,
 		});
 	});
 
@@ -57,12 +57,12 @@ describe('StringInput', () => {
 		const options = [
 			{
 				label: 'Default Value',
-				value: 'defaultValue'
+				value: 'defaultValue',
 			},
 			{
 				label: 'LIFERAY',
-				value: 'Liferay'
-			}
+				value: 'Liferay',
+			},
 		];
 
 		const {asFragment, getByTestId} = render(
@@ -80,7 +80,7 @@ describe('StringInput', () => {
 		testControlledInput({
 			element,
 			mockFunc: mockOnChange,
-			value: defaultValue
+			value: defaultValue,
 		});
 	});
 });

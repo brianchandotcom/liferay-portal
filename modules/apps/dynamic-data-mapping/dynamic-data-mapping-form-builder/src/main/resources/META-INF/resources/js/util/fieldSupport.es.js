@@ -46,7 +46,7 @@ export const normalizeSettingsContextPages = (
 			field = {
 				...field,
 				value: generatedFieldName,
-				visible: true
+				visible: true,
 			};
 		}
 		else if (fieldName === 'label') {
@@ -54,16 +54,16 @@ export const normalizeSettingsContextPages = (
 				...field,
 				localizedValue: {
 					...field.localizedValue,
-					[editingLanguageId]: fieldType.label
+					[editingLanguageId]: fieldType.label,
 				},
 				type: 'text',
-				value: fieldType.label
+				value: fieldType.label,
 			};
 		}
 		else if (fieldName === 'type') {
 			field = {
 				...field,
-				value: fieldType.name
+				value: fieldType.name,
 			};
 		}
 		else if (fieldName === 'validation') {
@@ -71,13 +71,13 @@ export const normalizeSettingsContextPages = (
 				...field,
 				validation: {
 					...field.validation,
-					fieldName: generatedFieldName
-				}
+					fieldName: generatedFieldName,
+				},
 			};
 		}
 
 		return {
-			...field
+			...field,
 		};
 	});
 };
@@ -135,7 +135,7 @@ export const localizeField = (field, defaultLanguageId, editingLanguageId) => {
 	) {
 		value = {
 			...value,
-			[editingLanguageId]: value[defaultLanguageId]
+			[editingLanguageId]: value[defaultLanguageId],
 		};
 	}
 
@@ -145,8 +145,8 @@ export const localizeField = (field, defaultLanguageId, editingLanguageId) => {
 		editingLanguageId,
 		localizedValue: {
 			...(field.localizedValue || {}),
-			[editingLanguageId]: value
+			[editingLanguageId]: value,
 		},
-		value
+		value,
 	};
 };

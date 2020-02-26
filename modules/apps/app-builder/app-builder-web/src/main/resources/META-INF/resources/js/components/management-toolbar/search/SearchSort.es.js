@@ -33,21 +33,21 @@ export default ({columns, disabled}) => {
 	if (!defaultColumn) {
 		defaultColumn = {
 			...columns[0],
-			asc: true
+			asc: true,
 		};
 	}
 
 	const [state, setState] = useState({
 		active: false,
 		asc: defaultColumn.asc,
-		column: defaultColumn.key
+		column: defaultColumn.key,
 	});
 
 	const sort = (asc, column) => {
 		setState({
 			active: false,
 			asc,
-			column
+			column,
 		});
 
 		dispatch({sort: `${column}:${asc ? 'asc' : 'desc'}`, type: 'SORT'});
@@ -64,7 +64,7 @@ export default ({columns, disabled}) => {
 					onActiveChange={newActive =>
 						setState(prevState => ({
 							...prevState,
-							active: newActive
+							active: newActive,
 						}))
 					}
 					trigger={
@@ -109,7 +109,7 @@ export default ({columns, disabled}) => {
 				<Button
 					className={classNames('nav-link', 'nav-link-monospaced', {
 						'order-arrow-down-active': !asc,
-						'order-arrow-up-active': asc
+						'order-arrow-up-active': asc,
 					})}
 					disabled={disabled}
 					displayType="unstyled"

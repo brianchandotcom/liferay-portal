@@ -32,7 +32,7 @@ class SaturationSlider extends Component {
 			constrain: this.constrainToRail_.bind(this),
 			container: this.element,
 			handles: '.handle',
-			sources: '.rail-handle'
+			sources: '.rail-handle',
 		});
 		this.on('elementChanged', this.handleElementChanged_);
 
@@ -197,7 +197,7 @@ SaturationSlider.STATE = {
 	 */
 
 	inputName: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -207,7 +207,7 @@ SaturationSlider.STATE = {
 	 */
 
 	max: {
-		value: 100
+		value: 100,
 	},
 
 	/**
@@ -217,7 +217,7 @@ SaturationSlider.STATE = {
 	 */
 
 	min: {
-		value: 0
+		value: 0,
 	},
 
 	/**
@@ -230,8 +230,8 @@ SaturationSlider.STATE = {
 		validator(val) {
 			return core.isNumber(val) && this.min <= val && val <= this.max;
 		},
-		value: 0
-	}
+		value: 0,
+	},
 };
 
 export {SaturationSlider};

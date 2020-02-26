@@ -19,7 +19,7 @@ import ResultsBar from '../../shared/components/results-bar/ResultsBar.es';
 import ToolbarWithSelection from '../../shared/components/toolbar-with-selection/ToolbarWithSelection.es';
 import AssigneeFilter from '../filter/AssigneeFilter.es';
 import ProcessStatusFilter, {
-	processStatusConstants
+	processStatusConstants,
 } from '../filter/ProcessStatusFilter.es';
 import ProcessStepFilter from '../filter/ProcessStepFilter.es';
 import SLAStatusFilter from '../filter/SLAStatusFilter.es';
@@ -32,13 +32,13 @@ const Header = ({
 	items = [],
 	routeParams,
 	selectedFilters,
-	totalCount
+	totalCount,
 }) => {
 	const {
 		selectAll,
 		selectedItems,
 		setSelectAll,
-		setSelectedItems
+		setSelectedItems,
 	} = useContext(InstanceListContext);
 	const previousCount = usePrevious(totalCount);
 	const {bulkModal, setBulkModal, setSingleModal} = useContext(ModalContext);
@@ -57,11 +57,11 @@ const Header = ({
 				else {
 					setSingleModal({
 						selectedItem: selectedItems[0],
-						visible: true
+						visible: true,
 					});
 				}
-			}
-		}
+			},
+		},
 	];
 
 	const selectedOnPage = useMemo(
@@ -76,7 +76,7 @@ const Header = ({
 	const checkbox = {
 		checked: allPageSelected || selectAll,
 		indeterminate:
-			selectedOnPage.length > 0 && !allPageSelected && !selectAll
+			selectedOnPage.length > 0 && !allPageSelected && !selectAll,
 	};
 
 	const remainingItems = useMemo(() => {
@@ -88,7 +88,7 @@ const Header = ({
 	}, [items, selectedItems]);
 
 	const toolbarActive = useMemo(() => selectedItems.length > 0, [
-		selectedItems
+		selectedItems,
 	]);
 
 	useEffect(() => {
@@ -196,7 +196,7 @@ const Header = ({
 						{completedStatusSelected && (
 							<TimeRangeFilter
 								options={{
-									withSelectionTitle: false
+									withSelectionTitle: false,
 								}}
 							/>
 						)}

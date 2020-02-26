@@ -31,7 +31,7 @@ const mockFieldType = {
 	description: 'Single line or multiline text area.',
 	icon: 'text',
 	initialConfig_: {
-		locale: 'en_US'
+		locale: 'en_US',
 	},
 	label: 'Text Field',
 	name: 'text',
@@ -45,26 +45,26 @@ const mockFieldType = {
 								fields: [
 									{
 										fieldName: 'label',
-										localizable: true
+										localizable: true,
 									},
 									{
-										fieldName: 'name'
+										fieldName: 'name',
 									},
 									{
-										fieldName: 'required'
+										fieldName: 'required',
 									},
 									{
-										fieldName: 'type'
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		]
+										fieldName: 'type',
+									},
+								],
+							},
+						],
+					},
+				],
+			},
+		],
 	},
-	type: 'text'
+	type: 'text',
 };
 
 const fieldTypes = [
@@ -74,8 +74,8 @@ const fieldTypes = [
 		label: 'Date',
 		name: 'date',
 		settingsContext: {
-			pages: []
-		}
+			pages: [],
+		},
 	},
 	mockFieldType,
 	{
@@ -84,8 +84,8 @@ const fieldTypes = [
 		label: 'Single Selection',
 		name: 'radio',
 		settingsContext: {
-			pages: []
-		}
+			pages: [],
+		},
 	},
 	{
 		description: 'Choose one or more options from a list.',
@@ -93,8 +93,8 @@ const fieldTypes = [
 		label: 'Select from list',
 		name: 'select',
 		settingsContext: {
-			pages: []
-		}
+			pages: [],
+		},
 	},
 	{
 		description: 'Select options from a matrix.',
@@ -102,8 +102,8 @@ const fieldTypes = [
 		label: 'Grid',
 		name: 'grid',
 		settingsContext: {
-			pages: []
-		}
+			pages: [],
+		},
 	},
 	{
 		description: 'Select multiple options using a checkbox.',
@@ -111,9 +111,9 @@ const fieldTypes = [
 		label: 'Multiple Selection',
 		name: 'checkbox',
 		settingsContext: {
-			pages: []
-		}
-	}
+			pages: [],
+		},
+	},
 ];
 
 describe('Builder', () => {
@@ -138,7 +138,7 @@ describe('Builder', () => {
 			paginationMode: 'wizard',
 			rules: [],
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 	});
 
@@ -170,14 +170,14 @@ describe('Builder', () => {
 							classList: [
 								'row',
 								{
-									value: 'row'
-								}
-							]
-						}
-					}
-				}
+									value: 'row',
+								},
+							],
+						},
+					},
+				},
 			},
-			fieldType: mockFieldType
+			fieldType: mockFieldType,
 		});
 
 		jest.runAllTimers();
@@ -203,7 +203,7 @@ describe('Builder', () => {
 		FormRenderer.emit('fieldClicked', {
 			columnIndex: 0,
 			pageIndex: 0,
-			rowIndex: 0
+			rowIndex: 0,
 		});
 
 		jest.runAllTimers();
@@ -228,7 +228,7 @@ describe('Builder', () => {
 		FormRenderer.emit('fieldClicked', {
 			columnIndex: 0,
 			pageIndex: 0,
-			rowIndex: 0
+			rowIndex: 0,
 		});
 
 		jest.runAllTimers();
@@ -303,9 +303,9 @@ describe('Builder', () => {
 		sidebar.emit('settingsFieldEdited', {
 			fieldInstance: {
 				...mockFieldType,
-				fieldName: 'label'
+				fieldName: 'label',
 			},
-			value: 'new label'
+			value: 'new label',
 		});
 
 		jest.runAllTimers();
@@ -322,8 +322,8 @@ describe('Builder', () => {
 		sidebar.emit('settingsFieldEdited', {
 			fieldInstance: {
 				...mockFieldType,
-				fieldName: 'predefinedValue'
-			}
+				fieldName: 'predefinedValue',
+			},
 		});
 
 		jest.runAllTimers();
@@ -358,8 +358,8 @@ describe('Builder', () => {
 		component.props.pages = [
 			...pages,
 			{
-				rows: []
-			}
+				rows: [],
+			},
 		];
 		component.props.activePage = 1;
 
@@ -418,7 +418,7 @@ describe('Builder', () => {
 		FormRenderer.emit('fieldDeleted', {
 			columnIndex: 0,
 			pageIndex: 1,
-			rowIndex: 0
+			rowIndex: 0,
 		});
 
 		jest.runAllTimers();
@@ -477,17 +477,17 @@ describe('Builder', () => {
 			paginationMode: 'wizard',
 			rules: [],
 			spritemap,
-			successPageSettings
+			successPageSettings,
 		});
 		const data = {
 			item: {
-				settingsItem: 'reset-page'
-			}
+				settingsItem: 'reset-page',
+			},
 		};
 		const {FormRenderer} = builderComponent.refs;
 
 		FormRenderer._handlePageSettingsClicked({
-			data
+			data,
 		});
 
 		jest.runAllTimers();

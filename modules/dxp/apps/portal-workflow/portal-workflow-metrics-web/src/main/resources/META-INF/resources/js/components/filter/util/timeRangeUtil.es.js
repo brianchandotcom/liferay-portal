@@ -19,7 +19,7 @@ const buildFallbackTimeRange = (fallbackKeys, queryDateEnd, queryDateStart) => {
 		return {
 			...fallbackItems[0],
 			dateEnd: parseQueryDate(queryDateEnd, true),
-			dateStart: parseQueryDate(queryDateStart)
+			dateStart: parseQueryDate(queryDateStart),
 		};
 	}
 
@@ -68,7 +68,7 @@ const getCustomTimeRange = (dateEnd, dateStart) => {
 		dateStart: parseQueryDate(dateStart),
 		dividerAfter: true,
 		key: 'custom',
-		name: Liferay.Language.get('custom-range')
+		name: Liferay.Language.get('custom-range'),
 	};
 
 	customTimeRange.resultName = `${formatDescriptionDate(
@@ -101,7 +101,7 @@ const getFormatPattern = (dateEndMoment, dateStartMoment, isAmPm) => {
 
 	return {
 		dateEndPattern,
-		dateStartPattern
+		dateStartPattern,
 	};
 };
 
@@ -132,7 +132,7 @@ const parseDateItems = isAmPm => items =>
 			...item,
 			dateEnd: new Date(item.dateEnd),
 			dateStart: new Date(item.dateStart),
-			key: item.key
+			key: item.key,
 		};
 
 		if (parsedItem.key !== 'custom') {
@@ -165,5 +165,5 @@ export {
 	parseDateItems,
 	parseDateMomentEnLocale,
 	parseDateEnLocale,
-	parseQueryDate
+	parseQueryDate,
 };

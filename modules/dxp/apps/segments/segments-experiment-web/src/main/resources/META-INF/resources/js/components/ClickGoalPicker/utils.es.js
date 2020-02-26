@@ -18,7 +18,7 @@ export const GeometryType = PropTypes.shape({
 	left: PropTypes.number.isRequired,
 	right: PropTypes.number.isRequired,
 	top: PropTypes.number.isRequired,
-	width: PropTypes.number.isRequired
+	width: PropTypes.number.isRequired,
 });
 
 /**
@@ -74,7 +74,7 @@ export function getRootElementGeometry(rootElement) {
 		left,
 		right,
 		top,
-		width
+		width,
 	} = rootElement.getBoundingClientRect();
 
 	return {
@@ -82,7 +82,7 @@ export function getRootElementGeometry(rootElement) {
 		left: left + TARGET_OFFSET / 2,
 		right: right - TARGET_OFFSET / 2,
 		top: top + TARGET_OFFSET / 2,
-		width: width + TARGET_OFFSET
+		width: width + TARGET_OFFSET,
 	};
 }
 
@@ -98,7 +98,7 @@ export function getElementGeometry(element) {
 		left,
 		right,
 		top,
-		width
+		width,
 	} = element.getBoundingClientRect();
 
 	return {
@@ -107,6 +107,6 @@ export function getElementGeometry(element) {
 		left,
 		right,
 		top,
-		width: width + TARGET_OFFSET
+		width: width + TARGET_OFFSET,
 	};
 }

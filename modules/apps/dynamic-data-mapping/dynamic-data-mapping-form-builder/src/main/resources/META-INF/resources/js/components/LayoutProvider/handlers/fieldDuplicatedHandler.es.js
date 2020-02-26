@@ -49,7 +49,7 @@ const handleFieldDuplicated = (
 				if (field.fieldName === 'name') {
 					field = {
 						...field,
-						value: newFieldName
+						value: newFieldName,
 					};
 				}
 				else if (field.fieldName === 'label') {
@@ -57,9 +57,9 @@ const handleFieldDuplicated = (
 						...field,
 						localizedValue: {
 							...field.localizedValue,
-							[editingLanguageId]: label
+							[editingLanguageId]: label,
 						},
-						value: label
+						value: label,
 					};
 				}
 				else if (field.fieldName === 'validation') {
@@ -75,18 +75,18 @@ const handleFieldDuplicated = (
 									value: expression.value.replace(
 										oldFieldName,
 										newFieldName
-									)
-								}
-							}
+									),
+								},
+							},
 						};
 					}
 				}
 
 				return {
-					...field
+					...field,
 				};
-			})
-		}
+			}),
+		},
 	};
 	const newRowIndex = rowIndex + 1;
 
@@ -97,9 +97,9 @@ const handleFieldDuplicated = (
 			...duplicatedField,
 			columnIndex,
 			pageIndex,
-			rowIndex: newRowIndex
+			rowIndex: newRowIndex,
 		},
-		pages: FormSupport.addRow(pages, newRowIndex, pageIndex, newRow)
+		pages: FormSupport.addRow(pages, newRowIndex, pageIndex, newRow),
 	};
 };
 

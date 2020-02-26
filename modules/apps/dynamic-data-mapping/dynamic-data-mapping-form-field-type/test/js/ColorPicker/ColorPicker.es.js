@@ -35,7 +35,7 @@ describe('Field Color Picker', () => {
 		component = new ColorPicker({
 			name,
 			readOnly: false,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -45,7 +45,7 @@ describe('Field Color Picker', () => {
 		component = new ColorPicker({
 			name,
 			spritemap,
-			tip: 'Helptext'
+			tip: 'Helptext',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -55,7 +55,7 @@ describe('Field Color Picker', () => {
 		component = new ColorPicker({
 			label: 'Label',
 			name,
-			spritemap
+			spritemap,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -69,7 +69,7 @@ describe('Field Color Picker', () => {
 		component = new ColorPicker({
 			events,
 			name,
-			spritemap
+			spritemap,
 		});
 
 		const {fieldBase} = component.refs;

@@ -27,7 +27,7 @@ export default function getCountries(callback) {
 	Liferay.Service(
 		'/country/get-countries',
 		{
-			active: true
+			active: true,
 		},
 		callback
 	);

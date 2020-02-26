@@ -46,7 +46,7 @@ export default {
 		body,
 		fragmentEntryLinkId,
 		onNetworkStatus,
-		parentCommentId = 0
+		parentCommentId = 0,
 	}) {
 		return serviceFetch(
 			config.addFragmentEntryLinkCommentURL,
@@ -54,8 +54,8 @@ export default {
 				body: {
 					body,
 					fragmentEntryLinkId,
-					parentCommentId
-				}
+					parentCommentId,
+				},
 			},
 			onNetworkStatus
 		);
@@ -80,7 +80,7 @@ export default {
 		name,
 		onNetworkStatus,
 		previewImageURL,
-		segmentsExperienceId
+		segmentsExperienceId,
 	}) {
 		return serviceFetch(
 			config.addFragmentCompositionURL,
@@ -91,8 +91,8 @@ export default {
 					itemId,
 					name,
 					previewImageURL,
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus,
 			{requestGenerateDraft: true}
@@ -116,7 +116,7 @@ export default {
 		onNetworkStatus,
 		parentItemId,
 		position,
-		segmentsExperienceId
+		segmentsExperienceId,
 	}) {
 		return serviceFetch(
 			config.addFragmentEntryLinkURL,
@@ -126,8 +126,8 @@ export default {
 					groupId,
 					parentItemId,
 					position,
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus,
 			{requestGenerateDraft: true}
@@ -145,7 +145,7 @@ export default {
 		return serviceFetch(
 			config.deleteFragmentEntryLinkCommentURL,
 			{
-				body: {commentId}
+				body: {commentId},
 			},
 			onNetworkStatus
 		);
@@ -164,8 +164,8 @@ export default {
 			{
 				body: {
 					itemId,
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus,
 			{requestGenerateDraft: true}
@@ -188,8 +188,8 @@ export default {
 				body: {
 					body,
 					commentId,
-					resolved
-				}
+					resolved,
+				},
 			},
 			onNetworkStatus
 		);
@@ -205,15 +205,15 @@ export default {
 	renderFragmentEntryLinkContent({
 		fragmentEntryLinkId,
 		onNetworkStatus,
-		segmentsExperienceId
+		segmentsExperienceId,
 	}) {
 		return serviceFetch(
 			config.renderFragmentEntryURL,
 			{
 				body: {
 					fragmentEntryLinkId,
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus
 		);
@@ -229,7 +229,7 @@ export default {
 	updateEditableValues({
 		editableValues,
 		fragmentEntryLinkId,
-		onNetworkStatus
+		onNetworkStatus,
 	}) {
 		return serviceFetch(
 			config.editFragmentEntryLinkURL,
@@ -237,11 +237,11 @@ export default {
 				body: {
 					editableValues: JSON.stringify(editableValues),
 					fragmentEntryLinkId,
-					updateClassedModel: true
-				}
+					updateClassedModel: true,
+				},
 			},
 			onNetworkStatus,
 			{requestGenerateDraft: true}
 		);
-	}
+	},
 };

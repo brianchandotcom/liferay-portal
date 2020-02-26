@@ -27,5 +27,5 @@ export default {
 	image: ImageProcessor,
 	link: LinkProcessor,
 	'rich-text': RichTextProcessor,
-	text: TextProcessor
+	text: TextProcessor,
 };

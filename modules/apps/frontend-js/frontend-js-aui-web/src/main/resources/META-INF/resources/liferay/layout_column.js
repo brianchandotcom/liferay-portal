@@ -43,8 +43,8 @@ AUI.add(
 		var ColumnLayout = A.Component.create({
 			ATTRS: {
 				proxyNode: {
-					value: Layout.PROXY_NODE
-				}
+					value: Layout.PROXY_NODE,
+				},
 			},
 
 			EXTENDS: A.SortableLayout,
@@ -90,7 +90,7 @@ AUI.add(
 					}
 				},
 
-				dragItem: 0
+				dragItem: 0,
 			},
 
 			register() {
@@ -119,7 +119,7 @@ AUI.add(
 								}
 
 								Layout._columnContainer.addClass(CSS_DRAGGING);
-							}
+							},
 						},
 						on: {
 							'drag:start'() {
@@ -239,8 +239,8 @@ AUI.add(
 										event.halt();
 									}
 								}
-							}
-						}
+							},
+						},
 					}
 				);
 
@@ -251,13 +251,13 @@ AUI.add(
 				);
 
 				Layout.syncDraggableClassUI();
-			}
+			},
 		});
 
 		Layout.ColumnLayout = ColumnLayout;
 	},
 	'',
 	{
-		requires: ['aui-sortable-layout', 'dd']
+		requires: ['aui-sortable-layout', 'dd'],
 	}
 );

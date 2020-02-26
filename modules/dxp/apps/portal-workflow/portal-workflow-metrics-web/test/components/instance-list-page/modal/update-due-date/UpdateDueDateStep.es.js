@@ -23,7 +23,7 @@ const ContainerMock = ({children}) => {
 };
 
 const wrapperMock = {
-	wrapper: ContainerMock
+	wrapper: ContainerMock,
 };
 
 describe('The TimePickerInput component should be render with AM/PM format', () => {

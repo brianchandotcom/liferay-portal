@@ -34,7 +34,7 @@ describe('Field Tooltip', () => {
 		component = new Tooltip({
 			icon: 'question-circle-full',
 			spritemap,
-			text: 'This is a tooltip information about this component'
+			text: 'This is a tooltip information about this component',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -44,7 +44,7 @@ describe('Field Tooltip', () => {
 		component = new Tooltip({
 			icon: 'question-circle-full',
 			spritemap,
-			text: 'This is a tooltip information about this component'
+			text: 'This is a tooltip information about this component',
 		});
 
 		jest.runAllTimers();
@@ -61,7 +61,7 @@ describe('Field Tooltip', () => {
 		component = new Tooltip({
 			icon: 'question-circle-full',
 			spritemap,
-			text: 'This is a tooltip information about this component'
+			text: 'This is a tooltip information about this component',
 		});
 
 		component._handleTooltipHovered();
@@ -75,13 +75,13 @@ describe('Field Tooltip', () => {
 		component = new Tooltip({
 			icon: 'question-circle-full',
 			spritemap,
-			text: 'This is a tooltip information about this component'
+			text: 'This is a tooltip information about this component',
 		});
 
 		jest.runAllTimers();
 
 		component.refs.tooltipSource = {
-			element: document.createElement('div')
+			element: document.createElement('div'),
 		};
 
 		component._handleTooltipHovered();

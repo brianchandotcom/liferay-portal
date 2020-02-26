@@ -62,15 +62,15 @@ const SingleUpdateDueDateModal = () => {
 				comment: undefined,
 				dueDate: undefined,
 				selectedItem: undefined,
-				visible: false
+				visible: false,
 			});
-		}
+		},
 	});
 
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params: {completed: false, page: 1, pageSize: 1},
-		url: `/workflow-instances/${selectedItem.id}/workflow-tasks`
+		url: `/workflow-instances/${selectedItem.id}/workflow-tasks`,
 	});
 
 	const {dateDue, id: taskId} = useMemo(
@@ -81,7 +81,7 @@ const SingleUpdateDueDateModal = () => {
 	const {postData} = usePost({
 		admin: true,
 		body: {comment, dueDate},
-		url: `/workflow-tasks/${taskId}/update-due-date`
+		url: `/workflow-tasks/${taskId}/update-due-date`,
 	});
 
 	const handleDone = useCallback(() => {
@@ -124,7 +124,7 @@ const SingleUpdateDueDateModal = () => {
 					);
 
 					return Promise.reject(err);
-				})
+				}),
 			];
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

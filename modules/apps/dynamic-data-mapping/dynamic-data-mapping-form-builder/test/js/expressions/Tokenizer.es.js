@@ -22,7 +22,7 @@ describe('Tokenizer', () => {
 			new Token('Operator', '*'),
 			new Token('Variable', 'a'),
 			new Token('Operator', '+'),
-			new Token('Literal', '1')
+			new Token('Literal', '1'),
 		]);
 	});
 
@@ -32,7 +32,7 @@ describe('Tokenizer', () => {
 			new Token('Operator', '*'),
 			new Token('Variable', 'a'),
 			new Token('Operator', '+'),
-			new Token('Literal', '125')
+			new Token('Literal', '125'),
 		]);
 	});
 
@@ -42,7 +42,7 @@ describe('Tokenizer', () => {
 			new Token('Operator', '+'),
 			new Token('Literal', '13.44'),
 			new Token('Operator', '*'),
-			new Token('Literal', '567')
+			new Token('Literal', '567'),
 		]);
 	});
 
@@ -52,7 +52,7 @@ describe('Tokenizer', () => {
 			new Token('Operator', '*'),
 			new Token('Variable', 'Field2'),
 			new Token('Operator', '+'),
-			new Token('Variable', 'Field3')
+			new Token('Variable', 'Field3'),
 		]);
 	});
 
@@ -65,7 +65,7 @@ describe('Tokenizer', () => {
 			new Token('Function', 'sum'),
 			new Token('Left Parenthesis', '('),
 			new Token('Variable', 'Field2'),
-			new Token('Right Parenthesis', ')')
+			new Token('Right Parenthesis', ')'),
 		]);
 	});
 });

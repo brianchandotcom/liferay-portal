@@ -148,7 +148,7 @@
 			};
 
 			obj[methodName] = proxy;
-		}
+		},
 	};
 
 	Liferay.Dependency = Dependency;

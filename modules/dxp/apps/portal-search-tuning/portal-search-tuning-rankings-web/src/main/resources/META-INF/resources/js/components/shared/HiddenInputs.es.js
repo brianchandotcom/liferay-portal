@@ -29,7 +29,7 @@ const HiddenInputs = ({valueMap = {}}) => {
 };
 
 HiddenInputs.propTypes = {
-	valueMap: PropTypes.object.isRequired
+	valueMap: PropTypes.object.isRequired,
 };
 
 export default HiddenInputs;

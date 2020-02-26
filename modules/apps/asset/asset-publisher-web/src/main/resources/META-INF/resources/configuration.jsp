@@ -79,7 +79,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 						form,
 						'<%= className %>currentClassTypeIds'
 					)
-				)
+				),
 			});
 
 		<%
@@ -103,8 +103,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 					),
 					metadataFields: Liferay.Util.listSelect(
 						currentMetadataFieldsInput
-					)
-				}
+					),
+				},
 			});
 		}
 		else if (currentMetadataFieldsInput) {
@@ -112,8 +112,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 				data: {
 					metadataFields: Liferay.Util.listSelect(
 						currentMetadataFieldsInput
-					)
-				}
+					),
+				},
 			});
 		}
 		else {

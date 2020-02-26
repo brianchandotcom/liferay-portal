@@ -43,26 +43,26 @@ AUI.add(
 			ATTRS: {
 				itemsPerPage: {
 					validator: Lang.isNumber,
-					value: 20
+					value: 20,
 				},
 
 				itemsPerPageList: {
 					validator: Array.isArray,
-					value: [5, 10, 20, 30, 50, 75]
+					value: [5, 10, 20, 30, 50, 75],
 				},
 
 				namespace: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				results: {
 					validator: Lang.isNumber,
-					value: 0
+					value: 0,
 				},
 
 				selectedItem: {
 					validator: Lang.isNumber,
-					value: 0
+					value: 0,
 				},
 
 				strings: {
@@ -75,16 +75,16 @@ AUI.add(
 							per: Liferay.Language.get('per'),
 							prev: Liferay.Language.get('previous'),
 							results: Liferay.Language.get('results'),
-							showing: Liferay.Language.get('showing')
+							showing: Liferay.Language.get('showing'),
 						});
 					},
-					validator: Lang.isObject
+					validator: Lang.isObject,
 				},
 
 				visible: {
 					setter: '_uiSetVisible',
-					validator: Lang.isBoolean
-				}
+					validator: Lang.isBoolean,
+				},
 			},
 
 			EXTENDS: A.Pagination,
@@ -153,7 +153,7 @@ AUI.add(
 						resultsContent = Lang.sub(instance._resultsMessage, [
 							(page - 1) * itemsPerPage + 1,
 							tmp < results ? tmp : results,
-							results
+							results,
 						]);
 					}
 					else {
@@ -200,7 +200,7 @@ AUI.add(
 
 					instance._dispatchRequest({
 						itemsPerPage,
-						page
+						page,
 					});
 
 					var results = instance.get(RESULTS);
@@ -299,7 +299,7 @@ AUI.add(
 							instance._onItemClick,
 							'.lfr-pagination-link',
 							instance
-						)
+						),
 					];
 
 					instance.after(
@@ -354,26 +354,26 @@ AUI.add(
 						Lang.sub(instance.TPL_DELTA_SELECTOR, {
 							amount: selectorLabel.amount,
 							id: deltaSelectorId,
-							title: selectorLabel.title
+							title: selectorLabel.title,
 						})
 					);
 
 					var itemContainer = ANode.create(
 						Lang.sub(instance.TPL_ITEM_CONTAINER, {
-							id: namespace + 'itemContainerId'
+							id: namespace + 'itemContainerId',
 						})
 					);
 
 					var itemsContainer = ANode.create(
 						Lang.sub(instance.TPL_CONTAINER, {
-							id: namespace + 'itemsContainer'
+							id: namespace + 'itemsContainer',
 						})
 					);
 
 					var searchResults = ANode.create(
 						Lang.sub(instance.TPL_RESULTS, {
 							id: namespace + 'searchResultsId',
-							value: instance._getResultsContent()
+							value: instance._getResultsContent(),
 						})
 					);
 
@@ -384,7 +384,7 @@ AUI.add(
 								idLi: namespace + 'itemLiId' + index,
 								idLink: namespace + 'itemLinkId' + index,
 								index,
-								value: item
+								value: item,
 							});
 						});
 
@@ -412,14 +412,14 @@ AUI.add(
 					instance._searchResults = searchResults;
 
 					Liferay.Menu.register(deltaSelectorId);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Pagination = Pagination;
 	},
 	'',
 	{
-		requires: ['aui-pagination']
+		requires: ['aui-pagination'],
 	}
 );

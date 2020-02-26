@@ -17,22 +17,22 @@ function updateExperiencePriorityReducer(state, {subtarget, target}) {
 
 	const targetExperience = {
 		...experiences[target.segmentsExperienceId],
-		priority: target.priority
+		priority: target.priority,
 	};
 	const subtargetExperience = {
 		...experiences[subtarget.segmentsExperienceId],
-		priority: subtarget.priority
+		priority: subtarget.priority,
 	};
 
 	const updatedExperiences = {
 		...experiences,
 		[target.segmentsExperienceId]: targetExperience,
-		[subtarget.segmentsExperienceId]: subtargetExperience
+		[subtarget.segmentsExperienceId]: subtargetExperience,
 	};
 
 	return {
 		...state,
-		availableSegmentsExperiences: updatedExperiences
+		availableSegmentsExperiences: updatedExperiences,
 	};
 }
 

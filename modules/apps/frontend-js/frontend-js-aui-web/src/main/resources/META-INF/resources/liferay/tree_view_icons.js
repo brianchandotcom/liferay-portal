@@ -26,7 +26,7 @@ AUI.add(
 			'glyphicon-plus',
 			'icon-file',
 			'icon-minus',
-			'icon-plus'
+			'icon-plus',
 		];
 
 		var clearIconClasses = function(element) {
@@ -81,6 +81,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-tree-view']
+		requires: ['aui-tree-view'],
 	}
 );

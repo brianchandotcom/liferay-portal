@@ -25,13 +25,13 @@
 		false: {
 			cssClass: 'controls-hidden',
 			iconCssClass: 'hidden',
-			state: 'hidden'
+			state: 'hidden',
 		},
 		true: {
 			cssClass: 'controls-visible',
 			iconCssClass: 'view',
-			state: 'visible'
-		}
+			state: 'visible',
+		},
 	};
 
 	var REGEX_PORTLET_ID = /^(?:p_p_id)?_(.*)_.*$/;
@@ -39,7 +39,7 @@
 	var REGEX_SUB = /\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g;
 
 	var SRC_HIDE_LINK = {
-		src: 'hideLink'
+		src: 'hideLink',
 	};
 
 	var STR_RIGHT_SQUARE_BRACKET = ']';
@@ -58,7 +58,7 @@
 			var instance = this;
 
 			return instance._map[id];
-		}
+		},
 	};
 
 	var Util = {
@@ -169,7 +169,7 @@
 									plid: portletTitleEditOptions.plid,
 									portletId:
 										portletTitleEditOptions.portletId,
-									title: event.newVal
+									title: event.newVal,
 								});
 							}
 						},
@@ -216,10 +216,10 @@
 							if (instance._titleListener) {
 								instance._titleListener.detach();
 							}
-						}
+						},
 					},
 					cssClass: 'lfr-portlet-title-editable',
-					node: title
+					node: title,
 				});
 
 				editable.get('cancelButton').icon = 'times';
@@ -235,7 +235,7 @@
 			A.use('aui-button-search-cancel', A => {
 				new A.ButtonSearchCancel({
 					trigger:
-						'input[type=password], input[type=search], input.clearable, input.search-query'
+						'input[type=password], input[type=search], input.clearable, input.search-query',
 				});
 			});
 
@@ -516,7 +516,7 @@
 
 						result = [
 							...result,
-							...getDisabledParents(el.parentElement)
+							...getDisabledParents(el.parentElement),
 						];
 					}
 
@@ -821,7 +821,7 @@
 
 					nodeRegion = {
 						left: nodeRegion.left + window.scrollX,
-						top: nodeRegion.top + window.scrollY
+						top: nodeRegion.top + window.scrollY,
 					};
 
 					nodeRegion.bottom = nodeRegion.top + node.offsetHeight;
@@ -856,7 +856,7 @@
 
 						frameOffset = {
 							left: frameOffset.left + window.scrollX,
-							top: frameOffset.top + window.scrollY
+							top: frameOffset.top + window.scrollY,
 						};
 
 						var xOffset = frameOffset.left - winRegion.left;
@@ -1104,7 +1104,7 @@
 				title: '',
 				url:
 					themeDisplay.getPathMain() + '/portal/update_portlet_title',
-				...params
+				...params,
 			};
 
 			var data = {
@@ -1112,12 +1112,12 @@
 				p_auth: Liferay.authToken,
 				p_l_id: params.plid,
 				portletId: params.portletId,
-				title: params.title
+				title: params.title,
 			};
 
 			Liferay.Util.fetch(params.url, {
 				body: Liferay.Util.objectToFormData(data),
-				method: 'POST'
+				method: 'POST',
 			});
 		},
 
@@ -1401,7 +1401,7 @@
 
 				selectBox.addEventListener('change', toggle);
 			}
-		}
+		},
 	};
 
 	Liferay.provide(
@@ -1472,7 +1472,7 @@
 						detachEventHandles();
 					},
 					'.btn-cancel,.lfr-hide-dialog'
-				)
+				),
 			];
 		},
 		['aui-base']
@@ -1483,7 +1483,7 @@
 		'openDDMPortlet',
 		(config, callback) => {
 			var defaultValues = {
-				eventName: 'selectStructure'
+				eventName: 'selectStructure',
 			};
 
 			config = A.merge(defaultValues, config);
@@ -1501,7 +1501,7 @@
 				resourceClassNameId: config.resourceClassNameId,
 				scopeTitle: config.title,
 				structureAvailableFields: config.structureAvailableFields,
-				templateId: config.templateId
+				templateId: config.templateId,
 			};
 
 			if ('mode' in config) {
@@ -1785,7 +1785,7 @@
 					config.uri,
 					A.merge(
 						{
-							eventName
+							eventName,
 						},
 						config.urlParams
 					)
@@ -1795,7 +1795,7 @@
 
 				config.dialogIframe = A.merge(
 					{
-						bodyCssClass: 'dialog-with-footer'
+						bodyCssClass: 'dialog-with-footer',
 					},
 					config.dialogIframe || {}
 				);
@@ -1937,7 +1937,7 @@
 				docBody.addClass(currentState.cssClass);
 
 				Liferay.fire('toggleControls', {
-					enabled: controlsVisible
+					enabled: controlsVisible,
 				});
 
 				trigger.on('tap', () => {
@@ -1980,7 +1980,7 @@
 
 					Liferay.fire('toggleControls', {
 						enabled: controlsVisible,
-						src: 'ui'
+						src: 'ui',
 					});
 				});
 			}
@@ -2001,7 +2001,7 @@
 					action,
 					form: A.one(form),
 					singleSubmit,
-					validate: validate !== false
+					validate: validate !== false,
 				});
 			}
 		},
@@ -2009,7 +2009,7 @@
 	);
 
 	Liferay.publish('submitForm', {
-		defaultFn: Util._defaultSubmitFormFn
+		defaultFn: Util._defaultSubmitFormFn,
 	});
 
 	Liferay.provide(
@@ -2047,7 +2047,7 @@
 
 					if (!event.portletAjaxable) {
 						data = {
-							portletAjaxable: false
+							portletAjaxable: false,
 						};
 					}
 
@@ -2068,7 +2068,7 @@
 
 	Liferay.BREAKPOINTS = {
 		PHONE: 768,
-		TABLET: 980
+		TABLET: 980,
 	};
 
 	Liferay.STATUS_CODE = {
@@ -2081,7 +2081,7 @@
 		SC_FILE_EXTENSION_EXCEPTION: 491,
 		SC_FILE_NAME_EXCEPTION: 492,
 		SC_FILE_SIZE_EXCEPTION: 493,
-		SC_UPLOAD_REQUEST_SIZE_EXCEPTION: 495
+		SC_UPLOAD_REQUEST_SIZE_EXCEPTION: 495,
 	};
 
 	// 0-200: Theme Developer
@@ -2099,6 +2099,6 @@
 		OVERLAY: 1000,
 		POPOVER: 1600,
 		TOOLTIP: 10000,
-		WINDOW: 1200
+		WINDOW: 1200,
 	};
 })(AUI(), AUI.$, Liferay);

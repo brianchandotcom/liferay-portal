@@ -14,7 +14,7 @@ import {
 	validateDuration,
 	validateHours,
 	validateName,
-	validateNodeKeys
+	validateNodeKeys,
 } from '../../../../src/main/resources/META-INF/resources/js/components/sla/util/slaFormUtil.es';
 
 test('Should test duration', () => {

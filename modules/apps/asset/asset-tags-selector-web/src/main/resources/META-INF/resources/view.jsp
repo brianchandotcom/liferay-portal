@@ -69,8 +69,8 @@
 			'<%= HtmlUtil.escapeJS(assetTagsSelectorDisplayContext.getEventName()) %>',
 			{
 				data: {
-					items: items
-				}
+					items: items,
+				},
 			}
 		);
 	});

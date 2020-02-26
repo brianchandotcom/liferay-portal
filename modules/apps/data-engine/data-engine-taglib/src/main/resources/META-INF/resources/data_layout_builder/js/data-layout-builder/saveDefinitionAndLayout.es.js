@@ -17,21 +17,21 @@ import {fetch} from 'frontend-js-web';
 const HEADERS = {
 	Accept: 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-	'Content-Type': 'application/json'
+	'Content-Type': 'application/json',
 };
 
 export const addItem = (endpoint, item) =>
 	fetch(getURL(endpoint), {
 		body: JSON.stringify(item),
 		headers: HEADERS,
-		method: 'POST'
+		method: 'POST',
 	}).then(response => response.json());
 
 export const getURL = (path, params) => {
 	params = {
 		['p_auth']: Liferay.authToken,
 		t: Date.now(),
-		...params
+		...params,
 	};
 
 	const uri = new URL(`${window.location.origin}${path}`);
@@ -46,7 +46,7 @@ export const updateItem = (endpoint, item, params) =>
 	fetch(getURL(endpoint, params), {
 		body: JSON.stringify(item),
 		headers: HEADERS,
-		method: 'PUT'
+		method: 'PUT',
 	})
 		.then(response => response.text())
 		.then(text => (text ? JSON.parse(text) : {}));
@@ -57,7 +57,7 @@ export default ({
 	dataDefinitionId,
 	dataLayout,
 	groupId,
-	params = {}
+	params = {},
 }) => {
 	const normalizedDataLayout = {
 		...dataLayout,
@@ -70,18 +70,18 @@ export default ({
 						dataLayoutRow.dataLayoutColumns || []
 					).map(dataLayoutColumn => ({
 						...dataLayoutColumn,
-						fieldNames: dataLayoutColumn.fieldNames || []
-					}))
+						fieldNames: dataLayoutColumn.fieldNames || [],
+					})),
 				})
 			),
 			description: dataLayoutPage.description || {
-				[themeDisplay.getLanguageId()]: ''
+				[themeDisplay.getLanguageId()]: '',
 			},
 			title: dataLayoutPage.title || {
-				[themeDisplay.getLanguageId()]: ''
-			}
+				[themeDisplay.getLanguageId()]: '',
+			},
 		})),
-		...(params.dataLayout || {})
+		...(params.dataLayout || {}),
 	};
 
 	const saveDataDefinitionDataLayout = () => {
@@ -91,7 +91,7 @@ export default ({
 				{
 					...dataDefinition,
 					...(params.dataDefinition || {}),
-					defaultDataLayout: normalizedDataLayout
+					defaultDataLayout: normalizedDataLayout,
 				}
 			);
 		}
@@ -105,7 +105,7 @@ export default ({
 		return addItem(endpoint, {
 			...dataDefinition,
 			...(params.dataDefinition || {}),
-			defaultDataLayout: normalizedDataLayout
+			defaultDataLayout: normalizedDataLayout,
 		});
 	};
 

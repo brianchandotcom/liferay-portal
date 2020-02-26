@@ -25,7 +25,7 @@ const ToolbarWithSelection = ({
 	indeterminate,
 	selectAll,
 	selectedCount,
-	totalCount
+	totalCount,
 }) => {
 	return (
 		<ClayManagementToolbar

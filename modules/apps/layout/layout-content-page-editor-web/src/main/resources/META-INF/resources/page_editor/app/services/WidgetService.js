@@ -32,7 +32,7 @@ export default {
 		parentItemId,
 		portletId,
 		position,
-		segmentsExperienceId
+		segmentsExperienceId,
 	}) {
 		return serviceFetch(
 			config.addPortletURL,
@@ -41,11 +41,11 @@ export default {
 					parentItemId,
 					portletId,
 					position,
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus,
 			{requestGenerateDraft: true}
 		);
-	}
+	},
 };

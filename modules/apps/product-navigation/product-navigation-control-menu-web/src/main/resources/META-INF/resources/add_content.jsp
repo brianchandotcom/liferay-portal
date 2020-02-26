@@ -60,7 +60,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 			focusItem: searchContent,
 			inputNode: searchContent,
 			namespace: '<portlet:namespace />',
-			panelBody: addContentCollapse
+			panelBody: addContentCollapse,
 		});
 
 		if (ControlMenu.PortletDragDrop) {
@@ -68,11 +68,11 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 				on: {
 					dragEnd: function(event) {
 						addContent.addPortlet(event.portletNode, {
-							item: event.appendNode
+							item: event.appendNode,
 						});
-					}
+					},
 				},
-				srcNode: '#<portlet:namespace />entriesContainer'
+				srcNode: '#<portlet:namespace />entriesContainer',
 			});
 		}
 

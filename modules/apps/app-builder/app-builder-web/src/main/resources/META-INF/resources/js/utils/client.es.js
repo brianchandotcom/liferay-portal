@@ -17,7 +17,7 @@ import {fetch} from 'frontend-js-web';
 const HEADERS = {
 	Accept: 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-	'Content-Type': 'application/json'
+	'Content-Type': 'application/json',
 };
 
 const parseJSON = (response, resolve, reject) =>
@@ -40,7 +40,7 @@ export const addItem = (endpoint, item) =>
 	fetch(getURL(endpoint), {
 		body: JSON.stringify(item),
 		headers: HEADERS,
-		method: 'POST'
+		method: 'POST',
 	}).then(response => parseResponse(response));
 
 export const confirmDelete = endpoint => item =>
@@ -62,20 +62,20 @@ export const confirmDelete = endpoint => item =>
 export const deleteItem = endpoint =>
 	fetch(getURL(endpoint), {
 		headers: HEADERS,
-		method: 'DELETE'
+		method: 'DELETE',
 	}).then(response => parseResponse(response));
 
 export const getItem = (endpoint, params) =>
 	fetch(getURL(endpoint, params), {
 		headers: HEADERS,
-		method: 'GET'
+		method: 'GET',
 	}).then(response => parseResponse(response));
 
 export const getURL = (path, params) => {
 	params = {
 		['p_auth']: Liferay.authToken,
 		t: Date.now(),
-		...params
+		...params,
 	};
 
 	const uri = new URL(`${window.location.origin}${path}`);
@@ -89,12 +89,12 @@ export const getURL = (path, params) => {
 export const request = (endpoint, method = 'GET') =>
 	fetch(getURL(endpoint), {
 		headers: HEADERS,
-		method
+		method,
 	}).then(response => parseResponse(response));
 
 export const updateItem = (endpoint, item, params) =>
 	fetch(getURL(endpoint, params), {
 		body: JSON.stringify(item),
 		headers: HEADERS,
-		method: 'PUT'
+		method: 'PUT',
 	}).then(response => parseResponse(response));

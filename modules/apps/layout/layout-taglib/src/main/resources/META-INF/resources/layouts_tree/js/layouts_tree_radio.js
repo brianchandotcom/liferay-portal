@@ -25,8 +25,8 @@ AUI.add(
 		var LayoutsTreeRadio = A.Component.create({
 			ATTRS: {
 				showRootNode: {
-					value: false
-				}
+					value: false,
+				},
 			},
 
 			EXTENDS: A.Plugin.Base,
@@ -42,7 +42,7 @@ AUI.add(
 					return new A.Do.AlterReturn(
 						'Modified type attribute',
 						A.merge(currentRetVal, {
-							type: 'liferay-radio'
+							type: 'liferay-radio',
 						})
 					);
 				},
@@ -53,7 +53,7 @@ AUI.add(
 						Lang.sub(LABEL_TPL, {
 							cssClass,
 							label,
-							title
+							title,
 						})
 					);
 				},
@@ -77,7 +77,7 @@ AUI.add(
 						'Modified cssClass, label and type attributes',
 						A.merge(A.Do.currentRetVal, {
 							labelEl,
-							type: 'liferay-radio'
+							type: 'liferay-radio',
 						})
 					);
 				},
@@ -87,7 +87,7 @@ AUI.add(
 
 					if (event.newVal) {
 						instance.get(STR_HOST).fire('radioNodeCheckedChange', {
-							node: event.target
+							node: event.target,
 						});
 					}
 				},
@@ -123,18 +123,18 @@ AUI.add(
 							'_formatRootNode',
 							instance._formatRootNode,
 							instance
-						)
+						),
 					];
 
 					host.get('boundingBox').addClass('lfr-tree-radio');
-				}
-			}
+				},
+			},
 		});
 
 		A.Plugin.LayoutsTreeRadio = LayoutsTreeRadio;
 	},
 	'',
 	{
-		requires: ['aui-tree-node', 'liferay-layouts-tree-node-radio']
+		requires: ['aui-tree-node', 'liferay-layouts-tree-node-radio'],
 	}
 );

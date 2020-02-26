@@ -50,29 +50,30 @@ AUI.add(
 			ATTRS: {
 				closeCaption: {
 					validator: Lang.isString,
-					value: ''
+					value: '',
 				},
 				editItemURL: {
 					validator: Lang.isString,
-					value: ''
+					value: '',
 				},
 				maxFileSize: {
 					setter: Lang.toInt,
 					value:
-						Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE
+						Liferay.PropsValues
+							.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 				},
 				uploadItemReturnType: {
 					validator: Lang.isString,
-					value: ''
+					value: '',
 				},
 				uploadItemURL: {
 					validator: Lang.isString,
-					value: ''
+					value: '',
 				},
 				validExtensions: {
 					validator: Lang.isString,
-					value: '*'
-				}
+					value: '*',
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -116,7 +117,7 @@ AUI.add(
 							STR_VISIBLE_CHANGE,
 							instance._afterVisibleChange,
 							instance
-						)
+						),
 					];
 
 					var uploadItemURL = instance.get('uploadItemURL');
@@ -266,7 +267,7 @@ AUI.add(
 								[
 									Liferay.Util.formatStorage(
 										instance.get('maxFileSize')
-									)
+									),
 								]
 							);
 						}
@@ -285,7 +286,7 @@ AUI.add(
 								[
 									Liferay.Util.formatStorage(
 										maxUploadRequestSize
-									)
+									),
 								]
 							);
 						}
@@ -301,22 +302,22 @@ AUI.add(
 								data: [
 									{
 										key: Liferay.Language.get('format'),
-										value: file.type
+										value: file.type,
 									},
 									{
 										key: Liferay.Language.get('size'),
 										value: Liferay.Util.formatStorage(
 											file.size
-										)
+										),
 									},
 									{
 										key: Liferay.Language.get('name'),
-										value: file.name
-									}
+										value: file.name,
+									},
 								],
-								title: Liferay.Language.get('file-info')
-							}
-						]
+								title: Liferay.Language.get('file-info'),
+							},
+						],
 					};
 				},
 
@@ -338,8 +339,8 @@ AUI.add(
 					instance.fire(STR_SELECTED_ITEM, {
 						data: {
 							returnType: link.getData('returntype'),
-							value: link.getData('value')
-						}
+							value: link.getData('value'),
+						},
 					});
 				},
 
@@ -401,12 +402,12 @@ AUI.add(
 						closeable: true,
 						delay: {
 							hide: 5000,
-							show: 0
+							show: 0,
 						},
 						duration: 250,
 						icon: 'exclamation-full',
 						message,
-						type: 'danger'
+						type: 'danger',
 					}).render(instance.rootNode);
 				},
 
@@ -426,7 +427,7 @@ AUI.add(
 							preview,
 							returnType,
 							title: file.name,
-							value: preview
+							value: preview,
 						})
 					);
 
@@ -476,7 +477,7 @@ AUI.add(
 								[
 									Liferay.Util.formatStorage(
 										instance.get('maxFileSize')
-									)
+									),
 								]
 							);
 						}
@@ -518,25 +519,25 @@ AUI.add(
 						btnCloseCaption: instance.get('closeCaption'),
 						editItemURL: instance.get('editItemURL'),
 						links: instance.all('.item-preview'),
-						uploadItemURL: instance.get('uploadItemURL')
+						uploadItemURL: instance.get('uploadItemURL'),
 					});
 
 					instance._uploadItemViewer = new A.LiferayItemViewer({
 						btnCloseCaption: instance.get('closeCaption'),
 						links: '',
-						uploadItemURL: instance.get('uploadItemURL')
+						uploadItemURL: instance.get('uploadItemURL'),
 					});
 
 					instance._itemSelectorUploader = new A.LiferayItemSelectorUploader(
 						{
-							rootNode: instance.rootNode
+							rootNode: instance.rootNode,
 						}
 					);
 
 					instance._bindUI();
 					instance._renderUI();
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.ItemSelectorRepositoryEntryBrowser = ItemSelectorRepositoryEntryBrowser;
@@ -547,7 +548,7 @@ AUI.add(
 			'liferay-alert',
 			'liferay-item-selector-uploader',
 			'liferay-item-viewer',
-			'liferay-portlet-base'
-		]
+			'liferay-portlet-base',
+		],
 	}
 );

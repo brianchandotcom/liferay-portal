@@ -20,7 +20,7 @@ const spritemap = 'spritemap';
 
 const props = {
 	resolvePreviewURL: () => Promise.resolve(previewURL),
-	spritemap
+	spritemap,
 };
 
 describe('PreviewButton', () => {
@@ -76,7 +76,7 @@ describe('PreviewButton', () => {
 		it('shows error notification when resolvePreviewURL fails', () => {
 			component = new PreviewButton({
 				...props,
-				resolvePreviewURL: () => Promise.reject()
+				resolvePreviewURL: () => Promise.reject(),
 			});
 
 			const notificationSpy = jest.spyOn(Notifications, 'showError');

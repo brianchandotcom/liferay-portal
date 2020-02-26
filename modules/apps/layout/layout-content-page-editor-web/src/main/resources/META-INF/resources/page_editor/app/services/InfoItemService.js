@@ -30,7 +30,7 @@ export default {
 		classPK,
 		fieldId,
 		languageId,
-		onNetworkStatus
+		onNetworkStatus,
 	}) {
 		return serviceFetch(
 			config.getAssetFieldValueURL,
@@ -39,8 +39,8 @@ export default {
 					classNameId,
 					classPK,
 					fieldId,
-					languageId
-				}
+					languageId,
+				},
 			},
 			onNetworkStatus
 		);
@@ -59,8 +59,8 @@ export default {
 			{
 				body: {
 					classNameId,
-					classPK
-				}
+					classPK,
+				},
 			},
 			onNetworkStatus
 		);
@@ -76,15 +76,15 @@ export default {
 	getAvailableStructureMappingFields({
 		classNameId,
 		classTypeId,
-		onNetworkStatus
+		onNetworkStatus,
 	}) {
 		return serviceFetch(
 			config.mappingFieldsURL,
 			{
 				body: {
 					classNameId,
-					classTypeId
-				}
+					classTypeId,
+				},
 			},
 			onNetworkStatus
 		);
@@ -103,8 +103,8 @@ export default {
 			{
 				body: {
 					className,
-					classPK
-				}
+					classPK,
+				},
 			},
 			onNetworkStatus
 		);
@@ -117,5 +117,5 @@ export default {
 	 */
 	getPageContents({onNetworkStatus}) {
 		return serviceFetch(config.getPageContentsURL, {}, onNetworkStatus);
-	}
+	},
 };

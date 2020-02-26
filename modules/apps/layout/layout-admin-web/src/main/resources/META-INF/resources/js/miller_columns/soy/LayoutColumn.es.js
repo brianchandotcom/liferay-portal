@@ -42,7 +42,7 @@ class LayoutColumn extends Component {
 			href: actionURLs[dropdownItem.name],
 			label: dropdownItem.label,
 			layoutColumnItem,
-			namespace
+			namespace,
 		}));
 
 		return dropdownItems;
@@ -58,11 +58,11 @@ class LayoutColumn extends Component {
 			dropdownItems: LayoutColumn._getLayoutColumnItemDropDownItems(
 				layoutColumnItem,
 				this.portletNamespace
-			)
+			),
 		}));
 
 		return Object.assign(state, {
-			layoutColumn
+			layoutColumn,
 		});
 	}
 
@@ -112,7 +112,7 @@ LayoutColumn.STATE = {
 			pending: Config.bool().value(false),
 			plid: Config.string().required(),
 			title: Config.string().required(),
-			url: Config.string().required()
+			url: Config.string().required(),
 		})
 	).required(),
 
@@ -153,7 +153,7 @@ LayoutColumn.STATE = {
 	 * @type {!string}
 	 */
 
-	styleModifier: Config.string()
+	styleModifier: Config.string(),
 };
 
 Soy.register(LayoutColumn, templates);

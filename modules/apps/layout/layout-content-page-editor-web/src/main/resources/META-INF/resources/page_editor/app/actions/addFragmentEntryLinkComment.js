@@ -17,12 +17,12 @@ import {ADD_FRAGMENT_ENTRY_LINK_COMMENT} from './types';
 export default function addFragmentEntryLinkComment({
 	fragmentEntryLinkComment,
 	fragmentEntryLinkId,
-	parentCommentId
+	parentCommentId,
 }) {
 	return {
 		fragmentEntryLinkComment,
 		fragmentEntryLinkId,
 		parentCommentId,
-		type: ADD_FRAGMENT_ENTRY_LINK_COMMENT
+		type: ADD_FRAGMENT_ENTRY_LINK_COMMENT,
 	};
 }

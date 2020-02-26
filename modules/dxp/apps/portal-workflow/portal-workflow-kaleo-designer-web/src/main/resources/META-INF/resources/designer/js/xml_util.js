@@ -81,7 +81,7 @@ AUI.add(
 
 				return {
 					close: BUFFER_CLOSE_NODE.join(STR_BLANK),
-					open: BUFFER_OPEN_NODE.join(STR_BLANK)
+					open: BUFFER_OPEN_NODE.join(STR_BLANK),
 				};
 			},
 
@@ -147,13 +147,13 @@ AUI.add(
 				}
 
 				return valid;
-			}
+			},
 		};
 
 		Liferay.XMLUtil = XMLUtil;
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base'],
 	}
 );

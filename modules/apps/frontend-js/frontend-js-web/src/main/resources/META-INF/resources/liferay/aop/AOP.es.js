@@ -75,7 +75,7 @@ class AOP {
 	 */
 	createHandle(fn, before) {
 		return {
-			detach: this.detach_.bind(this, fn, before)
+			detach: this.detach_.bind(this, fn, before),
 		};
 	}
 
@@ -244,7 +244,7 @@ class AOP {
 	static modify_(type, value) {
 		return {
 			type,
-			value
+			value,
 		};
 	}
 

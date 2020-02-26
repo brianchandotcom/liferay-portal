@@ -80,11 +80,11 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 			method: Liferay.Service.bind('/wiki.wikipage/get-temp-file-names'),
 			params: {
 				nodeId: <%= node.getNodeId() %>,
-				folderName: '<%= WikiConstants.TEMP_FOLDER_NAME %>'
-			}
+				folderName: '<%= WikiConstants.TEMP_FOLDER_NAME %>',
+			},
 		},
 		tempRandomSuffix: '<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
 		uploadFile:
-			'<liferay-portlet:actionURL name="/wiki/edit_page_attachment"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>'
+			'<liferay-portlet:actionURL name="/wiki/edit_page_attachment"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>',
 	});
 </aui:script>

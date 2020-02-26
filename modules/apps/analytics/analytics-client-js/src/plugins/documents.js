@@ -27,13 +27,13 @@ function getDocumentPayload(documentElement) {
 
 	let payload = {
 		fileEntryId: dataset.analyticsAssetId,
-		fileEntryVersion: dataset.analyticsAssetVersion
+		fileEntryVersion: dataset.analyticsAssetVersion,
 	};
 
 	if (dataset.analyticsAssetTitle) {
 		payload = {
 			...payload,
-			title: dataset.analyticsAssetTitle
+			title: dataset.analyticsAssetTitle,
 		};
 	}
 

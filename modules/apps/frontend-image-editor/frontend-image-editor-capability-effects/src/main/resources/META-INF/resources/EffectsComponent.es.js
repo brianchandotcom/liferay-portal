@@ -77,7 +77,7 @@ class EffectsComponent extends Component {
 	generateThumbnail_(effect, imageData) {
 		const promise = this.spawnWorker_({
 			effect,
-			imageData
+			imageData,
 		});
 
 		promise.then(imageData => {
@@ -208,7 +208,7 @@ class EffectsComponent extends Component {
 		if (!promise) {
 			promise = this.spawnWorker_({
 				effect,
-				imageData
+				imageData,
 			});
 
 			this.cache_[effect] = promise;
@@ -283,7 +283,7 @@ EffectsComponent.STATE = {
 	 */
 	carouselOffset: {
 		validator: core.isString,
-		value: '0'
+		value: '0',
 	},
 
 	/**
@@ -313,8 +313,8 @@ EffectsComponent.STATE = {
 			'paella',
 			'aureus',
 			'expanse',
-			'orchid'
-		]
+			'orchid',
+		],
 	},
 
 	/**
@@ -323,7 +323,7 @@ EffectsComponent.STATE = {
 	 * @type {Function}
 	 */
 	getImageEditorImageData: {
-		validator: core.isFunction
+		validator: core.isFunction,
 	},
 
 	/**
@@ -332,7 +332,7 @@ EffectsComponent.STATE = {
 	 * @type {Function}
 	 */
 	modulePath: {
-		validator: core.isString
+		validator: core.isString,
 	},
 
 	/**
@@ -341,7 +341,7 @@ EffectsComponent.STATE = {
 	 * @type {Function}
 	 */
 	requestImageEditorPreview: {
-		validator: core.isFunction
+		validator: core.isFunction,
 	},
 
 	/**
@@ -351,8 +351,8 @@ EffectsComponent.STATE = {
 	 */
 	thumbnailSize: {
 		validator: core.isNumber,
-		value: 55
-	}
+		value: 55,
+	},
 };
 
 Soy.register(EffectsComponent, componentTemplates);

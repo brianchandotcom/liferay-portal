@@ -22,5 +22,5 @@ export const EDITABLE_FLOATING_TOOLBAR_CLASSNAMES = {
 	disabled: `${FLOATING_TOOLBAR_CLASS}__button--disabled disabled`,
 	linked: `${FLOATING_TOOLBAR_CLASS}__button--linked`,
 	mapped: `${FLOATING_TOOLBAR_CLASS}__button--mapped`,
-	panel: `${FLOATING_TOOLBAR_CLASS}__panel`
+	panel: `${FLOATING_TOOLBAR_CLASS}__panel`,
 };

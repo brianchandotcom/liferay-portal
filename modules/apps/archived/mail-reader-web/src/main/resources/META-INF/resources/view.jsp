@@ -58,7 +58,7 @@ MailManager mailManager = MailManager.getInstance(request);
 			Liferay.Mail.init({
 				initialAccountId: <%= initialAccountId %>,
 				initialFolderId: <%= initialFolderId %>,
-				namespace: '<portlet:namespace />'
+				namespace: '<portlet:namespace />',
 			});
 		</aui:script>
 	</c:when>

@@ -213,5 +213,5 @@ tinymce.addI18n('fi', {
 	Tools: 'Ty\u00f6kalut',
 	View: 'N\u00e4yt\u00e4',
 	Table: 'Taulukko',
-	Format: 'Muotoilu'
+	Format: 'Muotoilu',
 });

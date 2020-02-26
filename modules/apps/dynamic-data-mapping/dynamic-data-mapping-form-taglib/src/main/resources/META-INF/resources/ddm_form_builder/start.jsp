@@ -33,7 +33,7 @@
 				'<%= HtmlUtil.escapeJS(fieldSettingsDDMFormContextURL) %>',
 			getFunctionsURL: '<%= HtmlUtil.escapeJS(functionsURL) %>',
 			getRolesURL: '<%= HtmlUtil.escapeJS(rolesURL) %>',
-			portletNamespace: '<%= HtmlUtil.escapeJS(refererPortletNamespace) %>'
+			portletNamespace: '<%= HtmlUtil.escapeJS(refererPortletNamespace) %>',
 		};
 
 		Liferay.DDM.FieldSets.register(<%= fieldSets %>);
@@ -49,7 +49,7 @@
 						'<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
 					editingLanguageId:
 						'<%= HtmlUtil.escapeJS(editingLanguageId) %>',
-					showPagination: <%= showPagination %>
+					showPagination: <%= showPagination %>,
 				});
 			}
 		);
@@ -64,7 +64,7 @@
 					rules: JSON.parse(
 						'<%= HtmlUtil.escapeJS(serializedDDMFormRules) %>'
 					),
-					visible: false
+					visible: false,
 				});
 			}
 		);
@@ -83,6 +83,6 @@
 		'<%= npmResolvedPackageName %>/alloy/templates/rule-builder.es',
 		'<%= npmResolvedPackageName %>/alloy/templates/rule.es',
 		'<%= npmResolvedPackageName %>/alloy/templates/sidebar.es',
-		initTagLib
+		initTagLib,
 	]);
 </aui:script>

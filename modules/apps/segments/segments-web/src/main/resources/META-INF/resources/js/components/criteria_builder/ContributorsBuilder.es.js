@@ -25,7 +25,7 @@ import {
 	contributorShape,
 	operatorShape,
 	propertyGroupShape,
-	propertyTypesShape
+	propertyTypesShape,
 } from '../../utils/types.es';
 import {getPluralMessage} from '../../utils/utils.es';
 import CriteriaSidebar from '../criteria_sidebar/CriteriaSidebar.es';
@@ -47,7 +47,7 @@ class ContributorBuilder extends React.Component {
 		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
 		supportedConjunctions: PropTypes.arrayOf(conjunctionShape).isRequired,
 		supportedOperators: PropTypes.arrayOf(operatorShape).isRequired,
-		supportedPropertyTypes: propertyTypesShape.isRequired
+		supportedPropertyTypes: propertyTypesShape.isRequired,
 	};
 
 	static defaultProps = {
@@ -56,7 +56,7 @@ class ContributorBuilder extends React.Component {
 		membersCountLoading: false,
 		onConjunctionChange: () => {},
 		onPreviewMembers: () => {},
-		onQueryChange: () => {}
+		onQueryChange: () => {},
 	};
 
 	constructor(props) {
@@ -73,7 +73,7 @@ class ContributorBuilder extends React.Component {
 			: propertyGroups[0].propertyKey;
 
 		this.state = {
-			editingId: propertyKey
+			editingId: propertyKey,
 		};
 	}
 
@@ -85,7 +85,7 @@ class ContributorBuilder extends React.Component {
 
 	_handleCriteriaEdit = (id, editing) => {
 		this.setState({
-			editingId: editing ? undefined : id
+			editingId: editing ? undefined : id,
 		});
 	};
 
@@ -101,13 +101,13 @@ class ContributorBuilder extends React.Component {
 			propertyGroups,
 			supportedConjunctions,
 			supportedOperators,
-			supportedPropertyTypes
+			supportedPropertyTypes,
 		} = this.props;
 
 		const {editingId} = this.state;
 
 		const rootClasses = getCN('contributor-builder-root', {
-			editing
+			editing,
 		});
 
 		return (

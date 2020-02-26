@@ -81,6 +81,6 @@ String userTokenName = tokenConfiguration.userTokenName();
 		contentBox: '#<portlet:namespace />authenticationCookies',
 		fieldIndexes:
 			'<portlet:namespace /><%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE %>authenticationCookiesIndexes',
-		namespace: '<portlet:namespace />'
+		namespace: '<portlet:namespace />',
 	}).render();
 </aui:script>

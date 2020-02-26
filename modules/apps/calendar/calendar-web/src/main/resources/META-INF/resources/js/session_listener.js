@@ -18,12 +18,12 @@ AUI.add(
 		var CalendarSessionListener = A.Component.create({
 			ATTRS: {
 				calendars: {
-					value: []
+					value: [],
 				},
 
 				scheduler: {
-					value: null
-				}
+					value: null,
+				},
 			},
 
 			NAME: 'calendar-session-listener',
@@ -83,14 +83,14 @@ AUI.add(
 						'sessionExpired',
 						A.bind(instance._onSessionExpired, instance)
 					);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.CalendarSessionListener = CalendarSessionListener;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-component']
+		requires: ['aui-base', 'aui-component'],
 	}
 );

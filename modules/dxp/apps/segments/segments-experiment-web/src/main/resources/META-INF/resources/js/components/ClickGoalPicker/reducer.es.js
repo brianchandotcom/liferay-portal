@@ -23,7 +23,7 @@ export function reducer(state, action) {
 				if (state.mode !== mode) {
 					return {
 						...state,
-						mode
+						mode,
 					};
 				}
 			}
@@ -32,7 +32,7 @@ export function reducer(state, action) {
 		case 'editTarget':
 			return {
 				...state,
-				editingTarget: action.selector
+				editingTarget: action.selector,
 			};
 
 		case 'selectTarget':
@@ -40,7 +40,7 @@ export function reducer(state, action) {
 				...state,
 				editingTarget: null,
 				mode: 'active',
-				selectedTarget: action.selector
+				selectedTarget: action.selector,
 			};
 
 		default:
@@ -52,7 +52,7 @@ export function reducer(state, action) {
 export function getInitialState(target) {
 	return {
 		...INITIAL_STATE,
-		selectedTarget: target
+		selectedTarget: target,
 	};
 }
 
@@ -90,7 +90,7 @@ const INITIAL_STATE = {
 	 * As noted above, it is possible to have one target selected and another
 	 * being edited at the same time.
 	 */
-	selectedTarget: ''
+	selectedTarget: '',
 };
 
 export const StateContext = React.createContext(INITIAL_STATE);

@@ -60,7 +60,7 @@ function AddResult({fetchDocumentsSearchUrl, onAddResultSubmit}) {
 
 AddResult.propTypes = {
 	fetchDocumentsSearchUrl: PropTypes.string.isRequired,
-	onAddResultSubmit: PropTypes.func.isRequired
+	onAddResultSubmit: PropTypes.func.isRequired,
 };
 
 export default AddResult;

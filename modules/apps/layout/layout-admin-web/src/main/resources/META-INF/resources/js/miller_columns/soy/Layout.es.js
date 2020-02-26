@@ -25,13 +25,13 @@ import templates from './Layout.soy';
 import {
 	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES,
-	LayoutDragDrop
+	LayoutDragDrop,
 } from './utils/LayoutDragDrop.es';
 import {
 	dropIsValid,
 	dropItemInsideColumn,
 	dropItemInsideItem,
-	dropItemNextToItem
+	dropItemNextToItem,
 } from './utils/LayoutDropUtils.es';
 import {
 	columnIsItemChild,
@@ -40,13 +40,13 @@ import {
 	getItem,
 	getItemColumn,
 	getItemColumnIndex,
-	itemIsParent
+	itemIsParent,
 } from './utils/LayoutGetUtils.es';
 import {
 	clearFollowingColumns,
 	clearPath,
 	deleteEmptyColumns,
-	setActiveItem
+	setActiveItem,
 } from './utils/LayoutUpdateUtils.es';
 
 /**
@@ -82,9 +82,9 @@ class Layout extends Component {
 
 				plugins.push({
 					cfg: {
-						rowSelector: '.layout-item'
+						rowSelector: '.layout-item',
 					},
-					fn: A.Plugin.SearchContainerSelect
+					fn: A.Plugin.SearchContainerSelect,
 				});
 
 				const searchContainer = new Liferay.SearchContainer({
@@ -92,7 +92,7 @@ class Layout extends Component {
 					id:
 						this.getInitialConfig().portletNamespace +
 						this.getInitialConfig().searchContainerId,
-					plugins
+					plugins,
 				});
 
 				this.searchContainer_ = searchContainer;
@@ -182,7 +182,7 @@ class Layout extends Component {
 
 		return fetch(this.getItemChildrenURL, {
 			body: formData,
-			method: 'POST'
+			method: 'POST',
 		}).then(response => response.json());
 	}
 
@@ -230,7 +230,7 @@ class Layout extends Component {
 		this._resetDragDropClasses();
 
 		let layoutColumns = this.layoutColumns.map(layoutColumn => [
-			...layoutColumn
+			...layoutColumn,
 		]);
 		const {sourceItemPlid, targetId, targetType} = eventData;
 
@@ -512,7 +512,7 @@ class Layout extends Component {
 
 		return fetch(this.moveLayoutColumnItemURL, {
 			body: formData,
-			method: 'POST'
+			method: 'POST',
 		}).catch(() => {
 			this._resetHoveredData();
 		});
@@ -537,7 +537,7 @@ class Layout extends Component {
 			[
 				nextLayoutColumns.indexOf(column),
 				column.indexOf(item),
-				'hasChild'
+				'hasChild',
 			],
 			false
 		);
@@ -883,7 +883,7 @@ Layout.STATE = {
 	breadcrumbEntries: Config.arrayOf(
 		Config.shapeOf({
 			title: Config.string().required(),
-			url: Config.string().required()
+			url: Config.string().required(),
 		})
 	).required(),
 
@@ -915,7 +915,7 @@ Layout.STATE = {
 				parentable: Config.bool().required(),
 				plid: Config.string().required(),
 				title: Config.string().required(),
-				url: Config.string().required()
+				url: Config.string().required(),
 			})
 		)
 	).required(),
@@ -955,7 +955,7 @@ Layout.STATE = {
 	 * @type {!string}
 	 */
 
-	siteNavigationMenuNames: Config.string().required()
+	siteNavigationMenuNames: Config.string().required(),
 };
 
 Soy.register(Layout, templates);

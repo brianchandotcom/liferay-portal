@@ -15,7 +15,7 @@
 (function($) {
 	$.ajaxSetup({
 		data: {},
-		type: 'POST'
+		type: 'POST',
 	});
 
 	$.ajaxPrefilter(options => {

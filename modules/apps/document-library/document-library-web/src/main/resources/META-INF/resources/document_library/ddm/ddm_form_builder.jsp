@@ -89,12 +89,12 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 			closeable: true,
 			delay: {
 				hide: 5000,
-				show: 0
+				show: 0,
 			},
 			duration: 500,
 			message: message,
 			title: Liferay.Language.get('warning'),
-			type: 'warning'
+			type: 'warning',
 		}).render('body');
 	};
 
@@ -120,7 +120,7 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 				height: 600,
 				mode: 'xml',
 				tabSize: 4,
-				width: 600
+				width: 600,
 			}).render();
 		}
 
@@ -246,8 +246,8 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 				'<%= HtmlUtil.escapeJS(dlEditFileEntryTypeDisplayContext.getDefaultLanguageId()) %>',
 			localesMap: <%= dlEditFileEntryTypeDisplayContext.getLocalesMapString() %>,
 			srcNode:
-				'#<portlet:namespace />translationManager .lfr-translation-manager-content'
-		}
+				'#<portlet:namespace />translationManager .lfr-translation-manager-content',
+		},
 	}).render();
 
 	var dialog = Liferay.Util.getWindow();
@@ -304,6 +304,6 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 	});
 
 	Liferay.fire('<portlet:namespace />formBuilderLoaded', {
-		formBuilder: formBuilder
+		formBuilder: formBuilder,
 	});
 </aui:script>

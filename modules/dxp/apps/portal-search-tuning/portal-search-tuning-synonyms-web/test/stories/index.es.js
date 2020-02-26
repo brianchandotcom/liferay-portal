@@ -13,7 +13,7 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import {
 	STORYBOOK_CONSTANTS,
 	StorybookAddonKnobs,
-	StorybookReact
+	StorybookReact,
 } from 'liferay-npm-scripts/src/storybook';
 import React from 'react';
 
@@ -28,7 +28,7 @@ addDecorator(storyFn => {
 	const context = {
 		namespace:
 			'_com_liferay_portal_search_synonyms_web_portlet_SynonymsPortlet_',
-		spritemap: STORYBOOK_CONSTANTS.SPRITEMAP_PATH
+		spritemap: STORYBOOK_CONSTANTS.SPRITEMAP_PATH,
 	};
 
 	return (

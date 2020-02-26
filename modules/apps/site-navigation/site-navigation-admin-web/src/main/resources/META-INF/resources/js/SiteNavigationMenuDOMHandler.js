@@ -21,7 +21,7 @@ import {
 	MENU_ITEM_DRAGGING_CLASSNAME,
 	getChildren,
 	getId,
-	isMenuItem
+	isMenuItem,
 } from './SiteNavigationMenuItemDOMHandler';
 
 /**
@@ -68,7 +68,7 @@ const getNearestMenuItem = function(originMenuItem, placeholder) {
 			return {
 				distance,
 				menuItem,
-				region: menuItemRegion
+				region: menuItemRegion,
 			};
 		})
 		.reduce(
@@ -79,7 +79,7 @@ const getNearestMenuItem = function(originMenuItem, placeholder) {
 			},
 			{
 				distance: Infinity,
-				menuItem: null
+				menuItem: null,
 			}
 		).menuItem;
 };
@@ -171,5 +171,5 @@ export {
 	insertAtPosition,
 	insertAtTop,
 	isOver,
-	shouldBeNested
+	shouldBeNested,
 };

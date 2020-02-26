@@ -14,6 +14,6 @@
 
 module.exports = {
 	globals: {
-		_: true
-	}
+		_: true,
+	},
 };

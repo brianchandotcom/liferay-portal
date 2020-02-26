@@ -119,10 +119,10 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_ro
 				destroyOnHide: true,
 				height: 768,
 				modal: true,
-				width: 600
+				width: 600,
 			},
 			uri: event.currentTarget.href,
-			title: '<liferay-ui:message key="members" />'
+			title: '<liferay-ui:message key="members" />',
 		});
 	}
 </aui:script>

@@ -17,7 +17,7 @@ const STATES = {
 	SHOW: {show: true},
 	WAIT_HIDE: {show: true},
 	WAIT_RESHOW: {show: true},
-	WAIT_SHOW: {show: false}
+	WAIT_SHOW: {show: false},
 };
 
 export {STATES};
@@ -30,34 +30,34 @@ export default function reducer(state, action) {
 					...state,
 					current: STATES.WAIT_SHOW,
 					target: action.target,
-					timestamp: Date.now()
+					timestamp: Date.now(),
 				};
 			}
 			else if (state.current === STATES.WAIT_SHOW) {
 				return {
 					...state,
 					target: action.target,
-					timestamp: Date.now()
+					timestamp: Date.now(),
 				};
 			}
 			else if (state.current === STATES.WAIT_RESHOW) {
 				return {
 					...state,
 					nextTarget: action.target,
-					timestamp: Date.now()
+					timestamp: Date.now(),
 				};
 			}
 			else if (state.current === STATES.WAIT_HIDE) {
 				return {
 					...state,
 					current: STATES.WAIT_RESHOW,
-					nextTarget: action.target
+					nextTarget: action.target,
 				};
 			}
 			else {
 				return {
 					...state,
-					timestamp: Date.now()
+					timestamp: Date.now(),
 				};
 			}
 
@@ -72,14 +72,14 @@ export default function reducer(state, action) {
 			if (state.current === STATES.WAIT_SHOW) {
 				return {
 					...state,
-					current: STATES.SHOW
+					current: STATES.SHOW,
 				};
 			}
 			else if (state.current === STATES.WAIT_RESHOW) {
 				return {
 					...state,
 					current: STATES.SHOW,
-					target: state.nextTarget
+					target: state.nextTarget,
 				};
 			}
 
@@ -96,7 +96,7 @@ export default function reducer(state, action) {
 				return {
 					...state,
 					current: STATES.WAIT_HIDE,
-					timestamp: Date.now()
+					timestamp: Date.now(),
 				};
 			}
 

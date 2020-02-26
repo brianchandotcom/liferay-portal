@@ -23,7 +23,7 @@ export default function ColorPalette({
 	label,
 	onClear,
 	onColorSelect,
-	selectedColor
+	selectedColor,
 }) {
 	return (
 		<>
@@ -34,7 +34,8 @@ export default function ColorPalette({
 					{config.themeColorsCssClasses.map(color => (
 						<li
 							className={classNames('palette-item', {
-								'palette-item-selected': color === selectedColor
+								'palette-item-selected':
+									color === selectedColor,
 							})}
 							key={color}
 						>
@@ -68,5 +69,5 @@ ColorPalette.propTypes = {
 	label: PropTypes.string,
 	onClear: PropTypes.func,
 	onColorSelect: PropTypes.func.isRequired,
-	selectedColor: PropTypes.string
+	selectedColor: PropTypes.string,
 };

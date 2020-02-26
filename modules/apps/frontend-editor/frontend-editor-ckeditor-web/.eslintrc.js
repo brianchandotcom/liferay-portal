@@ -14,6 +14,6 @@
 
 module.exports = {
 	globals: {
-		ckEditor: true
-	}
+		ckEditor: true,
+	},
 };

@@ -22,7 +22,7 @@ import {withLoading} from '../../components/loading/Loading.es';
 import {withEmpty} from '../../components/table/EmptyState.es';
 import EditAppContext, {
 	UPDATE_DATA_LAYOUT_ID,
-	UPDATE_DATA_LIST_VIEW_ID
+	UPDATE_DATA_LIST_VIEW_ID,
 } from './EditAppContext.es';
 
 const {Body, Cell, Head, Row} = ClayTable;
@@ -31,8 +31,8 @@ const ListItems = ({itemType, items}) => {
 	const {
 		dispatch,
 		state: {
-			app: {dataLayoutId, dataListViewId}
-		}
+			app: {dataLayoutId, dataListViewId},
+		},
 	} = useContext(EditAppContext);
 
 	const itemId = itemType === 'DATA_LAYOUT' ? dataLayoutId : dataListViewId;
@@ -45,7 +45,7 @@ const ListItems = ({itemType, items}) => {
 
 		dispatch({
 			id,
-			type
+			type,
 		});
 	};
 
@@ -72,14 +72,14 @@ const ListItems = ({itemType, items}) => {
 							dateCreated,
 							dateModified,
 							id,
-							name: {en_US: itemName}
+							name: {en_US: itemName},
 						},
 						index
 					) => {
 						return (
 							<Row
 								className={classNames('selectable-row', {
-									'selectable-active': id === itemId
+									'selectable-active': id === itemId,
 								})}
 								key={index}
 								onClick={() => onItemIdChange(id)}

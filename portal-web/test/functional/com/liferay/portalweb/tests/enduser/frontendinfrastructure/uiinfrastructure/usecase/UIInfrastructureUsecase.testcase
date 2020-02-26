@@ -188,19 +188,19 @@ definition {
 
 		UserBar.signOut();
 
-		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_USER_PERSONAL_BAR_SIGN_IN_PNG");
+		SikuliAssertElementPresent(locator1 = "UserBar#USER_SIGN_IN_PNG");
 
 		takeScreenshot();
 
 		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/login");
 
-		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_LOG_IN_MODAL_PNG");
+		SikuliAssertElementPresent(locator1 = "SignIn#LOGIN_PORTLET_PNG");
 
 		SignIn._signIn();
 
 		WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_ICON");
 
-		SikuliAssertElementPresent(locator1 = "Navigation#SCREENSHOTS_USER_AVATAR_ICON_PNG");
+		SikuliAssertElementPresent(locator1 = "UserBar#USER_AVATAR_ICON_PNG");
 
 		takeScreenshot();
 

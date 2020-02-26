@@ -58,6 +58,7 @@ export default withRouter(({history}) => {
 					</label>
 
 					<ClayInput
+						maxLength={75}
 						onChange={event => setHeadline(event.target.value)}
 						placeholder={Liferay.Language.get(
 							'what-is-your-question'

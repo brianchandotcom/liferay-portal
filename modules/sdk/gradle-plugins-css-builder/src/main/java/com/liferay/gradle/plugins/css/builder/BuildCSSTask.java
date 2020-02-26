@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.css.builder;
 
+import com.liferay.css.builder.CSSBuilder;
 import com.liferay.css.builder.CSSBuilderArgs;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
@@ -32,15 +33,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
-import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectories;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SkipWhenEmpty;
+import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.CollectionUtils;
 import org.gradle.util.GUtil;
 
@@ -48,13 +50,19 @@ import org.gradle.util.GUtil;
  * @author Andrea Di Giorgi
  * @author David Truong
  */
-public class BuildCSSTask extends JavaExec {
+public class BuildCSSTask extends DefaultTask {
 
 	public BuildCSSTask() {
-		setDefaultCharacterEncoding(StandardCharsets.UTF_8.toString());
 		setDirNames("/");
-		setMain("com.liferay.css.builder.CSSBuilder");
-		systemProperty("sass.compiler.jni.clean.temp.dir", true);
+		System.setProperty("file.encoding", StandardCharsets.UTF_8.toString());
+		System.setProperty("sass.compiler.jni.clean.temp.dir", "true");
+	}
+
+	@TaskAction
+	public void buildCSS() throws Exception {
+		List<String> args = _getCompleteArgs();
+
+		CSSBuilder.main(args.toArray(new String[0]));
 	}
 
 	public BuildCSSTask dirNames(Iterable<Object> dirNames) {
@@ -75,13 +83,6 @@ public class BuildCSSTask extends JavaExec {
 
 	public BuildCSSTask excludes(Object... excludes) {
 		return excludes(Arrays.asList(excludes));
-	}
-
-	@Override
-	public void exec() {
-		setArgs(_getCompleteArgs());
-
-		super.exec();
 	}
 
 	public File getBaseDir() {
@@ -322,7 +323,7 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	private List<String> _getCompleteArgs() {
-		List<String> args = new ArrayList<>(getArgs());
+		List<String> args = new ArrayList<>();
 
 		args.add(
 			"--append-css-import-timestamps=" + isAppendCssImportTimestamps());

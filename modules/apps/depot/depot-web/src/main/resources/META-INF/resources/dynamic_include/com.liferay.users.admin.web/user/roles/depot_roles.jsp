@@ -312,7 +312,8 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 						'<%= depotAdminRolesDisplayContext.getSelectDepotRolesEventName() %>',
 					selectedData: [],
 					title: '<liferay-ui:message arguments="role" key="select-x" />',
-					uri: '<%= depotAdminRolesDisplayContext.getSelectDepotRolesURL() %>'
+					uri:
+						'<%= depotAdminRolesDisplayContext.getSelectDepotRolesURL() %>'
 				},
 				function(event) {
 					<portlet:namespace />selectRole(

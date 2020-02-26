@@ -64,7 +64,6 @@ public class DepotAdminRolesDisplayContext {
 		throws PortalException {
 
 		_liferayPortletRequest = liferayPortletRequest;
-
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -154,8 +153,13 @@ public class DepotAdminRolesDisplayContext {
 
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		return !Objects.equals(
-			portletDisplay.getPortletName(), myAccountPortletId);
+		if (!Objects.equals(
+				portletDisplay.getPortletName(), myAccountPortletId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _contains(UserGroupRole userGroupRole) {

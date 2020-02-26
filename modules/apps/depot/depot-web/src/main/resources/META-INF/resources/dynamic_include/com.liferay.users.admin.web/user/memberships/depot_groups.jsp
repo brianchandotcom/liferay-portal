@@ -129,7 +129,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 				'<%= depotAdminMembershipsDisplayContext.getItemSelectorEventName() %>',
 			singleSelect: true,
 			title: '<liferay-ui:message arguments="asset-library" key="select-x" />',
-			url: '<%= depotAdminMembershipsDisplayContext.getItemSelectorURL() %>',
+			url: '<%= depotAdminMembershipsDisplayContext.getItemSelectorURL() %>'
 		});
 
 		itemSelectorDialog.on('selectedItemChange', function(event) {

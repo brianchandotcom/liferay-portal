@@ -29,7 +29,7 @@ definition {
 
 		Refresh();
 
-		SikuliAssertElementPresent(locator1 = "ControlMenu#HOME_HEADING_AND_PRODUCT_MENU_OPENED_PNG");
+		SikuliAssertElementPresent(locator1 = "ControlMenu#HOME_HEADING_AND_PRODUCT_MENU_CLOSED_PNG");
 
 		SikuliAssertElementPresent(locator1 = "ControlMenu#HOME_ICONS_RIGHT_PNG");
 

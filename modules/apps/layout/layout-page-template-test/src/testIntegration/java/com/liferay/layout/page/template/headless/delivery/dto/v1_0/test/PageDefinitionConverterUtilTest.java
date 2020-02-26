@@ -121,18 +121,20 @@ public class PageDefinitionConverterUtilTest {
 
 	@Test
 	public void testToPageDefinitionFragmentFieldLink() throws Exception {
-		_testToPageDefinitionFragmentField(
-			"editable_values_fragment_field_link.json",
-			"<lfr-editable id=\"my-link\" type=\"link\"><a href=\"\" id=\"" +
-				"my-link\">Go here</a></lfr-editable>");
+		_validateFragmentFieldText(
+			_getFragmentField(
+				"editable_values_fragment_field_link.json", "my-link",
+				"<lfr-editable id=\"my-link\" type=\"link\"><a href=\"\" " +
+					"id=\"my-link\">Go here</a></lfr-editable>"));
 	}
 
 	@Test
 	public void testToPageDefinitionFragmentFieldText() throws Exception {
-		_testToPageDefinitionFragmentField(
-			"editable_values_fragment_field_text.json",
-			"<lfr-editable id=\"my-text\" type=\"text\">Example</lfr-editable" +
-				">");
+		_validateFragmentFieldText(
+			_getFragmentField(
+				"editable_values_fragment_field_text.json", "my-text",
+				"<lfr-editable id=\"my-text\" type=\"text\">Example" +
+					"</lfr-editable>"));
 	}
 
 	@Test
@@ -182,13 +184,8 @@ public class PageDefinitionConverterUtilTest {
 			_serviceContext);
 	}
 
-	private String _read(String fileName) throws Exception {
-		return new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
-	}
-
-	private void _testToPageDefinitionFragmentField(
-			String editableValuesFileName, String html)
+	private FragmentField _getFragmentField(
+			String editableValuesFileName, String fragmentFieldId, String html)
 		throws Exception {
 
 		Layout layout = _layoutLocalService.fetchLayout(
@@ -262,6 +259,17 @@ public class PageDefinitionConverterUtilTest {
 
 		FragmentField fragmentField = fragmentFields[0];
 
+		Assert.assertEquals(fragmentFieldId, fragmentField.getId());
+
+		return fragmentField;
+	}
+
+	private String _read(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void _validateFragmentFieldText(FragmentField fragmentField) {
 		FragmentFieldText fragmentFieldText =
 			(FragmentFieldText)fragmentField.getValue();
 

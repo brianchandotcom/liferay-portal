@@ -101,14 +101,14 @@ definition {
 
 	@summary = "Get the groupId from any existing site by using groupName"
 	macro _getGroupIdByName {
-		Variables.assertDefined(parameterList = "${groupName}");
+		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		var companyId = JSONCompany.getCompanyId();
 
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/true \
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/${site} \
 				-u test@liferay.com:test
 		''';
 

@@ -124,6 +124,28 @@ public class PageDefinitionConverterUtilTest {
 	}
 
 	@Test
+	public void testToPageDefinitionFragmentConfig() throws Exception {
+		FragmentInstanceDefinition fragmentInstanceDefinition =
+			_getFragmentInstanceDefinition(
+				_read("fragment_config.json"),
+				"editable_values_fragment_config.json", "my-fragment-entry-key",
+				RandomTestUtil.randomString(),
+				_read("html_fragment_config.ftl"));
+
+		Map<String, Object> fragmentConfigMap =
+			fragmentInstanceDefinition.getFragmentConfig();
+
+		Assert.assertEquals("center", fragmentConfigMap.get("textAlign"));
+		Assert.assertEquals(4, fragmentConfigMap.get("level"));
+
+		Map<String, String> textColorMap =
+			(Map<String, String>)fragmentConfigMap.get("textColor");
+
+		Assert.assertEquals("danger", textColorMap.get("cssClass"));
+		Assert.assertEquals("rgb(171, 16, 16)", textColorMap.get("rgbValue"));
+	}
+
+	@Test
 	public void testToPageDefinitionFragmentFieldBackgroundImage()
 		throws Exception {
 

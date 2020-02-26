@@ -25,6 +25,7 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
@@ -38,6 +39,7 @@ import com.liferay.headless.delivery.dto.v1_0.InlineLink;
 import com.liferay.headless.delivery.dto.v1_0.InlineValue;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
 import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -247,6 +249,63 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertNull(pageElement.getDefinition());
 		Assert.assertNull(pageElement.getPageElements());
 		Assert.assertEquals(PageElement.Type.ROOT, pageElement.getType());
+	}
+
+	@Test
+	public void testToPageDefinitionRow() throws Exception {
+		_addLayoutPageTemplateStructure(
+			"layout_data_row.json", new HashMap<>());
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			_layoutPageTemplateEntry.getPlid());
+
+		PageDefinition pageDefinition =
+			PageDefinitionConverterUtil.toPageDefinition(
+				_fragmentCollectionContributorTracker,
+				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
+				layout);
+
+		PageElement rootPageElement = pageDefinition.getPageElement();
+
+		Assert.assertEquals(PageElement.Type.ROOT, rootPageElement.getType());
+
+		PageElement[] pageElements = rootPageElement.getPageElements();
+
+		Assert.assertEquals(
+			Arrays.toString(pageElements), 1, pageElements.length);
+
+		PageElement rowPageElement = pageElements[0];
+
+		Assert.assertEquals(PageElement.Type.ROW, rowPageElement.getType());
+
+		RowDefinition rowDefinition =
+			(RowDefinition)rowPageElement.getDefinition();
+
+		Assert.assertFalse(rowDefinition.getGutters());
+
+		Assert.assertEquals(
+			Integer.valueOf(2), rowDefinition.getNumberOfColumns());
+
+		PageElement[] columnPageElements = rowPageElement.getPageElements();
+
+		Assert.assertEquals(
+			Arrays.toString(columnPageElements), 2, columnPageElements.length);
+
+		Assert.assertEquals(
+			PageElement.Type.COLUMN, columnPageElements[0].getType());
+		Assert.assertNull(columnPageElements[0].getPageElements());
+
+		Assert.assertEquals(
+			PageElement.Type.COLUMN, columnPageElements[1].getType());
+		Assert.assertNull(columnPageElements[1].getPageElements());
+
+		ColumnDefinition columnDefinition1 =
+			(ColumnDefinition)columnPageElements[0].getDefinition();
+		ColumnDefinition columnDefinition2 =
+			(ColumnDefinition)columnPageElements[1].getDefinition();
+
+		Assert.assertEquals(Integer.valueOf(5), columnDefinition1.getSize());
+		Assert.assertEquals(Integer.valueOf(7), columnDefinition2.getSize());
 	}
 
 	@Test

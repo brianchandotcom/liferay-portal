@@ -1,0 +1,49 @@
+{
+	"items": {
+		"7b620b26-53f8-4fd2-a459-2c5aa85b90c1": {
+			"children": [
+				"896232e5-04a2-4bd1-a687-f1e0983f16bb"
+			],
+			"config": {},
+			"itemId": "7b620b26-53f8-4fd2-a459-2c5aa85b90c1",
+			"parentId": "",
+			"type": "root"
+		},
+		"896232e5-04a2-4bd1-a687-f1e0983f16bb": {
+			"children": [
+				"955c2cf9-5506-4786-af78-ed0892c49b90",
+				"d5b689ac-fcdd-44ba-aed6-cf1f7dc2e933"
+			],
+			"config": {
+				"gutters": false,
+				"numberOfColumns": 2
+			},
+			"itemId": "896232e5-04a2-4bd1-a687-f1e0983f16bb",
+			"parentId": "7b620b26-53f8-4fd2-a459-2c5aa85b90c1",
+			"type": "row"
+		},
+		"955c2cf9-5506-4786-af78-ed0892c49b90": {
+			"children": [],
+			"config": {
+				"size": 5
+			},
+			"itemId": "955c2cf9-5506-4786-af78-ed0892c49b90",
+			"parentId": "896232e5-04a2-4bd1-a687-f1e0983f16bb",
+			"type": "column"
+		},
+		"d5b689ac-fcdd-44ba-aed6-cf1f7dc2e933": {
+			"children": [],
+			"config": {
+				"size": 7
+			},
+			"itemId": "d5b689ac-fcdd-44ba-aed6-cf1f7dc2e933",
+			"parentId": "896232e5-04a2-4bd1-a687-f1e0983f16bb",
+			"type": "column"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "7b620b26-53f8-4fd2-a459-2c5aa85b90c1"
+	},
+	"version": 1
+}

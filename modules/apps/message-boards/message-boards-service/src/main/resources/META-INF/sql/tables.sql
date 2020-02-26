@@ -102,6 +102,7 @@ create table MBMessage (
 	allowPingbacks BOOLEAN,
 	answer BOOLEAN,
 	lastPublishDate DATE null,
+	urlTitle VARCHAR(255) null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,

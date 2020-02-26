@@ -128,6 +128,7 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="urlTitle" type="String" />
 	</model>
 	<model name="com.liferay.message.boards.model.MBStatsUser">
 		<field name="statsUserId" type="long" />

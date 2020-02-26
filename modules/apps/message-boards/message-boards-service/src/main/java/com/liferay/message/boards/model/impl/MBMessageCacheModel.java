@@ -61,7 +61,7 @@ public class MBMessageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -109,6 +109,8 @@ public class MBMessageCacheModel
 		sb.append(answer);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", urlTitle=");
+		sb.append(urlTitle);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -206,6 +208,13 @@ public class MBMessageCacheModel
 			mbMessageImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		if (urlTitle == null) {
+			mbMessageImpl.setUrlTitle("");
+		}
+		else {
+			mbMessageImpl.setUrlTitle(urlTitle);
+		}
+
 		mbMessageImpl.setStatus(status);
 		mbMessageImpl.setStatusByUserId(statusByUserId);
 
@@ -267,6 +276,7 @@ public class MBMessageCacheModel
 
 		answer = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
+		urlTitle = objectInput.readUTF();
 
 		status = objectInput.readInt();
 
@@ -351,6 +361,13 @@ public class MBMessageCacheModel
 		objectOutput.writeBoolean(answer);
 		objectOutput.writeLong(lastPublishDate);
 
+		if (urlTitle == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(urlTitle);
+		}
+
 		objectOutput.writeInt(status);
 
 		objectOutput.writeLong(statusByUserId);
@@ -388,6 +405,7 @@ public class MBMessageCacheModel
 	public boolean allowPingbacks;
 	public boolean answer;
 	public long lastPublishDate;
+	public String urlTitle;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

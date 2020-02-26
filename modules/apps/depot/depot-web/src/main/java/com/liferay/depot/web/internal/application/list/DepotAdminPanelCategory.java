@@ -18,6 +18,7 @@ import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.depot.web.internal.constants.DepotAdminPanelCategoryKeys;
+import com.liferay.depot.web.internal.util.DepotSupportChecker;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -28,6 +29,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -57,7 +59,8 @@ public class DepotAdminPanelCategory extends BasePanelCategory {
 
 	@Override
 	public boolean isShow(PermissionChecker permissionChecker, Group group) {
-		if (PortalPermissionUtil.contains(
+		if (_depotSupportChecker.isEnabled() &&
+			PortalPermissionUtil.contains(
 				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 
 			return true;
@@ -65,5 +68,8 @@ public class DepotAdminPanelCategory extends BasePanelCategory {
 
 		return false;
 	}
+
+	@Reference
+	private DepotSupportChecker _depotSupportChecker;
 
 }

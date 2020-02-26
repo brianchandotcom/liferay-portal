@@ -105,7 +105,7 @@ function DropZoneContainer() {
 }
 
 function Root({children}) {
-	return <div className="pt-4">{children}</div>;
+	return <div>{children}</div>;
 }
 
 const FragmentContent = React.memo(function FragmentContent({

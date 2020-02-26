@@ -62,6 +62,35 @@ public class DLFolderLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteAllByGroup() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder parentFolder = DLAppServiceUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		DLAppServiceUtil.addFolder(
+			_group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		int count = DLFolderLocalServiceUtil.getRepositoryFoldersCount(
+			_group.getGroupId());
+
+		Assert.assertEquals(2, count);
+
+		DLFolderLocalServiceUtil.deleteAllByGroup(_group.getGroupId());
+
+		count = DLFolderLocalServiceUtil.getRepositoryFoldersCount(
+			_group.getGroupId());
+
+		Assert.assertEquals(0, count);
+	}
+
+	@Test
 	public void testGetNoAssetEntries() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

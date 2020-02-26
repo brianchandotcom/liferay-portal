@@ -38,6 +38,7 @@ import {
 	useIsSelected,
 	useSelectItem,
 } from './Controls';
+import hasDropZoneChild from './layout-data-items/hasDropZoneChild';
 import useDragAndDrop, {
 	DragDropManagerImpl,
 	TARGET_POSITION,
@@ -319,16 +320,6 @@ Topper.propTypes = {
 };
 
 function isRemovable(item, layoutData) {
-	function hasDropZoneChildren(item, layoutData) {
-		return item.children.some(childrenId => {
-			const children = layoutData.items[childrenId];
-
-			return children.type === LAYOUT_DATA_ITEM_TYPES.dropZone
-				? true
-				: hasDropZoneChildren(children, layoutData);
-		});
-	}
-
 	if (
 		item.type === LAYOUT_DATA_ITEM_TYPES.dropZone ||
 		item.type === LAYOUT_DATA_ITEM_TYPES.column
@@ -336,5 +327,5 @@ function isRemovable(item, layoutData) {
 		return false;
 	}
 
-	return !hasDropZoneChildren(item, layoutData);
+	return !hasDropZoneChild(item, layoutData);
 }

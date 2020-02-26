@@ -48,6 +48,7 @@ import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import SaveFragmentCompositionModal from '../floating-toolbar/SaveFragmentCompositionModal';
 import ColumnOverlayGrid from './ColumnOverlayGrid';
 import Row from './Row';
+import hasDropZoneChild from './hasDropZoneChild';
 
 export const ResizingContext = React.createContext();
 
@@ -171,6 +172,19 @@ const RowWithControls = React.forwardRef(
 			}
 		}, [layoutData, state, dispatch, resizeFinished]);
 
+		const buttons = [];
+
+		if (!hasDropZoneChild(item, layoutData)) {
+			buttons.push(
+				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
+				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition
+			);
+		}
+
+		buttons.push(
+			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
+		);
+
 		const content = (
 			<Row
 				className="page-editor__row"
@@ -187,11 +201,7 @@ const RowWithControls = React.forwardRef(
 				}}
 			>
 				<FloatingToolbar
-					buttons={[
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration,
-					]}
+					buttons={buttons}
 					item={item}
 					itemRef={ref}
 					onButtonClick={handleButtonClick}

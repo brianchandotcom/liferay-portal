@@ -149,9 +149,9 @@ public class KeywordResourceImpl
 		projectionList.add(
 			ProjectionFactoryUtil.alias(
 				ProjectionFactoryUtil.sqlProjection(
-					"select count(entryId) AS count from " +
+					"(select count(entryId) AS count from " +
 						"AssetEntries_AssetTags where tagId = this_.tagId " +
-							"group by tagId AS count",
+							"group by tagId) AS count",
 					new String[] {"count"}, new Type[] {Type.INTEGER}),
 				"count"));
 		projectionList.add(ProjectionFactoryUtil.property("companyId"));

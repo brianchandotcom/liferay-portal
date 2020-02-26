@@ -242,12 +242,42 @@ public class PageDefinitionConverterUtilTest {
 			String editableValuesFileName, String fragmentFieldId, String html)
 		throws Exception {
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			_layoutPageTemplateEntry.getPlid());
-
 		String fragmentName = RandomTestUtil.randomString();
 
 		String fragmentEntryKey = "my-fragment-entry-key";
+
+		FragmentInstanceDefinition fragmentInstanceDefinition =
+			_getFragmentInstanceDefinition(
+				editableValuesFileName, fragmentEntryKey, fragmentName, html);
+
+		Fragment fragment = fragmentInstanceDefinition.getFragment();
+
+		Assert.assertEquals(
+			_fragmentCollection.getName(),
+			fragment.getFragmentCollectionName());
+		Assert.assertEquals(fragmentEntryKey, fragment.getFragmentKey());
+		Assert.assertEquals(fragmentName, fragment.getFragmentName());
+
+		FragmentField[] fragmentFields =
+			fragmentInstanceDefinition.getFragmentFields();
+
+		Assert.assertEquals(
+			Arrays.toString(fragmentFields), 1, fragmentFields.length);
+
+		FragmentField fragmentField = fragmentFields[0];
+
+		Assert.assertEquals(fragmentFieldId, fragmentField.getId());
+
+		return fragmentField;
+	}
+
+	private FragmentInstanceDefinition _getFragmentInstanceDefinition(
+			String editableValuesFileName, String fragmentEntryKey,
+			String fragmentName, String html)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			_layoutPageTemplateEntry.getPlid());
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
@@ -294,28 +324,7 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertEquals(
 			PageElement.Type.FRAGMENT, fragmentPageElement.getType());
 
-		FragmentInstanceDefinition fragmentInstanceDefinition =
-			(FragmentInstanceDefinition)fragmentPageElement.getDefinition();
-
-		Fragment fragment = fragmentInstanceDefinition.getFragment();
-
-		Assert.assertEquals(
-			_fragmentCollection.getName(),
-			fragment.getFragmentCollectionName());
-		Assert.assertEquals(fragmentEntryKey, fragment.getFragmentKey());
-		Assert.assertEquals(fragmentName, fragment.getFragmentName());
-
-		FragmentField[] fragmentFields =
-			fragmentInstanceDefinition.getFragmentFields();
-
-		Assert.assertEquals(
-			Arrays.toString(fragmentFields), 1, fragmentFields.length);
-
-		FragmentField fragmentField = fragmentFields[0];
-
-		Assert.assertEquals(fragmentFieldId, fragmentField.getId());
-
-		return fragmentField;
+		return (FragmentInstanceDefinition)fragmentPageElement.getDefinition();
 	}
 
 	private String _read(String fileName) throws Exception {

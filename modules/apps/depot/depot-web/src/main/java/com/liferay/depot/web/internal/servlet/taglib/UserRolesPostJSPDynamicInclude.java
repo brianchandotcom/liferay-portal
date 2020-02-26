@@ -14,12 +14,17 @@
 
 package com.liferay.depot.web.internal.servlet.taglib;
 
+import com.liferay.depot.web.internal.util.DepotSupportChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
+import java.io.IOException;
+
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,6 +34,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DynamicInclude.class)
 public class UserRolesPostJSPDynamicInclude extends BaseJSPDynamicInclude {
+
+	@Override
+	public void include(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
+		throws IOException {
+
+		if (!_depotSupportChecker.isEnabled()) {
+			return;
+		}
+
+		super.include(httpServletRequest, httpServletResponse, key);
+	}
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
@@ -57,5 +75,8 @@ public class UserRolesPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserRolesPostJSPDynamicInclude.class);
+
+	@Reference
+	private DepotSupportChecker _depotSupportChecker;
 
 }

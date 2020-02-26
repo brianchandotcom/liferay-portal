@@ -21,12 +21,12 @@ DepotAdminSelectRoleDisplayContext depotAdminSelectRoleDisplayContext = (DepotAd
 %>
 
 <clay:management-toolbar
-	displayContext="<%= (DepotAdminSelectRoleManagementToolbarDisplayContext)request.getAttribute(DepotAdminWebKeys.DEPOT_ADMIN_SELECT_ROLE_MANAGEMENT_TOOLBAL_DISPLAY_CONTEXT) %>"
+	displayContext="<%= request.getAttribute(DepotAdminWebKeys.DEPOT_ADMIN_SELECT_ROLE_MANAGEMENT_TOOLBAL_DISPLAY_CONTEXT) %>"
 />
 
 <aui:form action="<%= depotAdminSelectRoleDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="selectDepotRoleFm">
 	<c:choose>
-		<c:when test="<%= depotAdminSelectRoleDisplayContext.getStep().getType() == DepotAdminSelectRoleDisplayContext.Step1.TYPE %>">
+		<c:when test="<%= depotAdminSelectRoleDisplayContext.isStep1() %>">
 
 			<%
 			DepotAdminSelectRoleDisplayContext.Step1 step1 = (DepotAdminSelectRoleDisplayContext.Step1)depotAdminSelectRoleDisplayContext.getStep();
@@ -82,7 +82,7 @@ DepotAdminSelectRoleDisplayContext depotAdminSelectRoleDisplayContext = (DepotAd
 				});
 			</aui:script>
 		</c:when>
-		<c:when test="<%= depotAdminSelectRoleDisplayContext.getStep().getType() == DepotAdminSelectRoleDisplayContext.Step2.TYPE %>">
+		<c:when test="<%= depotAdminSelectRoleDisplayContext.isStep2() %>">
 
 			<%
 			DepotAdminSelectRoleDisplayContext.Step2 step2 = (DepotAdminSelectRoleDisplayContext.Step2)depotAdminSelectRoleDisplayContext.getStep();

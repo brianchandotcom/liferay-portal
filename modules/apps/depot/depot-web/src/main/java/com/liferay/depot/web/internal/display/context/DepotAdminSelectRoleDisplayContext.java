@@ -70,7 +70,7 @@ public class DepotAdminSelectRoleDisplayContext {
 
 		_user = PortalUtil.getSelectedUser(renderRequest);
 
-		int step = ParamUtil.getInteger(renderRequest, "step", 1);
+		int step = ParamUtil.getInteger(renderRequest, "step", Step1.TYPE);
 
 		if (step == Step2.TYPE) {
 			_step = new Step2(renderRequest, renderResponse, _user);
@@ -88,6 +88,22 @@ public class DepotAdminSelectRoleDisplayContext {
 
 	public Step getStep() {
 		return _step;
+	}
+
+	public boolean isStep1() {
+		if (_step.getType() == Step1.TYPE) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isStep2() {
+		if (_step.getType() == Step2.TYPE) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static class Step1 implements Step {
@@ -135,7 +151,7 @@ public class DepotAdminSelectRoleDisplayContext {
 				_renderRequest, _renderResponse, _user);
 
 			portletURL.setParameter("resetCur", Boolean.TRUE.toString());
-			portletURL.setParameter("step", "2");
+			portletURL.setParameter("step", String.valueOf(Step2.TYPE));
 
 			return portletURL;
 		}
@@ -208,7 +224,7 @@ public class DepotAdminSelectRoleDisplayContext {
 			PortletURL portletURL = _getPortletURL(
 				_renderRequest, _renderResponse, _user);
 
-			portletURL.setParameter("step", "1");
+			portletURL.setParameter("step", String.valueOf(Step1.TYPE));
 
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				_themeDisplay.getLocale(), getClass());
@@ -285,17 +301,19 @@ public class DepotAdminSelectRoleDisplayContext {
 		}
 
 		public boolean isDisabled(Role role) {
-			if ((_user != null) && (_group != null)) {
-				List<UserGroupRole> userGroupRoles =
-					UserGroupRoleLocalServiceUtil.getUserGroupRoles(
-						_user.getUserId());
+			if ((_user == null) || (_group == null)) {
+				return false;
+			}
 
-				for (UserGroupRole userGroupRole : userGroupRoles) {
-					if ((_group.getGroupId() == userGroupRole.getGroupId()) &&
-						(userGroupRole.getRoleId() == role.getRoleId())) {
+			List<UserGroupRole> userGroupRoles =
+				UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+					_user.getUserId());
 
-						return true;
-					}
+			for (UserGroupRole userGroupRole : userGroupRoles) {
+				if ((_group.getGroupId() == userGroupRole.getGroupId()) &&
+					(userGroupRole.getRoleId() == role.getRoleId())) {
+
+					return true;
 				}
 			}
 
@@ -374,7 +392,8 @@ public class DepotAdminSelectRoleDisplayContext {
 
 		portletURL.setParameter(
 			"step",
-			String.valueOf(ParamUtil.getInteger(renderRequest, "step", 1)));
+			String.valueOf(
+				ParamUtil.getInteger(renderRequest, "step", Step1.TYPE)));
 
 		return portletURL;
 	}

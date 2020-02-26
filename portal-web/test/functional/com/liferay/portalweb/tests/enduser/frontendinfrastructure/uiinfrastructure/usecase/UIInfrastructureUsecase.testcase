@@ -188,11 +188,15 @@ definition {
 
 		UserBar.signOut();
 
+		WaitForElementPresent(locator1 = "UserBar#USER_SIGN_IN");
+
 		SikuliAssertElementPresent(locator1 = "UserBar#USER_SIGN_IN_PNG");
 
 		takeScreenshot();
 
 		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/login");
+
+		WaitForElementPresent(locator1 = "SignIn#PORTLET_TITLE");
 
 		SikuliAssertElementPresent(locator1 = "SignIn#LOGIN_PORTLET_PNG");
 

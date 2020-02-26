@@ -64,7 +64,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 
 			data.put("groupdescriptivename", group.getDescriptiveName(locale));
 			data.put("groupid", group.getGroupId());
-			data.put("groupscopelabel", group.getScopeLabel(themeDisplay));
+			data.put("groupscopelabel", LanguageUtil.get(resourceBundle, group.getScopeLabel(themeDisplay)));
 			data.put("grouptarget", target);
 			data.put("grouptype", LanguageUtil.get(resourceBundle, group.getTypeLabel()));
 			data.put("url", groupURLProvider.getGroupURL(group, liferayPortletRequest));

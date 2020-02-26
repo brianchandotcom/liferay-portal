@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLabel from '@clayui/label';
 import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
@@ -41,43 +42,55 @@ export default ({question}) => {
 		<>
 			{!!relatedQuestions.length && (
 				<>
-					<h3 className="c-mt-5">Related Questions</h3>
+					<h2 className="c-mt-5 font-weight-light h3 text-secondary">
+						Related Questions
+					</h2>
+
 					<hr />
-					<div className="autofit-padded autofit-row">
+
+					<div className="row">
 						{relatedQuestions.map(relatedQuestion => (
 							<div
-								className="autofit-col"
+								className="col-3 p-3 position-relative"
 								key={relatedQuestion.id}
 							>
-								<div className="autofit-row">
-									<div className="autofit-col autofit-col-expand">
-										{relatedQuestion.messageBoardSection &&
-											relatedQuestion.messageBoardSection
-												.title}
-									</div>
-									<div>
-										<QuestionBadge
-											symbol={
-												normalizeRating(
-													question.aggregateRating
-												) < 0
-													? 'caret-bottom'
-													: 'caret-top'
-											}
-											value={normalizeRating(
-												relatedQuestion.aggregateRating
-											)}
-										/>
-									</div>
-								</div>
-								<h2 className="question-headline">
-									<Link
-										to={'/questions/' + relatedQuestion.id}
+								<div className="d-flex justify-content-between stretched-link-layer">
+									<ClayLabel
+										className="bg-light border-0 text-uppercase"
+										displayType="secondary"
+										large
 									>
+										{'Collaboration'}
+										{/* {relatedQuestion.messageBoardSection &&
+												relatedQuestion
+													.messageBoardSection.title} */}
+									</ClayLabel>
+
+									<QuestionBadge
+										className="text-secondary"
+										symbol={
+											normalizeRating(
+												question.aggregateRating
+											) < 0
+												? 'caret-bottom'
+												: 'caret-top'
+										}
+										value={normalizeRating(
+											relatedQuestion.aggregateRating
+										)}
+									/>
+								</div>
+
+								<Link
+									className="c-mt-2 d-block question-title stretched-link text-reset"
+									to={'/questions/' + relatedQuestion.id}
+								>
+									<h3 className="h2 stretched-link-layer">
 										{relatedQuestion.headline}
-									</Link>
-								</h2>
-								<div>
+									</h3>
+								</Link>
+
+								<div className="c-mt-3 small stretched-link-layer">
 									<UserIcon
 										fullName={relatedQuestion.creator.name}
 										portraitURL={
@@ -88,12 +101,12 @@ export default ({question}) => {
 											relatedQuestion.creator.id
 										)}
 									/>
-									<span>
-										<strong>
-											{relatedQuestion.creator.name}
-										</strong>
+
+									<span className="c-ml-2 font-weight-bold">
+										{relatedQuestion.creator.name}
 									</span>
-									<span>
+
+									<span className="text-secondary">
 										{' - ' +
 											dateToInternationalHuman(
 												relatedQuestion.dateModified

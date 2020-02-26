@@ -10,10 +10,44 @@
 	background-color: $white;
 }
 
+.question-title {
+	&:after {
+		background-color: $light-l1;
+		border-radius: 0.25rem;
+		opacity: 0;
+		transition: opacity 300ms ease-in-out;
+		will-change: opacity;
+	}
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+
+		&:after {
+			opacity: 1;
+		}
+	}
+}
+
 .question-list {
 	display: flex;
 	flex-direction: row;
 	list-style: none;
 	margin-bottom: 0;
 	padding-left: 0;
+}
+
+.question-user {
+	.question-user-popover {
+		display: none;
+		min-width: 234px;
+		top: 100%;
+	}
+
+	&:hover,
+	&:focus {
+		.question-user-popover {
+			display: block;
+		}
+	}
 }

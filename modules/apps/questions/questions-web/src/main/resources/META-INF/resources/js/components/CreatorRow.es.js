@@ -12,20 +12,18 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React from 'react';
+import {Link} from 'react-router-dom';
 
 import {timeDifference} from '../utils/utils.es';
 import UserIcon from './UserIcon.es';
 import UserPopover from './UserPopover.es';
 
 export default ({question: {creator, dateCreated}}) => {
-	const [showPopover, setShowPopover] = useState(false);
-
 	return (
-		<div
-			className="align-items-center bg-white border border-light c-ml-3 c-p-3 d-inline-flex justify-content-center position-relative rounded"
-			onMouseLeave={() => setShowPopover(false)}
-			onMouseOver={() => setShowPopover(true)}
+		<Link
+			className="align-items-center border-light btn btn-secondary c-ml-3 c-p-3 d-inline-flex justify-content-center position-relative question-user"
+			to={``}
 		>
 			<UserIcon
 				fullName={creator.name}
@@ -36,10 +34,12 @@ export default ({question: {creator, dateCreated}}) => {
 			<div className="c-ml-3 text-left">
 				<p className="c-mb-0 small">{timeDifference(dateCreated)}</p>
 
-				<p className="c-mb-0 font-weight-bold">{creator.name}</p>
+				<p className="c-mb-0 font-weight-bold text-dark">
+					{creator.name}
+				</p>
 			</div>
 
-			<UserPopover creator={creator} show={showPopover} />
-		</div>
+			<UserPopover creator={creator} />
+		</Link>
 	);
 };

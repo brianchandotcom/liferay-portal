@@ -17,31 +17,39 @@ import React from 'react';
 
 import UserIcon from './UserIcon.es';
 
-export default ({creator, show}) => {
+export default ({creator}) => {
 	return (
-		<>
-			{show && (
-				<ClayPopover
-					alignPosition="bottom"
-					className="question-user-popover"
-					disableScroll={true}
-					header={
-						<div className="autofit-padded autofit-row">
-							<div className="autofit-col">
-								<UserIcon
-									fullName={creator.name}
-									portraitURL={creator.image}
-									size="sm"
-									userId={String(creator.id)}
-								/>
-							</div>
-							<div className="autofit-col">
-								<strong>{creator.name}</strong>
-							</div>
-						</div>
-					}
-				></ClayPopover>
-			)}
-		</>
+		<ClayPopover
+			alignPosition="bottom"
+			className="question-user-popover"
+			disableScroll={true}
+			header={
+				<div className="align-items-center d-flex">
+					<UserIcon
+						fullName={creator.name}
+						portraitURL={creator.image}
+						userId={String(creator.id)}
+					/>
+
+					<div className="c-ml-2">
+						<h4 className="font-weight-light h6 text-secondary">
+							Liferay Legend
+						</h4>
+
+						<h3 className="h5">{creator.name}</h3>
+					</div>
+				</div>
+			}
+		>
+			<div className="text-secondary">
+				<p className="c-mb-0">Posts: 14.551</p>
+				<p className="c-mb-0">Join Date: 2006-09-02</p>
+				<p className="c-mb-0">Last Post Date: 2019-10-25</p>
+			</div>
+
+			<p className="c-mb-1 c-mt-2 font-weight-bold text-center text-primary">
+				View Activity
+			</p>
+		</ClayPopover>
 	);
 };

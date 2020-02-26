@@ -196,7 +196,7 @@ export default ({
 								</p>
 							</div>
 
-							<div className="col-2 text-right">
+							<div className="col-2">
 								<ClayButton.Group spaced={true}>
 									{question.actions.subscribe && (
 										<Subscription

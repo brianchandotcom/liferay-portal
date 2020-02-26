@@ -75,7 +75,7 @@ export default withRouter(
 
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
-								<span className="small">
+								<span className="small text-secondary">
 									{Liferay.Language.get(
 										'be-specific-and-imagine-you-are-asking-a-question-to-another-person'
 									)}
@@ -106,7 +106,7 @@ export default withRouter(
 
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
-								<span className="small">
+								<span className="small text-secondary">
 									{Liferay.Language.get(
 										'include-all-the-information-someone-would-need-to-answer-your-question'
 									)}
@@ -130,7 +130,7 @@ export default withRouter(
 						/>
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
-								<span className="small">
+								<span className="small text-secondary">
 									{Liferay.Language.get(
 										'add-up-to-5-tags-to-describe-what-your-question-is-about'
 									)}

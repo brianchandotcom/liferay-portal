@@ -2,27 +2,6 @@
 	color: $secondary;
 	position: relative;
 
-	.question-title {
-		color: $dark;
-
-		&:after {
-			background-color: $light-l1;
-			border-radius: 0.25rem;
-			opacity: 0;
-			transition: opacity 300ms ease-in-out;
-			will-change: opacity;
-		}
-
-		&:hover,
-		&:focus {
-			text-decoration: none;
-
-			&:after {
-				opacity: 1;
-			}
-		}
-	}
-
 	.question-badge {
 		border-radius: 0.25rem;
 		padding: 0.75rem 1rem;

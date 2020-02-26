@@ -72,7 +72,7 @@ export default ({
 						/>
 
 						{comment.length < 15 && (
-							<p className="c-mt-3">
+							<p className="float-right small text-secondary">
 								{lang.sub(
 									Liferay.Language.get('x-characters-left'),
 									[15 - comment.length]

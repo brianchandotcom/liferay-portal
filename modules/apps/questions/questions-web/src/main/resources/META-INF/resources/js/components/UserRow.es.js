@@ -12,25 +12,24 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React from 'react';
+import {Link} from 'react-router-dom';
 
 import UserPopover from './UserPopover.es';
 
 export default ({creator}) => {
-	const [showPopover, setShowPopover] = useState(false);
-
 	return (
-		<div
-			onMouseLeave={() => setShowPopover(false)}
-			onMouseOver={() => setShowPopover(true)}
+		<Link
+			className="border-0 btn btn-block btn-secondary position-relative question-user text-right"
+			to={``}
 		>
-			<p className="mb-0 small text-secondary">
+			<p className="c-mb-0 small">
 				{Liferay.Language.get('answered-by')}
 			</p>
 
-			<p className="font-weight-bold">{creator.name}</p>
+			<p className="c-mb-0 font-weight-bold text-dark">{creator.name}</p>
 
-			<UserPopover creator={creator} show={showPopover} />
-		</div>
+			<UserPopover creator={creator} />
+		</Link>
 	);
 };

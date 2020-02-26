@@ -15,15 +15,12 @@
 package com.liferay.layout.type.controller.display.page.internal.layout.type.controller;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
-import com.liferay.info.item.selector.InfoItemSelectorTracker;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -120,16 +117,6 @@ public class DisplayPageLayoutTypeController
 				themeDisplay.getPermissionChecker(), layout)) {
 
 			layoutMode = Constants.VIEW;
-		}
-
-		if (layoutMode.equals(Constants.EDIT)) {
-			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.
-					FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
-				_fragmentCollectionContributorTracker);
-
-			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.ITEM_SELECTOR, _itemSelector);
 		}
 
 		httpServletRequest.setAttribute(
@@ -322,10 +309,6 @@ public class DisplayPageLayoutTypeController
 		DisplayPageLayoutTypeController.class);
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Reference
 	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
@@ -340,12 +323,6 @@ public class DisplayPageLayoutTypeController
 
 	@Reference
 	private InfoItemRendererTracker _infoItemRendererTracker;
-
-	@Reference
-	private InfoItemSelectorTracker _infoItemSelectorTracker;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

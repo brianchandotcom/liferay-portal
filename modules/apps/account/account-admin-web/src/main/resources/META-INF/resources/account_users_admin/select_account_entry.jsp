@@ -58,6 +58,8 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 					"entityid", accountEntryDisplay.getAccountEntryId()
 				).put(
 					"entityname", accountEntryDisplay.getName()
+				).put(
+					"entityroles", StringPool.BLANK
 				).build();
 				%>
 

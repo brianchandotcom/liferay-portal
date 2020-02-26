@@ -47,6 +47,7 @@ public class MBMessageSoap implements Serializable {
 		soapModel.setParentMessageId(model.getParentMessageId());
 		soapModel.setTreePath(model.getTreePath());
 		soapModel.setSubject(model.getSubject());
+		soapModel.setUrlSubject(model.getUrlSubject());
 		soapModel.setBody(model.getBody());
 		soapModel.setFormat(model.getFormat());
 		soapModel.setAnonymous(model.isAnonymous());
@@ -239,6 +240,14 @@ public class MBMessageSoap implements Serializable {
 		_subject = subject;
 	}
 
+	public String getUrlSubject() {
+		return _urlSubject;
+	}
+
+	public void setUrlSubject(String urlSubject) {
+		_urlSubject = urlSubject;
+	}
+
 	public String getBody() {
 		return _body;
 	}
@@ -355,6 +364,7 @@ public class MBMessageSoap implements Serializable {
 	private long _parentMessageId;
 	private String _treePath;
 	private String _subject;
+	private String _urlSubject;
 	private String _body;
 	private String _format;
 	private boolean _anonymous;

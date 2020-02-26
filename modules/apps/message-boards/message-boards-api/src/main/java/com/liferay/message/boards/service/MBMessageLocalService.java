@@ -295,6 +295,10 @@ public interface MBMessageLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessage fetchMBMessage(long messageId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessage fetchMBMessageByUrlSubject(
+		long groupId, String urlSubject);
+
 	/**
 	 * Returns the message-boards message matching the UUID and group.
 	 *

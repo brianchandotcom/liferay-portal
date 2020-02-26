@@ -163,6 +163,15 @@ public class MBMessageServiceWrapper
 	}
 
 	@Override
+	public com.liferay.message.boards.model.MBMessage
+			fetchMBMessageByUrlSubject(long groupId, String urlSubject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbMessageService.fetchMBMessageByUrlSubject(
+			groupId, urlSubject);
+	}
+
+	@Override
 	public java.util.List<com.liferay.message.boards.model.MBMessage>
 			getCategoryMessages(
 				long groupId, long categoryId, int status, int start, int end)

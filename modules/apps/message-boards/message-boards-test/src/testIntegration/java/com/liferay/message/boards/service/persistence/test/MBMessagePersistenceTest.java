@@ -155,6 +155,8 @@ public class MBMessagePersistenceTest {
 
 		newMBMessage.setSubject(RandomTestUtil.randomString());
 
+		newMBMessage.setUrlSubject(RandomTestUtil.randomString());
+
 		newMBMessage.setBody(RandomTestUtil.randomString());
 
 		newMBMessage.setFormat(RandomTestUtil.randomString());
@@ -218,6 +220,8 @@ public class MBMessagePersistenceTest {
 			existingMBMessage.getTreePath(), newMBMessage.getTreePath());
 		Assert.assertEquals(
 			existingMBMessage.getSubject(), newMBMessage.getSubject());
+		Assert.assertEquals(
+			existingMBMessage.getUrlSubject(), newMBMessage.getUrlSubject());
 		Assert.assertEquals(
 			existingMBMessage.getBody(), newMBMessage.getBody());
 		Assert.assertEquals(
@@ -330,6 +334,15 @@ public class MBMessagePersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_C(0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_US() throws Exception {
+		_persistence.countByG_US(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_US(0L, "null");
+
+		_persistence.countByG_US(0L, (String)null);
 	}
 
 	@Test
@@ -544,10 +557,10 @@ public class MBMessagePersistenceTest {
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"categoryId", true, "threadId", true, "rootMessageId", true,
 			"parentMessageId", true, "treePath", true, "subject", true,
-			"format", true, "anonymous", true, "priority", true,
-			"allowPingbacks", true, "answer", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"urlSubject", true, "format", true, "anonymous", true, "priority",
+			true, "allowPingbacks", true, "answer", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -774,6 +787,17 @@ public class MBMessagePersistenceTest {
 			Long.valueOf(existingMBMessage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingMBMessage, "getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(
+			Long.valueOf(existingMBMessage.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingMBMessage, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingMBMessage.getUrlSubject(),
+				ReflectionTestUtil.invoke(
+					existingMBMessage, "getOriginalUrlSubject",
+					new Class<?>[0])));
 	}
 
 	protected MBMessage addMBMessage() throws Exception {
@@ -810,6 +834,8 @@ public class MBMessagePersistenceTest {
 		mbMessage.setTreePath(RandomTestUtil.randomString());
 
 		mbMessage.setSubject(RandomTestUtil.randomString());
+
+		mbMessage.setUrlSubject(RandomTestUtil.randomString());
 
 		mbMessage.setBody(RandomTestUtil.randomString());
 

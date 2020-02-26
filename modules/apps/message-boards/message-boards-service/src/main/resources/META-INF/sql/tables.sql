@@ -95,6 +95,7 @@ create table MBMessage (
 	parentMessageId LONG,
 	treePath STRING null,
 	subject VARCHAR(75) null,
+	urlSubject VARCHAR(255) null,
 	body TEXT null,
 	format VARCHAR(75) null,
 	anonymous BOOLEAN,

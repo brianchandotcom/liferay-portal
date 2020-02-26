@@ -59,6 +59,7 @@ public class MBMessageWrapper
 		attributes.put("parentMessageId", getParentMessageId());
 		attributes.put("treePath", getTreePath());
 		attributes.put("subject", getSubject());
+		attributes.put("urlSubject", getUrlSubject());
 		attributes.put("body", getBody());
 		attributes.put("format", getFormat());
 		attributes.put("anonymous", isAnonymous());
@@ -170,6 +171,12 @@ public class MBMessageWrapper
 
 		if (subject != null) {
 			setSubject(subject);
+		}
+
+		String urlSubject = (String)attributes.get("urlSubject");
+
+		if (urlSubject != null) {
+			setUrlSubject(urlSubject);
 		}
 
 		String body = (String)attributes.get("body");
@@ -640,6 +647,16 @@ public class MBMessageWrapper
 	@Override
 	public String getTreePath() {
 		return model.getTreePath();
+	}
+
+	/**
+	 * Returns the url subject of this message-boards message.
+	 *
+	 * @return the url subject of this message-boards message
+	 */
+	@Override
+	public String getUrlSubject() {
+		return model.getUrlSubject();
 	}
 
 	/**
@@ -1120,6 +1137,16 @@ public class MBMessageWrapper
 	@Override
 	public void setTreePath(String treePath) {
 		model.setTreePath(treePath);
+	}
+
+	/**
+	 * Sets the url subject of this message-boards message.
+	 *
+	 * @param urlSubject the url subject of this message-boards message
+	 */
+	@Override
+	public void setUrlSubject(String urlSubject) {
+		model.setUrlSubject(urlSubject);
 	}
 
 	/**

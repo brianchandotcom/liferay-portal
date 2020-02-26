@@ -336,6 +336,21 @@ public interface MBMessageModel
 	public void setSubject(String subject);
 
 	/**
+	 * Returns the url subject of this message-boards message.
+	 *
+	 * @return the url subject of this message-boards message
+	 */
+	@AutoEscape
+	public String getUrlSubject();
+
+	/**
+	 * Sets the url subject of this message-boards message.
+	 *
+	 * @param urlSubject the url subject of this message-boards message
+	 */
+	public void setUrlSubject(String urlSubject);
+
+	/**
 	 * Returns the body of this message-boards message.
 	 *
 	 * @return the body of this message-boards message

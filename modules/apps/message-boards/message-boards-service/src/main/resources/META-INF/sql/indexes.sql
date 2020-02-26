@@ -27,6 +27,7 @@ create index IX_4257DB85 on MBMessage (groupId, categoryId, status);
 create index IX_CBFDBF0A on MBMessage (groupId, categoryId, threadId, answer);
 create index IX_385E123E on MBMessage (groupId, categoryId, threadId, status);
 create index IX_ED39AC98 on MBMessage (groupId, status);
+create unique index IX_5EF0B8A3 on MBMessage (groupId, urlSubject[$COLUMN_LENGTH:255$]);
 create index IX_377858D2 on MBMessage (groupId, userId, status);
 create index IX_6A095F16 on MBMessage (parentMessageId, status);
 create index IX_9D7C3B23 on MBMessage (threadId, answer);

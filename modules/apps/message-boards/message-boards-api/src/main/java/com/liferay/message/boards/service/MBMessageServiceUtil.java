@@ -156,6 +156,13 @@ public class MBMessageServiceUtil {
 		getService().emptyMessageAttachments(messageId);
 	}
 
+	public static com.liferay.message.boards.model.MBMessage
+			fetchMBMessageByUrlSubject(long groupId, String urlSubject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchMBMessageByUrlSubject(groupId, urlSubject);
+	}
+
 	public static java.util.List<com.liferay.message.boards.model.MBMessage>
 			getCategoryMessages(
 				long groupId, long categoryId, int status, int start, int end)

@@ -88,12 +88,12 @@ public class MBMessageModelImpl
 		{"categoryId", Types.BIGINT}, {"threadId", Types.BIGINT},
 		{"rootMessageId", Types.BIGINT}, {"parentMessageId", Types.BIGINT},
 		{"treePath", Types.VARCHAR}, {"subject", Types.VARCHAR},
-		{"body", Types.CLOB}, {"format", Types.VARCHAR},
-		{"anonymous", Types.BOOLEAN}, {"priority", Types.DOUBLE},
-		{"allowPingbacks", Types.BOOLEAN}, {"answer", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"urlSubject", Types.VARCHAR}, {"body", Types.CLOB},
+		{"format", Types.VARCHAR}, {"anonymous", Types.BOOLEAN},
+		{"priority", Types.DOUBLE}, {"allowPingbacks", Types.BOOLEAN},
+		{"answer", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -116,6 +116,7 @@ public class MBMessageModelImpl
 		TABLE_COLUMNS_MAP.put("parentMessageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("treePath", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("urlSubject", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("format", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("anonymous", Types.BOOLEAN);
@@ -130,7 +131,7 @@ public class MBMessageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,treePath STRING null,subject VARCHAR(75) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,treePath STRING null,subject VARCHAR(75) null,urlSubject VARCHAR(255) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table MBMessage";
 
@@ -164,13 +165,15 @@ public class MBMessageModelImpl
 
 	public static final long THREADID_COLUMN_BITMASK = 256L;
 
-	public static final long USERID_COLUMN_BITMASK = 512L;
+	public static final long URLSUBJECT_COLUMN_BITMASK = 512L;
 
-	public static final long UUID_COLUMN_BITMASK = 1024L;
+	public static final long USERID_COLUMN_BITMASK = 1024L;
 
-	public static final long CREATEDATE_COLUMN_BITMASK = 2048L;
+	public static final long UUID_COLUMN_BITMASK = 2048L;
 
-	public static final long MESSAGEID_COLUMN_BITMASK = 4096L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 4096L;
+
+	public static final long MESSAGEID_COLUMN_BITMASK = 8192L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -209,6 +212,7 @@ public class MBMessageModelImpl
 		model.setParentMessageId(soapModel.getParentMessageId());
 		model.setTreePath(soapModel.getTreePath());
 		model.setSubject(soapModel.getSubject());
+		model.setUrlSubject(soapModel.getUrlSubject());
 		model.setBody(soapModel.getBody());
 		model.setFormat(soapModel.getFormat());
 		model.setAnonymous(soapModel.isAnonymous());
@@ -427,6 +431,10 @@ public class MBMessageModelImpl
 		attributeGetterFunctions.put("subject", MBMessage::getSubject);
 		attributeSetterBiConsumers.put(
 			"subject", (BiConsumer<MBMessage, String>)MBMessage::setSubject);
+		attributeGetterFunctions.put("urlSubject", MBMessage::getUrlSubject);
+		attributeSetterBiConsumers.put(
+			"urlSubject",
+			(BiConsumer<MBMessage, String>)MBMessage::setUrlSubject);
 		attributeGetterFunctions.put("body", MBMessage::getBody);
 		attributeSetterBiConsumers.put(
 			"body", (BiConsumer<MBMessage, String>)MBMessage::setBody);
@@ -823,6 +831,32 @@ public class MBMessageModelImpl
 	@Override
 	public void setSubject(String subject) {
 		_subject = subject;
+	}
+
+	@JSON
+	@Override
+	public String getUrlSubject() {
+		if (_urlSubject == null) {
+			return "";
+		}
+		else {
+			return _urlSubject;
+		}
+	}
+
+	@Override
+	public void setUrlSubject(String urlSubject) {
+		_columnBitmask |= URLSUBJECT_COLUMN_BITMASK;
+
+		if (_originalUrlSubject == null) {
+			_originalUrlSubject = _urlSubject;
+		}
+
+		_urlSubject = urlSubject;
+	}
+
+	public String getOriginalUrlSubject() {
+		return GetterUtil.getString(_originalUrlSubject);
 	}
 
 	@JSON
@@ -1303,6 +1337,7 @@ public class MBMessageModelImpl
 		mbMessageImpl.setParentMessageId(getParentMessageId());
 		mbMessageImpl.setTreePath(getTreePath());
 		mbMessageImpl.setSubject(getSubject());
+		mbMessageImpl.setUrlSubject(getUrlSubject());
 		mbMessageImpl.setBody(getBody());
 		mbMessageImpl.setFormat(getFormat());
 		mbMessageImpl.setAnonymous(isAnonymous());
@@ -1426,6 +1461,8 @@ public class MBMessageModelImpl
 
 		mbMessageModelImpl._setOriginalParentMessageId = false;
 
+		mbMessageModelImpl._originalUrlSubject = mbMessageModelImpl._urlSubject;
+
 		mbMessageModelImpl._originalAnswer = mbMessageModelImpl._answer;
 
 		mbMessageModelImpl._setOriginalAnswer = false;
@@ -1509,6 +1546,14 @@ public class MBMessageModelImpl
 
 		if ((subject != null) && (subject.length() == 0)) {
 			mbMessageCacheModel.subject = null;
+		}
+
+		mbMessageCacheModel.urlSubject = getUrlSubject();
+
+		String urlSubject = mbMessageCacheModel.urlSubject;
+
+		if ((urlSubject != null) && (urlSubject.length() == 0)) {
+			mbMessageCacheModel.urlSubject = null;
 		}
 
 		mbMessageCacheModel.body = getBody();
@@ -1675,6 +1720,8 @@ public class MBMessageModelImpl
 	private boolean _setOriginalParentMessageId;
 	private String _treePath;
 	private String _subject;
+	private String _urlSubject;
+	private String _originalUrlSubject;
 	private String _body;
 	private String _format;
 	private boolean _anonymous;

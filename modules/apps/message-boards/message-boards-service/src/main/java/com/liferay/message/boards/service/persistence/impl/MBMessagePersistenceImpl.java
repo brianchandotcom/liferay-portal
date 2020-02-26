@@ -6708,6 +6708,261 @@ public class MBMessagePersistenceImpl
 	private static final String _FINDER_COLUMN_G_C_CATEGORYID_2 =
 		"mbMessage.categoryId = ?";
 
+	private FinderPath _finderPathFetchByG_US;
+	private FinderPath _finderPathCountByG_US;
+
+	/**
+	 * Returns the message-boards message where groupId = &#63; and urlSubject = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param urlSubject the url subject
+	 * @return the matching message-boards message
+	 * @throws NoSuchMessageException if a matching message-boards message could not be found
+	 */
+	@Override
+	public MBMessage findByG_US(long groupId, String urlSubject)
+		throws NoSuchMessageException {
+
+		MBMessage mbMessage = fetchByG_US(groupId, urlSubject);
+
+		if (mbMessage == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", urlSubject=");
+			sb.append(urlSubject);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchMessageException(sb.toString());
+		}
+
+		return mbMessage;
+	}
+
+	/**
+	 * Returns the message-boards message where groupId = &#63; and urlSubject = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param urlSubject the url subject
+	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	 */
+	@Override
+	public MBMessage fetchByG_US(long groupId, String urlSubject) {
+		return fetchByG_US(groupId, urlSubject, true);
+	}
+
+	/**
+	 * Returns the message-boards message where groupId = &#63; and urlSubject = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param urlSubject the url subject
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	 */
+	@Override
+	public MBMessage fetchByG_US(
+		long groupId, String urlSubject, boolean useFinderCache) {
+
+		urlSubject = Objects.toString(urlSubject, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, urlSubject};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_US, finderArgs, this);
+		}
+
+		if (result instanceof MBMessage) {
+			MBMessage mbMessage = (MBMessage)result;
+
+			if ((groupId != mbMessage.getGroupId()) ||
+				!Objects.equals(urlSubject, mbMessage.getUrlSubject())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_US_GROUPID_2);
+
+			boolean bindUrlSubject = false;
+
+			if (urlSubject.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_US_URLSUBJECT_3);
+			}
+			else {
+				bindUrlSubject = true;
+
+				sb.append(_FINDER_COLUMN_G_US_URLSUBJECT_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindUrlSubject) {
+					queryPos.add(urlSubject);
+				}
+
+				List<MBMessage> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_US, finderArgs, list);
+					}
+				}
+				else {
+					MBMessage mbMessage = list.get(0);
+
+					result = mbMessage;
+
+					cacheResult(mbMessage);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByG_US, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (MBMessage)result;
+		}
+	}
+
+	/**
+	 * Removes the message-boards message where groupId = &#63; and urlSubject = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param urlSubject the url subject
+	 * @return the message-boards message that was removed
+	 */
+	@Override
+	public MBMessage removeByG_US(long groupId, String urlSubject)
+		throws NoSuchMessageException {
+
+		MBMessage mbMessage = findByG_US(groupId, urlSubject);
+
+		return remove(mbMessage);
+	}
+
+	/**
+	 * Returns the number of message-boards messages where groupId = &#63; and urlSubject = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param urlSubject the url subject
+	 * @return the number of matching message-boards messages
+	 */
+	@Override
+	public int countByG_US(long groupId, String urlSubject) {
+		urlSubject = Objects.toString(urlSubject, "");
+
+		FinderPath finderPath = _finderPathCountByG_US;
+
+		Object[] finderArgs = new Object[] {groupId, urlSubject};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_MBMESSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_US_GROUPID_2);
+
+			boolean bindUrlSubject = false;
+
+			if (urlSubject.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_US_URLSUBJECT_3);
+			}
+			else {
+				bindUrlSubject = true;
+
+				sb.append(_FINDER_COLUMN_G_US_URLSUBJECT_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindUrlSubject) {
+					queryPos.add(urlSubject);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_US_GROUPID_2 =
+		"mbMessage.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_US_URLSUBJECT_2 =
+		"mbMessage.urlSubject = ?";
+
+	private static final String _FINDER_COLUMN_G_US_URLSUBJECT_3 =
+		"(mbMessage.urlSubject IS NULL OR mbMessage.urlSubject = '')";
+
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
 	private FinderPath _finderPathCountByG_S;
@@ -20606,6 +20861,11 @@ public class MBMessagePersistenceImpl
 			new Object[] {mbMessage.getUuid(), mbMessage.getGroupId()},
 			mbMessage);
 
+		finderCache.putResult(
+			_finderPathFetchByG_US,
+			new Object[] {mbMessage.getGroupId(), mbMessage.getUrlSubject()},
+			mbMessage);
+
 		mbMessage.resetOriginalValues();
 	}
 
@@ -20700,6 +20960,15 @@ public class MBMessagePersistenceImpl
 			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
 		finderCache.putResult(
 			_finderPathFetchByUUID_G, args, mbMessageModelImpl, false);
+
+		args = new Object[] {
+			mbMessageModelImpl.getGroupId(), mbMessageModelImpl.getUrlSubject()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByG_US, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByG_US, args, mbMessageModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -20724,6 +20993,28 @@ public class MBMessagePersistenceImpl
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
 			finderCache.removeResult(_finderPathFetchByUUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				mbMessageModelImpl.getGroupId(),
+				mbMessageModelImpl.getUrlSubject()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_US, args);
+			finderCache.removeResult(_finderPathFetchByG_US, args);
+		}
+
+		if ((mbMessageModelImpl.getColumnBitmask() &
+			 _finderPathFetchByG_US.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				mbMessageModelImpl.getOriginalGroupId(),
+				mbMessageModelImpl.getOriginalUrlSubject()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_US, args);
+			finderCache.removeResult(_finderPathFetchByG_US, args);
 		}
 	}
 
@@ -22327,6 +22618,18 @@ public class MBMessagePersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
+
+		_finderPathFetchByG_US = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, MBMessageImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_US",
+			new String[] {Long.class.getName(), String.class.getName()},
+			MBMessageModelImpl.GROUPID_COLUMN_BITMASK |
+			MBMessageModelImpl.URLSUBJECT_COLUMN_BITMASK);
+
+		_finderPathCountByG_US = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_US",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByG_S = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, MBMessageImpl.class,

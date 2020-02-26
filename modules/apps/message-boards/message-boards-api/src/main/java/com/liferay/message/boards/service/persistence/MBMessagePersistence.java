@@ -1758,6 +1758,56 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public int filterCountByG_C(long groupId, long categoryId);
 
 	/**
+	 * Returns the message-boards message where groupId = &#63; and urlSubject = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param urlSubject the url subject
+	 * @return the matching message-boards message
+	 * @throws NoSuchMessageException if a matching message-boards message could not be found
+	 */
+	public MBMessage findByG_US(long groupId, String urlSubject)
+		throws NoSuchMessageException;
+
+	/**
+	 * Returns the message-boards message where groupId = &#63; and urlSubject = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param urlSubject the url subject
+	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	 */
+	public MBMessage fetchByG_US(long groupId, String urlSubject);
+
+	/**
+	 * Returns the message-boards message where groupId = &#63; and urlSubject = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param urlSubject the url subject
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	 */
+	public MBMessage fetchByG_US(
+		long groupId, String urlSubject, boolean useFinderCache);
+
+	/**
+	 * Removes the message-boards message where groupId = &#63; and urlSubject = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param urlSubject the url subject
+	 * @return the message-boards message that was removed
+	 */
+	public MBMessage removeByG_US(long groupId, String urlSubject)
+		throws NoSuchMessageException;
+
+	/**
+	 * Returns the number of message-boards messages where groupId = &#63; and urlSubject = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param urlSubject the url subject
+	 * @return the number of matching message-boards messages
+	 */
+	public int countByG_US(long groupId, String urlSubject);
+
+	/**
 	 * Returns all the message-boards messages where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID

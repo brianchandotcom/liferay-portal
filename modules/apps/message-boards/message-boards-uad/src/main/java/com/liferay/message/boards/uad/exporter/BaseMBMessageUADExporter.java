@@ -55,7 +55,7 @@ public abstract class BaseMBMessageUADExporter
 
 	@Override
 	protected String toXmlString(MBMessage mbMessage) {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.message.boards.model.MBMessage");
@@ -84,6 +84,10 @@ public abstract class BaseMBMessageUADExporter
 		sb.append(
 			"<column><column-name>subject</column-name><column-value><![CDATA[");
 		sb.append(mbMessage.getSubject());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>urlSubject</column-name><column-value><![CDATA[");
+		sb.append(mbMessage.getUrlSubject());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>body</column-name><column-value><![CDATA[");

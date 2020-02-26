@@ -43,7 +43,7 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 
 			data.put("groupdescriptivename", group.getDescriptiveName(locale));
 			data.put("groupid", group.getGroupId());
-			data.put("groupscopelabel", group.getScopeLabel(themeDisplay));
+			data.put("groupscopelabel", LanguageUtil.get(request, group.getScopeLabel(themeDisplay)));
 			data.put("grouptype", LanguageUtil.get(request, group.getTypeLabel()));
 			data.put("url", group.getDisplayURL(themeDisplay));
 			data.put("uuid", group.getUuid());

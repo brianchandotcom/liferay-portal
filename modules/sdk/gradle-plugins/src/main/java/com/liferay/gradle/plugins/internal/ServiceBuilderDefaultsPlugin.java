@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.BuildDBTask;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -68,6 +69,7 @@ public class ServiceBuilderDefaultsPlugin
 		_addTaskBuildDB(project);
 		_configureTaskCleanServiceBuilder(buildServiceTask);
 		_configureTaskProcessResources(buildServiceTask);
+		_configureTasksBuildService(project);
 
 		GradleUtil.withPlugin(
 			project, LiferayBasePlugin.class,
@@ -149,6 +151,16 @@ public class ServiceBuilderDefaultsPlugin
 		buildDBTask.setClasspath(fileCollection);
 	}
 
+	private void _configureTaskBuildService(BuildServiceTask buildServiceTask) {
+		String targetKernelVersion = GradleUtil.getProperty(
+			buildServiceTask.getProject(),
+			"service.builder.target.kernel.version", (String)null);
+
+		if (Validator.isNotNull(targetKernelVersion)) {
+			buildServiceTask.setTargetKernelVersion(targetKernelVersion);
+		}
+	}
+
 	private void _configureTaskBuildServiceForBndBuilderPlugin(
 		BuildServiceTask buildServiceTask) {
 
@@ -214,6 +226,21 @@ public class ServiceBuilderDefaultsPlugin
 				@Override
 				public void execute(BuildDBTask buildDBTask) {
 					_configureTaskBuildDBClasspath(buildDBTask, classpath);
+				}
+
+			});
+	}
+
+	private void _configureTasksBuildService(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildServiceTask.class,
+			new Action<BuildServiceTask>() {
+
+				@Override
+				public void execute(BuildServiceTask buildServiceTask) {
+					_configureTaskBuildService(buildServiceTask);
 				}
 
 			});

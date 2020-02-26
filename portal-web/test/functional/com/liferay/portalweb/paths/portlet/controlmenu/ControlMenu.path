@@ -51,6 +51,11 @@
 </tr>
 <!--HOME-->
 <tr>
+	<td>HOME_HEADING_AND_PRODUCT_MENU_CLOSED_PNG</td>
+	<td>portal/screenshots/controlmenu/home/heading_and_product_menu_closed.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HOME_HEADING_AND_PRODUCT_MENU_OPENED_PNG</td>
 	<td>portal/screenshots/controlmenu/home/heading_and_product_menu_opened.png</td>
 	<td></td>

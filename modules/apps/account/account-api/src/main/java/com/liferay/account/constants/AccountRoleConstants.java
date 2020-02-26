@@ -15,6 +15,7 @@
 package com.liferay.account.constants;
 
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
@@ -41,6 +42,14 @@ public class AccountRoleConstants {
 
 	public static boolean isRequiredRole(Role role) {
 		return ArrayUtil.contains(REQUIRED_ROLE_NAMES, role.getName());
+	}
+
+	public static boolean isSharedRole(Role role) {
+		if (role.getType() == RoleConstants.TYPE_ACCOUNT) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

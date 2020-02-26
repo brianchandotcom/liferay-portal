@@ -53,7 +53,7 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 				</portlet:renderURL>
 
 				<%
-				if (AccountRoleConstants.isRequiredRole(accountRole.getRole())) {
+				if (AccountRoleConstants.isSharedRole(accountRole.getRole())) {
 					rowURL = StringPool.BLANK;
 				}
 				%>

@@ -376,7 +376,7 @@ definition {
 			groupName = "Guest",
 			title = "WC Title");
 
-		var liferaySiteId = JSONGroupAPI._getGroupIdByName(groupName = "Guest");
+		var liferaySiteId = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
 
 		var deleteCurl = '''
 			-H 'Authorization: Bearer ${accessToken}' ${portalURL}/api/jsonws/journal.journalarticle/delete-article \

@@ -2220,7 +2220,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
 
-		var liferaySiteId = JSONGroupAPI._getGroupIdByName(groupName = "Guest");
+		var liferaySiteId = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
 
 		var siteName = TestCase.getSiteName();
 
@@ -2231,7 +2231,7 @@ definition {
 			searchURL = "${testSearchURL}"
 		);
 
-		var newSiteId = JSONGroupAPI._getGroupIdByName(groupName = "New Site");
+		var newSiteId = JSONGroupAPI._getGroupIdByName(groupName = "New Site", site = "true");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "site",

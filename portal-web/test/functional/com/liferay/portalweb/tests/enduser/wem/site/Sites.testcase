@@ -163,7 +163,7 @@ definition {
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "");
 
-		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Site Name");
+		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Site Name", site = "true");
 
 		AssertTextEquals(
 			locator1 = "TextInput#FRIENDLY_URL_SITE_SETTINGS",

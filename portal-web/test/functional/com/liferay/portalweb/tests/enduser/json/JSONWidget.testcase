@@ -90,7 +90,7 @@ definition {
 				layoutName = "Test Page Name",
 				layoutTemplate = "${layoutTemplate}");
 
-			var groupId = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name");
+			var groupId = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name", site = "true");
 
 			var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
 				groupId = "${groupId}",

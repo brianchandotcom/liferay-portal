@@ -111,6 +111,9 @@
 			<sanitize content-type="text/plain" modes="ALL" />
 			<validator name="required" />
 		</field>
+		<field name="urlSubject" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="body" type="String">
 			<hint-collection name="CLOB" />
 			<validator name="required" />

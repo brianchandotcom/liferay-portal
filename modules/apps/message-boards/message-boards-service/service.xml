@@ -252,6 +252,7 @@
 		<column name="parentMessageId" type="long" />
 		<column name="treePath" type="String" />
 		<column name="subject" type="String" uad-nonanonymizable="true" />
+		<column name="urlSubject" type="String" uad-nonanonymizable="true" />
 		<column name="body" type="String" uad-nonanonymizable="true" />
 		<column name="format" type="String" />
 		<column name="anonymous" type="boolean" />
@@ -298,6 +299,10 @@
 		<finder name="G_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" />
+		</finder>
+		<finder name="G_US" return-type="MBMessage" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="urlSubject" />
 		</finder>
 		<finder name="G_S" return-type="Collection" where="categoryId != -1">
 			<finder-column name="groupId" />

@@ -134,7 +134,8 @@ public class CheckstyleUtil {
 				for (String attributeName :
 						checkConfiguration.getAttributeNames()) {
 
-					if (!attributeName.equals("description") &&
+					if (!attributeName.equals("category") &&
+						!attributeName.equals("description") &&
 						!attributeName.equals("documentationLocation")) {
 
 						defaultConfiguration.addAttribute(

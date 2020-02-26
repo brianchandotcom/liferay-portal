@@ -26,6 +26,62 @@ definition {
 		}
 	}
 
+	@description = "This ensures that content sets from a site can select the basic web content stored in a depot."
+	@priority = "5"
+	test CreateSetOnSiteUsingDepotWC {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			title = "WC WebContent Title");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Asset Publisher Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Site Manual Asset List");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Site Manual Asset List",
+			assetName = "WC WebContent Title",
+			assetType = "Basic Web Content",
+			depotName = "Test Depot Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.selectAssetList(assetListName = "Site Manual Asset List");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name");
+
+		AssertTextEquals(
+			key_assetTitle = "WC WebContent Title",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH",
+			value1 = "WC WebContent Title");
+	}
+
 	@description = "This ensures that the image is displayed by AP through Content Sets in a depot."
 	@priority = "5"
 	test DisplayImageInAP {
@@ -112,7 +168,6 @@ definition {
 	@description = "This ensures that tagged the web content is displayed by AP through dynamic selection in a depot."
 	@priority = "5"
 	test DisplayWebContentWithTagInAP {
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(

@@ -30,33 +30,17 @@ definition {
 				vocabularyName = "${vocabularyName}");
 		}
 
-		PortletEntry.publish();
-	}
+		if (isSet(mbAttachmentFile)) {
+			Panel.expandPanel(panel = "Attachments");
 
-	macro addCPWithAttachment {
-		LexiconEntry.gotoAdd();
+			AssertElementPresent(locator1 = "Button#SELECT_FILES");
 
-		MenuItem.click(menuItem = "Thread");
+			var key_attachmentFileName = "${mbAttachmentFile}";
 
-		Click(locator1 = "TextInput#SUBJECT");
-
-		Type(
-			locator1 = "TextInput#SUBJECT",
-			value1 = "${threadSubject}");
-
-		AlloyEditor.typeEditor(
-			content = "${threadBody}",
-			editor = "body");
-
-		Panel.expandPanel(panel = "Attachments");
-
-		AssertElementPresent(locator1 = "Button#SELECT_FILES");
-
-		var key_attachmentFileName = "${mbAttachmentFile}";
-
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = "${mbAttachmentFile}");
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "${mbAttachmentFile}");
+		}
 
 		PortletEntry.publish();
 	}

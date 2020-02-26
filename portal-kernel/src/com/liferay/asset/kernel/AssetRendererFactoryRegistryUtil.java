@@ -191,6 +191,15 @@ public class AssetRendererFactoryRegistryUtil {
 		return filteredAssetRendererFactories;
 	}
 
+	private static Comparator<ServiceReference<AssetRendererFactory>>
+		_getServiceReferenceComparator() {
+
+		Comparator<ServiceReference<AssetRendererFactory>>
+			serviceReferenceComparator = ServiceRankingUtil::compare;
+
+		return serviceReferenceComparator.reversed();
+	}
+
 	private AssetRendererFactoryRegistryUtil() {
 	}
 
@@ -206,8 +215,7 @@ public class AssetRendererFactoryRegistryUtil {
 
 					emitter.emit(assetRendererFactory.getClassName());
 				},
-				((Comparator<ServiceReference<AssetRendererFactory>>)
-					ServiceRankingUtil::compare).reversed());
+				_getServiceReferenceComparator());
 
 	private static ServiceTrackerMap<String, AssetRendererFactory>
 		_assetRenderFactoriesMapByClassType =
@@ -221,8 +229,7 @@ public class AssetRendererFactoryRegistryUtil {
 
 					emitter.emit(assetRendererFactory.getType());
 				},
-				((Comparator<ServiceReference<AssetRendererFactory>>)
-					ServiceRankingUtil::compare).reversed());
+				_getServiceReferenceComparator());
 
 	private static final ServiceRegistrationMap<AssetRendererFactory<?>>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();

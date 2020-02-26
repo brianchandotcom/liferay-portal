@@ -16,6 +16,7 @@ import {Treeview} from 'frontend-js-components-web';
 import React from 'react';
 
 import {useActiveItemId} from '../../../app/components/Controls';
+import hasDropZoneChild from '../../../app/components/layout-data-items/hasDropZoneChild';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../../../app/config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
@@ -134,16 +135,6 @@ export default function PageStructureSidebar() {
 }
 
 function isRemovable(item, layoutData) {
-	function hasDropZoneChildren(item, layoutData) {
-		return item.children.some(childId => {
-			const child = layoutData.items[childId];
-
-			return child.type === LAYOUT_DATA_ITEM_TYPES.dropZone
-				? true
-				: hasDropZoneChildren(child, layoutData);
-		});
-	}
-
 	if (
 		item.type === LAYOUT_DATA_ITEM_TYPES.dropZone ||
 		item.type === LAYOUT_DATA_ITEM_TYPES.column
@@ -151,5 +142,5 @@ function isRemovable(item, layoutData) {
 		return false;
 	}
 
-	return !hasDropZoneChildren(item, layoutData);
+	return !hasDropZoneChild(item, layoutData);
 }

@@ -8,6 +8,12 @@ configurations {
 task buildCoreJSBundle(type: Copy)
 task buildFetch(type: Copy)
 
+buildCSS {
+	imports = [
+		new File(npmInstall.nodeModulesDir, "@clayui/css/src/scss")
+	]
+}
+
 buildCoreJSBundle {
 	eachFile new StripPathSegmentsAction(5)
 
@@ -54,6 +60,7 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:portal-url-builder:portal-url-builder-api")
 
 	coreJSBundle group: "org.webjars.npm", name: "core-js-bundle", transitive: false, version: "3.1.4"

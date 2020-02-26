@@ -65,6 +65,18 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 
 				printWriter.println("\" type=\"text/javascript\"></script>");
 			}
+
+			for (String fileName : _CSS_FILE_NAMES) {
+				printWriter.print(
+					"<link data-senna-track=\"permanent\" href=\"");
+
+				printWriter.print(
+					absolutePortalURLBuilder.forModule(
+						_bundleContext.getBundle(), fileName
+					).build());
+
+				printWriter.println("\" rel=\"stylesheet\" type=\"text/css\">");
+			}
 		}
 	}
 
@@ -80,9 +92,11 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 		_bundleContext = bundleContext;
 	}
 
+	private static final String[] _CSS_FILE_NAMES = {"/css/main.css"};
+
 	private static final String[] _FILE_NAMES = {
-		"closest.js", "/core-js-bundle.min.js", "/fetch.js", "/svg.contains.js",
-		"/uint16array.slice.js"
+		"closest.js", "control.menu.js", "/core-js-bundle.min.js", "/fetch.js",
+		"/svg.contains.js", "/uint16array.slice.js"
 	};
 
 	@Reference

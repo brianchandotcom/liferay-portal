@@ -43,6 +43,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot 1",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title 1");
 
 		JSONDepot.addDepot(
@@ -52,6 +53,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot 2",
 			groupName = "Test Depot Name 2",
+			site = "false",
 			title = "WC WebContent Title 2");
 
 		for (var depotName : list "Test Depot Name,Test Depot Name 2") {
@@ -98,6 +100,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
@@ -170,6 +173,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
@@ -207,6 +211,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
@@ -258,6 +263,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
@@ -295,6 +301,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
@@ -329,6 +336,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
@@ -370,6 +378,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		Navigator.openSiteURL(siteName = "Site Name");

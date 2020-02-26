@@ -51,6 +51,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
 				groupName = "Test Depot Name",
+				site = "false",
 				title = "WC WebContent Title ${i}");
 		}
 
@@ -264,6 +265,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		WebContent.expireCP(webContentTitleList = "WC WebContent Title");
@@ -288,6 +290,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Guest",
+			site = "false",
 			title = "Web Content Title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -317,6 +320,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();

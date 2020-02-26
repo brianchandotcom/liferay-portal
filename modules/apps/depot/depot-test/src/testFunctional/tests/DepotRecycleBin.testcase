@@ -47,6 +47,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
@@ -134,6 +135,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
@@ -224,6 +226,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		WebContent.moveToRecycleBinCP(

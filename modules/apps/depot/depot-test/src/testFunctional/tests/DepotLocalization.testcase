@@ -88,6 +88,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");

@@ -120,17 +120,23 @@ export default ({
 				100
 			).then(answers =>
 				answers.sort((answer1, answer2) => {
-					if (!answer1.aggregateRating || answer2.showAsAnswer) {
+					if (answer2.showAsAnswer) {
 						return 1;
 					}
-					if (!answer2.aggregateRating || answer1.showAsAnswer) {
+					if (answer1.showAsAnswer) {
 						return -1;
 					}
 
-					return (
-						answer2.aggregateRating.ratingValue -
-						answer1.aggregateRating.ratingValue
-					);
+					const ratingValue1 =
+						(answer1.aggregateRating &&
+							answer1.aggregateRating.ratingValue) ||
+						0;
+					const ratingValue2 =
+						(answer2.aggregateRating &&
+							answer2.aggregateRating.ratingValue) ||
+						0;
+
+					return ratingValue2 - ratingValue1;
 				})
 			);
 		}

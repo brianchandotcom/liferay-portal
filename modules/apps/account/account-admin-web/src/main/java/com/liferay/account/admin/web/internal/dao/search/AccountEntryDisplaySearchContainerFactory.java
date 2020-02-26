@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +41,28 @@ import java.util.Objects;
 public class AccountEntryDisplaySearchContainerFactory {
 
 	public static SearchContainer create(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return _create(
+			new LinkedHashMap<>(), liferayPortletRequest,
+			liferayPortletResponse);
+	}
+
+	public static SearchContainer create(
+		long userId, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		LinkedHashMap<String, Object> params =
+			LinkedHashMapBuilder.<String, Object>put(
+				"accountUserIds", new long[] {userId}
+			).build();
+
+		return _create(params, liferayPortletRequest, liferayPortletResponse);
+	}
+
+	private static SearchContainer _create(
+		LinkedHashMap<String, Object> params,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -68,24 +93,31 @@ public class AccountEntryDisplaySearchContainerFactory {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		String keywords = ParamUtil.getString(
+			liferayPortletRequest, "keywords", null);
+
 		String navigation = ParamUtil.getString(
 			liferayPortletRequest, "navigation", "active");
 
-		List<AccountEntry> accountEntries =
-			AccountEntryLocalServiceUtil.getAccountEntries(
-				themeDisplay.getCompanyId(), _getStatus(navigation),
+		params.put("status", _getStatus(navigation));
+
+		BaseModelSearchResult<AccountEntry> baseModelSearchResult =
+			AccountEntryLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), keywords, params,
 				accountEntryDisplaySearchContainer.getStart(),
-				accountEntryDisplaySearchContainer.getEnd(),
-				accountEntryDisplaySearchContainer.getOrderByComparator());
+				accountEntryDisplaySearchContainer.getDelta(),
+				accountEntryDisplaySearchContainer.getOrderByCol(),
+				_isReverseOrder(
+					accountEntryDisplaySearchContainer.getOrderByType()));
 
 		List<AccountEntryDisplay> accountEntryDisplays =
-			TransformUtil.transform(accountEntries, AccountEntryDisplay::of);
+			TransformUtil.transform(
+				baseModelSearchResult.getBaseModels(), AccountEntryDisplay::of);
 
 		accountEntryDisplaySearchContainer.setResults(accountEntryDisplays);
 
 		accountEntryDisplaySearchContainer.setTotal(
-			AccountEntryLocalServiceUtil.getAccountEntriesCount(
-				themeDisplay.getCompanyId(), _getStatus(navigation)));
+			baseModelSearchResult.getLength());
 
 		return accountEntryDisplaySearchContainer;
 	}
@@ -107,6 +139,14 @@ public class AccountEntryDisplaySearchContainerFactory {
 		}
 
 		return WorkflowConstants.STATUS_APPROVED;
+	}
+
+	private static boolean _isReverseOrder(String orderByType) {
+		if (Objects.equals(orderByType, "desc")) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

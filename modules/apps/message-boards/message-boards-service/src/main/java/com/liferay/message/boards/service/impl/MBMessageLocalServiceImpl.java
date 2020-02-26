@@ -95,6 +95,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -343,6 +344,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		message.setSubject(subject);
 		message.setAllowPingbacks(allowPingbacks);
+		message.setUrlTitle(getUniqueUrlTitle(groupId, messageId, subject));
 		message.setStatus(WorkflowConstants.STATUS_DRAFT);
 		message.setStatusByUserId(user.getUserId());
 		message.setStatusByUserName(userName);
@@ -936,6 +938,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return mbMessagePersistence.fetchByT_P_First(
 			threadId, parentMessageId, null);
+	}
+
+	@Override
+	public MBMessage fetchMBMessageByUrlTitle(long groupId, String urlTitle) {
+		return mbMessagePersistence.fetchByG_UT(groupId, urlTitle);
 	}
 
 	@Override
@@ -2012,6 +2019,26 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return subscriptionSender;
 	}
 
+	protected String getUniqueUrlTitle(
+		long groupId, long mbMessageId, String name) {
+
+		String urlTitle = _getUrlTitle(mbMessageId, name);
+
+		String uniqueUrlTitle = urlTitle;
+
+		MBMessage mbMessage = mbMessagePersistence.fetchByG_UT(
+			groupId, uniqueUrlTitle);
+
+		for (int i = 1; mbMessage != null; i++) {
+			uniqueUrlTitle = urlTitle + StringPool.DASH + i;
+
+			mbMessage = mbMessagePersistence.fetchByG_UT(
+				groupId, uniqueUrlTitle);
+		}
+
+		return uniqueUrlTitle;
+	}
+
 	protected void notifyDiscussionSubscribers(
 			long userId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
@@ -2571,6 +2598,27 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			new MessageCreateDateComparator(true));
 
 		return message.getMessageId();
+	}
+
+	private String _getUrlTitle(long id, String title) {
+		if (title == null) {
+			return String.valueOf(id);
+		}
+
+		title = StringUtil.toLowerCase(title.trim());
+
+		if (Validator.isNull(title) || Validator.isNumber(title) ||
+			title.equals("rss")) {
+
+			title = String.valueOf(id);
+		}
+		else {
+			title = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+				title);
+		}
+
+		return ModelHintsUtil.trimString(
+			MBMessage.class.getName(), "urlTitle", title);
 	}
 
 	private MBMessage _updateMessage(

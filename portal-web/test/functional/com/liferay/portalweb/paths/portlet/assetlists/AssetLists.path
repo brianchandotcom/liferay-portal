@@ -34,6 +34,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_LIST_REMOVE_SCOPE</td>
+	<td>//tr[contains(@data-qa-id,'row')][contains(.,'${key_scopeName}')]//span/*[name()='svg'][contains(@class,'lexicon-icon-times-circle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_LIST_SCOPE_NAME</td>
+	<td>//tr[contains(@data-qa-id,'row')][contains(.,'${key_scopeName}')]//td[contains(@class,'lfr-name-column')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_LIST_SELECT_BUTTON</td>
 	<td>//div[contains(@class,'btn-group')]//a[contains(@title,'Select')]</td>
 	<td></td>

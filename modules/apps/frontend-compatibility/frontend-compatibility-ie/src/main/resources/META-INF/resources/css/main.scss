@@ -129,12 +129,14 @@
 	transition: all 0.5s ease;
 
 	@at-root {
-		.ie .product-menu-open & {
-			left: 320px;
-		}
+		@include media-breakpoint-up(sm) {
+			.ie .product-menu-open & {
+				left: 320px;
+			}
 
-		.ie .open-admin-panel & {
-			right: 320px;
+			.ie .open-admin-panel & {
+				right: 320px;
+			}
 		}
 	}
 }

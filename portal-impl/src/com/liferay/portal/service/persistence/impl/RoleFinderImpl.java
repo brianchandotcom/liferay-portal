@@ -880,6 +880,10 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 
 			String sql = CustomSQLUtil.get(COUNT_BY_C_N_D_T);
 
+			if (params == null) {
+				params = new LinkedHashMap<>();
+			}
+
 			long classNameId = GetterUtil.getLong(
 				params.get("classNameId"),
 				ClassNameLocalServiceUtil.getClassNameId(Role.class));
@@ -1034,6 +1038,10 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_N_D_T);
+
+			if (params == null) {
+				params = new LinkedHashMap<>();
+			}
 
 			long classNameId = GetterUtil.getLong(
 				params.get("classNameId"),

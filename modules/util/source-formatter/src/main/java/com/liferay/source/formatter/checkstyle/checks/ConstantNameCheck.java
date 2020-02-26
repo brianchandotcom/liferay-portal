@@ -66,17 +66,22 @@ public class ConstantNameCheck extends BaseCheck {
 		List<String> camelCaseTypeNames = getAttributeValues(
 			_CAMEL_CASE_TYPE_NAMES_KEY);
 
-		if (camelCaseTypeNames.contains(typeName) ||
-			isCollection(detailAST.findFirstToken(TokenTypes.TYPE))) {
+		for (String camelCaseTypeName : camelCaseTypeNames) {
+			if (typeName.matches(camelCaseTypeName) ||
+				isCollection(detailAST.findFirstToken(TokenTypes.TYPE))) {
 
-			regex = _CAMEL_CASE_REGEX;
+				regex = _CAMEL_CASE_REGEX;
+			}
 		}
-		else if (_isImmutableFieldType(typeName)) {
-			regex = _UPPER_CASE_REGEX;
-		}
-		else {
-			regex = _CONSTANT_NAME_REGEX;
-			typeName = null;
+
+		if (regex == null) {
+			if (_isImmutableFieldType(typeName)) {
+				regex = _UPPER_CASE_REGEX;
+			}
+			else {
+				regex = _CONSTANT_NAME_REGEX;
+				typeName = null;
+			}
 		}
 
 		String accessLevel = null;

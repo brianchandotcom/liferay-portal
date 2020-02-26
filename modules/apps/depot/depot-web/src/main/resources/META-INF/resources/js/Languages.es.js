@@ -74,6 +74,20 @@ const Languages = ({
 	};
 	const customLocalesInputRef = useRef();
 
+	const handleOnItemDrop = (id, newIndex) => {
+		setCustomLocales(languages => {
+			const currentIndex = languages.findIndex(
+				({localeId}) => localeId === id
+			);
+
+			const clonedLanguages = [...languages];
+			const removedItem = clonedLanguages.splice(currentIndex, 1)[0];
+			clonedLanguages.splice(newIndex, 0, removedItem);
+
+			return clonedLanguages;
+		});
+	};
+
 	useEffect(() => {
 		if (!currentInheritLocales) {
 			const localesIds = customLocales.map(({localeId}) => localeId);
@@ -126,6 +140,7 @@ const Languages = ({
 					<LanguagesList
 						defaultLocaleId={customDefaultLocaleId}
 						locales={customLocales}
+						onItemDrop={handleOnItemDrop}
 						onMakeDefault={handleOnMakeDefault}
 						onOpenManageModal={handleOnModalOpen}
 						showActions

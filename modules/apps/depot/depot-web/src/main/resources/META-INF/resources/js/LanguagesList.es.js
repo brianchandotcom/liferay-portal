@@ -15,6 +15,8 @@
 import ClayButton from '@clayui/button';
 import ClayTable from '@clayui/table';
 import React from 'react';
+import {DndProvider} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import LanguageListItem from './LanguageListItem.es';
 
@@ -25,7 +27,8 @@ const LanguagesList = ({
 	locales,
 	showActions = false,
 	onMakeDefault = noop,
-	onOpenManageModal = noop
+	onOpenManageModal = noop,
+	onItemDrop = noop
 }) => {
 	return (
 		<ClayTable
@@ -54,17 +57,21 @@ const LanguagesList = ({
 			</ClayTable.Head>
 
 			<ClayTable.Body>
-				{locales.map(locale => {
-					return (
-						<LanguageListItem
-							{...locale}
-							isDefault={defaultLocaleId === locale.localeId}
-							key={locale.localeId}
-							onMakeDefault={onMakeDefault}
-							showActions={showActions}
-						/>
-					);
-				})}
+				<DndProvider backend={HTML5Backend}>
+					{locales.map((locale, index) => {
+						return (
+							<LanguageListItem
+								{...locale}
+								index={index}
+								isDefault={defaultLocaleId === locale.localeId}
+								key={locale.localeId}
+								onItemDrop={onItemDrop}
+								onMakeDefault={onMakeDefault}
+								showActions={showActions}
+							/>
+						);
+					})}
+				</DndProvider>
 			</ClayTable.Body>
 		</ClayTable>
 	);

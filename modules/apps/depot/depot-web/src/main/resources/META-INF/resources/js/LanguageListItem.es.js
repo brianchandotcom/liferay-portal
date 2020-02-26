@@ -17,16 +17,114 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayTable from '@clayui/table';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import {useDrag, useDrop} from 'react-dnd';
+
+const noop = () => {};
+
+const DROP_ZONES = {
+	BOTTOM: 'BOTTOM',
+	TOP: 'TOP'
+};
+
+const ACCEPTING_TYPES = {
+	ITEM: 'ITEM'
+};
+
+// Defines the distance in px from the border to the center of an item where
+// dropZone changes from TOP/BOTTOM to ELEMENT
+const ITEM_HOVER_BORDER_LIMIT = 20;
+
+const isValidTarget = (source, target, dropZone) => {
+	return !!(
+		source.id !== target.id &&
+		((dropZone === DROP_ZONES.TOP &&
+			(target.index < source.index || target.index > source.index + 1)) ||
+			(dropZone === DROP_ZONES.BOTTOM &&
+				(target.index > source.index ||
+					target.index < source.index - 1)))
+	);
+};
+
+const getDropZone = (ref, monitor) => {
+	if (!ref.current) {
+		return;
+	}
+
+	const clientOffset = monitor.getClientOffset();
+	const dropItemBoundingRect = ref.current.getBoundingClientRect();
+	const hoverTopLimit = ITEM_HOVER_BORDER_LIMIT;
+	const hoverClientY = clientOffset.y - dropItemBoundingRect.top;
+
+	let dropZone = DROP_ZONES.BOTTOM;
+
+	if (hoverClientY < hoverTopLimit) {
+		dropZone = DROP_ZONES.TOP;
+	}
+
+	return dropZone;
+};
 
 const LanguageListItem = ({
 	displayName,
 	isDefault,
 	localeId,
 	onMakeDefault,
-	showActions
+	showActions,
+	index,
+	onItemDrop = noop
 }) => {
 	const [active, setActive] = useState(false);
+	const [dropZone, setDropZone] = useState();
+	const ref = useRef();
+
+	const [{isDragging}, drag] = useDrag({
+		collect: monitor => ({
+			isDragging: !!monitor.isDragging()
+		}),
+		item: {
+			id: localeId,
+			index,
+			type: ACCEPTING_TYPES.ITEM
+		}
+	});
+
+	const [{isOver}, drop] = useDrop({
+		accept: ACCEPTING_TYPES.ITEM,
+		canDrop(source, monitor) {
+			const dropZone = getDropZone(ref, monitor);
+
+			return isValidTarget(source, {id: localeId, index}, dropZone);
+		},
+		collect: monitor => ({
+			isOver: !!monitor.isOver()
+		}),
+		drop(source, monitor) {
+			if (monitor.canDrop()) {
+				let newIndex = index;
+
+				if (dropZone === DROP_ZONES.BOTTOM) {
+					newIndex = index + 1;
+				}
+
+				onItemDrop(source.id, newIndex);
+			}
+		},
+		hover(source, monitor) {
+			let dropZone;
+
+			if (isOver && monitor.canDrop()) {
+				dropZone = getDropZone(ref, monitor);
+			}
+
+			setDropZone(dropZone);
+		}
+	});
+
+	useEffect(() => {
+		drag(drop(ref));
+	}, [drag, drop]);
+
 	const makeDefault = event => {
 		setActive(false);
 		onMakeDefault({localeId});
@@ -36,7 +134,7 @@ const LanguageListItem = ({
 	};
 
 	return (
-		<ClayTable.Row>
+		<ClayTable.Row ref={ref}>
 			<ClayTable.Cell expanded>
 				{displayName}
 				{isDefault && (
@@ -60,7 +158,7 @@ const LanguageListItem = ({
 							<ClayDropDown.Item
 								data-value={localeId}
 								key={localeId}
-								onClick={event => makeDefault(event)}
+								onClick={makeDefault}
 							>
 								{Liferay.Language.get('make-default')}
 							</ClayDropDown.Item>

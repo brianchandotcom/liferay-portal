@@ -175,14 +175,8 @@ export default function Topper({children, item, itemRef, layoutData}) {
 			const managementToolbarHeight = document
 				.querySelector('.page-editor__toolbar')
 				.getBoundingClientRect().height;
-			const pageEditorTop = document
-				.getElementById('page-editor')
-				.getBoundingClientRect().y;
 
-			if (
-				itemTop < pageEditorTop ||
-				itemTop < controlMenuHeight + managementToolbarHeight
-			) {
+			if (itemTop < controlMenuHeight + managementToolbarHeight) {
 				setIsInset(true);
 			}
 			else {

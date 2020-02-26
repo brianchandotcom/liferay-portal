@@ -59,17 +59,6 @@ public class UpgradeNamespace extends UpgradeProcess {
 
 			boolean hasOldTable = hasTable(oldTableName);
 
-			if (hasOldTable && !hasRows(oldTableName)) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Not renaming ", oldTableName, " to ", newTableName,
-							" because ", oldTableName, " has no data"));
-				}
-
-				return;
-			}
-
 			if (!hasNewTable && !hasOldTable) {
 				runSQL(tableSqlCreate);
 

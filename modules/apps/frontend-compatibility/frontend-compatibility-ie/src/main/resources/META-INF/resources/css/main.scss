@@ -99,24 +99,19 @@
 }
 
 :-ms-input-placeholder {
-	color: #6b6c7e !important;
+	color: $gray-500 !important;
 }
 
 :-ms-input-placeholder.form-builder-page-header-title,
 :-ms-input-placeholder.form-builder-page-header-description,
 .form-builder-page-header-description:-ms-input-placeholder,
 .form-builder-page-header-title:-ms-input-placeholder {
-	color: #6b6c7d !important;
+	color: $gray-500 !important;
 }
 
 .form-control-inline {
-	&:-ms-input-placeholder {
-		color: #a7a9bc;
-		font-style: italic;
-	}
-
-	&::-ms-input-placeholder {
-		color: #a7a9bc;
+	&:-ms-input-placeholder, &::-ms-input-placeholder {
+		color: $gray-500;
 		font-style: italic;
 	}
 }
@@ -131,11 +126,11 @@
 	@at-root {
 		@include media-breakpoint-up(sm) {
 			.ie .product-menu-open & {
-				left: 320px;
+				left: $sidenav-width;
 			}
 
 			.ie .open-admin-panel & {
-				right: 320px;
+				right: $sidenav-width;
 			}
 		}
 	}

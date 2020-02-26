@@ -118,6 +118,7 @@ const FragmentContent = React.forwardRef(
 						});
 					}
 				);
+				updateContent();
 			}
 
 			return () => {

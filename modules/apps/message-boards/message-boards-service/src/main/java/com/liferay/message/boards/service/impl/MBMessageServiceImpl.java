@@ -342,6 +342,22 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		mbMessageLocalService.emptyMessageAttachments(messageId);
 	}
 
+	public MBMessage fetchMBMessageByUrlSubject(long groupId, String urlSubject)
+		throws PortalException {
+
+		MBMessage mbMessage = mbMessageLocalService.fetchMBMessageByUrlSubject(
+			groupId, urlSubject);
+
+		if (mbMessage == null) {
+			return null;
+		}
+
+		_messageModelResourcePermission.check(
+			getPermissionChecker(), mbMessage, ActionKeys.VIEW);
+
+		return mbMessage;
+	}
+
 	@Override
 	public List<MBMessage> getCategoryMessages(
 			long groupId, long categoryId, int status, int start, int end)

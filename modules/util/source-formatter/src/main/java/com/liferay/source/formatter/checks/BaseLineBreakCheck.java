@@ -18,9 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * @author Hugo Huijser
  */
@@ -81,19 +78,5 @@ public abstract class BaseLineBreakCheck extends BaseFileCheck {
 			}
 		}
 	}
-
-	protected String fixRedundantCommaInsideArray(String content) {
-		Matcher matcher = _redundantCommaPattern.matcher(content);
-
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, StringPool.COMMA, StringPool.BLANK, matcher.start());
-		}
-
-		return content;
-	}
-
-	private static final Pattern _redundantCommaPattern = Pattern.compile(
-		",\n\t+\\}");
 
 }

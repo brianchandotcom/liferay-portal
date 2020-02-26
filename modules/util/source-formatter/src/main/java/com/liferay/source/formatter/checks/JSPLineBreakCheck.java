@@ -82,7 +82,20 @@ public class JSPLineBreakCheck extends BaseLineBreakCheck {
 
 		content = _fixRedundantLineBreaks(content);
 
-		return fixRedundantCommaInsideArray(content);
+		return _fixRedundantCommaInsideArray(content);
+	}
+
+	private String _fixRedundantCommaInsideArray(String content) {
+		Matcher matcher = _redundantCommaPattern.matcher(content);
+
+		if (matcher.find() &&
+			JSPSourceUtil.isJavaSource(content, matcher.start())) {
+
+			return StringUtil.replaceFirst(
+				content, StringPool.COMMA, StringPool.BLANK, matcher.start());
+		}
+
+		return content;
 	}
 
 	private String _fixRedundantLineBreaks(String content) {
@@ -141,6 +154,8 @@ public class JSPLineBreakCheck extends BaseLineBreakCheck {
 		return content;
 	}
 
+	private static final Pattern _redundantCommaPattern = Pattern.compile(
+		",\n\t*\\}");
 	private static final Pattern _redundantLineBreakPattern1 = Pattern.compile(
 		"[\n\t][^/\n\t].*(\\(\n)");
 	private static final Pattern _redundantLineBreakPattern2 = Pattern.compile(

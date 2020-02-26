@@ -172,13 +172,14 @@ export const getMessage = messageBoardMessageId =>
         }`);
 
 export const getThread = (
-	messageBoardThreadId,
+	friendlyUrlPath,
+	siteKey,
 	page = 1,
 	sort = 'showAsAnswer:desc,dateModified:desc'
 ) =>
 	request(gql`
         query {
-            messageBoardThread(messageBoardThreadId: ${messageBoardThreadId}){
+            messageBoardThreadByFriendlyUrlPath(friendlyUrlPath: ${friendlyUrlPath}, siteKey: ${siteKey}){
             	actions
                 aggregateRating {
                     ratingAverage
@@ -199,6 +200,7 @@ export const getThread = (
                 dateCreated
                 dateModified
                 encodingFormat
+                friendlyUrlPath
                 headline
                 id 
                 keywords 
@@ -360,6 +362,7 @@ export const getThreads = ({
                         name
                     } 
                     dateModified
+                    friendlyUrlPath
                     headline
                     id 
                     keywords 

@@ -201,7 +201,7 @@ export default ({
 
 						<Link
 							className="question-title stretched-link"
-							to={'/questions/' + question.id}
+							to={'/questions/' + question.friendlyUrlPath}
 						>
 							<h2 className="c-mb-0 stretched-link-layer text-dark">
 								{question.headline}

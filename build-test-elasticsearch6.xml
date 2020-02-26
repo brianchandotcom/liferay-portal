@@ -685,7 +685,7 @@ xpack.monitoring.collection.enabled: true</echo>
 
 	<target name="print-elasticsearch-indices">
 		<exec executable="curl" outputproperty="curl.output.elasticsearch.indices">
-			<arg line="&apos;localhost:9200/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
+			<arg line="&apos;localhost:9200/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }, { &quot;match&quot;: { &quot;entryClassName&quot;: &quot;com.liferay.portal.kernel.model.Layout&quot; } }, { &quot;match&quot;: { &quot;entryClassName&quot;: &quot;com.liferay.calendar.model.Calendar&quot; } }]}}}&apos;" />
 		</exec>
 
 		<echo></echo>

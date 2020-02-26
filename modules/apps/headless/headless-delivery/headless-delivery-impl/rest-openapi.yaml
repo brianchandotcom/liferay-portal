@@ -1413,6 +1413,8 @@ components:
                     description:
                         The message's media format (e.g., HTML, BBCode, etc.).
                     type: string
+                friendlyUrlPath:
+                    type: string
                 headline:
                     description:
                         The message's main title.
@@ -1604,6 +1606,8 @@ components:
                 encodingFormat:
                     description:
                         The media format of the thread's content (e.g., HTML, BBCode, etc.).
+                    type: string
+                friendlyUrlPath:
                     type: string
                 headline:
                     description:
@@ -6348,6 +6352,37 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardMessage"]
+    "/sites/{siteId}/message-board-messages/by-friendly-url-path/{friendlyUrlPath}":
+        get:
+            operationId: getSiteMessageBoardMessageByFriendlyUrlPath
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                    description:
+                        ""
+            tags: ["MessageBoardMessage"]
     "/sites/{siteId}/message-board-sections":
         get:
             description:
@@ -6504,6 +6539,37 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/MessageBoardThread"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardThread"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardThread"
+                    description:
+                        ""
+            tags: ["MessageBoardThread"]
+    "/sites/{siteId}/message-board-threads/by-friendly-url-path/{friendlyUrlPath}":
+        get:
+            operationId: getSiteMessageBoardThreadByFriendlyUrlPath
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

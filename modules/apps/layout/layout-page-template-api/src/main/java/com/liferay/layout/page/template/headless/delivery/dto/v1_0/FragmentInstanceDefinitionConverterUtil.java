@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -408,12 +407,17 @@ public class FragmentInstanceDefinitionConverterUtil {
 						Map<String, String> localeMap = _toLocaleMap(
 							jsonObject);
 
-						title = HashMapBuilder.<String, Object>put(
-							"value_i18n", localeMap
-						).build();
-						url = HashMapBuilder.<String, Object>put(
-							"value_i18n", localeMap
-						).build();
+						title = new InlineValue() {
+							{
+								value_i18n = localeMap;
+							}
+						};
+
+						url = new InlineValue() {
+							{
+								value_i18n = localeMap;
+							}
+						};
 					}
 				};
 				fragmentLink = _toFragmentLink(jsonObject);

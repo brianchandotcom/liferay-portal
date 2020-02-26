@@ -14,6 +14,7 @@
 
 import ClayPopover from '@clayui/popover';
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import UserIcon from './UserIcon.es';
 
@@ -32,9 +33,7 @@ export default ({creator}) => {
 					/>
 
 					<div className="c-ml-2">
-						<h4 className="font-weight-light h6 text-secondary">
-							Liferay Legend
-						</h4>
+						<h4 className="font-weight-light h6 text-secondary"></h4>
 
 						<h3 className="h5">{creator.name}</h3>
 					</div>
@@ -42,14 +41,16 @@ export default ({creator}) => {
 			}
 		>
 			<div className="text-secondary">
-				<p className="c-mb-0">Posts: 14.551</p>
-				<p className="c-mb-0">Join Date: 2006-09-02</p>
-				<p className="c-mb-0">Last Post Date: 2019-10-25</p>
+				<p className="c-mb-0">Posts: </p>
+				<p className="c-mb-0">Join Date: </p>
+				<p className="c-mb-0">Last Post Date: </p>
 			</div>
 
-			<p className="c-mb-1 c-mt-2 font-weight-bold text-center text-primary">
-				View Activity
-			</p>
+			<Link to={'/questions/creator/' + creator.id}>
+				<p className="c-mb-1 c-mt-2 font-weight-bold text-center text-primary">
+					View Activity
+				</p>
+			</Link>
 		</ClayPopover>
 	);
 };

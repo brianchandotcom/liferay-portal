@@ -1,8 +1,8 @@
+@import 'atlas-variables';
+
 @import './variables';
 
 .page-editor__topper {
-	$activeBackgroundColor: #004ad7;
-	$backgroundColor: #0b5fff;
 	$borderWidth: 2px;
 	$color: #fff;
 	$showDuration: 0.2s;
@@ -10,7 +10,7 @@
 	position: relative;
 
 	&:before {
-		box-shadow: inset 0 0 0 $borderWidth fade_out($backgroundColor, 1);
+		box-shadow: inset 0 0 0 $borderWidth fade_out($primary-l2, 1);
 		content: '';
 		display: block;
 		height: 100%;
@@ -38,10 +38,10 @@
 	}
 
 	&__bar {
-		background-color: $backgroundColor;
+		background-color: $primary;
 		border-radius: 2px 2px 0 0;
 		bottom: calc(100% + #{$borderWidth});
-		box-shadow: 0 0 0 $borderWidth $backgroundColor;
+		box-shadow: 0 0 0 $borderWidth $primary;
 		color: $color;
 		font-size: 12px;
 		height: 24px;
@@ -71,31 +71,31 @@
 	}
 
 	&.hovered:before {
-		box-shadow: inset 0 0 0 $borderWidth $backgroundColor;
+		box-shadow: inset 0 0 0 $borderWidth $primary-l1;
 		z-index: 1;
 	}
 
 	&.active:before {
-		box-shadow: inset 0 0 0 $borderWidth $activeBackgroundColor;
+		box-shadow: inset 0 0 0 $borderWidth $primary;
+		z-index: 1;
 	}
 
 	&.active > &__bar {
-		background-color: $activeBackgroundColor;
-		box-shadow: 0 0 0 $borderWidth $activeBackgroundColor;
+		box-shadow: 0 0 0 $borderWidth $primary;
 	}
 
 	&.drag-over-bottom:before {
-		border-bottom: 4px solid $activeBackgroundColor;
+		border-bottom: 4px solid $primary-l1;
 	}
 
 	&.drag-over-top:before {
-		border-top: 4px solid $activeBackgroundColor;
+		border-top: 4px solid $primary-l1;
 	}
 
 	&.drag-over-middle .page-editor__container > .container:after,
 	&.drag-over-middle .page-editor__container > .container-fluid:after,
 	&.drag-over-middle.page-editor__col:after {
-		box-shadow: inset 0 0 0 4px $activeBackgroundColor;
+		box-shadow: inset 0 0 0 4px $primary-l1;
 	}
 
 	&__drag-icon {

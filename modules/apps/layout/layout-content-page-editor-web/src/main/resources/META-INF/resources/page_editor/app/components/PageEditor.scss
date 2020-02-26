@@ -90,7 +90,7 @@
 		will-change: box-shadow;
 
 		&--active {
-			box-shadow: inset 0 0 0 4px $colorPrimary;
+			box-shadow: inset 0 0 0 4px $primary-l1;
 		}
 
 		.taglib-empty-result-message-header {

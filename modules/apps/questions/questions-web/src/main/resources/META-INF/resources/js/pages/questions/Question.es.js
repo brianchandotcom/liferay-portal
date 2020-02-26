@@ -244,45 +244,47 @@ export default ({
 							{answers.length} {Liferay.Language.get('answers')}
 						</h3>
 
-						<div className="border-bottom c-mt-3">
-							<ClayNavigationBar triggerLabel="Active">
-								<ClayNavigationBar.Item
-									active={filter === 'active'}
-								>
-									<ClayLink
-										className="nav-link"
-										displayType="unstyled"
-										onClick={() => filterBy('active')}
+						{!!answers.length && (
+							<div className="border-bottom c-mt-3">
+								<ClayNavigationBar triggerLabel="Active">
+									<ClayNavigationBar.Item
+										active={filter === 'active'}
 									>
-										{Liferay.Language.get('active')}
-									</ClayLink>
-								</ClayNavigationBar.Item>
+										<ClayLink
+											className="nav-link"
+											displayType="unstyled"
+											onClick={() => filterBy('active')}
+										>
+											{Liferay.Language.get('active')}
+										</ClayLink>
+									</ClayNavigationBar.Item>
 
-								<ClayNavigationBar.Item
-									active={filter === 'oldest'}
-								>
-									<ClayLink
-										className="nav-link"
-										displayType="unstyled"
-										onClick={() => filterBy('oldest')}
+									<ClayNavigationBar.Item
+										active={filter === 'oldest'}
 									>
-										{Liferay.Language.get('oldest')}
-									</ClayLink>
-								</ClayNavigationBar.Item>
+										<ClayLink
+											className="nav-link"
+											displayType="unstyled"
+											onClick={() => filterBy('oldest')}
+										>
+											{Liferay.Language.get('oldest')}
+										</ClayLink>
+									</ClayNavigationBar.Item>
 
-								<ClayNavigationBar.Item
-									active={filter === 'votes'}
-								>
-									<ClayLink
-										className="nav-link"
-										displayType="unstyled"
-										onClick={() => filterBy('votes')}
+									<ClayNavigationBar.Item
+										active={filter === 'votes'}
 									>
-										{Liferay.Language.get('votes')}
-									</ClayLink>
-								</ClayNavigationBar.Item>
-							</ClayNavigationBar>
-						</div>
+										<ClayLink
+											className="nav-link"
+											displayType="unstyled"
+											onClick={() => filterBy('votes')}
+										>
+											{Liferay.Language.get('votes')}
+										</ClayLink>
+									</ClayNavigationBar.Item>
+								</ClayNavigationBar>
+							</div>
+						)}
 
 						<div className="c-mt-3">
 							{answers.map(answer => (

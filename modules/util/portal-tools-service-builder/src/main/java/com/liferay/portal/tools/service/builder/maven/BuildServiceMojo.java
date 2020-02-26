@@ -207,11 +207,8 @@ public class BuildServiceMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setServiceBuilderTargetKernelVersion(
-		String serviceBuilderTargetKernelVersion) {
-
-		_serviceBuilderArgs.setTargetKernelVersion(
-			serviceBuilderTargetKernelVersion);
+	public void setTargetKernelVersion(String targetKernelVersion) {
+		_serviceBuilderArgs.setTargetKernelVersion(targetKernelVersion);
 	}
 
 	/**

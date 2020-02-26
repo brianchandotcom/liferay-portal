@@ -21,15 +21,16 @@ function onLocaleChange(layoutRendererInstance, event) {
 export default function dataEngineLayoutRendererLanguageProxy(props) {
 	let localeChangedHandler = null;
 
-	Liferay.componentReady(props.namespace + 'dataEngineLayoutRenderer')
-		.then(event => {
+	Liferay.componentReady(props.namespace + 'dataEngineLayoutRenderer').then(
+		event => {
 			localeChangedHandler = Liferay.after(
 				'inputLocalized:localeChanged',
 				onLocaleChange.bind(this, event)
 			);
-		});
+		}
+	);
 
-	function destroyInstance(event) {
+	function destroyInstance(_event) {
 		if (localeChangedHandler) {
 			localeChangedHandler.detach();
 		}

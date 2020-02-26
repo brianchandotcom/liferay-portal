@@ -585,6 +585,13 @@ public class GroupImpl extends GroupBaseImpl {
 		throws PortalException {
 
 		if (getGroupId() == themeDisplay.getScopeGroupId()) {
+			if (getType() == GroupConstants.TYPE_DEPOT) {
+				return StringUtil.appendParentheticalSuffix(
+					themeDisplay.translate("current-asset-library"),
+					HtmlUtil.escape(
+						getDescriptiveName(themeDisplay.getLocale())));
+			}
+
 			return StringUtil.appendParentheticalSuffix(
 				themeDisplay.translate("current-site"),
 				HtmlUtil.escape(getDescriptiveName(themeDisplay.getLocale())));
@@ -604,6 +611,14 @@ public class GroupImpl extends GroupBaseImpl {
 	@Override
 	public String getScopeLabel(ThemeDisplay themeDisplay) {
 		String label = "site";
+
+		if (getType() == GroupConstants.TYPE_DEPOT) {
+			if (getGroupId() == themeDisplay.getScopeGroupId()) {
+				return "current-asset-library";
+			}
+
+			return "asset-library";
+		}
 
 		if (getGroupId() == themeDisplay.getScopeGroupId()) {
 			label = "current-site";

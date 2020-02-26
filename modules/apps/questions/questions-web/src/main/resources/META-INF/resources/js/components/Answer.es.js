@@ -61,7 +61,7 @@ export default ({answer, answerChange, deleteAnswer}) => {
 	return (
 		<>
 			<div
-				className={classnames('question-answer', {
+				className={classnames('question-answer c-p-3', {
 					'question-answer-success': showAsAnswer
 				})}
 			>

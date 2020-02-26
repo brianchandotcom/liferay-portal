@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
@@ -146,65 +147,68 @@ export default ({
 				questions.items &&
 				questions.items.map(question => (
 					<div
-						className={'c-mt-4 c-p-3 question-row'}
+						className="c-mt-4 c-p-3 position-relative question-row text-secondary"
 						key={question.id}
 					>
-						<div className="autofit-padded-no-gutter autofit-row">
-							<div className="autofit-col autofit-col-expand">
+						<div className="align-items-center d-flex justify-content-between">
+							<ClayLabel
+								className="bg-light border-0 stretched-link-layer text-uppercase"
+								displayType="secondary"
+								large
+							>
+								{'Collaboration'}
 								{/* {question.category} */}
-							</div>
+							</ClayLabel>
 
-							<div className="autofit-col">
-								<ul className="question-list">
-									<li>
-										<QuestionBadge
-											symbol={
-												normalizeRating(
-													question.aggregateRating
-												) < 0
-													? 'caret-bottom'
-													: 'caret-top'
-											}
-											value={normalizeRating(
+							<ul className="question-list">
+								<li>
+									<QuestionBadge
+										symbol={
+											normalizeRating(
 												question.aggregateRating
-											)}
-										/>
-									</li>
+											) < 0
+												? 'caret-bottom'
+												: 'caret-top'
+										}
+										value={normalizeRating(
+											question.aggregateRating
+										)}
+									/>
+								</li>
 
-									<li>
-										<QuestionBadge
-											symbol="view"
-											value={question.viewCount}
-										/>
-									</li>
+								<li>
+									<QuestionBadge
+										symbol="view"
+										value={question.viewCount}
+									/>
+								</li>
 
-									<li>
-										<QuestionBadge
-											className={
-												hasValidAnswer(question)
-													? 'question-badge-success'
-													: ''
-											}
-											symbol={
-												hasValidAnswer(question)
-													? 'check-circle-full'
-													: 'message'
-											}
-											value={
-												question.messageBoardMessages
-													.items.length
-											}
-										/>
-									</li>
-								</ul>
-							</div>
+								<li>
+									<QuestionBadge
+										className={
+											hasValidAnswer(question)
+												? 'question-badge-success'
+												: ''
+										}
+										symbol={
+											hasValidAnswer(question)
+												? 'check-circle-full'
+												: 'message'
+										}
+										value={
+											question.messageBoardMessages.items
+												.length
+										}
+									/>
+								</li>
+							</ul>
 						</div>
 
 						<Link
 							className="question-title stretched-link"
 							to={'/questions/' + question.id}
 						>
-							<h2 className="c-mb-0 stretched-link-layer">
+							<h2 className="c-mb-0 stretched-link-layer text-dark">
 								{question.headline}
 							</h2>
 						</Link>
@@ -213,40 +217,35 @@ export default ({
 							<ArticleBodyRenderer {...question} />
 						</div>
 
-						<div className="autofit-padded-no-gutters autofit-row autofit-row-center c-mt-3">
-							<div className="autofit-col autofit-col-expand">
-								<div className="autofit-row autofit-row-center">
-									<Link
-										className="question-user stretched-link-layer"
-										to={
-											'/questions/creator/' +
-											question.creator.id
-										}
-									>
-										<UserIcon
-											fullName={question.creator.name}
-											portraitURL={question.creator.image}
-											size="sm"
-											userId={String(question.creator.id)}
-										/>
+						<div className="align-items-center c-mt-3 d-flex justify-content-between">
+							<div className="stretched-link-layer">
+								<Link
+									to={
+										'/questions/creator/' +
+										question.creator.id
+									}
+								>
+									<UserIcon
+										fullName={question.creator.name}
+										portraitURL={question.creator.image}
+										size="sm"
+										userId={String(question.creator.id)}
+									/>
 
-										<strong className="c-ml-2">
-											{question.creator.name}
-										</strong>
-									</Link>
+									<strong className="c-ml-2 text-dark">
+										{question.creator.name}
+									</strong>
+								</Link>
 
-									<span className="c-ml-2 stretched-link-layer">
-										{'- ' +
-											dateToInternationalHuman(
-												question.dateModified
-											)}
-									</span>
-								</div>
+								<span className="c-ml-2 small">
+									{'- ' +
+										dateToInternationalHuman(
+											question.dateModified
+										)}
+								</span>
 							</div>
 
-							<div className="autofit-col">
-								<TagList tags={question.keywords} />
-							</div>
+							<TagList tags={question.keywords} />
 						</div>
 					</div>
 				))

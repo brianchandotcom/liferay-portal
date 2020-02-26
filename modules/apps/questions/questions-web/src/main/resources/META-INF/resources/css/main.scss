@@ -6,10 +6,6 @@
 	z-index: 2;
 }
 
-.bg-white {
-	background-color: $white;
-}
-
 .question-title {
 	&:after {
 		background-color: $light-l1;
@@ -49,5 +45,46 @@
 		.question-user-popover {
 			display: block;
 		}
+	}
+}
+
+.question-answer {
+	&:not(:first-child) {
+		border-top: 1px solid $secondary-l3;
+	}
+
+	&.question-answer-success {
+		background-color: $success-l2;
+		border: 1px solid $success-l1;
+		border-radius: 0.25rem;
+	}
+}
+
+.question-reply {
+	&:not(:first-child) {
+		border-top: 1px solid $secondary-l3;
+		padding-top: 1rem;
+	}
+
+	.question-reply-icon {
+		transform: rotateZ(180deg);
+	}
+}
+
+.question-creator:before {
+	border-top: 1px solid $secondary-l3;
+	content: '';
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 50%;
+}
+
+.question-badge {
+	color: inherit;
+
+	&.question-badge-success {
+		background-color: $success-l2;
+		color: $success;
 	}
 }

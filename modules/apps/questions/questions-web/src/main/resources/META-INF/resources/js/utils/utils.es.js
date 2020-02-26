@@ -21,7 +21,7 @@ export function getCKEditorConfig() {
 	const config = {
 		codeSnippet_theme: 'monokai_sublime',
 		extraPlugins: 'codesnippet',
-		height: 356
+		height: 216
 	};
 	config.toolbarGroups = [
 		{groups: ['basicstyles', 'cleanup'], name: 'basicstyles'},

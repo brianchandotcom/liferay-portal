@@ -17,13 +17,10 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 export default ({tags = []}) => (
-	<ul className="question-list">
+	<ul className="question-list stretched-link-layer">
 		{tags.map(tag => (
 			<li key={tag}>
-				<ClayLabel
-					className="stretched-link-layer"
-					displayType="secondary"
-				>
+				<ClayLabel displayType="secondary">
 					<Link key={tag} to={`/questions/tag/${tag}`}>
 						{tag}
 					</Link>

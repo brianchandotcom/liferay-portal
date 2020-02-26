@@ -231,12 +231,7 @@ export default ({
 							<TagList tags={question.keywords} />
 						</div>
 
-						<div className="c-mt-4 position-relative text-right">
-							<hr
-								className="c-my-0 position-absolute w-100"
-								style={{top: '50%'}}
-							/>
-
+						<div className="c-mt-4 position-relative question-creator text-right">
 							<CreatorRow question={question} />
 						</div>
 

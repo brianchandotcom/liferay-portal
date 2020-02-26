@@ -17,12 +17,10 @@ import React from 'react';
 
 export default ({className, symbol, value}) => {
 	return (
-		<div className={`question-badge stretched-link-layer ${className}`}>
+		<div className={`btn stretched-link-layer question-badge ${className}`}>
 			<ClayIcon symbol={symbol} />
 
-			<small className="c-ml-2">
-				<strong>{value || 0}</strong>
-			</small>
+			<span className="c-ml-2 font-weight-bold small">{value || 0}</span>
 		</div>
 	);
 };

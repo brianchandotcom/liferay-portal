@@ -85,7 +85,6 @@ export default ({
 								disabled={comment.length < 15}
 								displayType="primary"
 								onClick={postComment}
-								// small
 							>
 								{Liferay.Language.get('reply')}
 							</ClayButton>
@@ -93,7 +92,6 @@ export default ({
 							<ClayButton
 								displayType="secondary"
 								onClick={() => showNewCommentChange(false)}
-								// small
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>

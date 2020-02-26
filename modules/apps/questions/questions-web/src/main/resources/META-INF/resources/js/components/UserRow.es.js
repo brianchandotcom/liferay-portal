@@ -16,7 +16,7 @@ import React from 'react';
 
 import UserPopover from './UserPopover.es';
 
-export default ({creator}) => {
+export default ({creator, statistics}) => {
 	return (
 		<div className="border-0 btn btn-block btn-secondary position-relative question-user text-right">
 			<p className="c-mb-0 small">
@@ -25,7 +25,7 @@ export default ({creator}) => {
 
 			<p className="c-mb-0 font-weight-bold text-dark">{creator.name}</p>
 
-			<UserPopover creator={creator} />
+			<UserPopover creator={creator} statistics={statistics} />
 		</div>
 	);
 };

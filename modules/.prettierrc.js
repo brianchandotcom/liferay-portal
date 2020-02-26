@@ -23,7 +23,7 @@ const FALLBACK_CONFIG = {
 	jsxSingleQuote: false,
 	singleQuote: true,
 	tabWidth: 4,
-	trailingComma: 'none',
+	trailingComma: 'es5',
 	useTabs: true
 };
 

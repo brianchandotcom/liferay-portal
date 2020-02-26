@@ -25,7 +25,11 @@ definition {
 			failMessage = "Please only set 'groupName' or 'groupKey' but not both or none.");
 
 		if (isSet(groupName)) {
-			var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+			if (!(isSet(site))) {
+				var site = "true";
+			}
+
+			var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
 		}
 		else if (isSet(groupKey)) {
 			if (!(isSet(site))) {

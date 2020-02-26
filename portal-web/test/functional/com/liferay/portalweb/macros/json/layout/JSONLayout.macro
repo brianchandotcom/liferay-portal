@@ -211,7 +211,11 @@ definition {
 	macro updateLayoutTemplateOfPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${layoutTemplate}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
 
 		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
 

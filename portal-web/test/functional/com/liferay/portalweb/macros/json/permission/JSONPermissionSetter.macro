@@ -5,7 +5,11 @@ definition {
 			var groupName = "Global";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
 
 		return "${groupId}";
 	}

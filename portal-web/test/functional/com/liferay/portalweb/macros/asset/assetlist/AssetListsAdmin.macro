@@ -110,6 +110,36 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro configureScope {
+		Click(
+			key_title = "${assetListTitle}",
+			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+
+		Panel.expandPanel(panel = "Scope");
+
+		AssertClick(
+			locator1 = "Configuration#SCOPE_SELECT",
+			value1 = "Select");
+
+		MenuItem.click(menuItem = "Other Site...");
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#SELECT_SITES");
+
+		if (isSet(depotName)) {
+			Navigator.gotoNavTab(navTab = "Asset Libraries");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+			LexiconEntry.gotoEntry(rowEntry = "${depotName}");
+		}
+
+		SelectFrameTop();
+
+		PortletEntry.save();
+	}
+
 	macro deleteEntry {
 		LexiconList.delete(listEntry = "${assetListTitle}");
 
@@ -146,6 +176,27 @@ definition {
 
 	macro openAssetListsAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet");
+	}
+
+	macro removeScope {
+		Click(
+			key_title = "${assetListTitle}",
+			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+
+		Panel.expandPanel(panel = "Scope");
+
+		Click(
+			key_scopeName = "${scopeName}",
+			locator1 = "AssetLists#ASSET_LIST_REMOVE_SCOPE");
+
+		PortletEntry.save();
+
+		AssertTextNotPresent(
+			key_scopeName = "${scopeName}",
+			locator1 = "AssetLists#ASSET_LIST_SCOPE_NAME",
+			value1 = "${scopeName}");
+
+		SelectFrameTop();
 	}
 
 	macro renameAssetList {

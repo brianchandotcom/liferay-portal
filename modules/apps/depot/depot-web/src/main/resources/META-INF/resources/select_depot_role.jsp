@@ -26,7 +26,7 @@ DepotAdminSelectRoleDisplayContext depotAdminSelectRoleDisplayContext = (DepotAd
 
 <aui:form action="<%= depotAdminSelectRoleDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="selectDepotRoleFm">
 	<c:choose>
-		<c:when test="<%= depotAdminSelectRoleDisplayContext.getStep().getType() == DepotAdminSelectRoleDisplayContext.Step1.TYPE %>">
+		<c:when test="<%= depotAdminSelectRoleDisplayContext.isStep1() %>">
 
 			<%
 			DepotAdminSelectRoleDisplayContext.Step1 step1 = (DepotAdminSelectRoleDisplayContext.Step1)depotAdminSelectRoleDisplayContext.getStep();
@@ -74,15 +74,15 @@ DepotAdminSelectRoleDisplayContext depotAdminSelectRoleDisplayContext = (DepotAd
 				dom.delegate(form, 'click', '.group-selector-button', function(event) {
 					Liferay.Util.postForm(form, {
 						data: {
-							groupId: event.delegateTarget.dataset.groupid
+							groupId: event.delegateTarget.dataset.groupid,
 						},
 
-						url: '<%= step1.getSelectRolePortletURL() %>'
+						url: '<%= step1.getSelectRolePortletURL() %>',
 					});
 				});
 			</aui:script>
 		</c:when>
-		<c:when test="<%= depotAdminSelectRoleDisplayContext.getStep().getType() == DepotAdminSelectRoleDisplayContext.Step2.TYPE %>">
+		<c:when test="<%= depotAdminSelectRoleDisplayContext.isStep2() %>">
 
 			<%
 			DepotAdminSelectRoleDisplayContext.Step2 step2 = (DepotAdminSelectRoleDisplayContext.Step2)depotAdminSelectRoleDisplayContext.getStep();
@@ -127,7 +127,7 @@ DepotAdminSelectRoleDisplayContext depotAdminSelectRoleDisplayContext = (DepotAd
 				openingLiferay.fire(
 					'<%= HtmlUtil.escape(step2.getSyncEntitiesEventName()) %>',
 					{
-						selectors: A.all('.selector-button')
+						selectors: A.all('.selector-button'),
 					}
 				);
 

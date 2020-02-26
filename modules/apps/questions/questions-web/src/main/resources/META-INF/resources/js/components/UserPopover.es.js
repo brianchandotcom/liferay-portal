@@ -16,9 +16,10 @@ import ClayPopover from '@clayui/popover';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+import {dateToBriefInternationalHuman} from '../utils/utils.es';
 import UserIcon from './UserIcon.es';
 
-export default ({creator}) => {
+export default ({creator, statistics}) => {
 	return (
 		<ClayPopover
 			alignPosition="bottom"
@@ -33,7 +34,9 @@ export default ({creator}) => {
 					/>
 
 					<div className="c-ml-2">
-						<h4 className="font-weight-light h6 text-secondary"></h4>
+						<h4 className="font-weight-light h6 text-secondary">
+							{statistics.rank}
+						</h4>
 
 						<h3 className="h5">{creator.name}</h3>
 					</div>
@@ -41,9 +44,15 @@ export default ({creator}) => {
 			}
 		>
 			<div className="text-secondary">
-				<p className="c-mb-0">Posts: </p>
-				<p className="c-mb-0">Join Date: </p>
-				<p className="c-mb-0">Last Post Date: </p>
+				<p className="c-mb-0">Posts: {statistics.postsNumber}</p>
+				<p className="c-mb-0">
+					Join Date:{' '}
+					{dateToBriefInternationalHuman(statistics.joinDate)}
+				</p>
+				<p className="c-mb-0">
+					Last Post Date:{' '}
+					{dateToBriefInternationalHuman(statistics.lastPostDate)}
+				</p>
 			</div>
 
 			<Link to={'/questions/creator/' + creator.id}>

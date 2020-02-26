@@ -149,7 +149,10 @@ export default ({answer, answerChange, deleteAnswer}) => {
 					</div>
 
 					<div className="col-2 text-right">
-						<UserRow creator={answer.creator} />
+						<UserRow
+							creator={answer.creator}
+							statistics={answer.creatorStatistics}
+						/>
 					</div>
 				</div>
 			</div>

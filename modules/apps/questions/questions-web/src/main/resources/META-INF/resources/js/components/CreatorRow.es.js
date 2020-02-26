@@ -18,7 +18,7 @@ import {timeDifference} from '../utils/utils.es';
 import UserIcon from './UserIcon.es';
 import UserPopover from './UserPopover.es';
 
-export default ({question: {creator, dateCreated}}) => {
+export default ({question: {creator, creatorStatistics, dateCreated}}) => {
 	return (
 		<div className="align-items-center border-light btn btn-secondary c-ml-3 c-p-3 d-inline-flex justify-content-center position-relative question-user">
 			<UserIcon
@@ -35,7 +35,7 @@ export default ({question: {creator, dateCreated}}) => {
 				</p>
 			</div>
 
-			<UserPopover creator={creator} />
+			<UserPopover creator={creator} statistics={creatorStatistics} />
 		</div>
 	);
 };

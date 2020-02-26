@@ -56,7 +56,7 @@ definition {
 	macro addWebContent {
 		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
 
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
 		var contentXML = JSONWebcontentSetter.setContentXML(content = "${content}");
 

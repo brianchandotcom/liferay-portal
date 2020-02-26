@@ -618,29 +618,29 @@ public class GroupImpl extends GroupBaseImpl {
 			return "asset-library";
 		}
 
-		String label = "site";
-
 		if (getGroupId() == themeDisplay.getScopeGroupId()) {
-			label = "current-site";
-		}
-		else if (getGroupId() == themeDisplay.getCompanyGroupId()) {
-			label = "global";
-		}
-		else if (isLayout()) {
-			label = "page";
-		}
-		else {
-			Group scopeGroup = themeDisplay.getScopeGroup();
-
-			if (scopeGroup.hasAncestor(getGroupId())) {
-				label = "parent-site";
-			}
-			else if (hasAncestor(scopeGroup.getGroupId())) {
-				label = "child-site";
-			}
+			return "current-site";
 		}
 
-		return label;
+		if (getGroupId() == themeDisplay.getCompanyGroupId()) {
+			return "global";
+		}
+
+		if (isLayout()) {
+			return "page";
+		}
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (scopeGroup.hasAncestor(getGroupId())) {
+			return "parent-site";
+		}
+
+		if (hasAncestor(scopeGroup.getGroupId())) {
+			return "child-site";
+		}
+
+		return "site";
 	}
 
 	@Override

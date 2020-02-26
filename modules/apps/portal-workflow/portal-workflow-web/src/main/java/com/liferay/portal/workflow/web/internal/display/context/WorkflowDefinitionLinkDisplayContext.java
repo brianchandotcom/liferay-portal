@@ -164,19 +164,13 @@ public class WorkflowDefinitionLinkDisplayContext {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					new DropdownItemList() {
-						{
-							add(
-								_getOrderByDropdownItem(
-									"resource",
-									_getCurrentOrder(httpServletRequest)));
-
-							add(
-								_getOrderByDropdownItem(
-									"workflow",
-									_getCurrentOrder(httpServletRequest)));
-						}
-					});
+					DropdownItemListBuilder.add(
+						_getOrderByDropdownItem(
+							"resource", _getCurrentOrder(httpServletRequest))
+					).add(
+						_getOrderByDropdownItem(
+							"workflow", _getCurrentOrder(httpServletRequest))
+					).build());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(
 						_workflowDefinitionLinkRequestHelper.getRequest(),

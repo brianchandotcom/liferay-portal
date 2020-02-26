@@ -197,27 +197,21 @@ public class WorkflowDefinitionDisplayContext {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					new DropdownItemList() {
-						{
-							add(
-								_getFilterNavigationDropdownItem(
-									"all",
-									_getCurrentNavigation(httpServletRequest),
-									"all"));
-
-							add(
-								_getFilterNavigationDropdownItem(
-									"published",
-									_getCurrentNavigation(httpServletRequest),
-									"published"));
-
-							add(
-								_getFilterNavigationDropdownItem(
-									"not-published",
-									_getCurrentNavigation(httpServletRequest),
-									"not-published"));
-						}
-					});
+					DropdownItemListBuilder.add(
+						_getFilterNavigationDropdownItem(
+							"all", _getCurrentNavigation(httpServletRequest),
+							"all")
+					).add(
+						_getFilterNavigationDropdownItem(
+							"published",
+							_getCurrentNavigation(httpServletRequest),
+							"published")
+					).add(
+						_getFilterNavigationDropdownItem(
+							"not-published",
+							_getCurrentNavigation(httpServletRequest),
+							"not-published")
+					).build());
 
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(
@@ -227,21 +221,16 @@ public class WorkflowDefinitionDisplayContext {
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					new DropdownItemList() {
-						{
-							add(
-								_getOrderByDropdownItem(
-									"last-modified",
-									_getCurrentOrder(httpServletRequest),
-									httpServletRequest));
-
-							add(
-								_getOrderByDropdownItem(
-									"title",
-									_getCurrentOrder(httpServletRequest),
-									httpServletRequest));
-						}
-					});
+					DropdownItemListBuilder.add(
+						_getOrderByDropdownItem(
+							"last-modified",
+							_getCurrentOrder(httpServletRequest),
+							httpServletRequest)
+					).add(
+						_getOrderByDropdownItem(
+							"title", _getCurrentOrder(httpServletRequest),
+							httpServletRequest)
+					).build());
 
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(

@@ -260,15 +260,13 @@ public class WorkflowTaskDisplayContext {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					new DropdownItemList() {
-						{
-							add(_getFilterNavigationDropdownItem("all"));
-
-							add(_getFilterNavigationDropdownItem("pending"));
-
-							add(_getFilterNavigationDropdownItem("completed"));
-						}
-					});
+					DropdownItemListBuilder.add(
+						_getFilterNavigationDropdownItem("all")
+					).add(
+						_getFilterNavigationDropdownItem("pending")
+					).add(
+						_getFilterNavigationDropdownItem("completed")
+					).build());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(
 						_workflowTaskRequestHelper.getRequest(), "filter"));
@@ -276,13 +274,11 @@ public class WorkflowTaskDisplayContext {
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					new DropdownItemList() {
-						{
-							add(_getOrderByDropdownItem("last-activity-date"));
-
-							add(_getOrderByDropdownItem("due-date"));
-						}
-					});
+					DropdownItemListBuilder.add(
+						_getOrderByDropdownItem("last-activity-date")
+					).add(
+						_getOrderByDropdownItem("due-date")
+					).build());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(
 						_workflowTaskRequestHelper.getRequest(), "order-by"));

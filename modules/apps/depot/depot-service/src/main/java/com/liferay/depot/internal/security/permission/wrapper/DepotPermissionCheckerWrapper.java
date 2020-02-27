@@ -62,59 +62,22 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		Group group, String name, long primKey, String actionId) {
 
-		if (StringUtil.equals(name, Group.class.getName())) {
-			try {
-				Group currentGroup = _groupLocalService.getGroup(primKey);
-
-				if (currentGroup.getType() == GroupConstants.TYPE_DEPOT) {
-					if (_isGroupAdmin(currentGroup)) {
-						return true;
-					}
-
-					return _depotEntryModelResourcePermission.contains(
-						this, currentGroup.getClassPK(), actionId);
-				}
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
-
-				return false;
-			}
+		if (super.hasPermission(group, name, primKey, actionId)) {
+			return true;
 		}
 
-		return super.hasPermission(group, name, primKey, actionId);
-	}
-
-	@Override
-	public boolean hasPermission(
-		Group group, String name, String primKey, String actionId) {
-
-		if (StringUtil.equals(name, Group.class.getName())) {
-			return hasPermission(group, name, Long.valueOf(primKey), actionId);
-		}
-
-		return super.hasPermission(group, name, primKey, actionId);
+		return _hasPermission(name, primKey, actionId);
 	}
 
 	@Override
 	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
-		return hasPermission(
-			_groupLocalService.fetchGroup(groupId), name, primKey, actionId);
-	}
-
-	@Override
-	public boolean hasPermission(
-		long groupId, String name, String primKey, String actionId) {
-
-		if (StringUtil.equals(name, Group.class.getName())) {
-			return hasPermission(
-				_groupLocalService.fetchGroup(groupId), name,
-				Long.valueOf(primKey), actionId);
+		if (super.hasPermission(groupId, name, primKey, actionId)) {
+			return true;
 		}
 
-		return super.hasPermission(groupId, name, primKey, actionId);
+		return _hasPermission(name, primKey, actionId);
 	}
 
 	@Override
@@ -218,6 +181,28 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 
 		return value;
+	}
+
+	private boolean _hasPermission(String name, long groupId, String actionId) {
+		if (StringUtil.equals(name, Group.class.getName())) {
+			try {
+				Group group = _groupLocalService.getGroup(groupId);
+
+				if (group.getType() == GroupConstants.TYPE_DEPOT) {
+					if (_isGroupAdmin(group)) {
+						return true;
+					}
+
+					return _depotEntryModelResourcePermission.contains(
+						this, group.getClassPK(), actionId);
+				}
+			}
+			catch (Exception exception) {
+				_log.error(exception, exception);
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isGroupAdmin(Group group) throws PortalException {

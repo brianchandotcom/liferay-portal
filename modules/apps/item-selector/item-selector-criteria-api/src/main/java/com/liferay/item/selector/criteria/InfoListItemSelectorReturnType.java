@@ -28,9 +28,6 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  * <code>classPK</code>: The class pk of the selected info list
  * </li>
  * <li>
- * <code>infoListProviderKey</code>: The key of the selected info list provider
- * </li>
- * <li>
  * <code>title</code>: The title of the selected info list
  * </li>
  * </ul>

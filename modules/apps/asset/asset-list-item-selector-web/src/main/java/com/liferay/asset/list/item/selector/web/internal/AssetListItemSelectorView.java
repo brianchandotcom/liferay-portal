@@ -14,7 +14,6 @@
 
 package com.liferay.asset.list.item.selector.web.internal;
 
-import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.util.AssetListPortletUtil;
@@ -159,9 +158,6 @@ public class AssetListItemSelectorView
 						_portal.getClassNameId(AssetListEntry.class)
 					).put(
 						"classPK", assetListEntry.getAssetListEntryId()
-					).put(
-						"infoListProviderKey",
-						AssetListWebKeys.ASSET_LIST_INFO_LIST_PROVIDER_KEY
 					).put(
 						"title", assetListEntry.getTitle()
 					).toString();

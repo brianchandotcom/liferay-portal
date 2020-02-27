@@ -14,7 +14,6 @@
 
 package com.liferay.asset.list.item.selector.web.internal;
 
-import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
@@ -53,9 +52,6 @@ public class AssetListItemSelectorReturnTypeResolver
 			"classNameId", _portal.getClassNameId(AssetListEntry.class)
 		).put(
 			"classPK", assetListEntry.getAssetListEntryId()
-		).put(
-			"infoListProviderKey",
-			AssetListWebKeys.ASSET_LIST_INFO_LIST_PROVIDER_KEY
 		).put(
 			"title", assetListEntry.getTitle()
 		).toString();

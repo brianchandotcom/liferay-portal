@@ -28,6 +28,10 @@ public class SortTermDisplayContext {
 		return _label;
 	}
 
+	public String getLanguageLabel() {
+		return _languageLabel;
+	}
+
 	public boolean isSelected() {
 		return _selected;
 	}
@@ -40,12 +44,17 @@ public class SortTermDisplayContext {
 		_label = label;
 	}
 
+	public void setLanguageLabel(String languageLabel) {
+		_languageLabel = languageLabel;
+	}
+
 	public void setSelected(boolean selected) {
 		_selected = selected;
 	}
 
 	private String _field;
 	private String _label;
+	private String _languageLabel;
 	private boolean _selected;
 
 }

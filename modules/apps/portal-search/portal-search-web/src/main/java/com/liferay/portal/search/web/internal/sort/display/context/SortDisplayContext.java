@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.internal.sort.display.context;
 
+import com.liferay.portal.search.web.internal.sort.configuration.SortPortletInstanceConfiguration;
+
 import java.util.List;
 
 /**
@@ -21,6 +23,10 @@ import java.util.List;
  * @author André de Oliveira
  */
 public class SortDisplayContext {
+
+	public long getDisplayStyleGroupId() {
+		return _displayStyleGroupId;
+	}
 
 	public String getParameterName() {
 		return _parameterName;
@@ -30,12 +36,22 @@ public class SortDisplayContext {
 		return _parameterValue;
 	}
 
+	public SortPortletInstanceConfiguration
+		getSortPortletInstanceConfiguration() {
+
+		return _sortPortletInstanceConfiguration;
+	}
+
 	public List<SortTermDisplayContext> getSortTermDisplayContexts() {
 		return _sortTermDisplayContexts;
 	}
 
 	public boolean isRenderNothing() {
 		return _renderNothing;
+	}
+
+	public void setDisplayStyleGroupId(long displayStyleGroupId) {
+		_displayStyleGroupId = displayStyleGroupId;
 	}
 
 	public void setParameterName(String parameterName) {
@@ -50,15 +66,23 @@ public class SortDisplayContext {
 		_renderNothing = renderNothing;
 	}
 
+	public void setSortPortletInstanceConfiguration(
+		SortPortletInstanceConfiguration sortPortletInstanceConfiguration) {
+
+		_sortPortletInstanceConfiguration = sortPortletInstanceConfiguration;
+	}
+
 	public void setSortTermDisplayContexts(
 		List<SortTermDisplayContext> sortTermDisplayContexts) {
 
 		_sortTermDisplayContexts = sortTermDisplayContexts;
 	}
 
+	private long _displayStyleGroupId;
 	private String _parameterName;
 	private String _parameterValue;
 	private boolean _renderNothing;
+	private SortPortletInstanceConfiguration _sortPortletInstanceConfiguration;
 	private List<SortTermDisplayContext> _sortTermDisplayContexts;
 
 }

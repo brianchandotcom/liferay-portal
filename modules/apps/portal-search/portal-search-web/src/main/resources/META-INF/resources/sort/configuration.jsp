@@ -17,6 +17,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 
@@ -24,6 +25,9 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.search.web.internal.sort.configuration.SortPortletInstanceConfiguration" %><%@
+page import="com.liferay.portal.search.web.internal.sort.display.context.SortDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.sort.portlet.SortPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.sort.portlet.SortPortletPreferencesImpl" %><%@
 page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
@@ -31,6 +35,10 @@ page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUt
 <portlet:defineObjects />
 
 <%
+SortDisplayContext sortDisplayContext = (SortDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
+
+SortPortletInstanceConfiguration sortPortletInstanceConfiguration = sortDisplayContext.getSortPortletInstanceConfiguration();
+
 SortPortletPreferences sortPortletPreferences = new SortPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));
 
 JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
@@ -50,7 +58,26 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<aui:fieldset id='<%= renderResponse.getNamespace() + "fieldsId" %>'>
+			<liferay-frontend:fieldset
+				collapsible="<%= true %>"
+				label="display-settings"
+			>
+				<div class="display-template">
+					<liferay-ddm:template-selector
+						className="<%= SortDisplayContext.class.getName() %>"
+						displayStyle="<%= sortPortletInstanceConfiguration.displayStyle() %>"
+						displayStyleGroupId="<%= sortDisplayContext.getDisplayStyleGroupId() %>"
+						refreshURL="<%= configurationRenderURL %>"
+						showEmptyOption="<%= true %>"
+					/>
+				</div>
+			</liferay-frontend:fieldset>
+
+			<liferay-frontend:fieldset
+				collapsible="<%= true %>"
+				id='<%= renderResponse.getNamespace() + "fieldsId" %>'
+				label="advanced-configuration"
+			>
 
 				<%
 				int[] fieldsIndexes = new int[fieldsJSONArray.length()];
@@ -76,7 +103,7 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 				<aui:input cssClass="fields-input" name="<%= PortletPreferencesJspUtil.getInputName(SortPortletPreferences.PREFERENCE_KEY_FIELDS) %>" type="hidden" value="<%= sortPortletPreferences.getFieldsString() %>" />
 
 				<aui:input name="fieldsIndexes" type="hidden" value="<%= StringUtil.merge(fieldsIndexes) %>" />
-			</aui:fieldset>
+			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

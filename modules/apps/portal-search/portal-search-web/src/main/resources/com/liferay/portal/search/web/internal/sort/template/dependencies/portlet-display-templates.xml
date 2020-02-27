@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key>sort-compact-ftl</template-key>
+		<name>portlet-display-template-name-compact-layout</name>
+		<description>portlet-display-template-description-compact</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portal/search/web/internal/sort/template/dependencies/portlet_display_template_compact.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

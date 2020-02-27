@@ -40,6 +40,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _allowNavigation;
 	}
 
+	public boolean isIncludeAllVisibleGroups() {
+		return _includeAllVisibleGroups;
+	}
+
 	public boolean isIncludeFormsSite() {
 		return _includeFormsSite;
 	}
@@ -54,6 +58,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public void setAllowNavigation(boolean allowNavigation) {
 		_allowNavigation = allowNavigation;
+	}
+
+	public void setIncludeAllVisibleGroups(boolean includeAllVisibleGroups) {
+		_includeAllVisibleGroups = includeAllVisibleGroups;
 	}
 
 	public void setIncludeFormsSite(boolean includeFormsSite) {
@@ -77,6 +85,7 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	private boolean _allowNavigation = true;
+	private boolean _includeAllVisibleGroups;
 	private boolean _includeFormsSite;
 	private boolean _includeUserPersonalSite;
 	private String _portletId;

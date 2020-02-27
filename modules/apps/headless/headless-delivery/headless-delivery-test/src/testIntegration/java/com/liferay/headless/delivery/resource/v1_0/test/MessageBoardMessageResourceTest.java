@@ -62,6 +62,12 @@ public class MessageBoardMessageResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGetSiteMessageBoardMessageByFriendlyUrlPath() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetSiteMessageBoardMessagesPageWithSortInteger() {
 	}
 
@@ -75,6 +81,12 @@ public class MessageBoardMessageResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetMessageBoardMessage() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteMessageBoardMessageByFriendlyUrlPath() {
 	}
 
 	@Ignore

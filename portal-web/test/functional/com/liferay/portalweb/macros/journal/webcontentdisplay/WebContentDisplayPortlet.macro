@@ -482,13 +482,13 @@ definition {
 	macro viewDefaultMessage {
 		Alert.viewInfoMessageSpecific(infoMessage = "This application is not visible to users yet");
 
-		Alert.viewInfoMessageSpecific(infoMessage = "Select Web Content to make it visible");
+		Alert.viewInfoMessageSpecific(infoMessage = "Select web content to make it visible");
 	}
 
 	macro viewDeletedArticle {
 		Alert.viewWarningSpecific(warningMessage = "The selected web content no longer exists.");
 
-		Alert.viewWarningSpecific(warningMessage = "Do you want to Select Another Web Content?");
+		Alert.viewWarningSpecific(warningMessage = "Do you want to Select Another web content?");
 	}
 
 	macro viewEnabledFileTypesPGViaWCD {

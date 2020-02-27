@@ -1780,6 +1780,8 @@ definition {
 	@description = "This is a use case for LPS-88571."
 	@priority = "3"
 	test ImportSiteWithMissingReferenceOfPreloadedEntry {
+		property test.name.skip.portal.instance = "ExportImport#ImportSiteWithMissingReferenceOfPreloadedEntry";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Global");
 
 		DMNavigator.gotoDocumentType();
@@ -1858,6 +1860,28 @@ definition {
 		LAR.importSiteCP(
 			importValidationMissingItem = "Document Type",
 			larFileName = "${larFileName}",
+			siteName = "Site C");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Export/Import",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "false",
+			settingFieldName = "Validate Missing References");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Site C");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
 			siteName = "Site C");
 	}
 

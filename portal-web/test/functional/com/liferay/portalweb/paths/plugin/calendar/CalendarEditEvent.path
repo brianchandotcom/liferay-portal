@@ -429,7 +429,7 @@
 </tr>
 <tr>
 	<td>CATEGORIZATION_TAG_SPECIFIC</td>
-	<td>//li[contains(@class,'textboxlistentry')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagText}')] | //span[contains(@id, 'item-tag') and contains (., '${key_tagText}')]</td>
+	<td>//li[contains(@class,'textboxlistentry')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagText}')] | //span[contains(text(),'${key_tagText}')]</td>
 	<td></td>
 </tr>
 <tr>

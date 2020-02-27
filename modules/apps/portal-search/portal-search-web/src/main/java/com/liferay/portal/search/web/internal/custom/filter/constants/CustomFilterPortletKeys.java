@@ -20,6 +20,9 @@ package com.liferay.portal.search.web.internal.custom.filter.constants;
  */
 public class CustomFilterPortletKeys {
 
+	public static final String CONFIGURATION_DISPLAY_CONTEXT =
+		"CONFIGURATION_DISPLAY_CONTEXT";
+
 	public static final String CUSTOM_FILTER =
 		"com_liferay_portal_search_web_internal_custom_filter_portlet_" +
 			"CustomFilterPortlet";

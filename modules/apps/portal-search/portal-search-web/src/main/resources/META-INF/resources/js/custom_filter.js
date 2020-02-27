@@ -30,7 +30,9 @@ AUI.add(
 
 			var applyButton = instance.form.one('.custom-filter-apply-button');
 
-			applyButton.on('click', A.bind(instance._onClick, instance));
+			if (applyButton) {
+				applyButton.on('click', A.bind(instance._onClick, instance));
+			}
 		};
 
 		A.mix(CustomFilter.prototype, {

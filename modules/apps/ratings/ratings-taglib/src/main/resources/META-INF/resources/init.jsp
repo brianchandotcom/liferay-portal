@@ -14,11 +14,18 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.ratings.kernel.RatingsType" %>
+
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 

@@ -20,11 +20,24 @@
 String className = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:className"));
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ratings:ratings:classPK"));
 String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:type"));
+Map<String, Object> data = new HashMap<>();
 %>
 
-<liferay-ui:ratings
-	className="<%= className %>"
-	classPK="<%= classPK %>"
-	inTrash="<%= false %>"
-	type="<%= type %>"
-/>
+<c:choose>
+	<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
+		<div class="ratings-taglib">
+			<react:component
+				data="<%= data %>"
+				module="js/components/RatingsLike.es"
+			/>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:ratings
+			className="<%= className %>"
+			classPK="<%= classPK %>"
+			inTrash="<%= false %>"
+			type="<%= type %>"
+		/>
+	</c:otherwise>
+</c:choose>

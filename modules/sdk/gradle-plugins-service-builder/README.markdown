@@ -127,7 +127,6 @@ Property Name | Type | Default Value | Description
 `sqlIndexesFileName` | `String` | `"indexes.sql"` | A name (relative to `sqlDir`) for the file in which the SQL index creation instructions are generated. It sets the `service.sql.indexes.file` argument.
 `sqlSequencesFileName` | `String` | `"sequences.sql"` | A name (relative to `sqlDir`) for the file in which the SQL sequence creation instructions are generated. It sets the `service.sql.sequences.file` argument.
 `targetEntityName` | `String` | `null` | If specified, it's the name of the entity for which Liferay Service Builder should generate the service. It sets the `service.target.entity.name` argument.
-`targetKernelVersion` | `String` | `null` | If specified, it's the target kernel version for which Liferay Service Builder should generate the service. It sets the `service.target.kernel.version` argument.
 `testDir` | `File` | `null` | If specified, it's a directory where integration test Java source files are generated. It sets the `service.test.dir` argument.
 `uadDir` | `File` | `null` | A directory where the UAD (user-associated data) Java source files are generated. It sets the `service.uad.dir` argument.
 `uadTestIntegrationDir` | `File` | `null` | A directory where integration test UAD (user-associated data) Java source files are generated. It sets the `service.uad.test.integration.dir` argument.

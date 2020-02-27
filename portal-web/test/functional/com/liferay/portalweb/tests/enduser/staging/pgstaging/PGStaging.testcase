@@ -767,6 +767,8 @@ definition {
 			siteName = "Remote Site");
 
 		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
+
+		WebContent.viewNoEditWCViaWCD(webContentContent = "Web Content Content");
 	}
 
 	@description = "This is a use case for LPS-80295."

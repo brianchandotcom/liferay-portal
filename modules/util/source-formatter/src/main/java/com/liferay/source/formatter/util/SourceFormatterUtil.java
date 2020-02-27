@@ -178,6 +178,27 @@ public class SourceFormatterUtil {
 			recentChangesFileNames, pathMatchers);
 	}
 
+	public static String getDocumentationURLString(Class<?> checkClass) {
+		String documentationURLString = _getDocumentationURLString(
+			checkClass.getSimpleName());
+
+		if (documentationURLString != null) {
+			return documentationURLString;
+		}
+
+		Class<?> superclass = checkClass.getSuperclass();
+
+		String className = superclass.getSimpleName();
+
+		documentationURLString = _getDocumentationURLString(className);
+
+		if ((documentationURLString != null) || !className.startsWith("Base")) {
+			return documentationURLString;
+		}
+
+		return _getDocumentationURLString(className.substring(4));
+	}
+
 	public static File getFile(String baseDirName, String fileName, int level) {
 		for (int i = 0; i < level; i++) {
 			File file = new File(baseDirName + fileName);
@@ -215,21 +236,6 @@ public class SourceFormatterUtil {
 			markdownFileName, TextFormatter.N);
 
 		return markdownFileName + ".markdown";
-	}
-
-	public static String getMarkdownURLString(String checkName) {
-		String markdownFileName = getMarkdownFileName(checkName);
-
-		ClassLoader classLoader = SourceFormatterUtil.class.getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"documentation/checks/" + markdownFileName);
-
-		if (inputStream != null) {
-			return _DOCUMENTATION_URL + markdownFileName;
-		}
-
-		return null;
 	}
 
 	public static File getPortalDir(String baseDirName) {
@@ -493,6 +499,21 @@ public class SourceFormatterUtil {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	private static String _getDocumentationURLString(String checkName) {
+		String markdownFileName = getMarkdownFileName(checkName);
+
+		ClassLoader classLoader = SourceFormatterUtil.class.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"documentation/checks/" + markdownFileName);
+
+		if (inputStream != null) {
+			return _DOCUMENTATION_URL + markdownFileName;
+		}
+
+		return null;
 	}
 
 	private static PathMatchers _getPathMatchers(

@@ -736,39 +736,64 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 	private boolean _referencesNonfinalVariable(DetailAST detailAST) {
 		List<String> variableNames = _getVariableNames(detailAST);
 
-		DetailAST previousDetailAST = detailAST.getPreviousSibling();
-		DetailAST parentDetailAST = detailAST.getParent();
+		for (String variableName : variableNames) {
+			DetailAST variableTypeDetailAST = getVariableTypeDetailAST(
+				detailAST, variableName);
 
-		while (true) {
-			if (previousDetailAST != null) {
-				if (previousDetailAST.getType() == TokenTypes.EXPR) {
-					DetailAST firstChildDetailAST =
-						previousDetailAST.getFirstChild();
+			if (variableTypeDetailAST == null) {
+				return true;
+			}
 
-					if (firstChildDetailAST.getType() == TokenTypes.ASSIGN) {
-						DetailAST identDetailAST =
-							firstChildDetailAST.findFirstToken(
-								TokenTypes.IDENT);
+			DetailAST variableDefinitionDetailAST =
+				variableTypeDetailAST.getParent();
 
-						if (variableNames.contains(identDetailAST.getText())) {
-							return true;
-						}
-					}
+			DetailAST parentDetailAST = variableDefinitionDetailAST.getParent();
+
+			if (parentDetailAST.getType() == TokenTypes.OBJBLOCK) {
+				DetailAST modifiersDetailAST =
+					variableDefinitionDetailAST.findFirstToken(
+						TokenTypes.MODIFIERS);
+
+				if ((modifiersDetailAST == null) ||
+					!modifiersDetailAST.branchContains(TokenTypes.FINAL)) {
+
+					return true;
 				}
-
-				previousDetailAST = previousDetailAST.getPreviousSibling();
 
 				continue;
 			}
 
-			if (parentDetailAST == null) {
-				return false;
+			List<DetailAST> variableCallerDetailASTList =
+				getVariableCallerDetailASTList(
+					variableDefinitionDetailAST, variableName);
+
+			for (DetailAST variableCallerDetailAST :
+					variableCallerDetailASTList) {
+
+				parentDetailAST = variableCallerDetailAST.getParent();
+
+				if ((parentDetailAST.getType() == TokenTypes.ASSIGN) ||
+					(parentDetailAST.getType() == TokenTypes.BAND_ASSIGN) ||
+					(parentDetailAST.getType() == TokenTypes.BOR_ASSIGN) ||
+					(parentDetailAST.getType() == TokenTypes.BXOR_ASSIGN) ||
+					(parentDetailAST.getType() == TokenTypes.DEC) ||
+					(parentDetailAST.getType() == TokenTypes.DIV_ASSIGN) ||
+					(parentDetailAST.getType() == TokenTypes.INC) ||
+					(parentDetailAST.getType() == TokenTypes.MINUS_ASSIGN) ||
+					(parentDetailAST.getType() == TokenTypes.MOD_ASSIGN) ||
+					(parentDetailAST.getType() == TokenTypes.PLUS_ASSIGN) ||
+					(parentDetailAST.getType() == TokenTypes.POST_DEC) ||
+					(parentDetailAST.getType() == TokenTypes.POST_INC) ||
+					(parentDetailAST.getType() == TokenTypes.SL_ASSIGN) ||
+					(parentDetailAST.getType() == TokenTypes.SR_ASSIGN) ||
+					(parentDetailAST.getType() == TokenTypes.STAR_ASSIGN)) {
+
+					return true;
+				}
 			}
-
-			previousDetailAST = parentDetailAST;
-
-			parentDetailAST = parentDetailAST.getParent();
 		}
+
+		return false;
 	}
 
 	private static final String _CHECK_INLINE = "checkInline";

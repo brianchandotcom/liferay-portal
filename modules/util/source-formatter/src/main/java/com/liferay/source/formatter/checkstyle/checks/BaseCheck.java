@@ -437,7 +437,10 @@ public abstract class BaseCheck extends AbstractCheck {
 		boolean globalVariable = false;
 		DetailAST rangeDetailAST = null;
 
-		if (parentDetailAST.getType() == TokenTypes.OBJBLOCK) {
+		if (parentDetailAST.getType() == TokenTypes.FOR_INIT) {
+			rangeDetailAST = parentDetailAST.getParent();
+		}
+		else if (parentDetailAST.getType() == TokenTypes.OBJBLOCK) {
 			rangeDetailAST = parentDetailAST;
 
 			globalVariable = true;
@@ -453,7 +456,8 @@ public abstract class BaseCheck extends AbstractCheck {
 			rangeDetailAST = parentDetailAST.getLastChild();
 		}
 
-		if ((rangeDetailAST.getType() != TokenTypes.OBJBLOCK) &&
+		if ((rangeDetailAST.getType() != TokenTypes.LITERAL_FOR) &&
+			(rangeDetailAST.getType() != TokenTypes.OBJBLOCK) &&
 			(rangeDetailAST.getType() != TokenTypes.SLIST)) {
 
 			return variableCallerDetailASTList;

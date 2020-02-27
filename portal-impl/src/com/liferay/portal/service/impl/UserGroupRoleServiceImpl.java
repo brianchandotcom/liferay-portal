@@ -129,6 +129,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds)
 		throws PortalException {
 
+		List<UserGroupRole> filteredDepotUserGroupRoles = new ArrayList<>();
 		List<UserGroupRole> filteredOrganizationUserGroupRoles =
 			new ArrayList<>();
 		List<UserGroupRole> filteredSiteUserGroupRoles = new ArrayList<>();
@@ -161,10 +162,14 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 				filteredSiteUserGroupRoles.add(userGroupRole);
 			}
+			else if (role.getType() == RoleConstants.TYPE_DEPOT) {
+				filteredDepotUserGroupRoles.add(userGroupRole);
+			}
 		}
 
 		if (filteredOrganizationUserGroupRoles.isEmpty() &&
-			filteredSiteUserGroupRoles.isEmpty()) {
+			filteredSiteUserGroupRoles.isEmpty() &&
+			filteredDepotUserGroupRoles.isEmpty()) {
 
 			return;
 		}
@@ -200,6 +205,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
 
+		List<UserGroupRole> filteredDepotUserGroupRoles = new ArrayList<>();
 		List<UserGroupRole> filteredUserGroupRoles = new ArrayList<>();
 
 		Role role = rolePersistence.findByPrimaryKey(roleId);
@@ -227,9 +233,14 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 				filteredUserGroupRoles.add(userGroupRole);
 			}
+			else if (role.getType() == RoleConstants.TYPE_DEPOT) {
+				filteredDepotUserGroupRoles.add(userGroupRole);
+			}
 		}
 
-		if (filteredUserGroupRoles.isEmpty()) {
+		if (filteredUserGroupRoles.isEmpty() &&
+			filteredDepotUserGroupRoles.isEmpty()) {
+
 			return;
 		}
 

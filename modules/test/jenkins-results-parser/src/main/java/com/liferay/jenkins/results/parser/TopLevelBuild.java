@@ -223,9 +223,19 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	public Element getJenkinsReportElement() {
-		return Dom4JUtil.getNewElement(
-			"html", null, getJenkinsReportHeadElement(),
-			getJenkinsReportBodyElement());
+		long start = System.currentTimeMillis();
+
+		try {
+			return Dom4JUtil.getNewElement(
+				"html", null, getJenkinsReportHeadElement(),
+				getJenkinsReportBodyElement());
+		}
+		finally {
+			String duration = JenkinsResultsParserUtil.toDurationString(
+				System.currentTimeMillis() - start);
+
+			System.out.println("Jenkins reported generated in " + duration);
+		}
 	}
 
 	public String getJenkinsReportURL() {

@@ -158,15 +158,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public void deleteAllByGroup(long groupId) throws PortalException {
 		Group group = groupLocalService.getGroup(groupId);
 
-		List<DLFolder> dlFolders = dlFolderPersistence.findByGroupId(groupId);
+		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
+			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		for (DLFolder dlFolder : dlFolders) {
-			if (dlFolder.getParentFolderId() !=
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-				continue;
-			}
-
 			dlFolderLocalService.deleteFolder(dlFolder);
 		}
 

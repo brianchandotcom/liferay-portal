@@ -26,26 +26,32 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -858,14 +864,21 @@ public class OrganizationLocalServiceTest {
 	public void testSearchOrganizationsWithOrganizationsTreeParameter()
 		throws Exception {
 
-		testSearchOrganizationsWithOrganizationsTreeParameter(false);
+		testSearchOrganizationsWithOrganizationsTreeParameter(false, false);
 	}
 
 	@Test
 	public void testSearchOrganizationsWithOrganizationsTreeParameterAsAdminUser()
 		throws Exception {
 
-		testSearchOrganizationsWithOrganizationsTreeParameter(true);
+		testSearchOrganizationsWithOrganizationsTreeParameter(true, false);
+	}
+
+	@Test
+	public void testSearchOrganizationsWithOrganizationsTreeParameterAsChildOrganizationManager()
+		throws Exception {
+
+		testSearchOrganizationsWithOrganizationsTreeParameter(false, true);
 	}
 
 	protected List<Object> getOrganizationsAndUsers(Organization organization) {
@@ -893,7 +906,7 @@ public class OrganizationLocalServiceTest {
 	}
 
 	protected void testSearchOrganizationsWithOrganizationsTreeParameter(
-			boolean searchAsAdminUser)
+			boolean searchAsAdminUser, boolean searchAsManager)
 		throws Exception {
 
 		Organization rootOrganization = OrganizationTestUtil.addOrganization();
@@ -928,6 +941,18 @@ public class OrganizationLocalServiceTest {
 				RoleConstants.ORGANIZATION_ADMINISTRATOR);
 		}
 
+		if (searchAsManager) {
+			_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+			RoleTestUtil.addResourcePermission(
+				_role, Organization.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(_user.getCompanyId()),
+				ActionKeys.MANAGE_SUBORGANIZATIONS);
+
+			_userLocalService.addRoleUser(_role.getRoleId(), _user);
+		}
+
 		LinkedHashMap<String, Object> organizationParams =
 			LinkedHashMapBuilder.<String, Object>put(
 				"organizationsTree", _user.getOrganizations(true)
@@ -941,7 +966,7 @@ public class OrganizationLocalServiceTest {
 
 		int expectedCount = 1;
 
-		if (searchAsAdminUser) {
+		if (searchAsAdminUser || searchAsManager) {
 			expectedCount = 2;
 		}
 
@@ -954,7 +979,7 @@ public class OrganizationLocalServiceTest {
 
 		expectedSearchResults.add(organization);
 
-		if (searchAsAdminUser) {
+		if (searchAsAdminUser || searchAsManager) {
 			expectedSearchResults.add(suborganization);
 		}
 
@@ -1003,6 +1028,12 @@ public class OrganizationLocalServiceTest {
 	private PermissionChecker _originalPermissionChecker;
 
 	@DeleteAfterTestRun
+	private Role _role;
+
+	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

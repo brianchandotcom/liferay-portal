@@ -374,7 +374,7 @@ definition {
 			locator1 = "Sharing#EMAIL_VIEW_DOCUMENT_BUTTON",
 			value1 = "View Document");
 
-		SelectWindow(locator1 = "title=- ${siteName}");
+		SelectWindow(locator1 = "title=- Control Panel - ${siteName}");
 
 		DMDocumentSharing.viewDocumentViaSharedContent(
 			contentSharingPermission = "View",

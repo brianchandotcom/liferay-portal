@@ -38,13 +38,22 @@ public abstract class BaseNodeValidator<T extends Node>
 
 		doValidate(definition, node);
 
-		validateTransitions(node.getOutgoingTransitions());
-
+		validateName(node);
 		validateNotifications(node);
+		validateTransitions(node.getOutgoingTransitions());
 	}
 
 	protected abstract void doValidate(Definition definition, T node)
 		throws KaleoDefinitionValidationException;
+
+	protected void validateName(T node)
+		throws KaleoDefinitionValidationException {
+		String name = node.getName();
+
+		if(name.length() > 200) {
+			throw new KaleoDefinitionValidationException.MustSetValidNodeNameLength(200, name);
+		}
+	}
 
 	protected void validateNotifications(T node)
 		throws KaleoDefinitionValidationException {

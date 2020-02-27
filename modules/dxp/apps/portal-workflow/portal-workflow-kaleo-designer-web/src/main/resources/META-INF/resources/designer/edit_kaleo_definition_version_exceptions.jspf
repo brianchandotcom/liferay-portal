@@ -137,6 +137,16 @@
 
 <liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetTerminalStateNode.class %>" message="you-must-define-an-end-node" />
 
+<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetValidNodeNameLength.class %>">
+
+	<%
+		KaleoDefinitionValidationException.MustSetValidNodeNameLength
+			msvnnl = (KaleoDefinitionValidationException.MustSetValidNodeNameLength)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= new Object[] {msvnnl.getNode(), msvnnl.getLength()} %>" key="the-x-node-name-exceeds-the-length-limit-of-x-characters" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= KaleoDefinitionValidationException.UnbalancedForkAndJoinNode.class %>">
 
 	<%

@@ -720,8 +720,15 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		Class<?> superclass = checkClass.getSuperclass();
 
-		return SourceFormatterUtil.getMarkdownURLString(
-			superclass.getSimpleName());
+		String className = superclass.getSimpleName();
+
+		markdownURLString = SourceFormatterUtil.getMarkdownURLString(className);
+
+		if ((markdownURLString != null) || !className.startsWith("Base")) {
+			return markdownURLString;
+		}
+
+		return SourceFormatterUtil.getMarkdownURLString(className.substring(4));
 	}
 
 	private String _getVariableTypeName(

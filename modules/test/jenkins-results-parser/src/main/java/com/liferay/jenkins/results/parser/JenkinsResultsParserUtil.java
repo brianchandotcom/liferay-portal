@@ -49,6 +49,7 @@ import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.security.KeyManagementException;
@@ -113,6 +114,56 @@ public class JenkinsResultsParserUtil {
 	};
 
 	public static boolean debug;
+
+	public static void append(File file, String content) throws IOException {
+		if (debug) {
+			System.out.println(
+				combine(
+					"Append to file ", file.getPath(), " with length ",
+					String.valueOf(content.length())));
+		}
+
+		File parentDir = file.getParentFile();
+
+		if ((parentDir != null) && !parentDir.exists()) {
+			if (debug) {
+				System.out.println("Make parent directories for " + file);
+			}
+
+			parentDir.mkdirs();
+		}
+
+		try (OutputStream outputStream = Files.newOutputStream(
+				Paths.get(file.toURI()), StandardOpenOption.CREATE,
+				StandardOpenOption.APPEND)) {
+
+			outputStream.write(content.getBytes());
+		}
+	}
+
+	public static void appendToCacheFile(String key, String content) {
+		File cacheFile = _getCacheFile(key);
+
+		boolean cacheFileCreated = false;
+
+		if (!cacheFile.exists()) {
+			cacheFileCreated = true;
+		}
+
+		try {
+			append(cacheFile, content);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to append to cache file", ioException);
+		}
+
+		if (cacheFileCreated) {
+			System.out.println("Created cache file in " + cacheFile.getPath());
+
+			cacheFile.deleteOnExit();
+		}
+	}
 
 	public static void clearCache() {
 		File cacheDirectory = new File(
@@ -791,6 +842,23 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return Arrays.asList(propertyContent.split(","));
+	}
+
+	public static BufferedReader getCachedFileBufferedReader(String key) {
+		File cachedTextFile = _getCacheFile(key);
+
+		if (!cachedTextFile.exists()) {
+			return null;
+		}
+
+		try {
+			return Files.newBufferedReader(Paths.get(cachedTextFile.toURI()));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get buffered reader for " + cachedTextFile.getPath(),
+				ioException);
+		}
 	}
 
 	public static String getCachedText(String key) {
@@ -2724,17 +2792,11 @@ public class JenkinsResultsParserUtil {
 				"Write file " + file + " with length " + content.length());
 		}
 
-		File parentDir = file.getParentFile();
-
-		if ((parentDir != null) && !parentDir.exists()) {
-			if (debug) {
-				System.out.println("Make parent directories for " + file);
-			}
-
-			parentDir.mkdirs();
+		if (file.exists()) {
+			file.delete();
 		}
 
-		Files.write(Paths.get(file.toURI()), content.getBytes());
+		append(file, content);
 	}
 
 	public static void write(String path, String content) throws IOException {

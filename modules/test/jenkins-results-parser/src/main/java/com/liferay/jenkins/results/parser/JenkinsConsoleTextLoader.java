@@ -15,20 +15,12 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,17 +35,9 @@ public class JenkinsConsoleTextLoader {
 	public JenkinsConsoleTextLoader(String buildURL) {
 		this.buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
 
-		FileSystem fileSystem = FileSystems.getDefault();
-
-		localCachedLogFilePath = fileSystem.getPath(
-			System.getProperty("java.io.tmpdir"), "jenkins-cached-files",
-			JenkinsResultsParserUtil.combine(
-				"jenkins_console_log-", String.valueOf(buildURL.hashCode()),
-				".log"));
-
-		File localCachedLogFile = localCachedLogFilePath.toFile();
-
-		localCachedLogFile.deleteOnExit();
+		consoleLogFileKey = JenkinsResultsParserUtil.combine(
+			"jenkins_console_log-", String.valueOf(buildURL.hashCode()),
+			".log");
 
 		serverLogSize = 0;
 	}
@@ -71,15 +55,7 @@ public class JenkinsConsoleTextLoader {
 
 		update();
 
-		try {
-			return new String(Files.readAllBytes(localCachedLogFilePath));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to read cached log file " +
-					localCachedLogFilePath.toString(),
-				ioException);
-		}
+		return JenkinsResultsParserUtil.getCachedText(consoleLogFileKey);
 	}
 
 	public int getLineCount() {
@@ -97,80 +73,67 @@ public class JenkinsConsoleTextLoader {
 	protected void update() {
 		boolean hasMoreData = true;
 
-		try (OutputStream outputStream = Files.newOutputStream(
-				localCachedLogFilePath, StandardOpenOption.CREATE,
-				StandardOpenOption.APPEND)) {
+		while (hasMoreData) {
+			String url =
+				buildURL + "/logText/progressiveHtml?start=" + serverLogSize;
 
-			while (hasMoreData) {
-				String url =
-					buildURL + "/logText/progressiveHtml?start=" +
-						serverLogSize;
+			try {
+				URL urlObject = new URL(
+					JenkinsResultsParserUtil.getLocalURL(url));
 
-				try {
-					URL urlObject = new URL(
-						JenkinsResultsParserUtil.getLocalURL(url));
+				HttpURLConnection httpURLConnection =
+					(HttpURLConnection)urlObject.openConnection();
 
-					HttpURLConnection httpURLConnection =
-						(HttpURLConnection)urlObject.openConnection();
+				long latestServerLogSize = httpURLConnection.getHeaderFieldLong(
+					"X-Text-Size", serverLogSize);
 
-					long latestServerLogSize =
-						httpURLConnection.getHeaderFieldLong(
-							"X-Text-Size", serverLogSize);
+				if (latestServerLogSize == serverLogSize) {
+					break;
+				}
 
-					if (latestServerLogSize == serverLogSize) {
-						break;
+				try (BufferedReader bufferedReader = new BufferedReader(
+						new InputStreamReader(
+							httpURLConnection.getInputStream()))) {
+
+					String line = bufferedReader.readLine();
+
+					while (line != null) {
+						Matcher matcher = _anchorPattern.matcher(line);
+
+						line = matcher.replaceAll("$1") + "\n";
+
+						line = StringEscapeUtils.unescapeHtml(line);
+
+						JenkinsResultsParserUtil.appendToCacheFile(
+							consoleLogFileKey, line);
+
+						line = bufferedReader.readLine();
 					}
 
-					try (BufferedReader bufferedReader = new BufferedReader(
-							new InputStreamReader(
-								httpURLConnection.getInputStream()))) {
+					hasMoreData = Boolean.parseBoolean(
+						httpURLConnection.getHeaderField("X-More-Data"));
 
-						String line = bufferedReader.readLine();
-
-						while (line != null) {
-							Matcher matcher = _anchorPattern.matcher(line);
-
-							line = matcher.replaceAll("$1") + "\n";
-
-							line = StringEscapeUtils.unescapeHtml(line);
-
-							outputStream.write(line.getBytes());
-
-							line = bufferedReader.readLine();
-						}
-
-						hasMoreData = Boolean.parseBoolean(
-							httpURLConnection.getHeaderField("X-More-Data"));
-
-						serverLogSize = latestServerLogSize;
-					}
-				}
-				catch (MalformedURLException malformedURLException) {
-					throw new IllegalArgumentException(
-						"Invalid buildURL " + buildURL, malformedURLException);
-				}
-				catch (IOException ioException) {
-					System.out.println(
-						"Unable to update console log for build: " + buildURL);
-
-					ioException.printStackTrace();
-
-					return;
+					serverLogSize = latestServerLogSize;
 				}
 			}
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to create local cached log file output stream ",
-					localCachedLogFilePath.toString()),
-				ioException);
+			catch (MalformedURLException malformedURLException) {
+				throw new IllegalArgumentException(
+					"Invalid buildURL " + buildURL, malformedURLException);
+			}
+			catch (IOException ioException) {
+				System.out.println(
+					"Unable to update console log for build: " + buildURL);
+
+				ioException.printStackTrace();
+
+				return;
+			}
 		}
 	}
 
 	protected String buildURL;
+	protected String consoleLogFileKey;
 	protected boolean hasMoreData = true;
-	protected Path localCachedLogFilePath;
 	protected long serverLogSize;
 
 	private static final Pattern _anchorPattern = Pattern.compile(

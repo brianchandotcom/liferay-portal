@@ -377,7 +377,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_WEEK_WEEK_START_DAY</td>
-	<td>xpath=(//tr[contains(@class,'scheduler-view-day-header')]//th[@class='scheduler-view-day-header-day']/a/span)[1]</td>
+	<td>xpath=(//tr[contains(@class,'scheduler-view-day-header')]//th[@class='scheduler-view-day-header-day']/a)[1]</td>
 	<td></td>
 </tr>
 <tr>

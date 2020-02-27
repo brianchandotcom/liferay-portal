@@ -13,7 +13,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {ClayInput} from '@clayui/form';
+import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -23,21 +23,47 @@ import {useDebounceCallback} from '../utils/utils.es';
 
 export default withRouter(
 	({
-		history,
-		match: {
-			params: {sectionId},
-		},
-		searchChange,
-	}) => {
+		 history,
+		 match: {
+			 params: {sectionId},
+		 },
+		 filterChange,
+		 searchChange,
+	 }) => {
 		const context = useContext(AppContext);
 
 		const [debounceCallback] = useDebounceCallback(value => {
 			searchChange(value);
 		}, 500);
 
+		const item = value => ({value, label: Liferay.Language.get(value)});
+
+		const options = [
+			item('latest-created'),
+			item('latest-edited'),
+			item('week'),
+			item('month')
+		];
+
 		return (
-			<div className="autofit-padded-no-gutters autofit-row autofit-row-center">
-				<div className="autofit-col autofit-col-expand" />
+			<div
+				className="autofit-padded-no-gutters autofit-row autofit-row-center">
+
+				<div className="d-flex">
+					{Liferay.Language.get('filter-by')}
+
+					<ClaySelect
+						onChange={filterChange}
+					>
+						{options.map(item => (
+							<ClaySelect.Option
+								key={item.value}
+								label={item.label}
+								value={item.value}
+							/>
+						))}
+					</ClaySelect>
+				</div>
 
 				<div className="d-flex">
 					<ClayInput.Group>
@@ -84,7 +110,7 @@ export default withRouter(
 									)
 								}
 							>
-								<ClayIcon symbol="pencil" />
+								<ClayIcon symbol="pencil"/>
 
 								<span className="sr-only">
 									{Liferay.Language.get('ask-question')}

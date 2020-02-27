@@ -86,7 +86,7 @@ export default ({
 			message => message.showAsAnswer
 		).length > 0;
 
-	const filterBy = type => {
+	const filterChange = type => {
 		if (type === 'modified') {
 			setActiveFilter('modified');
 			renderQuestions(loadThreads());
@@ -130,46 +130,9 @@ export default ({
 	return (
 		<section className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
 			<QuestionsNavigationBar
-				searchChange={search => setSearch(search)}
+				filterChange={filterChange}
+				searchChange={setSearch}
 			/>
-
-			<ClayButton.Group>
-				<ClayButton
-					displayType={
-						activeFilter === 'created' ? 'primary' : 'secondary'
-					}
-					onClick={() => filterBy('created')}
-				>
-					{Liferay.Language.get('latest-created')}
-				</ClayButton>
-
-				<ClayButton
-					displayType={
-						activeFilter === 'modified' ? 'primary' : 'secondary'
-					}
-					onClick={() => filterBy('modified')}
-				>
-					{Liferay.Language.get('latest-edited')}
-				</ClayButton>
-
-				<ClayButton
-					displayType={
-						activeFilter === 'week' ? 'primary' : 'secondary'
-					}
-					onClick={() => filterBy('week')}
-				>
-					{Liferay.Language.get('week')}
-				</ClayButton>
-
-				<ClayButton
-					displayType={
-						activeFilter === 'month' ? 'primary' : 'secondary'
-					}
-					onClick={() => filterBy('month')}
-				>
-					{Liferay.Language.get('month')}
-				</ClayButton>
-			</ClayButton.Group>
 
 			{loading ? (
 				<ClayLoadingIndicator />

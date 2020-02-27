@@ -23,7 +23,7 @@ export default withRouter(({history, location, match: {url}}) => {
 	return (
 		<>
 			{location.pathname !== '/' && (
-				<div className="align-items-center d-flex justify-content-between">
+				<div className="align-items-center d-flex justify-content-between questions-navigation">
 					<ClayNavigationBar triggerLabel="Questions">
 						<ClayNavigationBar.Item
 							active={!isActive('tags')}

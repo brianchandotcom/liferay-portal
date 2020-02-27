@@ -30,4 +30,6 @@ public interface InfoListProviderTracker {
 
 	public List<InfoListProvider> getInfoListProviders(Class<?> itemClass);
 
+	public List<InfoListProvider> getInfoListProviders(String itemClassName);
+
 }

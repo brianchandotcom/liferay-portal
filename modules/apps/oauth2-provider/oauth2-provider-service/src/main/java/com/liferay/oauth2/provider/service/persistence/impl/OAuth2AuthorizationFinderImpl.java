@@ -53,17 +53,18 @@ public class OAuth2AuthorizationFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_PURGE_DATE);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			q.addEntity("OAuth2Authorization", OAuth2AuthorizationImpl.class);
+			sqlQuery.addEntity(
+				"OAuth2Authorization", OAuth2AuthorizationImpl.class);
 
-			qPos.add(purgeDate);
-			qPos.add(purgeDate);
+			queryPos.add(purgeDate);
+			queryPos.add(purgeDate);
 
 			return (List<OAuth2Authorization>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

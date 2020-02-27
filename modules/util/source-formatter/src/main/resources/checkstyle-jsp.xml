@@ -178,9 +178,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.FactoryCheck">
 			<message key="factory.use" value="Use ''{0}'' to create new instance of ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.NestedIfStatementCheck">
-			<message key="if.statements.combine" value="Combine nested if-statements" />
-		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.InstanceofOrderCheck">
 			<message key="instanceof.order" value="''{0}'' should come before ''{1}''" />
 		</module>
@@ -226,6 +223,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingParenthesesCheck">
 			<message key="parentheses.missing.1" value="Missing parentheses between the ''{0}'' operator and the ''{1}'' operator" />
 			<message key="parentheses.missing.2" value="Missing parentheses around the {0} hand side argument of the ''{1}'' operator" />
+		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.NestedIfStatementCheck">
+			<message key="if.statements.combine" value="Combine nested if-statements" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.NumberSuffixCheck">
 			<message key="suffix.incorrect" value="Use uppercase ''{0}'' as suffix for the type ''{1}''" />

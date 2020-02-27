@@ -106,6 +106,12 @@ export default function LinkPanel({item}) {
 			const editableProcessorValues =
 				editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
 
+			const config = Object.keys(newConfig).length
+				? {
+						...newConfig,
+				  }
+				: {};
+
 			const nextEditableValues = {
 				...editableValues,
 
@@ -113,10 +119,7 @@ export default function LinkPanel({item}) {
 					...editableProcessorValues,
 					[editableId]: {
 						...editableProcessorValues[editableId],
-						config: {
-							...newConfig,
-							mapperType: 'link',
-						},
+						config,
 					},
 				},
 			};

@@ -79,19 +79,30 @@ export default ({
 				`/o/data-engine/v2.0/data-definitions/by-content-type/${contentType}`
 			);
 
-			Promise.all([globalFieldSetsPromise, groupFieldSetsPromise]).then(
-				([
-					{items: globalFieldSets = []},
-					{items: groupFieldSets = []}
-				]) => {
-					dispatch({
-						payload: {
-							fieldsets: [...globalFieldSets, ...groupFieldSets]
-						},
-						type: UPDATE_FIELDSETS
-					});
-				}
-			);
+			Promise.all([globalFieldSetsPromise, groupFieldSetsPromise])
+				.then(
+					([
+						{items: globalFieldSets = []},
+						{items: groupFieldSets = []},
+					]) => {
+						dispatch({
+							payload: {
+								fieldsets: [
+									...globalFieldSets,
+									...groupFieldSets,
+								],
+							},
+							type: UPDATE_FIELDSETS,
+						});
+					}
+				)
+				.catch(error => {
+					if (process.env.NODE_ENV === 'development') {
+						console.warn(
+							`AppContextProvider: promise rejected: ${error}`
+						);
+					}
+				});
 		}
 	}, [contentType, dispatch, groupId]);
 

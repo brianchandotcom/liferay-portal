@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -123,7 +126,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 				checkName, category,
 				_getPropertyValue(moduleElement, "description"),
 				_getPropertyValue(moduleElement, "documentationLocation"),
-				sourceProcessorName));
+				CheckType.CHECKSTYLE, sourceProcessorName));
 
 		return checkInfoMap;
 	}
@@ -197,7 +200,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 					checkName,
 					new CheckInfo(
 						checkName, category, description, StringPool.BLANK,
-						sourceProcessorName));
+						CheckType.SOURCE_CHECK, sourceProcessorName));
 			}
 		}
 
@@ -205,9 +208,9 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 	}
 
 	private void _createChecksTableMarkdown(
-			String header, File file, Collection<CheckInfo> checkInfos,
-			File documentationChecksDir, boolean displayCategory,
-			boolean displayFileExtensions)
+			String header, String rootFolderLocation, File file,
+			Collection<CheckInfo> checkInfos, File documentationChecksDir,
+			boolean displayCategory, boolean displayFileExtensions)
 		throws IOException {
 
 		String content = StringPool.BLANK;
@@ -249,34 +252,14 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		for (CheckInfo checkInfo : checkInfos) {
 			String checkName = checkInfo.getName();
 
-			String link = null;
+			String documentationlink = _getDocumentationLink(
+				rootFolderLocation, documentationChecksDir, checkInfo);
 
-			String documentationLocation = checkInfo.getDocumentationLocation();
-
-			if (Validator.isNotNull(documentationLocation)) {
-				link =
-					SourceFormatterUtil.CHECKSTYLE_DOCUMENTATION_URL_BASE +
-						documentationLocation;
-			}
-			else {
-				String markdownFileName =
-					SourceFormatterUtil.getMarkdownFileName(checkName);
-
-				File markdownFile = new File(
-					documentationChecksDir, markdownFileName);
-
-				if (markdownFile.exists()) {
-					link = StringBundler.concat(
-						_DOCUMENTATION_CHECKS_DIR_NAME, markdownFileName, "#",
-						StringUtil.toLowerCase(checkName));
-				}
-			}
-
-			if (link != null) {
+			if (documentationlink != null) {
 				sb.append("[");
 				sb.append(checkName);
 				sb.append("](");
-				sb.append(link);
+				sb.append(documentationlink);
 				sb.append(") | ");
 			}
 			else {
@@ -421,8 +404,9 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		sb.append("\n\n");
 
 		_createChecksTableMarkdown(
-			headerName, new File(documentationDir, markdownFileName),
-			checkInfoMap.values(), documentationChecksDir, true, true);
+			headerName, rootFolderLocation,
+			new File(documentationDir, markdownFileName), checkInfoMap.values(),
+			documentationChecksDir, true, true);
 
 		sb.append("- ### By Category:\n");
 
@@ -439,7 +423,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			sb.append("\n");
 
 			_createChecksTableMarkdown(
-				headerName, new File(documentationDir, markdownFileName),
+				headerName, rootFolderLocation,
+				new File(documentationDir, markdownFileName),
 				_getCategoryCheckInfos(category, checkInfoMap),
 				documentationChecksDir, false, true);
 		}
@@ -471,7 +456,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			sb.append("\n");
 
 			_createChecksTableMarkdown(
-				"Checks for " + fileExtensionsString,
+				"Checks for " + fileExtensionsString, rootFolderLocation,
 				new File(documentationDir, markdownFileName),
 				_getSourceProcessorCheckInfos(
 					sourceProcessorName, checkInfoMap),
@@ -479,6 +464,100 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		}
 
 		return StringUtil.trim(sb.toString());
+	}
+
+	private String _getDocumentationLink(
+		File documentationChecksDir, String checkName) {
+
+		String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
+			checkName);
+
+		File markdownFile = new File(documentationChecksDir, markdownFileName);
+
+		if (markdownFile.exists()) {
+			return StringBundler.concat(
+				_DOCUMENTATION_CHECKS_DIR_NAME, markdownFileName, "#",
+				StringUtil.toLowerCase(checkName));
+		}
+
+		return null;
+	}
+
+	private String _getDocumentationLink(
+			String rootFolderLocation, File documentationChecksDir,
+			CheckInfo checkInfo)
+		throws IOException {
+
+		String documentationLocation = checkInfo.getDocumentationLocation();
+
+		if (Validator.isNotNull(documentationLocation)) {
+			return SourceFormatterUtil.CHECKSTYLE_DOCUMENTATION_URL_BASE +
+				documentationLocation;
+		}
+
+		String checkName = checkInfo.getName();
+
+		String documentationLink = _getDocumentationLink(
+			documentationChecksDir, checkName);
+
+		if (documentationLink != null) {
+			return documentationLink;
+		}
+
+		File sourceDir = null;
+
+		CheckType checkType = checkInfo.getCheckType();
+
+		if (checkType.equals(CheckType.CHECKSTYLE)) {
+			sourceDir = new File(
+				rootFolderLocation + _CHECKSTYLE_SOURCE_LOCATION);
+		}
+		else {
+			sourceDir = new File(
+				rootFolderLocation + _SOURCE_CHECKS_SOURCE_LOCATION);
+		}
+
+		File sourceFile = new File(sourceDir, checkName + ".java");
+
+		if (!sourceFile.exists()) {
+			return null;
+		}
+
+		JavaClass javaClass = null;
+
+		try {
+			javaClass = JavaClassParser.parseJavaClass(
+				sourceFile.getName(), FileUtil.read(sourceFile));
+		}
+		catch (Exception exception) {
+			return null;
+		}
+
+		List<String> extendedClassNames = javaClass.getExtendedClassNames();
+
+		if (extendedClassNames.isEmpty()) {
+			return null;
+		}
+
+		String extendedClassName = extendedClassNames.get(0);
+
+		sourceFile = new File(sourceDir, extendedClassName + ".java");
+
+		if (!sourceFile.exists()) {
+			return null;
+		}
+
+		documentationLink = _getDocumentationLink(
+			documentationChecksDir, extendedClassName);
+
+		if ((documentationLink != null) ||
+			!extendedClassName.startsWith("Base")) {
+
+			return documentationLink;
+		}
+
+		return _getDocumentationLink(
+			documentationChecksDir, extendedClassName.substring(4));
 	}
 
 	private List<String> _getFileExtensions(String sourceProcessorName) {
@@ -637,10 +716,16 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		return sourceProcessorNames;
 	}
 
+	private static final String _CHECKSTYLE_SOURCE_LOCATION =
+		"src/main/java/com/liferay/source/formatter/checkstyle/checks/";
+
 	private static final String _DOCUMENTATION_CHECKS_DIR_NAME = "checks/";
 
 	private static final String _DOCUMENTATION_DIR_LOCATION =
 		"src/main/resources/documentation/";
+
+	private static final String _SOURCE_CHECKS_SOURCE_LOCATION =
+		"src/main/java/com/liferay/source/formatter/checks/";
 
 	private final Map<String, List<String>> _sourceProcessorFileExtensionsMap =
 		new HashMap<>();
@@ -649,12 +734,14 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		public CheckInfo(
 			String name, String category, String description,
-			String documentationLocation, String sourceProcessorName) {
+			String documentationLocation, CheckType checkType,
+			String sourceProcessorName) {
 
 			_name = name;
 			_category = category;
 			_description = description;
 			_documentationLocation = documentationLocation;
+			_checkType = checkType;
 
 			_sourceProcessorNames.add(sourceProcessorName);
 		}
@@ -670,6 +757,10 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		public String getCategory() {
 			return _category;
+		}
+
+		public CheckType getCheckType() {
+			return _checkType;
 		}
 
 		public String getDescription() {
@@ -689,6 +780,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		}
 
 		private final String _category;
+		private final CheckType _checkType;
 		private final String _description;
 		private final String _documentationLocation;
 		private final String _name;

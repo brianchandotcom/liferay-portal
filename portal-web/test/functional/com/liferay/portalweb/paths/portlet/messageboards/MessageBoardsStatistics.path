@@ -21,17 +21,17 @@
 </tr>
 <tr>
 	<td>GENERAL_NUMBER_OF_CATEGORIES</td>
-	<td>//div[contains(@id,'messageBoardsGeneralStatistics')]/div/dl/dd[1]</td>
+	<td>//div[@class='statistics-panel']//div[contains(@class,'overview-container') and contains(.,'Categories')]/p</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GENERAL_NUMBER_OF_POSTS</td>
-	<td>//div[contains(@id,'messageBoardsGeneralStatistics')]/div/dl/dd[2]</td>
+	<td>//div[@class='statistics-panel']//div[contains(@class,'overview-container') and contains(.,'Posts')]/p</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GENERAL_NUMBER_OF_PARTICIPANTS</td>
-	<td>//div[contains(@id,'messageBoardsGeneralStatistics')]/div/dl/dd[3]</td>
+	<td>//div[@class='statistics-panel']//div[contains(@class,'overview-container') and contains(.,'Participants')]/p</td>
 	<td></td>
 </tr>
 <tr>

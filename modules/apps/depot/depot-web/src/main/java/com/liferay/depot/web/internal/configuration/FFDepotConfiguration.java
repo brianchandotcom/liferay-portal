@@ -21,9 +21,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Alejandro Tardín
  */
-@ExtendedObjectClassDefinition(generateUI = false)
+@ExtendedObjectClassDefinition(category = "asset-libraries")
 @Meta.OCD(
-	id = "com.liferay.depot.web.internal.configuration.FFDepotConfiguration"
+	id = "com.liferay.depot.web.internal.configuration.FFDepotConfiguration",
+	localization = "content/Language",
+	name = "asset-libraries-configuration-name"
 )
 public interface FFDepotConfiguration {
 

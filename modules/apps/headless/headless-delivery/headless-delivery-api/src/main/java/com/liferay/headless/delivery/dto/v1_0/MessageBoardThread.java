@@ -358,6 +358,34 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String encodingFormat;
 
+	@Schema
+	public String getFriendlyUrlPath() {
+		return friendlyUrlPath;
+	}
+
+	public void setFriendlyUrlPath(String friendlyUrlPath) {
+		this.friendlyUrlPath = friendlyUrlPath;
+	}
+
+	@JsonIgnore
+	public void setFriendlyUrlPath(
+		UnsafeSupplier<String, Exception> friendlyUrlPathUnsafeSupplier) {
+
+		try {
+			friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String friendlyUrlPath;
+
 	@Schema(description = "The thread's main title.")
 	public String getHeadline() {
 		return headline;
@@ -953,6 +981,20 @@ public class MessageBoardThread {
 			sb.append("\"");
 
 			sb.append(_escape(encodingFormat));
+
+			sb.append("\"");
+		}
+
+		if (friendlyUrlPath != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlPath\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(friendlyUrlPath));
 
 			sb.append("\"");
 		}

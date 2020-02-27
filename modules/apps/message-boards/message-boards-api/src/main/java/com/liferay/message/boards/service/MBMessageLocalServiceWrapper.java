@@ -430,6 +430,14 @@ public class MBMessageLocalServiceWrapper
 		return _mbMessageLocalService.fetchMBMessage(messageId);
 	}
 
+	@Override
+	public com.liferay.message.boards.model.MBMessage fetchMBMessageByUrlTitle(
+		long groupId, String urlTitle) {
+
+		return _mbMessageLocalService.fetchMBMessageByUrlTitle(
+			groupId, urlTitle);
+	}
+
 	/**
 	 * Returns the message-boards message matching the UUID and group.
 	 *

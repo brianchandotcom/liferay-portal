@@ -169,6 +169,8 @@ public class MBMessagePersistenceTest {
 
 		newMBMessage.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newMBMessage.setUrlTitle(RandomTestUtil.randomString());
+
 		newMBMessage.setStatus(RandomTestUtil.nextInt());
 
 		newMBMessage.setStatusByUserId(RandomTestUtil.nextLong());
@@ -234,6 +236,8 @@ public class MBMessagePersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingMBMessage.getLastPublishDate()),
 			Time.getShortTimestamp(newMBMessage.getLastPublishDate()));
+		Assert.assertEquals(
+			existingMBMessage.getUrlTitle(), newMBMessage.getUrlTitle());
 		Assert.assertEquals(
 			existingMBMessage.getStatus(), newMBMessage.getStatus());
 		Assert.assertEquals(
@@ -330,6 +334,15 @@ public class MBMessagePersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_C(0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_UT() throws Exception {
+		_persistence.countByG_UT(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_UT(0L, "null");
+
+		_persistence.countByG_UT(0L, (String)null);
 	}
 
 	@Test
@@ -546,8 +559,8 @@ public class MBMessagePersistenceTest {
 			"parentMessageId", true, "treePath", true, "subject", true,
 			"format", true, "anonymous", true, "priority", true,
 			"allowPingbacks", true, "answer", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"urlTitle", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -774,6 +787,17 @@ public class MBMessagePersistenceTest {
 			Long.valueOf(existingMBMessage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingMBMessage, "getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(
+			Long.valueOf(existingMBMessage.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingMBMessage, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingMBMessage.getUrlTitle(),
+				ReflectionTestUtil.invoke(
+					existingMBMessage, "getOriginalUrlTitle",
+					new Class<?>[0])));
 	}
 
 	protected MBMessage addMBMessage() throws Exception {
@@ -824,6 +848,8 @@ public class MBMessagePersistenceTest {
 		mbMessage.setAnswer(RandomTestUtil.randomBoolean());
 
 		mbMessage.setLastPublishDate(RandomTestUtil.nextDate());
+
+		mbMessage.setUrlTitle(RandomTestUtil.randomString());
 
 		mbMessage.setStatus(RandomTestUtil.nextInt());
 

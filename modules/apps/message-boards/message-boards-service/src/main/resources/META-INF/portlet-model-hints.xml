@@ -121,10 +121,14 @@
 		<field name="allowPingbacks" type="boolean" />
 		<field name="answer" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="urlTitle" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="urlTitle" type="String" />
 	</model>
 	<model name="com.liferay.message.boards.model.MBStatsUser">
 		<field name="statsUserId" type="long" />

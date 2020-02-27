@@ -16,4 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/edit_ddm_structure_form_builder.jsp" servletContext="<%= application %>" />
+<c:choose>
+	<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
+		<liferay-util:include page="/edit_ddm_structure_data_layout_builder.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/edit_ddm_structure_form_builder.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>

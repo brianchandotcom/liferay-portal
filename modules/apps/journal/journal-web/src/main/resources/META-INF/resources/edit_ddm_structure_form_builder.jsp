@@ -31,11 +31,9 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false) : LanguageUtil.get(request, "new-structure"));
 
 DDMForm ddmForm = null;
-long ddmStructureId = 0L;
 
 if (ddmStructure != null) {
 	ddmForm = ddmStructure.getDDMForm();
-	ddmStructureId = ddmStructure.getStructureId();
 }
 
 PortletURL editDDMStructureURL = renderResponse.createActionURL();
@@ -71,15 +69,13 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 
 						<aui:button cssClass="btn-sm mr-3" type="submit" value="<%= journalEditDDMStructuresDisplayContext.getSaveButtonLabel() %>" />
 
-						<c:if test="<%= !journalDisplayContext.useDataEngineEditor() %>">
-							<clay:button
-								icon="cog"
-								id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
-								monospaced="<%= true %>"
-								size="sm"
-								style="borderless"
-							/>
-						</c:if>
+						<clay:button
+							icon="cog"
+							id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
+							monospaced="<%= true %>"
+							size="sm"
+							style="borderless"
+						/>
 					</div>
 				</li>
 			</ul>
@@ -182,24 +178,9 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				</div>
 			</c:if>
 
-			<c:choose>
-				<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
-					<liferay-data-engine:data-layout-builder
-						componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
-						contentType="journal"
-						dataDefinitionId="<%= ddmStructureId %>"
-						groupId="<%= groupId %>"
-						localizable="<%= true %>"
-						namespace="<%= renderResponse.getNamespace() %>"
-						singlePage="<%= true %>"
-					/>
-				</c:when>
-				<c:otherwise>
-					<div class="sheet">
-						<%@ include file="/ddm_form_builder.jspf" %>
-					</div>
-				</c:otherwise>
-			</c:choose>
+			<div class="sheet">
+				<%@ include file="/ddm_form_builder.jspf" %>
+			</div>
 		</div>
 	</div>
 </aui:form>
@@ -275,74 +256,43 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 	}
 
 	function <portlet:namespace />saveDDMStructure() {
-		<c:choose>
-			<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
-				Liferay.componentReady(
-					'<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
-				).then(function(dataLayoutBuilder) {
-					var name = <portlet:namespace />getInputLocalizedValues('name');
-					var description = <portlet:namespace />getInputLocalizedValues(
-						'description'
-					);
-
-					dataLayoutBuilder
-						.save({
-							dataDefinition: {
-								description: description,
-								name: name,
-							},
-							dataLayout: {
-								description: description,
-								name: name,
-							},
-						})
-						.then(function(dataLayout) {
-							Liferay.Util.navigate('<%= HtmlUtil.escapeJS(redirect) %>');
-						});
-				});
-			</c:when>
-			<c:otherwise>
-				Liferay.Util.postForm(document.<portlet:namespace />fm, {
-					data: {
-						definition: <portlet:namespace />formBuilder.getContentValue(),
-					},
-				});
-			</c:otherwise>
-		</c:choose>
+		Liferay.Util.postForm(document.<portlet:namespace />fm, {
+			data: {
+				definition: <portlet:namespace />formBuilder.getContentValue(),
+			},
+		});
 	}
 
-	<c:if test="<%= !journalDisplayContext.useDataEngineEditor() %>">
-		var contextualSidebarButton = document.getElementById(
-			'<portlet:namespace />contextualSidebarButton'
-		);
-		var contextualSidebarContainer = document.getElementById(
-			'<portlet:namespace />contextualSidebarContainer'
-		);
+	var contextualSidebarButton = document.getElementById(
+		'<portlet:namespace />contextualSidebarButton'
+	);
+	var contextualSidebarContainer = document.getElementById(
+		'<portlet:namespace />contextualSidebarContainer'
+	);
 
-		if (
-			contextualSidebarContainer &&
-			window.innerWidth > Liferay.BREAKPOINTS.PHONE
-		) {
-			contextualSidebarContainer.classList.add('contextual-sidebar-visible');
-		}
+	if (
+		contextualSidebarContainer &&
+		window.innerWidth > Liferay.BREAKPOINTS.PHONE
+	) {
+		contextualSidebarContainer.classList.add('contextual-sidebar-visible');
+	}
 
-		if (contextualSidebarButton) {
-			contextualSidebarButton.addEventListener('click', function(event) {
-				if (
-					contextualSidebarContainer.classList.contains(
-						'contextual-sidebar-visible'
-					)
-				) {
-					contextualSidebarContainer.classList.remove(
-						'contextual-sidebar-visible'
-					);
-				}
-				else {
-					contextualSidebarContainer.classList.add(
-						'contextual-sidebar-visible'
-					);
-				}
-			});
-		}
-	</c:if>
+	if (contextualSidebarButton) {
+		contextualSidebarButton.addEventListener('click', function(event) {
+			if (
+				contextualSidebarContainer.classList.contains(
+					'contextual-sidebar-visible'
+				)
+			) {
+				contextualSidebarContainer.classList.remove(
+					'contextual-sidebar-visible'
+				);
+			}
+			else {
+				contextualSidebarContainer.classList.add(
+					'contextual-sidebar-visible'
+				);
+			}
+		});
+	}
 </aui:script>

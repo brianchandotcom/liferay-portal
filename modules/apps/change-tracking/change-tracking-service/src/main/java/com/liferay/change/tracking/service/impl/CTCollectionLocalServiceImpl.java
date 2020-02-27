@@ -23,7 +23,7 @@ import com.liferay.change.tracking.internal.CTServiceRegistry;
 import com.liferay.change.tracking.internal.CTTableMapperHelper;
 import com.liferay.change.tracking.internal.conflict.CTConflictChecker;
 import com.liferay.change.tracking.internal.conflict.ConstraintResolverConflictInfo;
-import com.liferay.change.tracking.internal.conflict.ResolvedModificationConflictInfo;
+import com.liferay.change.tracking.internal.conflict.ModificationConflictInfo;
 import com.liferay.change.tracking.internal.resolver.ConstraintResolverKey;
 import com.liferay.change.tracking.model.CTAutoResolutionInfo;
 import com.liferay.change.tracking.model.CTCollection;
@@ -31,6 +31,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.resolver.ConstraintResolver;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl;
@@ -138,7 +139,8 @@ public class CTCollectionLocalServiceImpl
 						}
 
 						return new CTConflictChecker<>(
-							ctService, modelClassNameId, _serviceTrackerMap,
+							_ctEntryLocalService, ctService, modelClassNameId,
+							_serviceTrackerMap,
 							ctCollection.getCtCollectionId(),
 							CTConstants.CT_COLLECTION_ID_PRODUCTION);
 					});
@@ -208,18 +210,15 @@ public class CTCollectionLocalServiceImpl
 					constraintResolverConflictInfo.setCtAutoResolutionInfoId(
 						ctAutoResolutionInfo.getCtAutoResolutionInfoId());
 				}
-				else if (conflictInfo instanceof
-							ResolvedModificationConflictInfo) {
-
-					ResolvedModificationConflictInfo
-						resolvedModificationConflictInfo =
-							(ResolvedModificationConflictInfo)conflictInfo;
+				else if (conflictInfo instanceof ModificationConflictInfo) {
+					ModificationConflictInfo resolvedModificationConflictInfo =
+						(ModificationConflictInfo)conflictInfo;
 
 					resolvedModificationConflictInfo.setCtAutoResolutionInfoId(
 						ctAutoResolutionInfo.getCtAutoResolutionInfoId());
 
 					ctAutoResolutionInfo.setConflictIdentifier(
-						ResolvedModificationConflictInfo.class.getName());
+						ModificationConflictInfo.class.getName());
 				}
 
 				_ctAutoResolutionInfoPersistence.update(ctAutoResolutionInfo);
@@ -238,13 +237,11 @@ public class CTCollectionLocalServiceImpl
 
 			if (Objects.equals(
 					ctAutoResolutionInfo.getConflictIdentifier(),
-					ResolvedModificationConflictInfo.class.getName())) {
+					ModificationConflictInfo.class.getName())) {
 
-				ResolvedModificationConflictInfo
-					resolvedModificationConflictInfo =
-						new ResolvedModificationConflictInfo(
-							ctAutoResolutionInfo.getSourceModelClassPK(),
-							ctAutoResolutionInfo.getTargetModelClassPK());
+				ModificationConflictInfo resolvedModificationConflictInfo =
+					new ModificationConflictInfo(
+						ctAutoResolutionInfo.getSourceModelClassPK(), true);
 
 				resolvedModificationConflictInfo.setCtAutoResolutionInfoId(
 					ctAutoResolutionInfo.getCtAutoResolutionInfoId());
@@ -594,6 +591,9 @@ public class CTCollectionLocalServiceImpl
 
 	@Reference
 	private CTAutoResolutionInfoPersistence _ctAutoResolutionInfoPersistence;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

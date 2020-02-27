@@ -24,54 +24,61 @@ import java.util.ResourceBundle;
 /**
  * @author Samuel Trong Tran
  */
-public class StrictModificationConflictInfo implements ConflictInfo {
+public class ModificationConflictInfo implements ConflictInfo {
 
-	public StrictModificationConflictInfo(
-		long sourcePrimaryKey, long targetPrimaryKey) {
-
-		_sourcePrimaryKey = sourcePrimaryKey;
-		_targetPrimaryKey = targetPrimaryKey;
+	public ModificationConflictInfo(long modelClassPK, boolean resolved) {
+		_modelClassPK = modelClassPK;
+		_resolved = resolved;
 	}
 
 	@Override
 	public String getConflictDescription(ResourceBundle resourceBundle) {
-		return LanguageUtil.get(
-			resourceBundle, "concurrent-modification-conflict");
+		return LanguageUtil.get(resourceBundle, "modification-conflict");
 	}
 
 	@Override
 	public long getCTAutoResolutionInfoId() {
-		return 0;
+		return _ctAutoResolutionInfoId;
 	}
 
 	@Override
 	public String getResolutionDescription(ResourceBundle resourceBundle) {
-		return LanguageUtil.get(
-			resourceBundle, "system-cannot-resolve-the-conflict");
+		String message = "the-conflict-cannot-be-automatically-resolved";
+
+		if (isResolved()) {
+			message = "the-conflict-was-automatically-resolved";
+		}
+
+		return LanguageUtil.get(resourceBundle, message);
 	}
 
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
-			locale, StrictModificationConflictInfo.class);
+			locale, ModificationConflictInfo.class);
 	}
 
 	@Override
 	public long getSourcePrimaryKey() {
-		return _sourcePrimaryKey;
+		return _modelClassPK;
 	}
 
 	@Override
 	public long getTargetPrimaryKey() {
-		return _targetPrimaryKey;
+		return _modelClassPK;
 	}
 
 	@Override
 	public boolean isResolved() {
-		return false;
+		return _resolved;
 	}
 
-	private final long _sourcePrimaryKey;
-	private final long _targetPrimaryKey;
+	public void setCtAutoResolutionInfoId(long ctAutoResolutionInfoId) {
+		_ctAutoResolutionInfoId = ctAutoResolutionInfoId;
+	}
+
+	private long _ctAutoResolutionInfoId;
+	private final long _modelClassPK;
+	private final boolean _resolved;
 
 }

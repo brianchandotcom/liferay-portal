@@ -252,6 +252,7 @@
 		<column name="parentMessageId" type="long" />
 		<column name="treePath" type="String" />
 		<column name="subject" type="String" uad-nonanonymizable="true" />
+		<column name="urlTitle" type="String" uad-nonanonymizable="true" />
 		<column name="body" type="String" uad-nonanonymizable="true" />
 		<column name="format" type="String" />
 		<column name="anonymous" type="boolean" />
@@ -259,7 +260,6 @@
 		<column name="allowPingbacks" type="boolean" />
 		<column name="answer" type="boolean" />
 		<column name="lastPublishDate" type="Date" />
-		<column name="urlTitle" type="String" uad-nonanonymizable="true" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />

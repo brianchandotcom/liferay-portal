@@ -52,8 +52,13 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 
 	@Override
 	public List<InfoListProvider> getInfoListProviders(Class<?> itemClass) {
+		return getInfoListProviders(GenericsUtil.getItemClassName(itemClass));
+	}
+
+	@Override
+	public List<InfoListProvider> getInfoListProviders(String className) {
 		List<InfoListProvider> infoListProviders =
-			_itemClassInfoListProviders.get(itemClass);
+			_itemClassInfoListProviders.get(className);
 
 		if (infoListProviders != null) {
 			return new ArrayList<>(infoListProviders);
@@ -71,7 +76,7 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 
 		List<InfoListProvider> itemClassInfoListProviders =
 			_itemClassInfoListProviders.computeIfAbsent(
-				GenericsUtil.getItemClass(infoListProvider),
+				GenericsUtil.getItemClassName(infoListProvider),
 				itemClass -> new ArrayList<>());
 
 		itemClassInfoListProviders.add(infoListProvider);
@@ -82,7 +87,7 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 
 		List<InfoListProvider> itemClassInfoListProviders =
 			_itemClassInfoListProviders.get(
-				GenericsUtil.getItemClass(infoListProvider));
+				GenericsUtil.getItemClassName(infoListProvider));
 
 		if (itemClassInfoListProviders != null) {
 			itemClassInfoListProviders.remove(infoListProvider);
@@ -91,7 +96,7 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 
 	private final Map<String, InfoListProvider> _infoListProviders =
 		new ConcurrentHashMap<>();
-	private final Map<Class, List<InfoListProvider>>
+	private final Map<String, List<InfoListProvider>>
 		_itemClassInfoListProviders = new ConcurrentHashMap<>();
 
 }

@@ -25,21 +25,21 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -62,201 +62,142 @@ public class DepotPermissionCheckerWrapperTest {
 	public void testHasPermissionForADepotGroupDelegatesToDepot()
 		throws Exception {
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
 
-		try {
-			DepotTestUtil.withRegularUser(
-				(user, role) -> {
-					PermissionChecker permissionChecker =
-						_permissionCheckerFactory.create(user);
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-					Assert.assertFalse(
-						permissionChecker.hasPermission(
-							depotEntry.getGroup(), Group.class.getName(),
-							depotEntry.getGroupId(), ActionKeys.VIEW));
+				Assert.assertFalse(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(), ActionKeys.VIEW));
 
-					RoleTestUtil.addResourcePermission(
-						role, DepotEntry.class.getName(),
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(TestPropsValues.getCompanyId()),
-						ActionKeys.VIEW);
+				RoleTestUtil.addResourcePermission(
+					role, DepotEntry.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.VIEW);
 
-					Assert.assertTrue(
-						permissionChecker.hasPermission(
-							depotEntry.getGroup(), Group.class.getName(),
-							depotEntry.getGroupId(), ActionKeys.VIEW));
-				});
-		}
-		finally {
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-		}
+				Assert.assertTrue(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(), ActionKeys.VIEW));
+			});
 	}
 
 	@Test
 	public void testHasPermissionsWithDepotGroupAndAssetLibraryAdmin()
 		throws Exception {
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
 
-		try {
-			DepotTestUtil.withAssetLibraryAdministrator(
-				depotEntry,
-				user -> {
-					PermissionChecker permissionChecker =
-						_permissionCheckerFactory.create(user);
+		DepotTestUtil.withAssetLibraryAdministrator(
+			depotEntry,
+			user -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-					Assert.assertTrue(
-						permissionChecker.hasPermission(
-							depotEntry.getGroup(), Group.class.getName(),
-							depotEntry.getGroupId(),
-							ActionKeys.ASSIGN_MEMBERS));
+				Assert.assertTrue(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(), ActionKeys.ASSIGN_MEMBERS));
 
-					Assert.assertTrue(
-						permissionChecker.hasPermission(
-							depotEntry.getGroup(), Group.class.getName(),
-							depotEntry.getGroupId(),
-							ActionKeys.ASSIGN_USER_ROLES));
+				Assert.assertTrue(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(), ActionKeys.ASSIGN_USER_ROLES));
 
-					Assert.assertTrue(
-						permissionChecker.hasPermission(
-							depotEntry.getGroup(), Group.class.getName(),
-							depotEntry.getGroupId(), ActionKeys.DELETE));
+				Assert.assertTrue(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(), ActionKeys.DELETE));
 
-					Assert.assertTrue(
-						permissionChecker.hasPermission(
-							depotEntry.getGroup(), Group.class.getName(),
-							depotEntry.getGroupId(), ActionKeys.UPDATE));
+				Assert.assertTrue(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(), ActionKeys.UPDATE));
 
-					Assert.assertTrue(
-						permissionChecker.hasPermission(
-							depotEntry.getGroup(), Group.class.getName(),
-							depotEntry.getGroupId(), ActionKeys.VIEW));
+				Assert.assertTrue(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(), ActionKeys.VIEW));
 
-					Assert.assertTrue(
-						permissionChecker.hasPermission(
-							depotEntry.getGroup(), Group.class.getName(),
-							depotEntry.getGroupId(), ActionKeys.VIEW_MEMBERS));
+				Assert.assertTrue(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(), ActionKeys.VIEW_MEMBERS));
 
-					Assert.assertTrue(
-						permissionChecker.hasPermission(
-							depotEntry.getGroup(), Group.class.getName(),
-							depotEntry.getGroupId(),
-							ActionKeys.VIEW_SITE_ADMINISTRATION));
-				});
-		}
-		finally {
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-		}
+				Assert.assertTrue(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(),
+						ActionKeys.VIEW_SITE_ADMINISTRATION));
+			});
 	}
 
 	@Test
 	public void testIsGroupAdminWithDepotGroupAndAssetLibraryAdmin()
 		throws Exception {
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
 
-		try {
-			DepotTestUtil.withAssetLibraryAdministrator(
-				depotEntry,
-				user -> {
-					PermissionChecker permissionChecker =
-						_permissionCheckerFactory.create(user);
+		DepotTestUtil.withAssetLibraryAdministrator(
+			depotEntry,
+			user -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-					Assert.assertTrue(
-						permissionChecker.isGroupAdmin(
-							depotEntry.getGroupId()));
-				});
-		}
-		finally {
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-		}
+				Assert.assertTrue(
+					permissionChecker.isGroupAdmin(depotEntry.getGroupId()));
+			});
 	}
 
 	@Test
 	public void testIsGroupAdminWithDepotGroupAndAssetLibraryMember()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				_userLocalService.addGroupUsers(
+					depotEntry.getGroupId(), new long[] {user.getUserId()});
 
-		try {
-			_userLocalService.addGroupUsers(
-				depotEntry.getGroupId(), new long[] {user.getUserId()});
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			Assert.assertFalse(
-				permissionChecker.isGroupAdmin(depotEntry.getGroupId()));
-		}
-		finally {
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-
-			_userLocalService.deleteUser(user);
-		}
+				Assert.assertFalse(
+					permissionChecker.isGroupAdmin(depotEntry.getGroupId()));
+			});
 	}
 
 	@Test
 	public void testIsGroupAdminWithDepotGroupAndAssetLibraryOwner()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				DepotEntry depotEntry = _addDepotEntry(user.getUserId());
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), user.getUserId()));
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-		try {
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			Assert.assertTrue(
-				permissionChecker.isGroupAdmin(depotEntry.getGroupId()));
-		}
-		finally {
-			_userLocalService.deleteUser(user);
-
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-		}
+				Assert.assertTrue(
+					permissionChecker.isGroupAdmin(depotEntry.getGroupId()));
+			});
 	}
 
 	@Test
 	public void testIsGroupAdminWithGroup0AndNoOmniAdmin() throws Exception {
-		User user = UserTestUtil.addUser();
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			user);
-
-		Assert.assertFalse(permissionChecker.isGroupAdmin(0));
+				Assert.assertFalse(permissionChecker.isGroupAdmin(0));
+			});
 	}
 
 	@Test
@@ -292,98 +233,63 @@ public class DepotPermissionCheckerWrapperTest {
 	public void testIsGroupMemberWithDepotGroupAndAssetLibraryAdmin()
 		throws Exception {
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
 
-		try {
-			DepotTestUtil.withAssetLibraryAdministrator(
-				depotEntry,
-				user -> {
-					PermissionChecker permissionChecker =
-						_permissionCheckerFactory.create(user);
+		DepotTestUtil.withAssetLibraryAdministrator(
+			depotEntry,
+			user -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-					Assert.assertTrue(
-						permissionChecker.isGroupMember(
-							depotEntry.getGroupId()));
-				});
-		}
-		finally {
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-		}
+				Assert.assertTrue(
+					permissionChecker.isGroupMember(depotEntry.getGroupId()));
+			});
 	}
 
 	@Test
 	public void testIsGroupMemberWithDepotGroupAndAssetLibraryMember()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				_userLocalService.addGroupUsers(
+					depotEntry.getGroupId(), new long[] {user.getUserId()});
 
-		try {
-			_userLocalService.addGroupUsers(
-				depotEntry.getGroupId(), new long[] {user.getUserId()});
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			Assert.assertTrue(
-				permissionChecker.isGroupMember(depotEntry.getGroupId()));
-		}
-		finally {
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-
-			_userLocalService.deleteUser(user);
-		}
+				Assert.assertTrue(
+					permissionChecker.isGroupMember(depotEntry.getGroupId()));
+			});
 	}
 
 	@Test
 	public void testIsGroupMemberWithDepotGroupAndAssetLibraryOwner()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				DepotEntry depotEntry = _addDepotEntry(user.getUserId());
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), user.getUserId()));
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-		try {
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			Assert.assertTrue(
-				permissionChecker.isGroupMember(depotEntry.getGroupId()));
-		}
-		finally {
-			_userLocalService.deleteUser(user);
-
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-		}
+				Assert.assertTrue(
+					permissionChecker.isGroupMember(depotEntry.getGroupId()));
+			});
 	}
 
 	@Test
 	public void testIsGroupMemberWithGroup0AndNoOmniAdmin() throws Exception {
-		User user = UserTestUtil.addUser();
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			user);
-
-		Assert.assertFalse(permissionChecker.isGroupMember(0));
+				Assert.assertFalse(permissionChecker.isGroupMember(0));
+			});
 	}
 
 	@Test
@@ -419,98 +325,63 @@ public class DepotPermissionCheckerWrapperTest {
 	public void testIsGroupOwnerWithDepotGroupAndAssetLibraryAdmin()
 		throws Exception {
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
 
-		try {
-			DepotTestUtil.withAssetLibraryAdministrator(
-				depotEntry,
-				user -> {
-					PermissionChecker permissionChecker =
-						_permissionCheckerFactory.create(user);
+		DepotTestUtil.withAssetLibraryAdministrator(
+			depotEntry,
+			user -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-					Assert.assertFalse(
-						permissionChecker.isGroupOwner(
-							depotEntry.getGroupId()));
-				});
-		}
-		finally {
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-		}
+				Assert.assertFalse(
+					permissionChecker.isGroupOwner(depotEntry.getGroupId()));
+			});
 	}
 
 	@Test
 	public void testIsGroupOwnerWithDepotGroupAndAssetLibraryMember()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				_userLocalService.addGroupUsers(
+					depotEntry.getGroupId(), new long[] {user.getUserId()});
 
-		try {
-			_userLocalService.addGroupUsers(
-				depotEntry.getGroupId(), new long[] {user.getUserId()});
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			Assert.assertFalse(
-				permissionChecker.isGroupOwner(depotEntry.getGroupId()));
-		}
-		finally {
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-
-			_userLocalService.deleteUser(user);
-		}
+				Assert.assertFalse(
+					permissionChecker.isGroupOwner(depotEntry.getGroupId()));
+			});
 	}
 
 	@Test
 	public void testIsGroupOwnerWithDepotGroupAndAssetLibraryOwner()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				DepotEntry depotEntry = _addDepotEntry(user.getUserId());
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), user.getUserId()));
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-		try {
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			Assert.assertTrue(
-				permissionChecker.isGroupOwner(depotEntry.getGroupId()));
-		}
-		finally {
-			_userLocalService.deleteUser(user);
-
-			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-		}
+				Assert.assertTrue(
+					permissionChecker.isGroupOwner(depotEntry.getGroupId()));
+			});
 	}
 
 	@Test
 	public void testIsGroupOwnerWithGroup0AndNoOmniAdmin() throws Exception {
-		User user = UserTestUtil.addUser();
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			user);
-
-		Assert.assertFalse(permissionChecker.isGroupOwner(0));
+				Assert.assertFalse(permissionChecker.isGroupOwner(0));
+			});
 	}
 
 	@Test
@@ -542,17 +413,28 @@ public class DepotPermissionCheckerWrapperTest {
 			permissionChecker.isGroupOwner(TestPropsValues.getGroupId()));
 	}
 
+	private DepotEntry _addDepotEntry(long userId) throws PortalException {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), userId));
+
+		_depotEntries.add(depotEntry);
+
+		return depotEntry;
+	}
+
+	@DeleteAfterTestRun
+	private final List<DepotEntry> _depotEntries = new ArrayList<>();
+
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
-
-	@Inject
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

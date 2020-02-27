@@ -1327,12 +1327,13 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardThreadsRanked(dateCreated: ___, dateModified: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardThreadsRanked(dateCreated: ___, dateModified: ___, messageBoardSectionId: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public MessageBoardThreadPage messageBoardThreadsRanked(
 			@GraphQLName("dateCreated") Date dateCreated,
 			@GraphQLName("dateModified") Date dateModified,
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
 			@GraphQLName("sort") String sortsString)
@@ -1343,7 +1344,8 @@ public class Query {
 			this::_populateResourceContext,
 			messageBoardThreadResource -> new MessageBoardThreadPage(
 				messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-					dateCreated, dateModified, Pagination.of(page, pageSize),
+					dateCreated, dateModified, messageBoardSectionId,
+					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						messageBoardThreadResource, sortsString))));
 	}

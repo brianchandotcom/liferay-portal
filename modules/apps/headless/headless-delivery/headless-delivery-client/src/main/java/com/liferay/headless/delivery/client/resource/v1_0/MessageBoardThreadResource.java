@@ -76,13 +76,15 @@ public interface MessageBoardThreadResource {
 
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 			java.util.Date dateCreated, java.util.Date dateModified,
-			Pagination pagination, String sortString)
+			Long messageBoardSectionId, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getMessageBoardThreadsRankedPageHttpResponse(
 				java.util.Date dateCreated, java.util.Date dateModified,
-				Pagination pagination, String sortString)
+				Long messageBoardSectionId, Pagination pagination,
+				String sortString)
 		throws Exception;
 
 	public void deleteMessageBoardThread(Long messageBoardThreadId)
@@ -490,12 +492,14 @@ public interface MessageBoardThreadResource {
 
 		public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 				java.util.Date dateCreated, java.util.Date dateModified,
-				Pagination pagination, String sortString)
+				Long messageBoardSectionId, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getMessageBoardThreadsRankedPageHttpResponse(
-					dateCreated, dateModified, pagination, sortString);
+					dateCreated, dateModified, messageBoardSectionId,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -520,7 +524,8 @@ public interface MessageBoardThreadResource {
 		public HttpInvoker.HttpResponse
 				getMessageBoardThreadsRankedPageHttpResponse(
 					java.util.Date dateCreated, java.util.Date dateModified,
-					Pagination pagination, String sortString)
+					Long messageBoardSectionId, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -556,6 +561,12 @@ public interface MessageBoardThreadResource {
 				httpInvoker.parameter(
 					"dateModified",
 					liferayToJSONDateFormat.format(dateModified));
+			}
+
+			if (messageBoardSectionId != null) {
+				httpInvoker.parameter(
+					"messageBoardSectionId",
+					String.valueOf(messageBoardSectionId));
 			}
 
 			if (pagination != null) {

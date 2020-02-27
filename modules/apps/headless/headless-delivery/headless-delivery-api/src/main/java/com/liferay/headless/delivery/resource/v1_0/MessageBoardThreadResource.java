@@ -61,8 +61,8 @@ public interface MessageBoardThreadResource {
 		throws Exception;
 
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
-			Date dateCreated, Date dateModified, Pagination pagination,
-			Sort[] sorts)
+			Date dateCreated, Date dateModified, Long messageBoardSectionId,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public void deleteMessageBoardThread(Long messageBoardThreadId)

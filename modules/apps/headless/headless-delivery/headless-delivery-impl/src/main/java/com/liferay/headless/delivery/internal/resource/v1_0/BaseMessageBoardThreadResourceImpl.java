@@ -204,6 +204,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "dateCreated"),
 			@Parameter(in = ParameterIn.QUERY, name = "dateModified"),
+			@Parameter(in = ParameterIn.QUERY, name = "messageBoardSectionId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
 			@Parameter(in = ParameterIn.QUERY, name = "sort")
@@ -217,6 +218,8 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				dateCreated,
 			@Parameter(hidden = true) @QueryParam("dateModified") java.util.Date
 				dateModified,
+			@Parameter(hidden = true) @QueryParam("messageBoardSectionId") Long
+				messageBoardSectionId,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 

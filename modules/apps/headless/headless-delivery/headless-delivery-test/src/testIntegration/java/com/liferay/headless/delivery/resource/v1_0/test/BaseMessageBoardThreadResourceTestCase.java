@@ -574,7 +574,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	public void testGetMessageBoardThreadsRankedPage() throws Exception {
 		Page<MessageBoardThread> page =
 			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-				RandomTestUtil.nextDate(), RandomTestUtil.nextDate(),
+				RandomTestUtil.nextDate(), RandomTestUtil.nextDate(), null,
 				Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
@@ -588,7 +588,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				randomMessageBoardThread());
 
 		page = messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -622,7 +622,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		Page<MessageBoardThread> page1 =
 			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-				null, null, Pagination.of(1, 2), null);
+				null, null, null, Pagination.of(1, 2), null);
 
 		List<MessageBoardThread> messageBoardThreads1 =
 			(List<MessageBoardThread>)page1.getItems();
@@ -632,7 +632,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		Page<MessageBoardThread> page2 =
 			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-				null, null, Pagination.of(2, 2), null);
+				null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -644,7 +644,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		Page<MessageBoardThread> page3 =
 			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-				null, null, Pagination.of(1, 3), null);
+				null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
@@ -745,7 +745,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardThread> ascPage =
 				messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-					null, null, Pagination.of(1, 2),
+					null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -754,7 +754,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 			Page<MessageBoardThread> descPage =
 				messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-					null, null, Pagination.of(1, 2),
+					null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(

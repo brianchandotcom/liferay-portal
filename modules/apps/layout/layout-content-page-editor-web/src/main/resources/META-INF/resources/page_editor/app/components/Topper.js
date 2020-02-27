@@ -169,7 +169,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 	useEffect(() => {
 		if (itemRef && itemRef.current) {
 			const itemTop =
-				itemRef.current.getBoundingClientRect().y - TOPPER_BAR_HEIGHT;
+				itemRef.current.getBoundingClientRect().top - TOPPER_BAR_HEIGHT;
 			const controlMenuHeight = document
 				.getElementById('ControlMenu')
 				.getBoundingClientRect().height;

@@ -344,8 +344,7 @@ public class PageDefinitionConverterUtilTest {
 
 		FragmentImage fragmentImage = sectionDefinition.getBackgroundImage();
 
-		Assert.assertEquals(
-			"http://myexample.com/myexample.png", fragmentImage.getTitle());
+		Assert.assertNull(fragmentImage.getTitle());
 		Assert.assertEquals(
 			"http://myexample.com/myexample.png", fragmentImage.getUrl());
 
@@ -503,16 +502,7 @@ public class PageDefinitionConverterUtilTest {
 	}
 
 	private void _validateFragmentImage(FragmentImage fragmentImage) {
-		InlineValue titleInlineValue = (InlineValue)fragmentImage.getTitle();
-
-		Assert.assertNull(titleInlineValue.getValue());
-
-		Map<String, String> titleI18nMap = titleInlineValue.getValue_i18n();
-
-		Assert.assertEquals(
-			"http://myexample.com/myexample.png", titleI18nMap.get("en_US"));
-		Assert.assertEquals(
-			"http://miejemplo.es/miejemplo.png", titleI18nMap.get("es_ES"));
+		Assert.assertNull(fragmentImage.getTitle());
 
 		InlineValue urlInlineValue = (InlineValue)fragmentImage.getUrl();
 

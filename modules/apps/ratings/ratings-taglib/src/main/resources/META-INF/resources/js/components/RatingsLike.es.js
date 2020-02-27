@@ -12,10 +12,15 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 const RatingsLike = () => {
-	return <div className="like">like</div>;
+	return (
+		<div className="ratings-like">
+			<ClayIcon symbol="heart" />
+		</div>
+	);
 };
 
 export default function(props) {

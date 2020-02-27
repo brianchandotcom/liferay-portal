@@ -22,15 +22,18 @@ long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ratings:
 String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:type"));
 Map<String, Object> data = new HashMap<>();
 %>
+<liferay-util:html-top
+	outputKey="ratings-taglib"
+>
+	<link href='<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>' rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
 
 <c:choose>
 	<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
-		<div class="ratings-taglib">
-			<react:component
-				data="<%= data %>"
-				module="js/components/RatingsLike.es"
-			/>
-		</div>
+		<react:component
+			data="<%= data %>"
+			module="js/components/RatingsLike.es"
+		/>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:ratings

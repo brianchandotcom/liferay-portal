@@ -1,0 +1,13 @@
+@import 'atlas-variables';
+
+.ratings-like {
+	.lexicon-icon-heart {
+		cursor: pointer;
+		transition: all .2s ease-in-out;
+
+		&:hover {
+			color: $dark;
+			transform: scale(1.3);
+		}
+	}
+}

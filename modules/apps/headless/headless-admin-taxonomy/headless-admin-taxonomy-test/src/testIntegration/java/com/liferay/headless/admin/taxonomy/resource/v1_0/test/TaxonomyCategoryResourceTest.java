@@ -48,6 +48,18 @@ public class TaxonomyCategoryResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGetTaxonomyCategoryRankedPage() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetTaxonomyCategoryRankedPageWithPagination() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLDeleteTaxonomyCategory() {
 	}
 

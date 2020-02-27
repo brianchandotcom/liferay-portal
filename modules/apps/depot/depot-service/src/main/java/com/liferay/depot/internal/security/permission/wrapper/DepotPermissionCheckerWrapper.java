@@ -67,6 +67,10 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				Group currentGroup = _groupLocalService.getGroup(primKey);
 
 				if (currentGroup.getType() == GroupConstants.TYPE_DEPOT) {
+					if (_isGroupAdmin(currentGroup)) {
+						return true;
+					}
+
 					return _depotEntryModelResourcePermission.contains(
 						this, currentGroup.getClassPK(), actionId);
 				}
@@ -216,7 +220,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		return value;
 	}
 
-	private boolean _isGroupAdmin(Group group) throws Exception {
+	private boolean _isGroupAdmin(Group group) throws PortalException {
 		if (Objects.equals(group.getType(), GroupConstants.TYPE_DEPOT)) {
 			if (_userGroupRoleLocalService.hasUserGroupRole(
 					getUserId(), group.getGroupId(),

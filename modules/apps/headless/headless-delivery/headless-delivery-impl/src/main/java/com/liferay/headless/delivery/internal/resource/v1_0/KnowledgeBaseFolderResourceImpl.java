@@ -73,7 +73,8 @@ public class KnowledgeBaseFolderResourceImpl
 			parentKnowledgeBaseFolderId);
 
 		return Page.of(
-			_getKnowledgeBaseFolderListActions(kbFolder.getGroupId()),
+			_getKnowledgeBaseFolderKnowledgeBaseFolderListActions(
+				kbFolder.getGroupId()),
 			transform(
 				_kbFolderService.getKBFolders(
 					kbFolder.getGroupId(), parentKnowledgeBaseFolderId,
@@ -90,7 +91,7 @@ public class KnowledgeBaseFolderResourceImpl
 		throws Exception {
 
 		return Page.of(
-			_getSiteListActions(siteId),
+			_getSiteKnowledgeBaseFolderListActions(siteId),
 			transform(
 				_kbFolderService.getKBFolders(
 					siteId, 0, pagination.getStartPosition(),
@@ -155,16 +156,6 @@ public class KnowledgeBaseFolderResourceImpl
 					null)));
 	}
 
-	private Map<String, Map<String, String>> _getActions(KBFolder kbFolder) {
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete", addAction("DELETE", kbFolder, "deleteKnowledgeBaseFolder")
-		).put(
-			"get", addAction("VIEW", kbFolder, "getKnowledgeBaseFolder")
-		).put(
-			"replace", addAction("UPDATE", kbFolder, "putKnowledgeBaseFolder")
-		).build();
-	}
-
 	private long _getClassNameId() {
 		return _portal.getClassNameId(KBFolder.class.getName());
 	}
@@ -178,8 +169,20 @@ public class KnowledgeBaseFolderResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private Map<String, Map<String, String>> _getKnowledgeBaseFolderListActions(
-		Long groupId) {
+	private Map<String, Map<String, String>> _getKnowledgeBaseFolderItemActions(
+		KBFolder kbFolder) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete", addAction("DELETE", kbFolder, "deleteKnowledgeBaseFolder")
+		).put(
+			"get", addAction("VIEW", kbFolder, "getKnowledgeBaseFolder")
+		).put(
+			"replace", addAction("UPDATE", kbFolder, "putKnowledgeBaseFolder")
+		).build();
+	}
+
+	private Map<String, Map<String, String>>
+		_getKnowledgeBaseFolderKnowledgeBaseFolderListActions(Long groupId) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
@@ -194,7 +197,9 @@ public class KnowledgeBaseFolderResourceImpl
 		).build();
 	}
 
-	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
+	private Map<String, Map<String, String>>
+		_getSiteKnowledgeBaseFolderListActions(Long siteId) {
+
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
 			addAction(
@@ -217,7 +222,7 @@ public class KnowledgeBaseFolderResourceImpl
 
 		return new KnowledgeBaseFolder() {
 			{
-				actions = _getActions(kbFolder);
+				actions = _getKnowledgeBaseFolderItemActions(kbFolder);
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(

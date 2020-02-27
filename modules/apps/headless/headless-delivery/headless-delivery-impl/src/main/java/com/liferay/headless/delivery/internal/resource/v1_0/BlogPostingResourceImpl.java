@@ -117,7 +117,7 @@ public class BlogPostingResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			_getListActions(siteId),
+			_getSiteBlogPostingListActions(siteId),
 			booleanQuery -> {
 			},
 			filter, BlogsEntry.class, search, pagination,
@@ -245,7 +245,7 @@ public class BlogPostingResourceImpl
 		}
 	}
 
-	private Map<String, Map<String, String>> _getActions(
+	private Map<String, Map<String, String>> _getBlogPostingItemActions(
 		BlogsEntry blogsEntry) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
@@ -256,6 +256,25 @@ public class BlogPostingResourceImpl
 			"replace", addAction("UPDATE", blogsEntry, "putBlogPosting")
 		).put(
 			"update", addAction("UPDATE", blogsEntry, "patchBlogPosting")
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getBlogPostingRatingItemActions(
+			RatingsEntry ratingsEntry)
+		throws Exception {
+
+		BlogsEntry blogsEntry = _blogsEntryService.getEntry(
+			ratingsEntry.getClassPK());
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create", addAction("UPDATE", blogsEntry, "postBlogPostingMyRating")
+		).put(
+			"delete",
+			addAction("UPDATE", blogsEntry, "deleteBlogPostingMyRating")
+		).put(
+			"get", addAction("VIEW", blogsEntry, "getBlogPostingMyRating")
+		).put(
+			"replace", addAction("UPDATE", blogsEntry, "putBlogPostingMyRating")
 		).build();
 	}
 
@@ -296,7 +315,9 @@ public class BlogPostingResourceImpl
 		}
 	}
 
-	private Map<String, Map<String, String>> _getListActions(Long siteId) {
+	private Map<String, Map<String, String>> _getSiteBlogPostingListActions(
+		Long siteId) {
+
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
 			addAction(
@@ -314,31 +335,12 @@ public class BlogPostingResourceImpl
 		).build();
 	}
 
-	private Map<String, Map<String, String>> _getRatingActions(
-			RatingsEntry ratingsEntry)
-		throws Exception {
-
-		BlogsEntry blogsEntry = _blogsEntryService.getEntry(
-			ratingsEntry.getClassPK());
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create", addAction("UPDATE", blogsEntry, "postBlogPostingMyRating")
-		).put(
-			"delete",
-			addAction("UPDATE", blogsEntry, "deleteBlogPostingMyRating")
-		).put(
-			"get", addAction("VIEW", blogsEntry, "getBlogPostingMyRating")
-		).put(
-			"replace", addAction("UPDATE", blogsEntry, "putBlogPostingMyRating")
-		).build();
-	}
-
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
 		return new SPIRatingResource<>(
 			BlogsEntry.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_getRatingActions(ratingsEntry), _portal, ratingsEntry,
-				_userLocalService),
+				_getBlogPostingRatingItemActions(ratingsEntry), _portal,
+				ratingsEntry, _userLocalService),
 			contextUser);
 	}
 
@@ -346,7 +348,7 @@ public class BlogPostingResourceImpl
 		return _blogPostingDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				_getActions(blogsEntry), _dtoConverterRegistry,
+				_getBlogPostingItemActions(blogsEntry), _dtoConverterRegistry,
 				blogsEntry.getEntryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

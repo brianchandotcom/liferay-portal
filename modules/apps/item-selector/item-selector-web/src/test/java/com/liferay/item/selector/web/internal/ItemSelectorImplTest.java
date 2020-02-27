@@ -21,7 +21,9 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.item.selector.web.internal.util.ItemSelectorCriterionSerializerImpl;
+import com.liferay.item.selector.web.internal.util.ItemSelectorKeyUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -165,9 +167,19 @@ public class ItemSelectorImplTest extends PowerMockito {
 			"itemSelectedEventName",
 			parameters.get(ItemSelectorImpl.PARAMETER_ITEM_SELECTED_EVENT_NAME)
 				[0]);
+
+		String mediaItemSelectorCriterionKey =
+			ItemSelectorKeyUtil.getItemSelectorCriterionKey(
+				MediaItemSelectorCriterion.class);
+		String flickerItemSelectorCriterionKey =
+			ItemSelectorKeyUtil.getItemSelectorCriterionKey(
+				FlickrItemSelectorCriterion.class);
+
 		Assert.assertEquals(
-			"media,flickr",
+			mediaItemSelectorCriterionKey + StringPool.COMMA +
+				flickerItemSelectorCriterionKey,
 			parameters.get(ItemSelectorImpl.PARAMETER_CRITERIA)[0]);
+
 		Assert.assertNull(parameters.get("0_desiredItemSelectorReturnTypes"));
 		Assert.assertNotNull(parameters.get("0_json")[0]);
 		Assert.assertNotNull(parameters.get("1_json")[0]);

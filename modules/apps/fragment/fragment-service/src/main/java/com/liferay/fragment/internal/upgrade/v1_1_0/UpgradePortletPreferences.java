@@ -15,6 +15,7 @@
 package com.liferay.fragment.internal.upgrade.v1_1_0;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -69,10 +70,18 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 	}
 
 	protected void upgradePortletPreferences() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select classPK, companyId, groupId, namespace from " +
 					"FragmentEntryLink");
-			ResultSet rs = ps.executeQuery()) {
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"delete from PortletPreferences where " +
+						"portletPreferencesId = ?"));
+			PreparedStatement ps3 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update PortletPreferences set plid = ? where " +
+						"portletPreferencesId = ?"));
+			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
 				long classPK = rs.getLong("classPK");
@@ -85,13 +94,86 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 						_getPortletPreferencesList(
 							companyId, groupId, namespace);
 
-					_processPortletPreferencesList(
-						companyId, groupId, classPK, portletPreferencesList);
+					if (portletPreferencesList.isEmpty()) {
+						continue;
+					}
+
+					PortletPreferences companyPortletPreferences = null;
+					PortletPreferences groupPortletPreferences = null;
+					PortletPreferences layoutPortletPreferences = null;
+
+					long companyControlPanelPlid =
+						_companyControlPanelPlids.get(companyId);
+					long groupControlPanelPlid = _groupControlPanelPlids.get(
+						groupId);
+					long layoutPlid = classPK;
+
+					for (PortletPreferences portletPreferences :
+							portletPreferencesList) {
+
+						if (portletPreferences.getPlid() ==
+								companyControlPanelPlid) {
+
+							companyPortletPreferences = portletPreferences;
+						}
+						else if (portletPreferences.getPlid() ==
+									groupControlPanelPlid) {
+
+							groupPortletPreferences = portletPreferences;
+						}
+						else if (portletPreferences.getPlid() == layoutPlid) {
+							layoutPortletPreferences = portletPreferences;
+						}
+					}
+
+					if (groupPortletPreferences != null) {
+						if (companyPortletPreferences != null) {
+							ps2.setLong(
+								1,
+								companyPortletPreferences.
+									getPortletPreferencesId());
+							ps2.addBatch();
+						}
+
+						if (layoutPortletPreferences != null) {
+							ps2.setLong(
+								1,
+								layoutPortletPreferences.
+									getPortletPreferencesId());
+							ps2.addBatch();
+						}
+
+						ps3.setLong(1, classPK);
+						ps3.setLong(
+							2,
+							groupPortletPreferences.getPortletPreferencesId());
+						ps3.addBatch();
+					}
+					else if (companyPortletPreferences != null) {
+						if (layoutPortletPreferences != null) {
+							ps2.setLong(
+								1,
+								layoutPortletPreferences.
+									getPortletPreferencesId());
+							ps2.addBatch();
+						}
+
+						ps3.setLong(1, classPK);
+						ps3.setLong(
+							2,
+							companyPortletPreferences.
+								getPortletPreferencesId());
+						ps3.addBatch();
+					}
 				}
 				catch (Exception exception) {
 					_log.error(exception, exception);
 				}
 			}
+
+			ps2.executeBatch();
+
+			ps3.executeBatch();
 		}
 	}
 
@@ -121,13 +203,6 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 					_groupControlPanelPlids.put(layout.getGroupId(), plid);
 				}
 			}
-		}
-	}
-
-	private void _deleteIfNotNull(PortletPreferences portletPreferences) {
-		if (portletPreferences != null) {
-			_portletPreferencesLocalService.deletePortletPreferences(
-				portletPreferences);
 		}
 	}
 
@@ -165,52 +240,6 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		}
 
 		return portletPreferencesList;
-	}
-
-	private void _processPortletPreferencesList(
-		long companyId, long groupId, long classPK,
-		List<PortletPreferences> portletPreferencesList) {
-
-		if (portletPreferencesList.isEmpty()) {
-			return;
-		}
-
-		PortletPreferences companyPortletPreferences = null;
-		PortletPreferences groupPortletPreferences = null;
-		PortletPreferences layoutPortletPreferences = null;
-
-		long companyControlPanelPlid = _companyControlPanelPlids.get(companyId);
-		long groupControlPanelPlid = _groupControlPanelPlids.get(groupId);
-		long layoutPlid = classPK;
-
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			if (portletPreferences.getPlid() == companyControlPanelPlid) {
-				companyPortletPreferences = portletPreferences;
-			}
-			else if (portletPreferences.getPlid() == groupControlPanelPlid) {
-				groupPortletPreferences = portletPreferences;
-			}
-			else if (portletPreferences.getPlid() == layoutPlid) {
-				layoutPortletPreferences = portletPreferences;
-			}
-		}
-
-		if (groupPortletPreferences != null) {
-			_deleteIfNotNull(companyPortletPreferences);
-			_deleteIfNotNull(layoutPortletPreferences);
-			_updatePlid(groupPortletPreferences, classPK);
-		}
-		else if (companyPortletPreferences != null) {
-			_deleteIfNotNull(layoutPortletPreferences);
-			_updatePlid(companyPortletPreferences, classPK);
-		}
-	}
-
-	private void _updatePlid(PortletPreferences portletPreferences, long plid) {
-		portletPreferences.setPlid(plid);
-
-		_portletPreferencesLocalService.updatePortletPreferences(
-			portletPreferences);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

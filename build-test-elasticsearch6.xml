@@ -684,8 +684,31 @@ xpack.monitoring.collection.enabled: true</echo>
 	</target>
 
 	<target name="print-elasticsearch-indices">
+		<property name="elasticsearch.print.query">
+			<![CDATA[
+				{
+					"query": {
+						"bool": {
+							"must": [
+								{ "match": { "userName": "test test" } }
+							],
+							"must_not": [
+								{ "match": { "hidden": "true" } },
+								{ "match": { "entryClassName": "com.liferay.portal.kernel.model.Layout" } },
+								{ "match": { "entryClassName": "com.liferay.calendar.model.Calendar" } }
+							]
+						}
+					}
+				}
+			]]>
+		</property>
+
 		<exec executable="curl" outputproperty="curl.output.elasticsearch.indices">
-			<arg line="&apos;localhost:9200/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }, { &quot;match&quot;: { &quot;entryClassName&quot;: &quot;com.liferay.portal.kernel.model.Layout&quot; } }, { &quot;match&quot;: { &quot;entryClassName&quot;: &quot;com.liferay.calendar.model.Calendar&quot; } }]}}}&apos;" />
+			<arg value="localhost:9200/liferay-${companyId}/_search?pretty" />
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
+			<arg value="-d" />
+			<arg value="${elasticsearch.print.query}" />
 		</exec>
 
 		<echo></echo>
@@ -698,14 +721,49 @@ xpack.monitoring.collection.enabled: true</echo>
 	</target>
 
 	<target name="restore-backup">
+		<property name="register.repository">
+			<![CDATA[
+				{
+					"type": "fs",
+					"settings": {
+						"location": "${liferay.home}/data/elasticsearch6/repo"
+					}
+				}
+			]]>
+		</property>
+
 		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-X PUT &quot;localhost:${elasticsearch.port}/_snapshot/my_backup&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;type&quot;: &quot;fs&quot;,&quot;settings&quot;: {&quot;location&quot;: &quot;${liferay.home}/data/elasticsearch6/repo&quot;}}&apos;" />
+			<arg value="-X" />
+			<arg value="PUT" />
+			<arg value="localhost:${elasticsearch.port}/_snapshot/my_backup" />
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
+			<arg value="-d" />
+			<arg value="${register.repository}" />
 		</exec>
 
 		<echo>Defining snapshot repository.${line.separator}${curl.output}</echo>
 
+		<property name="restore.repository">
+			<![CDATA[
+				{
+					"indices": "${backup.index}",
+					"ignore_unavailable": true,
+					"include_global_state": true,
+					"rename_pattern": "index_(.+)",
+					"rename_replacement": "restored_index_$1"
+				}
+			]]>
+		</property>
+
 		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-X POST &quot;localhost:${elasticsearch.port}/_snapshot/my_backup/snapshot_2/_restore&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;indices&quot;: &quot;${backup.index}&quot;,&quot;ignore_unavailable&quot;: true,&quot;include_global_state&quot;: true,&quot;rename_pattern&quot;: &quot;index_(.+)&quot;,&quot;rename_replacement&quot;: &quot;restored_index_$1&quot;}&apos;" />
+			<arg value="-X" />
+			<arg value="POST" />
+			<arg value="localhost:${elasticsearch.port}/_snapshot/my_backup/snapshot_2/_restore" />
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
+			<arg value="-d" />
+			<arg value="${restore.repository}" />
 		</exec>
 
 		<echo>Restoring snapshot.${line.separator}${curl.output}</echo>

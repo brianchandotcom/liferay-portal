@@ -84,7 +84,7 @@ export default {
 		previewImageURL,
 		saveInlineContent,
 		saveMappingConfiguration,
-		segmentsExperienceId
+		segmentsExperienceId,
 	}) {
 		return serviceFetch(
 			config.addFragmentCompositionURL,
@@ -97,8 +97,8 @@ export default {
 					previewImageURL,
 					saveInlineContent,
 					saveMappingConfiguration,
-					segmentsExperienceId
-				}
+					segmentsExperienceId,
+				},
 			},
 			onNetworkStatus,
 			{requestGenerateDraft: true}

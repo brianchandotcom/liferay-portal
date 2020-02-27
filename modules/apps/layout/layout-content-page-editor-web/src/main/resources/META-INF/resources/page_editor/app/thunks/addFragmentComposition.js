@@ -23,7 +23,7 @@ export default function addFragment({
 	previewImageURL,
 	saveInlineContent,
 	saveMappingConfiguration,
-	store
+	store,
 }) {
 	return dispatch => {
 		const {segmentsExperienceId} = store;
@@ -37,7 +37,7 @@ export default function addFragment({
 			previewImageURL,
 			saveInlineContent,
 			saveMappingConfiguration,
-			segmentsExperienceId
+			segmentsExperienceId,
 		}).then(({fragmentComposition, layoutData}) => {
 			dispatch(
 				addFragmentComposition({

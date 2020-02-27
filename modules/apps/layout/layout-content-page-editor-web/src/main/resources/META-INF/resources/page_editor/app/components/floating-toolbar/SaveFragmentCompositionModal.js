@@ -69,7 +69,7 @@ const SaveFragmentCompositionModal = ({
 				previewImageURL: thumbnail.url,
 				saveInlineContent,
 				saveMappingConfiguration,
-				store
+				store,
 			})
 		)
 			.then(() => {

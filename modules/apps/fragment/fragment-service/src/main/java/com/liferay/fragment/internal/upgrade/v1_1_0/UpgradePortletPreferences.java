@@ -22,17 +22,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,12 +36,8 @@ import java.util.Map;
  */
 public class UpgradePortletPreferences extends UpgradeProcess {
 
-	public UpgradePortletPreferences(
-		LayoutLocalService layoutLocalService,
-		PortletPreferencesLocalService portletPreferencesLocalService) {
-
+	public UpgradePortletPreferences(LayoutLocalService layoutLocalService) {
 		_layoutLocalService = layoutLocalService;
-		_portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
 	protected void deleteGroupControlPanelLayouts() throws PortalException {
@@ -90,17 +82,17 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 				String namespace = rs.getString("namespace");
 
 				try {
-					List<PortletPreferences> portletPreferencesList =
-						_getPortletPreferencesList(
+					Map<Long, Long> portletPreferencesMap =
+						_getPortletPreferencesMap(
 							companyId, groupId, namespace);
 
-					if (portletPreferencesList.isEmpty()) {
+					if (portletPreferencesMap.isEmpty()) {
 						continue;
 					}
 
-					PortletPreferences companyPortletPreferences = null;
-					PortletPreferences groupPortletPreferences = null;
-					PortletPreferences layoutPortletPreferences = null;
+					Long companyPortletPreferencesId = null;
+					Long groupPortletPreferencesId = null;
+					Long layoutPortletPreferencesId = null;
 
 					long companyControlPanelPlid =
 						_companyControlPanelPlids.get(companyId);
@@ -108,61 +100,48 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 						groupId);
 					long layoutPlid = classPK;
 
-					for (PortletPreferences portletPreferences :
-							portletPreferencesList) {
+					for (Map.Entry<Long, Long> entry :
+							portletPreferencesMap.entrySet()) {
 
-						if (portletPreferences.getPlid() ==
-								companyControlPanelPlid) {
+						Long portletPreferencesId = entry.getKey();
+						Long portletPreferencesPlid = entry.getValue();
 
-							companyPortletPreferences = portletPreferences;
+						if (portletPreferencesPlid == companyControlPanelPlid) {
+							companyPortletPreferencesId = portletPreferencesId;
 						}
-						else if (portletPreferences.getPlid() ==
+						else if (portletPreferencesPlid ==
 									groupControlPanelPlid) {
 
-							groupPortletPreferences = portletPreferences;
+							groupPortletPreferencesId = portletPreferencesId;
 						}
-						else if (portletPreferences.getPlid() == layoutPlid) {
-							layoutPortletPreferences = portletPreferences;
+						else if (portletPreferencesPlid == layoutPlid) {
+							layoutPortletPreferencesId = portletPreferencesId;
 						}
 					}
 
-					if (groupPortletPreferences != null) {
-						if (companyPortletPreferences != null) {
-							ps2.setLong(
-								1,
-								companyPortletPreferences.
-									getPortletPreferencesId());
+					if (groupPortletPreferencesId != null) {
+						if (companyPortletPreferencesId != null) {
+							ps2.setLong(1, companyPortletPreferencesId);
 							ps2.addBatch();
 						}
 
-						if (layoutPortletPreferences != null) {
-							ps2.setLong(
-								1,
-								layoutPortletPreferences.
-									getPortletPreferencesId());
+						if (layoutPortletPreferencesId != null) {
+							ps2.setLong(1, layoutPortletPreferencesId);
 							ps2.addBatch();
 						}
 
 						ps3.setLong(1, classPK);
-						ps3.setLong(
-							2,
-							groupPortletPreferences.getPortletPreferencesId());
+						ps3.setLong(2, groupPortletPreferencesId);
 						ps3.addBatch();
 					}
-					else if (companyPortletPreferences != null) {
-						if (layoutPortletPreferences != null) {
-							ps2.setLong(
-								1,
-								layoutPortletPreferences.
-									getPortletPreferencesId());
+					else if (companyPortletPreferencesId != null) {
+						if (layoutPortletPreferencesId != null) {
+							ps2.setLong(1, layoutPortletPreferencesId);
 							ps2.addBatch();
 						}
 
 						ps3.setLong(1, classPK);
-						ps3.setLong(
-							2,
-							companyPortletPreferences.
-								getPortletPreferencesId());
+						ps3.setLong(2, companyPortletPreferencesId);
 						ps3.addBatch();
 					}
 				}
@@ -206,20 +185,21 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		}
 	}
 
-	private List<PortletPreferences> _getPortletPreferencesList(
+	private Map<Long, Long> _getPortletPreferencesMap(
 			long companyId, long groupId, String namespace)
 		throws Exception {
 
-		List<PortletPreferences> portletPreferencesList = new ArrayList<>();
+		Map<Long, Long> portletPreferencesMap = new HashMap<>();
 
 		long companyControlPanelPlid = _companyControlPanelPlids.get(companyId);
 
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(11);
 
-		sb.append("select PortletPreferences.portletPreferencesId from ");
-		sb.append("PortletPreferences inner join Layout on ");
-		sb.append("PortletPreferences.plid = Layout.plid where ");
-		sb.append("PortletPreferences.portletId like CONCAT('%_INSTANCE_', '");
+		sb.append("select PortletPreferences.portletPreferencesId, ");
+		sb.append("PortletPreferences.plid from PortletPreferences inner ");
+		sb.append("join Layout on PortletPreferences.plid = Layout.plid ");
+		sb.append("where PortletPreferences.portletId like ");
+		sb.append("CONCAT('%_INSTANCE_', '");
 		sb.append(namespace);
 		sb.append("') and (Layout.groupId = ");
 		sb.append(groupId);
@@ -232,14 +212,14 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 			while (rs.next()) {
 				long portletPreferencesId = rs.getLong("portletPreferencesId");
+				long portletPreferencesPlid = rs.getLong("plid");
 
-				portletPreferencesList.add(
-					_portletPreferencesLocalService.getPortletPreferences(
-						portletPreferencesId));
+				portletPreferencesMap.put(
+					portletPreferencesId, portletPreferencesPlid);
 			}
 		}
 
-		return portletPreferencesList;
+		return portletPreferencesMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -251,7 +231,5 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		new HashMap<>();
 
 	private final LayoutLocalService _layoutLocalService;
-	private final PortletPreferencesLocalService
-		_portletPreferencesLocalService;
 
 }

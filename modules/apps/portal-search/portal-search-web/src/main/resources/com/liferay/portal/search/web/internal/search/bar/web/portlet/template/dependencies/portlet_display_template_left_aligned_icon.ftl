@@ -61,7 +61,7 @@
 				id="${namespace + stringUtil.randomId()}" name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}" placeholder="${searchBarPortletDisplayContext.getInputPlaceholder()}" title="${languageUtil.get(locale, 'search')}" type="text" value="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())}" />
 
 				<div class="input-group-inset-item input-group-inset-item-before">
-					<button ariaLabel="${languageUtil.get(locale, 'submit')}" class="btn" type="submit">
+					<button ariaLabel="${languageUtil.get(locale, 'submit')}" class="btn btn-unstyled" type="submit">
 						<@clay.icon symbol="search" />
 					</button>
 				</div>

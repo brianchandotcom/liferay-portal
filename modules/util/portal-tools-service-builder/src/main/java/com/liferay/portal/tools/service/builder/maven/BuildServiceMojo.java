@@ -207,6 +207,13 @@ public class BuildServiceMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setSnapshotFeatureList(String snapshotFeatureList) {
+		_serviceBuilderArgs.setSnapshotFeatureList(snapshotFeatureList);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setSpringFileName(String springFileName) {
 		_serviceBuilderArgs.setSpringFileName(springFileName);
 	}
@@ -251,13 +258,6 @@ public class BuildServiceMojo extends AbstractMojo {
 	 */
 	public void setTargetEntityName(String targetEntityName) {
 		_serviceBuilderArgs.setTargetEntityName(targetEntityName);
-	}
-
-	/**
-	 * @parameter
-	 */
-	public void setTargetKernelVersion(String targetKernelVersion) {
-		_serviceBuilderArgs.setTargetKernelVersion(targetKernelVersion);
 	}
 
 	/**

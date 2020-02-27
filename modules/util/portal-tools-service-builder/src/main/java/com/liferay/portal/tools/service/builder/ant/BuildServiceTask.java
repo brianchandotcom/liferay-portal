@@ -134,6 +134,10 @@ public class BuildServiceTask extends Task {
 		_serviceBuilderArgs.setResourcesDirName(resourcesDirName);
 	}
 
+	public void setSnapshotFeatureList(String snapshotFeatureList) {
+		_serviceBuilderArgs.setSnapshotFeatureList(snapshotFeatureList);
+	}
+
 	public void setSpringFileName(String springFileName) {
 		_serviceBuilderArgs.setSpringFileName(springFileName);
 	}
@@ -160,10 +164,6 @@ public class BuildServiceTask extends Task {
 
 	public void setTargetEntityName(String targetEntityName) {
 		_serviceBuilderArgs.setTargetEntityName(targetEntityName);
-	}
-
-	public void setTargetKernelVersion(String targetKernelVersion) {
-		_serviceBuilderArgs.setTargetKernelVersion(targetKernelVersion);
 	}
 
 	public void setTestDirName(String testDirName) {

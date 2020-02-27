@@ -67,6 +67,7 @@ public class ServiceBuilderInvoker {
 			serviceBuilderArgs.getPropsUtil(),
 			serviceBuilderArgs.getReadOnlyPrefixes(), resourceActionModels,
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getResourcesDirName()),
+			serviceBuilderArgs.getSnapshotFeatureList(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getSpringFileName()),
 			serviceBuilderArgs.getSpringNamespaces(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getSqlDirName()),
@@ -74,7 +75,6 @@ public class ServiceBuilderInvoker {
 			serviceBuilderArgs.getSqlIndexesFileName(),
 			serviceBuilderArgs.getSqlSequencesFileName(),
 			serviceBuilderArgs.getTargetEntityName(),
-			serviceBuilderArgs.getTargetKernelVersion(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getTestDirName()),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getUADDirName()),
 			true);

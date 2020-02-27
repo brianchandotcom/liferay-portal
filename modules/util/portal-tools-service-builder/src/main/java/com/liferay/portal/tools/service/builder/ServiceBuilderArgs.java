@@ -96,6 +96,10 @@ public class ServiceBuilderArgs {
 		return _resourcesDirName;
 	}
 
+	public String getSnapshotFeatureList() {
+		return _snapshotFeatureList;
+	}
+
 	public String getSpringFileName() {
 		return _springFileName;
 	}
@@ -122,10 +126,6 @@ public class ServiceBuilderArgs {
 
 	public String getTargetEntityName() {
 		return _targetEntityName;
-	}
-
-	public String getTargetKernelVersion() {
-		return _targetKernelVersion;
 	}
 
 	public String getTestDirName() {
@@ -272,6 +272,10 @@ public class ServiceBuilderArgs {
 		_resourcesDirName = resourcesDirName;
 	}
 
+	public void setSnapshotFeatureList(String snapshotFeatureList) {
+		_snapshotFeatureList = snapshotFeatureList;
+	}
+
 	public void setSpringFileName(String springFileName) {
 		_springFileName = springFileName;
 	}
@@ -302,10 +306,6 @@ public class ServiceBuilderArgs {
 
 	public void setTargetEntityName(String targetEntityName) {
 		_targetEntityName = targetEntityName;
-	}
-
-	public void setTargetKernelVersion(String targetKernelVersion) {
-		_targetKernelVersion = targetKernelVersion;
 	}
 
 	public void setTestDirName(String testDirName) {
@@ -392,6 +392,7 @@ public class ServiceBuilderArgs {
 	private String[] _resourceActionsConfigs = RESOURCE_ACTION_CONFIGS;
 	private boolean _resourceActionsConfigsSet;
 	private String _resourcesDirName = "src";
+	private String _snapshotFeatureList;
 	private String _springFileName = "src/META-INF/portal-spring.xml";
 	private String[] _springNamespaces = {"beans"};
 	private String _sqlDirName = "../sql";
@@ -399,7 +400,6 @@ public class ServiceBuilderArgs {
 	private String _sqlIndexesFileName = "indexes.sql";
 	private String _sqlSequencesFileName = "sequences.sql";
 	private String _targetEntityName;
-	private String _targetKernelVersion;
 	private String _testDirName = "test/integration";
 	private String _uadDirName = StringPool.BLANK;
 	private String _uadTestIntegrationDirName = StringPool.BLANK;

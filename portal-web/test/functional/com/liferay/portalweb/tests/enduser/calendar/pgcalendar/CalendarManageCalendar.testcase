@@ -492,16 +492,6 @@ definition {
 			userScreenName = "usersn2");
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea1@liferay.com",
-			userLoginFullName = "userfn1 userln1");
-
-		Navigator.gotoPage(pageName = "Calendar Page");
-
-		Calendar.searchOtherCalendars(searchValue = "u");
-
-		Calendar.viewOtherCalendarsSearchResult(calendarName = "userfn2 userln2");
-
-		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea2@liferay.com",
 			userLoginFullName = "userfn2 userln2");
 
@@ -517,9 +507,6 @@ definition {
 
 		Calendar.viewOtherCalendarsSearchResult(calendarName = "userfn2 userln2");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"

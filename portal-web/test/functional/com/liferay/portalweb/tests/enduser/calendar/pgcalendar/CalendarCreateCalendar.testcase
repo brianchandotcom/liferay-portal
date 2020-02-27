@@ -138,6 +138,8 @@ definition {
 
 		CalendarNavigator.gotoPreviousDay();
 
+		Refresh();
+
 		CalendarEvent.resizeViaEventBlock();
 
 		Alert.viewSuccessMessage();
@@ -157,6 +159,8 @@ definition {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		ScrollWebElementIntoView(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC");
+
+		Refresh();
 
 		CalendarEvent.resizeViaEventBlock();
 

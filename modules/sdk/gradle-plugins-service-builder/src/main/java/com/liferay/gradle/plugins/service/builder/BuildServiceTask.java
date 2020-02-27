@@ -133,7 +133,7 @@ public class BuildServiceTask extends JavaExec {
 	@Input
 	@Optional
 	public String getSnapshotFeatureList() {
-		return GradleUtil.toString(_targetKernelVersion);
+		return GradleUtil.toString(_snapshotFeatureList);
 	}
 
 	@Input
@@ -376,8 +376,8 @@ public class BuildServiceTask extends JavaExec {
 		_targetEntityName = targetEntityName;
 	}
 
-	public void setTargetKernelVersion(Object targetKernelVersion) {
-		_targetKernelVersion = targetKernelVersion;
+	public void setSnapshotFeatureList(Object snapshotFeatureList) {
+		_snapshotFeatureList = snapshotFeatureList;
 	}
 
 	public void setTestDir(Object testDir) {
@@ -530,6 +530,7 @@ public class BuildServiceTask extends JavaExec {
 	private Object _inputFile;
 	private final Set<Object> _modelHintsConfigs = new LinkedHashSet<>();
 	private Object _modelHintsFile;
+	private Object _snapshotFeatureList;
 	private boolean _osgiModule;
 	private Object _pluginName;
 	private Object _propsUtil;
@@ -543,7 +544,6 @@ public class BuildServiceTask extends JavaExec {
 	private Object _sqlIndexesFileName = "indexes.sql";
 	private Object _sqlSequencesFileName = "sequences.sql";
 	private Object _targetEntityName;
-	private Object _targetKernelVersion;
 	private Object _testDir;
 	private Object _uadDir;
 	private Object _uadTestIntegrationDir;

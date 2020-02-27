@@ -152,12 +152,12 @@ public class ServiceBuilderDefaultsPlugin
 	}
 
 	private void _configureTaskBuildService(BuildServiceTask buildServiceTask) {
-		String targetKernelVersion = GradleUtil.getProperty(
+		String snapshotFeatureList = GradleUtil.getProperty(
 			buildServiceTask.getProject(),
 			"service.builder.snapshot.feature.list", (String)null);
 
-		if (Validator.isNotNull(targetKernelVersion)) {
-			buildServiceTask.setTargetKernelVersion(targetKernelVersion);
+		if (Validator.isNotNull(snapshotFeatureList)) {
+			buildServiceTask.setSnapshotFeatureList(snapshotFeatureList);
 		}
 	}
 

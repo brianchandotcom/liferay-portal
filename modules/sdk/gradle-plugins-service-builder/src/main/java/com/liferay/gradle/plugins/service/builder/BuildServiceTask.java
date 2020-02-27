@@ -131,6 +131,12 @@ public class BuildServiceTask extends JavaExec {
 	}
 
 	@Input
+	@Optional
+	public String getSnapshotFeatureList() {
+		return GradleUtil.toString(_targetKernelVersion);
+	}
+
+	@Input
 	public File getSpringFile() {
 		return GradleUtil.toFile(getProject(), _springFile);
 	}
@@ -164,12 +170,6 @@ public class BuildServiceTask extends JavaExec {
 	@Optional
 	public String getTargetEntityName() {
 		return GradleUtil.toString(_targetEntityName);
-	}
-
-	@Input
-	@Optional
-	public String getTargetKernelVersion() {
-		return GradleUtil.toString(_targetKernelVersion);
 	}
 
 	@Input
@@ -435,6 +435,13 @@ public class BuildServiceTask extends JavaExec {
 			"service.resource.actions.configs=" +
 				CollectionUtils.join(",", getResourceActionsConfigs()));
 		args.add("service.resources.dir=" + _relativize(getResourcesDir()));
+
+		String snapshotFeatureList = getSnapshotFeatureList();
+
+		if (Validator.isNotNull(snapshotFeatureList)) {
+			args.add("service.snapshot.feature.list=" + snapshotFeatureList);
+		}
+
 		args.add("service.spring.file=" + _relativize(getSpringFile()));
 		args.add(
 			"service.spring.namespaces=" +
@@ -451,12 +458,6 @@ public class BuildServiceTask extends JavaExec {
 		}
 
 		args.add("service.target.entity.name=" + targetEntityName);
-
-		String targetKernelVersion = getTargetKernelVersion();
-
-		if (Validator.isNotNull(targetKernelVersion)) {
-			args.add("service.target.kernel.version=" + targetKernelVersion);
-		}
 
 		File testDir = getTestDir();
 

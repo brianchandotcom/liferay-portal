@@ -277,6 +277,12 @@ export const getMessages = (
                         id
                         name
                     }
+                    creatorStatistics {
+						joinDate
+						lastPostDate
+						postsNumber
+						rank
+					}
                     encodingFormat
                     id
                     messageBoardMessages {

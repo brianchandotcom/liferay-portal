@@ -133,7 +133,7 @@ public class BuildServiceTask extends JavaExec {
 	@Input
 	@Optional
 	public String getSnapshotFeatureList() {
-		return GradleUtil.toString(_targetKernelVersion);
+		return GradleUtil.toString(_snapshotFeatureList);
 	}
 
 	@Input
@@ -342,6 +342,10 @@ public class BuildServiceTask extends JavaExec {
 		_resourcesDir = resourcesDir;
 	}
 
+	public void setSnapshotFeatureList(Object snapshotFeatureList) {
+		_snapshotFeatureList = snapshotFeatureList;
+	}
+
 	public void setSpringFile(Object springFile) {
 		_springFile = springFile;
 	}
@@ -374,10 +378,6 @@ public class BuildServiceTask extends JavaExec {
 
 	public void setTargetEntityName(Object targetEntityName) {
 		_targetEntityName = targetEntityName;
-	}
-
-	public void setTargetKernelVersion(Object targetKernelVersion) {
-		_targetKernelVersion = targetKernelVersion;
 	}
 
 	public void setTestDir(Object testDir) {
@@ -536,6 +536,7 @@ public class BuildServiceTask extends JavaExec {
 	private final Set<Object> _readOnlyPrefixes = new HashSet<>();
 	private final Set<Object> _resourceActionsConfigs = new LinkedHashSet<>();
 	private Object _resourcesDir;
+	private Object _snapshotFeatureList;
 	private Object _springFile;
 	private final Set<Object> _springNamespaces = new LinkedHashSet<>();
 	private Object _sqlDir;
@@ -543,7 +544,6 @@ public class BuildServiceTask extends JavaExec {
 	private Object _sqlIndexesFileName = "indexes.sql";
 	private Object _sqlSequencesFileName = "sequences.sql";
 	private Object _targetEntityName;
-	private Object _targetKernelVersion;
 	private Object _testDir;
 	private Object _uadDir;
 	private Object _uadTestIntegrationDir;

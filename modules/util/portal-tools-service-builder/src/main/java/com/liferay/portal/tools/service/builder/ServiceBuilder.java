@@ -205,6 +205,8 @@ public class ServiceBuilder {
 				arguments.get("service.resource.actions.configs"),
 				StringUtil.merge(ServiceBuilderArgs.RESOURCE_ACTION_CONFIGS)));
 		String resourcesDirName = arguments.get("service.resources.dir");
+		String snapshotFeatureList = arguments.get(
+			"service.snapshot.feature.list");
 		String springFileName = arguments.get("service.spring.file");
 		String[] springNamespaces = StringUtil.split(
 			arguments.get("service.spring.namespaces"));
@@ -214,8 +216,6 @@ public class ServiceBuilder {
 		String sqlSequencesFileName = arguments.get(
 			"service.sql.sequences.file");
 		String targetEntityName = arguments.get("service.target.entity.name");
-		String targetKernelVersion = arguments.get(
-			"service.target.kernel.version");
 		String testDirName = arguments.get("service.test.dir");
 		String uadDirName = arguments.get("service.uad.dir");
 
@@ -239,7 +239,7 @@ public class ServiceBuilder {
 				databaseNameMaxLength, hbmFileName, implDirName, inputFileName,
 				modelHintsFileName, osgiModule, pluginName, propsUtil,
 				readOnlyPrefixes, resourceActionModels, resourcesDirName,
-				targetKernelVersion, springFileName, springNamespaces,
+				snapshotFeatureList, springFileName, springNamespaces,
 				sqlDirName, sqlFileName, sqlIndexesFileName,
 				sqlSequencesFileName, targetEntityName, testDirName, uadDirName,
 				true);

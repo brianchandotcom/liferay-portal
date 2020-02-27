@@ -15,14 +15,12 @@
 package com.liferay.depot.internal.security.permission.wrapper.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -167,8 +165,6 @@ public class DepotPermissionCheckerWrapperTest {
 	public void testIsGroupAdminWithDepotGroupAndAssetLibraryAdmin()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
-
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -177,28 +173,20 @@ public class DepotPermissionCheckerWrapperTest {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
-		Role role = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
-
 		try {
-			_userGroupRoleLocalService.addUserGroupRoles(
-				user.getUserId(), depotEntry.getGroupId(),
-				new long[] {role.getRoleId()});
+			DepotTestUtil.withAssetLibraryAdministrator(
+				depotEntry,
+				user -> {
+					PermissionChecker permissionChecker =
+						_permissionCheckerFactory.create(user);
 
-			_userLocalService.addGroupUsers(
-				depotEntry.getGroupId(), new long[] {user.getUserId()});
-
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			Assert.assertTrue(
-				permissionChecker.isGroupAdmin(depotEntry.getGroupId()));
+					Assert.assertTrue(
+						permissionChecker.isGroupAdmin(
+							depotEntry.getGroupId()));
+				});
 		}
 		finally {
 			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-
-			_userLocalService.deleteUser(user);
 		}
 	}
 
@@ -304,8 +292,6 @@ public class DepotPermissionCheckerWrapperTest {
 	public void testIsGroupMemberWithDepotGroupAndAssetLibraryAdmin()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
-
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -314,28 +300,20 @@ public class DepotPermissionCheckerWrapperTest {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
-		Role role = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
-
 		try {
-			_userGroupRoleLocalService.addUserGroupRoles(
-				user.getUserId(), depotEntry.getGroupId(),
-				new long[] {role.getRoleId()});
+			DepotTestUtil.withAssetLibraryAdministrator(
+				depotEntry,
+				user -> {
+					PermissionChecker permissionChecker =
+						_permissionCheckerFactory.create(user);
 
-			_userLocalService.addGroupUsers(
-				depotEntry.getGroupId(), new long[] {user.getUserId()});
-
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			Assert.assertTrue(
-				permissionChecker.isGroupMember(depotEntry.getGroupId()));
+					Assert.assertTrue(
+						permissionChecker.isGroupMember(
+							depotEntry.getGroupId()));
+				});
 		}
 		finally {
 			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-
-			_userLocalService.deleteUser(user);
 		}
 	}
 
@@ -441,8 +419,6 @@ public class DepotPermissionCheckerWrapperTest {
 	public void testIsGroupOwnerWithDepotGroupAndAssetLibraryAdmin()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
-
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -451,28 +427,20 @@ public class DepotPermissionCheckerWrapperTest {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
-		Role role = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
-
 		try {
-			_userGroupRoleLocalService.addUserGroupRoles(
-				user.getUserId(), depotEntry.getGroupId(),
-				new long[] {role.getRoleId()});
+			DepotTestUtil.withAssetLibraryAdministrator(
+				depotEntry,
+				user -> {
+					PermissionChecker permissionChecker =
+						_permissionCheckerFactory.create(user);
 
-			_userLocalService.addGroupUsers(
-				depotEntry.getGroupId(), new long[] {user.getUserId()});
-
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			Assert.assertFalse(
-				permissionChecker.isGroupOwner(depotEntry.getGroupId()));
+					Assert.assertFalse(
+						permissionChecker.isGroupOwner(
+							depotEntry.getGroupId()));
+				});
 		}
 		finally {
 			_depotEntryLocalService.deleteDepotEntry(depotEntry);
-
-			_userLocalService.deleteUser(user);
 		}
 	}
 

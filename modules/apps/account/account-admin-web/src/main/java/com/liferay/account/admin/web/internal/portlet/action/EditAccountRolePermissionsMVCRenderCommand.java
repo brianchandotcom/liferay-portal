@@ -14,9 +14,16 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
-import com.liferay.account.admin.web.internal.util.AccountRoleRequestHelper;
+import com.liferay.account.admin.web.internal.util.AccountRoleRequestHelperUtil;
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -24,6 +31,9 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pei-Jung Lan
@@ -44,12 +54,37 @@ public class EditAccountRolePermissionsMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		_accountRoleRequestHelper.setRequestAttributes(renderRequest);
+		AccountRoleRequestHelperUtil.setRequestAttributes(
+			renderRequest, _accountRoleTypeContributor, _panelAppRegistry,
+			_panelCategoryRegistry, _personalMenuEntries);
 
 		return "/account_entries_admin/edit_account_role.jsp";
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "_removePersonalMenuEntry"
+	)
+	private void _addPersonalMenuEntry(PersonalMenuEntry personalMenuEntry) {
+		_personalMenuEntries.add(personalMenuEntry);
+	}
+
+	private void _removePersonalMenuEntry(PersonalMenuEntry personalMenuEntry) {
+		_personalMenuEntries.remove(personalMenuEntry);
+	}
+
+	@Reference(target = "(component.name=*.AccountRoleTypeContributor)")
+	private RoleTypeContributor _accountRoleTypeContributor;
+
 	@Reference
-	private AccountRoleRequestHelper _accountRoleRequestHelper;
+	private PanelAppRegistry _panelAppRegistry;
+
+	@Reference
+	private PanelCategoryRegistry _panelCategoryRegistry;
+
+	private final List<PersonalMenuEntry> _personalMenuEntries =
+		new CopyOnWriteArrayList<>();
 
 }

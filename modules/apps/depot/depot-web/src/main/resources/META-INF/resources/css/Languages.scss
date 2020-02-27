@@ -1,0 +1,15 @@
+@import 'atlas-variables';
+
+.language-list-item {
+	&.dragging {
+		opacity: 0.4;
+	}
+
+	&.drop-top td {
+		box-shadow: 0px -3px 0 0 $primary;
+	}
+
+	&.drop-bottom td {
+		box-shadow: inset 0px -3px 0 0 $primary, 0px 1px 0 0 $primary;
+	}
+}

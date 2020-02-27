@@ -34,7 +34,7 @@ const LanguagesList = ({
 		<ClayTable
 			borderless
 			headVerticalAlignment="middle"
-			hover={showActions}
+			hover={false}
 		>
 			<ClayTable.Head>
 				<ClayTable.Row>

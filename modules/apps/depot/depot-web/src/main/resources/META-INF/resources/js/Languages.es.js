@@ -21,6 +21,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import LanguagesList from './LanguagesList.es';
 import ManageLanguages from './ManageLanguages.es';
 
+import '../css/Languages.scss';
+
 const Languages = ({
 	availableLocales,
 	defaultLocaleId,

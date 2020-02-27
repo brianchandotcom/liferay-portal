@@ -19,6 +19,7 @@ import ClayLabel from '@clayui/label';
 import ClayTable from '@clayui/table';
 import React, {useEffect, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
+import classNames from 'classnames';
 
 const noop = () => {};
 
@@ -134,7 +135,14 @@ const LanguageListItem = ({
 	};
 
 	return (
-		<ClayTable.Row ref={ref}>
+		<ClayTable.Row
+			ref={ref}
+			className={classNames('language-list-item', {
+				dragging: isDragging,
+				'drop-bottom': isOver && dropZone === DROP_ZONES.BOTTOM,
+				'drop-top': isOver && dropZone === DROP_ZONES.TOP,
+			})}
+		>
 			<ClayTable.Cell expanded>
 				{displayName}
 				{isDefault && (

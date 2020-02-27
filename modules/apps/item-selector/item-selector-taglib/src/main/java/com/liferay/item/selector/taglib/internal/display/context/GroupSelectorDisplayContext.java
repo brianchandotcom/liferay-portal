@@ -156,12 +156,18 @@ public class GroupSelectorDisplayContext {
 	}
 
 	private String _getEmptyResultsMessage() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		Optional<GroupItemSelectorProvider> optional =
 			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
 				_getGroupType());
 
 		return optional.map(
-			GroupItemSelectorProvider::getEmptyResultsMessage
+			groupItemSelectorProvider ->
+				groupItemSelectorProvider.getEmptyResultsMessage(
+					themeDisplay.getLocale())
 		).orElse(
 			GroupSearch.EMPTY_RESULTS_MESSAGE
 		);

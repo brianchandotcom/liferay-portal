@@ -43,9 +43,18 @@ import org.osgi.service.component.annotations.Reference;
 public class GroupItemSelectorProviderImpl
 	implements GroupItemSelectorProvider {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public String getEmptyResultsMessage() {
 		return GroupSearch.EMPTY_RESULTS_MESSAGE;
+	}
+
+	@Override
+	public String getEmptyResultsMessage(Locale locale) {
+		return _language.get(locale, GroupSearch.EMPTY_RESULTS_MESSAGE);
 	}
 
 	@Override

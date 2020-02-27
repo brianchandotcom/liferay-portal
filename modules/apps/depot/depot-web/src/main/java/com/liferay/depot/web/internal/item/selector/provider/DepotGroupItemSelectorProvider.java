@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,9 +42,20 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotGroupItemSelectorProvider
 	implements GroupItemSelectorProvider {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public String getEmptyResultsMessage() {
 		return "no-asset-libraries-were-found";
+	}
+
+	@Override
+	public String getEmptyResultsMessage(Locale locale) {
+		return ResourceBundleUtil.getString(
+			_resourceBundleLoader.loadResourceBundle(locale),
+			"no-asset-libraries-were-found");
 	}
 
 	@Override
@@ -125,5 +138,8 @@ public class DepotGroupItemSelectorProvider
 
 	@Reference
 	private Language _language;
+
+	@Reference(target = "(bundle.symbolic.name=com.liferay.depot.web)")
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

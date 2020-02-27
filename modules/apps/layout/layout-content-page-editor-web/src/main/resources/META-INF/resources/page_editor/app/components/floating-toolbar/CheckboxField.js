@@ -23,7 +23,6 @@ export const CheckboxField = ({field, onValueSelect, value}) => (
 		<ClayCheckbox
 			aria-label={field.label}
 			checked={value}
-			defaultChecked={field.defaultValue}
 			label={field.label}
 			onChange={event => {
 				onValueSelect(field.name, event.target.checked);
@@ -35,5 +34,5 @@ export const CheckboxField = ({field, onValueSelect, value}) => (
 CheckboxField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onValueSelect: PropTypes.func.isRequired,
-	value: PropTypes.string,
+	value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };

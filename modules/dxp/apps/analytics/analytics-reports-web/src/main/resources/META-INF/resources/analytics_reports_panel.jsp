@@ -21,7 +21,7 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 %>
 
 <c:choose>
-	<c:when test="<%= AnalyticsReportsUtil.isAnalyticsEnabled(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) %>">
+	<c:when test="<%= AnalyticsReportsUtil.isAnalyticsSynced(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) %>">
 		<div id="<portlet:namespace />-analytics-reports-root">
 			<div class="inline-item my-5 p-5 w-100">
 				<span aria-hidden="true" class="loading-animation"></span>
@@ -42,7 +42,7 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 				/>
 
 				<c:choose>
-					<c:when test="<%= AnalyticsReportsUtil.isAnalyticsEnabled(themeDisplay.getCompanyId()) %>">
+					<c:when test="<%= AnalyticsReportsUtil.isAnalyticsConnected(themeDisplay.getCompanyId()) %>">
 						<h4 class="mt-3"><liferay-ui:message key="sync-to-analytics-cloud" /></h4>
 
 						<p class="text-secondary"><liferay-ui:message key="sync-to-analytics-cloud-help" /></p>

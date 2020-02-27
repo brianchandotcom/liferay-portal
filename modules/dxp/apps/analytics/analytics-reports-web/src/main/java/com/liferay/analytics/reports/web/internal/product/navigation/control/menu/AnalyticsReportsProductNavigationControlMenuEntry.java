@@ -239,8 +239,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			portalPreferences.getValue(
 				AnalyticsReportsPortletKeys.ANALYTICS_REPORTS, "hide-panel"));
 
-		if (!AnalyticsReportsUtil.isAnalyticsEnabled(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) &&
+		if (!AnalyticsReportsUtil.isAnalyticsConnected(
+				themeDisplay.getCompanyId()) &&
 			hidePanel) {
 
 			return false;

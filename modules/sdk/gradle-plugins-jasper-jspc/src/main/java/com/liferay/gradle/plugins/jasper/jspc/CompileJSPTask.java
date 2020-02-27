@@ -20,8 +20,11 @@ import com.liferay.gradle.util.GradleUtil;
 import java.io.File;
 import java.io.OutputStream;
 
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
 import java.lang.reflect.Method;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
@@ -51,8 +55,7 @@ public class CompileJSPTask extends JavaExec {
 
 		try {
 			_runWithClassPath(
-				classpath.getAsPath() + File.pathSeparator +
-					jspCClasspath.getAsPath(),
+				classpath.getAsPath(), jspCClasspath.getAsPath(),
 				_getCompleteArgs());
 		}
 		catch (Exception exception) {
@@ -112,12 +115,80 @@ public class CompileJSPTask extends JavaExec {
 		_webAppDir = webAppDir;
 	}
 
-	private static void _runWithClassPath(String classpath, String[] args)
+	private static BiConsumer<String, String[]> _getJspCBiConsumer(
+			String classpath)
 		throws Exception {
 
-		classpath =
-			System.getProperty("java.class.path") + File.pathSeparator +
-				classpath;
+		Reference<BiConsumer<String, String[]>> jspCBiConsumerReference =
+			_jspCBiConsumers.get(classpath);
+
+		BiConsumer<String, String[]> jspCBiConsumer = null;
+
+		if (jspCBiConsumerReference != null) {
+			jspCBiConsumer = jspCBiConsumerReference.get();
+		}
+
+		if (jspCBiConsumer == null) {
+			ClassLoader classLoader = new URLClassLoader(
+				_toURLs(classpath), null);
+
+			Class<?> jspCClass = classLoader.loadClass(
+				"org.apache.jasper.JspC");
+
+			Method setArgsMethod = jspCClass.getMethod(
+				"setArgs", String[].class);
+
+			Method setClassPathMethod = jspCClass.getMethod(
+				"setClassPath", String.class);
+
+			Method executeMethod = jspCClass.getMethod("execute");
+
+			jspCBiConsumer = (jspCClasspath, args) -> {
+				try {
+					Object jspC = jspCClass.newInstance();
+
+					setArgsMethod.invoke(jspC, new Object[] {args});
+
+					setClassPathMethod.invoke(jspC, jspCClasspath);
+
+					Thread currentThread = Thread.currentThread();
+
+					ClassLoader contextClassLoader =
+						currentThread.getContextClassLoader();
+
+					currentThread.setContextClassLoader(classLoader);
+
+					try {
+						executeMethod.invoke(jspC);
+					}
+					finally {
+						currentThread.setContextClassLoader(contextClassLoader);
+					}
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
+				}
+			};
+
+			_jspCBiConsumers.put(
+				classpath, new SoftReference<>(jspCBiConsumer));
+		}
+
+		return jspCBiConsumer;
+	}
+
+	private static void _runWithClassPath(
+			String classpath, String jspCClasspath, String[] args)
+		throws Exception {
+
+		BiConsumer<String, String[]> jspCBiConsumer = _getJspCBiConsumer(
+			classpath);
+
+		jspCBiConsumer.accept(jspCClasspath, args);
+	}
+
+	private static URL[] _toURLs(String classpath)
+		throws MalformedURLException {
 
 		String[] files = classpath.split(File.pathSeparator);
 
@@ -131,35 +202,7 @@ public class CompileJSPTask extends JavaExec {
 			urls[i] = uri.toURL();
 		}
 
-		ClassLoader classLoader = new URLClassLoader(urls, null);
-
-		Class<?> jspCClass = classLoader.loadClass("org.apache.jasper.JspC");
-
-		Object jspC = jspCClass.newInstance();
-
-		Method setArgsMethod = jspCClass.getMethod("setArgs", String[].class);
-
-		setArgsMethod.invoke(jspC, new Object[] {args});
-
-		Method setClassPathMethod = jspCClass.getMethod(
-			"setClassPath", String.class);
-
-		setClassPathMethod.invoke(jspC, classpath);
-
-		Method executeMethod = jspCClass.getMethod("execute");
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(classLoader);
-
-		try {
-			executeMethod.invoke(jspC);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
+		return urls;
 	}
 
 	private String[] _getCompleteArgs() {
@@ -168,6 +211,9 @@ public class CompileJSPTask extends JavaExec {
 			FileUtil.getAbsolutePath(getWebAppDir())
 		};
 	}
+
+	private static final Map<String, Reference<BiConsumer<String, String[]>>>
+		_jspCBiConsumers = new HashMap<>();
 
 	private Object _destinationDir;
 	private FileCollection _jspCClasspath;

@@ -16,7 +16,9 @@ package com.liferay.layout.content.page.editor.web.internal.util;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
+import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -61,11 +63,15 @@ public class FragmentEntryLinkItemSelectorUtil {
 			for (int j = 0; j < fieldsJSONArray.length(); j++) {
 				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(j);
 
-				if ((fieldJSONObject != null) &&
-					Objects.equals(
-						fieldJSONObject.getString("type"), "itemSelector") &&
-					fieldJSONObject.has("typeOptions")) {
+				if ((fieldJSONObject == null) ||
+					!fieldJSONObject.has("typeOptions")) {
 
+					continue;
+				}
+
+				String type = fieldJSONObject.getString("type");
+
+				if (Objects.equals(type, "itemSelector")) {
 					JSONObject typeOptionsJSONObject =
 						fieldJSONObject.getJSONObject("typeOptions");
 
@@ -73,6 +79,19 @@ public class FragmentEntryLinkItemSelectorUtil {
 						typeOptionsJSONObject.put(
 							"infoItemSelectorURL",
 							_getInfoItemSelectorURL(
+								itemSelector, httpServletRequest,
+								liferayPortletResponse, typeOptionsJSONObject));
+					}
+				}
+
+				if (Objects.equals(type, "itemCollectionSelector")) {
+					JSONObject typeOptionsJSONObject =
+						fieldJSONObject.getJSONObject("typeOptions");
+
+					if (typeOptionsJSONObject.has("itemType")) {
+						typeOptionsJSONObject.put(
+							"infoListSelectorURL",
+							_getInfoListSelectorURL(
 								itemSelector, httpServletRequest,
 								liferayPortletResponse, typeOptionsJSONObject));
 					}
@@ -128,6 +147,41 @@ public class FragmentEntryLinkItemSelectorUtil {
 		}
 
 		return infoItemSelectorURL.toString();
+	}
+
+	private static String _getInfoListSelectorURL(
+		ItemSelector itemSelector, HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		JSONObject typeOptionsJSONObject) {
+
+		InfoListItemSelectorCriterion infoListItemSelectorCriterion =
+			new InfoListItemSelectorCriterion();
+
+		String itemType = typeOptionsJSONObject.getString("itemType");
+
+		if (Validator.isNotNull(itemType)) {
+			infoListItemSelectorCriterion.setItemType(itemType);
+
+			String itemSubtype = typeOptionsJSONObject.getString("itemSubtype");
+
+			if (Validator.isNotNull(itemSubtype)) {
+				infoListItemSelectorCriterion.setItemSubtype(itemSubtype);
+			}
+		}
+
+		infoListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoListItemSelectorReturnType());
+
+		PortletURL infoListSelectorURL = itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			liferayPortletResponse.getNamespace() + "selectInfoList",
+			infoListItemSelectorCriterion);
+
+		if (infoListSelectorURL == null) {
+			return StringPool.BLANK;
+		}
+
+		return infoListSelectorURL.toString();
 	}
 
 }

@@ -21,13 +21,17 @@ import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {config} from '../../config/index';
 
 export const ItemCollectionSelectorField = ({field, onValueSelect, value}) => {
+	const {typeOptions = {}} = field;
 	const eventName = `${config.portletNamespace}selectInfoList`;
 
 	return (
 		<ClayForm.Group small>
 			<ItemSelector
 				eventName={eventName}
-				itemSelectorURL={config.infoListSelectorURL}
+				itemSelectorURL={
+					typeOptions.infoListSelectorURL ||
+					config.infoListSelectorURL
+				}
 				label={field.label}
 				onItemSelect={item => {
 					onValueSelect(field.name, {

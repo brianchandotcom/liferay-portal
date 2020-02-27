@@ -29,6 +29,7 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 		<>
 			<ClayForm.Group small>
 				<ItemSelector
+					itemSelectorURL={typeOptions.infoItemSelectorURL}
 					label={field.label}
 					onItemSelect={item => {
 						onValueSelect(field.name, {

@@ -71,7 +71,7 @@ public class FragmentEntryLinkItemSelectorUtil {
 
 					if (typeOptionsJSONObject.has("itemType")) {
 						typeOptionsJSONObject.put(
-							"itemSelectorUrl",
+							"infoItemSelectorURL",
 							_getInfoItemSelectorURL(
 								itemSelector, httpServletRequest,
 								liferayPortletResponse, typeOptionsJSONObject));

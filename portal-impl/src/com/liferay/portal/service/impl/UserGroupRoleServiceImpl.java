@@ -148,7 +148,10 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 			userGroupRole.setGroupId(groupId);
 			userGroupRole.setRoleId(roleId);
 
-			if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
+			if (role.getType() == RoleConstants.TYPE_DEPOT) {
+				filteredDepotUserGroupRoles.add(userGroupRole);
+			}
+			else if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
 				if (!OrganizationMembershipPolicyUtil.isRoleProtected(
 						getPermissionChecker(), userId,
 						group.getOrganizationId(), roleId)) {
@@ -162,14 +165,11 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 				filteredSiteUserGroupRoles.add(userGroupRole);
 			}
-			else if (role.getType() == RoleConstants.TYPE_DEPOT) {
-				filteredDepotUserGroupRoles.add(userGroupRole);
-			}
 		}
 
-		if (filteredOrganizationUserGroupRoles.isEmpty() &&
-			filteredSiteUserGroupRoles.isEmpty() &&
-			filteredDepotUserGroupRoles.isEmpty()) {
+		if (filteredDepotUserGroupRoles.isEmpty() &&
+			filteredOrganizationUserGroupRoles.isEmpty() &&
+			filteredSiteUserGroupRoles.isEmpty()) {
 
 			return;
 		}
@@ -216,7 +216,10 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 			userGroupRole.setGroupId(groupId);
 			userGroupRole.setRoleId(roleId);
 
-			if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
+			if (role.getType() == RoleConstants.TYPE_DEPOT) {
+				filteredUserGroupRoles.add(userGroupRole);
+			}
+			else if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
 				Group group = groupPersistence.findByPrimaryKey(groupId);
 
 				if (!OrganizationMembershipPolicyUtil.isRoleProtected(
@@ -230,9 +233,6 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 					 !SiteMembershipPolicyUtil.isRoleProtected(
 						 getPermissionChecker(), userId, groupId, roleId)) {
 
-				filteredUserGroupRoles.add(userGroupRole);
-			}
-			else if (role.getType() == RoleConstants.TYPE_DEPOT) {
 				filteredUserGroupRoles.add(userGroupRole);
 			}
 		}

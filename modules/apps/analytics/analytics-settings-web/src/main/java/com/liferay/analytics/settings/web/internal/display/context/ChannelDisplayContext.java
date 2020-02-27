@@ -71,11 +71,11 @@ public class ChannelDisplayContext {
 					_getKeywords(), channelSearch.getCur() - 1,
 					channelSearch.getDelta()));
 
-			HttpEntity httpEntity = httpResponse.getEntity();
-
 			StatusLine statusLine = httpResponse.getStatusLine();
 
 			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+
 				throw new PortalException(
 					"Request to Analytics Cloud failed: " +
 						StringUtil.read(httpEntity.getContent()));

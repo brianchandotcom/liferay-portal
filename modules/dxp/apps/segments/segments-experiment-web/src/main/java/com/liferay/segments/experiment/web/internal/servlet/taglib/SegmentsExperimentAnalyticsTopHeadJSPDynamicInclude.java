@@ -54,7 +54,7 @@ public class SegmentsExperimentAnalyticsTopHeadJSPDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!SegmentsExperimentUtil.isAnalyticsEnabled(
+		if (!SegmentsExperimentUtil.isAnalyticsSynced(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
 
 			return;

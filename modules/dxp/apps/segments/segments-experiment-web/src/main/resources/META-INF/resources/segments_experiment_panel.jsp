@@ -21,7 +21,7 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 %>
 
 <c:choose>
-	<c:when test="<%= SegmentsExperimentUtil.isAnalyticsEnabled(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) %>">
+	<c:when test="<%= SegmentsExperimentUtil.isAnalyticsSynced(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) %>">
 		<div id="<portlet:namespace />-segments-experiment-root" %>
 			<div class="inline-item my-5 p-5 w-100">
 				<span aria-hidden="true" class="loading-animation"></span>
@@ -41,7 +41,7 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 			/>
 
 			<c:choose>
-				<c:when test="<%= SegmentsExperimentUtil.isAnalyticsEnabled(themeDisplay.getCompanyId()) %>">
+				<c:when test="<%= SegmentsExperimentUtil.isAnalyticsConnected(themeDisplay.getCompanyId()) %>">
 					<h4 class="mt-3"><liferay-ui:message key="sync-to-analytics-cloud" /></h4>
 
 					<p class="text-secondary"><liferay-ui:message key="sync-to-analytics-cloud-help" /></p>

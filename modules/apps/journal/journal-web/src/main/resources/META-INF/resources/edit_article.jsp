@@ -250,6 +250,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 								dataRecordValues="<%= journalEditArticleDisplayContext.getValues(ddmStructure) %>"
 								namespace="<%= renderResponse.getNamespace() %>"
 							/>
+
 							<liferay-frontend:component
 								componentId='<%= renderResponse.getNamespace() + "dataEngineLayoutRendererLanguageProxy" %>'
 								module="js/dataEngineLayoutRendererLanguageProxy.es"

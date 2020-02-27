@@ -76,7 +76,7 @@ const App = props => {
 		dataDefinitionId,
 		dataLayoutId,
 		fieldTypesModules,
-		groupId
+		groupId,
 	} = parseProps(props);
 
 	const [loaded, setLoaded] = useState(false);

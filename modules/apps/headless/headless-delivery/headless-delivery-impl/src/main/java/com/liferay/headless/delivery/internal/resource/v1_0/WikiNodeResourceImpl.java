@@ -73,7 +73,7 @@ public class WikiNodeResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			_getActions(siteId),
+			_getSiteWikiNodeListActions(siteId),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -133,7 +133,17 @@ public class WikiNodeResourceImpl
 		_wikiNodeService.unsubscribeNode(wikiNodeId);
 	}
 
-	private Map<String, Map<String, String>> _getActions(
+	private Map<String, Map<String, String>> _getSiteWikiNodeListActions(
+		Long siteId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_NODE", "postSiteWikiNode", "com.liferay.wiki", siteId)
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getWikiNodeItemActions(
 		com.liferay.wiki.model.WikiNode wikiNode) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
@@ -151,20 +161,12 @@ public class WikiNodeResourceImpl
 		).build();
 	}
 
-	private Map<String, Map<String, String>> _getActions(Long siteId) {
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_NODE", "postSiteWikiNode", "com.liferay.wiki", siteId)
-		).build();
-	}
-
 	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
 		throws Exception {
 
 		return new WikiNode() {
 			{
-				actions = _getActions(wikiNode);
+				actions = _getWikiNodeItemActions(wikiNode);
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(wikiNode.getUserId()));

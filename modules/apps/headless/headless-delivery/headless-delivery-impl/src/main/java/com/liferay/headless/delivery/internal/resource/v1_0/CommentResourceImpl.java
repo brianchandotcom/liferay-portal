@@ -73,7 +73,7 @@ public class CommentResourceImpl
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
 		return spiCommentResource.getEntityCommentsPage(
-			_getBlogPostingCommentsListActions(
+			_getBlogPostingCommentListActions(
 				BlogsEntry.class.getName(), blogPostingId,
 				blogsEntry.getUserId(), blogsEntry.getGroupId()),
 			blogsEntry.getGroupId(), BlogsEntry.class.getName(), blogPostingId,
@@ -113,7 +113,7 @@ public class CommentResourceImpl
 		DLFileEntry dlFileEntry = _dlFileEntryService.getFileEntry(documentId);
 
 		return spiCommentResource.getEntityCommentsPage(
-			_getDocumentCommentsListActions(
+			_getDocumentCommentListActions(
 				DLFileEntry.class.getName(), documentId,
 				dlFileEntry.getUserId(), dlFileEntry.getGroupId()),
 			dlFileEntry.getGroupId(), DLFileEntry.class.getName(), documentId,
@@ -141,7 +141,7 @@ public class CommentResourceImpl
 			structuredContentId);
 
 		return spiCommentResource.getEntityCommentsPage(
-			_getStructuredContentCommentsListActions(
+			_getStructuredContentCommentListActions(
 				JournalArticle.class.getName(), structuredContentId,
 				journalArticle.getUserId(), journalArticle.getGroupId()),
 			journalArticle.getGroupId(), JournalArticle.class.getName(),
@@ -220,7 +220,7 @@ public class CommentResourceImpl
 		return spiCommentResource.putComment(commentId, comment.getText());
 	}
 
-	private Map<String, Map<String, String>> _getBlogPostingCommentsListActions(
+	private Map<String, Map<String, String>> _getBlogPostingCommentListActions(
 		String className, Long entityId, long ownerId, long siteId) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
@@ -236,7 +236,7 @@ public class CommentResourceImpl
 		).build();
 	}
 
-	private Map<String, Map<String, String>> _getDocumentCommentsListActions(
+	private Map<String, Map<String, String>> _getDocumentCommentListActions(
 		String className, Long entityId, long ownerId, long siteId) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
@@ -260,7 +260,7 @@ public class CommentResourceImpl
 	}
 
 	private Map<String, Map<String, String>>
-		_getStructuredContentCommentsListActions(
+		_getStructuredContentCommentListActions(
 			String className, Long entityId, long ownerId, long siteId) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(

@@ -112,7 +112,7 @@ public class WikiPageResourceImpl
 		WikiNode wikiNode = _wikiNodeService.getNode(wikiNodeId);
 
 		return SearchUtil.search(
-			_getWikiNodeListActions(wikiNode),
+			_getWikiNodeWikiPageListActions(wikiNode),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -156,7 +156,7 @@ public class WikiPageResourceImpl
 			ActionKeys.VIEW);
 
 		return Page.of(
-			_getWikiPageListActions(wikiPage),
+			_getWikiPageWikiPageListActions(wikiPage),
 			transform(
 				_wikiPageService.getChildren(
 					wikiPage.getGroupId(), wikiPage.getNodeId(), true,
@@ -258,7 +258,44 @@ public class WikiPageResourceImpl
 			wikiPage.getNodeId(), wikiPage.getTitle());
 	}
 
-	private Map<String, Map<String, String>> _getActions(
+	private String _getEncodingFormat(
+		com.liferay.wiki.model.WikiPage wikiPage) {
+
+		String format = wikiPage.getFormat();
+
+		if (format.equals("creole")) {
+			return "text/x-wiki";
+		}
+		else if (format.equals("html")) {
+			return "text/html";
+		}
+		else if (format.equals("plain_text")) {
+			return "text/plain";
+		}
+
+		return format;
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		WikiPage wikiPage) {
+
+		return CustomFieldsUtil.toMap(
+			com.liferay.wiki.model.WikiPage.class.getName(),
+			contextCompany.getCompanyId(), wikiPage.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private Map<String, Map<String, String>> _getWikiNodeWikiPageListActions(
+		WikiNode wikiNode) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"add-page", addAction("ADD_PAGE", wikiNode, "postWikiNodeWikiPage")
+		).put(
+			"get", addAction("VIEW", wikiNode, "getWikiNodeWikiPagesPage")
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getWikiPageItemActions(
 		com.liferay.wiki.model.WikiPage wikiPage) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
@@ -300,44 +337,7 @@ public class WikiPageResourceImpl
 		).build();
 	}
 
-	private String _getEncodingFormat(
-		com.liferay.wiki.model.WikiPage wikiPage) {
-
-		String format = wikiPage.getFormat();
-
-		if (format.equals("creole")) {
-			return "text/x-wiki";
-		}
-		else if (format.equals("html")) {
-			return "text/html";
-		}
-		else if (format.equals("plain_text")) {
-			return "text/plain";
-		}
-
-		return format;
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		WikiPage wikiPage) {
-
-		return CustomFieldsUtil.toMap(
-			com.liferay.wiki.model.WikiPage.class.getName(),
-			contextCompany.getCompanyId(), wikiPage.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private Map<String, Map<String, String>> _getWikiNodeListActions(
-		WikiNode wikiNode) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"add-page", addAction("ADD_PAGE", wikiNode, "postWikiNodeWikiPage")
-		).put(
-			"get", addAction("VIEW", wikiNode, "getWikiNodeWikiPagesPage")
-		).build();
-	}
-
-	private Map<String, Map<String, String>> _getWikiPageListActions(
+	private Map<String, Map<String, String>> _getWikiPageWikiPageListActions(
 		com.liferay.wiki.model.WikiPage wikiPage) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
@@ -360,7 +360,7 @@ public class WikiPageResourceImpl
 
 		return new WikiPage() {
 			{
-				actions = _getActions(wikiPage);
+				actions = _getWikiPageItemActions(wikiPage);
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						com.liferay.wiki.model.WikiPage.class.getName(),

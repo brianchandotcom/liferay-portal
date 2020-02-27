@@ -102,7 +102,8 @@ public class MessageBoardSectionResourceImpl
 			parentMessageBoardSectionId);
 
 		return _getMessageBoardSectionsPage(
-			_getMessageBoardSectionListActions(mbCategory.getGroupId()),
+			_getMessageBoardSectionMessageBoardSectionListActions(
+				mbCategory.getGroupId()),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -123,7 +124,7 @@ public class MessageBoardSectionResourceImpl
 		throws Exception {
 
 		return _getMessageBoardSectionsPage(
-			_getSiteActions(siteId),
+			_getSiteMessageBoardSectionListActions(siteId),
 			booleanQuery -> {
 				if (!GetterUtil.getBoolean(flatten)) {
 					BooleanFilter booleanFilter =
@@ -216,7 +217,16 @@ public class MessageBoardSectionResourceImpl
 					messageBoardSection.getViewableByAsString())));
 	}
 
-	private Map<String, Map<String, String>> _getActions(
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		MessageBoardSection messageBoardSection) {
+
+		return CustomFieldsUtil.toMap(
+			MBCategory.class.getName(), contextCompany.getCompanyId(),
+			messageBoardSection.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private Map<String, Map<String, String>> _getMessageBoardSectionItemActions(
 		MBCategory mbCategory) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
@@ -244,17 +254,8 @@ public class MessageBoardSectionResourceImpl
 		).build();
 	}
 
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		MessageBoardSection messageBoardSection) {
-
-		return CustomFieldsUtil.toMap(
-			MBCategory.class.getName(), contextCompany.getCompanyId(),
-			messageBoardSection.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private Map<String, Map<String, String>> _getMessageBoardSectionListActions(
-		long groupId) {
+	private Map<String, Map<String, String>>
+		_getMessageBoardSectionMessageBoardSectionListActions(long groupId) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
@@ -291,7 +292,9 @@ public class MessageBoardSectionResourceImpl
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
-	private Map<String, Map<String, String>> _getSiteActions(Long siteId) {
+	private Map<String, Map<String, String>>
+		_getSiteMessageBoardSectionListActions(Long siteId) {
+
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
 			addAction(
@@ -310,7 +313,7 @@ public class MessageBoardSectionResourceImpl
 
 		return new MessageBoardSection() {
 			{
-				actions = _getActions(mbCategory);
+				actions = _getMessageBoardSectionItemActions(mbCategory);
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(mbCategory.getUserId()));

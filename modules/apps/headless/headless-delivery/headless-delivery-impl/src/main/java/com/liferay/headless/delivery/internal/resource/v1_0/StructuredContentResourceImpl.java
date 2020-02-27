@@ -160,7 +160,7 @@ public class StructuredContentResourceImpl
 			contentStructureId);
 
 		return _getStructuredContentsPage(
-			_getContentStructureListActions(ddmStructure),
+			_getContentStructureStructuredContentListActions(ddmStructure),
 			booleanQuery -> {
 				if (contentStructureId != null) {
 					BooleanFilter booleanFilter =
@@ -235,7 +235,7 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		return _getStructuredContentsPage(
-			_getSiteListActions(siteId),
+			_getSiteStructuredContentListActions(siteId),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -274,7 +274,8 @@ public class StructuredContentResourceImpl
 			structuredContentFolderId);
 
 		return _getStructuredContentsPage(
-			_getStructuredContentFolderListActions(journalFolder),
+			_getStructuredContentFolderStructuredContentListActions(
+				journalFolder),
 			booleanQuery -> {
 				if (structuredContentFolderId != null) {
 					BooleanFilter booleanFilter =
@@ -658,7 +659,123 @@ public class StructuredContentResourceImpl
 		}
 	}
 
-	private Map<String, Map<String, String>> _getActions(
+	private Map<String, Map<String, String>>
+		_getContentStructureStructuredContentListActions(
+			DDMStructure ddmStructure) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"get",
+			addAction(
+				"VIEW", ddmStructure.getStructureId(),
+				"getContentStructureStructuredContentsPage",
+				ddmStructure.getUserId(), "com.liferay.journal",
+				ddmStructure.getGroupId())
+		).build();
+	}
+
+	private DDMFormField _getDDMFormField(
+		DDMStructure ddmStructure, String name) {
+
+		try {
+			return ddmStructure.getDDMFormField(name);
+		}
+		catch (Exception exception) {
+			throw new BadRequestException(
+				StringBundler.concat(
+					"Unable to get content field value for \"", name,
+					"\" for content structure ", ddmStructure.getStructureId()),
+				exception);
+		}
+	}
+
+	private String _getDDMTemplateKey(DDMStructure ddmStructure) {
+		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
+
+		if (ddmTemplates.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		DDMTemplate ddmTemplate = ddmTemplates.get(0);
+
+		return ddmTemplate.getTemplateKey();
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		StructuredContent structuredContent) {
+
+		return CustomFieldsUtil.toMap(
+			JournalArticle.class.getName(), contextCompany.getCompanyId(),
+			structuredContent.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private List<DDMFormField> _getRootDDMFormFields(
+		DDMStructure ddmStructure) {
+
+		return transform(
+			ddmStructure.getRootFieldNames(),
+			fieldName -> _getDDMFormField(ddmStructure, fieldName));
+	}
+
+	private Map<String, Map<String, String>>
+		_getSiteStructuredContentListActions(Long siteId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_ARTICLE", "postSiteStructuredContent",
+				"com.liferay.journal", siteId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getSiteStructuredContentsPage", "com.liferay.journal",
+				siteId)
+		).build();
+	}
+
+	private SPIRatingResource<Rating> _getSPIRatingResource() {
+		return new SPIRatingResource<>(
+			JournalArticle.class.getName(), _ratingsEntryLocalService,
+			ratingsEntry -> RatingUtil.toRating(
+				_getStructuredContentRatingItemActions(ratingsEntry), _portal,
+				ratingsEntry, _userLocalService),
+			contextUser);
+	}
+
+	private StructuredContent _getStructuredContent(
+			JournalArticle journalArticle)
+		throws Exception {
+
+		ContentLanguageUtil.addContentLanguageHeader(
+			journalArticle.getAvailableLanguageIds(),
+			journalArticle.getDefaultLanguageId(), contextHttpServletResponse,
+			contextAcceptLanguage.getPreferredLocale());
+
+		return _toStructuredContent(journalArticle);
+	}
+
+	private Map<String, Map<String, String>>
+		_getStructuredContentFolderStructuredContentListActions(
+			JournalFolder journalFolder) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_ARTICLE", journalFolder.getFolderId(),
+				"postStructuredContentFolderStructuredContent",
+				journalFolder.getUserId(), "com.liferay.journal",
+				journalFolder.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", journalFolder.getFolderId(),
+				"getStructuredContentFolderStructuredContentsPage",
+				journalFolder.getUserId(), "com.liferay.journal",
+				journalFolder.getGroupId())
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getStructuredContentItemActions(
 		JournalArticle journalArticle) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
@@ -707,57 +824,8 @@ public class StructuredContentResourceImpl
 		).build();
 	}
 
-	private Map<String, Map<String, String>> _getContentStructureListActions(
-		DDMStructure ddmStructure) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"get",
-			addAction(
-				"VIEW", ddmStructure.getStructureId(),
-				"getContentStructureStructuredContentsPage",
-				ddmStructure.getUserId(), "com.liferay.journal",
-				ddmStructure.getGroupId())
-		).build();
-	}
-
-	private DDMFormField _getDDMFormField(
-		DDMStructure ddmStructure, String name) {
-
-		try {
-			return ddmStructure.getDDMFormField(name);
-		}
-		catch (Exception exception) {
-			throw new BadRequestException(
-				StringBundler.concat(
-					"Unable to get content field value for \"", name,
-					"\" for content structure ", ddmStructure.getStructureId()),
-				exception);
-		}
-	}
-
-	private String _getDDMTemplateKey(DDMStructure ddmStructure) {
-		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
-
-		if (ddmTemplates.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		DDMTemplate ddmTemplate = ddmTemplates.get(0);
-
-		return ddmTemplate.getTemplateKey();
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		StructuredContent structuredContent) {
-
-		return CustomFieldsUtil.toMap(
-			JournalArticle.class.getName(), contextCompany.getCompanyId(),
-			structuredContent.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private Map<String, Map<String, String>> _getRatingActions(
-			RatingsEntry ratingsEntry)
+	private Map<String, Map<String, String>>
+			_getStructuredContentRatingItemActions(RatingsEntry ratingsEntry)
 		throws Exception {
 
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
@@ -787,69 +855,6 @@ public class StructuredContentResourceImpl
 				"UPDATE", journalArticle.getResourcePrimKey(),
 				"putStructuredContentMyRating", journalArticle.getUserId(),
 				JournalArticle.class.getName(), journalArticle.getGroupId())
-		).build();
-	}
-
-	private List<DDMFormField> _getRootDDMFormFields(
-		DDMStructure ddmStructure) {
-
-		return transform(
-			ddmStructure.getRootFieldNames(),
-			fieldName -> _getDDMFormField(ddmStructure, fieldName));
-	}
-
-	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_ARTICLE", "postSiteStructuredContent",
-				"com.liferay.journal", siteId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getSiteStructuredContentsPage", "com.liferay.journal",
-				siteId)
-		).build();
-	}
-
-	private SPIRatingResource<Rating> _getSPIRatingResource() {
-		return new SPIRatingResource<>(
-			JournalArticle.class.getName(), _ratingsEntryLocalService,
-			ratingsEntry -> RatingUtil.toRating(
-				_getRatingActions(ratingsEntry), _portal, ratingsEntry,
-				_userLocalService),
-			contextUser);
-	}
-
-	private StructuredContent _getStructuredContent(
-			JournalArticle journalArticle)
-		throws Exception {
-
-		ContentLanguageUtil.addContentLanguageHeader(
-			journalArticle.getAvailableLanguageIds(),
-			journalArticle.getDefaultLanguageId(), contextHttpServletResponse,
-			contextAcceptLanguage.getPreferredLocale());
-
-		return _toStructuredContent(journalArticle);
-	}
-
-	private Map<String, Map<String, String>>
-		_getStructuredContentFolderListActions(JournalFolder journalFolder) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_ARTICLE", journalFolder.getFolderId(),
-				"postStructuredContentFolderStructuredContent",
-				journalFolder.getUserId(), "com.liferay.journal",
-				journalFolder.getGroupId())
-		).put(
-			"get",
-			addAction(
-				"VIEW", journalFolder.getFolderId(),
-				"getStructuredContentFolderStructuredContentsPage",
-				journalFolder.getUserId(), "com.liferay.journal",
-				journalFolder.getGroupId())
 		).build();
 	}
 
@@ -1027,8 +1032,8 @@ public class StructuredContentResourceImpl
 		return _structuredContentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				_getActions(journalArticle), _dtoConverterRegistry,
-				journalArticle.getResourcePrimKey(),
+				_getStructuredContentItemActions(journalArticle),
+				_dtoConverterRegistry, journalArticle.getResourcePrimKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}

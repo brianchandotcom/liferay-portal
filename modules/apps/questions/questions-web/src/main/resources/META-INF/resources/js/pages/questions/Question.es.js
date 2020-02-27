@@ -157,7 +157,7 @@ export default ({
 		<section className="c-mt-5">
 			{question && (
 				<div className="row">
-					<div className="col-1 text-center">
+					<div className="col-md-1 text-md-center">
 						<Rating
 							aggregateRating={question.aggregateRating}
 							entityId={question.id}
@@ -169,12 +169,14 @@ export default ({
 						/>
 					</div>
 
-					<div className="col-10">
-						<SectionLabel section={question.messageBoardSection} />
+					<div className="col-md-10">
+						<div className="align-items-end flex-column-reverse flex-md-row row">
+							<div className="c-mt-4 c-mt-md-0 col-md-9">
+								<SectionLabel
+									section={question.messageBoardSection}
+								/>
 
-						<div className="c-mt-2 row">
-							<div className="col-10">
-								<h1 className="question-headline">
+								<h1 className="c-mt-2 question-headline">
 									{question.headline}
 								</h1>
 
@@ -196,8 +198,11 @@ export default ({
 								</p>
 							</div>
 
-							<div className="col-2">
-								<ClayButton.Group spaced={true}>
+							<div className="col-md-3 text-right">
+								<ClayButton.Group
+									className="question-actions"
+									spaced={true}
+								>
 									{question.actions.subscribe && (
 										<Subscription
 											onSubscription={subscribed =>
@@ -231,7 +236,7 @@ export default ({
 							<TagList tags={question.keywords} />
 						</div>
 
-						<div className="c-mt-4 position-relative question-creator text-right">
+						<div className="c-mt-4 position-relative question-creator text-center text-md-right">
 							<CreatorRow question={question} />
 						</div>
 

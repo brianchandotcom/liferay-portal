@@ -58,7 +58,7 @@ export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 	};
 
 	return (
-		<div className="align-items-center d-inline-flex flex-column justify-content-center text-secondary">
+		<div className="align-items-center d-inline-flex flex-md-column justify-content-center text-secondary">
 			<ClayButton
 				className={
 					'text-reset' + (userRating === 1 ? ' text-primary' : '')
@@ -70,7 +70,7 @@ export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 				<ClayIcon symbol="caret-top" />
 			</ClayButton>
 
-			<span>{rating || 0}</span>
+			<span className="c-px-2">{rating || 0}</span>
 
 			<ClayButton
 				className={

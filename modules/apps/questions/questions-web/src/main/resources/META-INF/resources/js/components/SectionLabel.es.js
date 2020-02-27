@@ -19,7 +19,7 @@ export default ({section}) => (
 	<>
 		{section && (
 			<ClayLabel
-				className="bg-light border-0 text-uppercase"
+				className="bg-light border-0 stretched-link-layer text-uppercase"
 				displayType="secondary"
 				large
 			>

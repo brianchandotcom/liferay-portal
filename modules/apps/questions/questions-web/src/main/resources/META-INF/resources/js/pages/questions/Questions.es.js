@@ -102,7 +102,7 @@ export default ({
 	};
 
 	return (
-		<section className="c-mt-5 c-mx-auto col-xl-10">
+		<section className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
 			<ClayButton.Group>
 				<ClayButton
 					displayType={
@@ -150,14 +150,12 @@ export default ({
 						className="c-mt-4 c-p-3 position-relative question-row text-secondary"
 						key={question.id}
 					>
-						<div className="align-items-center d-flex justify-content-between">
-							<div className={'stretched-link-layer'}>
-								<SectionLabel
-									section={question.messageBoardSection}
-								/>
-							</div>
+						<div className="align-items-center d-flex flex-wrap justify-content-between">
+							<SectionLabel
+								section={question.messageBoardSection}
+							/>
 
-							<ul className="question-list">
+							<ul className="c-mb-0 d-flex flex-wrap list-unstyled stretched-link-layer">
 								<li>
 									<QuestionBadge
 										symbol={
@@ -184,7 +182,7 @@ export default ({
 									<QuestionBadge
 										className={
 											hasValidAnswer(question)
-												? 'question-badge-success'
+												? 'alert-success border-0'
 												: ''
 										}
 										symbol={
@@ -214,8 +212,8 @@ export default ({
 							<ArticleBodyRenderer {...question} />
 						</div>
 
-						<div className="align-items-center c-mt-3 d-flex justify-content-between">
-							<div className="stretched-link-layer">
+						<div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">
+							<div className="c-mt-3 c-mt-sm-0 stretched-link-layer">
 								<Link
 									to={
 										'/questions/creator/' +

@@ -14,7 +14,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import classnames from 'classnames';
 import React from 'react';
 
 import {subscribe, unsubscribe} from '../utils/client.es';
@@ -33,19 +32,11 @@ export default ({onSubscription, question}) => {
 
 	return (
 		<ClayButton
-			className={classnames({
-				'question-subscribed': question.subscribed,
-			})}
-			displayType="secondary"
+			displayType={question.subscribed ? 'primary' : 'secondary'}
 			monospaced
 			onClick={changeSubscription}
 		>
-			<ClayIcon
-				className={classnames({
-					'question-bell-subscribed': question.subscribed,
-				})}
-				symbol="bell-on"
-			/>
+			<ClayIcon symbol="bell-on" />
 		</ClayButton>
 	);
 };

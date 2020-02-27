@@ -51,10 +51,10 @@ export default ({question}) => {
 					<div className="row">
 						{relatedQuestions.map(relatedQuestion => (
 							<div
-								className="col-3 p-3 position-relative"
+								className="col-lg-3 col-md-4 col-sm-6 p-3 position-relative"
 								key={relatedQuestion.id}
 							>
-								<div className="d-flex justify-content-between stretched-link-layer">
+								<div className="align-items-center d-flex justify-content-between stretched-link-layer">
 									<SectionLabel
 										section={
 											relatedQuestion.messageBoardSection

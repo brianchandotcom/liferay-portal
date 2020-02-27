@@ -14,6 +14,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import React, {useContext} from 'react';
@@ -36,30 +37,28 @@ export default withRouter(({history, location, searchChange}) => {
 	const isActive = value => location.pathname.includes('/' + value);
 
 	return (
-		<div className="autofit-padded-no-gutters autofit-row autofit-row-center">
-			<div className="autofit-col autofit-col-expand">
-				<ClayNavigationBar triggerLabel="Questions">
-					<ClayNavigationBar.Item
-						active={isActive('questions')}
-						onClick={() => navigate('/questions')}
-					>
-						<ClayLink className="nav-link" displayType="unstyled">
-							{Liferay.Language.get('questions')}
-						</ClayLink>
-					</ClayNavigationBar.Item>
+		<div className="align-items-center d-flex justify-content-between">
+			<ClayNavigationBar triggerLabel="Questions">
+				<ClayNavigationBar.Item
+					active={isActive('questions')}
+					onClick={() => navigate('/questions')}
+				>
+					<ClayLink className="nav-link" displayType="unstyled">
+						{Liferay.Language.get('questions')}
+					</ClayLink>
+				</ClayNavigationBar.Item>
 
-					<ClayNavigationBar.Item
-						active={isActive('tags')}
-						onClick={() => navigate('/tags')}
-					>
-						<ClayLink className="nav-link" displayType="unstyled">
-							{Liferay.Language.get('tags')}
-						</ClayLink>
-					</ClayNavigationBar.Item>
-				</ClayNavigationBar>
-			</div>
+				<ClayNavigationBar.Item
+					active={isActive('tags')}
+					onClick={() => navigate('/tags')}
+				>
+					<ClayLink className="nav-link" displayType="unstyled">
+						{Liferay.Language.get('tags')}
+					</ClayLink>
+				</ClayNavigationBar.Item>
+			</ClayNavigationBar>
 
-			<div className="autofit-col">
+			<div className="d-flex">
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayInput
@@ -70,6 +69,7 @@ export default withRouter(({history, location, searchChange}) => {
 							placeholder={Liferay.Language.get('search')}
 							type="text"
 						/>
+
 						<ClayInput.GroupInsetItem after tag="span">
 							<ClayButtonWithIcon
 								displayType="unstyled"
@@ -79,16 +79,29 @@ export default withRouter(({history, location, searchChange}) => {
 						</ClayInput.GroupInsetItem>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
-			</div>
 
-			<div className="autofit-col">
 				{context.canCreateThread && (
-					<ClayButton
-						displayType="primary"
-						onClick={() => navigate('/questions/new')}
-					>
-						{Liferay.Language.get('ask-question')}
-					</ClayButton>
+					<>
+						<ClayButton
+							className="c-ml-3 d-none d-sm-block text-nowrap"
+							displayType="primary"
+							onClick={() => navigate('/questions/new')}
+						>
+							{Liferay.Language.get('ask-question')}
+						</ClayButton>
+
+						<ClayButton
+							className="btn-monospaced d-block d-sm-none position-fixed question-button shadow"
+							displayType="primary"
+							onClick={() => navigate('/questions/new')}
+						>
+							<ClayIcon symbol="pencil" />
+
+							<span className="sr-only">
+								{Liferay.Language.get('ask-question')}
+							</span>
+						</ClayButton>
+					</>
 				)}
 			</div>
 		</div>

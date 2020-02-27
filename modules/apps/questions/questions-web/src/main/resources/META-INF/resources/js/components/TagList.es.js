@@ -17,7 +17,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 export default ({tags = []}) => (
-	<ul className="question-list stretched-link-layer">
+	<ul className="c-mb-0 d-flex flex-wrap list-unstyled stretched-link-layer">
 		{tags.map(tag => (
 			<li key={tag}>
 				<ClayLabel displayType="secondary">

@@ -140,21 +140,23 @@ export default withRouter(
 					</ClayForm.Group>
 				</ClayForm>
 
-				<ClayButton.Group className="c-mt-4" spaced={true}>
+				<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
 					<ClayButton
+						className="c-mt-4 c-mt-sm-0"
 						disabled={!articleBody || !headline}
 						displayType="primary"
 						onClick={submit}
 					>
-						{Liferay.Language.get('post-your-question')}
+						{Liferay.Language.get('update-your-question')}
 					</ClayButton>
 
-					<Link to={'/questions/'}>
-						<ClayButton displayType="secondary">
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
+					<Link
+						className="btn btn-secondary c-ml-sm-3"
+						to={`/questions/`}
+					>
+						{Liferay.Language.get('cancel')}
 					</Link>
-				</ClayButton.Group>
+				</div>
 			</section>
 		);
 	}

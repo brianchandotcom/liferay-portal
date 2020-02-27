@@ -65,8 +65,8 @@ export default ({answer, answerChange, deleteAnswer}) => {
 					'question-answer-success': showAsAnswer,
 				})}
 			>
-				<div className="row">
-					<div className="col-1 text-center">
+				<div className="align-items-center align-items-md-start row">
+					<div className="col-6 col-md-1 order-1 order-md-0 text-md-center text-right">
 						<Rating
 							aggregateRating={answer.aggregateRating}
 							entityId={answer.id}
@@ -78,7 +78,7 @@ export default ({answer, answerChange, deleteAnswer}) => {
 						/>
 					</div>
 
-					<div className="col-9">
+					<div className="c-mb-4 c-mb-md-0 col-lg-9 col-md-8">
 						{showAsAnswer && (
 							<p className="c-mb-0 font-weight-bold text-success">
 								<ClayIcon symbol="check-circle-full" />
@@ -125,8 +125,8 @@ export default ({answer, answerChange, deleteAnswer}) => {
 								>
 									{Liferay.Language.get(
 										showAsAnswer
-											? 'unmark as answer'
-											: 'mark as answer'
+											? 'Unmark as answer'
+											: 'Mark as answer'
 									)}
 								</ClayButton>
 							)}
@@ -148,7 +148,7 @@ export default ({answer, answerChange, deleteAnswer}) => {
 						</ClayButton.Group>
 					</div>
 
-					<div className="col-2 text-right">
+					<div className="col-6 col-lg-2 col-md-3">
 						<UserRow
 							creator={answer.creator}
 							statistics={answer.creatorStatistics}
@@ -158,7 +158,7 @@ export default ({answer, answerChange, deleteAnswer}) => {
 			</div>
 
 			<div className="row">
-				<div className="col-9 offset-1">
+				<div className="col-md-9 offset-md-1">
 					<Comments
 						comments={comments}
 						commentsChange={_commentsChange}

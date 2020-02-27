@@ -111,7 +111,7 @@ public class KeywordResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			_getSiteListActions(siteId),
+			_getSiteKeywordListActions(siteId),
 			booleanQuery -> {
 			},
 			filter, AssetTag.class, search, pagination,
@@ -144,7 +144,9 @@ public class KeywordResourceImpl
 			_assetTagService.updateTag(keywordId, keyword.getName(), null));
 	}
 
-	private Map<String, Map<String, String>> _getActions(AssetTag assetTag) {
+	private Map<String, Map<String, String>> _getKeywordItemActions(
+		AssetTag assetTag) {
+
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			addAction(
@@ -188,7 +190,9 @@ public class KeywordResourceImpl
 		return projectionList;
 	}
 
-	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
+	private Map<String, Map<String, String>> _getSiteKeywordListActions(
+		Long siteId) {
+
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
 			addAction(
@@ -224,7 +228,7 @@ public class KeywordResourceImpl
 	private Keyword _toKeyword(AssetTag assetTag) {
 		return new Keyword() {
 			{
-				actions = _getActions(assetTag);
+				actions = _getKeywordItemActions(assetTag);
 				dateCreated = assetTag.getCreateDate();
 				dateModified = assetTag.getModifiedDate();
 				id = assetTag.getTagId();

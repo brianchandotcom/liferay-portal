@@ -104,7 +104,7 @@ public class TaxonomyVocabularyResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			_getSiteListActions(siteId),
+			_getSiteTaxonomyVocabularyListActions(siteId),
 			booleanQuery -> {
 			},
 			filter, AssetVocabulary.class, search, pagination,
@@ -242,23 +242,6 @@ public class TaxonomyVocabularyResourceImpl
 				new ServiceContext()));
 	}
 
-	private Map<String, Map<String, String>> _getActions(
-		AssetVocabulary assetVocabulary) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			addAction("DELETE", assetVocabulary, "deleteTaxonomyVocabulary")
-		).put(
-			"get", addAction("VIEW", assetVocabulary, "getTaxonomyVocabulary")
-		).put(
-			"replace",
-			addAction("UPDATE", assetVocabulary, "putTaxonomyVocabulary")
-		).put(
-			"update",
-			addAction("UPDATE", assetVocabulary, "patchTaxonomyVocabulary")
-		).build();
-	}
-
 	private AssetType _getAssetType(
 		long groupId, long classNameId, long classTypePK,
 		long[] requiredClassNameIds) {
@@ -351,6 +334,23 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		return assetTypes;
+	}
+
+	private Map<String, Map<String, String>> _getAssetVocabularyItemActions(
+		AssetVocabulary assetVocabulary) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction("DELETE", assetVocabulary, "deleteTaxonomyVocabulary")
+		).put(
+			"get", addAction("VIEW", assetVocabulary, "getTaxonomyVocabulary")
+		).put(
+			"replace",
+			addAction("UPDATE", assetVocabulary, "putTaxonomyVocabulary")
+		).put(
+			"update",
+			addAction("UPDATE", assetVocabulary, "patchTaxonomyVocabulary")
+		).build();
 	}
 
 	private String _getAvailableAssetTypes(
@@ -489,7 +489,9 @@ public class TaxonomyVocabularyResourceImpl
 		return assetVocabularySettingsHelper.toString();
 	}
 
-	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
+	private Map<String, Map<String, String>>
+		_getSiteTaxonomyVocabularyListActions(Long siteId) {
+
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
 			addAction(
@@ -509,7 +511,7 @@ public class TaxonomyVocabularyResourceImpl
 
 		return new TaxonomyVocabulary() {
 			{
-				actions = _getActions(assetVocabulary);
+				actions = _getAssetVocabularyItemActions(assetVocabulary);
 				assetTypes = _getAssetTypes(
 					new AssetVocabularySettingsHelper(
 						assetVocabulary.getSettings()),

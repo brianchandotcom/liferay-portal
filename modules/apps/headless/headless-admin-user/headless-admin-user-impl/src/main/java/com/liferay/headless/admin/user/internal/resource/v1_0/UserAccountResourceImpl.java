@@ -112,7 +112,7 @@ public class UserAccountResourceImpl
 			organizationId);
 
 		return _getUserAccountsPage(
-			_getOrganizationListActions(organization),
+			_getOrganizationUserAccountListActions(organization),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -133,7 +133,7 @@ public class UserAccountResourceImpl
 		throws Exception {
 
 		return _getUserAccountsPage(
-			_getSiteListActions(siteId),
+			_getSiteUserAccountListActions(siteId),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -175,15 +175,6 @@ public class UserAccountResourceImpl
 			search, filter, pagination, sorts);
 	}
 
-	private Map<String, Map<String, String>> _getActions(User user) {
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"get",
-			addAction(
-				"VIEW", "getUserAccount", User.class.getName(),
-				user.getGroupId())
-		).build();
-	}
-
 	private String _getListTypeMessage(long listTypeId) throws Exception {
 		if (listTypeId == 0) {
 			return null;
@@ -195,8 +186,8 @@ public class UserAccountResourceImpl
 			contextAcceptLanguage.getPreferredLocale(), listType.getName());
 	}
 
-	private Map<String, Map<String, String>> _getOrganizationListActions(
-		Organization organization) {
+	private Map<String, Map<String, String>>
+		_getOrganizationUserAccountListActions(Organization organization) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"get",
@@ -206,7 +197,9 @@ public class UserAccountResourceImpl
 		).build();
 	}
 
-	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
+	private Map<String, Map<String, String>> _getSiteUserAccountListActions(
+		Long siteId) {
+
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"get",
 			addAction(
@@ -221,6 +214,17 @@ public class UserAccountResourceImpl
 				setSiteGroupId(group.getGroupId());
 			}
 		};
+	}
+
+	private Map<String, Map<String, String>> _getUserAccountItemActions(
+		User user) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"get",
+			addAction(
+				"VIEW", "getUserAccount", User.class.getName(),
+				user.getGroupId())
+		).build();
 	}
 
 	private Page<UserAccount> _getUserAccountsPage(
@@ -282,7 +286,7 @@ public class UserAccountResourceImpl
 
 		return new UserAccount() {
 			{
-				actions = _getActions(user);
+				actions = _getUserAccountItemActions(user);
 				additionalName = user.getMiddleName();
 				alternateName = user.getScreenName();
 				birthDate = user.getBirthday();

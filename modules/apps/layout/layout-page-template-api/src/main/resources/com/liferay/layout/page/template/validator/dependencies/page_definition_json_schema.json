@@ -67,9 +67,6 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/InlineValue"
-						},
-						{
-							"$ref": "#/definitions/MappedValue"
 						}
 					],
 					"type": "object"
@@ -101,9 +98,6 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/InlineValue"
-						},
-						{
-							"$ref": "#/definitions/MappedValue"
 						}
 					],
 					"type": "object"
@@ -119,9 +113,6 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/InlineValue"
-						},
-						{
-							"$ref": "#/definitions/MappedValue"
 						}
 					]
 				},
@@ -129,9 +120,6 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/InlineValue"
-						},
-						{
-							"$ref": "#/definitions/MappedValue"
 						}
 					]
 				}
@@ -210,9 +198,6 @@
 					"oneOf": [
 						{
 							"$ref": "#/definitions/InlineLink"
-						},
-						{
-							"$ref": "#/definitions/MappedValue"
 						}
 					]
 				}
@@ -247,25 +232,6 @@
 				}
 			},
 			"title": "The InlineValue Schema",
-			"type": "object"
-		},
-		"MappedValue": {
-			"additionalProperties": false,
-			"properties": {
-				"classNameId": {
-					"title": "The classNameId Schema",
-					"type": "integer"
-				},
-				"classPK": {
-					"title": "The classPK Schema",
-					"type": "integer"
-				},
-				"fieldId": {
-					"title": "The fieldId Schema",
-					"type": "string"
-				}
-			},
-			"title": "The MappedValue Schema",
 			"type": "object"
 		},
 		"PageElement": {

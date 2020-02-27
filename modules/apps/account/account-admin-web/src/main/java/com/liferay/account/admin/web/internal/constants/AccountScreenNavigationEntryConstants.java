@@ -19,6 +19,8 @@ package com.liferay.account.admin.web.internal.constants;
  */
 public class AccountScreenNavigationEntryConstants {
 
+	public static final String CATEGORY_KEY_ASSIGNEES = "assignees";
+
 	public static final String CATEGORY_KEY_CONTACT = "contact";
 
 	public static final String CATEGORY_KEY_DEFINE_PERMISSIONS =
@@ -42,6 +44,8 @@ public class AccountScreenNavigationEntryConstants {
 
 	public static final String ENTRY_KEY_ALERTS_AND_ANNOUNCEMENTS_DELIVERY =
 		"alerts-and-announcements-delivery";
+
+	public static final String ENTRY_KEY_ASSIGNEES = "assignees";
 
 	public static final String ENTRY_KEY_CONTACT_INFORMATION =
 		"contact-information";

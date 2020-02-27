@@ -167,7 +167,6 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 		<#list entity.databaseRegularEntityColumns as entityColumn>
 			<#if entityColumn.primitiveType>
 			<#elseif stringUtil.equals(entityColumn.type, "Date")>
-			<#elseif stringUtil.equals(entityColumn.type, "String")>
 			<#elseif !stringUtil.equals(entityColumn.type, "Blob")>
 				<#assign throwsClassNotFoundException = true />
 			</#if>
@@ -191,7 +190,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 			<#elseif stringUtil.equals(entityColumn.type, "Date")>
 				${entityColumn.name} = objectInput.readLong();
 			<#elseif stringUtil.equals(entityColumn.type, "String")>
-				${entityColumn.name} = objectInput.readUTF();
+				${entityColumn.name} = (String)objectInput.readObject();
 			<#elseif !stringUtil.equals(entityColumn.type, "Blob")>
 				${entityColumn.name} = (${entityColumn.genericizedType})objectInput.readObject();
 			</#if>
@@ -227,10 +226,10 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 				objectOutput.writeLong(${entityColumn.name});
 			<#elseif stringUtil.equals(entityColumn.type, "String")>
 				if (${entityColumn.name} == null) {
-					objectOutput.writeUTF("");
+					objectOutput.writeObject("");
 				}
 				else {
-					objectOutput.writeUTF(${entityColumn.name});
+					objectOutput.writeObject(${entityColumn.name});
 				}
 			<#elseif !stringUtil.equals(entityColumn.type, "Blob")>
 				objectOutput.writeObject(${entityColumn.name});

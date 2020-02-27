@@ -49,15 +49,15 @@ export default function ColumnOverlayGrid({
 					{[...Array(12).keys()].map(column => (
 						<div
 							className={classNames(
-								'col column-overlay-grid__column',
+								'col page-editor__column-overlay-grid__column',
 								{
-									'column-overlay-grid__column--highlighted':
+									'page-editor__column-overlay-grid__column--highlighted':
 										column === highlightedColumn,
 								}
 							)}
 							key={`col-overlay-grid-column-${column}`}
 						>
-							<div className="column-overlay-grid__column-content h-100" />
+							<div className="h-100 page-editor__column-overlay-grid__column-content" />
 						</div>
 					))}
 				</div>

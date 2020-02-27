@@ -3,7 +3,7 @@
 Check | Category | Description
 ----- | -------- | -----------
 FTLEmptyLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-FTLIfStatementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[FTLIfStatementCheck](checks/if_statement_check.markdown#ifstatementcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 FTLImportsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 FTLLiferayVariableOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 FTLStringRelationalOperatorCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |

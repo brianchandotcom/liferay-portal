@@ -14,10 +14,9 @@ ContractionsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-
 CopyrightCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [DefaultComesLastCheck](https://checkstyle.sourceforge.io/config_coding.html#DefaultComesLast) | [Styling](styling_checks.markdown#styling-checks) | Check that the default is after all the cases in a switch statement. |
 EmptyCollectionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-ExceptionMessageCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[ExceptionMessageCheck](checks/message_check.markdown#messagecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 FactoryCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 GetterUtilCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[IfStatementCheck](checks/if_statement_check.markdown#ifstatementcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 InstanceofOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSONNamingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JSONUtilCheck](checks/json_util_check.markdown#jsonutilcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -38,13 +37,13 @@ JSPLogFileNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneou
 JSPLogParametersCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSPMissingTaglibsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSPModuleIllegalImportsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-JSPParenthesesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JSPParenthesesCheck](checks/if_statement_check.markdown#ifstatementcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSPRedirectBackURLCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JSPSendRedirectCheck](checks/jsp_send_redirect_check.markdown#jspsendredirectcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSPServiceUtilCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSPSessionKeysCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSPStringBundlerCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-JSPStringMethodsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JSPStringMethodsCheck](checks/string_methods_check.markdown#stringmethodscheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSPStylingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSPSubnameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSPTagAttributesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -72,6 +71,7 @@ MissingDiamondOperatorCheck | [Miscellaneous](miscellaneous_checks.markdown#misc
 MissingParenthesesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [ModifierOrderCheck](https://checkstyle.sourceforge.io/config_modifier.html#ModifierOrder) | [Styling](styling_checks.markdown#styling-checks) | Checks that the order of modifiers conforms to the suggestions in the Java Language specification, § 8.1.1, 8.3.1, 8.4.3 and 9.4. |
 [MultipleVariableDeclarationsCheck](https://checkstyle.sourceforge.io/config_coding.html#MultipleVariableDeclarations) | [Styling](styling_checks.markdown#styling-checks) | Checks that each variable declaration is in its own statement and on its own line. |
+NestedIfStatementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [NoLineWrapCheck](https://checkstyle.sourceforge.io/config_whitespace.html#NoLineWrap) | [Styling](styling_checks.markdown#styling-checks) | Checks that chosen statements are not line-wrapped. |
 [NoWhitespaceAfterCheck](https://checkstyle.sourceforge.io/config_whitespace.html#NoWhitespaceAfter) | [Styling](styling_checks.markdown#styling-checks) | Checks that there is no whitespace after a token. |
 [NoWhitespaceBeforeCheck](https://checkstyle.sourceforge.io/config_whitespace.html#NoWhitespaceBefore) | [Styling](styling_checks.markdown#styling-checks) | Checks that there is no whitespace before a token. |

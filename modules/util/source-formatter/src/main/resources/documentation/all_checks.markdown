@@ -50,7 +50,7 @@ ConstantNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-
 ConstructorMissingEmptyLineCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 ContractionsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 CopyrightCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-CreationMenuBuilderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
+[CreationMenuBuilderCheck](checks/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 [DefaultComesLastCheck](https://checkstyle.sourceforge.io/config_coding.html#DefaultComesLast) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Check that the default is after all the cases in a switch statement. |
 DeprecatedUsageCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 DockerfileEmptyLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Dockerfile | |
@@ -58,10 +58,10 @@ DockerfileInstructionCheck | [Miscellaneous](miscellaneous_checks.markdown#misce
 EmptyCollectionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 EnumConstantDividerCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 EnumConstantOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
-ExceptionMessageCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[ExceptionMessageCheck](checks/message_check.markdown#messagecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 ExceptionVariableNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 FTLEmptyLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .ftl | |
-FTLIfStatementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .ftl | |
+[FTLIfStatementCheck](checks/if_statement_check.markdown#ifstatementcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .ftl | |
 FTLImportsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .ftl | |
 FTLLiferayVariableOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .ftl | |
 FTLStringRelationalOperatorCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .ftl | |
@@ -92,7 +92,6 @@ GradleStylingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous
 GradleTestDependencyVersionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
 HTMLEmptyLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .html | |
 HTMLWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .html | |
-[IfStatementCheck](checks/if_statement_check.markdown#ifstatementcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 IncorrectFileLocationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | | |
 InstanceofOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 JSLodashDependencyCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .js or .jsx | |
@@ -124,13 +123,13 @@ JSPLogFileNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneou
 JSPLogParametersCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPMissingTaglibsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPModuleIllegalImportsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
-JSPParenthesesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
+[JSPParenthesesCheck](checks/if_statement_check.markdown#ifstatementcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPRedirectBackURLCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
 [JSPSendRedirectCheck](checks/jsp_send_redirect_check.markdown#jspsendredirectcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPServiceUtilCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPSessionKeysCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPStringBundlerCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
-JSPStringMethodsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
+[JSPStringMethodsCheck](checks/string_methods_check.markdown#stringmethodscheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPStylingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPSubnameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPTagAttributesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .jsp, .jspf, .tag, .tpl or .vm | |
@@ -255,8 +254,8 @@ LiteralStringEqualsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscell
 LocalPatternCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 [LocalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalVariableName) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that local, non-final variable names conform to a specified pattern. |
 LocaleUtilCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-LogMessageCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
-MapBuilderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
+[LogMessageCheck](checks/message_check.markdown#messagecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
+[MapBuilderCheck](checks/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 [MapIterationCheck](checks/map_iteration_check.markdown#mapiterationcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 MarkdownFileExtensionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .markdown or .md | |
 MarkdownSourceFormatterDocumentationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .markdown or .md | |
@@ -278,6 +277,7 @@ MissingOverrideCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneo
 MissingParenthesesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [ModifierOrderCheck](https://checkstyle.sourceforge.io/config_modifier.html#ModifierOrder) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that the order of modifiers conforms to the suggestions in the Java Language specification, § 8.1.1, 8.3.1, 8.4.3 and 9.4. |
 [MultipleVariableDeclarationsCheck](https://checkstyle.sourceforge.io/config_coding.html#MultipleVariableDeclarations) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that each variable declaration is in its own statement and on its own line. |
+NestedIfStatementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 NewFileCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | | |
 [NoLineWrapCheck](https://checkstyle.sourceforge.io/config_whitespace.html#NoLineWrap) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that chosen statements are not line-wrapped. |
 [NoWhitespaceAfterCheck](https://checkstyle.sourceforge.io/config_whitespace.html#NoWhitespaceAfter) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that there is no whitespace after a token. |

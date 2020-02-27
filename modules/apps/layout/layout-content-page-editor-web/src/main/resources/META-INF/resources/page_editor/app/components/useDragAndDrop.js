@@ -435,8 +435,9 @@ function getParentItemIdAndPositon({
 	const siblingOrParent = items[siblingOrParentId];
 
 	if (
-		targetPosition === TARGET_POSITION.MIDDLE &&
-		isNestingSupported(item.type, siblingOrParent.type)
+		siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.root ||
+		(targetPosition === TARGET_POSITION.MIDDLE &&
+			isNestingSupported(item.type, siblingOrParent.type))
 	) {
 		return {
 			parentId: siblingOrParent.itemId,

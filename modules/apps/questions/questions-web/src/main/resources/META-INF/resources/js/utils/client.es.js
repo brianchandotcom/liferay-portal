@@ -334,11 +334,15 @@ export const getThreads = ({
 	page = 1,
 	pageSize = 30,
 	search = '',
+	sectionId,
 	siteKey,
 	sort = 'dateModified:desc',
 	tag = '',
 }) => {
+	const filterSections = `title eq '${sectionId}'`;
+
 	let filter = '';
+
 	if (tag) {
 		filter = `keywords/any(x:x eq '${tag}')`;
 	}
@@ -348,74 +352,98 @@ export const getThreads = ({
 
 	return request(gql`
         query {
-            messageBoardThreads(filter: ${filter}, page: ${page}, pageSize: ${pageSize}, search: ${search}, siteKey: ${siteKey}, sort: ${sort}){
-                items {
-                    aggregateRating {
-                        ratingAverage
-                        ratingCount
-                        ratingValue
-                    } 
-                    articleBody
-                    creator {
-                        id
-                        image
-                        name
-                    } 
-                    dateModified
-                    friendlyUrlPath
-                    headline
-                    id 
-                    keywords 
-                    messageBoardMessages {
-                        items {
-                            showAsAnswer
-                        }
-                    }
-                    viewCount
-                } 
-                page 
-                pageSize 
-                totalCount
-            }
-        }`);
+			messageBoardSections(siteKey: ${siteKey}, filter: ${filterSections}){
+				items {
+					messageBoardThreads(filter: ${filter}, page: ${page}, pageSize: ${pageSize}, search: ${search}, sort: ${sort}){
+						items {
+							aggregateRating {
+								ratingAverage
+								ratingCount
+								ratingValue
+							} 
+							articleBody
+							creator {
+								id
+								image
+								name
+							} 
+							dateModified
+							friendlyUrlPath
+							headline
+							id 
+							keywords 
+							messageBoardMessages {
+								items {
+									showAsAnswer
+								}
+							}
+							viewCount
+						} 
+						page 
+						pageSize 
+						totalCount
+					}
+				}
+			}
+        }`).then(data => data['items'][0]['messageBoardThreads']);
+};
+
+export const getSection = (title, siteKey) => {
+	const filter = `title eq '${title}'`;
+
+	return request(gql`
+		query {
+			messageBoardSections(filter: ${filter}, pageSize: 1, siteKey: ${siteKey}) {
+				items {
+				  id
+				}
+			}
+		}
+	`);
 };
 
 export const getRankedThreads = (
 	dateModified,
 	page = 1,
 	pageSize = 20,
+	sectionId,
+	siteKey,
 	sort = ''
 ) =>
-	request(gql`
+	getSection(sectionId, siteKey)
+		.then(data => data.items[0].id)
+		.then(sectionId =>
+			request(gql`
         query {
-          messageBoardThreadsRanked(dateModified: ${dateModified.toISOString()}, page: ${page}, pageSize: ${pageSize}, sort: ${sort}){
-            items {
-                aggregateRating {
-                    ratingAverage
-                    ratingCount
-                    ratingValue
-                } 
-                articleBody
-                creator {
-                    id
-                    name
-                } 
-                dateModified
-                headline
-                id 
-                keywords 
-                messageBoardMessages {
-                    items {
-                        showAsAnswer
-                    }
-                }
-                viewCount
-            }   
-            page
-            pageSize
-            totalCount
-          }
-        }`);
+			messageBoardThreadsRanked(dateModified: ${dateModified.toISOString()}, messageBoardSectionId: ${sectionId}, page: ${page}, pageSize: ${pageSize}, sort: ${sort}){
+				items {
+					aggregateRating {
+						ratingAverage
+						ratingCount
+						ratingValue
+					} 
+					articleBody
+					creator {
+						id
+						name
+					} 
+					dateModified
+					headline
+					id 
+					keywords 
+					messageBoardMessages {
+						items {
+							showAsAnswer
+						}
+					}
+					viewCount
+				}   
+				page
+				pageSize
+				totalCount
+        	}
+		}`)
+		);
 
 export const getRelatedThreads = (search = '', siteKey) =>
 	request(gql`
@@ -443,6 +471,25 @@ export const getRelatedThreads = (search = '', siteKey) =>
                 totalCount
             }
         }`);
+
+export const getSections = siteKey =>
+	request(gql`
+		query {
+			messageBoardSections(siteKey: ${siteKey}) {
+				actions
+				items {
+					description
+					id
+					numberOfMessageBoardThreads
+					title
+				}
+				lastPage
+				page
+				pageSize
+				totalCount
+			}
+		}
+`);
 
 export const markAsAnswerMessageBoardMessage = (
 	messageBoardMessageId,
@@ -480,20 +527,6 @@ export const updateThread = (
             }
         }`);
 };
-
-export const getMyUserAccount = () =>
-	request(gql`
-		query {
-			myUserAccount {
-				id
-				name
-				roleBriefs {
-					name
-				}
-			}
-		}
-	`);
-
 export const subscribe = messageBoardThreadId =>
 	request(gql`
         mutation {

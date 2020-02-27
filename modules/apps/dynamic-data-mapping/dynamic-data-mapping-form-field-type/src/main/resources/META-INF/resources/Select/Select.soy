@@ -186,31 +186,8 @@
 	{@param? multiple: bool}
 
 	<select aria-label="select" class="form-control hide" id="{$name}" name="{$name}" {if $multiple}multiple size="{length($options)}"{/if}>
-		<option disabled {if length($displayValues) == 0}selected{/if} value=""></option>
-
-		{foreach $option in $options}
-			{call .select_hidden_options}
-				{param option: $option /}
-				{param values: $displayValues /}
-			{/call}
+		{foreach $currentValue in $displayValues}
+			<option selected="selected" value="{$currentValue}">{$currentValue}</option>
 		{/foreach}
 	</select>
-{/template}
-
-/**
- * Prints the DDM form hidden select options.
- */
-{template .select_hidden_options}
-	{@param option: [label: string, value: string]}
-	{@param values: ?}
-
-	{let $selected kind="attributes"}
-		{foreach $currentValue in $values}
-			{if $currentValue == $option.value}
-				selected
-			{/if}
-		{/foreach}
-	{/let}
-
-	<option {$selected} value="{$option.value}">{$option.label}</option>
 {/template}

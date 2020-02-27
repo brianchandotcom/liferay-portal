@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadFileEntryHandler;
@@ -132,6 +133,11 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 		String customFieldsKeys = uploadPortletRequest.getParameter(
 			"customFieldsKeys");
+
+		if (Validator.isNull(customFieldsKeys)) {
+			return new HashMap<>();
+		}
+
 		String customFieldsTypes = uploadPortletRequest.getParameter(
 			"customFieldsTypes");
 		String customFieldsValues = uploadPortletRequest.getParameter(

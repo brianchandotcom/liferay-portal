@@ -5187,6 +5187,11 @@ paths:
                       format: date-time
                       type: string
                 - in: query
+                  name: messageBoardSectionId
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
                   name: page
                   schema:
                       type: integer

@@ -72,8 +72,7 @@ public class JenkinsConsoleTextLoader {
 		update();
 
 		try {
-			return StringEscapeUtils.unescapeHtml(
-				new String(Files.readAllBytes(localCachedLogFilePath)));
+			return new String(Files.readAllBytes(localCachedLogFilePath));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -132,6 +131,8 @@ public class JenkinsConsoleTextLoader {
 							Matcher matcher = _anchorPattern.matcher(line);
 
 							line = matcher.replaceAll("$1") + "\n";
+
+							line = StringEscapeUtils.unescapeHtml(line);
 
 							outputStream.write(line.getBytes());
 

@@ -342,6 +342,10 @@ public class BuildServiceTask extends JavaExec {
 		_resourcesDir = resourcesDir;
 	}
 
+	public void setSnapshotFeatureList(Object snapshotFeatureList) {
+		_snapshotFeatureList = snapshotFeatureList;
+	}
+
 	public void setSpringFile(Object springFile) {
 		_springFile = springFile;
 	}
@@ -374,10 +378,6 @@ public class BuildServiceTask extends JavaExec {
 
 	public void setTargetEntityName(Object targetEntityName) {
 		_targetEntityName = targetEntityName;
-	}
-
-	public void setSnapshotFeatureList(Object snapshotFeatureList) {
-		_snapshotFeatureList = snapshotFeatureList;
 	}
 
 	public void setTestDir(Object testDir) {
@@ -530,13 +530,13 @@ public class BuildServiceTask extends JavaExec {
 	private Object _inputFile;
 	private final Set<Object> _modelHintsConfigs = new LinkedHashSet<>();
 	private Object _modelHintsFile;
-	private Object _snapshotFeatureList;
 	private boolean _osgiModule;
 	private Object _pluginName;
 	private Object _propsUtil;
 	private final Set<Object> _readOnlyPrefixes = new HashSet<>();
 	private final Set<Object> _resourceActionsConfigs = new LinkedHashSet<>();
 	private Object _resourcesDir;
+	private Object _snapshotFeatureList;
 	private Object _springFile;
 	private final Set<Object> _springNamespaces = new LinkedHashSet<>();
 	private Object _sqlDir;

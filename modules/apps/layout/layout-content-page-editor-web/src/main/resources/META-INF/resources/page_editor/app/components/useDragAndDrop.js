@@ -341,6 +341,14 @@ function isValidMoveToTargetPosition({
 		return false;
 	}
 
+	if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
+		const parent = items[siblingOrParent.parentId];
+
+		if (!parent || parent.type !== LAYOUT_DATA_ITEM_TYPES.root) {
+			return false;
+		}
+	}
+
 	if (children.includes(item.itemId)) {
 		return !(
 			isSibling(children, item, targetPosition, siblingOrParent.itemId) ||

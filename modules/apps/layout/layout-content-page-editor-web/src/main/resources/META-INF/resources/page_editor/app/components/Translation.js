@@ -12,8 +12,9 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
@@ -163,7 +164,7 @@ export default function Translation({
 		segmentsExperienceId,
 	]);
 
-	const {languageIcon} = availableLanguages[languageId];
+	const {languageIcon, languageLabel} = availableLanguages[languageId];
 
 	return (
 		<ClayDropDown
@@ -175,11 +176,14 @@ export default function Translation({
 			}}
 			onActiveChange={setActive}
 			trigger={
-				<ClayButtonWithIcon
+				<ClayButton
+					className="btn-monospaced"
 					displayType="secondary"
 					small
-					symbol={languageIcon}
-				/>
+				>
+					<ClayIcon symbol={languageIcon} />
+					<span className="btn-section sr-only">{languageLabel}</span>
+				</ClayButton>
 			}
 		>
 			<ClayDropDown.ItemList>

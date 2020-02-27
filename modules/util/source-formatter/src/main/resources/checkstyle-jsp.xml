@@ -178,8 +178,8 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.FactoryCheck">
 			<message key="factory.use" value="Use ''{0}'' to create new instance of ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.IfStatementCheck">
-			<message key="if.statements.combine" value="Combine if-statements" />
+		<module name="com.liferay.source.formatter.checkstyle.checks.NestedIfStatementCheck">
+			<message key="if.statements.combine" value="Combine nested if-statements" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.InstanceofOrderCheck">
 			<message key="instanceof.order" value="''{0}'' should come before ''{1}''" />

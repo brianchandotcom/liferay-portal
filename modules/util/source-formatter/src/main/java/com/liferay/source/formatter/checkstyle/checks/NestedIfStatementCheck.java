@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * @author Hugo Huijser
  */
-public class IfStatementCheck extends BaseCheck {
+public class NestedIfStatementCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

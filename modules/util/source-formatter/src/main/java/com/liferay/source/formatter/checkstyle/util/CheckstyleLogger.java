@@ -168,8 +168,17 @@ public class CheckstyleLogger extends DefaultLogger {
 
 			Class<?> superClass = checkClass.getSuperclass();
 
+			String className = superClass.getSimpleName();
+
+			markdownURLString = SourceFormatterUtil.getMarkdownURLString(
+				className);
+
+			if ((markdownURLString != null) || !className.startsWith("Base")) {
+				return markdownURLString;
+			}
+
 			return SourceFormatterUtil.getMarkdownURLString(
-				superClass.getSimpleName());
+				className.substring(4));
 		}
 		catch (Exception exception) {
 			return null;

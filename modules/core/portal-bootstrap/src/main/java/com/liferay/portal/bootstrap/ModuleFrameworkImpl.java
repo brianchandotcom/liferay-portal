@@ -1043,6 +1043,25 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
 	}
 
+	private String _getFragmentHost(Bundle bundle) {
+		Dictionary<String, String> dictionary = bundle.getHeaders(
+			StringPool.BLANK);
+
+		String fragmentHost = dictionary.get(Constants.FRAGMENT_HOST);
+
+		if (fragmentHost == null) {
+			return null;
+		}
+
+		int index = fragmentHost.indexOf(StringPool.SEMICOLON);
+
+		if (index != -1) {
+			fragmentHost = fragmentHost.substring(0, index);
+		}
+
+		return fragmentHost;
+	}
+
 	private Dictionary<String, Object> _getProperties(
 		Object bean, String beanName) {
 
@@ -1161,7 +1180,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private void _installBundlesFromDir(
-			String dirPath, Map<String, Long> checksums)
+			String dirPath, Map<String, Long> checksums,
+			Set<String> fragmentHosts)
 		throws IOException {
 
 		BundleContext bundleContext = _framework.getBundleContext();
@@ -1220,6 +1240,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				if (!_isFragmentBundle(bundle)) {
 					bundle.start();
 				}
+				else {
+					fragmentHosts.add(_getFragmentHost(bundle));
+				}
 			}
 			catch (BundleException bundleException) {
 				_log.error(
@@ -1265,10 +1288,30 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private Map<String, Long> _installDynamicBundles() throws IOException {
 		Map<String, Long> checksums = new HashMap<>();
 
+		Set<String> fragmentHosts = new HashSet<>();
+
 		_installBundlesFromDir(
-			PropsValues.MODULE_FRAMEWORK_PORTAL_DIR, checksums);
+			PropsValues.MODULE_FRAMEWORK_PORTAL_DIR, checksums, fragmentHosts);
 		_installBundlesFromDir(
-			PropsValues.MODULE_FRAMEWORK_MODULES_DIR, checksums);
+			PropsValues.MODULE_FRAMEWORK_MODULES_DIR, checksums, fragmentHosts);
+
+		List<Bundle> refreshBundles = new ArrayList<>();
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		if (!fragmentHosts.isEmpty()) {
+			for (Bundle bundle : bundleContext.getBundles()) {
+				if (fragmentHosts.remove(bundle.getSymbolicName())) {
+					refreshBundles.add(bundle);
+
+					if (fragmentHosts.isEmpty()) {
+						break;
+					}
+				}
+			}
+
+			_refreshBundles(refreshBundles);
+		}
 
 		return checksums;
 	}

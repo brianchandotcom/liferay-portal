@@ -240,6 +240,8 @@ definition {
 		AssertElementNotPresent(
 			key_rowEntry = "Test Depot Name",
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
 	@description = "This ensures that able to select specific asset libraries scope from Content Sets permissions."

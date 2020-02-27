@@ -55,6 +55,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -340,6 +342,12 @@ public class AssetCategoriesDisplayContext {
 		_categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
 
 		return _categoryId;
+	}
+
+	public String getCategoryLocalizationXML(AssetCategory category) {
+		return LocalizationUtil.updateLocalization(
+			category.getTitleMap(), StringPool.BLANK, "title",
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 	}
 
 	public String getDisplayStyle() {

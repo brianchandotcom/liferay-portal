@@ -58,19 +58,10 @@ renderResponse.setTitle((category == null) ? LanguageUtil.get(request, "add-new-
 				collapsible="<%= true %>"
 				label="details"
 			>
-				<label for="title">
-					<liferay-ui:message key="name" />
-
-					<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
-				</label>
-
-				<liferay-ui:input-localized
-					autoFocus="<%= true %>"
-					maxLength='<%= String.valueOf(ModelHintsUtil.getMaxLength(AssetCategory.class.getName(), "name")) %>'
-					name="title"
-					placeholder="name"
-					xml='<%= BeanPropertiesUtil.getString(category, "title") %>'
-				/>
+				<aui:input label="name" localized="<%= true %>" name="title" placeholder="name" type="text" value="<%= (category == null) ? StringPool.BLANK : assetCategoriesDisplayContext.getCategoryLocalizationXML(category) %>">
+					<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AssetCategory.class.getName(), "name") %></aui:validator>
+					<aui:validator name="required" />
+				</aui:input>
 
 				<aui:input name="description" placeholder="description" />
 

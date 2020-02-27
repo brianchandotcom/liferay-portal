@@ -108,8 +108,8 @@ public class JGroupsReceiver extends ReceiverAdapter {
 			addresses.add(address);
 		}
 
-		_clusterReceiver.addressesUpdated(addresses);
 		_clusterReceiver.coordinatorAddressUpdated(coordinatorAddress);
+		_clusterReceiver.addressesUpdated(addresses);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

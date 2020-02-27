@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.service.builder</artifactId>
-	<version>1.0.330</version>
+	<version>1.0.331</version>
 	<goalPrefix>service-builder</goalPrefix>
 	<mojos>
 		<mojo>
@@ -173,6 +173,13 @@
 					<description/>
 				</parameter>
 				<parameter>
+					<name>snapshotFeatureList</name>
+					<type>java.lang.String</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
 					<name>springFileName</name>
 					<type>java.lang.String</type>
 					<required>false</required>
@@ -216,13 +223,6 @@
 				</parameter>
 				<parameter>
 					<name>targetEntityName</name>
-					<type>java.lang.String</type>
-					<required>false</required>
-					<editable>true</editable>
-					<description/>
-				</parameter>
-				<parameter>
-					<name>targetKernelVersion</name>
 					<type>java.lang.String</type>
 					<required>false</required>
 					<editable>true</editable>

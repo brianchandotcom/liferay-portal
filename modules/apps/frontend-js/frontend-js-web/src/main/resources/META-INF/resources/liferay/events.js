@@ -12,22 +12,19 @@
  * details.
  */
 
-Liferay.on = function() {};
-
-Liferay.fire = function() {};
-
-Liferay.detach = function() {};
-
 (function(A, Liferay) {
 	var CLICK_EVENTS = {};
+	var Util = Liferay.Util;
 
-	var DOC = A.config.doc;
+	A.use('attribute', 'oop', A => {
+		A.augment(Liferay, A.Attribute, true);
+	});
 
 	Liferay.provide(
 		Liferay,
 		'delegateClick',
 		(id, fn) => {
-			var el = DOC.getElementById(id);
+			var el = A.config.doc.getElementById(id);
 
 			if (!el || el.id != id) {
 				return;
@@ -62,7 +59,147 @@ Liferay.detach = function() {};
 
 	Liferay._CLICK_EVENTS = CLICK_EVENTS;
 
-	A.use('attribute', 'oop', A => {
-		A.augment(Liferay, A.Attribute, true);
+	Liferay.provide(
+		window,
+		'submitForm',
+		(form, action, singleSubmit, validate) => {
+			if (!Util._submitLocked) {
+				if (form.jquery) {
+					form = form[0];
+				}
+
+				Liferay.fire('submitForm', {
+					action,
+					form: A.one(form),
+					singleSubmit,
+					validate: validate !== false,
+				});
+			}
+		},
+		['aui-base', 'aui-form-validator', 'aui-url', 'liferay-form']
+	);
+
+	Liferay.publish('submitForm', {
+		defaultFn(event) {
+			var form = event.form;
+
+			var hasErrors = false;
+
+			if (event.validate) {
+				var liferayForm = Liferay.Form.get(form.attr('id'));
+
+				if (liferayForm) {
+					var validator = liferayForm.formValidator;
+
+					if (A.instanceOf(validator, A.FormValidator)) {
+						validator.validate();
+
+						hasErrors = validator.hasErrors();
+
+						if (hasErrors) {
+							validator.focusInvalidField();
+						}
+					}
+				}
+			}
+
+			if (!hasErrors) {
+				var action = event.action || form.attr('action');
+
+				var singleSubmit = event.singleSubmit;
+
+				var inputs = form.all(
+					'button[type=submit], input[type=button], input[type=image], input[type=reset], input[type=submit]'
+				);
+
+				Util.disableFormButtons(inputs, form);
+
+				if (singleSubmit === false) {
+					Util._submitLocked = A.later(
+						1000,
+						Util,
+						Util.enableFormButtons,
+						[inputs, form]
+					);
+				}
+				else {
+					Util._submitLocked = true;
+				}
+
+				var baseURL;
+				var queryString;
+				var searchParamsIndex = action.indexOf('?');
+
+				if (searchParamsIndex === -1) {
+					baseURL = action;
+					queryString = '';
+				}
+				else {
+					baseURL = action.slice(0, searchParamsIndex);
+					queryString = action.slice(searchParamsIndex + 1);
+				}
+
+				var searchParams = new URLSearchParams(queryString);
+
+				var authToken = searchParams.get('p_auth') || '';
+
+				form.append(
+					'<input name="p_auth" type="hidden" value="' +
+						authToken +
+						'" />'
+				);
+
+				if (authToken) {
+					searchParams.delete('p_auth');
+
+					action = baseURL + '?' + searchParams.toString();
+				}
+
+				form.attr('action', action);
+
+				Util.submitForm(form);
+
+				form.attr('target', '');
+
+				Util._submitLocked = null;
+			}
+		},
+	});
+
+	Liferay.after('closeWindow', event => {
+		var id = event.id;
+
+		var dialog = Util.getTop().Liferay.Util.Window.getById(id);
+
+		if (dialog && dialog.iframe) {
+			var dialogWindow = dialog.iframe.node.get('contentWindow').getDOM();
+
+			var openingWindow = dialogWindow.Liferay.Util.getOpener();
+			var redirect = event.redirect;
+
+			if (redirect) {
+				openingWindow.Liferay.Util.navigate(redirect);
+			}
+			else {
+				var refresh = event.refresh;
+
+				if (refresh && openingWindow) {
+					var data;
+
+					if (!event.portletAjaxable) {
+						data = {
+							portletAjaxable: false,
+						};
+					}
+
+					openingWindow.Liferay.Portlet.refresh(
+						'#p_p_id_' + refresh + '_',
+						data
+					);
+				}
+			}
+
+			dialog.hide();
+		}
 	});
 })(AUI(), Liferay);

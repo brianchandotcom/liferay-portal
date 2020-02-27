@@ -205,7 +205,6 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
 
-		List<UserGroupRole> filteredDepotUserGroupRoles = new ArrayList<>();
 		List<UserGroupRole> filteredUserGroupRoles = new ArrayList<>();
 
 		Role role = rolePersistence.findByPrimaryKey(roleId);
@@ -234,13 +233,11 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 				filteredUserGroupRoles.add(userGroupRole);
 			}
 			else if (role.getType() == RoleConstants.TYPE_DEPOT) {
-				filteredDepotUserGroupRoles.add(userGroupRole);
+				filteredUserGroupRoles.add(userGroupRole);
 			}
 		}
 
-		if (filteredUserGroupRoles.isEmpty() &&
-			filteredDepotUserGroupRoles.isEmpty()) {
-
+		if (filteredUserGroupRoles.isEmpty()) {
 			return;
 		}
 

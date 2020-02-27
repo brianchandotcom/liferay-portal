@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.AbstractMap;
 import java.util.Locale;
@@ -73,7 +74,7 @@ public class DepotRolesPortalInstanceLifecycleListener
 		if (Objects.equals(
 				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, name)) {
 
-			return _language.get(
+			return ResourceBundleUtil.getString(
 				resourceBundle,
 				"asset-library-administrators-are-super-users-of-their-asset-" +
 					"library-but-cannot-make-other-users-into-asset-library-" +
@@ -82,15 +83,15 @@ public class DepotRolesPortalInstanceLifecycleListener
 		else if (Objects.equals(
 					DepotRolesConstants.ASSET_LIBRARY_MEMBER, name)) {
 
-			return _language.get(
+			return ResourceBundleUtil.getString(
 				resourceBundle,
-				"all-users-who-belong-to-an-asset library-have-this-role-" +
+				"all-users-who-belong-to-an-asset-library-have-this-role-" +
 					"within-that-asset-library");
 		}
 		else if (Objects.equals(
 					DepotRolesConstants.ASSET_LIBRARY_OWNER, name)) {
 
-			return _language.get(
+			return ResourceBundleUtil.getString(
 				resourceBundle,
 				"asset-library-owners-are-super-users-of-their-asset-library-" +
 					"and-can-assign-asset-library-roles-to-users");

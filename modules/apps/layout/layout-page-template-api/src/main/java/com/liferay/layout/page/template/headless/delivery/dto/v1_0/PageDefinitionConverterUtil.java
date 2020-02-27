@@ -253,9 +253,6 @@ public class PageDefinitionConverterUtil {
 
 									return new FragmentImage() {
 										{
-											title =
-												backgroundImageJSONObject.get(
-													"title");
 											url = backgroundImageJSONObject.get(
 												"url");
 										}

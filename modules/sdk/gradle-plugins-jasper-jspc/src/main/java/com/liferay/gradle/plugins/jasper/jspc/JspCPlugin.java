@@ -24,7 +24,6 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -49,21 +48,17 @@ public class JspCPlugin implements Plugin<Project> {
 
 	public static final String GENERATE_JSP_JAVA_TASK_NAME = "generateJSPJava";
 
-	public static final String TOOL_CONFIGURATION_NAME = "jspCTool";
-
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		Configuration jspCConfiguration = _addConfigurationJspC(project);
-		Configuration jspCToolConfiguration = _addConfigurationJspCTool(
-			project);
 
 		final CompileJSPTask generateJSPJavaTask = _addTaskGenerateJSPJava(
-			project, jspCConfiguration, jspCToolConfiguration);
+			project, jspCConfiguration);
 
 		final JavaCompile compileJSPTask = _addTaskCompileJSP(
-			generateJSPJavaTask, jspCConfiguration, jspCToolConfiguration);
+			generateJSPJavaTask, jspCConfiguration);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -88,28 +83,11 @@ public class JspCPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	private Configuration _addConfigurationJspCTool(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, TOOL_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencySet) {
-					_addDependenciesJspCTool(project);
-				}
-
-			});
-
-		configuration.setDescription(
-			"Configures Liferay Jasper JspC for this project.");
-		configuration.setVisible(false);
-
-		return configuration;
-	}
-
 	private void _addDependenciesJspC(Project project) {
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.portal.servlet.jsp.compiler", "latest.release");
+
 		DependencyHandler dependencyHandler = project.getDependencies();
 
 		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
@@ -138,24 +116,14 @@ public class JspCPlugin implements Plugin<Project> {
 			CONFIGURATION_NAME, sourceSet.getCompileClasspath());
 	}
 
-	private void _addDependenciesJspCTool(Project project) {
-		GradleUtil.addDependency(
-			project, TOOL_CONFIGURATION_NAME, "org.apache.ant", "ant", "1.9.4");
-
-		GradleUtil.addDependency(
-			project, TOOL_CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.jasper.jspc", "latest.release");
-	}
-
 	private JavaCompile _addTaskCompileJSP(
-		CompileJSPTask generateJSPJavaTask, Configuration jspCConfiguration,
-		Configuration jspCToolConfiguration) {
+		CompileJSPTask generateJSPJavaTask, Configuration jspCConfiguration) {
 
 		JavaCompile javaCompile = GradleUtil.addTask(
 			generateJSPJavaTask.getProject(), COMPILE_JSP_TASK_NAME,
 			JavaCompile.class);
 
-		javaCompile.setClasspath(jspCToolConfiguration.plus(jspCConfiguration));
+		javaCompile.setClasspath(jspCConfiguration);
 		javaCompile.setDescription("Compile JSP files to check for errors.");
 		javaCompile.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 		javaCompile.setSource(generateJSPJavaTask.getOutputs());
@@ -179,13 +147,11 @@ public class JspCPlugin implements Plugin<Project> {
 	}
 
 	private CompileJSPTask _addTaskGenerateJSPJava(
-		Project project, Configuration jspCConfiguration,
-		Configuration jspCToolConfiguration) {
+		Project project, Configuration jspCConfiguration) {
 
 		final CompileJSPTask compileJSPTask = GradleUtil.addTask(
 			project, GENERATE_JSP_JAVA_TASK_NAME, CompileJSPTask.class);
 
-		compileJSPTask.setClasspath(jspCToolConfiguration);
 		compileJSPTask.setDescription(
 			"Compiles JSP files to Java source files to check for errors.");
 

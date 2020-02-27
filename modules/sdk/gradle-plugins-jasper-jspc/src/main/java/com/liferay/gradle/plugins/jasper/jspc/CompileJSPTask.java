@@ -18,46 +18,43 @@ import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
-import java.io.OutputStream;
-
-import java.lang.reflect.Method;
-
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.jasper.JspC;
+
+import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.InputFiles;
-import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
+import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
  */
 @CacheableTask
-public class CompileJSPTask extends JavaExec {
+public class CompileJSPTask extends DefaultTask {
 
-	@Override
-	public void exec() {
-		FileCollection classpath = getClasspath();
+	@TaskAction
+	public void compileJSP() {
 		FileCollection jspCClasspath = getJspCClasspath();
 
+		JspC jspC = new JspC();
+
 		try {
-			_runWithClassPath(
-				classpath.getAsPath() + File.pathSeparator +
-					jspCClasspath.getAsPath(),
-				_getCompleteArgs());
+			jspC.setArgs(_getCompleteArgs());
+			jspC.setClassPath(jspCClasspath.getAsPath());
+
+			jspC.execute();
 		}
 		catch (Exception exception) {
 			throw new GradleException(exception.getMessage(), exception);
@@ -109,63 +106,8 @@ public class CompileJSPTask extends JavaExec {
 		_jspCClasspath = jspCClasspath;
 	}
 
-	@Override
-	public JavaExec setStandardOutput(OutputStream outputStream) {
-		throw new UnsupportedOperationException();
-	}
-
 	public void setWebAppDir(Object webAppDir) {
 		_webAppDir = webAppDir;
-	}
-
-	private static void _runWithClassPath(String classpath, String[] args)
-		throws Exception {
-
-		classpath =
-			System.getProperty("java.class.path") + File.pathSeparator +
-				classpath;
-
-		String[] files = classpath.split(File.pathSeparator);
-
-		URL[] urls = new URL[files.length];
-
-		for (int i = 0; i < files.length; i++) {
-			File file = new File(files[i]);
-
-			URI uri = file.toURI();
-
-			urls[i] = uri.toURL();
-		}
-
-		ClassLoader classLoader = new URLClassLoader(urls, null);
-
-		Class<?> jspCClass = classLoader.loadClass("org.apache.jasper.JspC");
-
-		Object jspC = jspCClass.newInstance();
-
-		Method setArgsMethod = jspCClass.getMethod("setArgs", String[].class);
-
-		setArgsMethod.invoke(jspC, new Object[] {args});
-
-		Method setClassPathMethod = jspCClass.getMethod(
-			"setClassPath", String.class);
-
-		setClassPathMethod.invoke(jspC, classpath);
-
-		Method executeMethod = jspCClass.getMethod("execute");
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(classLoader);
-
-		try {
-			executeMethod.invoke(jspC);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
 	}
 
 	private String[] _getCompleteArgs() {

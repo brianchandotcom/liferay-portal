@@ -12,98 +12,81 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from './AppContext.es';
 import {ErrorBoundary} from './components/ErrorBoundary.es';
 import NavigationBar from './pages/NavigationBar.es';
 import EditAnswer from './pages/answers/EditAnswer.es';
+import Home from './pages/home/Home';
 import EditQuestion from './pages/questions/EditQuestion.es';
 import NewQuestion from './pages/questions/NewQuestion.es';
 import Question from './pages/questions/Question.es';
 import Questions from './pages/questions/Questions.es';
 import Tags from './pages/tags/Tags.es';
 
-export default props => {
-	const [search, setSearch] = useState('');
+export default props => (
+	<AppContextProvider {...props}>
+		<Router>
+			<ErrorBoundary>
+				<div>
+					<Route component={Home} exact path="/" />
+					<Route component={Home} exact path="/questions" />
 
-	const searchChange = value => {
-		setSearch(value);
-	};
+					<Route
+						path="/questions/:sectionId"
+						render={({match: {path}}) => (
+							<>
+								<NavigationBar />
 
-	return (
-		<AppContextProvider {...props}>
-			<Router>
-				<ErrorBoundary>
-					<div>
-						<NavigationBar searchChange={searchChange} />
-
-						<Switch>
-							<Route
-								exact
-								path="/"
-								render={props => (
-									<Questions
-										{...props}
-										search={search}
-										tag={''}
+								<Switch>
+									<Route
+										component={EditAnswer}
+										exact
+										path={`${path}/:questionId/answers/:answerId/edit`}
 									/>
-								)}
-							/>
-							<Route
-								component={EditAnswer}
-								path="/answers/:answerId/edit"
-							/>
-							<Route
-								path="/questions/tag/:tag"
-								render={props => (
-									<Questions
-										{...props}
-										search={search}
-										tag={props.match.params.tag}
+									<Route
+										component={Questions}
+										exact
+										path={`${path}/creator/:creatorId`}
 									/>
-								)}
-							/>
-							<Route
-								path="/questions/creator/:creatorId"
-								render={props => (
-									<Questions
-										{...props}
-										creatorId={props.match.params.creatorId}
+									<Route
+										component={Questions}
+										exact
+										path={`${path}/tag/:tag`}
 									/>
-								)}
-							/>
-							<Route
-								component={EditQuestion}
-								exact
-								path="/questions/:questionId/edit"
-							/>
-							<Route
-								exact
-								path="/questions"
-								render={props => (
-									<Questions
-										{...props}
-										search={search}
-										tag={''}
+									<Route
+										component={NewQuestion}
+										exact
+										path={`${path}/new`}
 									/>
-								)}
-							/>
-							<Route
-								component={NewQuestion}
-								exact
-								path="/questions/new"
-							/>
-							<Route
-								component={Question}
-								path="/questions/:questionId"
-							/>
-							<Route component={Tags} path="/tags" />
-						</Switch>
-					</div>
-				</ErrorBoundary>
-			</Router>
-		</AppContextProvider>
-	);
-};
+									<Route
+										component={Tags}
+										exact
+										path={`${path}/tags`}
+									/>
+									<Route
+										component={Question}
+										exact
+										path={`${path}/:questionId`}
+									/>
+									<Route
+										component={EditQuestion}
+										exact
+										path={`${path}/:questionId/edit`}
+									/>
+									<Route
+										component={Questions}
+										exact
+										path={`${path}/`}
+									/>
+								</Switch>
+							</>
+						)}
+					/>
+				</div>
+			</ErrorBoundary>
+		</Router>
+	</AppContextProvider>
+);

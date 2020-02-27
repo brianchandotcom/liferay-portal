@@ -282,13 +282,11 @@ const MAX_DIFFERENCE = 50;
 function checkElevate({
 	clientOffset,
 	hoverBoundingRect,
+	item,
 	items,
 	siblingOrParent,
 }) {
 	const parent = items[siblingOrParent.parentId];
-
-	const parentIsNotRoot =
-		parent && parent.type !== LAYOUT_DATA_ITEM_TYPES.root;
 
 	let isElevate = false;
 
@@ -315,7 +313,17 @@ function checkElevate({
 		}
 	}
 
-	return parentIsNotRoot && isElevate;
+	if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
+		return (
+			isElevate &&
+			(parent.type === LAYOUT_DATA_ITEM_TYPES.root ||
+				(items[parent.parentId] &&
+					items[parent.parentId].type ===
+						LAYOUT_DATA_ITEM_TYPES.root))
+		);
+	}
+
+	return isElevate;
 }
 
 function isValidMoveToMiddle({item, siblingOrParent}) {

@@ -88,7 +88,19 @@ public class MessageBoardThreadResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGetSiteMessageBoardThreadByFriendlyUrlPath() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetSiteMessageBoardThreadsPageWithSortInteger() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath() {
 	}
 
 	@Override

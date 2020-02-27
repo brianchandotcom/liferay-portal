@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DDMStructurePermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
@@ -31,8 +30,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 
 import javax.portlet.PortletURL;
 
@@ -59,8 +56,6 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 		_dlRequestHelper = new DLRequestHelper(httpServletRequest);
 		_dlViewFileEntryMetadataSetsDisplayContext =
 			dlViewFileEntryMetadataSetsDisplayContext;
-		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -137,26 +132,16 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 	}
 
 	private boolean _isShowAddButton() throws PortalException {
-		Group group = _themeDisplay.getScopeGroup();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		if (group.isLayout()) {
-			group = group.getParentGroup();
-		}
+		Group group = themeDisplay.getScopeGroup();
 
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if ((stagingGroupHelper.isLocalLiveGroup(group) ||
-			 stagingGroupHelper.isRemoteLiveGroup(group)) &&
-			stagingGroupHelper.isStagedPortlet(
-				group, DLPortletKeys.DOCUMENT_LIBRARY)) {
-
-			return false;
-		}
-
-		if (DDMStructurePermission.containsAddDDMStructurePermission(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(),
+		if ((!group.hasLocalOrRemoteStagingGroup() || group.isStagingGroup()) &&
+			DDMStructurePermission.containsAddDDMStructurePermission(
+				_dlRequestHelper.getPermissionChecker(),
+				_dlRequestHelper.getScopeGroupId(),
 				_dlViewFileEntryMetadataSetsDisplayContext.
 					getStructureClassNameId())) {
 
@@ -172,6 +157,5 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLViewFileEntryMetadataSetsDisplayContext
 		_dlViewFileEntryMetadataSetsDisplayContext;
-	private final ThemeDisplay _themeDisplay;
 
 }

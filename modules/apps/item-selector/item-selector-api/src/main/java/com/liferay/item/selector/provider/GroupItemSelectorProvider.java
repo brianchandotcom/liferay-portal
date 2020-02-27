@@ -24,7 +24,15 @@ import java.util.Locale;
  */
 public interface GroupItemSelectorProvider {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getEmptyResultsMessage();
+
+	public default String getEmptyResultsMessage(Locale locale) {
+		return getEmptyResultsMessage();
+	}
 
 	public List<Group> getGroups(
 		long companyId, long groupId, String keywords, int start, int end);

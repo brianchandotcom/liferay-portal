@@ -59,6 +59,7 @@ public class MBMessageWrapper
 		attributes.put("parentMessageId", getParentMessageId());
 		attributes.put("treePath", getTreePath());
 		attributes.put("subject", getSubject());
+		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("body", getBody());
 		attributes.put("format", getFormat());
 		attributes.put("anonymous", isAnonymous());
@@ -66,7 +67,6 @@ public class MBMessageWrapper
 		attributes.put("allowPingbacks", isAllowPingbacks());
 		attributes.put("answer", isAnswer());
 		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -173,6 +173,12 @@ public class MBMessageWrapper
 			setSubject(subject);
 		}
 
+		String urlTitle = (String)attributes.get("urlTitle");
+
+		if (urlTitle != null) {
+			setUrlTitle(urlTitle);
+		}
+
 		String body = (String)attributes.get("body");
 
 		if (body != null) {
@@ -213,12 +219,6 @@ public class MBMessageWrapper
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
-		}
-
-		String urlTitle = (String)attributes.get("urlTitle");
-
-		if (urlTitle != null) {
-			setUrlTitle(urlTitle);
 		}
 
 		Integer status = (Integer)attributes.get("status");

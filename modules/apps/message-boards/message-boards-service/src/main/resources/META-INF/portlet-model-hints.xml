@@ -111,6 +111,9 @@
 			<sanitize content-type="text/plain" modes="ALL" />
 			<validator name="required" />
 		</field>
+		<field name="urlTitle" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="body" type="String">
 			<hint-collection name="CLOB" />
 			<validator name="required" />
@@ -121,9 +124,6 @@
 		<field name="allowPingbacks" type="boolean" />
 		<field name="answer" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
-		<field name="urlTitle" type="String">
-			<hint name="max-length">255</hint>
-		</field>
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

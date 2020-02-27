@@ -95,6 +95,8 @@ public class MBMessageCacheModel
 		sb.append(treePath);
 		sb.append(", subject=");
 		sb.append(subject);
+		sb.append(", urlTitle=");
+		sb.append(urlTitle);
 		sb.append(", body=");
 		sb.append(body);
 		sb.append(", format=");
@@ -109,8 +111,6 @@ public class MBMessageCacheModel
 		sb.append(answer);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
-		sb.append(", urlTitle=");
-		sb.append(urlTitle);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -182,6 +182,13 @@ public class MBMessageCacheModel
 			mbMessageImpl.setSubject(subject);
 		}
 
+		if (urlTitle == null) {
+			mbMessageImpl.setUrlTitle("");
+		}
+		else {
+			mbMessageImpl.setUrlTitle(urlTitle);
+		}
+
 		if (body == null) {
 			mbMessageImpl.setBody("");
 		}
@@ -206,13 +213,6 @@ public class MBMessageCacheModel
 		}
 		else {
 			mbMessageImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		if (urlTitle == null) {
-			mbMessageImpl.setUrlTitle("");
-		}
-		else {
-			mbMessageImpl.setUrlTitle(urlTitle);
 		}
 
 		mbMessageImpl.setStatus(status);
@@ -265,6 +265,7 @@ public class MBMessageCacheModel
 		parentMessageId = objectInput.readLong();
 		treePath = objectInput.readUTF();
 		subject = objectInput.readUTF();
+		urlTitle = objectInput.readUTF();
 		body = objectInput.readUTF();
 		format = objectInput.readUTF();
 
@@ -276,7 +277,6 @@ public class MBMessageCacheModel
 
 		answer = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
-		urlTitle = objectInput.readUTF();
 
 		status = objectInput.readInt();
 
@@ -338,6 +338,13 @@ public class MBMessageCacheModel
 			objectOutput.writeUTF(subject);
 		}
 
+		if (urlTitle == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(urlTitle);
+		}
+
 		if (body == null) {
 			objectOutput.writeUTF("");
 		}
@@ -360,13 +367,6 @@ public class MBMessageCacheModel
 
 		objectOutput.writeBoolean(answer);
 		objectOutput.writeLong(lastPublishDate);
-
-		if (urlTitle == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(urlTitle);
-		}
 
 		objectOutput.writeInt(status);
 
@@ -398,6 +398,7 @@ public class MBMessageCacheModel
 	public long parentMessageId;
 	public String treePath;
 	public String subject;
+	public String urlTitle;
 	public String body;
 	public String format;
 	public boolean anonymous;
@@ -405,7 +406,6 @@ public class MBMessageCacheModel
 	public boolean allowPingbacks;
 	public boolean answer;
 	public long lastPublishDate;
-	public String urlTitle;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

@@ -86,12 +86,12 @@ public abstract class BaseMBMessageUADExporter
 		sb.append(mbMessage.getSubject());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>body</column-name><column-value><![CDATA[");
-		sb.append(mbMessage.getBody());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>urlTitle</column-name><column-value><![CDATA[");
 		sb.append(mbMessage.getUrlTitle());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>body</column-name><column-value><![CDATA[");
+		sb.append(mbMessage.getBody());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

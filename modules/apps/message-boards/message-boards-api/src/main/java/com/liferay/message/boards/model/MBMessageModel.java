@@ -336,6 +336,21 @@ public interface MBMessageModel
 	public void setSubject(String subject);
 
 	/**
+	 * Returns the url title of this message-boards message.
+	 *
+	 * @return the url title of this message-boards message
+	 */
+	@AutoEscape
+	public String getUrlTitle();
+
+	/**
+	 * Sets the url title of this message-boards message.
+	 *
+	 * @param urlTitle the url title of this message-boards message
+	 */
+	public void setUrlTitle(String urlTitle);
+
+	/**
 	 * Returns the body of this message-boards message.
 	 *
 	 * @return the body of this message-boards message
@@ -457,21 +472,6 @@ public interface MBMessageModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
-	/**
-	 * Returns the url title of this message-boards message.
-	 *
-	 * @return the url title of this message-boards message
-	 */
-	@AutoEscape
-	public String getUrlTitle();
-
-	/**
-	 * Sets the url title of this message-boards message.
-	 *
-	 * @param urlTitle the url title of this message-boards message
-	 */
-	public void setUrlTitle(String urlTitle);
 
 	/**
 	 * Returns the status of this message-boards message.

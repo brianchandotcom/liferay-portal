@@ -50,7 +50,7 @@ public abstract class BaseMBMessageUADDisplay
 
 	@Override
 	public String[] getDisplayFieldNames() {
-		return new String[] {"subject", "body", "urlTitle"};
+		return new String[] {"subject", "urlTitle", "body"};
 	}
 
 	@Override

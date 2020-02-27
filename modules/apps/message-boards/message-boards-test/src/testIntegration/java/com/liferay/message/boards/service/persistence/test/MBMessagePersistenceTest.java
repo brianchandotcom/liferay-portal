@@ -155,6 +155,8 @@ public class MBMessagePersistenceTest {
 
 		newMBMessage.setSubject(RandomTestUtil.randomString());
 
+		newMBMessage.setUrlTitle(RandomTestUtil.randomString());
+
 		newMBMessage.setBody(RandomTestUtil.randomString());
 
 		newMBMessage.setFormat(RandomTestUtil.randomString());
@@ -168,8 +170,6 @@ public class MBMessagePersistenceTest {
 		newMBMessage.setAnswer(RandomTestUtil.randomBoolean());
 
 		newMBMessage.setLastPublishDate(RandomTestUtil.nextDate());
-
-		newMBMessage.setUrlTitle(RandomTestUtil.randomString());
 
 		newMBMessage.setStatus(RandomTestUtil.nextInt());
 
@@ -221,6 +221,8 @@ public class MBMessagePersistenceTest {
 		Assert.assertEquals(
 			existingMBMessage.getSubject(), newMBMessage.getSubject());
 		Assert.assertEquals(
+			existingMBMessage.getUrlTitle(), newMBMessage.getUrlTitle());
+		Assert.assertEquals(
 			existingMBMessage.getBody(), newMBMessage.getBody());
 		Assert.assertEquals(
 			existingMBMessage.getFormat(), newMBMessage.getFormat());
@@ -236,8 +238,6 @@ public class MBMessagePersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingMBMessage.getLastPublishDate()),
 			Time.getShortTimestamp(newMBMessage.getLastPublishDate()));
-		Assert.assertEquals(
-			existingMBMessage.getUrlTitle(), newMBMessage.getUrlTitle());
 		Assert.assertEquals(
 			existingMBMessage.getStatus(), newMBMessage.getStatus());
 		Assert.assertEquals(
@@ -557,10 +557,10 @@ public class MBMessagePersistenceTest {
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"categoryId", true, "threadId", true, "rootMessageId", true,
 			"parentMessageId", true, "treePath", true, "subject", true,
-			"format", true, "anonymous", true, "priority", true,
-			"allowPingbacks", true, "answer", true, "lastPublishDate", true,
-			"urlTitle", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"urlTitle", true, "format", true, "anonymous", true, "priority",
+			true, "allowPingbacks", true, "answer", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -835,6 +835,8 @@ public class MBMessagePersistenceTest {
 
 		mbMessage.setSubject(RandomTestUtil.randomString());
 
+		mbMessage.setUrlTitle(RandomTestUtil.randomString());
+
 		mbMessage.setBody(RandomTestUtil.randomString());
 
 		mbMessage.setFormat(RandomTestUtil.randomString());
@@ -848,8 +850,6 @@ public class MBMessagePersistenceTest {
 		mbMessage.setAnswer(RandomTestUtil.randomBoolean());
 
 		mbMessage.setLastPublishDate(RandomTestUtil.nextDate());
-
-		mbMessage.setUrlTitle(RandomTestUtil.randomString());
 
 		mbMessage.setStatus(RandomTestUtil.nextInt());
 

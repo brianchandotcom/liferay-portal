@@ -88,10 +88,10 @@ public class MBMessageModelImpl
 		{"categoryId", Types.BIGINT}, {"threadId", Types.BIGINT},
 		{"rootMessageId", Types.BIGINT}, {"parentMessageId", Types.BIGINT},
 		{"treePath", Types.VARCHAR}, {"subject", Types.VARCHAR},
-		{"body", Types.CLOB}, {"format", Types.VARCHAR},
-		{"anonymous", Types.BOOLEAN}, {"priority", Types.DOUBLE},
-		{"allowPingbacks", Types.BOOLEAN}, {"answer", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}, {"urlTitle", Types.VARCHAR},
+		{"urlTitle", Types.VARCHAR}, {"body", Types.CLOB},
+		{"format", Types.VARCHAR}, {"anonymous", Types.BOOLEAN},
+		{"priority", Types.DOUBLE}, {"allowPingbacks", Types.BOOLEAN},
+		{"answer", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP},
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
 		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
@@ -116,6 +116,7 @@ public class MBMessageModelImpl
 		TABLE_COLUMNS_MAP.put("parentMessageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("treePath", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("format", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("anonymous", Types.BOOLEAN);
@@ -123,7 +124,6 @@ public class MBMessageModelImpl
 		TABLE_COLUMNS_MAP.put("allowPingbacks", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("answer", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
@@ -131,7 +131,7 @@ public class MBMessageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,treePath STRING null,subject VARCHAR(75) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,urlTitle VARCHAR(255) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,treePath STRING null,subject VARCHAR(75) null,urlTitle VARCHAR(255) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table MBMessage";
 
@@ -212,6 +212,7 @@ public class MBMessageModelImpl
 		model.setParentMessageId(soapModel.getParentMessageId());
 		model.setTreePath(soapModel.getTreePath());
 		model.setSubject(soapModel.getSubject());
+		model.setUrlTitle(soapModel.getUrlTitle());
 		model.setBody(soapModel.getBody());
 		model.setFormat(soapModel.getFormat());
 		model.setAnonymous(soapModel.isAnonymous());
@@ -219,7 +220,6 @@ public class MBMessageModelImpl
 		model.setAllowPingbacks(soapModel.isAllowPingbacks());
 		model.setAnswer(soapModel.isAnswer());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setUrlTitle(soapModel.getUrlTitle());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -431,6 +431,9 @@ public class MBMessageModelImpl
 		attributeGetterFunctions.put("subject", MBMessage::getSubject);
 		attributeSetterBiConsumers.put(
 			"subject", (BiConsumer<MBMessage, String>)MBMessage::setSubject);
+		attributeGetterFunctions.put("urlTitle", MBMessage::getUrlTitle);
+		attributeSetterBiConsumers.put(
+			"urlTitle", (BiConsumer<MBMessage, String>)MBMessage::setUrlTitle);
 		attributeGetterFunctions.put("body", MBMessage::getBody);
 		attributeSetterBiConsumers.put(
 			"body", (BiConsumer<MBMessage, String>)MBMessage::setBody);
@@ -457,9 +460,6 @@ public class MBMessageModelImpl
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
 			(BiConsumer<MBMessage, Date>)MBMessage::setLastPublishDate);
-		attributeGetterFunctions.put("urlTitle", MBMessage::getUrlTitle);
-		attributeSetterBiConsumers.put(
-			"urlTitle", (BiConsumer<MBMessage, String>)MBMessage::setUrlTitle);
 		attributeGetterFunctions.put("status", MBMessage::getStatus);
 		attributeSetterBiConsumers.put(
 			"status", (BiConsumer<MBMessage, Integer>)MBMessage::setStatus);
@@ -834,6 +834,32 @@ public class MBMessageModelImpl
 
 	@JSON
 	@Override
+	public String getUrlTitle() {
+		if (_urlTitle == null) {
+			return "";
+		}
+		else {
+			return _urlTitle;
+		}
+	}
+
+	@Override
+	public void setUrlTitle(String urlTitle) {
+		_columnBitmask |= URLTITLE_COLUMN_BITMASK;
+
+		if (_originalUrlTitle == null) {
+			_originalUrlTitle = _urlTitle;
+		}
+
+		_urlTitle = urlTitle;
+	}
+
+	public String getOriginalUrlTitle() {
+		return GetterUtil.getString(_originalUrlTitle);
+	}
+
+	@JSON
+	@Override
 	public String getBody() {
 		if (_body == null) {
 			return "";
@@ -947,32 +973,6 @@ public class MBMessageModelImpl
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		_lastPublishDate = lastPublishDate;
-	}
-
-	@JSON
-	@Override
-	public String getUrlTitle() {
-		if (_urlTitle == null) {
-			return "";
-		}
-		else {
-			return _urlTitle;
-		}
-	}
-
-	@Override
-	public void setUrlTitle(String urlTitle) {
-		_columnBitmask |= URLTITLE_COLUMN_BITMASK;
-
-		if (_originalUrlTitle == null) {
-			_originalUrlTitle = _urlTitle;
-		}
-
-		_urlTitle = urlTitle;
-	}
-
-	public String getOriginalUrlTitle() {
-		return GetterUtil.getString(_originalUrlTitle);
 	}
 
 	@JSON
@@ -1336,6 +1336,7 @@ public class MBMessageModelImpl
 		mbMessageImpl.setParentMessageId(getParentMessageId());
 		mbMessageImpl.setTreePath(getTreePath());
 		mbMessageImpl.setSubject(getSubject());
+		mbMessageImpl.setUrlTitle(getUrlTitle());
 		mbMessageImpl.setBody(getBody());
 		mbMessageImpl.setFormat(getFormat());
 		mbMessageImpl.setAnonymous(isAnonymous());
@@ -1343,7 +1344,6 @@ public class MBMessageModelImpl
 		mbMessageImpl.setAllowPingbacks(isAllowPingbacks());
 		mbMessageImpl.setAnswer(isAnswer());
 		mbMessageImpl.setLastPublishDate(getLastPublishDate());
-		mbMessageImpl.setUrlTitle(getUrlTitle());
 		mbMessageImpl.setStatus(getStatus());
 		mbMessageImpl.setStatusByUserId(getStatusByUserId());
 		mbMessageImpl.setStatusByUserName(getStatusByUserName());
@@ -1460,11 +1460,11 @@ public class MBMessageModelImpl
 
 		mbMessageModelImpl._setOriginalParentMessageId = false;
 
+		mbMessageModelImpl._originalUrlTitle = mbMessageModelImpl._urlTitle;
+
 		mbMessageModelImpl._originalAnswer = mbMessageModelImpl._answer;
 
 		mbMessageModelImpl._setOriginalAnswer = false;
-
-		mbMessageModelImpl._originalUrlTitle = mbMessageModelImpl._urlTitle;
 
 		mbMessageModelImpl._originalStatus = mbMessageModelImpl._status;
 
@@ -1547,6 +1547,14 @@ public class MBMessageModelImpl
 			mbMessageCacheModel.subject = null;
 		}
 
+		mbMessageCacheModel.urlTitle = getUrlTitle();
+
+		String urlTitle = mbMessageCacheModel.urlTitle;
+
+		if ((urlTitle != null) && (urlTitle.length() == 0)) {
+			mbMessageCacheModel.urlTitle = null;
+		}
+
 		mbMessageCacheModel.body = getBody();
 
 		String body = mbMessageCacheModel.body;
@@ -1578,14 +1586,6 @@ public class MBMessageModelImpl
 		}
 		else {
 			mbMessageCacheModel.lastPublishDate = Long.MIN_VALUE;
-		}
-
-		mbMessageCacheModel.urlTitle = getUrlTitle();
-
-		String urlTitle = mbMessageCacheModel.urlTitle;
-
-		if ((urlTitle != null) && (urlTitle.length() == 0)) {
-			mbMessageCacheModel.urlTitle = null;
 		}
 
 		mbMessageCacheModel.status = getStatus();
@@ -1719,6 +1719,8 @@ public class MBMessageModelImpl
 	private boolean _setOriginalParentMessageId;
 	private String _treePath;
 	private String _subject;
+	private String _urlTitle;
+	private String _originalUrlTitle;
 	private String _body;
 	private String _format;
 	private boolean _anonymous;
@@ -1728,8 +1730,6 @@ public class MBMessageModelImpl
 	private boolean _originalAnswer;
 	private boolean _setOriginalAnswer;
 	private Date _lastPublishDate;
-	private String _urlTitle;
-	private String _originalUrlTitle;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

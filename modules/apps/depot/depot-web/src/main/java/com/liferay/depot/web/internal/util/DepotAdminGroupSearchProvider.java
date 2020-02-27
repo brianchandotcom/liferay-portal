@@ -15,6 +15,9 @@
 package com.liferay.depot.web.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -46,7 +50,14 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotAdminGroupSearchProvider {
 
 	public GroupSearch getGroupSearch(
-		PortletRequest portletRequest, PortletURL portletURL) {
+			GroupItemSelectorCriterion groupItemSelectorCriterion,
+			PortletRequest portletRequest, PortletURL portletURL)
+		throws PortalException {
+
+		if (!groupItemSelectorCriterion.isIncludeAllVisibleGroups()) {
+			return _getGroupConnectedDepotGroupsGroupSearch(
+				portletRequest, portletURL);
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -114,7 +125,45 @@ public class DepotAdminGroupSearchProvider {
 		};
 	}
 
+	private GroupSearch _getGroupConnectedDepotGroupsGroupSearch(
+			PortletRequest portletRequest, PortletURL portletURL)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);
+
+		groupSearch.setTotal(
+			_depotEntryLocalService.getGroupConnectedDepotEntriesCount(
+				themeDisplay.getScopeGroupId()));
+
+		List<DepotEntry> depotEntries =
+			_depotEntryLocalService.getGroupConnectedDepotEntries(
+				themeDisplay.getScopeGroupId(), groupSearch.getStart(),
+				groupSearch.getEnd());
+
+		List<Group> groups = new ArrayList<>();
+
+		for (DepotEntry depotEntry : depotEntries) {
+			groups.add(depotEntry.getGroup());
+		}
+
+		groupSearch.setResults(groups);
+
+		groupSearch.setEmptyResultsMessage(
+			LanguageUtil.get(
+				ResourceBundleUtil.getBundle(
+					portletRequest.getLocale(), getClass()),
+				"no-asset-libraries-were-found"));
+
+		return groupSearch;
+	}
+
 	private long[] _classNameIds;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

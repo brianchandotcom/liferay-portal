@@ -24,6 +24,7 @@ import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -185,8 +186,14 @@ public class DepotItemSelectorView
 
 		@Override
 		public GroupSearch getGroupSearch() {
-			return _depotAdminGroupSearchProvider.getGroupSearch(
-				getPortletRequest(), getPortletURL());
+			try {
+				return _depotAdminGroupSearchProvider.getGroupSearch(
+					_groupItemSelectorCriterion, getPortletRequest(),
+					getPortletURL());
+			}
+			catch (PortalException portalException) {
+				return ReflectionUtil.throwException(portalException);
+			}
 		}
 
 		@Override

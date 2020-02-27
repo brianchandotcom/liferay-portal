@@ -21,6 +21,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -95,6 +96,7 @@ public class DepotGroupItemSelectorView
 			servletRequest, servletResponse, depotGroupItemSelectorCriterion,
 			portletURL, itemSelectedEventName, search,
 			new DepotGroupSelectorViewDescriptor(
+				depotGroupItemSelectorCriterion,
 				(HttpServletRequest)servletRequest, portletURL));
 	}
 
@@ -214,8 +216,10 @@ public class DepotGroupItemSelectorView
 		implements ItemSelectorViewDescriptor<Group> {
 
 		public DepotGroupSelectorViewDescriptor(
+			DepotGroupItemSelectorCriterion depotGroupItemSelectorCriterion,
 			HttpServletRequest httpServletRequest, PortletURL portletURL) {
 
+			_depotGroupItemSelectorCriterion = depotGroupItemSelectorCriterion;
 			_httpServletRequest = httpServletRequest;
 			_portletURL = portletURL;
 		}
@@ -237,14 +241,22 @@ public class DepotGroupItemSelectorView
 
 		@Override
 		public SearchContainer getSearchContainer() {
-			PortletRequest portletRequest =
-				(PortletRequest)_httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST);
+			try {
+				PortletRequest portletRequest =
+					(PortletRequest)_httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST);
 
-			return _depotAdminGroupSearchProvider.getGroupSearch(
-				portletRequest, _portletURL);
+				return _depotAdminGroupSearchProvider.getGroupSearch(
+					_depotGroupItemSelectorCriterion, portletRequest,
+					_portletURL);
+			}
+			catch (PortalException portalException) {
+				return ReflectionUtil.throwException(portalException);
+			}
 		}
 
+		private final DepotGroupItemSelectorCriterion
+			_depotGroupItemSelectorCriterion;
 		private HttpServletRequest _httpServletRequest;
 		private final PortletURL _portletURL;
 

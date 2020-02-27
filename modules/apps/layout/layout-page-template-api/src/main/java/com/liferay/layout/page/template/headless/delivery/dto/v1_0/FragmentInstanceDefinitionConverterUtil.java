@@ -130,11 +130,6 @@ public class FragmentInstanceDefinitionConverterUtil {
 							{
 								backgroundImage = new FragmentImage() {
 									{
-										title = new InlineValue() {
-											{
-												value_i18n = localeMap;
-											}
-										};
 										url = new InlineValue() {
 											{
 												value_i18n = localeMap;
@@ -424,11 +419,6 @@ public class FragmentInstanceDefinitionConverterUtil {
 			{
 				fragmentImage = new FragmentImage() {
 					{
-						title = new InlineValue() {
-							{
-								value_i18n = localeMap;
-							}
-						};
 						url = new InlineValue() {
 							{
 								value_i18n = localeMap;

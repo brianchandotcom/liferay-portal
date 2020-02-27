@@ -12,10 +12,7 @@
  * details.
  */
 
-/* eslint-disable no-unused-vars */
-import {FieldBase} from 'dynamic-data-mapping-form-field-type';
-
-/* eslint-enable no-unused-vars */
+import 'dynamic-data-mapping-form-field-type';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';

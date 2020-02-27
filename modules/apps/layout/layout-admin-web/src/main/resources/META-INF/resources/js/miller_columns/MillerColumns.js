@@ -73,7 +73,7 @@ const MillerColumns = ({
 	const columns = useMemo(() => {
 		const columns = [];
 
-		// eslint-disable-next-line no-for-of-loops/no-for-of-loops, no-unused-vars
+		// eslint-disable-next-line no-for-of-loops/no-for-of-loops
 		for (const item of items.values()) {
 			if (!columns[item.columnIndex]) {
 				columns[item.columnIndex] = {
@@ -143,7 +143,7 @@ const MillerColumns = ({
 		let prevColumnIndex;
 		let itemIndex = 0;
 
-		// eslint-disable-next-line no-for-of-loops/no-for-of-loops, no-unused-vars
+		// eslint-disable-next-line no-for-of-loops/no-for-of-loops
 		for (let item of items.values()) {
 			const columnIndex = item.columnIndex;
 

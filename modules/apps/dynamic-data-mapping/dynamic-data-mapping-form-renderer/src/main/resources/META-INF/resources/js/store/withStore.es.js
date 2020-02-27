@@ -169,7 +169,7 @@ export default Component => {
 							localizedValue &&
 							localizedValue[editingLanguageId.newVal]
 								? localizedValue[editingLanguageId.newVal]
-								: null
+								: null,
 					}),
 					true
 				);

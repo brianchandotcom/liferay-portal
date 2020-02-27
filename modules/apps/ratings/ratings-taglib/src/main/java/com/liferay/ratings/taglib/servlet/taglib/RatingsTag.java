@@ -72,11 +72,11 @@ public class RatingsTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute("liferay-ratings:ratings:type", _type);
 		httpServletRequest.setAttribute(
 			"liferay-ui:ratings:className", _className);
 		httpServletRequest.setAttribute(
 			"liferay-ui:ratings:classPK", String.valueOf(_classPK));
-		httpServletRequest.setAttribute("liferay-ratings:ratings:type", _type);
 	}
 
 	private static final String _PAGE = "/page.jsp";

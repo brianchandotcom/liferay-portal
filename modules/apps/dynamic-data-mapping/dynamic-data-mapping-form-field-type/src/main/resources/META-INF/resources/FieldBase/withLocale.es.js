@@ -24,14 +24,14 @@ export default Component => {
 				if (key !== editingLanguageId) {
 					languageValues.push({
 						name: this.name.replace(editingLanguageId, key),
-						value: this.localizedValue[key]
+						value: this.localizedValue[key],
 					});
 				}
 			});
 
 			return {
 				...super.prepareStateForRender(states),
-				localizedValue: languageValues
+				localizedValue: languageValues,
 			};
 		}
 	}
@@ -41,9 +41,9 @@ export default Component => {
 			Config.object(),
 			Config.shapeOf({
 				name: Config.string(),
-				value: Config.any()
-			})
-		]).value([])
+				value: Config.any(),
+			}),
+		]).value([]),
 	};
 
 	return WithLocale;

@@ -167,7 +167,7 @@ const SidebarTab = ({onTabClick, selectedTab, tabs}) => {
 									{
 										active: selectedTab
 											? name === selectedTab
-											: index === 0
+											: index === 0,
 									}
 								)}
 								data-senna-off

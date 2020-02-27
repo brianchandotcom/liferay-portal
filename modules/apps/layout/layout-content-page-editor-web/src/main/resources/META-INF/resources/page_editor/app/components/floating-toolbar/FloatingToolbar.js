@@ -371,11 +371,23 @@ const getElementAlign = (element, anchor) => {
 	let horizontal = 'left';
 	let vertical = 'bottom';
 
+	const productMenuOpen = Liferay.SideNavigation.instance(
+		document.querySelector('.product-menu-toggle')
+	).visible();
+	const wrapperWidth = document
+		.getElementById('wrapper')
+		.getBoundingClientRect().width;
+
 	try {
 		const {right: anchorRight} = anchor.getBoundingClientRect();
 		const {width: elementWidth} = element.getBoundingClientRect();
 
-		horizontal = anchorRight - elementWidth > 0 ? 'right' : 'left';
+		if (productMenuOpen && anchorRight - elementWidth < wrapperWidth / 2) {
+			horizontal = 'left';
+		}
+		else {
+			horizontal = anchorRight - elementWidth > 0 ? 'right' : 'left';
+		}
 	}
 	catch (error) {}
 

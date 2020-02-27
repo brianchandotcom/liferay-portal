@@ -343,8 +343,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		message.setSubject(subject);
-		message.setAllowPingbacks(allowPingbacks);
 		message.setUrlTitle(getUniqueUrlTitle(groupId, messageId, subject));
+		message.setAllowPingbacks(allowPingbacks);
 		message.setStatus(WorkflowConstants.STATUS_DRAFT);
 		message.setStatusByUserId(user.getUserId());
 		message.setStatusByUserName(userName);

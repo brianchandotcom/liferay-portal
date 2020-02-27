@@ -16,6 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
+
 <%
 PollsDisplayContext pollsDisplayContext = new PollsDisplayContext(renderRequest, renderResponse);
 %>

@@ -64,6 +64,19 @@ public class PollsDisplayContext {
 		_pollsRequestHelper = new PollsRequestHelper(renderRequest);
 	}
 
+	public List<DropdownItem> getActionItemsDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteQuestions");
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_pollsRequestHelper.getRequest(), "delete"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
+	}
+
 	public String getClearResultsURL() throws PortletException {
 		PortletURL clearResultsURL = PortletURLUtil.clone(
 			getPortletURL(), _renderResponse);

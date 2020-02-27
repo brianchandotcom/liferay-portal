@@ -25,7 +25,7 @@ const Component = ({
 	items,
 	namespace,
 	selectURL,
-	title
+	title,
 }) => {
 	const onDestroyPortlet = function() {
 		Liferay.detach('destroyPortlet', onDestroyPortlet);
@@ -40,15 +40,15 @@ const Component = ({
 				dialog: {
 					constrain: true,
 					modal: true,
-					width: 900
+					width: 900,
 				},
 				id: namespace + 'selectChangeList',
 				title: Liferay.Language.get('select-a-publication'),
-				uri: selectURL
+				uri: selectURL,
 			},
 			event => {
 				const portletURL = createPortletURL(checkoutURL, {
-					ctCollectionId: event.ctcollectionid
+					ctCollectionId: event.ctcollectionid,
 				});
 
 				Liferay.Util.navigate(portletURL.toString());
@@ -83,7 +83,7 @@ Component.propTypes = {
 	iconName: PropTypes.string,
 	namespace: PropTypes.string,
 	selectURL: PropTypes.string,
-	title: PropTypes.string
+	title: PropTypes.string,
 };
 
 export default function(props) {

@@ -182,7 +182,7 @@ export default function Translation({
 					small
 				>
 					<ClayIcon symbol={languageIcon} />
-					<span className="btn-section sr-only">{languageLabel}</span>
+					<span className="sr-only">{languageLabel}</span>
 				</ClayButton>
 			}
 		>

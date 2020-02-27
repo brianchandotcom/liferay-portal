@@ -24,11 +24,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "third-party", generateUI = false)
 @Meta.OCD(
 	description = "frontend-js-aui-configuration-description",
-	id = "com.liferay.frontend.js.aui.web.internal.configuration.AuiConfiguration",
+	id = "com.liferay.frontend.js.aui.web.internal.configuration.AUIConfiguration",
 	localization = "content/Language",
 	name = "frontend-js-aui-configuration-name"
 )
-public interface AuiConfiguration {
+public interface AUIConfiguration {
 
 	/**
 	 * Set this to <code>true</code> to enable AUI usage.

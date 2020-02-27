@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.js.aui.web.internal.servlet;
 
-import com.liferay.frontend.js.aui.web.internal.configuration.AuiConfiguration;
+import com.liferay.frontend.js.aui.web.internal.configuration.AUIConfiguration;
 import com.liferay.frontend.js.top.head.extender.TopHeadResources;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera Avellón
  */
 @Component(
-	configurationPid = "com.liferay.frontend.js.aui.web.internal.configuration.AuiConfiguration",
+	configurationPid = "com.liferay.frontend.js.aui.web.internal.configuration.AUIConfiguration",
 	immediate = true, property = "service.ranking:Integer=-1",
 	service = TopHeadResources.class
 )
-public class AuiTopHeadResources implements TopHeadResources {
+public class AUITopHeadResources implements TopHeadResources {
 
 	@Override
 	public Collection<String> getAuthenticatedJsResourcePaths() {
@@ -59,8 +59,8 @@ public class AuiTopHeadResources implements TopHeadResources {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		AuiConfiguration auiConfiguration = ConfigurableUtil.createConfigurable(
-			AuiConfiguration.class, properties);
+		AUIConfiguration auiConfiguration = ConfigurableUtil.createConfigurable(
+			AUIConfiguration.class, properties);
 
 		List<String> authenticatedJsResourcePaths = new ArrayList<>();
 

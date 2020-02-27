@@ -468,12 +468,12 @@
 <!--PORTLET_COLUMN-->
 <tr>
 	<td>PORTLET_COLUMN_1</td>
-	<td>//div[contains(@class,'portlet-dropzone') and contains(@class,'empty') and contains(@id,'column-1')]</td>
+	<td>//div[contains(@class,'col-md-6 portlet-column portlet-column-first')]/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PORTLET_COLUMN_2</td>
-	<td>//div[contains(@class,'portlet-dropzone') and contains(@class,'empty') and contains(@id,'column-2')]</td>
+	<td>//div[contains(@class,'col-md-6 portlet-column portlet-column-last')]/div</td>
 	<td></td>
 </tr>
 <tr>

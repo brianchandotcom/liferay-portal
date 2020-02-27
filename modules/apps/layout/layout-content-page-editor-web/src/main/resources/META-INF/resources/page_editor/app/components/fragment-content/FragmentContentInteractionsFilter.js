@@ -15,7 +15,9 @@
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
+import {useSelector} from '../../store/index';
 import {useHoverItem, useIsActive, useSelectItem} from '../Controls';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
 import {getEditableElement} from './getEditableElement';
@@ -32,6 +34,14 @@ export default function FragmentContentInteractionsFilter({
 	const isActive = useIsActive();
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
+
+	const editableValues = useSelector(state =>
+		state.fragmentEntryLinks[fragmentEntryLinkId]
+			? state.fragmentEntryLinks[fragmentEntryLinkId].editableValues[
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+			  ]
+			: {}
+	);
 
 	const siblingIds = useMemo(
 		() => [
@@ -89,13 +99,26 @@ export default function FragmentContentInteractionsFilter({
 		const editableElement = getEditableElement(event.target);
 
 		if (editableElement) {
+			const editableElementId = getEditableElementId(editableElement);
+			const editableValue = editableValues[editableElementId] || {};
+
+			const isMapped =
+				(editableValue.classNameId &&
+					editableValue.classPK &&
+					editableValue.fieldId) ||
+				editableValue.mappedField;
+
+			if (isMapped) {
+				return;
+			}
+
 			const editableClickPosition = {
 				clientX: event.clientX,
 				clientY: event.clientY,
 			};
 			const editableUniqueId = getEditableUniqueId(
 				fragmentEntryLinkId,
-				getEditableElementId(editableElement)
+				editableElementId
 			);
 
 			if (isActive(editableUniqueId)) {

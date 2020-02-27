@@ -506,7 +506,6 @@ definition {
 		Calendar.searchOtherCalendars(searchValue = "u");
 
 		Calendar.viewOtherCalendarsSearchResult(calendarName = "userfn2 userln2");
-
 	}
 
 	@priority = "4"

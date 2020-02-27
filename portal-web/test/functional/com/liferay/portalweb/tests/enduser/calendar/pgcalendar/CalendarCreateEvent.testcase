@@ -752,11 +752,9 @@ definition {
 
 		CalendarEvent.viewYearly(eventTitle = "Calendar Event Repeating Title");
 
-		CalendarNavigator.gotoView(viewType = "Day");
+		CalendarNavigator.gotoView(viewType = "Week");
 
-		CalendarScheduler.selectSpecificEvent(
-			eventTitle = "Calendar Event Repeating Title",
-			eventToday = "false");
+		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = "Calendar Event Repeating Title");
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 

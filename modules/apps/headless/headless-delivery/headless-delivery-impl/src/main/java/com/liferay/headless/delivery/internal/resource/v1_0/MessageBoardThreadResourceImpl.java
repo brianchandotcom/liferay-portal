@@ -189,11 +189,13 @@ public class MessageBoardThreadResourceImpl
 
 	@Override
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
-		Date dateCreated, Date dateModified, Pagination pagination,
-		Sort[] sorts) {
+			Date dateCreated, Date dateModified, Long messageBoardSectionId,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
 
 		DynamicQuery dynamicQuery = _getDynamicQuery(
-			dateCreated, dateModified, pagination, sorts);
+			dateCreated, dateModified, messageBoardSectionId, pagination,
+			sorts);
 
 		return Page.of(
 			transform(
@@ -389,8 +391,8 @@ public class MessageBoardThreadResourceImpl
 	}
 
 	private DynamicQuery _getDynamicQuery(
-		Date dateCreated, Date dateModified, Pagination pagination,
-		Sort[] sorts) {
+		Date dateCreated, Date dateModified, Long messageBoardSectionId,
+		Pagination pagination, Sort[] sorts) {
 
 		DynamicQuery dynamicQuery = _ratingsStatsLocalService.dynamicQuery();
 
@@ -411,10 +413,15 @@ public class MessageBoardThreadResourceImpl
 				RestrictionsFactoryUtil.gt("modifiedDate", dateModified));
 		}
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.sqlRestriction(
-				"EXISTS (select 1 from MBMessage where this_.classPK = " +
-					"messageId AND parentMessageId = 0 AND status = 0)"));
+		String sql =
+			"EXISTS (select 1 from MBMessage where this_.classPK = messageId " +
+				"AND parentMessageId = 0 AND status = 0";
+
+		if (messageBoardSectionId != null) {
+			sql += " AND categoryId = " + messageBoardSectionId;
+		}
+
+		dynamicQuery.add(RestrictionsFactoryUtil.sqlRestriction(sql + ")"));
 
 		dynamicQuery.setLimit(
 			pagination.getStartPosition(), pagination.getEndPosition());

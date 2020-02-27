@@ -993,7 +993,6 @@ components:
                 html:
                     oneOf:
                         - $ref: "#/components/schemas/InlineValue"
-                        - $ref: "#/components/schemas/MappedValue"
             type: object
         FragmentFieldImage:
             properties:
@@ -1009,18 +1008,15 @@ components:
                 text:
                     oneOf:
                         - $ref: "#/components/schemas/InlineValue"
-                        - $ref: "#/components/schemas/MappedValue"
             type: object
         FragmentImage:
             properties:
                 title:
                     oneOf:
                         - $ref: "#/components/schemas/InlineValue"
-                        - $ref: "#/components/schemas/MappedValue"
                 url:
                     oneOf:
                         - $ref: "#/components/schemas/InlineValue"
-                        - $ref: "#/components/schemas/MappedValue"
             type: object
         FragmentInstanceDefinition:
             properties:
@@ -1050,7 +1046,6 @@ components:
                 value:
                     oneOf:
                         - $ref: "#/components/schemas/InlineLink"
-                        - $ref: "#/components/schemas/MappedValue"
         InlineLink:
             properties:
                 href:
@@ -1336,19 +1331,6 @@ components:
             required:
                 - name
             type: object
-        MappedValue:
-            properties:
-                classNameId:
-                    format: int64
-                    readOnly: true
-                    type: integer
-                classPK:
-                    format: int64
-                    readOnly: true
-                    type: integer
-                fieldId:
-                    readOnly: true
-                    type: string
         MessageBoardAttachment:
             description:
                 A binary file attached to a message on a message board (`MessageBoardMessage`).

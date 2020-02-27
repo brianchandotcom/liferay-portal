@@ -44,9 +44,9 @@
 		box-shadow: 0 0 0 $borderWidth $primary;
 		color: $color;
 		font-size: 12px;
-		height: 24px;
+		height: 22px;
 		left: $borderWidth;
-		line-height: 24px;
+		line-height: 22px;
 		max-width: calc(100% - #{$borderWidth * 2});
 		opacity: 0;
 		padding: 0 8px 0 4px;
@@ -65,7 +65,7 @@
 
 	&.active > &__bar {
 		opacity: 1;
-		transform: translateY(1px);
+		transform: translateY(2px);
 		transition-delay: 0.3s;
 		z-index: $portletTopperZIndex + 1;
 	}

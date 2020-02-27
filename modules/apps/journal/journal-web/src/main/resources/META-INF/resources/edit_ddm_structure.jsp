@@ -71,13 +71,15 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 
 						<aui:button cssClass="btn-sm mr-3" type="submit" value="<%= journalEditDDMStructuresDisplayContext.getSaveButtonLabel() %>" />
 
-						<clay:button
-							icon="cog"
-							id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
-							monospaced="<%= true %>"
-							size="sm"
-							style="borderless"
-						/>
+						<c:if test="<%= !journalDisplayContext.useDataEngineEditor() %>">
+							<clay:button
+								icon="cog"
+								id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
+								monospaced="<%= true %>"
+								size="sm"
+								style="borderless"
+							/>
+						</c:if>
 					</div>
 				</li>
 			</ul>
@@ -309,36 +311,38 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 		</c:choose>
 	}
 
-	var contextualSidebarButton = document.getElementById(
-		'<portlet:namespace />contextualSidebarButton'
-	);
-	var contextualSidebarContainer = document.getElementById(
-		'<portlet:namespace />contextualSidebarContainer'
-	);
+	<c:if test="<%= !journalDisplayContext.useDataEngineEditor() %>">
+		var contextualSidebarButton = document.getElementById(
+			'<portlet:namespace />contextualSidebarButton'
+		);
+		var contextualSidebarContainer = document.getElementById(
+			'<portlet:namespace />contextualSidebarContainer'
+		);
 
-	if (
-		contextualSidebarContainer &&
-		window.innerWidth > Liferay.BREAKPOINTS.PHONE
-	) {
-		contextualSidebarContainer.classList.add('contextual-sidebar-visible');
-	}
+		if (
+			contextualSidebarContainer &&
+			window.innerWidth > Liferay.BREAKPOINTS.PHONE
+		) {
+			contextualSidebarContainer.classList.add('contextual-sidebar-visible');
+		}
 
-	if (contextualSidebarButton) {
-		contextualSidebarButton.addEventListener('click', function(event) {
-			if (
-				contextualSidebarContainer.classList.contains(
-					'contextual-sidebar-visible'
-				)
-			) {
-				contextualSidebarContainer.classList.remove(
-					'contextual-sidebar-visible'
-				);
-			}
-			else {
-				contextualSidebarContainer.classList.add(
-					'contextual-sidebar-visible'
-				);
-			}
-		});
-	}
+		if (contextualSidebarButton) {
+			contextualSidebarButton.addEventListener('click', function(event) {
+				if (
+					contextualSidebarContainer.classList.contains(
+						'contextual-sidebar-visible'
+					)
+				) {
+					contextualSidebarContainer.classList.remove(
+						'contextual-sidebar-visible'
+					);
+				}
+				else {
+					contextualSidebarContainer.classList.add(
+						'contextual-sidebar-visible'
+					);
+				}
+			});
+		}
+	</c:if>
 </aui:script>

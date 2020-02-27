@@ -95,3 +95,16 @@
 		right: 1rem;
 	}
 }
+
+.questions-home-card {
+	margin: 1rem;
+
+	&:hover,
+	&:focus {
+		box-shadow: 0 20px 40px rgba(39, 40, 51, 0.16);
+	}
+}
+
+.questions-navigation {
+	border-bottom: 1px solid $secondary-l3;;
+}

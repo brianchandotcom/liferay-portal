@@ -49,8 +49,12 @@ export default () => {
 										truncate={false}
 									>
 										<p>{section.description}</p>
-										<p>{section.numberOfMessageBoardThreads}{' '}{Liferay.Language.get(
-											'threads')}</p>
+										<p>
+											{
+												section.numberOfMessageBoardThreads
+											}{' '}
+											{Liferay.Language.get('threads')}
+										</p>
 									</ClayCard.Description>
 								</ClayCard.Body>
 							</ClayCard>

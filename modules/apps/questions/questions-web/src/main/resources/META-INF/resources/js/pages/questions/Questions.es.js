@@ -27,25 +27,34 @@ import TagList from '../../components/TagList.es';
 import UserIcon from '../../components/UserIcon.es';
 import {getRankedThreads, getThreads} from '../../utils/client.es';
 import {dateToInternationalHuman, normalizeRating} from '../../utils/utils.es';
+import QuestionsNavigationBar from '../QuestionsNavigationBar.es';
 
 export default ({
 	match: {
-		params: {creatorId, tag},
+		params: {creatorId, sectionId, tag},
 	},
-	search,
 }) => {
-	const context = useContext(AppContext);
-
+	const [activeFilter, setActiveFilter] = useState('modified');
 	const [error, setError] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [page, setPage] = useState(1);
 	const [pageSize] = useState(20);
 	const [questions, setQuestions] = useState([]);
-	const [activeFilter, setActiveFilter] = useState('modified');
+	const [search, setSearch] = useState('');
+
+	const context = useContext(AppContext);
 
 	useEffect(() => {
 		renderQuestions(loadThreads());
-	}, [creatorId, page, pageSize, search, context.siteKey, tag, loadThreads]);
+	}, [
+		creatorId,
+		context.siteKey,
+		page,
+		pageSize,
+		sectionId,
+		tag,
+		loadThreads,
+	]);
 
 	const renderQuestions = questions => {
 		questions
@@ -64,11 +73,12 @@ export default ({
 				page,
 				pageSize,
 				search,
+				sectionId,
 				siteKey: context.siteKey,
 				sort,
 				tag,
 			}),
-		[context.siteKey, creatorId, page, pageSize, search, tag]
+		[context.siteKey, creatorId, page, pageSize, search, sectionId, tag]
 	);
 
 	const hasValidAnswer = question =>
@@ -86,14 +96,30 @@ export default ({
 			const date = new Date();
 			date.setDate(date.getDate() - 7);
 
-			renderQuestions(getRankedThreads(date, page, pageSize));
+			renderQuestions(
+				getRankedThreads(
+					date,
+					page,
+					pageSize,
+					sectionId,
+					context.siteKey
+				)
+			);
 		}
 		else if (type === 'month') {
 			setActiveFilter('month');
 			const date = new Date();
 			date.setDate(date.getDate() - 31);
 
-			renderQuestions(getRankedThreads(date, page, pageSize));
+			renderQuestions(
+				getRankedThreads(
+					date,
+					page,
+					pageSize,
+					sectionId,
+					context.siteKey
+				)
+			);
 		}
 		else {
 			setActiveFilter('created');
@@ -103,6 +129,10 @@ export default ({
 
 	return (
 		<section className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
+			<QuestionsNavigationBar
+				searchChange={search => setSearch(search)}
+			/>
+
 			<ClayButton.Group>
 				<ClayButton
 					displayType={
@@ -201,7 +231,7 @@ export default ({
 
 						<Link
 							className="question-title stretched-link"
-							to={'/questions/' + question.friendlyUrlPath}
+							to={`/questions/${sectionId}/${question.friendlyUrlPath}`}
 						>
 							<h2 className="c-mb-0 stretched-link-layer text-dark">
 								{question.headline}
@@ -215,10 +245,7 @@ export default ({
 						<div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">
 							<div className="c-mt-3 c-mt-sm-0 stretched-link-layer">
 								<Link
-									to={
-										'/questions/creator/' +
-										question.creator.id
-									}
+									to={`/questions/${sectionId}/creator/${question.creator.id}`}
 								>
 									<UserIcon
 										fullName={question.creator.name}

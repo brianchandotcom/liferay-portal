@@ -26,7 +26,7 @@ export default withRouter(
 	({
 		history,
 		match: {
-			params: {questionId},
+			params: {questionId, sectionId},
 		},
 	}) => {
 		const [articleBody, setArticleBody] = useState('');
@@ -152,7 +152,7 @@ export default withRouter(
 
 					<Link
 						className="btn btn-secondary c-ml-sm-3"
-						to={`/questions/`}
+						to={`/questions/${sectionId}/${questionId}`}
 					>
 						{Liferay.Language.get('cancel')}
 					</Link>

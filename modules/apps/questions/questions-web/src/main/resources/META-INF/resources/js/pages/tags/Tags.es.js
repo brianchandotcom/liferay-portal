@@ -15,14 +15,14 @@
 import ClayCard, {ClayCardWithNavigation} from '@clayui/card';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useContext, useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import {getTags} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {dateToInternationalHuman} from '../../utils/utils.es';
 
-export default () => {
+export default withRouter(({match: {url}}) => {
 	const context = useContext(AppContext);
 
 	const [page, setPage] = useState(1);
@@ -42,7 +42,7 @@ export default () => {
 								className="col-md-3 question-tags"
 								key={tag.id}
 							>
-								<Link to={`/questions/tag/${tag.name}`}>
+								<Link to={`${url}/tag/${tag.name}`}>
 									<ClayCardWithNavigation>
 										<ClayCard.Body>
 											<ClayCard.Description displayType="title">
@@ -87,4 +87,4 @@ export default () => {
 			)}
 		</>
 	);
-};
+});

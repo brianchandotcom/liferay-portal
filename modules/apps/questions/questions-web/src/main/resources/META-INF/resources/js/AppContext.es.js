@@ -16,7 +16,7 @@ import React, {createContext, useEffect, useState} from 'react';
 
 import {hasListPermissions} from './utils/client.es';
 
-const AppContext = createContext();
+const AppContext = createContext({});
 
 const AppContextProvider = ({children, ...context}) => {
 	const [canCreateThread, setCanCreateThread] = useState(false);

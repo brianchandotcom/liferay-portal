@@ -17,6 +17,7 @@ package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 import com.liferay.headless.admin.workflow.dto.v1_0.Assignee;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignableUser;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignableUsers;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskIds;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.AssigneeUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskAssignableUsersResource;
 import com.liferay.portal.kernel.model.User;
@@ -46,8 +47,8 @@ public class WorkflowTaskAssignableUsersResourceImpl
 	extends BaseWorkflowTaskAssignableUsersResourceImpl {
 
 	@Override
-	public WorkflowTaskAssignableUsers getWorkflowTaskAssignableUser(
-			Long[] workflowTaskIds)
+	public WorkflowTaskAssignableUsers postWorkflowTaskAssignableUser(
+			WorkflowTaskIds workflowTaskIds)
 		throws Exception {
 
 		return new WorkflowTaskAssignableUsers() {
@@ -59,7 +60,9 @@ public class WorkflowTaskAssignableUsersResourceImpl
 
 						Set<User> commonAssignableUsers = null;
 
-						for (Long workflowTaskId : workflowTaskIds) {
+						for (Long workflowTaskId :
+								workflowTaskIds.getWorkflowTaskIds()) {
+
 							List<User> assignableUsers =
 								_workflowTaskManager.getAssignableUsers(
 									contextUser.getCompanyId(), workflowTaskId);

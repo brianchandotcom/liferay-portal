@@ -28,7 +28,6 @@ import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
 import com.liferay.headless.admin.workflow.client.resource.v1_0.WorkflowTaskResource;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowTaskSerDes;
-import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -52,14 +50,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +66,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -597,232 +591,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkflowTasksPage() throws Exception {
-		Page<WorkflowTask> page = workflowTaskResource.getWorkflowTasksPage(
-			null, null, RandomTestUtil.randomString(), null, null, null,
-			RandomTestUtil.nextDate(), RandomTestUtil.nextDate(), null, null,
-			null, null, null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
-		WorkflowTask workflowTask1 = testGetWorkflowTasksPage_addWorkflowTask(
-			randomWorkflowTask());
-
-		WorkflowTask workflowTask2 = testGetWorkflowTasksPage_addWorkflowTask(
-			randomWorkflowTask());
-
-		page = workflowTaskResource.getWorkflowTasksPage(
-			null, null, null, null, null, null, null, null, null, null, null,
-			null, null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowTask1, workflowTask2),
-			(List<WorkflowTask>)page.getItems());
-		assertValid(page);
-	}
-
-	@Test
-	public void testGetWorkflowTasksPageWithPagination() throws Exception {
-		WorkflowTask workflowTask1 = testGetWorkflowTasksPage_addWorkflowTask(
-			randomWorkflowTask());
-
-		WorkflowTask workflowTask2 = testGetWorkflowTasksPage_addWorkflowTask(
-			randomWorkflowTask());
-
-		WorkflowTask workflowTask3 = testGetWorkflowTasksPage_addWorkflowTask(
-			randomWorkflowTask());
-
-		Page<WorkflowTask> page1 = workflowTaskResource.getWorkflowTasksPage(
-			null, null, null, null, null, null, null, null, null, null, null,
-			null, null, Pagination.of(1, 2), null);
-
-		List<WorkflowTask> workflowTasks1 =
-			(List<WorkflowTask>)page1.getItems();
-
-		Assert.assertEquals(
-			workflowTasks1.toString(), 2, workflowTasks1.size());
-
-		Page<WorkflowTask> page2 = workflowTaskResource.getWorkflowTasksPage(
-			null, null, null, null, null, null, null, null, null, null, null,
-			null, null, Pagination.of(2, 2), null);
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<WorkflowTask> workflowTasks2 =
-			(List<WorkflowTask>)page2.getItems();
-
-		Assert.assertEquals(
-			workflowTasks2.toString(), 1, workflowTasks2.size());
-
-		Page<WorkflowTask> page3 = workflowTaskResource.getWorkflowTasksPage(
-			null, null, null, null, null, null, null, null, null, null, null,
-			null, null, Pagination.of(1, 3), null);
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowTask1, workflowTask2, workflowTask3),
-			(List<WorkflowTask>)page3.getItems());
-	}
-
-	@Test
-	public void testGetWorkflowTasksPageWithSortDateTime() throws Exception {
-		testGetWorkflowTasksPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, workflowTask1, workflowTask2) -> {
-				BeanUtils.setProperty(
-					workflowTask1, entityField.getName(),
-					DateUtils.addMinutes(new Date(), -2));
-			});
-	}
-
-	@Test
-	public void testGetWorkflowTasksPageWithSortInteger() throws Exception {
-		testGetWorkflowTasksPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, workflowTask1, workflowTask2) -> {
-				BeanUtils.setProperty(workflowTask1, entityField.getName(), 0);
-				BeanUtils.setProperty(workflowTask2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetWorkflowTasksPageWithSortString() throws Exception {
-		testGetWorkflowTasksPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, workflowTask1, workflowTask2) -> {
-				Class<?> clazz = workflowTask1.getClass();
-
-				Method method = clazz.getMethod(
-					"get" +
-						StringUtil.upperCaseFirstLetter(entityField.getName()));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
-						workflowTask1, entityField.getName(),
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
-						workflowTask2, entityField.getName(),
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else {
-					BeanUtils.setProperty(
-						workflowTask1, entityField.getName(),
-						"Aaa" + RandomTestUtil.randomString());
-					BeanUtils.setProperty(
-						workflowTask2, entityField.getName(),
-						"Bbb" + RandomTestUtil.randomString());
-				}
-			});
-	}
-
-	protected void testGetWorkflowTasksPageWithSort(
-			EntityField.Type type,
-			UnsafeTriConsumer
-				<EntityField, WorkflowTask, WorkflowTask, Exception>
-					unsafeTriConsumer)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		WorkflowTask workflowTask1 = randomWorkflowTask();
-		WorkflowTask workflowTask2 = randomWorkflowTask();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(entityField, workflowTask1, workflowTask2);
-		}
-
-		workflowTask1 = testGetWorkflowTasksPage_addWorkflowTask(workflowTask1);
-
-		workflowTask2 = testGetWorkflowTasksPage_addWorkflowTask(workflowTask2);
-
-		for (EntityField entityField : entityFields) {
-			Page<WorkflowTask> ascPage =
-				workflowTaskResource.getWorkflowTasksPage(
-					null, null, null, null, null, null, null, null, null, null,
-					null, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":asc");
-
-			assertEquals(
-				Arrays.asList(workflowTask1, workflowTask2),
-				(List<WorkflowTask>)ascPage.getItems());
-
-			Page<WorkflowTask> descPage =
-				workflowTaskResource.getWorkflowTasksPage(
-					null, null, null, null, null, null, null, null, null, null,
-					null, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":desc");
-
-			assertEquals(
-				Arrays.asList(workflowTask2, workflowTask1),
-				(List<WorkflowTask>)descPage.getItems());
-		}
-	}
-
-	protected WorkflowTask testGetWorkflowTasksPage_addWorkflowTask(
-			WorkflowTask workflowTask)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetWorkflowTasksPage() throws Exception {
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
-
-		graphQLFields.add(
-			new GraphQLField(
-				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
-
-		graphQLFields.add(new GraphQLField("page"));
-		graphQLFields.add(new GraphQLField("totalCount"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"query",
-			new GraphQLField(
-				"workflowTasks",
-				new HashMap<String, Object>() {
-					{
-						put("page", 1);
-						put("pageSize", 2);
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		JSONObject workflowTasksJSONObject = dataJSONObject.getJSONObject(
-			"workflowTasks");
-
-		Assert.assertEquals(0, workflowTasksJSONObject.get("totalCount"));
-
-		WorkflowTask workflowTask1 = testGraphQLWorkflowTask_addWorkflowTask();
-		WorkflowTask workflowTask2 = testGraphQLWorkflowTask_addWorkflowTask();
-
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		dataJSONObject = jsonObject.getJSONObject("data");
-
-		workflowTasksJSONObject = dataJSONObject.getJSONObject("workflowTasks");
-
-		Assert.assertEquals(2, workflowTasksJSONObject.get("totalCount"));
-
-		assertEqualsJSONArray(
-			Arrays.asList(workflowTask1, workflowTask2),
-			workflowTasksJSONObject.getJSONArray("items"));
+	public void testPostWorkflowTasksPage() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	@Test

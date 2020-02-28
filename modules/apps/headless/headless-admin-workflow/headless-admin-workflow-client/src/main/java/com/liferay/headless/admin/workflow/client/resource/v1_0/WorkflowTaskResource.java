@@ -21,9 +21,6 @@ import com.liferay.headless.admin.workflow.client.pagination.Pagination;
 import com.liferay.headless.admin.workflow.client.problem.Problem;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowTaskSerDes;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -77,24 +74,16 @@ public interface WorkflowTaskResource {
 				Pagination pagination)
 		throws Exception;
 
-	public Page<WorkflowTask> getWorkflowTasksPage(
-			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
-			String[] assetTypes, Long[] assigneeIds, Boolean completed,
-			java.util.Date dateDueEnd, java.util.Date dateDueStart,
-			Boolean searchByRoles, Boolean searchByUserRoles,
-			String[] taskNames, Long workflowDefinitionId,
-			Long[] workflowInstanceIds, Pagination pagination,
-			String sortString)
+	public Page<WorkflowTask> postWorkflowTasksPage(
+			Pagination pagination, String sortString,
+			com.liferay.headless.admin.workflow.client.dto.v1_0.
+				WorkflowTasksBulkSelection workflowTasksBulkSelection)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getWorkflowTasksPageHttpResponse(
-			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
-			String[] assetTypes, Long[] assigneeIds, Boolean completed,
-			java.util.Date dateDueEnd, java.util.Date dateDueStart,
-			Boolean searchByRoles, Boolean searchByUserRoles,
-			String[] taskNames, Long workflowDefinitionId,
-			Long[] workflowInstanceIds, Pagination pagination,
-			String sortString)
+	public HttpInvoker.HttpResponse postWorkflowTasksPageHttpResponse(
+			Pagination pagination, String sortString,
+			com.liferay.headless.admin.workflow.client.dto.v1_0.
+				WorkflowTasksBulkSelection workflowTasksBulkSelection)
 		throws Exception;
 
 	public void patchWorkflowTaskAssignToUser(
@@ -554,23 +543,15 @@ public interface WorkflowTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<WorkflowTask> getWorkflowTasksPage(
-				Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
-				String[] assetTypes, Long[] assigneeIds, Boolean completed,
-				java.util.Date dateDueEnd, java.util.Date dateDueStart,
-				Boolean searchByRoles, Boolean searchByUserRoles,
-				String[] taskNames, Long workflowDefinitionId,
-				Long[] workflowInstanceIds, Pagination pagination,
-				String sortString)
+		public Page<WorkflowTask> postWorkflowTasksPage(
+				Pagination pagination, String sortString,
+				com.liferay.headless.admin.workflow.client.dto.v1_0.
+					WorkflowTasksBulkSelection workflowTasksBulkSelection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowTasksPageHttpResponse(
-					andOperator, assetPrimaryKeys, assetTitle, assetTypes,
-					assigneeIds, completed, dateDueEnd, dateDueStart,
-					searchByRoles, searchByUserRoles, taskNames,
-					workflowDefinitionId, workflowInstanceIds, pagination,
-					sortString);
+				postWorkflowTasksPageHttpResponse(
+					pagination, sortString, workflowTasksBulkSelection);
 
 			String content = httpResponse.getContent();
 
@@ -592,17 +573,16 @@ public interface WorkflowTaskResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getWorkflowTasksPageHttpResponse(
-				Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
-				String[] assetTypes, Long[] assigneeIds, Boolean completed,
-				java.util.Date dateDueEnd, java.util.Date dateDueStart,
-				Boolean searchByRoles, Boolean searchByUserRoles,
-				String[] taskNames, Long workflowDefinitionId,
-				Long[] workflowInstanceIds, Pagination pagination,
-				String sortString)
+		public HttpInvoker.HttpResponse postWorkflowTasksPageHttpResponse(
+				Pagination pagination, String sortString,
+				com.liferay.headless.admin.workflow.client.dto.v1_0.
+					WorkflowTasksBulkSelection workflowTasksBulkSelection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				workflowTasksBulkSelection.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -621,87 +601,7 @@ public interface WorkflowTaskResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-			if (andOperator != null) {
-				httpInvoker.parameter(
-					"andOperator", String.valueOf(andOperator));
-			}
-
-			if (assetPrimaryKeys != null) {
-				for (int i = 0; i < assetPrimaryKeys.length; i++) {
-					httpInvoker.parameter(
-						"assetPrimaryKeys",
-						String.valueOf(assetPrimaryKeys[i]));
-				}
-			}
-
-			if (assetTitle != null) {
-				httpInvoker.parameter("assetTitle", String.valueOf(assetTitle));
-			}
-
-			if (assetTypes != null) {
-				for (int i = 0; i < assetTypes.length; i++) {
-					httpInvoker.parameter(
-						"assetTypes", String.valueOf(assetTypes[i]));
-				}
-			}
-
-			if (assigneeIds != null) {
-				for (int i = 0; i < assigneeIds.length; i++) {
-					httpInvoker.parameter(
-						"assigneeIds", String.valueOf(assigneeIds[i]));
-				}
-			}
-
-			if (completed != null) {
-				httpInvoker.parameter("completed", String.valueOf(completed));
-			}
-
-			if (dateDueEnd != null) {
-				httpInvoker.parameter(
-					"dateDueEnd", liferayToJSONDateFormat.format(dateDueEnd));
-			}
-
-			if (dateDueStart != null) {
-				httpInvoker.parameter(
-					"dateDueStart",
-					liferayToJSONDateFormat.format(dateDueStart));
-			}
-
-			if (searchByRoles != null) {
-				httpInvoker.parameter(
-					"searchByRoles", String.valueOf(searchByRoles));
-			}
-
-			if (searchByUserRoles != null) {
-				httpInvoker.parameter(
-					"searchByUserRoles", String.valueOf(searchByUserRoles));
-			}
-
-			if (taskNames != null) {
-				for (int i = 0; i < taskNames.length; i++) {
-					httpInvoker.parameter(
-						"taskNames", String.valueOf(taskNames[i]));
-				}
-			}
-
-			if (workflowDefinitionId != null) {
-				httpInvoker.parameter(
-					"workflowDefinitionId",
-					String.valueOf(workflowDefinitionId));
-			}
-
-			if (workflowInstanceIds != null) {
-				for (int i = 0; i < workflowInstanceIds.length; i++) {
-					httpInvoker.parameter(
-						"workflowInstanceIds",
-						String.valueOf(workflowInstanceIds[i]));
-				}
-			}
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (pagination != null) {
 				httpInvoker.parameter(

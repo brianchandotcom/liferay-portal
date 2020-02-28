@@ -191,13 +191,26 @@ public abstract class BaseWorkflowTaskAssignableUsersResourceTestCase {
 	}
 
 	@Test
-	public void testGetWorkflowTaskAssignableUser() throws Exception {
-		Assert.assertTrue(false);
+	public void testPostWorkflowTaskAssignableUser() throws Exception {
+		WorkflowTaskAssignableUsers randomWorkflowTaskAssignableUsers =
+			randomWorkflowTaskAssignableUsers();
+
+		WorkflowTaskAssignableUsers postWorkflowTaskAssignableUsers =
+			testPostWorkflowTaskAssignableUser_addWorkflowTaskAssignableUsers(
+				randomWorkflowTaskAssignableUsers);
+
+		assertEquals(
+			randomWorkflowTaskAssignableUsers, postWorkflowTaskAssignableUsers);
+		assertValid(postWorkflowTaskAssignableUsers);
 	}
 
-	@Test
-	public void testGraphQLGetWorkflowTaskAssignableUser() throws Exception {
-		Assert.assertTrue(true);
+	protected WorkflowTaskAssignableUsers
+			testPostWorkflowTaskAssignableUser_addWorkflowTaskAssignableUsers(
+				WorkflowTaskAssignableUsers workflowTaskAssignableUsers)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(

@@ -117,7 +117,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title - Staged Edit");
+		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = "Calendar Event Title - Staged Edit");
 
 		CalendarEvent.assertEventNotEditable();
 

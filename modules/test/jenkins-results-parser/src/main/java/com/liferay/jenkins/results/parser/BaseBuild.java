@@ -388,30 +388,18 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getConsoleText() {
-		String consoleText = JenkinsResultsParserUtil.getCachedText(
-			_PREFIX_CONSOLE_TEXT_CACHE + getBuildURL());
-
-		if (consoleText != null) {
-			return consoleText;
-		}
-
 		String buildURL = getBuildURL();
 
-		if (buildURL != null) {
-			JenkinsConsoleTextLoader jenkinsConsoleTextLoader =
-				new JenkinsConsoleTextLoader(getBuildURL());
-
-			consoleText = jenkinsConsoleTextLoader.getConsoleText();
-
-			if (consoleText.contains("\nFinished:")) {
-				JenkinsResultsParserUtil.saveToCacheFile(
-					_PREFIX_CONSOLE_TEXT_CACHE + getBuildURL(), consoleText);
-			}
-
-			return consoleText;
+		if (buildURL == null) {
+			return "";
 		}
 
-		return "";
+		if (_jenkinsConsoleTextLoader == null) {
+			_jenkinsConsoleTextLoader = new JenkinsConsoleTextLoader(
+				getBuildURL());
+		}
+
+		return _jenkinsConsoleTextLoader.getConsoleText();
 	}
 
 	@Override
@@ -3426,8 +3414,6 @@ public abstract class BaseBuild implements Build {
 
 	private static final int _PIXELS_WIDTH_INDENT = 35;
 
-	private static final String _PREFIX_CONSOLE_TEXT_CACHE = "console-text-";
-
 	private static final String[] _TOKENS_HIGH_PRIORITY_CONTENT = {
 		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"
 	};
@@ -3461,6 +3447,7 @@ public abstract class BaseBuild implements Build {
 
 	private String _buildDescription;
 	private int _buildNumber = -1;
+	private JenkinsConsoleTextLoader _jenkinsConsoleTextLoader;
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;
 	private Map<String, String> _parameters = new HashMap<>();

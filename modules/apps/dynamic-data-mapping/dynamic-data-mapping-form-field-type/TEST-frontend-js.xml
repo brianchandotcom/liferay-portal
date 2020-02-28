@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="0" hostname="" id="0" name="Jest" package="dynamic-data-mapping.dynamic-data-mapping-form-field-type" skipped="0" tests="87" time="0" timestamp="1582915334539">
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Paragraph" name="Field Paragraph is readOnly" time="0.026">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Paragraph" name="Field Paragraph has an id" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Paragraph" name="Field Paragraph has a label" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Paragraph" name="Field Paragraph has a placeholder" time="0.001">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Paragraph" name="Field Paragraph is not required" time="0.001">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Paragraph" name="Field Paragraph renders Label if showLabel is true" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Paragraph" name="Field Paragraph has a spritemap" time="0.001">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Paragraph" name="Field Paragraph has a value" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Paragraph" name="Field Paragraph has a key" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor is readOnly" time="0.031">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor has a helptext" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor has an id" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor has a label" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor has a placeholder" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor is not required" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor renders Label if showLabel is true" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor has a spritemap" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor has a value" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor has a key" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor emits a change value when onChangeEditor method is triggered" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Editor" name="Field Editor triggers AlloyEditor actionPerformed method" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric renders the default markup" time="0.037">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric is not readOnly" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric has a helptext" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric has an id" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric has a label" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric has a placeholder" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric is not required" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric renders Label if showLabel is true" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric has a spritemap" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric has a value" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric has a key" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric emits a field edit event on field value change" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric propagates the field edit event" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric changes the mask type" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric check if event is sent when decimal is being writen" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Numeric" name="Field Numeric check field value is rounded when fieldType is integer but it receives a double" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Radio" name="Field Radio is not edidable" time="0.034">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Radio" name="Field Radio has a helptext" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Radio" name="Field Radio renders options" time="0.01">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Radio" name="Field Radio renders no options when options is empty" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Radio" name="Field Radio has an id" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Radio" name="Field Radio has a label" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Radio" name="Field Radio has a predefined Value" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Radio" name="Field Radio is not required" time="0.007">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Radio" name="Field Radio renders Label if showLabel is true" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Radio" name="Field Radio has a spritemap" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Radio" name="Field Radio has a value" time="0.008">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.ColorPicker" name="Field Color Picker renders field disabled" time="0.067">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.ColorPicker" name="Field Color Picker renders field with helptext" time="0.023">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.ColorPicker" name="Field Color Picker renders field with label" time="0.018">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.ColorPicker" name="Field Color Picker emits field edit event on field change" time="0">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Text" name="Field Text is not readOnly" time="0.031">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Text" name="Field Text has a helptext" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Text" name="Field Text has an id" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Text" name="Field Text has a label" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Text" name="Field Text has a placeholder" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Text" name="Field Text is not required" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Text" name="Field Text renders Label if showLabel is true" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Text" name="Field Text has a spritemap" time="0.002">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Text" name="Field Text has a value" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Text" name="Field Text emits a field edit with correct parameters" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.DocumentLibrary" name="Field DocumentLibrary is not readOnly" time="0.032">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.DocumentLibrary" name="Field DocumentLibrary has a helptext" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.DocumentLibrary" name="Field DocumentLibrary has an id" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.DocumentLibrary" name="Field DocumentLibrary has a label" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.DocumentLibrary" name="Field DocumentLibrary has a placeholder" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.DocumentLibrary" name="Field DocumentLibrary is not required" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.DocumentLibrary" name="Field DocumentLibrary renders Label if showLabel is true" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.DocumentLibrary" name="Field DocumentLibrary has a spritemap" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.DocumentLibrary" name="Field DocumentLibrary has a value" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.KeyValue" name="KeyValue is not edidable" time="0.038">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.KeyValue" name="KeyValue has a helptext" time="0.006">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.KeyValue" name="KeyValue has an id" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.KeyValue" name="KeyValue has a label" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.KeyValue" name="KeyValue has a predefined Value" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.KeyValue" name="KeyValue is not required" time="0.003">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.KeyValue" name="KeyValue renders Label if showLabel is true" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.KeyValue" name="KeyValue has a spritemap" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.KeyValue" name="KeyValue has a value" time="0.004">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.KeyValue" name="KeyValue renders component with a key" time="0.005">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Options" name="Options shows the options" time="0.056">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Options" name="Options shows an empty option when value is an array of size 1" time="0.035">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Options" name="Options does not show an empty option when translating" time="0.01">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Options" name="Options edits the value of an option based on the label" time="0.021">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Options" name="Options inserts a new empty option when editing the last option" time="0.017">
+  </testcase>
+  <testcase classname="dynamic-data-mapping.dynamic-data-mapping-form-field-type.test.js.Options" name="Options does not insert a new empty option automatically if translating" time="0.008">
+  </testcase>
+</testsuite>

@@ -313,7 +313,7 @@ public class VariableNameCheck extends BaseCheck {
 			_ENFORCE_TYPE_NAMES_KEY);
 
 		if ((typeName.endsWith("Impl") ||
-			 enforceTypeNames.contains(typeName)) &&
+			 _isEnforceTypeName(typeName, enforceTypeNames)) &&
 			!variableName.matches("(?i).*" + typeName + "[0-9]*")) {
 
 			log(
@@ -529,6 +529,18 @@ public class VariableNameCheck extends BaseCheck {
 			String name = childDetailAST.getText();
 
 			if (name.equals("Boolean")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isEnforceTypeName(
+		String typeName, List<String> enforceTypeNames) {
+
+		for (String enforceTypeName : enforceTypeNames) {
+			if (typeName.matches(enforceTypeName)) {
 				return true;
 			}
 		}

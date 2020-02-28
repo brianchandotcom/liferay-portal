@@ -38,12 +38,7 @@ const parseProps = ({
 	groupId: Number(groupId),
 });
 
-const AppContent = ({
-	config,
-	dataLayoutBuilder,
-	setDataLayoutBuilder,
-	...props
-}) => {
+const AppContent = ({dataLayoutBuilder, setDataLayoutBuilder, ...props}) => {
 	const [state, dispatch] = useContext(AppContext);
 
 	useEffect(() => {
@@ -56,7 +51,7 @@ const AppContent = ({
 		<>
 			<DataLayoutBuilder
 				appContext={[state, dispatch]}
-				config={config}
+				config={state.config}
 				onLoad={setDataLayoutBuilder}
 				{...parseProps(props)}
 			/>
@@ -108,7 +103,6 @@ const App = props => {
 						groupId={groupId}
 					>
 						<AppContent
-							config={config}
 							dataLayoutBuilder={dataLayoutBuilder}
 							setDataLayoutBuilder={setDataLayoutBuilder}
 							{...props}

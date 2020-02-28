@@ -7055,38 +7055,13 @@ go</echo>
 											<arg value="-Pliferay.home=${liferay.home}/osgi-temp" />
 										</gradle-execute>
 
-										<move
-											todir="${liferay.home}/deploy-temp"
-										>
-											<fileset
-												dir="${liferay.home}/deploy/"
-												includes="**/*"
-											/>
-										</move>
-
 										<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
 											<property name="app.name" value="${osgi.app.name}" />
-											<property name="output.dir" value="${liferay.home}/deploy" />
+											<property name="output.dir" value="${liferay.home}/deploy-temp" />
 											<property name="osgi.dir" value="${liferay.home}/osgi-temp/osgi" />
 										</ant>
 
 										<delete dir="${liferay.home}/osgi-temp" failonerror="false" />
-
-										<if>
-											<available file="${liferay.home}/deploy-temp" />
-											<then>
-												<move
-													todir="${liferay.home}/deploy"
-												>
-													<fileset
-														dir="${liferay.home}/deploy-temp/"
-														includes="**/*"
-													/>
-												</move>
-
-												<delete dir="${liferay.home}/deploy-temp" failonerror="false" />
-											</then>
-										</if>
 									</else>
 								</if>
 
@@ -7095,7 +7070,7 @@ go</echo>
 								<for param="lpkg.file.path">
 									<path>
 										<fileset
-											dir="${liferay.home}/deploy"
+											dir="${liferay.home}/deploy-temp"
 										>
 											<include name="*${Liferay-Releng-App-Title}*.lpkg" />
 										</fileset>
@@ -7125,6 +7100,8 @@ go</echo>
 										<delete dir="${liferay.home}/lpkg-unzip-temp" failonerror="false" />
 									</sequential>
 								</for>
+
+								<delete dir="${liferay.home}/deploy-temp" failonerror="false" />
 							</sequential>
 						</for>
 					</sequential>

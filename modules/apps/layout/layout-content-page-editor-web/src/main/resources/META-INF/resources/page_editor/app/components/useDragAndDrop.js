@@ -210,7 +210,7 @@ export default function useDragAndDrop({
 						dropTargetItemId:
 							parent.type !== LAYOUT_DATA_ITEM_TYPES.row &&
 							parent.children.length
-								? parent.parentId
+								? parent.parentId || item.parentId
 								: item.parentId,
 						targetPosition: newTargetPosition,
 					});

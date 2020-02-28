@@ -484,6 +484,14 @@ components:
                         type: object
                     type: array
             type: object
+        WorkflowTaskIds:
+            properties:
+                workflowTaskIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+            type: object
         WorkflowTaskTransitions:
             properties:
                 workflowTaskTransitions:
@@ -1168,17 +1176,16 @@ paths:
                         ""
             tags: ["WorkflowTask"]
     "/workflow-tasks/assignable-users":
-        get:
-            operationId: getWorkflowTaskAssignableUser
-            parameters:
-                - in: query
-                  name: workflowTaskIds
-                  required: true
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
+        post:
+            operationId: postWorkflowTaskAssignableUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowTaskIds"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowTaskIds"
             responses:
                 200:
                     content:

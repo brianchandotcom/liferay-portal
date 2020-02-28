@@ -43,6 +43,7 @@ String portletId = (String)objArray[9];
 
 			groupItemSelectorCriterion.setAllowNavigation(false);
 			groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new URLItemSelectorReturnType());
+			groupItemSelectorCriterion.setIncludeAllVisibleGroups(true);
 			groupItemSelectorCriterion.setIncludeFormsSite(true);
 			groupItemSelectorCriterion.setIncludeUserPersonalSite(true);
 			groupItemSelectorCriterion.setPortletId(portletId);

@@ -32,13 +32,6 @@
 				<required>false</required>
 			</attribute>
 			<attribute>
-				<name>enableSuccessPage</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
-				<required>false</required>
-				<defaultValue>true</defaultValue>
-			</attribute>
-			<attribute>
 				<name>groupId</name>
 				<inputType>java.lang.Long</inputType>
 				<outputType>java.lang.Long</outputType>

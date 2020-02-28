@@ -91,11 +91,6 @@
 	<td>//li/a[contains(@class,'carousel-menu-item') and contains(@class,'carousel-menu-index')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SCREENSHOTS_FJORD_THEME_PNG</td>
-	<td>portal/screenshots/theme/fjord_theme.png</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>FjordTheme</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">FjordTheme</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SCREENSHOTS_FJORD_THEME_PNG</td>
+    <td>portal/screenshots/theme/fjord_theme_home_page.png</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

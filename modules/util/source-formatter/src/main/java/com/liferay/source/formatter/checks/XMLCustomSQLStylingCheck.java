@@ -47,7 +47,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_checkIncorrectLineBreakAfterComma(fileName, content);
+		//_checkIncorrectLineBreakAfterComma(fileName, content);
+
 		_checkMissingLineBreakAfterKeyword(fileName, content);
 		_checkMissingParentheses(fileName, content);
 		_checkMultiLineClause(fileName, content);

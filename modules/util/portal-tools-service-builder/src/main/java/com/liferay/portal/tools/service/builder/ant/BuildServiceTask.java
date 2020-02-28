@@ -83,6 +83,10 @@ public class BuildServiceTask extends Task {
 		_serviceBuilderArgs.setImplDirName(implDirName);
 	}
 
+	public void setIncubationFeatures(String incubationFeatures) {
+		_serviceBuilderArgs.setIncubationFeatures(incubationFeatures);
+	}
+
 	public void setInputFileName(String inputFileName) {
 		_serviceBuilderArgs.setInputFileName(inputFileName);
 	}
@@ -132,10 +136,6 @@ public class BuildServiceTask extends Task {
 
 	public void setResourcesDirName(String resourcesDirName) {
 		_serviceBuilderArgs.setResourcesDirName(resourcesDirName);
-	}
-
-	public void setSnapshotFeatureList(String snapshotFeatureList) {
-		_serviceBuilderArgs.setSnapshotFeatureList(snapshotFeatureList);
 	}
 
 	public void setSpringFileName(String springFileName) {

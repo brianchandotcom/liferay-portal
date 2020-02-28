@@ -59,6 +59,7 @@ public class ServiceBuilderInvoker {
 			serviceBuilderArgs.getDatabaseNameMaxLength(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getHbmFileName()),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getImplDirName()),
+			serviceBuilderArgs.getIncubationFeatures(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getInputFileName()),
 			_getAbsolutePath(
 				baseDir, serviceBuilderArgs.getModelHintsFileName()),
@@ -67,7 +68,6 @@ public class ServiceBuilderInvoker {
 			serviceBuilderArgs.getPropsUtil(),
 			serviceBuilderArgs.getReadOnlyPrefixes(), resourceActionModels,
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getResourcesDirName()),
-			serviceBuilderArgs.getSnapshotFeatureList(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getSpringFileName()),
 			serviceBuilderArgs.getSpringNamespaces(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getSqlDirName()),

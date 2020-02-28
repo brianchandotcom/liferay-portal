@@ -224,6 +224,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="service.build.number.increment=true" />
 			<arg value="service.hbm.file=${basedir}/src/META-INF/portal-hbm.xml" />
 			<arg value="service.impl.dir=${basedir}/src" />
+			<arg value="service.incubation.features=${service.builder.incubation.features}" />
 			<arg value="service.input.file=${service.file}" />
 			<arg value="service.model.hints.configs=${basedir}/src/META-INF/portal-model-hints.xml" />
 			<arg value="service.model.hints.file=${basedir}/src/META-INF/portal-model-hints.xml" />
@@ -231,7 +232,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="service.plugin.name=" />
 			<arg value="service.props.util=com.liferay.portal.util.PropsUtil" />
 			<arg value="service.resources.dir=${basedir}/src" />
-			<arg value="service.snapshot.feature.list=${service.builder.snapshot.feature.list}" />
 			<arg value="service.spring.file=${basedir}/src/META-INF/portal-spring.xml" />
 			<arg value="service.spring.namespaces=beans" />
 			<arg value="service.sql.dir=${basedir}/../sql" />

@@ -1990,7 +1990,7 @@ rerun your task.
 					<propertyref name="sass.generate.source.map" />
 					<propertyref name="sass.precision" />
 					<propertyref name="sdk.dir" />
-					<propertyref name="service.builder.snapshot.feature.list" />
+					<propertyref name="service.builder.incubation.features" />
 					<propertyref name="timeout.app.server.wait" />
 					<propertyref name="upgrade.table.dir" />
 					<propertyref prefix="build.compat.version.com.liferay.portal." />

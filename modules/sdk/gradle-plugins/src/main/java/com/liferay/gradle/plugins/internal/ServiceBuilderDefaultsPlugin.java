@@ -152,12 +152,13 @@ public class ServiceBuilderDefaultsPlugin
 	}
 
 	private void _configureTaskBuildService(BuildServiceTask buildServiceTask) {
-		String snapshotFeatureList = GradleUtil.getProperty(
+		String incubationFeatures = GradleUtil.getProperty(
 			buildServiceTask.getProject(),
-			"service.builder.snapshot.feature.list", (String)null);
+			"service.builder.incubation.features", (String)null);
 
-		if (Validator.isNotNull(snapshotFeatureList)) {
-			buildServiceTask.setSnapshotFeatureList(snapshotFeatureList);
+		if (Validator.isNotNull(incubationFeatures)) {
+			buildServiceTask.setIncubationFeatures(
+				incubationFeatures.split(","));
 		}
 	}
 

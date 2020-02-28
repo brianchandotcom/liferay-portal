@@ -64,6 +64,10 @@ public class ServiceBuilderArgs {
 		return _implDirName;
 	}
 
+	public String[] getIncubationFeatures() {
+		return _incubationFeatures;
+	}
+
 	public String getInputFileName() {
 		return _inputFileName;
 	}
@@ -94,10 +98,6 @@ public class ServiceBuilderArgs {
 
 	public String getResourcesDirName() {
 		return _resourcesDirName;
-	}
-
-	public String getSnapshotFeatureList() {
-		return _snapshotFeatureList;
 	}
 
 	public String getSpringFileName() {
@@ -194,6 +194,14 @@ public class ServiceBuilderArgs {
 		_implDirName = implDirName;
 	}
 
+	public void setIncubationFeatures(String incubationFeatures) {
+		setIncubationFeatures(_split(incubationFeatures));
+	}
+
+	public void setIncubationFeatures(String[] incubationFeatures) {
+		_incubationFeatures = incubationFeatures;
+	}
+
 	public void setInputFileName(String inputFileName) {
 		_inputFileName = inputFileName;
 	}
@@ -270,10 +278,6 @@ public class ServiceBuilderArgs {
 
 	public void setResourcesDirName(String resourcesDirName) {
 		_resourcesDirName = resourcesDirName;
-	}
-
-	public void setSnapshotFeatureList(String snapshotFeatureList) {
-		_snapshotFeatureList = snapshotFeatureList;
 	}
 
 	public void setSpringFileName(String springFileName) {
@@ -380,6 +384,7 @@ public class ServiceBuilderArgs {
 	private int _databaseNameMaxLength = 30;
 	private String _hbmFileName = "src/META-INF/portal-hbm.xml";
 	private String _implDirName = "src";
+	private String[] _incubationFeatures = {};
 	private String _inputFileName = "service.xml";
 	private String[] _modelHintsConfigs = MODEL_HINTS_CONFIGS;
 	private boolean _modelHintsConfigsSet;
@@ -392,7 +397,6 @@ public class ServiceBuilderArgs {
 	private String[] _resourceActionsConfigs = RESOURCE_ACTION_CONFIGS;
 	private boolean _resourceActionsConfigsSet;
 	private String _resourcesDirName = "src";
-	private String _snapshotFeatureList;
 	private String _springFileName = "src/META-INF/portal-spring.xml";
 	private String[] _springNamespaces = {"beans"};
 	private String _sqlDirName = "../sql";

@@ -186,6 +186,8 @@ public class ServiceBuilder {
 			arguments.get("service.database.name.max.length"), 30);
 		String hbmFileName = arguments.get("service.hbm.file");
 		String implDirName = arguments.get("service.impl.dir");
+		String[] incubationFeatures = StringUtil.split(
+			arguments.get("service.incubation.features"));
 		String inputFileName = arguments.get("service.input.file");
 		String[] modelHintsConfigs = StringUtil.split(
 			GetterUtil.getString(
@@ -205,8 +207,6 @@ public class ServiceBuilder {
 				arguments.get("service.resource.actions.configs"),
 				StringUtil.merge(ServiceBuilderArgs.RESOURCE_ACTION_CONFIGS)));
 		String resourcesDirName = arguments.get("service.resources.dir");
-		String snapshotFeatureList = arguments.get(
-			"service.snapshot.feature.list");
 		String springFileName = arguments.get("service.spring.file");
 		String[] springNamespaces = StringUtil.split(
 			arguments.get("service.spring.namespaces"));
@@ -236,11 +236,11 @@ public class ServiceBuilder {
 			ServiceBuilder serviceBuilder = new ServiceBuilder(
 				apiDirName, autoImportDefaultReferences, autoNamespaceTables,
 				beanLocatorUtil, buildNumber, buildNumberIncrement,
-				databaseNameMaxLength, hbmFileName, implDirName, inputFileName,
-				modelHintsFileName, osgiModule, pluginName, propsUtil,
-				readOnlyPrefixes, resourceActionModels, resourcesDirName,
-				snapshotFeatureList, springFileName, springNamespaces,
-				sqlDirName, sqlFileName, sqlIndexesFileName,
+				databaseNameMaxLength, hbmFileName, implDirName,
+				incubationFeatures, inputFileName, modelHintsFileName,
+				osgiModule, pluginName, propsUtil, readOnlyPrefixes,
+				resourceActionModels, resourcesDirName, springFileName,
+				springNamespaces, sqlDirName, sqlFileName, sqlIndexesFileName,
 				sqlSequencesFileName, targetEntityName, testDirName, uadDirName,
 				true);
 
@@ -490,10 +490,10 @@ public class ServiceBuilder {
 		this(
 			apiDirName, autoImportDefaultReferences, autoNamespaceTables,
 			beanLocatorUtil, 1, true, databaseNameMaxLength, hbmFileName,
-			implDirName, inputFileName, modelHintsFileName, osgiModule,
+			implDirName, null, inputFileName, modelHintsFileName, osgiModule,
 			pluginName, propsUtil, readOnlyPrefixes, resourceActionModels,
-			resourcesDirName, null, springFileName, springNamespaces,
-			sqlDirName, sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
+			resourcesDirName, springFileName, springNamespaces, sqlDirName,
+			sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
 			targetEntityName, testDirName, uadDirName, true);
 	}
 
@@ -502,14 +502,14 @@ public class ServiceBuilder {
 			boolean autoNamespaceTables, String beanLocatorUtil,
 			long buildNumber, boolean buildNumberIncrement,
 			int databaseNameMaxLength, String hbmFileName, String implDirName,
-			String inputFileName, String modelHintsFileName, boolean osgiModule,
-			String pluginName, String propsUtil, String[] readOnlyPrefixes,
+			String[] incubationFeatures, String inputFileName,
+			String modelHintsFileName, boolean osgiModule, String pluginName,
+			String propsUtil, String[] readOnlyPrefixes,
 			Set<String> resourceActionModels, String resourcesDirName,
-			String snapshotFeatureList, String springFileName,
-			String[] springNamespaces, String sqlDirName, String sqlFileName,
-			String sqlIndexesFileName, String sqlSequencesFileName,
-			String targetEntityName, String testDirName, String uadDirName,
-			boolean build)
+			String springFileName, String[] springNamespaces, String sqlDirName,
+			String sqlFileName, String sqlIndexesFileName,
+			String sqlSequencesFileName, String targetEntityName,
+			String testDirName, String uadDirName, boolean build)
 		throws Exception {
 
 		_tplBadAliasNames = _getTplProperty(
@@ -569,6 +569,7 @@ public class ServiceBuilder {
 			_buildNumberIncrement = buildNumberIncrement;
 			_hbmFileName = _normalize(hbmFileName);
 			_implDirName = _normalize(implDirName);
+			_incubationFeatures = incubationFeatures;
 			_modelHintsFileName = _normalize(modelHintsFileName);
 			_osgiModule = osgiModule;
 			_pluginName = GetterUtil.getString(pluginName);
@@ -576,10 +577,6 @@ public class ServiceBuilder {
 			_readOnlyPrefixes = readOnlyPrefixes;
 			_resourceActionModels = resourceActionModels;
 			_resourcesDirName = _normalize(resourcesDirName);
-
-			_snapshotFeatureList = Arrays.asList(
-				StringUtil.split(snapshotFeatureList, ","));
-
 			_springFileName = _normalize(springFileName);
 
 			_springNamespaces = springNamespaces;
@@ -1191,12 +1188,12 @@ public class ServiceBuilder {
 			_apiDirName, _autoImportDefaultReferences, _autoNamespaceTables,
 			_beanLocatorUtil, _buildNumber, _buildNumberIncrement,
 			_databaseNameMaxLength, _hbmFileName, _implDirName,
-			refFile.getAbsolutePath(), _modelHintsFileName, _osgiModule,
-			_pluginName, _propsUtil, _readOnlyPrefixes, _resourceActionModels,
-			_resourcesDirName, StringUtil.merge(_snapshotFeatureList, ","),
-			_springFileName, _springNamespaces, _sqlDirName, _sqlFileName,
-			_sqlIndexesFileName, _sqlSequencesFileName, _targetEntityName,
-			_testDirName, _uadDirName, false);
+			_incubationFeatures, refFile.getAbsolutePath(), _modelHintsFileName,
+			_osgiModule, _pluginName, _propsUtil, _readOnlyPrefixes,
+			_resourceActionModels, _resourcesDirName, _springFileName,
+			_springNamespaces, _sqlDirName, _sqlFileName, _sqlIndexesFileName,
+			_sqlSequencesFileName, _targetEntityName, _testDirName, _uadDirName,
+			false);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -7478,6 +7475,7 @@ public class ServiceBuilder {
 	private Map<String, Entity> _entityPool = new HashMap<>();
 	private String _hbmFileName;
 	private String _implDirName;
+	private String[] _incubationFeatures;
 	private Map<String, JavaClass> _javaClasses = new HashMap<>();
 	private String _modelHintsFileName;
 	private Set<String> _modifiedFileNames = new HashSet<>();
@@ -7493,7 +7491,6 @@ public class ServiceBuilder {
 	private Set<String> _resourceActionModels = new HashSet<>();
 	private String _resourcesDirName;
 	private String _serviceOutputPath;
-	private List<String> _snapshotFeatureList;
 	private String _springFileName;
 	private String[] _springNamespaces;
 	private String _sqlDirName;

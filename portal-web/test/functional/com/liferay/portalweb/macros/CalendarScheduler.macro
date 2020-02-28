@@ -74,7 +74,7 @@ definition {
 	macro changeCalendar {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = "${eventTitle}");
 
 		AssertTextEquals(
 			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
@@ -96,7 +96,7 @@ definition {
 				value1 = "Entire Series");
 		}
 
-		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = "${eventTitle}");
 
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR");
 	}

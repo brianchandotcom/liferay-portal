@@ -101,6 +101,7 @@ const MillerColumnsItem = ({
 		states = [],
 		title,
 		url,
+		viewUrl,
 	},
 	actionHandlers = {},
 	namespace,
@@ -235,7 +236,7 @@ const MillerColumnsItem = ({
 			ref={ref}
 		>
 			<a className="miller-columns-item-mask" href={url}>
-				<span className="sr-only">{`${Liferay.Language.get(
+				<span className="c-inner sr-only">{`${Liferay.Language.get(
 					'select'
 				)} ${title}`}</span>
 			</a>
@@ -257,8 +258,10 @@ const MillerColumnsItem = ({
 			)}
 
 			<div className="autofit-col autofit-col-expand">
-				<h4 className="list-group-title">
-					<span className="text-truncate">{title}</span>
+				<h4 className="list-group-title text-truncate-inline">
+					<a className="text-truncate" href={viewUrl}>
+						{title}
+					</a>
 				</h4>
 
 				{description && (

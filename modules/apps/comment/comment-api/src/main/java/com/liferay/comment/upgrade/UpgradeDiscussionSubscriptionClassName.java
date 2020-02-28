@@ -57,13 +57,6 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 			MBDiscussion.class.getName() + StringPool.UNDERLINE +
 				_oldSubscriptionClassName;
 
-		int count = _subscriptionLocalService.getSubscriptionsCount(
-			newSubscriptionClassName);
-
-		if (count > 0) {
-			return;
-		}
-
 		List<Subscription> subscriptions =
 			_subscriptionLocalService.getSubscriptions(
 				_oldSubscriptionClassName);

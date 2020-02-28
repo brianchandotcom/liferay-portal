@@ -40,6 +40,10 @@ public class LayoutStructureItemHelperFactory {
 			return new ContainerLayoutStructureItemHelper();
 		}
 
+		if (pageElementType == PageElement.Type.FRAGMENT) {
+			return new FragmentLayoutStructureItemHelper();
+		}
+
 		return null;
 	}
 

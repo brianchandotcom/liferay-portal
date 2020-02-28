@@ -51,9 +51,7 @@
 		opacity: 0;
 		padding: 0 8px 0 4px;
 		position: absolute;
-		transform: translateY(100%);
-		transition: box-shadow ease $showDuration,
-			transform ease ($showDuration * 1.5), opacity ease $showDuration;
+		transition: box-shadow ease $showDuration, opacity ease $showDuration;
 		z-index: -1;
 
 		&--inset {
@@ -66,7 +64,6 @@
 	&.active > &__bar {
 		opacity: 1;
 		transform: translateY(2px);
-		transition-delay: 0.3s;
 		z-index: $portletTopperZIndex + 1;
 	}
 

@@ -232,6 +232,20 @@ public interface KaleoTimerModel
 	public void setKaleoClassPK(long kaleoClassPK);
 
 	/**
+	 * Returns the kaleo definition ID of this kaleo timer.
+	 *
+	 * @return the kaleo definition ID of this kaleo timer
+	 */
+	public long getKaleoDefinitionId();
+
+	/**
+	 * Sets the kaleo definition ID of this kaleo timer.
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo timer
+	 */
+	public void setKaleoDefinitionId(long kaleoDefinitionId);
+
+	/**
 	 * Returns the kaleo definition version ID of this kaleo timer.
 	 *
 	 * @return the kaleo definition version ID of this kaleo timer

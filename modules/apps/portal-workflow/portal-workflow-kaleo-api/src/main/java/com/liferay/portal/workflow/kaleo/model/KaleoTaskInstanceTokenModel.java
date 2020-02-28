@@ -204,6 +204,20 @@ public interface KaleoTaskInstanceTokenModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the kaleo definition ID of this kaleo task instance token.
+	 *
+	 * @return the kaleo definition ID of this kaleo task instance token
+	 */
+	public long getKaleoDefinitionId();
+
+	/**
+	 * Sets the kaleo definition ID of this kaleo task instance token.
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo task instance token
+	 */
+	public void setKaleoDefinitionId(long kaleoDefinitionId);
+
+	/**
 	 * Returns the kaleo definition version ID of this kaleo task instance token.
 	 *
 	 * @return the kaleo definition version ID of this kaleo task instance token

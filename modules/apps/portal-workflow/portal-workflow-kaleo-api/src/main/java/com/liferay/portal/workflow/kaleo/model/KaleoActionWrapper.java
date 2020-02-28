@@ -52,6 +52,7 @@ public class KaleoActionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("kaleoClassName", getKaleoClassName());
 		attributes.put("kaleoClassPK", getKaleoClassPK());
+		attributes.put("kaleoDefinitionId", getKaleoDefinitionId());
 		attributes.put(
 			"kaleoDefinitionVersionId", getKaleoDefinitionVersionId());
 		attributes.put("kaleoNodeName", getKaleoNodeName());
@@ -126,6 +127,12 @@ public class KaleoActionWrapper
 
 		if (kaleoClassPK != null) {
 			setKaleoClassPK(kaleoClassPK);
+		}
+
+		Long kaleoDefinitionId = (Long)attributes.get("kaleoDefinitionId");
+
+		if (kaleoDefinitionId != null) {
+			setKaleoDefinitionId(kaleoDefinitionId);
 		}
 
 		Long kaleoDefinitionVersionId = (Long)attributes.get(
@@ -263,6 +270,16 @@ public class KaleoActionWrapper
 	@Override
 	public long getKaleoClassPK() {
 		return model.getKaleoClassPK();
+	}
+
+	/**
+	 * Returns the kaleo definition ID of this kaleo action.
+	 *
+	 * @return the kaleo definition ID of this kaleo action
+	 */
+	@Override
+	public long getKaleoDefinitionId() {
+		return model.getKaleoDefinitionId();
 	}
 
 	/**
@@ -478,6 +495,16 @@ public class KaleoActionWrapper
 	@Override
 	public void setKaleoClassPK(long kaleoClassPK) {
 		model.setKaleoClassPK(kaleoClassPK);
+	}
+
+	/**
+	 * Sets the kaleo definition ID of this kaleo action.
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo action
+	 */
+	@Override
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		model.setKaleoDefinitionId(kaleoDefinitionId);
 	}
 
 	/**

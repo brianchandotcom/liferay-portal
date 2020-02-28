@@ -70,6 +70,7 @@ public class KaleoTaskModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"kaleoDefinitionId", Types.BIGINT},
 		{"kaleoDefinitionVersionId", Types.BIGINT},
 		{"kaleoNodeId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}
@@ -87,6 +88,7 @@ public class KaleoTaskModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("kaleoDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoDefinitionVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoNodeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -94,7 +96,7 @@ public class KaleoTaskModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoTask (mvccVersion LONG default 0 not null,kaleoTaskId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,description STRING null)";
+		"create table KaleoTask (mvccVersion LONG default 0 not null,kaleoTaskId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,description STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoTask";
 
@@ -282,6 +284,11 @@ public class KaleoTaskModelImpl
 			"modifiedDate",
 			(BiConsumer<KaleoTask, Date>)KaleoTask::setModifiedDate);
 		attributeGetterFunctions.put(
+			"kaleoDefinitionId", KaleoTask::getKaleoDefinitionId);
+		attributeSetterBiConsumers.put(
+			"kaleoDefinitionId",
+			(BiConsumer<KaleoTask, Long>)KaleoTask::setKaleoDefinitionId);
+		attributeGetterFunctions.put(
 			"kaleoDefinitionVersionId", KaleoTask::getKaleoDefinitionVersionId);
 		attributeSetterBiConsumers.put(
 			"kaleoDefinitionVersionId",
@@ -427,6 +434,16 @@ public class KaleoTaskModelImpl
 	}
 
 	@Override
+	public long getKaleoDefinitionId() {
+		return _kaleoDefinitionId;
+	}
+
+	@Override
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		_kaleoDefinitionId = kaleoDefinitionId;
+	}
+
+	@Override
 	public long getKaleoDefinitionVersionId() {
 		return _kaleoDefinitionVersionId;
 	}
@@ -544,6 +561,7 @@ public class KaleoTaskModelImpl
 		kaleoTaskImpl.setUserName(getUserName());
 		kaleoTaskImpl.setCreateDate(getCreateDate());
 		kaleoTaskImpl.setModifiedDate(getModifiedDate());
+		kaleoTaskImpl.setKaleoDefinitionId(getKaleoDefinitionId());
 		kaleoTaskImpl.setKaleoDefinitionVersionId(
 			getKaleoDefinitionVersionId());
 		kaleoTaskImpl.setKaleoNodeId(getKaleoNodeId());
@@ -676,6 +694,8 @@ public class KaleoTaskModelImpl
 			kaleoTaskCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		kaleoTaskCacheModel.kaleoDefinitionId = getKaleoDefinitionId();
+
 		kaleoTaskCacheModel.kaleoDefinitionVersionId =
 			getKaleoDefinitionVersionId();
 
@@ -784,6 +804,7 @@ public class KaleoTaskModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _kaleoDefinitionId;
 	private long _kaleoDefinitionVersionId;
 	private long _originalKaleoDefinitionVersionId;
 	private boolean _setOriginalKaleoDefinitionVersionId;

@@ -145,6 +145,9 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 		newKaleoTaskAssignmentInstance.setModifiedDate(
 			RandomTestUtil.nextDate());
 
+		newKaleoTaskAssignmentInstance.setKaleoDefinitionId(
+			RandomTestUtil.nextLong());
+
 		newKaleoTaskAssignmentInstance.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());
 
@@ -211,6 +214,9 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 				existingKaleoTaskAssignmentInstance.getModifiedDate()),
 			Time.getShortTimestamp(
 				newKaleoTaskAssignmentInstance.getModifiedDate()));
+		Assert.assertEquals(
+			existingKaleoTaskAssignmentInstance.getKaleoDefinitionId(),
+			newKaleoTaskAssignmentInstance.getKaleoDefinitionId());
 		Assert.assertEquals(
 			existingKaleoTaskAssignmentInstance.getKaleoDefinitionVersionId(),
 			newKaleoTaskAssignmentInstance.getKaleoDefinitionVersionId());
@@ -342,11 +348,12 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 			"KaleoTaskAssignmentInstance", "mvccVersion", true,
 			"kaleoTaskAssignmentInstanceId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionVersionId", true,
-			"kaleoInstanceId", true, "kaleoInstanceTokenId", true,
-			"kaleoTaskInstanceTokenId", true, "kaleoTaskId", true,
-			"kaleoTaskName", true, "assigneeClassName", true, "assigneeClassPK",
-			true, "completed", true, "completionDate", true);
+			"modifiedDate", true, "kaleoDefinitionId", true,
+			"kaleoDefinitionVersionId", true, "kaleoInstanceId", true,
+			"kaleoInstanceTokenId", true, "kaleoTaskInstanceTokenId", true,
+			"kaleoTaskId", true, "kaleoTaskName", true, "assigneeClassName",
+			true, "assigneeClassPK", true, "completed", true, "completionDate",
+			true);
 	}
 
 	@Test
@@ -617,6 +624,9 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 		kaleoTaskAssignmentInstance.setCreateDate(RandomTestUtil.nextDate());
 
 		kaleoTaskAssignmentInstance.setModifiedDate(RandomTestUtil.nextDate());
+
+		kaleoTaskAssignmentInstance.setKaleoDefinitionId(
+			RandomTestUtil.nextLong());
 
 		kaleoTaskAssignmentInstance.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());

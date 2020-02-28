@@ -76,7 +76,7 @@ public class KaleoLogCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(65);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,6 +98,8 @@ public class KaleoLogCacheModel
 		sb.append(kaleoClassName);
 		sb.append(", kaleoClassPK=");
 		sb.append(kaleoClassPK);
+		sb.append(", kaleoDefinitionId=");
+		sb.append(kaleoDefinitionId);
 		sb.append(", kaleoDefinitionVersionId=");
 		sb.append(kaleoDefinitionVersionId);
 		sb.append(", kaleoInstanceId=");
@@ -184,6 +186,7 @@ public class KaleoLogCacheModel
 		}
 
 		kaleoLogImpl.setKaleoClassPK(kaleoClassPK);
+		kaleoLogImpl.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoLogImpl.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 		kaleoLogImpl.setKaleoInstanceId(kaleoInstanceId);
 		kaleoLogImpl.setKaleoInstanceTokenId(kaleoInstanceTokenId);
@@ -301,6 +304,8 @@ public class KaleoLogCacheModel
 
 		kaleoClassPK = objectInput.readLong();
 
+		kaleoDefinitionId = objectInput.readLong();
+
 		kaleoDefinitionVersionId = objectInput.readLong();
 
 		kaleoInstanceId = objectInput.readLong();
@@ -363,6 +368,8 @@ public class KaleoLogCacheModel
 		}
 
 		objectOutput.writeLong(kaleoClassPK);
+
+		objectOutput.writeLong(kaleoDefinitionId);
 
 		objectOutput.writeLong(kaleoDefinitionVersionId);
 
@@ -461,6 +468,7 @@ public class KaleoLogCacheModel
 	public long modifiedDate;
 	public String kaleoClassName;
 	public long kaleoClassPK;
+	public long kaleoDefinitionId;
 	public long kaleoDefinitionVersionId;
 	public long kaleoInstanceId;
 	public long kaleoInstanceTokenId;

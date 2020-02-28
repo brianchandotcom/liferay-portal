@@ -45,6 +45,7 @@ public class KaleoDefinitionVersionSoap implements Serializable {
 		soapModel.setStatusDate(model.getStatusDate());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setKaleoDefinitionId(model.getKaleoDefinitionId());
 		soapModel.setName(model.getName());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
@@ -202,6 +203,14 @@ public class KaleoDefinitionVersionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getKaleoDefinitionId() {
+		return _kaleoDefinitionId;
+	}
+
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		_kaleoDefinitionId = kaleoDefinitionId;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -269,6 +278,7 @@ public class KaleoDefinitionVersionSoap implements Serializable {
 	private Date _statusDate;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _kaleoDefinitionId;
 	private String _name;
 	private String _title;
 	private String _description;

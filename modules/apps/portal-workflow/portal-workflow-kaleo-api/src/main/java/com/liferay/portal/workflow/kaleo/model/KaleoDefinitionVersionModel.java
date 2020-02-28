@@ -274,6 +274,20 @@ public interface KaleoDefinitionVersionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the kaleo definition ID of this kaleo definition version.
+	 *
+	 * @return the kaleo definition ID of this kaleo definition version
+	 */
+	public long getKaleoDefinitionId();
+
+	/**
+	 * Sets the kaleo definition ID of this kaleo definition version.
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo definition version
+	 */
+	public void setKaleoDefinitionId(long kaleoDefinitionId);
+
+	/**
 	 * Returns the name of this kaleo definition version.
 	 *
 	 * @return the name of this kaleo definition version

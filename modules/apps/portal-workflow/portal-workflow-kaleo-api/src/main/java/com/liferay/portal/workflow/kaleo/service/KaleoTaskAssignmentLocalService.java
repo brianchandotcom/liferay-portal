@@ -74,7 +74,7 @@ public interface KaleoTaskAssignmentLocalService
 		KaleoTaskAssignment kaleoTaskAssignment);
 
 	public KaleoTaskAssignment addKaleoTaskAssignment(
-			String kaleoClassName, long kaleoClassPK,
+			String kaleoClassName, long kaleoClassPK, long kaleoDefinitionId,
 			long kaleoDefinitionVersionId, Assignment assignment,
 			ServiceContext serviceContext)
 		throws PortalException;

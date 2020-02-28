@@ -78,8 +78,9 @@ public interface KaleoInstanceTokenLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoInstanceToken addKaleoInstanceToken(
-			long currentKaleoNodeId, long kaleoDefinitionVersionId,
-			long kaleoInstanceId, long parentKaleoInstanceTokenId,
+			long currentKaleoNodeId, long kaleoDefinitionId,
+			long kaleoDefinitionVersionId, long kaleoInstanceId,
+			long parentKaleoInstanceTokenId,
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException;

@@ -141,6 +141,8 @@ public class KaleoLogPersistenceTest {
 
 		newKaleoLog.setKaleoClassPK(RandomTestUtil.nextLong());
 
+		newKaleoLog.setKaleoDefinitionId(RandomTestUtil.nextLong());
+
 		newKaleoLog.setKaleoDefinitionVersionId(RandomTestUtil.nextLong());
 
 		newKaleoLog.setKaleoInstanceId(RandomTestUtil.nextLong());
@@ -211,6 +213,9 @@ public class KaleoLogPersistenceTest {
 			newKaleoLog.getKaleoClassName());
 		Assert.assertEquals(
 			existingKaleoLog.getKaleoClassPK(), newKaleoLog.getKaleoClassPK());
+		Assert.assertEquals(
+			existingKaleoLog.getKaleoDefinitionId(),
+			newKaleoLog.getKaleoDefinitionId());
 		Assert.assertEquals(
 			existingKaleoLog.getKaleoDefinitionVersionId(),
 			newKaleoLog.getKaleoDefinitionVersionId());
@@ -347,15 +352,15 @@ public class KaleoLogPersistenceTest {
 			"KaleoLog", "mvccVersion", true, "kaleoLogId", true, "groupId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "kaleoClassName", true,
-			"kaleoClassPK", true, "kaleoDefinitionVersionId", true,
-			"kaleoInstanceId", true, "kaleoInstanceTokenId", true,
-			"kaleoTaskInstanceTokenId", true, "kaleoNodeName", true,
-			"terminalKaleoNode", true, "kaleoActionId", true, "kaleoActionName",
-			true, "kaleoActionDescription", true, "previousKaleoNodeId", true,
-			"previousKaleoNodeName", true, "previousAssigneeClassName", true,
-			"previousAssigneeClassPK", true, "currentAssigneeClassName", true,
-			"currentAssigneeClassPK", true, "type", true, "startDate", true,
-			"endDate", true, "duration", true);
+			"kaleoClassPK", true, "kaleoDefinitionId", true,
+			"kaleoDefinitionVersionId", true, "kaleoInstanceId", true,
+			"kaleoInstanceTokenId", true, "kaleoTaskInstanceTokenId", true,
+			"kaleoNodeName", true, "terminalKaleoNode", true, "kaleoActionId",
+			true, "kaleoActionName", true, "kaleoActionDescription", true,
+			"previousKaleoNodeId", true, "previousKaleoNodeName", true,
+			"previousAssigneeClassName", true, "previousAssigneeClassPK", true,
+			"currentAssigneeClassName", true, "currentAssigneeClassPK", true,
+			"type", true, "startDate", true, "endDate", true, "duration", true);
 	}
 
 	@Test
@@ -587,6 +592,8 @@ public class KaleoLogPersistenceTest {
 		kaleoLog.setKaleoClassName(RandomTestUtil.randomString());
 
 		kaleoLog.setKaleoClassPK(RandomTestUtil.nextLong());
+
+		kaleoLog.setKaleoDefinitionId(RandomTestUtil.nextLong());
 
 		kaleoLog.setKaleoDefinitionVersionId(RandomTestUtil.nextLong());
 

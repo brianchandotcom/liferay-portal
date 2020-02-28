@@ -47,13 +47,15 @@ public class KaleoTaskLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoTask addKaleoTask(
-			long kaleoDefinitionVersionId, long kaleoNodeId,
+			long kaleoDefinitionId, long kaleoDefinitionVersionId,
+			long kaleoNodeId,
 			com.liferay.portal.workflow.kaleo.definition.Task task,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoTaskLocalService.addKaleoTask(
-			kaleoDefinitionVersionId, kaleoNodeId, task, serviceContext);
+			kaleoDefinitionId, kaleoDefinitionVersionId, kaleoNodeId, task,
+			serviceContext);
 	}
 
 	/**

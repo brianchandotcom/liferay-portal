@@ -72,6 +72,7 @@ public class KaleoNotificationRecipientModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"kaleoDefinitionId", Types.BIGINT},
 		{"kaleoDefinitionVersionId", Types.BIGINT},
 		{"kaleoNotificationId", Types.BIGINT},
 		{"recipientClassName", Types.VARCHAR},
@@ -94,6 +95,7 @@ public class KaleoNotificationRecipientModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("kaleoDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoDefinitionVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoNotificationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("recipientClassName", Types.VARCHAR);
@@ -107,7 +109,7 @@ public class KaleoNotificationRecipientModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoNotificationRecipient (mvccVersion LONG default 0 not null,kaleoNotificationRecipientId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNotificationId LONG,recipientClassName VARCHAR(200) null,recipientClassPK LONG,recipientRoleType INTEGER,recipientScript TEXT null,recipientScriptLanguage VARCHAR(75) null,recipientScriptContexts STRING null,address VARCHAR(255) null,notificationReceptionType VARCHAR(3) null)";
+		"create table KaleoNotificationRecipient (mvccVersion LONG default 0 not null,kaleoNotificationRecipientId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNotificationId LONG,recipientClassName VARCHAR(200) null,recipientClassPK LONG,recipientRoleType INTEGER,recipientScript TEXT null,recipientScriptLanguage VARCHAR(75) null,recipientScriptContexts STRING null,address VARCHAR(255) null,notificationReceptionType VARCHAR(3) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table KaleoNotificationRecipient";
@@ -325,6 +327,13 @@ public class KaleoNotificationRecipientModelImpl
 			(BiConsumer<KaleoNotificationRecipient, Date>)
 				KaleoNotificationRecipient::setModifiedDate);
 		attributeGetterFunctions.put(
+			"kaleoDefinitionId",
+			KaleoNotificationRecipient::getKaleoDefinitionId);
+		attributeSetterBiConsumers.put(
+			"kaleoDefinitionId",
+			(BiConsumer<KaleoNotificationRecipient, Long>)
+				KaleoNotificationRecipient::setKaleoDefinitionId);
+		attributeGetterFunctions.put(
 			"kaleoDefinitionVersionId",
 			KaleoNotificationRecipient::getKaleoDefinitionVersionId);
 		attributeSetterBiConsumers.put(
@@ -520,6 +529,16 @@ public class KaleoNotificationRecipientModelImpl
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public long getKaleoDefinitionId() {
+		return _kaleoDefinitionId;
+	}
+
+	@Override
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		_kaleoDefinitionId = kaleoDefinitionId;
 	}
 
 	@Override
@@ -723,6 +742,8 @@ public class KaleoNotificationRecipientModelImpl
 		kaleoNotificationRecipientImpl.setUserName(getUserName());
 		kaleoNotificationRecipientImpl.setCreateDate(getCreateDate());
 		kaleoNotificationRecipientImpl.setModifiedDate(getModifiedDate());
+		kaleoNotificationRecipientImpl.setKaleoDefinitionId(
+			getKaleoDefinitionId());
 		kaleoNotificationRecipientImpl.setKaleoDefinitionVersionId(
 			getKaleoDefinitionVersionId());
 		kaleoNotificationRecipientImpl.setKaleoNotificationId(
@@ -884,6 +905,9 @@ public class KaleoNotificationRecipientModelImpl
 		else {
 			kaleoNotificationRecipientCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
+
+		kaleoNotificationRecipientCacheModel.kaleoDefinitionId =
+			getKaleoDefinitionId();
 
 		kaleoNotificationRecipientCacheModel.kaleoDefinitionVersionId =
 			getKaleoDefinitionVersionId();
@@ -1057,6 +1081,7 @@ public class KaleoNotificationRecipientModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _kaleoDefinitionId;
 	private long _kaleoDefinitionVersionId;
 	private long _originalKaleoDefinitionVersionId;
 	private boolean _setOriginalKaleoDefinitionVersionId;

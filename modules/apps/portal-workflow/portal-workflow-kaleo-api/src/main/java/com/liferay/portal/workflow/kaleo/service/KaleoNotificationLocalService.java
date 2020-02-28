@@ -74,7 +74,7 @@ public interface KaleoNotificationLocalService
 		KaleoNotification kaleoNotification);
 
 	public KaleoNotification addKaleoNotification(
-			String kaleoClassName, long kaleoClassPK,
+			String kaleoClassName, long kaleoClassPK, long kaleoDefinitionId,
 			long kaleoDefinitionVersionId, String kaleoNodeName,
 			Notification notification, ServiceContext serviceContext)
 		throws PortalException;

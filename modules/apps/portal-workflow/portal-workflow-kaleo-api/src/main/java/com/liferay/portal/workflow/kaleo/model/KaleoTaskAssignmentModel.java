@@ -233,6 +233,20 @@ public interface KaleoTaskAssignmentModel
 	public void setKaleoClassPK(long kaleoClassPK);
 
 	/**
+	 * Returns the kaleo definition ID of this kaleo task assignment.
+	 *
+	 * @return the kaleo definition ID of this kaleo task assignment
+	 */
+	public long getKaleoDefinitionId();
+
+	/**
+	 * Sets the kaleo definition ID of this kaleo task assignment.
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo task assignment
+	 */
+	public void setKaleoDefinitionId(long kaleoDefinitionId);
+
+	/**
 	 * Returns the kaleo definition version ID of this kaleo task assignment.
 	 *
 	 * @return the kaleo definition version ID of this kaleo task assignment

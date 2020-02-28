@@ -144,6 +144,9 @@ public class KaleoNotificationRecipientPersistenceTest {
 		newKaleoNotificationRecipient.setModifiedDate(
 			RandomTestUtil.nextDate());
 
+		newKaleoNotificationRecipient.setKaleoDefinitionId(
+			RandomTestUtil.nextLong());
+
 		newKaleoNotificationRecipient.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());
 
@@ -209,6 +212,9 @@ public class KaleoNotificationRecipientPersistenceTest {
 				existingKaleoNotificationRecipient.getModifiedDate()),
 			Time.getShortTimestamp(
 				newKaleoNotificationRecipient.getModifiedDate()));
+		Assert.assertEquals(
+			existingKaleoNotificationRecipient.getKaleoDefinitionId(),
+			newKaleoNotificationRecipient.getKaleoDefinitionId());
 		Assert.assertEquals(
 			existingKaleoNotificationRecipient.getKaleoDefinitionVersionId(),
 			newKaleoNotificationRecipient.getKaleoDefinitionVersionId());
@@ -295,11 +301,12 @@ public class KaleoNotificationRecipientPersistenceTest {
 			"KaleoNotificationRecipient", "mvccVersion", true,
 			"kaleoNotificationRecipientId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionVersionId", true,
-			"kaleoNotificationId", true, "recipientClassName", true,
-			"recipientClassPK", true, "recipientRoleType", true,
-			"recipientScriptLanguage", true, "recipientScriptContexts", true,
-			"address", true, "notificationReceptionType", true);
+			"modifiedDate", true, "kaleoDefinitionId", true,
+			"kaleoDefinitionVersionId", true, "kaleoNotificationId", true,
+			"recipientClassName", true, "recipientClassPK", true,
+			"recipientRoleType", true, "recipientScriptLanguage", true,
+			"recipientScriptContexts", true, "address", true,
+			"notificationReceptionType", true);
 	}
 
 	@Test
@@ -568,6 +575,9 @@ public class KaleoNotificationRecipientPersistenceTest {
 		kaleoNotificationRecipient.setCreateDate(RandomTestUtil.nextDate());
 
 		kaleoNotificationRecipient.setModifiedDate(RandomTestUtil.nextDate());
+
+		kaleoNotificationRecipient.setKaleoDefinitionId(
+			RandomTestUtil.nextLong());
 
 		kaleoNotificationRecipient.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());

@@ -56,6 +56,7 @@ public class KaleoDefinitionVersionWrapper
 		attributes.put("statusDate", getStatusDate());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("kaleoDefinitionId", getKaleoDefinitionId());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
@@ -134,6 +135,12 @@ public class KaleoDefinitionVersionWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long kaleoDefinitionId = (Long)attributes.get("kaleoDefinitionId");
+
+		if (kaleoDefinitionId != null) {
+			setKaleoDefinitionId(kaleoDefinitionId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -253,6 +260,16 @@ public class KaleoDefinitionVersionWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getKaleoDefinition();
+	}
+
+	/**
+	 * Returns the kaleo definition ID of this kaleo definition version.
+	 *
+	 * @return the kaleo definition ID of this kaleo definition version
+	 */
+	@Override
+	public long getKaleoDefinitionId() {
+		return model.getKaleoDefinitionId();
 	}
 
 	/**
@@ -645,6 +662,16 @@ public class KaleoDefinitionVersionWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the kaleo definition ID of this kaleo definition version.
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo definition version
+	 */
+	@Override
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		model.setKaleoDefinitionId(kaleoDefinitionId);
 	}
 
 	/**

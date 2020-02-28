@@ -203,6 +203,20 @@ public interface KaleoTransitionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the kaleo definition ID of this kaleo transition.
+	 *
+	 * @return the kaleo definition ID of this kaleo transition
+	 */
+	public long getKaleoDefinitionId();
+
+	/**
+	 * Sets the kaleo definition ID of this kaleo transition.
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo transition
+	 */
+	public void setKaleoDefinitionId(long kaleoDefinitionId);
+
+	/**
 	 * Returns the kaleo definition version ID of this kaleo transition.
 	 *
 	 * @return the kaleo definition version ID of this kaleo transition

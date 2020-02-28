@@ -148,6 +148,9 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 
 		newKaleoTimerInstanceToken.setKaleoClassPK(RandomTestUtil.nextLong());
 
+		newKaleoTimerInstanceToken.setKaleoDefinitionId(
+			RandomTestUtil.nextLong());
+
 		newKaleoTimerInstanceToken.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());
 
@@ -217,6 +220,9 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 		Assert.assertEquals(
 			existingKaleoTimerInstanceToken.getKaleoClassPK(),
 			newKaleoTimerInstanceToken.getKaleoClassPK());
+		Assert.assertEquals(
+			existingKaleoTimerInstanceToken.getKaleoDefinitionId(),
+			newKaleoTimerInstanceToken.getKaleoDefinitionId());
 		Assert.assertEquals(
 			existingKaleoTimerInstanceToken.getKaleoDefinitionVersionId(),
 			newKaleoTimerInstanceToken.getKaleoDefinitionVersionId());
@@ -321,11 +327,11 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 			"kaleoTimerInstanceTokenId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
-			"kaleoDefinitionVersionId", true, "kaleoInstanceId", true,
-			"kaleoInstanceTokenId", true, "kaleoTaskInstanceTokenId", true,
-			"kaleoTimerId", true, "kaleoTimerName", true, "blocking", true,
-			"completionUserId", true, "completed", true, "completionDate",
-			true);
+			"kaleoDefinitionId", true, "kaleoDefinitionVersionId", true,
+			"kaleoInstanceId", true, "kaleoInstanceTokenId", true,
+			"kaleoTaskInstanceTokenId", true, "kaleoTimerId", true,
+			"kaleoTimerName", true, "blocking", true, "completionUserId", true,
+			"completed", true, "completionDate", true);
 	}
 
 	@Test
@@ -614,6 +620,8 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 			RandomTestUtil.randomString());
 
 		kaleoTimerInstanceToken.setKaleoClassPK(RandomTestUtil.nextLong());
+
+		kaleoTimerInstanceToken.setKaleoDefinitionId(RandomTestUtil.nextLong());
 
 		kaleoTimerInstanceToken.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());

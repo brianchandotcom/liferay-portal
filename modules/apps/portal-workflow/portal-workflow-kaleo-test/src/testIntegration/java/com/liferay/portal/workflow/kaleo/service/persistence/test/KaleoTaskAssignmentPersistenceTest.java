@@ -143,6 +143,8 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		newKaleoTaskAssignment.setKaleoClassPK(RandomTestUtil.nextLong());
 
+		newKaleoTaskAssignment.setKaleoDefinitionId(RandomTestUtil.nextLong());
+
 		newKaleoTaskAssignment.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());
 
@@ -201,6 +203,9 @@ public class KaleoTaskAssignmentPersistenceTest {
 		Assert.assertEquals(
 			existingKaleoTaskAssignment.getKaleoClassPK(),
 			newKaleoTaskAssignment.getKaleoClassPK());
+		Assert.assertEquals(
+			existingKaleoTaskAssignment.getKaleoDefinitionId(),
+			newKaleoTaskAssignment.getKaleoDefinitionId());
 		Assert.assertEquals(
 			existingKaleoTaskAssignment.getKaleoDefinitionVersionId(),
 			newKaleoTaskAssignment.getKaleoDefinitionVersionId());
@@ -289,8 +294,8 @@ public class KaleoTaskAssignmentPersistenceTest {
 			"KaleoTaskAssignment", "mvccVersion", true, "kaleoTaskAssignmentId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"kaleoClassName", true, "kaleoClassPK", true,
-			"kaleoDefinitionVersionId", true, "kaleoNodeId", true,
+			"kaleoClassName", true, "kaleoClassPK", true, "kaleoDefinitionId",
+			true, "kaleoDefinitionVersionId", true, "kaleoNodeId", true,
 			"assigneeClassName", true, "assigneeClassPK", true,
 			"assigneeActionId", true, "assigneeScriptLanguage", true,
 			"assigneeScriptRequiredContexts", true);
@@ -543,6 +548,8 @@ public class KaleoTaskAssignmentPersistenceTest {
 		kaleoTaskAssignment.setKaleoClassName(RandomTestUtil.randomString());
 
 		kaleoTaskAssignment.setKaleoClassPK(RandomTestUtil.nextLong());
+
+		kaleoTaskAssignment.setKaleoDefinitionId(RandomTestUtil.nextLong());
 
 		kaleoTaskAssignment.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());

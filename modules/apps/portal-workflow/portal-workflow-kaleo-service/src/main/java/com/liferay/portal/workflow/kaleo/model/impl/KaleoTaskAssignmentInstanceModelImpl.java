@@ -73,6 +73,7 @@ public class KaleoTaskAssignmentInstanceModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"kaleoDefinitionId", Types.BIGINT},
 		{"kaleoDefinitionVersionId", Types.BIGINT},
 		{"kaleoInstanceId", Types.BIGINT},
 		{"kaleoInstanceTokenId", Types.BIGINT},
@@ -94,6 +95,7 @@ public class KaleoTaskAssignmentInstanceModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("kaleoDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoDefinitionVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoInstanceTokenId", Types.BIGINT);
@@ -107,7 +109,7 @@ public class KaleoTaskAssignmentInstanceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoTaskAssignmentInstance (mvccVersion LONG default 0 not null,kaleoTaskAssignmentInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoTaskId LONG,kaleoTaskName VARCHAR(200) null,assigneeClassName VARCHAR(200) null,assigneeClassPK LONG,completed BOOLEAN,completionDate DATE null)";
+		"create table KaleoTaskAssignmentInstance (mvccVersion LONG default 0 not null,kaleoTaskAssignmentInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoTaskId LONG,kaleoTaskName VARCHAR(200) null,assigneeClassName VARCHAR(200) null,assigneeClassPK LONG,completed BOOLEAN,completionDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table KaleoTaskAssignmentInstance";
@@ -334,6 +336,13 @@ public class KaleoTaskAssignmentInstanceModelImpl
 			(BiConsumer<KaleoTaskAssignmentInstance, Date>)
 				KaleoTaskAssignmentInstance::setModifiedDate);
 		attributeGetterFunctions.put(
+			"kaleoDefinitionId",
+			KaleoTaskAssignmentInstance::getKaleoDefinitionId);
+		attributeSetterBiConsumers.put(
+			"kaleoDefinitionId",
+			(BiConsumer<KaleoTaskAssignmentInstance, Long>)
+				KaleoTaskAssignmentInstance::setKaleoDefinitionId);
+		attributeGetterFunctions.put(
 			"kaleoDefinitionVersionId",
 			KaleoTaskAssignmentInstance::getKaleoDefinitionVersionId);
 		attributeSetterBiConsumers.put(
@@ -537,6 +546,16 @@ public class KaleoTaskAssignmentInstanceModelImpl
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public long getKaleoDefinitionId() {
+		return _kaleoDefinitionId;
+	}
+
+	@Override
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		_kaleoDefinitionId = kaleoDefinitionId;
 	}
 
 	@Override
@@ -759,6 +778,8 @@ public class KaleoTaskAssignmentInstanceModelImpl
 		kaleoTaskAssignmentInstanceImpl.setUserName(getUserName());
 		kaleoTaskAssignmentInstanceImpl.setCreateDate(getCreateDate());
 		kaleoTaskAssignmentInstanceImpl.setModifiedDate(getModifiedDate());
+		kaleoTaskAssignmentInstanceImpl.setKaleoDefinitionId(
+			getKaleoDefinitionId());
 		kaleoTaskAssignmentInstanceImpl.setKaleoDefinitionVersionId(
 			getKaleoDefinitionVersionId());
 		kaleoTaskAssignmentInstanceImpl.setKaleoInstanceId(
@@ -940,6 +961,9 @@ public class KaleoTaskAssignmentInstanceModelImpl
 			kaleoTaskAssignmentInstanceCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		kaleoTaskAssignmentInstanceCacheModel.kaleoDefinitionId =
+			getKaleoDefinitionId();
+
 		kaleoTaskAssignmentInstanceCacheModel.kaleoDefinitionVersionId =
 			getKaleoDefinitionVersionId();
 
@@ -1085,6 +1109,7 @@ public class KaleoTaskAssignmentInstanceModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _kaleoDefinitionId;
 	private long _kaleoDefinitionVersionId;
 	private long _originalKaleoDefinitionVersionId;
 	private boolean _setOriginalKaleoDefinitionVersionId;

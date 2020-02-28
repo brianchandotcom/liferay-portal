@@ -74,8 +74,8 @@ public interface KaleoTransitionLocalService
 	public KaleoTransition addKaleoTransition(KaleoTransition kaleoTransition);
 
 	public KaleoTransition addKaleoTransition(
-			long kaleoDefinitionVersionId, long kaleoNodeId,
-			Transition transition, KaleoNode sourceKaleoNode,
+			long kaleoDefinitionId, long kaleoDefinitionVersionId,
+			long kaleoNodeId, Transition transition, KaleoNode sourceKaleoNode,
 			KaleoNode targetKaleoNode, ServiceContext serviceContext)
 		throws PortalException;
 

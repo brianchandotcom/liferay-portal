@@ -7083,19 +7083,30 @@ go</echo>
 											src="@{lpkg.file.path}"
 										/>
 
-										<echo append="true" file="${liferay.home}/lpkg-unzip-temp/liferay-marketplace.properties" message="${line.separator}" />
-
-										<echo append="true" file="${liferay.home}/lpkg-unzip-temp/liferay-marketplace.properties">restart-required=false</echo>
-
-										<zip
-											destfile="@{lpkg.file.path}"
-											update="true"
-										>
-											<zipfileset
-												dir="${liferay.home}/lpkg-unzip-temp"
-												includes="liferay-marketplace.properties"
+										<if>
+											<resourcecontains
+												resource="${liferay.home}/lpkg-unzip-temp/liferay-marketplace.properties"
+												substring="restart-required=true"
 											/>
-										</zip>
+											<then>
+												<replace
+													file="${liferay.home}/lpkg-unzip-temp/liferay-marketplace.properties"
+												>
+													<replacetoken>restart-required=true</replacetoken>
+													<replacevalue>restart-required=false</replacevalue>
+												</replace>
+
+												<zip
+													destfile="@{lpkg.file.path}"
+													update="true"
+												>
+													<zipfileset
+														dir="${liferay.home}/lpkg-unzip-temp"
+														includes="liferay-marketplace.properties"
+													/>
+												</zip>
+											</then>
+										</if>
 
 										<delete dir="${liferay.home}/lpkg-unzip-temp" failonerror="false" />
 									</sequential>

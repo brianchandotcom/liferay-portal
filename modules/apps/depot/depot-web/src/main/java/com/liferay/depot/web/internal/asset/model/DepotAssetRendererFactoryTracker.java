@@ -111,7 +111,7 @@ public class DepotAssetRendererFactoryTracker {
 				_bundleContext.getService(serviceReference);
 
 			if (assetRendererFactory instanceof
-					ControlledDepotAssetRendererFactoryWrapper) {
+					DepotAssetRendererFactoryWrapper) {
 
 				return assetRendererFactory;
 			}
@@ -128,7 +128,7 @@ public class DepotAssetRendererFactoryTracker {
 				"service.ranking", Integer.MAX_VALUE);
 
 			AssetRendererFactory wrappedAssetRendererFactoryWrapper =
-				new ControlledDepotAssetRendererFactoryWrapper(
+				new DepotAssetRendererFactoryWrapper(
 					assetRendererFactory, _depotApplicationController,
 					_depotEntryLocalService, _groupLocalService);
 

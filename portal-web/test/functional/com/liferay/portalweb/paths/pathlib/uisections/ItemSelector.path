@@ -181,6 +181,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>URL_IMAGE_EXAMPLE</td>
+	<td>//p[contains(@class,'form-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>URL_IMAGE_PREVIEW</td>
 	<td>//div[contains(@class,'aspect-ratio')]//img</td>
 	<td></td>

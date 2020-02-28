@@ -110,6 +110,8 @@ public interface AccountEntryLocalService
 	public void deleteAccountEntries(long[] accountEntryIds)
 		throws PortalException;
 
+	public void deleteAccountEntriesByCompanyId(long companyId);
+
 	/**
 	 * Deletes the account entry from the database. Also notifies the appropriate model listeners.
 	 *

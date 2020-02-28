@@ -125,6 +125,10 @@ public class AccountEntryLocalServiceUtil {
 		getService().deleteAccountEntries(accountEntryIds);
 	}
 
+	public static void deleteAccountEntriesByCompanyId(long companyId) {
+		getService().deleteAccountEntriesByCompanyId(companyId);
+	}
+
 	/**
 	 * Deletes the account entry from the database. Also notifies the appropriate model listeners.
 	 *

@@ -132,6 +132,11 @@ public class AccountEntryLocalServiceWrapper
 		_accountEntryLocalService.deleteAccountEntries(accountEntryIds);
 	}
 
+	@Override
+	public void deleteAccountEntriesByCompanyId(long companyId) {
+		_accountEntryLocalService.deleteAccountEntriesByCompanyId(companyId);
+	}
+
 	/**
 	 * Deletes the account entry from the database. Also notifies the appropriate model listeners.
 	 *

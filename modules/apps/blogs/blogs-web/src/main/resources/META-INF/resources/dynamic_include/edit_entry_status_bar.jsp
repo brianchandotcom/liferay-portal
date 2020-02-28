@@ -22,9 +22,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortletInstanceConfigurationUtil.getBlogsPortletInstanceConfiguration(themeDisplay);
 %>
 
-<liferay-frontend:info-bar
-	fixed="<%= true %>"
->
+<liferay-frontend:info-bar>
 	<c:choose>
 		<c:when test="<%= entry != null %>">
 			<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">

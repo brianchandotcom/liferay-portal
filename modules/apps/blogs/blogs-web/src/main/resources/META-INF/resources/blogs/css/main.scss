@@ -250,9 +250,10 @@
 		}
 	}
 
-	.info-bar-center {
-		@include media-breakpoint-up(sm) {
-			margin-top: 16px;
+	.info-bar-container {
+		min-height: 35px;
+		.info-bar-center {
+			margin-top: 5px;
 		}
 	}
 

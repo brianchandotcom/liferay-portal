@@ -15,19 +15,12 @@
 package com.liferay.depot.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -95,68 +88,6 @@ public class DepotAssetRendererFactoryTracker {
 	private ServiceTracker<AssetRendererFactory, AssetRendererFactory>
 		_serviceTracker;
 
-	private class ControlledDepotAssetRendererFactoryWrapper
-		extends DepotAssetRendererFactoryWrapper {
-
-		public ControlledDepotAssetRendererFactoryWrapper(
-			AssetRendererFactory assetRendererFactory) {
-
-			_assetRendererFactory = assetRendererFactory;
-		}
-
-		@Override
-		public ClassTypeReader getClassTypeReader() {
-			if (isSelectable()) {
-				return new DepotClassTypeReader(
-					super.getClassTypeReader(), _depotEntryLocalService);
-			}
-
-			return super.getClassTypeReader();
-		}
-
-		@Override
-		public boolean isSelectable() {
-			Group group = _getGroup();
-
-			if ((group != null) &&
-				(group.getType() == GroupConstants.TYPE_DEPOT) &&
-				!_depotApplicationController.isClassNameEnabled(
-					getClassName(), group.getGroupId())) {
-
-				return false;
-			}
-
-			return _assetRendererFactory.isSelectable();
-		}
-
-		@Override
-		protected AssetRendererFactory getAssetRendererFactory() {
-			return _assetRendererFactory;
-		}
-
-		private Group _getGroup() {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			if (serviceContext == null) {
-				return _groupLocalService.fetchGroup(
-					GroupThreadLocal.getGroupId());
-			}
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-			if (themeDisplay != null) {
-				return themeDisplay.getScopeGroup();
-			}
-
-			return _groupLocalService.fetchGroup(
-				serviceContext.getScopeGroupId());
-		}
-
-		private final AssetRendererFactory _assetRendererFactory;
-
-	}
-
 	private class DepotAssetRendererFactoryServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<AssetRendererFactory, AssetRendererFactory> {
@@ -198,7 +129,8 @@ public class DepotAssetRendererFactoryTracker {
 
 			AssetRendererFactory wrappedAssetRendererFactoryWrapper =
 				new ControlledDepotAssetRendererFactoryWrapper(
-					assetRendererFactory);
+					assetRendererFactory, _depotApplicationController,
+					_depotEntryLocalService, _groupLocalService);
 
 			ServiceRegistration<AssetRendererFactory> serviceRegistration =
 				_bundleContext.registerService(

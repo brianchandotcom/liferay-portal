@@ -290,7 +290,6 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Guest",
-			site = "false",
 			title = "Web Content Title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");

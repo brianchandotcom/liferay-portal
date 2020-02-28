@@ -181,9 +181,7 @@ const RowWithControls = React.forwardRef(
 			);
 		}
 
-		buttons.push(
-			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
-		);
+		buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration);
 
 		const content = (
 			<Row

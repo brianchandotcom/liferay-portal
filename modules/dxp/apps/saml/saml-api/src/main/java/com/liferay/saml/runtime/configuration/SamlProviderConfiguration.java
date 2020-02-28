@@ -96,7 +96,7 @@ public interface SamlProviderConfiguration {
 	public boolean ldapImportEnabled();
 
 	@Meta.AD(
-		deflt = "idp", id = "saml.role", name = "saml-role",
+		deflt = "sp", id = "saml.role", name = "saml-role",
 		optionLabels = {"saml-role-idp", "saml-role-sp"},
 		optionValues = {"idp", "sp"}, required = false
 	)

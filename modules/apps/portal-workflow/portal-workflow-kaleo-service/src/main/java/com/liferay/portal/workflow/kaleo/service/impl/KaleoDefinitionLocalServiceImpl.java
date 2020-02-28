@@ -147,8 +147,8 @@ public class KaleoDefinitionLocalServiceImpl
 		// Kaleo definition version
 
 		_kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
-			name, title, description, content, getVersion(version),
-			serviceContext);
+			kaleoDefinitionId, name, title, description, content,
+			getVersion(version), serviceContext);
 
 		return kaleoDefinition;
 	}
@@ -330,8 +330,8 @@ public class KaleoDefinitionLocalServiceImpl
 		// Kaleo definition version
 
 		_kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
-			kaleoDefinition.getName(), title, description, content,
-			getVersion(nextVersion), serviceContext);
+			kaleoDefinitionId, kaleoDefinition.getName(), title, description,
+			content, getVersion(nextVersion), serviceContext);
 
 		return kaleoDefinition;
 	}

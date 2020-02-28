@@ -43,8 +43,8 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 
 	@Override
 	public KaleoTask addKaleoTask(
-			long kaleoDefinitionVersionId, long kaleoNodeId, Task task,
-			ServiceContext serviceContext)
+			long kaleoDefinitionId, long kaleoDefinitionVersionId,
+			long kaleoNodeId, Task task, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Kaleo task
@@ -61,6 +61,7 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 		kaleoTask.setUserName(user.getFullName());
 		kaleoTask.setCreateDate(now);
 		kaleoTask.setModifiedDate(now);
+		kaleoTask.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoTask.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 		kaleoTask.setKaleoNodeId(kaleoNodeId);
 		kaleoTask.setName(task.getName());
@@ -74,7 +75,7 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 
 		for (Assignment assignment : assignments) {
 			_kaleoTaskAssignmentLocalService.addKaleoTaskAssignment(
-				KaleoTask.class.getName(), kaleoTaskId,
+				KaleoTask.class.getName(), kaleoTaskId, kaleoDefinitionId,
 				kaleoDefinitionVersionId, assignment, serviceContext);
 		}
 
@@ -84,8 +85,8 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 
 		for (TaskForm taskForm : taskForms) {
 			_kaleoTaskFormLocalService.addKaleoTaskForm(
-				kaleoDefinitionVersionId, kaleoNodeId, kaleoTask, taskForm,
-				serviceContext);
+				kaleoDefinitionId, kaleoDefinitionVersionId, kaleoNodeId,
+				kaleoTask, taskForm, serviceContext);
 		}
 
 		return kaleoTask;

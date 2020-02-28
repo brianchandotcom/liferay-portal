@@ -49,8 +49,9 @@ public class KaleoNotificationRecipientLocalServiceImpl
 
 	@Override
 	public KaleoNotificationRecipient addKaleoNotificationRecipient(
-			long kaleoDefinitionVersionId, long kaleoNotificationId,
-			Recipient recipient, ServiceContext serviceContext)
+			long kaleoDefinitionId, long kaleoDefinitionVersionId,
+			long kaleoNotificationId, Recipient recipient,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
@@ -67,6 +68,7 @@ public class KaleoNotificationRecipientLocalServiceImpl
 		kaleoNotificationRecipient.setUserName(user.getFullName());
 		kaleoNotificationRecipient.setCreateDate(now);
 		kaleoNotificationRecipient.setModifiedDate(now);
+		kaleoNotificationRecipient.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoNotificationRecipient.setKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId);
 		kaleoNotificationRecipient.setKaleoNotificationId(kaleoNotificationId);

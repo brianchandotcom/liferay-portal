@@ -62,8 +62,9 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 	@Override
 	public KaleoDefinitionVersion addKaleoDefinitionVersion(
-			String name, String title, String description, String content,
-			String version, ServiceContext serviceContext)
+			long kaleoDefinitionId, String name, String title,
+			String description, String content, String version,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Kaleo definition version

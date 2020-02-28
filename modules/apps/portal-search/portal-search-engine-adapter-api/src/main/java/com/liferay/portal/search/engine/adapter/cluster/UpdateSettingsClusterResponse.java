@@ -14,27 +14,27 @@
 
 package com.liferay.portal.search.engine.adapter.cluster;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
- * @author Dylan Rebelak
+ * @author Bryan Engler
  */
-@ProviderType
-public interface ClusterRequestExecutor {
+public class UpdateSettingsClusterResponse implements ClusterResponse {
 
-	public <T extends ClusterResponse> T execute(
-		ClusterRequest<T> clusterRequest);
+	public UpdateSettingsClusterResponse(
+		String persistentSettings, String transientSettings) {
 
-	public HealthClusterResponse executeClusterRequest(
-		HealthClusterRequest healthClusterRequest);
+		_persistentSettings = persistentSettings;
+		_transientSettings = transientSettings;
+	}
 
-	public StateClusterResponse executeClusterRequest(
-		StateClusterRequest stateClusterRequest);
+	public String getPersistentSettings() {
+		return _persistentSettings;
+	}
 
-	public StatsClusterResponse executeClusterRequest(
-		StatsClusterRequest statsClusterRequest);
+	public String getTransientSettings() {
+		return _transientSettings;
+	}
 
-	public UpdateSettingsClusterResponse executeClusterRequest(
-		UpdateSettingsClusterRequest updateSettingsClusterRequest);
+	private final String _persistentSettings;
+	private final String _transientSettings;
 
 }

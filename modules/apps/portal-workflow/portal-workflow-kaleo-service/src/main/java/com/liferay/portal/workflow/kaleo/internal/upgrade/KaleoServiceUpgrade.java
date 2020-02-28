@@ -120,6 +120,11 @@ public class KaleoServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.0.0", "2.0.1", new UpgradeMessageBoardsClassName());
+
+		registry.register(
+			"2.0.1", "3.0.0",
+			new com.liferay.portal.workflow.kaleo.internal.upgrade.v3_0_0.
+				UpgradeSchema());
 	}
 
 }

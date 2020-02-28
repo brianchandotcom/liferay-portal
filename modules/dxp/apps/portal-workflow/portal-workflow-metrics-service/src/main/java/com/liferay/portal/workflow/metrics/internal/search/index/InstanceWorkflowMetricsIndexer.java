@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 
 import java.text.ParseException;
@@ -100,15 +99,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		document.addKeyword("instanceId", kaleoInstance.getKaleoInstanceId());
 		document.addDateSortable(
 			"modifiedDate", kaleoInstance.getModifiedDate());
-
-		KaleoDefinition kaleoDefinition = getKaleoDefinition(
-			kaleoInstance.getKaleoDefinitionVersionId());
-
-		if (kaleoDefinition != null) {
-			document.addKeyword(
-				"processId", kaleoDefinition.getKaleoDefinitionId());
-		}
-
+		document.addKeyword("processId", kaleoInstance.getKaleoDefinitionId());
 		document.addKeyword("userId", kaleoInstance.getUserId());
 		document.addKeyword("userName", kaleoInstance.getUserName());
 		document.addKeyword(

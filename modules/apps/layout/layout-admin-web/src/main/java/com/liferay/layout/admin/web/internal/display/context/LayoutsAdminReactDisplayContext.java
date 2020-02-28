@@ -204,7 +204,11 @@ public class LayoutsAdminReactDisplayContext
 			portletURL.setParameter(
 				"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
-			layoutJSONObject.put("url", portletURL.toString());
+			layoutJSONObject.put(
+				"url", portletURL.toString()
+			).put(
+				"viewUrl", getViewLayoutURL(layout)
+			);
 
 			layoutsJSONArray.put(layoutJSONObject);
 		}

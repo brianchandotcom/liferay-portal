@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -126,11 +128,18 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		for (AssetDisplayPageEntry assetDisplayPageEntry :
 				assetDisplayPageEntries) {
 
-			JournalArticle journalArticle =
-				_journalArticleService.getLatestArticle(
-					assetDisplayPageEntry.getClassPK());
+			try {
+				JournalArticle journalArticle =
+					_journalArticleService.getLatestArticle(
+						assetDisplayPageEntry.getClassPK());
 
-			journalArticles.add(journalArticle);
+				journalArticles.add(journalArticle);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
 		}
 
 		return journalArticles;
@@ -224,6 +233,9 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			processedArticleIds.add(journalArticle.getArticleId());
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleSitemapURLProvider.class);
 
 	@Reference
 	private AssetDisplayPageEntryLocalService

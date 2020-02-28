@@ -136,6 +136,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 		KaleoInstance kaleoInstance =
 			_kaleoInstanceLocalService.addKaleoInstance(
+				kaleoDefinition.getKaleoDefinitionId(),
 				kaleoDefinitionVersion.getKaleoDefinitionVersionId(),
 				kaleoDefinitionVersion.getName(), kaleoDefinition.getVersion(),
 				_createWorkflowContext(),
@@ -156,6 +157,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 			kaleoDefinitionVersions.get(0);
 
 		KaleoNode kaleoNode = kaleoNodeLocalService.addKaleoNode(
+			kaleoDefinition.getKaleoDefinitionId(),
 			kaleoDefinitionVersion.getKaleoDefinitionVersionId(), node,
 			ServiceContextTestUtil.getServiceContext());
 
@@ -178,6 +180,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 		KaleoNode kaleoNode = addKaleoNode(kaleoDefinition, task);
 
 		KaleoTask kaleoTask = _kaleoTaskLocalService.addKaleoTask(
+			kaleoNode.getKaleoDefinitionId(),
 			kaleoNode.getKaleoDefinitionVersionId(), kaleoNode.getKaleoNodeId(),
 			task, ServiceContextTestUtil.getServiceContext());
 

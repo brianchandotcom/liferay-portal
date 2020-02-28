@@ -76,6 +76,7 @@ public abstract class BaseKaleoLocalServiceTestCase {
 
 		KaleoAction kaleoAction = kaleoActionLocalService.addKaleoAction(
 			KaleoNode.class.getName(), kaleoNode.getKaleoNodeId(),
+			kaleoInstance.getKaleoDefinitionId(),
 			kaleoInstance.getKaleoDefinitionVersionId(), kaleoNode.getName(),
 			new Action(
 				StringUtil.randomString(), StringUtil.randomString(),
@@ -114,7 +115,7 @@ public abstract class BaseKaleoLocalServiceTestCase {
 			).build();
 
 		return _kaleoInstanceLocalService.addKaleoInstance(
-			1, "Test", 1, workflowContext, serviceContext);
+			1, 1, "Test", 1, workflowContext, serviceContext);
 	}
 
 	protected KaleoInstanceToken addKaleoInstanceToken(
@@ -124,7 +125,7 @@ public abstract class BaseKaleoLocalServiceTestCase {
 		KaleoNode kaleoNode = addKaleoNode(kaleoInstance);
 
 		return _kaleoInstanceTokenLocalService.addKaleoInstanceToken(
-			kaleoNode.getKaleoNodeId(),
+			kaleoNode.getKaleoNodeId(), kaleoInstance.getKaleoDefinitionId(),
 			kaleoInstance.getKaleoDefinitionVersionId(),
 			kaleoInstance.getKaleoInstanceId(), 0,
 			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
@@ -135,6 +136,7 @@ public abstract class BaseKaleoLocalServiceTestCase {
 		throws Exception {
 
 		return _kaleoNodeLocalService.addKaleoNode(
+			kaleoInstance.getKaleoDefinitionId(),
 			kaleoInstance.getKaleoDefinitionVersionId(),
 			new Task("task", StringPool.BLANK), serviceContext);
 	}

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -51,7 +50,6 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -222,24 +220,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 		}
 
 		return DigestUtils.sha256Hex(sb.toString());
-	}
-
-	protected KaleoDefinition getKaleoDefinition(
-		long kaleoDefinitionVersionId) {
-
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			getKaleoDefinitionVersion(kaleoDefinitionVersionId);
-
-		if (kaleoDefinitionVersion != null) {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(kaleoDefinitionVersion.getCompanyId());
-
-			return kaleoDefinitionLocalService.fetchKaleoDefinition(
-				kaleoDefinitionVersion.getName(), serviceContext);
-		}
-
-		return null;
 	}
 
 	protected KaleoDefinitionVersion getKaleoDefinitionVersion(

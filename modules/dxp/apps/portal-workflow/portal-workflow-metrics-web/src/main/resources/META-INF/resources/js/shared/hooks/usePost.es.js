@@ -23,6 +23,8 @@ const usePost = ({admin = false, body = {}, url}) => {
 		() =>
 			client.post(url, body).then(({data}) => {
 				setData(data);
+
+				return data;
 			}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[admin, queryBodyStr, url]

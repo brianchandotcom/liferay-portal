@@ -406,12 +406,12 @@
 <!--PAGE_COLUMN_PORTLET-->
 <tr>
 	<td>PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE</td>
-	<td>//div[contains(@class,'col-md-10')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletName}')]</td>
+	<td>//div[contains(@class,'col') and contains(@class,'10')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE</td>
-	<td>//div[contains(@class,'col-md-2')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletName}')]</td>
+	<td>//div[contains(@class,'col') and contains(@class,'2')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

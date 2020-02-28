@@ -28,7 +28,7 @@ definition {
 	}
 
 	macro gotoCustomizedPageInfo {
-		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+		Click(locator1 = "Icon#PAGE_CUSTOMIZATION_ELLIPSIS");
 
 		if (isSet(viewDefaultPage)) {
 			var key_menuItem = "View Page without my customizations";

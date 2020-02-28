@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -195,35 +194,6 @@ public class OutputStreamWriterTest {
 	}
 
 	@Test
-	public void testException() throws IOException {
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		ExceptionThrowingOutputStream exceptionThrowingOutputStream =
-			new ExceptionThrowingOutputStream(byteArrayOutputStream);
-
-		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-			exceptionThrowingOutputStream, "UTF-8", 4, true);
-
-		UnsyncPrintWriter writer = new UnsyncPrintWriter(outputStreamWriter);
-
-		writer.write(10);
-
-		exceptionThrowingOutputStream.forceException(true);
-
-		writer.write(10);
-
-		exceptionThrowingOutputStream.forceException(false);
-
-		try {
-			writer.write(10);
-		}
-		catch (BufferOverflowException bufferOverflowException) {
-			bufferOverflowException.printStackTrace();
-		}
-	}
-
-	@Test
 	public void testFlush() throws IOException {
 		MarkerOutputStream markerOutputStream = new MarkerOutputStream();
 
@@ -385,6 +355,32 @@ public class OutputStreamWriterTest {
 	public void testWriteString() throws IOException {
 		_testWriteString(false);
 		_testWriteString(true);
+	}
+
+	@Test
+	public void testWriteWithExceptionThrownFromOutputStream() {
+		ForceExceptionOnWriteOutputStream forceExceptionOnWriteOutputStream =
+			new ForceExceptionOnWriteOutputStream();
+
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+			forceExceptionOnWriteOutputStream, "UTF-8", 4, true);
+
+		UnsyncPrintWriter writer = new UnsyncPrintWriter(outputStreamWriter);
+
+		writer.write('a');
+
+		forceExceptionOnWriteOutputStream.forceExceptionOnWrite(true);
+
+		writer.write('a');
+
+		forceExceptionOnWriteOutputStream.forceExceptionOnWrite(false);
+
+		try {
+			writer.write('a');
+		}
+		catch (BufferOverflowException bufferOverflowException) {
+			Assert.fail("BufferOverflowException was thrown and unhandled");
+		}
 	}
 
 	private int _getDefaultOutputBufferSize() {
@@ -618,45 +614,30 @@ public class OutputStreamWriterTest {
 
 	}
 
-	private static class ExceptionThrowingOutputStream extends OutputStream {
+	private static class ForceExceptionOnWriteOutputStream
+		extends OutputStream {
 
-		public ExceptionThrowingOutputStream(OutputStream outputStream) {
-			_outputStream = outputStream;
-		}
-
-		public void forceException(boolean bool) {
-			_forceException = bool;
-		}
-
-		@Override
-		public void write(byte[] b) throws IOException {
-			if (_forceException) {
-				throw new IOException();
-			}
-
-			_outputStream.write(b);
+		public void forceExceptionOnWrite(boolean forceExceptionOnWrite) {
+			_forceExceptionOnWrite = forceExceptionOnWrite;
 		}
 
 		@Override
 		public void write(byte[] b, int off, int len) throws IOException {
-			if (_forceException) {
+			if (_forceExceptionOnWrite) {
 				throw new IOException();
 			}
 
-			_outputStream.write(b, off, len);
+			super.write(b, off, len);
 		}
 
 		@Override
 		public void write(int b) throws IOException {
-			if (_forceException) {
+			if (_forceExceptionOnWrite) {
 				throw new IOException();
 			}
-
-			_outputStream.write(b);
 		}
 
-		private boolean _forceException;
-		private final OutputStream _outputStream;
+		private boolean _forceExceptionOnWrite;
 
 	}
 

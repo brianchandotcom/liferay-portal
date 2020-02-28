@@ -804,14 +804,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				regexp="PermSize"
 				replace="MetaspaceSize"
 			/>
-
-			<propertyregex
-				input="${poshi.java.jdk.opts}"
-				override="true"
-				property="poshi.java.jdk.opts"
-				regexp="&quot;"
-				replace=""
-			/>
 		</sequential>
 	</macrodef>
 
@@ -1340,7 +1332,24 @@ war.path=${app.server.portal.dir}/</echo>
 
 					<get-poshi-java-jdk-opts />
 
-					<gradle-execute failonerror="@{failonerror}" gradlejvmargs="${poshi.java.jdk.opts}" stacktrace="false" task="@{task}">
+					<local name="poshi.gradle.jvm.args" />
+
+					<if>
+						<os family="windows" />
+						<then>
+							<propertyregex
+								input="${poshi.java.jdk.opts}"
+								property="poshi.gradle.jvm.args"
+								regexp="&quot;"
+								replace=""
+							/>
+						</then>
+						<else>
+							<property name="poshi.gradle.jvm.args" value="${poshi.java.jdk.opts}" />
+						</else>
+					</if>
+
+					<gradle-execute failonerror="@{failonerror}" gradlejvmargs="${poshi.gradle.jvm.args}" stacktrace="false" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
 						<arg value="-Plocal=${test.poshi.runner.local.release}" />
 						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />

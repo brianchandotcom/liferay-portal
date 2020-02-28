@@ -18,7 +18,6 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.account.service.persistence.AccountEntryUserRelPersistence;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -96,7 +95,8 @@ public class AccountEntryUserRelModelListener
 		throws ModelListenerException {
 
 		List<AccountEntryUserRel> accountEntryUserRels =
-			_accountEntryUserRelPersistence.findByAUI(accountUserId);
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountUserId(accountUserId);
 
 		if (ListUtil.isEmpty(accountEntryUserRels)) {
 			try {
@@ -123,8 +123,5 @@ public class AccountEntryUserRelModelListener
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
-
-	@Reference
-	private AccountEntryUserRelPersistence _accountEntryUserRelPersistence;
 
 }

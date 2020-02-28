@@ -14,16 +14,15 @@
 
 package com.liferay.portal.kernel.io;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.CharsetEncoder;
@@ -358,29 +357,191 @@ public class OutputStreamWriterTest {
 	}
 
 	@Test
-	public void testWriteWithExceptionThrownFromOutputStream() {
-		ForceExceptionOnWriteOutputStream forceExceptionOnWriteOutputStream =
-			new ForceExceptionOnWriteOutputStream();
+	public void testWriteWithExceptionThrownFromOutputStream()
+		throws IOException {
+
+		IOException ioException1 = new IOException();
+
+		AtomicBoolean throwIOException = new AtomicBoolean();
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream() {
+
+				@Override
+				public void write(byte[] bytes, int offset, int length) {
+					if (throwIOException.get()) {
+						ReflectionUtil.throwException(ioException1);
+					}
+
+					super.write(bytes, offset, length);
+				}
+
+			};
 
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-			forceExceptionOnWriteOutputStream, "UTF-8", 4, true);
+			unsyncByteArrayOutputStream, "UTF-8", 4, true);
 
-		UnsyncPrintWriter writer = new UnsyncPrintWriter(outputStreamWriter);
+		// Fill up the ByteBuffer
 
-		writer.write('a');
-
-		forceExceptionOnWriteOutputStream.forceExceptionOnWrite(true);
-
-		writer.write('a');
-
-		forceExceptionOnWriteOutputStream.forceExceptionOnWrite(false);
+		throwIOException.set(true);
 
 		try {
-			writer.write('a');
+			outputStreamWriter.write('a');
+
+			Assert.fail();
 		}
-		catch (BufferOverflowException bufferOverflowException) {
-			Assert.fail("BufferOverflowException was thrown and unhandled");
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
 		}
+
+		try {
+			outputStreamWriter.write('b');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		try {
+			outputStreamWriter.write('c');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		try {
+			outputStreamWriter.write('d');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		// Fill up the CharBuffer
+
+		try {
+			outputStreamWriter.write('e');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		try {
+			outputStreamWriter.write('f');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		// No space in buffer, discard
+
+		try {
+			outputStreamWriter.write('g');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		try {
+			outputStreamWriter.write('h');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		Assert.assertEquals("", unsyncByteArrayOutputStream.toString());
+
+		try {
+			outputStreamWriter.flush();
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		Assert.assertEquals("", unsyncByteArrayOutputStream.toString());
+
+		// Recovered, data within buffer size has been preserved
+
+		throwIOException.set(false);
+
+		outputStreamWriter.write('i');
+
+		Assert.assertEquals("abcdefi", unsyncByteArrayOutputStream.toString());
+
+		// Cut in between surrogate pair
+
+		unsyncByteArrayOutputStream.reset();
+
+		char[] surrogatePair = Character.toChars(0x2363A);
+
+		Assert.assertEquals(
+			Arrays.toString(surrogatePair), 2, surrogatePair.length);
+
+		throwIOException.set(true);
+
+		// Fill up the ByteBuffer
+
+		try {
+			outputStreamWriter.write("abcd".toCharArray());
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		// Fill up the CharBuffer
+
+		try {
+			outputStreamWriter.write('e');
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		try {
+			outputStreamWriter.write(surrogatePair[0]);
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		// No space in buffer, discard
+
+		try {
+			outputStreamWriter.write(surrogatePair[1]);
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
+
+		throwIOException.set(false);
+
+		// New write must discard leftover surrogate char
+
+		outputStreamWriter.write('f');
+
+		Assert.assertEquals("abcdef", unsyncByteArrayOutputStream.toString());
 	}
 
 	private int _getDefaultOutputBufferSize() {
@@ -611,33 +772,6 @@ public class OutputStreamWriterTest {
 		}
 
 		private final CharsetEncoder _charsetEncoder;
-
-	}
-
-	private static class ForceExceptionOnWriteOutputStream
-		extends OutputStream {
-
-		public void forceExceptionOnWrite(boolean forceExceptionOnWrite) {
-			_forceExceptionOnWrite = forceExceptionOnWrite;
-		}
-
-		@Override
-		public void write(byte[] b, int off, int len) throws IOException {
-			if (_forceExceptionOnWrite) {
-				throw new IOException();
-			}
-
-			super.write(b, off, len);
-		}
-
-		@Override
-		public void write(int b) throws IOException {
-			if (_forceExceptionOnWrite) {
-				throw new IOException();
-			}
-		}
-
-		private boolean _forceExceptionOnWrite;
 
 	}
 

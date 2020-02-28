@@ -435,9 +435,16 @@ function getParentItemIdAndPositon({
 	const siblingOrParent = items[siblingOrParentId];
 
 	if (
-		siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.root ||
-		(targetPosition === TARGET_POSITION.MIDDLE &&
-			isNestingSupported(item.type, siblingOrParent.type))
+		siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.column &&
+		targetPosition !== TARGET_POSITION.MIDDLE
+	) {
+		targetPosition = TARGET_POSITION.MIDDLE;
+	}
+
+	if (
+		(siblingOrParent.type === LAYOUT_DATA_ITEM_TYPES.root ||
+			targetPosition === TARGET_POSITION.MIDDLE) &&
+		isNestingSupported(item.type, siblingOrParent.type)
 	) {
 		return {
 			parentId: siblingOrParent.itemId,

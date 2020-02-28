@@ -25,6 +25,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -107,7 +109,12 @@ public class FragmentLayoutStructureItemHelper
 
 		JSONObject jsonObject = JSONUtil.put(
 			_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-			JSONFactoryUtil.createJSONObject());
+			JSONFactoryUtil.createJSONObject()
+		).put(
+			_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			_createEditablesValuesJSONObject(
+				(List<Object>)definitionMap.get("fragmentFields"))
+		);
 
 		try {
 			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
@@ -125,6 +132,103 @@ public class FragmentLayoutStructureItemHelper
 		}
 
 		return null;
+	}
+
+	private JSONObject _createEditablesValuesJSONObject(
+		List<Object> fragmentFields) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (fragmentFields == null) {
+			return jsonObject;
+		}
+
+		for (Object fragmentField : fragmentFields) {
+			JSONObject fragmentFieldJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			Map<String, Object> fragmentFieldMap =
+				(Map<String, Object>)fragmentField;
+
+			String fragmentFieldId = (String)fragmentFieldMap.get("id");
+
+			if (Validator.isNull(fragmentFieldId)) {
+				continue;
+			}
+
+			Map<String, Object> valueMap =
+				(Map<String, Object>)fragmentFieldMap.get("value");
+
+			if (valueMap == null) {
+				continue;
+			}
+
+			JSONObject fragmentLinkJSONObject = _createFragmentLinkJSONObject(
+				(Map<String, Object>)valueMap.get("fragmentLink"));
+
+			if (fragmentLinkJSONObject != null) {
+				fragmentFieldJSONObject.put("config", fragmentLinkJSONObject);
+			}
+
+			JSONObject localizationJSONObject = _createLocalizationJSONObject(
+				(Map<String, Object>)valueMap.get("text"));
+
+			try {
+				jsonObject.put(
+					fragmentFieldId,
+					JSONUtil.merge(
+						fragmentFieldJSONObject, localizationJSONObject));
+			}
+			catch (JSONException jsonException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(jsonException, jsonException);
+				}
+			}
+		}
+
+		return jsonObject;
+	}
+
+	private JSONObject _createFragmentLinkJSONObject(
+		Map<String, Object> fragmentLinkMap) {
+
+		JSONObject fragmentLinkJSONObject = JSONFactoryUtil.createJSONObject();
+
+		if (fragmentLinkMap == null) {
+			return fragmentLinkJSONObject;
+		}
+
+		fragmentLinkJSONObject.put("target", fragmentLinkMap.get("target"));
+
+		Map<String, Object> valueMap = (Map<String, Object>)fragmentLinkMap.get(
+			"value");
+
+		if (valueMap != null) {
+			fragmentLinkJSONObject.put("href", valueMap.get("href"));
+		}
+
+		return fragmentLinkJSONObject;
+	}
+
+	private JSONObject _createLocalizationJSONObject(
+		Map<String, Object> textMap) {
+
+		JSONObject localizationJSONObject = JSONFactoryUtil.createJSONObject();
+
+		if (textMap == null) {
+			return localizationJSONObject;
+		}
+
+		Map<String, Object> valueI18nMap = (Map<String, Object>)textMap.get(
+			"value_i18n");
+
+		if (valueI18nMap != null) {
+			for (Map.Entry<String, Object> entry : valueI18nMap.entrySet()) {
+				localizationJSONObject.put(entry.getKey(), entry.getValue());
+			}
+		}
+
+		return localizationJSONObject;
 	}
 
 	private FragmentEntry _getFragmentEntry(
@@ -148,6 +252,10 @@ public class FragmentLayoutStructureItemHelper
 	private static final String _BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR =
 		"com.liferay.fragment.entry.processor.background.image." +
 			"BackgroundImageFragmentEntryProcessor";
+
+	private static final String _EDITABLE_FRAGMENT_ENTRY_PROCESSOR =
+		"com.liferay.fragment.entry.processor.editable." +
+			"EditableFragmentEntryProcessor";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentLayoutStructureItemHelper.class);

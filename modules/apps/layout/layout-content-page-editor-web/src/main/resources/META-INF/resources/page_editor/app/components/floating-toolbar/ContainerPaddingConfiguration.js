@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {CONTAINER_PADDING_IDENTIFIERS} from '../../config/constants/containerPaddingIdentifiers';
-import {PADDING_OPTIONS} from '../../config/constants/paddingOptions';
+import {config} from '../../config/index';
 
 export const ContainerPaddingVerticalConfiguration = ({
 	onValueChange,
@@ -39,7 +39,7 @@ export const ContainerPaddingVerticalConfiguration = ({
 						),
 					})
 				}
-				options={PADDING_OPTIONS}
+				options={config.paddingOptions}
 				value={String(paddingTop)}
 			/>
 		</div>
@@ -58,7 +58,7 @@ export const ContainerPaddingVerticalConfiguration = ({
 						),
 					})
 				}
-				options={PADDING_OPTIONS}
+				options={config.paddingOptions}
 				value={String(paddingBottom)}
 			/>
 		</div>
@@ -90,7 +90,7 @@ export const ContainerPaddingHorizontalConfiguration = ({
 						),
 					})
 				}
-				options={PADDING_OPTIONS}
+				options={config.paddingOptions}
 				value={String(paddingHorizontal)}
 			/>
 		</div>

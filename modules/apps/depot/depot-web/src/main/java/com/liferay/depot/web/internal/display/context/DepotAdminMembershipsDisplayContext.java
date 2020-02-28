@@ -17,7 +17,6 @@ package com.liferay.depot.web.internal.display.context;
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.depot.web.internal.item.selector.criteria.depot.group.criterion.DepotGroupItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;

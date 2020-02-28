@@ -259,7 +259,10 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 					var rowColumns = [];
 
 					rowColumns.push(
-						'<i class="' + event.iconcssclass + '"></i> ' + LString.escapeHTML(event.rolename)
+						'<i class="' +
+							event.iconcssclass +
+							'"></i> ' +
+							LString.escapeHTML(event.rolename)
 					);
 
 					rowColumns.push(event.groupdescriptivename);
@@ -280,10 +283,17 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 						if (
 							<portlet:namespace />deleteDepotGroupRolesGroupIds[i] ==
 								event.groupid &&
-							<portlet:namespace />deleteDepotGroupRolesRoleIds[i] == event.roleid
+							<portlet:namespace />deleteDepotGroupRolesRoleIds[i] ==
+								event.roleid
 						) {
-							<portlet:namespace />deleteDepotGroupRolesGroupIds.splice(i, 1);
-							<portlet:namespace />deleteDepotGroupRolesRoleIds.splice(i, 1);
+							<portlet:namespace />deleteDepotGroupRolesGroupIds.splice(
+								i,
+								1
+							);
+							<portlet:namespace />deleteDepotGroupRolesRoleIds.splice(
+								i,
+								1
+							);
 
 							break;
 						}

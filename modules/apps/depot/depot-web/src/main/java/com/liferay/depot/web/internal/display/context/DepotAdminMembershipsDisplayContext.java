@@ -19,6 +19,7 @@ import com.liferay.depot.web.internal.item.selector.criteria.depot.group.criteri
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -91,15 +92,16 @@ public class DepotAdminMembershipsDisplayContext {
 	}
 
 	public PortletURL getItemSelectorURL() {
-		ItemSelectorCriterion itemSelectorCriterion =
+		GroupItemSelectorCriterion groupItemSelectorCriterion =
 			new DepotGroupItemSelectorCriterion();
 
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new GroupItemSelectorReturnType());
+		groupItemSelectorCriterion.setIncludeAllVisibleGroups(true);
 
 		return _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
-			getItemSelectorEventName(), itemSelectorCriterion);
+			getItemSelectorEventName(), groupItemSelectorCriterion);
 	}
 
 	public String getLabel() {

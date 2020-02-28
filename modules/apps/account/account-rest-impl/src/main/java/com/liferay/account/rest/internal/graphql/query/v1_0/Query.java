@@ -104,7 +104,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {account(accountId: ___){description, domains, id, name, parentAccountId, status}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {account(accountId: ___){description, domains, id, name, organizationIds, parentAccountId, status}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "")
 	public Account account(@GraphQLName("accountId") Long accountId)

@@ -37,12 +37,14 @@ public interface WorkflowTaskAssignableUsersResource {
 		return new Builder();
 	}
 
-	public WorkflowTaskAssignableUsers getWorkflowTaskAssignableUser(
-			Long[] workflowTaskIds)
+	public WorkflowTaskAssignableUsers postWorkflowTaskAssignableUser(
+			com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskIds
+				workflowTaskIds)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getWorkflowTaskAssignableUserHttpResponse(
-			Long[] workflowTaskIds)
+	public HttpInvoker.HttpResponse postWorkflowTaskAssignableUserHttpResponse(
+			com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskIds
+				workflowTaskIds)
 		throws Exception;
 
 	public static class Builder {
@@ -101,12 +103,13 @@ public interface WorkflowTaskAssignableUsersResource {
 	public static class WorkflowTaskAssignableUsersResourceImpl
 		implements WorkflowTaskAssignableUsersResource {
 
-		public WorkflowTaskAssignableUsers getWorkflowTaskAssignableUser(
-				Long[] workflowTaskIds)
+		public WorkflowTaskAssignableUsers postWorkflowTaskAssignableUser(
+				com.liferay.headless.admin.workflow.client.dto.v1_0.
+					WorkflowTaskIds workflowTaskIds)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowTaskAssignableUserHttpResponse(workflowTaskIds);
+				postWorkflowTaskAssignableUserHttpResponse(workflowTaskIds);
 
 			String content = httpResponse.getContent();
 
@@ -130,11 +133,14 @@ public interface WorkflowTaskAssignableUsersResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getWorkflowTaskAssignableUserHttpResponse(
-					Long[] workflowTaskIds)
+				postWorkflowTaskAssignableUserHttpResponse(
+					com.liferay.headless.admin.workflow.client.dto.v1_0.
+						WorkflowTaskIds workflowTaskIds)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(workflowTaskIds.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -153,14 +159,7 @@ public interface WorkflowTaskAssignableUsersResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (workflowTaskIds != null) {
-				for (int i = 0; i < workflowTaskIds.length; i++) {
-					httpInvoker.parameter(
-						"workflowTaskIds", String.valueOf(workflowTaskIds[i]));
-				}
-			}
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

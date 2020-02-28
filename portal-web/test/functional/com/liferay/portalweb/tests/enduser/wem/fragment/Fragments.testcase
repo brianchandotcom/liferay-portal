@@ -525,6 +525,68 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-108376. Can check Cacheable for fragments when create them in portal and they are non-Cachable by default."
+	@priority = "5"
+	test MarkFragmentCreatedInPortalAsCacheable {
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+		FragmentsAdminNavigator.gotoEntryEllipsisItem(
+			entry = "Fragment Name",
+			item = "Edit");
+
+		AssertElementPresent(
+			checkboxName = "Cacheable",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			checkboxName = "Cacheable",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Check.checkNotVisible(
+			checkboxName = "Cacheable",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		AssertChecked.assertCheckedNotVisible(
+			checkboxName = "Cacheable",
+			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+
+		PortletEntry.publish();
+	}
+
+	@description = "This is a test for LPS-108376. Can check Cacheable for fragments without Read-Only label imported to portal and they are non-Cachable by default."
+	@priority = "4"
+	test MarkFragmentWithoutReadOnlyImportedToPortalAsCacheable {
+		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+		FragmentsAdminNavigator.gotoEntryEllipsisItem(
+			entry = "Content",
+			item = "Edit");
+
+		AssertElementNotPresent(locator1 = "FragmentEditor#READ_ONLY_VIEW");
+
+		AssertElementPresent(
+			checkboxName = "Cacheable",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			checkboxName = "Cacheable",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Check.checkNotVisible(
+			checkboxName = "Cacheable",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		AssertChecked.assertCheckedNotVisible(
+			checkboxName = "Cacheable",
+			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+
+		PortletEntry.publish();
+	}
+
 	@description = "This is a test for LPS-100540. Global fragments can be propagated to all pages of a site or sites that use the fragments"
 	@priority = "5"
 	test PropagateGlobalFragmentChanges {

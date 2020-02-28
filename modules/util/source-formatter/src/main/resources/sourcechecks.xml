@@ -532,7 +532,9 @@
 	<source-processor name="MarkdownSourceProcessor">
 		<check name="MarkdownFileExtensionCheck" />
 		<check name="MarkdownSourceFormatterDocumentationCheck" />
-		<check name="MarkdownSourceFormatterReadmeCheck" />
+		<check name="MarkdownSourceFormatterReadmeCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="MarkdownStylingCheck" />
 		<check name="MarkdownWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />

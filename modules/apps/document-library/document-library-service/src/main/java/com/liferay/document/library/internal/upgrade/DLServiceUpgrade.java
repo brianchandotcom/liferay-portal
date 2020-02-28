@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.upgrade;
 
+import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.document.library.internal.upgrade.v1_0_0.UpgradeDocumentLibrary;
 import com.liferay.document.library.internal.upgrade.v1_0_1.UpgradeDLConfiguration;
 import com.liferay.document.library.internal.upgrade.v1_0_1.UpgradeDLFileEntryConfiguration;
@@ -23,8 +24,10 @@ import com.liferay.document.library.internal.upgrade.v2_0_0.UpgradeCompanyId;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -56,6 +59,13 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 			"2.0.0", "3.0.0",
 			new UpgradeViewCount(
 				"DlFileEntry", DLFileEntry.class, "fileEntryId", "readCount"));
+
+		registry.register(
+			"3.0.0", "3.0.1",
+			new UpgradeDiscussionSubscriptionClassName(
+				_subscriptionLocalService, DLFileEntry.class.getName(),
+				UpgradeDiscussionSubscriptionClassName.DeletionMode.
+					DELETE_OLD));
 	}
 
 	@Reference
@@ -64,6 +74,9 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference(target = "(dl.store.upgrade=true)")
 	private Store _store;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private ViewCountEntryLocalService _viewCountEntryLocalService;

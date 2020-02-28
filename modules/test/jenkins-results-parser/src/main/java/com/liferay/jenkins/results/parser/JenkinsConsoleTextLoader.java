@@ -39,6 +39,8 @@ public class JenkinsConsoleTextLoader {
 			"jenkins_console_log-", String.valueOf(buildURL.hashCode()),
 			".log");
 
+		JenkinsResultsParserUtil.saveToCacheFile(consoleLogFileKey, "");
+
 		serverLogSize = 0;
 	}
 

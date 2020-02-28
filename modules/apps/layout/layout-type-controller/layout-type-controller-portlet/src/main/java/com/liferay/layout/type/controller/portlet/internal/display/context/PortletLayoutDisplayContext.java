@@ -58,19 +58,11 @@ public class PortletLayoutDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		JSONObject backgroundImageJSONObject =
-			rowConfigJSONObject.getJSONObject("backgroundImage");
-
-		if (backgroundImageJSONObject == null) {
-			return rowConfigJSONObject.getString(
-				"backgroundImage", StringPool.BLANK);
-		}
-
-		String fieldId = backgroundImageJSONObject.getString("fieldId");
+		String fieldId = rowConfigJSONObject.getString("fieldId");
 
 		if (Validator.isNotNull(fieldId)) {
-			long classNameId = backgroundImageJSONObject.getLong("classNameId");
-			long classPK = backgroundImageJSONObject.getLong("classPK");
+			long classNameId = rowConfigJSONObject.getLong("classNameId");
+			long classPK = rowConfigJSONObject.getLong("classPK");
 
 			if ((classNameId != 0L) && (classPK != 0L)) {
 				InfoDisplayContributor infoDisplayContributor =
@@ -100,7 +92,7 @@ public class PortletLayoutDisplayContext {
 			}
 		}
 
-		String backgroundImageURL = backgroundImageJSONObject.getString("url");
+		String backgroundImageURL = rowConfigJSONObject.getString("url");
 
 		if (Validator.isNotNull(backgroundImageURL)) {
 			return backgroundImageURL;

@@ -68,15 +68,7 @@ public class RenderFragmentLayoutDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		JSONObject backgroundImageJSONObject =
-			rowConfigJSONObject.getJSONObject("backgroundImage");
-
-		if (backgroundImageJSONObject == null) {
-			return rowConfigJSONObject.getString(
-				"backgroundImage", StringPool.BLANK);
-		}
-
-		String mappedField = backgroundImageJSONObject.getString("mappedField");
+		String mappedField = rowConfigJSONObject.getString("mappedField");
 
 		if (Validator.isNotNull(mappedField)) {
 			InfoDisplayObjectProvider infoDisplayObjectProvider =
@@ -107,11 +99,11 @@ public class RenderFragmentLayoutDisplayContext {
 			}
 		}
 
-		String fieldId = backgroundImageJSONObject.getString("fieldId");
+		String fieldId = rowConfigJSONObject.getString("fieldId");
 
 		if (Validator.isNotNull(fieldId)) {
-			long classNameId = backgroundImageJSONObject.getLong("classNameId");
-			long classPK = backgroundImageJSONObject.getLong("classPK");
+			long classNameId = rowConfigJSONObject.getLong("classNameId");
+			long classPK = rowConfigJSONObject.getLong("classPK");
 
 			if ((classNameId != 0L) && (classPK != 0L)) {
 				InfoDisplayContributor infoDisplayContributor =
@@ -141,7 +133,7 @@ public class RenderFragmentLayoutDisplayContext {
 			}
 		}
 
-		String backgroundImageURL = backgroundImageJSONObject.getString("url");
+		String backgroundImageURL = rowConfigJSONObject.getString("url");
 
 		if (Validator.isNotNull(backgroundImageURL)) {
 			return backgroundImageURL;

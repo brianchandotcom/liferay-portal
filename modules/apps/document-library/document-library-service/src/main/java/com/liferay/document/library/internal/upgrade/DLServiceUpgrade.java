@@ -53,7 +53,9 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register("1.0.2", "1.1.0", new UpgradeSchema());
 
-		registry.register("1.1.0", "2.0.0", new UpgradeCompanyId());
+		registry.register("1.1.0", "1.1.1", new DummyUpgradeStep());
+
+		registry.register("1.1.1", "2.0.0", new UpgradeCompanyId());
 
 		registry.register(
 			"2.0.0", "3.0.0",

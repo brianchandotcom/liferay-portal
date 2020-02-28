@@ -215,6 +215,76 @@ definition {
 			searchAssetType = "Message Boards Message");
 	}
 
+	test HotDeployElasticsearch7App {
+		property hot.deploy.osgi.app.includes = "portal-search-elasticsearch7";
+		property osgi.app.includes = "";
+		property test.name.skip.portal.instance = "Elasticsearch7#HotDeployElasticsearch7App";
+
+		var appName = "Liferay Connector to Elasticsearch 7";
+
+		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
+
+		AssertConsoleTextPresent(value1 = "STARTED ${appName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.assertEngineVendorAndVersions(
+			clientVersion = "7.3.0",
+			engineVendor = "Elasticsearch",
+			serverVersion = "7.3.0");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Search",
+			configurationName = "Elasticsearch 7",
+			configurationScope = "System Scope");
+
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active",
+			searchTerm = "Elasticsearch");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved",
+			searchTerm = "Elasticsearch");
+
+		AssertConsoleTextPresent(value1 = "STOPPED com.liferay.portal.search.elasticsearch7");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.search.elasticsearch7");
+
+		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "apple");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "apple",
+			searchAssetType = "Web Content Article");
+	}
+
 	@priority = "5"
 	test OSGiConfigSmokeTest {
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config:com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config";

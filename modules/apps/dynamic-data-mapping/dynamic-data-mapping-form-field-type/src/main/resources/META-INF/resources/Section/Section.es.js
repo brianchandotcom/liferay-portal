@@ -14,21 +14,21 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './SectionRegister.soy.js';
+import './SectionRegister.soy';
 
 import 'dynamic-data-mapping-form-renderer/js/components/PageRenderer/PageRenderer.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './Section.soy.js';
+import templates from './Section.soy';
 
 class Section extends Component {
 	dispatchEvent(event, name, value) {
 		this.emit(name, {
 			fieldInstance: this,
 			originalEvent: event,
-			value
+			value,
 		});
 	}
 
@@ -45,9 +45,9 @@ class Section extends Component {
 						return nestedFields.find(
 							nestedField => nestedField.fieldName === fieldName
 						);
-					})
-				}))
-			}))
+					}),
+				})),
+			})),
 		};
 
 		return newState;
@@ -82,7 +82,8 @@ class Section extends Component {
 		if (typeof rows === 'string') {
 			try {
 				return JSON.parse(rows);
-			} catch (e) {
+			}
+			catch (e) {
 				return [];
 			}
 		}
@@ -227,7 +228,7 @@ Section.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.string()
+	value: Config.string(),
 };
 
 Soy.register(Section, templates);

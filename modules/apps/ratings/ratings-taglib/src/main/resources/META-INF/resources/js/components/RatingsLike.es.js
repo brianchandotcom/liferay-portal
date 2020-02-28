@@ -13,12 +13,22 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import React, {useState} from 'react';
 
 const RatingsLike = () => {
+	const [active, setActive] = useState(false);
+
+	const toggleActive = () => {
+		setActive(!active);
+	}
+
 	return (
 		<div className="ratings-like">
-			<ClayIcon symbol="heart" />
+			<ClayIcon
+				className={active ? 'selected' : ''}
+				symbol="heart"
+				onClick={toggleActive}
+			/>
 		</div>
 	);
 };

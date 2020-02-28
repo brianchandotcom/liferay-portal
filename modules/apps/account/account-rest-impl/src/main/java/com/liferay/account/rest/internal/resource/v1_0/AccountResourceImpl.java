@@ -16,14 +16,19 @@ package com.liferay.account.rest.internal.resource.v1_0;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.rest.dto.v1_0.Account;
 import com.liferay.account.rest.internal.odata.entity.v1_0.AccountEntityModel;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -33,7 +38,9 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -98,16 +105,22 @@ public class AccountResourceImpl
 
 	@Override
 	public Account postAccount(Account account) throws Exception {
-		return _toAccount(
-			_accountEntryLocalService.addAccountEntry(
-				contextUser.getUserId(), _getParentAccountId(account),
-				account.getName(), account.getDescription(),
-				_getDomains(account), null, _getStatus(account)));
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			contextUser.getUserId(), _getParentAccountId(account),
+			account.getName(), account.getDescription(), _getDomains(account),
+			null, _getStatus(account));
+
+		_updateAccountOrganizations(
+			accountEntry.getAccountEntryId(), account.getOrganizationIds());
+
+		return _toAccount(accountEntry);
 	}
 
 	@Override
 	public Account putAccount(Long accountId, Account account)
 		throws Exception {
+
+		_updateAccountOrganizations(accountId, account.getOrganizationIds());
 
 		return _toAccount(
 			_accountEntryLocalService.updateAccountEntry(
@@ -147,14 +160,57 @@ public class AccountResourceImpl
 				domains = StringUtil.split(accountEntry.getDomains());
 				id = accountEntry.getAccountEntryId();
 				name = accountEntry.getName();
+				organizationIds = transformToArray(
+					_accountEntryOrganizationRelLocalService.
+						getAccountEntryOrganizationRels(
+							accountEntry.getAccountEntryId()),
+					AccountEntryOrganizationRel::getOrganizationId, Long.class);
 				parentAccountId = accountEntry.getParentAccountEntryId();
 				status = accountEntry.getStatus();
 			}
 		};
 	}
 
+	private void _updateAccountOrganizations(
+			long accountId, Long[] organizationIds)
+		throws Exception {
+
+		if (organizationIds == null) {
+			return;
+		}
+
+		Set<Long> organizationIdsSet = SetUtil.fromArray(organizationIds);
+
+		List<Long> currentOrganizationIds = ListUtil.toList(
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRels(accountId),
+			AccountEntryOrganizationRel::getOrganizationId);
+
+		Set<Long> deleteOrganizationIdsSet = SetUtil.fromCollection(
+			currentOrganizationIds);
+
+		deleteOrganizationIdsSet.removeAll(organizationIdsSet);
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRels(
+				accountId, ArrayUtil.toLongArray(deleteOrganizationIdsSet));
+
+		Set<Long> addOrganizationIdsSet = SetUtil.fromCollection(
+			organizationIdsSet);
+
+		addOrganizationIdsSet.removeAll(currentOrganizationIds);
+
+		_accountEntryOrganizationRelLocalService.
+			addAccountEntryOrganizationRels(
+				accountId, ArrayUtil.toLongArray(addOrganizationIdsSet));
+	}
+
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
 
 	private final EntityModel _entityModel = new AccountEntityModel();
 

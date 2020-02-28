@@ -78,8 +78,8 @@ public class KaleoInstanceLocalServiceImpl
 
 	@Override
 	public KaleoInstance addKaleoInstance(
-			long kaleoDefinitionVersionId, String kaleoDefinitionName,
-			int kaleoDefinitionVersion,
+			long kaleoDefinitionId, long kaleoDefinitionVersionId,
+			String kaleoDefinitionName, int kaleoDefinitionVersion,
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -108,6 +108,7 @@ public class KaleoInstanceLocalServiceImpl
 		kaleoInstance.setUserName(user.getFullName());
 		kaleoInstance.setCreateDate(now);
 		kaleoInstance.setModifiedDate(now);
+		kaleoInstance.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoInstance.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 		kaleoInstance.setKaleoDefinitionName(kaleoDefinitionName);
 		kaleoInstance.setKaleoDefinitionVersion(kaleoDefinitionVersion);

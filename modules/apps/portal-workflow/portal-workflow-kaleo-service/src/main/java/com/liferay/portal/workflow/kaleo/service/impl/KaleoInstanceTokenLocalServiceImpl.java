@@ -61,8 +61,9 @@ public class KaleoInstanceTokenLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoInstanceToken addKaleoInstanceToken(
-			long currentKaleoNodeId, long kaleoDefinitionVersionId,
-			long kaleoInstanceId, long parentKaleoInstanceTokenId,
+			long currentKaleoNodeId, long kaleoDefinitionId,
+			long kaleoDefinitionVersionId, long kaleoInstanceId,
+			long parentKaleoInstanceTokenId,
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -85,6 +86,7 @@ public class KaleoInstanceTokenLocalServiceImpl
 		kaleoInstanceToken.setUserName(user.getFullName());
 		kaleoInstanceToken.setCreateDate(now);
 		kaleoInstanceToken.setModifiedDate(now);
+		kaleoInstanceToken.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoInstanceToken.setKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId);
 		kaleoInstanceToken.setKaleoInstanceId(kaleoInstanceId);
@@ -126,6 +128,7 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 		return kaleoInstanceTokenLocalService.addKaleoInstanceToken(
 			parentKaleoInstanceToken.getCurrentKaleoNodeId(),
+			parentKaleoInstanceToken.getKaleoDefinitionId(),
 			parentKaleoInstanceToken.getKaleoDefinitionVersionId(),
 			parentKaleoInstanceToken.getKaleoInstanceId(),
 			parentKaleoInstanceToken.getKaleoInstanceTokenId(), workflowContext,
@@ -239,7 +242,8 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 		KaleoInstanceToken kaleoInstanceToken =
 			kaleoInstanceTokenLocalService.addKaleoInstanceToken(
-				0, kaleoInstance.getKaleoDefinitionVersionId(),
+				0, kaleoInstance.getKaleoDefinitionId(),
+				kaleoInstance.getKaleoDefinitionVersionId(),
 				kaleoInstance.getKaleoInstanceId(),
 				KaleoInstanceTokenConstants.
 					PARENT_KALEO_INSTANCE_TOKEN_ID_DEFAULT,

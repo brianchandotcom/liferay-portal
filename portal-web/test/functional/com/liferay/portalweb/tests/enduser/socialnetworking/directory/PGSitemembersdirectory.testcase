@@ -1,4 +1,5 @@
 @component-name = "portal-social-networking"
+@ignore = "true"
 definition {
 
 	property portal.upstream = "true";

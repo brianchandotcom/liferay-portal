@@ -309,16 +309,27 @@ public class VariableNameCheck extends BaseCheck {
 	private void _checkTypeName(
 		DetailAST detailAST, String variableName, String typeName) {
 
-		List<String> enforceTypeNames = getAttributeValues(
-			_ENFORCE_TYPE_NAMES_KEY);
+		if (variableName.matches("(?i).*" + typeName + "[0-9]*")) {
+			return;
+		}
 
-		if ((typeName.endsWith("Impl") ||
-			 _isEnforceTypeName(typeName, enforceTypeNames)) &&
-			!variableName.matches("(?i).*" + typeName + "[0-9]*")) {
-
+		if (typeName.endsWith("Impl")) {
 			log(
 				detailAST, _MSG_INCORRECT_ENDING_VARIABLE, typeName,
 				getExpectedVariableName(typeName));
+		}
+
+		List<String> enforceTypeNames = getAttributeValues(
+			_ENFORCE_TYPE_NAMES_KEY);
+
+		for (String enforceTypeName : enforceTypeNames) {
+			if (typeName.matches(enforceTypeName)) {
+				log(
+					detailAST, _MSG_INCORRECT_ENDING_VARIABLE, typeName,
+					getExpectedVariableName(typeName));
+
+				return;
+			}
 		}
 	}
 
@@ -529,18 +540,6 @@ public class VariableNameCheck extends BaseCheck {
 			String name = childDetailAST.getText();
 
 			if (name.equals("Boolean")) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private boolean _isEnforceTypeName(
-		String typeName, List<String> enforceTypeNames) {
-
-		for (String enforceTypeName : enforceTypeNames) {
-			if (typeName.matches(enforceTypeName)) {
 				return true;
 			}
 		}

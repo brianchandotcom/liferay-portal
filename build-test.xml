@@ -7112,6 +7112,12 @@ go</echo>
 									</sequential>
 								</for>
 
+								<zip
+									basedir="${liferay.home}/deploy-temp"
+									destfile="${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg"
+									includes="*.lpkg"
+								/>
+
 								<delete dir="${liferay.home}/deploy-temp" failonerror="false" />
 							</sequential>
 						</for>

@@ -115,6 +115,26 @@ public class AccountSerDes {
 			sb.append("\"");
 		}
 
+		if (account.getOrganizationIds() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"organizationIds\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getOrganizationIds().length; i++) {
+				sb.append(account.getOrganizationIds()[i]);
+
+				if ((i + 1) < account.getOrganizationIds().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (account.getParentAccountId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -181,6 +201,15 @@ public class AccountSerDes {
 			map.put("name", String.valueOf(account.getName()));
 		}
 
+		if (account.getOrganizationIds() == null) {
+			map.put("organizationIds", null);
+		}
+		else {
+			map.put(
+				"organizationIds",
+				String.valueOf(account.getOrganizationIds()));
+		}
+
 		if (account.getParentAccountId() == null) {
 			map.put("parentAccountId", null);
 		}
@@ -236,6 +265,12 @@ public class AccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					account.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "organizationIds")) {
+				if (jsonParserFieldValue != null) {
+					account.setOrganizationIds(
+						toLongs((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "parentAccountId")) {

@@ -20,12 +20,22 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 
 /**
  * @author Carlos Lancha
  */
-@DDMForm
+@DDMForm(
+	rules = {
+		@DDMFormRule(
+			actions = {
+				"setVisible('name', FALSE)"
+			},
+			condition = "TRUE"
+		)
+	}
+)
 @DDMFormLayout(
 	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.TABBED_MODE,
 	value = {
@@ -35,7 +45,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 				@DDMFormLayoutRow(
 					{
 						@DDMFormLayoutColumn(
-							size = 12, value = {"label", "repeatable", "rows"}
+							size = 12, value = {"label", "name", "repeatable", "rows"}
 						)
 					}
 				)
@@ -46,7 +56,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 public interface SectionDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField(dataType = "json", type = "text", visibilityExpression = "FALSE")
+	@DDMFormField(
+		dataType = "json", type = "text", visibilityExpression = "FALSE"
+	)
 	public String rows();
 
 }

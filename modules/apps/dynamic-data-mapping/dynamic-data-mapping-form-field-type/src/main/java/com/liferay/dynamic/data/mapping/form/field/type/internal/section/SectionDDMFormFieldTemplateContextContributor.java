@@ -78,9 +78,7 @@ public class SectionDDMFormFieldTemplateContextContributor
 				"predefinedValue")
 		).put(
 			"rows",
-			getJSONArray(
-				DDMFormFieldTypeUtil.getPropertyValue(
-					ddmFormFieldRenderingContext, "rows"))
+			getJSONArray(GetterUtil.getString(ddmFormField.getProperty("rows")))
 		).put(
 			"value",
 			DDMFormFieldTypeUtil.getPropertyValue(

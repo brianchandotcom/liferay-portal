@@ -61,8 +61,8 @@ function EditableDecorationMask({classNames: elementsClassNames, elements}) {
 				newRects[editableId] = {
 					height: rect.height,
 					width: rect.width,
-					x: rect.x,
-					y: rect.y,
+					x: rect.left,
+					y: rect.top,
 				};
 			}
 		});

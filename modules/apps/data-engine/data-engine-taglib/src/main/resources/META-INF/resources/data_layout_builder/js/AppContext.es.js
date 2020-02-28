@@ -42,7 +42,7 @@ const initialState = {
 		disabledProperties: [],
 		disabledTabs: [],
 		multiPage: true,
-		unimplementedProperties: []
+		unimplementedProperties: [],
 	},
 	dataDefinition: {
 		dataDefinitionFields: [],
@@ -369,7 +369,7 @@ const createReducer = dataLayoutBuilder => {
 
 				return {
 					...state,
-					config: config || state.config
+					config: config || state.config,
 				};
 			}
 			case UPDATE_IDS: {

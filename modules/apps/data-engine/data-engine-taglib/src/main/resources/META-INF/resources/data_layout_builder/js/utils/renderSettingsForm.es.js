@@ -62,7 +62,7 @@ export const getFilteredSettingsContext = ({config, settingsContext}) => {
 
 	const unsupportedProperties = [
 		...config.unimplementedProperties,
-		...config.disabledProperties
+		...config.disabledProperties,
 	];
 
 	return {

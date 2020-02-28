@@ -121,4 +121,12 @@ public interface SamlConfiguration {
 	)
 	public int getSpMessageCheckInterval();
 
+	@Meta.AD(
+		deflt = "true",
+		description = "saml-idp-role-can-be-configured-description",
+		id = "saml.idp.role.can.be.configured",
+		name = "saml-idp-role-can-be-configured", required = false
+	)
+	public boolean idpRoleCanBeConfigured();
+
 }

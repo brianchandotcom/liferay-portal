@@ -149,22 +149,23 @@ public class UpdateRolesMVCActionCommand extends BaseMVCActionCommand {
 
 		long[] groupIds = StringUtil.split(
 			ParamUtil.getString(portletRequest, groupIdsParam), 0L);
-		long[] rolesIds = StringUtil.split(
+		long[] roleIds = StringUtil.split(
 			ParamUtil.getString(portletRequest, roleIdsParam), 0L);
 
-		if (groupIds.length != rolesIds.length) {
+		if (groupIds.length != roleIds.length) {
 			return Collections.emptySet();
 		}
 
-		return IntStream.range(
-			0, groupIds.length
-		).filter(
-			i -> (groupIds[i] == 0) || (rolesIds[i] == 0)
-		).mapToObj(
-			i -> _getUserGroupRole(userId, groupIds[i], rolesIds[i])
-		).collect(
-			Collectors.toSet()
-		);
+		Set<UserGroupRole> userGroupRoles = new HashSet<>();
+
+		for (int i = 0; i < groupIds.length; i++) {
+			if ((groupIds[i] != 0) && (roleIds[i] != 0)) {
+				userGroupRoles.add(
+					_getUserGroupRole(userId, groupIds[i], roleIds[i]));
+			}
+		}
+
+		return userGroupRoles;
 	}
 
 	private long _getUserId(User user) {

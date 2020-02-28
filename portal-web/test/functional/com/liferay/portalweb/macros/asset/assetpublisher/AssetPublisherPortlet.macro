@@ -517,6 +517,8 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
+			Navigator.gotoNavTab(navTab = "My Sites");
+
 			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 			if ("${siteScopeType}" != "Parent Site") {

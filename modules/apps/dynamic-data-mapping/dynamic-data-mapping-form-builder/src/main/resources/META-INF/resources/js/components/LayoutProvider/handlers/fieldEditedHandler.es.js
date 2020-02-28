@@ -20,16 +20,11 @@ import {
 	updateSettingsContextProperty,
 } from '../util/settingsContext.es';
 
-export const updatePages = (
-	editingLanguageId,
-	pages,
-	previousFieldName,
-	newFieldName,
-	propertyName,
-	propertyValue
-) => {
+export const updatePages = (props, pages, previousFieldName, newField) => {
 	let parentFieldName;
 	const visitor = new PagesVisitor(pages);
+
+	const {fieldName: newFieldName} = newField;
 
 	let newPages = visitor.mapFields(
 		(field, fieldIndex, columnIndex, rowIndex, pageIndex, parentField) => {
@@ -38,18 +33,7 @@ export const updatePages = (
 					parentFieldName = parentField.fieldName;
 				}
 
-				return {
-					...field,
-					fieldName: newFieldName,
-					name: newFieldName,
-					[propertyName]: propertyValue,
-					settingsContext: updateSettingsContextProperty(
-						editingLanguageId,
-						field.settingsContext,
-						propertyName,
-						propertyValue
-					),
-				};
+				return newField;
 			}
 
 			return field;
@@ -85,7 +69,7 @@ export const updatePages = (
 						...field,
 						rows,
 						settingsContext: updateSettingsContextProperty(
-							editingLanguageId,
+							props.editingLanguageId,
 							field.settingsContext,
 							'rows',
 							rows
@@ -104,24 +88,20 @@ export const updatePages = (
 };
 
 export const updateState = (props, state, propertyName, propertyValue) => {
-	const {editingLanguageId} = props;
 	const {focusedField, pages, rules} = state;
-	const {fieldName: previousFieldName} = focusedField;
+	const {fieldName: previousFocusedFieldName} = focusedField;
 	const newFocusedField = updateField(
 		props,
 		focusedField,
 		propertyName,
 		propertyValue
 	);
-	const {fieldName: newFieldName} = newFocusedField;
 
 	const newPages = updatePages(
-		editingLanguageId,
+		props,
 		pages,
-		previousFieldName,
-		newFieldName,
-		propertyName,
-		newFocusedField[propertyName]
+		previousFocusedFieldName,
+		newFocusedField
 	);
 
 	return {

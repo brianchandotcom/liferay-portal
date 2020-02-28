@@ -376,21 +376,18 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFocusedFieldUpdated(focusedField) {
-		const {columnIndex, pageIndex, rowIndex} = focusedField;
-		const {pages} = this.state;
+		const {settingsContext} = focusedField;
+		let {state} = this;
+		const visitor = new PagesVisitor(settingsContext.pages);
 
-		this.setState({
-			focusedField,
-			pages: this._setColumnFields(
-				pages,
-				{
-					columnIndex,
-					pageIndex,
-					rowIndex,
-				},
-				[focusedField]
-			),
+		visitor.mapFields(({fieldName, value}) => {
+			state = handleFieldEdited(this.props, state, {
+				propertyName: fieldName,
+				propertyValue: value,
+			});
 		});
+
+		this.setState(state);
 	}
 
 	_handleLanguageIdDeleted({locale}) {
@@ -526,18 +523,6 @@ class LayoutProvider extends Component {
 		const {rules} = this.props;
 
 		return rules;
-	}
-
-	_setColumnFields(pages, target, fields) {
-		const {columnIndex, pageIndex, rowIndex} = target;
-
-		return FormSupport.setColumnFields(
-			pages,
-			pageIndex,
-			rowIndex,
-			columnIndex,
-			fields
-		);
 	}
 
 	_setEvents(value) {

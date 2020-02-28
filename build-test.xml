@@ -12338,7 +12338,7 @@ url=${short.hostname}:8080</echo>
 
 							../gradlew \
 								-Danalytics.cloud.url=${analytics.cloud.faro.frontend.url} \
-								-Dbrowser.chrome.bin.args=${browser.chrome.bin.args} \
+								-Dbrowser.chrome.bin.args='${browser.chrome.bin.args}' \
 								-Dbrowser.chrome.bin.file=${browser.chrome.bin.file} \
 								-Dbrowser.type=chrome \
 								-Dchrome.driver.version=${selenium.chrome.driver.version} \

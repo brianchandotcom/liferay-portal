@@ -16,17 +16,16 @@ package com.liferay.depot.web.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -77,30 +76,26 @@ public class DepotAdminGroupSearchProvider {
 		List<Group> results = null;
 
 		if (searchTerms.hasSearchTerms()) {
-			int total = _groupLocalService.searchCount(
+			int total = _groupService.searchCount(
 				company.getCompanyId(), _classNameIds,
 				searchTerms.getKeywords(), groupParams);
 
 			groupSearch.setTotal(total);
 
-			results = _groupLocalService.search(
+			results = _groupService.search(
 				company.getCompanyId(), _classNameIds,
 				searchTerms.getKeywords(), groupParams, groupSearch.getStart(),
 				groupSearch.getEnd(), groupSearch.getOrderByComparator());
 		}
 		else {
-			long groupId = ParamUtil.getLong(
-				portletRequest, "groupId",
-				GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-			int total = _groupLocalService.searchCount(
-				company.getCompanyId(), _classNameIds, groupId,
+			int total = _groupService.searchCount(
+				company.getCompanyId(), _classNameIds,
 				searchTerms.getKeywords(), groupParams);
 
 			groupSearch.setTotal(total);
 
-			results = _groupLocalService.search(
-				company.getCompanyId(), _classNameIds, groupId,
+			results = _groupService.search(
+				company.getCompanyId(), _classNameIds,
 				searchTerms.getKeywords(), groupParams, groupSearch.getStart(),
 				groupSearch.getEnd(), groupSearch.getOrderByComparator());
 		}
@@ -135,11 +130,11 @@ public class DepotAdminGroupSearchProvider {
 		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);
 
 		groupSearch.setTotal(
-			_depotEntryLocalService.getGroupConnectedDepotEntriesCount(
+			_depotEntryService.getGroupConnectedDepotEntriesCount(
 				themeDisplay.getScopeGroupId()));
 
 		List<DepotEntry> depotEntries =
-			_depotEntryLocalService.getGroupConnectedDepotEntries(
+			_depotEntryService.getGroupConnectedDepotEntries(
 				themeDisplay.getScopeGroupId(), groupSearch.getStart(),
 				groupSearch.getEnd());
 
@@ -166,6 +161,9 @@ public class DepotAdminGroupSearchProvider {
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
+	private DepotEntryService _depotEntryService;
+
+	@Reference
+	private GroupService _groupService;
 
 }

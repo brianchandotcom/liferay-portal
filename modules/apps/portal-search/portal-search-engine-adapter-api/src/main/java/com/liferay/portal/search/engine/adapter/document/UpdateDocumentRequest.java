@@ -93,6 +93,10 @@ public class UpdateDocumentRequest
 		return _refresh;
 	}
 
+	public boolean isUpsert() {
+		return _upsert;
+	}
+
 	public void setRefresh(boolean refresh) {
 		_refresh = refresh;
 	}
@@ -101,11 +105,16 @@ public class UpdateDocumentRequest
 		_type = type;
 	}
 
+	public void setUpsert(boolean upsert) {
+		_upsert = upsert;
+	}
+
 	private final Document _document;
 	private final String _indexName;
 	private final com.liferay.portal.kernel.search.Document _legacyDocument;
 	private boolean _refresh;
 	private String _type;
 	private final String _uid;
+	private boolean _upsert;
 
 }

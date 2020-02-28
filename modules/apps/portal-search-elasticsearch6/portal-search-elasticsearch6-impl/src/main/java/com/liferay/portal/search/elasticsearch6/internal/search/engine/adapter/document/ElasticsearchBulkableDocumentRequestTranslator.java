@@ -120,6 +120,7 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 		UpdateRequestBuilder updateRequestBuilder = client.prepareUpdate();
 
 		_setDoc(updateRequestBuilder, updateDocumentRequest);
+		_setDocAsUpsert(updateRequestBuilder, updateDocumentRequest.isUpsert());
 		_setRefreshPolicy(
 			updateRequestBuilder, updateDocumentRequest.isRefresh());
 
@@ -225,6 +226,14 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 
 			updateRequestBuilder.setDoc(
 				elasticsearchDocument, XContentType.JSON);
+		}
+	}
+
+	private void _setDocAsUpsert(
+		UpdateRequestBuilder updateRequestBuilder, boolean upsert) {
+
+		if (upsert) {
+			updateRequestBuilder.setDocAsUpsert(upsert);
 		}
 	}
 

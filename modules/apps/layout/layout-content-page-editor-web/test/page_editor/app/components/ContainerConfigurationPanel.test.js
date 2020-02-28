@@ -18,7 +18,6 @@ import React from 'react';
 
 import {ContainerConfigurationPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/ContainerConfigurationPanel';
 import {CONTAINER_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/containerTypes';
-import {PADDING_OPTIONS} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/paddingOptions';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 
 jest.mock(
@@ -52,6 +51,37 @@ jest.mock(
 
 describe('ContainerConfigurationPanel', () => {
 	afterEach(cleanup);
+
+	const PADDING_OPTIONS = [
+		{
+			label: '0',
+			value: '0',
+		},
+		{
+			label: '1',
+			value: '3',
+		},
+		{
+			label: '2',
+			value: '4',
+		},
+		{
+			label: '4',
+			value: '5',
+		},
+		{
+			label: '6',
+			value: '6',
+		},
+		{
+			label: '8',
+			value: '7',
+		},
+		{
+			label: '10',
+			value: '8',
+		},
+	];
 
 	['top', 'bottom', 'horizontal'].forEach(paddingDirection => {
 		const paddingLabel = `padding-${paddingDirection}`;

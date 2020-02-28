@@ -40,9 +40,9 @@ export default ({
 		() =>
 			dispatch({
 				payload: {
-					config
+					config,
 				},
-				type: UPDATE_CONFIG
+				type: UPDATE_CONFIG,
 			}),
 		[config, dispatch]
 	);

@@ -73,8 +73,9 @@ public interface KaleoConditionLocalService
 	public KaleoCondition addKaleoCondition(KaleoCondition kaleoCondition);
 
 	public KaleoCondition addKaleoCondition(
-			long kaleoDefinitionVersionId, long kaleoNodeId,
-			Condition condition, ServiceContext serviceContext)
+			long kaleoDefinitionId, long kaleoDefinitionVersionId,
+			long kaleoNodeId, Condition condition,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

@@ -71,6 +71,7 @@ public class KaleoTaskFormModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"kaleoDefinitionId", Types.BIGINT},
 		{"kaleoDefinitionVersionId", Types.BIGINT},
 		{"kaleoNodeId", Types.BIGINT}, {"kaleoTaskId", Types.BIGINT},
 		{"kaleoTaskName", Types.VARCHAR}, {"name", Types.VARCHAR},
@@ -92,6 +93,7 @@ public class KaleoTaskFormModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("kaleoDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoDefinitionVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoNodeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoTaskId", Types.BIGINT);
@@ -108,7 +110,7 @@ public class KaleoTaskFormModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoTaskForm (mvccVersion LONG default 0 not null,kaleoTaskFormId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,kaleoTaskId LONG,kaleoTaskName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,formCompanyId LONG,formDefinition STRING null,formGroupId LONG,formId LONG,formUuid VARCHAR(75) null,metadata STRING null,priority INTEGER)";
+		"create table KaleoTaskForm (mvccVersion LONG default 0 not null,kaleoTaskFormId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,kaleoTaskId LONG,kaleoTaskName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,formCompanyId LONG,formDefinition STRING null,formGroupId LONG,formId LONG,formUuid VARCHAR(75) null,metadata STRING null,priority INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoTaskForm";
 
@@ -308,6 +310,12 @@ public class KaleoTaskFormModelImpl
 			"modifiedDate",
 			(BiConsumer<KaleoTaskForm, Date>)KaleoTaskForm::setModifiedDate);
 		attributeGetterFunctions.put(
+			"kaleoDefinitionId", KaleoTaskForm::getKaleoDefinitionId);
+		attributeSetterBiConsumers.put(
+			"kaleoDefinitionId",
+			(BiConsumer<KaleoTaskForm, Long>)
+				KaleoTaskForm::setKaleoDefinitionId);
+		attributeGetterFunctions.put(
 			"kaleoDefinitionVersionId",
 			KaleoTaskForm::getKaleoDefinitionVersionId);
 		attributeSetterBiConsumers.put(
@@ -493,6 +501,16 @@ public class KaleoTaskFormModelImpl
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public long getKaleoDefinitionId() {
+		return _kaleoDefinitionId;
+	}
+
+	@Override
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		_kaleoDefinitionId = kaleoDefinitionId;
 	}
 
 	@Override
@@ -747,6 +765,7 @@ public class KaleoTaskFormModelImpl
 		kaleoTaskFormImpl.setUserName(getUserName());
 		kaleoTaskFormImpl.setCreateDate(getCreateDate());
 		kaleoTaskFormImpl.setModifiedDate(getModifiedDate());
+		kaleoTaskFormImpl.setKaleoDefinitionId(getKaleoDefinitionId());
 		kaleoTaskFormImpl.setKaleoDefinitionVersionId(
 			getKaleoDefinitionVersionId());
 		kaleoTaskFormImpl.setKaleoNodeId(getKaleoNodeId());
@@ -898,6 +917,8 @@ public class KaleoTaskFormModelImpl
 			kaleoTaskFormCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		kaleoTaskFormCacheModel.kaleoDefinitionId = getKaleoDefinitionId();
+
 		kaleoTaskFormCacheModel.kaleoDefinitionVersionId =
 			getKaleoDefinitionVersionId();
 
@@ -1048,6 +1069,7 @@ public class KaleoTaskFormModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _kaleoDefinitionId;
 	private long _kaleoDefinitionVersionId;
 	private long _originalKaleoDefinitionVersionId;
 	private boolean _setOriginalKaleoDefinitionVersionId;

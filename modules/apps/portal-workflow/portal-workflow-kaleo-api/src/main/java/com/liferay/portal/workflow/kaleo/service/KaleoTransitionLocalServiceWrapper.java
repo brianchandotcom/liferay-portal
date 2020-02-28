@@ -51,7 +51,8 @@ public class KaleoTransitionLocalServiceWrapper
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoTransition
 			addKaleoTransition(
-				long kaleoDefinitionVersionId, long kaleoNodeId,
+				long kaleoDefinitionId, long kaleoDefinitionVersionId,
+				long kaleoNodeId,
 				com.liferay.portal.workflow.kaleo.definition.Transition
 					transition,
 				com.liferay.portal.workflow.kaleo.model.KaleoNode
@@ -62,8 +63,8 @@ public class KaleoTransitionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoTransitionLocalService.addKaleoTransition(
-			kaleoDefinitionVersionId, kaleoNodeId, transition, sourceKaleoNode,
-			targetKaleoNode, serviceContext);
+			kaleoDefinitionId, kaleoDefinitionVersionId, kaleoNodeId,
+			transition, sourceKaleoNode, targetKaleoNode, serviceContext);
 	}
 
 	/**

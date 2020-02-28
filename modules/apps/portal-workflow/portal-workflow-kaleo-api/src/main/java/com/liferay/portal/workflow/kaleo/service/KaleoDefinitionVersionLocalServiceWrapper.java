@@ -53,13 +53,14 @@ public class KaleoDefinitionVersionLocalServiceWrapper
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion
 			addKaleoDefinitionVersion(
-				String name, String title, String description, String content,
-				String version,
+				long kaleoDefinitionId, String name, String title,
+				String description, String content, String version,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
-			name, title, description, content, version, serviceContext);
+			kaleoDefinitionId, name, title, description, content, version,
+			serviceContext);
 	}
 
 	/**

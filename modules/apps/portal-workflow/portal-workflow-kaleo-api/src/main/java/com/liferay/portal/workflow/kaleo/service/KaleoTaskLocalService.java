@@ -73,8 +73,8 @@ public interface KaleoTaskLocalService
 	public KaleoTask addKaleoTask(KaleoTask kaleoTask);
 
 	public KaleoTask addKaleoTask(
-			long kaleoDefinitionVersionId, long kaleoNodeId, Task task,
-			ServiceContext serviceContext)
+			long kaleoDefinitionId, long kaleoDefinitionVersionId,
+			long kaleoNodeId, Task task, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

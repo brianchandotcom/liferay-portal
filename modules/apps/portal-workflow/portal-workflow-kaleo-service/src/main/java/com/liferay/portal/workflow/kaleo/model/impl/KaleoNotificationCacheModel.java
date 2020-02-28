@@ -78,7 +78,7 @@ public class KaleoNotificationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,6 +100,8 @@ public class KaleoNotificationCacheModel
 		sb.append(kaleoClassName);
 		sb.append(", kaleoClassPK=");
 		sb.append(kaleoClassPK);
+		sb.append(", kaleoDefinitionId=");
+		sb.append(kaleoDefinitionId);
 		sb.append(", kaleoDefinitionVersionId=");
 		sb.append(kaleoDefinitionVersionId);
 		sb.append(", kaleoNodeName=");
@@ -161,6 +163,7 @@ public class KaleoNotificationCacheModel
 		}
 
 		kaleoNotificationImpl.setKaleoClassPK(kaleoClassPK);
+		kaleoNotificationImpl.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoNotificationImpl.setKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId);
 
@@ -236,6 +239,8 @@ public class KaleoNotificationCacheModel
 
 		kaleoClassPK = objectInput.readLong();
 
+		kaleoDefinitionId = objectInput.readLong();
+
 		kaleoDefinitionVersionId = objectInput.readLong();
 		kaleoNodeName = objectInput.readUTF();
 		name = objectInput.readUTF();
@@ -276,6 +281,8 @@ public class KaleoNotificationCacheModel
 		}
 
 		objectOutput.writeLong(kaleoClassPK);
+
+		objectOutput.writeLong(kaleoDefinitionId);
 
 		objectOutput.writeLong(kaleoDefinitionVersionId);
 
@@ -339,6 +346,7 @@ public class KaleoNotificationCacheModel
 	public long modifiedDate;
 	public String kaleoClassName;
 	public long kaleoClassPK;
+	public long kaleoDefinitionId;
 	public long kaleoDefinitionVersionId;
 	public String kaleoNodeName;
 	public String name;

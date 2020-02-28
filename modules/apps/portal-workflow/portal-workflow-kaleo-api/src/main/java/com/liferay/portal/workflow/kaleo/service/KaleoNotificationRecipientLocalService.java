@@ -74,8 +74,9 @@ public interface KaleoNotificationRecipientLocalService
 		KaleoNotificationRecipient kaleoNotificationRecipient);
 
 	public KaleoNotificationRecipient addKaleoNotificationRecipient(
-			long kaleoDefinitionVersionId, long kaleoNotificationId,
-			Recipient recipient, ServiceContext serviceContext)
+			long kaleoDefinitionId, long kaleoDefinitionVersionId,
+			long kaleoNotificationId, Recipient recipient,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

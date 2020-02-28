@@ -73,7 +73,7 @@ public interface KaleoNodeLocalService
 	public KaleoNode addKaleoNode(KaleoNode kaleoNode);
 
 	public KaleoNode addKaleoNode(
-			long kaleoDefinitionVersionId, Node node,
+			long kaleoDefinitionId, long kaleoDefinitionVersionId, Node node,
 			ServiceContext serviceContext)
 		throws PortalException;
 

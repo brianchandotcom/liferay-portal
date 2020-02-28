@@ -142,6 +142,9 @@ public class KaleoTaskFormInstancePersistenceTest {
 
 		newKaleoTaskFormInstance.setModifiedDate(RandomTestUtil.nextDate());
 
+		newKaleoTaskFormInstance.setKaleoDefinitionId(
+			RandomTestUtil.nextLong());
+
 		newKaleoTaskFormInstance.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());
 
@@ -199,6 +202,9 @@ public class KaleoTaskFormInstancePersistenceTest {
 			Time.getShortTimestamp(
 				existingKaleoTaskFormInstance.getModifiedDate()),
 			Time.getShortTimestamp(newKaleoTaskFormInstance.getModifiedDate()));
+		Assert.assertEquals(
+			existingKaleoTaskFormInstance.getKaleoDefinitionId(),
+			newKaleoTaskFormInstance.getKaleoDefinitionId());
 		Assert.assertEquals(
 			existingKaleoTaskFormInstance.getKaleoDefinitionVersionId(),
 			newKaleoTaskFormInstance.getKaleoDefinitionVersionId());
@@ -304,12 +310,12 @@ public class KaleoTaskFormInstancePersistenceTest {
 			"KaleoTaskFormInstance", "mvccVersion", true,
 			"kaleoTaskFormInstanceId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionVersionId", true,
-			"kaleoInstanceId", true, "kaleoTaskId", true,
-			"kaleoTaskInstanceTokenId", true, "kaleoTaskFormId", true,
-			"formValues", true, "formValueEntryGroupId", true,
-			"formValueEntryId", true, "formValueEntryUuid", true, "metadata",
-			true);
+			"modifiedDate", true, "kaleoDefinitionId", true,
+			"kaleoDefinitionVersionId", true, "kaleoInstanceId", true,
+			"kaleoTaskId", true, "kaleoTaskInstanceTokenId", true,
+			"kaleoTaskFormId", true, "formValues", true,
+			"formValueEntryGroupId", true, "formValueEntryId", true,
+			"formValueEntryUuid", true, "metadata", true);
 	}
 
 	@Test
@@ -586,6 +592,8 @@ public class KaleoTaskFormInstancePersistenceTest {
 		kaleoTaskFormInstance.setCreateDate(RandomTestUtil.nextDate());
 
 		kaleoTaskFormInstance.setModifiedDate(RandomTestUtil.nextDate());
+
+		kaleoTaskFormInstance.setKaleoDefinitionId(RandomTestUtil.nextLong());
 
 		kaleoTaskFormInstance.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());

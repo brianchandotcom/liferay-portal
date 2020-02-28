@@ -54,7 +54,8 @@ public class KaleoNotificationRecipientLocalServiceWrapper
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient
 			addKaleoNotificationRecipient(
-				long kaleoDefinitionVersionId, long kaleoNotificationId,
+				long kaleoDefinitionId, long kaleoDefinitionVersionId,
+				long kaleoNotificationId,
 				com.liferay.portal.workflow.kaleo.definition.Recipient
 					recipient,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -62,8 +63,8 @@ public class KaleoNotificationRecipientLocalServiceWrapper
 
 		return _kaleoNotificationRecipientLocalService.
 			addKaleoNotificationRecipient(
-				kaleoDefinitionVersionId, kaleoNotificationId, recipient,
-				serviceContext);
+				kaleoDefinitionId, kaleoDefinitionVersionId,
+				kaleoNotificationId, recipient, serviceContext);
 	}
 
 	/**

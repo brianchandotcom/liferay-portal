@@ -66,7 +66,7 @@ const SLAInfo = ({processId}) => {
 					title={Liferay.Language.get('warning')}
 				>
 					{`${sub(blockedSLAText, [
-						blockedSLACount
+						blockedSLACount,
 					])} ${Liferay.Language.get(
 						'fix-the-sla-configuration-to-resume-accurate-reporting'
 					)} `}

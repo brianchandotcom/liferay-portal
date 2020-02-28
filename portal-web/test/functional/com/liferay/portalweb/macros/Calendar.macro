@@ -683,12 +683,6 @@ definition {
 
 		Navigator.gotoPage(pageName = "${pageName}");
 
-		Calendar.chooseOtherCalendarMenulistOption(
-			calendarName = "${calendarName}",
-			menuListOption = "RSS");
-
-		Navigator.gotoPage(pageName = "${pageName}");
-
 		Calendar.viewCalendarColorPicker(
 			calendarName = "${calendarName}",
 			color = "${color}");

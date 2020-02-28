@@ -14,6 +14,10 @@
 
 package com.liferay.data.engine.configuration;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Map;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -25,6 +29,12 @@ public interface DataLayoutBuilderConfiguration {
 
 	public default String[] getDisabledTabs() {
 		return new String[0];
+	}
+
+	public default Map<String, Object> getSuccessPageSettings() {
+		return HashMapBuilder.<String, Object>put(
+			"enabled", true
+		).build();
 	}
 
 	public default String[] getUnimplementedProperties() {

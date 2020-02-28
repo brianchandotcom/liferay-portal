@@ -33,7 +33,6 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -55,7 +54,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.portal.service.http.LayoutServiceHttp;
 
 import java.io.IOException;
@@ -293,15 +291,8 @@ public class ExportImportChangesetMVCActionCommandImpl
 					currentThread.setContextClassLoader(
 						PortalClassLoaderUtil.getClassLoader());
 
-					Group liveGroup = GroupServiceHttp.getGroup(
-						httpPrincipal, liveGroupId);
-
-					Group controlPanelGroup = GroupServiceHttp.getGroup(
-						httpPrincipal, liveGroup.getCompanyId(),
-						GroupConstants.CONTROL_PANEL);
-
-					targetPlid = LayoutServiceHttp.getDefaultPlid(
-						httpPrincipal, controlPanelGroup.getGroupId(), true);
+					targetPlid = LayoutServiceHttp.getControlPanelLayoutPlid(
+						httpPrincipal);
 				}
 				finally {
 					currentThread.setContextClassLoader(contextClassLoader);

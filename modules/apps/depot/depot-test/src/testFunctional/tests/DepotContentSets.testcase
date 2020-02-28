@@ -36,11 +36,13 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC Depot 1 Title");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Second Depot Name",
+			site = "false",
 			title = "WC Depot 2 Title");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
@@ -106,6 +108,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC WebContent Title");
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -654,6 +657,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
 				groupName = "Test Depot Name",
+				site = "false",
 				title = "WC WebContent Title ${i}");
 		}
 
@@ -718,16 +722,19 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
+			site = "false",
 			title = "WC Depot 1 Title");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Second Depot Name",
+			site = "false",
 			title = "WC Depot 2 Title");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Third Depot Name",
+			site = "false",
 			title = "WC Depot 3 Title");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
@@ -767,6 +774,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
 				groupName = "Test Second Depot Name",
+				site = "false",
 				title = "WC WebContent Title ${i}");
 		}
 

@@ -212,8 +212,6 @@ definition {
 		}
 
 		task ("Add a blog") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
-
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",

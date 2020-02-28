@@ -51,15 +51,16 @@ public class KaleoTaskFormLocalServiceWrapper
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoTaskForm
 			addKaleoTaskForm(
-				long kaleoDefinitionVersionId, long kaleoNodeId,
+				long kaleoDefinitionId, long kaleoDefinitionVersionId,
+				long kaleoNodeId,
 				com.liferay.portal.workflow.kaleo.model.KaleoTask kaleoTask,
 				com.liferay.portal.workflow.kaleo.definition.TaskForm taskForm,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoTaskFormLocalService.addKaleoTaskForm(
-			kaleoDefinitionVersionId, kaleoNodeId, kaleoTask, taskForm,
-			serviceContext);
+			kaleoDefinitionId, kaleoDefinitionVersionId, kaleoNodeId, kaleoTask,
+			taskForm, serviceContext);
 	}
 
 	/**

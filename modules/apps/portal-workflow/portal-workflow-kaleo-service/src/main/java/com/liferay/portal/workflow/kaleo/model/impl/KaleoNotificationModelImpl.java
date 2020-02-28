@@ -72,6 +72,7 @@ public class KaleoNotificationModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"kaleoClassName", Types.VARCHAR}, {"kaleoClassPK", Types.BIGINT},
+		{"kaleoDefinitionId", Types.BIGINT},
 		{"kaleoDefinitionVersionId", Types.BIGINT},
 		{"kaleoNodeName", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"executionType", Types.VARCHAR},
@@ -93,6 +94,7 @@ public class KaleoNotificationModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("kaleoClassName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("kaleoClassPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("kaleoDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoDefinitionVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoNodeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -104,7 +106,7 @@ public class KaleoNotificationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoNotification (mvccVersion LONG default 0 not null,kaleoNotificationId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,template TEXT null,templateLanguage VARCHAR(75) null,notificationTypes VARCHAR(255) null)";
+		"create table KaleoNotification (mvccVersion LONG default 0 not null,kaleoNotificationId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,template TEXT null,templateLanguage VARCHAR(75) null,notificationTypes VARCHAR(255) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoNotification";
 
@@ -326,6 +328,12 @@ public class KaleoNotificationModelImpl
 			"kaleoClassPK",
 			(BiConsumer<KaleoNotification, Long>)
 				KaleoNotification::setKaleoClassPK);
+		attributeGetterFunctions.put(
+			"kaleoDefinitionId", KaleoNotification::getKaleoDefinitionId);
+		attributeSetterBiConsumers.put(
+			"kaleoDefinitionId",
+			(BiConsumer<KaleoNotification, Long>)
+				KaleoNotification::setKaleoDefinitionId);
 		attributeGetterFunctions.put(
 			"kaleoDefinitionVersionId",
 			KaleoNotification::getKaleoDefinitionVersionId);
@@ -549,6 +557,16 @@ public class KaleoNotificationModelImpl
 	}
 
 	@Override
+	public long getKaleoDefinitionId() {
+		return _kaleoDefinitionId;
+	}
+
+	@Override
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		_kaleoDefinitionId = kaleoDefinitionId;
+	}
+
+	@Override
 	public long getKaleoDefinitionVersionId() {
 		return _kaleoDefinitionVersionId;
 	}
@@ -732,6 +750,7 @@ public class KaleoNotificationModelImpl
 		kaleoNotificationImpl.setModifiedDate(getModifiedDate());
 		kaleoNotificationImpl.setKaleoClassName(getKaleoClassName());
 		kaleoNotificationImpl.setKaleoClassPK(getKaleoClassPK());
+		kaleoNotificationImpl.setKaleoDefinitionId(getKaleoDefinitionId());
 		kaleoNotificationImpl.setKaleoDefinitionVersionId(
 			getKaleoDefinitionVersionId());
 		kaleoNotificationImpl.setKaleoNodeName(getKaleoNodeName());
@@ -891,6 +910,8 @@ public class KaleoNotificationModelImpl
 
 		kaleoNotificationCacheModel.kaleoClassPK = getKaleoClassPK();
 
+		kaleoNotificationCacheModel.kaleoDefinitionId = getKaleoDefinitionId();
+
 		kaleoNotificationCacheModel.kaleoDefinitionVersionId =
 			getKaleoDefinitionVersionId();
 
@@ -1043,6 +1064,7 @@ public class KaleoNotificationModelImpl
 	private long _kaleoClassPK;
 	private long _originalKaleoClassPK;
 	private boolean _setOriginalKaleoClassPK;
+	private long _kaleoDefinitionId;
 	private long _kaleoDefinitionVersionId;
 	private long _originalKaleoDefinitionVersionId;
 	private boolean _setOriginalKaleoDefinitionVersionId;

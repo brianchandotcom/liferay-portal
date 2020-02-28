@@ -54,14 +54,14 @@ public class KaleoInstanceLocalServiceUtil {
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoInstance
 			addKaleoInstance(
-				long kaleoDefinitionVersionId, String kaleoDefinitionName,
-				int kaleoDefinitionVersion,
+				long kaleoDefinitionId, long kaleoDefinitionVersionId,
+				String kaleoDefinitionName, int kaleoDefinitionVersion,
 				java.util.Map<String, java.io.Serializable> workflowContext,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addKaleoInstance(
-			kaleoDefinitionVersionId, kaleoDefinitionName,
+			kaleoDefinitionId, kaleoDefinitionVersionId, kaleoDefinitionName,
 			kaleoDefinitionVersion, workflowContext, serviceContext);
 	}
 

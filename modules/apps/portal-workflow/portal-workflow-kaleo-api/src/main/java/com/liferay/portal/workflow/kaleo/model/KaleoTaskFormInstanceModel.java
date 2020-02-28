@@ -204,6 +204,20 @@ public interface KaleoTaskFormInstanceModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the kaleo definition ID of this kaleo task form instance.
+	 *
+	 * @return the kaleo definition ID of this kaleo task form instance
+	 */
+	public long getKaleoDefinitionId();
+
+	/**
+	 * Sets the kaleo definition ID of this kaleo task form instance.
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo task form instance
+	 */
+	public void setKaleoDefinitionId(long kaleoDefinitionId);
+
+	/**
 	 * Returns the kaleo definition version ID of this kaleo task form instance.
 	 *
 	 * @return the kaleo definition version ID of this kaleo task form instance

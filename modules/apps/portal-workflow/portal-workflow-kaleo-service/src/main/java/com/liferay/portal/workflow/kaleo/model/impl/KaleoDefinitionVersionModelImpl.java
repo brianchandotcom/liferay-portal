@@ -83,10 +83,10 @@ public class KaleoDefinitionVersionModelImpl
 		{"userName", Types.VARCHAR}, {"statusByUserId", Types.BIGINT},
 		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"content", Types.CLOB},
-		{"version", Types.VARCHAR}, {"startKaleoNodeId", Types.BIGINT},
-		{"status", Types.INTEGER}
+		{"kaleoDefinitionId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"content", Types.CLOB}, {"version", Types.VARCHAR},
+		{"startKaleoNodeId", Types.BIGINT}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -104,6 +104,7 @@ public class KaleoDefinitionVersionModelImpl
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("kaleoDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
@@ -114,7 +115,7 @@ public class KaleoDefinitionVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoDefinitionVersion (mvccVersion LONG default 0 not null,kaleoDefinitionVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,title STRING null,description STRING null,content TEXT null,version VARCHAR(75) null,startKaleoNodeId LONG,status INTEGER)";
+		"create table KaleoDefinitionVersion (mvccVersion LONG default 0 not null,kaleoDefinitionVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,name VARCHAR(200) null,title STRING null,description STRING null,content TEXT null,version VARCHAR(75) null,startKaleoNodeId LONG,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table KaleoDefinitionVersion";
@@ -346,6 +347,12 @@ public class KaleoDefinitionVersionModelImpl
 			"modifiedDate",
 			(BiConsumer<KaleoDefinitionVersion, Date>)
 				KaleoDefinitionVersion::setModifiedDate);
+		attributeGetterFunctions.put(
+			"kaleoDefinitionId", KaleoDefinitionVersion::getKaleoDefinitionId);
+		attributeSetterBiConsumers.put(
+			"kaleoDefinitionId",
+			(BiConsumer<KaleoDefinitionVersion, Long>)
+				KaleoDefinitionVersion::setKaleoDefinitionId);
 		attributeGetterFunctions.put("name", KaleoDefinitionVersion::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -561,6 +568,16 @@ public class KaleoDefinitionVersionModelImpl
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public long getKaleoDefinitionId() {
+		return _kaleoDefinitionId;
+	}
+
+	@Override
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		_kaleoDefinitionId = kaleoDefinitionId;
 	}
 
 	@Override
@@ -963,6 +980,7 @@ public class KaleoDefinitionVersionModelImpl
 		kaleoDefinitionVersionImpl.setStatusDate(getStatusDate());
 		kaleoDefinitionVersionImpl.setCreateDate(getCreateDate());
 		kaleoDefinitionVersionImpl.setModifiedDate(getModifiedDate());
+		kaleoDefinitionVersionImpl.setKaleoDefinitionId(getKaleoDefinitionId());
 		kaleoDefinitionVersionImpl.setName(getName());
 		kaleoDefinitionVersionImpl.setTitle(getTitle());
 		kaleoDefinitionVersionImpl.setDescription(getDescription());
@@ -1113,6 +1131,9 @@ public class KaleoDefinitionVersionModelImpl
 			kaleoDefinitionVersionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		kaleoDefinitionVersionCacheModel.kaleoDefinitionId =
+			getKaleoDefinitionId();
+
 		kaleoDefinitionVersionCacheModel.name = getName();
 
 		String name = kaleoDefinitionVersionCacheModel.name;
@@ -1250,6 +1271,7 @@ public class KaleoDefinitionVersionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _kaleoDefinitionId;
 	private String _name;
 	private String _originalName;
 	private String _title;

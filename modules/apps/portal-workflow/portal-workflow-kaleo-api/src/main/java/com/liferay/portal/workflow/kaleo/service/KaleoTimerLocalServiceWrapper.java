@@ -47,15 +47,15 @@ public class KaleoTimerLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoTimer addKaleoTimer(
-			String kaleoClassName, long kaleoClassPK,
+			String kaleoClassName, long kaleoClassPK, long kaleoDefinitionId,
 			long kaleoDefinitionVersionId,
 			com.liferay.portal.workflow.kaleo.definition.Timer timer,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoTimerLocalService.addKaleoTimer(
-			kaleoClassName, kaleoClassPK, kaleoDefinitionVersionId, timer,
-			serviceContext);
+			kaleoClassName, kaleoClassPK, kaleoDefinitionId,
+			kaleoDefinitionVersionId, timer, serviceContext);
 	}
 
 	/**

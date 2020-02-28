@@ -73,8 +73,9 @@ public interface KaleoDefinitionVersionLocalService
 		KaleoDefinitionVersion kaleoDefinitionVersion);
 
 	public KaleoDefinitionVersion addKaleoDefinitionVersion(
-			String name, String title, String description, String content,
-			String version, ServiceContext serviceContext)
+			long kaleoDefinitionId, String name, String title,
+			String description, String content, String version,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

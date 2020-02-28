@@ -232,6 +232,20 @@ public interface KaleoActionModel
 	public void setKaleoClassPK(long kaleoClassPK);
 
 	/**
+	 * Returns the kaleo definition ID of this kaleo action.
+	 *
+	 * @return the kaleo definition ID of this kaleo action
+	 */
+	public long getKaleoDefinitionId();
+
+	/**
+	 * Sets the kaleo definition ID of this kaleo action.
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo action
+	 */
+	public void setKaleoDefinitionId(long kaleoDefinitionId);
+
+	/**
 	 * Returns the kaleo definition version ID of this kaleo action.
 	 *
 	 * @return the kaleo definition version ID of this kaleo action

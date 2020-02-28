@@ -14,26 +14,85 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
-export const TextField = ({field, onValueSelect, value}) => (
-	<ClayForm.Group>
-		<label htmlFor={field.name}>{field.label}</label>
+export const TextField = ({field, onValueSelect, value}) => {
+	const [currentValue, setCurrentValue] = useState(value);
+	const [errorMessage, setErrorMessage] = useState('');
 
-		<ClayInput
-			id={field.name}
-			onChange={event => {
-				onValueSelect(field.name, event.target.value);
-			}}
-			placeholder={field.typeOptions ? field.typeOptions.placeholder : ''}
-			sizing="sm"
-			type="text"
-			value={value || field.defaultValue}
-		/>
-	</ClayForm.Group>
-);
+	const additionalAttributes = {
+		...(field.typeOptions && field.typeOptions.validation
+			? field.typeOptions.validation
+			: {}),
+		errorMessage: undefined,
+		regexp: undefined,
+	};
+
+	const fieldType =
+		field.typeOptions && field.typeOptions.validation
+			? field.typeOptions.validation.type
+			: 'text';
+
+	if (fieldType === 'pattern') {
+		additionalAttributes.type = 'text';
+		additionalAttributes.pattern =
+			field.typeOptions && field.typeOptions.validation
+				? field.typeOptions.validation.regexp
+				: '.*?';
+	}
+
+	return (
+		<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
+			<label htmlFor={field.name}>{field.label}</label>
+
+			<ClayInput
+				id={field.name}
+				onBlur={event => {
+					if (event.target.checkValidity()) {
+						setErrorMessage('');
+					}
+				}}
+				onChange={event => {
+					if (event.target.validity.valid) {
+						setErrorMessage('');
+
+						onValueSelect(field.name, event.target.value);
+					}
+					else {
+						setErrorMessage(
+							field.typeOptions && field.typeOptions.validation
+								? field.typeOptions.validation.errorMessage ||
+										Liferay.Language.get(
+											'you-have-entered-invalid-data'
+										)
+								: ''
+						);
+					}
+
+					setCurrentValue(event.target.value);
+				}}
+				placeholder={
+					field.typeOptions ? field.typeOptions.placeholder : ''
+				}
+				sizing="sm"
+				type={fieldType}
+				value={currentValue || value || field.defaultValue}
+				{...additionalAttributes}
+			/>
+
+			{errorMessage && (
+				<ClayForm.FeedbackGroup>
+					<ClayForm.FeedbackItem>
+						<ClayForm.FeedbackIndicator symbol="check-circle-full" />
+						{errorMessage}
+					</ClayForm.FeedbackItem>
+				</ClayForm.FeedbackGroup>
+			)}
+		</ClayForm.Group>
+	);
+};
 
 TextField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,

@@ -14,7 +14,7 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
-import com.liferay.account.admin.web.internal.util.AccountRoleRequestHelper;
+import com.liferay.account.admin.web.internal.helper.AccountRoleRequestHelper;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 

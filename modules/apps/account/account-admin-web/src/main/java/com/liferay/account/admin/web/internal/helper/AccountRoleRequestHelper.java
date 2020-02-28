@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.account.admin.web.internal.util;
+package com.liferay.account.admin.web.internal.helper;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;

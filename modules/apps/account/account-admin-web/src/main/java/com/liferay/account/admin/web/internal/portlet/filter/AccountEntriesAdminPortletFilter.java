@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.portlet.filter;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.account.admin.web.internal.util.AccountRoleRequestHelper;
+import com.liferay.account.admin.web.internal.helper.AccountRoleRequestHelper;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;

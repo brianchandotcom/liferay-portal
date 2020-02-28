@@ -34,9 +34,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -53,81 +51,55 @@ public class AssetCategorySearchTest extends BaseSearchTestCase {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchAttachments() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchBaseModelWithTrash() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchByDDMStructureField() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchByKeywordsInsideParentBaseModel() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchComments() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchCommentsByKeywords() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchExpireAllVersions() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchExpireLatestVersion() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchMyEntries() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchRecentEntries() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchStatus() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchVersions() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
 	public void testSearchWithinDDMStructure() throws Exception {
 	}
 

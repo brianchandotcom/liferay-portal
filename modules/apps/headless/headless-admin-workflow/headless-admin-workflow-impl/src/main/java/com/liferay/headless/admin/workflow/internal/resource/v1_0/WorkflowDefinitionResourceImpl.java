@@ -137,7 +137,7 @@ public class WorkflowDefinitionResourceImpl
 		};
 	}
 
-	@Reference
+	@Reference(target = "(proxy.bean=false)")
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

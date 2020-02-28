@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.internal.importer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
@@ -338,8 +339,8 @@ public class LayoutPageTemplatesImporterImpl
 
 		LayoutStructureItem layoutStructureItem =
 			layoutStructureItemHelper.addLayoutStructureItem(
-				layoutPageTemplateEntry, layoutStructure, pageElement,
-				parentItemId, position);
+				_fragmentCollectionContributorTracker, layoutPageTemplateEntry,
+				layoutStructure, pageElement, parentItemId, position);
 
 		if ((layoutStructureItem == null) ||
 			(pageElement.getPageElements() == null)) {
@@ -450,6 +451,10 @@ public class LayoutPageTemplatesImporterImpl
 		LayoutPageTemplatesImporterImpl.class);
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

@@ -160,10 +160,10 @@ export const getTags = (page = 1, siteKey) =>
             }
         }`);
 
-export const getMessage = messageBoardMessageId =>
+export const getMessage = (friendlyUrlPath, siteKey) =>
 	request(gql`
         query {
-            messageBoardMessage(messageBoardMessageId: ${messageBoardMessageId}){
+            messageBoardMessageByFriendlyUrlPath(friendlyUrlPath: ${friendlyUrlPath}, siteKey: ${siteKey}){
                 articleBody 
                 headline
                 id 
@@ -224,6 +224,7 @@ export const getThread = (
                         	rank
                         }
                         encodingFormat
+                        friendlyUrlPath
                         id
                         messageBoardMessages {
                             items {
@@ -286,6 +287,7 @@ export const getMessages = (
 						rank
 					}
                     encodingFormat
+                    friendlyUrlPath
                     id
                     messageBoardMessages {
                         items {
@@ -310,10 +312,10 @@ export const getMessages = (
             }
         }`).then(x => x.items);
 
-export const getThreadContent = messageBoardThreadId =>
+export const getThreadContent = (friendlyUrlPath, siteKey) =>
 	request(gql`
         query {
-            messageBoardThread(messageBoardThreadId: ${messageBoardThreadId}){
+            messageBoardThreadByFriendlyUrlPath(friendlyUrlPath: ${friendlyUrlPath}, siteKey: ${siteKey}){
                 articleBody 
                 headline
                 id 
@@ -378,7 +380,7 @@ export const getThreads = ({
 								}
 							}
 							viewCount
-						} 
+						}
 						page 
 						pageSize 
 						totalCount

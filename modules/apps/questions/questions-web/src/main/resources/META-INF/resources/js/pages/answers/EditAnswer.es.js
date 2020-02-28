@@ -16,28 +16,34 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {getMessage, updateMessage} from '../../utils/client.es';
 import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
+import {AppContext} from "../../AppContext.es";
 
 export default withRouter(
 	({
-		history,
-		match: {
-			params: {answerId},
-		},
-	}) => {
+		 history,
+		 match: {
+			 params: {answerId},
+		 },
+	 }) => {
+		const context = useContext(AppContext);
+
 		const [articleBody, setArticleBody] = useState('');
+		const [id, setId] = useState();
 
 		const loadMessage = () =>
-			getMessage(answerId).then(({articleBody}) =>
-				setArticleBody(articleBody)
+			getMessage(answerId, context.siteKey).then(({articleBody, id}) => {
+					setArticleBody(articleBody);
+					setId(id);
+				}
 			);
 
 		const submit = () => {
-			updateMessage(articleBody, answerId).then(() => history.goBack());
+			updateMessage(articleBody, id).then(() => history.goBack());
 		};
 
 		return (
@@ -50,7 +56,7 @@ export default withRouter(
 							{Liferay.Language.get('answer')}
 
 							<span className="c-ml-2 reference-mark">
-								<ClayIcon symbol="asterisk" />
+								<ClayIcon symbol="asterisk"/>
 							</span>
 						</label>
 

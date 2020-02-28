@@ -148,7 +148,7 @@ export default withRouter(
 									>
 										<Link
 											className="text-reset"
-											to={`${url}/answers/${answer.id}/edit`}
+											to={`${url}/answers/${answer.friendlyUrlPath}/edit`}
 										>
 											{Liferay.Language.get('edit')}
 										</Link>

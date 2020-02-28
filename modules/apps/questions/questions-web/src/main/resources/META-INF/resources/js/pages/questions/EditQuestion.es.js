@@ -16,11 +16,12 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {getThreadContent, updateThread} from '../../utils/client.es';
 import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
+import {AppContext} from "../../AppContext.es";
 
 export default withRouter(
 	({
@@ -29,15 +30,19 @@ export default withRouter(
 			params: {questionId, sectionId},
 		},
 	}) => {
+		const context = useContext(AppContext);
+
 		const [articleBody, setArticleBody] = useState('');
 		const [headline, setHeadline] = useState('');
+		const [id, setId] = useState('');
 		const [tags, setTags] = useState('');
 
 		const loadThread = () =>
-			getThreadContent(questionId).then(
-				({articleBody, headline, tags}) => {
+			getThreadContent(questionId, context.siteKey).then(
+				({articleBody, headline, id, tags}) => {
 					setArticleBody(articleBody);
 					setHeadline(headline);
+					setId(id);
 					if (tags) {
 						setTags(tags.toString());
 					}
@@ -45,7 +50,7 @@ export default withRouter(
 			);
 
 		const submit = () =>
-			updateThread(articleBody, headline, tags, questionId).then(() =>
+			updateThread(articleBody, headline, tags, id).then(() =>
 				history.goBack()
 			);
 

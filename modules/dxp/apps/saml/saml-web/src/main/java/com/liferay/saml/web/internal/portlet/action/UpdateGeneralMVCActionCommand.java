@@ -14,6 +14,7 @@
 
 package com.liferay.saml.web.internal.portlet.action;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -22,14 +23,19 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.runtime.configuration.SamlConfiguration;
+import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.util.PortletPropsKeys;
 import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
 
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -37,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.saml.runtime.configuration.SamlKeyStoreManagerConfiguration",
+	configurationPid = "com.liferay.saml.runtime.configuration.SamlConfiguration",
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SamlAdminPortletKeys.SAML_ADMIN,
@@ -46,6 +52,12 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_samlConfiguration = ConfigurableUtil.createConfigurable(
+			SamlConfiguration.class, properties);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -86,14 +98,57 @@ public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
+		String samlRole = unicodeProperties.getProperty(
+			PortletPropsKeys.SAML_ROLE);
+
+		SamlProviderConfiguration samlProviderConfiguration =
+			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
+
+		if (samlProviderConfiguration.enabled() && enabled &&
+			!StringUtil.equalsIgnoreCase(
+				samlProviderConfiguration.role(), samlRole)) {
+
+			SessionErrors.add(actionRequest, "roleInUse");
+
+			return;
+		}
+
+		if (!_validateRoleSelection(enabled, samlRole)) {
+			SessionErrors.add(actionRequest, "idpRoleNotConfigurable");
+
+			return;
+		}
+
 		_samlProviderConfigurationHelper.updateProperties(unicodeProperties);
 
 		actionResponse.setRenderParameter("mvcRenderCommandName", "/admin");
 		actionResponse.setRenderParameter("tabs1", "general");
 	}
 
+	private boolean _validateRoleSelection(boolean enabled, String samlRole) {
+		if (_samlConfiguration.idpRoleCanBeConfigured()) {
+			return true;
+		}
+
+		if (!_samlProviderConfigurationHelper.isRoleIdp() &&
+			samlRole.equals("idp")) {
+
+			return false;
+		}
+
+		if (!_samlProviderConfigurationHelper.isEnabled() && enabled &&
+			samlRole.equals("idp")) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	@Reference
 	private LocalEntityManager _localEntityManager;
+
+	private SamlConfiguration _samlConfiguration;
 
 	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;

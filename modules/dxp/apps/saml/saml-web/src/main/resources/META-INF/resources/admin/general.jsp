@@ -17,6 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+boolean currentSamlRoleIsSP = StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), "sp");
+boolean isRoleIdPAvailable = generalTabDefaultViewDisplayContext.isRoleIdPAvailable();
+
 UnicodeProperties properties = PropertiesParamUtil.getProperties(request, "settings--");
 
 String entityId = properties.getProperty(PortletPropsKeys.SAML_ENTITY_ID, (String)request.getAttribute(SamlWebKeys.SAML_ENTITY_ID));
@@ -36,9 +39,17 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 	<liferay-ui:error key="certificateInvalid" message="please-create-a-signing-credential-before-enabling" />
 	<liferay-ui:error key="entityIdInUse" message="saml-must-be-disabled-before-changing-the-entity-id" />
 	<liferay-ui:error key="entityIdTooLong" message="entity-id-too-long" />
+	<liferay-ui:error key="idpRoleNotConfigurable" message="the-identity-provider-role-is-not-available-for-configuration" />
+	<liferay-ui:error key="roleInUse" message="saml-must-be-disabled-before-changing-the-saml-role" />
 
 	<aui:fieldset>
 		<aui:input label="enabled" name='<%= "settings--" + PortletPropsKeys.SAML_ENABLED + "--" %>' type="checkbox" value="<%= samlProviderConfigurationHelper.isEnabled() %>" />
+
+		<c:if test='<%= !isRoleIdPAvailable && StringUtil.equalsIgnoreCase(samlProviderConfiguration.role(), "idp") %>'>
+			<div class="portlet-msg-info">
+				<liferay-ui:message key="the-identity-provider-role-is-not-available-for-configuration-please-migrate-to-an-alternate-idp-provider-solution" />
+			</div>
+		</c:if>
 
 		<aui:select label="saml-role" name='<%= "settings--" + PortletPropsKeys.SAML_ROLE + "--" %>' required="<%= true %>" showEmptyOption="<%= true %>">
 			<aui:option label="identity-provider" selected='<%= samlRole.equals("idp") %>' value="idp" />
@@ -81,7 +92,7 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 			</liferay-util:include>
 		</aui:fieldset>
 
-		<c:if test='<%= samlRole.equals("sp") %>'>
+		<c:if test="<%= currentSamlRoleIsSP %>">
 			<aui:fieldset label="encryption-certificate-and-private-key">
 				<liferay-util:include page="/admin/certificate_info.jsp" servletContext="<%= application %>">
 					<liferay-util:param name="certificateUsage" value="<%= LocalEntityManager.CertificateUsage.ENCRYPTION.name() %>" />

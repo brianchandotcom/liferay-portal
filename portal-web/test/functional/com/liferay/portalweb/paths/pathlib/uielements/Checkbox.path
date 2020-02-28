@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_CHECKBOX_CHECKED</td>
+	<td>//label[contains(.,'${checkboxName}')]/input[@type='checkbox' and @checked]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLOGS_ENTRY</td>
 	<td>//input[contains(@id,'BlogsEntry')]</td>
 	<td></td>

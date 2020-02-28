@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>SEARCH_INFO</td>
-	<td>//div[contains(@id,'ManagementToolbar')]//span[contains(@class,'text-truncate')]/span</td>
+	<td>//div[contains(@class,'container-fluid')]//span[contains(@class,'text-truncate')]/span</td>
 	<td></td>
 </tr>
 <tr>

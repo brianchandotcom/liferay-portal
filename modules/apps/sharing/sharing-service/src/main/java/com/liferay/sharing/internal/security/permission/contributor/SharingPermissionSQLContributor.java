@@ -15,6 +15,9 @@
 package com.liferay.sharing.internal.security.permission.contributor;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +29,10 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
+import com.liferay.sharing.model.SharingEntryTable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Extends inline permission SQL queries to also consider sharing entries when
@@ -45,6 +52,66 @@ public class SharingPermissionSQLContributor
 		_classNameLocalService = classNameLocalService;
 		_groupLocalService = groupLocalService;
 		_sharingConfigurationFactory = sharingConfigurationFactory;
+	}
+
+	@Override
+	public Predicate getPermissionPredicate(
+		PermissionChecker permissionChecker, String className,
+		Column<?, Long> classPKColumn, long[] groupIds) {
+
+		SharingConfiguration sharingConfiguration =
+			_sharingConfigurationFactory.getSystemSharingConfiguration();
+
+		if (!sharingConfiguration.isEnabled()) {
+			return null;
+		}
+
+		List<Long> disableGroupIds = new ArrayList<>();
+
+		if (groupIds != null) {
+			for (long groupId : groupIds) {
+				if (groupId == GroupConstants.DEFAULT_LIVE_GROUP_ID) {
+					continue;
+				}
+
+				SharingConfiguration groupSharingConfiguration =
+					_getSharingConfiguration(groupId);
+
+				if (!groupSharingConfiguration.isEnabled()) {
+					disableGroupIds.add(groupId);
+				}
+			}
+
+			if (disableGroupIds.size() == groupIds.length) {
+				return null;
+			}
+		}
+
+		return classPKColumn.in(
+			DSLQueryFactoryUtil.select(
+				SharingEntryTable.INSTANCE.classPK
+			).from(
+				SharingEntryTable.INSTANCE
+			).where(
+				() -> {
+					Predicate predicate =
+						SharingEntryTable.INSTANCE.toUserId.eq(
+							permissionChecker.getUserId()
+						).and(
+							SharingEntryTable.INSTANCE.classNameId.eq(
+								_classNameLocalService.getClassNameId(
+									className))
+						);
+
+					if (disableGroupIds.isEmpty()) {
+						return predicate;
+					}
+
+					return predicate.and(
+						SharingEntryTable.INSTANCE.groupId.notIn(
+							disableGroupIds.toArray(new Long[0])));
+				}
+			));
 	}
 
 	@Override

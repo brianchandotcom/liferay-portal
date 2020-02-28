@@ -448,6 +448,27 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		Predicate permissionPredicate = classPKColumn.in(
 			resourcePermissionDSLQuery);
 
+		List<PermissionSQLContributor> permissionSQLContributors =
+			_permissionSQLContributors.getService(modelClass.getName());
+
+		if ((permissionSQLContributors != null) &&
+			!permissionSQLContributors.isEmpty()) {
+
+			for (PermissionSQLContributor permissionSQLContributor :
+					permissionSQLContributors) {
+
+				Predicate contributorPermissionPredicate =
+					permissionSQLContributor.getPermissionPredicate(
+						permissionChecker, modelClass.getName(), classPKColumn,
+						groupIds);
+
+				if (contributorPermissionPredicate != null) {
+					permissionPredicate = permissionPredicate.or(
+						contributorPermissionPredicate.withParentheses());
+				}
+			}
+		}
+
 		Set<Long> groupIdSet = null;
 
 		for (long groupId : groupIds) {

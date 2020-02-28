@@ -341,7 +341,8 @@ export const getThreads = ({
 	sort = 'dateModified:desc',
 	tag = '',
 }) => {
-	const filterSections = `title eq '${sectionId}'`;
+
+	const filterSections = `title eq '${sectionId}' or id eq '${sectionId}'`;
 
 	let filter = '';
 
@@ -354,7 +355,7 @@ export const getThreads = ({
 
 	return request(gql`
         query {
-			messageBoardSections(siteKey: ${siteKey}, filter: ${filterSections}){
+			messageBoardSections(flatten: true, siteKey: ${siteKey}, filter: ${filterSections}){
 				items {
 					messageBoardThreads(filter: ${filter}, page: ${page}, pageSize: ${pageSize}, search: ${search}, sort: ${sort}){
 						items {
@@ -391,18 +392,33 @@ export const getThreads = ({
 };
 
 export const getSection = (title, siteKey) => {
-	const filter = `title eq '${title}'`;
+	const filter = `title eq '${title}' or id eq '${title}'`;
 
 	return request(gql`
 		query {
-			messageBoardSections(filter: ${filter}, pageSize: 1, siteKey: ${siteKey}) {
+			messageBoardSections(filter: ${filter}, flatten:true, pageSize: 1, siteKey: ${siteKey}) {
 				items {
-				  id
+					id
+					parentMessageBoardSectionId
+					title
 				}
 			}
 		}
-	`);
+	`).then(data => data.items[0]);
 };
+
+export const getChildSections = sectionId =>
+	request(gql`
+		query{
+			messageBoardSectionMessageBoardSections(parentMessageBoardSectionId: ${sectionId}){
+				items {
+					id
+					parentMessageBoardSectionId
+					title
+				}
+			}
+		}
+	`).then(data => data['items']);
 
 export const getRankedThreads = (
 	dateModified,
@@ -412,12 +428,12 @@ export const getRankedThreads = (
 	siteKey,
 	sort = ''
 ) =>
-	getSection(sectionId, siteKey)
-		.then(data => data.items[0].id)
-		.then(sectionId =>
-			request(gql`
+	getSection(sectionId, siteKey).then(section =>
+		request(gql`
         query {
-			messageBoardThreadsRanked(dateModified: ${dateModified.toISOString()}, messageBoardSectionId: ${sectionId}, page: ${page}, pageSize: ${pageSize}, sort: ${sort}){
+			messageBoardThreadsRanked(dateModified: ${dateModified.toISOString()}, messageBoardSectionId: ${
+			section.id
+		}, page: ${page}, pageSize: ${pageSize}, sort: ${sort}){
 				items {
 					aggregateRating {
 						ratingAverage
@@ -445,7 +461,7 @@ export const getRankedThreads = (
 				totalCount
         	}
 		}`)
-		);
+	);
 
 export const getRelatedThreads = (search = '', siteKey) =>
 	request(gql`
@@ -479,17 +495,13 @@ export const getSections = siteKey =>
 	request(gql`
 		query {
 			messageBoardSections(siteKey: ${siteKey}) {
-				actions
 				items {
 					description
 					id
 					numberOfMessageBoardThreads
+					parentMessageBoardSectionId
 					title
 				}
-				lastPage
-				page
-				pageSize
-				totalCount
 			}
 		}
 `);

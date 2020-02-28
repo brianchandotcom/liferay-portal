@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
@@ -34,7 +33,6 @@ export default ({
 		params: {creatorId, sectionId, tag},
 	},
 }) => {
-	const [activeFilter, setActiveFilter] = useState('modified');
 	const [error, setError] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [page, setPage] = useState(1);
@@ -52,6 +50,7 @@ export default ({
 		page,
 		pageSize,
 		sectionId,
+		search,
 		tag,
 		loadThreads,
 	]);
@@ -88,11 +87,9 @@ export default ({
 
 	const filterChange = type => {
 		if (type === 'modified') {
-			setActiveFilter('modified');
 			renderQuestions(loadThreads());
 		}
 		else if (type === 'week') {
-			setActiveFilter('week');
 			const date = new Date();
 			date.setDate(date.getDate() - 7);
 
@@ -107,7 +104,6 @@ export default ({
 			);
 		}
 		else if (type === 'month') {
-			setActiveFilter('month');
 			const date = new Date();
 			date.setDate(date.getDate() - 31);
 
@@ -122,7 +118,6 @@ export default ({
 			);
 		}
 		else {
-			setActiveFilter('created');
 			renderQuestions(loadThreads('dateCreated:desc'));
 		}
 	};
@@ -131,7 +126,9 @@ export default ({
 		<section className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
 			<QuestionsNavigationBar
 				filterChange={filterChange}
-				searchChange={setSearch}
+				searchChange={search => {
+					setSearch(search);
+				}}
 			/>
 
 			{loading ? (

@@ -194,69 +194,6 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 			);
 		}
 
-		Liferay.provide(
-			window,
-			'<portlet:namespace />selectRole',
-			function(roleId, name, groupName, groupId, iconCssClass) {
-				var A = AUI();
-				var LString = A.Lang.String;
-
-				var rowColumns = [];
-
-				rowColumns.push(
-					'<i class="' + iconCssClass + '"></i> ' + LString.escapeHTML(name)
-				);
-
-				rowColumns.push(groupName);
-
-				rowColumns.push(
-					'<a class="modify-link" data-groupId="' +
-						groupId +
-						'" data-rowId="' +
-						roleId +
-						'" href="javascript:;"><%= UnicodeFormatter.toString(removeDepotRoleIcon) %></a>'
-				);
-
-				for (
-					var i = 0;
-					i < <portlet:namespace />deleteDepotGroupRolesRoleIds.length;
-					i++
-				) {
-					if (
-						<portlet:namespace />deleteDepotGroupRolesGroupIds[i] ==
-							groupId &&
-						<portlet:namespace />deleteDepotGroupRolesRoleIds[i] == roleId
-					) {
-						<portlet:namespace />deleteDepotGroupRolesGroupIds.splice(i, 1);
-						<portlet:namespace />deleteDepotGroupRolesRoleIds.splice(i, 1);
-
-						break;
-					}
-				}
-
-				<portlet:namespace />addDepotGroupRolesGroupIds.push(groupId);
-				<portlet:namespace />addDepotGroupRolesRoleIds.push(roleId);
-
-				document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupRolesGroupIds.value = <portlet:namespace />addDepotGroupRolesGroupIds.join(
-					','
-				);
-				document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupRolesRoleIds.value = <portlet:namespace />addDepotGroupRolesRoleIds.join(
-					','
-				);
-				document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupRolesGroupIds.value = <portlet:namespace />deleteDepotGroupRolesGroupIds.join(
-					','
-				);
-				document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupRolesRoleIds.value = <portlet:namespace />deleteDepotGroupRolesRoleIds.join(
-					','
-				);
-
-				searchContainer.addRow(rowColumns, roleId);
-
-				searchContainer.updateDataStore();
-			},
-			['liferay-search-container']
-		);
-
 		Liferay.on(
 			'<%= depotAdminRolesDisplayContext.getDepotRoleSyncEntitiesEventName() %>',
 			function(event) {
@@ -316,13 +253,61 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 						'<%= depotAdminRolesDisplayContext.getSelectDepotRolesURL() %>',
 				},
 				function(event) {
-					<portlet:namespace />selectRole(
-						event.roleid,
-						event.rolename,
-						event.groupdescriptivename,
-						event.groupid,
-						event.iconcssclass
+					var A = AUI();
+					var LString = A.Lang.String;
+
+					var rowColumns = [];
+
+					rowColumns.push(
+						'<i class="' + event.iconcssclass + '"></i> ' + LString.escapeHTML(event.rolename)
 					);
+
+					rowColumns.push(event.groupdescriptivename);
+
+					rowColumns.push(
+						'<a class="modify-link" data-groupId="' +
+							event.groupid +
+							'" data-rowId="' +
+							event.roleid +
+							'" href="javascript:;"><%= UnicodeFormatter.toString(removeDepotRoleIcon) %></a>'
+					);
+
+					for (
+						var i = 0;
+						i < <portlet:namespace />deleteDepotGroupRolesRoleIds.length;
+						i++
+					) {
+						if (
+							<portlet:namespace />deleteDepotGroupRolesGroupIds[i] ==
+								event.groupid &&
+							<portlet:namespace />deleteDepotGroupRolesRoleIds[i] == event.roleid
+						) {
+							<portlet:namespace />deleteDepotGroupRolesGroupIds.splice(i, 1);
+							<portlet:namespace />deleteDepotGroupRolesRoleIds.splice(i, 1);
+
+							break;
+						}
+					}
+
+					<portlet:namespace />addDepotGroupRolesGroupIds.push(event.groupid);
+					<portlet:namespace />addDepotGroupRolesRoleIds.push(event.roleid);
+
+					document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupRolesGroupIds.value = <portlet:namespace />addDepotGroupRolesGroupIds.join(
+						','
+					);
+					document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupRolesRoleIds.value = <portlet:namespace />addDepotGroupRolesRoleIds.join(
+						','
+					);
+					document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupRolesGroupIds.value = <portlet:namespace />deleteDepotGroupRolesGroupIds.join(
+						','
+					);
+					document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupRolesRoleIds.value = <portlet:namespace />deleteDepotGroupRolesRoleIds.join(
+						','
+					);
+
+					searchContainer.addRow(rowColumns, event.roleid);
+
+					searchContainer.updateDataStore();
 				}
 			);
 		});

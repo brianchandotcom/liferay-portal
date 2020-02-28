@@ -46,16 +46,13 @@ const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 						<div
 							className={classNames(
 								'page-editor__no-fragments-message',
-								'taglib-empty-result-message',
 								{
 									'page-editor__no-fragments-message--active':
 										isOver && canDrop,
 								}
 							)}
 						>
-							<div className="taglib-empty-result-message-header"></div>
-
-							<div className="taglib-empty-result-message-title">
+							<div className="page-editor__no-fragments-message__title">
 								{Liferay.Language.get('place-fragments-here')}
 							</div>
 						</div>

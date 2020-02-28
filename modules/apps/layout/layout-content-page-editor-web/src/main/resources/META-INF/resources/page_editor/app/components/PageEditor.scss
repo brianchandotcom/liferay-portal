@@ -83,19 +83,24 @@
 	}
 
 	&__no-fragments-message {
-		background: #f7faff;
-		box-shadow: inset 0 0 0 2px #b3cdff;
-		padding: 10vh 0;
-		transition: box-shadow ease 0.3s;
-		will-change: box-shadow;
+		background: $primary-l3;
+		border: 2px dashed $primary-l2;
+		padding: 15vh 0;
 
 		&--active {
-			box-shadow: inset 0 0 0 4px $primary-l1;
+			border: 2px solid $primary-l1;
+
+			.page-editor__no-fragments-message__title {
+				color: $gray-400;
+			}
 		}
 
-		.taglib-empty-result-message-header {
-			max-width: 120px;
-			padding-top: 160px;
+		&__title {
+			color: $gray-500;
+			font-size: 14px;
+			font-weight: 600;
+			margin-top: 0;
+			text-align: center;
 		}
 	}
 

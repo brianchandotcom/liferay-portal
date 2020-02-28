@@ -23,6 +23,11 @@ components:
                     type: integer
                 name:
                     type: string
+                organizationIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
                 parentAccountId:
                     format: int64
                     type: integer

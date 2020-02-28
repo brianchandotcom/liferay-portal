@@ -154,8 +154,20 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		}
 
 		if (itemConfigJSONObject.has("backgroundImage")) {
-			setBackgroundImageJSONObject(
-				itemConfigJSONObject.getJSONObject("backgroundImage"));
+			JSONObject backgroundImageJSONObject = null;
+
+			Object backgroundImage = itemConfigJSONObject.get(
+				"backgroundImage");
+
+			if (backgroundImage instanceof JSONObject) {
+				backgroundImageJSONObject = (JSONObject)backgroundImage;
+			}
+			else {
+				backgroundImageJSONObject = JSONUtil.put(
+					"url", backgroundImage);
+			}
+
+			setBackgroundImageJSONObject(backgroundImageJSONObject);
 		}
 
 		if (itemConfigJSONObject.has("paddingBottom")) {

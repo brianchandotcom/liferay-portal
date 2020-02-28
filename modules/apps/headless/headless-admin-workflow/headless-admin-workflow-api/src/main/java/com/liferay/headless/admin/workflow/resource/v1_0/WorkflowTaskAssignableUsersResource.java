@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.workflow.resource.v1_0;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignableUsers;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskIds;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import javax.annotation.Generated;
@@ -38,8 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WorkflowTaskAssignableUsersResource {
 
-	public WorkflowTaskAssignableUsers getWorkflowTaskAssignableUser(
-			Long[] workflowTaskIds)
+	public WorkflowTaskAssignableUsers postWorkflowTaskAssignableUser(
+			WorkflowTaskIds workflowTaskIds)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

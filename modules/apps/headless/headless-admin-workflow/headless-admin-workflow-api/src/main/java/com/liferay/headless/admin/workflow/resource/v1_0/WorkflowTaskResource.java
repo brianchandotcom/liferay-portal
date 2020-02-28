@@ -19,12 +19,11 @@ import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToRole;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTasksBulkSelection;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.Date;
 
 import javax.annotation.Generated;
 
@@ -61,13 +60,9 @@ public interface WorkflowTaskResource {
 				Pagination pagination)
 		throws Exception;
 
-	public Page<WorkflowTask> getWorkflowTasksPage(
-			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
-			String[] assetTypes, Long[] assigneeIds, Boolean completed,
-			Date dateDueEnd, Date dateDueStart, Boolean searchByRoles,
-			Boolean searchByUserRoles, String[] taskNames,
-			Long workflowDefinitionId, Long[] workflowInstanceIds,
-			Pagination pagination, Sort[] sorts)
+	public Page<WorkflowTask> postWorkflowTasksPage(
+			Pagination pagination, Sort[] sorts,
+			WorkflowTasksBulkSelection workflowTasksBulkSelection)
 		throws Exception;
 
 	public void patchWorkflowTaskAssignToUser(

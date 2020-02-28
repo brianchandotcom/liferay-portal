@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search API
 Bundle-SymbolicName: com.liferay.portal.search.api
-Bundle-Version: 4.2.1
+Bundle-Version: 4.3.0
 Export-Package:\
 	com.liferay.portal.search.aggregation,\
 	com.liferay.portal.search.aggregation.bucket,\
@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.portal.search.analysis,\
 	com.liferay.portal.search.batch,\
 	com.liferay.portal.search.buffer,\
+	com.liferay.portal.search.ccr,\
 	com.liferay.portal.search.configuration,\
 	com.liferay.portal.search.constants,\
 	com.liferay.portal.search.contributor,\

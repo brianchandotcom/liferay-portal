@@ -18,6 +18,7 @@ import ClayIcon from '@clayui/icon';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
+import ClayMultiSelect from '@clayui/multi-select';
 
 import {AppContext} from '../../AppContext.es';
 import {createQuestion} from '../../utils/client.es';
@@ -52,6 +53,41 @@ export default withRouter(
 				tags,
 				context.siteKey
 			).then(() => debounceCallback());
+
+
+		const [value, setValue] = useState("");
+		const [items, setItems] = useState([
+			{
+				label: "one",
+				value: "1"
+			}
+		]);
+
+		const sourceItems = [
+			{
+				label: "one",
+				value: "1"
+			},
+			{
+				label: "two",
+				value: "2"
+			},
+			{
+				label: "three",
+				value: "3"
+			},
+			{
+				label: "four",
+				value: "4"
+			}
+		];
+
+		const setItems2 = value => {
+			console.log(value, sourceItems, sourceItems.map(x => x.value), sourceItems.map(x => x.value).includes(value))
+			if (sourceItems.map(x => x.value).includes(value)) {
+				setItems(value)
+			}
+		}
 
 		return (
 			<section className="c-mt-5 c-mx-auto col-xl-10">
@@ -144,6 +180,17 @@ export default withRouter(
 						</ClayForm.FeedbackGroup>
 					</ClayForm.Group>
 				</ClayForm>
+
+
+				<ClayMultiSelect
+					inputName="myInput"
+					inputValue={value}
+					items={items}
+					onChange={setValue}
+					onItemsChange={setItems2}
+					sourceItems={sourceItems}
+				/>
+
 
 				<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
 					<ClayButton

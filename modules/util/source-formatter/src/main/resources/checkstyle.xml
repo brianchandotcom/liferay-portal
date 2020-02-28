@@ -325,10 +325,14 @@
 			<message key="variable.rename" value="Rename {0} ''{1}'' to ''{2}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.JSONUtilCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Checks for utilization of class `JSONUtil`" />
 			<message key="json.util.put.all.use" value="Use ''JSONUtil.putAll'' instead of chaining on ''JSONUtil.put''" />
 			<message key="json.util.put.use" value="Combine calls ''{0}'' ({1}) and ''{2}'' ({3}) into single call ''{4}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.LambdaCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Checks that `lambda` statements are as simple as possible" />
 			<message key="lambda.simplify" value="Simplify lambda statement with single statement" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.LineBreakAfterCommaCheck">
@@ -341,6 +345,8 @@
 			<message key="end.line.character.incorrect" value="Line should not end with ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ListUtilCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Checks for utilization of class `ListUtil`" />
 			<message key="array.unneeded" value="Pass arguments directly to ''ListUtil.fromArray'' instead of passing new array" />
 			<message key="list.util.use" value="Use ''ListUtil.fromArray'' to simplify code" />
 		</module>
@@ -367,6 +373,8 @@
 			<message key="null.value.incorrect" value="Null values are not allowed in ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MapIterationCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Checks that there are no unnecessary map iterations" />
 			<message key="entry.set.use" value="Use Map.entrySet() to retrieve values" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNamingCheck">
@@ -384,6 +392,8 @@
 			<message key="generic.types.missing" value="Missing generic types ''{0}'' for type ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingEmptyLineCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Checks for missing line breaks around variable declarations" />
 			<message key="empty.line.missing.after.method.call" value="There should be an empty line after line ''{0}''" />
 			<message key="empty.line.missing.after.variable.definition" value="There should be an empty line after variable definition of type ''{0}''" />
 			<message key="empty.line.missing.after.variable.reference" value="There should be an empty line before line ''{0}'', as we finished referencing variable ''{1}''" />
@@ -424,6 +434,8 @@
 			<message key="persistence.call.illegal" value="Illegal call to class ''{0}'', see LPS-68923" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.PersistenceUpdateCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks that there are no stale references in service code from persistence updates" />
 			<message key="update.call.reassign" value="Update call should be reassigned to variable ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.PlusStatementCheck">

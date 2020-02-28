@@ -285,9 +285,15 @@
 		<check name="JavaServiceImplCheck" />
 		<check name="JavaSessionCheck" />
 		<check name="JavaStaticBlockCheck" />
-		<check name="JavaStaticImportsCheck" />
+		<check name="JavaStaticImportsCheck">
+			<category name="Styling" />
+			<description name="Checks that there are no static imports" />
+		</check>
 		<check name="JavaStaticVariableDependencyCheck" />
-		<check name="JavaStopWatchCheck" />
+		<check name="JavaStopWatchCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for potential NullPointerException when using `StopWatch`" />
+		</check>
 		<check name="JavaStylingCheck" />
 		<check name="JavaSystemExceptionCheck" />
 		<check name="JavaTermDividersCheck" />
@@ -298,7 +304,10 @@
 		<check name="PrincipalExceptionCheck" />
 		<check name="SessionKeysCheck" />
 		<check name="UnparameterizedClassCheck" />
-		<check name="ValidatorEqualsCheck" />
+		<check name="ValidatorEqualsCheck">
+			<category name="Performance" />
+			<description name="Checks that there are no calls to `Validator.equals(Object, Object)`" />
+		</check>
 
 		<!-- Liferay Source Checks -->
 
@@ -352,7 +361,10 @@
 		<check name="JavaReleaseInfoCheck" />
 		<check name="JavaServiceObjectCheck" />
 		<check name="JavaServiceTrackerFactoryCheck" />
-		<check name="JavaServiceUtilCheck" />
+		<check name="JavaServiceUtilCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that there are no calls to `*ServiceImpl` from a `*ServiceUtil` class" />
+		</check>
 		<check name="JavaSignatureParametersCheck">
 			<property name="enabled" value="false" />
 		</check>
@@ -371,7 +383,10 @@
 			<description name="Checks for potential ClassCastException" />
 		</check>
 		<check name="JavaUnusedSourceFormatterChecksCheck" />
-		<check name="JavaUpgradeClassCheck" />
+		<check name="JavaUpgradeClassCheck">
+			<category name="Bug Prevention" />
+			<description name="Performs several checks on Upgrade classes" />
+		</check>
 		<check name="JavaUpgradeConnectionCheck" />
 		<check name="JavaUpgradeVersionCheck" />
 		<check name="JavaVariableTypeCheck">
@@ -381,7 +396,10 @@
 		<check name="JavaXMLSecurityCheck" />
 		<check name="LanguageKeysCheck" />
 		<check name="LocaleUtilCheck" />
-		<check name="ResourceBundleCheck" />
+		<check name="ResourceBundleCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that there are no calls to `java.util.ResourceBundle.getBundle`" />
+		</check>
 		<check name="StringMethodsCheck">
 			<category name="Performance" />
 			<description name="Checks if performance can be improved by using different String operation methods" />
@@ -454,9 +472,15 @@
 		</check>
 		<check name="EmptyCollectionCheck" />
 		<check name="GetterUtilCheck" />
-		<check name="JSPArrowFunctionCheck" />
+		<check name="JSPArrowFunctionCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that there are no array functions" />
+		</check>
 		<check name="JSPButtonTagCheck" />
-		<check name="JSPDefineObjectsCheck" />
+		<check name="JSPDefineObjectsCheck">
+			<category name="Performance" />
+			<description name="Checks for unnesecarry duplication of code that already exists in `defineObjects`" />
+		</check>
 		<check name="JSPEmptyLinesCheck" />
 		<check name="JSPExceptionOrderCheck" />
 		<check name="JSPIllegalSyntaxCheck" />
@@ -481,7 +505,10 @@
 		<check name="PrimitiveWrapperInstantiationCheck" />
 		<check name="PrincipalExceptionCheck" />
 		<check name="UnparameterizedClassCheck" />
-		<check name="ValidatorEqualsCheck" />
+		<check name="ValidatorEqualsCheck">
+			<category name="Performance" />
+			<description name="Checks that there are no calls to `Validator.equals(Object, Object)`" />
+		</check>
 
 		<!-- Liferay Source Checks -->
 
@@ -489,11 +516,17 @@
 		<check name="JSPLanguageKeysCheck" />
 		<check name="JSPLogParametersCheck" />
 		<check name="JSPMissingTaglibsCheck" />
-		<check name="JSPSendRedirectCheck" />
+		<check name="JSPSendRedirectCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that there are no calls to `HttpServletResponse.sendRedirect` from `jsp` files" />
+		</check>
 		<check name="JSPStringMethodsCheck" />
 		<check name="JSPUnusedJSPF" />
 		<check name="LocaleUtilCheck" />
-		<check name="ResourceBundleCheck" />
+		<check name="ResourceBundleCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that there are no calls to `java.util.ResourceBundle.getBundle`" />
+		</check>
 		<check name="SubstringCheck" />
 
 		<!-- Module Source Checks -->
@@ -578,7 +611,10 @@
 		<!-- Liferay Source Checks -->
 
 		<check name="PropertiesBuildIncludeDirsCheck" />
-		<check name="PropertiesLanguageKeysCheck" />
+		<check name="PropertiesLanguageKeysCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that there is no HTML markup in language keys" />
+		</check>
 		<check name="PropertiesServiceKeysCheck" />
 		<check name="PropertiesVerifyPropertiesCheck" />
 	</source-processor>
@@ -625,7 +661,10 @@
 		<check name="XMLPoshiFileCheck" />
 		<check name="XMLProjectElementCheck" />
 		<check name="XMLResourceActionsFileCheck" />
-		<check name="XMLServiceEntityNameCheck" />
+		<check name="XMLServiceEntityNameCheck">
+			<category name="Bug Prevention" />
+			<description name="Chceks that the entity name in `service.xml` does not equal the package name" />
+		</check>
 		<check name="XMLServiceFileCheck">
 			<property name="checkMVCCEnabled" value="false" />
 		</check>

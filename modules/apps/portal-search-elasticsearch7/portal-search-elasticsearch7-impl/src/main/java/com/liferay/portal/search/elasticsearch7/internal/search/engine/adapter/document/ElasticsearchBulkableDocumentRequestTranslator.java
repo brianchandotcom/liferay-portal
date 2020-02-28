@@ -102,6 +102,7 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 		UpdateRequest updateRequest = new UpdateRequest();
 
 		_setDoc(updateRequest, updateDocumentRequest);
+		_setDocAsUpsert(updateRequest, updateDocumentRequest.isUpsert());
 		_setRefreshPolicy(updateRequest, updateDocumentRequest.isRefresh());
 
 		updateRequest.id(_getUid(updateDocumentRequest));
@@ -196,6 +197,12 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 					updateDocumentRequest.getDocument71());
 
 			updateRequest.doc(elasticsearchDocument, XContentType.JSON);
+		}
+	}
+
+	private void _setDocAsUpsert(UpdateRequest updateRequest, boolean upsert) {
+		if (upsert) {
+			updateRequest.docAsUpsert(upsert);
 		}
 	}
 

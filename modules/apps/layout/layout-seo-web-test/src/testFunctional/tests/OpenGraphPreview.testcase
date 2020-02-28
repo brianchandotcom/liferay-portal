@@ -384,11 +384,11 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
+		Click.pauseClickAt(locator1 = "ControlMenu#EDIT_COG");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 

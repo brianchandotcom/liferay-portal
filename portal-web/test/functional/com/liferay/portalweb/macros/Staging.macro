@@ -1332,6 +1332,18 @@ definition {
 		AssertTextEquals(
 			locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_DESCRIPTION",
 			value1 = "${publishTemplateDescription}");
+
+		if (isSet(uncheckContentNameList)) {
+			AssertClick(
+				locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_NAME",
+				value1 = "${publishTemplateName}");
+
+			for (var contentName : list "${uncheckContentNameList}") {
+				AssertNotChecked(
+					key_contentName = "${contentName}",
+					locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL");
+			}
+		}
 	}
 
 	macro viewSitePagesVariationPG {

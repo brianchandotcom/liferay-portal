@@ -460,6 +460,30 @@ class Layout extends Component {
 	}
 
 	/**
+	 * @param {!object} event
+	 * @private
+	 * @review
+	 */
+	_handleTooltipHovered(event) {
+		const layoutColumnTitle = document.querySelector(
+			'span[title="' +
+				event.srcElement.getAttribute('data-tooltip') +
+				'"]'
+		);
+
+		if (
+			layoutColumnTitle &&
+			layoutColumnTitle.offsetWidth < layoutColumnTitle.scrollWidth
+		) {
+			event.srcElement.setAttribute(
+				'title',
+				event.srcElement.getAttribute('data-tooltip')
+			);
+			event.srcElement.classList.add('lfr-portal-tooltip');
+		}
+	}
+
+	/**
 	 * @private
 	 * @review
 	 */

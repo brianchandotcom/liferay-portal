@@ -297,7 +297,7 @@
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_ELLIPSIS</td>
-	<td>//*[@data-qa-id='controlMenu']//div[contains(@class,'icon-menu')]</td>
+	<td>//div[@class='control-menu-level-2']//div[contains(@class,'icon-menu')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -48,7 +48,7 @@ public class KaleoTimerLocalServiceImpl extends KaleoTimerLocalServiceBaseImpl {
 
 	@Override
 	public KaleoTimer addKaleoTimer(
-			String kaleoClassName, long kaleoClassPK,
+			String kaleoClassName, long kaleoClassPK, long kaleoDefinitionId,
 			long kaleoDefinitionVersionId, Timer timer,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -69,6 +69,7 @@ public class KaleoTimerLocalServiceImpl extends KaleoTimerLocalServiceBaseImpl {
 		kaleoTimer.setModifiedDate(now);
 		kaleoTimer.setKaleoClassName(kaleoClassName);
 		kaleoTimer.setKaleoClassPK(kaleoClassPK);
+		kaleoTimer.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoTimer.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 		kaleoTimer.setName(timer.getName());
 		kaleoTimer.setBlocking(timer.isBlocking());
@@ -100,7 +101,7 @@ public class KaleoTimerLocalServiceImpl extends KaleoTimerLocalServiceBaseImpl {
 
 		for (Action action : actions) {
 			_kaleoActionLocalService.addKaleoAction(
-				KaleoTimer.class.getName(), kaleoTimerId,
+				KaleoTimer.class.getName(), kaleoTimerId, kaleoDefinitionId,
 				kaleoDefinitionVersionId, timer.getName(), action,
 				serviceContext);
 		}
@@ -111,7 +112,7 @@ public class KaleoTimerLocalServiceImpl extends KaleoTimerLocalServiceBaseImpl {
 
 		for (Assignment reassignment : reassignments) {
 			_kaleoTaskAssignmentLocalService.addKaleoTaskAssignment(
-				KaleoTimer.class.getName(), kaleoTimerId,
+				KaleoTimer.class.getName(), kaleoTimerId, kaleoDefinitionId,
 				kaleoDefinitionVersionId, reassignment, serviceContext);
 		}
 
@@ -121,7 +122,7 @@ public class KaleoTimerLocalServiceImpl extends KaleoTimerLocalServiceBaseImpl {
 
 		for (Notification notification : notifications) {
 			_kaleoNotificationLocalService.addKaleoNotification(
-				KaleoTimer.class.getName(), kaleoTimerId,
+				KaleoTimer.class.getName(), kaleoTimerId, kaleoDefinitionId,
 				kaleoDefinitionVersionId, timer.getName(), notification,
 				serviceContext);
 		}

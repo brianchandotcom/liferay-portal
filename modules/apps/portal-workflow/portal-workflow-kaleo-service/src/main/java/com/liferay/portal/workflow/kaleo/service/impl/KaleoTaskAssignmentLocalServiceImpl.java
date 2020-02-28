@@ -50,7 +50,7 @@ public class KaleoTaskAssignmentLocalServiceImpl
 
 	@Override
 	public KaleoTaskAssignment addKaleoTaskAssignment(
-			String kaleoClassName, long kaleoClassPK,
+			String kaleoClassName, long kaleoClassPK, long kaleoDefinitionId,
 			long kaleoDefinitionVersionId, Assignment assignment,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -70,6 +70,7 @@ public class KaleoTaskAssignmentLocalServiceImpl
 		kaleoTaskAssignment.setModifiedDate(now);
 		kaleoTaskAssignment.setKaleoClassName(kaleoClassName);
 		kaleoTaskAssignment.setKaleoClassPK(kaleoClassPK);
+		kaleoTaskAssignment.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoTaskAssignment.setKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId);
 		kaleoTaskAssignment.setKaleoNodeId(

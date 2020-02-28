@@ -63,6 +63,8 @@ public class KaleoTaskFormInstanceLocalServiceImpl
 		kaleoTaskFormInstance.setUserName(user.getFullName());
 		kaleoTaskFormInstance.setCreateDate(now);
 		kaleoTaskFormInstance.setModifiedDate(now);
+		kaleoTaskFormInstance.setKaleoDefinitionId(
+			kaleoTaskInstanceToken.getKaleoDefinitionId());
 		kaleoTaskFormInstance.setKaleoDefinitionVersionId(
 			kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
 		kaleoTaskFormInstance.setKaleoInstanceId(

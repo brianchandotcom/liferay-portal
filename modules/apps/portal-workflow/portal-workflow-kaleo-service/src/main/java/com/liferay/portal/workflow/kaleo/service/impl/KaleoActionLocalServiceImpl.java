@@ -60,7 +60,7 @@ public class KaleoActionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoAction addKaleoAction(
-			String kaleoClassName, long kaleoClassPK,
+			String kaleoClassName, long kaleoClassPK, long kaleoDefinitionId,
 			long kaleoDefinitionVersionId, String kaleoNodeName, Action action,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -79,6 +79,7 @@ public class KaleoActionLocalServiceImpl
 		kaleoAction.setModifiedDate(now);
 		kaleoAction.setKaleoClassName(kaleoClassName);
 		kaleoAction.setKaleoClassPK(kaleoClassPK);
+		kaleoAction.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoAction.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 		kaleoAction.setKaleoNodeName(kaleoNodeName);
 		kaleoAction.setName(action.getName());

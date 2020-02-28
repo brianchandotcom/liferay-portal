@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.depot.internal.security.permissions;
+package com.liferay.depot.internal.security.permission.wrapper;
 
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapperFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -29,24 +28,22 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "service.ranking:Integer=100",
-	service = PermissionCheckerFactory.class
+	service = PermissionCheckerWrapperFactory.class
 )
-public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
+public class PermissionCheckerFactoryImpl
+	implements PermissionCheckerWrapperFactory {
 
 	@Override
-	public PermissionChecker create(User user) {
-		return new DepotPermissionChecker(
-			_permissionCheckerFactory.create(user), _groupLocalService,
-			_roleLocalService, _userGroupRoleLocalService);
+	public PermissionChecker wrapPermissionChecker(
+		PermissionChecker permissionChecker) {
+
+		return new DepotPermissionCheckerWrapper(
+			permissionChecker, _groupLocalService, _roleLocalService,
+			_userGroupRoleLocalService);
 	}
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference(
-		target = "(&(original.bean=true)(bean.id=com.liferay.portal.kernel.security.permission.PermissionCheckerFactory))"
-	)
-	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

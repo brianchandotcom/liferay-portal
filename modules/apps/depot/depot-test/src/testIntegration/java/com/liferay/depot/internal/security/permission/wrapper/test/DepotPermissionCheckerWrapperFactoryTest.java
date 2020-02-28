@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.internal.security.permissions.test;
+package com.liferay.depot.internal.security.permission.wrapper.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class PermissionCheckerFactoryTest {
+public class DepotPermissionCheckerWrapperFactoryTest {
 
 	@ClassRule
 	@Rule
@@ -48,9 +48,9 @@ public class PermissionCheckerFactoryTest {
 		Class<? extends PermissionChecker> clazz = permissionChecker.getClass();
 
 		Assert.assertEquals(
-			"com.liferay.depot.internal.security.permissions." +
-				"DepotPermissionChecker",
-			clazz.getCanonicalName());
+			"com.liferay.depot.internal.security.permission.wrapper." +
+				"DepotPermissionCheckerWrapper",
+			clazz.getName());
 	}
 
 	@Inject

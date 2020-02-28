@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -115,6 +116,9 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		_elasticsearchConnectionManager.registerCompanyId(companyId);
 
 		waitForYellowStatus();
+
+		_crossClusterReplicationHelper.follow(
+			_indexNameBuilder.getIndexName(companyId));
 	}
 
 	@Override
@@ -132,6 +136,9 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	@Override
 	public void removeCompany(long companyId) {
 		super.removeCompany(companyId);
+
+		_crossClusterReplicationHelper.unfollow(
+			_indexNameBuilder.getIndexName(companyId));
 
 		try {
 			RestHighLevelClient restHighLevelClient =
@@ -241,6 +248,13 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		return true;
 	}
 
+	@Reference(unbind = "-")
+	protected void setCrossClusterReplicationHelper(
+		CrossClusterReplicationHelper crossClusterReplicationHelper) {
+
+		_crossClusterReplicationHelper = crossClusterReplicationHelper;
+	}
+
 	@Reference
 	protected void setElasticsearchConnectionManager(
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {
@@ -333,6 +347,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchSearchEngine.class);
 
+	private CrossClusterReplicationHelper _crossClusterReplicationHelper;
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private IndexFactory _indexFactory;
 	private IndexNameBuilder _indexNameBuilder;

@@ -753,6 +753,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 				updateDocumentRequest.setRefresh(true);
 				updateDocumentRequest.setType(indexType);
+				updateDocumentRequest.setUpsert(true);
 
 				_searchEngineAdapter.execute(updateDocumentRequest);
 			}

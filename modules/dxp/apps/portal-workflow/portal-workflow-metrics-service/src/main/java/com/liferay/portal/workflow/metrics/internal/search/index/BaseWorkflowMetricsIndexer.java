@@ -288,6 +288,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 				{
 					setType(getIndexType());
+					setUpsert(true);
 				}
 			}
 		).forEach(
@@ -365,6 +366,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 		}
 
 		updateDocumentRequest.setType(getIndexType());
+		updateDocumentRequest.setUpsert(true);
 
 		searchEngineAdapter.execute(updateDocumentRequest);
 	}

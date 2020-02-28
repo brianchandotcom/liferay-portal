@@ -8,10 +8,15 @@
 		 	FROM
 			 	OAuth2Authorization
 			WHERE
-				(OAuth2Authorization.refreshTokenExpirationDate IS NOT NULL) AND
-				(OAuth2Authorization.refreshTokenExpirationDate < ?) OR
-				(OAuth2Authorization.refreshTokenExpirationDate IS NULL) AND
-				(OAuth2Authorization.accessTokenExpirationDate < ?)
+				(OAuth2Authorization.accessTokenExpirationDate < ?) AND
+				(
+					(
+						(OAuth2Authorization.refreshTokenExpirationDate IS NOT NULL) AND
+						(OAuth2Authorization.refreshTokenExpirationDate < ?)
+					) OR
+					(OAuth2Authorization.refreshTokenExpirationDate IS NULL)
+				)
+
 		]]>
 	</sql>
 	<sql id="com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder.findByC_A_B_A">

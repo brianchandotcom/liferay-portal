@@ -14,6 +14,7 @@
 
 package com.liferay.account.internal.model.listener;
 
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -36,6 +37,17 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		_accountRoleLocalService.deleteAccountRolesByCompanyId(
 			company.getCompanyId());
 	}
+
+	@Override
+	public void onBeforeRemove(Company company) throws ModelListenerException {
+		super.onAfterRemove(company);
+
+		_accountEntryLocalService.deleteAccountEntriesByCompanyId(
+			company.getCompanyId());
+	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;

@@ -33,7 +33,6 @@ import Button from '../components/button/Button.es';
 import FieldTypeList from '../components/field-types/FieldTypeList.es';
 import FieldSets from '../components/fieldsets/Fieldsets.es';
 import Sidebar from '../components/sidebar/Sidebar.es';
-import {useSidebarContent} from '../hooks/index.es';
 import isClickOutside from '../utils/clickOutside.es';
 import renderSettingsForm, {
 	getEvents,
@@ -277,9 +276,6 @@ export default () => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [{focusedCustomObjectField, focusedField}] = useContext(AppContext);
 	const [keywords, setKeywords] = useState('');
-	const [sidebarClosed, setSidebarClosed] = useState(false);
-
-	useSidebarContent(dataLayoutBuilder.containerRef, sidebarClosed);
 
 	const sidebarRef = useRef();
 
@@ -303,42 +299,6 @@ export default () => {
 		return () => window.removeEventListener('click', eventHandler);
 	}, [dataLayoutBuilder, sidebarRef]);
 
-	useEffect(() => {
-		const productMenuToggle = document.querySelector(
-			'.product-menu-toggle'
-		);
-
-		if (productMenuToggle) {
-			const sidenav = Liferay.SideNavigation.instance(productMenuToggle);
-
-			if (!sidebarClosed) {
-				sidenav.hide();
-			}
-		}
-	}, [sidebarClosed]);
-
-	useLayoutEffect(() => {
-		const productMenuToggle = document.querySelector(
-			'.product-menu-toggle'
-		);
-
-		if (productMenuToggle) {
-			Liferay.SideNavigation.hide(productMenuToggle);
-
-			const sidenav = Liferay.SideNavigation.instance(productMenuToggle);
-			const openEventListener = sidenav.on(
-				'openStart.lexicon.sidenav',
-				() => {
-					setSidebarClosed(true);
-				}
-			);
-
-			return () => {
-				openEventListener.removeListener();
-			};
-		}
-	}, []);
-
 	const hasFocusedField = Object.keys(focusedField).length > 0;
 	const hasFocusedCustomObjectField =
 		Object.keys(focusedCustomObjectField).length > 0;
@@ -346,10 +306,7 @@ export default () => {
 
 	return (
 		<Sidebar
-			closeable={!displaySettings || sidebarClosed}
-			closed={sidebarClosed}
 			onSearch={displaySettings ? false : setKeywords}
-			onToggle={closed => setSidebarClosed(closed)}
 			ref={sidebarRef}
 		>
 			<>

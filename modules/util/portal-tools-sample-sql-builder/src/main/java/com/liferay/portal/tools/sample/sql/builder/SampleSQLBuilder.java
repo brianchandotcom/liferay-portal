@@ -42,6 +42,8 @@ import java.io.Writer;
 
 import java.nio.channels.FileChannel;
 
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -168,7 +170,7 @@ public class SampleSQLBuilder {
 	protected void compressSQL(
 			DB db, File directory, Map<String, Writer> insertSQLWriters,
 			Map<String, StringBundler> sqls, String insertSQL)
-		throws IOException {
+		throws IOException, SQLException {
 
 		String tableName = insertSQL.substring(0, insertSQL.indexOf(' '));
 

@@ -365,10 +365,10 @@ public class ConfigurationPersistenceManager
 	protected void storeInDatabase(String pid, Dictionary<?, ?> dictionary)
 		throws IOException {
 
-		UnsyncByteArrayOutputStream outputStream =
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		ConfigurationHandler.write(outputStream, dictionary);
+		ConfigurationHandler.write(unsyncByteArrayOutputStream, dictionary);
 
 		try (Connection connection = _dataSource.getConnection()) {
 			connection.setAutoCommit(false);
@@ -378,7 +378,7 @@ public class ConfigurationPersistenceManager
 						"update Configuration_ set dictionary = ? where " +
 							"configurationId = ?"))) {
 
-				ps1.setString(1, outputStream.toString());
+				ps1.setString(1, unsyncByteArrayOutputStream.toString());
 				ps1.setString(2, pid);
 
 				if (ps1.executeUpdate() == 0) {
@@ -389,7 +389,8 @@ public class ConfigurationPersistenceManager
 										"?)"))) {
 
 						ps2.setString(1, pid);
-						ps2.setString(2, outputStream.toString());
+						ps2.setString(
+							2, unsyncByteArrayOutputStream.toString());
 
 						ps2.executeUpdate();
 					}

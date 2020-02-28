@@ -111,7 +111,8 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		if (_totalSize < THRESHOLD_SIZE) {
 			return new ServletInputStreamAdapter(
 				new UnsyncByteArrayInputStream(
-					_cachedBytes.unsafeGetByteArray(), 0, _cachedBytes.size()));
+					_unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
+					_unsyncByteArrayOutputStream.size()));
 		}
 		else if (_tempFile != null) {
 			return new ServletInputStreamAdapter(
@@ -141,7 +142,7 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 
 		if (_totalSize > 0) {
 			if (_totalSize < THRESHOLD_SIZE) {
-				_cachedBytes.write(b, off, bytesRead);
+				_unsyncByteArrayOutputStream.write(b, off, bytesRead);
 			}
 			else {
 				_writeToTempFile(b, off, bytesRead);
@@ -185,12 +186,12 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayInputStream.class);
 
-	private final UnsyncByteArrayOutputStream _cachedBytes =
-		new UnsyncByteArrayOutputStream();
 	private final HttpSession _session;
 	private final File _tempFile;
 	private OutputStream _tempFileOutputStream;
 	private long _totalRead;
 	private final long _totalSize;
+	private final UnsyncByteArrayOutputStream _unsyncByteArrayOutputStream =
+		new UnsyncByteArrayOutputStream();
 
 }

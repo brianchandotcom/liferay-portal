@@ -50,17 +50,21 @@ public class Base64 {
 			return null;
 		}
 
-		UnsyncByteArrayOutputStream ubaos = new UnsyncByteArrayOutputStream(
-			32000);
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream(32000);
 
-		try (ObjectOutputStream os = new ObjectOutputStream(ubaos)) {
+		try (ObjectOutputStream os = new ObjectOutputStream(
+				unsyncByteArrayOutputStream)) {
+
 			os.writeObject(o);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
 
-		return _encode(ubaos.unsafeGetByteArray(), 0, ubaos.size(), false);
+		return _encode(
+			unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
+			unsyncByteArrayOutputStream.size(), false);
 	}
 
 	public static Object stringToObject(String s) {
@@ -257,18 +261,18 @@ public class Base64 {
 
 		byte[] bytes = _decode(s, false);
 
-		UnsyncByteArrayInputStream ubais = new UnsyncByteArrayInputStream(
-			bytes);
+		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+			new UnsyncByteArrayInputStream(bytes);
 
 		try {
 			ObjectInputStream is = null;
 
 			if (classLoader == null) {
-				is = new ProtectedObjectInputStream(ubais);
+				is = new ProtectedObjectInputStream(unsyncByteArrayInputStream);
 			}
 			else {
 				is = new ProtectedClassLoaderObjectInputStream(
-					ubais, classLoader);
+					unsyncByteArrayInputStream, classLoader);
 			}
 
 			return is.readObject();

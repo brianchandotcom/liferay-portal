@@ -324,11 +324,12 @@ public class ImageToolImpl implements ImageTool {
 	public byte[] getBytes(RenderedImage renderedImage, String contentType)
 		throws IOException {
 
-		UnsyncByteArrayOutputStream baos = new UnsyncByteArrayOutputStream();
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
 
-		write(renderedImage, contentType, baos);
+		write(renderedImage, contentType, unsyncByteArrayOutputStream);
 
-		return baos.toByteArray();
+		return unsyncByteArrayOutputStream.toByteArray();
 	}
 
 	@Override

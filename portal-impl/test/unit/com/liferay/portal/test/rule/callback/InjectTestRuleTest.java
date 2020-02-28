@@ -98,13 +98,14 @@ public class InjectTestRuleTest {
 
 		InjectTestBag injectTestBag = null;
 
-		UnsyncByteArrayOutputStream ubaos = ConsoleTestUtil.hijackStdOut();
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			ConsoleTestUtil.hijackStdOut();
 
 		try {
 			Thread registerThread = new Thread(
 				() -> {
 					while (true) {
-						String stdOut = ubaos.toString();
+						String stdOut = unsyncByteArrayOutputStream.toString();
 
 						if (!stdOut.contains(
 								"Waiting for service " +
@@ -131,7 +132,7 @@ public class InjectTestRuleTest {
 			registerThread.join();
 		}
 		finally {
-			ConsoleTestUtil.restoreStdOut(ubaos);
+			ConsoleTestUtil.restoreStdOut(unsyncByteArrayOutputStream);
 		}
 
 		Assert.assertSame(service1, TestCase2._service1);

@@ -44,6 +44,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,17 +136,19 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 			"customFieldsKeys");
 
 		if (Validator.isNull(customFieldsKeys)) {
-			return new HashMap<>();
+			return Collections.emptyMap();
 		}
 
-		String customFieldsTypes = uploadPortletRequest.getParameter(
-			"customFieldsTypes");
 		String customFieldsValues = uploadPortletRequest.getParameter(
 			"customFieldsValues");
 
-		String[] customFieldsKeysArray = StringUtil.split(customFieldsKeys);
 		List<String> customFieldsValuesList =
 			(List)JSONFactoryUtil.looseDeserialize(customFieldsValues);
+
+		String[] customFieldsKeysArray = StringUtil.split(customFieldsKeys);
+
+		String customFieldsTypes = uploadPortletRequest.getParameter(
+			"customFieldsTypes");
 
 		Stream<String> customFieldsTypesStream = Arrays.stream(
 			StringUtil.split(customFieldsTypes));

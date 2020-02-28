@@ -17,6 +17,9 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.ccr.CCRRequest;
+import com.liferay.portal.search.engine.adapter.ccr.CCRRequestExecutor;
+import com.liferay.portal.search.engine.adapter.ccr.CCRResponse;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterResponse;
@@ -47,6 +50,16 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ElasticsearchSearchEngineAdapterImpl
 	implements SearchEngineAdapter {
+
+	@Override
+	public <T extends CCRResponse> T execute(CCRRequest<T> ccrRequest) {
+		try {
+			return ccrRequest.accept(_ccrRequestExecutor);
+		}
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
+		}
+	}
 
 	@Override
 	public <T extends ClusterResponse> T execute(
@@ -119,6 +132,13 @@ public class ElasticsearchSearchEngineAdapterImpl
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
+	protected void setCCRRequestExecutor(
+		CCRRequestExecutor ccrRequestExecutor) {
+
+		_ccrRequestExecutor = ccrRequestExecutor;
+	}
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	protected void setClusterRequestExecutor(
 		ClusterRequestExecutor clusterRequestExecutor) {
 
@@ -187,6 +207,7 @@ public class ElasticsearchSearchEngineAdapterImpl
 		return runtimeException1;
 	}
 
+	private CCRRequestExecutor _ccrRequestExecutor;
 	private ClusterRequestExecutor _clusterRequestExecutor;
 	private DocumentRequestExecutor _documentRequestExecutor;
 	private IndexRequestExecutor _indexRequestExecutor;

@@ -37,7 +37,11 @@ definition {
 		else {
 			AssertElementPresent.pauseAssertVisible(locator1 = "ItemSelector#URL_IMAGE_SOURCE");
 
-			SelectFrameTop(value1 = "relative=top");
+			if (IsElementPresent(locator1 = "ItemSelector#URL_IMAGE_EXAMPLE")) {
+				Click(locator1 = "ItemSelector#URL_IMAGE_EXAMPLE");
+			}
+
+			MouseOver(locator1 = "Button#ADD");
 
 			AssertClick(
 				locator1 = "Button#ADD",

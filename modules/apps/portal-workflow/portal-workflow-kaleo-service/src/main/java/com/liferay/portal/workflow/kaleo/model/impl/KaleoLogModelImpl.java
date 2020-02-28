@@ -72,6 +72,7 @@ public class KaleoLogModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"kaleoClassName", Types.VARCHAR}, {"kaleoClassPK", Types.BIGINT},
+		{"kaleoDefinitionId", Types.BIGINT},
 		{"kaleoDefinitionVersionId", Types.BIGINT},
 		{"kaleoInstanceId", Types.BIGINT},
 		{"kaleoInstanceTokenId", Types.BIGINT},
@@ -104,6 +105,7 @@ public class KaleoLogModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("kaleoClassName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("kaleoClassPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("kaleoDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoDefinitionVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoInstanceTokenId", Types.BIGINT);
@@ -128,7 +130,7 @@ public class KaleoLogModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoLog (mvccVersion LONG default 0 not null,kaleoLogId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoNodeName VARCHAR(200) null,terminalKaleoNode BOOLEAN,kaleoActionId LONG,kaleoActionName VARCHAR(200) null,kaleoActionDescription STRING null,previousKaleoNodeId LONG,previousKaleoNodeName VARCHAR(200) null,previousAssigneeClassName VARCHAR(200) null,previousAssigneeClassPK LONG,currentAssigneeClassName VARCHAR(200) null,currentAssigneeClassPK LONG,type_ VARCHAR(50) null,comment_ TEXT null,startDate DATE null,endDate DATE null,duration LONG,workflowContext TEXT null)";
+		"create table KaleoLog (mvccVersion LONG default 0 not null,kaleoLogId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoNodeName VARCHAR(200) null,terminalKaleoNode BOOLEAN,kaleoActionId LONG,kaleoActionName VARCHAR(200) null,kaleoActionDescription STRING null,previousKaleoNodeId LONG,previousKaleoNodeName VARCHAR(200) null,previousAssigneeClassName VARCHAR(200) null,previousAssigneeClassPK LONG,currentAssigneeClassName VARCHAR(200) null,currentAssigneeClassPK LONG,type_ VARCHAR(50) null,comment_ TEXT null,startDate DATE null,endDate DATE null,duration LONG,workflowContext TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoLog";
 
@@ -331,6 +333,11 @@ public class KaleoLogModelImpl
 		attributeSetterBiConsumers.put(
 			"kaleoClassPK",
 			(BiConsumer<KaleoLog, Long>)KaleoLog::setKaleoClassPK);
+		attributeGetterFunctions.put(
+			"kaleoDefinitionId", KaleoLog::getKaleoDefinitionId);
+		attributeSetterBiConsumers.put(
+			"kaleoDefinitionId",
+			(BiConsumer<KaleoLog, Long>)KaleoLog::setKaleoDefinitionId);
 		attributeGetterFunctions.put(
 			"kaleoDefinitionVersionId", KaleoLog::getKaleoDefinitionVersionId);
 		attributeSetterBiConsumers.put(
@@ -602,6 +609,16 @@ public class KaleoLogModelImpl
 
 	public long getOriginalKaleoClassPK() {
 		return _originalKaleoClassPK;
+	}
+
+	@Override
+	public long getKaleoDefinitionId() {
+		return _kaleoDefinitionId;
+	}
+
+	@Override
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		_kaleoDefinitionId = kaleoDefinitionId;
 	}
 
 	@Override
@@ -968,6 +985,7 @@ public class KaleoLogModelImpl
 		kaleoLogImpl.setModifiedDate(getModifiedDate());
 		kaleoLogImpl.setKaleoClassName(getKaleoClassName());
 		kaleoLogImpl.setKaleoClassPK(getKaleoClassPK());
+		kaleoLogImpl.setKaleoDefinitionId(getKaleoDefinitionId());
 		kaleoLogImpl.setKaleoDefinitionVersionId(getKaleoDefinitionVersionId());
 		kaleoLogImpl.setKaleoInstanceId(getKaleoInstanceId());
 		kaleoLogImpl.setKaleoInstanceTokenId(getKaleoInstanceTokenId());
@@ -1146,6 +1164,8 @@ public class KaleoLogModelImpl
 		}
 
 		kaleoLogCacheModel.kaleoClassPK = getKaleoClassPK();
+
+		kaleoLogCacheModel.kaleoDefinitionId = getKaleoDefinitionId();
 
 		kaleoLogCacheModel.kaleoDefinitionVersionId =
 			getKaleoDefinitionVersionId();
@@ -1365,6 +1385,7 @@ public class KaleoLogModelImpl
 	private long _kaleoClassPK;
 	private long _originalKaleoClassPK;
 	private boolean _setOriginalKaleoClassPK;
+	private long _kaleoDefinitionId;
 	private long _kaleoDefinitionVersionId;
 	private long _originalKaleoDefinitionVersionId;
 	private boolean _setOriginalKaleoDefinitionVersionId;

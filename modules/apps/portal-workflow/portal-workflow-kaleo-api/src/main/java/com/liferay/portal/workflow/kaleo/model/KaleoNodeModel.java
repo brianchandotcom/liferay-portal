@@ -203,6 +203,20 @@ public interface KaleoNodeModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the kaleo definition ID of this kaleo node.
+	 *
+	 * @return the kaleo definition ID of this kaleo node
+	 */
+	public long getKaleoDefinitionId();
+
+	/**
+	 * Sets the kaleo definition ID of this kaleo node.
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo node
+	 */
+	public void setKaleoDefinitionId(long kaleoDefinitionId);
+
+	/**
 	 * Returns the kaleo definition version ID of this kaleo node.
 	 *
 	 * @return the kaleo definition version ID of this kaleo node

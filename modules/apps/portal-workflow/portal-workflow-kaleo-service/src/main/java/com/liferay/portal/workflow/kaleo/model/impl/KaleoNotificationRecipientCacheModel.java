@@ -81,7 +81,7 @@ public class KaleoNotificationRecipientCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -99,6 +99,8 @@ public class KaleoNotificationRecipientCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", kaleoDefinitionId=");
+		sb.append(kaleoDefinitionId);
 		sb.append(", kaleoDefinitionVersionId=");
 		sb.append(kaleoDefinitionVersionId);
 		sb.append(", kaleoNotificationId=");
@@ -158,6 +160,7 @@ public class KaleoNotificationRecipientCacheModel
 				new Date(modifiedDate));
 		}
 
+		kaleoNotificationRecipientImpl.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoNotificationRecipientImpl.setKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId);
 		kaleoNotificationRecipientImpl.setKaleoNotificationId(
@@ -232,6 +235,8 @@ public class KaleoNotificationRecipientCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		kaleoDefinitionId = objectInput.readLong();
+
 		kaleoDefinitionVersionId = objectInput.readLong();
 
 		kaleoNotificationId = objectInput.readLong();
@@ -268,6 +273,8 @@ public class KaleoNotificationRecipientCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(kaleoDefinitionId);
 
 		objectOutput.writeLong(kaleoDefinitionVersionId);
 
@@ -328,6 +335,7 @@ public class KaleoNotificationRecipientCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long kaleoDefinitionId;
 	public long kaleoDefinitionVersionId;
 	public long kaleoNotificationId;
 	public String recipientClassName;

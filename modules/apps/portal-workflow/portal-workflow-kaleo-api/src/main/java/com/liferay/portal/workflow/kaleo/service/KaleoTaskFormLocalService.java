@@ -74,8 +74,8 @@ public interface KaleoTaskFormLocalService
 	public KaleoTaskForm addKaleoTaskForm(KaleoTaskForm kaleoTaskForm);
 
 	public KaleoTaskForm addKaleoTaskForm(
-			long kaleoDefinitionVersionId, long kaleoNodeId,
-			KaleoTask kaleoTask, TaskForm taskForm,
+			long kaleoDefinitionId, long kaleoDefinitionVersionId,
+			long kaleoNodeId, KaleoTask kaleoTask, TaskForm taskForm,
 			ServiceContext serviceContext)
 		throws PortalException;
 

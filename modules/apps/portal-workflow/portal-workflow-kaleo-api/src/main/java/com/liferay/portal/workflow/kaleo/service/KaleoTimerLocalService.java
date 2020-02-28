@@ -73,7 +73,7 @@ public interface KaleoTimerLocalService
 	public KaleoTimer addKaleoTimer(KaleoTimer kaleoTimer);
 
 	public KaleoTimer addKaleoTimer(
-			String kaleoClassName, long kaleoClassPK,
+			String kaleoClassName, long kaleoClassPK, long kaleoDefinitionId,
 			long kaleoDefinitionVersionId, Timer timer,
 			ServiceContext serviceContext)
 		throws PortalException;

@@ -53,13 +53,13 @@ public class KaleoNodeLocalServiceUtil {
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoNode
 			addKaleoNode(
-				long kaleoDefinitionVersionId,
+				long kaleoDefinitionId, long kaleoDefinitionVersionId,
 				com.liferay.portal.workflow.kaleo.definition.Node node,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addKaleoNode(
-			kaleoDefinitionVersionId, node, serviceContext);
+			kaleoDefinitionId, kaleoDefinitionVersionId, node, serviceContext);
 	}
 
 	/**

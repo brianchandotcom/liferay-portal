@@ -142,6 +142,9 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 
 		newKaleoTaskInstanceToken.setModifiedDate(RandomTestUtil.nextDate());
 
+		newKaleoTaskInstanceToken.setKaleoDefinitionId(
+			RandomTestUtil.nextLong());
+
 		newKaleoTaskInstanceToken.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());
 
@@ -205,6 +208,9 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 				existingKaleoTaskInstanceToken.getModifiedDate()),
 			Time.getShortTimestamp(
 				newKaleoTaskInstanceToken.getModifiedDate()));
+		Assert.assertEquals(
+			existingKaleoTaskInstanceToken.getKaleoDefinitionId(),
+			newKaleoTaskInstanceToken.getKaleoDefinitionId());
 		Assert.assertEquals(
 			existingKaleoTaskInstanceToken.getKaleoDefinitionVersionId(),
 			newKaleoTaskInstanceToken.getKaleoDefinitionVersionId());
@@ -314,11 +320,11 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 			"KaleoTaskInstanceToken", "mvccVersion", true,
 			"kaleoTaskInstanceTokenId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionVersionId", true,
-			"kaleoInstanceId", true, "kaleoInstanceTokenId", true,
-			"kaleoTaskId", true, "kaleoTaskName", true, "className", true,
-			"classPK", true, "completionUserId", true, "completed", true,
-			"completionDate", true, "dueDate", true);
+			"modifiedDate", true, "kaleoDefinitionId", true,
+			"kaleoDefinitionVersionId", true, "kaleoInstanceId", true,
+			"kaleoInstanceTokenId", true, "kaleoTaskId", true, "kaleoTaskName",
+			true, "className", true, "classPK", true, "completionUserId", true,
+			"completed", true, "completionDate", true, "dueDate", true);
 	}
 
 	@Test
@@ -600,6 +606,8 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 		kaleoTaskInstanceToken.setCreateDate(RandomTestUtil.nextDate());
 
 		kaleoTaskInstanceToken.setModifiedDate(RandomTestUtil.nextDate());
+
+		kaleoTaskInstanceToken.setKaleoDefinitionId(RandomTestUtil.nextLong());
 
 		kaleoTaskInstanceToken.setKaleoDefinitionVersionId(
 			RandomTestUtil.nextLong());

@@ -232,6 +232,20 @@ public interface KaleoLogModel
 	public void setKaleoClassPK(long kaleoClassPK);
 
 	/**
+	 * Returns the kaleo definition ID of this kaleo log.
+	 *
+	 * @return the kaleo definition ID of this kaleo log
+	 */
+	public long getKaleoDefinitionId();
+
+	/**
+	 * Sets the kaleo definition ID of this kaleo log.
+	 *
+	 * @param kaleoDefinitionId the kaleo definition ID of this kaleo log
+	 */
+	public void setKaleoDefinitionId(long kaleoDefinitionId);
+
+	/**
 	 * Returns the kaleo definition version ID of this kaleo log.
 	 *
 	 * @return the kaleo definition version ID of this kaleo log

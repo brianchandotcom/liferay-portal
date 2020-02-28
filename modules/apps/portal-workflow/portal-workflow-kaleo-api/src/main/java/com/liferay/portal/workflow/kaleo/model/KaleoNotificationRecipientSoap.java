@@ -43,6 +43,7 @@ public class KaleoNotificationRecipientSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setKaleoDefinitionId(model.getKaleoDefinitionId());
 		soapModel.setKaleoDefinitionVersionId(
 			model.getKaleoDefinitionVersionId());
 		soapModel.setKaleoNotificationId(model.getKaleoNotificationId());
@@ -186,6 +187,14 @@ public class KaleoNotificationRecipientSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getKaleoDefinitionId() {
+		return _kaleoDefinitionId;
+	}
+
+	public void setKaleoDefinitionId(long kaleoDefinitionId) {
+		_kaleoDefinitionId = kaleoDefinitionId;
+	}
+
 	public long getKaleoDefinitionVersionId() {
 		return _kaleoDefinitionVersionId;
 	}
@@ -274,6 +283,7 @@ public class KaleoNotificationRecipientSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _kaleoDefinitionId;
 	private long _kaleoDefinitionVersionId;
 	private long _kaleoNotificationId;
 	private String _recipientClassName;

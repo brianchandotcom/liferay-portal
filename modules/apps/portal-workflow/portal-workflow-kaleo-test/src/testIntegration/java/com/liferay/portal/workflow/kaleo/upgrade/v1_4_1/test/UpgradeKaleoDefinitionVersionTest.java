@@ -42,11 +42,8 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
-import java.io.IOException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.function.BiConsumer;
@@ -126,26 +123,6 @@ public class UpgradeKaleoDefinitionVersionTest {
 		}
 	}
 
-	private void _addColumnAndIndex(String table, String column, String index)
-		throws Exception {
-
-		_addColumn(
-			table, column,
-			(table2, column2) -> _addIndex(table2, index, column2));
-	}
-
-	private void _addIndex(String table, String index, String... columns) {
-		try {
-			_db.runSQL(
-				StringBundler.concat(
-					"create index ", index, " on ", table, " (",
-					StringUtil.merge(columns), ");"));
-		}
-		catch (IOException | SQLException exception) {
-			throw new AssertionError(exception);
-		}
-	}
-
 	private void _addKaleoDefinition(
 			long companyId, long groupId, String name, int version)
 		throws Exception {
@@ -221,47 +198,6 @@ public class UpgradeKaleoDefinitionVersionTest {
 			_dbInspector = new DBInspector(con);
 
 			_addColumn("KaleoDefinition", "startKaleoNodeId");
-
-			_addColumnAndIndex(
-				"KaleoAction", "kaleoDefinitionId", "IX_F95A622");
-			_addColumnAndIndex(
-				"KaleoCondition", "kaleoDefinitionId", "IX_DC978A5D");
-			_addColumnAndIndex(
-				"KaleoInstance", "kaleoDefinitionId", "IX_ACF16238");
-			_addColumnAndIndex(
-				"KaleoInstanceToken", "kaleoDefinitionId", "IX_7BDB04B4");
-			_addColumnAndIndex("KaleoLog", "kaleoDefinitionId", "IX_6C64B7D4");
-
-			_addColumn(
-				"KaleoNode", "kaleoDefinitionId",
-				(table, column) -> {
-					_addIndex("KaleoNode", "IX_32E94DD6", "kaleoDefinitionId");
-					_addIndex(
-						"KaleoNode", "IX_F28C443E", "companyId",
-						"kaleoDefinitionId");
-				});
-
-			_addColumnAndIndex(
-				"KaleoNotification", "kaleoDefinitionId", "IX_4B968E8D");
-			_addColumnAndIndex(
-				"KaleoNotificationRecipient", "kaleoDefinitionId",
-				"IX_AA6697EA");
-			_addColumnAndIndex("KaleoTask", "kaleoDefinitionId", "IX_3FFA633");
-			_addColumnAndIndex(
-				"KaleoTaskAssignment", "kaleoDefinitionId", "IX_575C03A6");
-			_addColumnAndIndex(
-				"KaleoTaskAssignmentInstance", "kaleoDefinitionId",
-				"IX_C851011");
-			_addColumnAndIndex(
-				"KaleoTaskForm", "kaleoDefinitionId", "IX_60D1964F");
-			_addColumnAndIndex(
-				"KaleoTaskFormInstance", "kaleoDefinitionId", "IX_B975E9BA");
-			_addColumnAndIndex(
-				"KaleoTaskInstanceToken", "kaleoDefinitionId", "IX_608E9519");
-			_addColumn("KaleoTimer", "kaleoDefinitionId");
-			_addColumn("KaleoTimerInstanceToken", "kaleoDefinitionId");
-			_addColumnAndIndex(
-				"KaleoTransition", "kaleoDefinitionId", "IX_479F3063");
 
 			_dbInspector = null;
 		}

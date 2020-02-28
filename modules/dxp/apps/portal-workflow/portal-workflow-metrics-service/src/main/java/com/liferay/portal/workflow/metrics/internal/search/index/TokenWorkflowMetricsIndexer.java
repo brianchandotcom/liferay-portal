@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
@@ -113,15 +112,8 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			"instanceId", kaleoTaskInstanceToken.getKaleoInstanceId());
 		document.addDateSortable(
 			"modifiedDate", kaleoTaskInstanceToken.getModifiedDate());
-
-		KaleoDefinition kaleoDefinition = getKaleoDefinition(
-			kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
-
-		if (kaleoDefinition != null) {
-			document.addKeyword(
-				"processId", kaleoDefinition.getKaleoDefinitionId());
-		}
-
+		document.addKeyword(
+			"processId", kaleoTaskInstanceToken.getKaleoDefinitionId());
 		document.addKeyword("taskId", kaleoTaskInstanceToken.getKaleoTaskId());
 		document.addKeyword(
 			"taskName", kaleoTaskInstanceToken.getKaleoTaskName());

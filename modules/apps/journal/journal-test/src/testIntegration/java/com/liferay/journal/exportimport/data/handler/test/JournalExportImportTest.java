@@ -18,10 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileVersion;
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -30,21 +27,16 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
-import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEventListenerRegistryUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
-import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -53,19 +45,15 @@ import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -80,9 +68,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.URLCodec;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -108,7 +93,6 @@ import java.util.stream.Stream;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -204,125 +188,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	@Test
 	public void testExportImportStructuredJournalArticle() throws Exception {
 		exportImportJournalArticle(false);
-	}
-
-	@Ignore
-	@Test
-	public void testReferenceSkipping() throws Exception {
-		setPortalProperty("STAGING_DELETE_TEMP_LAR_ON_SUCCESS", false);
-
-		LarFileSetterExportImportLifecycleListener
-			larFileSetterExportImportLifecycleListener =
-				new LarFileSetterExportImportLifecycleListener();
-
-		ExportImportLifecycleEventListenerRegistryUtil.register(
-			larFileSetterExportImportLifecycleListener);
-
-		Layout targetLayout = LayoutTestUtil.addLayout(group);
-
-		StagingLocalServiceUtil.enableLocalStaging(
-			TestPropsValues.getUserId(), group, false, false,
-			new ServiceContext());
-
-		Group stagingGroup = group.getStagingGroup();
-
-		JournalArticle journalArticle = (JournalArticle)addStagedModel(
-			stagingGroup.getGroupId());
-
-		DLFolder dlFolder = DLTestUtil.addDLFolder(stagingGroup.getGroupId());
-
-		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
-			dlFolder.getFolderId());
-
-		DLFileVersion fileVersion = dlFileEntry.getFileVersion();
-
-		DLFileEntryLocalServiceUtil.updateStatus(
-			dlFileEntry.getUserId(), fileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(), new HashMap<>());
-
-		String content = journalArticle.getContent();
-
-		String dlFileEntryUrl = StringUtil.merge(
-			new String[] {
-				StringPool.BLANK, "documents",
-				String.valueOf(dlFileEntry.getGroupId()),
-				String.valueOf(dlFileEntry.getFolderId()),
-				URLCodec.encodeURL(dlFileEntry.getTitle(), true)
-			},
-			StringPool.SLASH);
-
-		String newContent = StringBundler.concat(
-			"<![CDATA[<img data-fileentryid=\"", dlFileEntry.getFileEntryId(),
-			"\" src=\"", dlFileEntryUrl, "\" />]]>");
-
-		journalArticle = JournalArticleLocalServiceUtil.updateContent(
-			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			journalArticle.getVersion(),
-			content.replaceAll("<\\!\\[CDATA\\[.+?\\]\\]>", newContent));
-
-		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
-				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, true,
-				false, true, false, false, false, false, true, true, true, null,
-				true, true, null, true, null,
-				ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, true, true,
-				UserIdStrategy.CURRENT_USER_ID);
-
-		Layout sourceLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			targetLayout.getUuid(), stagingGroup.getGroupId(), false);
-
-		StagingUtil.publishPortlet(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			group.getGroupId(), sourceLayout.getPlid(), targetLayout.getPlid(),
-			getPortletId(), parameterMap);
-
-		checkJournalArticleInLar(journalArticle);
-
-		checkFileEntriesInLar(stagingGroup, false);
-
-		// Update modifiedDate
-
-		JournalArticleLocalServiceUtil.updateContent(
-			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			journalArticle.getVersion(), journalArticle.getContent());
-
-		Map<String, String[]> modifiedParameterMap = new HashMap<>(
-			parameterMap);
-
-		modifiedParameterMap.put(
-			PortletDataHandlerControl.getNamespacedControlName(
-				getNamespace(), "referenced-content-behavior"),
-			new String[] {"include-if-modified"});
-
-		StagingUtil.publishPortlet(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			group.getGroupId(), sourceLayout.getPlid(), targetLayout.getPlid(),
-			getPortletId(), modifiedParameterMap);
-
-		checkJournalArticleInLar(journalArticle);
-
-		checkFileEntriesInLar(stagingGroup, true);
-
-		// Update modifiedDate
-
-		JournalArticleLocalServiceUtil.updateContent(
-			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			journalArticle.getVersion(), journalArticle.getContent());
-
-		StagingUtil.publishPortlet(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			group.getGroupId(), sourceLayout.getPlid(), targetLayout.getPlid(),
-			getPortletId(), parameterMap);
-
-		checkJournalArticleInLar(journalArticle);
-
-		checkFileEntriesInLar(stagingGroup, false);
-
-		ExportImportLifecycleEventListenerRegistryUtil.unregister(
-			larFileSetterExportImportLifecycleListener);
-
-		setPortalProperty("STAGING_DELETE_TEMP_LAR_ON_SUCCESS", true);
 	}
 
 	public class LarFileSetterExportImportLifecycleListener

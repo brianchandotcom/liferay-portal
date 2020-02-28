@@ -55,7 +55,7 @@ export const getFilteredSettingsContext = ({config, settingsContext}) => {
 	const unsupportedTabs = [...config.disabledTabs];
 
 	const pages = settingsContext.pages.filter(
-		page => unsupportedTabs.indexOf(page.title) === -1
+		page => !unsupportedTabs.includes(page.title)
 	);
 
 	const visitor = new PagesVisitor(pages);
@@ -73,7 +73,7 @@ export const getFilteredSettingsContext = ({config, settingsContext}) => {
 				fields: column.fields
 					.filter(
 						({fieldName}) =>
-							unsupportedProperties.indexOf(fieldName) === -1
+							!unsupportedProperties.includes(fieldName)
 					)
 					.map(field => {
 						if (field.fieldName === 'dataSourceType') {

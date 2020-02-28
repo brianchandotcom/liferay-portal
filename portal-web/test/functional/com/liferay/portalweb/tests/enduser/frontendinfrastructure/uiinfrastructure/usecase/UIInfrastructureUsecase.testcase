@@ -180,42 +180,6 @@ definition {
 		}
 	}
 
-	@description = "This test validates Fjord Theme."
-	@priority = "5"
-	test ValidateFjordTheme {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "UIInfrastructureUseCase#ValidateFjordTheme";
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addSiteTemplateCP(
-			siteName = "Fjord Name",
-			siteTemplateName = "Fjord");
-
-		Navigator.openSiteURL(siteName = "Fjord Name");
-
-		AssertClick(
-			key_pageName = "Home",
-			locator1 = "Home#PAGE",
-			value1 = "Home");
-
-		ProductMenuHelper.closeProductMenu();
-
-		SikuliAssertElementPresent(locator1 = "MediaGallery#SCREENSHOTS_FJORD_THEME_PNG");
-
-		takeScreenshot();
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.deleteCP(siteName = "Fjord Name");
-	}
-
 	@description = "This is a use case for LPS-70390."
 	@priority = "4"
 	test ViewNonASCIICharactersWithSPADisabled {

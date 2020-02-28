@@ -18,6 +18,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			Site.tearDownCP();
+		}
 	}
 
 	@priority = "5"
@@ -32,15 +35,21 @@ definition {
 			portlet = "Sites");
 
 		Site.addSiteTemplateCP(
-			siteName = "Fjord Theme Site",
+			siteName = "Fjord Name",
 			siteTemplateName = "Fjord");
 
-		Navigator.openSiteURL(siteName = "Fjord Theme Site");
+		Navigator.openSiteURL(siteName = "Fjord Name");
 
 		AssertClick(
 			key_pageName = "Home",
 			locator1 = "Home#PAGE",
 			value1 = "Home");
+
+		ProductMenuHelper.closeProductMenu();
+
+		SikuliAssertElementPresent(locator1 = "FjordTheme#SCREENSHOTS_FJORD_THEME_PNG");
+
+		takeScreenshot();
 
 		AssertVisible(locator1 = "UserBar#USER_AVATAR_IMAGE");
 

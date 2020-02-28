@@ -99,10 +99,14 @@ public class AccountRoleLocalServiceImpl
 
 		accountRole = super.deleteAccountRole(accountRole);
 
-		userGroupRoleLocalService.deleteUserGroupRolesByRoleId(
-			accountRole.getRoleId());
+		Role role = roleLocalService.fetchRole(accountRole.getRoleId());
 
-		roleLocalService.deleteRole(accountRole.getRoleId());
+		if (role != null) {
+			userGroupRoleLocalService.deleteUserGroupRolesByRoleId(
+				accountRole.getRoleId());
+
+			roleLocalService.deleteRole(accountRole.getRoleId());
+		}
 
 		return accountRole;
 	}
@@ -111,14 +115,7 @@ public class AccountRoleLocalServiceImpl
 	public AccountRole deleteAccountRole(long accountRoleId)
 		throws PortalException {
 
-		AccountRole accountRole = super.deleteAccountRole(accountRoleId);
-
-		userGroupRoleLocalService.deleteUserGroupRolesByRoleId(
-			accountRole.getRoleId());
-
-		roleLocalService.deleteRole(accountRole.getRoleId());
-
-		return accountRole;
+		return deleteAccountRole(getAccountRole(accountRoleId));
 	}
 
 	@Override

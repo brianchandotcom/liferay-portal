@@ -15,6 +15,7 @@ dependencies {
 	compileOnly project(":apps:asset:asset-display-page-api")
 	compileOnly project(":apps:bulk:bulk-selection-api")
 	compileOnly project(":apps:changeset:changeset-api")
+	compileOnly project(":apps:comment:comment-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:document-library:document-library-file-rank-api")
 	compileOnly project(":apps:document-library:document-library-sync-api")

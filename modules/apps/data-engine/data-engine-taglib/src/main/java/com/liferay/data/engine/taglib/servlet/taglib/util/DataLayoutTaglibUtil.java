@@ -154,6 +154,9 @@ public class DataLayoutTaglibUtil {
 		).put(
 			"multiPage", dataLayoutBuilderDefinition.isMultiPage()
 		).put(
+			"successPageSettings",
+			dataLayoutBuilderDefinition.getSuccessPageSettings()
+		).put(
 			"unimplementedProperties",
 			dataLayoutBuilderDefinition.getUnimplementedProperties()
 		);

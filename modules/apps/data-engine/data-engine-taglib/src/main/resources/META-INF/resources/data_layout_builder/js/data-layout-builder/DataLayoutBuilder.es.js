@@ -40,7 +40,6 @@ class DataLayoutBuilder extends React.Component {
 			fieldTypes,
 			localizable,
 			portletNamespace,
-			successPageSettings,
 		} = this.props;
 
 		const context = this._setContext(this.props.context);
@@ -67,7 +66,7 @@ class DataLayoutBuilder extends React.Component {
 					editingLanguageId: themeDisplay.getDefaultLanguageId(),
 					initialPages: context.pages,
 					initialPaginationMode: context.paginationMode,
-					initialSuccessPageSettings: successPageSettings,
+					initialSuccessPageSettings: config.successPageSettings,
 					ref: 'layoutProvider',
 				},
 				singlePage: !config.multiPage,

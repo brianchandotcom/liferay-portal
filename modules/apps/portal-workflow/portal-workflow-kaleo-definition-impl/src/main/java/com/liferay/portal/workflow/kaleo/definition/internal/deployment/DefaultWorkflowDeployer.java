@@ -87,6 +87,7 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 
 		for (Node node : nodes) {
 			KaleoNode kaleoNode = _kaleoNodeLocalService.addKaleoNode(
+				kaleoDefinition.getKaleoDefinitionId(),
 				kaleoDefinitionVersionId, node, serviceContext);
 
 			kaleoNodesMap.put(node.getName(), kaleoNode);
@@ -97,6 +98,7 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 				Task task = (Task)node;
 
 				_kaleoTaskLocalService.addKaleoTask(
+					kaleoDefinition.getKaleoDefinitionId(),
 					kaleoDefinitionVersionId, kaleoNode.getKaleoNodeId(), task,
 					serviceContext);
 			}
@@ -104,6 +106,7 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 				Condition condition = (Condition)node;
 
 				_kaleoConditionLocalService.addKaleoCondition(
+					kaleoDefinition.getKaleoDefinitionId(),
 					kaleoDefinitionVersionId, kaleoNode.getKaleoNodeId(),
 					condition, serviceContext);
 			}
@@ -134,6 +137,7 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 				}
 
 				_kaleoTransitionLocalService.addKaleoTransition(
+					kaleoNode.getKaleoDefinitionId(),
 					kaleoNode.getKaleoDefinitionVersionId(),
 					kaleoNode.getKaleoNodeId(), transition, sourceKaleoNode,
 					targetKaleoNode, serviceContext);

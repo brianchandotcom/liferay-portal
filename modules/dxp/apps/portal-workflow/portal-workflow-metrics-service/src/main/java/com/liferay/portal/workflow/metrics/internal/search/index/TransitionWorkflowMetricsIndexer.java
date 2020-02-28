@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
@@ -56,15 +55,8 @@ public class TransitionWorkflowMetricsIndexer
 		document.addKeyword("name", kaleoTransition.getName());
 		document.addKeyword(
 			"nodeId", _getNodeId(kaleoTransition.getKaleoNodeId()));
-
-		KaleoDefinition kaleoDefinition = getKaleoDefinition(
-			kaleoTransition.getKaleoDefinitionVersionId());
-
-		if (kaleoDefinition != null) {
-			document.addKeyword(
-				"processId", kaleoDefinition.getKaleoDefinitionId());
-		}
-
+		document.addKeyword(
+			"processId", kaleoTransition.getKaleoDefinitionId());
 		document.addKeyword(
 			"sourceNodeId", _getNodeId(kaleoTransition.getSourceKaleoNodeId()));
 		document.addKeyword(

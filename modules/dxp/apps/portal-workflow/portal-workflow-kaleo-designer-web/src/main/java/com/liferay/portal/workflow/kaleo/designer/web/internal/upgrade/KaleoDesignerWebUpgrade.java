@@ -45,6 +45,7 @@ public class KaleoDesignerWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.0.0", "1.0.1",
 			new UpgradeKaleoDefinitionVersion(
+				_counterLocalService, _kaleoDefinitionLocalService,
 				_kaleoDefinitionVersionLocalService,
 				_resourceActionLocalService, _resourceActions,
 				_userLocalService));

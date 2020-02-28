@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
@@ -103,7 +102,8 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	public Document createDocument(KaleoNode kaleoNode) {
 		return _createDocument(
 			kaleoNode.getCompanyId(), kaleoNode.getCreateDate(),
-			kaleoNode.isInitial(), kaleoNode.getKaleoDefinitionVersionId(),
+			kaleoNode.isInitial(), kaleoNode.getKaleoDefinitionId(),
+			kaleoNode.getKaleoDefinitionVersionId(),
 			kaleoNode.getModifiedDate(), kaleoNode.getName(),
 			kaleoNode.getKaleoNodeId(), kaleoNode.isTerminal(),
 			kaleoNode.getType());
@@ -112,6 +112,7 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	public Document createDocument(KaleoTask kaleoTask) {
 		return _createDocument(
 			kaleoTask.getCompanyId(), kaleoTask.getCreateDate(), false,
+			kaleoTask.getKaleoDefinitionId(),
 			kaleoTask.getKaleoDefinitionVersionId(),
 			kaleoTask.getModifiedDate(), kaleoTask.getName(),
 			kaleoTask.getKaleoTaskId(), false, NodeType.TASK.name());
@@ -135,8 +136,9 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	private Document _createDocument(
 		long companyId, Date createDate, boolean initial,
-		long kaleoDefinitionVersionId, Date modifiedDate, String name,
-		long nodeId, boolean terminal, String type) {
+		long kaleoDefinitionId, long kaleoDefinitionVersionId,
+		Date modifiedDate, String name, long nodeId, boolean terminal,
+		String type) {
 
 		Document document = new DocumentImpl();
 
@@ -150,15 +152,7 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		document.addDateSortable("modifiedDate", modifiedDate);
 		document.addKeyword("name", name);
 		document.addKeyword("nodeId", nodeId);
-
-		KaleoDefinition kaleoDefinition = getKaleoDefinition(
-			kaleoDefinitionVersionId);
-
-		if (kaleoDefinition != null) {
-			document.addKeyword(
-				"processId", kaleoDefinition.getKaleoDefinitionId());
-		}
-
+		document.addKeyword("processId", kaleoDefinitionId);
 		document.addKeyword("terminal", terminal);
 		document.addKeyword("type", type);
 

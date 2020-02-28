@@ -21,13 +21,13 @@ ConstantNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-
 ConstructorMissingEmptyLineCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 ContractionsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 CopyrightCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-CreationMenuBuilderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[CreationMenuBuilderCheck](checks/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [DefaultComesLastCheck](https://checkstyle.sourceforge.io/config_coding.html#DefaultComesLast) | [Styling](styling_checks.markdown#styling-checks) | Check that the default is after all the cases in a switch statement. |
 DeprecatedUsageCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 EmptyCollectionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 EnumConstantDividerCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 EnumConstantOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-ExceptionMessageCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[ExceptionMessageCheck](checks/message_check.markdown#messagecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 ExceptionVariableNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 FactoryCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 FilterStringWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -35,9 +35,9 @@ FilterStringWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#misc
 FullyQualifiedNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 GetterUtilCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 InstanceofOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-ItemListBuilderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[ItemListBuilderCheck](checks/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSONNamingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[JSONUtilCheck](checks/json_util_check.markdown#jsonutilcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JSONUtilCheck](checks/json_util_check.markdown#jsonutilcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks for utilization of class `JSONUtil` |
 Java2HTMLCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JavaAPISignatureCheck](checks/java_api_signature_check.markdown#javaapisignaturecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that types `HttpServletRequest`, `HttpServletResponse`, `ThemeDisplay`, and `ServiceContext` are not used in API method signatures |
 JavaAbstractMethodCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -109,14 +109,14 @@ JavaReturnStatementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscell
 JavaServiceImplCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaServiceObjectCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaServiceTrackerFactoryCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[JavaServiceUtilCheck](checks/java_service_util_check.markdown#javaserviceutilcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaServiceUtilCheck](checks/java_service_util_check.markdown#javaserviceutilcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that there are no calls to `*ServiceImpl` from a `*ServiceUtil` class |
 JavaSessionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaSignatureParametersCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaStagedModelDataHandlerCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaStaticBlockCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[JavaStaticImportsCheck](checks/java_static_imports_check.markdown#javastaticimportscheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaStaticImportsCheck](checks/java_static_imports_check.markdown#javastaticimportscheck) | [Styling](styling_checks.markdown#styling-checks) | Checks that there are no static imports |
 JavaStaticVariableDependencyCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[JavaStopWatchCheck](checks/java_stop_watch_check.markdown#javastopwatchcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaStopWatchCheck](checks/java_stop_watch_check.markdown#javastopwatchcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for potential NullPointerException when using `StopWatch` |
 JavaStringBundlerConcatCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaStringBundlerInitialCapacityCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaStylingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -130,7 +130,7 @@ JavaTermStylingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneo
 [JavaTestMethodAnnotationsCheck](checks/java_test_method_annotations_check.markdown#javatestmethodannotationscheck) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks if methods with test annotations follow the naming conventions |
 [JavaUnsafeCastingCheck](checks/java_unsafe_casting_check.markdown#javaunsafecastingcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for potential ClassCastException |
 JavaUnusedSourceFormatterChecksCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[JavaUpgradeClassCheck](checks/java_upgrade_class_check.markdown#javaupgradeclasscheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[JavaUpgradeClassCheck](checks/java_upgrade_class_check.markdown#javaupgradeclasscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on Upgrade classes |
 JavaUpgradeConnectionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaUpgradeVersionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JavaVariableTypeCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -139,20 +139,20 @@ JavaXMLSecurityCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneo
 JavadocCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JavadocStyleCheck](https://checkstyle.sourceforge.io/config_javadoc.html#JavadocStyle) | [Styling](styling_checks.markdown#styling-checks) | Validates Javadoc comments to help ensure they are well formed. |
 LPS42924Check | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[LambdaCheck](checks/lambda_check.markdown#lambdacheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[LambdaCheck](checks/lambda_check.markdown#lambdacheck) | [Styling](styling_checks.markdown#styling-checks) | Checks that `lambda` statements are as simple as possible |
 LanguageKeysCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 LineBreakAfterCommaCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 LineBreakBeforeGenericStartCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 LineEndCharacterCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[ListUtilCheck](checks/list_util_check.markdown#listutilcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[ListUtilCheck](checks/list_util_check.markdown#listutilcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks for utilization of class `ListUtil` |
 LiteralStringEqualsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalFinalVariableName) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that local final variable names conform to a specified pattern. |
 LocalPatternCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [LocalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalVariableName) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that local, non-final variable names conform to a specified pattern. |
 LocaleUtilCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-LogMessageCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-MapBuilderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[MapIterationCheck](checks/map_iteration_check.markdown#mapiterationcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[LogMessageCheck](checks/message_check.markdown#messagecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[MapBuilderCheck](checks/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[MapIterationCheck](checks/map_iteration_check.markdown#mapiterationcheck) | [Performance](performance_checks.markdown#performance-checks) | Checks that there are no unnecessary map iterations |
 [MemberNameCheck](https://checkstyle.sourceforge.io/config_naming.html#MemberName) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that instance variable names conform to a specified pattern. |
 MethodCallsOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [MethodNameCheck](https://checkstyle.sourceforge.io/config_naming.html#MethodName) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that method names conform to a specified pattern. |
@@ -162,7 +162,7 @@ MissingAuthorCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous
 [MissingDeprecatedCheck](https://checkstyle.sourceforge.io/config_annotation.html#MissingDeprecated) | [Styling](styling_checks.markdown#styling-checks) | Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present. |
 MissingDeprecatedJavadocCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 MissingDiamondOperatorCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[MissingEmptyLineCheck](checks/missing_empty_line_check.markdown#missingemptylinecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[MissingEmptyLineCheck](checks/missing_empty_line_check.markdown#missingemptylinecheck) | [Styling](styling_checks.markdown#styling-checks) | Checks for missing line breaks around variable declarations |
 MissingModifierCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 MissingOverrideCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 MissingParenthesesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -182,7 +182,7 @@ OperatorOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous
 [ParameterNameCheck](https://checkstyle.sourceforge.io/config_naming.html#ParameterName) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that method parameter names conform to a specified pattern. |
 ParsePrimitiveTypeCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 PersistenceCallCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[PersistenceUpdateCheck](checks/persistence_update_check.markdown#persistenceupdatecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[PersistenceUpdateCheck](checks/persistence_update_check.markdown#persistenceupdatecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that there are no stale references in service code from persistence updates |
 PlusStatementCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 PrimitiveWrapperInstantiationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 PrincipalExceptionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -190,7 +190,7 @@ RedundantBranchingStatementCheck | [Miscellaneous](miscellaneous_checks.markdown
 RedundantVariableDeclarationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 ReferenceAnnotationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [RequireThisCheck](https://checkstyle.sourceforge.io/config_coding.html#RequireThis) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that references to instance variables and methods of the present object are explicitly of the form 'this.varName' or 'this.methodName(args)' and that those references don't rely on the default behavior when 'this.' is absent. |
-[ResourceBundleCheck](checks/resource_bundle_check.markdown#resourcebundlecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[ResourceBundleCheck](checks/resource_bundle_check.markdown#resourcebundlecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that there are no calls to `java.util.ResourceBundle.getBundle` |
 SelfReferenceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 SemiColonCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 SessionKeysCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -217,7 +217,7 @@ UnusedMethodCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-
 UnusedParameterCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 UnusedVariableCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 UnwrappedVariableInfoCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-[ValidatorEqualsCheck](checks/validator_equals_check.markdown#validatorequalscheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[ValidatorEqualsCheck](checks/validator_equals_check.markdown#validatorequalscheck) | [Performance](performance_checks.markdown#performance-checks) | Checks that there are no calls to `Validator.equals(Object, Object)` |
 ValidatorIsNullCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 VariableDeclarationAsUsedCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 VariableNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |

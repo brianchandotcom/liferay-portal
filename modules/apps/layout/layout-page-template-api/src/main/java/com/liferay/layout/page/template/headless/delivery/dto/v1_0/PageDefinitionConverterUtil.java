@@ -30,6 +30,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
@@ -232,14 +233,17 @@ public class PageDefinitionConverterUtil {
 							layout = new Layout() {
 								{
 									paddingBottom =
-										containerLayoutStructureItem.
-											getPaddingBottom();
+										PaddingConverter.convertToExternalValue(
+											containerLayoutStructureItem.
+												getPaddingBottom());
 									paddingHorizontal =
-										containerLayoutStructureItem.
-											getPaddingHorizontal();
+										PaddingConverter.convertToExternalValue(
+											containerLayoutStructureItem.
+												getPaddingHorizontal());
 									paddingTop =
-										containerLayoutStructureItem.
-											getPaddingTop();
+										PaddingConverter.convertToExternalValue(
+											containerLayoutStructureItem.
+												getPaddingTop());
 
 									setContainerType(
 										() -> {

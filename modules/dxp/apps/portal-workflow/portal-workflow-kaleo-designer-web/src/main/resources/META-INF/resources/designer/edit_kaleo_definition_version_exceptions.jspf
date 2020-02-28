@@ -140,8 +140,8 @@
 <liferay-ui:error exception="<%= KaleoDefinitionValidationException.MustSetValidNodeNameLength.class %>">
 
 	<%
-		KaleoDefinitionValidationException.MustSetValidNodeNameLength
-			msvnnl = (KaleoDefinitionValidationException.MustSetValidNodeNameLength)errorException;
+	KaleoDefinitionValidationException.MustSetValidNodeNameLength
+		msvnnl = (KaleoDefinitionValidationException.MustSetValidNodeNameLength)errorException;
 	%>
 
 	<liferay-ui:message arguments="<%= new Object[] {msvnnl.getNode(), msvnnl.getLength()} %>" key="the-x-node-name-exceeds-the-length-limit-of-x-characters" translateArguments="<%= false %>" />

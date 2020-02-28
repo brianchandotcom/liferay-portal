@@ -48,10 +48,12 @@ public abstract class BaseNodeValidator<T extends Node>
 
 	protected void validateName(T node)
 		throws KaleoDefinitionValidationException {
+
 		String name = node.getName();
 
-		if(name.length() > 200) {
-			throw new KaleoDefinitionValidationException.MustSetValidNodeNameLength(200, name);
+		if (name.length() > 200) {
+			throw new KaleoDefinitionValidationException.
+				MustSetValidNodeNameLength(200, name);
 		}
 	}
 

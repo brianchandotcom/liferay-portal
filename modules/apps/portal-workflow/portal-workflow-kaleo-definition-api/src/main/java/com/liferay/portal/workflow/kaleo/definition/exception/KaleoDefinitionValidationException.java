@@ -55,32 +55,6 @@ public class KaleoDefinitionValidationException extends WorkflowException {
 
 	}
 
-	public static class MustSetValidNodeNameLength
-		extends KaleoDefinitionValidationException {
-
-		public MustSetValidNodeNameLength(int length, String node) {
-			super(
-				String.format(
-					"The node name exceeds the length limit", node, length));
-
-			_length = length;
-			_node = node;
-		}
-
-		public int getLength() {
-			return _length;
-		}
-
-		private final int _length;
-
-		public String getNode() {
-			return _node;
-		}
-
-		private final String _node;
-
-	}
-
 	public static class MultipleInitialStateNodes
 		extends KaleoDefinitionValidationException {
 
@@ -329,6 +303,33 @@ public class KaleoDefinitionValidationException extends WorkflowException {
 		public MustSetTerminalStateNode() {
 			super("You must define an end node");
 		}
+
+	}
+
+	public static class MustSetValidNodeNameLength
+		extends KaleoDefinitionValidationException {
+
+		public MustSetValidNodeNameLength(int length, String node) {
+			super(
+				String.format(
+					"The %s node name exceeds the length limit of %s " +
+						"characters",
+					node, length));
+
+			_length = length;
+			_node = node;
+		}
+
+		public int getLength() {
+			return _length;
+		}
+
+		public String getNode() {
+			return _node;
+		}
+
+		private final int _length;
+		private final String _node;
 
 	}
 

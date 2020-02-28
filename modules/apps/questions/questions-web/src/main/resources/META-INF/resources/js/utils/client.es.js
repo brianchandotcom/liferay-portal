@@ -462,6 +462,7 @@ export const getRelatedThreads = (search = '', siteKey) =>
                     	name
                 	} 
                     dateModified
+                    friendlyUrlPath
                     headline
                     id 
 					messageBoardSection {

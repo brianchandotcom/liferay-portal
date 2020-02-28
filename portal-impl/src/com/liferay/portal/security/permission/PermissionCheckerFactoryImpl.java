@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.contributor.RoleContributor;
+import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapperFactory;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
@@ -38,6 +39,8 @@ public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
 	}
 
 	public void afterPropertiesSet() {
+		_permissionCheckerWrapperFactories = ServiceTrackerCollections.openList(
+			PermissionCheckerWrapperFactory.class);
 		_roleContributors = ServiceTrackerCollections.openList(
 			RoleContributor.class);
 	}
@@ -49,14 +52,27 @@ public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
 		permissionChecker.init(
 			user, _roleContributors.toArray(new RoleContributor[0]));
 
-		return new StagingPermissionChecker(permissionChecker);
+		permissionChecker = new StagingPermissionChecker(permissionChecker);
+
+		for (PermissionCheckerWrapperFactory permissionCheckerWrapperFactory :
+				_permissionCheckerWrapperFactories) {
+
+			permissionChecker =
+				permissionCheckerWrapperFactory.wrapPermissionChecker(
+					permissionChecker);
+		}
+
+		return permissionChecker;
 	}
 
 	public void destroy() {
+		_permissionCheckerWrapperFactories.close();
 		_roleContributors.close();
 	}
 
 	private final PermissionChecker _permissionChecker;
+	private ServiceTrackerList<PermissionCheckerWrapperFactory>
+		_permissionCheckerWrapperFactories;
 	private ServiceTrackerList<RoleContributor> _roleContributors;
 
 }

@@ -51,18 +51,18 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 			</div>
 		</c:if>
 
+		<c:if test="<%= currentSamlRoleIsSP && !localEntityManager.hasDefaultIdpRole() %>">
+			<div class="portlet-msg-info">
+				<liferay-ui:message key="you-must-configure-at-least-one-identity-provider-connection-for-saml-to-function" />
+			</div>
+		</c:if>
+
 		<aui:select label="saml-role" name='<%= "settings--" + PortletPropsKeys.SAML_ROLE + "--" %>' required="<%= true %>" showEmptyOption="<%= true %>">
 			<aui:option label="identity-provider" selected='<%= samlRole.equals("idp") %>' value="idp" />
 			<aui:option label="service-provider" selected='<%= samlRole.equals("sp") %>' value="sp" />
 		</aui:select>
 
 		<aui:input helpMessage="entity-id-help" label="saml-entity-id" name='<%= "settings--" + PortletPropsKeys.SAML_ENTITY_ID + "--" %>' required="<%= true %>" value="<%= entityId %>" />
-
-		<c:if test='<%= samlRole.equals("sp") && !localEntityManager.hasDefaultIdpRole() %>'>
-			<div class="portlet-msg-info">
-				<liferay-ui:message key="you-must-configure-at-least-one-identity-provider-connection-for-saml-to-function" />
-			</div>
-		</c:if>
 	</aui:fieldset>
 
 	<aui:button-row>

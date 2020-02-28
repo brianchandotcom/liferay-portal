@@ -341,7 +341,6 @@ export const getThreads = ({
 	sort = 'dateModified:desc',
 	tag = '',
 }) => {
-
 	const filterSections = `title eq '${sectionId}' or id eq '${sectionId}'`;
 
 	let filter = '';

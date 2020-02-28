@@ -19,9 +19,9 @@ import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
+import {AppContext} from '../../AppContext.es';
 import {getThreadContent, updateThread} from '../../utils/client.es';
 import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
-import {AppContext} from "../../AppContext.es";
 
 export default withRouter(
 	({

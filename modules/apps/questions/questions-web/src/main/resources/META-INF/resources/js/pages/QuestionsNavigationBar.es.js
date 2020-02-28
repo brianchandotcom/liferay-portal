@@ -46,13 +46,13 @@ function getFilterOptions() {
 
 export default withRouter(
 	({
-		 filterChange,
-		 history,
-		 match: {
-			 params: {sectionId},
-		 },
-		 searchChange,
-	 }) => {
+		filterChange,
+		history,
+		match: {
+			params: {sectionId},
+		},
+		searchChange,
+	}) => {
 		const context = useContext(AppContext);
 
 		const [active, setActive] = useState(false);
@@ -93,8 +93,7 @@ export default withRouter(
 		}, [context.siteKey, sectionId]);
 
 		return (
-			<div
-				className="autofit-padded-no-gutters autofit-row autofit-row-center">
+			<div className="autofit-padded-no-gutters autofit-row autofit-row-center">
 				<div className="autofit-col autofit-col-expand">
 					<ClayDropDown
 						active={active}
@@ -106,8 +105,9 @@ export default withRouter(
 										{section.parentSection.title}
 										{' : '}
 										{section.title ===
-										 section.parentSection.title ? 'All' :
-											section.title}
+										section.parentSection.title
+											? 'All'
+											: section.title}
 									</>
 								)}
 							</div>
@@ -115,8 +115,8 @@ export default withRouter(
 					>
 						<Link
 							to={`/questions/${(section.parentSection &&
-											   section.parentSection.id) ||
-											  sectionId}`}
+								section.parentSection.id) ||
+								sectionId}`}
 						>
 							<ClayDropDown.Help>{'All'}</ClayDropDown.Help>
 						</Link>
@@ -195,7 +195,7 @@ export default withRouter(
 									)
 								}
 							>
-								<ClayIcon symbol="pencil"/>
+								<ClayIcon symbol="pencil" />
 
 								<span className="sr-only">
 									{Liferay.Language.get('ask-question')}

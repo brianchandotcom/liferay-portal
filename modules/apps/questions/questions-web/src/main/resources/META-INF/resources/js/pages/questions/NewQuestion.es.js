@@ -29,11 +29,11 @@ import {
 
 export default withRouter(
 	({
-		 history,
-		 match: {
-			 params: {sectionId},
-		 },
-	 }) => {
+		history,
+		match: {
+			params: {sectionId},
+		},
+	}) => {
 		const context = useContext(AppContext);
 
 		const [articleBody, setArticleBody] = useState('');
@@ -63,8 +63,8 @@ export default withRouter(
 							{Liferay.Language.get('title')}
 
 							<span className="c-ml-2 reference-mark">
-							<ClayIcon symbol="asterisk"/>
-						</span>
+								<ClayIcon symbol="asterisk" />
+							</span>
 						</label>
 
 						<ClayInput
@@ -80,11 +80,11 @@ export default withRouter(
 
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
-							<span className="small text-secondary">
-								{Liferay.Language.get(
-									'be-specific-and-imagine-you-are-asking-a-question-to-another-person'
-								)}
-							</span>
+								<span className="small text-secondary">
+									{Liferay.Language.get(
+										'be-specific-and-imagine-you-are-asking-a-question-to-another-person'
+									)}
+								</span>
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					</ClayForm.Group>
@@ -94,7 +94,7 @@ export default withRouter(
 							{Liferay.Language.get('body')}
 
 							<span className="c-ml-2 reference-mark">
-								<ClayIcon symbol="asterisk"/>
+								<ClayIcon symbol="asterisk" />
 							</span>
 						</label>
 

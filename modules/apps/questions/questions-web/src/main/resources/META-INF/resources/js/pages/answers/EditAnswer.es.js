@@ -19,17 +19,17 @@ import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
+import {AppContext} from '../../AppContext.es';
 import {getMessage, updateMessage} from '../../utils/client.es';
 import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
-import {AppContext} from "../../AppContext.es";
 
 export default withRouter(
 	({
-		 history,
-		 match: {
-			 params: {answerId},
-		 },
-	 }) => {
+		history,
+		match: {
+			params: {answerId},
+		},
+	}) => {
 		const context = useContext(AppContext);
 
 		const [articleBody, setArticleBody] = useState('');
@@ -37,10 +37,9 @@ export default withRouter(
 
 		const loadMessage = () =>
 			getMessage(answerId, context.siteKey).then(({articleBody, id}) => {
-					setArticleBody(articleBody);
-					setId(id);
-				}
-			);
+				setArticleBody(articleBody);
+				setId(id);
+			});
 
 		const submit = () => {
 			updateMessage(articleBody, id).then(() => history.goBack());
@@ -56,7 +55,7 @@ export default withRouter(
 							{Liferay.Language.get('answer')}
 
 							<span className="c-ml-2 reference-mark">
-								<ClayIcon symbol="asterisk"/>
+								<ClayIcon symbol="asterisk" />
 							</span>
 						</label>
 

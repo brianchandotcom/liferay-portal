@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.EmailAddressLocalService;
@@ -265,7 +264,8 @@ public class OrganizationResourceImpl
 	}
 
 	private DefaultDTOConverterContext _getDTOConverterContext(
-		String organizationId) {
+			String organizationId)
+		throws Exception {
 
 		return new DefaultDTOConverterContext(
 			contextAcceptLanguage.isAcceptAllLanguages(),
@@ -291,22 +291,20 @@ public class OrganizationResourceImpl
 		);
 	}
 
-	private long _getOrganizationId(String organizationId) {
+	private long _getOrganizationId(String organizationId) throws Exception {
 		if (organizationId == null) {
 			return 0;
 		}
 
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization =
-				_organizationLocalService.fetchOrganizationByReferenceCode(
-					CompanyThreadLocal.getCompanyId(), organizationId);
+				_organizationResourceDTOConverter.getObject(organizationId);
 
 		if (serviceBuilderOrganization == null) {
 			return GetterUtil.getLong(organizationId);
 		}
 
-		return GetterUtil.getLong(
-			serviceBuilderOrganization.getOrganizationId());
+		return serviceBuilderOrganization.getOrganizationId();
 	}
 
 	private Map<String, Map<String, String>> _getOrganizationItemActions(
@@ -356,7 +354,8 @@ public class OrganizationResourceImpl
 	}
 
 	private Map<String, Map<String, String>>
-		_getOrganizationOrganizationListActions(String organizationId) {
+			_getOrganizationOrganizationListActions(String organizationId)
+		throws Exception {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"get",

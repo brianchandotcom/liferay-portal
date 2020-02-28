@@ -12,7 +12,7 @@
 import React, {useContext, useMemo, useState} from 'react';
 
 import PromisesResolver from '../../../../../shared/components/promises-resolver/PromisesResolver.es';
-import {useFetch} from '../../../../../shared/hooks/useFetch.es';
+import {usePost} from '../../../../../shared/hooks/usePost.es';
 import {ModalContext} from '../../ModalContext.es';
 import {Body} from './BulkReassignSelectAssigneesStepBody.es';
 import {Header} from './BulkReassignSelectAssigneesStepHeader.es';
@@ -24,9 +24,9 @@ const BulkReassignSelectAssigneesStep = ({setErrorToast}) => {
 
 	const [retry, setRetry] = useState(0);
 
-	const {data, fetchData} = useFetch({
+	const {data, postData} = usePost({
 		admin: true,
-		params: {
+		body: {
 			workflowTaskIds: selectedTasks.map(task => task.id),
 		},
 		url: '/workflow-tasks/assignable-users',
@@ -36,14 +36,14 @@ const BulkReassignSelectAssigneesStep = ({setErrorToast}) => {
 		setErrorToast(false);
 
 		return [
-			fetchData().catch(err => {
+			postData().catch(err => {
 				setErrorToast(Liferay.Language.get('your-request-has-failed'));
 
 				return Promise.reject(err);
 			}),
 		];
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fetchData, retry]);
+	}, [postData, retry]);
 
 	return (
 		<div className="fixed-height modal-metrics-content">

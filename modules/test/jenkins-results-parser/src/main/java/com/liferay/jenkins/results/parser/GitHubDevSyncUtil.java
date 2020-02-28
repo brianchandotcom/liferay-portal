@@ -115,7 +115,7 @@ public class GitHubDevSyncUtil {
 		try {
 			int retries = 0;
 
-			while ((retries < 10) && !gitHubDevGitRemotes.isEmpty()) {
+			while ((retries < 3) && !gitHubDevGitRemotes.isEmpty()) {
 				retries++;
 
 				GitRemote gitHubDevGitRemote = getRandomGitRemote(
@@ -124,24 +124,28 @@ public class GitHubDevSyncUtil {
 				gitHubDevGitRemotes.remove(gitHubDevGitRemote);
 
 				try {
-					RemoteGitBranch cacheRemoteGitBranch =
+					RemoteGitBranch cachedRemoteGitBranch =
 						gitWorkingDirectory.getRemoteGitBranch(
 							cacheBranchName, gitHubDevGitRemote, true);
 
-					gitWorkingDirectory.fetch(cacheRemoteGitBranch);
+					gitWorkingDirectory.fetch(cachedRemoteGitBranch);
 
-					return cacheRemoteGitBranch;
+					return cachedRemoteGitBranch;
 				}
-				catch (Exception exception) {
+				catch (RuntimeException runtimeException) {
 					String message = JenkinsResultsParserUtil.combine(
-						"Unable to fetch ", cacheBranchName, " from ",
-						gitHubDevGitRemote.getHostname());
+						"Unable to fetch cached remote Git branch ",
+						cacheBranchName, "\n", runtimeException.getMessage());
 
-					if (retries == 10) {
-						throw new RuntimeException(message, exception);
+					if (retries == 3) {
+						System.out.println(message);
+
+						throw new RuntimeException(
+							JenkinsResultsParserUtil.combine(
+								"Unable to fetch ", cacheBranchName,
+								" from git@github-dev.com"),
+							runtimeException);
 					}
-
-					JenkinsResultsParserUtil.sleep(30000);
 
 					System.out.println("Retrying: " + message);
 				}
@@ -150,10 +154,7 @@ public class GitHubDevSyncUtil {
 				}
 			}
 
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to fetch ", cacheBranchName,
-					" from git@github-dev.com"));
+			return null;
 		}
 		finally {
 			gitWorkingDirectory.removeGitRemotes(gitHubDevGitRemotes);

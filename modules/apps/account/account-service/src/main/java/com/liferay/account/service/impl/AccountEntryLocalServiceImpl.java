@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -181,6 +182,21 @@ public class AccountEntryLocalServiceImpl
 
 		_performActions(
 			accountEntryIds, accountEntryLocalService::deleteAccountEntry);
+	}
+
+	@Override
+	public void deleteAccountEntriesByCompanyId(long companyId) {
+		if (!CompanyThreadLocal.isDeleteInProcess()) {
+			throw new UnsupportedOperationException(
+				"Deleting account entries by company must be called when " +
+					"deleting a company");
+		}
+
+		for (AccountEntry accountRole :
+				accountEntryPersistence.findByCompanyId(companyId)) {
+
+			accountEntryPersistence.remove(accountRole);
+		}
 	}
 
 	@Override

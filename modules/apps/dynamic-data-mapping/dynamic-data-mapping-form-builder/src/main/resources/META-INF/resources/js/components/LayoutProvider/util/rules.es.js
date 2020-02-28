@@ -18,7 +18,12 @@ import Token from '../../../expressions/Token.es';
 import Tokenizer from '../../../expressions/Tokenizer.es';
 
 export const isEqualLengthOptions = (options1, options2) => {
-	return options1.length === options2.length;
+	if (!!options1 && !!options2) {
+		return options1.length === options2.length;
+	}
+	else {
+		return false;
+	}
 };
 
 export const isFieldValueOperand = operands => {

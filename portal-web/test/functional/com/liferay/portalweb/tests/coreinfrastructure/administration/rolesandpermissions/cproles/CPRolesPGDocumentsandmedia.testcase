@@ -106,6 +106,8 @@ definition {
 
 	@priority = "4"
 	test AddDMDocumentSiteMemberRoleInline {
+		property custom.properties = "default.layout.template.id=1_column";
+
 		Permissions.setUpSiteMemberRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Documents and Media Page",

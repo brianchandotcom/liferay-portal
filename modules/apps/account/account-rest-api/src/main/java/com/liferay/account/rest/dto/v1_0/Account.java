@@ -157,6 +157,34 @@ public class Account {
 	protected String name;
 
 	@Schema
+	public Long[] getOrganizationIds() {
+		return organizationIds;
+	}
+
+	public void setOrganizationIds(Long[] organizationIds) {
+		this.organizationIds = organizationIds;
+	}
+
+	@JsonIgnore
+	public void setOrganizationIds(
+		UnsafeSupplier<Long[], Exception> organizationIdsUnsafeSupplier) {
+
+		try {
+			organizationIds = organizationIdsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long[] organizationIds;
+
+	@Schema
 	public Long getParentAccountId() {
 		return parentAccountId;
 	}
@@ -299,6 +327,26 @@ public class Account {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (organizationIds != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"organizationIds\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < organizationIds.length; i++) {
+				sb.append(organizationIds[i]);
+
+				if ((i + 1) < organizationIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (parentAccountId != null) {

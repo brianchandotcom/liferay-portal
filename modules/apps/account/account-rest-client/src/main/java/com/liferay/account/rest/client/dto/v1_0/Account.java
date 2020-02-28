@@ -108,6 +108,27 @@ public class Account implements Cloneable {
 
 	protected String name;
 
+	public Long[] getOrganizationIds() {
+		return organizationIds;
+	}
+
+	public void setOrganizationIds(Long[] organizationIds) {
+		this.organizationIds = organizationIds;
+	}
+
+	public void setOrganizationIds(
+		UnsafeSupplier<Long[], Exception> organizationIdsUnsafeSupplier) {
+
+		try {
+			organizationIds = organizationIdsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long[] organizationIds;
+
 	public Long getParentAccountId() {
 		return parentAccountId;
 	}

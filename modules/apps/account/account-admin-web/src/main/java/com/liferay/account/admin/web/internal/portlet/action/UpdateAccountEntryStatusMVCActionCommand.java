@@ -16,6 +16,8 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.petra.lang.SafeClosable;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.Constants;
@@ -52,10 +54,20 @@ public class UpdateAccountEntryStatusMVCActionCommand
 			actionRequest, "accountEntryIds");
 
 		if (cmd.equals(Constants.DEACTIVATE)) {
-			_accountEntryLocalService.deactivateAccountEntries(accountEntryIds);
+			try (SafeClosable safeClosable =
+					ProxyModeThreadLocal.setWithSafeClosable(true)) {
+
+				_accountEntryLocalService.deactivateAccountEntries(
+					accountEntryIds);
+			}
 		}
 		else if (cmd.equals(Constants.RESTORE)) {
-			_accountEntryLocalService.activateAccountEntries(accountEntryIds);
+			try (SafeClosable safeClosable =
+					ProxyModeThreadLocal.setWithSafeClosable(true)) {
+
+				_accountEntryLocalService.activateAccountEntries(
+					accountEntryIds);
+			}
 		}
 	}
 

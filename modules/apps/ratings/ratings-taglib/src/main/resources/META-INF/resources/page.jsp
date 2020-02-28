@@ -30,6 +30,9 @@ Map<String, Object> data = new HashMap<>();
 
 <c:choose>
 	<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
+		<clay:icon
+			symbol="heart"
+		/>
 		<react:component
 			data="<%= data %>"
 			module="js/components/RatingsLike.es"

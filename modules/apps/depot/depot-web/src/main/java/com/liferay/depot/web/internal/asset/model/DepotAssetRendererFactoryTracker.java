@@ -116,18 +116,19 @@ public class DepotAssetRendererFactoryTracker {
 				return assetRendererFactory;
 			}
 
-			Dictionary<String, Object> assetRendererFactoryProperties =
-				new HashMapDictionary<>();
+			Dictionary<String, Object>
+				depotAssetRendererFactoryWrapperProperties =
+					new HashMapDictionary<>();
 
 			for (String key : serviceReference.getPropertyKeys()) {
-				assetRendererFactoryProperties.put(
+				depotAssetRendererFactoryWrapperProperties.put(
 					key, serviceReference.getProperty(key));
 			}
 
-			assetRendererFactoryProperties.put(
+			depotAssetRendererFactoryWrapperProperties.put(
 				"service.ranking", Integer.MAX_VALUE);
 
-			AssetRendererFactory wrappedAssetRendererFactoryWrapper =
+			AssetRendererFactory depotAssetRendererFactoryWrapper =
 				new DepotAssetRendererFactoryWrapper(
 					assetRendererFactory, _depotApplicationController,
 					_depotEntryLocalService, _groupLocalService);
@@ -135,12 +136,12 @@ public class DepotAssetRendererFactoryTracker {
 			ServiceRegistration<AssetRendererFactory> serviceRegistration =
 				_bundleContext.registerService(
 					AssetRendererFactory.class,
-					wrappedAssetRendererFactoryWrapper,
-					assetRendererFactoryProperties);
+					depotAssetRendererFactoryWrapper,
+					depotAssetRendererFactoryWrapperProperties);
 
 			_serviceRegistrations.put(serviceReference, serviceRegistration);
 
-			return wrappedAssetRendererFactoryWrapper;
+			return depotAssetRendererFactoryWrapper;
 		}
 
 		@Override

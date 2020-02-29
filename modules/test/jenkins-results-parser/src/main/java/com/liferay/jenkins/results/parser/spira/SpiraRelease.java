@@ -35,16 +35,14 @@ import org.json.JSONObject;
 public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 	public static SpiraRelease createSpiraRelease(
-			SpiraProject spiraProject, String releaseName)
-		throws IOException {
+		SpiraProject spiraProject, String releaseName) {
 
 		return createSpiraRelease(spiraProject, releaseName, null);
 	}
 
 	public static SpiraRelease createSpiraRelease(
-			SpiraProject spiraProject, String releaseName,
-			Integer parentReleaseID)
-		throws IOException {
+		SpiraProject spiraProject, String releaseName,
+		Integer parentReleaseID) {
 
 		String urlPath = "projects/{project_id}/releases{parent_release_id}";
 
@@ -75,17 +73,21 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 		requestJSONObject.put("EndDate", toDateString(calendar));
 
-		JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
-			urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
-			requestJSONObject.toString());
+		try {
+			JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
+				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONObject.toString());
 
-		return spiraProject.getSpiraReleaseByID(
-			responseJSONObject.getInt(ID_KEY));
+			return spiraProject.getSpiraReleaseByID(
+				responseJSONObject.getInt(ID_KEY));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public static SpiraRelease createSpiraReleaseByPath(
-			SpiraProject spiraProject, String releasePath)
-		throws IOException {
+		SpiraProject spiraProject, String releasePath) {
 
 		List<SpiraRelease> spiraReleases = spiraProject.getSpiraReleasesByPath(
 			releasePath);
@@ -109,8 +111,7 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 	}
 
 	public static void deleteSpiraReleaseByID(
-			SpiraProject spiraProject, int releaseID)
-		throws IOException {
+		SpiraProject spiraProject, int releaseID) {
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
@@ -118,17 +119,21 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 			"project_id", String.valueOf(spiraProject.getID()));
 		urlPathReplacements.put("release_id", String.valueOf(releaseID));
 
-		SpiraRestAPIUtil.request(
-			"projects/{project_id}/releases/{release_id}", null,
-			urlPathReplacements, HttpRequestMethod.DELETE, null);
+		try {
+			SpiraRestAPIUtil.request(
+				"projects/{project_id}/releases/{release_id}", null,
+				urlPathReplacements, HttpRequestMethod.DELETE, null);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 
 		_spiraReleases.remove(
 			_createSpiraReleaseKey(spiraProject.getID(), releaseID));
 	}
 
 	public static void deleteSpiraReleasesByPath(
-			SpiraProject spiraProject, String releasePath)
-		throws IOException {
+		SpiraProject spiraProject, String releasePath) {
 
 		List<SpiraRelease> spiraReleases = spiraProject.getSpiraReleasesByPath(
 			releasePath);
@@ -158,9 +163,7 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 		return (SpiraRelease)parentSpiraArtifact;
 	}
 
-	public SpiraReleaseBuild getSpiraReleaseBuildByID(int releaseBuildID)
-		throws IOException {
-
+	public SpiraReleaseBuild getSpiraReleaseBuildByID(int releaseBuildID) {
 		List<SpiraReleaseBuild> spiraReleaseBuilds =
 			SpiraReleaseBuild.getSpiraReleaseBuilds(
 				getSpiraProject(), this,
@@ -180,8 +183,7 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 	}
 
 	protected static List<SpiraRelease> getSpiraReleases(
-			SpiraProject spiraProject, SearchParameter... searchParameters)
-		throws IOException {
+		SpiraProject spiraProject, SearchParameter... searchParameters) {
 
 		List<SpiraRelease> spiraReleases = new ArrayList<>();
 
@@ -213,28 +215,33 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 			requestJSONArray.put(searchParameter.toFilterJSONObject());
 		}
 
-		JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-			"projects/{project_id}/releases/search", urlParameters,
-			urlPathReplacements, HttpRequestMethod.POST,
-			requestJSONArray.toString());
+		try {
+			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+				"projects/{project_id}/releases/search", urlParameters,
+				urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONArray.toString());
 
-		for (int i = 0; i < responseJSONArray.length(); i++) {
-			SpiraRelease spiraRelease = new SpiraRelease(
-				responseJSONArray.getJSONObject(i));
+			for (int i = 0; i < responseJSONArray.length(); i++) {
+				SpiraRelease spiraRelease = new SpiraRelease(
+					responseJSONArray.getJSONObject(i));
 
-			_spiraReleases.put(
-				_createSpiraReleaseKey(
-					spiraProject.getID(), spiraRelease.getID()),
-				spiraRelease);
+				_spiraReleases.put(
+					_createSpiraReleaseKey(
+						spiraProject.getID(), spiraRelease.getID()),
+					spiraRelease);
 
-			if (spiraRelease.matches(searchParameters)) {
-				spiraReleases.add(spiraRelease);
+				if (spiraRelease.matches(searchParameters)) {
+					spiraReleases.add(spiraRelease);
+				}
 			}
+
+			addPreviousSearchParameters(SpiraRelease.class, searchParameters);
+
+			return spiraReleases;
 		}
-
-		addPreviousSearchParameters(SpiraRelease.class, searchParameters);
-
-		return spiraReleases;
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	@Override
@@ -243,12 +250,7 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 		SpiraProject spiraProject = getSpiraProject();
 
-		try {
-			return spiraProject.getSpiraReleaseByIndentLevel(indentLevel);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return spiraProject.getSpiraReleaseByIndentLevel(indentLevel);
 	}
 
 	protected static final String ID_KEY = "ReleaseId";

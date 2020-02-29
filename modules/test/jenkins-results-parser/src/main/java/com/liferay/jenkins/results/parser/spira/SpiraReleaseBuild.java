@@ -32,9 +32,8 @@ import org.json.JSONObject;
 public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
 	public static SpiraReleaseBuild createSpiraReleaseBuild(
-			SpiraProject spiraProject, SpiraRelease spiraRelease,
-			String releaseBuildName)
-		throws IOException {
+		SpiraProject spiraProject, SpiraRelease spiraRelease,
+		String releaseBuildName) {
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
@@ -50,22 +49,27 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		requestJSONObject.put("BuildStatusId", STATUS_SUCCEEDED);
 		requestJSONObject.put("Name", releaseBuildName);
 
-		JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
-			"projects/{project_id}/releases/{release_id}/builds", null,
-			urlPathReplacements, HttpRequestMethod.POST,
-			requestJSONObject.toString());
+		try {
+			JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
+				"projects/{project_id}/releases/{release_id}/builds", null,
+				urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONObject.toString());
 
-		SpiraReleaseBuild spiraReleaseBuild =
-			spiraRelease.getSpiraReleaseBuildByID(
-				responseJSONObject.getInt(ID_KEY));
+			SpiraReleaseBuild spiraReleaseBuild =
+				spiraRelease.getSpiraReleaseBuildByID(
+					responseJSONObject.getInt(ID_KEY));
 
-		_spiraReleaseBuilds.put(
-			_createSpiraReleaseBuildKey(
-				spiraProject.getID(), spiraRelease.getID(),
-				spiraReleaseBuild.getID()),
-			spiraReleaseBuild);
+			_spiraReleaseBuilds.put(
+				_createSpiraReleaseBuildKey(
+					spiraProject.getID(), spiraRelease.getID(),
+					spiraReleaseBuild.getID()),
+				spiraReleaseBuild);
 
-		return spiraReleaseBuild;
+			return spiraReleaseBuild;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	@Override
@@ -74,9 +78,8 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 	}
 
 	protected static List<SpiraReleaseBuild> getSpiraReleaseBuilds(
-			SpiraProject spiraProject, SpiraRelease spiraRelease,
-			SearchParameter... searchParameters)
-		throws IOException {
+		SpiraProject spiraProject, SpiraRelease spiraRelease,
+		SearchParameter... searchParameters) {
 
 		List<SpiraReleaseBuild> spiraReleaseBuilds = new ArrayList<>();
 
@@ -111,27 +114,32 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 			requestJSONArray.put(searchParameter.toFilterJSONObject());
 		}
 
-		JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-			"projects/{project_id}/releases/{release_id}/builds", urlParameters,
-			urlPathReplacements, HttpRequestMethod.POST,
-			requestJSONArray.toString());
+		try {
+			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+				"projects/{project_id}/releases/{release_id}/builds",
+				urlParameters, urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONArray.toString());
 
-		for (int i = 0; i < responseJSONArray.length(); i++) {
-			SpiraReleaseBuild spiraReleaseBuild = new SpiraReleaseBuild(
-				responseJSONArray.getJSONObject(i));
+			for (int i = 0; i < responseJSONArray.length(); i++) {
+				SpiraReleaseBuild spiraReleaseBuild = new SpiraReleaseBuild(
+					responseJSONArray.getJSONObject(i));
 
-			_spiraReleaseBuilds.put(
-				_createSpiraReleaseBuildKey(
-					spiraProject.getID(), spiraRelease.getID(),
-					spiraReleaseBuild.getID()),
-				spiraReleaseBuild);
+				_spiraReleaseBuilds.put(
+					_createSpiraReleaseBuildKey(
+						spiraProject.getID(), spiraRelease.getID(),
+						spiraReleaseBuild.getID()),
+					spiraReleaseBuild);
 
-			if (spiraReleaseBuild.matches(searchParameters)) {
-				spiraReleaseBuilds.add(spiraReleaseBuild);
+				if (spiraReleaseBuild.matches(searchParameters)) {
+					spiraReleaseBuilds.add(spiraReleaseBuild);
+				}
 			}
-		}
 
-		return spiraReleaseBuilds;
+			return spiraReleaseBuilds;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	protected static final String ID_KEY = "BuildId";

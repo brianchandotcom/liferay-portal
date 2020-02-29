@@ -34,16 +34,14 @@ import org.json.JSONObject;
 public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 
 	public static SpiraTestSetFolder createSpiraTestSetFolder(
-			SpiraProject spiraProject, String testSetFolderName)
-		throws IOException {
+		SpiraProject spiraProject, String testSetFolderName) {
 
 		return createSpiraTestSetFolder(spiraProject, testSetFolderName, null);
 	}
 
 	public static SpiraTestSetFolder createSpiraTestSetFolder(
-			SpiraProject spiraProject, String testSetFolderName,
-			Integer parentTestSetFolderID)
-		throws IOException {
+		SpiraProject spiraProject, String testSetFolderName,
+		Integer parentTestSetFolderID) {
 
 		String testSetFolderPath = "/" + testSetFolderName;
 
@@ -78,17 +76,21 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 			"Name", StringEscapeUtils.unescapeJava(testSetFolderName));
 		requestJSONObject.put("ParentTestSetFolderId", parentTestSetFolderID);
 
-		JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
-			urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
-			requestJSONObject.toString());
+		try {
+			JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
+				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONObject.toString());
 
-		return spiraProject.getSpiraTestSetFolderByID(
-			responseJSONObject.getInt(ID_KEY));
+			return spiraProject.getSpiraTestSetFolderByID(
+				responseJSONObject.getInt(ID_KEY));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public static SpiraTestSetFolder createSpiraTestSetFolderByPath(
-			SpiraProject spiraProject, String testSetFolderPath)
-		throws IOException {
+		SpiraProject spiraProject, String testSetFolderPath) {
 
 		List<SpiraTestSetFolder> spiraTestSetFolders =
 			spiraProject.getSpiraTestSetFoldersByPath(testSetFolderPath);
@@ -113,8 +115,7 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 	}
 
 	public static void deleteSpiraTestSetFolderByID(
-			SpiraProject spiraProject, int testSetFolderID)
-		throws IOException {
+		SpiraProject spiraProject, int testSetFolderID) {
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
@@ -123,9 +124,14 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 		urlPathReplacements.put(
 			"test_set_folder_id", String.valueOf(testSetFolderID));
 
-		SpiraRestAPIUtil.request(
-			"projects/{project_id}/test-set-folders/{test_set_folder_id}", null,
-			urlPathReplacements, HttpRequestMethod.DELETE, null);
+		try {
+			SpiraRestAPIUtil.request(
+				"projects/{project_id}/test-set-folders/{test_set_folder_id}",
+				null, urlPathReplacements, HttpRequestMethod.DELETE, null);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 
 		_spiraTestSetFolders.remove(
 			_createSpiraTestSetFolderKey(
@@ -133,8 +139,7 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 	}
 
 	public static void deleteSpiraTestSetFoldersByPath(
-			SpiraProject spiraProject, String testSetFolderPath)
-		throws IOException {
+		SpiraProject spiraProject, String testSetFolderPath) {
 
 		List<SpiraTestSetFolder> spiraTestSetFolders =
 			spiraProject.getSpiraTestSetFoldersByPath(testSetFolderPath);
@@ -151,8 +156,7 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 	}
 
 	protected static List<SpiraTestSetFolder> getSpiraTestSetFolders(
-			SpiraProject spiraProject, SearchParameter... searchParameters)
-		throws IOException {
+		SpiraProject spiraProject, SearchParameter... searchParameters) {
 
 		List<SpiraTestSetFolder> spiraTestSetFolders = new ArrayList<>();
 
@@ -175,31 +179,39 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 		urlPathReplacements.put(
 			"project_id", String.valueOf(spiraProject.getID()));
 
-		JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-			"projects/{project_id}/test-set-folders", null, urlPathReplacements,
-			HttpRequestMethod.GET, null);
+		try {
+			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+				"projects/{project_id}/test-set-folders", null,
+				urlPathReplacements, HttpRequestMethod.GET, null);
 
-		for (int i = 0; i < responseJSONArray.length(); i++) {
-			JSONObject responseJSONObject = responseJSONArray.getJSONObject(i);
+			for (int i = 0; i < responseJSONArray.length(); i++) {
+				JSONObject responseJSONObject = responseJSONArray.getJSONObject(
+					i);
 
-			responseJSONObject.put(SpiraProject.ID_KEY, spiraProject.getID());
+				responseJSONObject.put(
+					SpiraProject.ID_KEY, spiraProject.getID());
 
-			SpiraTestSetFolder spiraTestSetFolder = new SpiraTestSetFolder(
-				responseJSONObject);
+				SpiraTestSetFolder spiraTestSetFolder = new SpiraTestSetFolder(
+					responseJSONObject);
 
-			_spiraTestSetFolders.put(
-				_createSpiraTestSetFolderKey(
-					spiraProject.getID(), spiraTestSetFolder.getID()),
-				spiraTestSetFolder);
+				_spiraTestSetFolders.put(
+					_createSpiraTestSetFolderKey(
+						spiraProject.getID(), spiraTestSetFolder.getID()),
+					spiraTestSetFolder);
 
-			if (spiraTestSetFolder.matches(searchParameters)) {
-				spiraTestSetFolders.add(spiraTestSetFolder);
+				if (spiraTestSetFolder.matches(searchParameters)) {
+					spiraTestSetFolders.add(spiraTestSetFolder);
+				}
 			}
+
+			addPreviousSearchParameters(
+				SpiraTestSetFolder.class, searchParameters);
+
+			return spiraTestSetFolders;
 		}
-
-		addPreviousSearchParameters(SpiraTestSetFolder.class, searchParameters);
-
-		return spiraTestSetFolders;
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	@Override
@@ -208,12 +220,7 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 
 		SpiraProject spiraProject = getSpiraProject();
 
-		try {
-			return spiraProject.getSpiraTestSetFolderByIndentLevel(indentLevel);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return spiraProject.getSpiraTestSetFolderByIndentLevel(indentLevel);
 	}
 
 	protected static final String ID_KEY = "TestSetFolderId";

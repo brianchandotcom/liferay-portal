@@ -34,17 +34,15 @@ import org.json.JSONObject;
 public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 
 	public static SpiraTestCaseFolder createSpiraTestCaseFolder(
-			SpiraProject spiraProject, String testCaseFolderName)
-		throws IOException {
+		SpiraProject spiraProject, String testCaseFolderName) {
 
 		return createSpiraTestCaseFolder(
 			spiraProject, testCaseFolderName, null);
 	}
 
 	public static SpiraTestCaseFolder createSpiraTestCaseFolder(
-			SpiraProject spiraProject, String testCaseFolderName,
-			Integer parentTestCaseFolderID)
-		throws IOException {
+		SpiraProject spiraProject, String testCaseFolderName,
+		Integer parentTestCaseFolderID) {
 
 		String testCaseFolderPath = "/" + testCaseFolderName;
 
@@ -79,17 +77,21 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 			"Name", StringEscapeUtils.unescapeJava(testCaseFolderName));
 		requestJSONObject.put("ParentTestCaseFolderId", parentTestCaseFolderID);
 
-		JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
-			urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
-			requestJSONObject.toString());
+		try {
+			JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
+				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONObject.toString());
 
-		return spiraProject.getSpiraTestCaseFolderByID(
-			responseJSONObject.getInt(ID_KEY));
+			return spiraProject.getSpiraTestCaseFolderByID(
+				responseJSONObject.getInt(ID_KEY));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public static SpiraTestCaseFolder createSpiraTestCaseFolderByPath(
-			SpiraProject spiraProject, String testCaseFolderPath)
-		throws IOException {
+		SpiraProject spiraProject, String testCaseFolderPath) {
 
 		List<SpiraTestCaseFolder> spiraTestCaseFolders =
 			spiraProject.getSpiraTestCaseFoldersByPath(testCaseFolderPath);
@@ -115,8 +117,7 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 	}
 
 	public static void deleteSpiraTestCaseFolderByID(
-			SpiraProject spiraProject, int testCaseFolderID)
-		throws IOException {
+		SpiraProject spiraProject, int testCaseFolderID) {
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
@@ -125,9 +126,14 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 		urlPathReplacements.put(
 			"test_case_folder_id", String.valueOf(testCaseFolderID));
 
-		SpiraRestAPIUtil.request(
-			"projects/{project_id}/test-folders/{test_case_folder_id}", null,
-			urlPathReplacements, HttpRequestMethod.DELETE, null);
+		try {
+			SpiraRestAPIUtil.request(
+				"projects/{project_id}/test-folders/{test_case_folder_id}",
+				null, urlPathReplacements, HttpRequestMethod.DELETE, null);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 
 		_spiraTestCaseFolders.remove(
 			_createSpiraTestCaseFolderKey(
@@ -135,8 +141,7 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 	}
 
 	public static void deleteSpiraTestCaseFoldersByPath(
-			SpiraProject spiraProject, String testCaseFolderPath)
-		throws IOException {
+		SpiraProject spiraProject, String testCaseFolderPath) {
 
 		List<SpiraTestCaseFolder> spiraTestCaseFolders =
 			spiraProject.getSpiraTestCaseFoldersByPath(testCaseFolderPath);
@@ -168,8 +173,7 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 	}
 
 	protected static List<SpiraTestCaseFolder> getSpiraTestCaseFolders(
-			SpiraProject spiraProject, SearchParameter... searchParameters)
-		throws IOException {
+		SpiraProject spiraProject, SearchParameter... searchParameters) {
 
 		List<SpiraTestCaseFolder> spiraTestCaseFolders = new ArrayList<>();
 
@@ -192,32 +196,39 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 		urlPathReplacements.put(
 			"project_id", String.valueOf(spiraProject.getID()));
 
-		JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-			"projects/{project_id}/test-folders", null, urlPathReplacements,
-			HttpRequestMethod.GET, null);
+		try {
+			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+				"projects/{project_id}/test-folders", null, urlPathReplacements,
+				HttpRequestMethod.GET, null);
 
-		for (int i = 0; i < responseJSONArray.length(); i++) {
-			JSONObject responseJSONObject = responseJSONArray.getJSONObject(i);
+			for (int i = 0; i < responseJSONArray.length(); i++) {
+				JSONObject responseJSONObject = responseJSONArray.getJSONObject(
+					i);
 
-			responseJSONObject.put(SpiraProject.ID_KEY, spiraProject.getID());
+				responseJSONObject.put(
+					SpiraProject.ID_KEY, spiraProject.getID());
 
-			SpiraTestCaseFolder spiraTestCaseFolder = new SpiraTestCaseFolder(
-				responseJSONObject);
+				SpiraTestCaseFolder spiraTestCaseFolder =
+					new SpiraTestCaseFolder(responseJSONObject);
 
-			_spiraTestCaseFolders.put(
-				_createSpiraTestCaseFolderKey(
-					spiraProject.getID(), spiraTestCaseFolder.getID()),
-				spiraTestCaseFolder);
+				_spiraTestCaseFolders.put(
+					_createSpiraTestCaseFolderKey(
+						spiraProject.getID(), spiraTestCaseFolder.getID()),
+					spiraTestCaseFolder);
 
-			if (spiraTestCaseFolder.matches(searchParameters)) {
-				spiraTestCaseFolders.add(spiraTestCaseFolder);
+				if (spiraTestCaseFolder.matches(searchParameters)) {
+					spiraTestCaseFolders.add(spiraTestCaseFolder);
+				}
 			}
+
+			addPreviousSearchParameters(
+				SpiraTestCaseFolder.class, searchParameters);
+
+			return spiraTestCaseFolders;
 		}
-
-		addPreviousSearchParameters(
-			SpiraTestCaseFolder.class, searchParameters);
-
-		return spiraTestCaseFolders;
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	@Override
@@ -226,13 +237,7 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 
 		SpiraProject spiraProject = getSpiraProject();
 
-		try {
-			return spiraProject.getSpiraTestCaseFolderByIndentLevel(
-				indentLevel);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return spiraProject.getSpiraTestCaseFolderByIndentLevel(indentLevel);
 	}
 
 	protected static final String ID_KEY = "TestCaseFolderId";

@@ -58,7 +58,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return jsonObject.getInt(ID_KEY);
 	}
 
-	public SpiraRelease getSpiraReleaseByID(int releaseID) throws IOException {
+	public SpiraRelease getSpiraReleaseByID(int releaseID) {
 		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
 			this, new SearchParameter(SpiraRelease.ID_KEY, releaseID));
 
@@ -73,9 +73,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraReleases.get(0);
 	}
 
-	public SpiraRelease getSpiraReleaseByPath(String releasePath)
-		throws IOException {
-
+	public SpiraRelease getSpiraReleaseByPath(String releasePath) {
 		List<SpiraRelease> spiraReleases = getSpiraReleasesByPath(releasePath);
 
 		if (spiraReleases.size() > 1) {
@@ -89,16 +87,12 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraReleases.get(0);
 	}
 
-	public List<SpiraRelease> getSpiraReleasesByPath(String releasePath)
-		throws IOException {
-
+	public List<SpiraRelease> getSpiraReleasesByPath(String releasePath) {
 		return SpiraRelease.getSpiraReleases(
 			this, new SearchParameter("Path", releasePath));
 	}
 
-	public SpiraTestCaseObject getSpiraTestCaseByID(int testCaseID)
-		throws IOException {
-
+	public SpiraTestCaseObject getSpiraTestCaseByID(int testCaseID) {
 		List<SpiraTestCaseObject> spiraTestCases =
 			SpiraTestCaseObject.getSpiraTestCases(
 				this,
@@ -115,9 +109,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraTestCases.get(0);
 	}
 
-	public SpiraTestCaseObject getSpiraTestCaseByPath(String testCasePath)
-		throws IOException {
-
+	public SpiraTestCaseObject getSpiraTestCaseByPath(String testCasePath) {
 		List<SpiraTestCaseObject> spiraTestCases = getSpiraTestCasesByPath(
 			testCasePath);
 
@@ -134,8 +126,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraTestCases.get(0);
 	}
 
-	public SpiraTestCaseFolder getSpiraTestCaseFolderByID(int testCaseFolderID)
-		throws IOException {
+	public SpiraTestCaseFolder getSpiraTestCaseFolderByID(
+		int testCaseFolderID) {
 
 		List<SpiraTestCaseFolder> spiraTestCaseFolders =
 			SpiraTestCaseFolder.getSpiraTestCaseFolders(
@@ -157,8 +149,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 	}
 
 	public SpiraTestCaseFolder getSpiraTestCaseFolderByPath(
-			String testCaseFolderPath)
-		throws IOException {
+		String testCaseFolderPath) {
 
 		List<SpiraTestCaseFolder> spiraTestCaseFolders =
 			getSpiraTestCaseFoldersByPath(testCaseFolderPath);
@@ -177,24 +168,20 @@ public class SpiraProject extends BaseSpiraArtifact {
 	}
 
 	public List<SpiraTestCaseFolder> getSpiraTestCaseFoldersByPath(
-			String testCaseFolderPath)
-		throws IOException {
+		String testCaseFolderPath) {
 
 		return SpiraTestCaseFolder.getSpiraTestCaseFolders(
 			this, new SearchParameter("Path", testCaseFolderPath));
 	}
 
 	public List<SpiraTestCaseObject> getSpiraTestCasesByPath(
-			String testCasePath)
-		throws IOException {
+		String testCasePath) {
 
 		return SpiraTestCaseObject.getSpiraTestCases(
 			this, new SearchParameter("Path", testCasePath));
 	}
 
-	public SpiraTestSetFolder getSpiraTestSetFolderByID(int testSetFolderID)
-		throws IOException {
-
+	public SpiraTestSetFolder getSpiraTestSetFolderByID(int testSetFolderID) {
 		List<SpiraTestSetFolder> spiraTestSetFolders =
 			SpiraTestSetFolder.getSpiraTestSetFolders(
 				this,
@@ -215,8 +202,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 	}
 
 	public SpiraTestSetFolder getSpiraTestSetFolderByPath(
-			String testSetFolderPath)
-		throws IOException {
+		String testSetFolderPath) {
 
 		List<SpiraTestSetFolder> spiraTestSetFolders =
 			getSpiraTestSetFoldersByPath(testSetFolderPath);
@@ -235,16 +221,13 @@ public class SpiraProject extends BaseSpiraArtifact {
 	}
 
 	public List<SpiraTestSetFolder> getSpiraTestSetFoldersByPath(
-			String testCaseSetPath)
-		throws IOException {
+		String testCaseSetPath) {
 
 		return SpiraTestSetFolder.getSpiraTestSetFolders(
 			this, new SearchParameter("Path", testCaseSetPath));
 	}
 
-	protected SpiraRelease getSpiraReleaseByIndentLevel(String indentLevel)
-		throws IOException {
-
+	protected SpiraRelease getSpiraReleaseByIndentLevel(String indentLevel) {
 		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
 			this, new SearchParameter("IndentLevel", indentLevel));
 
@@ -260,8 +243,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 	}
 
 	protected SpiraTestCaseFolder getSpiraTestCaseFolderByIndentLevel(
-			String indentLevel)
-		throws IOException {
+		String indentLevel) {
 
 		List<SpiraTestCaseFolder> spiraTestCaseFolders =
 			SpiraTestCaseFolder.getSpiraTestCaseFolders(
@@ -279,8 +261,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 	}
 
 	protected SpiraTestSetFolder getSpiraTestSetFolderByIndentLevel(
-			String indentLevel)
-		throws IOException {
+		String indentLevel) {
 
 		List<SpiraTestSetFolder> spiraTestSetFolders =
 			SpiraTestSetFolder.getSpiraTestSetFolders(

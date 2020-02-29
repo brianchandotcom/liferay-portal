@@ -26,6 +26,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.SourceDirectorySet;
@@ -56,6 +57,8 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		_addConfigurationCSSBuilder(project);
+
 		Configuration portalCommonCSSConfiguration =
 			_addConfigurationPortalCommonCSS(project);
 
@@ -91,6 +94,27 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 			});
 	}
 
+	private Configuration _addConfigurationCSSBuilder(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, CSS_BUILDER_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					_addDependenciesCSSBuilder(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures Liferay CSS Builder for this project.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
 	private Configuration _addConfigurationPortalCommonCSS(
 		final Project project) {
 
@@ -115,6 +139,12 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 			});
 
 		return configuration;
+	}
+
+	private void _addDependenciesCSSBuilder(Project project) {
+		GradleUtil.addDependency(
+			project, CSS_BUILDER_CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.css.builder", "latest.release");
 	}
 
 	private void _addDependenciesPortalCommonCSS(Project project) {

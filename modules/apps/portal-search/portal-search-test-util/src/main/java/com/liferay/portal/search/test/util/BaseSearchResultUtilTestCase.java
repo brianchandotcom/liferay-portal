@@ -30,12 +30,18 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.registry.collections.ServiceTrackerMapFactory;
+import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+
+import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author André de Oliveira
@@ -49,6 +55,7 @@ public abstract class BaseSearchResultUtilTestCase {
 		setUpFastDateFormatFactoryUtil();
 		setUpPropsUtil();
 		setUpSearchResultTranslator();
+		setUpServiceTrackerMapFactory();
 	}
 
 	protected void assertEmptyCommentRelatedSearchResults(
@@ -132,6 +139,14 @@ public abstract class BaseSearchResultUtilTestCase {
 
 	protected void setUpSearchResultTranslator() {
 		searchResultTranslator = createSearchResultTranslator();
+	}
+
+	protected void setUpServiceTrackerMapFactory() {
+		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
+			Mockito.mock(
+				ServiceTrackerMapFactory.class,
+				(Answer)invocationOnMock -> Mockito.mock(
+					ServiceTrackerMap.class)));
 	}
 
 	protected ClassNameLocalService classNameLocalService;

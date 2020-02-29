@@ -158,6 +158,9 @@
 	<property name="doc.dir" value="${project.dir}/api" />
 	<property name="jacoco.agent.configuration" value="=destfile=${jacoco.dump.file},excludes=${jacoco.excludes},includes=${jacoco.includes},output=file,append=true" />
 
+	<var name="fork.mode" value="false" />
+	<var if:true="${jvm.debug}" name="fork.mode" value="true" />
+
 	<tempfile deleteonexit="true" destdir="${project.dir}" property="app.server.tmp.properties" suffix=".properties" />
 
 	<echoproperties destfile="${app.server.tmp.properties}" regex="app\.server\.${app.server.type}\..*" />

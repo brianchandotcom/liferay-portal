@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project basedir="." default="war" name="portal-web" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="war" name="portal-web" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if">
 	<import file="../build-common-web.xml" />
 
 	<property name="artifact.version" value="4.0.9" />
@@ -100,10 +100,12 @@
 		<java
 			classname="org.apache.jasper.JspC"
 			classpathref="jspc.classpath"
-			fork="false"
+			fork="${fork.mode}"
+			jvm="${jspc.java.home}/bin/java"
 			newenvironment="true"
 			outputproperty="jspc.output"
 		>
+			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
 			<arg line="${arg.line}" />
 		</java>
 

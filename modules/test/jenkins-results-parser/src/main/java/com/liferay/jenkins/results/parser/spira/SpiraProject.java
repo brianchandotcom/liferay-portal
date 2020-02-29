@@ -55,7 +55,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 	public SpiraRelease getSpiraReleaseByID(int releaseID) {
 		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
-			this, new SearchParameter(SpiraRelease.ID_KEY, releaseID));
+			this,
+			new SearchResult.SearchParameter(SpiraRelease.ID_KEY, releaseID));
 
 		if (spiraReleases.size() > 1) {
 			throw new RuntimeException("Duplicate release ID " + releaseID);
@@ -84,14 +85,15 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 	public List<SpiraRelease> getSpiraReleasesByPath(String releasePath) {
 		return SpiraRelease.getSpiraReleases(
-			this, new SearchParameter("Path", releasePath));
+			this, new SearchResult.SearchParameter("Path", releasePath));
 	}
 
 	public SpiraTestCaseObject getSpiraTestCaseByID(int testCaseID) {
 		List<SpiraTestCaseObject> spiraTestCases =
 			SpiraTestCaseObject.getSpiraTestCases(
 				this,
-				new SearchParameter(SpiraTestCaseObject.ID_KEY, testCaseID));
+				new SearchResult.SearchParameter(
+					SpiraTestCaseObject.ID_KEY, testCaseID));
 
 		if (spiraTestCases.size() > 1) {
 			throw new RuntimeException("Duplicate test case ID " + testCaseID);
@@ -127,7 +129,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 		List<SpiraTestCaseFolder> spiraTestCaseFolders =
 			SpiraTestCaseFolder.getSpiraTestCaseFolders(
 				this,
-				new SearchParameter(
+				new SearchResult.SearchParameter(
 					SpiraTestCaseFolder.ID_KEY, testCaseFolderID));
 
 		if (spiraTestCaseFolders.size() > 1) {
@@ -166,21 +168,21 @@ public class SpiraProject extends BaseSpiraArtifact {
 		String testCaseFolderPath) {
 
 		return SpiraTestCaseFolder.getSpiraTestCaseFolders(
-			this, new SearchParameter("Path", testCaseFolderPath));
+			this, new SearchResult.SearchParameter("Path", testCaseFolderPath));
 	}
 
 	public List<SpiraTestCaseObject> getSpiraTestCasesByPath(
 		String testCasePath) {
 
 		return SpiraTestCaseObject.getSpiraTestCases(
-			this, new SearchParameter("Path", testCasePath));
+			this, new SearchResult.SearchParameter("Path", testCasePath));
 	}
 
 	public SpiraTestSetFolder getSpiraTestSetFolderByID(int testSetFolderID) {
 		List<SpiraTestSetFolder> spiraTestSetFolders =
 			SpiraTestSetFolder.getSpiraTestSetFolders(
 				this,
-				new SearchParameter(
+				new SearchResult.SearchParameter(
 					SpiraTestSetFolder.ID_KEY, testSetFolderID));
 
 		if (spiraTestSetFolders.size() > 1) {
@@ -219,12 +221,12 @@ public class SpiraProject extends BaseSpiraArtifact {
 		String testCaseSetPath) {
 
 		return SpiraTestSetFolder.getSpiraTestSetFolders(
-			this, new SearchParameter("Path", testCaseSetPath));
+			this, new SearchResult.SearchParameter("Path", testCaseSetPath));
 	}
 
 	protected SpiraRelease getSpiraReleaseByIndentLevel(String indentLevel) {
 		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
-			this, new SearchParameter("IndentLevel", indentLevel));
+			this, new SearchResult.SearchParameter("IndentLevel", indentLevel));
 
 		if (spiraReleases.size() > 1) {
 			throw new RuntimeException("Duplicate indent level " + indentLevel);
@@ -242,7 +244,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 		List<SpiraTestCaseFolder> spiraTestCaseFolders =
 			SpiraTestCaseFolder.getSpiraTestCaseFolders(
-				this, new SearchParameter("IndentLevel", indentLevel));
+				this,
+				new SearchResult.SearchParameter("IndentLevel", indentLevel));
 
 		if (spiraTestCaseFolders.size() > 1) {
 			throw new RuntimeException("Duplicate indent level " + indentLevel);
@@ -260,7 +263,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 		List<SpiraTestSetFolder> spiraTestSetFolders =
 			SpiraTestSetFolder.getSpiraTestSetFolders(
-				this, new SearchParameter("IndentLevel", indentLevel));
+				this,
+				new SearchResult.SearchParameter("IndentLevel", indentLevel));
 
 		if (spiraTestSetFolders.size() > 1) {
 			throw new RuntimeException("Duplicate indent level " + indentLevel);

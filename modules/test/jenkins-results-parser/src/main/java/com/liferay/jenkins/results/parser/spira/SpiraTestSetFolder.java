@@ -151,7 +151,8 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 	}
 
 	protected static List<SpiraTestSetFolder> getSpiraTestSetFolders(
-		SpiraProject spiraProject, SearchParameter... searchParameters) {
+		SpiraProject spiraProject,
+		SearchResult.SearchParameter... searchParameters) {
 
 		List<SpiraTestSetFolder> spiraTestSetFolders = new ArrayList<>();
 

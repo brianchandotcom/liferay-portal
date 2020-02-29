@@ -168,7 +168,8 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 	}
 
 	protected static List<SpiraTestCaseFolder> getSpiraTestCaseFolders(
-		SpiraProject spiraProject, SearchParameter... searchParameters) {
+		SpiraProject spiraProject,
+		SearchResult.SearchParameter... searchParameters) {
 
 		List<SpiraTestCaseFolder> spiraTestCaseFolders = new ArrayList<>();
 

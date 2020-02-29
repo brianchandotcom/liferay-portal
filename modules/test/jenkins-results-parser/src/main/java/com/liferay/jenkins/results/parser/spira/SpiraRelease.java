@@ -162,7 +162,8 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 		List<SpiraReleaseBuild> spiraReleaseBuilds =
 			SpiraReleaseBuild.getSpiraReleaseBuilds(
 				getSpiraProject(), this,
-				new SearchParameter(SpiraReleaseBuild.ID_KEY, releaseBuildID));
+				new SearchResult.SearchParameter(
+					SpiraReleaseBuild.ID_KEY, releaseBuildID));
 
 		if (spiraReleaseBuilds.size() > 1) {
 			throw new RuntimeException(
@@ -178,7 +179,8 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 	}
 
 	protected static List<SpiraRelease> getSpiraReleases(
-		SpiraProject spiraProject, SearchParameter... searchParameters) {
+		SpiraProject spiraProject,
+		SearchResult.SearchParameter... searchParameters) {
 
 		List<SpiraRelease> spiraReleases = new ArrayList<>();
 
@@ -206,7 +208,7 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 		JSONArray requestJSONArray = new JSONArray();
 
-		for (SearchParameter searchParameter : searchParameters) {
+		for (SearchResult.SearchParameter searchParameter : searchParameters) {
 			requestJSONArray.put(searchParameter.toFilterJSONObject());
 		}
 

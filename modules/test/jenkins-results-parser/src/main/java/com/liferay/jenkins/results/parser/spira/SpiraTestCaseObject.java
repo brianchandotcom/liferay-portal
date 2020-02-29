@@ -173,7 +173,8 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	}
 
 	protected static List<SpiraTestCaseObject> getSpiraTestCases(
-		SpiraProject spiraProject, SearchParameter... searchParameters) {
+		SpiraProject spiraProject,
+		SearchResult.SearchParameter... searchParameters) {
 
 		List<SpiraTestCaseObject> spiraTestCases = new ArrayList<>();
 
@@ -201,7 +202,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		JSONArray requestJSONArray = new JSONArray();
 
-		for (SearchParameter searchParameter : searchParameters) {
+		for (SearchResult.SearchParameter searchParameter : searchParameters) {
 			requestJSONArray.put(searchParameter.toFilterJSONObject());
 		}
 

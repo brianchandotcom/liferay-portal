@@ -25,7 +25,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -66,9 +65,9 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 	protected static void addPreviousSearchParameters(
 		Class<? extends BaseSpiraArtifact> baseSpiraArtifactClass,
-		SearchParameter[] searchParameters) {
+		SearchResult.SearchParameter[] searchParameters) {
 
-		List<List<SearchParameter>> previousSearchParameters =
+		List<List<SearchResult.SearchParameter>> previousSearchParameters =
 			previousSearchParametersMap.get(baseSpiraArtifactClass);
 
 		if (previousSearchParameters == null) {
@@ -101,23 +100,25 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 	protected static boolean isPreviousSearch(
 		Class<? extends BaseSpiraArtifact> baseSpiraArtifactClass,
-		SearchParameter... searchParameters) {
+		SearchResult.SearchParameter... searchParameters) {
 
-		List<List<SearchParameter>> previousSearchParametersList =
+		List<List<SearchResult.SearchParameter>> previousSearchParametersList =
 			previousSearchParametersMap.get(baseSpiraArtifactClass);
 
 		if (previousSearchParametersList == null) {
 			return false;
 		}
 
-		for (List<SearchParameter> previousSearchParameters :
+		for (List<SearchResult.SearchParameter> previousSearchParameters :
 				previousSearchParametersList) {
 
 			if (previousSearchParameters.size() != searchParameters.length) {
 				continue;
 			}
 
-			for (SearchParameter searchParameter : searchParameters) {
+			for (SearchResult.SearchParameter searchParameter :
+					searchParameters) {
+
 				if (!previousSearchParameters.contains(searchParameter)) {
 					break;
 				}
@@ -138,8 +139,10 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		this.jsonObject = jsonObject;
 	}
 
-	protected boolean matches(SearchParameter... searchParameters) {
-		for (SearchParameter searchParameter : searchParameters) {
+	protected boolean matches(
+		SearchResult.SearchParameter... searchParameters) {
+
+		for (SearchResult.SearchParameter searchParameter : searchParameters) {
 			if (!searchParameter.matches(jsonObject)) {
 				return false;
 			}
@@ -149,86 +152,10 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	}
 
 	protected static final Map
-		<Class<? extends BaseSpiraArtifact>, List<List<SearchParameter>>>
-			previousSearchParametersMap = Collections.synchronizedMap(
-				new HashMap<>());
+		<Class<? extends BaseSpiraArtifact>,
+		 List<List<SearchResult.SearchParameter>>> previousSearchParametersMap =
+			Collections.synchronizedMap(new HashMap<>());
 
 	protected final JSONObject jsonObject;
-
-	protected static class SearchParameter {
-
-		public SearchParameter(String name, Object value) {
-			_name = name;
-			_value = value;
-		}
-
-		@Override
-		public boolean equals(Object object) {
-			if (object instanceof SearchParameter) {
-				SearchParameter otherSearchParameter = (SearchParameter)object;
-
-				if (_name.equals(otherSearchParameter.getName()) &&
-					_value.equals(otherSearchParameter.getValue())) {
-
-					return true;
-				}
-
-				return false;
-			}
-
-			return super.equals(object);
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public Object getValue() {
-			return _value;
-		}
-
-		@Override
-		public int hashCode() {
-			JSONObject jsonObject = toFilterJSONObject();
-
-			return jsonObject.hashCode();
-		}
-
-		public boolean matches(JSONObject jsonObject) {
-			if (!Objects.equals(getValue(), jsonObject.get(getName()))) {
-				return false;
-			}
-
-			return true;
-		}
-
-		public JSONObject toFilterJSONObject() {
-			JSONObject filterJSONObject = new JSONObject();
-
-			filterJSONObject.put("PropertyName", _name);
-
-			if (_value instanceof Integer) {
-				Integer intValue = (Integer)_value;
-
-				filterJSONObject.put("IntValue", intValue);
-			}
-			else if (_value instanceof String) {
-				String stringValue = (String)_value;
-
-				stringValue = stringValue.replaceAll("\\[", "[[]");
-
-				filterJSONObject.put("StringValue", stringValue);
-			}
-			else {
-				throw new RuntimeException("Invalid value type");
-			}
-
-			return filterJSONObject;
-		}
-
-		private final String _name;
-		private final Object _value;
-
-	}
 
 }

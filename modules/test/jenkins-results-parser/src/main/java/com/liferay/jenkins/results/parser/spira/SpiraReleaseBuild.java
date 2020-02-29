@@ -74,7 +74,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
 	protected static List<SpiraReleaseBuild> getSpiraReleaseBuilds(
 		SpiraProject spiraProject, SpiraRelease spiraRelease,
-		SearchParameter... searchParameters) {
+		SearchResult.SearchParameter... searchParameters) {
 
 		List<SpiraReleaseBuild> spiraReleaseBuilds = new ArrayList<>();
 
@@ -105,7 +105,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
 		JSONArray requestJSONArray = new JSONArray();
 
-		for (SearchParameter searchParameter : searchParameters) {
+		for (SearchResult.SearchParameter searchParameter : searchParameters) {
 			requestJSONArray.put(searchParameter.toFilterJSONObject());
 		}
 

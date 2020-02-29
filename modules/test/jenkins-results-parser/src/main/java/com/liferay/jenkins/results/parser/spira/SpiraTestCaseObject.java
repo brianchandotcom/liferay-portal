@@ -81,7 +81,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			requestJSONObject.toString());
 
 		SpiraTestCaseObject spiraTestCase = spiraProject.getSpiraTestCaseByID(
-			responseJSONObject.getInt("TestCaseId"));
+			responseJSONObject.getInt(ID_KEY));
 
 		_spiraTestCases.put(
 			_createSpiraTestCaseKey(
@@ -149,7 +149,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 	@Override
 	public int getID() {
-		return jsonObject.getInt("TestCaseId");
+		return jsonObject.getInt(ID_KEY);
 	}
 
 	public SpiraTestCaseFolder getParentSpiraTestCaseFolder() {
@@ -258,6 +258,8 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		return _parentSpiraArtifact;
 	}
+
+	protected static final String ID_KEY = "TestCaseId";
 
 	protected static final int STATUS_APPROVED = 4;
 

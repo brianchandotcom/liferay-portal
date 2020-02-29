@@ -80,7 +80,7 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 			requestJSONObject.toString());
 
 		return spiraProject.getSpiraReleaseByID(
-			responseJSONObject.getInt("ReleaseId"));
+			responseJSONObject.getInt(ID_KEY));
 	}
 
 	public static SpiraRelease createSpiraReleaseByPath(
@@ -140,7 +140,7 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 	@Override
 	public int getID() {
-		return jsonObject.getInt("ReleaseId");
+		return jsonObject.getInt(ID_KEY);
 	}
 
 	public SpiraRelease getParentSpiraRelease() {
@@ -164,7 +164,7 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 		List<SpiraReleaseBuild> spiraReleaseBuilds =
 			SpiraReleaseBuild.getSpiraReleaseBuilds(
 				getSpiraProject(), this,
-				new SearchParameter("BuildId", releaseBuildID));
+				new SearchParameter(SpiraReleaseBuild.ID_KEY, releaseBuildID));
 
 		if (spiraReleaseBuilds.size() > 1) {
 			throw new RuntimeException(
@@ -250,6 +250,8 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 			throw new RuntimeException(ioException);
 		}
 	}
+
+	protected static final String ID_KEY = "ReleaseId";
 
 	protected static final int STATUS_CANCELED = 5;
 

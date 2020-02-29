@@ -45,10 +45,10 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
 		JSONObject requestJSONObject = new JSONObject();
 
+		requestJSONObject.put(SpiraProject.ID_KEY, spiraProject.getID());
+		requestJSONObject.put(SpiraRelease.ID_KEY, spiraRelease.getID());
 		requestJSONObject.put("BuildStatusId", STATUS_SUCCEEDED);
 		requestJSONObject.put("Name", releaseBuildName);
-		requestJSONObject.put("ProjectId", spiraProject.getID());
-		requestJSONObject.put("ReleaseId", spiraRelease.getID());
 
 		JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
 			"projects/{project_id}/releases/{release_id}/builds", null,
@@ -57,7 +57,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
 		SpiraReleaseBuild spiraReleaseBuild =
 			spiraRelease.getSpiraReleaseBuildByID(
-				responseJSONObject.getInt("BuildId"));
+				responseJSONObject.getInt(ID_KEY));
 
 		_spiraReleaseBuilds.put(
 			_createSpiraReleaseBuildKey(
@@ -70,7 +70,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
 	@Override
 	public int getID() {
-		return jsonObject.getInt("BuildId");
+		return jsonObject.getInt(ID_KEY);
 	}
 
 	protected static List<SpiraReleaseBuild> getSpiraReleaseBuilds(
@@ -133,6 +133,8 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
 		return spiraReleaseBuilds;
 	}
+
+	protected static final String ID_KEY = "BuildId";
 
 	protected static final int STATUS_ABORTED = 4;
 

@@ -84,7 +84,7 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 			requestJSONObject.toString());
 
 		return spiraProject.getSpiraTestCaseFolderByID(
-			responseJSONObject.getInt("TestCaseFolderId"));
+			responseJSONObject.getInt(ID_KEY));
 	}
 
 	public static SpiraTestCaseFolder createSpiraTestCaseFolderByPath(
@@ -149,7 +149,7 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 
 	@Override
 	public int getID() {
-		return jsonObject.getInt("TestCaseFolderId");
+		return jsonObject.getInt(ID_KEY);
 	}
 
 	public SpiraTestCaseFolder getParentSpiraTestCaseFolder() {
@@ -199,7 +199,7 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 		for (int i = 0; i < responseJSONArray.length(); i++) {
 			JSONObject responseJSONObject = responseJSONArray.getJSONObject(i);
 
-			responseJSONObject.put("ProjectId", spiraProject.getID());
+			responseJSONObject.put(SpiraProject.ID_KEY, spiraProject.getID());
 
 			SpiraTestCaseFolder spiraTestCaseFolder = new SpiraTestCaseFolder(
 				responseJSONObject);
@@ -234,6 +234,8 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 			throw new RuntimeException(ioException);
 		}
 	}
+
+	protected static final String ID_KEY = "TestCaseFolderId";
 
 	private static String _createSpiraTestCaseFolderKey(
 		Integer projectID, Integer testCaseFolderID) {

@@ -55,12 +55,12 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 	@Override
 	public int getID() {
-		return jsonObject.getInt("ProjectId");
+		return jsonObject.getInt(ID_KEY);
 	}
 
 	public SpiraRelease getSpiraReleaseByID(int releaseID) throws IOException {
 		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
-			this, new SearchParameter("ReleaseId", releaseID));
+			this, new SearchParameter(SpiraRelease.ID_KEY, releaseID));
 
 		if (spiraReleases.size() > 1) {
 			throw new RuntimeException("Duplicate release ID " + releaseID);
@@ -101,7 +101,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 		List<SpiraTestCaseObject> spiraTestCases =
 			SpiraTestCaseObject.getSpiraTestCases(
-				this, new SearchParameter("TestCaseId", testCaseID));
+				this,
+				new SearchParameter(SpiraTestCaseObject.ID_KEY, testCaseID));
 
 		if (spiraTestCases.size() > 1) {
 			throw new RuntimeException("Duplicate test case ID " + testCaseID);
@@ -139,7 +140,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 		List<SpiraTestCaseFolder> spiraTestCaseFolders =
 			SpiraTestCaseFolder.getSpiraTestCaseFolders(
 				this,
-				new SearchParameter("TestCaseFolderId", testCaseFolderID));
+				new SearchParameter(
+					SpiraTestCaseFolder.ID_KEY, testCaseFolderID));
 
 		if (spiraTestCaseFolders.size() > 1) {
 			throw new RuntimeException(
@@ -195,7 +197,9 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 		List<SpiraTestSetFolder> spiraTestSetFolders =
 			SpiraTestSetFolder.getSpiraTestSetFolders(
-				this, new SearchParameter("TestSetFolderId", testSetFolderID));
+				this,
+				new SearchParameter(
+					SpiraTestSetFolder.ID_KEY, testSetFolderID));
 
 		if (spiraTestSetFolders.size() > 1) {
 			throw new RuntimeException(
@@ -292,6 +296,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 		return spiraTestSetFolders.get(0);
 	}
+
+	protected static final String ID_KEY = "ProjectId";
 
 	private SpiraProject(JSONObject jsonObject) {
 		super(jsonObject);

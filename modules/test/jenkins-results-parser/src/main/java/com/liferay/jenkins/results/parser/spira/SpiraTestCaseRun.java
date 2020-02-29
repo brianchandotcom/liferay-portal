@@ -63,6 +63,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		for (SpiraTestCaseObject spiraTestCase : spiraTestCaseObjects) {
 			JSONObject requestJSONObject = new JSONObject();
 
+			requestJSONObject.put(
+				SpiraTestCaseObject.ID_KEY, spiraTestCase.getID());
 			requestJSONObject.put("ExecutionStatusId", STATUS_PASSED);
 			requestJSONObject.put("RunnerMessage", spiraTestCase.getPath());
 			requestJSONObject.put("RunnerName", "Liferay CI");
@@ -70,7 +72,6 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			requestJSONObject.put("RunnerTestName", spiraTestCase.getName());
 			requestJSONObject.put(
 				"StartDate", PathSpiraArtifact.toDateString(calendar));
-			requestJSONObject.put("TestCaseId", spiraTestCase.getID());
 			requestJSONObject.put("TestRunFormatId", RUNNER_FORMAT_PLAIN);
 
 			requestJSONObjects.add(requestJSONObject);
@@ -82,7 +83,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 	@Override
 	public int getID() {
-		return jsonObject.getInt("TestRunId");
+		return jsonObject.getInt(ID_KEY);
 	}
 
 	protected static List<SpiraTestCaseRun> getSpiraTestCaseRuns(
@@ -110,7 +111,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		urlParameters.put("number_of_rows", String.valueOf(1000));
 		urlParameters.put("sort_direction", "DESC");
-		urlParameters.put("sort_field", "TestRunId");
+		urlParameters.put("sort_field", ID_KEY);
 		urlParameters.put("starting_row", String.valueOf(1));
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
@@ -134,7 +135,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		for (int i = 0; i < responseJSONArray.length(); i++) {
 			JSONObject responseJSONObject = responseJSONArray.getJSONObject(i);
 
-			responseJSONObject.put("ProjectId", spiraProject.getID());
+			responseJSONObject.put(SpiraProject.ID_KEY, spiraProject.getID());
 
 			SpiraTestCaseRun spiraTestCaseRun = new SpiraTestCaseRun(
 				responseJSONObject);
@@ -181,13 +182,15 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		for (int i = 0; i < responseJSONArray.length(); i++) {
 			JSONObject responseJSONObject = responseJSONArray.getJSONObject(i);
 
-			responseJSONObject.put("ProjectId", spiraProject.getID());
+			responseJSONObject.put(SpiraProject.ID_KEY, spiraProject.getID());
 
 			spiraTestCaseRuns.add(new SpiraTestCaseRun(responseJSONObject));
 		}
 
 		return spiraTestCaseRuns;
 	}
+
+	protected static final String ID_KEY = "TestRunId";
 
 	protected static final int RUNNER_FORMAT_HTML = 2;
 

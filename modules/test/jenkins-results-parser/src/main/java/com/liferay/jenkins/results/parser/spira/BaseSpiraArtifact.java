@@ -43,7 +43,8 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			return (SpiraProject)this;
 		}
 
-		return SpiraProject.getSpiraProjectByID(jsonObject.getInt("ProjectId"));
+		return SpiraProject.getSpiraProjectByID(
+			jsonObject.getInt(SpiraProject.ID_KEY));
 	}
 
 	@Override
@@ -155,6 +156,13 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 		public Object getValue() {
 			return _value;
+		}
+
+		@Override
+		public int hashCode() {
+			JSONObject jsonObject = toFilterJSONObject();
+
+			return jsonObject.hashCode();
 		}
 
 		public boolean matches(JSONObject jsonObject) {

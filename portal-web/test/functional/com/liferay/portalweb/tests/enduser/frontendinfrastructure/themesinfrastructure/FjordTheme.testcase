@@ -23,6 +23,7 @@ definition {
 		}
 	}
 
+	@description = "This test checks Fjord Theme can be applied and validates UI of home page."
 	@priority = "5"
 	test AddThemeSite {
 		property osgi.app.includes = "frontend-theme-fjord";
@@ -35,10 +36,10 @@ definition {
 			portlet = "Sites");
 
 		Site.addSiteTemplateCP(
-			siteName = "Fjord Name",
+			siteName = "Fjord Theme Site Name",
 			siteTemplateName = "Fjord");
 
-		Navigator.openSiteURL(siteName = "Fjord Name");
+		Navigator.openSiteURL(siteName = "Fjord Theme Site Name");
 
 		AssertClick(
 			key_pageName = "Home",
@@ -47,13 +48,7 @@ definition {
 
 		ProductMenuHelper.closeProductMenu();
 
-		SikuliAssertElementPresent(locator1 = "FjordTheme#SCREENSHOTS_FJORD_THEME_PNG");
-
-		takeScreenshot();
-
 		AssertVisible(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		takeScreenshot();
 
 		var key_title = "Dynamic and Customizable for a Healthier You";
 
@@ -67,6 +62,10 @@ definition {
 				locator1 = "Header#H2_TITLE",
 				value1 = "Dynamic and Customizable for a Healthier You");
 		}
+
+		SikuliAssertElementPresent(locator1 = "FjordTheme#SCREENSHOTS_THEME_HOME_PAGE_PNG");
+
+		takeScreenshot();
 	}
 
 }

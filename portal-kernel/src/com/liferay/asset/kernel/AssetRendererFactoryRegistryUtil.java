@@ -45,7 +45,7 @@ public class AssetRendererFactoryRegistryUtil {
 
 		return ListUtil.fromMapValues(
 			_filterAssetRendererFactories(
-				companyId, _classNameAssetRenderFactoriesServiceTrackerMap,
+				companyId, _getClassNameAssetRenderFactoriesServiceTrackerMap(),
 				false));
 	}
 
@@ -54,7 +54,7 @@ public class AssetRendererFactoryRegistryUtil {
 
 		return ListUtil.fromMapValues(
 			_filterAssetRendererFactories(
-				companyId, _classNameAssetRenderFactoriesServiceTrackerMap,
+				companyId, _getClassNameAssetRenderFactoriesServiceTrackerMap(),
 				filterSelectable));
 	}
 
@@ -62,28 +62,28 @@ public class AssetRendererFactoryRegistryUtil {
 		Class<T> clazz) {
 
 		return (AssetRendererFactory<T>)
-			_classNameAssetRenderFactoriesServiceTrackerMap.getService(
+			_getClassNameAssetRenderFactoriesServiceTrackerMap().getService(
 				clazz.getName());
 	}
 
 	public static AssetRendererFactory<?> getAssetRendererFactoryByClassName(
 		String className) {
 
-		return _classNameAssetRenderFactoriesServiceTrackerMap.getService(
+		return _getClassNameAssetRenderFactoriesServiceTrackerMap().getService(
 			className);
 	}
 
 	public static AssetRendererFactory<?> getAssetRendererFactoryByClassNameId(
 		long classNameId) {
 
-		return _classNameAssetRenderFactoriesServiceTrackerMap.getService(
+		return _getClassNameAssetRenderFactoriesServiceTrackerMap().getService(
 			PortalUtil.getClassName(classNameId));
 	}
 
 	public static AssetRendererFactory<?> getAssetRendererFactoryByType(
 		String type) {
 
-		return _typeAssetRenderFactoriesServiceTrackerMap.getService(type);
+		return _getTypeAssetRenderFactoriesServiceTrackerMap().getService(type);
 	}
 
 	public static long[] getClassNameIds(long companyId) {
@@ -96,7 +96,8 @@ public class AssetRendererFactoryRegistryUtil {
 		if (companyId > 0) {
 			Map<String, AssetRendererFactory<?>> assetRenderFactories =
 				_filterAssetRendererFactories(
-					companyId, _classNameAssetRenderFactoriesServiceTrackerMap,
+					companyId,
+					_getClassNameAssetRenderFactoriesServiceTrackerMap(),
 					filterSelectable);
 
 			long[] classNameIds = new long[assetRenderFactories.size()];
@@ -115,12 +116,12 @@ public class AssetRendererFactoryRegistryUtil {
 		}
 
 		Set<String> classNames =
-			_classNameAssetRenderFactoriesServiceTrackerMap.keySet();
+			_getClassNameAssetRenderFactoriesServiceTrackerMap().keySet();
 
 		Stream<String> stream = classNames.stream();
 
 		return stream.map(
-			_classNameAssetRenderFactoriesServiceTrackerMap::getService
+			_getClassNameAssetRenderFactoriesServiceTrackerMap()::getService
 		).map(
 			AssetRendererFactory::getClassNameId
 		).mapToLong(
@@ -195,6 +196,27 @@ public class AssetRendererFactoryRegistryUtil {
 		return filteredAssetRendererFactories;
 	}
 
+	private static ServiceTrackerMap<String, AssetRendererFactory>
+		_getClassNameAssetRenderFactoriesServiceTrackerMap() {
+
+		if (_classNameAssetRenderFactoriesServiceTrackerMap == null) {
+			_classNameAssetRenderFactoriesServiceTrackerMap =
+				ServiceTrackerCollections.openSingleValueMap(
+					AssetRendererFactory.class, null,
+					(serviceReference, emitter) -> {
+						Registry registry = RegistryUtil.getRegistry();
+
+						AssetRendererFactory assetRendererFactory =
+							registry.getService(serviceReference);
+
+						emitter.emit(assetRendererFactory.getClassName());
+					},
+					_getServiceReferenceComparator());
+		}
+
+		return _classNameAssetRenderFactoriesServiceTrackerMap;
+	}
+
 	private static Comparator<ServiceReference<AssetRendererFactory>>
 		_getServiceReferenceComparator() {
 
@@ -204,38 +226,35 @@ public class AssetRendererFactoryRegistryUtil {
 		return serviceReferenceComparator.reversed();
 	}
 
+	private static ServiceTrackerMap<String, AssetRendererFactory>
+		_getTypeAssetRenderFactoriesServiceTrackerMap() {
+
+		if (_typeAssetRenderFactoriesServiceTrackerMap == null) {
+			_typeAssetRenderFactoriesServiceTrackerMap =
+				ServiceTrackerCollections.openSingleValueMap(
+					AssetRendererFactory.class, null,
+					(serviceReference, emitter) -> {
+						Registry registry = RegistryUtil.getRegistry();
+
+						AssetRendererFactory assetRendererFactory =
+							registry.getService(serviceReference);
+
+						emitter.emit(assetRendererFactory.getType());
+					},
+					_getServiceReferenceComparator());
+		}
+
+		return _typeAssetRenderFactoriesServiceTrackerMap;
+	}
+
 	private AssetRendererFactoryRegistryUtil() {
 	}
 
 	private static ServiceTrackerMap<String, AssetRendererFactory>
-		_classNameAssetRenderFactoriesServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
-				AssetRendererFactory.class, null,
-				(serviceReference, emitter) -> {
-					Registry registry = RegistryUtil.getRegistry();
-
-					AssetRendererFactory assetRendererFactory =
-						registry.getService(serviceReference);
-
-					emitter.emit(assetRendererFactory.getClassName());
-				},
-				_getServiceReferenceComparator());
-
+		_classNameAssetRenderFactoriesServiceTrackerMap;
 	private static final ServiceRegistrationMap<AssetRendererFactory<?>>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
-
 	private static ServiceTrackerMap<String, AssetRendererFactory>
-		_typeAssetRenderFactoriesServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
-				AssetRendererFactory.class, null,
-				(serviceReference, emitter) -> {
-					Registry registry = RegistryUtil.getRegistry();
-
-					AssetRendererFactory assetRendererFactory =
-						registry.getService(serviceReference);
-
-					emitter.emit(assetRendererFactory.getType());
-				},
-				_getServiceReferenceComparator());
+		_typeAssetRenderFactoriesServiceTrackerMap;
 
 }

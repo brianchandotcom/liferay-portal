@@ -55,6 +55,11 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	}
 
 	@Override
+	public JSONObject toJSONObject() {
+		return jsonObject;
+	}
+
+	@Override
 	public String toString() {
 		return jsonObject.toString();
 	}

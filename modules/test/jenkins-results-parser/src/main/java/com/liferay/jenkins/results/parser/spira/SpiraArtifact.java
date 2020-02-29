@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -24,5 +26,7 @@ public interface SpiraArtifact {
 	public String getName();
 
 	public SpiraProject getSpiraProject();
+
+	public JSONObject toJSONObject();
 
 }

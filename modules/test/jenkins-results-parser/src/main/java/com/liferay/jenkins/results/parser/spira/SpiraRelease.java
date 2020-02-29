@@ -143,11 +143,6 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 		}
 	}
 
-	@Override
-	public int getID() {
-		return jsonObject.getInt(ID_KEY);
-	}
-
 	public SpiraRelease getParentSpiraRelease() {
 		PathSpiraArtifact parentSpiraArtifact = getParentSpiraArtifact();
 

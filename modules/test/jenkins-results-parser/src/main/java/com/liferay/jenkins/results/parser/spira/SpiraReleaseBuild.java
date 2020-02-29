@@ -72,11 +72,6 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		}
 	}
 
-	@Override
-	public int getID() {
-		return jsonObject.getInt(ID_KEY);
-	}
-
 	protected static List<SpiraReleaseBuild> getSpiraReleaseBuilds(
 		SpiraProject spiraProject, SpiraRelease spiraRelease,
 		SearchParameter... searchParameters) {

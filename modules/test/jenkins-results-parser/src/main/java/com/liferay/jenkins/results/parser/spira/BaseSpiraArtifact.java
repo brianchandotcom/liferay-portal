@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser.spira;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.lang.reflect.Field;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -31,6 +33,11 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BaseSpiraArtifact implements SpiraArtifact {
+
+	@Override
+	public int getID() {
+		return jsonObject.getInt(getIDKey(getClass()));
+	}
 
 	@Override
 	public String getName() {
@@ -68,6 +75,23 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		}
 
 		previousSearchParameters.add(Arrays.asList(searchParameters));
+	}
+
+	protected static String getIDKey(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		try {
+			Field field = spiraArtifactClass.getDeclaredField("ID_KEY");
+
+			return (String)field.get("ID_KEY");
+		}
+		catch (IllegalAccessException | IllegalArgumentException |
+			   NoSuchFieldException exception) {
+
+			throw new RuntimeException(
+				"Missing field ID_KEY in " + spiraArtifactClass.getName(),
+				exception);
+		}
 	}
 
 	protected static boolean isPreviousSearch(

@@ -150,11 +150,6 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 		}
 	}
 
-	@Override
-	public int getID() {
-		return jsonObject.getInt(ID_KEY);
-	}
-
 	protected static List<SpiraTestSetFolder> getSpiraTestSetFolders(
 		SpiraProject spiraProject, SearchParameter... searchParameters) {
 

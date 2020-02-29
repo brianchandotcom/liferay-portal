@@ -79,11 +79,6 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			spiraProject, requestJSONObjects.toArray(new JSONObject[0]));
 	}
 
-	@Override
-	public int getID() {
-		return jsonObject.getInt(ID_KEY);
-	}
-
 	protected static List<SpiraTestCaseRun> getSpiraTestCaseRuns(
 		SpiraProject spiraProject, SpiraTestCaseObject spiraTestCase,
 		SearchParameter... searchParameters) {

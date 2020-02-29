@@ -153,11 +153,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		}
 	}
 
-	@Override
-	public int getID() {
-		return jsonObject.getInt(ID_KEY);
-	}
-
 	public SpiraTestCaseFolder getParentSpiraTestCaseFolder() {
 		PathSpiraArtifact parentSpiraArtifact = getParentSpiraArtifact();
 

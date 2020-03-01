@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -70,6 +69,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -112,7 +112,7 @@ public class UserAccountResourceImpl
 			organizationId);
 
 		return _getUserAccountsPage(
-			_getOrganizationUserAccountListActions(organization),
+			new HashMap<>(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -133,7 +133,7 @@ public class UserAccountResourceImpl
 		throws Exception {
 
 		return _getUserAccountsPage(
-			_getSiteUserAccountListActions(siteId),
+			new HashMap<>(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -186,27 +186,6 @@ public class UserAccountResourceImpl
 			contextAcceptLanguage.getPreferredLocale(), listType.getName());
 	}
 
-	private Map<String, Map<String, String>>
-		_getOrganizationUserAccountListActions(Organization organization) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"get",
-			addAction(
-				"VIEW", "getOrganizationUserAccountsPage",
-				Organization.class.getName(), organization.getGroupId())
-		).build();
-	}
-
-	private Map<String, Map<String, String>> _getSiteUserAccountListActions(
-		Long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"get",
-			addAction(
-				"VIEW", "getSiteUserAccountsPage", User.class.getName(), siteId)
-		).build();
-	}
-
 	private ThemeDisplay _getThemeDisplay(Group group) {
 		return new ThemeDisplay() {
 			{
@@ -214,17 +193,6 @@ public class UserAccountResourceImpl
 				setSiteGroupId(group.getGroupId());
 			}
 		};
-	}
-
-	private Map<String, Map<String, String>> _getUserAccountItemActions(
-		User user) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"get",
-			addAction(
-				"VIEW", "getUserAccount", User.class.getName(),
-				user.getGroupId())
-		).build();
 	}
 
 	private Page<UserAccount> _getUserAccountsPage(
@@ -286,7 +254,6 @@ public class UserAccountResourceImpl
 
 		return new UserAccount() {
 			{
-				actions = _getUserAccountItemActions(user);
 				additionalName = user.getMiddleName();
 				alternateName = user.getScreenName();
 				birthDate = user.getBirthday();

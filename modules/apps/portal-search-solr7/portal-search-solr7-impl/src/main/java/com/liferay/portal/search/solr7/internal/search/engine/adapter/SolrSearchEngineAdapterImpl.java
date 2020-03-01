@@ -17,6 +17,8 @@ package com.liferay.portal.search.solr7.internal.search.engine.adapter;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.ccr.CCRRequest;
+import com.liferay.portal.search.engine.adapter.ccr.CCRResponse;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterResponse;
@@ -44,6 +46,11 @@ import org.osgi.service.component.annotations.Reference;
 	service = SearchEngineAdapter.class
 )
 public class SolrSearchEngineAdapterImpl implements SearchEngineAdapter {
+
+	@Override
+	public <T extends CCRResponse> T execute(CCRRequest<T> ccrRequest) {
+		return null;
+	}
 
 	@Override
 	public <T extends ClusterResponse> T execute(

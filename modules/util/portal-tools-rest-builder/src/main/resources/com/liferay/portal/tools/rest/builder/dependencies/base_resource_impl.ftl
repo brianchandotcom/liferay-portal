@@ -341,7 +341,7 @@ public abstract class Base${schemaName}ResourceImpl
 								(Boolean)parameters.get("flatten")
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 								${schemaVarName}
-							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id") || stringUtil.equals(javaMethodParameter.parameterName, "id")>
 								${schemaVarName}.getId() != null ? ${schemaVarName}.getId() :
 								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
 									(String)

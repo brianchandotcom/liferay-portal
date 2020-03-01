@@ -35,7 +35,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -261,11 +260,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 									typeSettingsProperties);
 
 							if (localizedNames.isEmpty() && (layout != null)) {
-								localizedNames = Collections.singletonMap(
-									contextAcceptLanguage.getPreferredLocale(),
-									layout.getName(
-										contextAcceptLanguage.
-											getPreferredLocale()));
+								localizedNames = layout.getNameMap();
 							}
 
 							return LocalizedMapUtil.getLocalizedMap(

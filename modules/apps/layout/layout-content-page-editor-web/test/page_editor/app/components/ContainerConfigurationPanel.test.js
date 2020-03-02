@@ -18,12 +18,43 @@ import React from 'react';
 
 import {ContainerConfigurationPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/ContainerConfigurationPanel';
 import {CONTAINER_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/containerTypes';
+import {config} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
+			paddingOptions: [
+				{
+					label: '0',
+					value: '0',
+				},
+				{
+					label: '1',
+					value: '3',
+				},
+				{
+					label: '2',
+					value: '4',
+				},
+				{
+					label: '4',
+					value: '5',
+				},
+				{
+					label: '6',
+					value: '6',
+				},
+				{
+					label: '8',
+					value: '7',
+				},
+				{
+					label: '10',
+					value: '8',
+				},
+			],
 			themeColorsCssClasses: [],
 		},
 	})
@@ -52,37 +83,6 @@ jest.mock(
 describe('ContainerConfigurationPanel', () => {
 	afterEach(cleanup);
 
-	const PADDING_OPTIONS = [
-		{
-			label: '0',
-			value: '0',
-		},
-		{
-			label: '1',
-			value: '3',
-		},
-		{
-			label: '2',
-			value: '4',
-		},
-		{
-			label: '4',
-			value: '5',
-		},
-		{
-			label: '6',
-			value: '6',
-		},
-		{
-			label: '8',
-			value: '7',
-		},
-		{
-			label: '10',
-			value: '8',
-		},
-	];
-
 	['top', 'bottom', 'horizontal'].forEach(paddingDirection => {
 		const paddingLabel = `padding-${paddingDirection}`;
 		const paddingPropName = `padding${paddingDirection
@@ -98,7 +98,7 @@ describe('ContainerConfigurationPanel', () => {
 				expect(input).toBeInstanceOf(HTMLSelectElement);
 			});
 
-			PADDING_OPTIONS.forEach(({value}) => {
+			config.paddingOptions.forEach(({value}) => {
 				it(`updates configuration when select input is changed to ${value}`, async () => {
 					const dispatch = jest.fn();
 					const {getByLabelText} = renderComponent(dispatch);

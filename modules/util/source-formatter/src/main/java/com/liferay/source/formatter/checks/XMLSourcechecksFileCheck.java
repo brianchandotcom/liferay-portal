@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
@@ -47,6 +48,20 @@ public class XMLSourcechecksFileCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private void _checkMissingTag(
+		String fileName, Element checkElement, String checkName,
+		String tagName) {
+
+		Element tagElement = checkElement.element(tagName);
+
+		if (tagElement == null) {
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Missing tag '", tagName, "' for check '", checkName, "'"));
+		}
+	}
+
 	private void _checkSourcechecksXML(String fileName, String content)
 		throws DocumentException, IOException {
 
@@ -69,9 +84,14 @@ public class XMLSourcechecksFileCheck extends BaseFileCheck {
 			for (Element checkElement :
 					(List<Element>)sourceProcessorElement.elements("check")) {
 
+				String checkName = checkElement.attributeValue("name");
+
+				_checkMissingTag(fileName, checkElement, checkName, "category");
+				_checkMissingTag(
+					fileName, checkElement, checkName, "description");
+
 				checkElementOrder(
-					fileName, checkElement, "property",
-					checkElement.attributeValue("name"),
+					fileName, checkElement, "property", checkName,
 					new ElementComparator());
 			}
 		}

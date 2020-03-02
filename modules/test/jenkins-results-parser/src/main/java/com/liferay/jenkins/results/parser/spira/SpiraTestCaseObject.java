@@ -123,6 +123,13 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	public static void deleteSpiraTestCaseByID(
 		SpiraProject spiraProject, int testCaseID) {
 
+		List<SpiraTestCaseObject> spiraTestCases = getSpiraTestCases(
+			spiraProject, new SearchResult.SearchParameter(ID_KEY, testCaseID));
+
+		if (spiraTestCases.isEmpty()) {
+			return;
+		}
+
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
 		urlPathReplacements.put(

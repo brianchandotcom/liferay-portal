@@ -113,6 +113,13 @@ public class SpiraRelease extends PathSpiraArtifact {
 	public static void deleteSpiraReleaseByID(
 		SpiraProject spiraProject, int releaseID) {
 
+		List<SpiraRelease> spiraReleases = getSpiraReleases(
+			spiraProject, new SearchResult.SearchParameter(ID_KEY, releaseID));
+
+		if (spiraReleases.isEmpty()) {
+			return;
+		}
+
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
 		urlPathReplacements.put(

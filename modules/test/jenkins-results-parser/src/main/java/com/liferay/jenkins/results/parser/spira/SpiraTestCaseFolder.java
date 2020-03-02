@@ -119,6 +119,15 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 	public static void deleteSpiraTestCaseFolderByID(
 		SpiraProject spiraProject, int testCaseFolderID) {
 
+		List<SpiraTestCaseFolder> spiraTestCaseFolders =
+			getSpiraTestCaseFolders(
+				spiraProject,
+				new SearchResult.SearchParameter(ID_KEY, testCaseFolderID));
+
+		if (spiraTestCaseFolders.isEmpty()) {
+			return;
+		}
+
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
 		urlPathReplacements.put(

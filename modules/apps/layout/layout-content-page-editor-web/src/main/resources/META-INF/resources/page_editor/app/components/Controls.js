@@ -14,6 +14,7 @@
 
 import React, {useCallback, useContext, useReducer} from 'react';
 
+import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 
 const INITIAL_STATE = {
@@ -31,7 +32,7 @@ const ControlsContext = React.createContext([INITIAL_STATE, () => {}]);
 const ControlsConsumer = ControlsContext.Consumer;
 
 const reducer = (state, action) => {
-	const {itemId, itemType, multiSelect, type} = action;
+	const {itemId, itemType, multiSelect, origin, type} = action;
 	let nextState = state;
 
 	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
@@ -47,6 +48,7 @@ const reducer = (state, action) => {
 
 			nextState = {
 				...nextState,
+				activationOrigin: origin,
 				activeItemId: wasSelected ? null : itemId,
 				activeItemType: itemType,
 				selectedItemsIds: wasSelected
@@ -57,6 +59,7 @@ const reducer = (state, action) => {
 		else if (itemId && itemId !== nextState.activeItemId) {
 			nextState = {
 				...nextState,
+				activationOrigin: origin,
 				activeItemId: itemId,
 				activeItemType: itemType,
 				selectedItemsIds: [itemId],
@@ -161,7 +164,11 @@ const useSelectItem = () => {
 	return useCallback(
 		(
 			itemId,
-			{multiSelect = false, itemType = ITEM_TYPES.layoutDataItem} = {
+			{
+				multiSelect = false,
+				itemType = ITEM_TYPES.layoutDataItem,
+				origin = ITEM_ACTIVATION_ORIGINS.pageEditor,
+			} = {
 				itemType: ITEM_TYPES.layoutDataItem,
 				multiSelect: false,
 			}
@@ -170,6 +177,7 @@ const useSelectItem = () => {
 				itemId,
 				itemType,
 				multiSelect,
+				origin,
 				type: SELECT_ITEM,
 			}),
 		[dispatch]

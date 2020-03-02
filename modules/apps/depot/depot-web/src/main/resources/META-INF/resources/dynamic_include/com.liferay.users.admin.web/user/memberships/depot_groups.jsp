@@ -111,113 +111,114 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 
 <c:if test="<%= depotAdminMembershipsDisplayContext.isSelectable() %>">
 	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
-		AUI().use('liferay-search-container');
+		AUI().use('liferay-search-container', function(A) {
+			var AArray = AUI().Array;
 
-		var AArray = AUI().Array;
+			var addDepotGroupIds = [];
+			var deleteDepotGroupIds = [];
 
-		var addDepotGroupIds = [];
-		var deleteDepotGroupIds = [];
+			var searchContainer = Liferay.SearchContainer.get(
+				'<portlet:namespace />depotGroupsSearchContainer'
+			);
 
-		var searchContainer = Liferay.SearchContainer.get(
-			'<portlet:namespace />depotGroupsSearchContainer'
-		);
+			var searchContainerContentBox = searchContainer.get('contentBox');
 
-		var searchContainerContentBox = searchContainer.get('contentBox');
+			var itemSelectorDialog = new ItemSelectorDialog.default({
+				eventName:
+					'<%= depotAdminMembershipsDisplayContext.getItemSelectorEventName() %>',
+				singleSelect: true,
+				title:
+					'<liferay-ui:message arguments="asset-library" key="select-x" />',
+				url: '<%= depotAdminMembershipsDisplayContext.getItemSelectorURL() %>',
+			});
 
-		var itemSelectorDialog = new ItemSelectorDialog.default({
-			eventName:
-				'<%= depotAdminMembershipsDisplayContext.getItemSelectorEventName() %>',
-			singleSelect: true,
-			title: '<liferay-ui:message arguments="asset-library" key="select-x" />',
-			url: '<%= depotAdminMembershipsDisplayContext.getItemSelectorURL() %>',
-		});
+			itemSelectorDialog.on('selectedItemChange', function(event) {
+				var selectedItem = event.selectedItem;
 
-		itemSelectorDialog.on('selectedItemChange', function(event) {
-			var selectedItem = event.selectedItem;
+				if (selectedItem) {
+					var itemValue = JSON.parse(selectedItem.value);
 
-			if (selectedItem) {
-				var itemValue = JSON.parse(selectedItem.value);
+					var rowColumns = [];
 
-				var rowColumns = [];
+					rowColumns.push(itemValue.title);
+					rowColumns.push('');
+					rowColumns.push(
+						'<a class="modify-link" data-rowId="' +
+							itemValue.classPK +
+							'" href="javascript:;"><%= UnicodeFormatter.toString(removeDepotGroupIcon) %></a>'
+					);
 
-				rowColumns.push(itemValue.title);
-				rowColumns.push('');
-				rowColumns.push(
-					'<a class="modify-link" data-rowId="' +
-						itemValue.classPK +
-						'" href="javascript:;"><%= UnicodeFormatter.toString(removeDepotGroupIcon) %></a>'
-				);
+					searchContainer.addRow(rowColumns, itemValue.classPK);
 
-				searchContainer.addRow(rowColumns, itemValue.classPK);
+					searchContainer.updateDataStore();
 
-				searchContainer.updateDataStore();
+					addDepotGroupIds.push(itemValue.classPK);
 
-				addDepotGroupIds.push(itemValue.classPK);
+					AArray.removeItem(deleteDepotGroupIds, itemValue.classPK);
 
-				AArray.removeItem(deleteDepotGroupIds, itemValue.classPK);
-
-				document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupIds.value = addDepotGroupIds.join(
-					','
-				);
-				document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupIds.value = deleteDepotGroupIds.join(
-					','
-				);
-			}
-		});
-
-		var selectDepotGroupLink = document.getElementById(
-			'<portlet:namespace />selectDepotGroupLink'
-		);
-
-		selectDepotGroupLink.addEventListener('click', function(event) {
-			event.preventDefault();
-			itemSelectorDialog.open();
-		});
-
-		var handleOnModifyLink = searchContainerContentBox.delegate(
-			'click',
-			function(event) {
-				var link = event.currentTarget;
-
-				var rowId = link.attr('data-rowId');
-				var tr = link.ancestor('tr');
-
-				var selectGroup = Liferay.Util.getWindow(
-					'<portlet:namespace />selectGroup'
-				);
-
-				if (selectGroup) {
-					var selectButton = selectGroup.iframe.node
-						.get('contentWindow.document')
-						.one('.selector-button[data-entityid="' + rowId + '"]');
-
-					Liferay.Util.toggleDisabled(selectButton, false);
+					document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupIds.value = addDepotGroupIds.join(
+						','
+					);
+					document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupIds.value = deleteDepotGroupIds.join(
+						','
+					);
 				}
+			});
 
-				searchContainer.deleteRow(tr, rowId);
+			var selectDepotGroupLink = document.getElementById(
+				'<portlet:namespace />selectDepotGroupLink'
+			);
 
-				AArray.removeItem(addDepotGroupIds, event.rowId);
+			selectDepotGroupLink.addEventListener('click', function(event) {
+				event.preventDefault();
+				itemSelectorDialog.open();
+			});
 
-				deleteDepotGroupIds.push(rowId);
+			var handleOnModifyLink = searchContainerContentBox.delegate(
+				'click',
+				function(event) {
+					var link = event.currentTarget;
 
-				document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupIds.value = addDepotGroupIds.join(
-					','
-				);
-				document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupIds.value = deleteDepotGroupIds.join(
-					','
-				);
-			},
-			'.modify-link'
-		);
+					var rowId = link.attr('data-rowId');
+					var tr = link.ancestor('tr');
 
-		var onDestroyPortlet = function(event) {
-			if (event.portletId === '<%= portletDisplay.getId() %>') {
-				Liferay.detach(handleOnModifyLink);
+					var selectGroup = Liferay.Util.getWindow(
+						'<portlet:namespace />selectGroup'
+					);
 
-				Liferay.detach('destroyPortlet', onDestroyPortlet);
-			}
-		};
+					if (selectGroup) {
+						var selectButton = selectGroup.iframe.node
+							.get('contentWindow.document')
+							.one('.selector-button[data-entityid="' + rowId + '"]');
 
-		Liferay.on('destroyPortlet', onDestroyPortlet);
+						Liferay.Util.toggleDisabled(selectButton, false);
+					}
+
+					searchContainer.deleteRow(tr, rowId);
+
+					AArray.removeItem(addDepotGroupIds, event.rowId);
+
+					deleteDepotGroupIds.push(rowId);
+
+					document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupIds.value = addDepotGroupIds.join(
+						','
+					);
+					document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupIds.value = deleteDepotGroupIds.join(
+						','
+					);
+				},
+				'.modify-link'
+			);
+
+			var onDestroyPortlet = function(event) {
+				if (event.portletId === '<%= portletDisplay.getId() %>') {
+					Liferay.detach(handleOnModifyLink);
+
+					Liferay.detach('destroyPortlet', onDestroyPortlet);
+				}
+			};
+
+			Liferay.on('destroyPortlet', onDestroyPortlet);
+		});
 	</aui:script>
 </c:if>

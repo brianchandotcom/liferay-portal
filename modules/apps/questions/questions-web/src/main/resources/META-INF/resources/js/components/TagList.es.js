@@ -16,13 +16,16 @@ import ClayLabel from '@clayui/label';
 import React from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
-export default withRouter(({tags = [], match: {url}}) => (
+export default withRouter(({tags = [], match: {params: {sectionId}}}) => (
 	<ul className="c-mb-0 d-flex flex-wrap list-unstyled stretched-link-layer">
 		{tags.map(tag => (
 			<li key={tag}>
 				<ClayLabel displayType="secondary">
-					<Link key={tag} to={`${url}/tag/${tag}`}>
-						{tag}
+					<Link
+						key={tag.taxonomyCategoryId}
+						to={`/questions/${sectionId}/tag/${tag.taxonomyCategoryId}`}
+					>
+						{tag.taxonomyCategoryName}
 					</Link>
 				</ClayLabel>
 			</li>

@@ -15,13 +15,13 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useContext, useState} from 'react';
-import {Link, withRouter} from 'react-router-dom';
 import ClayMultiSelect from '@clayui/multi-select';
+import {Editor} from 'frontend-editor-ckeditor-web';
+import React, {useContext, useEffect, useState} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import {createQuestion} from '../../utils/client.es';
+import {createQuestion, getAllTags} from '../../utils/client.es';
 import {
 	getCKEditorConfig,
 	onBeforeLoadCKEditor,
@@ -39,7 +39,9 @@ export default withRouter(
 
 		const [articleBody, setArticleBody] = useState('');
 		const [headline, setHeadline] = useState('');
-		const [tags, setTags] = useState('');
+		const [items, setItems] = useState([]);
+		const [sourceItems, setSourceItems] = useState([]);
+		const [inputValue, setInputValue] = useState('');
 
 		const [debounceCallback] = useDebounceCallback(
 			() => history.push(`/questions/${sectionId}/`),
@@ -50,44 +52,41 @@ export default withRouter(
 			createQuestion(
 				articleBody,
 				headline,
-				tags,
+				items.map(category => +category.value),
 				context.siteKey
 			).then(() => debounceCallback());
 
+		useEffect(() => {
+			getAllTags(context.siteKey).then(data => {
+				setSourceItems(
+					data.items
+						.flatMap(
+							vocabulary => vocabulary.taxonomyCategories.items
+						)
+						.map(category => ({
+							label: category.name,
+							value: category.id,
+						}))
+				);
+			});
+		}, [context.siteKey]);
 
-		const [value, setValue] = useState("");
-		const [items, setItems] = useState([
-			{
-				label: "one",
-				value: "1"
+		const filterItems = value => {
+			if (
+				value
+					.map(categories => categories.value)
+					.every(category =>
+						sourceItems
+							.map(category => category.value)
+							.includes(category)
+					) &&
+				value.length <= 5 &&
+				new Set(value.map(categories => categories.value)).size ===
+					value.length
+			) {
+				setItems(value);
 			}
-		]);
-
-		const sourceItems = [
-			{
-				label: "one",
-				value: "1"
-			},
-			{
-				label: "two",
-				value: "2"
-			},
-			{
-				label: "three",
-				value: "3"
-			},
-			{
-				label: "four",
-				value: "4"
-			}
-		];
-
-		const setItems2 = value => {
-			console.log(value, sourceItems, sourceItems.map(x => x.value), sourceItems.map(x => x.value).includes(value))
-			if (sourceItems.map(x => x.value).includes(value)) {
-				setItems(value)
-			}
-		}
+		};
 
 		return (
 			<section className="c-mt-5 c-mx-auto col-xl-10">
@@ -161,12 +160,13 @@ export default withRouter(
 							{Liferay.Language.get('tags')}
 						</label>
 
-						<ClayInput
+						<ClayMultiSelect
 							className="c-mt-3"
-							onChange={event => setTags(event.target.value)}
-							placeholder={Liferay.Language.get('add-your-tags')}
-							type="text"
-							value={tags}
+							inputValue={inputValue}
+							items={items}
+							onChange={setInputValue}
+							onItemsChange={filterItems}
+							sourceItems={sourceItems}
 						/>
 
 						<ClayForm.FeedbackGroup>
@@ -180,17 +180,6 @@ export default withRouter(
 						</ClayForm.FeedbackGroup>
 					</ClayForm.Group>
 				</ClayForm>
-
-
-				<ClayMultiSelect
-					inputName="myInput"
-					inputValue={value}
-					items={items}
-					onChange={setValue}
-					onItemsChange={setItems2}
-					sourceItems={sourceItems}
-				/>
-
 
 				<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
 					<ClayButton

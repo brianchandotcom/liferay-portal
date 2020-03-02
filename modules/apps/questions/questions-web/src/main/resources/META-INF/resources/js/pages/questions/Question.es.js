@@ -241,7 +241,9 @@ export default withRouter(
 							</div>
 
 							<div className="c-mt-4">
-								<TagList tags={question.keywords} />
+								<TagList
+									tags={question.taxonomyCategoryBriefs}
+								/>
 							</div>
 
 							<div className="c-mt-4 position-relative question-creator text-center text-md-right">

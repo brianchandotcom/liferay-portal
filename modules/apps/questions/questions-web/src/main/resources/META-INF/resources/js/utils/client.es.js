@@ -95,19 +95,19 @@ export const createComment = (articleBody, messageBoardMessageId) =>
             }
         }`);
 
-export const createQuestion = (articleBody, headline, tags, siteKey) => {
-	tags = tags.length ? tags.split(',').filter(x => x) : null;
-
-	return request(gql`
+export const createQuestion = (articleBody, headline, tags, siteKey) =>
+	request(gql`
         mutation {
-            createSiteMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, encodingFormat: "html", headline: ${headline}, keywords: ${tags}, showAsQuestion: true, viewableBy: ANYONE}, siteKey: ${siteKey}){
+            createSiteMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, encodingFormat: "html", headline: ${headline}, showAsQuestion: true, taxonomyCategoryIds: ${tags}, viewableBy: ANYONE}, siteKey: ${siteKey}){
                 articleBody
                 headline
-                keywords
+                taxonomyCategoryBriefs {
+                	taxonomyCategoryId
+					taxonomyCategoryName 
+                }
                 showAsQuestion
             }
         }`);
-};
 
 export const createVoteMessage = (id, rating) =>
 	request(gql`
@@ -160,6 +160,21 @@ export const getTags = (page = 1, siteKey) =>
             }
         }`);
 
+export const getAllTags = siteKey =>
+	request(gql`   
+		query {
+			taxonomyVocabularies(siteKey: ${siteKey}){
+				items {
+					taxonomyCategories {
+						items {
+							id
+							name
+						}
+					}
+				}
+			}
+		}`);
+
 export const getMessage = (friendlyUrlPath, siteKey) =>
 	request(gql`
         query {
@@ -167,7 +182,10 @@ export const getMessage = (friendlyUrlPath, siteKey) =>
                 articleBody 
                 headline
                 id 
-                keywords 
+				taxonomyCategoryBriefs {
+                	taxonomyCategoryId
+					taxonomyCategoryName 
+                } 
             }
         }`);
 
@@ -203,7 +221,6 @@ export const getThread = (
                 friendlyUrlPath
                 headline
                 id 
-                keywords 
                 messageBoardMessages(page: ${page}, pageSize: 20, sort: ${sort}) {
                     items {
                     	actions
@@ -254,6 +271,10 @@ export const getThread = (
                     ratingValue
                 }
                 subscribed
+				taxonomyCategoryBriefs {
+                	taxonomyCategoryId
+					taxonomyCategoryName 
+                }
                 viewCount
             }
         }`);
@@ -319,7 +340,10 @@ export const getThreadContent = (friendlyUrlPath, siteKey) =>
                 articleBody 
                 headline
                 id 
-                keywords 
+				taxonomyCategoryBriefs {
+                	taxonomyCategoryId
+					taxonomyCategoryName 
+                } 
             }
         }`);
 
@@ -339,14 +363,14 @@ export const getThreads = ({
 	sectionId,
 	siteKey,
 	sort = 'dateModified:desc',
-	tag = '',
+	taxonomyCategoryId = '',
 }) => {
 	const filterSections = `title eq '${sectionId}' or id eq '${sectionId}'`;
 
 	let filter = '';
 
-	if (tag) {
-		filter = `keywords/any(x:x eq '${tag}')`;
+	if (taxonomyCategoryId) {
+		filter = `taxonomyCategoryId/any(x:x eq ${taxonomyCategoryId})`;
 	}
 	else if (creatorId) {
 		filter = `creator/id eq ${creatorId}`;
@@ -373,12 +397,15 @@ export const getThreads = ({
 							friendlyUrlPath
 							headline
 							id 
-							keywords 
 							messageBoardMessages {
 								items {
 									showAsAnswer
 								}
 							}
+							taxonomyCategoryBriefs {
+								taxonomyCategoryId
+								taxonomyCategoryName
+							} 
 							viewCount
 						}
 						page 
@@ -446,13 +473,16 @@ export const getRankedThreads = (
 					} 
 					dateModified
 					headline
-					id 
-					keywords 
+					id  
 					messageBoardMessages {
 						items {
 							showAsAnswer
 						}
 					}
+					taxonomyCategoryBriefs {
+						taxonomyCategoryId
+						taxonomyCategoryName
+					} 
 					viewCount
 				}   
 				page
@@ -527,20 +557,21 @@ export const updateMessage = (articleBody, messageBoardMessageId) =>
 export const updateThread = (
 	articleBody,
 	headline,
-	tags,
-	messageBoardThreadId
-) => {
-	tags = tags.length ? tags.split(',').filter(x => x) : null;
-
-	return request(gql`
+	messageBoardThreadId,
+	taxonomyCategoryIds
+) =>
+	request(gql`
         mutation {
-            patchMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, headline: ${headline}, keywords: ${tags}}, messageBoardThreadId: ${messageBoardThreadId}){
+            patchMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, headline: ${headline}, taxonomyCategoryIds: ${taxonomyCategoryIds}}, messageBoardThreadId: ${messageBoardThreadId}){
                 articleBody
                 headline
-                keywords
+				taxonomyCategoryBriefs {
+					taxonomyCategoryId
+					taxonomyCategoryName
+				} 
             }
         }`);
-};
+
 export const subscribe = messageBoardThreadId =>
 	request(gql`
         mutation {

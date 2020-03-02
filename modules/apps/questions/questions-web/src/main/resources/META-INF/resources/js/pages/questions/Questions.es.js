@@ -30,7 +30,7 @@ import QuestionsNavigationBar from '../QuestionsNavigationBar.es';
 
 export default ({
 	match: {
-		params: {creatorId, sectionId, tag},
+		params: {creatorId, sectionId, tag: taxonomyCategoryId},
 	},
 }) => {
 	const [error, setError] = useState({});
@@ -51,7 +51,7 @@ export default ({
 		pageSize,
 		sectionId,
 		search,
-		tag,
+		taxonomyCategoryId,
 		loadThreads,
 	]);
 
@@ -75,9 +75,17 @@ export default ({
 				sectionId,
 				siteKey: context.siteKey,
 				sort,
-				tag,
+				taxonomyCategoryId,
 			}),
-		[context.siteKey, creatorId, page, pageSize, search, sectionId, tag]
+		[
+			context.siteKey,
+			creatorId,
+			page,
+			pageSize,
+			search,
+			sectionId,
+			taxonomyCategoryId,
+		]
 	);
 
 	const hasValidAnswer = question =>
@@ -227,7 +235,7 @@ export default ({
 								</span>
 							</div>
 
-							<TagList tags={question.keywords} />
+							<TagList tags={question.taxonomyCategoryBriefs} />
 						</div>
 					</div>
 				))

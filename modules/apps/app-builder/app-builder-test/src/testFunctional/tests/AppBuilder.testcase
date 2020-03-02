@@ -1551,14 +1551,18 @@ definition {
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page");
 
-		SitePages.addPublicPage(pageName = "App Builder Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page",
+			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "App Builder Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		Portlet.addPG(
 			pageName = "App Builder Page",
@@ -1603,14 +1607,18 @@ definition {
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page");
 
-		SitePages.addPublicPage(pageName = "App Builder Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page",
+			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "App Builder Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		Portlet.addPG(
 			pageName = "App Builder Page",
@@ -2424,14 +2432,18 @@ definition {
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page");
 
-		SitePages.addPublicPage(pageName = "App Builder Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page",
+			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "App Builder Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		Portlet.addPG(
 			pageName = "App Builder Page",
@@ -2613,14 +2625,18 @@ definition {
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App C");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page");
 
-		SitePages.addPublicPage(pageName = "App Builder Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page",
+			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "App Builder Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		Portlet.addPG(
 			pageName = "App Builder Page",

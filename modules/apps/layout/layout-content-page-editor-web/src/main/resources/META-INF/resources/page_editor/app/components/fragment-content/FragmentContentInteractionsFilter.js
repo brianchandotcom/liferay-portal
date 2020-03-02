@@ -16,9 +16,11 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useMemo} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
+import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {useSelector} from '../../store/index';
 import {
+	useActivationOrigin,
 	useActiveItemId,
 	useActiveItemType,
 	useHoverItem,
@@ -36,6 +38,7 @@ export default function FragmentContentInteractionsFilter({
 	fragmentEntryLinkId,
 	itemId,
 }) {
+	const activationOrigin = useActivationOrigin();
 	const hoverItem = useHoverItem();
 	const isActive = useIsActive();
 	const activeItemId = useActiveItemId();
@@ -105,6 +108,16 @@ export default function FragmentContentInteractionsFilter({
 						enableProcessor
 					);
 				});
+
+				if (
+					activationOrigin === ITEM_ACTIVATION_ORIGINS.structureTree
+				) {
+					activeEditableElement.scrollIntoView({
+						behavior: 'smooth',
+						block: 'nearest',
+						inline: 'nearest',
+					});
+				}
 			}
 		}
 
@@ -117,6 +130,7 @@ export default function FragmentContentInteractionsFilter({
 			}
 		};
 	}, [
+		activationOrigin,
 		activeItemId,
 		activeItemType,
 		editableElements,

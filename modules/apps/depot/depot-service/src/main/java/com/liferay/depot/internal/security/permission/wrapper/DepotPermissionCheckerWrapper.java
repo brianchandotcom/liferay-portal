@@ -62,22 +62,32 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		Group group, String name, long primKey, String actionId) {
 
-		if (super.hasPermission(group, name, primKey, actionId)) {
-			return true;
-		}
-
-		return _hasPermission(name, primKey, actionId);
+		return hasPermission(group.getGroupId(), name, primKey, actionId);
 	}
 
 	@Override
 	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
-		if (super.hasPermission(groupId, name, primKey, actionId)) {
-			return true;
+		Group depotGroup = _getDepotGroup(name, primKey);
+
+		if (depotGroup != null) {
+			try {
+				if (_isGroupAdmin(depotGroup)) {
+					return true;
+				}
+
+				return _depotEntryModelResourcePermission.contains(
+					this, depotGroup.getClassPK(), actionId);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
+
+				return false;
+			}
 		}
 
-		return _hasPermission(name, primKey, actionId);
+		return super.hasPermission(groupId, name, primKey, actionId);
 	}
 
 	@Override
@@ -152,6 +162,23 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 	}
 
+	private Group _getDepotGroup(String name, long primKey) {
+		if (StringUtil.equals(name, Group.class.getName())) {
+			try {
+				Group group = _groupLocalService.getGroup(primKey);
+
+				if (group.getType() == GroupConstants.TYPE_DEPOT) {
+					return group;
+				}
+			}
+			catch (Exception exception) {
+				_log.error(exception, exception);
+			}
+		}
+
+		return null;
+	}
+
 	private boolean _getOrAddToPermissionCache(
 			Group group,
 			UnsafeFunction<Group, Boolean, Exception> unsafeFunction,
@@ -181,28 +208,6 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 
 		return value;
-	}
-
-	private boolean _hasPermission(String name, long groupId, String actionId) {
-		if (StringUtil.equals(name, Group.class.getName())) {
-			try {
-				Group group = _groupLocalService.getGroup(groupId);
-
-				if (group.getType() == GroupConstants.TYPE_DEPOT) {
-					if (_isGroupAdmin(group)) {
-						return true;
-					}
-
-					return _depotEntryModelResourcePermission.contains(
-						this, group.getClassPK(), actionId);
-				}
-			}
-			catch (Exception exception) {
-				_log.error(exception, exception);
-			}
-		}
-
-		return false;
 	}
 
 	private boolean _isGroupAdmin(Group group) throws PortalException {

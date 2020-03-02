@@ -25,24 +25,27 @@ class PagesVisitor {
 		this._pages = null;
 	}
 
-	containsField(fieldName) {
-		return !!this.findField(field => field.fieldName === fieldName);
+	containsField(fieldName, includeNestedFields = false) {
+		return !!this.findField(
+			field => field.fieldName === fieldName,
+			includeNestedFields
+		);
 	}
 
-	findField(condition) {
+	findField(condition, includeNestedFields = false) {
 		let conditionField;
 
-		this._map(identity, identity, identity, (fields, ...args) => {
-			const field = fields.find((field, fieldIndex) => {
-				condition(field, fieldIndex, ...args);
+		this.mapFields(
+			(field, ...args) => {
+				if (condition(field, ...args)) {
+					conditionField = field;
+				}
 
-				return condition(field, fieldIndex, ...args);
-			});
-
-			if (field) {
-				conditionField = field;
-			}
-		});
+				return field;
+			},
+			false,
+			includeNestedFields
+		);
 
 		return conditionField;
 	}

@@ -16,9 +16,25 @@ export const getDataDefinitionField = (
 	dataDefinition = {dataDefinitionFields: []},
 	fieldName
 ) => {
-	return dataDefinition.dataDefinitionFields.find(field => {
-		return field.name === fieldName;
-	}, fieldName);
+	const {dataDefinitionFields} = dataDefinition;
+
+	for (let i = 0; i < dataDefinitionFields.length; i++) {
+		const field = dataDefinitionFields[i];
+
+		if (field.name === fieldName) {
+			return field;
+		}
+
+		const nestedField = getDataDefinitionField({
+			dataDefinitionFields: field.nestedFields || [],
+		}, fieldName);
+
+		if (nestedField) {
+			return nestedField;
+		}
+	}
+
+	return null;
 };
 
 export const getFieldLabel = (dataDefinition, fieldName) => {

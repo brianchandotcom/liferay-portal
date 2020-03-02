@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DataLayoutBuilderActions, DataLayoutVisitor} from 'data-engine-taglib';
+import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import React, {useContext, useEffect} from 'react';
 
 import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
@@ -35,34 +35,24 @@ export default ({children, dataLayoutBuilder}) => {
 
 		provider.props.fieldActions = [
 			{
-				action: indexes =>
-					dataLayoutBuilder.dispatch('fieldDuplicated', {indexes}),
+				action: fieldName =>
+					dataLayoutBuilder.dispatch('fieldDuplicated', {fieldName}),
 				label: Liferay.Language.get('duplicate'),
 			},
 			{
-				action: indexes => {
-					const fieldName = DataLayoutVisitor.getFieldNameFromIndexes(
-						dataLayout,
-						indexes
-					);
-
+				action: fieldName => {
 					dispatch({
 						payload: {fieldName},
 						type: DataLayoutBuilderActions.DELETE_DATA_LAYOUT_FIELD,
 					});
 
-					dataLayoutBuilder.dispatch('fieldDeleted', {indexes});
+					dataLayoutBuilder.dispatch('fieldDeleted', {fieldName});
 				},
 				label: Liferay.Language.get('remove'),
 				separator: true,
 			},
 			{
-				action: indexes => {
-					const fieldName = DataLayoutVisitor.getFieldNameFromIndexes(
-						dataLayout,
-						indexes
-					);
-
+				action: fieldName => {
 					onDeleteDefinitionField(fieldName);
 				},
 				label: Liferay.Language.get('delete-from-object'),

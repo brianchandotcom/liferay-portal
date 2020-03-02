@@ -134,9 +134,12 @@ class DataLayoutBuilder extends React.Component {
 		Liferay.destroyComponent(dataLayoutBuilderId);
 	}
 
-	getDefinitionField({settingsContext}) {
+	getDefinitionField({nestedFields = [], settingsContext}) {
 		const fieldConfig = {
 			customProperties: {},
+			nestedFields: nestedFields.map(nestedField =>
+				this.getDefinitionField(nestedField)
+			),
 		};
 		const settingsContextVisitor = new PagesVisitor(settingsContext.pages);
 

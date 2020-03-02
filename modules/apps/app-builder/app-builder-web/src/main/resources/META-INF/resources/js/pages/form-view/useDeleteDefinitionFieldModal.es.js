@@ -18,21 +18,19 @@ import ClayPanel from '@clayui/panel';
 import React, {useContext} from 'react';
 
 import {getItem} from '../../utils/client.es';
+import {getDataDefinitionField} from '../../utils/dataDefinition.es';
 import FormViewContext from './FormViewContext.es';
 
 export default callback => {
-	const [
-		{
-			dataDefinition: {dataDefinitionFields},
-			dataDefinitionId,
-			fieldTypes,
-		},
-	] = useContext(FormViewContext);
+	const [{dataDefinition, dataDefinitionId, fieldTypes}] = useContext(
+		FormViewContext
+	);
 	const [{onClose}, dispatchModal] = useContext(ClayModalContext);
 
 	return fieldName => {
-		const {fieldType, label} = dataDefinitionFields.find(
-			({name}) => name === fieldName
+		const {fieldType, label} = getDataDefinitionField(
+			dataDefinition,
+			fieldName
 		);
 		const {label: fieldTypeLabel} = fieldTypes.find(({name}) => {
 			return name === fieldType;

@@ -92,59 +92,6 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		return _ctService.updateWithUnsafeFunction(this::_check);
 	}
 
-	private boolean _appendConflictsWhereClauseSQL(
-		CTColumnResolutionType ctColumnResolutionType,
-		CTPersistence<T> ctPersistence, StringBundler sb) {
-
-		Set<String> conflictingColumnNames = ctPersistence.getCTColumnNames(
-			ctColumnResolutionType);
-
-		if (conflictingColumnNames.isEmpty()) {
-			return false;
-		}
-
-		Map<String, Integer> columnsMap = new HashMap<>(
-			ctPersistence.getTableColumnsMap());
-
-		Set<String> columnNames = columnsMap.keySet();
-
-		columnNames.retainAll(conflictingColumnNames);
-
-		Collection<Integer> columnTypes = columnsMap.values();
-
-		if ((ctColumnResolutionType == CTColumnResolutionType.STRICT) &&
-			columnTypes.contains(Types.BLOB)) {
-
-			return true;
-		}
-
-		sb.append(" where ");
-
-		for (Map.Entry<String, Integer> entry : columnsMap.entrySet()) {
-			String conflictColumnName = entry.getKey();
-
-			if (entry.getValue() == Types.CLOB) {
-				sb.append("CAST_CLOB_TEXT(t1.");
-				sb.append(conflictColumnName);
-				sb.append(") != CAST_CLOB_TEXT(t2.");
-				sb.append(conflictColumnName);
-				sb.append(")");
-			}
-			else {
-				sb.append("t1.");
-				sb.append(conflictColumnName);
-				sb.append(" != t2.");
-				sb.append(conflictColumnName);
-			}
-
-			sb.append(" or ");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return true;
-	}
-
 	private List<ConflictInfo> _check(CTPersistence<T> ctPersistence)
 		throws PortalException {
 
@@ -297,61 +244,25 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			primaryKeyName, " and ctEntry.changeType = ",
 			CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
-		StringBundler sb = new StringBundler(selectSQL);
+		List<Long> resolvedPrimaryKeys = _getModifiedPrimaryKeys(
+			connection, ctPersistence, CTColumnResolutionType.IGNORE,
+			selectSQL);
 
-		if (_appendConflictsWhereClauseSQL(
-				CTColumnResolutionType.IGNORE, ctPersistence, sb)) {
-
-			List<Serializable> resolvedPrimaryKeys = new ArrayList<>();
-
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						SQLTransformer.transform(sb.toString()));
-				ResultSet resultSet = preparedStatement.executeQuery()) {
-
-				while (resultSet.next()) {
-					long primaryKey = resultSet.getLong(1);
-
-					conflictInfos.add(
-						new ModificationConflictInfo(primaryKey, true));
-
-					resolvedPrimaryKeys.add(primaryKey);
-				}
-			}
-			catch (SQLException sqlException) {
-				throw new ORMException(sqlException);
-			}
-
-			_resolveModificationConflicts(
-				connection, ctPersistence, primaryKeyName, resolvedPrimaryKeys);
+		for (Long resolvedPrimaryKey : resolvedPrimaryKeys) {
+			conflictInfos.add(
+				new ModificationConflictInfo(resolvedPrimaryKey, true));
 		}
 
-		sb = new StringBundler(selectSQL);
+		_resolveModificationConflicts(
+			connection, ctPersistence, primaryKeyName, resolvedPrimaryKeys);
 
-		sb.append(" and ctEntry.modelMvccVersion != t2.mvccVersion");
+		List<Long> unresolvedPrimaryKeys = _getModifiedPrimaryKeys(
+			connection, ctPersistence, CTColumnResolutionType.STRICT,
+			selectSQL + " and ctEntry.modelMvccVersion != t2.mvccVersion");
 
-		List<Serializable> unresolvedPrimaryKeys = new ArrayList<>();
-
-		if (_appendConflictsWhereClauseSQL(
-				CTColumnResolutionType.STRICT, ctPersistence, sb)) {
-
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						SQLTransformer.transform(sb.toString()));
-				ResultSet resultSet = preparedStatement.executeQuery()) {
-
-				while (resultSet.next()) {
-					long primaryKey = resultSet.getLong(1);
-
-					conflictInfos.add(
-						new ModificationConflictInfo(primaryKey, false));
-
-					unresolvedPrimaryKeys.add(primaryKey);
-				}
-			}
-			catch (SQLException sqlException) {
-				throw new ORMException(sqlException);
-			}
+		for (Long unresolvedPrimaryKey : unresolvedPrimaryKeys) {
+			conflictInfos.add(
+				new ModificationConflictInfo(unresolvedPrimaryKey, false));
 		}
 
 		_updateModelMvccVersion(
@@ -397,9 +308,80 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		}
 	}
 
+	private List<Long> _getModifiedPrimaryKeys(
+		Connection connection, CTPersistence<T> ctPersistence,
+		CTColumnResolutionType ctColumnResolutionType, String sql) {
+
+		Set<String> conflictingColumnNames = ctPersistence.getCTColumnNames(
+			ctColumnResolutionType);
+
+		if (conflictingColumnNames.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		Map<String, Integer> columnsMap = new HashMap<>(
+			ctPersistence.getTableColumnsMap());
+
+		Set<String> columnNames = columnsMap.keySet();
+
+		columnNames.retainAll(conflictingColumnNames);
+
+		Collection<Integer> columnTypes = columnsMap.values();
+
+		if ((ctColumnResolutionType != CTColumnResolutionType.STRICT) ||
+			!columnTypes.contains(Types.BLOB)) {
+
+			StringBundler sb = new StringBundler(sql);
+
+			sb.append(" where ");
+
+			for (Map.Entry<String, Integer> entry : columnsMap.entrySet()) {
+				String conflictColumnName = entry.getKey();
+
+				if (entry.getValue() == Types.CLOB) {
+					sb.append("CAST_CLOB_TEXT(t1.");
+					sb.append(conflictColumnName);
+					sb.append(") != CAST_CLOB_TEXT(t2.");
+					sb.append(conflictColumnName);
+					sb.append(")");
+				}
+				else {
+					sb.append("t1.");
+					sb.append(conflictColumnName);
+					sb.append(" != t2.");
+					sb.append(conflictColumnName);
+				}
+
+				sb.append(" or ");
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sql = sb.toString();
+		}
+
+		List<Long> primaryKeys = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				SQLTransformer.transform(sql));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				long primaryKey = resultSet.getLong(1);
+
+				primaryKeys.add(primaryKey);
+			}
+		}
+		catch (SQLException sqlException) {
+			throw new ORMException(sqlException);
+		}
+
+		return primaryKeys;
+	}
+
 	private void _resolveModificationConflicts(
 		Connection connection, CTPersistence<T> ctPersistence,
-		String primaryKeyName, List<Serializable> resolvedPrimaryKeys) {
+		String primaryKeyName, List<Long> resolvedPrimaryKeys) {
 
 		if (resolvedPrimaryKeys.isEmpty()) {
 			return;
@@ -420,7 +402,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		sb.append(primaryKeyName);
 		sb.append(" in (");
 
-		for (Serializable primaryKey : resolvedPrimaryKeys) {
+		for (Long primaryKey : resolvedPrimaryKeys) {
 			sb.append(primaryKey);
 			sb.append(", ");
 		}
@@ -498,7 +480,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 	private void _updateModelMvccVersion(
 		Connection connection, String primaryKeyName, String tableName,
-		List<Serializable> unresolvedPrimaryKeys) {
+		List<Long> unresolvedPrimaryKeys) {
 
 		StringBundler sb = new StringBundler(
 			2 * unresolvedPrimaryKeys.size() + 18);
@@ -507,15 +489,15 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		sb.append(primaryKeyName);
 		sb.append(", t1.mvccVersion from ");
 		sb.append(tableName);
-		sb.append(" t1 inner join CTEntry t2 on t1.");
+		sb.append(" t1 inner join CTEntry on t1.");
 		sb.append(primaryKeyName);
-		sb.append(" = t2.modelClassPK and t2.changeType = ");
+		sb.append(" = CTEntry.modelClassPK and CTEntry.changeType = ");
 		sb.append(CTConstants.CT_CHANGE_TYPE_MODIFICATION);
-		sb.append(" and t2.ctCollectionId = ");
+		sb.append(" and CTEntry.ctCollectionId = ");
 		sb.append(_sourceCTCollectionId);
-		sb.append(" and t2.modelClassNameId = ");
+		sb.append(" and CTEntry.modelClassNameId = ");
 		sb.append(_modelClassNameId);
-		sb.append(" and t1.mvccVersion != t2.modelMvccVersion");
+		sb.append(" and t1.mvccVersion != CTEntry.modelMvccVersion");
 		sb.append(" where t1.ctCollectionId = ");
 		sb.append(_targetCTCollectionId);
 

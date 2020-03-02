@@ -31,7 +31,7 @@ import templates from './TextAdapter.soy';
  * element is only in view but is being edited. Do not update the value when it
  * is not disabled to avoid possible unnecessary renderings and blinks in the text.
  */
-const useSyncValue = (initialValue, disabled) => {
+export const useSyncValue = (initialValue, disabled) => {
 	const [value, setValue] = useState(initialValue);
 
 	useEffect(() => {

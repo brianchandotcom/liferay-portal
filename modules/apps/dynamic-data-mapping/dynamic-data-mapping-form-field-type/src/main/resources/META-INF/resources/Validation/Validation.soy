@@ -127,7 +127,7 @@
 				{param visible: $enableValidation /}
 			{/call}
 		{elseif $selectedValidation?.parameterMessage}
-			{call Numeric.render}
+			{call NumericAdapter.render}
 				{param dataType: $dataType /}
 				{param events: [
 					'fieldEdited': $_updateParameterValue

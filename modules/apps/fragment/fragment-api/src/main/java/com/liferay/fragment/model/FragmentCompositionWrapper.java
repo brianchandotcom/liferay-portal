@@ -280,6 +280,13 @@ public class FragmentCompositionWrapper
 		return model.getGroupId();
 	}
 
+	@Override
+	public String getImagePreviewURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+
+		return model.getImagePreviewURL(themeDisplay);
+	}
+
 	/**
 	 * Returns the last publish date of this fragment composition.
 	 *
@@ -593,6 +600,11 @@ public class FragmentCompositionWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	@Override
+	public void setImagePreviewURL(String imagePreviewURL) {
+		model.setImagePreviewURL(imagePreviewURL);
 	}
 
 	/**

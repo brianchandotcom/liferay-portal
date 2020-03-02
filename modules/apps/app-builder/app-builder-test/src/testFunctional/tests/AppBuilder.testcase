@@ -1565,7 +1565,7 @@ definition {
 			siteName = "App Builder Site Name");
 
 		Portlet.addPG(
-			pageName = "App Builder Page",
+			pageName = "App Builder Test Page",
 			portletName = "Widget App");
 
 		AppBuilderAdmin.add();
@@ -1621,7 +1621,7 @@ definition {
 			siteName = "App Builder Site Name");
 
 		Portlet.addPG(
-			pageName = "App Builder Page",
+			pageName = "App Builder Test Page",
 			portletName = "Widget App");
 
 		AppBuilderAdmin.add();
@@ -1639,7 +1639,7 @@ definition {
 		Portlet.deletePG(portletName = "Widget App");
 
 		Portlet.addPG(
-			pageName = "App Builder Page",
+			pageName = "App Builder Test Page",
 			portletName = "Widget App (Table View)");
 
 		Portlet.viewSpecificPG(portletName = "Widget App (Table View)");
@@ -2446,7 +2446,7 @@ definition {
 			siteName = "App Builder Site Name");
 
 		Portlet.addPG(
-			pageName = "App Builder Page",
+			pageName = "App Builder Test Page",
 			portletName = "Test App B");
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
@@ -2523,7 +2523,9 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		Navigator.gotoPage(pageName = "App Builder Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		AppBuilderAdmin.validateUndeployedApp();
 
@@ -2543,7 +2545,9 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		Navigator.gotoPage(pageName = "App Builder Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
 
@@ -2639,7 +2643,7 @@ definition {
 			siteName = "App Builder Site Name");
 
 		Portlet.addPG(
-			pageName = "App Builder Page",
+			pageName = "App Builder Test Page",
 			portletName = "Test App A");
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Test App A");
@@ -2693,7 +2697,9 @@ definition {
 
 		App.validateDeployedAs(title = "Product Menu");
 
-		Navigator.gotoPage(pageName = "App Builder Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		AppBuilderAdmin.gotoCustomAppCP(
 			panel = "Control Panel",
@@ -2722,7 +2728,9 @@ definition {
 
 		App.validateDeployedAs(title = "Widget and Standalone");
 
-		Navigator.gotoPage(pageName = "App Builder Page");
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Changed Name");
 

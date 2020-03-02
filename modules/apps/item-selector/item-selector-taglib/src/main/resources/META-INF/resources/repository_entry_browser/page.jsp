@@ -317,6 +317,25 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 
 									Map<String, Object> data = new HashMap<>();
 
+									Map<String, Serializable> customFieldsMap = fileEntry.getExpandoBridge().getAttributes();
+
+									Set<Map.Entry<String, Serializable>> customFields = customFieldsMap.entrySet();
+
+									String customFieldsKeys = customFields.stream().map(x -> x.getKey()).collect(Collectors.joining(","));
+
+									List<String> customFieldsValuesList = new ArrayList<>();
+
+									for (Map.Entry<String, Serializable> entry : customFields) {
+										customFieldsValuesList.add(JSONFactoryUtil.looseSerialize(entry.getValue()));
+									}
+
+									String customFieldsValues = JSONFactoryUtil.looseSerialize(customFieldsValuesList);
+
+									String customFieldsTypes = customFields.stream().map(x -> x.getValue().getClass().getName()).collect(Collectors.joining(","));
+
+									data.put("customFieldsKeys", customFieldsKeys);
+									data.put("customFieldsTypes", customFieldsTypes);
+									data.put("customFieldsValues", customFieldsValues);
 									data.put("description", fileEntry.getDescription());
 
 									String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);

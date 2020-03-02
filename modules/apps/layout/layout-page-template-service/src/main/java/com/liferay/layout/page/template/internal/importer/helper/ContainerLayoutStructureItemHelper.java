@@ -16,12 +16,12 @@ package com.liferay.layout.page.template.internal.importer.helper;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Layout;
 
 import java.util.Map;
 
@@ -35,8 +35,7 @@ public class ContainerLayoutStructureItemHelper
 	public LayoutStructureItem addLayoutStructureItem(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
-		LayoutPageTemplateEntry layoutPageTemplateEntry,
-		LayoutStructure layoutStructure, PageElement pageElement,
+		Layout layout, LayoutStructure layoutStructure, PageElement pageElement,
 		String parentItemId, int position) {
 
 		ContainerLayoutStructureItem containerLayoutStructureItem =
@@ -65,16 +64,16 @@ public class ContainerLayoutStructureItemHelper
 					jsonObject);
 			}
 
-			Map<String, Object> layout = (Map<String, Object>)definitionMap.get(
-				"layout");
+			Map<String, Object> containerLayout =
+				(Map<String, Object>)definitionMap.get("layout");
 
 			if (layout != null) {
 				containerLayoutStructureItem.setPaddingBottom(
-					(Integer)layout.get("paddingBottom"));
+					(Integer)containerLayout.get("paddingBottom"));
 				containerLayoutStructureItem.setPaddingHorizontal(
-					(Integer)layout.get("paddingHorizontal"));
+					(Integer)containerLayout.get("paddingHorizontal"));
 				containerLayoutStructureItem.setPaddingTop(
-					(Integer)layout.get("paddingTop"));
+					(Integer)containerLayout.get("paddingTop"));
 			}
 		}
 

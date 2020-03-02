@@ -20,7 +20,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -51,13 +50,12 @@ public class FragmentLayoutStructureItemHelper
 	public LayoutStructureItem addLayoutStructureItem(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
-		LayoutPageTemplateEntry layoutPageTemplateEntry,
-		LayoutStructure layoutStructure, PageElement pageElement,
+		Layout layout, LayoutStructure layoutStructure, PageElement pageElement,
 		String parentItemId, int position) {
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			fragmentCollectionContributorTracker, layoutPageTemplateEntry,
-			pageElement, position);
+			fragmentCollectionContributorTracker, layout, pageElement,
+			position);
 
 		if (fragmentEntryLink == null) {
 			return null;
@@ -70,8 +68,7 @@ public class FragmentLayoutStructureItemHelper
 	private FragmentEntryLink _addFragmentEntryLink(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
-		LayoutPageTemplateEntry layoutPageTemplateEntry,
-		PageElement pageElement, int position) {
+		Layout layout, PageElement pageElement, int position) {
 
 		Map<String, Object> definitionMap =
 			(Map<String, Object>)pageElement.getDefinition();
@@ -90,8 +87,7 @@ public class FragmentLayoutStructureItemHelper
 		}
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			fragmentCollectionContributorTracker, fragmentKey,
-			layoutPageTemplateEntry);
+			fragmentCollectionContributorTracker, fragmentKey, layout);
 
 		long fragmentEntryId = 0;
 		String html = StringPool.BLANK;
@@ -126,10 +122,9 @@ public class FragmentLayoutStructureItemHelper
 
 		try {
 			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
-				layoutPageTemplateEntry.getUserId(),
-				layoutPageTemplateEntry.getGroupId(), 0, fragmentEntryId,
+				layout.getUserId(), layout.getGroupId(), 0, fragmentEntryId,
 				PortalUtil.getClassNameId(Layout.class.getName()),
-				layoutPageTemplateEntry.getPlid(), css, html, js, configuration,
+				layout.getPlid(), css, html, js, configuration,
 				jsonObject.toString(), StringUtil.randomId(), position,
 				fragmentKey, ServiceContextThreadLocal.getServiceContext());
 		}
@@ -269,11 +264,11 @@ public class FragmentLayoutStructureItemHelper
 	private FragmentEntry _getFragmentEntry(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
-		String fragmentKey, LayoutPageTemplateEntry layoutPageTemplateEntry) {
+		String fragmentKey, Layout layout) {
 
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
-				layoutPageTemplateEntry.getGroupId(), fragmentKey);
+				layout.getGroupId(), fragmentKey);
 
 		if (fragmentEntry == null) {
 			fragmentEntry =

@@ -37,13 +37,15 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 		</div>
 
 		<div class="modal-footer">
-			<div class="btn-group">
-				<div class="btn-group-item">
-					<aui:button name="close" type="cancel" />
-				</div>
+			<div class="modal-item-last">
+				<div class="btn-group">
+					<div class="btn-group-item">
+						<aui:button name="close" type="cancel" />
+					</div>
 
-				<div class="btn-group-item">
-					<aui:button name="done" primary="<%= true %>" value="done" />
+					<div class="btn-group-item">
+						<aui:button name="done" primary="<%= true %>" value="done" />
+					</div>
 				</div>
 			</div>
 		</div>

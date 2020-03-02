@@ -2,19 +2,21 @@
 
 @import 'variables';
 
-body {
-	&.open {
-		@include media-breakpoint-up(sm) {
-			padding-left: $product-menu-width;
+#wrapper,
+.control-menu-container {
+	@include media-breakpoint-up(sm) {
+		overflow-x: hidden;
 
+		body.sidenav-transition & {
 			@include transition(padding 0.5s ease);
 		}
-	}
 
-	&.open,
-	&.sidenav-transition {
-		@include media-breakpoint-up(sm) {
-			overflow-x: hidden;
+		body.open & {
+			padding-left: $product-menu-width;
+		}
+
+		#wrapper & {
+			padding-left: 0;
 		}
 	}
 }

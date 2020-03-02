@@ -14,8 +14,10 @@
 
 package com.liferay.data.engine.taglib.servlet.taglib;
 
+import com.liferay.data.engine.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutBuilderTag;
 import com.liferay.data.engine.taglib.servlet.taglib.util.DataLayoutTaglibUtil;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -52,8 +54,8 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			request, "fieldTypesModules",
 			DataLayoutTaglibUtil.resolveFieldTypesModules());
 
-		// List<List<String>> panels =
-		// 		ListUtil.toList(ListUtil.toList("fields"));
+		String npmResolvedPackageName = NPMResolvedPackageNameUtil.get(
+			ServletContextUtil.getServletContext());
 
 		Map<String, Object> sidebarPanels = HashMapBuilder.<String, Object>put(
 			"fields",
@@ -63,7 +65,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				"label", "fields"
 			).put(
 				"pluginEntryPoint",
-				"data-engine-taglib@2.0.7/data_layout_builder/js/plugins" +
+				npmResolvedPackageName + "/data_layout_builder/js/plugins" +
 					"/fields-sidebar/index.es"
 			).put(
 				"sidebarPanelId", "fields"
@@ -80,8 +82,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 					additionalPanel);
 			}
 		}
-
-		// setNamespacedAttribute(request, "panels", panels);
 
 		setNamespacedAttribute(request, "sidebarPanels", sidebarPanels);
 

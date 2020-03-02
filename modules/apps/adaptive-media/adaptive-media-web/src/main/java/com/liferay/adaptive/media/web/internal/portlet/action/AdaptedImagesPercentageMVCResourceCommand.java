@@ -84,20 +84,20 @@ public class AdaptedImagesPercentageMVCResourceCommand
 
 		if (_isTaskInProgress(entryUuid)) {
 			return JSONUtil.put(
-				"adaptedImages", String.valueOf(entriesCount)
+				"adaptedImages", entriesCount
 			).put(
 				"errors", 0
 			).put(
-				"totalImages", String.valueOf(expectedEntriesCount)
+				"totalImages", expectedEntriesCount
 			);
 		}
 
 		return JSONUtil.put(
-			"adaptedImages", String.valueOf(entriesCount)
+			"adaptedImages", entriesCount
 		).put(
-			"errors", String.valueOf(expectedEntriesCount - entriesCount)
+			"errors", expectedEntriesCount - entriesCount
 		).put(
-			"totalImages", String.valueOf(expectedEntriesCount)
+			"totalImages", expectedEntriesCount
 		);
 	}
 

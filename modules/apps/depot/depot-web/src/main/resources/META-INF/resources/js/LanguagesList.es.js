@@ -28,14 +28,10 @@ const LanguagesList = ({
 	showActions = false,
 	onMakeDefault = noop,
 	onOpenManageModal = noop,
-	onItemDrop = noop
+	onItemDrop = noop,
 }) => {
 	return (
-		<ClayTable
-			borderless
-			headVerticalAlignment="middle"
-			hover={false}
-		>
+		<ClayTable borderless headVerticalAlignment="middle" hover={false}>
 			<ClayTable.Head>
 				<ClayTable.Row>
 					<ClayTable.Cell expanded headingCell headingTitle>

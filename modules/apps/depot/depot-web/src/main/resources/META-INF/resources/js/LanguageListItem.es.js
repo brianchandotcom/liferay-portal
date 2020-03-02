@@ -17,19 +17,19 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayTable from '@clayui/table';
+import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
-import classNames from 'classnames';
 
 const noop = () => {};
 
 const DROP_ZONES = {
 	BOTTOM: 'BOTTOM',
-	TOP: 'TOP'
+	TOP: 'TOP',
 };
 
 const ACCEPTING_TYPES = {
-	ITEM: 'ITEM'
+	ITEM: 'ITEM',
 };
 
 // Defines the distance in px from the border to the center of an item where
@@ -73,7 +73,7 @@ const LanguageListItem = ({
 	onMakeDefault,
 	showActions,
 	index,
-	onItemDrop = noop
+	onItemDrop = noop,
 }) => {
 	const [active, setActive] = useState(false);
 	const [dropZone, setDropZone] = useState();
@@ -81,13 +81,13 @@ const LanguageListItem = ({
 
 	const [{isDragging}, drag] = useDrag({
 		collect: monitor => ({
-			isDragging: !!monitor.isDragging()
+			isDragging: !!monitor.isDragging(),
 		}),
 		item: {
 			id: localeId,
 			index,
-			type: ACCEPTING_TYPES.ITEM
-		}
+			type: ACCEPTING_TYPES.ITEM,
+		},
 	});
 
 	const [{isOver}, drop] = useDrop({
@@ -98,7 +98,7 @@ const LanguageListItem = ({
 			return isValidTarget(source, {id: localeId, index}, dropZone);
 		},
 		collect: monitor => ({
-			isOver: !!monitor.isOver()
+			isOver: !!monitor.isOver(),
 		}),
 		drop(source, monitor) {
 			if (monitor.canDrop()) {
@@ -119,7 +119,7 @@ const LanguageListItem = ({
 			}
 
 			setDropZone(dropZone);
-		}
+		},
 	});
 
 	useEffect(() => {
@@ -130,18 +130,18 @@ const LanguageListItem = ({
 		setActive(false);
 		onMakeDefault({localeId});
 		Liferay.fire('inputLocalized:defaultLocaleChanged', {
-			item: event.currentTarget
+			item: event.currentTarget,
 		});
 	};
 
 	return (
 		<ClayTable.Row
-			ref={ref}
 			className={classNames('language-list-item', {
 				dragging: isDragging,
 				'drop-bottom': isOver && dropZone === DROP_ZONES.BOTTOM,
 				'drop-top': isOver && dropZone === DROP_ZONES.TOP,
 			})}
+			ref={ref}
 		>
 			<ClayTable.Cell expanded>
 				{displayName}

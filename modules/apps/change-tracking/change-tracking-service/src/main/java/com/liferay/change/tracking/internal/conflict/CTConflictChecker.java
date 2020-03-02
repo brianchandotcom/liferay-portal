@@ -284,43 +284,30 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Connection connection, CTPersistence<T> ctPersistence,
 		List<ConflictInfo> conflictInfos, String primaryKeyName) {
 
-		StringBundler sb1 = new StringBundler();
-
 		String tableName = ctPersistence.getTableName();
 
-		sb1.append("select t1.");
-		sb1.append(primaryKeyName);
-		sb1.append(" from ");
-		sb1.append(tableName);
-		sb1.append(" t1 inner join ");
-		sb1.append(tableName);
-		sb1.append(" t2 on t1.");
-		sb1.append(primaryKeyName);
-		sb1.append(" = t2.");
-		sb1.append(primaryKeyName);
-		sb1.append(" and t1.ctCollectionId = ");
-		sb1.append(_sourceCTCollectionId);
-		sb1.append(" and t2.ctCollectionId = ");
-		sb1.append(_targetCTCollectionId);
-		sb1.append(" inner join CTEntry ctEntry on ctEntry.ctCollectionId = ");
-		sb1.append(_sourceCTCollectionId);
-		sb1.append(" and ctEntry.modelClassNameId = ");
-		sb1.append(_modelClassNameId);
-		sb1.append(" and ctEntry.modelClassPK = t2.");
-		sb1.append(primaryKeyName);
-		sb1.append(" and ctEntry.changeType = ");
-		sb1.append(CTConstants.CT_CHANGE_TYPE_MODIFICATION);
+		String selectSQL = StringBundler.concat(
+			"select t1.", primaryKeyName, " from ", tableName,
+			" t1 inner join ", tableName, " t2 on t1.", primaryKeyName,
+			" = t2.", primaryKeyName, " and t1.ctCollectionId = ",
+			_sourceCTCollectionId, " and t2.ctCollectionId = ",
+			_targetCTCollectionId,
+			" inner join CTEntry ctEntry on ctEntry.ctCollectionId = ",
+			_sourceCTCollectionId, " and ctEntry.modelClassNameId = ",
+			_modelClassNameId, " and ctEntry.modelClassPK = t2.",
+			primaryKeyName, " and ctEntry.changeType = ",
+			CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 
-		String selectSQL = sb1.toString();
+		StringBundler sb = new StringBundler(selectSQL);
 
 		if (_appendConflictsWhereClauseSQL(
-				CTColumnResolutionType.IGNORE, ctPersistence, sb1)) {
+				CTColumnResolutionType.IGNORE, ctPersistence, sb)) {
 
 			List<Serializable> resolvedPrimaryKeys = new ArrayList<>();
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						SQLTransformer.transform(sb1.toString()));
+						SQLTransformer.transform(sb.toString()));
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {
@@ -341,19 +328,18 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				tableName);
 		}
 
-		StringBundler sb2 = new StringBundler();
+		sb = new StringBundler(selectSQL);
 
-		sb2.append(selectSQL);
-		sb2.append(" and ctEntry.modelMvccVersion != t2.mvccVersion");
+		sb.append(" and ctEntry.modelMvccVersion != t2.mvccVersion");
 
 		List<Serializable> unresolvedPrimaryKeys = new ArrayList<>();
 
 		if (_appendConflictsWhereClauseSQL(
-				CTColumnResolutionType.STRICT, ctPersistence, sb2)) {
+				CTColumnResolutionType.STRICT, ctPersistence, sb)) {
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						SQLTransformer.transform(sb2.toString()));
+						SQLTransformer.transform(sb.toString()));
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {
@@ -423,27 +409,28 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		long tempCTCollectionId = -_sourceCTCollectionId;
 
-		StringBundler sb1 = new StringBundler();
+		StringBundler sb = new StringBundler(
+			2 * resolvedPrimaryKeys.size() + 9);
 
-		sb1.append("update ");
-		sb1.append(tableName);
-		sb1.append(" t1 set t1.ctCollectionId = ");
-		sb1.append(tempCTCollectionId);
-		sb1.append(" where t1.ctCollectionId = ");
-		sb1.append(_sourceCTCollectionId);
-		sb1.append(" and t1.");
-		sb1.append(primaryKeyName);
-		sb1.append(" in (");
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" t1 set t1.ctCollectionId = ");
+		sb.append(tempCTCollectionId);
+		sb.append(" where t1.ctCollectionId = ");
+		sb.append(_sourceCTCollectionId);
+		sb.append(" and t1.");
+		sb.append(primaryKeyName);
+		sb.append(" in (");
 
 		for (Serializable primaryKey : resolvedPrimaryKeys) {
-			sb1.append(primaryKey);
-			sb1.append(", ");
+			sb.append(primaryKey);
+			sb.append(", ");
 		}
 
-		sb1.setStringAt(")", sb1.index() - 1);
+		sb.setStringAt(")", sb.index() - 1);
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb1.toString())) {
+				sb.toString())) {
 
 			preparedStatement.executeUpdate();
 		}
@@ -451,65 +438,58 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			throw new ORMException(sqlException);
 		}
 
-		StringBundler sb2 = new StringBundler();
+		sb = new StringBundler("select ");
 
 		Map<String, Integer> tableColumnsMap =
 			ctPersistence.getTableColumnsMap();
-
-		sb2.append("select ");
 
 		Set<String> ignoredColumnNames = ctPersistence.getCTColumnNames(
 			CTColumnResolutionType.IGNORE);
 
 		for (String name : tableColumnsMap.keySet()) {
 			if (name.equals("ctCollectionId")) {
-				sb2.append(_sourceCTCollectionId);
-				sb2.append(" as ");
+				sb.append(_sourceCTCollectionId);
+				sb.append(" as ");
 			}
 			else if (name.equals("mvccVersion")) {
-				sb2.append("(t1.mvccVersion + 1) ");
+				sb.append("(t1.mvccVersion + 1) ");
 			}
 			else if (ignoredColumnNames.contains(name)) {
-				sb2.append("t2.");
+				sb.append("t2.");
 			}
 			else {
-				sb2.append("t1.");
+				sb.append("t1.");
 			}
 
-			sb2.append(name);
-			sb2.append(", ");
+			sb.append(name);
+			sb.append(", ");
 		}
 
-		sb2.setStringAt(" from ", sb2.index() - 1);
+		sb.setStringAt(" from ", sb.index() - 1);
 
-		sb2.append(tableName);
-		sb2.append(" t1, ");
-		sb2.append(tableName);
-		sb2.append(" t2 where t1.");
-		sb2.append(primaryKeyName);
-		sb2.append(" = t2.");
-		sb2.append(primaryKeyName);
-		sb2.append(" and t1.ctCollectionId = ");
-		sb2.append(tempCTCollectionId);
-		sb2.append(" and t2.ctCollectionId = ");
-		sb2.append(_targetCTCollectionId);
+		sb.append(tableName);
+		sb.append(" t1, ");
+		sb.append(tableName);
+		sb.append(" t2 where t1.");
+		sb.append(primaryKeyName);
+		sb.append(" = t2.");
+		sb.append(primaryKeyName);
+		sb.append(" and t1.ctCollectionId = ");
+		sb.append(tempCTCollectionId);
+		sb.append(" and t2.ctCollectionId = ");
+		sb.append(_targetCTCollectionId);
 
 		try {
-			CTRowUtil.copyCTRows(ctPersistence, connection, sb2.toString());
+			CTRowUtil.copyCTRows(ctPersistence, connection, sb.toString());
 		}
 		catch (SQLException sqlException) {
 			throw new ORMException(sqlException);
 		}
 
-		StringBundler sb3 = new StringBundler(4);
-
-		sb3.append("delete from ");
-		sb3.append(tableName);
-		sb3.append(" where ctCollectionId = ");
-		sb3.append(tempCTCollectionId);
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb3.toString())) {
+				StringBundler.concat(
+					"delete from ", tableName, " where ctCollectionId = ",
+					tempCTCollectionId))) {
 
 			preparedStatement.executeUpdate();
 		}
@@ -522,7 +502,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Connection connection, String primaryKeyName, String tableName,
 		List<Serializable> unresolvedPrimaryKeys) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(
+			2 * unresolvedPrimaryKeys.size() + 18);
 
 		sb.append("select t1.");
 		sb.append(primaryKeyName);

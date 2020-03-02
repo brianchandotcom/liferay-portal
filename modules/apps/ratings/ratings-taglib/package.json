@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@clayui/button": "^3.3.0",
 		"@clayui/icon": "^3.0.3",
+		"prop-types": "^15.7.2",
 		"react": "16.12.0"
 	},
 	"name": "ratings-taglib",

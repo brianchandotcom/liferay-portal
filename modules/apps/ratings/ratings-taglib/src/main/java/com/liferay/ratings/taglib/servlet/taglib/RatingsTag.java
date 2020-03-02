@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
@@ -60,6 +63,10 @@ public class RatingsTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
+	public void setUrl(String url) {
+		_url = url;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -71,6 +78,7 @@ public class RatingsTag extends IncludeTag {
 		_type = type;
 	}
 
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -79,6 +87,7 @@ public class RatingsTag extends IncludeTag {
 		_classPK = 0;
 		_inTrash = null;
 		_type = null;
+		_url = null;
 	}
 
 	@Override
@@ -103,6 +112,8 @@ public class RatingsTag extends IncludeTag {
 
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:data", _getData(httpServletRequest));
+
+			httpServletRequest.setAttribute("liferay-ratings:ratings:url", _url);
 
 		} catch (Exception exception) {
 			_log.error(exception, exception);
@@ -140,15 +151,27 @@ public class RatingsTag extends IncludeTag {
 			}
 		}
 
+		String url = _url;
+
+		if (Validator.isNull(url)) {
+			url = themeDisplay.getPathMain() + "/portal/rate_entry";
+		}
+
 		return HashMapBuilder.<String, Object>put(
 			"positiveVotes",
 			(int)Math.round(totalScore)
+		).put(
+			"className", _className
+		).put(
+			"classPK", _classPK
 		).put(
 			"enabled", enabled
 		).put(
 			"inTrash", inTrash
 		).put(
 			"signedIn", themeDisplay.isSignedIn()
+		).put(
+			"url", url
 		).build();
 	}
 
@@ -160,5 +183,5 @@ public class RatingsTag extends IncludeTag {
 	private long _classPK;
 	private Boolean _inTrash;
 	private String _type;
-
+	private String _url;
 }

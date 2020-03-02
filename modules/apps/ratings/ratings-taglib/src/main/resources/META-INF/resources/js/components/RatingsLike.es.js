@@ -14,18 +14,28 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+const RATING_TYPE = 'like';
+const SCORE_LIKE = 1;
+const SCORE_UNLIKE = -1;
+
 const RatingsLike = ({
-	disabled = false,
+	className,
+	classPK,
 	enabled = false,
 	inTrash = false,
 	positiveVotes = 0,
-	signedIn
+	signedIn,
+	url,
 }) => {
 	const [active, setActive] = useState(false);
+	const [likes, setLikes] = useState(positiveVotes);
 
 	const toggleActive = () => {
+		sendVoteRequest(active ? SCORE_UNLIKE : SCORE_LIKE);
+
 		setActive(!active);
 	};
 
@@ -39,14 +49,36 @@ const RatingsLike = ({
 				'ratings-are-disabled-because-this-entry-is-in-the-recycle-bin'
 			);
 		} else if (!enabled) {
-			return LanguageUtil.get(
-				'ratings-are-disabled-in-staging'
-			);
+			return LanguageUtil.get('ratings-are-disabled-in-staging');
 		}
 
 		return active
 			? Liferay.Language.get('unlike-this')
 			: Liferay.Language.get('like-this');
+	};
+
+	const sendVoteRequest = score => {
+		Liferay.fire('ratings:vote', {
+			className,
+			classPK,
+			ratingType: RATING_TYPE,
+			score,
+		});
+
+		var data = {
+			className,
+			classPK,
+			p_auth: Liferay.authToken,
+			p_l_id: themeDisplay.getPlid(),
+			score,
+		};
+
+		Liferay.Util.fetch(url, {
+			body: Liferay.Util.objectToFormData(data),
+			method: 'POST',
+		})
+			.then(response => response.json())
+			.then(response => setLikes(response.totalScore));
 	};
 
 	return (
@@ -61,12 +93,20 @@ const RatingsLike = ({
 			>
 				<ClayIcon className={active ? 'selected' : ''} symbol="heart" />
 
-				<strong className="ml-2">
-					{active ? positiveVotes + 1 : positiveVotes}
-				</strong>
+				<strong className="ml-2">{likes}</strong>
 			</ClayButton>
 		</div>
 	);
+};
+
+RatingsLike.propTypes = {
+	className: PropTypes.string.isRequired,
+	classPK: PropTypes.number.isRequired,
+	enabled: PropTypes.bool,
+	inTrash: PropTypes.bool,
+	positiveVotes: PropTypes.number,
+	signedIn: PropTypes.bool.isRequired,
+	url: PropTypes.string.isRequired,
 };
 
 export default function(props) {

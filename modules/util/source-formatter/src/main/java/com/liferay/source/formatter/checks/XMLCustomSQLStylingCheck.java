@@ -47,8 +47,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			return content;
 		}
 
-		//_checkIncorrectLineBreakAfterComma(fileName, content);
-
+		_checkIncorrectLineBreakAfterComma(fileName, content);
 		_checkMissingLineBreakAfterKeyword(fileName, content);
 		_checkMissingParentheses(fileName, content);
 		_checkMultiLineClause(fileName, content);
@@ -82,6 +81,10 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 	private void _checkIncorrectLineBreakAfterComma(
 		String fileName, String content) {
+
+		if (true) {
+			return;
+		}
 
 		Matcher matcher = _incorrectLineBreakAfterCommaPattern.matcher(content);
 

@@ -63,6 +63,20 @@ public class LayoutStructureUtil {
 		return ArrayUtil.toLongArray(fragmentEntryLinkIds);
 	}
 
+	public static LayoutStructure getLayoutStructure(
+			long groupId, long plid, long segmentsExperienceId)
+		throws PortalException {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+					plid, true);
+
+		return LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+	}
+
 	public static String getLayoutStructureItemJSON(
 			FragmentCollectionContributorTracker
 				fragmentCollectionContributorTracker,

@@ -56,6 +56,15 @@ public class ConfigurationUpgradeStepFactoryImpl
 
 					dictionary.put("service.pid", newPid);
 
+					String fileName = dictionary.get(
+						"felix.fileinstall.filename");
+
+					if (fileName != null) {
+						dictionary.put(
+							"felix.fileinstall.filename",
+							StringUtil.replace(fileName, oldPid, newPid));
+					}
+
 					_persistenceManager.store(newPid, dictionary);
 
 					_persistenceManager.delete(oldPid);
@@ -82,11 +91,14 @@ public class ConfigurationUpgradeStepFactoryImpl
 						String oldServicePid = dictionary.put(
 							"service.pid", newServicePid);
 
-						dictionary.put(
-							"felix.fileinstall.filename",
-							StringUtil.replace(
-								dictionary.get("felix.fileinstall.filename"),
-								oldPid, newPid));
+						String fileName = dictionary.get(
+							"felix.fileinstall.filename");
+
+						if (fileName != null) {
+							dictionary.put(
+								"felix.fileinstall.filename",
+								StringUtil.replace(fileName, oldPid, newPid));
+						}
 
 						_persistenceManager.store(newServicePid, dictionary);
 

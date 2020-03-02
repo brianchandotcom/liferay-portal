@@ -185,8 +185,6 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		PortletEntry.publish();
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");

@@ -19,6 +19,12 @@
 		}
 	}
 
+	// LPS-109615
+
+	.modal-content .modal-footer .btn-toolbar {
+		margin-left: auto;
+	}
+
 	// LPS-97981
 
 	@include media-breakpoint-up(sm) {

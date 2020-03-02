@@ -31,7 +31,7 @@ import templates from './TextAdapter.soy';
  * element is only in view but is being edited. Do not update the value when it
  * is not disabled to avoid possible unnecessary renderings and blinks in the text.
  */
-export const useSyncValue = (initialValue, disabled) => {
+const useSyncValue = (initialValue, disabled) => {
 	const [value, setValue] = useState(initialValue);
 
 	useEffect(() => {
@@ -251,66 +251,62 @@ const DISPLAY_STYLE = {
 	singleline: Text,
 };
 
-const TextProxy = connectStore(
-	({
-		autocompleteEnabled,
-		autocomplete,
-		displayStyle = 'singleline',
-		emit,
-		fieldName,
-		id,
-		name,
-		options = [],
-		placeholder,
-		predefinedValue = '',
-		readOnly,
-		value,
-		...otherProps
-	}) => {
-		const optionsMemo = useMemo(() => options.map(option => option.label), [
-			options,
-		]);
-		const Component =
-			DISPLAY_STYLE[
-				autocomplete || autocompleteEnabled
-					? 'autocomplete'
-					: displayStyle
-			];
+const TextWithFieldBase = ({
+	autocomplete,
+	autocompleteEnabled,
+	displayStyle = 'singleline',
+	fieldName,
+	id,
+	name,
+	onBlur,
+	onFocus,
+	onInput,
+	options = [],
+	placeholder,
+	predefinedValue = '',
+	readOnly,
+	value,
+	...otherProps
+}) => {
+	const optionsMemo = useMemo(() => options.map(option => option.label), [
+		options,
+	]);
+	const Component =
+		DISPLAY_STYLE[
+			autocomplete || autocompleteEnabled ? 'autocomplete' : displayStyle
+		];
 
-		return (
-			<FieldBaseProxy
-				{...otherProps}
+	return (
+		<FieldBaseProxy {...otherProps} id={id} name={name} readOnly={readOnly}>
+			<Component
+				disabled={readOnly}
+				fieldName={fieldName}
 				id={id}
 				name={name}
-				readOnly={readOnly}
-			>
-				<Component
-					disabled={readOnly}
-					fieldName={fieldName}
-					id={id}
-					name={name}
-					onBlur={event =>
-						emit('fieldBlurred', event, event.target.value)
-					}
-					onFocus={event =>
-						emit('fieldFocused', event, event.target.value)
-					}
-					onInput={event =>
-						emit('fieldEdited', event, event.target.value)
-					}
-					options={optionsMemo}
-					placeholder={placeholder}
-					value={value ? value : predefinedValue}
-				/>
-			</FieldBaseProxy>
-		);
-	}
-);
+				onBlur={onBlur}
+				onFocus={onFocus}
+				onInput={onInput}
+				options={optionsMemo}
+				placeholder={placeholder}
+				value={value ? value : predefinedValue}
+			/>
+		</FieldBaseProxy>
+	);
+};
+
+const TextProxy = connectStore(({emit, ...otherProps}) => (
+	<TextWithFieldBase
+		{...otherProps}
+		onBlur={event => emit('fieldBlurred', event, event.target.value)}
+		onFocus={event => emit('fieldFocused', event, event.target.value)}
+		onInput={event => emit('fieldEdited', event, event.target.value)}
+	/>
+));
 
 const ReactTextAdapter = getConnectedReactComponentAdapter(
 	TextProxy,
 	templates
 );
 
-export {ReactTextAdapter};
+export {ReactTextAdapter, useSyncValue, TextWithFieldBase};
 export default ReactTextAdapter;

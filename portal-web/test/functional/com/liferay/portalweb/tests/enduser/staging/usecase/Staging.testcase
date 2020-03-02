@@ -3866,7 +3866,7 @@ definition {
 	@description = "This is a use case for LPS-77935."
 	@priority = "4"
 	test ViewSimplePublicationAfterDeleteDocumentInGlobal {
-		SitePages.openPagesAdmin(siteURLKey = "Global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -3891,7 +3891,7 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

@@ -326,7 +326,7 @@ definition {
 
 		Navigator.openURL();
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

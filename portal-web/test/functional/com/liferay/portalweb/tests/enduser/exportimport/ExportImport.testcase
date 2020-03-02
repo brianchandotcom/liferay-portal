@@ -396,7 +396,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -414,7 +414,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -441,7 +441,7 @@ definition {
 
 		PortletEntry.publish();
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

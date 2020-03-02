@@ -1206,7 +1206,7 @@ definition {
 			layoutName = "Documents and Media Page - Global",
 			widgetName = "Documents and Media");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -1223,7 +1223,7 @@ definition {
 			dmFolderDescription = "DM SubFolder Description",
 			dmFolderName = "DM SubFolder Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

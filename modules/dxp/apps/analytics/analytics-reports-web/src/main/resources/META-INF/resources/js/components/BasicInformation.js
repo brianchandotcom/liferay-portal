@@ -41,7 +41,7 @@ function BasicInformation({authorName, languageTag, publishDate, title}) {
 
 	return (
 		<div>
-			<h3 className="h4 mb-2">{title}</h3>
+			<h4 className="mb-2">{title}</h4>
 			<span className="text-secondary">
 				{Liferay.Util.sub(
 					Liferay.Language.get('published-on-x'),

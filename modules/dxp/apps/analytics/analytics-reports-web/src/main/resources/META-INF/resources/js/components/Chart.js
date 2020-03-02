@@ -34,7 +34,7 @@ const {useEffect, useMemo} = React;
 
 const CARTESIAN_GRID_COLOR = '#E7E7ED';
 const CHART_SIZES = {
-	dotRadius: 5,
+	dotRadius: 4,
 	height: 220,
 	lineWidth: 2,
 	width: 280,
@@ -284,13 +284,14 @@ export default function Chart({
 					<div className="d-flex ml-2">
 						<ClayButtonWithIcon
 							aria-label={Liferay.Language.get('previous-period')}
-							className="mr-1"
+							className="component-action mr-1"
 							displayType="secondary"
 							onClick={handlePreviousTimeSpanClick}
 							symbol="angle-left"
 						/>
 						<ClayButtonWithIcon
 							aria-label={Liferay.Language.get('next-period')}
+							className="component-action"
 							disabled={disabledNextTimeSpan}
 							displayType="secondary"
 							onClick={handleNextTimeSpanClick}
@@ -304,7 +305,7 @@ export default function Chart({
 				<div className={lineChartWrapperClasses}>
 					{chartState.loading && <ClayLoadingIndicator small />}
 
-					{title && <h4>{title}</h4>}
+					{title && <h5>{title}</h5>}
 
 					<div className="mt-3">
 						<LineChart
@@ -314,7 +315,7 @@ export default function Chart({
 						>
 							<Legend
 								formatter={legendFormatter}
-								iconSize={10}
+								iconSize={CHART_SIZES.dotRadius * 2}
 								iconType="circle"
 								layout="vertical"
 								verticalAlign="top"
@@ -372,6 +373,7 @@ export default function Chart({
 											strokeWidth: 0,
 										}}
 										dataKey={keyName}
+										dot={{r: 2}}
 										fill={color}
 										key={keyName}
 										stroke={color}

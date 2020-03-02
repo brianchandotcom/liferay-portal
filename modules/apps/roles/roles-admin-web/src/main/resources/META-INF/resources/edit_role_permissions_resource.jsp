@@ -45,7 +45,7 @@ headerNames.add("action");
 boolean showScope = _isShowScope(request, role, curModelResource, curPortletId);
 
 if (showScope) {
-	headerNames.add("sites");
+	headerNames.add("scope");
 }
 
 SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, liferayPortletResponse.createRenderURL(), headerNames, "there-are-no-actions");

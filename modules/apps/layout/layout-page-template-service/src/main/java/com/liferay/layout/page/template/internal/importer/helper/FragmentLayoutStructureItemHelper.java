@@ -44,14 +44,15 @@ import java.util.Map;
  * @author Jürgen Kappler
  */
 public class FragmentLayoutStructureItemHelper
-	implements LayoutStructureItemHelper {
+	extends BaseLayoutStructureItemHelper implements LayoutStructureItemHelper {
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		Layout layout, LayoutStructure layoutStructure, PageElement pageElement,
-		String parentItemId, int position) {
+			FragmentCollectionContributorTracker
+				fragmentCollectionContributorTracker,
+			Layout layout, LayoutStructure layoutStructure,
+			PageElement pageElement, String parentItemId, int position)
+		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			fragmentCollectionContributorTracker, layout, pageElement,
@@ -66,12 +67,13 @@ public class FragmentLayoutStructureItemHelper
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		Layout layout, PageElement pageElement, int position) {
+			FragmentCollectionContributorTracker
+				fragmentCollectionContributorTracker,
+			Layout layout, PageElement pageElement, int position)
+		throws Exception {
 
-		Map<String, Object> definitionMap =
-			(Map<String, Object>)pageElement.getDefinition();
+		Map<String, Object> definitionMap = getDefinitionMap(
+			pageElement.getDefinition());
 
 		if (definitionMap == null) {
 			return null;

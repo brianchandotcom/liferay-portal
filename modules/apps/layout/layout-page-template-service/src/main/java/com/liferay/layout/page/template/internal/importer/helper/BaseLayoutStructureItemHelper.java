@@ -14,22 +14,31 @@
 
 package com.liferay.layout.page.template.internal.importer.helper;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.model.Layout;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Map;
 
 /**
- * @author Jürgen Kappler
+ * @author Pavel Savinov
  */
-public interface LayoutStructureItemHelper {
+public abstract class BaseLayoutStructureItemHelper {
 
-	public LayoutStructureItem addLayoutStructureItem(
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			Layout layout, LayoutStructure layoutStructure,
-			PageElement pageElement, String parentItemId, int position)
-		throws Exception;
+	protected Map<String, Object> getDefinitionMap(Object definition)
+		throws Exception {
+
+		Map<String, Object> definitionMap = null;
+
+		if (definition instanceof Map) {
+			definitionMap = (Map<String, Object>)definition;
+		}
+		else {
+			definitionMap = _objectMapper.readValue(
+				definition.toString(), Map.class);
+		}
+
+		return definitionMap;
+	}
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 }

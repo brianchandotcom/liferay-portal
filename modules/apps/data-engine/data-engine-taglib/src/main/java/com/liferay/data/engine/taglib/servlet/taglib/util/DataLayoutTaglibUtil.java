@@ -117,26 +117,6 @@ public class DataLayoutTaglibUtil {
 			dataDefinitionId, httpServletRequest);
 	}
 
-	public static long getDataDefinitionId(
-		long dataLayoutId, HttpServletRequest httpServletRequest) {
-
-		try {
-			DataLayout dataLayout = _dataLayoutTaglibUtil._getDataLayout(
-				dataLayoutId, httpServletRequest);
-
-			return dataLayout.getDataDefinitionId();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			exception.printStackTrace();
-		}
-
-		return 0L;
-	}
-
 	public static JSONObject getDataLayoutConfigJSONObject(String contentType) {
 		DataLayoutBuilderConfiguration dataLayoutBuilderConfiguration =
 			_dataLayoutBuilderConfigurations.get(contentType);

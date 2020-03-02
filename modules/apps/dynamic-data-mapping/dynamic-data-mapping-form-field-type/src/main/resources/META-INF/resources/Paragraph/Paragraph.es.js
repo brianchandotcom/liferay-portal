@@ -29,7 +29,7 @@ const Paragraph = ({name, text}) => (
 		<div
 			className="liferay-ddm-form-field-paragraph-text"
 			dangerouslySetInnerHTML={{
-				__html: typeof text === 'object' ? text.content : text
+				__html: typeof text === 'object' ? text.content : text,
 			}}
 		/>
 	</div>

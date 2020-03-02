@@ -31,7 +31,7 @@ const Switcher = ({
 	onChange,
 	required,
 	showLabel,
-	spritemap
+	spritemap,
 }) => {
 	const [checked, setChecked] = useState(initialChecked);
 
@@ -79,7 +79,7 @@ const Checkbox = ({
 	onChange,
 	required,
 	showLabel,
-	spritemap
+	spritemap,
 }) => {
 	const [checked, setChecked] = useState(initialChecked);
 

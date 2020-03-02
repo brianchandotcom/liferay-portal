@@ -159,8 +159,8 @@ class Validation extends Component {
 		let expression = {};
 		const {
 			_enableValidation: enableValidation,
-			_parameter,
 			_errorMessage,
+			_parameter,
 			editingLanguageId,
 			validation: {fieldName: name},
 		} = this;

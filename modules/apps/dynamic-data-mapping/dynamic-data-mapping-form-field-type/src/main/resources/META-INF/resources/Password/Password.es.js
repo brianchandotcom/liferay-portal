@@ -28,7 +28,7 @@ const Password = ({
 	onFocus,
 	onInput,
 	placeholder,
-	value: initialValue
+	value: initialValue,
 }) => {
 	const [value, setValue] = useState(initialValue);
 

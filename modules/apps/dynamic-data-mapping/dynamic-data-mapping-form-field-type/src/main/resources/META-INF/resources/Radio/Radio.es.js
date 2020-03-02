@@ -31,7 +31,7 @@ const Radio = ({
 	onChange,
 	onFocus,
 	options,
-	value
+	value,
 }) => (
 	<div className="ddm-radio" onBlur={onBlur} onFocus={onFocus}>
 		{options.map(option => (
@@ -54,11 +54,11 @@ const RadioProxy = connectStore(
 		emit,
 		options = [
 			{
-				label: 'Option 1'
+				label: 'Option 1',
 			},
 			{
-				label: 'Option 2'
-			}
+				label: 'Option 2',
+			},
 		],
 		predefinedValue,
 		value,

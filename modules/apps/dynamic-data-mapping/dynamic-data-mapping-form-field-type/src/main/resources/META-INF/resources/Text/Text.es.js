@@ -38,7 +38,7 @@ const useSyncValue = (initialValue, disabled) => {
 		if (value !== initialValue && disabled) {
 			setValue(initialValue);
 		}
-	}, [initialValue, value]);
+	}, [disabled, initialValue, value]);
 
 	return [value, setValue];
 };
@@ -52,7 +52,7 @@ const Text = ({
 	onFocus,
 	onInput,
 	placeholder,
-	value: initialValue
+	value: initialValue,
 }) => {
 	const [value, setValue] = useSyncValue(initialValue, disabled);
 
@@ -87,7 +87,7 @@ const Textarea = ({
 	onFocus,
 	onInput,
 	placeholder,
-	value: initialValue
+	value: initialValue,
 }) => {
 	const [value, setValue] = useSyncValue(initialValue, disabled);
 
@@ -119,7 +119,7 @@ const Autocomplete = ({
 	onInput,
 	options,
 	placeholder,
-	value: initialValue
+	value: initialValue,
 }) => {
 	const [value, setValue] = useSyncValue(initialValue, disabled);
 	const [visible, setVisible] = useState(false);
@@ -248,7 +248,7 @@ const Autocomplete = ({
 const DISPLAY_STYLE = {
 	autocomplete: Autocomplete,
 	multiline: Textarea,
-	singleline: Text
+	singleline: Text,
 };
 
 const TextProxy = connectStore(
@@ -268,7 +268,7 @@ const TextProxy = connectStore(
 		...otherProps
 	}) => {
 		const optionsMemo = useMemo(() => options.map(option => option.label), [
-			options
+			options,
 		]);
 		const Component =
 			DISPLAY_STYLE[

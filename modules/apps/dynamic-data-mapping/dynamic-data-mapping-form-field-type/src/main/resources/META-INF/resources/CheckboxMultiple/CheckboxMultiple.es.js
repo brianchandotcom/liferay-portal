@@ -33,11 +33,11 @@ const Switcher = ({
 	onBlur,
 	onChange,
 	onFocus,
-	value
+	value,
 }) => (
 	<div
 		className={classNames('lfr-ddm-form-field-checkbox-switch', {
-			'lfr-ddm-form-field-checkbox-switch-inline': inline
+			'lfr-ddm-form-field-checkbox-switch-inline': inline,
 		})}
 	>
 		<label className="simple-toggle-switch toggle-switch">
@@ -70,7 +70,7 @@ const CheckboxMultiple = ({
 	onFocus,
 	options,
 	predefinedValue,
-	value: initialValue
+	value: initialValue,
 }) => {
 	const [value, setValue] = useState(initialValue);
 
@@ -119,11 +119,11 @@ const CheckboxMultipleProxy = connectStore(
 		name,
 		options = [
 			{
-				label: 'Option 1'
+				label: 'Option 1',
 			},
 			{
-				label: 'Option 2'
-			}
+				label: 'Option 2',
+			},
 		],
 		predefinedValue,
 		readOnly,

@@ -32,7 +32,7 @@ class FieldBase extends Component {
 		return {
 			...state,
 			showRepeatableAddButton: this.repeatable,
-			showRepeatableRemoveButton: this.repeatable && repeatedIndex > 0
+			showRepeatableRemoveButton: this.repeatable && repeatedIndex > 0,
 		};
 	}
 }

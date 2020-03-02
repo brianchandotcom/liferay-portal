@@ -85,7 +85,7 @@ function getConnectedReactComponentAdapter(ReactComponent, templates) {
 					...otherProps,
 					...events,
 					...store,
-					...newValues
+					...newValues,
 				});
 			}
 		}
@@ -157,7 +157,7 @@ const ObserverSubscribe = ({children, observer}) => {
 
 	return React.cloneElement(children, {
 		...children.props,
-		...state
+		...state,
 	});
 };
 

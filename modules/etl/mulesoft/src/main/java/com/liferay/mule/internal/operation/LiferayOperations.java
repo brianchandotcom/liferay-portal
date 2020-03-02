@@ -94,13 +94,13 @@ public class LiferayOperations {
 
 		liferayResponseValidator.validate(httpResponse);
 
-		HttpEntity httpEntity = httpResponse.getEntity();
+		String responseBody = getResponseBody(httpResponse);
 
-		InputStream inputStream = httpEntity.getContent();
+		logHttpResponse(httpResponse.getStatusCode(), responseBody);
 
 		return Result.<String, Void>builder(
 		).output(
-			IOUtils.toString(inputStream)
+			responseBody
 		).build();
 	}
 
@@ -132,13 +132,13 @@ public class LiferayOperations {
 
 		liferayResponseValidator.validate(httpResponse);
 
-		HttpEntity httpEntity = httpResponse.getEntity();
+		String responseBody = getResponseBody(httpResponse);
 
-		InputStream inputStream = httpEntity.getContent();
+		logHttpResponse(httpResponse.getStatusCode(), responseBody);
 
 		return Result.<String, Void>builder(
 		).output(
-			IOUtils.toString(inputStream)
+			responseBody
 		).build();
 	}
 
@@ -173,11 +173,13 @@ public class LiferayOperations {
 
 		liferayResponseValidator.validate(httpResponse);
 
-		HttpEntity httpEntity = httpResponse.getEntity();
+		String responseBody = getResponseBody(httpResponse);
+
+		logHttpResponse(httpResponse.getStatusCode(), responseBody);
 
 		return Result.<String, Void>builder(
 		).output(
-			IOUtils.toString(httpEntity.getContent())
+			responseBody
 		).build();
 	}
 
@@ -212,12 +214,20 @@ public class LiferayOperations {
 
 		liferayResponseValidator.validate(httpResponse);
 
-		HttpEntity httpEntity = httpResponse.getEntity();
+		String responseBody = getResponseBody(httpResponse);
+
+		logHttpResponse(httpResponse.getStatusCode(), responseBody);
 
 		return Result.<String, Void>builder(
 		).output(
-			IOUtils.toString(httpEntity.getContent())
+			responseBody
 		).build();
+	}
+
+	private String getResponseBody(HttpResponse httpResponse) {
+		HttpEntity httpEntity = httpResponse.getEntity();
+
+		return IOUtils.toString(httpEntity.getContent());
 	}
 
 	private void logEndpointParams(
@@ -228,6 +238,12 @@ public class LiferayOperations {
 			"Send {} request to endpoint {}, with path parameters {} and " +
 				"query parameters {}",
 			method, endpoint, pathParams, queryParams);
+	}
+
+	private void logHttpResponse(int statusCode, String message) {
+		logger.debug(
+			"Received response with status {} and message {}", statusCode,
+			message);
 	}
 
 	private static final Logger logger = LoggerFactory.getLogger(

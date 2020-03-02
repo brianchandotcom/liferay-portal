@@ -20,7 +20,6 @@ import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.extension.api.annotation.Alias;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
-import org.mule.runtime.extension.api.annotation.param.display.Placement;
 
 /**
  * @author Matija Petanjek
@@ -40,7 +39,6 @@ public class BasicCachedConnectionProvider
 	}
 
 	@ParameterGroup(name = "Connection config")
-	@Placement(order = 1)
 	private BasicAuthenticationConfig basicAuthenticationConfig;
 
 }

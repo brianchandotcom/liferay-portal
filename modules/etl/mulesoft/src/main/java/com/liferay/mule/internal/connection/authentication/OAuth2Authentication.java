@@ -26,8 +26,10 @@ import java.net.MalformedURLException;
 import java.util.concurrent.TimeoutException;
 
 import org.mule.runtime.api.util.MultiMap;
+import org.mule.runtime.core.api.util.IOUtils;
 import org.mule.runtime.http.api.HttpConstants;
 import org.mule.runtime.http.api.client.HttpClient;
+import org.mule.runtime.http.api.domain.entity.HttpEntity;
 import org.mule.runtime.http.api.domain.message.request.HttpRequest;
 import org.mule.runtime.http.api.domain.message.request.HttpRequestBuilder;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
@@ -87,12 +89,15 @@ public class OAuth2Authentication implements HttpAuthentication {
 				"Unresponsive authorization server's OAuth 2.0 endpoint");
 		}
 		else if (httpResponse.getStatusCode() != 200) {
+			HttpEntity httpEntity = httpResponse.getEntity();
+
 			throw new OAuth2Exception(
 				String.format(
 					"Unable to fetch access token from authorization server. " +
-						"Request failed with status %d (%s)",
+						"Request failed with status %d (%s) and message %s",
 					httpResponse.getStatusCode(),
-					httpResponse.getReasonPhrase()));
+					httpResponse.getReasonPhrase(),
+					IOUtils.toString(httpEntity.getContent())));
 		}
 
 		JsonNodeReader jsonNodeReader = new JsonNodeReader();

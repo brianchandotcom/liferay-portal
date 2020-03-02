@@ -14,8 +14,6 @@
 
 package com.liferay.mule.internal.connection.config;
 
-import org.mule.runtime.api.meta.ExpressionSupport;
-import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Password;
@@ -49,7 +47,6 @@ public class BasicAuthenticationConfig {
 	private String password;
 
 	@DisplayName("Username")
-	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@Parameter
 	@Placement(order = 1)
 	private String username;

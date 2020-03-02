@@ -25,8 +25,6 @@ import javax.inject.Inject;
 import org.mule.runtime.api.connection.CachedConnectionProvider;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
-import org.mule.runtime.api.meta.ExpressionSupport;
-import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
@@ -78,7 +76,6 @@ public abstract class BaseCachedConnectionProvider
 	protected LiferayProxyConfig liferayProxyConfig;
 
 	@DisplayName("OpenAPI Spec URL")
-	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@Parameter
 	@Placement(order = 1)
 	protected String openApiSpecPath;

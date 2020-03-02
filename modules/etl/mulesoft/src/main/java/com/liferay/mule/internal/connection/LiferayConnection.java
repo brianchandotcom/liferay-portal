@@ -40,6 +40,9 @@ import org.mule.runtime.http.api.domain.message.request.HttpRequest;
 import org.mule.runtime.http.api.domain.message.request.HttpRequestBuilder;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Matija Petanjek
  */
@@ -71,12 +74,16 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws IOException, TimeoutException {
 
-		return httpClient.send(
-			getHttpRequest(
-				HttpConstants.Method.DELETE,
-				serverBaseURL + resolvePathParams(endpoint, pathParams),
-				queryParams, null),
-			(int)connectionTimeout, true, null);
+		String uri = serverBaseURL + resolvePathParams(endpoint, pathParams);
+
+		HttpRequest httpRequest = getHttpRequest(
+			HttpConstants.Method.DELETE, uri, queryParams, null);
+
+		logHttpRequest(
+			connectionTimeout, HttpConstants.Method.DELETE, pathParams,
+			queryParams, uri);
+
+		return httpClient.send(httpRequest, (int)connectionTimeout, true, null);
 	}
 
 	public HttpResponse get(
@@ -85,12 +92,16 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws IOException, TimeoutException {
 
-		return httpClient.send(
-			getHttpRequest(
-				HttpConstants.Method.GET,
-				serverBaseURL + resolvePathParams(endpoint, pathParams),
-				queryParams, null),
-			(int)connectionTimeout, true, null);
+		String uri = serverBaseURL + resolvePathParams(endpoint, pathParams);
+
+		HttpRequest httpRequest = getHttpRequest(
+			HttpConstants.Method.GET, uri, queryParams, null);
+
+		logHttpRequest(
+			connectionTimeout, HttpConstants.Method.GET, pathParams,
+			queryParams, uri);
+
+		return httpClient.send(httpRequest, (int)connectionTimeout, true, null);
 	}
 
 	public HttpResponse getOpenAPISpec() throws IOException, TimeoutException {
@@ -111,12 +122,16 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws IOException, TimeoutException {
 
-		return httpClient.send(
-			getHttpRequest(
-				HttpConstants.Method.PATCH,
-				serverBaseURL + resolvePathParams(endpoint, pathParams),
-				queryParams, inputStream),
-			(int)connectionTimeout, true, null);
+		String uri = serverBaseURL + resolvePathParams(endpoint, pathParams);
+
+		HttpRequest httpRequest = getHttpRequest(
+			HttpConstants.Method.PATCH, uri, queryParams, inputStream);
+
+		logHttpRequest(
+			connectionTimeout, HttpConstants.Method.PATCH, pathParams,
+			queryParams, uri);
+
+		return httpClient.send(httpRequest, (int)connectionTimeout, true, null);
 	}
 
 	public HttpResponse post(
@@ -125,12 +140,16 @@ public final class LiferayConnection {
 			long connectionTimeout)
 		throws IOException, TimeoutException {
 
-		return httpClient.send(
-			getHttpRequest(
-				HttpConstants.Method.POST,
-				serverBaseURL + resolvePathParams(endpoint, pathParams),
-				queryParams, inputStream),
-			(int)connectionTimeout, true, null);
+		String uri = serverBaseURL + resolvePathParams(endpoint, pathParams);
+
+		HttpRequest httpRequest = getHttpRequest(
+			HttpConstants.Method.POST, uri, queryParams, inputStream);
+
+		logHttpRequest(
+			connectionTimeout, HttpConstants.Method.POST, pathParams,
+			queryParams, uri);
+
+		return httpClient.send(httpRequest, (int)connectionTimeout, true, null);
 	}
 
 	private LiferayConnection(
@@ -222,6 +241,17 @@ public final class LiferayConnection {
 		httpClient.start();
 	}
 
+	private void logHttpRequest(
+		long connectionTimeout, HttpConstants.Method method,
+		Map<String, String> pathParams, MultiMap<String, String> queryParams,
+		String uri) {
+
+		logger.debug(
+			"Sending {} request to {} with path parameters {}, query " +
+				"parameters {} and connection timeout {} ms",
+			method, uri, pathParams, queryParams, connectionTimeout);
+	}
+
 	private String resolvePathParams(
 		String endpoint, Map<String, String> pathParams) {
 
@@ -232,6 +262,9 @@ public final class LiferayConnection {
 
 		return endpoint;
 	}
+
+	private static final Logger logger = LoggerFactory.getLogger(
+		LiferayConnection.class);
 
 	private final HttpAuthentication httpAuthentication;
 	private HttpClient httpClient;

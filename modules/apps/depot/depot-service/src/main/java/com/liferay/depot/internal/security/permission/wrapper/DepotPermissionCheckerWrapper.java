@@ -16,7 +16,6 @@ package com.liferay.depot.internal.security.permission.wrapper;
 
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -46,14 +45,12 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 	public DepotPermissionCheckerWrapper(
 		PermissionChecker permissionChecker,
-		DepotEntryLocalService depotEntryLocalService,
 		ModelResourcePermission<DepotEntry> depotEntryModelResourcePermission,
 		GroupLocalService groupLocalService, RoleLocalService roleLocalService,
 		UserGroupRoleLocalService userGroupRoleLocalService) {
 
 		super(permissionChecker);
 
-		_depotEntryLocalService = depotEntryLocalService;
 		_depotEntryModelResourcePermission = depotEntryModelResourcePermission;
 		_groupLocalService = groupLocalService;
 		_roleLocalService = roleLocalService;
@@ -276,7 +273,6 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW,
 			ActionKeys.VIEW_MEMBERS, ActionKeys.VIEW_SITE_ADMINISTRATION));
 
-	private final DepotEntryLocalService _depotEntryLocalService;
 	private final ModelResourcePermission<DepotEntry>
 		_depotEntryModelResourcePermission;
 	private final GroupLocalService _groupLocalService;

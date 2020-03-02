@@ -125,8 +125,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		if (!uniqueIndexColumnNames.isEmpty()) {
 			for (String[] columnNames : uniqueIndexColumnNames) {
 				_checkConstraint(
-					connection, ctPersistence, conflictInfos, columnNames,
-					primaryKeyName);
+					connection, ctPersistence, conflictInfos, primaryKeyName,
+					columnNames);
 			}
 		}
 
@@ -135,8 +135,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 	private void _checkConstraint(
 			Connection connection, CTPersistence<T> ctPersistence,
-			List<ConflictInfo> conflictInfos, String[] columnNames,
-			String primaryKeyName)
+			List<ConflictInfo> conflictInfos, String primaryKeyName,
+			String[] columnNames)
 		throws PortalException {
 
 		String constraintConflictsSQL = CTRowUtil.getConstraintConflictsSQL(

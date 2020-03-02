@@ -208,8 +208,6 @@ public class DataDefinitionResourceImpl
 				_getResourceBundle(
 					ddmFormFieldTypeName,
 					contextAcceptLanguage.getPreferredLocale()))
-		).filter(
-			jsonObject -> !jsonObject.getBoolean("system")
 		).forEach(
 			jsonArray::put
 		);

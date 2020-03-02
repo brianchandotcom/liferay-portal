@@ -269,11 +269,11 @@ public class WorkflowHandlerRegistryUtil {
 		ServiceTrackerMap<String, WorkflowHandler<?>>
 			workflowHandlerServiceTrackerMap) {
 
-		Set<String> modelClassNames = workflowHandlerServiceTrackerMap.keySet();
-
 		List<WorkflowHandler<?>> workflowHandlers = new ArrayList<>();
 
-		for (String modelClassName : modelClassNames) {
+		for (String modelClassName :
+				workflowHandlerServiceTrackerMap.keySet()) {
+
 			workflowHandlers.add(
 				workflowHandlerServiceTrackerMap.getService(modelClassName));
 		}

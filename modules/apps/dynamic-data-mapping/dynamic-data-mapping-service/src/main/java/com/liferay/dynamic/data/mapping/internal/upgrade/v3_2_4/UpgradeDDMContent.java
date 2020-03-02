@@ -169,10 +169,10 @@ public class UpgradeDDMContent extends UpgradeProcess {
 									number);
 
 								if (!valueString.equals(formattedNumber)) {
-									DecimalFormat normalDecimalFormat =
+									DecimalFormat defaultDecimalFormat =
 										_getDecimalFormat(LocaleUtil.US);
 
-									number = normalDecimalFormat.parse(
+									number = defaultDecimalFormat.parse(
 										valueString);
 
 									formattedNumber = decimalFormat.format(

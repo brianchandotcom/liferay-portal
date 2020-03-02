@@ -47,10 +47,10 @@ public class NumericDDMFormFieldValueLocalizer
 			String formattedNumber = decimalFormat.format(number);
 
 			if (!value.equals(formattedNumber)) {
-				DecimalFormat normalDecimalFormat =
+				DecimalFormat defaultDecimalFormat =
 					NumericDDMFormFieldUtil.getNumberFormat(LocaleUtil.US);
 
-				number = normalDecimalFormat.parse(value);
+				number = defaultDecimalFormat.parse(value);
 
 				formattedNumber = decimalFormat.format(number);
 			}

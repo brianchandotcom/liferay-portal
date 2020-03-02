@@ -19,7 +19,6 @@ Export-Package:\
 	\
 	!aQute.lib.filter,\
 	\
-	!com.liferay.portal.asm,\
 	!com.liferay.portal.aspectj,\
 	!com.liferay.portal.cache.thread.local,\
 	!com.liferay.portal.dao.jdbc.aop,\

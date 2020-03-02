@@ -359,7 +359,14 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 									<aui:row>
 										<aui:col cssClass="connections contacts-count" width="<%= 100 %>">
-											<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(connectionUsersCount) %>" key='<%= showOnlySiteMembers ? "you-have-x-connections-in-this-site" : "you-have-x-connections" %>' translateArguments="<%= false %>" /></a>
+											<c:choose>
+												<c:when test="<%= showOnlySiteMembers %>">
+													<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(connectionUsersCount) %>" key='<%= (connectionUsersCount == 1) ? "you-have-x-connection-in-this-site" : "you-have-x-connections-in-this-site" %>' translateArguments="<%= false %>" /></a>
+												</c:when>
+												<c:otherwise>
+													<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(connectionUsersCount) %>" key='<%= (connectionUsersCount == 1) ? "you-have-x-connection" : "you-have-x-connections" %>' translateArguments="<%= false %>" /></a>
+												</c:otherwise>
+											</c:choose>
 										</aui:col>
 									</aui:row>
 
@@ -372,7 +379,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 									<c:if test="<%= !showOnlySiteMembers %>">
 										<aui:row>
 											<aui:col cssClass="contacts-count followers" width="<%= 100 %>">
-												<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(followerUsersCount) %>" key="you-have-x-followers" translateArguments="<%= false %>" /></a>
+												<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(followerUsersCount) %>" key='<%= (followerUsersCount == 1) ? "you-have-x-follower" : "you-have-x-followers" %>' translateArguments="<%= false %>" /></a>
 											</aui:col>
 										</aui:row>
 
@@ -382,14 +389,14 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 										<aui:row>
 											<aui:col cssClass="contacts contacts-count" width="<%= 100 %>">
-												<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(myContactsCount) %>" key="view-my-x-contacts" translateArguments="<%= false %>" /></a>
+												<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(myContactsCount) %>" key='<%= (myContactsCount == 1) ? "view-my-x-contact" : "view-my-x-contacts" %>' translateArguments="<%= false %>" /></a>
 											</aui:col>
 										</aui:row>
 									</c:if>
 
 									<aui:row>
 										<aui:col cssClass="all contacts-count" width="<%= 100 %>">
-											<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(allUsersCount) %>" key="view-all-x-users" translateArguments="<%= false %>" /></a>
+											<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(allUsersCount) %>" key='<%= (allUsersCount == 1) ? "view-all-x-user" : "view-all-x-users" %>' translateArguments="<%= false %>" /></a>
 										</aui:col>
 									</aui:row>
 

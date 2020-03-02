@@ -61,6 +61,14 @@
 		padding-bottom: 0.5rem;
 	}
 
+	.custom-dot {
+		border-radius: 50%;
+		display: inline-block;
+		height: 8px;
+		margin-right: 0.2rem;
+		width: 8px;
+	}
+
 	.custom-tooltip {
 		background-color: rgb(255, 255, 255);
 		border: 1px solid rgb(204, 204, 204);
@@ -68,14 +76,6 @@
 		opacity: 0.9;
 		padding: 0.25rem;
 		white-space: nowrap;
-
-		.custom-tooltip-dot {
-			border-radius: 50%;
-			display: inline-block;
-			height: 8px;
-			margin-right: 0.2rem;
-			width: 8px;
-		}
 	}
 
 	.line-chart-wrapper {

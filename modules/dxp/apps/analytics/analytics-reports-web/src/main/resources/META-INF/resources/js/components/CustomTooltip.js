@@ -37,7 +37,7 @@ export default function CustomTooltip(props) {
 					return (
 						<li key={item.name}>
 							<div
-								className="custom-tooltip-dot"
+								className="custom-dot"
 								style={{
 									backgroundColor: item.color,
 								}}

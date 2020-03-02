@@ -168,10 +168,16 @@ const generateDateFormatters = key => {
 function legendFormatterGenerator(totals, languageTag) {
 	return value => (
 		<span>
-			<span className="text-secondary">
+			<span
+				className="custom-dot mr-1"
+				style={{
+					backgroundColor: keyToHexColor(value),
+				}}
+			></span>
+			<span className="mr-2 text-secondary">
 				{keyToTranslatedLabelValue(value)}
 			</span>
-			<b>{' ' + numberFormat(languageTag, totals[value])}</b>
+			<b>{numberFormat(languageTag, totals[value])}</b>
 		</span>
 	);
 }
@@ -315,8 +321,7 @@ export default function Chart({
 						>
 							<Legend
 								formatter={legendFormatter}
-								iconSize={CHART_SIZES.dotRadius * 2}
-								iconType="circle"
+								iconSize={0}
 								layout="vertical"
 								verticalAlign="top"
 								wrapperStyle={{left: 0, paddingBottom: '1rem'}}

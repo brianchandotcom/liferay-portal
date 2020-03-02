@@ -28,12 +28,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
  */
 @DDMForm(
 	rules = {
-		@DDMFormRule(
-			actions = {
-				"setVisible('name', FALSE)"
-			},
-			condition = "TRUE"
-		)
+		@DDMFormRule(actions = "setVisible('name', FALSE)", condition = "TRUE")
 	}
 )
 @DDMFormLayout(
@@ -45,7 +40,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 				@DDMFormLayoutRow(
 					{
 						@DDMFormLayoutColumn(
-							size = 12, value = {"label", "name", "repeatable", "rows"}
+							size = 12,
+							value = {"label", "name", "repeatable", "rows"}
 						)
 					}
 				)

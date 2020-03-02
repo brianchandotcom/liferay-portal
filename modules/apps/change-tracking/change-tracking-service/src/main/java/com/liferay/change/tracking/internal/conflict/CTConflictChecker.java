@@ -502,7 +502,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		sb.append(_targetCTCollectionId);
 
 		if (!unresolvedPrimaryKeys.isEmpty()) {
-			sb.append(" and ");
+			sb.append(" and t1.");
 			sb.append(primaryKeyName);
 			sb.append(" not in (");
 

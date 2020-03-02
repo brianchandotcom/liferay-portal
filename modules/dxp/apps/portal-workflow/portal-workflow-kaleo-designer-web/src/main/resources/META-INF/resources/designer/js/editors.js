@@ -378,6 +378,7 @@ AUI.add(
 						var strings = instance.get('strings');
 
 						var addSectionButton = new A.Button({
+							cssClass: 'btn-secondary',
 							disabled: true,
 							id: 'addSectionButton',
 							label: strings.addSection,

@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -45,6 +47,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -53,9 +57,11 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalEditDDMStructuresDisplayContext {
 
 	public JournalEditDDMStructuresDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 
 		_journalWebConfiguration =
 			(JournalWebConfiguration)httpServletRequest.getAttribute(
@@ -81,6 +87,18 @@ public class JournalEditDDMStructuresDisplayContext {
 				"journal-web@4.0.6/js/ddm_structure/panels/BasicInfo.es"
 			).put(
 				"sidebarPanelId", "properties"
+			).put(
+				"url",
+				() -> {
+					PortletURL editBasicInfoURL =
+						_liferayPortletResponse.createRenderURL();
+
+					editBasicInfoURL.setParameter(
+						"mvcPath", "/ddm_structure/basic_info.jsp");
+					editBasicInfoURL.setWindowState(LiferayWindowState.POP_UP);
+
+					return editBasicInfoURL.toString();
+				}
 			).build());
 	}
 
@@ -278,6 +296,7 @@ public class JournalEditDDMStructuresDisplayContext {
 	private Long _ddmStructureId;
 	private final HttpServletRequest _httpServletRequest;
 	private final JournalWebConfiguration _journalWebConfiguration;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private Long _parentDDMStructureId;
 	private String _parentDDMStructureName;
 	private String _script;

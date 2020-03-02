@@ -23,6 +23,7 @@ export default class {
 	constructor({app, panel}) {
 		this.Component = Component(app);
 		this.title = panel.label;
+		this.url = panel.url;
 	}
 
 	renderSidebar() {

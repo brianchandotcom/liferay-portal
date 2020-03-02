@@ -1053,7 +1053,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			return null;
 		}
 
-		int index = fragmentHost.indexOf(StringPool.SEMICOLON);
+		int index = fragmentHost.indexOf(CharPool.SEMICOLON);
 
 		if (index != -1) {
 			fragmentHost = fragmentHost.substring(0, index);

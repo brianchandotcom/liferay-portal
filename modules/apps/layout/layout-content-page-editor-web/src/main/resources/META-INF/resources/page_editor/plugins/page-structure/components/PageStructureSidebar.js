@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import {Treeview} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -127,6 +128,16 @@ export default function PageStructureSidebar() {
 			</SidebarPanelHeader>
 
 			<div className="page-editor__page-structure px-4">
+				{!nodes.length && (
+					<ClayAlert
+						displayType="info"
+						title={Liferay.Language.get('info')}
+					>
+						{Liferay.Language.get(
+							'there-is-no-content-on-this-page'
+						)}
+					</ClayAlert>
+				)}
 				<Treeview
 					NodeComponent={StructureTreeNode}
 					nodes={nodes}

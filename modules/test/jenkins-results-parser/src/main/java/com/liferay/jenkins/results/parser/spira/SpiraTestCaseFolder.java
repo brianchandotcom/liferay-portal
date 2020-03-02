@@ -31,7 +31,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
+public class SpiraTestCaseFolder extends PathSpiraArtifact {
 
 	public static SpiraTestCaseFolder createSpiraTestCaseFolder(
 		SpiraProject spiraProject, String testCaseFolderName) {
@@ -153,18 +153,26 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 	}
 
 	public SpiraTestCaseFolder getParentSpiraTestCaseFolder() {
-		PathSpiraArtifact parentSpiraArtifact = getParentSpiraArtifact();
+		if (_parentSpiraTestCaseFolder != null) {
+			return _parentSpiraTestCaseFolder;
+		}
 
-		if (parentSpiraArtifact == null) {
+		Object testCaseFolderID = jsonObject.get("ParentTestCaseFolderId");
+
+		if (testCaseFolderID == JSONObject.NULL) {
 			return null;
 		}
 
-		if (!(parentSpiraArtifact instanceof SpiraTestCaseFolder)) {
-			throw new RuntimeException(
-				"Invalid parent object " + parentSpiraArtifact);
+		if (!(testCaseFolderID instanceof Integer)) {
+			return null;
 		}
 
-		return (SpiraTestCaseFolder)parentSpiraArtifact;
+		SpiraProject spiraProject = getSpiraProject();
+
+		_parentSpiraTestCaseFolder = spiraProject.getSpiraTestCaseFolderByID(
+			(Integer)testCaseFolderID);
+
+		return _parentSpiraTestCaseFolder;
 	}
 
 	protected static List<SpiraTestCaseFolder> getSpiraTestCaseFolders(
@@ -228,12 +236,8 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 	}
 
 	@Override
-	protected PathSpiraArtifact getSpiraArtifactByIndentLevel(
-		String indentLevel) {
-
-		SpiraProject spiraProject = getSpiraProject();
-
-		return spiraProject.getSpiraTestCaseFolderByIndentLevel(indentLevel);
+	protected PathSpiraArtifact getParentSpiraArtifact() {
+		return getParentSpiraTestCaseFolder();
 	}
 
 	protected static final String ID_KEY = "TestCaseFolderId";
@@ -250,5 +254,7 @@ public class SpiraTestCaseFolder extends IndentLevelSpiraArtifact {
 
 	private static final Map<String, SpiraTestCaseFolder>
 		_spiraTestCaseFolders = new HashMap<>();
+
+	private SpiraTestCaseFolder _parentSpiraTestCaseFolder;
 
 }

@@ -32,7 +32,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SpiraRelease extends IndentLevelSpiraArtifact {
+public class SpiraRelease extends PathSpiraArtifact {
 
 	public static SpiraRelease createSpiraRelease(
 		SpiraProject spiraProject, String releaseName) {
@@ -144,18 +144,22 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 	}
 
 	public SpiraRelease getParentSpiraRelease() {
-		PathSpiraArtifact parentSpiraArtifact = getParentSpiraArtifact();
+		if (_parentSpiraRelease != null) {
+			return _parentSpiraRelease;
+		}
 
-		if (parentSpiraArtifact == null) {
+		String indentLevel = jsonObject.getString("IndentLevel");
+
+		if (indentLevel.length() <= 3) {
 			return null;
 		}
 
-		if (!(parentSpiraArtifact instanceof SpiraRelease)) {
-			throw new RuntimeException(
-				"Invalid parent object " + parentSpiraArtifact);
-		}
+		String parentIndentLevel = indentLevel.substring(
+			0, indentLevel.length() - 3);
 
-		return (SpiraRelease)parentSpiraArtifact;
+		_parentSpiraRelease = _getSpiraReleaseByIndentLevel(parentIndentLevel);
+
+		return _parentSpiraRelease;
 	}
 
 	public SpiraReleaseBuild getSpiraReleaseBuildByID(int releaseBuildID) {
@@ -242,12 +246,8 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 	}
 
 	@Override
-	protected PathSpiraArtifact getSpiraArtifactByIndentLevel(
-		String indentLevel) {
-
-		SpiraProject spiraProject = getSpiraProject();
-
-		return spiraProject.getSpiraReleaseByIndentLevel(indentLevel);
+	protected PathSpiraArtifact getParentSpiraArtifact() {
+		return getParentSpiraRelease();
 	}
 
 	protected static final String ID_KEY = "ReleaseId";
@@ -278,7 +278,25 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 		super(jsonObject);
 	}
 
+	private SpiraRelease _getSpiraReleaseByIndentLevel(String indentLevel) {
+		List<SpiraRelease> spiraReleases = getSpiraReleases(
+			getSpiraProject(),
+			new SearchResult.SearchParameter("IndentLevel", indentLevel));
+
+		if (spiraReleases.size() > 1) {
+			throw new RuntimeException("Duplicate indent level " + indentLevel);
+		}
+
+		if (spiraReleases.isEmpty()) {
+			throw new RuntimeException("Missing indent level " + indentLevel);
+		}
+
+		return spiraReleases.get(0);
+	}
+
 	private static final Map<String, SpiraRelease> _spiraReleases =
 		new HashMap<>();
+
+	private SpiraRelease _parentSpiraRelease;
 
 }

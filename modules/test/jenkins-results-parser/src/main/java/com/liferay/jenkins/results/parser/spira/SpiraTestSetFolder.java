@@ -31,7 +31,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
+public class SpiraTestSetFolder extends PathSpiraArtifact {
 
 	public static SpiraTestSetFolder createSpiraTestSetFolder(
 		SpiraProject spiraProject, String testSetFolderName) {
@@ -150,6 +150,29 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 		}
 	}
 
+	public SpiraTestSetFolder getParentSpiraTestSetFolder() {
+		if (_parentSpiraTestSetFolder != null) {
+			return _parentSpiraTestSetFolder;
+		}
+
+		Object parentTestSetFolderID = jsonObject.get("ParentTestSetFolderId");
+
+		if (parentTestSetFolderID == JSONObject.NULL) {
+			return null;
+		}
+
+		if (!(parentTestSetFolderID instanceof Integer)) {
+			return null;
+		}
+
+		SpiraProject spiraProject = getSpiraProject();
+
+		_parentSpiraTestSetFolder = spiraProject.getSpiraTestSetFolderByID(
+			(Integer)parentTestSetFolderID);
+
+		return _parentSpiraTestSetFolder;
+	}
+
 	protected static List<SpiraTestSetFolder> getSpiraTestSetFolders(
 		SpiraProject spiraProject,
 		SearchResult.SearchParameter... searchParameters) {
@@ -211,12 +234,8 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 	}
 
 	@Override
-	protected PathSpiraArtifact getSpiraArtifactByIndentLevel(
-		String indentLevel) {
-
-		SpiraProject spiraProject = getSpiraProject();
-
-		return spiraProject.getSpiraTestSetFolderByIndentLevel(indentLevel);
+	protected PathSpiraArtifact getParentSpiraArtifact() {
+		return getParentSpiraTestSetFolder();
 	}
 
 	protected static final String ID_KEY = "TestSetFolderId";
@@ -233,5 +252,7 @@ public class SpiraTestSetFolder extends IndentLevelSpiraArtifact {
 
 	private static final Map<String, SpiraTestSetFolder> _spiraTestSetFolders =
 		new HashMap<>();
+
+	private SpiraTestSetFolder _parentSpiraTestSetFolder;
 
 }

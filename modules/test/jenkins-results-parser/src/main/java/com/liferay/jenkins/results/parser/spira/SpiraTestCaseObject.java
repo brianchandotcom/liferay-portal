@@ -154,18 +154,26 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	}
 
 	public SpiraTestCaseFolder getParentSpiraTestCaseFolder() {
-		PathSpiraArtifact parentSpiraArtifact = getParentSpiraArtifact();
+		if (_parentSpiraTestCaseFolder != null) {
+			return _parentSpiraTestCaseFolder;
+		}
 
-		if (parentSpiraArtifact == null) {
+		Object testCaseFolderID = jsonObject.get(SpiraTestCaseFolder.ID_KEY);
+
+		if (testCaseFolderID == JSONObject.NULL) {
 			return null;
 		}
 
-		if (!(parentSpiraArtifact instanceof SpiraTestCaseFolder)) {
-			throw new RuntimeException(
-				"Invalid parent object " + parentSpiraArtifact);
+		if (!(testCaseFolderID instanceof Integer)) {
+			return null;
 		}
 
-		return (SpiraTestCaseFolder)parentSpiraArtifact;
+		SpiraProject spiraProject = getSpiraProject();
+
+		_parentSpiraTestCaseFolder = spiraProject.getSpiraTestCaseFolderByID(
+			(Integer)testCaseFolderID);
+
+		return _parentSpiraTestCaseFolder;
 	}
 
 	public List<SpiraTestCaseRun> getSpiraTestCaseRuns() {
@@ -238,26 +246,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 	@Override
 	protected PathSpiraArtifact getParentSpiraArtifact() {
-		if (_parentSpiraArtifact != null) {
-			return _parentSpiraArtifact;
-		}
-
-		Object testCaseFolderID = jsonObject.get("TestCaseFolderId");
-
-		if (testCaseFolderID == JSONObject.NULL) {
-			return null;
-		}
-
-		if (!(testCaseFolderID instanceof Integer)) {
-			return null;
-		}
-
-		SpiraProject spiraProject = getSpiraProject();
-
-		_parentSpiraArtifact = spiraProject.getSpiraTestCaseFolderByID(
-			(Integer)testCaseFolderID);
-
-		return _parentSpiraArtifact;
+		return getParentSpiraTestCaseFolder();
 	}
 
 	protected static final String ID_KEY = "TestCaseId";
@@ -291,6 +280,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	private static final Map<String, SpiraTestCaseObject> _spiraTestCases =
 		new HashMap<>();
 
-	private PathSpiraArtifact _parentSpiraArtifact;
+	private SpiraTestCaseFolder _parentSpiraTestCaseFolder;
 
 }

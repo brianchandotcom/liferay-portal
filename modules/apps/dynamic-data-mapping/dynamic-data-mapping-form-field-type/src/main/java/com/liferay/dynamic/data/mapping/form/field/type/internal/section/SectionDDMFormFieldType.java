@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.display.order:Integer=8",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=adjust",
 		"ddm.form.field.type.label=section-field-type-label",
-		"ddm.form.field.type.name=section", "ddm.form.field.type.scope=app-builder,forms",
+		"ddm.form.field.type.name=section",
+		"ddm.form.field.type.scope=app-builder,forms",
 		"ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class

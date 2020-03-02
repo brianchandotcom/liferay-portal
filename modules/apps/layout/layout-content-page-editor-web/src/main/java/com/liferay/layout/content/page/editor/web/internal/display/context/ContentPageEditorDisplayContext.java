@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
@@ -25,6 +26,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.service.FragmentCompositionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
@@ -47,6 +49,7 @@ import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSid
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.LayoutContentPageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
+import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -792,12 +795,21 @@ public class ContentPageEditorDisplayContext {
 					fragmentCollection.getFragmentCollectionId(),
 					WorkflowConstants.STATUS_APPROVED);
 
-			if (!includeEmpty && ListUtil.isEmpty(fragmentEntries)) {
-				continue;
-			}
-
 			List<Map<String, Object>> filteredFragmentEntries =
 				_getFragmentEntries(fragmentEntries);
+
+			if (_layoutContentPageEditorConfiguration.
+					fragmentCompositionsEnabled()) {
+
+				List<FragmentComposition> fragmentCompositions =
+					FragmentCompositionServiceUtil.getFragmentCompositions(
+						fragmentCollection.getGroupId(),
+						fragmentCollection.getFragmentCollectionId(),
+						WorkflowConstants.STATUS_APPROVED);
+
+				filteredFragmentEntries.addAll(
+					_getFragmentCompositions(fragmentCompositions));
+			}
 
 			if (!includeEmpty && ListUtil.isEmpty(filteredFragmentEntries)) {
 				continue;
@@ -822,6 +834,38 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return allFragmentCollections;
+	}
+
+	private List<Map<String, Object>> _getFragmentCompositions(
+		List<FragmentComposition> fragmentCompositions) {
+
+		List<Map<String, Object>> filteredFragmentCompositions =
+			new ArrayList<>();
+
+		for (FragmentComposition fragmentComposition : fragmentCompositions) {
+			if (!_isAllowedFragmentEntryKey(
+					fragmentComposition.getFragmentCompositionKey())) {
+
+				continue;
+			}
+
+			filteredFragmentCompositions.add(
+				HashMapBuilder.<String, Object>put(
+					"fragmentEntryKey",
+					fragmentComposition.getFragmentCompositionKey()
+				).put(
+					"groupId", fragmentComposition.getGroupId()
+				).put(
+					"imagePreviewURL",
+					fragmentComposition.getImagePreviewURL(themeDisplay)
+				).put(
+					"name", fragmentComposition.getName()
+				).put(
+					"type", ContentPageEditorConstants.TYPE_COMPOSITION
+				).build());
+		}
+
+		return filteredFragmentCompositions;
 	}
 
 	private List<Map<String, Object>> _getFragmentEntries(

@@ -19,14 +19,14 @@ definition {
 			var key_contentName = "${webContentTitle}";
 
 			AssertClick(
-				key_breadcrumbName = "Sites",
+				key_breadcrumbName = "Sites and Libraries",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Sites");
+				value1 = "Sites and Libraries");
 
 			AssertClick(
-				key_groupTab = "Repository",
+				key_groupTab = "Asset Library",
 				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-				value1 = "Repository");
+				value1 = "Asset Library");
 
 			LexiconCard.clickCard(card = "${depotName}");
 
@@ -343,14 +343,14 @@ definition {
 			var key_contentName = "${webContentTitle}";
 
 			AssertClick(
-				key_breadcrumbName = "Sites",
+				key_breadcrumbName = "Sites and Libraries",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Sites");
+				value1 = "Sites and Libraries");
 
 			AssertClick(
-				key_groupTab = "Repository",
+				key_groupTab = "Asset Library",
 				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-				value1 = "Repository");
+				value1 = "Asset Library");
 
 			LexiconCard.clickCard(card = "${depotName}");
 

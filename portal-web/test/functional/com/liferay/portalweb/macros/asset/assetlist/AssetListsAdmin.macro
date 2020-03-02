@@ -225,9 +225,9 @@ definition {
 
 		if (isSet(depotName)) {
 			AssertClick(
-				key_breadcrumbName = "Sites",
+				key_breadcrumbName = "Sites and Libraries",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Sites");
+				value1 = "Sites and Libraries");
 
 			AssertClick(
 				key_groupTab = "Asset Library",

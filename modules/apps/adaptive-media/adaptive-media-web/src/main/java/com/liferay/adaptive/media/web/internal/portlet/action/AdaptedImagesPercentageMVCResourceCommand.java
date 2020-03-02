@@ -64,15 +64,14 @@ public class AdaptedImagesPercentageMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = themeDisplay.getCompanyId();
-
 		String entryUuid = ParamUtil.getString(resourceRequest, "entryUuid");
 
 		int entriesCount = _amImageEntryLocalService.getAMImageEntriesCount(
-			companyId, entryUuid);
+			themeDisplay.getCompanyId(), entryUuid);
 
 		int expectedEntriesCount =
-			_amImageEntryLocalService.getExpectedAMImageEntriesCount(companyId);
+			_amImageEntryLocalService.getExpectedAMImageEntriesCount(
+				themeDisplay.getCompanyId());
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,

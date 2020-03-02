@@ -164,6 +164,7 @@ JavaServiceObjectCheck | .java | |
 JavaServiceTrackerFactoryCheck | .java | |
 JavaSessionCheck | .java | |
 JavaSignatureParametersCheck | .java | |
+JavaSourceFormatterDocumentationCheck | .java | |
 JavaStagedModelDataHandlerCheck | .java | |
 JavaStaticBlockCheck | .java | |
 JavaStaticVariableDependencyCheck | .java | |

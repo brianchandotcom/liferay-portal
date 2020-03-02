@@ -215,6 +215,7 @@ JavaServiceTrackerFactoryCheck | [Miscellaneous](miscellaneous_checks.markdown#m
 [JavaServiceUtilCheck](checks/java_service_util_check.markdown#javaserviceutilcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks that there are no calls to `*ServiceImpl` from a `*ServiceUtil` class |
 JavaSessionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 JavaSignatureParametersCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
+JavaSourceFormatterDocumentationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 JavaStagedModelDataHandlerCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 JavaStaticBlockCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 [JavaStaticImportsCheck](checks/java_static_imports_check.markdown#javastaticimportscheck) | [Styling](styling_checks.markdown#styling-checks) | .java | Checks that there are no static imports |

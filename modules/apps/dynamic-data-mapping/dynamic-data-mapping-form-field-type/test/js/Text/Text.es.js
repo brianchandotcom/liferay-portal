@@ -13,6 +13,7 @@
  */
 
 import Text from '../../../src/main/resources/META-INF/resources/Text/Text.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const spritemap = 'icons.svg';
@@ -22,6 +23,8 @@ const defaultTextConfig = {
 	spritemap,
 };
 
+const TextWithContextMock = withContextMock(Text);
+
 describe('Field Text', () => {
 	afterEach(() => {
 		if (component) {
@@ -30,7 +33,7 @@ describe('Field Text', () => {
 	});
 
 	it('is not readOnly', () => {
-		component = new Text({
+		component = new TextWithContextMock({
 			...defaultTextConfig,
 			readOnly: false,
 		});
@@ -39,7 +42,7 @@ describe('Field Text', () => {
 	});
 
 	it('has a helptext', () => {
-		component = new Text({
+		component = new TextWithContextMock({
 			...defaultTextConfig,
 			tip: 'Type something',
 		});
@@ -48,7 +51,7 @@ describe('Field Text', () => {
 	});
 
 	it('has an id', () => {
-		component = new Text({
+		component = new TextWithContextMock({
 			...defaultTextConfig,
 			id: 'ID',
 		});
@@ -57,7 +60,7 @@ describe('Field Text', () => {
 	});
 
 	it('has a label', () => {
-		component = new Text({
+		component = new TextWithContextMock({
 			...defaultTextConfig,
 			label: 'label',
 		});
@@ -66,7 +69,7 @@ describe('Field Text', () => {
 	});
 
 	it('has a placeholder', () => {
-		component = new Text({
+		component = new TextWithContextMock({
 			...defaultTextConfig,
 			placeholder: 'Placeholder',
 		});
@@ -75,7 +78,7 @@ describe('Field Text', () => {
 	});
 
 	it('is not required', () => {
-		component = new Text({
+		component = new TextWithContextMock({
 			...defaultTextConfig,
 			required: false,
 		});
@@ -84,7 +87,7 @@ describe('Field Text', () => {
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new Text({
+		component = new TextWithContextMock({
 			...defaultTextConfig,
 			label: 'text',
 			showLabel: true,
@@ -94,13 +97,13 @@ describe('Field Text', () => {
 	});
 
 	it('has a spritemap', () => {
-		component = new Text(defaultTextConfig);
+		component = new TextWithContextMock(defaultTextConfig);
 
 		expect(component).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		component = new Text({
+		component = new TextWithContextMock({
 			...defaultTextConfig,
 			value: 'value',
 		});
@@ -122,7 +125,7 @@ describe('Field Text', () => {
 
 		const events = {fieldEdited: handleFieldEdited};
 
-		component = new Text({
+		component = new TextWithContextMock({
 			...defaultTextConfig,
 			events,
 			key: 'input',

@@ -13,6 +13,7 @@
  */
 
 import DocumentLibrary from '../../../src/main/resources/META-INF/resources/DocumentLibrary/DocumentLibrary.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const spritemap = 'icons.svg';
@@ -22,6 +23,8 @@ const defaultDocumentLibraryConfig = {
 	spritemap,
 };
 
+const DocumentLibraryWithContextMock = withContextMock(DocumentLibrary);
+
 describe('Field DocumentLibrary', () => {
 	afterEach(() => {
 		if (component) {
@@ -30,7 +33,7 @@ describe('Field DocumentLibrary', () => {
 	});
 
 	it('is not readOnly', () => {
-		component = new DocumentLibrary({
+		component = new DocumentLibraryWithContextMock({
 			...defaultDocumentLibraryConfig,
 			readOnly: false,
 		});
@@ -39,7 +42,7 @@ describe('Field DocumentLibrary', () => {
 	});
 
 	it('has a helptext', () => {
-		component = new DocumentLibrary({
+		component = new DocumentLibraryWithContextMock({
 			...defaultDocumentLibraryConfig,
 			tip: 'Type something',
 		});
@@ -48,7 +51,7 @@ describe('Field DocumentLibrary', () => {
 	});
 
 	it('has an id', () => {
-		component = new DocumentLibrary({
+		component = new DocumentLibraryWithContextMock({
 			...defaultDocumentLibraryConfig,
 			id: 'ID',
 		});
@@ -57,7 +60,7 @@ describe('Field DocumentLibrary', () => {
 	});
 
 	it('has a label', () => {
-		component = new DocumentLibrary({
+		component = new DocumentLibraryWithContextMock({
 			...defaultDocumentLibraryConfig,
 			label: 'label',
 		});
@@ -66,7 +69,7 @@ describe('Field DocumentLibrary', () => {
 	});
 
 	it('has a placeholder', () => {
-		component = new DocumentLibrary({
+		component = new DocumentLibraryWithContextMock({
 			...defaultDocumentLibraryConfig,
 			placeholder: 'Placeholder',
 		});
@@ -75,7 +78,7 @@ describe('Field DocumentLibrary', () => {
 	});
 
 	it('is not required', () => {
-		component = new DocumentLibrary({
+		component = new DocumentLibraryWithContextMock({
 			...defaultDocumentLibraryConfig,
 			required: false,
 		});
@@ -84,7 +87,7 @@ describe('Field DocumentLibrary', () => {
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new DocumentLibrary({
+		component = new DocumentLibraryWithContextMock({
 			...defaultDocumentLibraryConfig,
 			label: 'text',
 			showLabel: true,
@@ -94,13 +97,15 @@ describe('Field DocumentLibrary', () => {
 	});
 
 	it('has a spritemap', () => {
-		component = new DocumentLibrary(defaultDocumentLibraryConfig);
+		component = new DocumentLibraryWithContextMock(
+			defaultDocumentLibraryConfig
+		);
 
 		expect(component).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		component = new DocumentLibrary({
+		component = new DocumentLibraryWithContextMock({
 			...defaultDocumentLibraryConfig,
 			value: '{"id":"123"}',
 		});

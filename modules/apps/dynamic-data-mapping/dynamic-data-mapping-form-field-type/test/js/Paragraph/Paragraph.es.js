@@ -13,6 +13,7 @@
  */
 
 import Paragraph from '../../../src/main/resources/META-INF/resources/Paragraph/Paragraph.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const spritemap = 'icons.svg';
@@ -22,6 +23,8 @@ const defaultParagraphConfig = {
 	spritemap,
 };
 
+const ParagraphWithContextMock = withContextMock(Paragraph);
+
 describe('Field Paragraph', () => {
 	afterEach(() => {
 		if (component) {
@@ -30,7 +33,7 @@ describe('Field Paragraph', () => {
 	});
 
 	it('is readOnly', () => {
-		component = new Paragraph({
+		component = new ParagraphWithContextMock({
 			...defaultParagraphConfig,
 			readOnly: true,
 		});
@@ -39,7 +42,7 @@ describe('Field Paragraph', () => {
 	});
 
 	it('has an id', () => {
-		component = new Paragraph({
+		component = new ParagraphWithContextMock({
 			...defaultParagraphConfig,
 			id: 'ID',
 		});
@@ -48,7 +51,7 @@ describe('Field Paragraph', () => {
 	});
 
 	it('has a label', () => {
-		component = new Paragraph({
+		component = new ParagraphWithContextMock({
 			...defaultParagraphConfig,
 			label: 'label',
 		});
@@ -57,7 +60,7 @@ describe('Field Paragraph', () => {
 	});
 
 	it('has a placeholder', () => {
-		component = new Paragraph({
+		component = new ParagraphWithContextMock({
 			...defaultParagraphConfig,
 			placeholder: 'Placeholder',
 		});
@@ -66,7 +69,7 @@ describe('Field Paragraph', () => {
 	});
 
 	it('is not required', () => {
-		component = new Paragraph({
+		component = new ParagraphWithContextMock({
 			...defaultParagraphConfig,
 			required: false,
 		});
@@ -75,7 +78,7 @@ describe('Field Paragraph', () => {
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new Paragraph({
+		component = new ParagraphWithContextMock({
 			...defaultParagraphConfig,
 			label: 'text',
 			showLabel: true,
@@ -85,13 +88,13 @@ describe('Field Paragraph', () => {
 	});
 
 	it('has a spritemap', () => {
-		component = new Paragraph(defaultParagraphConfig);
+		component = new ParagraphWithContextMock(defaultParagraphConfig);
 
 		expect(component).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		component = new Paragraph({
+		component = new ParagraphWithContextMock({
 			...defaultParagraphConfig,
 			value: 'value',
 		});
@@ -100,7 +103,7 @@ describe('Field Paragraph', () => {
 	});
 
 	it('has a key', () => {
-		component = new Paragraph({
+		component = new ParagraphWithContextMock({
 			...defaultParagraphConfig,
 			key: 'key',
 		});

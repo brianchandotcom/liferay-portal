@@ -15,10 +15,13 @@
 import {fireEvent} from '@testing-library/react';
 
 import ColorPicker from '../../../src/main/resources/META-INF/resources/ColorPicker/ColorPicker.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const name = 'colorPicker';
 const spritemap = 'icons.svg';
+
+const ColorPickerWithContextMock = withContextMock(ColorPicker);
 
 describe('Field Color Picker', () => {
 	beforeEach(() => {
@@ -32,7 +35,7 @@ describe('Field Color Picker', () => {
 	});
 
 	it('renders field disabled', () => {
-		component = new ColorPicker({
+		component = new ColorPickerWithContextMock({
 			name,
 			readOnly: false,
 			spritemap,
@@ -42,7 +45,7 @@ describe('Field Color Picker', () => {
 	});
 
 	it('renders field with helptext', () => {
-		component = new ColorPicker({
+		component = new ColorPickerWithContextMock({
 			name,
 			spritemap,
 			tip: 'Helptext',
@@ -52,7 +55,7 @@ describe('Field Color Picker', () => {
 	});
 
 	it('renders field with label', () => {
-		component = new ColorPicker({
+		component = new ColorPickerWithContextMock({
 			label: 'Label',
 			name,
 			spritemap,
@@ -66,7 +69,7 @@ describe('Field Color Picker', () => {
 
 		const events = {fieldEdited: handleFieldEdited};
 
-		component = new ColorPicker({
+		component = new ColorPickerWithContextMock({
 			events,
 			name,
 			spritemap,

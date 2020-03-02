@@ -13,6 +13,7 @@
  */
 
 import Options from '../../../src/main/resources/META-INF/resources/Options/Options.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 const fireEvent = {
 	input: (element, config) => {
@@ -30,6 +31,8 @@ const fireEvent = {
 
 let component;
 const spritemap = 'icons.svg';
+
+const OptionsWithContextMock = withContextMock(Options);
 
 const optionsValue = {
 	en_US: [
@@ -54,7 +57,7 @@ describe('Options', () => {
 	});
 
 	it('shows the options', () => {
-		component = new Options({
+		component = new OptionsWithContextMock({
 			name: 'options',
 			spritemap,
 			value: optionsValue,
@@ -64,7 +67,7 @@ describe('Options', () => {
 	});
 
 	it('shows an empty option when value is an array of size 1', () => {
-		component = new Options({
+		component = new OptionsWithContextMock({
 			name: 'options',
 			spritemap,
 			value: {
@@ -96,7 +99,7 @@ describe('Options', () => {
 	});
 
 	it('does not show an empty option when translating', () => {
-		component = new Options({
+		component = new OptionsWithContextMock({
 			defaultLanguageId: themeDisplay.getLanguageId(),
 			editingLanguageId: 'pt_BR',
 			name: 'options',
@@ -122,7 +125,7 @@ describe('Options', () => {
 	});
 
 	it('edits the value of an option based on the label', () => {
-		component = new Options({
+		component = new OptionsWithContextMock({
 			name: 'options',
 			spritemap,
 			value: {
@@ -150,7 +153,7 @@ describe('Options', () => {
 	});
 
 	it('inserts a new empty option when editing the last option', () => {
-		component = new Options({
+		component = new OptionsWithContextMock({
 			name: 'options',
 			spritemap,
 			value: {
@@ -178,7 +181,7 @@ describe('Options', () => {
 	});
 
 	it('does not insert a new empty option automatically if translating', () => {
-		component = new Options({
+		component = new OptionsWithContextMock({
 			defaultLanguageId: themeDisplay.getLanguageId(),
 			editingLanguageId: 'pt_BR',
 			name: 'options',

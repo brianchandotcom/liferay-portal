@@ -15,6 +15,7 @@
 import {dom} from 'metal-dom';
 
 import Numeric from '../../../src/main/resources/META-INF/resources/Numeric/Numeric.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const spritemap = 'icons.svg';
@@ -23,6 +24,8 @@ const defaultNumericConfig = {
 	name: 'numericField',
 	spritemap,
 };
+
+const NumericWithContextMock = withContextMock(Numeric);
 
 describe('Field Numeric', () => {
 	beforeEach(() => {
@@ -36,7 +39,7 @@ describe('Field Numeric', () => {
 	});
 
 	it('renders the default markup', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			readOnly: false,
 		});
@@ -45,7 +48,7 @@ describe('Field Numeric', () => {
 	});
 
 	it('is not readOnly', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			readOnly: false,
 		});
@@ -54,7 +57,7 @@ describe('Field Numeric', () => {
 	});
 
 	it('has a helptext', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			tip: 'Type something',
 		});
@@ -63,7 +66,7 @@ describe('Field Numeric', () => {
 	});
 
 	it('has an id', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			id: 'ID',
 		});
@@ -72,7 +75,7 @@ describe('Field Numeric', () => {
 	});
 
 	it('has a label', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			label: 'label',
 		});
@@ -81,7 +84,7 @@ describe('Field Numeric', () => {
 	});
 
 	it('has a placeholder', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			placeholder: 'Placeholder',
 		});
@@ -90,7 +93,7 @@ describe('Field Numeric', () => {
 	});
 
 	it('is not required', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			required: false,
 		});
@@ -99,7 +102,7 @@ describe('Field Numeric', () => {
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			label: 'Numeric Field',
 			showLabel: true,
@@ -109,13 +112,13 @@ describe('Field Numeric', () => {
 	});
 
 	it('has a spritemap', () => {
-		component = new Numeric(defaultNumericConfig);
+		component = new NumericWithContextMock(defaultNumericConfig);
 
 		expect(component).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			value: '123',
 		});
@@ -124,7 +127,7 @@ describe('Field Numeric', () => {
 	});
 
 	it('has a key', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			key: 'key',
 		});
@@ -139,7 +142,7 @@ describe('Field Numeric', () => {
 
 		const events = {fieldEdited: handleFieldEdited};
 
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			events,
 		});
@@ -154,7 +157,7 @@ describe('Field Numeric', () => {
 	it('propagates the field edit event', () => {
 		jest.useFakeTimers();
 
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			key: 'input',
 		});
@@ -170,7 +173,7 @@ describe('Field Numeric', () => {
 	});
 
 	it('changes the mask type', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 		});
 
@@ -199,7 +202,7 @@ describe('Field Numeric', () => {
 
 		const events = {fieldEdited: handleFieldEdited};
 
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			events,
 			key: 'input',
@@ -213,7 +216,7 @@ describe('Field Numeric', () => {
 	});
 
 	it('check field value is rounded when fieldType is integer but it receives a double', () => {
-		component = new Numeric({
+		component = new NumericWithContextMock({
 			...defaultNumericConfig,
 			key: 'input',
 			value: '3.8',

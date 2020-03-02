@@ -13,9 +13,12 @@
  */
 
 import KeyValue from '../../../src/main/resources/META-INF/resources/KeyValue/KeyValue.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const spritemap = 'icons.svg';
+
+const KeyValueWithContextMock = withContextMock(KeyValue);
 
 describe('KeyValue', () => {
 	afterEach(() => {
@@ -25,7 +28,7 @@ describe('KeyValue', () => {
 	});
 
 	it('is not edidable', () => {
-		component = new KeyValue({
+		component = new KeyValueWithContextMock({
 			name: 'keyValue',
 			readOnly: false,
 			spritemap,
@@ -35,7 +38,7 @@ describe('KeyValue', () => {
 	});
 
 	it('has a helptext', () => {
-		component = new KeyValue({
+		component = new KeyValueWithContextMock({
 			name: 'keyValue',
 			spritemap,
 			tip: 'Type something',
@@ -45,7 +48,7 @@ describe('KeyValue', () => {
 	});
 
 	it('has an id', () => {
-		component = new KeyValue({
+		component = new KeyValueWithContextMock({
 			id: 'ID',
 			name: 'keyValue',
 			spritemap,
@@ -55,7 +58,7 @@ describe('KeyValue', () => {
 	});
 
 	it('has a label', () => {
-		component = new KeyValue({
+		component = new KeyValueWithContextMock({
 			label: 'label',
 			name: 'keyValue',
 			spritemap,
@@ -65,7 +68,7 @@ describe('KeyValue', () => {
 	});
 
 	it('has a predefined Value', () => {
-		component = new KeyValue({
+		component = new KeyValueWithContextMock({
 			name: 'keyValue',
 			placeholder: 'Option 1',
 			spritemap,
@@ -75,7 +78,7 @@ describe('KeyValue', () => {
 	});
 
 	it('is not required', () => {
-		component = new KeyValue({
+		component = new KeyValueWithContextMock({
 			name: 'keyValue',
 			required: false,
 			spritemap,
@@ -85,7 +88,7 @@ describe('KeyValue', () => {
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new KeyValue({
+		component = new KeyValueWithContextMock({
 			label: 'text',
 			name: 'keyValue',
 			showLabel: true,
@@ -96,7 +99,7 @@ describe('KeyValue', () => {
 	});
 
 	it('has a spritemap', () => {
-		component = new KeyValue({
+		component = new KeyValueWithContextMock({
 			name: 'keyValue',
 			spritemap,
 		});
@@ -105,7 +108,7 @@ describe('KeyValue', () => {
 	});
 
 	it('has a value', () => {
-		component = new KeyValue({
+		component = new KeyValueWithContextMock({
 			name: 'keyValue',
 			spritemap,
 			value: 'value',
@@ -115,7 +118,7 @@ describe('KeyValue', () => {
 	});
 
 	it('renders component with a key', () => {
-		component = new KeyValue({
+		component = new KeyValueWithContextMock({
 			keyword: 'key',
 			name: 'keyValue',
 			spritemap,

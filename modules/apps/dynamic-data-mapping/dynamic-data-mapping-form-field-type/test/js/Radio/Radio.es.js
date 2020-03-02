@@ -13,6 +13,7 @@
  */
 
 import Radio from '../../../src/main/resources/META-INF/resources/Radio/Radio.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const spritemap = 'icons.svg';
@@ -22,6 +23,8 @@ const defaultRadioConfig = {
 	spritemap,
 };
 
+const RadioWithContextMock = withContextMock(Radio);
+
 describe('Field Radio', () => {
 	afterEach(() => {
 		if (component) {
@@ -30,7 +33,7 @@ describe('Field Radio', () => {
 	});
 
 	it('is not edidable', () => {
-		component = new Radio({
+		component = new RadioWithContextMock({
 			...defaultRadioConfig,
 			readOnly: false,
 		});
@@ -39,7 +42,7 @@ describe('Field Radio', () => {
 	});
 
 	it('has a helptext', () => {
-		component = new Radio({
+		component = new RadioWithContextMock({
 			...defaultRadioConfig,
 			tip: 'Type something',
 		});
@@ -48,7 +51,7 @@ describe('Field Radio', () => {
 	});
 
 	it('renders options', () => {
-		component = new Radio({
+		component = new RadioWithContextMock({
 			...defaultRadioConfig,
 			options: [
 				{
@@ -78,7 +81,7 @@ describe('Field Radio', () => {
 	});
 
 	it('renders no options when options is empty', () => {
-		component = new Radio({
+		component = new RadioWithContextMock({
 			...defaultRadioConfig,
 			options: [],
 		});
@@ -87,7 +90,7 @@ describe('Field Radio', () => {
 	});
 
 	it('has an id', () => {
-		component = new Radio({
+		component = new RadioWithContextMock({
 			...defaultRadioConfig,
 			id: 'ID',
 		});
@@ -96,7 +99,7 @@ describe('Field Radio', () => {
 	});
 
 	it('has a label', () => {
-		component = new Radio({
+		component = new RadioWithContextMock({
 			...defaultRadioConfig,
 			label: 'label',
 		});
@@ -105,7 +108,7 @@ describe('Field Radio', () => {
 	});
 
 	it('has a predefined Value', () => {
-		component = new Radio({
+		component = new RadioWithContextMock({
 			...defaultRadioConfig,
 			placeholder: 'Option 1',
 		});
@@ -114,7 +117,7 @@ describe('Field Radio', () => {
 	});
 
 	it('is not required', () => {
-		component = new Radio({
+		component = new RadioWithContextMock({
 			...defaultRadioConfig,
 			required: false,
 		});
@@ -123,7 +126,7 @@ describe('Field Radio', () => {
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new Radio({
+		component = new RadioWithContextMock({
 			...defaultRadioConfig,
 			label: 'text',
 			showLabel: true,
@@ -133,13 +136,13 @@ describe('Field Radio', () => {
 	});
 
 	it('has a spritemap', () => {
-		component = new Radio(defaultRadioConfig);
+		component = new RadioWithContextMock(defaultRadioConfig);
 
 		expect(component).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		component = new Radio({
+		component = new RadioWithContextMock({
 			...defaultRadioConfig,
 			value: 'value',
 		});

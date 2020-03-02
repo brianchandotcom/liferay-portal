@@ -13,6 +13,7 @@
  */
 
 import Editor from '../../../src/main/resources/META-INF/resources/Editor/Editor.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const spritemap = 'icons.svg';
@@ -22,6 +23,8 @@ const defaultEditorConfig = {
 	spritemap,
 };
 
+const EditorWithContextMock = withContextMock(Editor);
+
 describe('Field Editor', () => {
 	afterEach(() => {
 		if (component) {
@@ -30,7 +33,7 @@ describe('Field Editor', () => {
 	});
 
 	it('is readOnly', () => {
-		component = new Editor({
+		component = new EditorWithContextMock({
 			...defaultEditorConfig,
 			readOnly: true,
 		});
@@ -39,7 +42,7 @@ describe('Field Editor', () => {
 	});
 
 	it('has a helptext', () => {
-		component = new Editor({
+		component = new EditorWithContextMock({
 			...defaultEditorConfig,
 			tip: 'Type something',
 		});
@@ -48,7 +51,7 @@ describe('Field Editor', () => {
 	});
 
 	it('has an id', () => {
-		component = new Editor({
+		component = new EditorWithContextMock({
 			...defaultEditorConfig,
 			id: 'ID',
 		});
@@ -57,7 +60,7 @@ describe('Field Editor', () => {
 	});
 
 	it('has a label', () => {
-		component = new Editor({
+		component = new EditorWithContextMock({
 			...defaultEditorConfig,
 			label: 'label',
 		});
@@ -66,7 +69,7 @@ describe('Field Editor', () => {
 	});
 
 	it('has a placeholder', () => {
-		component = new Editor({
+		component = new EditorWithContextMock({
 			...defaultEditorConfig,
 			placeholder: 'Placeholder',
 		});
@@ -75,7 +78,7 @@ describe('Field Editor', () => {
 	});
 
 	it('is not required', () => {
-		component = new Editor({
+		component = new EditorWithContextMock({
 			...defaultEditorConfig,
 			required: false,
 		});
@@ -84,7 +87,7 @@ describe('Field Editor', () => {
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new Editor({
+		component = new EditorWithContextMock({
 			...defaultEditorConfig,
 			label: 'text',
 			showLabel: true,
@@ -94,13 +97,13 @@ describe('Field Editor', () => {
 	});
 
 	it('has a spritemap', () => {
-		component = new Editor(defaultEditorConfig);
+		component = new EditorWithContextMock(defaultEditorConfig);
 
 		expect(component).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		component = new Editor({
+		component = new EditorWithContextMock({
 			...defaultEditorConfig,
 			value: 'value',
 		});
@@ -109,7 +112,7 @@ describe('Field Editor', () => {
 	});
 
 	it('has a key', () => {
-		component = new Editor({
+		component = new EditorWithContextMock({
 			...defaultEditorConfig,
 			key: 'key',
 		});
@@ -118,7 +121,7 @@ describe('Field Editor', () => {
 	});
 
 	it('emits a change value when onChangeEditor method is triggered', () => {
-		component = new Editor({
+		component = new EditorWithContextMock({
 			...defaultEditorConfig,
 		});
 		const event = {};
@@ -130,7 +133,7 @@ describe('Field Editor', () => {
 	});
 
 	it('triggers AlloyEditor actionPerformed method', () => {
-		component = new Editor({
+		component = new EditorWithContextMock({
 			...defaultEditorConfig,
 		});
 

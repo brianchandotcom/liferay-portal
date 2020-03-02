@@ -16,6 +16,8 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.LayoutPageTemplateEntryActionDropdownItemsProvider;
@@ -151,6 +153,21 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 	@Override
 	public String getImageSrc() {
 		return _layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		return LabelItemListBuilder.add(
+			labelItem -> {
+				Layout layout = LayoutLocalServiceUtil.getLayout(
+					_layoutPageTemplateEntry.getPlid());
+
+				Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+					PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+				labelItem.setStatus(draftLayout.getStatus());
+			}
+		).build();
 	}
 
 	@Override

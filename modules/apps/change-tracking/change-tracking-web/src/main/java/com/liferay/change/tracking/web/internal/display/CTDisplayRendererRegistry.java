@@ -194,7 +194,8 @@ public class CTDisplayRendererRegistry {
 
 	public <T extends CTModel<T>> String getViewURL(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, CTEntry ctEntry) {
+		LiferayPortletResponse liferayPortletResponse, CTEntry ctEntry,
+		boolean viewDiff) {
 
 		CTService<T> ctService = _ctServiceServiceTrackerMap.getService(
 			ctEntry.getModelClassNameId());
@@ -213,7 +214,15 @@ public class CTDisplayRendererRegistry {
 
 			PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-			portletURL.setParameter("mvcPath", "/change_lists/view_entry.jsp");
+			if (viewDiff) {
+				portletURL.setParameter(
+					"mvcRenderCommandName", "/change_lists/view_diff");
+			}
+			else {
+				portletURL.setParameter(
+					"mvcPath", "/change_lists/view_entry.jsp");
+			}
+
 			portletURL.setParameter(
 				"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
 

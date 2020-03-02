@@ -111,7 +111,13 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 									</div>
 
 									<%
-									String viewURL = ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry);
+									boolean viewDiff = false;
+
+									if (conflictInfo.getSourcePrimaryKey() == conflictInfo.getTargetPrimaryKey()) {
+										viewDiff = true;
+									}
+
+									String viewURL = ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry, viewDiff);
 									%>
 
 									<c:if test="<%= Validator.isNotNull(viewURL) %>">
@@ -183,33 +189,35 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 									String editURL = ctDisplayRendererRegistry.getEditURL(request, ctEntry);
 									%>
 
-									<c:choose>
-										<c:when test="<%= Validator.isNotNull(editURL) %>">
-											<div class="autofit-col">
-												<div class="autofit-section">
-													<a class="btn btn-secondary btn-sm" href="<%= editURL %>" type="button">
-														<%= LanguageUtil.get(request, "edit") %>
-													</a>
-												</div>
+									<c:if test="<%= Validator.isNotNull(editURL) %>">
+										<div class="autofit-col">
+											<div class="autofit-section">
+												<a class="btn btn-secondary btn-sm" href="<%= editURL %>" type="button">
+													<%= LanguageUtil.get(request, "edit") %>
+												</a>
 											</div>
-										</c:when>
-										<c:otherwise>
+										</div>
+									</c:if>
 
-											<%
-											String viewURL = ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry);
-											%>
+									<%
+									boolean viewDiff = false;
 
-											<c:if test="<%= Validator.isNotNull(viewURL) %>">
-												<div class="autofit-col">
-													<div class="autofit-section">
-														<a class="btn btn-secondary btn-sm" href="<%= viewURL %>" type="button">
-															<%= LanguageUtil.get(request, "view") %>
-														</a>
-													</div>
-												</div>
-											</c:if>
-										</c:otherwise>
-									</c:choose>
+									if (conflictInfo.getSourcePrimaryKey() == conflictInfo.getTargetPrimaryKey()) {
+										viewDiff = true;
+									}
+
+									String viewURL = ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry, viewDiff);
+									%>
+
+									<c:if test="<%= Validator.isNotNull(viewURL) %>">
+										<div class="autofit-col">
+											<div class="autofit-section">
+												<a class="btn btn-secondary btn-sm" href="<%= viewURL %>" type="button">
+													<%= LanguageUtil.get(request, "view") %>
+												</a>
+											</div>
+										</div>
+									</c:if>
 								</div>
 							</div>
 						</td>

@@ -1295,11 +1295,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		_installBundlesFromDir(
 			PropsValues.MODULE_FRAMEWORK_MODULES_DIR, checksums, fragmentHosts);
 
-		List<Bundle> refreshBundles = new ArrayList<>();
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
 		if (!fragmentHosts.isEmpty()) {
+			List<Bundle> refreshBundles = new ArrayList<>();
+
+			BundleContext bundleContext = _framework.getBundleContext();
+
 			for (Bundle bundle : bundleContext.getBundles()) {
 				if (fragmentHosts.remove(bundle.getSymbolicName())) {
 					refreshBundles.add(bundle);

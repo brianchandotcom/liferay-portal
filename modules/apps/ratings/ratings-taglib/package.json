@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@clayui/button": "^3.3.0",
 		"@clayui/icon": "^3.0.3",
 		"react": "16.12.0"
 	},

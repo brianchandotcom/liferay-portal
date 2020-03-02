@@ -12,10 +12,11 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
-const RatingsLike = () => {
+const RatingsLike = ({disabled = false, votes = 0}) => {
 	const [active, setActive] = useState(false);
 
 	const toggleActive = () => {
@@ -24,11 +25,25 @@ const RatingsLike = () => {
 
 	return (
 		<div className="ratings-like">
-			<ClayIcon
-				className={active ? 'selected' : ''}
-				symbol="heart"
+			<ClayButton
+				borderless
+				disabled={disabled}
+				displayType="secondary"
 				onClick={toggleActive}
-			/>
+				small
+				title={
+					active
+						? Liferay.Language.get('unlike-this')
+						: Liferay.Language.get('like-this')
+				}
+			>
+				<ClayIcon
+					className={active ? 'selected' : ''}
+					symbol="heart"
+				/>
+
+				<strong className="ml-2">{active ? (votes + 1) : votes}</strong>
+			</ClayButton>
 		</div>
 	);
 };

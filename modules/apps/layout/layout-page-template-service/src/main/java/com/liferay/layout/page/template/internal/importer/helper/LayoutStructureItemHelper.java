@@ -16,9 +16,9 @@ package com.liferay.layout.page.template.internal.importer.helper;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.model.Layout;
 
 /**
  * @author Jürgen Kappler
@@ -28,8 +28,7 @@ public interface LayoutStructureItemHelper {
 	public LayoutStructureItem addLayoutStructureItem(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
-		LayoutPageTemplateEntry layoutPageTemplateEntry,
-		LayoutStructure layoutStructure, PageElement pageElement,
+		Layout layout, LayoutStructure layoutStructure, PageElement pageElement,
 		String parentItemId, int position);
 
 }

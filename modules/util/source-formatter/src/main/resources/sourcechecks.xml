@@ -368,7 +368,9 @@
 		<check name="JavaSignatureParametersCheck">
 			<property name="enabled" value="false" />
 		</check>
-		<check name="JavaSourceFormatterDocumentationCheck" />
+		<check name="JavaSourceFormatterDocumentationCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaStagedModelDataHandlerCheck" />
 		<check name="JavaStringBundlerConcatCheck" />
 		<check name="JavaStringBundlerInitialCapacityCheck" />

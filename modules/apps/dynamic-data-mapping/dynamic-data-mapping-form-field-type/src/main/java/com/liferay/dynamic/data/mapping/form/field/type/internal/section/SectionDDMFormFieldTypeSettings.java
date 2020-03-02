@@ -41,7 +41,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 					{
 						@DDMFormLayoutColumn(
 							size = 12,
-							value = {"label", "name", "repeatable", "rows"}
+							value = {"label", "name", "repeatable", "rows", "type"}
 						)
 					}
 				)

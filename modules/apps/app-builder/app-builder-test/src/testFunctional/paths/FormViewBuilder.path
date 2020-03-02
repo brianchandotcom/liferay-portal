@@ -146,7 +146,7 @@
 
 <tr>
 	<td>TEXT_FIELD</td>
-	<td>//input[contains(@name,'${key_fieldName}')]</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/..//input</td>
 	<td></td>
 </tr>
 
@@ -186,13 +186,13 @@
 <!--DATE-->
 <tr>
 	<td>DATE_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@type='text']</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/..//input</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>TEXT_BOX_FIELD</td>
-	<td>//input[contains(@name, '${key_fieldName}')]</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/..//input</td>
 	<td></td>
 </tr>
 

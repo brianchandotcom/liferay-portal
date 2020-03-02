@@ -36,9 +36,15 @@ definition {
 
 		AppBuilderAdmin.continueNewCustomObject();
 
-		while (IsElementPresent(locator1 = "AppBuilder#BUTTON_CONTINUE")){
+		while (IsElementPresent(locator1 = "AppBuilder#BUTTON_CONTINUE")) {
 			Pause(locator1 = "1000");
 		}
+	}
+
+	macro addEntry {
+
+		AppBuilderAdmin.add();
+		AppBuilderAdmin.waitForSaveButtonVisible();
 	}
 
 	macro addOrRemovePermissionFromRoles {
@@ -303,6 +309,8 @@ definition {
 
 	macro save {
 		Click(locator1 = "AppBuilder#SAVE_BUTTON");
+
+		AppBuilderAdmin.waitForSaveButtonNotVisible()
 	}
 
 	macro searchByItem {
@@ -492,16 +500,16 @@ definition {
 		MenuItem.clickNoError(menuItem = "View");
 	}
 
-	macro waitForSaveButton {
+	macro waitForSaveButtonNotVisible {
 		while (IsNotVisible(locator1 = "AppBuilder#SAVE_BUTTON")) {
-			Pause(locator1 = "10000");
+			Pause(locator1 = "1000");
 		}
 	}
 
-	macro addEntry {
-
-		AppBuilderAdmin.add();
-		AppBuilderAdmin.waitForSaveButton();
-
+	macro waitForSaveButtonVisible {
+		while (IsVisible(locator1 = "AppBuilder#SAVE_BUTTON")) {
+			Pause(locator1 = "1000");
+		}
 	}
+
 }

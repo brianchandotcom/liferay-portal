@@ -17,6 +17,8 @@ package com.liferay.layout.page.template.internal.importer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
@@ -37,6 +39,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.validator.PageDefinitionValidator;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.CharPool;
@@ -56,8 +59,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -107,6 +112,64 @@ public class LayoutPageTemplatesImporterImpl
 					overwrite);
 			}
 		}
+	}
+
+	@Override
+	public List<FragmentEntryLink> importPageElement(
+			Layout layout, LayoutStructure layoutStructure, String parentItemId,
+			String pageElementJSON, int position)
+		throws Exception {
+
+		PageElement pageElement = _objectMapper.readValue(
+			pageElementJSON, PageElement.class);
+
+		_processPageElement(
+			layout, layoutStructure, pageElement, parentItemId, position);
+
+		LayoutStructureItem parentLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(parentItemId);
+
+		List<String> childrenItemIds =
+			parentLayoutStructureItem.getChildrenItemIds();
+
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+
+		fragmentEntryLinks.addAll(
+			_getFragmentEntryLinks(layoutStructure, childrenItemIds));
+
+		_updateLayoutPageTemplateStructure(layout, layoutStructure);
+
+		return fragmentEntryLinks;
+	}
+
+	private List<FragmentEntryLink> _getFragmentEntryLinks(
+			LayoutStructure layoutStructure, List<String> childrenItemIds)
+		throws PortalException {
+
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+
+		for (String childItemId : childrenItemIds) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childItemId);
+
+			if (layoutStructureItem instanceof FragmentLayoutStructureItem) {
+				FragmentLayoutStructureItem fragmentLayoutStructureItem =
+					(FragmentLayoutStructureItem)layoutStructureItem;
+
+				fragmentEntryLinks.add(
+					_fragmentEntryLinkLocalService.getFragmentEntryLink(
+						fragmentLayoutStructureItem.getFragmentEntryLinkId()));
+			}
+
+			List<String> currentChildrenItemIds =
+				layoutStructureItem.getChildrenItemIds();
+
+			fragmentEntryLinks.addAll(
+				_getFragmentEntryLinks(
+					layoutStructure, currentChildrenItemIds));
+		}
+
+		return fragmentEntryLinks;
 	}
 
 	private LayoutPageTemplateCollection _getLayoutPageTemplateCollection(
@@ -289,6 +352,9 @@ public class LayoutPageTemplatesImporterImpl
 			PageDefinition pageDefinition)
 		throws Exception {
 
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
 		LayoutStructure layoutStructure = new LayoutStructure();
 
 		LayoutStructureItem rootLayoutStructureItem =
@@ -306,25 +372,23 @@ public class LayoutPageTemplatesImporterImpl
 						pageElement.getPageElements()) {
 
 					_processPageElement(
-						layoutPageTemplateEntry, layoutStructure,
-						childPageElement, rootLayoutStructureItem.getItemId(),
-						position);
+						layout, layoutStructure, childPageElement,
+						rootLayoutStructureItem.getItemId(), position);
 
 					position++;
 				}
 			}
 		}
 
-		_updateLayoutPageTemplateStructure(
-			layoutPageTemplateEntry, layoutStructure);
+		_updateLayoutPageTemplateStructure(layout, layoutStructure);
 
 		_updateLayouts(layoutPageTemplateEntry);
 	}
 
 	private void _processPageElement(
-		LayoutPageTemplateEntry layoutPageTemplateEntry,
-		LayoutStructure layoutStructure, PageElement pageElement,
-		String parentItemId, int position) {
+			Layout layout, LayoutStructure layoutStructure,
+			PageElement pageElement, String parentItemId, int position)
+		throws Exception {
 
 		LayoutStructureItemHelperFactory layoutStructureItemHelperFactory =
 			LayoutStructureItemHelperFactory.getInstance();
@@ -339,8 +403,8 @@ public class LayoutPageTemplatesImporterImpl
 
 		LayoutStructureItem layoutStructureItem =
 			layoutStructureItemHelper.addLayoutStructureItem(
-				_fragmentCollectionContributorTracker, layoutPageTemplateEntry,
-				layoutStructure, pageElement, parentItemId, position);
+				_fragmentCollectionContributorTracker, layout, layoutStructure,
+				pageElement, parentItemId, position);
 
 		if ((layoutStructureItem == null) ||
 			(pageElement.getPageElements() == null)) {
@@ -352,7 +416,7 @@ public class LayoutPageTemplatesImporterImpl
 
 		for (PageElement childPageElement : pageElement.getPageElements()) {
 			_processPageElement(
-				layoutPageTemplateEntry, layoutStructure, childPageElement,
+				layout, layoutStructure, childPageElement,
 				layoutStructureItem.getItemId(), childPosition);
 
 			childPosition++;
@@ -403,8 +467,7 @@ public class LayoutPageTemplatesImporterImpl
 	}
 
 	private void _updateLayoutPageTemplateStructure(
-			LayoutPageTemplateEntry layoutPageTemplateEntry,
-			LayoutStructure layoutStructure)
+			Layout layout, LayoutStructure layoutStructure)
 		throws PortalException {
 
 		long classNameId = _portal.getClassNameId(Layout.class.getName());
@@ -414,22 +477,20 @@ public class LayoutPageTemplatesImporterImpl
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					layoutPageTemplateEntry.getGroupId(), classNameId,
-					layoutPageTemplateEntry.getPlid());
+					layout.getGroupId(), classNameId, layout.getPlid());
 
 		if (layoutPageTemplateStructure == null) {
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
-					layoutPageTemplateEntry.getUserId(),
-					layoutPageTemplateEntry.getGroupId(), classNameId,
-					layoutPageTemplateEntry.getPlid(), jsonObject.toString(),
+					layout.getUserId(), layout.getGroupId(), classNameId,
+					layout.getPlid(), jsonObject.toString(),
 					ServiceContextThreadLocal.getServiceContext());
 		}
 		else {
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructure(
-					layoutPageTemplateEntry.getGroupId(), classNameId,
-					layoutPageTemplateEntry.getPlid(), jsonObject.toString());
+					layout.getGroupId(), classNameId, layout.getPlid(),
+					jsonObject.toString());
 		}
 	}
 
@@ -455,6 +516,9 @@ public class LayoutPageTemplatesImporterImpl
 	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

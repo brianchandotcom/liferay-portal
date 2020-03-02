@@ -243,7 +243,7 @@ public class ContentDocument {
 	}
 
 	@GraphQLField(description = "The document's ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@Schema(description = "The document's file size in bytes.")

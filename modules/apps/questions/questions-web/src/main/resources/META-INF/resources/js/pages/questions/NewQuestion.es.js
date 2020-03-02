@@ -15,13 +15,13 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayMultiSelect from '@clayui/multi-select';
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import {createQuestion, getAllTags} from '../../utils/client.es';
+import TagSelector from '../../components/TagSelector';
+import {createQuestion} from '../../utils/client.es';
 import {
 	getCKEditorConfig,
 	onBeforeLoadCKEditor,
@@ -39,9 +39,7 @@ export default withRouter(
 
 		const [articleBody, setArticleBody] = useState('');
 		const [headline, setHeadline] = useState('');
-		const [items, setItems] = useState([]);
-		const [sourceItems, setSourceItems] = useState([]);
-		const [inputValue, setInputValue] = useState('');
+		const [tags, setTags] = useState([]);
 
 		const [debounceCallback] = useDebounceCallback(
 			() => history.push(`/questions/${sectionId}/`),
@@ -52,41 +50,9 @@ export default withRouter(
 			createQuestion(
 				articleBody,
 				headline,
-				items.map(category => +category.value),
+				tags,
 				context.siteKey
 			).then(() => debounceCallback());
-
-		useEffect(() => {
-			getAllTags(context.siteKey).then(data => {
-				setSourceItems(
-					data.items
-						.flatMap(
-							vocabulary => vocabulary.taxonomyCategories.items
-						)
-						.map(category => ({
-							label: category.name,
-							value: category.id,
-						}))
-				);
-			});
-		}, [context.siteKey]);
-
-		const filterItems = value => {
-			if (
-				value
-					.map(categories => categories.value)
-					.every(category =>
-						sourceItems
-							.map(category => category.value)
-							.includes(category)
-					) &&
-				value.length <= 5 &&
-				new Set(value.map(categories => categories.value)).size ===
-					value.length
-			) {
-				setItems(value);
-			}
-		};
 
 		return (
 			<section className="c-mt-5 c-mx-auto col-xl-10">
@@ -160,13 +126,9 @@ export default withRouter(
 							{Liferay.Language.get('tags')}
 						</label>
 
-						<ClayMultiSelect
+						<TagSelector
 							className="c-mt-3"
-							inputValue={inputValue}
-							items={items}
-							onChange={setInputValue}
-							onItemsChange={filterItems}
-							sourceItems={sourceItems}
+							tagsChange={tags => setTags(tags)}
 						/>
 
 						<ClayForm.FeedbackGroup>

@@ -76,9 +76,6 @@ public class SiteNavigationMenuItemLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_siteNavigationMenu = SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group);
-
 		_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			_group.getCompanyId(), SiteNavigationMenuItem.class.getName());
 
@@ -87,6 +84,9 @@ public class SiteNavigationMenuItemLocalServiceTest {
 				StringPool.CONTENT, ExpandoColumnConstants.STRING,
 				StringPool.BLANK);
 		}
+
+		_siteNavigationMenu = SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+			_group);
 	}
 
 	@Test

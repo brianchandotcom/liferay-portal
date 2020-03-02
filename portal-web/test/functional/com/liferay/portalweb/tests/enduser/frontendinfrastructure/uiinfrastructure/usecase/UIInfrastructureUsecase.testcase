@@ -19,6 +19,12 @@ definition {
 		}
 	}
 
+	@description = "Checks for each portlet having defined boundries."
+	@priority = "5"
+	test CheckPortletBoundries {
+
+	}
+		
 	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on guest page level after page refresh."
 	@priority = "5"
 	test RefreshHomePage {

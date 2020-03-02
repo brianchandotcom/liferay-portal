@@ -1,13 +1,15 @@
-body.open-admin-panel {
-	@include media-breakpoint-up(sm) {
-		padding-right: $admin-panel-width;
-	}
-}
-
-body.open-admin-panel,
-body.sidenav-transition {
+#wrapper,
+.control-menu-container {
 	@include media-breakpoint-up(sm) {
 		overflow-x: hidden;
+
+		body.sidenav-transition & {
+			@include transition(padding 0.5s ease);
+		}
+
+		body.open-admin-panel & {
+			padding-right: $admin-panel-width;
+		}
 	}
 }
 

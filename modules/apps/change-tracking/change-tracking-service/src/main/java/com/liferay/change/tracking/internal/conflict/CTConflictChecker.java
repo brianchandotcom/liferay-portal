@@ -284,11 +284,10 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Connection connection, CTPersistence<T> ctPersistence,
 		List<ConflictInfo> conflictInfos, String primaryKeyName) {
 
-		String tableName = ctPersistence.getTableName();
-
 		String selectSQL = StringBundler.concat(
-			"select t1.", primaryKeyName, " from ", tableName,
-			" t1 inner join ", tableName, " t2 on t1.", primaryKeyName,
+			"select t1.", primaryKeyName, " from ",
+			ctPersistence.getTableName(), " t1 inner join ",
+			ctPersistence.getTableName(), " t2 on t1.", primaryKeyName,
 			" = t2.", primaryKeyName, " and t1.ctCollectionId = ",
 			_sourceCTCollectionId, " and t2.ctCollectionId = ",
 			_targetCTCollectionId,
@@ -324,8 +323,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			}
 
 			_resolveModificationConflicts(
-				connection, ctPersistence, primaryKeyName, resolvedPrimaryKeys,
-				tableName);
+				connection, ctPersistence, primaryKeyName, resolvedPrimaryKeys);
 		}
 
 		sb = new StringBundler(selectSQL);
@@ -357,7 +355,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		}
 
 		_updateModelMvccVersion(
-			connection, primaryKeyName, tableName, unresolvedPrimaryKeys);
+			connection, primaryKeyName, ctPersistence.getTableName(),
+			unresolvedPrimaryKeys);
 	}
 
 	private List<Map.Entry<Long, Long>> _getConflictingPrimaryKeys(
@@ -400,8 +399,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 	private void _resolveModificationConflicts(
 		Connection connection, CTPersistence<T> ctPersistence,
-		String primaryKeyName, List<Serializable> resolvedPrimaryKeys,
-		String tableName) {
+		String primaryKeyName, List<Serializable> resolvedPrimaryKeys) {
 
 		if (resolvedPrimaryKeys.isEmpty()) {
 			return;
@@ -413,7 +411,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			2 * resolvedPrimaryKeys.size() + 9);
 
 		sb.append("update ");
-		sb.append(tableName);
+		sb.append(ctPersistence.getTableName());
 		sb.append(" t1 set t1.ctCollectionId = ");
 		sb.append(tempCTCollectionId);
 		sb.append(" where t1.ctCollectionId = ");
@@ -467,9 +465,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		sb.setStringAt(" from ", sb.index() - 1);
 
-		sb.append(tableName);
+		sb.append(ctPersistence.getTableName());
 		sb.append(" t1, ");
-		sb.append(tableName);
+		sb.append(ctPersistence.getTableName());
 		sb.append(" t2 where t1.");
 		sb.append(primaryKeyName);
 		sb.append(" = t2.");
@@ -488,8 +486,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"delete from ", tableName, " where ctCollectionId = ",
-					tempCTCollectionId))) {
+					"delete from ", ctPersistence.getTableName(),
+					" where ctCollectionId = ", tempCTCollectionId))) {
 
 			preparedStatement.executeUpdate();
 		}

@@ -24,6 +24,7 @@ import {
 	useIsSelected,
 	useSelectItem,
 } from '../../../app/components/Controls';
+import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
 import selectShowLayoutItemRemoveButton from '../../../app/selectors/selectShowLayoutItemRemoveButton';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
@@ -83,7 +84,11 @@ export default function StructureTreeNode({node}) {
 			onClick={event => {
 				event.stopPropagation();
 
-				selectItem(node.id, {multiSelect: event.shiftKey});
+				selectItem(node.id, {
+					itemType: node.type,
+					multiSelect: event.shiftKey,
+					origin: ITEM_ACTIVATION_ORIGINS.structureTree,
+				});
 			}}
 			onMouseLeave={event => {
 				event.stopPropagation();

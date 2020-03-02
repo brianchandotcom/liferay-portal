@@ -18,6 +18,7 @@ import React from 'react';
 import {useActiveItemId} from '../../../app/components/Controls';
 import hasDropZoneChild from '../../../app/components/layout-data-items/hasDropZoneChild';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
+import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../../../app/config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {PAGE_TYPES} from '../../../app/config/constants/pageTypes';
@@ -77,6 +78,7 @@ export default function PageStructureSidebar() {
 					id: childId,
 					name: editableId,
 					removable: false,
+					type: ITEM_TYPES.editable,
 				});
 			});
 		}
@@ -109,6 +111,7 @@ export default function PageStructureSidebar() {
 			id: item.itemId,
 			name: getName(item, fragmentEntryLinks),
 			removable: !itemInMasterLayout && isRemovable(item, layoutData),
+			type: ITEM_TYPES.layoutDataItem,
 		};
 
 		return node;

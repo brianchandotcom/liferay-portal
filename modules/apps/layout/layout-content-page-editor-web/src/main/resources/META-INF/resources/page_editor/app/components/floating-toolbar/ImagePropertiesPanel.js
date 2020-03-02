@@ -48,6 +48,17 @@ export function ImagePropertiesPanel({item}) {
 		editableConfig.alt
 	);
 
+	const imageUrl = useSelector(state => {
+		const url = selectEditableValueContent(
+			state,
+			fragmentEntryLinkId,
+			editableId,
+			EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+		);
+
+		return url === editableValue.defaultValue ? '' : url;
+	});
+
 	const updateRowConfig = useCallback(
 		newConfig => {
 			const editableValues =
@@ -143,7 +154,7 @@ export function ImagePropertiesPanel({item}) {
 	return (
 		<>
 			<ImageSelector
-				imageTitle={editableConfig.imageTitle}
+				imageTitle={editableConfig.imageTitle || imageUrl}
 				label={Liferay.Language.get('image')}
 				onClearButtonPressed={() => onImageChange('', '')}
 				onImageSelected={image => onImageChange(image.title, image.url)}

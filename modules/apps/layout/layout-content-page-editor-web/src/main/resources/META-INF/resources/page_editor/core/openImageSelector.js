@@ -33,7 +33,7 @@ export function openImageSelector(callback, destroyedCallback = null) {
 			const selectedImage = {};
 
 			if (returnType === 'URL') {
-				selectedImage.title = value;
+				selectedImage.title = '';
 				selectedImage.url = value;
 			}
 			else {

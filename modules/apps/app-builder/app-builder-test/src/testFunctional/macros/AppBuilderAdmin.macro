@@ -501,13 +501,13 @@ definition {
 	}
 
 	macro waitForSaveButtonNotVisible {
-		while (IsNotVisible(locator1 = "AppBuilder#SAVE_BUTTON")) {
+		while (IsVisible(locator1 = "AppBuilder#SAVE_BUTTON")) {
 			Pause(locator1 = "1000");
 		}
 	}
 
 	macro waitForSaveButtonVisible {
-		while (IsVisible(locator1 = "AppBuilder#SAVE_BUTTON")) {
+		while (IsNotVisible(locator1 = "AppBuilder#SAVE_BUTTON")) {
 			Pause(locator1 = "1000");
 		}
 	}

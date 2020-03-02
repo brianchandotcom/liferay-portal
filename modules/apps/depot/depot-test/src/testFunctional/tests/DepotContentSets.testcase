@@ -26,6 +26,84 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the documents with document type can be selected through Content Sets in a depot."
+	@priority = "5"
+	test AddDocTypeDocumentsManually {
+		for (var i : list "1,2") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(
+				depotName = "Test Depot Name",
+				portlet = "Documents and Media");
+
+			DMNavigator.gotoDocumentType();
+
+			DMDocumentType.add(
+				dmDocumentTypeDescription = "DM Document Type Description",
+				dmDocumentTypeFieldNames = "Text Box",
+				dmDocumentTypeName = "DM Document Type Name ${i}");
+		}
+
+		for (var i : list "1,2") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(
+				depotName = "Test Depot Name",
+				portlet = "Documents and Media");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title ${i}",
+				dmDocumentTypeName = "DM Document Type Name 2");
+		}
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.addManualSelection(
+			assetListTitle = "Depot Manual Asset List",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.viewAssetTypeList(
+			assetListName = "Depot Manual Asset List",
+			assetType = "Web Content Folder,Basic Document,Basic Web Content,Google Drive Shortcut,Documents Folder,DM Document Type Name 1,DM Document Type Name 2");
+
+		for (var i : list "1,2") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(
+				depotName = "Test Depot Name",
+				portlet = "Content Sets");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Depot Manual Asset List",
+				assetName = "DM Document Title ${i}",
+				assetType = "DM Document Type Name 2");
+		}
+
+		for (var documentName : list "DM Document Title 1,DM Document Title 2") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepot(
+				depotName = "Test Depot Name",
+				portlet = "Content Sets");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Depot Manual Asset List",
+				assetTitle = "${documentName}",
+				assetType = "Document");
+		}
+	}
+
 	@description = "This ensures that the scope can be changed through dynamic selection in a depot."
 	@priority = "5"
 	test ChangeScope {
@@ -592,6 +670,70 @@ definition {
 			assetListTitle = "Depot Dynamic Asset List",
 			assetTitle = "Document Title",
 			assetType = "Document");
+	}
+
+	@description = "This ensures that an image can be selected from other depot through dynamic selection that does not contain the keyword."
+	@priority = "5"
+	test SelectDocumentFromOtherScopeDynamically {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Second Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Second Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.doc");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Second Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpeg",
+			dmDocumentTitle = "DM Image Title");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addDynamicSelection(
+			assetListTitle = "Depot Dynamic Asset List",
+			depotName = "Test Depot Name");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.configureScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			depotName = "Test Second Depot Name");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.editAssetList(assetListTitle = "Depot Dynamic Asset List");
+
+		AssetListsAdmin.addKeywordsFilter(
+			keyWords = "doc",
+			queryAndOperator = "Any",
+			queryContains = "Does Not Contain");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.viewContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "DM Image Title",
+			assetType = "Document");
+
+		for (var i : list "1,2") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+			AssetListsAdmin.viewNoContent(
+				assetListTitle = "Depot Dynamic Asset List",
+				assetTitle = "Document_${i}.doc",
+				assetType = "Document");
+		}
 	}
 
 	@description = "This ensures that multiple documents can be selected through Content Sets in a depot."

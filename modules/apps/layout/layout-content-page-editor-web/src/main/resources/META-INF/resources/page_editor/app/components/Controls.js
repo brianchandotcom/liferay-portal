@@ -17,7 +17,9 @@ import React, {useCallback, useContext, useReducer} from 'react';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 
 const INITIAL_STATE = {
+	activationOrigin: null,
 	activeItemId: null,
+	activeItemType: null,
 	hoveredItemId: null,
 	selectedItemsIds: [],
 };

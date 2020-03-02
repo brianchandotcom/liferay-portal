@@ -198,6 +198,7 @@ definition {
 	test RestrictDefaultLocale {
 		property portal.acceptance = "true";
 		property custom.properties = "company.default.locale=es_ES";
+		property test.name.skip.portal.instance = "Locale#RestrictDefaultLocale";
 
 		User.firstLoginPG(
 			localization = "ES",

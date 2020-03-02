@@ -635,6 +635,7 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsEntriesAsGuestViaAP {
+		property portal.acceptance = "beck";
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntriesAsGuestViaAP";
 
 		Portlet.deletePG(portletName = "Blogs");
@@ -656,6 +657,8 @@ definition {
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content 2",
 			entryTitle = "Blogs Entry Title 2");
+
+		Pause(locator1 = "10000");
 
 		BlogsEntry.removeViewPermissionsPG(
 			entryTitle = "Blogs Entry Title 2",

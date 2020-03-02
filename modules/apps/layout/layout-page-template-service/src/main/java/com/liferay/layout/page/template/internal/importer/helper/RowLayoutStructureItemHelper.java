@@ -27,21 +27,23 @@ import java.util.Map;
 /**
  * @author Jürgen Kappler
  */
-public class RowLayoutStructureItemHelper implements LayoutStructureItemHelper {
+public class RowLayoutStructureItemHelper
+	extends BaseLayoutStructureItemHelper implements LayoutStructureItemHelper {
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		Layout layout, LayoutStructure layoutStructure, PageElement pageElement,
-		String parentItemId, int position) {
+			FragmentCollectionContributorTracker
+				fragmentCollectionContributorTracker,
+			Layout layout, LayoutStructure layoutStructure,
+			PageElement pageElement, String parentItemId, int position)
+		throws Exception {
 
 		RowLayoutStructureItem rowLayoutStructureItem =
 			(RowLayoutStructureItem)layoutStructure.addLayoutStructureItem(
 				LayoutDataItemTypeConstants.TYPE_ROW, parentItemId, position);
 
-		Map<String, Object> definitionMap =
-			(Map<String, Object>)pageElement.getDefinition();
+		Map<String, Object> definitionMap = getDefinitionMap(
+			pageElement.getDefinition());
 
 		if (definitionMap != null) {
 			rowLayoutStructureItem.setGutters(

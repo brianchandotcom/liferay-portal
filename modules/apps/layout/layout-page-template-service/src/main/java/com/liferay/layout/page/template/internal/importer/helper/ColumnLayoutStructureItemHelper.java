@@ -27,22 +27,23 @@ import java.util.Map;
  * @author Jürgen Kappler
  */
 public class ColumnLayoutStructureItemHelper
-	implements LayoutStructureItemHelper {
+	extends BaseLayoutStructureItemHelper implements LayoutStructureItemHelper {
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		Layout layout, LayoutStructure layoutStructure, PageElement pageElement,
-		String parentItemId, int position) {
+			FragmentCollectionContributorTracker
+				fragmentCollectionContributorTracker,
+			Layout layout, LayoutStructure layoutStructure,
+			PageElement pageElement, String parentItemId, int position)
+		throws Exception {
 
 		ColumnLayoutStructureItem columnLayoutStructureItem =
 			(ColumnLayoutStructureItem)
 				layoutStructure.addColumnLayoutStructureItem(
 					parentItemId, position);
 
-		Map<String, Object> definitionMap =
-			(Map<String, Object>)pageElement.getDefinition();
+		Map<String, Object> definitionMap = getDefinitionMap(
+			pageElement.getDefinition());
 
 		if (definitionMap != null) {
 			columnLayoutStructureItem.setSize(

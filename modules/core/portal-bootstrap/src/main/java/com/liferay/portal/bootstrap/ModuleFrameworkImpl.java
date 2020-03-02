@@ -1237,11 +1237,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL);
 				}
 
-				if (!_isFragmentBundle(bundle)) {
-					bundle.start();
+				if (_isFragmentBundle(bundle)) {
+					fragmentHosts.add(_getFragmentHost(bundle));
 				}
 				else {
-					fragmentHosts.add(_getFragmentHost(bundle));
+					bundle.start();
 				}
 			}
 			catch (BundleException bundleException) {

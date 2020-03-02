@@ -374,6 +374,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_COLUMN_3</td>
+	<td>//div[@id='layout-column_column-3']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_COLUMN_1_LAYOUT_1_COLUMN</td>
 	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'col-md-12')]</td>
 	<td></td>
@@ -425,6 +430,12 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_COLUMN_PORTLET_COLUMN_3_PORTLET_TITLE</td>
+	<td>//div[@id='column-3']//h2[contains(.,'${key_portletTitleName}')]</td>
+	//div[@id='layout-column_column-3']
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_HEADER</td>
 	<td>//div[@id='column-1']//header[contains(.,'${key_portletTitleName}')]/div/span</td>
 	<td></td>
@@ -432,6 +443,11 @@
 <tr>
 	<td>PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_HEADER</td>
 	<td>//div[@id='column-2']//header[contains(.,'${key_portletTitleName}')]/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_COLUMN_PORTLET_COLUMN_3_PORTLET_HEADER</td>
+	<td>//div[@id='column-3']//header[contains(.,'${key_portletTitleName}')]/div/span</td>
 	<td></td>
 </tr>
 <tr>

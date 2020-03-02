@@ -65,8 +65,8 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 
 		int total = count * amImageConfigurationEntries.size();
 
-		final AtomicInteger countAtomiCounter = new AtomicInteger(0);
-		final AtomicInteger errorAtomiCounter = new AtomicInteger(0);
+		AtomicInteger countAtomiCounter = new AtomicInteger(0);
+		AtomicInteger errorAtomiCounter = new AtomicInteger(0);
 
 		for (AMImageConfigurationEntry amImageConfigurationEntry :
 				amImageConfigurationEntries) {
@@ -81,8 +81,8 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 	public void optimize(long companyId, String configurationEntryUuid) {
 		int total = _amImageCounter.countExpectedAMImageEntries(companyId);
 
-		final AtomicInteger countAtomiCounter = new AtomicInteger(0);
-		final AtomicInteger errorAtomiCounter = new AtomicInteger(0);
+		AtomicInteger countAtomiCounter = new AtomicInteger(0);
+		AtomicInteger errorAtomiCounter = new AtomicInteger(0);
 
 		_optimize(
 			companyId, configurationEntryUuid, total, countAtomiCounter,
@@ -95,8 +95,6 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_dlFileEntryLocalService.getActionableDynamicQuery();
-
-		int errors = 0;
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {

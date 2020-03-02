@@ -27,7 +27,18 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		MenuItem.click(menuItem = "${adtType} Template");
+		if (IsElementPresent(key_text = "More", locator1 = "Button#ANY")) {
+			Button.clickMore();
+
+			ScrollWebElementIntoView(
+				key_menuItem = "${adtType} Template",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			MenuItem.click(menuItem = "${adtType} Template");
+		}
+		else {
+			MenuItem.click(menuItem = "${adtType} Template");
+		}
 
 		SiteAdmin.viewPortletTitle(portletTitle = "New ${adtType} Template");
 

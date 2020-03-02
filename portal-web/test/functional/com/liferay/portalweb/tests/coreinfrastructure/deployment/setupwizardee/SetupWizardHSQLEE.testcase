@@ -108,6 +108,55 @@ definition {
 		Smoke.runSmoke();
 	}
 
+	@priority = "5"
+	test HSQLtoSQLServer {
+		property database.types = "sqlserver";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSQLServer;"
+
+		SetupWizard.configurePG(
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databasePassword = PropsUtil.get("database.sqlserver.password"),
+			databaseType = "SQLServer",
+			databaseUserName = PropsUtil.get("database.sqlserver.username"),
+			jdbcDriverClassName = PropsUtil.get("database.sqlserver.driver"),
+			jdbcURL = PropsUtil.get("database.sqlserver.url"));
+
+		Smoke.viewWelcomePage(
+			userFirstName = "Joe",
+			userLastName = "Bloggs");
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "3"
+	test HSQLtoSQLServerSampleDataEnabled {
+		property databases.size = "1";
+		property database.types = "sqlserver";
+		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSQLServerSampleDataEnabled";
+
+		SetupWizard.configurePG(
+			addSampleData = "true",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test",
+			databaseName = "lportal",
+			databasePassword = PropsUtil.get("database.sqlserver.password"),
+			databaseType = "SQLServer",
+			databaseUserName = PropsUtil.get("database.sqlserver.username"),
+			jdbcDriverClassName = PropsUtil.get("database.sqlserver.driver"),
+			jdbcURL = PropsUtil.get("database.sqlserver.url"));
+
+		Smoke.viewWelcomePage();
+
+		SetupWizard.viewSampleDataEnabledInPropertiesFile();
+
+		SetupWizard.viewPopulatedSampleData();
+
+		Smoke.runSmoke();
+	}
+
 	@priority = "4"
 	test HSQLtoSybase {
 		property database.types = "sybase";

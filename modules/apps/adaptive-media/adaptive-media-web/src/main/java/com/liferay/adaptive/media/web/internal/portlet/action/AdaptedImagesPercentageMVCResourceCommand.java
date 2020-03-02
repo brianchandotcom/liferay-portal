@@ -20,7 +20,7 @@ import com.liferay.adaptive.media.web.internal.background.task.OptimizeImagesSin
 import com.liferay.adaptive.media.web.internal.constants.AMPortletKeys;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -103,7 +103,7 @@ public class AdaptedImagesPercentageMVCResourceCommand
 
 	private boolean _isTaskInProgress(String entryUuid) {
 		List<BackgroundTask> backgroundTasks =
-			BackgroundTaskManagerUtil.getBackgroundTasks(
+			_backgroundTaskManager.getBackgroundTasks(
 				CompanyConstants.SYSTEM,
 				OptimizeImagesSingleConfigurationBackgroundTaskExecutor.class.
 					getName(),
@@ -127,5 +127,8 @@ public class AdaptedImagesPercentageMVCResourceCommand
 
 	@Reference
 	private AMImageEntryLocalService _amImageEntryLocalService;
+
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
 
 }

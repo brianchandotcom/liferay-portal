@@ -74,55 +74,57 @@ public class AdaptedImagesPercentageMVCResourceCommand
 		int expectedEntriesCount =
 			_amImageEntryLocalService.getExpectedAMImageEntriesCount(companyId);
 
-		List<BackgroundTask> optimizeImageSingleBackgroundTasks =
-			BackgroundTaskManagerUtil.getBackgroundTasks(
-				CompanyConstants.SYSTEM,
-				OptimizeImagesSingleConfigurationBackgroundTaskExecutor.class.
-					getName(),
-				BackgroundTaskConstants.STATUS_IN_PROGRESS);
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse,
+			_getJSONObject(entryUuid, entriesCount, expectedEntriesCount));
+	}
 
-		boolean isTaskInProgress = false;
+	private JSONObject _getJSONObject(
+		String entryUuid, int entriesCount, int expectedEntriesCount) {
 
-		for (BackgroundTask backgroundTask :
-				optimizeImageSingleBackgroundTasks) {
+		int adaptedImagesCount = Math.min(entriesCount, expectedEntriesCount);
 
-			Map<String, Serializable> taskContextMap =
-				backgroundTask.getTaskContextMap();
-
-			String configurationEntryUuid = (String)taskContextMap.get(
-				AMOptimizeImagesBackgroundTaskConstants.
-					CONFIGURATION_ENTRY_UUID);
-
-			if (configurationEntryUuid == entryUuid) {
-				isTaskInProgress = true;
-			}
-		}
-
-		JSONObject jsonObject = null;
-
-		int min = Math.min(entriesCount, expectedEntriesCount);
-
-		if (isTaskInProgress) {
-			jsonObject = JSONUtil.put(
-				"adaptedImages", String.valueOf(min)
+		if (_isTaskInProgress(entryUuid)) {
+			return JSONUtil.put(
+				"adaptedImages", String.valueOf(adaptedImagesCount)
 			).put(
 				"errors", 0
 			).put(
 				"totalImages", String.valueOf(expectedEntriesCount)
 			);
 		}
-		else {
-			jsonObject = JSONUtil.put(
-				"adaptedImages", String.valueOf(min)
-			).put(
-				"errors", String.valueOf(expectedEntriesCount - min)
-			).put(
-				"totalImages", String.valueOf(expectedEntriesCount)
-			);
+
+		return JSONUtil.put(
+			"adaptedImages", String.valueOf(adaptedImagesCount)
+		).put(
+			"errors", String.valueOf(expectedEntriesCount - adaptedImagesCount)
+		).put(
+			"totalImages", String.valueOf(expectedEntriesCount)
+		);
+	}
+
+	private boolean _isTaskInProgress(String entryUuid) {
+		List<BackgroundTask> backgroundTasks =
+			BackgroundTaskManagerUtil.getBackgroundTasks(
+				CompanyConstants.SYSTEM,
+				OptimizeImagesSingleConfigurationBackgroundTaskExecutor.class.
+					getName(),
+				BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+		for (BackgroundTask backgroundTask : backgroundTasks) {
+			Map<String, Serializable> taskContextMap =
+				backgroundTask.getTaskContextMap();
+
+			if (entryUuid.equals(
+					taskContextMap.get(
+						AMOptimizeImagesBackgroundTaskConstants.
+							CONFIGURATION_ENTRY_UUID))) {
+
+				return true;
+			}
 		}
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonObject);
+		return false;
 	}
 
 	@Reference

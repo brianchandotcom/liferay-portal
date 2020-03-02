@@ -259,6 +259,20 @@ definition {
 			value1 = "${type}");
 	}
 
+	macro viewAssetTypeList {
+		var key_title = "${assetListName}";
+
+		Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+
+		Click(locator1 = "AssetLists#ASSET_LIST_SELECT_BUTTON");
+
+		for (var assetType : list "${assetType}") {
+			var key_assetType = "${assetType}";
+
+			AssertElementPresent(locator1 = "AssetLists#ASSET_TYPE_DROPDOWN_ITEM");
+		}
+	}
+
 	macro viewContent {
 		Click(
 			key_title = "${assetListTitle}",

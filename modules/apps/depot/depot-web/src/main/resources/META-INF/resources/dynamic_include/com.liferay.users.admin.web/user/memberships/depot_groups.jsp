@@ -89,6 +89,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
 			name="name"
+			value="<%= HtmlUtil.escape(group.getName(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text

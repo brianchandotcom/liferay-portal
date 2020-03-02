@@ -96,10 +96,6 @@ const AdaptiveMediaProgress = ({
 		fetch(percentageUrl)
 			.then(res => res.json())
 			.then(({adaptedImages, errors, totalImages}) => {
-				adaptedImages = parseInt(adaptedImages, 10);
-				errors = parseInt(errors, 10);
-				totalImages = parseInt(totalImages, 10);
-
 				if (isMounted()) {
 					setImagesFailed(errors);
 

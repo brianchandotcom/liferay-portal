@@ -246,7 +246,8 @@ public class FreeMarkerTool {
 		String returnType = javaMethodSignature.getReturnType();
 
 		if (returnType.contains("Collection<") ||
-			returnType.contains("Page<")) {
+			(returnType.contains("Page<") &&
+			 (methodName.lastIndexOf("Page") != -1))) {
 
 			methodName = methodName.substring(
 				0, methodName.lastIndexOf("Page"));

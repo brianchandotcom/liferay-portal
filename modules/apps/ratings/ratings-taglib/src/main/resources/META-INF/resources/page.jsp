@@ -19,8 +19,9 @@
 <%
 String className = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:className"));
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ratings:ratings:classPK"));
+Boolean inTrash = (Boolean)request.getAttribute("liferay-ui:ratings:inTrash");
 String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:type"));
-Map<String, Object> data = new HashMap<>();
+Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ratings:ratings:data");
 %>
 <liferay-util:html-top
 	outputKey="ratings-taglib"
@@ -44,7 +45,7 @@ Map<String, Object> data = new HashMap<>();
 		<liferay-ui:ratings
 			className="<%= className %>"
 			classPK="<%= classPK %>"
-			inTrash="<%= false %>"
+			inTrash="<%= inTrash %>"
 			type="<%= type %>"
 		/>
 	</c:otherwise>

@@ -16,33 +16,54 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
-const RatingsLike = ({disabled = false, votes = 0}) => {
+const RatingsLike = ({
+	disabled = false,
+	enabled = false,
+	inTrash = false,
+	positiveVotes = 0,
+	signedIn
+}) => {
 	const [active, setActive] = useState(false);
 
 	const toggleActive = () => {
 		setActive(!active);
-	}
+	};
+
+	const getTitle = () => {
+		if (!signedIn) {
+			return '';
+		}
+
+		if (inTrash) {
+			return LanguageUtil.get(
+				'ratings-are-disabled-because-this-entry-is-in-the-recycle-bin'
+			);
+		} else if (!enabled) {
+			return LanguageUtil.get(
+				'ratings-are-disabled-in-staging'
+			);
+		}
+
+		return active
+			? Liferay.Language.get('unlike-this')
+			: Liferay.Language.get('like-this');
+	};
 
 	return (
 		<div className="ratings-like">
 			<ClayButton
 				borderless
-				disabled={disabled}
+				disabled={!signedIn || !enabled}
 				displayType="secondary"
 				onClick={toggleActive}
 				small
-				title={
-					active
-						? Liferay.Language.get('unlike-this')
-						: Liferay.Language.get('like-this')
-				}
+				title={getTitle}
 			>
-				<ClayIcon
-					className={active ? 'selected' : ''}
-					symbol="heart"
-				/>
+				<ClayIcon className={active ? 'selected' : ''} symbol="heart" />
 
-				<strong className="ml-2">{active ? (votes + 1) : votes}</strong>
+				<strong className="ml-2">
+					{active ? positiveVotes + 1 : positiveVotes}
+				</strong>
 			</ClayButton>
 		</div>
 	);

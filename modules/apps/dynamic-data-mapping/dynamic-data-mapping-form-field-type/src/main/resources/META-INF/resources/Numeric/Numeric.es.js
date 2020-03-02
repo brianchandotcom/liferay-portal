@@ -86,6 +86,7 @@ const Numeric = ({
 				maskInstance.destroy();
 			}
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dataType, symbols, inputRef, setValue]);
 
 	return (

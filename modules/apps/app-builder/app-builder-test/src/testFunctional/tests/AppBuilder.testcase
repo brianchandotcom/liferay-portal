@@ -580,7 +580,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Alex");
 
 		FormViewBuilder.editText(
@@ -588,7 +588,7 @@ definition {
 			fieldValue = "Mister");
 
 		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
+			fieldName = "Number of children",
 			fieldValue = "4");
 
 		FormViewBuilder.selectSelectOption(
@@ -600,7 +600,7 @@ definition {
 			selectOptionsList = "Multiple 1,Multiple 2");
 
 		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
+			fieldName = "Date of birth",
 			fieldValue = "05/02/2016");
 
 		AppBuilderAdmin.save();
@@ -615,7 +615,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Ferguson");
 
 		FormViewBuilder.editText(
@@ -623,7 +623,7 @@ definition {
 			fieldValue = "Mister Ferguson");
 
 		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
+			fieldName = "Number of children",
 			fieldValue = "7");
 
 		FormViewBuilder.selectSelectOption(
@@ -635,7 +635,7 @@ definition {
 			selectOptionsList = "Multiple 3");
 
 		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
+			fieldName = "Date of birth",
 			fieldValue = "05/02/2000");
 
 		AppBuilderAdmin.save();
@@ -671,7 +671,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Pepe");
 
 		FormViewBuilder.editText(
@@ -679,7 +679,7 @@ definition {
 			fieldValue = "Mister Guardi");
 
 		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
+			fieldName = "Number of children",
 			fieldValue = "6");
 
 		FormViewBuilder.selectSelectOption(
@@ -691,7 +691,7 @@ definition {
 			selectOptionsList = "Multiple 1");
 
 		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
+			fieldName = "Date of birth",
 			fieldValue = "05/02/1999");
 
 		AppBuilderAdmin.save();
@@ -703,7 +703,7 @@ definition {
 		DetailsView.editEntry();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Klopp");
 
 		FormViewBuilder.editText(
@@ -711,7 +711,7 @@ definition {
 			fieldValue = "Mister Klopp");
 
 		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
+			fieldName = "Number of children",
 			fieldValue = "4");
 
 		FormViewBuilder.selectSelectOption(
@@ -723,7 +723,7 @@ definition {
 			selectOptionsList = "Multiple 2");
 
 		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
+			fieldName = "Date of birth",
 			fieldValue = "05/02/1989");
 
 		AppBuilderAdmin.cancel();
@@ -833,7 +833,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Alex");
 
 		FormViewBuilder.editText(
@@ -841,7 +841,7 @@ definition {
 			fieldValue = "Mister");
 
 		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
+			fieldName = "Number of children",
 			fieldValue = "4");
 
 		FormViewBuilder.selectSelectOption(
@@ -853,7 +853,7 @@ definition {
 			selectOptionsList = "Multiple 1,Multiple 2");
 
 		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
+			fieldName = "Date of birth",
 			fieldValue = "05/02/2016");
 
 		AppBuilderAdmin.save();
@@ -868,7 +868,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Ferguson");
 
 		FormViewBuilder.editText(
@@ -876,7 +876,7 @@ definition {
 			fieldValue = "Mister Ferguson");
 
 		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
+			fieldName = "Number of children",
 			fieldValue = "7");
 
 		FormViewBuilder.selectSelectOption(
@@ -888,7 +888,7 @@ definition {
 			selectOptionsList = "Multiple 3");
 
 		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
+			fieldName = "Date of birth",
 			fieldValue = "05/02/2000");
 
 		AppBuilderAdmin.save();
@@ -924,7 +924,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Pepe");
 
 		FormViewBuilder.editText(
@@ -932,7 +932,7 @@ definition {
 			fieldValue = "Mister Guardi");
 
 		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
+			fieldName = "Number of children",
 			fieldValue = "6");
 
 		FormViewBuilder.selectSelectOption(
@@ -944,7 +944,7 @@ definition {
 			selectOptionsList = "Multiple 1");
 
 		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
+			fieldName = "Date of birth",
 			fieldValue = "05/02/1999");
 
 		AppBuilderAdmin.save();
@@ -956,7 +956,7 @@ definition {
 		DetailsView.editEntry();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Klopp");
 
 		FormViewBuilder.editText(
@@ -964,7 +964,7 @@ definition {
 			fieldValue = "Mister Klopp");
 
 		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
+			fieldName = "Number of children",
 			fieldValue = "4");
 
 		FormViewBuilder.selectSelectOption(
@@ -976,7 +976,7 @@ definition {
 			selectOptionsList = "Multiple 2");
 
 		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
+			fieldName = "Date of birth",
 			fieldValue = "05/02/1989");
 
 		AppBuilderAdmin.cancel();
@@ -1099,7 +1099,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Alex");
 
 		FormViewBuilder.editText(
@@ -1107,7 +1107,7 @@ definition {
 			fieldValue = "Mister");
 
 		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
+			fieldName = "Number of children",
 			fieldValue = "2");
 
 		FormViewBuilder.selectSelectOption(
@@ -1119,7 +1119,7 @@ definition {
 			selectOptionsList = "Multiple 1,Multiple 2,Multiple 3");
 
 		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
+			fieldName = "Date of birth",
 			fieldValue = "05/02/2016");
 
 		AppBuilderAdmin.save();
@@ -1138,7 +1138,7 @@ definition {
 		AppBuilderAdmin.editItem(itemName = "Alex");
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Pepe");
 
 		FormViewBuilder.editText(
@@ -1146,7 +1146,7 @@ definition {
 			fieldValue = "Guardi");
 
 		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
+			fieldName = "Number of children",
 			fieldValue = "1");
 
 		FormViewBuilder.selectSelectOption(
@@ -1158,7 +1158,7 @@ definition {
 			selectOptionsList = "Multiple 2");
 
 		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
+			fieldName = "Date of birth",
 			fieldValue = "05/02/2014");
 
 		AppBuilderAdmin.save();
@@ -1202,7 +1202,7 @@ definition {
 
 		AppBuilderAdmin.add();
 
-		FormFields.editText(
+		FormViewBuilder.editText(
 			fieldName = "Text",
 			fieldValue = "test");
 
@@ -1511,7 +1511,7 @@ definition {
 			portletName = "My Registration app (Form View)");
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Test");
 
 		FormViewBuilder.editText(
@@ -1522,7 +1522,7 @@ definition {
 
 		AppBuilderAdmin.validateSuccessMessage();
 
-		AppBuilderAdmin.validateTextBox(fieldName = "FullName");
+		AppBuilderAdmin.validateTextBox(fieldName = "Full name");
 
 		AppBuilderAdmin.validateTextBox(fieldName = "Nickname");
 	}
@@ -1566,7 +1566,7 @@ definition {
 
 		AppBuilderAdmin.add();
 
-		FormFields.editText(
+		FormViewBuilder.editText(
 			fieldName = "Text",
 			fieldValue = "Content of form deployed as widget.");
 
@@ -1618,11 +1618,11 @@ definition {
 
 		AppBuilderAdmin.add();
 
-		FormFields.editText(
+		FormViewBuilder.editText(
 			fieldName = "Text",
 			fieldValue = "Content of form deployed as widget");
 
-		FormFields.editText(
+		FormViewBuilder.editText(
 			fieldName = "Numeric",
 			fieldValue = "1987");
 
@@ -2871,7 +2871,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Test");
 
 		FormViewBuilder.editText(
@@ -2886,7 +2886,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Best");
 
 		FormViewBuilder.editText(
@@ -2907,7 +2907,7 @@ definition {
 		DetailsView.editEntry();
 
 		FormViewBuilder.editText(
-			fieldName = "FullName",
+			fieldName = "Full name",
 			fieldValue = "Changed");
 
 		AppBuilderAdmin.save();

@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import BasicInfoPanel from './BasicInfoPanel.es';
 import {Component} from './PluginContext.es';
 
 /**
@@ -31,7 +32,7 @@ export default class {
 
 		return (
 			<Component>
-				<h1>helloooooo</h1>
+				<BasicInfoPanel url={this.url} />
 			</Component>
 		);
 	}

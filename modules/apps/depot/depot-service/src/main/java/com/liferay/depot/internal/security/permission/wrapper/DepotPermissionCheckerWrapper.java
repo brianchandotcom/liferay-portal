@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Cristina González
@@ -71,7 +73,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 		Group depotGroup = _getDepotGroup(name, primKey);
 
-		if (depotGroup != null) {
+		if ((depotGroup != null) && _supportedActionIds.contains(actionId)) {
 			try {
 				if (_isGroupAdmin(depotGroup)) {
 					return true;
@@ -267,6 +269,12 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DepotPermissionCheckerWrapper.class);
+
+	private static final Set<String> _supportedActionIds = new HashSet<>(
+		Arrays.asList(
+			ActionKeys.ASSIGN_MEMBERS, ActionKeys.ASSIGN_USER_ROLES,
+			ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW,
+			ActionKeys.VIEW_MEMBERS, ActionKeys.VIEW_SITE_ADMINISTRATION));
 
 	private final DepotEntryLocalService _depotEntryLocalService;
 	private final ModelResourcePermission<DepotEntry>

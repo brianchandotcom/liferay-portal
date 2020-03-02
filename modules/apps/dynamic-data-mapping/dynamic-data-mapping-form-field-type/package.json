@@ -38,7 +38,8 @@
 			"Grid",
 			"Select",
 			"Tooltip",
-			"Validation"
+			"Validation",
+			"withContextMock"
 		]
 	},
 	"main": "index.js",

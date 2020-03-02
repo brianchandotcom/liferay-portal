@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"@clayui/drop-down": "3.2.0",
-		"@clayui/icon": "3.0.3",
+		"@clayui/drop-down": "3.3.0",
+		"@clayui/icon": "3.0.4",
 		"clay-label": "2.20.2",
 		"clay-progress-bar": "2.20.2",
 		"clay-sticker": "2.20.2",

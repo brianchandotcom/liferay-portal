@@ -2,7 +2,7 @@
 @ignore = "true"
 definition {
 
-	property portal.upstream = "true";
+	property portal.upstream = "false";
 	property custom.properties = "default.layout.template.id=1_column";
 	property testray.main.component.name = "Social Networking";
 	var pageName = "My Sites Directory Page";

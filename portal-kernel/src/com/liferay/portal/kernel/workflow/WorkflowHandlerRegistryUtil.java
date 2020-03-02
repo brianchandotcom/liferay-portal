@@ -318,9 +318,9 @@ public class WorkflowHandlerRegistryUtil {
 		implements ServiceReferenceMapper<String, WorkflowHandler<?>> {
 
 		public WorkflowHandlerServiceReferenceMapper(
-			Predicate<WorkflowHandler<?>> filter) {
+			Predicate<WorkflowHandler<?>> predicate) {
 
-			_filter = filter;
+			_predicate = predicate;
 		}
 
 		@Override
@@ -333,12 +333,12 @@ public class WorkflowHandlerRegistryUtil {
 			WorkflowHandler<?> workflowHandler = registry.getService(
 				serviceReference);
 
-			if (_filter.test(workflowHandler)) {
+			if (_predicate.test(workflowHandler)) {
 				emitter.emit(workflowHandler.getClassName());
 			}
 		}
 
-		private final Predicate<WorkflowHandler<?>> _filter;
+		private final Predicate<WorkflowHandler<?>> _predicate;
 
 	}
 

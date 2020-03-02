@@ -34,11 +34,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,6 +68,20 @@ public class JournalEditDDMStructuresDisplayContext {
 
 	public boolean changeableDefaultLanguage() {
 		return _journalWebConfiguration.changeableDefaultLanguage();
+	}
+
+	public List<Map> getAdditionalPanels() {
+		return ListUtil.fromArray(
+			HashMapBuilder.<String, Object>put(
+				"icon", "cog"
+			).put(
+				"label", LanguageUtil.get(_httpServletRequest, "properties")
+			).put(
+				"pluginEntryPoint",
+				"journal-web@4.0.6/js/ddm_structure/panels/BasicInfo.es"
+			).put(
+				"sidebarPanelId", "properties"
+			).build());
 	}
 
 	public String getAvailableFields() {

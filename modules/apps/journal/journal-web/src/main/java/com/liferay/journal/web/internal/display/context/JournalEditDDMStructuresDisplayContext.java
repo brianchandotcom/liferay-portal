@@ -76,7 +76,7 @@ public class JournalEditDDMStructuresDisplayContext {
 		return _journalWebConfiguration.changeableDefaultLanguage();
 	}
 
-	public List<Map> getAdditionalPanels() {
+	public List<Map> getAdditionalPanels(String npmResolvedPackageName) {
 		return ListUtil.fromArray(
 			HashMapBuilder.<String, Object>put(
 				"icon", "cog"
@@ -84,7 +84,7 @@ public class JournalEditDDMStructuresDisplayContext {
 				"label", LanguageUtil.get(_httpServletRequest, "properties")
 			).put(
 				"pluginEntryPoint",
-				"journal-web@4.0.6/js/ddm_structure/panels/index.es"
+				npmResolvedPackageName + "/js/ddm_structure/panels/index.es"
 			).put(
 				"sidebarPanelId", "properties"
 			).put(

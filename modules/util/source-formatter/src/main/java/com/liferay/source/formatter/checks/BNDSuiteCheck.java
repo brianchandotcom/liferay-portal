@@ -64,7 +64,7 @@ public class BNDSuiteCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					"Deprecated apps that are not published on Marketplace " +
-						"should be moved to the deprecated folder");
+						"should be moved to the archived folder");
 			}
 		}
 

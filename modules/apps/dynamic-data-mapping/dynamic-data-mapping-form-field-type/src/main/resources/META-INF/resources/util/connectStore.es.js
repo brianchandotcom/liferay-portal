@@ -27,18 +27,27 @@ export const connectStore = Component => {
 		const dispatch = (...args) =>
 			(context.dispatch || instance.emit)(...args);
 
+		const store = context.store || {};
+
 		const emit = (name, event, value) =>
 			instance.emit(name, {
 				// A hacky to imitate an instance of a Metal+soy component
 				fieldInstance: {
 					...instance,
 					...instance.props,
-					isDisposed: instance.isDisposed
+					isDisposed: instance.isDisposed,
 				},
 				originalEvent: event,
-				value
+				value,
 			});
 
-		return <Component {...otherProps} dispatch={dispatch} emit={emit} />;
+		return (
+			<Component
+				{...otherProps}
+				dispatch={dispatch}
+				emit={emit}
+				store={store}
+			/>
+		);
 	};
 };

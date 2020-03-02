@@ -22,9 +22,11 @@ import React, {useMemo} from 'react';
 function FieldBase({
 	children,
 	displayErrors,
+	editingLanguageId,
 	errorMessage,
 	id,
 	label,
+	localizedValue = {},
 	name,
 	onRemoveButton,
 	onRepeatButton,
@@ -36,8 +38,22 @@ function FieldBase({
 	tip,
 	tooltip,
 	valid,
-	visible
+	visible,
 }) {
+	const localizedValueArray = useMemo(() => {
+		const languageValues = [];
+
+		Object.keys(localizedValue).forEach(key => {
+			if (key !== editingLanguageId && localizedValue[key] !== '') {
+				languageValues.push({
+					name: name.replace(editingLanguageId, key),
+					value: localizedValue[key],
+				});
+			}
+		});
+
+		return languageValues;
+	}, [localizedValue, editingLanguageId, name]);
 	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
 
 	return (
@@ -45,7 +61,7 @@ function FieldBase({
 			<div
 				className={classNames('form-group', {
 					'has-error': displayErrors && errorMessage && !valid,
-					hide: !visible
+					hide: !visible,
 				})}
 				data-field-name={name}
 			>
@@ -84,7 +100,7 @@ function FieldBase({
 					repeatable) && (
 					<label
 						className={classNames({
-							'ddm-empty': !showLabel && !required
+							'ddm-empty': !showLabel && !required,
 						})}
 						htmlFor={id}
 					>
@@ -114,6 +130,16 @@ function FieldBase({
 
 				{children}
 
+				{localizedValueArray.length > 0 &&
+					localizedValueArray.map(language => (
+						<input
+							key={language.name}
+							name={language.name}
+							type="hidden"
+							value={language.value}
+						/>
+					))}
+
 				{tip && <span className="form-text">{tip}</span>}
 
 				{displayErrors && errorMessage && !valid && (
@@ -130,9 +156,10 @@ function FieldBase({
  * This Proxy connects to the store to send the changes directly to the store. This
  * should be replaced when we have a communication with a Store/Provider in React.
  */
-const FieldBaseProxy = ({dispatch, name, ...otherProps}) => (
+const FieldBaseProxy = ({dispatch, name, store, ...otherProps}) => (
 	<FieldBase
 		{...otherProps}
+		editingLanguageId={store.editingLanguageId}
 		name={name}
 		onRemoveButton={() => dispatch('fieldRemoved', name)}
 		onRepeatButton={() => dispatch('fieldRepeated', name)}

@@ -36,8 +36,8 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 
 	<clay:alert
 		message='<%= LanguageUtil.get(resourceBundle, "timezone-warning-message") %>'
-		style="warning"
-		title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+		style="info"
+		title='<%= LanguageUtil.get(resourceBundle, "info") %>'
 	/>
 
 	<clay:alert

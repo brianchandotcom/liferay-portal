@@ -78,6 +78,10 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		Layout draftLayout = _layoutLocalService.getLayout(
 			themeDisplay.getPlid());
 
+		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		draftLayout = _layoutLocalService.updateLayout(draftLayout);
+
 		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
 
 		LayoutPermissionUtil.check(

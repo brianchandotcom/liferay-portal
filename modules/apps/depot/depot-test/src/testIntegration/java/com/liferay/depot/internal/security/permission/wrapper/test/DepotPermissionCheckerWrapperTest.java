@@ -75,6 +75,17 @@ public class DepotPermissionCheckerWrapperTest {
 						depotEntry.getGroupId(), ActionKeys.VIEW));
 
 				RoleTestUtil.addResourcePermission(
+					role, Group.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.VIEW);
+
+				Assert.assertFalse(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(), ActionKeys.VIEW));
+
+				RoleTestUtil.addResourcePermission(
 					role, DepotEntry.class.getName(),
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(TestPropsValues.getCompanyId()),

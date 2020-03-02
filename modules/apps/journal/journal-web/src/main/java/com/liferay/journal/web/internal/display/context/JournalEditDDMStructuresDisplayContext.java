@@ -84,7 +84,7 @@ public class JournalEditDDMStructuresDisplayContext {
 				"label", LanguageUtil.get(_httpServletRequest, "properties")
 			).put(
 				"pluginEntryPoint",
-				"journal-web@4.0.6/js/ddm_structure/panels/BasicInfo.es"
+				"journal-web@4.0.6/js/ddm_structure/panels/index.es"
 			).put(
 				"sidebarPanelId", "properties"
 			).put(

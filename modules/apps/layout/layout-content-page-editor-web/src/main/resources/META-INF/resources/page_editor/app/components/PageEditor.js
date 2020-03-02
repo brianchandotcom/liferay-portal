@@ -23,6 +23,7 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
+import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {
 	ARROW_DOWN_KEYCODE,
 	ARROW_UP_KEYCODE,
@@ -33,7 +34,12 @@ import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
 import moveItem from '../thunks/moveItem';
-import {useActiveItemId, useIsActive, useSelectItem} from './Controls';
+import {
+	useActivationOrigin,
+	useActiveItemId,
+	useIsActive,
+	useSelectItem,
+} from './Controls';
 import DragPreview from './DragPreview';
 import {EditableDecorationProvider} from './fragment-content/EditableDecorationContext';
 import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
@@ -280,19 +286,25 @@ function LayoutDataItemContent({
 	...otherProps
 }) {
 	const Component = LAYOUT_DATA_ITEMS[item.type];
+	const activationOrigin = useActivationOrigin();
 	const isActive = useIsActive()(item.itemId);
 	const isMounted = useIsMounted();
 	const componentRef = useRef(null);
 
 	useEffect(() => {
-		if (isActive && componentRef.current && isMounted()) {
+		if (
+			isActive &&
+			componentRef.current &&
+			isMounted() &&
+			activationOrigin === ITEM_ACTIVATION_ORIGINS.structureTree
+		) {
 			componentRef.current.scrollIntoView({
 				behavior: 'smooth',
 				block: 'nearest',
 				inline: 'nearest',
 			});
 		}
-	}, [componentRef, isActive, isMounted]);
+	}, [activationOrigin, componentRef, isActive, isMounted]);
 
 	return (
 		<Component item={item} layoutData={layoutData} ref={componentRef}>

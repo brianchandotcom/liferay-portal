@@ -112,7 +112,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 <c:if test="<%= depotAdminMembershipsDisplayContext.isSelectable() %>">
 	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 		AUI().use('liferay-search-container', function(A) {
-			var AArray = AUI().Array;
+			var AArray = A.Array;
 
 			var addDepotGroupIds = [];
 			var deleteDepotGroupIds = [];

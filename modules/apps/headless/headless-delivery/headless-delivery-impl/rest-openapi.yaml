@@ -314,7 +314,6 @@ components:
                     description:
                         The document's ID.
                     format: int64
-                    readOnly: true
                     type: integer
                 sizeInBytes:
                     description:

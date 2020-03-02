@@ -150,7 +150,6 @@ components:
                 id:
                     description:
                         The organization's ID.
-                    readOnly: true
                     type: string
                 image:
                     description:

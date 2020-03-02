@@ -91,6 +91,12 @@ const ControlsProvider = ({children}) => {
 	);
 };
 
+const useActivationOrigin = () => {
+	const [state] = useContext(ControlsContext);
+
+	return state.activationOrigin;
+};
+
 const useActiveItemId = () => {
 	const [state] = useContext(ControlsContext);
 
@@ -187,6 +193,7 @@ const useSelectItem = () => {
 export {
 	ControlsConsumer,
 	ControlsProvider,
+	useActivationOrigin,
 	useActiveItemId,
 	useActiveItemType,
 	useHoveredItemId,

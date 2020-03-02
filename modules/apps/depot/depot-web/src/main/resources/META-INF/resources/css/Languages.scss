@@ -12,4 +12,14 @@
 	&.drop-bottom td {
 		box-shadow: inset 0 -3px 0 0 $primary, 0 1px 0 0 $primary;
 	}
+
+	.language-drag-handler {
+		color: #cdced9;
+		cursor: move;
+
+		svg {
+			height: 1.5rem;
+			width: 1.5rem;
+		}
+	}
 }

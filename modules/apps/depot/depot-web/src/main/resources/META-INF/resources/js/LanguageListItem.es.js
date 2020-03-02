@@ -144,12 +144,21 @@ const LanguageListItem = ({
 			ref={ref}
 		>
 			<ClayTable.Cell expanded>
-				{displayName}
-				{isDefault && (
-					<ClayLabel className="ml-3" displayType="info">
-						{Liferay.Language.get('default')}
-					</ClayLabel>
-				)}
+				<div className="autofit-row autofit-row-center">
+					<div className="autofit-col autofit-padded-no-gutters">
+						<div className="language-drag-handler">
+							<ClayIcon symbol="drag" />
+						</div>
+					</div>
+					<div className="align-items-center autofit-col autofit-col-expand flex-row justify-content-start">
+						{displayName}
+						{isDefault && (
+							<ClayLabel className="ml-3" displayType="info">
+								{Liferay.Language.get('default')}
+							</ClayLabel>
+						)}
+					</div>
+				</div>
 			</ClayTable.Cell>
 			{showActions && (
 				<ClayTable.Cell align="right">

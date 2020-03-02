@@ -82,11 +82,9 @@ public class AdaptedImagesPercentageMVCResourceCommand
 	private JSONObject _getJSONObject(
 		String entryUuid, int entriesCount, int expectedEntriesCount) {
 
-		int adaptedImagesCount = Math.min(entriesCount, expectedEntriesCount);
-
 		if (_isTaskInProgress(entryUuid)) {
 			return JSONUtil.put(
-				"adaptedImages", String.valueOf(adaptedImagesCount)
+				"adaptedImages", String.valueOf(entriesCount)
 			).put(
 				"errors", 0
 			).put(
@@ -95,9 +93,9 @@ public class AdaptedImagesPercentageMVCResourceCommand
 		}
 
 		return JSONUtil.put(
-			"adaptedImages", String.valueOf(adaptedImagesCount)
+			"adaptedImages", String.valueOf(entriesCount)
 		).put(
-			"errors", String.valueOf(expectedEntriesCount - adaptedImagesCount)
+			"errors", String.valueOf(expectedEntriesCount - entriesCount)
 		).put(
 			"totalImages", String.valueOf(expectedEntriesCount)
 		);

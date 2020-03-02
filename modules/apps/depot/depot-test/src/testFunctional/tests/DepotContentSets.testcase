@@ -956,6 +956,67 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the web content created by the structure can be selected via searching for the corresponding structure name."
+	@priority = "5"
+	test SelectWebContentWithStructure {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		for (var i : list "1,2") {
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "WC WebContent Text ${i}",
+				webContentTitle = "WC WebContent Title ${i}");
+
+			PortletEntry.publish();
+		}
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		for (var i : list "1,2") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Depot Manual Asset List",
+				assetName = "WC WebContent Title ${i}",
+				assetType = "WC Structure Name");
+		}
+
+		for (var i : list "1,2") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Depot Manual Asset List",
+				assetTitle = "WC WebContent Title ${i}",
+				assetType = "Web Content Article");
+		}
+	}
+
 	@description = "This ensures that Content Sets can be set in a depot."
 	@priority = "5"
 	test Smoke {

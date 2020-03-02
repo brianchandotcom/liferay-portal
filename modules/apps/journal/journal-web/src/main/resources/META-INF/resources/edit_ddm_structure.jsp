@@ -84,22 +84,24 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 		</div>
 	</nav>
 
-	<div class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
-		<div class="sidebar-header">
-			<h4 class="component-title">
-				<liferay-ui:message key="properties" />
-			</h4>
-		</div>
+	<c:if test="<%= !journalDisplayContext.useDataEngineEditor() %>">
+		<div class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
+			<div class="sidebar-header">
+				<h4 class="component-title">
+					<liferay-ui:message key="properties" />
+				</h4>
+			</div>
 
-		<div class="sidebar-body">
-			<liferay-frontend:form-navigator
-				fieldSetCssClass="panel-group-flush"
-				formModelBean="<%= ddmStructure %>"
-				id="<%= JournalWebConstants.FORM_NAVIGATOR_ID_JOURNAL_DDM_STRUCTURE %>"
-				showButtons="<%= false %>"
-			/>
+			<div class="sidebar-body">
+				<liferay-frontend:form-navigator
+					fieldSetCssClass="panel-group-flush"
+					formModelBean="<%= ddmStructure %>"
+					id="<%= JournalWebConstants.FORM_NAVIGATOR_ID_JOURNAL_DDM_STRUCTURE %>"
+					showButtons="<%= false %>"
+				/>
+			</div>
 		</div>
-	</div>
+	</c:if>
 
 	<div class="contextual-sidebar-content">
 		<div class="container-fluid container-fluid-max-xl container-view">

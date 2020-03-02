@@ -3,6 +3,7 @@ import {PageTypes} from './PageTypes';
 export interface Config {
 	addFragmentEntryLinkCommentURL: string;
 	addFragmentEntryLinkURL: string;
+	addFragmentEntryLinksURL: string;
 	addItemURL: string;
 	addPortletURL: string;
 	addSegmentsExperienceURL: string;

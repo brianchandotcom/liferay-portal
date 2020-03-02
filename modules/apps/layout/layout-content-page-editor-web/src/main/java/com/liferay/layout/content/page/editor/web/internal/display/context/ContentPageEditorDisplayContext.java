@@ -203,6 +203,10 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/content_layout/add_fragment_entry_link_comment")
 			).put(
+				"addFragmentEntryLinksURL",
+				getFragmentEntryActionURL(
+					"/content_layout/add_fragment_entry_links")
+			).put(
 				"addFragmentEntryLinkURL",
 				getFragmentEntryActionURL(
 					"/content_layout/add_fragment_entry_link")

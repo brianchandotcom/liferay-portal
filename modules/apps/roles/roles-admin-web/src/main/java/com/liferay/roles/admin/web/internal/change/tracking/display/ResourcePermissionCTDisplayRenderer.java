@@ -139,7 +139,8 @@ public class ResourcePermissionCTDisplayRenderer
 			int scope = resourcePermission.getScope();
 
 			if (scope == ResourceConstants.SCOPE_COMPANY) {
-				arguments.add(_language.get(locale, "all-sites"));
+				arguments.add(
+					_language.get(locale, "all-sites-and-asset-libraries"));
 			}
 			else if (scope == ResourceConstants.SCOPE_GROUP) {
 				try {

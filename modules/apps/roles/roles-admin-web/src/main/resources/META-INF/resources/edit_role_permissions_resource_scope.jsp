@@ -63,7 +63,7 @@ String portletId = (String)objArray[9];
 		else if (role.getType() == RoleConstants.TYPE_REGULAR) {
 		%>
 
-			<liferay-ui:message key="all-sites" />
+			<liferay-ui:message key="all-sites-and-asset-libraries" />
 
 		<%
 		}

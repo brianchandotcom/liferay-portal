@@ -73,7 +73,9 @@ function GroupLabels({itemSelectorURL, portletNamespace, target}) {
 		<>
 			<span className="permission-scopes">
 				{groupNames.length === 0 ? (
-					<span>{Liferay.Language.get('all-sites')}</span>
+					<span>
+						{Liferay.Language.get('all-sites-and-asset-libraries')}
+					</span>
 				) : (
 					groupNames.map((name, i) => (
 						<ClayLabel

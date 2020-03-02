@@ -300,7 +300,7 @@ const createReducer = dataLayoutBuilder => {
 
 				return {
 					...state,
-					fieldTypes: fieldTypes.filter(({system}) => !system),
+					fieldTypes,
 				};
 			}
 			case UPDATE_FIELDSETS: {

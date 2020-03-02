@@ -16,11 +16,15 @@ import {getIndexes} from 'dynamic-data-mapping-form-renderer/js/components/FormR
 import dom from 'metal-dom';
 import React, {useEffect, useState} from 'react';
 
-import DataLayoutBuilderColumn from './DataLayoutBuilderDropColumn.es';
+import DataLayoutBuilderColumnDropZone from './DataLayoutBuilderColumnDropZone.es';
 import DragLayer from './DragLayer.es';
 
 const getColumns = () => [
 	...document.querySelectorAll('.col-empty .ddm-target'),
+];
+
+const getFields = () => [
+	...document.querySelectorAll('.ddm-field-container.ddm-target'),
 ];
 
 const getColumnKey = node => {
@@ -30,15 +34,21 @@ const getColumnKey = node => {
 	return `column_${pageIndex}_${rowIndex}_${columnIndex}_${placeholder}`;
 };
 
+const getFieldKey = node => {
+	return node.dataset.fieldName;
+};
+
 export default ({dataLayoutBuilder}) => {
 	const [columns, setColumns] = useState(getColumns());
+	const [fields, setFields] = useState(getFields());
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
 
-		const eventHandler = provider.on('rendered', () =>
-			setColumns(getColumns())
-		);
+		const eventHandler = provider.on('rendered', () => {
+			setColumns(getColumns());
+			setFields(getFields());
+		});
 
 		return () => eventHandler.removeListener();
 	}, [dataLayoutBuilder]);
@@ -50,9 +60,20 @@ export default ({dataLayoutBuilder}) => {
 			{columns.map(
 				(node, index) =>
 					node.parentElement && (
-						<DataLayoutBuilderColumn
+						<DataLayoutBuilderColumnDropZone
 							dataLayoutBuilder={dataLayoutBuilder}
 							key={getColumnKey(node, index)}
+							node={node}
+						/>
+					)
+			)}
+
+			{fields.map(
+				(node, index) =>
+					node.parentElement && (
+						<DataLayoutBuilderColumnDropZone
+							dataLayoutBuilder={dataLayoutBuilder}
+							key={getFieldKey(node, index)}
 							node={node}
 						/>
 					)

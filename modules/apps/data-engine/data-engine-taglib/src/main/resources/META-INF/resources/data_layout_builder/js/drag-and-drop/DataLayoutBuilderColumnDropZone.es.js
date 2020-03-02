@@ -31,29 +31,52 @@ export default ({dataLayoutBuilder, node}) => {
 	const [{dataDefinition}] = useContext(AppContext);
 	const onDrop = useCallback(
 		({data, type}) => {
-			const addedToPlaceholder = !!dom.closest(node, '.placeholder');
+			const {fieldName} = node.dataset;
 			const indexes = getIndexes(node.parentElement);
+			let parentFieldName;
+			const parentFieldNode = dom.closest(
+				node.parentElement,
+				'.ddm-field'
+			);
+
+			if (parentFieldNode) {
+				parentFieldName = parentFieldNode.dataset.fieldName;
+			}
 
 			if (type === DRAG_FIELD_TYPE) {
-				dataLayoutBuilder.dispatch(
-					'fieldAdded',
-					dropLayoutBuilderField({
+				const payload = dropLayoutBuilderField({
+					dataLayoutBuilder,
+					fieldName,
+					fieldTypeName: data.name,
+					indexes,
+					parentFieldName,
+				});
+
+				if (dom.closest(node, '.col-empty')) {
+					const addedToPlaceholder = dom.closest(
+						node,
+						'.placeholder'
+					);
+
+					dataLayoutBuilder.dispatch('fieldAdded', {
 						addedToPlaceholder,
-						dataLayoutBuilder,
-						fieldTypeName: data.name,
-						indexes,
-					})
-				);
+						...payload,
+					});
+				}
+				else {
+					dataLayoutBuilder.dispatch('sectionAdded', payload);
+				}
 			}
 			else if (type === DRAG_DATA_DEFINITION_FIELD) {
 				dataLayoutBuilder.dispatch(
 					'fieldAdded',
 					dropCustomObjectField({
-						addedToPlaceholder,
 						dataDefinition,
 						dataDefinitionFieldName: data.name,
 						dataLayoutBuilder,
+						fieldName,
 						indexes,
+						parentFieldName,
 						skipFieldNameGeneration: true,
 					})
 				);
@@ -86,11 +109,26 @@ export default ({dataLayoutBuilder, node}) => {
 			classList.remove('target-droppable');
 		}
 
+		const parentFieldNode = dom.closest(
+			node.parentElement,
+			`.ddm-field-container`
+		);
+
 		if (overTarget) {
 			classList.add('target-over');
+			classList.add('targetOver');
+
+			if (parentFieldNode) {
+				parentFieldNode.classList.add('active-drop-child');
+			}
 		}
 		else {
 			classList.remove('target-over');
+			classList.remove('targetOver');
+
+			if (parentFieldNode) {
+				parentFieldNode.classList.remove('active-drop-child');
+			}
 		}
 	}, [canDrop, node, overTarget]);
 

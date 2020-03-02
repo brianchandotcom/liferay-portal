@@ -58,18 +58,22 @@ export const dropCustomObjectField = ({
 
 export const dropLayoutBuilderField = ({
 	dataLayoutBuilder,
+	fieldName,
 	fieldTypeName,
-	...payload
+	indexes,
+	parentFieldName,
 }) => {
-	const fieldType = dataLayoutBuilder.getFieldTypes().find(({name}) => {
-		return name === fieldTypeName;
-	});
-
 	return {
-		...payload,
+		data: {
+			fieldName,
+			parentFieldName,
+		},
 		fieldType: {
-			...fieldType,
+			...dataLayoutBuilder.getFieldTypes().find(({name}) => {
+				return name === fieldTypeName;
+			}),
 			editable: true,
 		},
+		indexes,
 	};
 };

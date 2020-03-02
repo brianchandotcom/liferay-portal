@@ -78,11 +78,24 @@ public class DataLayoutUtil {
 	}
 
 	public static DataLayout toDataLayout(SPIDataLayout spiDataLayout) {
+		if (spiDataLayout == null) {
+			return null;
+		}
+
 		return new DataLayout() {
 			{
+				dataDefinitionId = spiDataLayout.getDataDefinitionId();
+				description = spiDataLayout.getDescription();
+				dataLayoutKey = spiDataLayout.getDataLayoutKey();
 				dataLayoutPages = _toDataLayoutPages(
 					spiDataLayout.getSPIDataLayoutPages());
+				dateCreated = spiDataLayout.getDateCreated();
+				dateModified = spiDataLayout.getDateModified();
+				id = spiDataLayout.getId();
+				name = spiDataLayout.getName();
 				paginationMode = spiDataLayout.getPaginationMode();
+				siteId = spiDataLayout.getSiteId();
+				userId = spiDataLayout.getUserId();
 			}
 		};
 	}
@@ -98,6 +111,7 @@ public class DataLayoutUtil {
 		spiDataLayout.setId(dataLayout.getId());
 		spiDataLayout.setName(dataLayout.getName());
 		spiDataLayout.setPaginationMode(dataLayout.getPaginationMode());
+		spiDataLayout.setSiteId(dataLayout.getSiteId());
 		spiDataLayout.setSPIDataLayoutPages(
 			_toSPIDataLayoutPages(dataLayout.getDataLayoutPages()));
 		spiDataLayout.setUserId(dataLayout.getUserId());

@@ -134,6 +134,7 @@ public class SPIDataDefinitionResource {
 				site, spiDataDefinition.getStorageType()));
 
 		if (spiDataLayout != null) {
+			spiDataLayout.setDataDefinitionId(spiDataDefinition.getId());
 			spiDataLayout.setDataLayoutKey(
 				spiDataDefinition.getDataDefinitionKey());
 
@@ -296,6 +297,13 @@ public class SPIDataDefinitionResource {
 			SPIDataLayoutResource spiDataLayoutResource =
 				_getSPIDataLayoutResource();
 
+			if (spiDataLayout.getId() == null) {
+				SPIDataLayout spiDefaultDataLayout = _getDefaultDataLayout(
+					spiDataDefinition.getId(), spiDataLayoutResource);
+
+				spiDataLayout.setId(spiDefaultDataLayout.getId());
+			}
+
 			spiDataDefinition.setSPIDefaultDataLayout(
 				spiDataLayoutResource.updateDataLayout(spiDataLayout));
 		}
@@ -358,6 +366,18 @@ public class SPIDataDefinitionResource {
 			dataDefinitionId);
 
 		return ddmStructure.getClassNameId();
+	}
+
+	private SPIDataLayout _getDefaultDataLayout(
+			long dataDefinitionId, SPIDataLayoutResource spiDataLayoutResource)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			dataDefinitionId);
+
+		return spiDataLayoutResource.getDataLayout(
+			ddmStructure.getClassNameId(), ddmStructure.getStructureKey(),
+			ddmStructure.getGroupId());
 	}
 
 	private String[] _getRemovedFieldNames(

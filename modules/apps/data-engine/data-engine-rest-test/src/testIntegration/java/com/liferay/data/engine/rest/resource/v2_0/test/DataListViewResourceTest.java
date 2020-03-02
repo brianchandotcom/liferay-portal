@@ -57,6 +57,7 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 	protected DataListView randomDataListView() throws Exception {
 		DataListView dataListView = super.randomDataListView();
 
+		dataListView.setDataDefinitionId(_dataDefinition.getId());
 		dataListView.setFieldNames(
 			new String[] {RandomTestUtil.randomString()});
 

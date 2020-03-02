@@ -133,9 +133,13 @@ public class DataDefinitionUtil {
 		spiDataDefinition.setSPIDataDefinitionFields(
 			_toSPIDataDefinitionFields(
 				dataDefinition.getDataDefinitionFields()));
-		spiDataDefinition.setSPIDefaultDataLayout(
-			DataLayoutUtil.toSPIDataLayout(
-				dataDefinition.getDefaultDataLayout()));
+
+		if (dataDefinition.getDefaultDataLayout() != null) {
+			spiDataDefinition.setSPIDefaultDataLayout(
+				DataLayoutUtil.toSPIDataLayout(
+					dataDefinition.getDefaultDataLayout()));
+		}
+
 		spiDataDefinition.setStorageType(dataDefinition.getStorageType());
 		spiDataDefinition.setUserId(dataDefinition.getUserId());
 

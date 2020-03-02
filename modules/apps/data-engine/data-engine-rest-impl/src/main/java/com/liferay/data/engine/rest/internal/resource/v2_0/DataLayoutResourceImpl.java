@@ -194,6 +194,7 @@ public class DataLayoutResourceImpl
 			dataLayout);
 
 		spiDataLayout.setId(dataLayoutId);
+		spiDataLayout.setSiteId(ddmStructureLayout.getGroupId());
 
 		return DataLayoutUtil.toDataLayout(
 			spiDataLayoutResource.updateDataLayout(spiDataLayout));

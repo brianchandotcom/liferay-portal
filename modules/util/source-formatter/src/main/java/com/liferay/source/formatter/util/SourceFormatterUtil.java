@@ -229,6 +229,8 @@ public class SourceFormatterUtil {
 	}
 
 	public static String getMarkdownFileName(String camelCaseName) {
+		camelCaseName = camelCaseName.replaceAll("([A-Z])s([A-Z])", "$1S$2");
+
 		String markdownFileName = TextFormatter.format(
 			camelCaseName, TextFormatter.K);
 

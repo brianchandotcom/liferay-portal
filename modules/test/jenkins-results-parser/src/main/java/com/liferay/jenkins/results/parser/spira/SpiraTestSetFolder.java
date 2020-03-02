@@ -246,6 +246,38 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 		return projectID + "-" + testSetFolderID;
 	}
 
+	private static List<JSONObject> _requestSpiraTestSetFolders(
+		SpiraProject spiraProject) {
+
+		List<JSONObject> spiraTestSetFolders = new ArrayList<>();
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		try {
+			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+				"projects/{project_id}/test-set-folders", null,
+				urlPathReplacements, HttpRequestMethod.GET, null);
+
+			for (int i = 0; i < responseJSONArray.length(); i++) {
+				JSONObject responseJSONObject = responseJSONArray.getJSONObject(
+					i);
+
+				responseJSONObject.put(
+					SpiraProject.ID_KEY, spiraProject.getID());
+
+				spiraTestSetFolders.add(responseJSONObject);
+			}
+
+			return spiraTestSetFolders;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private SpiraTestSetFolder(JSONObject jsonObject) {
 		super(jsonObject);
 	}

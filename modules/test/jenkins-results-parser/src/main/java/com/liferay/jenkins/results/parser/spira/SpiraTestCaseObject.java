@@ -273,6 +273,45 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		return projectID + "-" + testCaseID;
 	}
 
+	private static List<JSONObject> _requestSpiraTestCases(
+		SpiraProject spiraProject,
+		SearchResult.SearchParameter... searchParameters) {
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		Map<String, String> urlParameters = new HashMap<>();
+
+		urlParameters.put("number_of_rows", String.valueOf(15000));
+		urlParameters.put("starting_row", String.valueOf(1));
+
+		JSONArray requestJSONArray = new JSONArray();
+
+		for (SearchResult.SearchParameter searchParameter : searchParameters) {
+			requestJSONArray.put(searchParameter.toFilterJSONObject());
+		}
+
+		try {
+			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+				"projects/{project_id}/test-cases/search", urlParameters,
+				urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONArray.toString());
+
+			List<JSONObject> spiraTestCases = new ArrayList<>();
+
+			for (int i = 0; i < responseJSONArray.length(); i++) {
+				spiraTestCases.add(responseJSONArray.getJSONObject(i));
+			}
+
+			return spiraTestCases;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private SpiraTestCaseObject(JSONObject jsonObject) {
 		super(jsonObject);
 	}

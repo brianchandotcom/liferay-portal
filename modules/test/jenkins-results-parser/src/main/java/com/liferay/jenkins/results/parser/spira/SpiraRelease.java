@@ -274,6 +274,43 @@ public class SpiraRelease extends PathSpiraArtifact {
 		return projectID + "-" + releaseID;
 	}
 
+	private static List<JSONObject> _requestSpiraReleases(
+		int spiraProjectID, SearchResult.SearchParameter... searchParameters) {
+
+		Map<String, String> urlParameters = new HashMap<>();
+
+		urlParameters.put("number_rows", String.valueOf(15000));
+		urlParameters.put("start_row", String.valueOf(1));
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put("project_id", String.valueOf(spiraProjectID));
+
+		JSONArray requestJSONArray = new JSONArray();
+
+		for (SearchResult.SearchParameter searchParameter : searchParameters) {
+			requestJSONArray.put(searchParameter.toFilterJSONObject());
+		}
+
+		try {
+			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+				"projects/{project_id}/releases/search", urlParameters,
+				urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONArray.toString());
+
+			List<JSONObject> spiraReleases = new ArrayList<>();
+
+			for (int i = 0; i < responseJSONArray.length(); i++) {
+				spiraReleases.add(responseJSONArray.getJSONObject(i));
+			}
+
+			return spiraReleases;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private SpiraRelease(JSONObject jsonObject) {
 		super(jsonObject);
 	}

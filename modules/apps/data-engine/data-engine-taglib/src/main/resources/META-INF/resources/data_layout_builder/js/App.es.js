@@ -19,6 +19,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import AppContext from './AppContext.es';
 import AppContextProvider from './AppContextProvider.es';
+import MultiPanelSidebar from './components/sidebar/MultiPanelSidebar.es';
 import DataLayoutBuilder from './data-layout-builder/DataLayoutBuilder.es';
 import DataLayoutBuilderContextProvider from './data-layout-builder/DataLayoutBuilderContextProvider.es';
 import DataLayoutBuilderSidebar from './data-layout-builder/DataLayoutBuilderSidebar.es';
@@ -38,7 +39,23 @@ const parseProps = ({
 	groupId: Number(groupId),
 });
 
-const AppContent = ({dataLayoutBuilder, setDataLayoutBuilder, ...props}) => {
+const AppSidebar = ({panels, sidebarPanels}) => {
+	if (panels && sidebarPanels) {
+		return (
+			<MultiPanelSidebar panels={panels} sidebarPanels={sidebarPanels} />
+		);
+	}
+
+	return <DataLayoutBuilderSidebar />;
+};
+
+const AppContent = ({
+	dataLayoutBuilder,
+	panels,
+	setDataLayoutBuilder,
+	sidebarPanels,
+	...props
+}) => {
 	const [state, dispatch] = useContext(AppContext);
 
 	useEffect(() => {
@@ -59,7 +76,7 @@ const AppContent = ({dataLayoutBuilder, setDataLayoutBuilder, ...props}) => {
 				<DataLayoutBuilderContextProvider
 					dataLayoutBuilder={dataLayoutBuilder}
 				>
-					<DataLayoutBuilderSidebar />
+					<AppSidebar panels={panels} sidebarPanels={sidebarPanels} />
 
 					<DataLayoutBuilderDragAndDrop
 						dataLayoutBuilder={dataLayoutBuilder}
@@ -112,5 +129,5 @@ const App = props => {
 };
 
 export default function(props) {
-	return <App {...props} />;
+	return <App {...props} panels={[['fields'], ['properties']]} />;
 }

@@ -1,0 +1,92 @@
+@import 'atlas-variables';
+
+@import '../variables';
+
+$multiPanelSidebarButtonHeight: $multiPanelSidebarButtonWidth;
+
+// z-indexes for children of page-editor-sidebar (which is a stacking context).
+
+$zIndexButtons: 1;
+$zIndexContent: 0;
+
+.multi-panel-sidebar {
+	display: flex;
+	height: calc(100vh - #{$toolbarHeight});
+	position: fixed;
+	right: 0;
+	top: $toolbarHeight;
+	z-index: $zIndexMultiPanelSidebar;
+
+	&__buttons {
+		background-color: $multiPanelSidebarButtonBackgroundColor;
+		flex-direction: column;
+		padding-top: 16px;
+		width: $multiPanelSidebarButtonWidth;
+		z-index: $zIndexButtons;
+
+		a {
+			align-items: center;
+			border-radius: 0.25rem;
+			color: #a7a9bc;
+			display: flex;
+			height: 2.5em;
+			justify-content: center;
+
+			&.active,
+			&:active,
+			&:focus,
+			&:hover {
+				color: $multiPanelSidebarButtonHoverColor;
+			}
+
+			&:focus {
+				box-shadow: 0 0 0 0.125rem #fff, 0 0 0 0.25rem #80acff,
+					inset 0 0 rgba(0, 0, 0, 0);
+				outline: none;
+			}
+		}
+
+		button {
+			color: $multiPanelSidebarButtonColor;
+
+			&.active,
+			&:active,
+			&:focus,
+			&:hover {
+				color: $multiPanelSidebarButtonHoverColor;
+			}
+		}
+
+		hr {
+			border-color: $multiPanelSidebarButtonSeparatorColor;
+			margin: 12px 8px;
+		}
+	}
+
+	&__content {
+		background-color: $multiPanelSidebarContentBackgroundColor;
+		border-left: 1px solid $multiPanelSidebarBorderColor;
+		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
+		overflow-x: hidden;
+		position: fixed;
+		right: $multiPanelSidebarButtonWidth;
+		transform: translateX(100%);
+		transition: transform ease $defaultTransitionDuration;
+		width: $multiPanelSidebarContentWidth;
+		z-index: $zIndexContent;
+
+		&--open {
+			transform: translateX(0);
+		}
+	}
+
+	body.has-control-menu & {
+		height: calc(100vh - #{$controlMenuHeight + $managementBarHeight});
+		top: $controlMenuHeight + $managementBarHeight;
+
+		@include media-breakpoint-up(lg) {
+			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
+			top: $desktopControlMenuHeight + $toolbarHeight;
+		}
+	}
+}

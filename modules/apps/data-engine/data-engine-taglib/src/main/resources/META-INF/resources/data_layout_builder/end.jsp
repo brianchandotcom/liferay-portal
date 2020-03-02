@@ -28,18 +28,20 @@ data.put("dataDefinitionId", dataDefinitionId);
 data.put("dataLayoutBuilderElementId", renderResponse.getNamespace() + "-data-layout-builder");
 data.put("dataLayoutBuilderId", componentId);
 data.put("dataLayoutId", dataLayoutId);
-data.put("fieldTypes", fieldTypesJSONArray);
-data.put("fieldTypesModules", fieldTypesModules);
-data.put("groupId", groupId);
-data.put("localizable", localizable);
-data.put("singlePage", singlePage);
-data.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
 Map<String, Object> successPageSettings = new HashMap<>();
 
 successPageSettings.put("enabled", enableSuccessPage);
 
 data.put("successPageSettings", successPageSettings);
+data.put("fieldTypes", fieldTypesJSONArray);
+data.put("fieldTypesModules", fieldTypesModules);
+data.put("groupId", groupId);
+data.put("localizable", localizable);
+data.put("panels", panels);
+data.put("sidebarPanels", sidebarPanels);
+data.put("singlePage", singlePage);
+data.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 %>
 
 <div id="<%= componentId + "container" %>">

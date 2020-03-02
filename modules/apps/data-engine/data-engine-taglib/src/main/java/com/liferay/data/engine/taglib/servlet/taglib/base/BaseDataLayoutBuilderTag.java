@@ -34,6 +34,10 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		return super.doStartTag();
 	}
 
+	public java.util.List<java.util.Map> getAdditionalPanels() {
+		return _additionalPanels;
+	}
+
 	public java.lang.String getComponentId() {
 		return _componentId;
 	}
@@ -72,6 +76,10 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 
 	public boolean getSinglePage() {
 		return _singlePage;
+	}
+
+	public void setAdditionalPanels(java.util.List<java.util.Map> additionalPanels) {
+		_additionalPanels = additionalPanels;
 	}
 
 	public void setComponentId(java.lang.String componentId) {
@@ -125,6 +133,7 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_additionalPanels = null;
 		_componentId = null;
 		_contentType = null;
 		_dataDefinitionId = null;
@@ -149,6 +158,7 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		setNamespacedAttribute(request, "additionalPanels", _additionalPanels);
 		setNamespacedAttribute(request, "componentId", _componentId);
 		setNamespacedAttribute(request, "contentType", _contentType);
 		setNamespacedAttribute(request, "dataDefinitionId", _dataDefinitionId);
@@ -169,6 +179,7 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 	private static final String _START_PAGE =
 		"/data_layout_builder/start.jsp";
 
+	private java.util.List<java.util.Map> _additionalPanels = null;
 	private java.lang.String _componentId = null;
 	private java.lang.String _contentType = null;
 	private java.lang.Long _dataDefinitionId = null;

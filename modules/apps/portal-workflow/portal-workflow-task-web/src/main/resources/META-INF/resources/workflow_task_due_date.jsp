@@ -27,11 +27,13 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 <div class="task-action">
 	<aui:form action="<%= updateURL %>" method="post" name="updateFm">
 		<div class="modal-body task-action-content">
-			<aui:input name="workflowTaskId" type="hidden" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
+			<div class="modal-item-last">
+				<aui:input name="workflowTaskId" type="hidden" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 
-			<aui:input bean="<%= workflowTask %>" ignoreRequestValue="<%= true %>" model="<%= WorkflowTask.class %>" name="dueDate" required="<%= true %>" />
+				<aui:input bean="<%= workflowTask %>" ignoreRequestValue="<%= true %>" model="<%= WorkflowTask.class %>" name="dueDate" required="<%= true %>" />
 
-			<aui:input cols="55" cssClass="task-content-comment" name="comment" placeholder="comment" rows="1" type="textarea" />
+				<aui:input cols="55" cssClass="task-content-comment" name="comment" placeholder="comment" rows="1" type="textarea" />
+			</div>
 		</div>
 
 		<div class="modal-footer">

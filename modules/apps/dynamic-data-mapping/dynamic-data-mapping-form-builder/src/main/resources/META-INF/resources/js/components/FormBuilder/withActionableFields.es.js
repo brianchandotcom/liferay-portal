@@ -203,6 +203,8 @@ Actions.STATE = {
 	fieldName: Config.string(),
 };
 
+const ACTIONABLE_FIELDS_CONTAINER = 'ddm-actionable-fields-container';
+
 const withActionableFields = ChildComponent => {
 	class ActionableFields extends Component {
 		attached() {
@@ -215,6 +217,18 @@ const withActionableFields = ChildComponent => {
 					this._handleMouseEnterField.bind(this)
 				)
 			);
+		}
+
+		created() {
+			if (!this._actionableFieldsContainer) {
+				const container = document.createElement('div');
+
+				container.id = ACTIONABLE_FIELDS_CONTAINER;
+
+				document.body.appendChild(container);
+
+				this._actionableFieldsContainer = container;
+			}
 		}
 
 		disposeInternal() {
@@ -240,7 +254,7 @@ const withActionableFields = ChildComponent => {
 						disabled={!this.isActionsEnabled()}
 						items={fieldActions}
 						pages={pages}
-						portalElement={document.body}
+						portalElement={this._actionableFieldsContainer}
 						ref="selectedFieldActions"
 						spritemap={spritemap}
 						visible={false}
@@ -250,7 +264,7 @@ const withActionableFields = ChildComponent => {
 						disabled={!this.isActionsEnabled()}
 						items={fieldActions}
 						pages={pages}
-						portalElement={document.body}
+						portalElement={this._actionableFieldsContainer}
 						ref="hoveredFieldActions"
 						spritemap={spritemap}
 						visible={false}

@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "ddm.form.content.type=default",
+	immediate = true, property = "content.type=default",
 	service = DataLayoutBuilderConfiguration.class
 )
 public class DefaultDataLayoutBuilderConfiguration

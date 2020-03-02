@@ -198,15 +198,15 @@ public class DataLayoutTaglibUtil {
 		DataLayoutBuilderConfiguration dataLayoutBuilderConfiguration,
 		Map<String, Object> properties) {
 
-		String ddmFormContentType = GetterUtil.getString(
-			properties.get("ddm.form.content.type"));
+		String contentType = GetterUtil.getString(
+			properties.get("content.type"));
 
-		if (Validator.isNull(ddmFormContentType)) {
+		if (Validator.isNull(contentType)) {
 			return;
 		}
 
 		_dataLayoutBuilderConfigurations.put(
-			ddmFormContentType, dataLayoutBuilderConfiguration);
+			contentType, dataLayoutBuilderConfiguration);
 	}
 
 	@Deactivate
@@ -218,14 +218,14 @@ public class DataLayoutTaglibUtil {
 		DataLayoutBuilderConfiguration dataLayoutBuilderConfiguration,
 		Map<String, Object> properties) {
 
-		String ddmFormContentType = GetterUtil.getString(
-			properties.get("ddm.form.content.type"));
+		String contentType = GetterUtil.getString(
+			properties.get("content.type"));
 
-		if (Validator.isNull(ddmFormContentType)) {
+		if (Validator.isNull(contentType)) {
 			return;
 		}
 
-		_dataLayoutBuilderConfigurations.remove(ddmFormContentType);
+		_dataLayoutBuilderConfigurations.remove(contentType);
 	}
 
 	private Set<Locale> _getAvailableLocales(

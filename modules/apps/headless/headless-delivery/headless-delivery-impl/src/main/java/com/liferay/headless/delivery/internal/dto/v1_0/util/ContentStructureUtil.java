@@ -64,11 +64,11 @@ public class ContentStructureUtil {
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();
 				description = ddmStructure.getDescription(locale);
-				description_i18n = LocalizedMapUtil.getLocalizedMap(
+				description_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, ddmStructure.getDescriptionMap());
 				id = ddmStructure.getStructureId();
 				name = ddmStructure.getName(locale);
-				name_i18n = LocalizedMapUtil.getLocalizedMap(
+				name_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, ddmStructure.getDescriptionMap());
 				siteId = ddmStructure.getGroupId();
 			}
@@ -122,7 +122,7 @@ public class ContentStructureUtil {
 				dataType = toDataType(ddmFormField);
 				inputControl = toInputControl(ddmFormField);
 				label = _toString(labelLocalizedValue, locale);
-				label_i18n = LocalizedMapUtil.getLocalizedMap(
+				label_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguage, labelLocalizedValue.getValues());
 				localizable = ddmFormField.isLocalizable();
 				multiple = ddmFormField.isMultiple();
@@ -133,7 +133,7 @@ public class ContentStructureUtil {
 						acceptAllLanguage, ddmFormField, locale),
 					ContentStructureField.class);
 				predefinedValue = _toString(predefinedLocalizedValue, locale);
-				predefinedValue_i18n = LocalizedMapUtil.getLocalizedMap(
+				predefinedValue_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguage, predefinedLocalizedValue.getValues());
 				repeatable = ddmFormField.isRepeatable();
 				required = ddmFormField.isRequired();
@@ -158,7 +158,7 @@ public class ContentStructureUtil {
 
 								setLabel(_toString(localizedValue, locale));
 								setLabel_i18n(
-									LocalizedMapUtil.getLocalizedMap(
+									LocalizedMapUtil.getI18nMap(
 										acceptAllLanguage,
 										localizedValue.getValues()));
 

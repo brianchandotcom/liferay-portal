@@ -194,11 +194,11 @@ public class TaxonomyVocabularyResourceImpl
 		return _toTaxonomyVocabulary(
 			_assetVocabularyService.addVocabulary(
 				siteId, null,
-				LocalizedMapUtil.getLocaleMap(
+				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					taxonomyVocabulary.getName(),
 					taxonomyVocabulary.getName_i18n()),
-				LocalizedMapUtil.getLocaleMap(
+				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					taxonomyVocabulary.getDescription(),
 					taxonomyVocabulary.getDescription_i18n()),
@@ -220,12 +220,12 @@ public class TaxonomyVocabularyResourceImpl
 		return _toTaxonomyVocabulary(
 			_assetVocabularyService.updateVocabulary(
 				assetVocabulary.getVocabularyId(), null,
-				LocalizedMapUtil.getLocaleMap(
+				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					taxonomyVocabulary.getName(),
 					taxonomyVocabulary.getName_i18n(),
 					assetVocabulary.getTitleMap()),
-				LocalizedMapUtil.getLocaleMap(
+				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					taxonomyVocabulary.getDescription(),
 					taxonomyVocabulary.getDescription_i18n(),
@@ -485,13 +485,13 @@ public class TaxonomyVocabularyResourceImpl
 				dateModified = assetVocabulary.getModifiedDate();
 				description = assetVocabulary.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
-				description_i18n = LocalizedMapUtil.getLocalizedMap(
+				description_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					assetVocabulary.getDescriptionMap());
 				id = assetVocabulary.getVocabularyId();
 				name = assetVocabulary.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
-				name_i18n = LocalizedMapUtil.getLocalizedMap(
+				name_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					assetVocabulary.getTitleMap());
 				numberOfTaxonomyCategories = Optional.ofNullable(

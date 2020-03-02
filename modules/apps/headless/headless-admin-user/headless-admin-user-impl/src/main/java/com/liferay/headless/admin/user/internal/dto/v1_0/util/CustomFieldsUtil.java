@@ -80,7 +80,7 @@ public class CustomFieldsUtil {
 		if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
 			Map<Locale, String> map = (Map<Locale, String>)value;
 
-			return LocalizedMapUtil.getLocalizedMap(acceptAllLanguages, map);
+			return LocalizedMapUtil.getI18nMap(acceptAllLanguages, map);
 		}
 
 		return null;

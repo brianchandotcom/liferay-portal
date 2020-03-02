@@ -79,7 +79,7 @@ public class StructureUtil {
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();
 				description = ddmStructure.getDescription(locale);
-				description_i18n = LocalizedMapUtil.getLocalizedMap(
+				description_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, ddmStructure.getDescriptionMap());
 				formPages = TransformUtil.transformToArray(
 					ddmFormLayout.getDDMFormLayoutPages(),
@@ -89,7 +89,7 @@ public class StructureUtil {
 					FormPage.class);
 				id = ddmStructure.getStructureId();
 				name = ddmStructure.getName(locale);
-				name_i18n = LocalizedMapUtil.getLocalizedMap(
+				name_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, ddmStructure.getNameMap());
 				siteId = ddmStructure.getGroupId();
 
@@ -108,16 +108,14 @@ public class StructureUtil {
 							{
 								description = _toString(
 									locale, bodyLocalizedValue);
-								description_i18n =
-									LocalizedMapUtil.getLocalizedMap(
-										acceptAllLanguages,
-										bodyLocalizedValue.getValues());
+								description_i18n = LocalizedMapUtil.getI18nMap(
+									acceptAllLanguages,
+									bodyLocalizedValue.getValues());
 								headline = _toString(
 									locale, titleLocalizedValue);
-								headline_i18n =
-									LocalizedMapUtil.getLocalizedMap(
-										acceptAllLanguages,
-										titleLocalizedValue.getValues());
+								headline_i18n = LocalizedMapUtil.getI18nMap(
+									acceptAllLanguages,
+									titleLocalizedValue.getValues());
 							}
 						};
 					});
@@ -183,13 +181,13 @@ public class StructureUtil {
 				immutable = ddmFormField.isTransient();
 				inputControl = type;
 				label = _toString(locale, labelLocalizedValue);
-				label_i18n = LocalizedMapUtil.getLocalizedMap(
+				label_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, labelLocalizedValue.getValues());
 				localizable = ddmFormField.isLocalizable();
 				multiple = ddmFormField.isMultiple();
 				name = ddmFormField.getName();
 				predefinedValue = _toString(locale, predefinedLocalizedValue);
-				predefinedValue_i18n = LocalizedMapUtil.getLocalizedMap(
+				predefinedValue_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, predefinedLocalizedValue.getValues());
 				repeatable = ddmFormField.isRepeatable();
 				required = ddmFormField.isRequired();
@@ -279,7 +277,7 @@ public class StructureUtil {
 
 						LocalizedValue localizedValue = (LocalizedValue)object;
 
-						return LocalizedMapUtil.getLocalizedMap(
+						return LocalizedMapUtil.getI18nMap(
 							acceptAllLanguages, localizedValue.getValues());
 					});
 				setValidation(
@@ -302,10 +300,9 @@ public class StructureUtil {
 								errorMessage =
 									errorMessageLocalizedValue.getString(
 										locale);
-								errorMessage_i18n =
-									LocalizedMapUtil.getLocalizedMap(
-										acceptAllLanguages,
-										errorMessageLocalizedValue.getValues());
+								errorMessage_i18n = LocalizedMapUtil.getI18nMap(
+									acceptAllLanguages,
+									errorMessageLocalizedValue.getValues());
 								expression =
 									ddmFormFieldValidation.getExpression();
 							}
@@ -324,7 +321,7 @@ public class StructureUtil {
 		return new FormFieldOption() {
 			{
 				label = _toString(locale, localizedValue);
-				label_i18n = LocalizedMapUtil.getLocalizedMap(
+				label_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, localizedValue.getValues());
 				value = entry.getKey();
 			}
@@ -378,10 +375,10 @@ public class StructureUtil {
 						acceptAllLanguages, ddmFormField, locale),
 					FormField.class);
 				headline = _toString(locale, titleLocalizedValue);
-				headline_i18n = LocalizedMapUtil.getLocalizedMap(
+				headline_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, titleLocalizedValue.getValues());
 				text = _toString(locale, ddmFormLayoutPage.getDescription());
-				text_i18n = LocalizedMapUtil.getLocalizedMap(
+				text_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, descriptionLocalizedValue.getValues());
 			}
 		};

@@ -82,7 +82,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					_userLocalService.getUserById(group.getCreatorUserId()));
 				description = group.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
-				description_i18n = LocalizedMapUtil.getLocalizedMap(
+				description_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					group.getDescriptionMap());
 				friendlyUrlPath = group.getFriendlyURL();
@@ -91,7 +91,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				membershipType = group.getTypeLabel();
 				name = group.getName(
 					contextAcceptLanguage.getPreferredLocale());
-				name_i18n = LocalizedMapUtil.getLocalizedMap(
+				name_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					group.getNameMap());
 				parentSiteId = group.getParentGroupId();

@@ -266,7 +266,7 @@ public class TaxonomyCategoryResourceImpl
 			false, assetCategory.getDefaultLanguageId(), taxonomyCategory);
 
 		assetCategory.setDescriptionMap(
-			LocalizedMapUtil.getLocaleMap(
+			LocalizedMapUtil.getLocalizedMap(
 				contextAcceptLanguage.getPreferredLocale(),
 				taxonomyCategory.getDescription(),
 				taxonomyCategory.getDescription_i18n(),
@@ -274,7 +274,7 @@ public class TaxonomyCategoryResourceImpl
 		assetCategory.setExternalReferenceCode(
 			taxonomyCategory.getExternalReferenceCode());
 		assetCategory.setTitleMap(
-			LocalizedMapUtil.getLocaleMap(
+			LocalizedMapUtil.getLocalizedMap(
 				contextAcceptLanguage.getPreferredLocale(),
 				taxonomyCategory.getName(), taxonomyCategory.getName_i18n(),
 				assetCategory.getTitleMap()));
@@ -296,10 +296,10 @@ public class TaxonomyCategoryResourceImpl
 
 		AssetCategory assetCategory = _assetCategoryService.addCategory(
 			groupId, taxonomyCategoryId,
-			LocalizedMapUtil.getLocaleMap(
+			LocalizedMapUtil.getLocalizedMap(
 				contextAcceptLanguage.getPreferredLocale(),
 				taxonomyCategory.getName(), taxonomyCategory.getName_i18n()),
-			LocalizedMapUtil.getLocaleMap(
+			LocalizedMapUtil.getLocalizedMap(
 				contextAcceptLanguage.getPreferredLocale(),
 				taxonomyCategory.getDescription(),
 				taxonomyCategory.getDescription_i18n()),

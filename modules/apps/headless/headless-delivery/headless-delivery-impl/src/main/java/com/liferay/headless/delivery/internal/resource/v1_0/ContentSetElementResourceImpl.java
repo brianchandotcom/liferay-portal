@@ -152,7 +152,7 @@ public class ContentSetElementResourceImpl
 				id = assetEntry.getClassPK();
 				title = assetEntry.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
-				title_i18n = LocalizedMapUtil.getLocalizedMap(
+				title_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					assetEntry.getTitleMap());
 

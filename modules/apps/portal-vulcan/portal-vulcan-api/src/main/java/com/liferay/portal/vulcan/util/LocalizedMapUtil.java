@@ -28,75 +28,86 @@ import java.util.Map;
  */
 public class LocalizedMapUtil {
 
-	public static Map<Locale, String> getLocaleMap(
-		Locale defaultLocale, String defaultValue,
-		Map<String, String> localizedMap) {
-
-		Map<Locale, String> localeMap = getLocaleMap(localizedMap);
-
-		localeMap.put(defaultLocale, defaultValue);
-
-		return localeMap;
-	}
-
-	public static Map<Locale, String> getLocaleMap(
-		Locale defaultLocale, String defaultValue,
-		Map<String, String> localizedMap, Map<Locale, String> fallbackMap) {
-
-		Map<Locale, String> localeMap;
-
-		if (localizedMap != null) {
-			localeMap = getLocaleMap(localizedMap);
-		}
-		else if (defaultValue != null) {
-			localeMap = new HashMap<>(fallbackMap);
-		}
-		else {
-			localeMap = new HashMap<>();
-		}
-
-		localeMap.put(defaultLocale, defaultValue);
-
-		return localeMap;
-	}
-
-	public static Map<Locale, String> getLocaleMap(
-		Map<String, String> localizedMap) {
-
-		Map<Locale, String> localeMap = new HashMap<>();
-
-		if (localizedMap == null) {
-			return localeMap;
-		}
-
-		for (Map.Entry<String, String> entry : localizedMap.entrySet()) {
-			Locale locale = _getLocale(entry.getKey());
-			String localizedValue = entry.getValue();
-
-			if ((locale != null) && (localizedValue != null)) {
-				localeMap.put(locale, localizedValue);
-			}
-		}
-
-		return localeMap;
-	}
-
-	public static Map<String, String> getLocalizedMap(
-		boolean acceptAllLanguages, Map<Locale, String> localeMap) {
+	public static Map<String, String> getI18nMap(
+		boolean acceptAllLanguages, Map<Locale, String> localizedMap) {
 
 		if (!acceptAllLanguages) {
 			return null;
 		}
 
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> i18nMap = new HashMap<>();
 
-		for (Map.Entry<Locale, String> entry : localeMap.entrySet()) {
+		for (Map.Entry<Locale, String> entry : localizedMap.entrySet()) {
 			Locale locale = entry.getKey();
 
-			map.put(locale.toLanguageTag(), entry.getValue());
+			i18nMap.put(locale.toLanguageTag(), entry.getValue());
 		}
 
-		return map;
+		return i18nMap;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getI18nMap(boolean, Map)}
+	 */
+	@Deprecated
+	public static Map<String, String> getLocalizedMap(
+		boolean acceptAllLanguages, Map<Locale, String> localizedMap) {
+
+		return getI18nMap(acceptAllLanguages, localizedMap);
+	}
+
+	public static Map<Locale, String> getLocalizedMap(
+		Locale defaultLocale, String defaultValue,
+		Map<String, String> i18nMap) {
+
+		Map<Locale, String> localizedMap = getLocalizedMap(i18nMap);
+
+		localizedMap.put(defaultLocale, defaultValue);
+
+		return localizedMap;
+	}
+
+	public static Map<Locale, String> getLocalizedMap(
+		Locale defaultLocale, String defaultValue, Map<String, String> i18nMap,
+		Map<Locale, String> fallbackMap) {
+
+		Map<Locale, String> localizedMap;
+
+		if (i18nMap != null) {
+			localizedMap = getLocalizedMap(i18nMap);
+		}
+		else if (defaultValue != null) {
+			localizedMap = new HashMap<>(fallbackMap);
+		}
+		else {
+			localizedMap = new HashMap<>();
+		}
+
+		localizedMap.put(defaultLocale, defaultValue);
+
+		return localizedMap;
+	}
+
+	public static Map<Locale, String> getLocalizedMap(
+		Map<String, String> i18nMap) {
+
+		Map<Locale, String> localizedMap = new HashMap<>();
+
+		if (i18nMap == null) {
+			return localizedMap;
+		}
+
+		for (Map.Entry<String, String> entry : i18nMap.entrySet()) {
+			Locale locale = _getLocale(entry.getKey());
+			String localizedValue = entry.getValue();
+
+			if ((locale != null) && (localizedValue != null)) {
+				localizedMap.put(locale, localizedValue);
+			}
+		}
+
+		return localizedMap;
 	}
 
 	public static Map<Locale, String> merge(
@@ -141,24 +152,22 @@ public class LocalizedMapUtil {
 	}
 
 	public static Map<Locale, String> patch(
-		Map<Locale, String> map, Locale defaultLocale, String defaultValue,
-		Map<String, String> localizedMap) {
+		Map<Locale, String> localizedMap, Locale defaultLocale,
+		String defaultValue, Map<String, String> i18nMap) {
 
 		Map<Locale, String> result = new HashMap<>();
 
-		if (map != null) {
-			result.putAll(map);
+		if (localizedMap != null) {
+			result.putAll(localizedMap);
 		}
 
 		result = patch(result, defaultLocale, defaultValue);
 
-		if (localizedMap == null) {
+		if (i18nMap == null) {
 			return result;
 		}
 
-		for (Map.Entry<String, String> localizedEntry :
-				localizedMap.entrySet()) {
-
+		for (Map.Entry<String, String> localizedEntry : i18nMap.entrySet()) {
 			Locale locale = _getLocale(localizedEntry.getKey());
 
 			if (locale != null) {

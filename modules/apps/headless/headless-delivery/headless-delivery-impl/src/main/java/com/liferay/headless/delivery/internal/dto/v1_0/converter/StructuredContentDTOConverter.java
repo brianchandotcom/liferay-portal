@@ -134,12 +134,12 @@ public class StructuredContentDTOConverter
 				datePublished = journalArticle.getDisplayDate();
 				description = journalArticle.getDescription(
 					dtoConverterContext.getLocale());
-				description_i18n = LocalizedMapUtil.getLocalizedMap(
+				description_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					journalArticle.getDescriptionMap());
 				friendlyUrlPath = journalArticle.getUrlTitle(
 					dtoConverterContext.getLocale());
-				friendlyUrlPath_i18n = LocalizedMapUtil.getLocalizedMap(
+				friendlyUrlPath_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					journalArticle.getFriendlyURLMap());
 				id = journalArticle.getResourcePrimKey();
@@ -179,7 +179,7 @@ public class StructuredContentDTOConverter
 					TaxonomyCategoryBrief.class);
 				title = journalArticle.getTitle(
 					dtoConverterContext.getLocale());
-				title_i18n = LocalizedMapUtil.getLocalizedMap(
+				title_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					journalArticle.getTitleMap());
 				uuid = journalArticle.getUuid();
@@ -339,7 +339,7 @@ public class StructuredContentDTOConverter
 					ddmFormField);
 				label = localizedValue.getString(
 					dtoConverterContext.getLocale());
-				label_i18n = LocalizedMapUtil.getLocalizedMap(
+				label_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					localizedValue.getValues());
 				name = ddmFormField.getName();
@@ -453,7 +453,7 @@ public class StructuredContentDTOConverter
 						journalArticle.getResourcePrimKey(),
 						ddmTemplate.getTemplateId());
 					templateName = ddmTemplate.getName(locale);
-					templateName_i18n = LocalizedMapUtil.getLocalizedMap(
+					templateName_i18n = LocalizedMapUtil.getI18nMap(
 						acceptAllLanguages, ddmTemplate.getNameMap());
 				}
 			},

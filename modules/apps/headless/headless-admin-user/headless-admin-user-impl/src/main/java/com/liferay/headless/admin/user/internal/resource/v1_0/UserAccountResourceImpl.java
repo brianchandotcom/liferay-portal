@@ -223,7 +223,7 @@ public class UserAccountResourceImpl
 				id = role.getRoleId();
 				name = role.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
-				name_i18n = LocalizedMapUtil.getLocalizedMap(
+				name_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					role.getTitleMap());
 			}
@@ -236,7 +236,7 @@ public class UserAccountResourceImpl
 				id = group.getGroupId();
 				name = group.getName(
 					contextAcceptLanguage.getPreferredLocale());
-				name_i18n = LocalizedMapUtil.getLocalizedMap(
+				name_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					group.getNameMap());
 			}

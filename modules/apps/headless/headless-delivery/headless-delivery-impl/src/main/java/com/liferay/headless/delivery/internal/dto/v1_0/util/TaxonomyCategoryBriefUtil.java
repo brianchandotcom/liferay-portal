@@ -33,7 +33,7 @@ public class TaxonomyCategoryBriefUtil {
 			{
 				taxonomyCategoryId = assetCategory.getCategoryId();
 				taxonomyCategoryName = assetCategory.getTitle(locale);
-				taxonomyCategoryName_i18n = LocalizedMapUtil.getLocalizedMap(
+				taxonomyCategoryName_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, assetCategory.getTitleMap());
 			}
 		};

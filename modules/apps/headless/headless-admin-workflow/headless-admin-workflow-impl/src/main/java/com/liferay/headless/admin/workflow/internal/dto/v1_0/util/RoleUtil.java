@@ -39,11 +39,11 @@ public class RoleUtil {
 				dateCreated = role.getCreateDate();
 				dateModified = role.getModifiedDate();
 				description = role.getDescription(locale);
-				description_i18n = LocalizedMapUtil.getLocalizedMap(
+				description_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, role.getDescriptionMap());
 				id = role.getRoleId();
 				name = role.getTitle(locale);
-				name_i18n = LocalizedMapUtil.getLocalizedMap(
+				name_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, role.getTitleMap());
 				roleType = role.getTypeLabel();
 			}

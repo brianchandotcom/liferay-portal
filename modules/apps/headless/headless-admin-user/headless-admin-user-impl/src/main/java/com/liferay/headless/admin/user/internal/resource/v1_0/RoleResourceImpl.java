@@ -76,13 +76,13 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				dateModified = role.getModifiedDate();
 				description = role.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
-				description_i18n = LocalizedMapUtil.getLocalizedMap(
+				description_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					role.getDescriptionMap());
 				id = role.getRoleId();
 				name = role.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
-				name_i18n = LocalizedMapUtil.getLocalizedMap(
+				name_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					role.getTitleMap());
 				roleType = role.getTypeLabel();

@@ -59,12 +59,7 @@ definition {
 	test AddWebContentWithGlobalScopeViaCPToLiferayAP {
 		property test.name.skip.portal.instance = "AssetPublisherWithWebContent#AddWebContentWithGlobalScopeViaCPToLiferayAP";
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -105,12 +100,7 @@ definition {
 			assetContent = "WC WebContent Content",
 			assetTitle = "WC WebContent Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -125,12 +115,7 @@ definition {
 			assetContent = "WC WebContent Content Edit",
 			assetTitle = "WC WebContent Title Edit");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		WebContent.deleteCP(
 			siteURLKey = "global",
@@ -151,12 +136,7 @@ definition {
 
 	@priority = "4"
 	test AddWebContentWithGlobalScopeViaCPToSiteAP {
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -168,12 +148,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -221,12 +196,7 @@ definition {
 			assetContent = "WC WebContent Content",
 			assetTitle = "WC WebContent Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -243,12 +213,7 @@ definition {
 			assetContent = "WC WebContent Content Edit",
 			assetTitle = "WC WebContent Title Edit");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		WebContent.deleteCP(
 			siteURLKey = "global",
@@ -273,12 +238,7 @@ definition {
 	test AddWebContentWithStructureAndGlobalScopeViaCPToLiferayAP {
 		property test.name.skip.portal.instance = "AssetPublisherWithWebContent#AddWebContentWithStructureAndGlobalScopeViaCPToLiferayAP";
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		NavItem.gotoStructures();
 
@@ -293,12 +253,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		NavItem.gotoTemplates();
 
@@ -310,12 +265,7 @@ definition {
 
 		Navigator.openURL();
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -329,12 +279,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		WebContent.viewWithStructureCP(
 			webContentText = "WC WebContent Text",
@@ -372,12 +317,7 @@ definition {
 
 	@priority = "3"
 	test AddWebContentWithStructureAndGlobalScopeViaCPToSiteAP {
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		NavItem.gotoStructures();
 
@@ -392,12 +332,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		NavItem.gotoTemplates();
 
@@ -409,12 +344,7 @@ definition {
 
 		Navigator.openURL();
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -428,12 +358,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
 		WebContent.viewWithStructureCP(
 			webContentText = "WC WebContent Text",

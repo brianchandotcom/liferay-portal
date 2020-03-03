@@ -19,11 +19,9 @@
 <%
 User selUser = PortalUtil.getSelectedUser(request);
 
-long userId = selUser.getUserId();
+SearchContainer accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(selUser.getUserId(), liferayPortletRequest, liferayPortletResponse);
 
-SearchContainer accountEntryDisplaySearchContainerFactory = AccountEntryDisplaySearchContainerFactory.create(userId, liferayPortletRequest, liferayPortletResponse);
-
-accountEntryDisplaySearchContainerFactory.setRowChecker(null);
+accountEntryDisplaySearchContainer.setRowChecker(null);
 
 renderResponse.setTitle((selUser == null) ? LanguageUtil.get(request, "add-user") : LanguageUtil.format(request, "edit-user-x", HtmlUtil.escape(selUser.getFullName()), false));
 
@@ -32,11 +30,6 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 %>
-
-<portlet:actionURL name="/account_admin/edit_account_user_account_entries" var="editAccountUserAccountEntriesURL">
-	<portlet:param name="accountUserId" value="<%= String.valueOf(userId) %>" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
 
 <liferay-util:buffer
 	var="removeAccountEntryIcon"
@@ -47,6 +40,11 @@ portletDisplay.setURLBack(backURL);
 		message="remove"
 	/>
 </liferay-util:buffer>
+
+<portlet:actionURL name="/account_admin/edit_account_user_account_entries" var="editAccountUserAccountEntriesURL">
+	<portlet:param name="accountUserId" value="<%= String.valueOf(selUser.getUserId()) %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= editAccountUserAccountEntriesURL %>" method="post" name="fm">
 	<aui:input name="addAccountEntryIds" type="hidden" />
@@ -81,7 +79,7 @@ portletDisplay.setURLBack(backURL);
 		<div class="sheet-section">
 			<liferay-ui:search-container
 				headerNames="name,roles,null"
-				searchContainer="<%= accountEntryDisplaySearchContainerFactory %>"
+				searchContainer="<%= accountEntryDisplaySearchContainer %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.account.admin.web.internal.display.AccountEntryDisplay"

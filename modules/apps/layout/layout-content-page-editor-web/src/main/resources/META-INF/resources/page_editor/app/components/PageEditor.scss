@@ -38,7 +38,7 @@
 	&__container > .container:after,
 	&__container > .container-fluid:after,
 	&__row:after {
-		box-shadow: inset 0 0 0 1px rgba(11, 95, 255, 0.2);
+		box-shadow: inset 0 0 0 1px $primary-l2;
 	}
 
 	&__col &__row:after,

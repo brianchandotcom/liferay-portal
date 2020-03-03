@@ -283,8 +283,11 @@ public class PageDefinitionConverterUtil {
 
 									return new FragmentImage() {
 										{
-											url = backgroundImageJSONObject.get(
-												"url");
+											url = new InlineValue() {
+												{
+													value = urlValue;
+												}
+											};
 
 											setTitle(
 												() -> {

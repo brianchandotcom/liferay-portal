@@ -108,13 +108,13 @@ public class EditAssetListDisplayContext {
 	public EditAssetListDisplayContext(
 		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider,
 		ItemSelector itemSelector, PortletRequest portletRequest,
-		PortletResponse portletResponse, UnicodeProperties properties) {
+		PortletResponse portletResponse, UnicodeProperties unicodeProperties) {
 
 		_assetRendererFactoryClassProvider = assetRendererFactoryClassProvider;
 		_itemSelector = itemSelector;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
-		_properties = properties;
+		_unicodeProperties = unicodeProperties;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
 
@@ -216,7 +216,7 @@ public class EditAssetListDisplayContext {
 
 			for (int i = 0; true; i++) {
 				String queryValues = PropertiesParamUtil.getString(
-					_properties, _httpServletRequest, "queryValues" + i);
+					_unicodeProperties, _httpServletRequest, "queryValues" + i);
 
 				if (Validator.isNull(queryValues)) {
 					break;
@@ -234,24 +234,24 @@ public class EditAssetListDisplayContext {
 
 		for (int queryLogicIndex : queryLogicIndexes) {
 			boolean queryAndOperator = PropertiesParamUtil.getBoolean(
-				_properties, _httpServletRequest,
+				_unicodeProperties, _httpServletRequest,
 				"queryAndOperator" + queryLogicIndex);
 
 			JSONObject ruleJSONObject = JSONUtil.put(
 				"queryAndOperator", queryAndOperator);
 
 			boolean queryContains = PropertiesParamUtil.getBoolean(
-				_properties, _httpServletRequest,
+				_unicodeProperties, _httpServletRequest,
 				"queryContains" + queryLogicIndex, true);
 
 			ruleJSONObject.put("queryContains", queryContains);
 
-			String queryValues = _properties.getProperty(
+			String queryValues = _unicodeProperties.getProperty(
 				"queryValues" + queryLogicIndex, StringPool.BLANK);
 
 			String queryName = PropertiesParamUtil.getString(
-				_properties, _httpServletRequest, "queryName" + queryLogicIndex,
-				"assetTags");
+				_unicodeProperties, _httpServletRequest,
+				"queryName" + queryLogicIndex, "assetTags");
 
 			if (Objects.equals(queryName, "assetTags")) {
 				queryValues = ParamUtil.getString(
@@ -467,17 +467,18 @@ public class EditAssetListDisplayContext {
 		}
 
 		_classNameIds = getClassNameIds(
-			_properties, getAvailableClassNameIds());
+			_unicodeProperties, getAvailableClassNameIds());
 
 		return _classNameIds;
 	}
 
 	public long[] getClassNameIds(
-		UnicodeProperties properties, long[] availableClassNameIds) {
+		UnicodeProperties unicodeProperties, long[] availableClassNameIds) {
 
 		boolean anyAssetType = GetterUtil.getBoolean(
-			properties.getProperty("anyAssetType", Boolean.TRUE.toString()));
-		String selectionStyle = properties.getProperty(
+			unicodeProperties.getProperty(
+				"anyAssetType", Boolean.TRUE.toString()));
+		String selectionStyle = unicodeProperties.getProperty(
 			"selectionStyle", "dynamic");
 
 		if (anyAssetType || selectionStyle.equals("manual")) {
@@ -485,7 +486,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		long defaultClassNameId = GetterUtil.getLong(
-			properties.getProperty("anyAssetType", null));
+			unicodeProperties.getProperty("anyAssetType", null));
 
 		if (defaultClassNameId > 0) {
 			return new long[] {defaultClassNameId};
@@ -493,7 +494,8 @@ public class EditAssetListDisplayContext {
 
 		long[] classNameIds = GetterUtil.getLongValues(
 			StringUtil.split(
-				properties.getProperty("classNameIds", StringPool.BLANK)));
+				unicodeProperties.getProperty(
+					"classNameIds", StringPool.BLANK)));
 
 		if (ArrayUtil.isNotEmpty(classNameIds)) {
 			return classNameIds;
@@ -521,14 +523,14 @@ public class EditAssetListDisplayContext {
 
 		_classTypeIds = GetterUtil.getLongValues(
 			StringUtil.split(
-				_properties.getProperty(
+				_unicodeProperties.getProperty(
 					"classTypeIds" + className, StringPool.BLANK)));
 
 		return _classTypeIds;
 	}
 
 	public Long[] getClassTypeIds(
-		UnicodeProperties properties, String className,
+		UnicodeProperties unicodeProperties, String className,
 		List<ClassType> availableClassTypes) {
 
 		Long[] availableClassTypeIds = new Long[availableClassTypes.size()];
@@ -539,7 +541,8 @@ public class EditAssetListDisplayContext {
 			availableClassTypeIds[i] = classType.getClassTypeId();
 		}
 
-		return _getClassTypeIds(properties, className, availableClassTypeIds);
+		return _getClassTypeIds(
+			unicodeProperties, className, availableClassTypeIds);
 	}
 
 	public String getDDMStructureDisplayFieldValue() throws Exception {
@@ -652,7 +655,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		_orderByColumn1 = GetterUtil.getString(
-			_properties.getProperty("orderByColumn1", "modifiedDate"));
+			_unicodeProperties.getProperty("orderByColumn1", "modifiedDate"));
 
 		return _orderByColumn1;
 	}
@@ -663,7 +666,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		_orderByColumn2 = GetterUtil.getString(
-			_properties.getProperty("orderByColumn2", "title"));
+			_unicodeProperties.getProperty("orderByColumn2", "title"));
 
 		return _orderByColumn2;
 	}
@@ -674,7 +677,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		_orderByType1 = GetterUtil.getString(
-			_properties.getProperty("orderByType1", "DESC"));
+			_unicodeProperties.getProperty("orderByType1", "DESC"));
 
 		return _orderByType1;
 	}
@@ -685,7 +688,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		_orderByType2 = GetterUtil.getString(
-			_properties.getProperty("orderByType2", "ASC"));
+			_unicodeProperties.getProperty("orderByType2", "ASC"));
 
 		return _orderByType2;
 	}
@@ -815,7 +818,7 @@ public class EditAssetListDisplayContext {
 		long[] groupIds = GetterUtil.getLongValues(
 			StringUtil.split(
 				PropertiesParamUtil.getString(
-					_properties, _httpServletRequest, "groupIds")));
+					_unicodeProperties, _httpServletRequest, "groupIds")));
 
 		if (ArrayUtil.isEmpty(groupIds)) {
 			return Collections.singletonList(_themeDisplay.getScopeGroup());
@@ -899,7 +902,7 @@ public class EditAssetListDisplayContext {
 	}
 
 	public UnicodeProperties getUnicodeProperties() {
-		return _properties;
+		return _unicodeProperties;
 	}
 
 	public List<Long> getVocabularyIds() throws PortalException {
@@ -941,7 +944,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		_anyAssetType = GetterUtil.getBoolean(
-			_properties.getProperty("anyAssetType", null), true);
+			_unicodeProperties.getProperty("anyAssetType", null), true);
 
 		return _anyAssetType;
 	}
@@ -968,7 +971,7 @@ public class EditAssetListDisplayContext {
 				getAssetRendererFactoryByClassNameId(classNameIds[0]));
 
 		_subtypeFieldsFilterEnabled = GetterUtil.getBoolean(
-			_properties.getProperty(
+			_unicodeProperties.getProperty(
 				"subtypeFieldsFilterEnabled" + className,
 				Boolean.FALSE.toString()));
 
@@ -992,15 +995,16 @@ public class EditAssetListDisplayContext {
 
 		_ddmStructureDisplayFieldValue = ParamUtil.getString(
 			_httpServletRequest, "ddmStructureDisplayFieldValue",
-			_properties.getProperty(
+			_unicodeProperties.getProperty(
 				"ddmStructureDisplayFieldValue", StringPool.BLANK));
 
 		_ddmStructureFieldName = ParamUtil.getString(
 			_httpServletRequest, "ddmStructureFieldName",
-			_properties.getProperty("ddmStructureFieldName", StringPool.BLANK));
+			_unicodeProperties.getProperty(
+				"ddmStructureFieldName", StringPool.BLANK));
 		_ddmStructureFieldValue = ParamUtil.getString(
 			_httpServletRequest, "ddmStructureFieldValue",
-			_properties.getProperty(
+			_unicodeProperties.getProperty(
 				"ddmStructureFieldValue", StringPool.BLANK));
 
 		if (Validator.isNotNull(_ddmStructureFieldName) &&
@@ -1086,11 +1090,11 @@ public class EditAssetListDisplayContext {
 	}
 
 	private Long[] _getClassTypeIds(
-		UnicodeProperties properties, String className,
+		UnicodeProperties unicodeProperties, String className,
 		Long[] availableClassTypeIds) {
 
 		boolean anyAssetType = GetterUtil.getBoolean(
-			properties.getProperty(
+			unicodeProperties.getProperty(
 				"anyClassType" + className, Boolean.TRUE.toString()));
 
 		if (anyAssetType) {
@@ -1098,7 +1102,8 @@ public class EditAssetListDisplayContext {
 		}
 
 		long defaultClassTypeId = GetterUtil.getLong(
-			properties.getProperty("anyClassType" + className, null), -1);
+			unicodeProperties.getProperty("anyClassType" + className, null),
+			-1);
 
 		if (defaultClassTypeId > -1) {
 			return new Long[] {defaultClassTypeId};
@@ -1106,7 +1111,8 @@ public class EditAssetListDisplayContext {
 
 		Long[] classTypeIds = ArrayUtil.toArray(
 			StringUtil.split(
-				properties.getProperty("classTypeIds" + className, null), 0L));
+				unicodeProperties.getProperty("classTypeIds" + className, null),
+				0L));
 
 		if (classTypeIds != null) {
 			return classTypeIds;
@@ -1164,7 +1170,6 @@ public class EditAssetListDisplayContext {
 	private String _orderByType2;
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
-	private final UnicodeProperties _properties;
 	private String _redirect;
 	private long[] _referencedModelsGroupIds;
 	private SearchContainer _searchContainer;
@@ -1174,5 +1179,6 @@ public class EditAssetListDisplayContext {
 	private String _selectSegmentsEntryURL;
 	private Boolean _subtypeFieldsFilterEnabled;
 	private final ThemeDisplay _themeDisplay;
+	private final UnicodeProperties _unicodeProperties;
 
 }

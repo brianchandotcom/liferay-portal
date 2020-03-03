@@ -43,10 +43,10 @@ public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 			Repository repository = _repositoryServiceAdapter.getRepository(
 				_documentRepository.getRepositoryId());
 
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				repository.getTypeSettingsProperties();
 
-			return typeSettingsProperties.getProperty(
+			return typeSettingsUnicodeProperties.getProperty(
 				_getUniqueKey(owner, key));
 		}
 		catch (PortalException portalException) {
@@ -64,13 +64,13 @@ public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 			Repository repository = _repositoryServiceAdapter.getRepository(
 				_documentRepository.getRepositoryId());
 
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				repository.getTypeSettingsProperties();
 
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				_getUniqueKey(owner, key), value);
 
-			repository.setTypeSettingsProperties(typeSettingsProperties);
+			repository.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 			_repositoryServiceAdapter.updateRepository(repository);
 		}

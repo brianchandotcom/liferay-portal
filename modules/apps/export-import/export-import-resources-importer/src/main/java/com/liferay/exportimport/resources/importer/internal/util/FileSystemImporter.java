@@ -1795,9 +1795,10 @@ public class FileSystemImporter extends BaseImporter {
 	}
 
 	protected void resetLayoutColumns(Layout layout) throws PortalException {
-		UnicodeProperties typeSettings = layout.getTypeSettingsProperties();
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
 
-		Set<Map.Entry<String, String>> set = typeSettings.entrySet();
+		Set<Map.Entry<String, String>> set = unicodeProperties.entrySet();
 
 		Iterator<Map.Entry<String, String>> iterator = set.iterator();
 
@@ -1832,7 +1833,7 @@ public class FileSystemImporter extends BaseImporter {
 			iterator.remove();
 		}
 
-		layout.setTypeSettingsProperties(typeSettings);
+		layout.setTypeSettingsProperties(unicodeProperties);
 
 		layoutLocalService.updateLayout(layout);
 	}

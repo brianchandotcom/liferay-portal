@@ -126,9 +126,10 @@ public class DepotEntryLocalServiceTest {
 	public void testUpdateDepotEntry() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry("name", "description");
 
-		UnicodeProperties formTypeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties formTypeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		formTypeSettingsProperties.put(
+		formTypeSettingsUnicodeProperties.put(
 			PropsKeys.LOCALES,
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
@@ -140,7 +141,7 @@ public class DepotEntryLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newDescription"
 			).build(),
-			Collections.emptyMap(), formTypeSettingsProperties,
+			Collections.emptyMap(), formTypeSettingsUnicodeProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -154,7 +155,8 @@ public class DepotEntryLocalServiceTest {
 	public void testUpdateDepotEntryDeleteDefaultLocale() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry("name", "description");
 
-		UnicodeProperties formTypeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties formTypeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
 		Set<Locale> availableLocales = new HashSet<>();
 
@@ -163,7 +165,7 @@ public class DepotEntryLocalServiceTest {
 
 		String[] locales = LocaleUtil.toLanguageIds(availableLocales);
 
-		formTypeSettingsProperties.setProperty(
+		formTypeSettingsUnicodeProperties.setProperty(
 			PropsKeys.LOCALES, StringUtil.merge(locales));
 
 		_depotEntryLocalService.updateDepotEntry(
@@ -178,7 +180,7 @@ public class DepotEntryLocalServiceTest {
 			).put(
 				LocaleUtil.fromLanguageId("es_ES"), "nuevaDescripcion"
 			).build(),
-			Collections.emptyMap(), formTypeSettingsProperties,
+			Collections.emptyMap(), formTypeSettingsUnicodeProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -194,9 +196,10 @@ public class DepotEntryLocalServiceTest {
 	public void testUpdateDepotEntryInheritLocale() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry("name", "description");
 
-		UnicodeProperties formTypeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties formTypeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		formTypeSettingsProperties.setProperty("inheritLocales", "true");
+		formTypeSettingsUnicodeProperties.setProperty("inheritLocales", "true");
 
 		_depotEntryLocalService.updateDepotEntry(
 			depotEntry.getDepotEntryId(),
@@ -206,30 +209,31 @@ public class DepotEntryLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newDescription"
 			).build(),
-			Collections.emptyMap(), formTypeSettingsProperties,
+			Collections.emptyMap(), formTypeSettingsUnicodeProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("inheritLocales")));
+				typeSettingsUnicodeProperties.getProperty("inheritLocales")));
 		Assert.assertEquals(
 			StringUtil.merge(
 				LocaleUtil.toLanguageIds(_languaje.getAvailableLocales())),
-			typeSettingsProperties.getProperty("locales"));
+			typeSettingsUnicodeProperties.getProperty("locales"));
 	}
 
 	@Test
 	public void testUpdateDepotEntryNoDescription() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry("name", "description");
 
-		UnicodeProperties formTypeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties formTypeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		formTypeSettingsProperties.put(
+		formTypeSettingsUnicodeProperties.put(
 			PropsKeys.LOCALES,
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
@@ -239,7 +243,7 @@ public class DepotEntryLocalServiceTest {
 				LocaleUtil.getDefault(), "newName"
 			).build(),
 			Collections.emptyMap(), Collections.emptyMap(),
-			formTypeSettingsProperties,
+			formTypeSettingsUnicodeProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -273,9 +277,10 @@ public class DepotEntryLocalServiceTest {
 
 		String oldGroupKey = group.getGroupKey();
 
-		UnicodeProperties formTypeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties formTypeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		formTypeSettingsProperties.put(
+		formTypeSettingsUnicodeProperties.put(
 			PropsKeys.LOCALES,
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
@@ -287,7 +292,7 @@ public class DepotEntryLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "description"
 			).build(),
-			Collections.emptyMap(), formTypeSettingsProperties,
+			Collections.emptyMap(), formTypeSettingsUnicodeProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -301,10 +306,12 @@ public class DepotEntryLocalServiceTest {
 
 		DepotEntry depotEntry = _addDepotEntry("name", "description");
 
-		UnicodeProperties formTypeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties formTypeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		formTypeSettingsProperties.setProperty("inheritLocales", "false");
-		formTypeSettingsProperties.setProperty(PropsKeys.LOCALES, null);
+		formTypeSettingsUnicodeProperties.setProperty(
+			"inheritLocales", "false");
+		formTypeSettingsUnicodeProperties.setProperty(PropsKeys.LOCALES, null);
 
 		_depotEntryLocalService.updateDepotEntry(
 			depotEntry.getDepotEntryId(),
@@ -318,7 +325,7 @@ public class DepotEntryLocalServiceTest {
 			).put(
 				LocaleUtil.fromLanguageId("es_ES"), "descripcion"
 			).build(),
-			Collections.emptyMap(), formTypeSettingsProperties,
+			Collections.emptyMap(), formTypeSettingsUnicodeProperties,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

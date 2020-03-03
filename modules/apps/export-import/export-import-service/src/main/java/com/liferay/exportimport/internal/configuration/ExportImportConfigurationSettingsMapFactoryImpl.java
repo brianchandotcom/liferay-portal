@@ -275,30 +275,33 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 		}
 
-		UnicodeProperties groupTypeSettingsProperties =
+		UnicodeProperties groupTypeSettingsUnicodeProperties =
 			stagingGroup.getTypeSettingsProperties();
 
 		String remoteAddress = ParamUtil.getString(
 			portletRequest, "remoteAddress",
-			groupTypeSettingsProperties.getProperty("remoteAddress"));
+			groupTypeSettingsUnicodeProperties.getProperty("remoteAddress"));
 
 		remoteAddress = _http.removeProtocol(remoteAddress);
 
 		int remotePort = ParamUtil.getInteger(
 			portletRequest, "remotePort",
 			GetterUtil.getInteger(
-				groupTypeSettingsProperties.getProperty("remotePort")));
+				groupTypeSettingsUnicodeProperties.getProperty("remotePort")));
 		String remotePathContext = ParamUtil.getString(
 			portletRequest, "remotePathContext",
-			groupTypeSettingsProperties.getProperty("remotePathContext"));
+			groupTypeSettingsUnicodeProperties.getProperty(
+				"remotePathContext"));
 		boolean secureConnection = ParamUtil.getBoolean(
 			portletRequest, "secureConnection",
 			GetterUtil.getBoolean(
-				groupTypeSettingsProperties.getProperty("secureConnection")));
+				groupTypeSettingsUnicodeProperties.getProperty(
+					"secureConnection")));
 		long remoteGroupId = ParamUtil.getLong(
 			portletRequest, "remoteGroupId",
 			GetterUtil.getLong(
-				groupTypeSettingsProperties.getProperty("remoteGroupId")));
+				groupTypeSettingsUnicodeProperties.getProperty(
+					"remoteGroupId")));
 		boolean remotePrivateLayout = ParamUtil.getBoolean(
 			portletRequest, "remotePrivateLayout");
 

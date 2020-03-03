@@ -71,11 +71,11 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			mdrAction.getTypeSettingsProperties();
 
 		long plid = GetterUtil.getLong(
-			typeSettingsProperties.getProperty("plid"));
+			typeSettingsUnicodeProperties.getProperty("plid"));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -90,7 +90,7 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		long groupId = GetterUtil.getLong(
-			typeSettingsProperties.getProperty("groupId"));
+			typeSettingsUnicodeProperties.getProperty("groupId"));
 
 		if ((layout != null) && (layout.getGroupId() != groupId)) {
 			if (_log.isWarnEnabled()) {

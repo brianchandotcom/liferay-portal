@@ -156,7 +156,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			long depotEntryId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,
 			Map<String, Boolean> depotAppCustomizationMap,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -173,32 +173,35 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 				depotEntryId, entry.getValue(), entry.getKey());
 		}
 
-		_validateTypeSettingsProperties(depotEntry, typeSettingsProperties);
+		_validateTypeSettingsProperties(
+			depotEntry, typeSettingsUnicodeProperties);
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
 
-		UnicodeProperties currentTypeSettingsProperties =
+		UnicodeProperties currentTypeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
 		boolean inheritLocales = GetterUtil.getBoolean(
-			currentTypeSettingsProperties.getProperty("inheritLocales"), true);
+			currentTypeSettingsUnicodeProperties.getProperty("inheritLocales"),
+			true);
 
 		inheritLocales = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("inheritLocales"),
+			typeSettingsUnicodeProperties.getProperty("inheritLocales"),
 			inheritLocales);
 
 		if (inheritLocales) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				PropsKeys.LOCALES,
 				StringUtil.merge(
 					LocaleUtil.toLanguageIds(
 						LanguageUtil.getAvailableLocales())));
 		}
 
-		currentTypeSettingsProperties.putAll(typeSettingsProperties);
+		currentTypeSettingsUnicodeProperties.putAll(
+			typeSettingsUnicodeProperties);
 
 		Locale locale = LocaleUtil.fromLanguageId(
-			currentTypeSettingsProperties.getProperty("languageId"));
+			currentTypeSettingsUnicodeProperties.getProperty("languageId"));
 
 		Optional<String> defaultNameOptional = _getDefaultNameOptional(
 			nameMap, locale);
@@ -213,7 +216,8 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			group.isInheritContent(), group.isActive(), serviceContext);
 
 		_groupLocalService.updateGroup(
-			group.getGroupId(), currentTypeSettingsProperties.toString());
+			group.getGroupId(),
+			currentTypeSettingsUnicodeProperties.toString());
 
 		return depotEntry;
 	}
@@ -244,16 +248,17 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 	}
 
 	private void _validateTypeSettingsProperties(
-			DepotEntry depotEntry, UnicodeProperties typeSettingsProperties)
+			DepotEntry depotEntry,
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws LocaleException {
 
-		if (!typeSettingsProperties.containsKey("inheritLocales")) {
+		if (!typeSettingsUnicodeProperties.containsKey("inheritLocales")) {
 			return;
 		}
 
-		if (typeSettingsProperties.containsKey(PropsKeys.LOCALES) &&
+		if (typeSettingsUnicodeProperties.containsKey(PropsKeys.LOCALES) &&
 			Validator.isNull(
-				typeSettingsProperties.getProperty(PropsKeys.LOCALES))) {
+				typeSettingsUnicodeProperties.getProperty(PropsKeys.LOCALES))) {
 
 			throw new LocaleException(
 				LocaleException.TYPE_DEFAULT,
@@ -262,10 +267,10 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		}
 
 		boolean inheritLocales = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("inheritLocales"));
+			typeSettingsUnicodeProperties.getProperty("inheritLocales"));
 
 		if (!inheritLocales &&
-			!typeSettingsProperties.containsKey(PropsKeys.LOCALES)) {
+			!typeSettingsUnicodeProperties.containsKey(PropsKeys.LOCALES)) {
 
 			throw new LocaleException(
 				LocaleException.TYPE_DEFAULT,

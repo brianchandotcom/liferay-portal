@@ -246,12 +246,12 @@ public class FriendlyURLServletTest {
 		nameMap.put(locale, "friendly");
 		friendlyURLMap.put(locale, "/friendly");
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			_group.getTypeSettingsProperties();
 
-		typeSettingsProperties.put("url", careerLayout.getFriendlyURL());
+		typeSettingsUnicodeProperties.put("url", careerLayout.getFriendlyURL());
 
-		String typeSettings = typeSettingsProperties.toString();
+		String typeSettings = typeSettingsUnicodeProperties.toString();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
@@ -293,12 +293,12 @@ public class FriendlyURLServletTest {
 
 		redirectLayout.setType(LayoutConstants.TYPE_URL);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			_group.getTypeSettingsProperties();
 
-		typeSettingsProperties.put("url", _layout.getFriendlyURL());
+		typeSettingsUnicodeProperties.put("url", _layout.getFriendlyURL());
 
-		redirectLayout.setTypeSettingsProperties(typeSettingsProperties);
+		redirectLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		_layoutLocalService.updateLayout(redirectLayout);
 

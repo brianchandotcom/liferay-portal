@@ -108,13 +108,14 @@ public class ConvertLayoutMVCActionCommandTest {
 
 	@Test
 	public void testConvertWidgetLayoutToContentLayout() throws Exception {
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column");
 
 		Layout originalLayout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), typeSettingsProperties.toString());
+			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		ActionRequest actionRequest = _getMockActionRequest(
 			originalLayout.getPlid());
@@ -131,13 +132,14 @@ public class ConvertLayoutMVCActionCommandTest {
 	public void testConvertWidgetLayoutToContentLayoutWithExistingStructure()
 		throws Exception {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column");
 
 		Layout originalLayout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), typeSettingsProperties.toString());
+			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),

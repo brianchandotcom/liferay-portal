@@ -89,11 +89,12 @@ public class DirectoryOpenSearchImpl extends HitsOpenSearchImpl {
 		while (enu.hasMoreElements()) {
 			String attributeName = enu.nextElement();
 
-			UnicodeProperties properties = expandoBridge.getAttributeProperties(
-				attributeName);
+			UnicodeProperties unicodeProperties =
+				expandoBridge.getAttributeProperties(attributeName);
 
 			int indexType = GetterUtil.getInteger(
-				properties.getProperty(ExpandoColumnConstants.INDEX_TYPE));
+				unicodeProperties.getProperty(
+					ExpandoColumnConstants.INDEX_TYPE));
 
 			if (indexType != ExpandoColumnConstants.INDEX_TYPE_NONE) {
 				userParams.put(attributeName, keywords);

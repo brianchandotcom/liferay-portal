@@ -388,18 +388,18 @@ public class ExpandoPortlet extends MVCPortlet {
 			String name)
 		throws Exception {
 
-		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, "Property--");
 
 		boolean searchable = ParamUtil.getBoolean(actionRequest, "searchable");
 
 		if (!searchable) {
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				ExpandoColumnConstants.INDEX_TYPE,
 				String.valueOf(ExpandoColumnConstants.INDEX_TYPE_NONE));
 		}
 
-		expandoBridge.setAttributeProperties(name, properties);
+		expandoBridge.setAttributeProperties(name, unicodeProperties);
 	}
 
 	private int _getNumberType(

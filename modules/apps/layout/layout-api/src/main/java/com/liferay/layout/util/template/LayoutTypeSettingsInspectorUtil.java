@@ -30,22 +30,24 @@ import java.util.List;
 public class LayoutTypeSettingsInspectorUtil {
 
 	public static List<String> getPortletIds(
-		UnicodeProperties typeSettingsProperties, String columnId) {
+		UnicodeProperties typeSettingsUnicodeProperties, String columnId) {
 
-		return StringUtil.split(typeSettingsProperties.getProperty(columnId));
+		return StringUtil.split(
+			typeSettingsUnicodeProperties.getProperty(columnId));
 	}
 
 	public static boolean hasNestedPortletsPortlet(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		String nestedColumnIds = typeSettingsProperties.getProperty(
+		String nestedColumnIds = typeSettingsUnicodeProperties.getProperty(
 			LayoutTypePortletConstants.NESTED_COLUMN_IDS);
 
 		if (Validator.isNotNull(nestedColumnIds)) {
 			return true;
 		}
 
-		String typeSettingsPropertiesString = typeSettingsProperties.toString();
+		String typeSettingsPropertiesString =
+			typeSettingsUnicodeProperties.toString();
 
 		if (typeSettingsPropertiesString.contains(
 				PortletKeys.NESTED_PORTLETS)) {
@@ -57,10 +59,10 @@ public class LayoutTypeSettingsInspectorUtil {
 	}
 
 	public static boolean isCustomizableLayout(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
 		boolean customizableLayout = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty(
+			typeSettingsUnicodeProperties.getProperty(
 				LayoutConstants.CUSTOMIZABLE_LAYOUT));
 
 		if (customizableLayout) {

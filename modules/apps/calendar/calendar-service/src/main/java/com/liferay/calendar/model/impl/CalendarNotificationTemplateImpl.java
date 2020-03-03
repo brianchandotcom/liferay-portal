@@ -28,20 +28,21 @@ public class CalendarNotificationTemplateImpl
 
 	@Override
 	public String getNotificationTypeSettings() {
-		if (_notificationTypeSettingsProperties == null) {
+		if (_notificationTypeSettingsUnicodeProperties == null) {
 			return super.getNotificationTypeSettings();
 		}
 
-		return _notificationTypeSettingsProperties.toString();
+		return _notificationTypeSettingsUnicodeProperties.toString();
 	}
 
 	@Override
 	public UnicodeProperties getNotificationTypeSettingsProperties() {
-		if (_notificationTypeSettingsProperties == null) {
-			_notificationTypeSettingsProperties = new UnicodeProperties(true);
+		if (_notificationTypeSettingsUnicodeProperties == null) {
+			_notificationTypeSettingsUnicodeProperties = new UnicodeProperties(
+				true);
 
 			try {
-				_notificationTypeSettingsProperties.load(
+				_notificationTypeSettingsUnicodeProperties.load(
 					super.getNotificationTypeSettings());
 			}
 			catch (IOException ioException) {
@@ -49,30 +50,30 @@ public class CalendarNotificationTemplateImpl
 			}
 		}
 
-		return _notificationTypeSettingsProperties;
+		return _notificationTypeSettingsUnicodeProperties;
 	}
 
 	@Override
 	public void setNotificationTypeSettings(String notificationTypeSettings) {
-		_notificationTypeSettingsProperties = null;
+		_notificationTypeSettingsUnicodeProperties = null;
 
 		super.setNotificationTypeSettings(notificationTypeSettings);
 	}
 
 	@Override
 	public void setTypeSettingsProperties(
-		UnicodeProperties notificationTypeSettingsProperties) {
+		UnicodeProperties notificationTypeSettingsUnicodeProperties) {
 
-		_notificationTypeSettingsProperties =
-			notificationTypeSettingsProperties;
+		_notificationTypeSettingsUnicodeProperties =
+			notificationTypeSettingsUnicodeProperties;
 
 		super.setNotificationTypeSettings(
-			_notificationTypeSettingsProperties.toString());
+			_notificationTypeSettingsUnicodeProperties.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarNotificationTemplateImpl.class);
 
-	private UnicodeProperties _notificationTypeSettingsProperties;
+	private UnicodeProperties _notificationTypeSettingsUnicodeProperties;
 
 }

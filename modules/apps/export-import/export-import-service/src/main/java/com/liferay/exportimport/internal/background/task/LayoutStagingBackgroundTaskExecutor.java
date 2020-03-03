@@ -238,13 +238,13 @@ public class LayoutStagingBackgroundTaskExecutor
 		LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
 			targetGroupId, true, true);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			sourceGroup.getTypeSettingsProperties();
 
 		boolean branchingPrivate = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("branchingPrivate"));
+			typeSettingsUnicodeProperties.getProperty("branchingPrivate"));
 		boolean branchingPublic = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("branchingPublic"));
+			typeSettingsUnicodeProperties.getProperty("branchingPublic"));
 
 		ServiceContext serviceContext = new ServiceContext();
 

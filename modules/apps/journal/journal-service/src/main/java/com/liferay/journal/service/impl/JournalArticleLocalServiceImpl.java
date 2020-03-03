@@ -4024,14 +4024,15 @@ public class JournalArticleLocalServiceImpl
 			_journalArticleResourceLocalService.getArticleResource(
 				article.getResourcePrimKey());
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put("title", article.getArticleId());
+		typeSettingsUnicodeProperties.put("title", article.getArticleId());
 
 		TrashEntry trashEntry = _trashEntryLocalService.addTrashEntry(
 			userId, article.getGroupId(), JournalArticle.class.getName(),
 			article.getResourcePrimKey(), articleResource.getUuid(), null,
-			oldStatus, articleVersionStatusOVPs, typeSettingsProperties);
+			oldStatus, articleVersionStatusOVPs, typeSettingsUnicodeProperties);
 
 		String trashArticleId = _trashHelper.getTrashTitle(
 			trashEntry.getEntryId());

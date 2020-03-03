@@ -1422,10 +1422,10 @@ public class LayoutsAdminDisplayContext {
 			return false;
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		String layoutTemplateId = typeSettingsProperties.getProperty(
+		String layoutTemplateId = typeSettingsUnicodeProperties.getProperty(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
 
 		LayoutConverter layoutConverter =

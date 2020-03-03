@@ -80,14 +80,15 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private Layout _getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.fastLoad(
+		typeSettingsUnicodeProperties.fastLoad(
 			siteNavigationMenuItem.getTypeSettings());
 
-		String layoutUuid = typeSettingsProperties.get("layoutUuid");
+		String layoutUuid = typeSettingsUnicodeProperties.get("layoutUuid");
 		boolean privateLayout = GetterUtil.getBoolean(
-			typeSettingsProperties.get("privateLayout"));
+			typeSettingsUnicodeProperties.get("privateLayout"));
 
 		return _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
@@ -99,10 +100,10 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private Map<Locale, String> _getLocalizedNamesFromProperties(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
 		Set<Map.Entry<String, String>> properties =
-			typeSettingsProperties.entrySet();
+			typeSettingsUnicodeProperties.entrySet();
 
 		Stream<Map.Entry<String, String>> propertiesStream =
 			properties.stream();
@@ -200,9 +201,10 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			Map<Long, List<SiteNavigationMenuItem>> siteNavigationMenuItemsMap)
 		throws Exception {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.fastLoad(
+		typeSettingsUnicodeProperties.fastLoad(
 			siteNavigationMenuItem.getTypeSettings());
 
 		Layout layout = _getLayout(siteNavigationMenuItem);
@@ -223,7 +225,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						item, siteNavigationMenuItemsMap),
 					NavigationMenuItem.class);
 				type = _toType(siteNavigationMenuItem.getType());
-				url = typeSettingsProperties.getProperty("url");
+				url = typeSettingsUnicodeProperties.getProperty("url");
 
 				setLink(
 					() -> {
@@ -240,9 +242,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						String defaultLanguageId = LocaleUtil.toLanguageId(
 							LocaleUtil.getDefault());
 
-						String name = typeSettingsProperties.getProperty(
+						String name = typeSettingsUnicodeProperties.getProperty(
 							"name_" + preferredLanguageId,
-							typeSettingsProperties.getProperty(
+							typeSettingsUnicodeProperties.getProperty(
 								"name_" + defaultLanguageId));
 
 						if (name == null) {
@@ -257,7 +259,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						if (contextAcceptLanguage.isAcceptAllLanguages()) {
 							Map<Locale, String> localizedNames =
 								_getLocalizedNamesFromProperties(
-									typeSettingsProperties);
+									typeSettingsUnicodeProperties);
 
 							if (localizedNames.isEmpty() && (layout != null)) {
 								localizedNames = layout.getNameMap();

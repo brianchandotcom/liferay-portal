@@ -185,7 +185,7 @@ public class JournalContentPortletLayoutListener
 
 	@Override
 	public void updatePropertiesOnRemoveFromLayout(
-			String portletId, UnicodeProperties typeSettingsProperties)
+			String portletId, UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortletLayoutListenerException {
 	}
 

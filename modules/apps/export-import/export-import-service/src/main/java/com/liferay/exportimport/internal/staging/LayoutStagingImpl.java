@@ -129,10 +129,10 @@ public class LayoutStagingImpl implements LayoutStaging {
 			group = group.getLiveGroup();
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
-		if (typeSettingsProperties.isEmpty()) {
+		if (typeSettingsUnicodeProperties.isEmpty()) {
 			return false;
 		}
 
@@ -140,11 +140,11 @@ public class LayoutStagingImpl implements LayoutStaging {
 
 		if (privateLayout) {
 			branchingEnabled = GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("branchingPrivate"));
+				typeSettingsUnicodeProperties.getProperty("branchingPrivate"));
 		}
 		else {
 			branchingEnabled = GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("branchingPublic"));
+				typeSettingsUnicodeProperties.getProperty("branchingPublic"));
 		}
 
 		if (!branchingEnabled || !group.isStaged() ||

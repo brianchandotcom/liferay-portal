@@ -57,11 +57,11 @@ public class LayoutTemplateModificationActionHandler implements ActionHandler {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			UnicodeProperties mdrActionTypeSettingsProperties =
+			UnicodeProperties mdrActionTypeSettingsUnicodeProperties =
 				mdrAction.getTypeSettingsProperties();
 
 			String layoutTemplateId = GetterUtil.getString(
-				mdrActionTypeSettingsProperties.getProperty(
+				mdrActionTypeSettingsUnicodeProperties.getProperty(
 					"layoutTemplateId"));
 
 			layoutTypePortlet.setLayoutTemplateId(0, layoutTemplateId, false);

@@ -168,11 +168,12 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			actualParams.setParentMap(params);
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		String defaultAssetPublisherPortletId = typeSettingsProperties.get(
-			LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID);
+		String defaultAssetPublisherPortletId =
+			typeSettingsUnicodeProperties.get(
+				LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID);
 
 		String currentDefaultAssetPublisherPortletId =
 			defaultAssetPublisherPortletId;

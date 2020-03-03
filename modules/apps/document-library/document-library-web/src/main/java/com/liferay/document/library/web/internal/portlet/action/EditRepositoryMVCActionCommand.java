@@ -125,15 +125,15 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 			long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				PropertiesParamUtil.getProperties(actionRequest, "settings--");
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFolder.class.getName(), actionRequest);
 
 			_repositoryService.addRepository(
 				themeDisplay.getScopeGroupId(), classNameId, folderId, name,
-				description, portletDisplay.getId(), typeSettingsProperties,
-				serviceContext);
+				description, portletDisplay.getId(),
+				typeSettingsUnicodeProperties, serviceContext);
 		}
 		else {
 

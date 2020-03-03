@@ -120,7 +120,7 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		UnicodeProperties properties = new UnicodeProperties(true);
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 		Enumeration<String> names = portletPreferences.getNames();
 
@@ -134,12 +134,12 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 				continue;
 			}
 
-			properties.put(name, value);
+			unicodeProperties.put(name, value);
 		}
 
 		_assetListEntryService.addDynamicAssetListEntry(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), title,
-			properties.toString(), serviceContext);
+			unicodeProperties.toString(), serviceContext);
 	}
 
 	private void _saveManualAssetList(

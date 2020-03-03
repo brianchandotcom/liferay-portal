@@ -91,10 +91,10 @@ public class LayoutTypeURLTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		UnicodeProperties properties =
+		UnicodeProperties unicodeProperties =
 			layoutURLType.getTypeSettingsProperties();
 
-		properties.setProperty("url", "javascript:alert(1)");
+		unicodeProperties.setProperty("url", "javascript:alert(1)");
 
 		Assert.assertTrue(
 			Validator.isUrl(

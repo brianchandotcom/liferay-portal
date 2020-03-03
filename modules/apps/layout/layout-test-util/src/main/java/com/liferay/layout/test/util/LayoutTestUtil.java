@@ -323,10 +323,10 @@ public class LayoutTestUtil {
 
 		Layout layout = addLayout(groupId, false);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"linkToLayoutId", String.valueOf(linkedToLayoutId));
 
 		layout.setType(LayoutConstants.TYPE_LINK_TO_LAYOUT);

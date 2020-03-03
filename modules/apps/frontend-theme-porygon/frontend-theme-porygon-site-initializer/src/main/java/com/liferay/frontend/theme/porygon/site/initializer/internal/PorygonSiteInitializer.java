@@ -674,15 +674,16 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			LocaleUtil.getSiteDefault(), name
 		).build();
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put("layout-template-id", "1_column");
+		typeSettingsUnicodeProperties.put("layout-template-id", "1_column");
 
 		return _layoutLocalService.addLayout(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, new HashMap<>(),
 			new HashMap<>(), new HashMap<>(), new HashMap<>(), "portlet",
-			typeSettingsProperties.toString(), false, new HashMap<>(),
+			typeSettingsUnicodeProperties.toString(), false, new HashMap<>(),
 			serviceContext);
 	}
 

@@ -26,35 +26,35 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 
 	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
-		if (_typeSettingsProperties == null) {
-			_typeSettingsProperties = new UnicodeProperties(true);
+		if (_typeSettingsUnicodeProperties == null) {
+			_typeSettingsUnicodeProperties = new UnicodeProperties(true);
 
-			_typeSettingsProperties.fastLoad(getTypeSettings());
+			_typeSettingsUnicodeProperties.fastLoad(getTypeSettings());
 		}
 
-		return _typeSettingsProperties;
+		return _typeSettingsUnicodeProperties;
 	}
 
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		super.setTypeSettings(typeSettings);
 
-		_typeSettingsProperties = null;
+		_typeSettingsUnicodeProperties = null;
 	}
 
 	@Override
 	public void setTypeSettingsProperties(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		_typeSettingsProperties = typeSettingsProperties;
+		_typeSettingsUnicodeProperties = typeSettingsUnicodeProperties;
 
-		if (_typeSettingsProperties == null) {
-			_typeSettingsProperties = new UnicodeProperties();
+		if (_typeSettingsUnicodeProperties == null) {
+			_typeSettingsUnicodeProperties = new UnicodeProperties();
 		}
 
-		super.setTypeSettings(_typeSettingsProperties.toString());
+		super.setTypeSettings(_typeSettingsUnicodeProperties.toString());
 	}
 
-	private transient UnicodeProperties _typeSettingsProperties;
+	private transient UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

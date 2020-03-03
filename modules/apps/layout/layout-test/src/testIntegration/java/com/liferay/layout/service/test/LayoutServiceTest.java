@@ -197,13 +197,13 @@ public class LayoutServiceTest {
 		Layout updatedLayout = LayoutLocalServiceUtil.getLayout(
 			layout.getPlid());
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			updatedLayout.getTypeSettingsProperties();
 
 		Assert.assertFalse(
 			"Updating layout prototype should not add property \"" +
 				Sites.LAYOUT_UPDATEABLE + "\"",
-			typeSettingsProperties.containsKey(Sites.LAYOUT_UPDATEABLE));
+			typeSettingsUnicodeProperties.containsKey(Sites.LAYOUT_UPDATEABLE));
 	}
 
 	@DeleteAfterTestRun

@@ -39,16 +39,18 @@ public class UpgradeLayout extends UpgradeProcess {
 			return;
 		}
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettingsProperties.load(typeSettings);
+		typeSettingsUnicodeProperties.load(typeSettings);
 
-		typeSettingsProperties.setProperty(
-			"embeddedLayoutURL", typeSettingsProperties.getProperty("url"));
+		typeSettingsUnicodeProperties.setProperty(
+			"embeddedLayoutURL",
+			typeSettingsUnicodeProperties.getProperty("url"));
 
-		typeSettingsProperties.remove("url");
+		typeSettingsUnicodeProperties.remove("url");
 
-		updateTypeSettings(plid, typeSettingsProperties.toString());
+		updateTypeSettings(plid, typeSettingsUnicodeProperties.toString());
 	}
 
 	protected void updateLayouts() throws Exception {

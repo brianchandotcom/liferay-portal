@@ -64,15 +64,16 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 	public MDRRule addRule(
 			long ruleGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
-			UnicodeProperties typeSettings, ServiceContext serviceContext)
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_mdrRuleGroupModelResourcePermission.check(
 			getPermissionChecker(), ruleGroupId, ActionKeys.UPDATE);
 
 		return mdrRuleLocalService.addRule(
-			ruleGroupId, nameMap, descriptionMap, type, typeSettings,
-			serviceContext);
+			ruleGroupId, nameMap, descriptionMap, type,
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
@@ -128,7 +129,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 	public MDRRule updateRule(
 			long ruleId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -138,8 +139,8 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 			getPermissionChecker(), rule.getRuleGroupId(), ActionKeys.UPDATE);
 
 		return mdrRuleLocalService.updateRule(
-			ruleId, nameMap, descriptionMap, type, typeSettingsProperties,
-			serviceContext);
+			ruleId, nameMap, descriptionMap, type,
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Reference(

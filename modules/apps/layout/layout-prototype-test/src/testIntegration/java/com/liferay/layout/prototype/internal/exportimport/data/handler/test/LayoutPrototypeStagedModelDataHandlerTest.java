@@ -151,9 +151,10 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 
 		Layout layout = _layoutPrototype.getLayout();
 
-		UnicodeProperties typeSettings = layout.getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
 
-		typeSettings.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			LayoutPrototypeStagedModelDataHandlerTest.class.getName(),
 			Boolean.TRUE.toString());
 

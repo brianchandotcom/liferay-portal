@@ -52,11 +52,11 @@ public class ThemeModificationActionHandler implements ActionHandler {
 
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			mdrAction.getTypeSettingsProperties();
 
 		String themeId = GetterUtil.getString(
-			typeSettingsProperties.getProperty("themeId"));
+			typeSettingsUnicodeProperties.getProperty("themeId"));
 
 		Theme theme = _themeLocalService.fetchTheme(companyId, themeId);
 
@@ -71,7 +71,7 @@ public class ThemeModificationActionHandler implements ActionHandler {
 		httpServletRequest.setAttribute(WebKeys.THEME, theme);
 
 		String colorSchemeId = GetterUtil.getString(
-			typeSettingsProperties.getProperty("colorSchemeId"));
+			typeSettingsUnicodeProperties.getProperty("colorSchemeId"));
 
 		ColorScheme colorScheme = _themeLocalService.fetchColorScheme(
 			companyId, themeId, colorSchemeId);

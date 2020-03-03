@@ -48,12 +48,13 @@ public class UpgradeLayoutSetTypeSettings extends UpgradeProcess {
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			groupId, privateLayout);
 
-		UnicodeProperties typeSettings = layoutSet.getSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layoutSet.getSettingsProperties();
 
-		typeSettings.setProperty(key, property);
+		typeSettingsUnicodeProperties.setProperty(key, property);
 
 		_layoutSetLocalService.updateSettings(
-			groupId, privateLayout, typeSettings.toString());
+			groupId, privateLayout, typeSettingsUnicodeProperties.toString());
 	}
 
 	protected void updateRobots() throws Exception {
@@ -66,33 +67,36 @@ public class UpgradeLayoutSetTypeSettings extends UpgradeProcess {
 					long groupId = rs.getLong("groupId");
 					String typeSettings = rs.getString("typeSettings");
 
-					UnicodeProperties typeSettingsProperties =
+					UnicodeProperties typeSettingsUnicodeProperties =
 						new UnicodeProperties();
 
-					typeSettingsProperties.load(typeSettings);
+					typeSettingsUnicodeProperties.load(typeSettings);
 
-					String privateRobots = typeSettingsProperties.getProperty(
-						"true-robots.txt");
+					String privateRobots =
+						typeSettingsUnicodeProperties.getProperty(
+							"true-robots.txt");
 
 					if (privateRobots != null) {
 						updateLayoutSetTypeSettings(
 							"true-robots.txt", privateRobots, groupId, true);
 
-						typeSettingsProperties.remove("true-robots.txt");
+						typeSettingsUnicodeProperties.remove("true-robots.txt");
 					}
 
-					String publicRobots = typeSettingsProperties.getProperty(
-						"false-robots.txt");
+					String publicRobots =
+						typeSettingsUnicodeProperties.getProperty(
+							"false-robots.txt");
 
 					if (publicRobots != null) {
 						updateLayoutSetTypeSettings(
 							"false-robots.txt", publicRobots, groupId, false);
 
-						typeSettingsProperties.remove("false-robots.txt");
+						typeSettingsUnicodeProperties.remove(
+							"false-robots.txt");
 					}
 
 					_groupLocalService.updateGroup(
-						groupId, typeSettingsProperties.toString());
+						groupId, typeSettingsUnicodeProperties.toString());
 				}
 			}
 		}

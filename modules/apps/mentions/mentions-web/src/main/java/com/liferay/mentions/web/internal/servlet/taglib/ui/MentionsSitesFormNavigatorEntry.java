@@ -67,17 +67,18 @@ public class MentionsSitesFormNavigatorEntry
 		Group liveGroup = (Group)httpServletRequest.getAttribute(
 			"site.liveGroup");
 
-		UnicodeProperties typeSettingsProperties = null;
+		UnicodeProperties typeSettingsUnicodeProperties = null;
 
 		if (liveGroup != null) {
-			typeSettingsProperties = liveGroup.getTypeSettingsProperties();
+			typeSettingsUnicodeProperties =
+				liveGroup.getTypeSettingsProperties();
 		}
 		else {
-			typeSettingsProperties = new UnicodeProperties();
+			typeSettingsUnicodeProperties = new UnicodeProperties();
 		}
 
 		boolean groupMentionsEnabled = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("mentionsEnabled"), true);
+			typeSettingsUnicodeProperties.getProperty("mentionsEnabled"), true);
 
 		httpServletRequest.setAttribute(
 			MentionsWebKeys.GROUP_MENTIONS_ENABLED, groupMentionsEnabled);

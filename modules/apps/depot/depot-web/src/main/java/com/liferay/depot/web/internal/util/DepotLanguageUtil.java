@@ -68,10 +68,10 @@ public class DepotLanguageUtil {
 	}
 
 	private static Locale[] _getDepotAvailableLocales(Group group) {
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
-		String groupLanguageIds = typeSettingsProperties.getProperty(
+		String groupLanguageIds = typeSettingsUnicodeProperties.getProperty(
 			PropsKeys.LOCALES);
 
 		if (groupLanguageIds != null) {

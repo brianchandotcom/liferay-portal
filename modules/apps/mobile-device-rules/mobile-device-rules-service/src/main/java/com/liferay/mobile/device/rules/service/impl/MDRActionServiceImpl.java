@@ -61,7 +61,7 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 	public MDRAction addAction(
 			long ruleGroupInstanceId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -70,7 +70,7 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 
 		return mdrActionLocalService.addAction(
 			ruleGroupInstanceId, nameMap, descriptionMap, type,
-			typeSettingsProperties, serviceContext);
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 	public MDRAction updateAction(
 			long actionId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -141,8 +141,8 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		return mdrActionLocalService.updateAction(
-			actionId, nameMap, descriptionMap, type, typeSettingsProperties,
-			serviceContext);
+			actionId, nameMap, descriptionMap, type,
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Reference(

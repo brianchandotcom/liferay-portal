@@ -57,10 +57,10 @@ public class StagedLayoutSetImpl
 
 		// Last publish date
 
-		UnicodeProperties settingsProperties =
+		UnicodeProperties settingsUnicodeProperties =
 			_layoutSet.getSettingsProperties();
 
-		String lastPublishDateString = settingsProperties.getProperty(
+		String lastPublishDateString = settingsUnicodeProperties.getProperty(
 			"last-publish-date");
 
 		Instant instant = Instant.ofEpochMilli(
@@ -182,9 +182,9 @@ public class StagedLayoutSetImpl
 	public void setLastPublishDate(Date lastPublishDate) {
 		_lastPublishDate = lastPublishDate;
 
-		UnicodeProperties settingsProperties = getSettingsProperties();
+		UnicodeProperties settingsUnicodeProperties = getSettingsProperties();
 
-		settingsProperties.setProperty(
+		settingsUnicodeProperties.setProperty(
 			"last-publish-date", String.valueOf(_lastPublishDate.getTime()));
 	}
 

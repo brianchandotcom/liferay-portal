@@ -298,40 +298,44 @@ public class LayoutCopyHelperTest {
 
 	@Test
 	public void testCopyTypeSettings() throws Exception {
-		UnicodeProperties sourceProperties = new UnicodeProperties();
+		UnicodeProperties sourceUnicodeProperties = new UnicodeProperties();
 
-		sourceProperties.setProperty(
+		sourceUnicodeProperties.setProperty(
 			"lfr-theme:regular:show-footer", Boolean.TRUE.toString());
-		sourceProperties.setProperty(
+		sourceUnicodeProperties.setProperty(
 			"lfr-theme:regular:show-header", Boolean.TRUE.toString());
 
 		Layout sourceLayout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), sourceProperties.toString());
+			_group.getGroupId(), sourceUnicodeProperties.toString());
 
 		Layout targetLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), StringPool.BLANK);
 
-		UnicodeProperties targetProperties = new UnicodeProperties();
+		UnicodeProperties targetUnicodeProperties = new UnicodeProperties();
 
-		targetProperties.fastLoad(targetLayout.getTypeSettings());
+		targetUnicodeProperties.fastLoad(targetLayout.getTypeSettings());
 
 		Assert.assertNull(
-			targetProperties.getProperty("lfr-theme:regular:show-footer"));
+			targetUnicodeProperties.getProperty(
+				"lfr-theme:regular:show-footer"));
 		Assert.assertNull(
-			targetProperties.getProperty("lfr-theme:regular:show-header"));
+			targetUnicodeProperties.getProperty(
+				"lfr-theme:regular:show-header"));
 
 		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
 
 		targetLayout = _layoutLocalService.fetchLayout(targetLayout.getPlid());
 
-		targetProperties.fastLoad(targetLayout.getTypeSettings());
+		targetUnicodeProperties.fastLoad(targetLayout.getTypeSettings());
 
 		Assert.assertEquals(
 			Boolean.TRUE.toString(),
-			targetProperties.getProperty("lfr-theme:regular:show-footer"));
+			targetUnicodeProperties.getProperty(
+				"lfr-theme:regular:show-footer"));
 		Assert.assertEquals(
 			Boolean.TRUE.toString(),
-			targetProperties.getProperty("lfr-theme:regular:show-header"));
+			targetUnicodeProperties.getProperty(
+				"lfr-theme:regular:show-header"));
 	}
 
 	@Inject

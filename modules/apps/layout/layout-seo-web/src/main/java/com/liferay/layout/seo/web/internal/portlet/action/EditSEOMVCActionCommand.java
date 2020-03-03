@@ -131,10 +131,10 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 
 		themeDisplay.clearLayoutFriendlyURL(layout);
 
-		UnicodeProperties layoutTypeSettingsProperties =
+		UnicodeProperties layoutTypeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		UnicodeProperties formTypeSettingsProperties =
+		UnicodeProperties formTypeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
@@ -144,30 +144,32 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 		String type = layout.getType();
 
 		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
-			layoutTypeSettingsProperties.putAll(formTypeSettingsProperties);
+			layoutTypeSettingsUnicodeProperties.putAll(
+				formTypeSettingsUnicodeProperties);
 
 			boolean layoutCustomizable = GetterUtil.getBoolean(
-				layoutTypeSettingsProperties.get(
+				layoutTypeSettingsUnicodeProperties.get(
 					LayoutConstants.CUSTOMIZABLE_LAYOUT));
 
 			if (!layoutCustomizable) {
 				layoutTypePortlet.removeCustomization(
-					layoutTypeSettingsProperties);
+					layoutTypeSettingsUnicodeProperties);
 			}
 
 			layout = _layoutService.updateLayout(
 				groupId, privateLayout, layoutId,
-				layoutTypeSettingsProperties.toString());
+				layoutTypeSettingsUnicodeProperties.toString());
 		}
 		else {
-			layoutTypeSettingsProperties.putAll(formTypeSettingsProperties);
+			layoutTypeSettingsUnicodeProperties.putAll(
+				formTypeSettingsUnicodeProperties);
 
-			layoutTypeSettingsProperties.putAll(
+			layoutTypeSettingsUnicodeProperties.putAll(
 				layout.getTypeSettingsProperties());
 
 			layout = _layoutService.updateLayout(
 				groupId, privateLayout, layoutId,
-				layoutTypeSettingsProperties.toString());
+				layoutTypeSettingsUnicodeProperties.toString());
 		}
 
 		EventsProcessorUtil.process(

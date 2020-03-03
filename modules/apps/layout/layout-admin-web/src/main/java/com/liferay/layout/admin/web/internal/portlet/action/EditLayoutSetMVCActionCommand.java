@@ -114,7 +114,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 	protected void updateLookAndFeel(
 			ActionRequest actionRequest, long companyId, long liveGroupId,
 			long stagingGroupId, boolean privateLayout,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws Exception {
 
 		String[] devices = StringUtil.split(
@@ -133,8 +133,8 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 					companyId, deviceThemeId, deviceColorSchemeId);
 
 				_actionUtil.updateThemeSettingsProperties(
-					actionRequest, companyId, typeSettingsProperties, device,
-					deviceThemeId, false);
+					actionRequest, companyId, typeSettingsUnicodeProperties,
+					device, deviceThemeId, false);
 			}
 
 			long groupId = liveGroupId;
@@ -158,10 +158,10 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 		Group liveGroup = _groupLocalService.getGroup(liveGroupId);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			liveGroup.getTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"mergeGuestPublicPages", String.valueOf(mergeGuestPublicPages));
 
 		_groupService.updateGroup(liveGroupId, liveGroup.getTypeSettings());
@@ -169,14 +169,14 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void updateSettings(
 			ActionRequest actionRequest, long liveGroupId, long stagingGroupId,
-			boolean privateLayout, UnicodeProperties settingsProperties)
+			boolean privateLayout, UnicodeProperties settingsUnicodeProperties)
 		throws Exception {
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
-		settingsProperties.putAll(typeSettingsProperties);
+		settingsUnicodeProperties.putAll(typeSettingsUnicodeProperties);
 
 		long groupId = liveGroupId;
 
@@ -185,7 +185,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		_layoutSetService.updateSettings(
-			groupId, privateLayout, settingsProperties.toString());
+			groupId, privateLayout, settingsUnicodeProperties.toString());
 	}
 
 	@Reference

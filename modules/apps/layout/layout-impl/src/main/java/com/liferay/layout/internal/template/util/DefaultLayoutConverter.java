@@ -147,11 +147,11 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
 		if (LayoutTypeSettingsInspectorUtil.hasNestedPortletsPortlet(
-				typeSettingsProperties)) {
+				typeSettingsUnicodeProperties)) {
 
 			conversionWarningMessages.add(
 				LanguageUtil.get(
@@ -162,7 +162,7 @@ public class DefaultLayoutConverter implements LayoutConverter {
 		}
 
 		if (LayoutTypeSettingsInspectorUtil.isCustomizableLayout(
-				typeSettingsProperties)) {
+				typeSettingsUnicodeProperties)) {
 
 			conversionWarningMessages.add(
 				LanguageUtil.get(
@@ -175,7 +175,7 @@ public class DefaultLayoutConverter implements LayoutConverter {
 		if (_isLayoutTemplateParseable(layout) &&
 			!ArrayUtil.contains(
 				_layoutConverterConfiguration.verifiedLayoutTemplateIds(),
-				typeSettingsProperties.getProperty(
+				typeSettingsUnicodeProperties.getProperty(
 					LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID))) {
 
 			conversionWarningMessages.add(

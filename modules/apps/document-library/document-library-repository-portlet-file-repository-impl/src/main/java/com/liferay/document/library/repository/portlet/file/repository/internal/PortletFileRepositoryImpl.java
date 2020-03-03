@@ -269,14 +269,15 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		long classNameId = _portal.getClassNameId(
 			PortletRepository.class.getName());
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
 		return _run(
 			() -> _repositoryLocalService.addRepository(
 				user.getUserId(), groupId, classNameId,
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, portletId,
-				StringPool.BLANK, portletId, typeSettingsProperties, true,
-				serviceContext));
+				StringPool.BLANK, portletId, typeSettingsUnicodeProperties,
+				true, serviceContext));
 	}
 
 	@Override

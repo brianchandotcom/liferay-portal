@@ -135,11 +135,11 @@ public class PublishLayoutMVCActionCommand
 
 			draftLayout = _layoutLocalService.getLayout(themeDisplay.getPlid());
 
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				draftLayout.getTypeSettingsProperties();
 
 			if (Validator.isNotNull(layoutPrototypeUuid)) {
-				typeSettingsProperties.setProperty(
+				typeSettingsUnicodeProperties.setProperty(
 					"layoutPrototypeUuid", layoutPrototypeUuid);
 			}
 

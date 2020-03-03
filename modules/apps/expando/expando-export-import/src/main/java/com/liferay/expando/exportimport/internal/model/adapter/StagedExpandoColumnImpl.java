@@ -304,9 +304,9 @@ public class StagedExpandoColumnImpl implements StagedExpandoColumn {
 
 	@Override
 	public void setTypeSettingsProperties(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		_expandoColumn.setTypeSettingsProperties(typeSettingsProperties);
+		_expandoColumn.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 	}
 
 	@Override

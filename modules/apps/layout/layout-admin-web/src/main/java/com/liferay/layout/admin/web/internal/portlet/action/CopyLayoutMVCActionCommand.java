@@ -98,7 +98,7 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
@@ -107,17 +107,18 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			Layout sourceLayout = _layoutLocalService.fetchLayout(sourcePlid);
 
-			UnicodeProperties sourceTypeSettingsProperties =
+			UnicodeProperties sourceTypeSettingsUnicodeProperties =
 				sourceLayout.getTypeSettingsProperties();
 
-			sourceTypeSettingsProperties.putAll(typeSettingsProperties);
+			sourceTypeSettingsUnicodeProperties.putAll(
+				typeSettingsUnicodeProperties);
 
 			Layout targetLayout = _layoutService.addLayout(
 				groupId, privateLayout, sourceLayout.getParentLayoutId(), 0, 0,
 				nameMap, sourceLayout.getTitleMap(),
 				sourceLayout.getDescriptionMap(), sourceLayout.getKeywordsMap(),
 				sourceLayout.getRobotsMap(), sourceLayout.getType(),
-				sourceTypeSettingsProperties.toString(), false, false,
+				sourceTypeSettingsUnicodeProperties.toString(), false, false,
 				new HashMap<>(), serviceContext);
 
 			Layout draftLayout = _layoutLocalService.fetchLayout(

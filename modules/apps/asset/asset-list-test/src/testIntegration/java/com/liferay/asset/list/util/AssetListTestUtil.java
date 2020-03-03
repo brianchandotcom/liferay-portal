@@ -95,9 +95,10 @@ public class AssetListTestUtil {
 				long segmentsEntryId)
 		throws PortalException {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put(
+		typeSettingsUnicodeProperties.put(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
@@ -107,7 +108,7 @@ public class AssetListTestUtil {
 			addAssetListEntrySegmentsEntryRel(
 				TestPropsValues.getUserId(), groupId,
 				assetListEntry.getAssetListEntryId(), segmentsEntryId,
-				typeSettingsProperties.toString(), serviceContext);
+				typeSettingsUnicodeProperties.toString(), serviceContext);
 	}
 
 }

@@ -81,11 +81,12 @@ public class UpgradeLayoutType extends UpgradeProcess {
 	}
 
 	protected String getJournalArticleId(String typeSettings) throws Exception {
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettingsProperties.fastLoad(typeSettings);
+		typeSettingsUnicodeProperties.fastLoad(typeSettings);
 
-		return typeSettingsProperties.getProperty("article-id");
+		return typeSettingsUnicodeProperties.getProperty("article-id");
 	}
 
 	protected String getPortletId() {
@@ -129,13 +130,14 @@ public class UpgradeLayoutType extends UpgradeProcess {
 	}
 
 	protected String getTypeSettings(String portletId) {
-		UnicodeProperties newTypeSettings = new UnicodeProperties(true);
+		UnicodeProperties newTypeSettingsUnicodeProperties =
+			new UnicodeProperties(true);
 
-		newTypeSettings.put("column-1", portletId);
-		newTypeSettings.put(
+		newTypeSettingsUnicodeProperties.put("column-1", portletId);
+		newTypeSettingsUnicodeProperties.put(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column");
 
-		return newTypeSettings.toString();
+		return newTypeSettingsUnicodeProperties.toString();
 	}
 
 	protected void updateLayout(long plid, String portletId) throws Exception {

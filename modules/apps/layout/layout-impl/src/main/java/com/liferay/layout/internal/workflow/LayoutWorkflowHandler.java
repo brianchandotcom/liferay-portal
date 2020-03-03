@@ -117,14 +117,15 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 			throw new PortalException(exception);
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			draftLayout.getTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty("published", "true");
+		typeSettingsUnicodeProperties.setProperty("published", "true");
 
 		draftLayout = _layoutLocalService.updateLayout(
 			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
-			draftLayout.getLayoutId(), typeSettingsProperties.toString());
+			draftLayout.getLayoutId(),
+			typeSettingsUnicodeProperties.toString());
 
 		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 

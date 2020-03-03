@@ -121,9 +121,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-		UnicodeProperties properties = draftLayout.getTypeSettingsProperties();
+		UnicodeProperties unicodeProperties =
+			draftLayout.getTypeSettingsProperties();
 
-		properties.put("published", Boolean.FALSE.toString());
+		unicodeProperties.put("published", Boolean.FALSE.toString());
 
 		_layoutLocalService.updateLayout(draftLayout);
 

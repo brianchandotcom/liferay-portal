@@ -56,11 +56,11 @@ public class NotificationUtil {
 			return defaultValue;
 		}
 
-		UnicodeProperties notificationTypeSettingsProperties =
+		UnicodeProperties notificationTypeSettingsUnicodeProperties =
 			calendarNotificationTemplate.
 				getNotificationTypeSettingsProperties();
 
-		return notificationTypeSettingsProperties.get(propertyName);
+		return notificationTypeSettingsUnicodeProperties.get(propertyName);
 	}
 
 }

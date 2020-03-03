@@ -62,7 +62,8 @@ public class ActionUtil {
 	public static UnicodeProperties getTypeSettingsProperties(
 		ActionRequest actionRequest, Collection<String> propertyNames) {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
 		for (String propertyName : propertyNames) {
 			String[] values = ParamUtil.getParameterValues(
@@ -70,10 +71,10 @@ public class ActionUtil {
 
 			String merged = StringUtil.merge(values);
 
-			typeSettingsProperties.setProperty(propertyName, merged);
+			typeSettingsUnicodeProperties.setProperty(propertyName, merged);
 		}
 
-		return typeSettingsProperties;
+		return typeSettingsUnicodeProperties;
 	}
 
 	public static void includeEditorJSP(

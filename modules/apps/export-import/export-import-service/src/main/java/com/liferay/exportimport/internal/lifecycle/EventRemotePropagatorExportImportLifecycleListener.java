@@ -124,10 +124,11 @@ public class EventRemotePropagatorExportImportLifecycleListener
 
 		Group targetGroup = _groupLocalService.fetchGroup(targetGroupId);
 
-		UnicodeProperties typeSettings =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			sourceGroup.getTypeSettingsProperties();
 
-		String remoteGroupUUID = typeSettings.getProperty("remoteGroupUUID");
+		String remoteGroupUUID = typeSettingsUnicodeProperties.getProperty(
+			"remoteGroupUUID");
 
 		// If the target group can be found and the UUID's also match, then we
 		// must not propagate the event because it means remote staging is

@@ -74,16 +74,17 @@ public class AddAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 					(ThemeDisplay)actionRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				UnicodeProperties properties = new UnicodeProperties(true);
+				UnicodeProperties unicodeProperties = new UnicodeProperties(
+					true);
 
-				properties.setProperty(
+				unicodeProperties.setProperty(
 					"groupIds", String.valueOf(themeDisplay.getScopeGroupId()));
 
 				assetListEntry =
 					_assetListEntryService.addDynamicAssetListEntry(
 						serviceContext.getUserId(),
 						serviceContext.getScopeGroupId(), title,
-						properties.toString(), serviceContext);
+						unicodeProperties.toString(), serviceContext);
 			}
 			else {
 				assetListEntry = _assetListEntryService.addAssetListEntry(

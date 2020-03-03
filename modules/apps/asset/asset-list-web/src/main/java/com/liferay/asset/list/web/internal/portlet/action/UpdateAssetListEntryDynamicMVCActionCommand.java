@@ -78,21 +78,22 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 			actionRequest, "segmentsEntryId");
 
 		try {
-			UnicodeProperties properties = new UnicodeProperties(true);
+			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
-			properties.fastLoad(
+			unicodeProperties.fastLoad(
 				assetListEntry.getTypeSettings(segmentsEntryId));
 
-			updateQueryLogic(actionRequest, properties);
+			updateQueryLogic(actionRequest, unicodeProperties);
 
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				PropertiesParamUtil.getProperties(
 					actionRequest, "TypeSettingsProperties--");
 
-			properties.putAll(typeSettingsProperties);
+			unicodeProperties.putAll(typeSettingsUnicodeProperties);
 
 			_assetListEntryService.updateAssetListEntryTypeSettings(
-				assetListEntryId, segmentsEntryId, properties.toString());
+				assetListEntryId, segmentsEntryId,
+				unicodeProperties.toString());
 		}
 		catch (DuplicateQueryRuleException duplicateQueryRuleException) {
 			if (_log.isDebugEnabled()) {
@@ -141,7 +142,7 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 	}
 
 	protected void updateQueryLogic(
-			ActionRequest actionRequest, UnicodeProperties properties)
+			ActionRequest actionRequest, UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -165,13 +166,13 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 
 			queryRules.add(queryRule);
 
-			properties.put(
+			unicodeProperties.put(
 				"queryContains" + i, String.valueOf(queryRule.isContains()));
-			properties.put(
+			unicodeProperties.put(
 				"queryAndOperator" + i,
 				String.valueOf(queryRule.isAndOperator()));
-			properties.put("queryName" + i, queryRule.getName());
-			properties.put(
+			unicodeProperties.put("queryName" + i, queryRule.getName());
+			unicodeProperties.put(
 				"queryValues" + i, StringUtil.merge(queryRule.getValues()));
 
 			i++;
@@ -179,17 +180,17 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 
 		// Clear previous preferences that are now blank
 
-		String value = properties.getProperty("queryValues" + i);
+		String value = unicodeProperties.getProperty("queryValues" + i);
 
 		while (Validator.isNotNull(value)) {
-			properties.remove("queryContains" + i);
-			properties.remove("queryAndOperator" + i);
-			properties.remove("queryName" + i);
-			properties.remove("queryValues" + i);
+			unicodeProperties.remove("queryContains" + i);
+			unicodeProperties.remove("queryAndOperator" + i);
+			unicodeProperties.remove("queryName" + i);
+			unicodeProperties.remove("queryValues" + i);
 
 			i++;
 
-			value = properties.getProperty("queryValues" + i);
+			value = unicodeProperties.getProperty("queryValues" + i);
 		}
 	}
 

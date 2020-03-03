@@ -583,24 +583,24 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_targetLayout.getLayoutId(),
 				_sourceLayout.getMasterLayoutPlid());
 
-			UnicodeProperties properties = new UnicodeProperties();
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-			properties.load(_sourceLayout.getTypeSettings());
+			unicodeProperties.load(_sourceLayout.getTypeSettings());
 
 			if ((_sourceLayout.getClassNameId() == _portal.getClassNameId(
 					Layout.class)) &&
 				(_targetLayout.getPlid() == _sourceLayout.getClassPK())) {
 
-				properties.put("published", Boolean.TRUE.toString());
+				unicodeProperties.put("published", Boolean.TRUE.toString());
 
 				_layoutLocalService.updateLayout(
 					_sourceLayout.getGroupId(), _sourceLayout.isPrivateLayout(),
-					_sourceLayout.getLayoutId(), properties.toString());
+					_sourceLayout.getLayoutId(), unicodeProperties.toString());
 			}
 
 			_layoutLocalService.updateLayout(
 				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
-				_targetLayout.getLayoutId(), properties.toString());
+				_targetLayout.getLayoutId(), unicodeProperties.toString());
 
 			_targetLayout.setType(_sourceLayout.getType());
 

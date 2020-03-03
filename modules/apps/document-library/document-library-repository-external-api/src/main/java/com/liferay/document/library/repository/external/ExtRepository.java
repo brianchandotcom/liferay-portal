@@ -404,12 +404,12 @@ public interface ExtRepository {
 	 * This method is called only once, the first time the repository is used.
 	 * </p>
 	 *
-	 * @param  typeSettingsProperties the type settings properties
+	 * @param  typeSettingsUnicodeProperties the type settings properties
 	 * @param  credentialsProvider the Liferay Portal username and password
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public void initRepository(
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			CredentialsProvider credentialsProvider)
 		throws PortalException;
 

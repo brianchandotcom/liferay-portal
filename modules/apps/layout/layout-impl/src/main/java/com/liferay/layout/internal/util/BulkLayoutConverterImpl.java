@@ -188,11 +188,11 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 			actionableDynamicQuery.setPerformActionMethod(
 				(Layout layout) -> {
-					UnicodeProperties typeSettingsProperties =
+					UnicodeProperties typeSettingsUnicodeProperties =
 						layout.getTypeSettingsProperties();
 
 					String layoutTemplateId =
-						typeSettingsProperties.getProperty(
+						typeSettingsUnicodeProperties.getProperty(
 							LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
 
 					if (layoutTemplateId != null) {
@@ -313,10 +313,10 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 			Layout layout, Locale locale)
 		throws LayoutConvertException {
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		String layoutTemplateId = typeSettingsProperties.getProperty(
+		String layoutTemplateId = typeSettingsUnicodeProperties.getProperty(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
 
 		if (Validator.isNull(layoutTemplateId)) {

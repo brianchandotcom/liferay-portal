@@ -114,11 +114,11 @@ public class MDRActionStagedModelDataHandler
 		String type = action.getType();
 
 		if (type.equals(SiteRedirectActionHandler.class.getName())) {
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				action.getTypeSettingsProperties();
 
 			long plid = GetterUtil.getLong(
-				typeSettingsProperties.getProperty("plid"));
+				typeSettingsUnicodeProperties.getProperty("plid"));
 
 			try {
 				Layout layout = _layoutLocalService.getLayout(plid);
@@ -228,11 +228,11 @@ public class MDRActionStagedModelDataHandler
 			return;
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			action.getTypeSettingsProperties();
 
 		long groupId = GetterUtil.getLong(
-			typeSettingsProperties.getProperty("groupId"));
+			typeSettingsUnicodeProperties.getProperty("groupId"));
 
 		boolean privateLayout = GetterUtil.getBoolean(
 			actionElement.attributeValue("private-layout"));
@@ -241,7 +241,7 @@ public class MDRActionStagedModelDataHandler
 			Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
 				layoutUuid, groupId, privateLayout);
 
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"plid", String.valueOf(layout.getPlid()));
 		}
 		catch (Exception exception) {

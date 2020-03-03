@@ -127,7 +127,7 @@ public class EditActionMVCActionCommand extends BaseMVCActionCommand {
 			throw new ActionTypeException();
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			ActionUtil.getTypeSettingsProperties(
 				actionRequest, actionHandler.getPropertyNames());
 
@@ -140,12 +140,12 @@ public class EditActionMVCActionCommand extends BaseMVCActionCommand {
 
 			_mdrActionService.addAction(
 				ruleGroupInstanceId, nameMap, descriptionMap, type,
-				typeSettingsProperties, serviceContext);
+				typeSettingsUnicodeProperties, serviceContext);
 		}
 		else {
 			_mdrActionService.updateAction(
-				actionId, nameMap, descriptionMap, type, typeSettingsProperties,
-				serviceContext);
+				actionId, nameMap, descriptionMap, type,
+				typeSettingsUnicodeProperties, serviceContext);
 		}
 	}
 

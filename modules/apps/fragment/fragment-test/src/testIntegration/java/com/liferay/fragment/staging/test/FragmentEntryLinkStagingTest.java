@@ -76,16 +76,17 @@ public class FragmentEntryLinkStagingTest {
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put("published", "true");
+		typeSettingsUnicodeProperties.put("published", "true");
 
 		_layout = _layoutLocalService.addLayout(
 			TestPropsValues.getUserId(), _liveGroup.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0, nameMap, nameMap,
 			Collections.emptyMap(), Collections.emptyMap(),
 			Collections.emptyMap(), LayoutConstants.TYPE_CONTENT,
-			typeSettingsProperties.toString(), false, false,
+			typeSettingsUnicodeProperties.toString(), false, false,
 			Collections.emptyMap(), serviceContext);
 	}
 

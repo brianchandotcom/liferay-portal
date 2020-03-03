@@ -166,10 +166,10 @@ public class SimpleRuleHandler implements RuleHandler {
 	protected boolean isValidBooleanValue(
 		MDRRule mdrRule, String property, boolean value) {
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			mdrRule.getTypeSettingsProperties();
 
-		String validValueString = typeSettingsProperties.get(property);
+		String validValueString = typeSettingsUnicodeProperties.get(property);
 
 		if (Validator.isNull(validValueString)) {
 			return true;
@@ -191,10 +191,10 @@ public class SimpleRuleHandler implements RuleHandler {
 	protected boolean isValidMultiValue(
 		MDRRule mdrRule, String property, String value) {
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			mdrRule.getTypeSettingsProperties();
 
-		String validValueString = typeSettingsProperties.get(property);
+		String validValueString = typeSettingsUnicodeProperties.get(property);
 
 		if (Validator.isNull(validValueString)) {
 			return true;
@@ -216,11 +216,11 @@ public class SimpleRuleHandler implements RuleHandler {
 	protected boolean isValidRangeValue(
 		MDRRule mdrRule, String maxProperty, String minProperty, float value) {
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			mdrRule.getTypeSettingsProperties();
 
-		String max = typeSettingsProperties.get(maxProperty);
-		String min = typeSettingsProperties.get(minProperty);
+		String max = typeSettingsUnicodeProperties.get(maxProperty);
+		String min = typeSettingsUnicodeProperties.get(minProperty);
 
 		if (Validator.isNull(max) && Validator.isNull(min)) {
 			logRangeValue(

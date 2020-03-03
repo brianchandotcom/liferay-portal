@@ -137,11 +137,11 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		long userId = portletDataContext.getUserId(
 			layoutSetPrototype.getUserUuid());
 
-		UnicodeProperties settingsProperties =
+		UnicodeProperties settingsUnicodeProperties =
 			layoutSetPrototype.getSettingsProperties();
 
 		boolean layoutsUpdateable = GetterUtil.getBoolean(
-			settingsProperties.getProperty("layoutsUpdateable"), true);
+			settingsUnicodeProperties.getProperty("layoutsUpdateable"), true);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			layoutSetPrototype);

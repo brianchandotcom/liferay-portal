@@ -68,12 +68,12 @@ public class AddAssetListEntryVariationMVCActionCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			UnicodeProperties properties = new UnicodeProperties(true);
+			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				"groupIds", String.valueOf(themeDisplay.getScopeGroupId()));
 
-			typeSettings = properties.toString();
+			typeSettings = unicodeProperties.toString();
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

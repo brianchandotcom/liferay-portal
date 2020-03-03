@@ -37,13 +37,13 @@ public class CalendarNotificationTemplateTestUtil {
 			String fromAddress, String fromName, String subject, String body)
 		throws PortalException {
 
-		UnicodeProperties notificationTypeSettingsProperties =
+		UnicodeProperties notificationTypeSettingsUnicodeProperties =
 			new UnicodeProperties(true);
 
-		notificationTypeSettingsProperties.put(
+		notificationTypeSettingsUnicodeProperties.put(
 			CalendarNotificationTemplateConstants.PROPERTY_FROM_ADDRESS,
 			fromAddress);
-		notificationTypeSettingsProperties.put(
+		notificationTypeSettingsUnicodeProperties.put(
 			CalendarNotificationTemplateConstants.PROPERTY_FROM_NAME, fromName);
 
 		User user = UserLocalServiceUtil.getUser(calendar.getUserId());
@@ -52,7 +52,7 @@ public class CalendarNotificationTemplateTestUtil {
 			addCalendarNotificationTemplate(
 				calendar.getUserId(), calendar.getCalendarId(),
 				NotificationType.EMAIL,
-				notificationTypeSettingsProperties.toString(),
+				notificationTypeSettingsUnicodeProperties.toString(),
 				notificationTemplateType, subject, body,
 				createServiceContext(user));
 	}

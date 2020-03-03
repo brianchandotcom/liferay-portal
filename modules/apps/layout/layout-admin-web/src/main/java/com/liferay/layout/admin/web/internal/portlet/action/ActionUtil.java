@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 public class ActionUtil {
 
 	public void deleteThemeSettingsProperties(
-		UnicodeProperties typeSettingsProperties, String device) {
+		UnicodeProperties typeSettingsUnicodeProperties, String device) {
 
 		String keyPrefix = ThemeSettingImpl.namespaceProperty(device);
 
-		Set<String> keys = typeSettingsProperties.keySet();
+		Set<String> keys = typeSettingsUnicodeProperties.keySet();
 
 		Iterator<String> itr = keys.iterator();
 
@@ -88,7 +88,7 @@ public class ActionUtil {
 	public void updateLookAndFeel(
 			ActionRequest actionRequest, long companyId, long liveGroupId,
 			long stagingGroupId, boolean privateLayout, long layoutId,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws Exception {
 
 		String[] devices = StringUtil.split(
@@ -110,15 +110,16 @@ public class ActionUtil {
 					companyId);
 				deviceColorSchemeId = StringPool.BLANK;
 
-				deleteThemeSettingsProperties(typeSettingsProperties, device);
+				deleteThemeSettingsProperties(
+					typeSettingsUnicodeProperties, device);
 			}
 			else if (Validator.isNotNull(deviceThemeId)) {
 				deviceColorSchemeId = getColorSchemeId(
 					companyId, deviceThemeId, deviceColorSchemeId);
 
 				updateThemeSettingsProperties(
-					actionRequest, companyId, typeSettingsProperties, device,
-					deviceThemeId, true);
+					actionRequest, companyId, typeSettingsUnicodeProperties,
+					device, deviceThemeId, true);
 			}
 
 			long groupId = liveGroupId;
@@ -129,7 +130,7 @@ public class ActionUtil {
 
 			_layoutService.updateLayout(
 				groupId, privateLayout, layoutId,
-				typeSettingsProperties.toString());
+				typeSettingsUnicodeProperties.toString());
 
 			_layoutService.updateLookAndFeel(
 				groupId, privateLayout, layoutId, deviceThemeId,
@@ -139,31 +140,31 @@ public class ActionUtil {
 
 	public UnicodeProperties updateThemeSettingsProperties(
 			ActionRequest actionRequest, long companyId,
-			UnicodeProperties typeSettingsProperties, String device,
+			UnicodeProperties typeSettingsUnicodeProperties, String device,
 			String deviceThemeId, boolean layout)
 		throws Exception {
 
 		Theme theme = _themeLocalService.getTheme(companyId, deviceThemeId);
 
-		deleteThemeSettingsProperties(typeSettingsProperties, device);
+		deleteThemeSettingsProperties(typeSettingsUnicodeProperties, device);
 
 		Map<String, ThemeSetting> themeSettings =
 			theme.getConfigurableSettings();
 
 		if (themeSettings.isEmpty()) {
-			return typeSettingsProperties;
+			return typeSettingsUnicodeProperties;
 		}
 
 		setThemeSettingProperties(
-			actionRequest, typeSettingsProperties, themeSettings, device,
+			actionRequest, typeSettingsUnicodeProperties, themeSettings, device,
 			layout);
 
-		return typeSettingsProperties;
+		return typeSettingsUnicodeProperties;
 	}
 
 	protected void setThemeSettingProperties(
 			ActionRequest actionRequest,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			Map<String, ThemeSetting> themeSettings, String device,
 			boolean isLayout)
 		throws PortalException {
@@ -197,7 +198,7 @@ public class ActionUtil {
 					 layout.getDefaultThemeSetting(key, device, false))) ||
 				(!isLayout && !value.equals(themeSetting.getValue()))) {
 
-				typeSettingsProperties.setProperty(
+				typeSettingsUnicodeProperties.setProperty(
 					ThemeSettingImpl.namespaceProperty(device, key), value);
 			}
 		}

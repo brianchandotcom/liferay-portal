@@ -47,21 +47,22 @@ public class CMISRepositoryUtil {
 
 	public static void checkRepository(
 			long repositoryId, Map<String, String> parameters,
-			UnicodeProperties typeSettingsProperties, String typeSettingsKey)
+			UnicodeProperties typeSettingsUnicodeProperties,
+			String typeSettingsKey)
 		throws PortalException, RepositoryException {
 
-		if (!typeSettingsProperties.containsKey(typeSettingsKey) ||
+		if (!typeSettingsUnicodeProperties.containsKey(typeSettingsKey) ||
 			Validator.isNull(
-				typeSettingsProperties.getProperty(typeSettingsKey))) {
+				typeSettingsUnicodeProperties.getProperty(typeSettingsKey))) {
 
 			Repository cmisRepository = getCMISRepository(parameters);
 
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				typeSettingsKey, cmisRepository.getId());
 
 			try {
 				RepositoryLocalServiceUtil.updateRepository(
-					repositoryId, typeSettingsProperties);
+					repositoryId, typeSettingsUnicodeProperties);
 			}
 			catch (PortalException | SystemException exception) {
 				throw new RepositoryException(exception);
@@ -70,7 +71,8 @@ public class CMISRepositoryUtil {
 
 		parameters.put(
 			SessionParameter.REPOSITORY_ID,
-			getTypeSettingsValue(typeSettingsProperties, typeSettingsKey));
+			getTypeSettingsValue(
+				typeSettingsUnicodeProperties, typeSettingsKey));
 	}
 
 	public static com.liferay.document.library.repository.cmis.Session
@@ -103,10 +105,12 @@ public class CMISRepositoryUtil {
 	}
 
 	public static String getTypeSettingsValue(
-			UnicodeProperties typeSettingsProperties, String typeSettingsKey)
+			UnicodeProperties typeSettingsUnicodeProperties,
+			String typeSettingsKey)
 		throws InvalidRepositoryException {
 
-		String value = typeSettingsProperties.getProperty(typeSettingsKey);
+		String value = typeSettingsUnicodeProperties.getProperty(
+			typeSettingsKey);
 
 		if (Validator.isNull(value)) {
 			throw new InvalidRepositoryException(

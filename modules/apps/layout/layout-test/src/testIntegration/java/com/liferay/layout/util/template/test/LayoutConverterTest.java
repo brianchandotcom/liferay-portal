@@ -837,13 +837,14 @@ public class LayoutConverterTest {
 
 	@Test
 	public void testIsConvertibleTrueWidgetPageCustomizable() throws Exception {
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			LayoutConstants.CUSTOMIZABLE_LAYOUT, Boolean.TRUE.toString());
 
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), typeSettingsProperties.toString());
+			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(
@@ -856,14 +857,15 @@ public class LayoutConverterTest {
 	public void testIsConvertibleTrueWidgetPageWithNestedApplicationsWidget()
 		throws Exception {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put(
+		typeSettingsUnicodeProperties.put(
 			LayoutTypePortletConstants.NESTED_COLUMN_IDS,
 			StringUtil.randomString());
 
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), typeSettingsProperties.toString());
+			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(
@@ -994,13 +996,14 @@ public class LayoutConverterTest {
 		List<Map<String, List<String>>> encodedPortletIdsMaps =
 			new ArrayList<>();
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId);
 
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), typeSettingsProperties.toString());
+			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		for (Map<String, String[]> portletIdsMap : portletIdsMaps) {
 			Set<Map.Entry<String, String[]>> entries = portletIdsMap.entrySet();
@@ -1128,13 +1131,14 @@ public class LayoutConverterTest {
 	private void _testConvertNoPortlets(String layoutTemplateId)
 		throws Exception {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId);
 
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), typeSettingsProperties.toString());
+			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(

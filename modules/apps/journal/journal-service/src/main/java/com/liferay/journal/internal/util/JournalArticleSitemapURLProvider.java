@@ -70,12 +70,17 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			_journalArticleService.getArticlesByLayoutUuid(
 				layoutSet.getGroupId(), layoutUuid);
 
+		boolean headCheck = true;
+
 		if ((journalArticles != null) && journalArticles.isEmpty()) {
+			headCheck = false;
+
 			journalArticles = getDisplayPageTemplateArticles(
 				layoutUuid, layoutSet);
 		}
 
-		visitArticles(element, layoutSet, themeDisplay, journalArticles);
+		visitArticles(
+			element, layoutSet, themeDisplay, journalArticles, headCheck);
 	}
 
 	@Override
@@ -86,7 +91,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		List<JournalArticle> journalArticles =
 			_journalArticleService.getLayoutArticles(layoutSet.getGroupId());
 
-		visitArticles(element, layoutSet, themeDisplay, journalArticles);
+		visitArticles(element, layoutSet, themeDisplay, journalArticles, true);
 	}
 
 	protected List<JournalArticle> getDisplayPageTemplateArticles(
@@ -102,12 +107,13 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			return journalArticles;
 		}
 
-		DynamicQuery dynamicQuery =
+		DynamicQuery assetDisplayPageEntryDynamicQuery =
 			_assetDisplayPageEntryLocalService.dynamicQuery();
 
 		Property plidProperty = PropertyFactoryUtil.forName("plid");
 
-		dynamicQuery.add(plidProperty.eq(layout.getPlid()));
+		assetDisplayPageEntryDynamicQuery.add(
+			plidProperty.eq(layout.getPlid()));
 
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
 			"classNameId");
@@ -115,25 +121,30 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
 
-		dynamicQuery.add(classNameIdProperty.eq(classNameId));
+		assetDisplayPageEntryDynamicQuery.add(
+			classNameIdProperty.eq(classNameId));
 
 		Property layoutPageTemplateEntryIdProperty =
 			PropertyFactoryUtil.forName("layoutPageTemplateEntryId");
 
-		dynamicQuery.add(layoutPageTemplateEntryIdProperty.ne(Long.valueOf(0)));
+		assetDisplayPageEntryDynamicQuery.add(
+			layoutPageTemplateEntryIdProperty.ne(Long.valueOf(0)));
 
-		List<AssetDisplayPageEntry> assetDisplayPageEntries =
-			_assetDisplayPageEntryLocalService.dynamicQuery(dynamicQuery);
+		assetDisplayPageEntryDynamicQuery.setProjection(
+			PropertyFactoryUtil.forName("classPK"));
 
-		for (AssetDisplayPageEntry assetDisplayPageEntry :
-				assetDisplayPageEntries) {
+		List<Long> resourcePrimKeys =
+			_assetDisplayPageEntryLocalService.dynamicQuery(
+				assetDisplayPageEntryDynamicQuery);
 
+		for (Long resourcePrimKey : resourcePrimKeys) {
 			try {
 				JournalArticle journalArticle =
-					_journalArticleService.getLatestArticle(
-						assetDisplayPageEntry.getClassPK());
+					_journalArticleService.getLatestArticle(resourcePrimKey);
 
-				journalArticles.add(journalArticle);
+				if (journalArticle.isIndexable()) {
+					journalArticles.add(journalArticle);
+				}
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -163,7 +174,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 	protected void visitArticles(
 			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay,
-			List<JournalArticle> journalArticles)
+			List<JournalArticle> journalArticles, boolean headCheck)
 		throws PortalException {
 
 		if (journalArticles.isEmpty()) {
@@ -178,7 +189,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			if (processedArticleIds.contains(journalArticle.getArticleId()) ||
 				(journalArticle.getStatus() !=
 					WorkflowConstants.STATUS_APPROVED) ||
-				!JournalUtil.isHead(journalArticle)) {
+				(headCheck && !JournalUtil.isHead(journalArticle))) {
 
 				continue;
 			}

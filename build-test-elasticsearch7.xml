@@ -1023,15 +1023,13 @@ xpack.monitoring.collection.enabled: true</echo>
 			</then>
 		</if>
 
+		<antcall target="configure-elasticsearch-cluster-properties" />
+
 		<get-testcase-property property.name="remote.elasticsearch.ccr.enabled" />
 
 		<if>
 			<equals arg1="${remote.elasticsearch.ccr.enabled}" arg2="true" />
 			<then>
-				<antcall target="configure-elasticsearch-cluster-properties">
-					<param name="remote.elasticsearch.cluster.size" value="2" />
-				</antcall>
-
 				<antcall target="prepare-additional-elasticsearch-dirs">
 					<param name="remote.elasticsearch.cluster.size" value="2" />
 				</antcall>
@@ -1043,8 +1041,6 @@ xpack.monitoring.collection.enabled: true</echo>
 				</antcall>
 			</then>
 			<else>
-				<antcall target="configure-elasticsearch-cluster-properties" />
-
 				<antcall target="prepare-additional-elasticsearch-dirs" />
 
 				<antcall target="start-elasticsearch-node" />

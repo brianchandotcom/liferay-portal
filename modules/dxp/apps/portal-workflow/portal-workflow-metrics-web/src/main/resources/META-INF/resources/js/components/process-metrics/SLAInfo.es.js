@@ -57,7 +57,7 @@ const SLAInfo = ({processId}) => {
 			: Liferay.Language.get('x-sla-is-blocked');
 
 	return (
-		<>
+		<div className="container-fluid-1280">
 			{blockedSLACount !== 0 && showDismisible && (
 				<ClayAlert
 					className="mb-0"
@@ -97,7 +97,7 @@ const SLAInfo = ({processId}) => {
 					</>
 				</ClayAlert>
 			)}
-		</>
+		</div>
 	);
 };
 

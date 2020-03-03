@@ -24,6 +24,8 @@ public interface CrossClusterReplicationConfigurationWrapper {
 
 	public String getCCRLocalClusterConnectionId();
 
+	public String getRemoteClusterAlias();
+
 	public boolean isCCREnabled();
 
 }

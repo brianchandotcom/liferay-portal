@@ -49,8 +49,8 @@ class FormRenderer extends Component {
 		this.emit('fieldBlurred', event);
 	}
 
-	_handleFieldClicked(index) {
-		this.emit('fieldClicked', index);
+	_handleFieldClicked(event) {
+		this.emit('fieldClicked', event);
 	}
 
 	_handleFieldEdited(event) {

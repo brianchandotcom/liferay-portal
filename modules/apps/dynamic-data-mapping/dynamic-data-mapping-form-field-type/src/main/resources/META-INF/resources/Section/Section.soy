@@ -5,8 +5,6 @@
 	{@param name: string}
 	{@param spritemap: string}
 	{@param? _handleFieldBlurred: any}
-	{@param? _handleFieldChanged: any}
-	{@param? _handleFieldClicked: any}
 	{@param? _handleFieldEdited: any}
 	{@param? _handleFieldFocused: any}
 	{@param? displayErrors: bool}
@@ -29,8 +27,6 @@
 		{param contentRenderer kind="html"}
 			{call PageRenderer.rows}
 				{param _handleFieldBlurred: $_handleFieldBlurred /}
-				{param _handleFieldChanged: $_handleFieldChanged /}
-				{param _handleFieldClicked: $_handleFieldClicked /}
 				{param _handleFieldEdited: $_handleFieldEdited /}
 				{param _handleFieldFocused: $_handleFieldFocused /}
 				{param activePage: $activePage /}

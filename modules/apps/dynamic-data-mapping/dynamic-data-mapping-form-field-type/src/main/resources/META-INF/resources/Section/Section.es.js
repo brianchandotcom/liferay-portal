@@ -24,14 +24,6 @@ import {Config} from 'metal-state';
 import templates from './Section.soy';
 
 class Section extends Component {
-	dispatchEvent(event, name, value) {
-		this.emit(name, {
-			fieldInstance: this,
-			originalEvent: event,
-			value,
-		});
-	}
-
 	prepareStateForRender(state) {
 		const {nestedFields} = this;
 
@@ -53,29 +45,16 @@ class Section extends Component {
 		return newState;
 	}
 
-	_handleOnDispatch(event) {
-		switch (event.type) {
-			case 'value':
-				this.dispatchEvent(event, 'fieldEdited', event.payload);
-				break;
-			case 'blur':
-				this.dispatchEvent(
-					event.payload,
-					'fieldBlurred',
-					event.payload.target.value
-				);
-				break;
-			case 'focus':
-				this.dispatchEvent(
-					event.payload,
-					'fieldFocused',
-					event.payload.target.value
-				);
-				break;
-			default:
-				console.error(new TypeError(`There is no type ${event.type}`));
-				break;
-		}
+	_handleFieldBlurred(event) {
+		this.emit('fieldBlurred', event);
+	}
+
+	_handleFieldEdited(event) {
+		this.emit('fieldEdited', event);
+	}
+
+	_handleFieldFocused(event) {
+		this.emit('fieldFocused', event);
 	}
 
 	_setRows(rows) {

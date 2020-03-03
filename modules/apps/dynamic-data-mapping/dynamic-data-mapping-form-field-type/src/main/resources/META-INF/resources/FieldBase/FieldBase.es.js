@@ -35,6 +35,18 @@ class FieldBase extends Component {
 			showRepeatableRemoveButton: this.repeatable && repeatedIndex > 0,
 		};
 	}
+
+	_handleFieldClicked(event) {
+		const {delegateTarget} = event;
+		const {fieldName} = delegateTarget.dataset;
+
+		event.stopPropagation();
+
+		this.dispatch('fieldClicked', {
+			fieldName,
+			originalEvent: event,
+		});
+	}
 }
 
 FieldBase.STATE = {

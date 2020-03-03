@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -329,13 +330,12 @@ public class Sidecar {
 
 		processConfigBuilder.setBootstrapClassPath(bootstrapClasspath);
 
-		Map<String, String> environments = new HashMap<>();
-
-		environments.putAll(System.getenv());
-
-		environments.put("HOSTNAME", "localhost");
-
-		processConfigBuilder.setEnvironment(environments);
+		processConfigBuilder.setEnvironment(
+			HashMapBuilder.putAll(
+				System.getenv()
+			).put(
+				"HOSTNAME", "localhost"
+			).build());
 
 		processConfigBuilder.setProcessLogConsumer(
 			processLog -> {

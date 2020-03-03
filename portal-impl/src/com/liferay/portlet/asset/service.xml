@@ -318,7 +318,7 @@
 		<!-- Other fields -->
 
 		<column accessor="true" name="name" type="String" />
-		<column name="assetCount" type="int" />
+		<column change-tracking-resolution-type="merge" name="assetCount" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Relationships -->

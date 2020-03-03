@@ -50,8 +50,8 @@ export default withRouter(
 			createQuestion(
 				articleBody,
 				headline,
-				tags,
-				context.siteKey
+				context.siteKey,
+				tags.map(tag => tag.value)
 			).then(() => debounceCallback());
 
 		return (

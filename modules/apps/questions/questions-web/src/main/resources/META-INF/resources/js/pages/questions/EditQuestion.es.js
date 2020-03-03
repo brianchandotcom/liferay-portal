@@ -20,6 +20,7 @@ import React, {useContext, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import TagSelector from '../../components/TagSelector';
 import {getThreadContent, updateThread} from '../../utils/client.es';
 import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
 
@@ -35,24 +36,37 @@ export default withRouter(
 		const [articleBody, setArticleBody] = useState('');
 		const [headline, setHeadline] = useState('');
 		const [id, setId] = useState('');
-		const [tags, setTags] = useState('');
+		const [tags, setTags] = useState([]);
 
 		const loadThread = () =>
 			getThreadContent(questionId, context.siteKey).then(
-				({articleBody, headline, id, tags}) => {
+				({articleBody, headline, id, taxonomyCategoryBriefs}) => {
 					setArticleBody(articleBody);
 					setHeadline(headline);
 					setId(id);
-					if (tags) {
-						setTags(tags.toString());
+					if (taxonomyCategoryBriefs) {
+						setTags(
+							taxonomyCategoryBriefs.map(
+								({
+									taxonomyCategoryId,
+									taxonomyCategoryName,
+								}) => ({
+									label: taxonomyCategoryName,
+									value: taxonomyCategoryId,
+								})
+							)
+						);
 					}
 				}
 			);
 
 		const submit = () =>
-			updateThread(articleBody, headline, tags, id).then(() =>
-				history.goBack()
-			);
+			updateThread(
+				articleBody,
+				headline,
+				id,
+				tags.map(tag => tag.value)
+			).then(() => history.goBack());
 
 		return (
 			<section className="c-mt-5 c-mx-auto col-xl-10">
@@ -127,12 +141,11 @@ export default withRouter(
 							{Liferay.Language.get('tags')}
 						</label>
 
-						<ClayInput
-							onChange={event => setTags(event.target.value)}
-							placeholder={Liferay.Language.get('add-your-tags')}
-							type="text"
-							value={tags}
+						<TagSelector
+							tags={tags}
+							tagsChange={tags => setTags(tags)}
 						/>
+
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<span className="small text-secondary">

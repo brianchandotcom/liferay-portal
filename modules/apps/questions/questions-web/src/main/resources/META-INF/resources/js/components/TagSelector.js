@@ -18,7 +18,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {AppContext} from '../AppContext.es';
 import {getAllTags} from '../utils/client.es';
 
-export default ({tagsChange, ...props}) => {
+export default ({tagsChange, tags = [], ...props}) => {
 	const context = useContext(AppContext);
 
 	const [inputValue, setInputValue] = useState('');
@@ -32,11 +32,17 @@ export default ({tagsChange, ...props}) => {
 					.flatMap(vocabulary => vocabulary.taxonomyCategories.items)
 					.map(({id, name}) => ({
 						label: name,
-						value: id,
+						value: +id,
 					}))
 			);
 		});
 	}, [context.siteKey]);
+
+	useEffect(() => {
+		if (tags.length) {
+			setItems(tags);
+		}
+	}, [tags]);
 
 	const maxTags = tags => tags.length > 5;
 	const duplicatedTags = tags =>
@@ -53,7 +59,7 @@ export default ({tagsChange, ...props}) => {
 			!duplicatedTags(tags)
 		) {
 			setItems(tags);
-			tagsChange(tags.map(item => +item.value));
+			tagsChange(tags);
 		}
 	};
 

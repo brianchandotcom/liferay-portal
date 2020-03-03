@@ -19,7 +19,7 @@ import {Link, withRouter} from 'react-router-dom';
 export default withRouter(({tags = [], match: {params: {sectionId}}}) => (
 	<ul className="c-mb-0 d-flex flex-wrap list-unstyled stretched-link-layer">
 		{tags.map(tag => (
-			<li key={tag}>
+			<li key={tag.taxonomyCategoryId}>
 				<ClayLabel displayType="secondary">
 					<Link
 						key={tag.taxonomyCategoryId}

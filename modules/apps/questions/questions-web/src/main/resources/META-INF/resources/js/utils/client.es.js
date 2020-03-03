@@ -95,7 +95,7 @@ export const createComment = (articleBody, messageBoardMessageId) =>
             }
         }`);
 
-export const createQuestion = (articleBody, headline, tags, siteKey) =>
+export const createQuestion = (articleBody, headline, siteKey, tags) =>
 	request(gql`
         mutation {
             createSiteMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, encodingFormat: "html", headline: ${headline}, showAsQuestion: true, taxonomyCategoryIds: ${tags}, viewableBy: ANYONE}, siteKey: ${siteKey}){

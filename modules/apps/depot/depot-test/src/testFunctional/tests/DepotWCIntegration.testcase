@@ -90,7 +90,6 @@ definition {
 	}
 
 	@description = "This test covers LPS-105119. It ensures that a web content in a depot can be selected through the field."
-	@ignore = "true"
 	@priority = "4"
 	test SelectDepotContentViaWebContentField {
 		JSONLayout.addPublicLayout(
@@ -188,7 +187,7 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.addContentDisplay(fragmentName = "Content");
+		// PageEditor.addContentDisplay(fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
 			depotName = "Test Depot Name",

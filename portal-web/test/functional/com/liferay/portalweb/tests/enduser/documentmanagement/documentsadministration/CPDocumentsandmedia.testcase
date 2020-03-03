@@ -28,7 +28,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82073."
-	@ignore = "true"
 	@priority = "5"
 	test AddShortcutToSiteDocument {
 		property portal.acceptance = "true";

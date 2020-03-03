@@ -842,11 +842,11 @@ xpack.monitoring.collection.enabled: true</echo>
 			select="\1"
 		/>
 
-		<exec executable="curl" outputproperty="curl.output.companyId">
+		<exec executable="curl" outputproperty="curl.output.connect.to.remote.cluster">
 			<arg line="-X PUT &quot;localhost:9202/_cluster/settings&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;persistent&quot;:{&quot;cluster&quot;:{&quot;remote&quot;:{&quot;leader&quot;:{&quot;seeds&quot;:[&quot;127.0.0.1:9300&quot;]}}}}}&apos;" />
 		</exec>
 
-		<echo>${curl.output.companyId}</echo>
+		<echo>${curl.output.connect.to.remote.cluster}</echo>
 
 		<exec executable="curl" outputproperty="curl.output.follower.liferay.index">
 			<arg line="-X PUT &quot;localhost:9202/liferay-${companyId}/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-${companyId}&quot;}&apos;" />

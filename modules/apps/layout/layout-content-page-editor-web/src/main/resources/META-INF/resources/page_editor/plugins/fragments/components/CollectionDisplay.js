@@ -14,11 +14,53 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDrag} from 'react-dnd';
+import {getEmptyImage} from 'react-dnd-html5-backend';
 
+import {useSelectItem} from '../../../app/components/Controls';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {useDispatch, useSelector} from '../../../app/store/index';
+import addItem from '../../../app/thunks/addItem';
 import Collapse from '../../../common/components/Collapse';
 
 const CollectionDisplayCard = () => {
+	const dispatch = useDispatch();
+	const store = useSelector(state => state);
+	const selectItem = useSelectItem();
+
+	const [, drag, preview] = useDrag({
+		end(_item, monitor) {
+			const result = monitor.getDropResult();
+
+			if (!result) {
+				return;
+			}
+
+			const {parentId, position} = result;
+
+			if (parentId) {
+				dispatch(
+					addItem({
+						itemType: LAYOUT_DATA_ITEM_TYPES.collection,
+						parentItemId: parentId,
+						position,
+						selectItem,
+						store,
+					})
+				);
+			}
+		},
+		item: {
+			name: Liferay.Language.get('collection-display'),
+			type: LAYOUT_DATA_ITEM_TYPES.collection,
+		},
+	});
+
+	useEffect(() => {
+		preview(getEmptyImage(), {captureDraggingState: true});
+	}, [preview]);
+
 	return (
 		<div
 			className={classNames(
@@ -29,6 +71,7 @@ const CollectionDisplayCard = () => {
 				'selector-button',
 				'overflow-hidden'
 			)}
+			ref={drag}
 		>
 			<div className="page-editor__fragments__fragment-card-no-preview">
 				<ClayIcon symbol="list" />

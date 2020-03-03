@@ -46,7 +46,9 @@ const useSLA = (
 		},
 	});
 
-	const changeNodesKeys = (type, nodeKeys, callback) => selectedNodeKeys => {
+	const changeNodesKeys = (type, nodeKeys, callback) => selectedNodes => {
+		const selectedNodeKeys = getNodeKeys(selectedNodes);
+
 		const filteredNodeKeys = nodeKeys.filter(({compositeId}) =>
 			selectedNodeKeys.includes(`${compositeId}`)
 		);
@@ -57,7 +59,9 @@ const useSLA = (
 		callback(filteredNodeKeys);
 	};
 
-	const changePauseNodes = (pauseNodeKeys, callback) => nodeKeys => {
+	const changePauseNodes = (pauseNodeKeys, callback) => nodes => {
+		const nodeKeys = getNodeKeys(nodes);
+
 		const filteredPauseNodeKeys = pauseNodeKeys.filter(({compositeId}) =>
 			nodeKeys.includes(`${compositeId}`)
 		);
@@ -133,23 +137,22 @@ const useSLA = (
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[fetchClient]
 	);
-
-	const filterNodeTagIds = (nodes, nodeKeys = []) => {
-		return nodes
-			.filter(({compositeId}) =>
-				nodeKeys.find(
-					node => `${node.id}:${node.executionType}` === compositeId
-				)
+	const getNodeTags = (nodes, nodeKeys = []) => {
+		return nodes.filter(({compositeId}) =>
+			nodeKeys.find(
+				node => `${node.id}:${node.executionType}` === compositeId
 			)
-			.map(({compositeId}) => `${compositeId}`);
+		);
 	};
 
-	const pauseNodeTagIds = (pauseNodes, pauseNodeKeys) => {
+	const getNodeKeys = nodes => nodes.map(({compositeId}) => compositeId);
+
+	const getPauseNodeTags = (pauseNodes, pauseNodeKeys) => {
 		const nodeKeys = pauseNodeKeys || [];
 
-		return pauseNodes
-			.filter(({id}) => nodeKeys.find(node => node.id == id))
-			.map(({compositeId}) => `${compositeId}`);
+		return pauseNodes.filter(({id}) =>
+			nodeKeys.find(node => node.id == id)
+		);
 	};
 
 	const resetNodes = () => {
@@ -232,8 +235,8 @@ const useSLA = (
 		changePauseNodes,
 		changeValue,
 		fetchSLA,
-		filterNodeTagIds,
-		pauseNodeTagIds,
+		getNodeTags,
+		getPauseNodeTags,
 		resetNodes,
 		saveSLA,
 		sla,

@@ -16,7 +16,7 @@ import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 import Icon from '../../shared/components/Icon.es';
-import MultiSelect from '../../shared/components/MultiSelect.es';
+import {AutocompleteMultiSelect} from '../../shared/components/autocomplete/AutocompleteMultiSelect.es';
 import LoadingState from '../../shared/components/loading/LoadingState.es';
 import {
 	BackLink,
@@ -126,8 +126,8 @@ const Body = ({id, processId, query}) => {
 		changeNodesKeys,
 		changePauseNodes,
 		changeValue,
-		filterNodeTagIds,
-		pauseNodeTagIds,
+		getNodeTags,
+		getPauseNodeTags,
 		sla: {
 			calendarKey = calendarStore.defaultCalendar.key,
 			days,
@@ -326,18 +326,20 @@ const Body = ({id, processId, query}) => {
 								)}
 							</div>
 
-							<MultiSelect
-								data={getStartNodes(
+							<AutocompleteMultiSelect
+								fieldId="compositeId"
+								fieldName="desc"
+								id="start"
+								items={getStartNodes(
 									pauseNodeKeys,
 									stopNodeKeys
 								)}
-								fieldId="compositeId"
-								onChangeTags={changeNodesKeys(
+								onChange={changeNodesKeys(
 									START_NODE_KEYS,
 									nodes,
 									checkNodeErrors(START_NODE_KEYS)
 								)}
-								selectedTagsId={filterNodeTagIds(
+								selectedItems={getNodeTags(
 									getStartNodes(pauseNodeKeys, stopNodeKeys),
 									startNodeKeys
 								)}
@@ -362,17 +364,19 @@ const Body = ({id, processId, query}) => {
 								)}
 							</div>
 
-							<MultiSelect
-								data={getPauseNodes(
+							<AutocompleteMultiSelect
+								fieldId="compositeId"
+								fieldName="desc"
+								id="pause"
+								items={getPauseNodes(
 									startNodeKeys,
 									stopNodeKeys
 								)}
-								fieldId="compositeId"
-								onChangeTags={changePauseNodes(
+								onChange={changePauseNodes(
 									getPauseNodes(startNodeKeys, stopNodeKeys),
 									checkNodeErrors(PAUSE_NODE_KEYS)
 								)}
-								selectedTagsId={pauseNodeTagIds(
+								selectedItems={getPauseNodeTags(
 									getPauseNodes(startNodeKeys, stopNodeKeys),
 									pauseNodeKeys
 								)}
@@ -398,18 +402,20 @@ const Body = ({id, processId, query}) => {
 								)}
 							</div>
 
-							<MultiSelect
-								data={getStopNodes(
+							<AutocompleteMultiSelect
+								fieldId="compositeId"
+								fieldName="desc"
+								id="stop"
+								items={getStopNodes(
 									pauseNodeKeys,
 									startNodeKeys
 								)}
-								fieldId="compositeId"
-								onChangeTags={changeNodesKeys(
+								onChange={changeNodesKeys(
 									STOP_NODE_KEYS,
 									nodes,
 									checkNodeErrors(STOP_NODE_KEYS)
 								)}
-								selectedTagsId={filterNodeTagIds(
+								selectedItems={getNodeTags(
 									getStopNodes(pauseNodeKeys, startNodeKeys),
 									stopNodeKeys
 								)}

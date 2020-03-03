@@ -16,10 +16,9 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {SearchInput} from 'data-engine-taglib';
+import {DataDefinitionUtils, SearchInput} from 'data-engine-taglib';
 import React, {useContext, useRef, useState} from 'react';
 
-import {getDataDefinitionField} from '../../utils/dataDefinition.es';
 import EditTableViewContext, {
 	REMOVE_FILTER_VALUE,
 	UPDATE_FILTER_VALUE,
@@ -203,7 +202,7 @@ const RENDERERS = {
 export const FilterRenderer = ({fieldName, useFieldLabel}) => {
 	const [{dataDefinition}] = useContext(EditTableViewContext);
 
-	const dataDefinitionField = getDataDefinitionField(
+	const dataDefinitionField = DataDefinitionUtils.getDataDefinitionField(
 		dataDefinition,
 		fieldName
 	);

@@ -13,6 +13,7 @@
  */
 
 import {
+	DataDefinitionUtils,
 	DataLayoutBuilderActions,
 	DataLayoutVisitor,
 	DragTypes,
@@ -21,7 +22,6 @@ import {
 import React, {useContext} from 'react';
 
 import useDoubleClick from '../../hooks/useDoubleClick.es';
-import {forEachDataDefinitionField} from '../../utils/dataDefinition.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
 import {dropCustomObjectField} from './actions.es';
@@ -37,27 +37,33 @@ const getFieldTypes = ({
 	const dataDefinitionFields = [];
 	const {dataLayoutPages} = dataLayout;
 
-	forEachDataDefinitionField(dataDefinition, ({fieldType, label, name}) => {
-		if (fieldType === 'section') {
-			return;
+	DataDefinitionUtils.forEachDataDefinitionField(
+		dataDefinition,
+		({fieldType, label, name}) => {
+			if (fieldType === 'section') {
+				return;
+			}
+
+			const fieldTypeSettings = fieldTypes.find(({name}) => {
+				return name === fieldType;
+			});
+
+			dataDefinitionFields.push({
+				active: name === focusedCustomObjectField.name,
+				className: 'custom-object-field',
+				description: fieldTypeSettings.label,
+				disabled: DataLayoutVisitor.containsField(
+					dataLayoutPages,
+					name
+				),
+				dragAlignment: 'right',
+				dragType: DragTypes.DRAG_DATA_DEFINITION_FIELD,
+				icon: fieldTypeSettings.icon,
+				label: label.en_US,
+				name,
+			});
 		}
-
-		const fieldTypeSettings = fieldTypes.find(({name}) => {
-			return name === fieldType;
-		});
-
-		dataDefinitionFields.push({
-			active: name === focusedCustomObjectField.name,
-			className: 'custom-object-field',
-			description: fieldTypeSettings.label,
-			disabled: DataLayoutVisitor.containsField(dataLayoutPages, name),
-			dragAlignment: 'right',
-			dragType: DragTypes.DRAG_DATA_DEFINITION_FIELD,
-			icon: fieldTypeSettings.icon,
-			label: label.en_US,
-			name,
-		});
-	});
+	);
 
 	return dataDefinitionFields;
 };

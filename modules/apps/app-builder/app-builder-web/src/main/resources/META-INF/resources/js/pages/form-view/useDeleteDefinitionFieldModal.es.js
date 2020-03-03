@@ -15,10 +15,10 @@
 import ClayButton from '@clayui/button/lib/Button';
 import {Context as ClayModalContext} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
+import {DataDefinitionUtils} from 'data-engine-taglib';
 import React, {useContext} from 'react';
 
 import {getItem} from '../../utils/client.es';
-import {getDataDefinitionField} from '../../utils/dataDefinition.es';
 import FormViewContext from './FormViewContext.es';
 
 export default callback => {
@@ -28,7 +28,7 @@ export default callback => {
 	const [{onClose}, dispatchModal] = useContext(ClayModalContext);
 
 	return fieldName => {
-		const {fieldType, label} = getDataDefinitionField(
+		const {fieldType, label} = DataDefinitionUtils.getDataDefinitionField(
 			dataDefinition,
 			fieldName
 		);

@@ -15,13 +15,8 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {DataDefinitionUtils} from 'data-engine-taglib';
 import React, {useEffect, useState} from 'react';
-
-import {
-	getDataDefinitionField,
-	getFieldLabel,
-	getOptionLabel,
-} from '../../utils/dataDefinition.es';
 
 const createFileEntryPreviewURL = (groupId, fileEntryId) => {
 	const portletURL = Liferay.PortletURL.createURL(
@@ -128,7 +123,9 @@ const DocumentRenderer = ({displayType, value = {}}) => {
 };
 
 const OptionsRenderer = ({displayType, options, values = []}) => {
-	const labels = values.map(value => getOptionLabel(options, value));
+	const labels = values.map(value =>
+		DataDefinitionUtils.getOptionLabel(options, value)
+	);
 
 	if (displayType === 'list' || labels.length === 0) {
 		return <StringRenderer value={labels.join(', ')} />;
@@ -170,7 +167,9 @@ const getFieldValueRenderer = (dataDefinitionField, displayType) => {
 		const {options} = customProperties;
 
 		return ({value}) => (
-			<StringRenderer value={getOptionLabel(options, value)} />
+			<StringRenderer
+				value={DataDefinitionUtils.getOptionLabel(options, value)}
+			/>
 		);
 	}
 
@@ -188,7 +187,9 @@ const getFieldValueRenderer = (dataDefinitionField, displayType) => {
 		}
 
 		return ({value = []}) => (
-			<StringRenderer value={getOptionLabel(options, value[0])} />
+			<StringRenderer
+				value={DataDefinitionUtils.getOptionLabel(options, value[0])}
+			/>
 		);
 	}
 
@@ -201,7 +202,7 @@ export const FieldValuePreview = ({
 	displayType = 'form',
 	fieldName,
 }) => {
-	const dataDefinitionField = getDataDefinitionField(
+	const dataDefinitionField = DataDefinitionUtils.getDataDefinitionField(
 		dataDefinition,
 		fieldName
 	);
@@ -222,7 +223,7 @@ export const FieldValuePreview = ({
 };
 
 export default ({dataDefinition, dataRecordValues, fieldName}) => {
-	const label = getFieldLabel(dataDefinition, fieldName);
+	const label = DataDefinitionUtils.getFieldLabel(dataDefinition, fieldName);
 
 	return (
 		<div className="data-record-field-preview">

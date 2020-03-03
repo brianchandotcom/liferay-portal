@@ -1144,6 +1144,8 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
+			Navigator.gotoNavTab(navTab = "My Sites");
+
 			var key_siteName = "${liferaySiteName}";
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "table");

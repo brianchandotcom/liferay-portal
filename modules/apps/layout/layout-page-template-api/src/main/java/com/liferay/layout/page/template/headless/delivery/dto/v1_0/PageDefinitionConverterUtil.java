@@ -19,6 +19,7 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
+import com.liferay.headless.delivery.dto.v1_0.InlineValue;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
@@ -276,10 +277,35 @@ public class PageDefinitionConverterUtil {
 										return null;
 									}
 
+									String urlValue =
+										backgroundImageJSONObject.getString(
+											"url");
+
 									return new FragmentImage() {
 										{
 											url = backgroundImageJSONObject.get(
 												"url");
+
+											setTitle(
+												() -> {
+													String title =
+														backgroundImageJSONObject.
+															getString("title");
+
+													if (Validator.isNull(
+															title) ||
+														title.equals(
+															urlValue)) {
+
+														return null;
+													}
+
+													return new InlineValue() {
+														{
+															value = title;
+														}
+													};
+												});
 										}
 									};
 								});

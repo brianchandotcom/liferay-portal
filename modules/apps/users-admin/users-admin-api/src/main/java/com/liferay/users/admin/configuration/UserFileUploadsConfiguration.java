@@ -53,6 +53,10 @@ public interface UserFileUploadsConfiguration {
 	)
 	public boolean imageCheckToken();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Meta.AD(
 		deflt = "true",
 		description = "use-initials-for-default-user-portrait-help",

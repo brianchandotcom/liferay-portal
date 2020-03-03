@@ -23,6 +23,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.Session;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -81,6 +82,18 @@ public class AssetTagCTEventListener implements CTEventListener {
 					assetTag.setAssetCount(count);
 
 					_assetTagLocalService.updateAssetTag(assetTag);
+
+					_assetTagLocalService.updateWithUnsafeFunction(
+						assetTagPersistence -> {
+							Session session =
+								assetTagPersistence.getCurrentSession();
+
+							session.flush();
+
+							session.clear();
+
+							return null;
+						});
 				}
 			}
 		}

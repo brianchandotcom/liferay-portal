@@ -23,10 +23,11 @@ Boolean inTrash = (Boolean)request.getAttribute("liferay-ui:ratings:inTrash");
 String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:type"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ratings:ratings:data");
 %>
+
 <liferay-util:html-top
 	outputKey="ratings-taglib"
 >
-	<link href='<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>' rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <c:choose>

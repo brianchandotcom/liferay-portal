@@ -14,9 +14,9 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
-import {fetch, objectToFormData} from 'frontend-js-web';
 
 const RATING_TYPE = 'like';
 const SCORE_LIKE = 1;
@@ -46,11 +46,12 @@ const RatingsLike = ({
 		}
 
 		if (inTrash) {
-			return LanguageUtil.get(
+			return Liferay.Language.get(
 				'ratings-are-disabled-because-this-entry-is-in-the-recycle-bin'
 			);
-		} else if (!enabled) {
-			return LanguageUtil.get('ratings-are-disabled-in-staging');
+		}
+		else if (!enabled) {
+			return Liferay.Language.get('ratings-are-disabled-in-staging');
 		}
 
 		return liked

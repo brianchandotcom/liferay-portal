@@ -9,7 +9,7 @@
 	}
 
 	.lexicon-icon-heart {
-		transition: all .2s ease-in-out;
+		transition: all 0.2s ease-in-out;
 
 		&.liked {
 			color: $red;
@@ -18,6 +18,6 @@
 	}
 
 	.likes {
-		margin-left: .5rem;
+		margin-left: 0.5rem;
 	}
 }

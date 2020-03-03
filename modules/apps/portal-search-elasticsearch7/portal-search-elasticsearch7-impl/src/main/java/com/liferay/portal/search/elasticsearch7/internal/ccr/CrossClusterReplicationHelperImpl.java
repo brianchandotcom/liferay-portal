@@ -50,11 +50,15 @@ public class CrossClusterReplicationHelperImpl
 			_putFollow(indexName);
 		}
 		catch (RuntimeException runtimeException) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to follow the index ", indexName, " in the ",
-					_REMOTE_CLUSTER_ALIAS, " cluster"),
-				runtimeException);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to follow the index ", indexName, " in the ",
+						crossClusterReplicationConfigurationWrapper.
+							getRemoteClusterAlias(),
+						" cluster"),
+					runtimeException);
+			}
 		}
 	}
 
@@ -76,8 +80,11 @@ public class CrossClusterReplicationHelperImpl
 			_deleteIndex(indexName);
 		}
 		catch (RuntimeException runtimeException) {
-			_log.error(
-				"Unable to unfollow the index " + indexName, runtimeException);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to unfollow the index " + indexName,
+					runtimeException);
+			}
 		}
 	}
 
@@ -124,7 +131,8 @@ public class CrossClusterReplicationHelperImpl
 
 	private void _putFollow(String indexName) {
 		PutFollowCCRRequest putFollowRequest = new PutFollowCCRRequest(
-			_REMOTE_CLUSTER_ALIAS, indexName, indexName);
+			crossClusterReplicationConfigurationWrapper.getRemoteClusterAlias(),
+			indexName, indexName);
 
 		putFollowRequest.setConnectionId(_getConnectionId());
 
@@ -141,8 +149,6 @@ public class CrossClusterReplicationHelperImpl
 
 		searchEngineAdapter.execute(unfollowCCRRequest);
 	}
-
-	private static final String _REMOTE_CLUSTER_ALIAS = "leader";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CrossClusterReplicationHelperImpl.class);

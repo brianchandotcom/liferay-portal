@@ -1365,7 +1365,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	private static volatile ViewCountManager _viewCountManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ViewCountManager.class, AssetEntryLocalServiceImpl.class,
-			"_viewCountManager", false, true);
+			"_viewCountManager", true, true);
 
 	private final ServiceTrackerMap
 		<String, List<AssetEntryValidatorExclusionRule>>

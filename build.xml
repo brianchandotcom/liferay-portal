@@ -175,6 +175,8 @@ message.
 		<if>
 			<equals arg1="${org.gradle.daemon}" arg2="true" />
 			<then>
+				<setup-sdk setupbinariescache="false" />
+
 				<gradle-execute dir="." forcedcacheenabled="false" task="">
 					<arg value="--stop" />
 				</gradle-execute>

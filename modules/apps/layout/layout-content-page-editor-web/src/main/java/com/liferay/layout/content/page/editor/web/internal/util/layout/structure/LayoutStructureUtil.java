@@ -14,6 +14,12 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -101,7 +107,20 @@ public class LayoutStructureUtil {
 			layoutStructure, layoutStructure.getLayoutStructureItem(itemId),
 			saveInlineContent, saveMappingConfiguration);
 
-		return pageElement.toString();
+		try {
+			SimpleFilterProvider simpleFilterProvider =
+				new SimpleFilterProvider();
+
+			FilterProvider filterProvider = simpleFilterProvider.addFilter(
+				"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
+
+			ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
+
+			return objectWriter.writeValueAsString(pageElement);
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
+		}
 	}
 
 	public static JSONObject updateLayoutPageTemplateData(
@@ -129,5 +148,7 @@ public class LayoutStructureUtil {
 
 		return dataJSONObject;
 	}
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 }

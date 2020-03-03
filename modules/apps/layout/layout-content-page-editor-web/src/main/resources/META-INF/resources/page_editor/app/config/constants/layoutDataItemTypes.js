@@ -13,6 +13,7 @@
  */
 
 export const LAYOUT_DATA_ITEM_TYPES = {
+	collection: 'collection',
 	column: 'column',
 	container: 'container',
 	dropZone: 'drop-zone',

@@ -8,9 +8,9 @@
 					"title": "http://myexample.com/myexample.png",
 					"url": "http://myexample.com/myexample.png"
 				},
-				"paddingBottom": 5,
-				"paddingHorizontal": 6,
-				"paddingTop": 4,
+				"paddingBottom": 7,
+				"paddingHorizontal": 5,
+				"paddingTop": 3,
 				"type": "fluid"
 			},
 			"itemId": "247d4dd8-6743-403f-927a-ff3f3015497c",

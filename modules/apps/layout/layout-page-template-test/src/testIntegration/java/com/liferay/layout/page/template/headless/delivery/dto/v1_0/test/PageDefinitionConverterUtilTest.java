@@ -353,10 +353,10 @@ public class PageDefinitionConverterUtilTest {
 
 		Assert.assertEquals("Fluid", sectionLayout.getContainerTypeAsString());
 		Assert.assertEquals(
-			Integer.valueOf(5), sectionLayout.getPaddingBottom());
+			Integer.valueOf(8), sectionLayout.getPaddingBottom());
 		Assert.assertEquals(
-			Integer.valueOf(6), sectionLayout.getPaddingHorizontal());
-		Assert.assertEquals(Integer.valueOf(4), sectionLayout.getPaddingTop());
+			Integer.valueOf(4), sectionLayout.getPaddingHorizontal());
+		Assert.assertEquals(Integer.valueOf(1), sectionLayout.getPaddingTop());
 	}
 
 	private void _addLayoutPageTemplateStructure(

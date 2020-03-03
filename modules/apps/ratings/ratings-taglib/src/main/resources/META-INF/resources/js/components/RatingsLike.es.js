@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+import {fetch, objectToFormData} from 'frontend-js-web';
 
 const RATING_TYPE = 'like';
 const SCORE_LIKE = 1;
@@ -30,13 +31,13 @@ const RatingsLike = ({
 	signedIn,
 	url,
 }) => {
-	const [active, setActive] = useState(false);
-	const [likes, setLikes] = useState(positiveVotes);
+	const [liked, setLiked] = useState(false);
+	const [totalLikes, setTotalLikes] = useState(positiveVotes);
 
-	const toggleActive = () => {
-		sendVoteRequest(active ? SCORE_UNLIKE : SCORE_LIKE);
+	const toggleLiked = () => {
+		sendVoteRequest(liked ? SCORE_UNLIKE : SCORE_LIKE);
 
-		setActive(!active);
+		setLiked(!liked);
 	};
 
 	const getTitle = () => {
@@ -52,7 +53,7 @@ const RatingsLike = ({
 			return LanguageUtil.get('ratings-are-disabled-in-staging');
 		}
 
-		return active
+		return liked
 			? Liferay.Language.get('unlike-this')
 			: Liferay.Language.get('like-this');
 	};
@@ -65,20 +66,20 @@ const RatingsLike = ({
 			score,
 		});
 
-		var data = {
+		const body = objectToFormData({
 			className,
 			classPK,
 			p_auth: Liferay.authToken,
 			p_l_id: themeDisplay.getPlid(),
 			score,
-		};
+		});
 
-		Liferay.Util.fetch(url, {
-			body: Liferay.Util.objectToFormData(data),
+		fetch(url, {
+			body,
 			method: 'POST',
 		})
 			.then(response => response.json())
-			.then(response => setLikes(response.totalScore));
+			.then(response => setTotalLikes(response.totalScore));
 	};
 
 	return (
@@ -87,13 +88,13 @@ const RatingsLike = ({
 				borderless
 				disabled={!signedIn || !enabled}
 				displayType="secondary"
-				onClick={toggleActive}
+				onClick={toggleLiked}
 				small
-				title={getTitle}
+				title={getTitle()}
 			>
-				<ClayIcon className={active ? 'selected' : ''} symbol="heart" />
+				<ClayIcon className={liked ? 'liked' : ''} symbol="heart" />
 
-				<strong className="ml-2">{likes}</strong>
+				<strong className="likes">{totalLikes}</strong>
 			</ClayButton>
 		</div>
 	);
@@ -101,7 +102,7 @@ const RatingsLike = ({
 
 RatingsLike.propTypes = {
 	className: PropTypes.string.isRequired,
-	classPK: PropTypes.number.isRequired,
+	classPK: PropTypes.string.isRequired,
 	enabled: PropTypes.bool,
 	inTrash: PropTypes.bool,
 	positiveVotes: PropTypes.number,

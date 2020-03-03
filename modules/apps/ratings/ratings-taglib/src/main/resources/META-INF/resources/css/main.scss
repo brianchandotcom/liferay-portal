@@ -1,18 +1,23 @@
 @import 'atlas-variables';
 
 .ratings-like {
-	.lexicon-icon-heart {
-		cursor: pointer;
-		transition: all .2s ease-in-out;
-
-		&:hover {
+	button {
+		&:hover:not(:disabled) .lexicon-icon-heart {
 			color: $dark;
 			transform: scale(1.3);
 		}
+	}
 
-		&.selected {
+	.lexicon-icon-heart {
+		transition: all .2s ease-in-out;
+
+		&.liked {
 			color: $red;
 			fill: $red;
 		}
+	}
+
+	.likes {
+		margin-left: .5rem;
 	}
 }

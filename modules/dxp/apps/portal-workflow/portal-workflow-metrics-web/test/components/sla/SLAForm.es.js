@@ -79,8 +79,8 @@ const SLAState = sla => ({
 	changeNodesKeys: () => () => {},
 	changePauseNodes: () => () => {},
 	changeValue: () => () => {},
-	filterNodeTagIds: () => () => [],
-	pauseNodeTagIds: () => () => [],
+	getNodeTags: () => [],
+	getPauseNodeTags: () => [],
 	saveSLA: () => Promise.resolve(true),
 	sla: {
 		...defaultSlaStore(),

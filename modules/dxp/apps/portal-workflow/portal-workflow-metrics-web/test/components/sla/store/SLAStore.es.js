@@ -39,32 +39,16 @@ test('Should change SLA form values', () => {
 
 	const {result} = renderHook(() => useSLA(client({}), '1', '1'));
 
-	const {
-		changeNodesKeys,
-		changePauseNodes,
-		changeValue,
-		filterNodeTagIds,
-		pauseNodeTagIds,
-	} = result.current;
+	const {changeNodesKeys, changePauseNodes, changeValue} = result.current;
 
 	act(() => changeValue('days', 123));
 	expect(result.current.sla.days).toBe(123);
-	expect(pauseNodeTagIds(nodeKeys, nodeKeys)).toMatchObject([
-		'123:enter',
-		'321:enter',
-		'1234:leave',
-	]);
-	expect(filterNodeTagIds(nodeKeys, nodeKeys)).toMatchObject([
-		'123:enter',
-		'321:enter',
-		'1234:leave',
-	]);
 
 	act(() =>
 		changePauseNodes(nodeKeys, () => {})([
-			'123:enter',
-			'456:enter',
-			'321:enter',
+			{compositeId: '123:enter'},
+			{compositeId: '456:enter'},
+			{compositeId: '321:enter'},
 		])
 	);
 	expect(
@@ -73,9 +57,9 @@ test('Should change SLA form values', () => {
 
 	act(() =>
 		changeNodesKeys(START_NODE_KEYS, nodeKeys, () => {})([
-			'123:enter',
-			'456:enter',
-			'321:enter',
+			{compositeId: '123:enter'},
+			{compositeId: '456:enter'},
+			{compositeId: '321:enter'},
 		])
 	);
 	expect(
@@ -84,9 +68,9 @@ test('Should change SLA form values', () => {
 
 	act(() =>
 		changeNodesKeys(STOP_NODE_KEYS, nodeKeys, () => {})([
-			'123:enter',
-			'456:enter',
-			'321:enter',
+			{compositeId: '123:enter'},
+			{compositeId: '456:enter'},
+			{compositeId: '321:enter'},
 		])
 	);
 	expect(

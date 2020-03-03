@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.util.regex.Matcher;
@@ -28,22 +30,17 @@ public class EmptyCollectionCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		_checkEmptyCollection(fileName, content);
-
-		return content;
-	}
-
-	private void _checkEmptyCollection(String fileName, String content) {
 		Matcher matcher = _emptyCollectionPattern.matcher(content);
 
-		while (matcher.find()) {
-			String collectionType = TextFormatter.format(
-				matcher.group(1), TextFormatter.J);
-
-			addMessage(
-				fileName, "Use Collections.empty" + collectionType + "()",
-				getLineNumber(content, matcher.start()));
+		if (!matcher.find()) {
+			return content;
 		}
+
+		String replacement = StringBundler.concat(
+			"Collections.empty",
+			TextFormatter.format(matcher.group(1), TextFormatter.J), "()");
+
+		return StringUtil.replace(content, matcher.group(), replacement);
 	}
 
 	private static final Pattern _emptyCollectionPattern = Pattern.compile(

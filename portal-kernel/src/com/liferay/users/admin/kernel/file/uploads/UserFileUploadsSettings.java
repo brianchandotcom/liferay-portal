@@ -30,6 +30,10 @@ public interface UserFileUploadsSettings {
 
 	public boolean isImageCheckToken();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public boolean isImageDefaultUseInitials();
 
 }

@@ -41,6 +41,8 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationExcepti
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.RequiredValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -208,7 +210,13 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				ddmFormField, ddmFormFieldValue.getValue());
 		}
 		catch (Exception exception) {
-			throw new MustSetValidValue(ddmFormField.getName(), exception);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Value is invalid for field " + ddmFormField.getName(),
+					exception);
+			}
+
+			throw new MustSetValidValue(ddmFormField.getName());
 		}
 	}
 
@@ -411,6 +419,9 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			throw new MustSetValidValuesSize(ddmFormField.getName());
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormValuesValidatorImpl.class);
 
 	private DDMExpressionFactory _ddmExpressionFactory;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

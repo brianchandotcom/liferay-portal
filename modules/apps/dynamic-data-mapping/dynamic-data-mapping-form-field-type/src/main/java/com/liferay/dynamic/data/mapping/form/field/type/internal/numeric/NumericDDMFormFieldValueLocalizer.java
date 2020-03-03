@@ -15,7 +15,8 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueLocalizer;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -58,9 +59,17 @@ public class NumericDDMFormFieldValueLocalizer
 			return formattedNumber;
 		}
 		catch (ParseException parseException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Numeric localization failed for locale " + locale,
+					parseException);
+			}
 		}
 
-		return StringPool.BLANK;
+		return value;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		NumericDDMFormFieldValueLocalizer.class);
 
 }

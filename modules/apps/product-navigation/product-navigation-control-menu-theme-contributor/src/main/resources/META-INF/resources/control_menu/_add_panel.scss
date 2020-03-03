@@ -1,8 +1,6 @@
 #wrapper,
 .control-menu-container {
 	@include media-breakpoint-up(sm) {
-		overflow-x: hidden;
-
 		body.sidenav-transition & {
 			@include transition(padding 0.5s ease);
 		}

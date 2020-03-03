@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -90,7 +91,8 @@ public class InfoListProviderItemSelectorView
 			infoListProviderItemSelectorCriterion, portletURL,
 			itemSelectedEventName, search,
 			new InfoListProviderItemSelectorViewDescriptor(
-				(HttpServletRequest)servletRequest, portletURL));
+				(HttpServletRequest)servletRequest,
+				infoListProviderItemSelectorCriterion, portletURL));
 	}
 
 	private static final List<ItemSelectorReturnType>
@@ -117,9 +119,14 @@ public class InfoListProviderItemSelectorView
 		implements ItemSelectorViewDescriptor<InfoListProvider> {
 
 		public InfoListProviderItemSelectorViewDescriptor(
-			HttpServletRequest httpServletRequest, PortletURL portletURL) {
+			HttpServletRequest httpServletRequest,
+			InfoListProviderItemSelectorCriterion
+				infoListProviderItemSelectorCriterion,
+			PortletURL portletURL) {
 
 			_httpServletRequest = httpServletRequest;
+			_infoListProviderItemSelectorCriterion =
+				infoListProviderItemSelectorCriterion;
 			_portletURL = portletURL;
 		}
 
@@ -197,8 +204,19 @@ public class InfoListProviderItemSelectorView
 				portletRequest, _portletURL, null,
 				"there-are-no-info-list-providers");
 
-			List<InfoListProvider> infoListProviders =
-				_infoListProviderTracker.getInfoListProviders();
+			List<InfoListProvider> infoListProviders = null;
+
+			String itemType =
+				_infoListProviderItemSelectorCriterion.getItemType();
+
+			if (Validator.isNotNull(itemType)) {
+				infoListProviders =
+					_infoListProviderTracker.getInfoListProviders(itemType);
+			}
+			else {
+				infoListProviders =
+					_infoListProviderTracker.getInfoListProviders();
+			}
 
 			searchContainer.setResults(
 				ListUtil.subList(
@@ -215,6 +233,8 @@ public class InfoListProviderItemSelectorView
 		}
 
 		private final HttpServletRequest _httpServletRequest;
+		private final InfoListProviderItemSelectorCriterion
+			_infoListProviderItemSelectorCriterion;
 		private final PortletURL _portletURL;
 
 	}

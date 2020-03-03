@@ -41,6 +41,8 @@ public class GetterUtilCheck extends BaseFileCheck {
 			_checkDefaultValues(fileName, content, _getterUtilGetPattern, 2);
 		}
 
+		_checkDefaultValues(fileName, content, _paramUtilGetPattern, 3);
+
 		return content;
 	}
 
@@ -93,6 +95,10 @@ public class GetterUtilCheck extends BaseFileCheck {
 	private static final Pattern _getterUtilGetPattern = Pattern.compile(
 		"GetterUtil\\.get(Boolean|Double|Float|Integer|Long|Number|Object|" +
 			"Short|String)\\((.*?)\\);\n",
+		Pattern.DOTALL);
+	private static final Pattern _paramUtilGetPattern = Pattern.compile(
+		"ParamUtil\\.get(Boolean|Double|Float|Integer|Long|Number|Short|" +
+			"String)\\((.*?)\\);\n",
 		Pattern.DOTALL);
 
 }

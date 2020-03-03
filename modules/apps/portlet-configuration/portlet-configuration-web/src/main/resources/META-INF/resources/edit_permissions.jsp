@@ -74,6 +74,10 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 							icon = "organizations";
 							message = "organization-role";
 						}
+						else if (roleType == RoleConstants.TYPE_DEPOT) {
+							icon = "books";
+							message = "asset-library-role";
+						}
 						%>
 
 						<liferay-ui:icon

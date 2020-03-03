@@ -59,6 +59,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import org.elasticsearch.common.settings.Settings;
@@ -180,6 +181,26 @@ public class Sidecar {
 		noticeableFuture.removeFutureListener(_restartFutureListener);
 
 		_processChannel.write(new StopSidecarProcessCallable());
+
+		try {
+			noticeableFuture.get(
+				_elasticsearchConfiguration.sidecarShutdownTimeout(),
+				TimeUnit.MILLISECONDS);
+		}
+		catch (Exception exception) {
+			if (!noticeableFuture.isDone()) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Sidecar process did not shutdown in ",
+							_elasticsearchConfiguration.
+								sidecarShutdownTimeout(),
+							" ms, force it to shutdown"));
+				}
+
+				noticeableFuture.cancel(true);
+			}
+		}
 
 		_processChannel = null;
 	}

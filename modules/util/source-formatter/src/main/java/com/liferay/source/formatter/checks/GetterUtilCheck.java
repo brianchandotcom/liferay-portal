@@ -54,12 +54,12 @@ public class GetterUtilCheck extends BaseFileCheck {
 		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
+			if (ToolsUtil.isInsideQuotes(content, matcher.start() + 1)) {
 				continue;
 			}
 
 			List<String> parameterList = JavaSourceUtil.getParameterList(
-				matcher.group());
+				content.substring(matcher.start() + 1));
 
 			if (parameterList.size() != parameterCount) {
 				continue;
@@ -93,12 +93,12 @@ public class GetterUtilCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _getterUtilGetPattern = Pattern.compile(
-		"GetterUtil\\.get(Boolean|Double|Float|Integer|Long|Number|Object|" +
-			"Short|String)\\((.*?)\\);\n",
+		"\\WGetterUtil\\.get(Boolean|Double|Float|Integer|Long|Number|Object|" +
+			"Short|String)\\(",
 		Pattern.DOTALL);
 	private static final Pattern _paramUtilGetPattern = Pattern.compile(
-		"ParamUtil\\.get(Boolean|Double|Float|Integer|Long|Number|Short|" +
-			"String)\\((.*?)\\);\n",
+		"\\WParamUtil\\.get(Boolean|Double|Float|Integer|Long|Number|Short|" +
+			"String)\\(",
 		Pattern.DOTALL);
 
 }

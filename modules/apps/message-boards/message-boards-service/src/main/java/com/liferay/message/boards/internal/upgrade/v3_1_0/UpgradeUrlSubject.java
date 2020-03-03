@@ -67,7 +67,7 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 				return urlSubject;
 			}
 
-			return urlSubject + StringPool.DASH + (mbMessageCount + 1);
+			return urlSubject + StringPool.DASH + mbMessageCount;
 		}
 		finally {
 			DataAccess.cleanUp(ps);

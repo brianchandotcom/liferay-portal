@@ -19,13 +19,14 @@ import {DndProvider, createDndContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import LanguageListItem from './LanguageListItem.es';
+import LanguageListItemEditable from './LanguageListItemEditable.es';
 
 const noop = () => {};
 
 const LanguagesList = ({
 	defaultLocaleId,
 	locales,
-	showActions = false,
+	isEditable = false,
 	onMakeDefault = noop,
 	onOpenManageModal = noop,
 	onItemDrop = noop,
@@ -40,7 +41,7 @@ const LanguagesList = ({
 						{Liferay.Language.get('active-language')}
 					</ClayTable.Cell>
 
-					{showActions && (
+					{isEditable && (
 						<ClayTable.Cell align="center">
 							<ClayButton
 								displayType="secondary"
@@ -57,16 +58,21 @@ const LanguagesList = ({
 			<ClayTable.Body>
 				<DndProvider manager={manager.current.dragDropManager}>
 					{locales.map((locale, index) => {
-						return (
-							<LanguageListItem
-								{...locale}
-								index={index}
-								isDefault={defaultLocaleId === locale.localeId}
-								key={locale.localeId}
+						const baseProps = {
+							...locale,
+							index,
+							isDefault: defaultLocaleId === locale.localeId,
+							key: locale.localeId,
+						};
+
+						return isEditable ? (
+							<LanguageListItemEditable
+								{...baseProps}
 								onItemDrop={onItemDrop}
 								onMakeDefault={onMakeDefault}
-								showActions={showActions}
 							/>
+						) : (
+							<LanguageListItem {...baseProps} />
 						);
 					})}
 				</DndProvider>

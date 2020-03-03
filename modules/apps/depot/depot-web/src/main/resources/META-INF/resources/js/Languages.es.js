@@ -141,11 +141,11 @@ const Languages = ({
 
 					<LanguagesList
 						defaultLocaleId={customDefaultLocaleId}
+						isEditable
 						locales={customLocales}
 						onItemDrop={handleOnItemDrop}
 						onMakeDefault={handleOnMakeDefault}
 						onOpenManageModal={handleOnModalOpen}
-						showActions
 					/>
 				</>
 			)}

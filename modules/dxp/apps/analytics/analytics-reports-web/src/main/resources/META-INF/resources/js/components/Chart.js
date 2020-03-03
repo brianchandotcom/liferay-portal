@@ -28,7 +28,7 @@ import {
 
 import {useChartState} from '../utils/chartState';
 import {numberFormat} from '../utils/numberFormat';
-import CustomDot from './CustomDot';
+import {ActiveDot as CustomActiveDot, Dot as CustomDot} from './CustomDots';
 import CustomTooltip from './CustomTooltip';
 
 const {useEffect, useMemo} = React;
@@ -379,12 +379,15 @@ export default function Chart({
 
 							{dataSet.keyList.map(keyName => {
 								const color = keyToHexColor(keyName);
+								const shape = keyToIconType(keyName);
 
 								return (
 									<Line
-										activeDot={<CustomDot active={true} />}
+										activeDot={
+											<CustomActiveDot shape={shape} />
+										}
 										dataKey={keyName}
-										dot={<CustomDot active={false} />}
+										dot={<CustomDot shape={shape} />}
 										fill={color}
 										key={keyName}
 										stroke={color}

@@ -432,9 +432,9 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, String settings)
 		throws PortalException {
 
-		UnicodeProperties settingsProperties = new UnicodeProperties();
+		UnicodeProperties settingsUnicodeProperties = new UnicodeProperties();
 
-		settingsProperties.fastLoad(settings);
+		settingsUnicodeProperties.fastLoad(settings);
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
@@ -445,9 +445,9 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSet.setModifiedDate(new Date());
 
 			validateSettings(
-				layoutSet.getSettingsProperties(), settingsProperties);
+				layoutSet.getSettingsProperties(), settingsUnicodeProperties);
 
-			layoutSet.setSettingsProperties(settingsProperties);
+			layoutSet.setSettingsProperties(settingsUnicodeProperties);
 
 			return layoutSetPersistence.update(layoutSet);
 		}
@@ -455,9 +455,9 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSetBranch.setModifiedDate(new Date());
 
 		validateSettings(
-			layoutSetBranch.getSettingsProperties(), settingsProperties);
+			layoutSetBranch.getSettingsProperties(), settingsUnicodeProperties);
 
-		layoutSetBranch.setSettingsProperties(settingsProperties);
+		layoutSetBranch.setSettingsProperties(settingsUnicodeProperties);
 
 		layoutSetBranchPersistence.update(layoutSetBranch);
 
@@ -578,17 +578,18 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	}
 
 	protected void validateSettings(
-		UnicodeProperties oldSettingsProperties,
-		UnicodeProperties newSettingsProperties) {
+		UnicodeProperties oldSettingsUnicodeProperties,
+		UnicodeProperties newSettingsUnicodeProperties) {
 
 		boolean enableJavaScript =
 			PropsValues.
 				FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUTSET_JAVASCRIPT;
 
 		if (!enableJavaScript) {
-			String javaScript = oldSettingsProperties.getProperty("javascript");
+			String javaScript = oldSettingsUnicodeProperties.getProperty(
+				"javascript");
 
-			newSettingsProperties.setProperty("javascript", javaScript);
+			newSettingsUnicodeProperties.setProperty("javascript", javaScript);
 		}
 	}
 

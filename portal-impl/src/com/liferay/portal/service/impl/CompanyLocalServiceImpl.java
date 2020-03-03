@@ -1109,17 +1109,19 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * found in portal.properties.
 	 *
 	 * @param companyId the primary key of the company
-	 * @param properties the company's properties. See {@link UnicodeProperties}
+	 * @param unicodeProperties the company's properties. See {@link UnicodeProperties}
 	 */
 	@Override
-	public void updatePreferences(long companyId, UnicodeProperties properties)
+	public void updatePreferences(
+			long companyId, UnicodeProperties unicodeProperties)
 		throws PortalException {
 
 		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			companyId);
 
 		try {
-			String newLanguageIds = properties.getProperty(PropsKeys.LOCALES);
+			String newLanguageIds = unicodeProperties.getProperty(
+				PropsKeys.LOCALES);
 
 			if (Validator.isNotNull(newLanguageIds)) {
 				String oldLanguageIds = portletPreferences.getValue(
@@ -1149,7 +1151,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			List<String> resetKeys = new ArrayList<>();
 
-			for (Map.Entry<String, String> entry : properties.entrySet()) {
+			for (Map.Entry<String, String> entry :
+					unicodeProperties.entrySet()) {
+
 				String value = entry.getValue();
 
 				if (value.equals(Portal.TEMP_OBFUSCATION_VALUE)) {

@@ -74,10 +74,10 @@ public class LayoutSetPrototypeLayoutModelListener
 
 			layoutSet.setModifiedDate(modifiedDate);
 
-			UnicodeProperties settingsProperties =
+			UnicodeProperties settingsUnicodeProperties =
 				layoutSet.getSettingsProperties();
 
-			settingsProperties.remove(Sites.MERGE_FAIL_COUNT);
+			settingsUnicodeProperties.remove(Sites.MERGE_FAIL_COUNT);
 
 			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 		}

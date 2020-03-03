@@ -82,10 +82,10 @@ public class LayoutSetPrototypeLayoutSetModelListener
 
 			layoutSetPrototype.setModifiedDate(modifiedDate);
 
-			UnicodeProperties settingsProperties =
+			UnicodeProperties settingsUnicodeProperties =
 				layoutSet.getSettingsProperties();
 
-			settingsProperties.remove("merge-fail-count");
+			settingsUnicodeProperties.remove("merge-fail-count");
 
 			LayoutSetPrototypeUtil.update(layoutSetPrototype);
 		}

@@ -178,14 +178,15 @@ public class UpdateLayoutAction extends JSONAction {
 			updateLayout = false;
 		}
 		else if (cmd.equals("update_type_settings")) {
-			UnicodeProperties layoutTypeSettingsProperties =
+			UnicodeProperties layoutTypeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();
 
-			UnicodeProperties formTypeSettingsProperties =
+			UnicodeProperties formTypeSettingsUnicodeProperties =
 				PropertiesParamUtil.getProperties(
 					httpServletRequest, "TypeSettingsProperties--");
 
-			layoutTypeSettingsProperties.putAll(formTypeSettingsProperties);
+			layoutTypeSettingsUnicodeProperties.putAll(
+				formTypeSettingsUnicodeProperties);
 		}
 		else if (cmd.equals("undo_layout_revision")) {
 			long layoutRevisionId = ParamUtil.getLong(

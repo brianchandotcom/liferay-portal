@@ -1057,17 +1057,18 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		if (group.isSite()) {
 			Group oldGroup = group;
 
-			UnicodeProperties oldTypeSettingsProperties =
+			UnicodeProperties oldTypeSettingsUnicodeProperties =
 				oldGroup.getTypeSettingsProperties();
 
 			group = groupLocalService.updateGroup(groupId, typeSettings);
 
 			RatingsDataTransformerUtil.transformGroupRatingsData(
-				groupId, oldTypeSettingsProperties,
+				groupId, oldTypeSettingsUnicodeProperties,
 				group.getTypeSettingsProperties());
 
 			SiteMembershipPolicyUtil.verifyPolicy(
-				group, oldGroup, null, null, null, oldTypeSettingsProperties);
+				group, oldGroup, null, null, null,
+				oldTypeSettingsUnicodeProperties);
 
 			return group;
 		}
@@ -1085,11 +1086,11 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), group, ActionKeys.UPDATE);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
 		for (Map.Entry<String, String> entry : stagedPortletIds.entrySet()) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				StagingUtil.getStagedPortletId(entry.getKey()),
 				entry.getValue());
 		}

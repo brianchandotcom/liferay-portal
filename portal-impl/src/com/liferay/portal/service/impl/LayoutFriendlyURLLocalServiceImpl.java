@@ -235,7 +235,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 		Map<Long, String> layoutFriendlyURLMap = new HashMap<>();
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			siteGroup.getTypeSettingsProperties();
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
@@ -250,7 +250,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 		}
 
 		if (GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty(
+				typeSettingsUnicodeProperties.getProperty(
 					GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES),
 				true)) {
 
@@ -260,7 +260,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 		Map<Long, String> filteredLayoutFriendlyURLMap = new HashMap<>();
 
 		String[] locales = StringUtil.split(
-			typeSettingsProperties.getProperty(PropsKeys.LOCALES));
+			typeSettingsUnicodeProperties.getProperty(PropsKeys.LOCALES));
 
 		if (!ArrayUtil.contains(locales, languageId)) {
 			for (Layout layout : layouts) {

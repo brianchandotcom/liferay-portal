@@ -78,7 +78,8 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 			selLayout = LayoutLocalServiceUtil.fetchLayout(selPlid);
 		}
 
-		_layoutTypeSettings = selLayout.getTypeSettingsProperties();
+		_layoutTypeSettingsUnicodeProperties =
+			selLayout.getTypeSettingsProperties();
 
 		if (!SitesUtil.isLayoutUpdateable(selLayout) ||
 			selLayout.isLayoutPrototypeLinkActive()) {
@@ -105,7 +106,7 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 
 		if (_customizationEnabled) {
 			customizable = GetterUtil.getBoolean(
-				_layoutTypeSettings.getProperty(
+				_layoutTypeSettingsUnicodeProperties.getProperty(
 					customizableKey, Boolean.FALSE.toString()));
 		}
 
@@ -188,7 +189,7 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 	}
 
 	private final boolean _customizationEnabled;
-	private final UnicodeProperties _layoutTypeSettings;
+	private final UnicodeProperties _layoutTypeSettingsUnicodeProperties;
 	private final PageContext _pageContext;
 	private final Writer _writer;
 

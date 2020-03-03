@@ -299,7 +299,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @param  emailAddresses the company's email addresses
 	 * @param  phones the company's phone numbers
 	 * @param  websites the company's websites
-	 * @param  properties the company's properties
+	 * @param  unicodeProperties the company's properties
 	 * @return the company with the primary key
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
@@ -311,7 +311,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			String tickerSymbol, String industry, String type, String size,
 			String languageId, String timeZoneId, List<Address> addresses,
 			List<EmailAddress> emailAddresses, List<Phone> phones,
-			List<Website> websites, UnicodeProperties properties)
+			List<Website> websites, UnicodeProperties unicodeProperties)
 		throws PortalException {
 
 		PortletPreferences oldCompanyPortletPreferences =
@@ -324,10 +324,10 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 
 		updateDisplay(company.getCompanyId(), languageId, timeZoneId);
 
-		updatePreferences(company.getCompanyId(), properties);
+		updatePreferences(company.getCompanyId(), unicodeProperties);
 
 		RatingsDataTransformerUtil.transformCompanyRatingsData(
-			companyId, oldCompanyPortletPreferences, properties);
+			companyId, oldCompanyPortletPreferences, unicodeProperties);
 
 		UsersAdminUtil.updateAddresses(
 			Account.class.getName(), company.getAccountId(), addresses);
@@ -411,10 +411,11 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * found in portal.properties.
 	 *
 	 * @param companyId the primary key of the company
-	 * @param properties the company's properties. See {@link UnicodeProperties}
+	 * @param unicodeProperties the company's properties. See {@link UnicodeProperties}
 	 */
 	@Override
-	public void updatePreferences(long companyId, UnicodeProperties properties)
+	public void updatePreferences(
+			long companyId, UnicodeProperties unicodeProperties)
 		throws PortalException {
 
 		if (!(roleLocalService.hasUserRole(
@@ -426,7 +427,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			throw new PrincipalException();
 		}
 
-		companyLocalService.updatePreferences(companyId, properties);
+		companyLocalService.updatePreferences(companyId, unicodeProperties);
 	}
 
 	/**

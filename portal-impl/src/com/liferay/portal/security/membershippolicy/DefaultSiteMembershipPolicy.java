@@ -97,7 +97,7 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 			Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
 			List<AssetTag> oldAssetTags,
 			Map<String, Serializable> oldExpandoAttributes,
-			UnicodeProperties oldTypeSettingsProperties)
+			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException {
 
 		if (group.isLimitedToParentSiteMembers()) {

@@ -1299,32 +1299,37 @@ public class ServicePreAction extends Action {
 				String typeSettings = layoutClone.get(httpServletRequest, plid);
 
 				if (typeSettings != null) {
-					UnicodeProperties typeSettingsProperties =
+					UnicodeProperties typeSettingsUnicodeProperties =
 						new UnicodeProperties(true);
 
-					typeSettingsProperties.load(typeSettings);
+					typeSettingsUnicodeProperties.load(typeSettings);
 
-					String stateMax = typeSettingsProperties.getProperty(
+					String stateMax = typeSettingsUnicodeProperties.getProperty(
 						LayoutTypePortletConstants.STATE_MAX);
-					String stateMin = typeSettingsProperties.getProperty(
+					String stateMin = typeSettingsUnicodeProperties.getProperty(
 						LayoutTypePortletConstants.STATE_MIN);
-					String modeAbout = typeSettingsProperties.getProperty(
-						LayoutTypePortletConstants.MODE_ABOUT);
-					String modeConfig = typeSettingsProperties.getProperty(
-						LayoutTypePortletConstants.MODE_CONFIG);
-					String modeEdit = typeSettingsProperties.getProperty(
+					String modeAbout =
+						typeSettingsUnicodeProperties.getProperty(
+							LayoutTypePortletConstants.MODE_ABOUT);
+					String modeConfig =
+						typeSettingsUnicodeProperties.getProperty(
+							LayoutTypePortletConstants.MODE_CONFIG);
+					String modeEdit = typeSettingsUnicodeProperties.getProperty(
 						LayoutTypePortletConstants.MODE_EDIT);
 					String modeEditDefaults =
-						typeSettingsProperties.getProperty(
+						typeSettingsUnicodeProperties.getProperty(
 							LayoutTypePortletConstants.MODE_EDIT_DEFAULTS);
-					String modeEditGuest = typeSettingsProperties.getProperty(
-						LayoutTypePortletConstants.MODE_EDIT_GUEST);
-					String modeHelp = typeSettingsProperties.getProperty(
+					String modeEditGuest =
+						typeSettingsUnicodeProperties.getProperty(
+							LayoutTypePortletConstants.MODE_EDIT_GUEST);
+					String modeHelp = typeSettingsUnicodeProperties.getProperty(
 						LayoutTypePortletConstants.MODE_HELP);
-					String modePreview = typeSettingsProperties.getProperty(
-						LayoutTypePortletConstants.MODE_PREVIEW);
-					String modePrint = typeSettingsProperties.getProperty(
-						LayoutTypePortletConstants.MODE_PRINT);
+					String modePreview =
+						typeSettingsUnicodeProperties.getProperty(
+							LayoutTypePortletConstants.MODE_PREVIEW);
+					String modePrint =
+						typeSettingsUnicodeProperties.getProperty(
+							LayoutTypePortletConstants.MODE_PRINT);
 
 					layoutTypePortlet.setStateMax(stateMax);
 					layoutTypePortlet.setStateMin(stateMin);
@@ -1825,11 +1830,12 @@ public class ServicePreAction extends Action {
 		if (layoutGroupId != guestGroup.getGroupId()) {
 			Group layoutGroup = GroupLocalServiceUtil.getGroup(layoutGroupId);
 
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				layoutGroup.getTypeSettingsProperties();
 
 			boolean mergeGuestPublicPages = GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("mergeGuestPublicPages"));
+				typeSettingsUnicodeProperties.getProperty(
+					"mergeGuestPublicPages"));
 
 			if (!mergeGuestPublicPages) {
 				return layouts;
@@ -1875,11 +1881,11 @@ public class ServicePreAction extends Action {
 					return layouts;
 				}
 
-				UnicodeProperties typeSettingsProperties =
+				UnicodeProperties typeSettingsUnicodeProperties =
 					previousGroup.getTypeSettingsProperties();
 
 				boolean mergeGuestPublicPages = GetterUtil.getBoolean(
-					typeSettingsProperties.getProperty(
+					typeSettingsUnicodeProperties.getProperty(
 						"mergeGuestPublicPages"));
 
 				if (!mergeGuestPublicPages) {

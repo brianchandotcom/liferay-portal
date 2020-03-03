@@ -293,9 +293,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		String friendlyURL = friendlyURLMap.get(LocaleUtil.getSiteDefault());
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.fastLoad(typeSettings);
+		typeSettingsUnicodeProperties.fastLoad(typeSettings);
 
 		int priority = Integer.MAX_VALUE;
 
@@ -344,18 +345,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			serviceContext, Sites.LAYOUT_UPDATEABLE, true);
 
 		if (!layoutUpdateable) {
-			typeSettingsProperties.put(
+			typeSettingsUnicodeProperties.put(
 				Sites.LAYOUT_UPDATEABLE, String.valueOf(layoutUpdateable));
 		}
 
 		if (privateLayout) {
-			typeSettingsProperties.put(
+			typeSettingsUnicodeProperties.put(
 				"privateLayout", String.valueOf(privateLayout));
 		}
 
-		validateTypeSettingsProperties(layout, typeSettingsProperties);
+		validateTypeSettingsProperties(layout, typeSettingsUnicodeProperties);
 
-		layout.setTypeSettingsProperties(typeSettingsProperties);
+		layout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
 
@@ -2607,22 +2608,22 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		boolean layoutUpdateable = ParamUtil.getBoolean(
 			serviceContext, Sites.LAYOUT_UPDATEABLE, true);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
 		Group group = layout.getGroup();
 
 		if (!group.isLayoutPrototype()) {
-			typeSettingsProperties.put(
+			typeSettingsUnicodeProperties.put(
 				Sites.LAYOUT_UPDATEABLE, String.valueOf(layoutUpdateable));
 		}
 
 		if (privateLayout) {
-			typeSettingsProperties.put(
+			typeSettingsUnicodeProperties.put(
 				"privateLayout", String.valueOf(privateLayout));
 		}
 
-		layout.setTypeSettingsProperties(typeSettingsProperties);
+		layout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		String layoutPrototypeUuid = ParamUtil.getString(
 			serviceContext, "layoutPrototypeUuid");
@@ -2749,17 +2750,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Date now = new Date();
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.fastLoad(typeSettings);
+		typeSettingsUnicodeProperties.fastLoad(typeSettings);
 
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
-		validateTypeSettingsProperties(layout, typeSettingsProperties);
+		validateTypeSettingsProperties(layout, typeSettingsUnicodeProperties);
 
 		layout.setModifiedDate(now);
-		layout.setTypeSettings(typeSettingsProperties.toString());
+		layout.setTypeSettings(typeSettingsUnicodeProperties.toString());
 
 		if (layout.isSystem() && (layout.getClassPK() > 0)) {
 			layout.setPublishDate(now);
@@ -3266,11 +3268,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	protected void validateTypeSettingsProperties(
-			Layout layout, UnicodeProperties typeSettingsProperties)
+			Layout layout, UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException {
 
-		String sitemapChangeFrequency = typeSettingsProperties.getProperty(
-			"sitemap-changefreq");
+		String sitemapChangeFrequency =
+			typeSettingsUnicodeProperties.getProperty("sitemap-changefreq");
 
 		if (Validator.isNotNull(sitemapChangeFrequency) &&
 			!sitemapChangeFrequency.equals("always") &&
@@ -3284,7 +3286,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			throw new SitemapChangeFrequencyException();
 		}
 
-		String sitemapInclude = typeSettingsProperties.getProperty(
+		String sitemapInclude = typeSettingsUnicodeProperties.getProperty(
 			LayoutTypePortletConstants.SITEMAP_INCLUDE);
 
 		if (Validator.isNotNull(sitemapInclude) &&
@@ -3293,7 +3295,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			throw new SitemapIncludeException();
 		}
 
-		String sitemapPriority = typeSettingsProperties.getProperty(
+		String sitemapPriority = typeSettingsUnicodeProperties.getProperty(
 			"sitemap-priority");
 
 		if (Validator.isNotNull(sitemapPriority)) {
@@ -3314,13 +3316,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUT_JAVASCRIPT;
 
 		if (!enableJavaScript) {
-			UnicodeProperties layoutTypeSettingsProperties =
+			UnicodeProperties layoutTypeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();
 
-			String javaScript = layoutTypeSettingsProperties.getProperty(
+			String javaScript = layoutTypeSettingsUnicodeProperties.getProperty(
 				"javascript");
 
-			typeSettingsProperties.setProperty("javascript", javaScript);
+			typeSettingsUnicodeProperties.setProperty("javascript", javaScript);
 		}
 	}
 

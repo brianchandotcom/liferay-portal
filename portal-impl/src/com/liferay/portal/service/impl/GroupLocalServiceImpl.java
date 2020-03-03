@@ -1280,22 +1280,22 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		group.setRemoteStagingGroupCount(stagingGroupCount);
 
 		if (stagingGroupCount == 0) {
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				group.getTypeSettingsProperties();
 
 			List<String> keys = new ArrayList<>();
 
-			for (String key : typeSettingsProperties.keySet()) {
+			for (String key : typeSettingsUnicodeProperties.keySet()) {
 				if (key.startsWith(StagingConstants.STAGED_PORTLET)) {
 					keys.add(key);
 				}
 			}
 
 			for (String key : keys) {
-				typeSettingsProperties.remove(key);
+				typeSettingsUnicodeProperties.remove(key);
 			}
 
-			group.setTypeSettingsProperties(typeSettingsProperties);
+			group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 		}
 
 		groupPersistence.update(group);
@@ -3786,22 +3786,26 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettingsProperties.fastLoad(typeSettings);
+		typeSettingsUnicodeProperties.fastLoad(typeSettings);
 
-		String newLanguageIds = typeSettingsProperties.getProperty(
+		String newLanguageIds = typeSettingsUnicodeProperties.getProperty(
 			PropsKeys.LOCALES);
 
 		if (Validator.isNotNull(newLanguageIds)) {
-			UnicodeProperties oldTypeSettingsProperties =
+			UnicodeProperties oldTypeSettingsUnicodeProperties =
 				group.getTypeSettingsProperties();
 
-			String oldLanguageIds = oldTypeSettingsProperties.getProperty(
-				PropsKeys.LOCALES, StringPool.BLANK);
+			String oldLanguageIds =
+				oldTypeSettingsUnicodeProperties.getProperty(
+					PropsKeys.LOCALES, StringPool.BLANK);
 
-			String defaultLanguageId = typeSettingsProperties.getProperty(
-				"languageId", LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+			String defaultLanguageId =
+				typeSettingsUnicodeProperties.getProperty(
+					"languageId",
+					LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
 			validateLanguageIds(defaultLanguageId, newLanguageIds);
 
@@ -5249,11 +5253,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return;
 		}
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettingsProperties.fastLoad(typeSettings);
+		typeSettingsUnicodeProperties.fastLoad(typeSettings);
 
-		String defaultLanguageId = typeSettingsProperties.getProperty(
+		String defaultLanguageId = typeSettingsUnicodeProperties.getProperty(
 			"languageId", LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);

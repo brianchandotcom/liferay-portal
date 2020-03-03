@@ -388,17 +388,18 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 		authorization = StringUtil.replace(
 			authorization, CharPool.COMMA, CharPool.NEW_LINE);
 
-		UnicodeProperties authorizationProperties = new UnicodeProperties();
+		UnicodeProperties authorizationUnicodeProperties =
+			new UnicodeProperties();
 
-		authorizationProperties.fastLoad(authorization);
+		authorizationUnicodeProperties.fastLoad(authorization);
 
 		for (Map.Entry<String, String> authorizationProperty :
-				authorizationProperties.entrySet()) {
+				authorizationUnicodeProperties.entrySet()) {
 
 			String key = authorizationProperty.getKey();
 
 			String value = StringUtil.unquote(
-				authorizationProperties.getProperty(key));
+				authorizationUnicodeProperties.getProperty(key));
 
 			httpAuthorizationHeader.setAuthParameter(key, value);
 		}

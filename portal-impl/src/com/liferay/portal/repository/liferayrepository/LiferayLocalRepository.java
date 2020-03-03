@@ -629,9 +629,9 @@ public class LiferayLocalRepository
 	}
 
 	public UnicodeProperties updateRepository(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		return typeSettingsProperties;
+		return typeSettingsUnicodeProperties;
 	}
 
 }

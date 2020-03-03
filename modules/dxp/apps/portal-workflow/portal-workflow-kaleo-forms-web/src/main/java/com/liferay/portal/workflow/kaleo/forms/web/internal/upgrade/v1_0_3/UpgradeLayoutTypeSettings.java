@@ -63,14 +63,17 @@ public class UpgradeLayoutTypeSettings extends BaseUpgradePortletId {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(Layout layout) -> {
 				try {
-					UnicodeProperties oldtypeSettings =
+					UnicodeProperties oldtypeSettingsUnicodeProperties =
 						layout.getTypeSettingsProperties();
-					UnicodeProperties newTypeSettings = getNewTypeSettings(
-						layout.getTypeSettingsProperties());
+					UnicodeProperties newTypeSettingsUnicodeProperties =
+						getNewTypeSettings(layout.getTypeSettingsProperties());
 
-					if (!oldtypeSettings.equals(newTypeSettings)) {
+					if (!oldtypeSettingsUnicodeProperties.equals(
+							newTypeSettingsUnicodeProperties)) {
+
 						updateLayout(
-							layout.getPlid(), newTypeSettings.toString());
+							layout.getPlid(),
+							newTypeSettingsUnicodeProperties.toString());
 					}
 				}
 				catch (Exception exception) {
@@ -91,29 +94,29 @@ public class UpgradeLayoutTypeSettings extends BaseUpgradePortletId {
 	}
 
 	protected UnicodeProperties getNewTypeSettings(
-		UnicodeProperties oldtypeSettingsProperties) {
+		UnicodeProperties oldtypeSettingsUnicodeProperties) {
 
-		UnicodeProperties newtypeSettingsProperties =
-			(UnicodeProperties)oldtypeSettingsProperties.clone();
+		UnicodeProperties newtypeSettingsUnicodeProperties =
+			(UnicodeProperties)oldtypeSettingsUnicodeProperties.clone();
 
-		for (String key : oldtypeSettingsProperties.keySet()) {
+		for (String key : oldtypeSettingsUnicodeProperties.keySet()) {
 			if (StringUtil.startsWith(
 					key, LayoutTypePortletConstants.COLUMN_PREFIX) ||
 				StringUtil.startsWith(
 					key, LayoutTypePortletConstants.NESTED_COLUMN_IDS)) {
 
 				String[] portletIds = StringUtil.split(
-					oldtypeSettingsProperties.getProperty(key));
+					oldtypeSettingsUnicodeProperties.getProperty(key));
 
 				if (ArrayUtil.isEmpty(portletIds) ||
 					Validator.isNull(portletIds[0])) {
 
-					newtypeSettingsProperties.remove(key);
+					newtypeSettingsUnicodeProperties.remove(key);
 				}
 			}
 		}
 
-		return newtypeSettingsProperties;
+		return newtypeSettingsUnicodeProperties;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

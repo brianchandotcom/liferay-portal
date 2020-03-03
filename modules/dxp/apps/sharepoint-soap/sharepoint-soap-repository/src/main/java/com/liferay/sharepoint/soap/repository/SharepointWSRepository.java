@@ -711,21 +711,23 @@ public class SharepointWSRepository
 
 	@Override
 	public void initRepository(
-		UnicodeProperties typeSettingsProperties,
+		UnicodeProperties typeSettingsUnicodeProperties,
 		CredentialsProvider credentialsProvider) {
 
 		try {
 			_credentialsProvider = credentialsProvider;
 
-			_libraryName = typeSettingsProperties.getProperty(_LIBRARY_NAME);
+			_libraryName = typeSettingsUnicodeProperties.getProperty(
+				_LIBRARY_NAME);
 
-			_libraryPath = typeSettingsProperties.getProperty(_LIBRARY_PATH);
+			_libraryPath = typeSettingsUnicodeProperties.getProperty(
+				_LIBRARY_PATH);
 
 			if (Validator.isNull(_libraryPath)) {
 				_libraryPath = _libraryName;
 			}
 
-			String serverVersion = typeSettingsProperties.getProperty(
+			String serverVersion = typeSettingsUnicodeProperties.getProperty(
 				_SERVER_VERSION, StringPool.BLANK);
 
 			if (serverVersion.equals(_SHAREPOINT_2013_VALUE)) {
@@ -737,7 +739,8 @@ public class SharepointWSRepository
 					SharepointConnection.ServerVersion.SHAREPOINT_2010;
 			}
 
-			String siteURL = typeSettingsProperties.getProperty(_SITE_URL);
+			String siteURL = typeSettingsUnicodeProperties.getProperty(
+				_SITE_URL);
 
 			URL url = URLUtil.toURL(siteURL);
 

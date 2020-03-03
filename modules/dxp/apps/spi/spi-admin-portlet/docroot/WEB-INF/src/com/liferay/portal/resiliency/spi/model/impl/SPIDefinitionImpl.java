@@ -136,36 +136,38 @@ public class SPIDefinitionImpl extends SPIDefinitionBaseImpl {
 
 	@Override
 	public String getTypeSettings() {
-		if (_typeSettingsProperties == null) {
+		if (_typeSettingsUnicodeProperties == null) {
 			return super.getTypeSettings();
 		}
 
-		return _typeSettingsProperties.toString();
+		return _typeSettingsUnicodeProperties.toString();
 	}
 
 	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
-		if (_typeSettingsProperties == null) {
-			_typeSettingsProperties = new UnicodeProperties(true);
+		if (_typeSettingsUnicodeProperties == null) {
+			_typeSettingsUnicodeProperties = new UnicodeProperties(true);
 
-			_typeSettingsProperties.fastLoad(super.getTypeSettings());
+			_typeSettingsUnicodeProperties.fastLoad(super.getTypeSettings());
 		}
 
-		return _typeSettingsProperties;
+		return _typeSettingsUnicodeProperties;
 	}
 
 	@Override
 	public String getTypeSettingsProperty(String key) {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
-		return typeSettingsProperties.getProperty(key);
+		return typeSettingsUnicodeProperties.getProperty(key);
 	}
 
 	@Override
 	public String getTypeSettingsProperty(String key, String defaultValue) {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
-		return typeSettingsProperties.getProperty(key, defaultValue);
+		return typeSettingsUnicodeProperties.getProperty(key, defaultValue);
 	}
 
 	@Override
@@ -193,73 +195,77 @@ public class SPIDefinitionImpl extends SPIDefinitionBaseImpl {
 
 	@Override
 	public void setMaxRestartAttempts(int maxRestartAttempts) {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
 		if (maxRestartAttempts >= 0) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"max-restart-attempts", String.valueOf(maxRestartAttempts));
 		}
 		else {
-			typeSettingsProperties.remove("max-restart-attempts");
+			typeSettingsUnicodeProperties.remove("max-restart-attempts");
 		}
 
-		setTypeSettingsProperties(typeSettingsProperties);
+		setTypeSettingsProperties(typeSettingsUnicodeProperties);
 	}
 
 	@Override
 	public void setNotificationRecipients(String notificationRecipients) {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
 		if (Validator.isNull(notificationRecipients)) {
-			typeSettingsProperties.remove("notification-recipients");
+			typeSettingsUnicodeProperties.remove("notification-recipients");
 		}
 		else {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"notification-recipients", notificationRecipients);
 		}
 
-		setTypeSettingsProperties(typeSettingsProperties);
+		setTypeSettingsProperties(typeSettingsUnicodeProperties);
 	}
 
 	@Override
 	public void setPortalProperties(String portalProperties) {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
 		if (Validator.isNull(portalProperties)) {
-			typeSettingsProperties.remove("portal-properties");
+			typeSettingsUnicodeProperties.remove("portal-properties");
 		}
 		else {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"portal-properties", portalProperties);
 		}
 
-		setTypeSettingsProperties(typeSettingsProperties);
+		setTypeSettingsProperties(typeSettingsUnicodeProperties);
 	}
 
 	@Override
 	public void setRestartAttempts(int restartAttempts) {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"restart-attempts", String.valueOf(restartAttempts));
 
-		setTypeSettingsProperties(typeSettingsProperties);
+		setTypeSettingsProperties(typeSettingsUnicodeProperties);
 	}
 
 	@Override
 	public void setTypeSettings(String typeSettings) {
-		_typeSettingsProperties = null;
+		_typeSettingsUnicodeProperties = null;
 
 		super.setTypeSettings(typeSettings);
 	}
 
 	@Override
 	public void setTypeSettingsProperties(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		_typeSettingsProperties = typeSettingsProperties;
+		_typeSettingsUnicodeProperties = typeSettingsUnicodeProperties;
 
-		super.setTypeSettings(_typeSettingsProperties.toString());
+		super.setTypeSettings(_typeSettingsUnicodeProperties.toString());
 	}
 
 	protected String getBaseDirName() {
@@ -271,6 +277,6 @@ public class SPIDefinitionImpl extends SPIDefinitionBaseImpl {
 		SPIDefinitionImpl.class);
 
 	private SPI _spi;
-	private UnicodeProperties _typeSettingsProperties;
+	private UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

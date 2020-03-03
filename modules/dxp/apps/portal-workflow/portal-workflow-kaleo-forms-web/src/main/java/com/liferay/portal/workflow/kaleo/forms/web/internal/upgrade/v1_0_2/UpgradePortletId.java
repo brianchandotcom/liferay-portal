@@ -58,11 +58,12 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	protected String getNewTypeSettings(
 		String typeSettings, String oldRootPortletId) {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettingsProperties.fastLoad(typeSettings);
+		typeSettingsUnicodeProperties.fastLoad(typeSettings);
 
-		Set<String> keys = typeSettingsProperties.keySet();
+		Set<String> keys = typeSettingsUnicodeProperties.keySet();
 
 		Iterator<String> itr = keys.iterator();
 
@@ -75,7 +76,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 					key, LayoutTypePortletConstants.NESTED_COLUMN_IDS)) {
 
 				String[] portletIds = StringUtil.split(
-					typeSettingsProperties.getProperty(key));
+					typeSettingsUnicodeProperties.getProperty(key));
 
 				if (!ArrayUtil.contains(portletIds, oldRootPortletId)) {
 					continue;
@@ -86,7 +87,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 
 					String mergedPortletIds = StringUtil.merge(portletIds);
 
-					typeSettingsProperties.setProperty(
+					typeSettingsUnicodeProperties.setProperty(
 						key, mergedPortletIds.concat(StringPool.COMMA));
 				}
 				else {
@@ -95,7 +96,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 			}
 		}
 
-		return typeSettingsProperties.toString();
+		return typeSettingsUnicodeProperties.toString();
 	}
 
 	@Override

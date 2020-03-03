@@ -83,12 +83,12 @@ public class SPIBackgroundTaskStatusMessageListener
 		SPIDefinition spiDefinition =
 			SPIDefinitionLocalServiceUtil.getSPIDefinition(spiDefinitionId);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			spiDefinition.getTypeSettingsProperties();
 
-		typeSettingsProperties.remove("backgroundTaskId");
+		typeSettingsUnicodeProperties.remove("backgroundTaskId");
 
-		spiDefinition.setTypeSettingsProperties(typeSettingsProperties);
+		spiDefinition.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 			spiDefinition.setStatusMessage(null);

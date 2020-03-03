@@ -38,11 +38,12 @@ public class CustomFieldsUtil {
 		while (attributeNames.hasMoreElements()) {
 			String attributeName = attributeNames.nextElement();
 
-			UnicodeProperties properties = expandoBridge.getAttributeProperties(
-				attributeName);
+			UnicodeProperties unicodeProperties =
+				expandoBridge.getAttributeProperties(attributeName);
 
 			if (!GetterUtil.getBoolean(
-					properties.get(ExpandoColumnConstants.PROPERTY_HIDDEN))) {
+					unicodeProperties.get(
+						ExpandoColumnConstants.PROPERTY_HIDDEN))) {
 
 				return true;
 			}

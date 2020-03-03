@@ -94,14 +94,14 @@ public class PortalSambaUtil {
 				}
 			}
 
-			UnicodeProperties properties = expandoBridge.getAttributeProperties(
-				attributeName);
+			UnicodeProperties unicodeProperties =
+				expandoBridge.getAttributeProperties(attributeName);
 
-			properties.put(
+			unicodeProperties.put(
 				ExpandoColumnConstants.PROPERTY_HIDDEN, StringPool.TRUE);
 
 			expandoBridge.setAttributeProperties(
-				attributeName, properties, false);
+				attributeName, unicodeProperties, false);
 		}
 	}
 

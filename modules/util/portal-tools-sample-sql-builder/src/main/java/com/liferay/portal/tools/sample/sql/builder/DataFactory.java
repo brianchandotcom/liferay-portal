@@ -1570,12 +1570,15 @@ public class DataFactory {
 		layoutModel.setType(LayoutConstants.TYPE_CONTENT);
 		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + name);
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettingsProperties.setProperty("fragmentEntries", fragmentEntries);
+		typeSettingsUnicodeProperties.setProperty(
+			"fragmentEntries", fragmentEntries);
 
 		layoutModel.setTypeSettings(
-			StringUtil.replace(typeSettingsProperties.toString(), '\n', "\\n"));
+			StringUtil.replace(
+				typeSettingsUnicodeProperties.toString(), '\n', "\\n"));
 
 		layoutModel.setLastPublishDate(new Date());
 
@@ -2437,15 +2440,17 @@ public class DataFactory {
 		layoutModel.setType(LayoutConstants.TYPE_PORTLET);
 		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + name);
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "2_columns_ii");
-		typeSettingsProperties.setProperty("column-1", column1);
-		typeSettingsProperties.setProperty("column-2", column2);
+		typeSettingsUnicodeProperties.setProperty("column-1", column1);
+		typeSettingsUnicodeProperties.setProperty("column-2", column2);
 
 		layoutModel.setTypeSettings(
-			StringUtil.replace(typeSettingsProperties.toString(), '\n', "\\n"));
+			StringUtil.replace(
+				typeSettingsUnicodeProperties.toString(), '\n', "\\n"));
 
 		layoutModel.setLastPublishDate(new Date());
 

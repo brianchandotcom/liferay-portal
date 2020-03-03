@@ -330,7 +330,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 	protected Group updateTrashEntriesMaxAge(Group group, int days)
 		throws Exception {
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getParentLiveGroupTypeSettingsProperties();
 
 		int companyTrashEntriesMaxAge = PrefsPropsUtil.getInteger(
@@ -341,19 +341,19 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		}
 		else {
 			days = GetterUtil.getInteger(
-				typeSettingsProperties.getProperty("trashEntriesMaxAge"),
+				typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge"),
 				companyTrashEntriesMaxAge);
 		}
 
 		if (days != companyTrashEntriesMaxAge) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"trashEntriesMaxAge", String.valueOf(days));
 		}
 		else {
-			typeSettingsProperties.remove("trashEntriesMaxAge");
+			typeSettingsUnicodeProperties.remove("trashEntriesMaxAge");
 		}
 
-		group.setTypeSettingsProperties(typeSettingsProperties);
+		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		return GroupLocalServiceUtil.updateGroup(group);
 	}

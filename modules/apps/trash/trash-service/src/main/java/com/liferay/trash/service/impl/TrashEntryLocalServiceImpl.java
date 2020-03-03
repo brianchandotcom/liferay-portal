@@ -83,7 +83,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @param  statusOVPs the primary keys and statuses of any of the entry's
 	 *         versions (e.g., {@link
 	 *         com.liferay.portlet.documentlibrary.model.DLFileVersion})
-	 * @param  typeSettingsProperties the type settings properties
+	 * @param  typeSettingsUnicodeProperties the type settings properties
 	 * @return the trashEntry
 	 */
 	@Override
@@ -91,7 +91,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			long userId, long groupId, String className, long classPK,
 			String classUuid, String referrerClassName, int status,
 			List<ObjectValuePair<Long, Integer>> statusOVPs,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
@@ -129,8 +129,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			trashEntry.setSystemEventSetKey(systemEvent.getSystemEventSetKey());
 		}
 
-		if (typeSettingsProperties != null) {
-			trashEntry.setTypeSettingsProperties(typeSettingsProperties);
+		if (typeSettingsUnicodeProperties != null) {
+			trashEntry.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 		}
 
 		trashEntry.setStatus(status);

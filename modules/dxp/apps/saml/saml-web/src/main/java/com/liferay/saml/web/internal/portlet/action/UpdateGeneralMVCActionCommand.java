@@ -52,13 +52,13 @@ public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
 		boolean enabled = GetterUtil.getBoolean(
-			properties.getProperty(PortletPropsKeys.SAML_ENABLED),
+			unicodeProperties.getProperty(PortletPropsKeys.SAML_ENABLED),
 			_samlProviderConfigurationHelper.isEnabled());
-		String samlEntityId = properties.getProperty(
+		String samlEntityId = unicodeProperties.getProperty(
 			PortletPropsKeys.SAML_ENTITY_ID);
 
 		if (enabled &&
@@ -86,7 +86,7 @@ public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		_samlProviderConfigurationHelper.updateProperties(properties);
+		_samlProviderConfigurationHelper.updateProperties(unicodeProperties);
 
 		actionResponse.setRenderParameter("mvcRenderCommandName", "/admin");
 		actionResponse.setRenderParameter("tabs1", "general");

@@ -48,7 +48,7 @@ public class EditSPIDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		String servletContextNames = ParamUtil.getString(
 			actionRequest, "servletContextNames");
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
@@ -56,14 +56,14 @@ public class EditSPIDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "useDefaultNotificationOptions", true);
 
 		if (useDefaultNotificationOptions) {
-			typeSettingsProperties.remove("notification-recipients");
+			typeSettingsUnicodeProperties.remove("notification-recipients");
 		}
 
 		boolean useDefaultRestartOptions = ParamUtil.getBoolean(
 			actionRequest, "useDefaultRestartOptions", true);
 
 		if (useDefaultRestartOptions) {
-			typeSettingsProperties.remove("max-restart-attempts");
+			typeSettingsUnicodeProperties.remove("max-restart-attempts");
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -72,7 +72,7 @@ public class EditSPIDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		SPIDefinitionServiceUtil.updateSPIDefinition(
 			spiDefinitionId, "localhost", connectorPort, description,
 			jvmArguments, portletIds, servletContextNames,
-			typeSettingsProperties.toString(), serviceContext);
+			typeSettingsUnicodeProperties.toString(), serviceContext);
 	}
 
 }

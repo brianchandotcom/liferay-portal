@@ -768,17 +768,17 @@ public class DocumentumRepository
 
 	@Override
 	public void initRepository(
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			CredentialsProvider credentialsProvider)
 		throws InvalidRepositoryException, PrincipalException {
 
-		_cabinet = typeSettingsProperties.getProperty(_CABINET);
+		_cabinet = typeSettingsUnicodeProperties.getProperty(_CABINET);
 
 		if (Validator.isNull(_cabinet)) {
 			throw new InvalidRepositoryException();
 		}
 
-		_repository = typeSettingsProperties.getProperty(_REPOSITORY);
+		_repository = typeSettingsUnicodeProperties.getProperty(_REPOSITORY);
 
 		if (Validator.isNull(_repository)) {
 			throw new InvalidRepositoryException();

@@ -66,11 +66,11 @@ public class TrashHelperImpl implements TrashHelper {
 			group.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE,
 			PropsValues.TRASH_ENTRIES_MAX_AGE);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getParentLiveGroupTypeSettingsProperties();
 
 		return GetterUtil.getInteger(
-			typeSettingsProperties.getProperty("trashEntriesMaxAge"),
+			typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge"),
 			trashEntriesMaxAge);
 	}
 
@@ -183,11 +183,11 @@ public class TrashHelperImpl implements TrashHelper {
 			return false;
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getParentLiveGroupTypeSettingsProperties();
 
 		return GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("trashEnabled"), true);
+			typeSettingsUnicodeProperties.getProperty("trashEnabled"), true);
 	}
 
 	@Override

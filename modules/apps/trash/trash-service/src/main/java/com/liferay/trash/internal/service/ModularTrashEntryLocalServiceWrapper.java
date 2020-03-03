@@ -57,14 +57,15 @@ public class ModularTrashEntryLocalServiceWrapper
 			long userId, long groupId, String className, long classPK,
 			String classUuid, String referrerClassName, int status,
 			List<ObjectValuePair<Long, Integer>> statusOVPs,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException {
 
 		return ModelAdapterUtil.adapt(
 			TrashEntry.class,
 			_trashEntryLocalService.addTrashEntry(
 				userId, groupId, className, classPK, classUuid,
-				referrerClassName, status, statusOVPs, typeSettingsProperties));
+				referrerClassName, status, statusOVPs,
+				typeSettingsUnicodeProperties));
 	}
 
 	@Override

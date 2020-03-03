@@ -64,14 +64,15 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			LocalEntityManager.CertificateUsage.valueOf(
 				ParamUtil.getString(actionRequest, "certificateUsage"));
 
-		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
 		String keystoreCredentialPassword = getKeystoreCredentialPassword(
-			certificateUsage, properties);
+			certificateUsage, unicodeProperties);
 
 		if (Validator.isNotNull(keystoreCredentialPassword)) {
-			_samlProviderConfigurationHelper.updateProperties(properties);
+			_samlProviderConfigurationHelper.updateProperties(
+				unicodeProperties);
 		}
 
 		try {
@@ -118,17 +119,17 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 
 	protected String getKeystoreCredentialPassword(
 			LocalEntityManager.CertificateUsage certificateUsage,
-			UnicodeProperties properties)
+			UnicodeProperties unicodeProperties)
 		throws UnsupportedBindingException {
 
 		if (certificateUsage == LocalEntityManager.CertificateUsage.SIGNING) {
-			return properties.getProperty(
+			return unicodeProperties.getProperty(
 				PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD);
 		}
 		else if (certificateUsage ==
 					LocalEntityManager.CertificateUsage.ENCRYPTION) {
 
-			return properties.getProperty(
+			return unicodeProperties.getProperty(
 				PortletPropsKeys.SAML_KEYSTORE_ENCRYPTION_CREDENTIAL_PASSWORD);
 		}
 		else {
@@ -140,7 +141,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 	protected void replaceCertificate(ActionRequest actionRequest)
 		throws Exception {
 
-		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
 		LocalEntityManager.CertificateUsage certificateUsage =
@@ -148,7 +149,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getString(actionRequest, "certificateUsage"));
 
 		String keystoreCredentialPassword = getKeystoreCredentialPassword(
-			certificateUsage, properties);
+			certificateUsage, unicodeProperties);
 
 		if (Validator.isNull(keystoreCredentialPassword)) {
 			throw new CertificateKeyPasswordException();
@@ -209,7 +210,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			keyPair.getPrivate(), keystoreCredentialPassword, x509Certificate,
 			certificateUsage);
 
-		_samlProviderConfigurationHelper.updateProperties(properties);
+		_samlProviderConfigurationHelper.updateProperties(unicodeProperties);
 
 		actionRequest.setAttribute(
 			SamlWebKeys.SAML_X509_CERTIFICATE, x509Certificate);

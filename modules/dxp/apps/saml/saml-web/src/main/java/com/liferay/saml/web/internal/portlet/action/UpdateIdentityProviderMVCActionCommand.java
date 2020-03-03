@@ -49,25 +49,25 @@ public class UpdateIdentityProviderMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
 		String nameIdentifierAttributeType = ParamUtil.getString(
 			actionRequest, "nameIdentifierAttributeType");
 
 		if (Validator.isNotNull(nameIdentifierAttributeType)) {
-			String nameIdentifierAttribute = properties.getProperty(
+			String nameIdentifierAttribute = unicodeProperties.getProperty(
 				PortletPropsKeys.SAML_IDP_METADATA_NAME_ID_ATTRIBUTE);
 
 			nameIdentifierAttribute =
 				nameIdentifierAttributeType + ":" + nameIdentifierAttribute;
 
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				PortletPropsKeys.SAML_IDP_METADATA_NAME_ID_ATTRIBUTE,
 				nameIdentifierAttribute);
 		}
 
-		_samlProviderConfigurationHelper.updateProperties(properties);
+		_samlProviderConfigurationHelper.updateProperties(unicodeProperties);
 
 		actionResponse.setRenderParameter("mvcRenderCommandName", "/admin");
 		actionResponse.setRenderParameter("tabs1", "identity-provider");

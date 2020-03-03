@@ -65,9 +65,10 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 
 		checkAttributeMethod.invoke(_classInstance, "sambaLMPassword");
 
-		UnicodeProperties properties = new UnicodeProperties();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-		properties.put(ExpandoColumnConstants.PROPERTY_HIDDEN, StringPool.TRUE);
+		unicodeProperties.put(
+			ExpandoColumnConstants.PROPERTY_HIDDEN, StringPool.TRUE);
 
 		Mockito.verify(
 			_expandoBridge, Mockito.times(1)
@@ -78,7 +79,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 		Mockito.verify(
 			_expandoBridge, Mockito.times(1)
 		).setAttributeProperties(
-			"sambaLMPassword", properties, false
+			"sambaLMPassword", unicodeProperties, false
 		);
 	}
 
@@ -89,9 +90,10 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 
 		PortalSambaUtil.checkAttributes();
 
-		UnicodeProperties properties = new UnicodeProperties();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-		properties.put(ExpandoColumnConstants.PROPERTY_HIDDEN, StringPool.TRUE);
+		unicodeProperties.put(
+			ExpandoColumnConstants.PROPERTY_HIDDEN, StringPool.TRUE);
 
 		Mockito.verify(
 			_expandoBridge, Mockito.times(1)
@@ -102,7 +104,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 		Mockito.verify(
 			_expandoBridge, Mockito.times(1)
 		).setAttributeProperties(
-			"sambaLMPassword", properties, false
+			"sambaLMPassword", unicodeProperties, false
 		);
 
 		Mockito.verify(
@@ -114,7 +116,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 		Mockito.verify(
 			_expandoBridge, Mockito.times(1)
 		).setAttributeProperties(
-			"sambaNTPassword", properties, false
+			"sambaNTPassword", unicodeProperties, false
 		);
 	}
 
@@ -136,9 +138,10 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 
 		checkAttributeMethod.invoke(_classInstance, "sambaLMPassword");
 
-		UnicodeProperties properties = new UnicodeProperties();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-		properties.put(ExpandoColumnConstants.PROPERTY_HIDDEN, StringPool.TRUE);
+		unicodeProperties.put(
+			ExpandoColumnConstants.PROPERTY_HIDDEN, StringPool.TRUE);
 
 		Mockito.verify(
 			_expandoBridge, Mockito.times(0)
@@ -149,7 +152,7 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 		Mockito.verify(
 			_expandoBridge, Mockito.times(1)
 		).setAttributeProperties(
-			"sambaLMPassword", properties, false
+			"sambaLMPassword", unicodeProperties, false
 		);
 	}
 

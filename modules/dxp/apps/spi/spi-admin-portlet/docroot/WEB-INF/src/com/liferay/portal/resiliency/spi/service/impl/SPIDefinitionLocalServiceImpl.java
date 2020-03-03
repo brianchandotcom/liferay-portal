@@ -306,7 +306,7 @@ public class SPIDefinitionLocalServiceImpl
 		SPIDefinition spiDefinition = spiDefinitionPersistence.findByPrimaryKey(
 			spiDefinitionId);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			spiDefinition.getTypeSettingsProperties();
 
 		Map<String, Serializable> taskContextMap =
@@ -328,11 +328,11 @@ public class SPIDefinitionLocalServiceImpl
 				StartSPIBackgroundTaskExecutor.class, taskContextMap,
 				new ServiceContext());
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"backgroundTaskId",
 			String.valueOf(backgroundTask.getBackgroundTaskId()));
 
-		spiDefinition.setTypeSettingsProperties(typeSettingsProperties);
+		spiDefinition.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		if (!automatedRestart && (spiDefinition.getRestartAttempts() > 0)) {
 			spiDefinition.setRestartAttempts(0);
@@ -425,13 +425,13 @@ public class SPIDefinitionLocalServiceImpl
 		spiDefinition.setStatus(SPIAdminConstants.STATUS_STOPPING);
 		spiDefinition.setStatusMessage(null);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			spiDefinition.getTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"backgroundTaskId", String.valueOf(backgroundTaskId));
 
-		spiDefinition.setTypeSettingsProperties(typeSettingsProperties);
+		spiDefinition.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		spiDefinitionPersistence.update(spiDefinition);
 
@@ -578,71 +578,72 @@ public class SPIDefinitionLocalServiceImpl
 	}
 
 	protected String normalizeTypeSettings(String typeSettings) {
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettingsProperties.fastLoad(typeSettings);
+		typeSettingsUnicodeProperties.fastLoad(typeSettings);
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"agent-class-name",
 			SPIConfigurationTemplate.getSPIAgentClassName());
 
 		String javaExecutable = GetterUtil.getString(
-			typeSettingsProperties.getProperty("java-executable"));
+			typeSettingsUnicodeProperties.getProperty("java-executable"));
 
 		if (Validator.isNull(javaExecutable)) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"java-executable",
 				SPIConfigurationTemplate.getJavaExecutable());
 		}
 
 		int maxThreads = GetterUtil.getInteger(
-			typeSettingsProperties.getProperty("max-threads"));
+			typeSettingsUnicodeProperties.getProperty("max-threads"));
 
 		if (maxThreads <= 0) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"max-threads",
 				String.valueOf(SPIConfigurationTemplate.getMaxThreads()));
 		}
 
 		int minThreads = GetterUtil.getInteger(
-			typeSettingsProperties.getProperty("min-threads"));
+			typeSettingsUnicodeProperties.getProperty("min-threads"));
 
 		if (minThreads <= 0) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"min-threads",
 				String.valueOf(SPIConfigurationTemplate.getMinThreads()));
 		}
 
 		long pingInterval = GetterUtil.getLong(
-			typeSettingsProperties.getProperty("ping-interval"));
+			typeSettingsUnicodeProperties.getProperty("ping-interval"));
 
 		if (pingInterval <= 0) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"ping-interval",
 				String.valueOf(SPIConfigurationTemplate.getSPIPingInterval()));
 		}
 
 		long registerTimeout = GetterUtil.getLong(
-			typeSettingsProperties.getProperty("register-timeout"));
+			typeSettingsUnicodeProperties.getProperty("register-timeout"));
 
 		if (registerTimeout <= 0) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"register-timeout",
 				String.valueOf(
 					SPIConfigurationTemplate.getSPIRegisterTimeout()));
 		}
 
 		long shutdownTimeout = GetterUtil.getLong(
-			typeSettingsProperties.getProperty("shutdown-timeout"));
+			typeSettingsUnicodeProperties.getProperty("shutdown-timeout"));
 
 		if (shutdownTimeout <= 0) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"shutdown-timeout",
 				String.valueOf(
 					SPIConfigurationTemplate.getSPIShutdownTimeout()));
 		}
 
-		return typeSettingsProperties.toString();
+		return typeSettingsUnicodeProperties.toString();
 	}
 
 	protected void setJVMArguments(

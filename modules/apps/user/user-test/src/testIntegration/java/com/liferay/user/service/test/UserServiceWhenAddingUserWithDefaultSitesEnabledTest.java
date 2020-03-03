@@ -62,32 +62,32 @@ public class UserServiceWhenAddingUserWithDefaultSitesEnabledTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		UnicodeProperties properties = new UnicodeProperties();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-		properties.put(
+		unicodeProperties.put(
 			PropsKeys.ADMIN_DEFAULT_GROUP_NAMES, _group.getDescriptiveName());
 
 		_organization = OrganizationTestUtil.addOrganization(true);
 
 		Group organizationGroup = _organization.getGroup();
 
-		properties.put(
+		unicodeProperties.put(
 			PropsKeys.ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES,
 			organizationGroup.getDescriptiveName());
 
 		_companyLocalService.updatePreferences(
-			_group.getCompanyId(), properties);
+			_group.getCompanyId(), unicodeProperties);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			_group.getTypeSettingsProperties();
 
 		_siteRole = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
-		typeSettingsProperties.put(
+		typeSettingsUnicodeProperties.put(
 			"defaultSiteRoleIds", String.valueOf(_siteRole.getRoleId()));
 
 		_groupLocalService.updateGroup(
-			_group.getGroupId(), typeSettingsProperties.toString());
+			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		_user = UserTestUtil.addUser();
 	}

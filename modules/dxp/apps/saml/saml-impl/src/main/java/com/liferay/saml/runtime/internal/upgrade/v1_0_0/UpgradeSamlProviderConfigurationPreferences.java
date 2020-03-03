@@ -76,7 +76,7 @@ public class UpgradeSamlProviderConfigurationPreferences
 		}
 
 		Set<String> migratedPrefsPropsKeys = new HashSet<>();
-		UnicodeProperties properties = new UnicodeProperties();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		for (String key : LegacySamlPropsKeys.SAML_KEYS_PREFS_PROPS) {
 			if (ArrayUtil.contains(
@@ -117,7 +117,7 @@ public class UpgradeSamlProviderConfigurationPreferences
 			}
 
 			if (!Objects.equals(value, getDefaultValue(key))) {
-				properties.put(key, value);
+				unicodeProperties.put(key, value);
 			}
 		}
 
@@ -128,7 +128,8 @@ public class UpgradeSamlProviderConfigurationPreferences
 			try {
 				CompanyThreadLocal.setCompanyId(companyId);
 
-				_samlProviderConfigurationHelper.updateProperties(properties);
+				_samlProviderConfigurationHelper.updateProperties(
+					unicodeProperties);
 			}
 			finally {
 				CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
@@ -149,7 +150,7 @@ public class UpgradeSamlProviderConfigurationPreferences
 			filter = new Filter(entityId);
 		}
 
-		UnicodeProperties properties = new UnicodeProperties();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		for (String key : LegacySamlPropsKeys.SAML_KEYS_PREFS_PROPS) {
 			if (ArrayUtil.contains(
@@ -165,18 +166,19 @@ public class UpgradeSamlProviderConfigurationPreferences
 			}
 
 			if (!Objects.equals(value, getDefaultValue(key))) {
-				properties.put(key, value);
+				unicodeProperties.put(key, value);
 			}
 		}
 
-		if (!properties.isEmpty()) {
+		if (!unicodeProperties.isEmpty()) {
 			long companyThreadLocalCompanyId =
 				CompanyThreadLocal.getCompanyId();
 
 			try {
 				CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
 
-				_samlProviderConfigurationHelper.updateProperties(properties);
+				_samlProviderConfigurationHelper.updateProperties(
+					unicodeProperties);
 			}
 			finally {
 				CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);

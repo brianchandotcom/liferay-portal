@@ -46,10 +46,10 @@ public class UpdateServiceProviderMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
-		_samlProviderConfigurationHelper.updateProperties(properties);
+		_samlProviderConfigurationHelper.updateProperties(unicodeProperties);
 
 		actionResponse.setRenderParameter("mvcRenderCommandName", "/admin");
 		actionResponse.setRenderParameter("tabs1", "service-provider");

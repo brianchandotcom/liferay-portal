@@ -31,6 +31,7 @@ public interface SamlProviderConfigurationHelper {
 
 	public boolean isRoleSp();
 
-	public void updateProperties(UnicodeProperties properties) throws Exception;
+	public void updateProperties(UnicodeProperties unicodeProperties)
+		throws Exception;
 
 }

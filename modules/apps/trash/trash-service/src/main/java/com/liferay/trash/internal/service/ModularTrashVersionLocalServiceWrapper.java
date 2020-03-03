@@ -48,13 +48,13 @@ public class ModularTrashVersionLocalServiceWrapper
 	@Override
 	public TrashVersion addTrashVersion(
 		long trashEntryId, String className, long classPK, int status,
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
 		return ModelAdapterUtil.adapt(
 			TrashVersion.class,
 			_trashVersionLocalService.addTrashVersion(
 				trashEntryId, className, classPK, status,
-				typeSettingsProperties));
+				typeSettingsUnicodeProperties));
 	}
 
 	@Override

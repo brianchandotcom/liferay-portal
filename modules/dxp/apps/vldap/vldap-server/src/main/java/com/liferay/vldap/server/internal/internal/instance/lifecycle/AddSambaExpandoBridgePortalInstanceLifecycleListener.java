@@ -49,14 +49,15 @@ public class AddSambaExpandoBridgePortalInstanceLifecycleListener
 			expandoBridge.addAttribute(_SAMBA_NT_PASSWORD, false);
 		}
 
-		UnicodeProperties properties = new UnicodeProperties();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-		properties.put(ExpandoColumnConstants.PROPERTY_HIDDEN, StringPool.TRUE);
+		unicodeProperties.put(
+			ExpandoColumnConstants.PROPERTY_HIDDEN, StringPool.TRUE);
 
 		expandoBridge.setAttributeProperties(
-			_SAMBA_LM_PASSWORD, properties, false);
+			_SAMBA_LM_PASSWORD, unicodeProperties, false);
 		expandoBridge.setAttributeProperties(
-			_SAMBA_NT_PASSWORD, properties, false);
+			_SAMBA_NT_PASSWORD, unicodeProperties, false);
 	}
 
 	private static final String _SAMBA_LM_PASSWORD = "sambaLMPassword";

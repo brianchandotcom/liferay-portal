@@ -429,14 +429,15 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		// Trash
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put("title", node.getName());
+		typeSettingsUnicodeProperties.put("title", node.getName());
 
 		TrashEntry trashEntry = _trashEntryLocalService.addTrashEntry(
 			userId, node.getGroupId(), WikiNode.class.getName(),
 			node.getNodeId(), node.getUuid(), null, oldStatus, null,
-			typeSettingsProperties);
+			typeSettingsUnicodeProperties);
 
 		node.setName(_trashHelper.getTrashTitle(trashEntry.getEntryId()));
 

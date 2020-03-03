@@ -91,17 +91,17 @@ public class AsahInterestTermFormNavigatorEntry
 				_assetListEntryService.fetchAssetListEntry(assetListEntryId);
 
 			if (assetListEntry != null) {
-				UnicodeProperties properties = new UnicodeProperties();
+				UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 				long segmentsEntryId = ParamUtil.getLong(
 					httpServletRequest, "segmentsEntryId",
 					SegmentsEntryConstants.ID_DEFAULT);
 
-				properties.load(
+				unicodeProperties.load(
 					assetListEntry.getTypeSettings(segmentsEntryId));
 
 				boolean enableContentRecommendation = GetterUtil.getBoolean(
-					properties.getProperty(
+					unicodeProperties.getProperty(
 						"enableContentRecommendation",
 						Boolean.FALSE.toString()));
 

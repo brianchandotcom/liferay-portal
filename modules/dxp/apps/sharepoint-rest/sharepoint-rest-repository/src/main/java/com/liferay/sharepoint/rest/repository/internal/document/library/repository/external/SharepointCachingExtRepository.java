@@ -396,12 +396,12 @@ public class SharepointCachingExtRepository implements ExtRepository {
 
 	@Override
 	public void initRepository(
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			CredentialsProvider credentialsProvider)
 		throws PortalException {
 
 		_extRepository.initRepository(
-			typeSettingsProperties, credentialsProvider);
+			typeSettingsUnicodeProperties, credentialsProvider);
 	}
 
 	@Override

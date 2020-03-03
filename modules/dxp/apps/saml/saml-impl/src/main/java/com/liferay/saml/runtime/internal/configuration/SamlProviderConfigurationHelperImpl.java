@@ -161,7 +161,7 @@ public class SamlProviderConfigurationHelperImpl
 	}
 
 	@Override
-	public void updateProperties(UnicodeProperties properties)
+	public void updateProperties(UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
@@ -197,7 +197,9 @@ public class SamlProviderConfigurationHelperImpl
 			configurationProperties = configuration.getProperties();
 		}
 
-		for (Map.Entry<String, String> mapEntry : properties.entrySet()) {
+		for (Map.Entry<String, String> mapEntry :
+				unicodeProperties.entrySet()) {
+
 			configurationProperties.put(mapEntry.getKey(), mapEntry.getValue());
 		}
 

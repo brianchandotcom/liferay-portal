@@ -29,36 +29,38 @@ public class TrashEntryImpl extends TrashEntryBaseImpl {
 
 	@Override
 	public String getTypeSettings() {
-		if (_typeSettingsProperties == null) {
+		if (_typeSettingsUnicodeProperties == null) {
 			return super.getTypeSettings();
 		}
 
-		return _typeSettingsProperties.toString();
+		return _typeSettingsUnicodeProperties.toString();
 	}
 
 	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
-		if (_typeSettingsProperties == null) {
-			_typeSettingsProperties = new UnicodeProperties(true);
+		if (_typeSettingsUnicodeProperties == null) {
+			_typeSettingsUnicodeProperties = new UnicodeProperties(true);
 
-			_typeSettingsProperties.fastLoad(super.getTypeSettings());
+			_typeSettingsUnicodeProperties.fastLoad(super.getTypeSettings());
 		}
 
-		return _typeSettingsProperties;
+		return _typeSettingsUnicodeProperties;
 	}
 
 	@Override
 	public String getTypeSettingsProperty(String key) {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
-		return typeSettingsProperties.getProperty(key);
+		return typeSettingsUnicodeProperties.getProperty(key);
 	}
 
 	@Override
 	public String getTypeSettingsProperty(String key, String defaultValue) {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
-		return typeSettingsProperties.getProperty(key, defaultValue);
+		return typeSettingsUnicodeProperties.getProperty(key, defaultValue);
 	}
 
 	@Override
@@ -86,21 +88,21 @@ public class TrashEntryImpl extends TrashEntryBaseImpl {
 
 	@Override
 	public void setTypeSettings(String typeSettings) {
-		_typeSettingsProperties = null;
+		_typeSettingsUnicodeProperties = null;
 
 		super.setTypeSettings(typeSettings);
 	}
 
 	@Override
 	public void setTypeSettingsProperties(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		_typeSettingsProperties = typeSettingsProperties;
+		_typeSettingsUnicodeProperties = typeSettingsUnicodeProperties;
 
-		super.setTypeSettings(_typeSettingsProperties.toString());
+		super.setTypeSettings(_typeSettingsUnicodeProperties.toString());
 	}
 
 	private TrashEntry _rootEntry;
-	private UnicodeProperties _typeSettingsProperties;
+	private UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

@@ -526,18 +526,18 @@ public class SharepointExtRepository implements ExtRepository {
 
 	@Override
 	public void initRepository(
-		UnicodeProperties typeSettingsProperties,
+		UnicodeProperties typeSettingsUnicodeProperties,
 		CredentialsProvider credentialsProvider) {
 
 		_libraryPath = _strip(
 			GetterUtil.getString(
-				typeSettingsProperties.getProperty("library-path")));
+				typeSettingsUnicodeProperties.getProperty("library-path")));
 
 		_rootFolder = new SharepointRootFolder(_libraryPath);
 
 		_siteAbsoluteURL = _strip(
 			GetterUtil.getString(
-				typeSettingsProperties.getProperty("site-absolute-url"),
+				typeSettingsUnicodeProperties.getProperty("site-absolute-url"),
 				StringPool.DASH));
 
 		_sharepointURLHelper = new SharepointURLHelper(

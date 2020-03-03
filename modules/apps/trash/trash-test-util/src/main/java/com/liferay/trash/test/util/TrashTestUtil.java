@@ -25,12 +25,13 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 public class TrashTestUtil {
 
 	public static Group disableTrash(Group group) {
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getParentLiveGroupTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty("trashEnabled", StringPool.FALSE);
+		typeSettingsUnicodeProperties.setProperty(
+			"trashEnabled", StringPool.FALSE);
 
-		group.setTypeSettingsProperties(typeSettingsProperties);
+		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		return GroupLocalServiceUtil.updateGroup(group);
 	}

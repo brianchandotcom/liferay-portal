@@ -82,17 +82,17 @@ public class SegmentsExperimentUtil {
 	}
 
 	public static JSONObject toGoalJSONObject(
-		Locale locale, UnicodeProperties typeSettingsProperties) {
+		Locale locale, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, SegmentsExperimentUtil.class);
 
-		String goal = typeSettingsProperties.getProperty("goal");
+		String goal = typeSettingsUnicodeProperties.getProperty("goal");
 
 		return JSONUtil.put(
 			"label", LanguageUtil.get(resourceBundle, goal)
 		).put(
-			"target", typeSettingsProperties.getProperty("goalTarget")
+			"target", typeSettingsUnicodeProperties.getProperty("goalTarget")
 		).put(
 			"value", goal
 		);

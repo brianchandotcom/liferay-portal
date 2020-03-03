@@ -37,7 +37,7 @@ public class TrashVersionLocalServiceImpl
 	@Override
 	public TrashVersion addTrashVersion(
 		long trashEntryId, String className, long classPK, int status,
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
 		long versionId = counterLocalService.increment();
 
@@ -47,8 +47,9 @@ public class TrashVersionLocalServiceImpl
 		trashVersion.setClassName(className);
 		trashVersion.setClassPK(classPK);
 
-		if (typeSettingsProperties != null) {
-			trashVersion.setTypeSettingsProperties(typeSettingsProperties);
+		if (typeSettingsUnicodeProperties != null) {
+			trashVersion.setTypeSettingsProperties(
+				typeSettingsUnicodeProperties);
 		}
 
 		trashVersion.setStatus(status);

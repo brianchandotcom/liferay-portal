@@ -203,7 +203,7 @@ public class AssetBrowserDisplayContext {
 		return _groupId;
 	}
 
-	public String getGroupLabel() {
+	public String getGroupTypeTitle() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

@@ -21,7 +21,9 @@ definition {
 
 	@description = "Checks for each portlet having defined boundries."
 	@priority = "5"
-	test CheckPortletBoundries {
+	test ViewPortletBoundries {
+		property portal.acceptance = "false";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
@@ -36,13 +38,17 @@ definition {
 			pageName = "Test Page",
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
-		
+
 		Navigator.gotoPage(pageName = "Test Page");
 
 		Portlet.addPG(portletName = "Message Board");
-		Refresh();
+
+		Navigator.gotoPage(pageName = "Test Page");
+
 		Portlet.addPG(portletName = "Hello World");
-		Refresh();
+
+		Navigator.gotoPage(pageName = "Test Page");
+
 		Portlet.addPG(portletName = "Documents and Media");
 
 		Portlet.dragAndDropPortletToColumnPG(
@@ -54,16 +60,16 @@ definition {
 			columnNumberFrom = "1",
 			columnNumberTo = "3",
 			portletName = "Documents and Media");
-		
+
 		MouseOver(
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
 			key_portletTitleName = "Message Boards");
-		
+
 		takeScreenshot();
 
 		MouseOver(
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE",
-			key_portletTitleName = "Hello World");		
+			key_portletTitleName = "Hello World");
 
 		takeScreenshot();
 

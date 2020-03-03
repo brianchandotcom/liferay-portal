@@ -37,12 +37,12 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 
 	@Override
-	public InfoListProvider getInfoListProvider(String className) {
-		if (Validator.isNull(className)) {
+	public InfoListProvider getInfoListProvider(String key) {
+		if (Validator.isNull(key)) {
 			return null;
 		}
 
-		return _infoListProviders.get(className);
+		return _infoListProviders.get(key);
 	}
 
 	@Override

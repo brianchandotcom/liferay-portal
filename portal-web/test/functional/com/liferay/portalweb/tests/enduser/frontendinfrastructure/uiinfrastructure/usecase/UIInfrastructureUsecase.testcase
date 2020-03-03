@@ -19,67 +19,6 @@ definition {
 		}
 	}
 
-	@description = "Checks for each portlet having defined boundries."
-	@priority = "5"
-	test ViewPortletBoundries {
-		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(
-			pageName = "Test Page",
-			sitePageType = "Widget Page");
-
-		SitePages.configurePage(
-			columnName = "3 Columns",
-			pageName = "Test Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoPage(pageName = "Test Page");
-
-		Portlet.addPG(portletName = "Message Board");
-
-		Navigator.gotoPage(pageName = "Test Page");
-
-		Portlet.addPG(portletName = "Hello World");
-
-		Navigator.gotoPage(pageName = "Test Page");
-
-		Portlet.addPG(portletName = "Documents and Media");
-
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "2",
-			portletName = "Hello World");
-
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "3",
-			portletName = "Documents and Media");
-
-		MouseOver(
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
-			key_portletTitleName = "Message Boards");
-
-		takeScreenshot();
-
-		MouseOver(
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE",
-			key_portletTitleName = "Hello World");
-
-		takeScreenshot();
-
-		MouseOver(
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_3_PORTLET_TITLE",
-			key_portletTitleName = "Documents and Media");
-
-		takeScreenshot();
-	}
-
 	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on guest page level after page refresh."
 	@priority = "5"
 	test RefreshHomePage {
@@ -274,6 +213,67 @@ definition {
 			userFirstName = "Skändi",
 			userLastName = "Ääkkönen",
 			userScreenName = "uskandi");
+	}
+
+	@description = "Checks for each portlet having defined boundries."
+	@priority = "5"
+	test ViewPortletBoundries {
+		property portal.acceptance = "false";
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Test Page",
+			sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "3 Columns",
+			pageName = "Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Portlet.addPG(portletName = "Message Board");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Portlet.addPG(portletName = "Hello World");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Portlet.dragAndDropPortletToColumnPG(
+			columnNumberFrom = "1",
+			columnNumberTo = "2",
+			portletName = "Hello World");
+
+		Portlet.dragAndDropPortletToColumnPG(
+			columnNumberFrom = "1",
+			columnNumberTo = "3",
+			portletName = "Documents and Media");
+
+		MouseOver(
+			key_portletTitleName = "Message Boards",
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE");
+
+		takeScreenshot();
+
+		MouseOver(
+			key_portletTitleName = "Hello World",
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE");
+
+		takeScreenshot();
+
+		MouseOver(
+			key_portletTitleName = "Documents and Media",
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_3_PORTLET_TITLE");
+
+		takeScreenshot();
 	}
 
 	@description = "This test validates sign in and sign out UI"

@@ -24,7 +24,7 @@ const handleClickOutside = (callback, wrapperRef) => event => {
 	const clickOutside = wrapperRef && !wrapperRef.contains(event.target);
 
 	if (clickOutside) {
-		callback();
+		callback(event);
 	}
 };
 

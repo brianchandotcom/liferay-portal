@@ -16,6 +16,7 @@ import React from 'react';
 const DropDown = ({
 	active,
 	activeItem,
+	id = '',
 	items,
 	match,
 	onSelect,
@@ -23,7 +24,10 @@ const DropDown = ({
 }) => {
 	return (
 		<ClayAutocomplete.DropDown active={active}>
-			<ClayDropDown.ItemList data-testid="dropDownList">
+			<ClayDropDown.ItemList
+				data-testid="dropDownList"
+				id={`dropDownList${id}`}
+			>
 				{items.length > 0 ? (
 					items.map((item, index) => (
 						<ClayAutocomplete.Item
@@ -31,13 +35,8 @@ const DropDown = ({
 							data-testid="dropDownListItem"
 							key={index}
 							match={match}
-							onMouseDown={event => {
-								event.stopPropagation();
-								onSelect(item);
-							}}
-							onMouseOver={() => {
-								setActiveItem(index);
-							}}
+							onMouseDown={() => onSelect(item)}
+							onMouseOver={() => setActiveItem(index)}
 							value={item.name}
 						/>
 					))

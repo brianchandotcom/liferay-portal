@@ -155,7 +155,6 @@ const Autocomplete = ({
 					match={value}
 					onSelect={handleSelect}
 					setActiveItem={setActiveItem}
-					setSelected={setSelected}
 				/>
 			</ClayAutocomplete>
 		</PromisesResolver>

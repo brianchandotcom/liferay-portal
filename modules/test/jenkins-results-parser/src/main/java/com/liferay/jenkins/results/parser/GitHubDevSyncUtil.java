@@ -512,9 +512,13 @@ public class GitHubDevSyncUtil {
 				String baseCacheBranchName = remoteGitBranchName.replaceAll(
 					"(.*)-\\d+", "$1");
 
+				if (!remoteGitBranchesMap.containsKey(baseCacheBranchName)) {
+					remoteGitBranchesMap.put(
+						baseCacheBranchName, new ArrayList<RemoteGitBranch>());
+				}
+
 				List<RemoteGitBranch> timestampedRemoteGitBranches =
-					remoteGitBranchesMap.computeIfAbsent(
-						baseCacheBranchName, key -> new ArrayList<>());
+					remoteGitBranchesMap.get(baseCacheBranchName);
 
 				timestampedRemoteGitBranches.add(remoteGitBranch);
 			}

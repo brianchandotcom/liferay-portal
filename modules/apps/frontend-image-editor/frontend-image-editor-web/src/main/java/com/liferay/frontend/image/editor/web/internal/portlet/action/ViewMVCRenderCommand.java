@@ -128,10 +128,14 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				properties.get(
 					"com.liferay.frontend.image.editor.capability.category"));
 
+			if (!imageEditorCapabilityDescriptorsMap.containsKey(category)) {
+				imageEditorCapabilityDescriptorsMap.put(
+					category, new ArrayList<ImageEditorCapabilityDescriptor>());
+			}
+
 			List<ImageEditorCapabilityDescriptor>
 				curImageEditorCapabilityDescriptors =
-					imageEditorCapabilityDescriptorsMap.computeIfAbsent(
-						category, key -> new ArrayList<>());
+					imageEditorCapabilityDescriptorsMap.get(category);
 
 			curImageEditorCapabilityDescriptors.add(
 				imageEditorCapabilityDescriptor);

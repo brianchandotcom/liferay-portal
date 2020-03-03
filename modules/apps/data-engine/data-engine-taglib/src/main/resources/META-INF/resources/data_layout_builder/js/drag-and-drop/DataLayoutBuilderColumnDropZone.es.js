@@ -68,18 +68,29 @@ export default ({dataLayoutBuilder, node}) => {
 				}
 			}
 			else if (type === DRAG_DATA_DEFINITION_FIELD) {
-				dataLayoutBuilder.dispatch(
-					'fieldAdded',
-					dropCustomObjectField({
-						dataDefinition,
-						dataDefinitionFieldName: data.name,
-						dataLayoutBuilder,
-						fieldName,
-						indexes,
-						parentFieldName,
-						skipFieldNameGeneration: true,
-					})
-				);
+				const payload = dropCustomObjectField({
+					dataDefinition,
+					dataDefinitionFieldName: data.name,
+					dataLayoutBuilder,
+					fieldName,
+					indexes,
+					parentFieldName,
+				});
+
+				if (dom.closest(node, '.col-empty')) {
+					const addedToPlaceholder = dom.closest(
+						node,
+						'.placeholder'
+					);
+
+					dataLayoutBuilder.dispatch('fieldAdded', {
+						addedToPlaceholder,
+						...payload,
+					});
+				}
+				else {
+					dataLayoutBuilder.dispatch('sectionAdded', payload);
+				}
 			}
 		},
 		[dataDefinition, dataLayoutBuilder, node]

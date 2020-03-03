@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getDataDefinitionField} from './utils/dataDefinition.es';
+
 export const ADD_CUSTOM_OBJECT_FIELD = 'ADD_CUSTOM_OBJECT_FIELD';
 export const DELETE_DATA_DEFINITION_FIELD = 'DELETE_DATA_DEFINITION_FIELD';
 export const DELETE_DATA_LAYOUT_FIELD = 'DELETE_DATA_LAYOUT_FIELD';
@@ -33,26 +35,34 @@ export const dropCustomObjectField = ({
 	dataDefinition,
 	dataDefinitionFieldName,
 	dataLayoutBuilder,
-	...payload
+	fieldName,
+	indexes,
+	parentFieldName,
 }) => {
-	const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-		({name}) => name === dataDefinitionFieldName
+	const dataDefinitionField = getDataDefinitionField(
+		dataDefinition,
+		dataDefinitionFieldName
 	);
-	const fieldType = dataLayoutBuilder.getFieldTypes().find(({name}) => {
-		return name === dataDefinitionField.fieldType;
-	});
 	const settingsContext = dataLayoutBuilder.getFieldSettingsContext(
 		dataDefinitionField
 	);
 	const {label} = dataDefinitionField;
 
 	return {
-		...payload,
+		data: {
+			fieldName,
+			parentFieldName,
+		},
 		fieldType: {
-			...fieldType,
+			...dataLayoutBuilder.getFieldTypes().find(({name}) => {
+				return name === dataDefinitionField.fieldType;
+			}),
+			editable: true,
 			label: label[themeDisplay.getLanguageId()],
 			settingsContext,
 		},
+		indexes,
+		skipFieldNameGeneration: true,
 	};
 };
 

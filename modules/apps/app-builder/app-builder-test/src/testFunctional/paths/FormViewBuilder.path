@@ -153,7 +153,7 @@
 <!--SELECT-->
 <tr>
 	<td>SELECT_FIELD</td>
-	<td>//label[contains(text(),'${key_fieldName}')]/following-sibling::div[contains(@class,'ddm-select-dropdown')]//button</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/following-sibling::div[contains(@class,'ddm-select-dropdown')]//button</td>
 	<td></td>
 </tr>
 

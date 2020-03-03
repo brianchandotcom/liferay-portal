@@ -66,6 +66,10 @@ public class RatingsTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
+	public void setInTrash(Boolean inTrash) {
+		_inTrash = inTrash;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);

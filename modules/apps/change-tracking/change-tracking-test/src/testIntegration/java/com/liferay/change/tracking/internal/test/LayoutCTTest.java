@@ -532,6 +532,7 @@ public class LayoutCTTest {
 		assetTag = assetTags.get(0);
 
 		Assert.assertEquals(tagName2, assetTag.getName());
+		Assert.assertEquals(1, assetTag.getAssetCount());
 	}
 
 	@Test

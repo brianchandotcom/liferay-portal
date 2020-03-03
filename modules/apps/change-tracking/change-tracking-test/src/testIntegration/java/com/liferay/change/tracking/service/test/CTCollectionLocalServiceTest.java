@@ -351,6 +351,7 @@ public class CTCollectionLocalServiceTest {
 		AssetTag assetTag = assetTags.get(0);
 
 		Assert.assertEquals(tagName2, assetTag.getName());
+		Assert.assertEquals(1, assetTag.getAssetCount());
 
 		Assert.assertEquals(
 			addedLayout,
@@ -393,6 +394,7 @@ public class CTCollectionLocalServiceTest {
 			assetTag = assetTags.get(0);
 
 			Assert.assertEquals(tagName1, assetTag.getName());
+			Assert.assertEquals(1, assetTag.getAssetCount());
 		}
 
 		_ctProcessLocalService.addCTProcess(

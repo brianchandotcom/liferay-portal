@@ -177,38 +177,69 @@
 	border-color: transparent;
 }
 
-.btn:not(.btn-monospaced):not(.btn-unstyled) {
-	font-size: var(--btn-font-size);
-	line-height: var(--btn-line-height);
-	padding: var(--btn-padding-y) var(--btn-padding-x);
+.btn:not(.btn-unstyled) {
+	&:not(.btn-lg):not(.btn-sm) {
+		font-size: var(--btn-font-size);
 
-	@at-root {
-		:not(.btn-group) > & {
-			border-radius: var(--btn-border-radius);
+		@at-root {
+			:not(.btn-group) > & {
+				border-radius: var(--btn-border-radius);
+			}
 		}
 	}
-}
 
-.btn-lg:not(.btn-monospaced):not(.btn-unstyled) {
-	font-size: var(--btn-font-size-lg);
-	line-height: var(--btn-line-height-lg);
-	padding: var(--btn-padding-y) var(--btn-padding-x-lg);
+	&:not(.btn-monospaced) {
+		line-height: var(--btn-line-height);
+		padding: var(--btn-padding-y) var(--btn-padding-x);
+	}
 
-	@at-root {
-		:not(.btn-group) > & {
-			border-radius: var(--btn-border-radius-lg);
+	&.btn-monospaced {
+		height: var(--btn-monospaced-size);
+		padding: var(--btn-monospaced-padding-y) var(--btn-monospaced-padding-x);
+		width: var(--btn-monospaced-size);
+	}
+
+	&.btn-lg {
+		font-size: var(--btn-font-size-lg);
+
+		@at-root {
+			:not(.btn-group) > & {
+				border-radius: var(--btn-border-radius-lg);
+			}
+		}
+
+		&:not(.btn-monospaced) {
+			line-height: var(--btn-line-height-lg);
+			padding: var(--btn-padding-y) var(--btn-padding-x-lg);
+		}
+
+		&.btn-monospaced {
+			height: var(--btn-monospaced-size-lg);
+			padding: var(--btn-monospaced-padding-y-lg)
+				var(--btn-monospaced-padding-x-lg);
+			width: var(--btn-monospaced-size-lg);
 		}
 	}
-}
 
-.btn-sm:not(.btn-monospaced):not(.btn-unstyled) {
-	font-size: var(--btn-font-size-sm);
-	line-height: var(--btn-line-height-sm);
-	padding: var(--btn-padding-y) var(--btn-padding-x-sm);
+	&.btn-sm {
+		font-size: var(--btn-font-size-sm);
 
-	@at-root {
-		:not(.btn-group) > & {
-			border-radius: var(--btn-border-radius-sm);
+		@at-root {
+			:not(.btn-group) > & {
+				border-radius: var(--btn-border-radius-sm);
+			}
+		}
+
+		&:not(.btn-monospaced) {
+			line-height: var(--btn-line-height-sm);
+			padding: var(--btn-padding-y) var(--btn-padding-x-sm);
+		}
+
+		&.btn-monospaced {
+			height: var(--btn-monospaced-size-sm);
+			padding: var(--btn-monospaced-padding-y-sm)
+				var(--btn-monospaced-padding-x-sm);
+			width: var(--btn-monospaced-size-sm);
 		}
 	}
 }

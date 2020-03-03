@@ -162,6 +162,30 @@ $theme-colors-cp: map-deep-merge(
 	--btn-line-height-sm: var(--line-height-sm);
 	--btn-border-radius-sm: var(--border-radius-sm);
 
+	--btn-monospaced-padding-y: calc(
+		var(--spacer) * #{$btn-monospaced-padding-y}
+	);
+	--btn-monospaced-padding-x: calc(
+		var(--spacer) * #{$btn-monospaced-padding-x}
+	);
+	--btn-monospaced-size: calc(var(--spacer) * #{$btn-monospaced-size});
+
+	--btn-monospaced-padding-y-sm: calc(
+		var(--spacer) * #{$btn-monospaced-padding-y-sm}
+	);
+	--btn-monospaced-padding-x-sm: calc(
+		var(--spacer) * #{$btn-monospaced-padding-x-sm}
+	);
+	--btn-monospaced-size-sm: calc(var(--spacer) * #{$btn-monospaced-size-sm});
+
+	--btn-monospaced-padding-y-lg: calc(
+		var(--spacer) * #{$btn-monospaced-padding-y-lg}
+	);
+	--btn-monospaced-padding-x-lg: calc(
+		var(--spacer) * #{$btn-monospaced-padding-x-lg}
+	);
+	--btn-monospaced-size-lg: calc(var(--spacer) * #{$btn-monospaced-size-lg});
+
 	// Alerts
 
 	--alert-padding-y: calc(var(--spacer) * #{$alert-padding-y});

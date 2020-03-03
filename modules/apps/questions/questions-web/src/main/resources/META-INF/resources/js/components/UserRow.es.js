@@ -21,13 +21,13 @@ export default withRouter(
 	({
 		creator,
 		match: {
-			params: {sectionId},
+			params: {sectionTitle},
 		},
 		statistics,
 	}) => (
 		<Link
 			className="border-0 btn btn-block btn-secondary position-relative question-user text-left text-md-right"
-			to={`/questions/${sectionId}/creator/${creator.id}`}
+			to={`/questions/${sectionTitle}/creator/${creator.id}`}
 		>
 			<p className="c-mb-0 small">
 				{Liferay.Language.get('answered-by')}

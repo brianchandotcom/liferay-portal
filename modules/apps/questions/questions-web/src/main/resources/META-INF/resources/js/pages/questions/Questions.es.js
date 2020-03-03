@@ -30,7 +30,7 @@ import QuestionsNavigationBar from '../QuestionsNavigationBar.es';
 
 export default ({
 	match: {
-		params: {creatorId, sectionId, tag: taxonomyCategoryId},
+		params: {creatorId, sectionTitle, tag: taxonomyCategoryId},
 	},
 }) => {
 	const [error, setError] = useState({});
@@ -199,7 +199,7 @@ export default ({
 
 						<Link
 							className="question-title stretched-link"
-							to={`/questions/${sectionId}/${question.friendlyUrlPath}`}
+							to={`/questions/${sectionTitle}/${question.friendlyUrlPath}`}
 						>
 							<h2 className="c-mb-0 stretched-link-layer text-dark">
 								{question.headline}
@@ -213,7 +213,7 @@ export default ({
 						<div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">
 							<div className="c-mt-3 c-mt-sm-0 stretched-link-layer">
 								<Link
-									to={`/questions/${sectionId}/creator/${question.creator.id}`}
+									to={`/questions/${sectionTitle}/creator/${question.creator.id}`}
 								>
 									<UserIcon
 										fullName={question.creator.name}

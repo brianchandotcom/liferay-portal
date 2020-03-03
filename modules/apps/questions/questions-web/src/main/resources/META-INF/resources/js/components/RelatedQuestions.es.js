@@ -25,7 +25,7 @@ import UserIcon from './UserIcon.es';
 export default withRouter(
 	({
 		match: {
-			params: {sectionId},
+			params: {sectionTitle},
 		},
 		question,
 	}) => {
@@ -87,7 +87,7 @@ export default withRouter(
 
 									<Link
 										className="c-mt-2 d-block question-title stretched-link text-reset"
-										to={`/questions/${sectionId}/${relatedQuestion.friendlyUrlPath}`}
+										to={`/questions/${sectionTitle}/${relatedQuestion.friendlyUrlPath}`}
 									>
 										<h3 className="h2 stretched-link-layer">
 											{relatedQuestion.headline}

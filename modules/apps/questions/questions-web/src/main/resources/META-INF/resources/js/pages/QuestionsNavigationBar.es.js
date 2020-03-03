@@ -49,7 +49,7 @@ export default withRouter(
 		filterChange,
 		history,
 		match: {
-			params: {sectionId},
+			params: {sectionTitle},
 		},
 		searchChange,
 	}) => {
@@ -66,7 +66,7 @@ export default withRouter(
 		const filterOptions = getFilterOptions();
 
 		useEffect(() => {
-			getSection(sectionId, context.siteKey)
+			getSection(sectionTitle, context.siteKey)
 				.then(section => {
 					if (section.parentMessageBoardSectionId) {
 						return Promise.all([
@@ -179,7 +179,7 @@ export default withRouter(
 								displayType="primary"
 								onClick={() =>
 									history.push(
-										'/questions/' + sectionId + '/new'
+										`/questions/${sectionTitle}/new`
 									)
 								}
 							>

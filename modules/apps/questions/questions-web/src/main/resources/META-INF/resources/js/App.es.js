@@ -35,7 +35,7 @@ export default props => (
 					<Route component={Home} exact path="/questions" />
 
 					<Route
-						path="/questions/:sectionId"
+						path="/questions/:sectionTitle"
 						render={({match: {path}}) => (
 							<>
 								<NavigationBar />

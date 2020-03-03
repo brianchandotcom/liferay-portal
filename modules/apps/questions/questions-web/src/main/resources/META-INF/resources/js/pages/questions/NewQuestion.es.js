@@ -32,17 +32,17 @@ export default withRouter(
 	({
 		history,
 		match: {
-			params: {sectionId},
+			params: {sectionTitle},
 		},
 	}) => {
-		const context = useContext(AppContext);
-
 		const [articleBody, setArticleBody] = useState('');
 		const [headline, setHeadline] = useState('');
 		const [tags, setTags] = useState([]);
 
+		const context = useContext(AppContext);
+
 		const [debounceCallback] = useDebounceCallback(
-			() => history.push(`/questions/${sectionId}/`),
+			() => history.push(`/questions/${sectionTitle}/`),
 			500
 		);
 
@@ -50,7 +50,7 @@ export default withRouter(
 			createQuestion(
 				articleBody,
 				headline,
-				context.siteKey,
+				context.section.id,
 				tags.map(tag => tag.value)
 			).then(() => debounceCallback());
 
@@ -155,7 +155,7 @@ export default withRouter(
 
 					<Link
 						className="btn btn-secondary c-ml-sm-3"
-						to={`/questions/${sectionId}`}
+						to={`/questions/${sectionTitle}`}
 					>
 						{Liferay.Language.get('cancel')}
 					</Link>

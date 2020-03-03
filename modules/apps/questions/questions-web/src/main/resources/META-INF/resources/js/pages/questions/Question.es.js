@@ -48,7 +48,7 @@ export default withRouter(
 	({
 		location: key,
 		match: {
-			params: {questionId, sectionId},
+			params: {questionId},
 			url,
 		},
 	}) => {
@@ -247,10 +247,7 @@ export default withRouter(
 							</div>
 
 							<div className="c-mt-4 position-relative question-creator text-center text-md-right">
-								<CreatorRow
-									question={question}
-									sectionId={sectionId}
-								/>
+								<CreatorRow question={question} />
 							</div>
 
 							<h3 className="c-mt-4 text-secondary">

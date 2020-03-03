@@ -329,27 +329,33 @@ public class PageDefinitionConverterUtilTest {
 		PageElement[] pageElements = rootPageElement.getPageElements();
 
 		Assert.assertEquals(
-			Arrays.toString(pageElements), 1, pageElements.length);
+			Arrays.toString(pageElements), 2, pageElements.length);
 
-		PageElement sectionPageElement = pageElements[0];
-
-		Assert.assertEquals(
-			PageElement.Type.SECTION, sectionPageElement.getType());
-
-		SectionDefinition sectionDefinition =
-			(SectionDefinition)sectionPageElement.getDefinition();
+		PageElement sectionPageElement1 = pageElements[0];
 
 		Assert.assertEquals(
-			"primary", sectionDefinition.getBackgroundColorCssClass());
+			PageElement.Type.SECTION, sectionPageElement1.getType());
 
-		FragmentImage fragmentImage = sectionDefinition.getBackgroundImage();
+		SectionDefinition sectionDefinition1 =
+			(SectionDefinition)sectionPageElement1.getDefinition();
 
-		Assert.assertNull(fragmentImage.getTitle());
 		Assert.assertEquals(
-			"http://myexample.com/myexample.png", fragmentImage.getUrl());
+			"primary", sectionDefinition1.getBackgroundColorCssClass());
+
+		FragmentImage fragmentImage1 = sectionDefinition1.getBackgroundImage();
+
+		InlineValue titleInlineValue = (InlineValue)fragmentImage1.getTitle();
+
+		Assert.assertEquals(
+			"My example1 background image title", titleInlineValue.getValue());
+
+		InlineValue urlInlineValue1 = (InlineValue)fragmentImage1.getUrl();
+
+		Assert.assertEquals(
+			"http://myexample1.com/myexample1.png", urlInlineValue1.getValue());
 
 		com.liferay.headless.delivery.dto.v1_0.Layout sectionLayout =
-			sectionDefinition.getLayout();
+			sectionDefinition1.getLayout();
 
 		Assert.assertEquals("Fluid", sectionLayout.getContainerTypeAsString());
 		Assert.assertEquals(
@@ -357,6 +363,23 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertEquals(
 			Integer.valueOf(4), sectionLayout.getPaddingHorizontal());
 		Assert.assertEquals(Integer.valueOf(1), sectionLayout.getPaddingTop());
+
+		PageElement sectionPageElement2 = pageElements[1];
+
+		Assert.assertEquals(
+			PageElement.Type.SECTION, sectionPageElement2.getType());
+
+		SectionDefinition sectionDefinition2 =
+			(SectionDefinition)sectionPageElement2.getDefinition();
+
+		FragmentImage fragmentImage2 = sectionDefinition2.getBackgroundImage();
+
+		Assert.assertNull(fragmentImage2.getTitle());
+
+		InlineValue urlInlineValue2 = (InlineValue)fragmentImage2.getUrl();
+
+		Assert.assertEquals(
+			"http://myexample2.com/myexample2.png", urlInlineValue2.getValue());
 	}
 
 	private void _addLayoutPageTemplateStructure(

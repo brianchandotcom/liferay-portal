@@ -80,7 +80,10 @@ public class AssetListItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _language.get(locale, "content-sets");
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		return _language.get(resourceBundle, "content-sets");
 	}
 
 	@Override

@@ -38,16 +38,18 @@ public class GetterUtilCheck extends BaseFileCheck {
 		throws ReflectiveOperationException {
 
 		if (!fileName.endsWith("GetterUtilTest.java")) {
-			_checkGetterUtilGet(fileName, content);
+			_checkDefaultValues(fileName, content, _getterUtilGetPattern, 2);
 		}
 
 		return content;
 	}
 
-	private void _checkGetterUtilGet(String fileName, String content)
+	private void _checkDefaultValues(
+			String fileName, String content, Pattern pattern,
+			int parameterCount)
 		throws ReflectiveOperationException {
 
-		Matcher matcher = _getterUtilGetPattern.matcher(content);
+		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
 			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
@@ -57,7 +59,7 @@ public class GetterUtilCheck extends BaseFileCheck {
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				matcher.group());
 
-			if (parameterList.size() != 2) {
+			if (parameterList.size() != parameterCount) {
 				continue;
 			}
 
@@ -71,19 +73,18 @@ public class GetterUtilCheck extends BaseFileCheck {
 
 			defaultValue = defaultValue.replaceFirst("\\.0", StringPool.BLANK);
 
-			String value = parameterList.get(1);
+			String value = parameterList.get(parameterCount - 1);
 
-			value = value.replaceFirst("0(\\.0)?[dDfFlL]?", "0");
+			String formattedValue = value.replaceFirst(
+				"0(\\.0)?[dDfFlL]?", "0");
 
-			if (value.equals("StringPool.BLANK")) {
-				value = StringPool.BLANK;
+			if (formattedValue.equals("StringPool.BLANK")) {
+				formattedValue = StringPool.BLANK;
 			}
 
-			if (Objects.equals(value, defaultValue)) {
+			if (Objects.equals(formattedValue, defaultValue)) {
 				addMessage(
-					fileName,
-					"No need to pass default value '" + parameterList.get(1) +
-						"'",
+					fileName, "No need to pass default value '" + value + "'",
 					getLineNumber(content, matcher.start()));
 			}
 		}

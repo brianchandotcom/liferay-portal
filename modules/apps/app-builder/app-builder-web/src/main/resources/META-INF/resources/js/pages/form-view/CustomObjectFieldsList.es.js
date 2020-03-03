@@ -21,6 +21,7 @@ import {
 import React, {useContext} from 'react';
 
 import useDoubleClick from '../../hooks/useDoubleClick.es';
+import {forEachDataDefinitionField} from '../../utils/dataDefinition.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
 import {dropCustomObjectField} from './actions.es';
@@ -33,15 +34,19 @@ const getFieldTypes = ({
 	fieldTypes,
 	focusedCustomObjectField,
 }) => {
-	const {dataDefinitionFields} = dataDefinition;
+	const dataDefinitionFields = [];
 	const {dataLayoutPages} = dataLayout;
 
-	return dataDefinitionFields.map(({fieldType, label, name}) => {
+	forEachDataDefinitionField(dataDefinition, ({fieldType, label, name}) => {
+		if (fieldType === 'section') {
+			return;
+		}
+
 		const fieldTypeSettings = fieldTypes.find(({name}) => {
 			return name === fieldType;
 		});
 
-		return {
+		dataDefinitionFields.push({
 			active: name === focusedCustomObjectField.name,
 			className: 'custom-object-field',
 			description: fieldTypeSettings.label,
@@ -51,8 +56,10 @@ const getFieldTypes = ({
 			icon: fieldTypeSettings.icon,
 			label: label.en_US,
 			name,
-		};
+		});
 	});
+
+	return dataDefinitionFields;
 };
 
 export default ({keywords}) => {

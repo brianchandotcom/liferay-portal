@@ -12,29 +12,52 @@
  * details.
  */
 
-export const getDataDefinitionField = (
+export const forEachDataDefinitionField = (
 	dataDefinition = {dataDefinitionFields: []},
-	fieldName
+	fn
 ) => {
-	const {dataDefinitionFields} = dataDefinition;
+	const {dataDefinitionFields = []} = dataDefinition;
 
 	for (let i = 0; i < dataDefinitionFields.length; i++) {
 		const field = dataDefinitionFields[i];
 
-		if (field.name === fieldName) {
-			return field;
+		if (fn(field)) {
+			return true;
 		}
 
-		const nestedField = getDataDefinitionField({
-			dataDefinitionFields: field.nestedFields || [],
-		}, fieldName);
-
-		if (nestedField) {
-			return nestedField;
+		if (
+			forEachDataDefinitionField(
+				{
+					dataDefinitionFields:
+						field.nestedDataDefinitionFields || [],
+				},
+				fn
+			)
+		) {
+			return true;
 		}
 	}
 
-	return null;
+	return false;
+};
+
+export const getDataDefinitionField = (
+	dataDefinition = {dataDefinitionFields: []},
+	fieldName
+) => {
+	let field = null;
+
+	forEachDataDefinitionField(dataDefinition, currentField => {
+		if (currentField.name === fieldName) {
+			field = currentField;
+
+			return true;
+		}
+
+		return false;
+	});
+
+	return field;
 };
 
 export const getFieldLabel = (dataDefinition, fieldName) => {

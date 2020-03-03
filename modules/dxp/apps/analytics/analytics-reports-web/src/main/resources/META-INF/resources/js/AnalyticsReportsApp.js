@@ -91,7 +91,7 @@ export default function({context, props}) {
 			<hr />
 
 			<Chart
-				dataProviders={[getHistoricalReads, getHistoricalViews]}
+				dataProviders={[getHistoricalViews, getHistoricalReads]}
 				defaultTimeSpanOption={defaultTimeSpanKey}
 				languageTag={languageTag}
 				timeSpanOptions={timeSpans}

@@ -99,6 +99,35 @@ public class DepotPermissionCheckerWrapperTest {
 	}
 
 	@Test
+	public void testHasPermissionForADepotGroupDoesNotDelegateToDepotForUnsupportedPermissions()
+		throws Exception {
+
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
+
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
+
+				Assert.assertFalse(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(), ActionKeys.MANAGE_LAYOUTS));
+
+				RoleTestUtil.addResourcePermission(
+					role, Group.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.MANAGE_LAYOUTS);
+
+				Assert.assertFalse(
+					permissionChecker.hasPermission(
+						depotEntry.getGroup(), Group.class.getName(),
+						depotEntry.getGroupId(), ActionKeys.MANAGE_LAYOUTS));
+			});
+	}
+
+	@Test
 	public void testHasPermissionsWithDepotGroupAndAssetLibraryAdmin()
 		throws Exception {
 

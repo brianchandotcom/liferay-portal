@@ -202,20 +202,22 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 		Group depotGroup = _getDepotGroup(name, primKey);
 
-		if ((depotGroup != null) && _supportedActionIds.contains(actionId)) {
-			try {
-				if (_isGroupAdmin(depotGroup)) {
-					return true;
+		if (depotGroup != null) {
+			if (_supportedActionIds.contains(actionId)) {
+				try {
+					if (_isGroupAdmin(depotGroup)) {
+						return true;
+					}
+
+					return _depotEntryModelResourcePermission.contains(
+						this, depotGroup.getClassPK(), actionId);
 				}
-
-				return _depotEntryModelResourcePermission.contains(
-					this, depotGroup.getClassPK(), actionId);
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
+				}
 			}
-			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
 
-				return false;
-			}
+			return false;
 		}
 
 		return hasPermissionSupplier.get();

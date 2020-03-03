@@ -137,7 +137,7 @@ class DataLayoutBuilder extends React.Component {
 	getDefinitionField({nestedFields = [], settingsContext}) {
 		const fieldConfig = {
 			customProperties: {},
-			nestedFields: nestedFields.map(nestedField =>
+			nestedDataDefinitionFields: nestedFields.map(nestedField =>
 				this.getDefinitionField(nestedField)
 			),
 		};

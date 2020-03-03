@@ -94,6 +94,16 @@ public class LocaleUtil {
 		return getInstance()._equals(locale1, locale2);
 	}
 
+	public static Locale fromBCP47LanguageId(String bcp47LanguageId) {
+		return getInstance()._fromBCP47LanguageId(bcp47LanguageId, true);
+	}
+
+	public static Locale fromBCP47LanguageId(
+		String bcp47LanguageId, boolean validate) {
+
+		return getInstance()._fromBCP47LanguageId(bcp47LanguageId, validate);
+	}
+
 	public static Locale fromLanguageId(String languageId) {
 		return getInstance()._fromLanguageId(languageId, true);
 	}
@@ -213,6 +223,22 @@ public class LocaleUtil {
 		String languageId2 = _toLanguageId(locale2);
 
 		return StringUtil.equalsIgnoreCase(languageId1, languageId2);
+	}
+
+	private Locale _fromBCP47LanguageId(
+		String bcp47LanguageId, boolean validate) {
+
+		if (bcp47LanguageId.equals("zh-Hans-CN")) {
+			return _fromLanguageId("zh_CN", validate);
+		}
+		else if (bcp47LanguageId.equals("zh-Hant-TW")) {
+			return _fromLanguageId("zh_TW", validate);
+		}
+
+		return _fromLanguageId(
+			StringUtil.replace(
+				bcp47LanguageId, CharPool.MINUS, CharPool.UNDERLINE),
+			validate);
 	}
 
 	private Locale _fromLanguageId(String languageId, boolean validate) {

@@ -117,6 +117,14 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 	public static void deleteSpiraTestSetFolderByID(
 		SpiraProject spiraProject, int testSetFolderID) {
 
+		List<SpiraTestSetFolder> spiraTestSetFolders = getSpiraTestSetFolders(
+			spiraProject,
+			new SearchResult.SearchParameter(ID_KEY, testSetFolderID));
+
+		if (spiraTestSetFolders.isEmpty()) {
+			return;
+		}
+
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
 		urlPathReplacements.put(
@@ -133,9 +141,7 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 			throw new RuntimeException(ioException);
 		}
 
-		_spiraTestSetFolders.remove(
-			_createSpiraTestSetFolderKey(
-				spiraProject.getID(), testSetFolderID));
+		removeCachedSpiraArtifacts(spiraTestSetFolders);
 	}
 
 	public static void deleteSpiraTestSetFoldersByPath(
@@ -177,60 +183,10 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 		SpiraProject spiraProject,
 		SearchResult.SearchParameter... searchParameters) {
 
-		List<SpiraTestSetFolder> spiraTestSetFolders = new ArrayList<>();
-
-		if (isPreviousSearch(SpiraTestSetFolder.class, searchParameters)) {
-			for (SpiraTestSetFolder spiraTestSetFolder :
-					_spiraTestSetFolders.values()) {
-
-				if (spiraTestSetFolder.matches(searchParameters)) {
-					spiraTestSetFolders.add(spiraTestSetFolder);
-				}
-			}
-
-			if (!spiraTestSetFolders.isEmpty()) {
-				return spiraTestSetFolders;
-			}
-		}
-
-		Map<String, String> urlPathReplacements = new HashMap<>();
-
-		urlPathReplacements.put(
-			"project_id", String.valueOf(spiraProject.getID()));
-
-		try {
-			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-				"projects/{project_id}/test-set-folders", null,
-				urlPathReplacements, HttpRequestMethod.GET, null);
-
-			for (int i = 0; i < responseJSONArray.length(); i++) {
-				JSONObject responseJSONObject = responseJSONArray.getJSONObject(
-					i);
-
-				responseJSONObject.put(
-					SpiraProject.ID_KEY, spiraProject.getID());
-
-				SpiraTestSetFolder spiraTestSetFolder = new SpiraTestSetFolder(
-					responseJSONObject);
-
-				_spiraTestSetFolders.put(
-					_createSpiraTestSetFolderKey(
-						spiraProject.getID(), spiraTestSetFolder.getID()),
-					spiraTestSetFolder);
-
-				if (spiraTestSetFolder.matches(searchParameters)) {
-					spiraTestSetFolders.add(spiraTestSetFolder);
-				}
-			}
-
-			addPreviousSearchParameters(
-				SpiraTestSetFolder.class, searchParameters);
-
-			return spiraTestSetFolders;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return getSpiraArtifacts(
+			SpiraTestSetFolder.class,
+			() -> _requestSpiraTestSetFolders(spiraProject),
+			T -> new SpiraTestSetFolder(T), searchParameters);
 	}
 
 	@Override
@@ -240,17 +196,10 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 
 	protected static final String ID_KEY = "TestSetFolderId";
 
-	private static String _createSpiraTestSetFolderKey(
-		Integer projectID, Integer testSetFolderID) {
-
-		return projectID + "-" + testSetFolderID;
-	}
-
 	private static List<JSONObject> _requestSpiraTestSetFolders(
 		SpiraProject spiraProject) {
 
 		List<JSONObject> spiraTestSetFolders = new ArrayList<>();
-
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
 		urlPathReplacements.put(
@@ -281,9 +230,6 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 	private SpiraTestSetFolder(JSONObject jsonObject) {
 		super(jsonObject);
 	}
-
-	private static final Map<String, SpiraTestSetFolder> _spiraTestSetFolders =
-		new HashMap<>();
 
 	private SpiraTestSetFolder _parentSpiraTestSetFolder;
 

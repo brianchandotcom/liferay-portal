@@ -139,14 +139,12 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 			SpiraRestAPIUtil.request(
 				"projects/{project_id}/test-folders/{test_case_folder_id}",
 				null, urlPathReplacements, HttpRequestMethod.DELETE, null);
+
+			removeCachedSpiraArtifacts(spiraTestCaseFolders);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-
-		_spiraTestCaseFolders.remove(
-			_createSpiraTestCaseFolderKey(
-				spiraProject.getID(), testCaseFolderID));
 	}
 
 	public static void deleteSpiraTestCaseFoldersByPath(
@@ -188,60 +186,10 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 		SpiraProject spiraProject,
 		SearchResult.SearchParameter... searchParameters) {
 
-		List<SpiraTestCaseFolder> spiraTestCaseFolders = new ArrayList<>();
-
-		if (isPreviousSearch(SpiraTestCaseFolder.class, searchParameters)) {
-			for (SpiraTestCaseFolder spiraTestCaseFolder :
-					_spiraTestCaseFolders.values()) {
-
-				if (spiraTestCaseFolder.matches(searchParameters)) {
-					spiraTestCaseFolders.add(spiraTestCaseFolder);
-				}
-			}
-
-			if (!spiraTestCaseFolders.isEmpty()) {
-				return spiraTestCaseFolders;
-			}
-		}
-
-		Map<String, String> urlPathReplacements = new HashMap<>();
-
-		urlPathReplacements.put(
-			"project_id", String.valueOf(spiraProject.getID()));
-
-		try {
-			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-				"projects/{project_id}/test-folders", null, urlPathReplacements,
-				HttpRequestMethod.GET, null);
-
-			for (int i = 0; i < responseJSONArray.length(); i++) {
-				JSONObject responseJSONObject = responseJSONArray.getJSONObject(
-					i);
-
-				responseJSONObject.put(
-					SpiraProject.ID_KEY, spiraProject.getID());
-
-				SpiraTestCaseFolder spiraTestCaseFolder =
-					new SpiraTestCaseFolder(responseJSONObject);
-
-				_spiraTestCaseFolders.put(
-					_createSpiraTestCaseFolderKey(
-						spiraProject.getID(), spiraTestCaseFolder.getID()),
-					spiraTestCaseFolder);
-
-				if (spiraTestCaseFolder.matches(searchParameters)) {
-					spiraTestCaseFolders.add(spiraTestCaseFolder);
-				}
-			}
-
-			addPreviousSearchParameters(
-				SpiraTestCaseFolder.class, searchParameters);
-
-			return spiraTestCaseFolders;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return getSpiraArtifacts(
+			SpiraTestCaseFolder.class,
+			() -> _requestSpiraTestCaseFolders(spiraProject),
+			T -> new SpiraTestCaseFolder(T), searchParameters);
 	}
 
 	@Override
@@ -250,12 +198,6 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 	}
 
 	protected static final String ID_KEY = "TestCaseFolderId";
-
-	private static String _createSpiraTestCaseFolderKey(
-		Integer projectID, Integer testCaseFolderID) {
-
-		return projectID + "-" + testCaseFolderID;
-	}
 
 	private static List<JSONObject> _requestSpiraTestCaseFolders(
 		SpiraProject spiraProject) {
@@ -292,9 +234,6 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 	private SpiraTestCaseFolder(JSONObject jsonObject) {
 		super(jsonObject);
 	}
-
-	private static final Map<String, SpiraTestCaseFolder>
-		_spiraTestCaseFolders = new HashMap<>();
 
 	private SpiraTestCaseFolder _parentSpiraTestCaseFolder;
 

@@ -31,27 +31,12 @@ import org.json.JSONObject;
 public class SpiraProject extends BaseSpiraArtifact {
 
 	public static SpiraProject getSpiraProjectByID(int projectID) {
-		if (_spiraProjects.containsKey(projectID)) {
-			return _spiraProjects.get(projectID);
-		}
+		List<SpiraProject> spiraProjects = getSpiraArtifacts(
+			SpiraProject.class, () -> _requestSpiraProjectByID(projectID),
+			T -> new SpiraProject(T),
+			new SearchResult.SearchParameter(ID_KEY, projectID));
 
-		Map<String, String> urlPathReplacements = new HashMap<>();
-
-		urlPathReplacements.put("project_id", String.valueOf(projectID));
-
-		try {
-			SpiraProject spiraProject = new SpiraProject(
-				SpiraRestAPIUtil.requestJSONObject(
-					"projects/{project_id}", null, urlPathReplacements,
-					HttpRequestMethod.GET, null));
-
-			_spiraProjects.put(spiraProject.getID(), spiraProject);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		return _spiraProjects.get(projectID);
+		return spiraProjects.get(0);
 	}
 
 	public SpiraRelease getSpiraReleaseByID(int releaseID) {
@@ -225,59 +210,6 @@ public class SpiraProject extends BaseSpiraArtifact {
 			this, new SearchResult.SearchParameter("Path", testCaseSetPath));
 	}
 
-	protected SpiraRelease getSpiraReleaseByIndentLevel(String indentLevel) {
-		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
-			this, new SearchResult.SearchParameter("IndentLevel", indentLevel));
-
-		if (spiraReleases.size() > 1) {
-			throw new RuntimeException("Duplicate indent level " + indentLevel);
-		}
-
-		if (spiraReleases.isEmpty()) {
-			throw new RuntimeException("Missing indent level " + indentLevel);
-		}
-
-		return spiraReleases.get(0);
-	}
-
-	protected SpiraTestCaseFolder getSpiraTestCaseFolderByIndentLevel(
-		String indentLevel) {
-
-		List<SpiraTestCaseFolder> spiraTestCaseFolders =
-			SpiraTestCaseFolder.getSpiraTestCaseFolders(
-				this,
-				new SearchResult.SearchParameter("IndentLevel", indentLevel));
-
-		if (spiraTestCaseFolders.size() > 1) {
-			throw new RuntimeException("Duplicate indent level " + indentLevel);
-		}
-
-		if (spiraTestCaseFolders.isEmpty()) {
-			throw new RuntimeException("Missing indent level " + indentLevel);
-		}
-
-		return spiraTestCaseFolders.get(0);
-	}
-
-	protected SpiraTestSetFolder getSpiraTestSetFolderByIndentLevel(
-		String indentLevel) {
-
-		List<SpiraTestSetFolder> spiraTestSetFolders =
-			SpiraTestSetFolder.getSpiraTestSetFolders(
-				this,
-				new SearchResult.SearchParameter("IndentLevel", indentLevel));
-
-		if (spiraTestSetFolders.size() > 1) {
-			throw new RuntimeException("Duplicate indent level " + indentLevel);
-		}
-
-		if (spiraTestSetFolders.isEmpty()) {
-			throw new RuntimeException("Missing indent level " + indentLevel);
-		}
-
-		return spiraTestSetFolders.get(0);
-	}
-
 	protected static final String ID_KEY = "ProjectId";
 
 	private static List<JSONObject> _requestSpiraProjectByID(
@@ -301,8 +233,5 @@ public class SpiraProject extends BaseSpiraArtifact {
 	private SpiraProject(JSONObject jsonObject) {
 		super(jsonObject);
 	}
-
-	private static final Map<Integer, SpiraProject> _spiraProjects =
-		new HashMap<>();
 
 }

@@ -55,17 +55,8 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 				urlPathReplacements, HttpRequestMethod.POST,
 				requestJSONObject.toString());
 
-			SpiraReleaseBuild spiraReleaseBuild =
-				spiraRelease.getSpiraReleaseBuildByID(
-					responseJSONObject.getInt(ID_KEY));
-
-			_spiraReleaseBuilds.put(
-				_createSpiraReleaseBuildKey(
-					spiraProject.getID(), spiraRelease.getID(),
-					spiraReleaseBuild.getID()),
-				spiraReleaseBuild);
-
-			return spiraReleaseBuild;
+			return spiraRelease.getSpiraReleaseBuildByID(
+				responseJSONObject.getInt(ID_KEY));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -76,65 +67,11 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		SpiraProject spiraProject, SpiraRelease spiraRelease,
 		SearchResult.SearchParameter... searchParameters) {
 
-		List<SpiraReleaseBuild> spiraReleaseBuilds = new ArrayList<>();
-
-		for (SpiraReleaseBuild spiraReleaseBuild :
-				_spiraReleaseBuilds.values()) {
-
-			if (spiraReleaseBuild.matches(searchParameters)) {
-				spiraReleaseBuilds.add(spiraReleaseBuild);
-			}
-		}
-
-		if (!spiraReleaseBuilds.isEmpty()) {
-			return spiraReleaseBuilds;
-		}
-
-		Map<String, String> urlParameters = new HashMap<>();
-
-		urlParameters.put("number_of_rows", String.valueOf(15000));
-		urlParameters.put("sort_by", "BuildId DESC");
-		urlParameters.put("starting_row", String.valueOf(1));
-
-		Map<String, String> urlPathReplacements = new HashMap<>();
-
-		urlPathReplacements.put(
-			"project_id", String.valueOf(spiraProject.getID()));
-		urlPathReplacements.put(
-			"release_id", String.valueOf(spiraRelease.getID()));
-
-		JSONArray requestJSONArray = new JSONArray();
-
-		for (SearchResult.SearchParameter searchParameter : searchParameters) {
-			requestJSONArray.put(searchParameter.toFilterJSONObject());
-		}
-
-		try {
-			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-				"projects/{project_id}/releases/{release_id}/builds",
-				urlParameters, urlPathReplacements, HttpRequestMethod.POST,
-				requestJSONArray.toString());
-
-			for (int i = 0; i < responseJSONArray.length(); i++) {
-				SpiraReleaseBuild spiraReleaseBuild = new SpiraReleaseBuild(
-					responseJSONArray.getJSONObject(i));
-
-				_spiraReleaseBuilds.put(
-					_createSpiraReleaseBuildKey(
-						spiraProject.getID(), spiraRelease.getID(),
-						spiraReleaseBuild.getID()),
-					spiraReleaseBuild);
-
-				if (spiraReleaseBuild.matches(searchParameters)) {
-					spiraReleaseBuilds.add(spiraReleaseBuild);
-				}
-			}
-
-			return spiraReleaseBuilds;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return getSpiraArtifacts(
+			SpiraReleaseBuild.class,
+			() -> _requestSpiraReleaseBuilds(
+				spiraProject, spiraRelease, searchParameters),
+			T -> new SpiraReleaseBuild(T), searchParameters);
 	}
 
 	protected static final String ID_KEY = "BuildId";
@@ -146,12 +83,6 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 	protected static final int STATUS_SUCCEEDED = 2;
 
 	protected static final int STATUS_UNSTABLED = 3;
-
-	private static String _createSpiraReleaseBuildKey(
-		int projectID, int releaseID, int releaseBuildID) {
-
-		return projectID + "-" + releaseID + "-" + releaseBuildID;
-	}
 
 	private static List<JSONObject> _requestSpiraReleaseBuilds(
 		SpiraProject spiraProject, SpiraRelease spiraRelease,
@@ -198,8 +129,5 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 	private SpiraReleaseBuild(JSONObject jsonObject) {
 		super(jsonObject);
 	}
-
-	private static final Map<String, SpiraReleaseBuild> _spiraReleaseBuilds =
-		new HashMap<>();
 
 }

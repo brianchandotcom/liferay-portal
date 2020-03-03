@@ -135,8 +135,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 			throw new RuntimeException(ioException);
 		}
 
-		_spiraReleases.remove(
-			_createSpiraReleaseKey(spiraProject.getID(), releaseID));
+		removeCachedSpiraArtifacts(spiraReleases);
 	}
 
 	public static void deleteSpiraReleasesByPath(
@@ -193,63 +192,10 @@ public class SpiraRelease extends PathSpiraArtifact {
 		SpiraProject spiraProject,
 		SearchResult.SearchParameter... searchParameters) {
 
-		List<SpiraRelease> spiraReleases = new ArrayList<>();
-
-		if (isPreviousSearch(SpiraRelease.class, searchParameters)) {
-			for (SpiraRelease spiraRelease : _spiraReleases.values()) {
-				if (spiraRelease.matches(searchParameters)) {
-					spiraReleases.add(spiraRelease);
-				}
-			}
-
-			if (!spiraReleases.isEmpty()) {
-				return spiraReleases;
-			}
-		}
-
-		Map<String, String> urlParameters = new HashMap<>();
-
-		urlParameters.put("number_rows", String.valueOf(15000));
-		urlParameters.put("start_row", String.valueOf(1));
-
-		Map<String, String> urlPathReplacements = new HashMap<>();
-
-		urlPathReplacements.put(
-			"project_id", String.valueOf(spiraProject.getID()));
-
-		JSONArray requestJSONArray = new JSONArray();
-
-		for (SearchResult.SearchParameter searchParameter : searchParameters) {
-			requestJSONArray.put(searchParameter.toFilterJSONObject());
-		}
-
-		try {
-			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-				"projects/{project_id}/releases/search", urlParameters,
-				urlPathReplacements, HttpRequestMethod.POST,
-				requestJSONArray.toString());
-
-			for (int i = 0; i < responseJSONArray.length(); i++) {
-				SpiraRelease spiraRelease = new SpiraRelease(
-					responseJSONArray.getJSONObject(i));
-
-				_spiraReleases.put(
-					_createSpiraReleaseKey(
-						spiraProject.getID(), spiraRelease.getID()),
-					spiraRelease);
-
-				if (spiraRelease.matches(searchParameters)) {
-					spiraReleases.add(spiraRelease);
-				}
-			}
-
-			addPreviousSearchParameters(SpiraRelease.class, searchParameters);
-
-			return spiraReleases;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return getSpiraArtifacts(
+			SpiraRelease.class,
+			() -> _requestSpiraReleases(spiraProject.getID(), searchParameters),
+			T -> new SpiraRelease(T), searchParameters);
 	}
 
 	@Override
@@ -276,10 +222,6 @@ public class SpiraRelease extends PathSpiraArtifact {
 	protected static final int TYPE_PHASE = 4;
 
 	protected static final int TYPE_SPRINT = 3;
-
-	private static String _createSpiraReleaseKey(int projectID, int releaseID) {
-		return projectID + "-" + releaseID;
-	}
 
 	private static List<JSONObject> _requestSpiraReleases(
 		int spiraProjectID, SearchResult.SearchParameter... searchParameters) {
@@ -318,10 +260,6 @@ public class SpiraRelease extends PathSpiraArtifact {
 		}
 	}
 
-	private SpiraRelease(JSONObject jsonObject) {
-		super(jsonObject);
-	}
-
 	private SpiraRelease _getSpiraReleaseByIndentLevel(String indentLevel) {
 		List<SpiraRelease> spiraReleases = getSpiraReleases(
 			getSpiraProject(),
@@ -338,8 +276,9 @@ public class SpiraRelease extends PathSpiraArtifact {
 		return spiraReleases.get(0);
 	}
 
-	private static final Map<String, SpiraRelease> _spiraReleases =
-		new HashMap<>();
+	private SpiraRelease(JSONObject jsonObject) {
+		super(jsonObject);
+	}
 
 	private SpiraRelease _parentSpiraRelease;
 

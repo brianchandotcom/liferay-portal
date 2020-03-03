@@ -732,6 +732,18 @@ public class DataLayoutTaglibUtil {
 
 						for (Map<String, Object> field : fields) {
 							unsafeConsumer.accept(field);
+
+							List<Map<String, Object>> nestedFields =
+								(List<Map<String, Object>>)field.get(
+									"nestedFields");
+
+							if (nestedFields != null) {
+								for (Map<String, Object> nestedField :
+										nestedFields) {
+
+									unsafeConsumer.accept(nestedField);
+								}
+							}
 						}
 					}
 				}

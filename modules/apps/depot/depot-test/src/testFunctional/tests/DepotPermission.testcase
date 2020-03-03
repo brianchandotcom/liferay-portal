@@ -26,6 +26,168 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the user can perform operations to memberships with all permissions."
+	@priority = "5"
+	test AccessMembershipWithAllPermissions {
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		for (var i : list "1,2") {
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDepotPortlet(
+				category = "People",
+				depotName = "Test Depot Name",
+				portlet = "Memberships");
+
+			Site.assignUserAsMemberCP(
+				userFirstName = "userfn${i}",
+				userLastName = "userln${i}",
+				userScreenName = "usersn${i}");
+		}
+
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Depot Regrole Name",
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test",
+			userScreenName = "usersn1");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Depot Regrole Name");
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,DELETE,PERMISSIONS,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		for (var i : list "1,2") {
+			Site.viewMemberCP(
+				userFirstName = "userfn${i}",
+				userLastName = "userln${i}",
+				userScreenName = "usersn${i}");
+		}
+
+		Click.waitForMenuToggleJSClick(
+			key_card = "usersn1",
+			locator1 = "LexiconCard#CARD_ELLIPSIS");
+
+		for (var item : list "Remove Membership,Assign Roles") {
+			AssertVisible(
+				key_menuItem = "${item}",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+	}
+
+	@description = "This ensures that the user can only view memberships with view permissions."
+	@priority = "5"
+	test AccessMembershipWithViewOnlyPermissions {
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Depot Regrole Name",
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test",
+			userScreenName = "usersn1");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Depot Regrole Name");
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Depot Regrole Name");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Site.viewMemberCP(
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		Click.waitForMenuToggleJSClick(
+			key_card = "usersn1",
+			locator1 = "LexiconCard#CARD_ELLIPSIS");
+
+		for (var item : list "Remove Membership,Assign Roles") {
+			AssertElementNotPresent(
+				key_menuItem = "${item}",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+	}
+
 	@description = "This ensures that the user can only add web content to the depot that has permissions set."
 	@priority = "5"
 	test AddWebContentPermissionWithinDepot {

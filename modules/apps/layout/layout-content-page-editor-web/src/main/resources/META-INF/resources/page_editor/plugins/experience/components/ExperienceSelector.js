@@ -321,7 +321,7 @@ const ExperienceSelector = ({
 				<span className="text-truncate">{selectedExperience.name}</span>
 
 				{selectedExperience.hasLockedSegmentsExperiment && (
-					<ClayIcon symbol="lock" />
+					<ClayIcon className="mr-3" symbol="lock" />
 				)}
 			</ClayButton>
 

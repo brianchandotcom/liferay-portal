@@ -112,25 +112,20 @@ definition {
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		if (isSet(siteName)) {
-			AssertClick(
-				key_breadcrumbName = "sites",
+		AssertClick(
+				key_breadcrumbName = "Sites and Libraries",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "sites");
+				value1 = "Sites and Libraries");
 
+		if (isSet(siteName)) {
 			LexiconCard.clickCard(card = "${siteName}");
 		}
 
 		if (isSet(depotName)) {
 			AssertClick(
-				key_breadcrumbName = "sites",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "sites");
-
-			AssertClick(
-				key_groupTab = "Repository",
+				key_groupTab = "Asset Library",
 				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-				value1 = "Repository");
+				value1 = "Asset Library");
 
 			LexiconCard.clickCard(card = "${depotName}");
 		}

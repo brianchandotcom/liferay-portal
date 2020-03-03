@@ -1337,7 +1337,7 @@ definition {
 	macro selectRepositoryWC {
 		var key_contentName = "${contentName}";
 
-		ItemSelector.changeWorkspaces(workspacesType = "Repository");
+		ItemSelector.changeWorkspaces(workspacesType = "Asset Library");
 
 		LexiconCard.clickCard(card = "${depotName}");
 

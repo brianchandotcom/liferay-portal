@@ -62,9 +62,9 @@ definition {
 		}
 
 		AssertClick(
-			key_breadcrumbName = "sites",
+			key_breadcrumbName = "Sites and Libraries",
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-			value1 = "sites");
+			value1 = "Sites and Libraries");
 
 		AssertClick(
 			key_groupTab = "${workspacesType}",
@@ -226,7 +226,7 @@ definition {
 
 		ItemSelector.changeWorkspaces(
 			navTab = "${navTab}",
-			workspacesType = "Repository");
+			workspacesType = "Asset Library");
 
 		LexiconCard.clickCard(card = "${depotName}");
 

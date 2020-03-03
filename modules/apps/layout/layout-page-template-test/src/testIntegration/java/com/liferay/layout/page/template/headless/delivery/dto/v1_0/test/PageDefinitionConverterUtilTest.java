@@ -539,6 +539,25 @@ public class PageDefinitionConverterUtilTest {
 			"http://miejemplo.es/miejemplo.png", urlI18nMap.get("es_ES"));
 	}
 
+	private void _validateFragmentImageWithTitle(
+		FragmentImage fragmentImage, String title) {
+
+		InlineValue titleInlineValue = (InlineValue)fragmentImage.getTitle();
+
+		Assert.assertEquals(title, titleInlineValue.getValue());
+
+		InlineValue urlInlineValue = (InlineValue)fragmentImage.getUrl();
+
+		Assert.assertNull(urlInlineValue.getValue());
+
+		Map<String, String> urlI18nMap = urlInlineValue.getValue_i18n();
+
+		Assert.assertEquals(
+			"http://myexample.com/myexample.png", urlI18nMap.get("en_US"));
+		Assert.assertEquals(
+			"http://miejemplo.es/miejemplo.png", urlI18nMap.get("es_ES"));
+	}
+
 	private FragmentCollection _fragmentCollection;
 
 	@Inject

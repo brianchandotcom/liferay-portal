@@ -1,73 +1,93 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`KeyValue has a helptext 1`] = `
-<div class="form-group" data-field-name="keyValue">
-  <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" class="ddm-field-text form-control" name="keyValueLabelkeyValue" type="text" value=""></div>
-  <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text"></div><span class="form-text">Type something</span>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="keyValue">
+    <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" type="text" class="form-control ddm-field-text" value=""></div>
+    <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div><span class="form-text">Type something</span>
+  </div>
 </div>
 `;
 
 exports[`KeyValue has a label 1`] = `
-<div class="form-group" data-field-name="keyValue">
-  <p class="ddm-label">label </p>
-  <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" class="ddm-field-text form-control" name="keyValueLabelkeyValue" type="text" value=""></div>
-  <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text"></div>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="keyValue">
+    <p class="ddm-label">label </p>
+    <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" type="text" class="form-control ddm-field-text" value=""></div>
+    <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
+  </div>
 </div>
 `;
 
 exports[`KeyValue has a predefined Value 1`] = `
-<div class="form-group" data-field-name="keyValue">
-  <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" class="ddm-field-text form-control" name="keyValueLabelkeyValue" type="text" placeholder="Option 1" value=""></div>
-  <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text"></div>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="keyValue">
+    <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" placeholder="Option 1" type="text" class="form-control ddm-field-text" value=""></div>
+    <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
+  </div>
 </div>
 `;
 
 exports[`KeyValue has a spritemap 1`] = `
-<div class="form-group" data-field-name="keyValue">
-  <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" class="ddm-field-text form-control" name="keyValueLabelkeyValue" type="text" value=""></div>
-  <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text"></div>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="keyValue">
+    <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" type="text" class="form-control ddm-field-text" value=""></div>
+    <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
+  </div>
 </div>
 `;
 
 exports[`KeyValue has a value 1`] = `
-<div class="form-group" data-field-name="keyValue">
-  <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" class="ddm-field-text form-control" name="keyValueLabelkeyValue" type="text" value="value"></div>
-  <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text"></div>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="keyValue">
+    <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" type="text" class="form-control ddm-field-text" value="value"></div>
+    <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
+  </div>
 </div>
 `;
 
 exports[`KeyValue has an id 1`] = `
-<div class="form-group" data-field-name="keyValue">
-  <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" class="ddm-field-text form-control" name="keyValueLabelkeyValue" type="text" value=""></div>
-  <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text"></div>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="keyValue">
+    <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" type="text" class="form-control ddm-field-text" value=""></div>
+    <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
+  </div>
 </div>
 `;
 
 exports[`KeyValue is not edidable 1`] = `
-<div class="form-group" data-field-name="keyValue">
-  <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" class="ddm-field-text form-control" name="keyValueLabelkeyValue" type="text" value=""></div>
-  <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text"></div>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="keyValue">
+    <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" type="text" class="form-control ddm-field-text" value=""></div>
+    <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
+  </div>
 </div>
 `;
 
 exports[`KeyValue is not required 1`] = `
-<div class="form-group" data-field-name="keyValue">
-  <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" class="ddm-field-text form-control" name="keyValueLabelkeyValue" type="text" value=""></div>
-  <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text"></div>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="keyValue">
+    <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" type="text" class="form-control ddm-field-text" value=""></div>
+    <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
+  </div>
 </div>
 `;
 
 exports[`KeyValue renders Label if showLabel is true 1`] = `
-<div class="form-group" data-field-name="keyValue">
-  <p class="ddm-label">text </p>
-  <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" class="ddm-field-text form-control" name="keyValueLabelkeyValue" type="text" value=""></div>
-  <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text"></div>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="keyValue">
+    <p class="ddm-label">text </p>
+    <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" type="text" class="form-control ddm-field-text" value=""></div>
+    <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value=""></div>
+  </div>
 </div>
 `;
 
 exports[`KeyValue renders component with a key 1`] = `
-<div class="form-group" data-field-name="keyValue">
-  <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" class="ddm-field-text form-control" name="keyValueLabelkeyValue" type="text" value=""></div>
-  <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value="key"></div>
+<div class="react-component-adapter">
+  <div class="form-group" data-field-name="keyValue">
+    <div class="form-group" data-field-name="keyValueLabelkeyValue"><input aria-label="text" name="keyValueLabelkeyValue" type="text" class="form-control ddm-field-text" value=""></div>
+    <div class="active form-text key-value-editor"><label class="control-label key-value-label">field-name:</label><input class="key-value-input" type="text" value="key"></div>
+  </div>
 </div>
 `;

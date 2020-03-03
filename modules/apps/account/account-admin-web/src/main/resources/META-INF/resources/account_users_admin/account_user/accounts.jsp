@@ -23,7 +23,7 @@ SearchContainer accountEntryDisplaySearchContainer = AccountEntryDisplaySearchCo
 
 accountEntryDisplaySearchContainer.setRowChecker(null);
 
-renderResponse.setTitle((selUser == null) ? LanguageUtil.get(request, "add-user") : LanguageUtil.format(request, "edit-user-x", HtmlUtil.escape(selUser.getFullName()), false));
+renderResponse.setTitle(LanguageUtil.format(request, "edit-user-x", HtmlUtil.escape(selUser.getFullName()), false));
 
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
@@ -194,7 +194,7 @@ portletDisplay.setURLBack(backURL);
 					title:
 						'<liferay-ui:message arguments="account" key="select-x" />',
 					uri:
-						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" /><portlet:param name="userId" value='<%= (selUser == null) ? "0" : String.valueOf(userId) %>' /></portlet:renderURL>',
+						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" /><portlet:param name="userId" value="<%= String.valueOf(selUser.getUserId()) %>" /></portlet:renderURL>',
 				},
 				function(event) {
 					var entityId = event.entityid;

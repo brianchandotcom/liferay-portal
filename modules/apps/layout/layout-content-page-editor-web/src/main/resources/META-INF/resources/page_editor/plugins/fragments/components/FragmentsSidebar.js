@@ -75,6 +75,7 @@ export default function FragmentsSidebar() {
 											}
 											key={fragmentEntry.fragmentEntryKey}
 											name={fragmentEntry.name}
+											type={fragmentEntry.type}
 										/>
 									)
 								)}

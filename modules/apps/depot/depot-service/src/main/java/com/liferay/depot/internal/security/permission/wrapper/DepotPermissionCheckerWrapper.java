@@ -37,6 +37,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * @author Cristina González
@@ -61,32 +62,18 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		Group group, String name, long primKey, String actionId) {
 
-		return hasPermission(group.getGroupId(), name, primKey, actionId);
+		return _hasPermission(
+			name, primKey, actionId,
+			() -> super.hasPermission(group, name, primKey, actionId));
 	}
 
 	@Override
 	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
-		Group depotGroup = _getDepotGroup(name, primKey);
-
-		if ((depotGroup != null) && _supportedActionIds.contains(actionId)) {
-			try {
-				if (_isGroupAdmin(depotGroup)) {
-					return true;
-				}
-
-				return _depotEntryModelResourcePermission.contains(
-					this, depotGroup.getClassPK(), actionId);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
-
-				return false;
-			}
-		}
-
-		return super.hasPermission(groupId, name, primKey, actionId);
+		return _hasPermission(
+			name, primKey, actionId,
+			() -> super.hasPermission(groupId, name, primKey, actionId));
 	}
 
 	@Override
@@ -207,6 +194,31 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 
 		return value;
+	}
+
+	private boolean _hasPermission(
+		String name, long primKey, String actionId,
+		Supplier<Boolean> hasPermissionSupplier) {
+
+		Group depotGroup = _getDepotGroup(name, primKey);
+
+		if ((depotGroup != null) && _supportedActionIds.contains(actionId)) {
+			try {
+				if (_isGroupAdmin(depotGroup)) {
+					return true;
+				}
+
+				return _depotEntryModelResourcePermission.contains(
+					this, depotGroup.getClassPK(), actionId);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
+
+				return false;
+			}
+		}
+
+		return hasPermissionSupplier.get();
 	}
 
 	private boolean _isGroupAdmin(Group group) throws PortalException {

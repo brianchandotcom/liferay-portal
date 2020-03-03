@@ -155,16 +155,14 @@ public class RatingsTag extends IncludeTag {
 	}
 
 	private double _getTotalScore() {
-		double totalScore = 0.0;
-
 		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(
 			_className, _classPK);
 
 		if (ratingsStats != null) {
-			totalScore = ratingsStats.getTotalScore();
+			return ratingsStats.getTotalScore();
 		}
 
-		return totalScore;
+		return 0.0;
 	}
 
 	private String _getURL(ThemeDisplay themeDisplay) {

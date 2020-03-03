@@ -14,9 +14,13 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cluster.ClusterEvent;
+import com.liferay.portal.kernel.cluster.ClusterEventListener;
+import com.liferay.portal.kernel.cluster.ClusterEventType;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterNode;
@@ -48,6 +52,7 @@ import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
 
 import org.apache.http.HttpHost;
 import org.apache.http.util.EntityUtils;
@@ -63,6 +68,10 @@ import org.elasticsearch.cluster.metadata.MetaData;
 import org.elasticsearch.common.xcontent.NamedXContentRegistry;
 import org.elasticsearch.env.NodeEnvironment;
 import org.elasticsearch.gateway.MetaDataStateFormat;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Tina Tian
@@ -116,6 +125,12 @@ public class ClusterableSidecar
 			HttpHost.create(getNetworkHostAddress()));
 
 		_restClient = restClientBuilder.build();
+
+		_clusterEventListener = new SidecarClusterEventListener();
+
+		_clusterExecutor.addClusterEventListener(_clusterEventListener);
+
+		_startCountDownLatch.countDown();
 	}
 
 	@Override
@@ -123,14 +138,7 @@ public class ClusterableSidecar
 		if (_restClient != null) {
 			try {
 				while (!_isOneNodeCluster()) {
-					Response response = _restClient.performRequest(
-						new Request("GET", "_cat/master?h=node"));
-
-					if (!_nodeName.equals(
-							StringUtil.removeSubstring(
-								EntityUtils.toString(response.getEntity()),
-								"\n"))) {
-
+					if (!_nodeName.equals(_getMasterNodeId())) {
 						break;
 					}
 
@@ -140,11 +148,11 @@ public class ClusterableSidecar
 							"_cluster/voting_config_exclusions/" + _nodeName));
 				}
 			}
-			catch (Exception exception) {
+			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to add master node to voting exclusions",
-						exception);
+						ioException);
 				}
 			}
 
@@ -160,7 +168,11 @@ public class ClusterableSidecar
 			_restClient = null;
 		}
 
+		_clusterExecutor.removeClusterEventListener(_clusterEventListener);
+
 		super.stop();
+
+		_stopCountDownLatch.countDown();
 	}
 
 	protected String getLogProperties() {
@@ -223,6 +235,44 @@ public class ClusterableSidecar
 		JSONObject jsonObject = nodesJSONObject.getJSONObject(iterator.next());
 
 		return GetterUtil.getString(jsonObject.get("transport_address"));
+	}
+
+	private static void _syncStart() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(ClusterableSidecar.class);
+
+		ServiceTracker<ClusterableSidecar, ClusterableSidecar> serviceTracker =
+			ServiceTrackerFactory.open(
+				bundle.getBundleContext(), ClusterableSidecar.class, null);
+
+		try {
+			SidecarComponentUtil.enableSidecarElasticsearchConnectionManager();
+
+			ClusterableSidecar clusterableSidecar =
+				serviceTracker.waitForService(0);
+
+			CountDownLatch countDownLatch =
+				clusterableSidecar._startCountDownLatch;
+
+			countDownLatch.await();
+		}
+		finally {
+			serviceTracker.close();
+		}
+	}
+
+	private static void _syncStop(String osgiServiceIdentifier)
+		throws Exception {
+
+		SidecarComponentUtil.disableSidecarElasticsearchConnectionManager();
+
+		ClusterableSidecar clusterableSidecar =
+			(ClusterableSidecar)
+				IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
+					osgiServiceIdentifier);
+
+		CountDownLatch countDownLatch = clusterableSidecar._stopCountDownLatch;
+
+		countDownLatch.await();
 	}
 
 	private void _cleanUpClusterMetaData() throws Exception {
@@ -300,6 +350,25 @@ public class ClusterableSidecar
 			nodePath);
 	}
 
+	private String _getMasterNodeId() {
+		try {
+			Response response = _restClient.performRequest(
+				new Request("GET", "_cat/master?h=node"));
+
+			return StringUtil.removeSubstring(
+				EntityUtils.toString(response.getEntity()),
+				StringPool.NEW_LINE);
+		}
+		catch (IOException ioException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find master node in elasticsearch cluster");
+			}
+
+			return null;
+		}
+	}
+
 	private String _getMasterNodeTransportAddress() {
 		if (_isOneNodeCluster()) {
 			return null;
@@ -350,12 +419,90 @@ public class ClusterableSidecar
 		new MethodKey(
 			ClusterableSidecar.class, "_getMasterNodeTransportAddress",
 			String.class);
+	private static final MethodKey _syncStartMethodKey = new MethodKey(
+		ClusterableSidecar.class, "_syncStart");
+	private static final MethodKey _syncStopMethodKey = new MethodKey(
+		ClusterableSidecar.class, "_syncStop", String.class);
 
+	private ClusterEventListener _clusterEventListener;
 	private final ClusterExecutor _clusterExecutor;
 	private final ClusterMasterExecutor _clusterMasterExecutor;
 	private String _initialMasterNodeTransportAddress;
 	private final JSONFactory _jsonFactory;
 	private final String _nodeName;
 	private RestClient _restClient;
+	private final CountDownLatch _startCountDownLatch = new CountDownLatch(1);
+	private final CountDownLatch _stopCountDownLatch = new CountDownLatch(1);
+
+	private class SidecarClusterEventListener implements ClusterEventListener {
+
+		@Override
+		public void processClusterEvent(ClusterEvent clusterEvent) {
+			if (!_clusterMasterExecutor.isMaster() ||
+				(clusterEvent.getClusterEventType() !=
+					ClusterEventType.DEPART)) {
+
+				return;
+			}
+
+			String masterNodeId = _getMasterNodeId();
+
+			if (masterNodeId != null) {
+				for (ClusterNode clusterNode : clusterEvent.getClusterNodes()) {
+					if (masterNodeId.endsWith(clusterNode.getClusterNodeId())) {
+						masterNodeId = null;
+
+						break;
+					}
+				}
+
+				if (masterNodeId != null) {
+					return;
+				}
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to elect new master node in elasticsearch " +
+						"cluster when node leaving, indexes may be broken, " +
+							"will remove all data and restart");
+			}
+
+			try {
+				_syncStop(getOSGiServiceIdentifier());
+
+				if (!_isOneNodeCluster()) {
+					FutureClusterResponses futureClusterResponses =
+						_clusterExecutor.execute(
+							ClusterRequest.createMulticastRequest(
+								new MethodHandler(
+									_syncStopMethodKey,
+									getOSGiServiceIdentifier()),
+								true));
+
+					futureClusterResponses.get();
+				}
+
+				deleteDir(getDataHome());
+
+				_syncStart();
+
+				if (!_isOneNodeCluster()) {
+					FutureClusterResponses futureClusterResponses =
+						_clusterExecutor.execute(
+							ClusterRequest.createMulticastRequest(
+								new MethodHandler(_syncStartMethodKey), true));
+
+					futureClusterResponses.get();
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to restart sidecar", exception);
+				}
+			}
+		}
+
+	}
 
 }

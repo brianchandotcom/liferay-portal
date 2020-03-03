@@ -191,6 +191,20 @@ public class PageDefinitionConverterUtilTest {
 	}
 
 	@Test
+	public void testToPageDefinitionFragmentFieldImageTitle() throws Exception {
+		FragmentField fragmentField = _getFragmentField(
+			"editable_values_fragment_field_image_title.json", "my-image",
+			"<lfr-editable id=\"my-image\" type=\"image\"><img/>" +
+				"</lfr-editable>");
+
+		FragmentFieldImage fragmentFieldImage =
+			(FragmentFieldImage)fragmentField.getValue();
+
+		_validateFragmentImageWithTitle(
+			fragmentFieldImage.getFragmentImage(), "My image title");
+	}
+
+	@Test
 	public void testToPageDefinitionFragmentFieldLink() throws Exception {
 		FragmentField fragmentField = _getFragmentField(
 			"editable_values_fragment_field_link.json", "my-link",

@@ -35,7 +35,7 @@ if (Validator.isNull(id)) {
 }
 
 if (!ignoreRequestValue && Validator.isNotNull(ParamUtil.getString(request, "checkboxNames"))) {
-	checked = ParamUtil.getBoolean(request, name, false);
+	checked = ParamUtil.getBoolean(request, name);
 }
 
 String checkedString = checked ? "checked" : "";

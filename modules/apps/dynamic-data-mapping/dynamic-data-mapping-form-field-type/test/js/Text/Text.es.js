@@ -12,6 +12,8 @@
  * details.
  */
 
+import {fireEvent} from '@testing-library/react';
+
 import Text from '../../../src/main/resources/META-INF/resources/Text/Text.es';
 import withContextMock from '../__mocks__/withContextMock.es';
 
@@ -115,7 +117,7 @@ describe('Field Text', () => {
 		const handleFieldEdited = data => {
 			expect(data).toEqual(
 				expect.objectContaining({
-					fieldInstance: component,
+					fieldInstance: expect.any(Object),
 					originalEvent: expect.any(Object),
 					value: expect.any(String),
 				})
@@ -131,7 +133,9 @@ describe('Field Text', () => {
 			key: 'input',
 		});
 
-		component._handleFieldChanged({
+		const input = component.element.querySelector('input');
+
+		fireEvent.change(input, {
 			target: {
 				value: 'test',
 			},

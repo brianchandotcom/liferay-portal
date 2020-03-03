@@ -49,8 +49,8 @@ const Text = ({
 	id,
 	name,
 	onBlur,
+	onChange,
 	onFocus,
-	onInput,
 	placeholder,
 	value: initialValue,
 }) => {
@@ -64,15 +64,15 @@ const Text = ({
 			id={id}
 			name={name}
 			onBlur={onBlur}
-			onFocus={onFocus}
-			onInput={event => {
+			onChange={event => {
 				if (fieldName === 'name') {
 					event.target.value = normalizeFieldName(event.target.value);
 				}
 
 				setValue(event.target.value);
-				onInput(event);
+				onChange(event);
 			}}
+			onFocus={onFocus}
 			placeholder={placeholder}
 			type="text"
 			value={value}
@@ -85,8 +85,8 @@ const Textarea = ({
 	id,
 	name,
 	onBlur,
+	onChange,
 	onFocus,
-	onInput,
 	placeholder,
 	value: initialValue,
 }) => {
@@ -99,11 +99,11 @@ const Textarea = ({
 			id={id}
 			name={name}
 			onBlur={onBlur}
-			onFocus={onFocus}
-			onInput={event => {
+			onChange={event => {
 				setValue(event.target.value);
-				onInput(event);
+				onChange(event);
 			}}
+			onFocus={onFocus}
 			placeholder={placeholder}
 			type="text"
 			value={value}
@@ -116,8 +116,8 @@ const Autocomplete = ({
 	id,
 	name,
 	onBlur,
+	onChange,
 	onFocus,
-	onInput,
 	options,
 	placeholder,
 	value: initialValue,
@@ -177,7 +177,7 @@ const Autocomplete = ({
 				onBlur={onBlur}
 				onChange={event => {
 					setValue(event.target.value);
-					onInput(event);
+					onChange(event);
 				}}
 				onFocus={onFocus}
 				onKeyDown={event => {
@@ -235,7 +235,7 @@ const Autocomplete = ({
 							match={value}
 							onClick={() => {
 								setValue(label);
-								onInput({target: {value: label}});
+								onChange({target: {value: label}});
 							}}
 							value={label}
 						/>
@@ -260,8 +260,8 @@ const TextWithFieldBase = ({
 	id,
 	name,
 	onBlur,
+	onChange,
 	onFocus,
-	onInput,
 	options = [],
 	placeholder,
 	predefinedValue = '',
@@ -285,8 +285,8 @@ const TextWithFieldBase = ({
 				id={id}
 				name={name}
 				onBlur={onBlur}
+				onChange={onChange}
 				onFocus={onFocus}
-				onInput={onInput}
 				options={optionsMemo}
 				placeholder={placeholder}
 				value={value ? value : predefinedValue}
@@ -299,8 +299,8 @@ const TextProxy = connectStore(({emit, ...otherProps}) => (
 	<TextWithFieldBase
 		{...otherProps}
 		onBlur={event => emit('fieldBlurred', event, event.target.value)}
+		onChange={event => emit('fieldEdited', event, event.target.value)}
 		onFocus={event => emit('fieldFocused', event, event.target.value)}
-		onInput={event => emit('fieldEdited', event, event.target.value)}
 	/>
 ));
 

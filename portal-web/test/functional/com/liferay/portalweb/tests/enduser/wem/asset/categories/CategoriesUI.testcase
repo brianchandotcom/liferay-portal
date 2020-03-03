@@ -50,6 +50,73 @@ definition {
 			vocabularyName = "Vocabulary Name");
 	}
 
+	@description = "This is a use case for LPS-107730. Can not store 256 character in name field, key field and value field of category."
+	@priority = "4"
+	test CannotStore256CharactersInNameFieldKeyFieldAndValueField {
+		var actualText = "The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256";
+		var inputText = "The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.";
+		var modifiedText = "The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255";
+
+		task ("Can not store 256 characters in name field of category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Add Category",
+				rowEntry = "Vocabulary Name");
+
+			PortletEntry.inputTitle(title = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "TextInput#TITLE",
+				value1 = "${inputText}");
+
+			Button.clickSave();
+
+			AssertTextEquals(
+				key_alertMessage = "Please enter no more than 255 characters.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "Please enter no more than 255 characters.");
+
+			PortletEntry.inputTitle(title = "${modifiedText}");
+
+			PortletEntry.save();
+		}
+
+		task ("Can not store 256 characters in key field and value field of category") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${modifiedText}");
+
+			Navigator.gotoNavUnderline(navUnderline = "Properties");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextNotEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${actualText}");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextNotEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${actualText}");
+		}
+	}
+
 	@priority = "4"
 	test EditCategory {
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -72,6 +139,142 @@ definition {
 		Category.viewCP(
 			categoryName = "Category Name Edit",
 			vocabularyName = "Vocabulary Name");
+	}
+
+	@description = "This is a use case for LPS-107730. Can input 254 characters to name field, key field and value field of category."
+	@priority = "4"
+	test Input254CharactersIntoNameFieldKeyFieldAndValueField {
+		var inputText = "The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 25";
+
+		task ("Assert input 254 characters to name field of category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Add Category",
+				rowEntry = "Vocabulary Name");
+
+			PortletEntry.inputTitle(title = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "TextInput#TITLE",
+				value1 = "${inputText}");
+
+			PortletEntry.save();
+
+			AssertVisible(
+				key_tableEntry = "${inputText}",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+		}
+
+		task ("Assert input 254 characters to key field and value field of category") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${inputText}");
+
+			Navigator.gotoNavUnderline(navUnderline = "Properties");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			PortletEntry.save();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${inputText}");
+
+			Navigator.gotoNavUnderline(navUnderline = "Properties");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+		}
+	}
+
+	@description = "This is a use case for LPS-107730. Can input 255 characters to name field, key field and value field of category."
+	@priority = "5"
+	test Input255CharactersIntoNameFieldKeyFieldAndValueField {
+		var inputText = "The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255.The number of characters is 255";
+
+		task ("Assert input 255 characters to name field of category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Add Category",
+				rowEntry = "Vocabulary Name");
+
+			PortletEntry.inputTitle(title = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "TextInput#TITLE",
+				value1 = "${inputText}");
+
+			PortletEntry.save();
+
+			AssertVisible(
+				key_tableEntry = "${inputText}",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+		}
+
+		task ("Assert input 255 characters to key field and value field of category") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${inputText}");
+
+			Navigator.gotoNavUnderline(navUnderline = "Properties");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			Type(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+
+			PortletEntry.save();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${inputText}");
+
+			Navigator.gotoNavUnderline(navUnderline = "Properties");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
+				value1 = "${inputText}");
+
+			AssertTextEquals(
+				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
+				value1 = "${inputText}");
+		}
 	}
 
 }

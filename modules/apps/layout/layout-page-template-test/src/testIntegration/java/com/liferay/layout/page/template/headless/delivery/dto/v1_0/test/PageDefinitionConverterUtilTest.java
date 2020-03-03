@@ -165,6 +165,23 @@ public class PageDefinitionConverterUtilTest {
 	}
 
 	@Test
+	public void testToPageDefinitionFragmentFieldBackgroundImageTitle()
+		throws Exception {
+
+		FragmentField fragmentField = _getFragmentField(
+			"editable_values_fragment_field_background_image_title.json",
+			"my-background-image",
+			"<div data-lfr-background-image-id=\"my-background-image\"></div>");
+
+		FragmentFieldBackgroundImage fragmentFieldBackgroundImage =
+			(FragmentFieldBackgroundImage)fragmentField.getValue();
+
+		_validateFragmentImageWithTitle(
+			fragmentFieldBackgroundImage.getBackgroundImage(),
+			"My background image title");
+	}
+
+	@Test
 	public void testToPageDefinitionFragmentFieldHTML() throws Exception {
 		FragmentField fragmentField = _getFragmentField(
 			"editable_values_fragment_field_html.json", "my-html",

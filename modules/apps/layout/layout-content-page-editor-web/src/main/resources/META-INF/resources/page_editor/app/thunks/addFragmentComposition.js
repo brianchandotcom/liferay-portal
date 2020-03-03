@@ -38,11 +38,11 @@ export default function addFragment({
 			saveInlineContent,
 			saveMappingConfiguration,
 			segmentsExperienceId,
-		}).then(({fragmentComposition, layoutData}) => {
+		}).then(fragmentComposition => {
 			dispatch(
 				addFragmentComposition({
+					fragmentCollectionId,
 					fragmentComposition,
-					layoutData,
 				})
 			);
 		});

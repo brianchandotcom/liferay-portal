@@ -14,6 +14,7 @@
 
 import baseReducer from './baseReducer';
 import fragmentEntryLinksReducer from './fragmentEntryLinksReducer';
+import fragmentsReducer from './fragmentsReducer';
 import languageReducer from './languageReducer';
 import layoutDataReducer from './layoutDataReducer';
 import mappingReducer from './mappingReducer';
@@ -40,6 +41,7 @@ export function reducer(state, action) {
 const combinedReducer = (state, action) =>
 	Object.entries({
 		fragmentEntryLinks: fragmentEntryLinksReducer,
+		fragments: fragmentsReducer,
 		languageId: languageReducer,
 		layoutData: layoutDataReducer,
 		mappedInfoItems: mappingReducer,

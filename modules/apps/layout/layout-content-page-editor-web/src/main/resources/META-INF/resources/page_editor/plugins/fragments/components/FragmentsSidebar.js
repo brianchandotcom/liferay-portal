@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 
 import {config} from '../../../app/config/index';
 import Collapse from '../../../common/components/Collapse';
@@ -23,27 +23,28 @@ import FragmentCard from './FragmentCard';
 import LayoutElements from './LayoutElements';
 
 export default function FragmentsSidebar() {
+	const [fragments] = useState(config.fragments);
+
 	const [searchValue, setSearchValue] = useState('');
+	const searchValueLowerCase = searchValue.toLowerCase();
 
-	const filtererdFragments = useMemo(() => {
-		const searchValueLowerCase = searchValue.toLowerCase();
-
-		return config.fragments
-			.map(fragmentCollection => {
-				return {
-					...fragmentCollection,
-					fragmentEntries: fragmentCollection.fragmentEntries.filter(
-						fragmentEntry =>
-							fragmentEntry.name
-								.toLowerCase()
-								.indexOf(searchValueLowerCase) !== -1
-					),
-				};
-			})
-			.filter(fragmentCollection => {
-				return fragmentCollection.fragmentEntries.length > 0;
-			});
-	}, [searchValue]);
+	const filteredFragments = searchValue
+		? fragments
+				.map(fragmentCollection => {
+					return {
+						...fragmentCollection,
+						fragmentEntries: fragmentCollection.fragmentEntries.filter(
+							fragmentEntry =>
+								fragmentEntry.name
+									.toLowerCase()
+									.indexOf(searchValueLowerCase) !== -1
+						),
+					};
+				})
+				.filter(fragmentCollection => {
+					return fragmentCollection.fragmentEntries.length > 0;
+				})
+		: fragments;
 
 	return (
 		<>
@@ -56,7 +57,7 @@ export default function FragmentsSidebar() {
 
 				{!searchValue.length && <LayoutElements />}
 
-				{filtererdFragments.map(fragmentCollection => (
+				{filteredFragments.map(fragmentCollection => (
 					<div key={fragmentCollection.fragmentCollectionId}>
 						<Collapse
 							label={fragmentCollection.name}

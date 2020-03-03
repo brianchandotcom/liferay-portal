@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.util.AssetRendererFactoryWrapper;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +42,7 @@ import javax.portlet.WindowState;
  * @author Adolfo Pérez
  */
 public class DepotAssetRendererFactoryWrapper<T>
-	implements AssetRendererFactory<T> {
+	implements AssetRendererFactoryWrapper<T> {
 
 	public DepotAssetRendererFactoryWrapper(
 		AssetRendererFactory assetRendererFactory,
@@ -169,6 +170,11 @@ public class DepotAssetRendererFactoryWrapper<T>
 
 		return getAssetRendererFactory().getURLView(
 			liferayPortletResponse, windowState);
+	}
+
+	@Override
+	public Class<? extends AssetRendererFactory> getWrappedClass() {
+		return getAssetRendererFactory().getClass();
 	}
 
 	@Override

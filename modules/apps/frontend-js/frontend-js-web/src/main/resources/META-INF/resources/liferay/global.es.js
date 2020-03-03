@@ -36,7 +36,7 @@ import {
 } from './layout_exporter.es';
 import {showTab} from './portal/tabs.es';
 import {showTooltip} from './portal/tooltip.es';
-import portlet from './portlet/portlet.es';
+import portlet, {minimizePortlet} from './portlet/portlet.es';
 import SideNavigation from './side_navigation.es';
 import getCountries from './util/address/get_countries.es';
 import getRegions from './util/address/get_regions.es';
@@ -90,6 +90,11 @@ Liferay.Portal = {
 	ToolTip: {
 		show: showTooltip,
 	},
+};
+
+Liferay.Portlet = {
+	...Liferay.Portlet,
+	minimize: minimizePortlet,
 };
 
 Liferay.SideNavigation = SideNavigation;

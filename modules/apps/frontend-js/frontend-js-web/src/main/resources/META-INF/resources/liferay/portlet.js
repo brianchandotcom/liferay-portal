@@ -481,98 +481,6 @@
 
 	Liferay.provide(
 		Portlet,
-		'minimize',
-		(portlet, el, options) => {
-			options = options || {};
-
-			var doAsUserId =
-				options.doAsUserId || themeDisplay.getDoAsUserIdEncoded();
-			var plid = options.plid || themeDisplay.getPlid();
-
-			portlet = A.one(portlet);
-
-			if (portlet) {
-				var content = portlet.one('.portlet-content-container');
-
-				if (content) {
-					var restore = content.hasClass('hide');
-
-					content.toggle();
-					portlet.toggleClass('portlet-minimized');
-
-					var link = A.one(el);
-
-					if (link) {
-						var title = restore
-							? Liferay.Language.get('minimize')
-							: Liferay.Language.get('restore');
-
-						link.attr('alt', title);
-						link.attr('title', title);
-
-						var linkText = link.one('.taglib-text-icon');
-
-						if (linkText) {
-							linkText.html(title);
-						}
-
-						var icon = link.one('i');
-
-						if (icon) {
-							icon.removeClass('icon-minus icon-resize-vertical');
-
-							if (restore) {
-								icon.addClass('icon-minus');
-							}
-							else {
-								icon.addClass('icon-resize-vertical');
-							}
-						}
-					}
-
-					var formData = Liferay.Util.objectToFormData({
-						cmd: 'minimize',
-						doAsUserId,
-						p_auth: Liferay.authToken,
-						p_l_id: plid,
-						p_p_id: portlet.portletId,
-						p_p_restore: restore,
-						p_v_l_s_g_id: themeDisplay.getSiteGroupId(),
-					});
-
-					Liferay.Util.fetch(
-						themeDisplay.getPathMain() + '/portal/update_layout',
-						{
-							body: formData,
-							method: 'POST',
-						}
-					).then(response => {
-						if (response.ok && restore) {
-							var data = {
-								doAsUserId,
-								p_l_id: plid,
-								p_p_boundary: false,
-								p_p_id: portlet.portletId,
-								p_p_isolated: true,
-							};
-
-							portlet.plug(A.Plugin.ParseContent);
-
-							portlet.load(
-								themeDisplay.getPathMain() +
-									'/portal/render_portlet?' +
-									A.QueryString.stringify(data)
-							);
-						}
-					});
-				}
-			}
-		},
-		['aui-parse-content', 'node-load', 'querystring-stringify']
-	);
-
-	Liferay.provide(
-		Portlet,
 		'onLoad',
 		function(options) {
 			var instance = this;
@@ -835,5 +743,8 @@
 		});
 	};
 
-	Liferay.Portlet = Portlet;
+	Liferay.Portlet = {
+		...Liferay.Portlet,
+		...Portlet,
+	};
 })(AUI(), Liferay);

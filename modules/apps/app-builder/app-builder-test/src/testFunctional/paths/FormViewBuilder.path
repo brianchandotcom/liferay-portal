@@ -42,7 +42,7 @@
 
 <tr>
 	<td>FIELD_LABEL</td>
-	<td>//label[contains(text(),'${fieldLabel}')]</td>
+	<td>//p[text()='${fieldLabel}']</td>
 	<td></td>
 </tr>
 
@@ -146,7 +146,7 @@
 
 <tr>
 	<td>TEXT_FIELD</td>
-	<td>//label[contains(text(),'${key_fieldName}')]/..//input</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//input[1]</td>
 	<td></td>
 </tr>
 
@@ -186,13 +186,13 @@
 <!--DATE-->
 <tr>
 	<td>DATE_FIELD</td>
-	<td>//label[contains(text(),'${key_fieldName}')]/..//input</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//input[1]</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>TEXT_BOX_FIELD</td>
-	<td>//label[contains(text(),'${key_fieldName}')]/..//input</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//input[1]</td>
 	<td></td>
 </tr>
 

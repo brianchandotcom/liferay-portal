@@ -63,7 +63,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 	protected void upgradePortletPreferences() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select classPK, companyId, groupId, namespace from " +
+				"select groupId, companyId, classPK, namespace from " +
 					"FragmentEntryLink");
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
@@ -76,9 +76,9 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long classPK = rs.getLong("classPK");
-				long companyId = rs.getLong("companyId");
 				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long classPK = rs.getLong("classPK");
 				String namespace = rs.getString("namespace");
 
 				try {

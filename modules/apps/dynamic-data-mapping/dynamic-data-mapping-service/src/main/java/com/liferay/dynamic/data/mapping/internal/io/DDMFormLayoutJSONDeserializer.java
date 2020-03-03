@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -67,8 +68,16 @@ public class DDMFormLayoutJSONDeserializer
 				jsonObject.getJSONArray("pages"), ddmFormLayout);
 
 			setDDMFormLayoutPageTitlesDefaultLocale(ddmFormLayout);
-			setDDMFormLayoutPaginationMode(
-				jsonObject.getString("paginationMode"), ddmFormLayout);
+
+			String paginationMode = jsonObject.getString("paginationMode");
+
+			if (Validator.isNotNull(paginationMode)) {
+				setDDMFormLayoutPaginationMode(paginationMode, ddmFormLayout);
+			}
+			else {
+				setDDMFormLayoutPaginationMode(
+					DDMFormLayout.WIZARD_MODE, ddmFormLayout);
+			}
 		}
 		catch (JSONException jsonException) {
 			if (_log.isWarnEnabled()) {

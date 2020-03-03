@@ -102,6 +102,10 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		List<DDMFormLayoutPage> ddmFormLayoutPages =
 			ddmFormLayout.getDDMFormLayoutPages();
 
+		if (Validator.isNull(ddmFormLayout.getPaginationMode())) {
+			ddmFormLayout.setPaginationMode(DDMFormLayout.WIZARD_MODE);
+		}
+
 		for (DDMFormLayoutPage ddmFormLayoutPage : ddmFormLayoutPages) {
 			LocalizedValue localizedValue = ddmFormLayoutPage.getTitle();
 

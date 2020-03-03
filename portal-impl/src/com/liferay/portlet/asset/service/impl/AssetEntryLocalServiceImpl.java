@@ -48,10 +48,9 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.view.count.ViewCountManager;
+import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
 import com.liferay.portlet.asset.service.base.AssetEntryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.util.AssetSearcher;
@@ -98,7 +97,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		// View count
 
-		_viewCountManager.deleteViewCount(
+		ViewCountManagerUtil.deleteViewCount(
 			entry.getCompanyId(),
 			classNameLocalService.getClassNameId(AssetEntry.class),
 			entry.getEntryId());
@@ -474,7 +473,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		_viewCountManager.incrementViewCount(
+		ViewCountManagerUtil.incrementViewCount(
 			companyId, classNameLocalService.getClassNameId(AssetEntry.class),
 			entry.getEntryId(), increment);
 	}
@@ -1361,11 +1360,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			}
 		}
 	}
-
-	private static volatile ViewCountManager _viewCountManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ViewCountManager.class, AssetEntryLocalServiceImpl.class,
-			"_viewCountManager", true, true);
 
 	private final ServiceTrackerMap
 		<String, List<AssetEntryValidatorExclusionRule>>

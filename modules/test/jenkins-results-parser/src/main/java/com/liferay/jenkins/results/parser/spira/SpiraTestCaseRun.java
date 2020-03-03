@@ -81,7 +81,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 	protected static List<SpiraTestCaseRun> getSpiraTestCaseRuns(
 		SpiraProject spiraProject, SpiraTestCaseObject spiraTestCase,
-		SearchResult.SearchParameter... searchParameters) {
+		SearchQuery.SearchParameter... searchParameters) {
 
 		return getSpiraArtifacts(
 			SpiraTestCaseRun.class,
@@ -150,7 +150,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 	private static List<JSONObject> _requestSpiraTestCaseRuns(
 		SpiraProject spiraProject, SpiraTestCaseObject spiraTestCase,
-		SearchResult.SearchParameter... searchParameters) {
+		SearchQuery.SearchParameter... searchParameters) {
 
 		Map<String, String> urlParameters = new HashMap<>();
 
@@ -168,7 +168,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		JSONArray requestJSONArray = new JSONArray();
 
-		for (SearchResult.SearchParameter searchParameter : searchParameters) {
+		for (SearchQuery.SearchParameter searchParameter : searchParameters) {
 			requestJSONArray.put(searchParameter.toFilterJSONObject());
 		}
 

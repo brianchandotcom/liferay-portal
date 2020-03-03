@@ -115,25 +115,25 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		Class<S> spiraArtifactClass,
 		Supplier<List<JSONObject>> spiraArtifactRequest,
 		Function<JSONObject, S> spiraArtifactCreator,
-		SearchResult.SearchParameter... searchParameters) {
+		SearchQuery.SearchParameter... searchParameters) {
 
-		SearchResult<S> searchResult = SearchResult.getCachedSearchResult(
+		SearchQuery<S> searchQuery = SearchQuery.getCachedSearchQuery(
 			spiraArtifactClass, searchParameters);
 
-		if (searchResult != null) {
-			return searchResult.getSpiraArtifacts();
+		if (searchQuery != null) {
+			return searchQuery.getSpiraArtifacts();
 		}
 
-		searchResult = new SearchResult<>(spiraArtifactClass, searchParameters);
+		searchQuery = new SearchQuery<>(spiraArtifactClass, searchParameters);
 
 		List<S> cachedSpiraArtifacts = _getCachedSpiraArtifacts(
 			spiraArtifactClass);
 
-		if (searchResult.hasDistinctResults()) {
+		if (searchQuery.hasDistinctResult()) {
 			S distinctSpiraArtifact = null;
 
 			for (S cachedSpiraArtifact : cachedSpiraArtifacts) {
-				if (searchResult.matches(cachedSpiraArtifact)) {
+				if (searchQuery.matches(cachedSpiraArtifact)) {
 					if (distinctSpiraArtifact != null) {
 						throw new RuntimeException(
 							"Too many results for distinct search");
@@ -147,7 +147,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 				JSONObject distinctJSONObject = null;
 
 				for (JSONObject jsonObject : spiraArtifactRequest.get()) {
-					if (searchResult.matches(spiraArtifactClass, jsonObject)) {
+					if (searchQuery.matches(spiraArtifactClass, jsonObject)) {
 						if (distinctJSONObject != null) {
 							throw new RuntimeException(
 								"Too many results for distinct search");
@@ -165,11 +165,11 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 			cachedSpiraArtifacts.add(distinctSpiraArtifact);
 
-			searchResult.addSpiraArtifact(distinctSpiraArtifact);
+			searchQuery.addSpiraArtifact(distinctSpiraArtifact);
 
-			SearchResult.cachedSearchResult(searchResult);
+			SearchQuery.cachedSearchQuery(searchQuery);
 
-			return searchResult.getSpiraArtifacts();
+			return searchQuery.getSpiraArtifacts();
 		}
 
 		for (JSONObject jsonObject : spiraArtifactRequest.get()) {
@@ -182,14 +182,14 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 				cachedSpiraArtifacts.add(spiraArtifact);
 			}
 
-			if (searchResult.matches(spiraArtifact)) {
-				searchResult.addSpiraArtifact(spiraArtifact);
+			if (searchQuery.matches(spiraArtifact)) {
+				searchQuery.addSpiraArtifact(spiraArtifact);
 			}
 		}
 
-		SearchResult.cachedSearchResult(searchResult);
+		SearchQuery.cachedSearchQuery(searchQuery);
 
-		return searchResult.getSpiraArtifacts();
+		return searchQuery.getSpiraArtifacts();
 	}
 
 	protected static void removeCachedSpiraArtifacts(
@@ -225,10 +225,8 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		this.jsonObject = jsonObject;
 	}
 
-	protected boolean matches(
-		SearchResult.SearchParameter... searchParameters) {
-
-		for (SearchResult.SearchParameter searchParameter : searchParameters) {
+	protected boolean matches(SearchQuery.SearchParameter... searchParameters) {
+		for (SearchQuery.SearchParameter searchParameter : searchParameters) {
 			if (!searchParameter.matches(jsonObject)) {
 				return false;
 			}

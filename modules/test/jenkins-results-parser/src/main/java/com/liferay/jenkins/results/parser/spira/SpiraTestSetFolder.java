@@ -119,7 +119,7 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 
 		List<SpiraTestSetFolder> spiraTestSetFolders = getSpiraTestSetFolders(
 			spiraProject,
-			new SearchResult.SearchParameter(ID_KEY, testSetFolderID));
+			new SearchQuery.SearchParameter(ID_KEY, testSetFolderID));
 
 		if (spiraTestSetFolders.isEmpty()) {
 			return;
@@ -181,7 +181,7 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 
 	protected static List<SpiraTestSetFolder> getSpiraTestSetFolders(
 		SpiraProject spiraProject,
-		SearchResult.SearchParameter... searchParameters) {
+		SearchQuery.SearchParameter... searchParameters) {
 
 		return getSpiraArtifacts(
 			SpiraTestSetFolder.class,

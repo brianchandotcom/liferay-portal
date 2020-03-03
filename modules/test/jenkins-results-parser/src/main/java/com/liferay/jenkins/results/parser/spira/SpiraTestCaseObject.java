@@ -120,7 +120,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		SpiraProject spiraProject, int testCaseID) {
 
 		List<SpiraTestCaseObject> spiraTestCases = getSpiraTestCases(
-			spiraProject, new SearchResult.SearchParameter(ID_KEY, testCaseID));
+			spiraProject, new SearchQuery.SearchParameter(ID_KEY, testCaseID));
 
 		if (spiraTestCases.isEmpty()) {
 			return;
@@ -184,7 +184,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 	protected static List<SpiraTestCaseObject> getSpiraTestCases(
 		SpiraProject spiraProject,
-		SearchResult.SearchParameter... searchParameters) {
+		SearchQuery.SearchParameter... searchParameters) {
 
 		return getSpiraArtifacts(
 			SpiraTestCaseObject.class,
@@ -217,7 +217,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 	private static List<JSONObject> _requestSpiraTestCases(
 		SpiraProject spiraProject,
-		SearchResult.SearchParameter... searchParameters) {
+		SearchQuery.SearchParameter... searchParameters) {
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
@@ -231,7 +231,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		JSONArray requestJSONArray = new JSONArray();
 
-		for (SearchResult.SearchParameter searchParameter : searchParameters) {
+		for (SearchQuery.SearchParameter searchParameter : searchParameters) {
 			requestJSONArray.put(searchParameter.toFilterJSONObject());
 		}
 

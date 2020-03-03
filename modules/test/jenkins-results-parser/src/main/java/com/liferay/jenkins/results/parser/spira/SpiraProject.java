@@ -34,7 +34,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 		List<SpiraProject> spiraProjects = getSpiraArtifacts(
 			SpiraProject.class, () -> _requestSpiraProjectByID(projectID),
 			T -> new SpiraProject(T),
-			new SearchResult.SearchParameter(ID_KEY, projectID));
+			new SearchQuery.SearchParameter(ID_KEY, projectID));
 
 		return spiraProjects.get(0);
 	}
@@ -42,7 +42,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 	public SpiraRelease getSpiraReleaseByID(int releaseID) {
 		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
 			this,
-			new SearchResult.SearchParameter(SpiraRelease.ID_KEY, releaseID));
+			new SearchQuery.SearchParameter(SpiraRelease.ID_KEY, releaseID));
 
 		if (spiraReleases.size() > 1) {
 			throw new RuntimeException("Duplicate release ID " + releaseID);
@@ -71,14 +71,14 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 	public List<SpiraRelease> getSpiraReleasesByPath(String releasePath) {
 		return SpiraRelease.getSpiraReleases(
-			this, new SearchResult.SearchParameter("Path", releasePath));
+			this, new SearchQuery.SearchParameter("Path", releasePath));
 	}
 
 	public SpiraTestCaseObject getSpiraTestCaseByID(int testCaseID) {
 		List<SpiraTestCaseObject> spiraTestCases =
 			SpiraTestCaseObject.getSpiraTestCases(
 				this,
-				new SearchResult.SearchParameter(
+				new SearchQuery.SearchParameter(
 					SpiraTestCaseObject.ID_KEY, testCaseID));
 
 		if (spiraTestCases.size() > 1) {
@@ -115,7 +115,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 		List<SpiraTestCaseFolder> spiraTestCaseFolders =
 			SpiraTestCaseFolder.getSpiraTestCaseFolders(
 				this,
-				new SearchResult.SearchParameter(
+				new SearchQuery.SearchParameter(
 					SpiraTestCaseFolder.ID_KEY, testCaseFolderID));
 
 		if (spiraTestCaseFolders.size() > 1) {
@@ -154,21 +154,21 @@ public class SpiraProject extends BaseSpiraArtifact {
 		String testCaseFolderPath) {
 
 		return SpiraTestCaseFolder.getSpiraTestCaseFolders(
-			this, new SearchResult.SearchParameter("Path", testCaseFolderPath));
+			this, new SearchQuery.SearchParameter("Path", testCaseFolderPath));
 	}
 
 	public List<SpiraTestCaseObject> getSpiraTestCasesByPath(
 		String testCasePath) {
 
 		return SpiraTestCaseObject.getSpiraTestCases(
-			this, new SearchResult.SearchParameter("Path", testCasePath));
+			this, new SearchQuery.SearchParameter("Path", testCasePath));
 	}
 
 	public SpiraTestSetFolder getSpiraTestSetFolderByID(int testSetFolderID) {
 		List<SpiraTestSetFolder> spiraTestSetFolders =
 			SpiraTestSetFolder.getSpiraTestSetFolders(
 				this,
-				new SearchResult.SearchParameter(
+				new SearchQuery.SearchParameter(
 					SpiraTestSetFolder.ID_KEY, testSetFolderID));
 
 		if (spiraTestSetFolders.size() > 1) {
@@ -207,7 +207,7 @@ public class SpiraProject extends BaseSpiraArtifact {
 		String testCaseSetPath) {
 
 		return SpiraTestSetFolder.getSpiraTestSetFolders(
-			this, new SearchResult.SearchParameter("Path", testCaseSetPath));
+			this, new SearchQuery.SearchParameter("Path", testCaseSetPath));
 	}
 
 	protected static final String ID_KEY = "ProjectId";

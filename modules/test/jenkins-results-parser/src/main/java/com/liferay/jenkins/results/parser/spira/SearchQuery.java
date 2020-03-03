@@ -26,7 +26,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SearchResult<T extends SpiraArtifact> {
+public class SearchQuery<T extends SpiraArtifact> {
 
 	public static class SearchParameter {
 
@@ -104,23 +104,23 @@ public class SearchResult<T extends SpiraArtifact> {
 
 	}
 
-	protected static void cachedSearchResult(SearchResult searchResult) {
-		List<SearchResult> cachedSearchResults =
-			_searchResultsMap.computeIfAbsent(
-				searchResult._spiraArtifactClass, T -> new ArrayList<>());
+	protected static void cachedSearchQuery(SearchQuery searchQuery) {
+		List<SearchQuery> cachedSearchQueries =
+			_searchQueriesMap.computeIfAbsent(
+				searchQuery._spiraArtifactClass, T -> new ArrayList<>());
 
-		cachedSearchResults.add(searchResult);
+		cachedSearchQueries.add(searchQuery);
 	}
 
-	protected static <T extends SpiraArtifact> SearchResult<T>
-		getCachedSearchResult(
+	protected static <T extends SpiraArtifact> SearchQuery<T>
+		getCachedSearchQuery(
 			Class<T> spiraArtifactClass, SearchParameter... searchParameters) {
 
-		List<SearchResult> cachedSearchResults =
-			_searchResultsMap.computeIfAbsent(
+		List<SearchQuery> cachedSearchQueries =
+			_searchQueriesMap.computeIfAbsent(
 				spiraArtifactClass, T -> new ArrayList<>());
 
-		for (SearchResult cachedSearchResult : cachedSearchResults) {
+		for (SearchQuery cachedSearchQuery : cachedSearchQueries) {
 			JSONArray filterJSONArray = new JSONArray();
 
 			for (SearchParameter searchParameter : searchParameters) {
@@ -128,16 +128,16 @@ public class SearchResult<T extends SpiraArtifact> {
 			}
 
 			if (filterJSONArray.similar(
-					cachedSearchResult.toFilterJSONArray())) {
+					cachedSearchQuery.toFilterJSONArray())) {
 
-				return cachedSearchResult;
+				return cachedSearchQuery;
 			}
 		}
 
 		return null;
 	}
 
-	protected SearchResult(
+	protected SearchQuery(
 		Class<T> spiraArtifactClass, SearchParameter... searchParameters) {
 
 		_spiraArtifactClass = spiraArtifactClass;
@@ -152,7 +152,7 @@ public class SearchResult<T extends SpiraArtifact> {
 		return _spiraArtifacts;
 	}
 
-	protected boolean hasDistinctResults() {
+	protected boolean hasDistinctResult() {
 		for (SearchParameter searchParameter : _searchParameters) {
 			String searchParameterName = searchParameter.getName();
 
@@ -201,7 +201,7 @@ public class SearchResult<T extends SpiraArtifact> {
 		return filterJSONArray;
 	}
 
-	private static final Map<Class, List<SearchResult>> _searchResultsMap =
+	private static final Map<Class, List<SearchQuery>> _searchQueriesMap =
 		new HashMap<>();
 
 	private final SearchParameter[] _searchParameters;

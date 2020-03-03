@@ -114,7 +114,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 		SpiraProject spiraProject, int releaseID) {
 
 		List<SpiraRelease> spiraReleases = getSpiraReleases(
-			spiraProject, new SearchResult.SearchParameter(ID_KEY, releaseID));
+			spiraProject, new SearchQuery.SearchParameter(ID_KEY, releaseID));
 
 		if (spiraReleases.isEmpty()) {
 			return;
@@ -172,7 +172,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 		List<SpiraReleaseBuild> spiraReleaseBuilds =
 			SpiraReleaseBuild.getSpiraReleaseBuilds(
 				getSpiraProject(), this,
-				new SearchResult.SearchParameter(
+				new SearchQuery.SearchParameter(
 					SpiraReleaseBuild.ID_KEY, releaseBuildID));
 
 		if (spiraReleaseBuilds.size() > 1) {
@@ -190,7 +190,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 
 	protected static List<SpiraRelease> getSpiraReleases(
 		SpiraProject spiraProject,
-		SearchResult.SearchParameter... searchParameters) {
+		SearchQuery.SearchParameter... searchParameters) {
 
 		return getSpiraArtifacts(
 			SpiraRelease.class,
@@ -224,7 +224,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 	protected static final int TYPE_SPRINT = 3;
 
 	private static List<JSONObject> _requestSpiraReleases(
-		int spiraProjectID, SearchResult.SearchParameter... searchParameters) {
+		int spiraProjectID, SearchQuery.SearchParameter... searchParameters) {
 
 		Map<String, String> urlParameters = new HashMap<>();
 
@@ -237,7 +237,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 
 		JSONArray requestJSONArray = new JSONArray();
 
-		for (SearchResult.SearchParameter searchParameter : searchParameters) {
+		for (SearchQuery.SearchParameter searchParameter : searchParameters) {
 			requestJSONArray.put(searchParameter.toFilterJSONObject());
 		}
 
@@ -267,7 +267,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 	private SpiraRelease _getSpiraReleaseByIndentLevel(String indentLevel) {
 		List<SpiraRelease> spiraReleases = getSpiraReleases(
 			getSpiraProject(),
-			new SearchResult.SearchParameter("IndentLevel", indentLevel));
+			new SearchQuery.SearchParameter("IndentLevel", indentLevel));
 
 		if (spiraReleases.size() > 1) {
 			throw new RuntimeException("Duplicate indent level " + indentLevel);

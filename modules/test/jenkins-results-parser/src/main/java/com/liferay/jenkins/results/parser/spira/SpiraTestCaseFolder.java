@@ -122,7 +122,7 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 		List<SpiraTestCaseFolder> spiraTestCaseFolders =
 			getSpiraTestCaseFolders(
 				spiraProject,
-				new SearchResult.SearchParameter(ID_KEY, testCaseFolderID));
+				new SearchQuery.SearchParameter(ID_KEY, testCaseFolderID));
 
 		if (spiraTestCaseFolders.isEmpty()) {
 			return;
@@ -184,7 +184,7 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 
 	protected static List<SpiraTestCaseFolder> getSpiraTestCaseFolders(
 		SpiraProject spiraProject,
-		SearchResult.SearchParameter... searchParameters) {
+		SearchQuery.SearchParameter... searchParameters) {
 
 		return getSpiraArtifacts(
 			SpiraTestCaseFolder.class,

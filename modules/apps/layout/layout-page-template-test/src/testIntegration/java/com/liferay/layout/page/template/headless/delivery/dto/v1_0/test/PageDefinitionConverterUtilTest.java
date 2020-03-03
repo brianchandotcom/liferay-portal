@@ -357,6 +357,23 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertEquals(
 			Integer.valueOf(4), sectionLayout.getPaddingHorizontal());
 		Assert.assertEquals(Integer.valueOf(1), sectionLayout.getPaddingTop());
+
+		PageElement sectionPageElement2 = pageElements[1];
+
+		Assert.assertEquals(
+			PageElement.Type.SECTION, sectionPageElement2.getType());
+
+		SectionDefinition sectionDefinition2 =
+			(SectionDefinition)sectionPageElement2.getDefinition();
+
+		FragmentImage fragmentImage2 = sectionDefinition2.getBackgroundImage();
+
+		Assert.assertNull(fragmentImage2.getTitle());
+
+		InlineValue urlInlineValue2 = (InlineValue)fragmentImage2.getUrl();
+
+		Assert.assertEquals(
+			"http://myexample2.com/myexample2.png", urlInlineValue2.getValue());
 	}
 
 	private void _addLayoutPageTemplateStructure(

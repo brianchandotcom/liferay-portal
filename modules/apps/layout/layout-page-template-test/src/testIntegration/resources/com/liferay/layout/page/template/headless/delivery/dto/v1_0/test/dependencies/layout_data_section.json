@@ -5,8 +5,8 @@
 			"config": {
 				"backgroundColorCssClass": "primary",
 				"backgroundImage": {
-					"title": "http://myexample.com/myexample.png",
-					"url": "http://myexample.com/myexample.png"
+					"title": "My example1 background image title",
+					"url": "http://myexample1.com/myexample1.png"
 				},
 				"paddingBottom": 7,
 				"paddingHorizontal": 5,
@@ -17,9 +17,23 @@
 			"parentId": "281911a2-118c-402d-8c7d-f061aa4d2a24",
 			"type": "container"
 		},
+		"247d4dd8-6743-403f-927a-ff3f3015497d": {
+			"children": [],
+			"config": {
+				"backgroundImage": {
+					"title": "http://myexample2.com/myexample2.png",
+					"url": "http://myexample2.com/myexample2.png"
+				},
+				"type": "fluid"
+			},
+			"itemId": "247d4dd8-6743-403f-927a-ff3f3015497d",
+			"parentId": "281911a2-118c-402d-8c7d-f061aa4d2a24",
+			"type": "container"
+		},
 		"281911a2-118c-402d-8c7d-f061aa4d2a24": {
 			"children": [
-				"247d4dd8-6743-403f-927a-ff3f3015497c"
+				"247d4dd8-6743-403f-927a-ff3f3015497c",
+				"247d4dd8-6743-403f-927a-ff3f3015497d"
 			],
 			"config": {},
 			"itemId": "281911a2-118c-402d-8c7d-f061aa4d2a24",

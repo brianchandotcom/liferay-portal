@@ -62,7 +62,7 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: RowWithControls,
 };
 
-export default function PageEditor({withinMasterPage = false}) {
+export default function PageEditor({mainItem, withinMasterPage = false}) {
 	const activeItemId = useActiveItemId();
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
@@ -73,8 +73,6 @@ export default function PageEditor({withinMasterPage = false}) {
 		state => state.sidebar.panelId && state.sidebar.open
 	);
 	const store = useSelector(state => state);
-
-	const mainItem = layoutData.items[layoutData.rootItems.main];
 
 	const onClick = event => {
 		if (event.target === event.currentTarget) {
@@ -241,6 +239,7 @@ export default function PageEditor({withinMasterPage = false}) {
 }
 
 PageEditor.propTypes = {
+	mainItem: getLayoutDataItemPropTypes().isRequired,
 	withinMasterPage: PropTypes.bool,
 };
 

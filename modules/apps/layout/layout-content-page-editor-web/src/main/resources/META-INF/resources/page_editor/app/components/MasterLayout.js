@@ -101,7 +101,11 @@ MasterLayoutDataItem.propTypes = {
 };
 
 function DropZoneContainer() {
-	return <PageEditor withinMasterPage />;
+	const mainItem = useSelector(
+		state => state.layoutData.items[state.layoutData.rootItems.main]
+	);
+
+	return <PageEditor mainItem={mainItem} withinMasterPage />;
 }
 
 function Root({children}) {

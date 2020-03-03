@@ -14,8 +14,13 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -99,10 +104,108 @@ public class SearchResult<T extends SpiraArtifact> {
 
 	}
 
-	protected SearchResult(SearchParameter... searchParameters) {
+	protected static void cachedSearchResult(SearchResult searchResult) {
+		List<SearchResult> cachedSearchResults =
+			_searchResultsMap.computeIfAbsent(
+				searchResult._spiraArtifactClass, T -> new ArrayList<>());
+
+		cachedSearchResults.add(searchResult);
+	}
+
+	protected static <T extends SpiraArtifact> SearchResult<T>
+		getCachedSearchResult(
+			Class<T> spiraArtifactClass, SearchParameter... searchParameters) {
+
+		List<SearchResult> cachedSearchResults =
+			_searchResultsMap.computeIfAbsent(
+				spiraArtifactClass, T -> new ArrayList<>());
+
+		for (SearchResult cachedSearchResult : cachedSearchResults) {
+			JSONArray filterJSONArray = new JSONArray();
+
+			for (SearchParameter searchParameter : searchParameters) {
+				filterJSONArray.put(searchParameter.toFilterJSONObject());
+			}
+
+			if (filterJSONArray.similar(
+					cachedSearchResult.toFilterJSONArray())) {
+
+				return cachedSearchResult;
+			}
+		}
+
+		return null;
+	}
+
+	protected SearchResult(
+		Class<T> spiraArtifactClass, SearchParameter... searchParameters) {
+
+		_spiraArtifactClass = spiraArtifactClass;
 		_searchParameters = searchParameters;
 	}
 
+	protected void addSpiraArtifact(T spiraArtifact) {
+		_spiraArtifacts.add(spiraArtifact);
+	}
+
+	protected List<T> getSpiraArtifacts() {
+		return _spiraArtifacts;
+	}
+
+	protected boolean hasDistinctResults() {
+		for (SearchParameter searchParameter : _searchParameters) {
+			String searchParameterName = searchParameter.getName();
+
+			if (searchParameterName.equals(
+					BaseSpiraArtifact.getIDKey(_spiraArtifactClass))) {
+
+				return true;
+			}
+
+			if (searchParameterName.equals("IndentLevel")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean matches(SpiraArtifact spiraArtifact) {
+		return matches(spiraArtifact.getClass(), spiraArtifact.toJSONObject());
+	}
+
+	protected boolean matches(
+		Class<? extends SpiraArtifact> spiraArtifactClass,
+		JSONObject jsonObject) {
+
+		if (spiraArtifactClass != _spiraArtifactClass) {
+			return false;
+		}
+
+		for (SearchParameter searchParameter : _searchParameters) {
+			if (!searchParameter.matches(jsonObject)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	protected JSONArray toFilterJSONArray() {
+		JSONArray filterJSONArray = new JSONArray();
+
+		for (SearchParameter searchParameter : _searchParameters) {
+			filterJSONArray.put(searchParameter.toFilterJSONObject());
+		}
+
+		return filterJSONArray;
+	}
+
+	private static final Map<Class, List<SearchResult>> _searchResultsMap =
+		new HashMap<>();
+
 	private final SearchParameter[] _searchParameters;
+	private final Class<T> _spiraArtifactClass;
+	private final List<T> _spiraArtifacts = new ArrayList<>();
 
 }

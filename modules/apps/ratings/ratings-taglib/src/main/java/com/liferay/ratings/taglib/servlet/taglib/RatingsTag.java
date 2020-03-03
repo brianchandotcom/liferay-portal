@@ -127,6 +127,30 @@ public class RatingsTag extends IncludeTag {
 	private Map<String, Object> _getData(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		boolean inTrash = _isInTrash();
+
+		return HashMapBuilder.<String, Object>put(
+			"className", _className
+		).put(
+			"classPK", _classPK
+		).put(
+			"enabled", _isEnabled(themeDisplay, inTrash)
+		).put(
+			"inTrash", inTrash
+		).put(
+			"positiveVotes", (int)Math.round(_getTotalScore())
+		).put(
+			"signedIn", themeDisplay.isSignedIn()
+		).put(
+			"url", _getURL(themeDisplay)
+		).build();
+	}
+
+	private double _getTotalScore() {
 		double totalScore = 0.0;
 
 		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(
@@ -136,47 +160,35 @@ public class RatingsTag extends IncludeTag {
 			totalScore = ratingsStats.getTotalScore();
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		return totalScore;
+	}
 
-		Boolean inTrash = _inTrash;
-
-		if (inTrash == null) {
-			inTrash = TrashUtil.isInTrash(_className, _classPK);
+	private String _getURL(ThemeDisplay themeDisplay) {
+		if (Validator.isNull(_url)) {
+			return themeDisplay.getPathMain() + "/portal/rate_entry";
 		}
 
-		boolean enabled = false;
+		return _url;
+	}
 
+	private boolean _isEnabled(ThemeDisplay themeDisplay, boolean inTrash) {
 		if (!inTrash) {
 			Group group = themeDisplay.getSiteGroup();
 
 			if (!group.isStagingGroup() && !group.isStagedRemotely()) {
-				enabled = true;
+				return true;
 			}
 		}
 
-		String url = _url;
+		return false;
+	}
 
-		if (Validator.isNull(url)) {
-			url = themeDisplay.getPathMain() + "/portal/rate_entry";
+	private boolean _isInTrash() throws PortalException {
+		if (_inTrash == null) {
+			return TrashUtil.isInTrash(_className, _classPK);
 		}
 
-		return HashMapBuilder.<String, Object>put(
-			"className", _className
-		).put(
-			"classPK", _classPK
-		).put(
-			"enabled", enabled
-		).put(
-			"inTrash", inTrash
-		).put(
-			"positiveVotes", (int)Math.round(totalScore)
-		).put(
-			"signedIn", themeDisplay.isSignedIn()
-		).put(
-			"url", url
-		).build();
+		return _inTrash;
 	}
 
 	private static final String _PAGE = "/page.jsp";

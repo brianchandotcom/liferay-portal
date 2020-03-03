@@ -15,8 +15,8 @@
 import './NumericRegister.soy';
 
 import {ClayInput} from '@clayui/form';
-import React, {useEffect, useRef} from 'react';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import React, {useEffect, useRef} from 'react';
 import vanillaTextMask from 'vanilla-text-mask';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
@@ -62,12 +62,12 @@ const Numeric = ({
 		let maskInstance = null;
 
 		if (inputRef.current) {
-			const {value} = inputRef.current;
+			let {value} = inputRef.current;
 
 			if (dataType === 'integer' && value) {
-				inputRef.current.value = Math.round(
+				value = String(Math.round(
 					value.replace(symbols.decimalSymbol, '.')
-				);
+				));
 			}
 
 			const mask = createNumberMask(getMaskConfig(dataType, symbols));
@@ -77,8 +77,10 @@ const Numeric = ({
 				mask,
 			});
 
-			setValue(value);
-			onChange({target: {value}});
+			if (value !== '') {
+				setValue(value);
+				onChange({target: {value}});
+			}
 		}
 
 		return () => {
@@ -95,13 +97,13 @@ const Numeric = ({
 			aria-label="numeric"
 			disabled={disabled}
 			onChange={event => {
-				const {value} = event.target;
+				const {value: newValue} = event.target;
 
-				if (value.substr(-1) === symbols.decimalSymbol) {
+				if (newValue.substr(-1) === symbols.decimalSymbol) {
 					return;
 				}
 
-				setValue(event.target.value);
+				setValue(newValue);
 				onChange(event);
 			}}
 			ref={inputRef}
@@ -118,7 +120,7 @@ const NumericProxy = connectStore(
 		id,
 		name,
 		placeholder,
-		predefinedValue,
+		predefinedValue = '',
 		readOnly,
 		symbols,
 		value,

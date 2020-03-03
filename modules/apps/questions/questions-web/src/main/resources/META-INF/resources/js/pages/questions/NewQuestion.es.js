@@ -20,7 +20,7 @@ import React, {useContext, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import TagSelector from '../../components/TagSelector';
+import TagSelector from '../../components/TagSelector.es';
 import {createQuestion} from '../../utils/client.es';
 import {
 	getCKEditorConfig,

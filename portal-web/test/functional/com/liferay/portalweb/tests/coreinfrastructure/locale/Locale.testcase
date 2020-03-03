@@ -30,6 +30,7 @@ definition {
 		property custom.properties = "locales=es_ES";
 		property custom.properties = "locales.enabled=es_ES";
 		property custom.properties = "company.default.locale=es_ES";
+		property test.name.skip.portal.instance = "Locale#AddFormWithSpanishAsOnlyLocale";
 
 		User.firstLoginPG(
 			localization = "ES",
@@ -254,6 +255,7 @@ definition {
 	test VerifyFriendlyURLRedirectToEnableDefualtLocale {
 		property custom.properties = "locales.enabled=en_US,zh_CN,fr_FR${line.separator}locale.use.default.if.not.available=true";
 		property custom.system.properties = "user.country=US${line.separator}user.language=en";
+		property test.name.skip.portal.instance = "Locale#VerifyFriendlyURLRedirectToEnableDefualtLocale";
 
 		User.firstLoginPG();
 

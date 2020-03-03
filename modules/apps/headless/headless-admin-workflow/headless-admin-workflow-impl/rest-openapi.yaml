@@ -510,6 +510,51 @@ components:
                         type: object
                     type: array
             type: object
+        WorkflowTasksBulkSelection:
+            properties:
+                andOperator:
+                    type: boolean
+                assetPrimaryKeys:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                assetTitle:
+                    type: string
+                assetTypes:
+                    items:
+                        type: string
+                    type: array
+                assigneeIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                completed:
+                    type: boolean
+                dateDueEnd:
+                    format: date-time
+                    type: string
+                dateDueStart:
+                    format: date-time
+                    type: string
+                searchByRoles:
+                    type: boolean
+                searchByUserRoles:
+                    type: boolean
+                taskNames:
+                    items:
+                        type: string
+                    type: array
+                workflowDefinitionId:
+                    format: int64
+                    type: integer
+                workflowInstanceIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+            type: object
 info:
     description:
         ""
@@ -1053,77 +1098,9 @@ paths:
                         ""
             tags: ["WorkflowLog"]
     "/workflow-tasks":
-        get:
-            operationId: getWorkflowTasksPage
+        post:
+            operationId: postWorkflowTasksPage
             parameters:
-                - in: query
-                  name: andOperator
-                  schema:
-                      type: boolean
-                - in: query
-                  name: assetPrimaryKeys
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
-                - in: query
-                  name: assetTitle
-                  schema:
-                      type: string
-                - in: query
-                  name: assetTypes
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                - in: query
-                  name: assigneeIds
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
-                - in: query
-                  name: completed
-                  schema:
-                      type: boolean
-                - in: query
-                  name: dateDueEnd
-                  schema:
-                      format: date-time
-                      type: string
-                - in: query
-                  name: dateDueStart
-                  schema:
-                      format: date-time
-                      type: string
-                - in: query
-                  name: searchByRoles
-                  schema:
-                      type: boolean
-                - in: query
-                  name: searchByUserRoles
-                  schema:
-                      type: boolean
-                - in: query
-                  name: taskNames
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                - in: query
-                  name: workflowDefinitionId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: workflowInstanceIds
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
                 - in: query
                   name: page
                   schema:
@@ -1136,6 +1113,14 @@ paths:
                   name: sort
                   schema:
                       type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowTasksBulkSelection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowTasksBulkSelection"
             responses:
                 200:
                     content:

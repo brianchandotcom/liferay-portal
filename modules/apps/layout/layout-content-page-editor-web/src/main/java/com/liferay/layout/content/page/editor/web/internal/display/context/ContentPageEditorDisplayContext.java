@@ -31,6 +31,8 @@ import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameCom
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorCriterion;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
@@ -1158,10 +1160,18 @@ public class ContentPageEditorDisplayContext {
 		infoListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoListItemSelectorReturnType());
 
+		InfoListProviderItemSelectorCriterion
+			infoListProviderItemSelectorCriterion =
+				new InfoListProviderItemSelectorCriterion();
+
+		infoListProviderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoListProviderItemSelectorReturnType());
+
 		PortletURL infoListSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 			_renderResponse.getNamespace() + "selectInfoList",
-			infoListItemSelectorCriterion);
+			infoListItemSelectorCriterion,
+			infoListProviderItemSelectorCriterion);
 
 		if (infoListSelectorURL == null) {
 			return StringPool.BLANK;

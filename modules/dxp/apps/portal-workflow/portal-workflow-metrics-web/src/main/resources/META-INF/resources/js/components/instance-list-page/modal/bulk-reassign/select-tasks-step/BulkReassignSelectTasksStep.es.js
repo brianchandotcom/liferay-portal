@@ -12,9 +12,9 @@
 import React, {useContext, useMemo, useState} from 'react';
 
 import PromisesResolver from '../../../../../shared/components/promises-resolver/PromisesResolver.es';
-import {useFetch} from '../../../../../shared/hooks/useFetch.es';
 import {useFilter} from '../../../../../shared/hooks/useFilter.es';
 import {usePaginationState} from '../../../../../shared/hooks/usePaginationState.es';
+import {usePost} from '../../../../../shared/hooks/usePost.es';
 import {InstanceListContext} from '../../../store/InstanceListPageStore.es';
 import {ModalContext} from '../../ModalContext.es';
 import {Body} from './BulkReassignSelectTasksStepBody.es';
@@ -38,7 +38,7 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 		initialPageSize: 5,
 	});
 
-	const params = useMemo(() => {
+	const body = useMemo(() => {
 		const filterByUser = userIds && userIds.length;
 
 		const assigneeIds = filterByUser
@@ -50,10 +50,7 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 		const params = {
 			assigneeIds,
 			completed: false,
-			page,
-			pageSize,
 			searchByRoles,
-			sort: 'workflowInstanceId:asc',
 			taskNames,
 		};
 
@@ -68,12 +65,12 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 
 		return params;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [page, pageSize, taskNames, userIds]);
+	}, [taskNames, userIds]);
 
-	const {data, fetchData} = useFetch({
+	const {data, postData} = usePost({
 		admin: true,
-		params,
-		url: '/workflow-tasks',
+		body,
+		url: `/workflow-tasks?page=${page}&pageSize=${pageSize}&sort=workflowInstanceId:asc`,
 	});
 
 	const paginationState = {
@@ -85,14 +82,14 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 		setErrorToast(false);
 
 		return [
-			fetchData().catch(err => {
+			postData().catch(err => {
 				setErrorToast(Liferay.Language.get('your-request-has-failed'));
 
 				return Promise.reject(err);
 			}),
 		];
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fetchData, retry]);
+	}, [postData, retry]);
 
 	return (
 		<div className="fixed-height modal-metrics-content">

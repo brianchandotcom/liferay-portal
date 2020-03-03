@@ -15,9 +15,9 @@ import ClayModal, {useModal} from '@clayui/modal';
 import React, {useCallback, useContext, useMemo, useState} from 'react';
 
 import {useToaster} from '../../../../shared/components/toaster/hooks/useToaster.es';
-import {useFetch} from '../../../../shared/hooks/useFetch.es';
 import {useFilter} from '../../../../shared/hooks/useFilter.es';
 import {usePatch} from '../../../../shared/hooks/usePatch.es';
+import {usePost} from '../../../../shared/hooks/usePost.es';
 import {sub} from '../../../../shared/util/lang.es';
 import {InstanceListContext} from '../../store/InstanceListPageStore.es';
 import {ModalContext} from '../ModalContext.es';
@@ -89,7 +89,7 @@ const BulkReassignModal = () => {
 		url: 'workflow-tasks/assign-to-user',
 	});
 
-	const params = useMemo(() => {
+	const body = useMemo(() => {
 		const filterByUser = userIds && userIds.length;
 
 		const assigneeIds = filterByUser
@@ -101,10 +101,7 @@ const BulkReassignModal = () => {
 		const params = {
 			assigneeIds,
 			completed: false,
-			page: 1,
-			pageSize: -1,
 			searchByRoles,
-			sort: 'workflowInstanceId:asc',
 			taskNames,
 		};
 
@@ -123,16 +120,16 @@ const BulkReassignModal = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [taskNames, userIds, visible]);
 
-	const {fetchData} = useFetch({
+	const {postData} = usePost({
 		admin: true,
-		params,
-		url: '/workflow-tasks',
+		body,
+		url: '/workflow-tasks?page=1&pageSize=-1&sort=workflowInstanceId:asc',
 	});
 
 	const handleNext = useCallback(() => {
 		if (selectAll) {
 			setFetching(true);
-			fetchData()
+			postData()
 				.then(({items}) => {
 					setBulkModal({
 						...bulkModal,
@@ -153,7 +150,7 @@ const BulkReassignModal = () => {
 			setCurrentStep('selectAssignees');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [bulkModal, fetchData, selectAll]);
+	}, [bulkModal, postData, selectAll]);
 
 	const handlePrevious = () => {
 		setBulkModal({

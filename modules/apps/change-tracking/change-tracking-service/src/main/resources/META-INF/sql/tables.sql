@@ -41,6 +41,7 @@ create table CTEntry (
 create table CTMessage (
 	mvccVersion LONG default 0 not null,
 	ctMessageId LONG not null primary key,
+	companyId LONG,
 	ctCollectionId LONG,
 	messageContent TEXT null
 );

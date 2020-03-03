@@ -74,12 +74,14 @@ public class CTMessageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", ctMessageId=");
 		sb.append(ctMessageId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", ctCollectionId=");
 		sb.append(ctCollectionId);
 		sb.append(", messageContent=");
@@ -95,6 +97,7 @@ public class CTMessageCacheModel
 
 		ctMessageImpl.setMvccVersion(mvccVersion);
 		ctMessageImpl.setCtMessageId(ctMessageId);
+		ctMessageImpl.setCompanyId(companyId);
 		ctMessageImpl.setCtCollectionId(ctCollectionId);
 
 		if (messageContent == null) {
@@ -115,6 +118,8 @@ public class CTMessageCacheModel
 
 		ctMessageId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		ctCollectionId = objectInput.readLong();
 		messageContent = objectInput.readUTF();
 	}
@@ -124,6 +129,8 @@ public class CTMessageCacheModel
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(ctMessageId);
+
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(ctCollectionId);
 
@@ -137,6 +144,7 @@ public class CTMessageCacheModel
 
 	public long mvccVersion;
 	public long ctMessageId;
+	public long companyId;
 	public long ctCollectionId;
 	public String messageContent;
 

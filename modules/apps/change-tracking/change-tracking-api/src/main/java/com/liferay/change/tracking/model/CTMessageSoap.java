@@ -32,6 +32,7 @@ public class CTMessageSoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCtMessageId(model.getCtMessageId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setMessageContent(model.getMessageContent());
 
@@ -103,6 +104,14 @@ public class CTMessageSoap implements Serializable {
 		_ctMessageId = ctMessageId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getCtCollectionId() {
 		return _ctCollectionId;
 	}
@@ -121,6 +130,7 @@ public class CTMessageSoap implements Serializable {
 
 	private long _mvccVersion;
 	private long _ctMessageId;
+	private long _companyId;
 	private long _ctCollectionId;
 	private String _messageContent;
 

@@ -63,7 +63,8 @@ public class CTMessageModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctMessageId", Types.BIGINT},
-		{"ctCollectionId", Types.BIGINT}, {"messageContent", Types.CLOB}
+		{"companyId", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"messageContent", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -72,12 +73,13 @@ public class CTMessageModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctMessageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("messageContent", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTMessage (mvccVersion LONG default 0 not null,ctMessageId LONG not null primary key,ctCollectionId LONG,messageContent TEXT null)";
+		"create table CTMessage (mvccVersion LONG default 0 not null,ctMessageId LONG not null primary key,companyId LONG,ctCollectionId LONG,messageContent TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTMessage";
 
@@ -239,6 +241,9 @@ public class CTMessageModelImpl
 		attributeSetterBiConsumers.put(
 			"ctMessageId",
 			(BiConsumer<CTMessage, Long>)CTMessage::setCtMessageId);
+		attributeGetterFunctions.put("companyId", CTMessage::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<CTMessage, Long>)CTMessage::setCompanyId);
 		attributeGetterFunctions.put(
 			"ctCollectionId", CTMessage::getCtCollectionId);
 		attributeSetterBiConsumers.put(
@@ -274,6 +279,16 @@ public class CTMessageModelImpl
 	@Override
 	public void setCtMessageId(long ctMessageId) {
 		_ctMessageId = ctMessageId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -320,7 +335,7 @@ public class CTMessageModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, CTMessage.class.getName(), getPrimaryKey());
+			getCompanyId(), CTMessage.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -351,6 +366,7 @@ public class CTMessageModelImpl
 
 		ctMessageImpl.setMvccVersion(getMvccVersion());
 		ctMessageImpl.setCtMessageId(getCtMessageId());
+		ctMessageImpl.setCompanyId(getCompanyId());
 		ctMessageImpl.setCtCollectionId(getCtCollectionId());
 		ctMessageImpl.setMessageContent(getMessageContent());
 
@@ -430,6 +446,8 @@ public class CTMessageModelImpl
 		ctMessageCacheModel.mvccVersion = getMvccVersion();
 
 		ctMessageCacheModel.ctMessageId = getCtMessageId();
+
+		ctMessageCacheModel.companyId = getCompanyId();
 
 		ctMessageCacheModel.ctCollectionId = getCtCollectionId();
 
@@ -519,6 +537,7 @@ public class CTMessageModelImpl
 
 	private long _mvccVersion;
 	private long _ctMessageId;
+	private long _companyId;
 	private long _ctCollectionId;
 	private long _originalCtCollectionId;
 	private boolean _setOriginalCtCollectionId;

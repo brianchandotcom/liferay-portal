@@ -196,21 +196,18 @@
 	<td></td>
 </tr>
 
-<<<<<<< HEAD
 <tr>
 	<td>TEXT_BOX_FIELD</td>
 	<td>//p[contains(text(),'${key_fieldName}')]/..//input[1]</td>
 	<td></td>
 </tr>
 
-=======
 <!--OBJECT_FIELD-->
 <tr>
 	<td>OBJECT_FIELD_NAME</td>
-	<td>//span[contains(text(), '${key_fieldName}')]</td>
+	<td>//div[@class='custom-object-field autofit-row autofit-row-center field-type']//span[contains(text(), '${key_fieldName}')]</td>
 	<td></td>
 </tr>
->>>>>>> LRQA-54502 Added text field from object field
 
 <tr>
 	<td>OBJECT_FIELD_PLUS</td>

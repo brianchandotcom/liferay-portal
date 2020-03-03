@@ -24,7 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface InfoListProviderTracker {
 
-	public InfoListProvider getInfoListProvider(String className);
+	public InfoListProvider getInfoListProvider(String key);
 
 	public List<InfoListProvider> getInfoListProviders();
 

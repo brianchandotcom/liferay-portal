@@ -47,13 +47,11 @@ public class EditAccountUserAccountEntriesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		long accountUserId = ParamUtil.getLong(actionRequest, "accountUserId");
 		long[] addAccountEntryIds = ParamUtil.getLongValues(
 			actionRequest, "addAccountEntryIds");
-
 		long[] deleteAccountEntryIds = ParamUtil.getLongValues(
 			actionRequest, "deleteAccountEntryIds");
-
-		long accountUserId = ParamUtil.getLong(actionRequest, "accountUserId");
 
 		try (SafeClosable safeClosable =
 				ProxyModeThreadLocal.setWithSafeClosable(true)) {

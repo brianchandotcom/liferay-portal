@@ -24,6 +24,7 @@ import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -143,8 +144,22 @@ public class AddFragmentCompositionMVCActionCommand
 		}
 
 		return JSONUtil.put(
-			"fragmentCompositionKey",
-			fragmentComposition.getFragmentCompositionKey());
+			"fragmentCollectionId",
+			String.valueOf(fragmentCollection.getFragmentCollectionId())
+		).put(
+			"fragmentCollectionName", fragmentCollection.getName()
+		).put(
+			"fragmentEntryKey", fragmentComposition.getFragmentCompositionKey()
+		).put(
+			"groupId", fragmentComposition.getGroupId()
+		).put(
+			"imagePreviewURL",
+			fragmentComposition.getImagePreviewURL(themeDisplay)
+		).put(
+			"name", fragmentComposition.getName()
+		).put(
+			"type", ContentPageEditorConstants.TYPE_COMPOSITION
+		);
 	}
 
 	private FileEntry _addPreviewImage(

@@ -20,7 +20,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
-import {getChildSections, getSection} from '../utils/client.es';
+import {getSection} from '../utils/client.es';
 import {useDebounceCallback} from '../utils/utils.es';
 
 function getFilterOptions() {
@@ -56,14 +56,10 @@ export default withRouter(
 		const context = useContext(AppContext);
 
 		const [active, setActive] = useState(false);
-		const [section, setSection] = useState({});
-		const [sections, setSections] = useState([]);
 
 		const [debounceCallback] = useDebounceCallback(value => {
 			searchChange(value);
 		}, 500);
-
-		const filterOptions = getFilterOptions();
 
 		useEffect(() => {
 			getSection(sectionTitle, context.siteKey)
@@ -82,15 +78,14 @@ export default withRouter(
 				})
 				.then(([section, parentSection]) => {
 					section.parentSection = parentSection;
-					setSection(section);
+					context.setSection(section);
+				});
+		}, [context, context.siteKey, sectionTitle]);
 
-					return getChildSections(
-						section.parentSection.id,
-						context.siteKey
-					);
-				})
-				.then(data => setSections(data || []));
-		}, [context.siteKey, sectionId]);
+		const filterOptions = getFilterOptions();
+
+		const getParentSubSections = () =>
+			context.section.parentSection.messageBoardSections.items;
 
 		return (
 			<div className="autofit-padded-no-gutters autofit-row autofit-row-center">
@@ -100,35 +95,41 @@ export default withRouter(
 						onActiveChange={setActive}
 						trigger={
 							<div>
-								{section.parentSection && (
+								{context.section.parentSection && (
 									<>
-										{section.parentSection.title}
+										{context.section.parentSection.title}
 										{' : '}
-										{section.title ===
-										section.parentSection.title
+										{context.section.title ===
+										context.section.parentSection.title
 											? 'All'
-											: section.title}
+											: context.section.title}
 									</>
 								)}
 							</div>
 						}
 					>
 						<Link
-							to={`/questions/${(section.parentSection &&
-								section.parentSection.id) ||
-								sectionId}`}
+							to={`/questions/${(context.section.parentSection &&
+								context.section.parentSection.id) ||
+								sectionTitle}`}
 						>
 							<ClayDropDown.Help>{'All'}</ClayDropDown.Help>
 						</Link>
 						<ClayDropDown.ItemList>
 							<ClayDropDown.Group>
-								{sections.map((item, i) => (
-									<ClayDropDown.Item href={item.href} key={i}>
-										<Link to={'/questions/' + item.title}>
-											{item.title}
-										</Link>
-									</ClayDropDown.Item>
-								))}
+								{context.section &&
+									getParentSubSections().map((item, i) => (
+										<ClayDropDown.Item
+											href={item.href}
+											key={i}
+										>
+											<Link
+												to={'/questions/' + item.title}
+											>
+												{item.title}
+											</Link>
+										</ClayDropDown.Item>
+									))}
 							</ClayDropDown.Group>
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
@@ -191,7 +192,7 @@ export default withRouter(
 								displayType="primary"
 								onClick={() =>
 									history.push(
-										'/questions/' + sectionId + '/new'
+										`/questions/${sectionTitle}/new`
 									)
 								}
 							>

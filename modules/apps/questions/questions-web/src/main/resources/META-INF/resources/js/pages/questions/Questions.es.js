@@ -42,11 +42,14 @@ export default ({
 
 	const context = useContext(AppContext);
 
+	const sectionId = context.section.id;
+
 	useEffect(() => {
-		renderQuestions(loadThreads());
+		if (sectionId) {
+			renderQuestions(loadThreads());
+		}
 	}, [
 		creatorId,
-		context.siteKey,
 		page,
 		pageSize,
 		sectionId,
@@ -59,7 +62,10 @@ export default ({
 		questions
 			.then(data => setQuestions(data || []))
 			.then(() => setLoading(false))
-			.catch(_ => {
+			.catch(error => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
 				setLoading(false);
 				setError({message: 'Loading Questions', title: 'Error'});
 			});
@@ -73,19 +79,10 @@ export default ({
 				pageSize,
 				search,
 				sectionId,
-				siteKey: context.siteKey,
 				sort,
 				taxonomyCategoryId,
 			}),
-		[
-			context.siteKey,
-			creatorId,
-			page,
-			pageSize,
-			search,
-			sectionId,
-			taxonomyCategoryId,
-		]
+		[creatorId, page, pageSize, search, sectionId, taxonomyCategoryId]
 	);
 
 	const hasValidAnswer = question =>
@@ -94,36 +91,20 @@ export default ({
 		).length > 0;
 
 	const filterChange = type => {
-		if (type === 'modified') {
-			renderQuestions(loadThreads());
+		if (type === 'latest-edited') {
+			renderQuestions(loadThreads('dateModified:desc'));
 		}
 		else if (type === 'week') {
 			const date = new Date();
 			date.setDate(date.getDate() - 7);
 
-			renderQuestions(
-				getRankedThreads(
-					date,
-					page,
-					pageSize,
-					sectionId,
-					context.siteKey
-				)
-			);
+			renderQuestions(getRankedThreads(date, page, pageSize, sectionId));
 		}
 		else if (type === 'month') {
 			const date = new Date();
 			date.setDate(date.getDate() - 31);
 
-			renderQuestions(
-				getRankedThreads(
-					date,
-					page,
-					pageSize,
-					sectionId,
-					context.siteKey
-				)
-			);
+			renderQuestions(getRankedThreads(date, page, pageSize, sectionId));
 		}
 		else {
 			renderQuestions(loadThreads('dateCreated:desc'));

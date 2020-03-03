@@ -95,10 +95,15 @@ export const createComment = (articleBody, messageBoardMessageId) =>
             }
         }`);
 
-export const createQuestion = (articleBody, headline, siteKey, tags) =>
+export const createQuestion = (
+	articleBody,
+	headline,
+	messageBoardSectionId,
+	tags
+) =>
 	request(gql`
         mutation {
-            createSiteMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, encodingFormat: "html", headline: ${headline}, showAsQuestion: true, taxonomyCategoryIds: ${tags}, viewableBy: ANYONE}, siteKey: ${siteKey}){
+            createMessageBoardSectionMessageBoardThread(messageBoardSectionId: ${messageBoardSectionId}, messageBoardThread: {articleBody: ${articleBody}, encodingFormat: "html", headline: ${headline}, showAsQuestion: true, taxonomyCategoryIds: ${tags}, viewableBy: ANYONE}){
                 articleBody
                 headline
                 taxonomyCategoryBriefs {
@@ -361,12 +366,9 @@ export const getThreads = ({
 	pageSize = 30,
 	search = '',
 	sectionId,
-	siteKey,
-	sort = 'dateModified:desc',
+	sort = 'dateCreated:desc',
 	taxonomyCategoryId = '',
 }) => {
-	const filterSections = `title eq '${sectionId}' or id eq '${sectionId}'`;
-
 	let filter = '';
 
 	if (taxonomyCategoryId) {
@@ -378,43 +380,39 @@ export const getThreads = ({
 
 	return request(gql`
         query {
-			messageBoardSections(flatten: true, siteKey: ${siteKey}, filter: ${filterSections}){
+			messageBoardSectionMessageBoardThreads(filter: ${filter}, messageBoardSectionId: ${sectionId}, page: ${page}, pageSize: ${pageSize}, search: ${search}, sort: ${sort}){
 				items {
-					messageBoardThreads(filter: ${filter}, page: ${page}, pageSize: ${pageSize}, search: ${search}, sort: ${sort}){
+					aggregateRating {
+						ratingAverage
+						ratingCount
+						ratingValue
+					} 
+					articleBody
+					creator {
+						id
+						image
+						name
+					} 
+					dateModified
+					friendlyUrlPath
+					headline
+					id 
+					messageBoardMessages {
 						items {
-							aggregateRating {
-								ratingAverage
-								ratingCount
-								ratingValue
-							} 
-							articleBody
-							creator {
-								id
-								image
-								name
-							} 
-							dateModified
-							friendlyUrlPath
-							headline
-							id 
-							messageBoardMessages {
-								items {
-									showAsAnswer
-								}
-							}
-							taxonomyCategoryBriefs {
-								taxonomyCategoryId
-								taxonomyCategoryName
-							} 
-							viewCount
+							showAsAnswer
 						}
-						page 
-						pageSize 
-						totalCount
 					}
+					taxonomyCategoryBriefs {
+						taxonomyCategoryId
+						taxonomyCategoryName
+					} 
+					viewCount
 				}
+				page 
+				pageSize 
+				totalCount
 			}
-        }`).then(data => data['items'][0]['messageBoardThreads']);
+        }`);
 };
 
 export const getSection = (title, siteKey) => {
@@ -425,6 +423,13 @@ export const getSection = (title, siteKey) => {
 			messageBoardSections(filter: ${filter}, flatten:true, pageSize: 1, siteKey: ${siteKey}) {
 				items {
 					id
+					messageBoardSections {
+						items {
+							id
+							parentMessageBoardSectionId
+							title
+						}
+					}
 					parentMessageBoardSectionId
 					title
 				}
@@ -433,33 +438,16 @@ export const getSection = (title, siteKey) => {
 	`).then(data => data.items[0]);
 };
 
-export const getChildSections = sectionId =>
-	request(gql`
-		query{
-			messageBoardSectionMessageBoardSections(parentMessageBoardSectionId: ${sectionId}){
-				items {
-					id
-					parentMessageBoardSectionId
-					title
-				}
-			}
-		}
-	`).then(data => data['items']);
-
 export const getRankedThreads = (
 	dateModified,
 	page = 1,
 	pageSize = 20,
 	sectionId,
-	siteKey,
 	sort = ''
 ) =>
-	getSection(sectionId, siteKey).then(section =>
-		request(gql`
+	request(gql`
         query {
-			messageBoardThreadsRanked(dateModified: ${dateModified.toISOString()}, messageBoardSectionId: ${
-			section.id
-		}, page: ${page}, pageSize: ${pageSize}, sort: ${sort}){
+			messageBoardThreadsRanked(dateModified: ${dateModified.toISOString()}, messageBoardSectionId: ${sectionId}, page: ${page}, pageSize: ${pageSize}, sort: ${sort}){
 				items {
 					aggregateRating {
 						ratingAverage
@@ -489,8 +477,7 @@ export const getRankedThreads = (
 				pageSize
 				totalCount
         	}
-		}`)
-	);
+		}`);
 
 export const getRelatedThreads = (search = '', siteKey) =>
 	request(gql`

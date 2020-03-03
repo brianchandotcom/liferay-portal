@@ -26,9 +26,11 @@ import DataLayoutBuilderDragAndDrop from './drag-and-drop/DataLayoutBuilderDragA
 import DragLayer from './drag-and-drop/DragLayer.es';
 import * as DragTypes from './drag-and-drop/dragTypes.es';
 import withDragAndDropContext from './drag-and-drop/withDragAndDropContext.es';
+import * as DataDefinitionUtils from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
 
 export {
+	DataDefinitionUtils,
 	DataLayoutBuilderActions,
 	DataLayoutBuilderContext,
 	DataLayoutBuilderContextProvider,

@@ -5616,7 +5616,7 @@ public class AssetTagPersistenceImpl
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("assetCount");
+		ctMergeColumnNames.add("assetCount");
 		ctStrictColumnNames.add("lastPublishDate");
 		ctStrictColumnNames.add("entries");
 

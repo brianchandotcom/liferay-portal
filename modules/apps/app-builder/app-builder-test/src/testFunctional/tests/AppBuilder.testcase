@@ -1696,10 +1696,15 @@ definition {
 			fieldType = "${myTextFieldName_2}",
 			tableViewName = "${myTableViewName_2}");
 
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName_1}");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName_2}");
+
 		AppBuilderAdmin.switchTab(tabName = "Apps");
 		AppBuilderAdmin.add();
 		AppBuilderAdmin.setName(title = "${myAppName_1}");
 		App.selectFormView(formViewName = "${myFormViewName_1}");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName_1}");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName_2}");
 		App.selectTableView(tableViewName = "${myTableViewName_1}");
 		App.toggleDeploy(deployOption = "Product Menu");
 		App.openProductMenuPlaceItDropdown();
@@ -1739,6 +1744,8 @@ definition {
 
 		AppBuilderAdmin.save();
 
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 1");
+
 		AppBuilderAdmin.gotoCustomAppCP(
 			panel = "Control Panel",
 			portlet = "${myAppName_2}");
@@ -1750,6 +1757,8 @@ definition {
 			fieldValue = "Content from Form 2");
 
 		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
 
 		AppBuilderAdmin.gotoCustomAppCP(
 			panel = "Control Panel",

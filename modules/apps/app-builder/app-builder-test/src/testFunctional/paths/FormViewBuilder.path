@@ -72,13 +72,7 @@
 
 <tr>
 	<td>SWITCHER_OPTION</td>
-	<td>//div[contains(@data-field-name,'${key_switcherOption}')]//span[@class='toggle-switch-bar']</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>SIDEBAR_BASIC_REQUIRED</td>
-	<td>//div[contains(@data-field-name,'required')]//span[@class='toggle-switch-bar']</td>
+	<td>//div[contains(@data-field-name,'${key_switcherOption}')]//input[@class='toggle-switch-check']</td>
 	<td></td>
 </tr>
 

@@ -52,10 +52,10 @@ definition {
 		AppBuilderAdmin.gotoBack();
 	}
 
-	macro clickOnSwitcher {
-		Click(
+	macro checkSwitcher {
+		Check.checkToggleSwitch(
 			key_switcherOption = "${propertyName}",
-			locator1 = "FormViewBuilder#SIDEBAR_BASIC_REQUIRED");
+			locator1 = "FormViewBuilder#SWITCHER_OPTION");
 	}
 
 	macro closeSidebar() {
@@ -177,7 +177,7 @@ definition {
 	}
 
 	macro setFieldRequired {
-		FormViewBuilder.clickOnSwitcher(propertyName = "required");
+		FormViewBuilder.checkSwitcher(propertyName = "required");
 	}
 
 	macro setName {

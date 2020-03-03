@@ -21,51 +21,6 @@ export const UPDATE_FIELD_TYPES = 'UPDATE_FIELD_TYPES';
 export const UPDATE_IDS = 'UPDATE_IDS';
 export const UPDATE_PAGES = 'UPDATE_PAGES';
 
-export const dropCustomObjectField = ({
-	dataDefinition,
-	dataDefinitionFieldName,
-	dataLayoutBuilder,
-	...payload
-}) => {
-	const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-		({name}) => name === dataDefinitionFieldName
-	);
-	const fieldType = dataLayoutBuilder.getFieldTypes().find(({name}) => {
-		return name === dataDefinitionField.fieldType;
-	});
-	const settingsContext = dataLayoutBuilder.getFieldSettingsContext(
-		dataDefinitionField
-	);
-	const {label} = dataDefinitionField;
-
-	return {
-		...payload,
-		fieldType: {
-			...fieldType,
-			label: label[themeDisplay.getLanguageId()],
-			settingsContext,
-		},
-	};
-};
-
-export const dropLayoutBuilderField = ({
-	dataLayoutBuilder,
-	fieldTypeName,
-	...payload
-}) => {
-	const fieldType = dataLayoutBuilder.getFieldTypes().find(({name}) => {
-		return name === fieldTypeName;
-	});
-
-	return {
-		...payload,
-		fieldType: {
-			...fieldType,
-			editable: true,
-		},
-	};
-};
-
 export const deleteDefinitionField = fieldName => ({
 	payload: {fieldName},
 	type: DataLayoutBuilderActions.DELETE_DATA_DEFINITION_FIELD,

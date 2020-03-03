@@ -24,7 +24,6 @@ import React, {useContext} from 'react';
 import useDoubleClick from '../../hooks/useDoubleClick.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
-import {dropCustomObjectField} from './actions.es';
 import useDeleteDefinitionField from './useDeleteDefinitionField.es';
 import useDeleteDefinitionFieldModal from './useDeleteDefinitionFieldModal.es';
 
@@ -89,7 +88,7 @@ export default ({keywords}) => {
 
 		dataLayoutBuilder.dispatch(
 			'fieldAdded',
-			dropCustomObjectField({
+			DataLayoutBuilderActions.dropCustomObjectField({
 				addedToPlaceholder: true,
 				dataDefinition,
 				dataDefinitionFieldName: name,
@@ -99,7 +98,6 @@ export default ({keywords}) => {
 					pageIndex: activePage,
 					rowIndex: pages[activePage].rows.length,
 				},
-				skipFieldNameGeneration: true,
 			})
 		);
 	};

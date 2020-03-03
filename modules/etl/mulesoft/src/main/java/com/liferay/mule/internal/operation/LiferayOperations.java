@@ -94,14 +94,7 @@ public class LiferayOperations {
 
 		liferayResponseValidator.validate(httpResponse);
 
-		String responseBody = getResponseBody(httpResponse);
-
-		logHttpResponse(httpResponse.getStatusCode(), responseBody);
-
-		return Result.<String, Void>builder(
-		).output(
-			responseBody
-		).build();
+		return geResult(httpResponse);
 	}
 
 	@DisplayName("Get Records")
@@ -132,14 +125,7 @@ public class LiferayOperations {
 
 		liferayResponseValidator.validate(httpResponse);
 
-		String responseBody = getResponseBody(httpResponse);
-
-		logHttpResponse(httpResponse.getStatusCode(), responseBody);
-
-		return Result.<String, Void>builder(
-		).output(
-			responseBody
-		).build();
+		return geResult(httpResponse);
 	}
 
 	@DisplayName("Update Record")
@@ -173,14 +159,7 @@ public class LiferayOperations {
 
 		liferayResponseValidator.validate(httpResponse);
 
-		String responseBody = getResponseBody(httpResponse);
-
-		logHttpResponse(httpResponse.getStatusCode(), responseBody);
-
-		return Result.<String, Void>builder(
-		).output(
-			responseBody
-		).build();
+		return geResult(httpResponse);
 	}
 
 	@DisplayName("Create Record")
@@ -214,9 +193,15 @@ public class LiferayOperations {
 
 		liferayResponseValidator.validate(httpResponse);
 
+		return geResult(httpResponse);
+	}
+
+	private Result<String, Void> geResult(HttpResponse httpResponse) {
 		String responseBody = getResponseBody(httpResponse);
 
-		logHttpResponse(httpResponse.getStatusCode(), responseBody);
+		logger.debug(
+			"Received response with status {} and message {}",
+			httpResponse.getStatusCode(), responseBody);
 
 		return Result.<String, Void>builder(
 		).output(
@@ -238,12 +223,6 @@ public class LiferayOperations {
 			"Send {} request to endpoint {}, with path parameters {} and " +
 				"query parameters {}",
 			method, endpoint, pathParams, queryParams);
-	}
-
-	private void logHttpResponse(int statusCode, String message) {
-		logger.debug(
-			"Received response with status {} and message {}", statusCode,
-			message);
 	}
 
 	private static final Logger logger = LoggerFactory.getLogger(

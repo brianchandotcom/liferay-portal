@@ -272,7 +272,7 @@ paths:
                     description:
                         "Account successfully replaced"
             tags: ["Account"]
-    "/accounts/{accountId}/roles":
+    "/accounts/{accountId}/account-roles":
         get:
             # @review
             description:
@@ -351,7 +351,7 @@ paths:
                     description:
                         ""
             tags: ["AccountRole"]
-    "/accounts/{accountId}/users":
+    "/accounts/{accountId}/account-users":
         get:
             # @review
             description:

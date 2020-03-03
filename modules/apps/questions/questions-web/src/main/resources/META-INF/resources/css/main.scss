@@ -108,3 +108,7 @@
 .questions-navigation {
 	border-bottom: 1px solid $secondary-l3;
 }
+
+.questions-disabled-link {
+	pointer-events: none;
+}

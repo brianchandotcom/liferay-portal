@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.web.internal.display.context;
 
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -347,7 +348,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 			if ((modelResourceRole.getType() ==
 					RoleConstants.TYPE_ORGANIZATION) ||
-				(modelResourceRole.getType() == RoleConstants.TYPE_SITE)) {
+				(modelResourceRole.getType() == RoleConstants.TYPE_SITE) ||
+				(modelResourceRole.getType() == RoleConstants.TYPE_DEPOT)) {
 
 				filterGroupRoles = true;
 			}
@@ -408,6 +410,9 @@ public class PortletConfigurationPermissionsDisplayContext {
 		excludedRoleNames.add(RoleConstants.ADMINISTRATOR);
 
 		if (filterGroupRoles) {
+			excludedRoleNames.add(
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
+			excludedRoleNames.add(DepotRolesConstants.ASSET_LIBRARY_OWNER);
 			excludedRoleNames.add(RoleConstants.ORGANIZATION_ADMINISTRATOR);
 			excludedRoleNames.add(RoleConstants.ORGANIZATION_OWNER);
 			excludedRoleNames.add(RoleConstants.SITE_ADMINISTRATOR);

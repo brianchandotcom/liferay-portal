@@ -94,7 +94,6 @@ const Numeric = ({
 			{...otherProps}
 			aria-label="numeric"
 			disabled={disabled}
-			name={name}
 			onChange={event => {
 				const {value} = event.target;
 
@@ -106,6 +105,7 @@ const Numeric = ({
 				onChange(event);
 			}}
 			ref={inputRef}
+			type="text"
 			value={value}
 		/>
 	);

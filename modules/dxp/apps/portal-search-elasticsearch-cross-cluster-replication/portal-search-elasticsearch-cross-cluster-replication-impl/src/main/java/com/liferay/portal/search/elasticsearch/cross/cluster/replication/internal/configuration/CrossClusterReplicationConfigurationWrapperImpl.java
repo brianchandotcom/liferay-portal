@@ -41,6 +41,11 @@ public class CrossClusterReplicationConfigurationWrapperImpl
 	}
 
 	@Override
+	public String getRemoteClusterAlias() {
+		return crossClusterReplicationConfiguration.remoteClusterAlias();
+	}
+
+	@Override
 	public boolean isCCREnabled() {
 		return crossClusterReplicationConfiguration.ccrEnabled();
 	}

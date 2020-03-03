@@ -42,4 +42,10 @@ public interface CrossClusterReplicationConfiguration {
 	)
 	public String ccrLocalClusterConnectionId();
 
+	@Meta.AD(
+		deflt = "leader", description = "remote-cluster-alias-help",
+		name = "remote-cluster-alias", required = false
+	)
+	public String remoteClusterAlias();
+
 }

@@ -26,6 +26,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListPermission;
+import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -58,8 +59,10 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetListDisplayContext {
 
 	public AssetListDisplayContext(
+		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_assetRendererFactoryClassProvider = assetRendererFactoryClassProvider;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -241,7 +244,10 @@ public class AssetListDisplayContext {
 	}
 
 	public String getClassName(AssetRendererFactory<?> assetRendererFactory) {
-		String className = assetRendererFactory.getClassName();
+		Class<? extends AssetRendererFactory> clazz =
+			_assetRendererFactoryClassProvider.getClass(assetRendererFactory);
+
+		String className = clazz.getName();
 
 		int pos = className.lastIndexOf(StringPool.PERIOD);
 
@@ -428,6 +434,8 @@ public class AssetListDisplayContext {
 	private AssetListEntry _assetListEntry;
 	private Long _assetListEntryId;
 	private Integer _assetListEntryType;
+	private final AssetRendererFactoryClassProvider
+		_assetRendererFactoryClassProvider;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;

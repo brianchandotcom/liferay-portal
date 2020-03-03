@@ -25,6 +25,7 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.util.AssetEntryQueryProcessor;
+import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -216,7 +217,10 @@ public class AssetPublisherWebUtil {
 	}
 
 	public String getClassName(AssetRendererFactory<?> assetRendererFactory) {
-		String className = assetRendererFactory.getClassName();
+		Class<? extends AssetRendererFactory> clazz =
+			_assetRendererFactoryClassProvider.getClass(assetRendererFactory);
+
+		String className = clazz.getName();
 
 		int pos = className.lastIndexOf(StringPool.PERIOD);
 
@@ -651,6 +655,10 @@ public class AssetPublisherWebUtil {
 
 	private AssetPublisherPortletInstanceConfiguration
 		_assetPublisherPortletInstanceConfiguration;
+
+	@Reference
+	private AssetRendererFactoryClassProvider
+		_assetRendererFactoryClassProvider;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

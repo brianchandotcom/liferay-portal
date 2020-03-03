@@ -32,6 +32,7 @@ import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
+import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -105,9 +106,11 @@ import javax.servlet.http.HttpServletRequest;
 public class EditAssetListDisplayContext {
 
 	public EditAssetListDisplayContext(
+		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider,
 		ItemSelector itemSelector, PortletRequest portletRequest,
 		PortletResponse portletResponse, UnicodeProperties properties) {
 
+		_assetRendererFactoryClassProvider = assetRendererFactoryClassProvider;
 		_itemSelector = itemSelector;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
@@ -448,7 +451,10 @@ public class EditAssetListDisplayContext {
 	}
 
 	public String getClassName(AssetRendererFactory<?> assetRendererFactory) {
-		String className = assetRendererFactory.getClassName();
+		Class<? extends AssetRendererFactory> clazz =
+			_assetRendererFactoryClassProvider.getClass(assetRendererFactory);
+
+		String className = clazz.getName();
 
 		int pos = className.lastIndexOf(StringPool.PERIOD);
 
@@ -1140,6 +1146,8 @@ public class EditAssetListDisplayContext {
 	private List<AssetListEntrySegmentsEntryRel>
 		_assetListEntrySegmentsEntryRels;
 	private Integer _assetListEntryType;
+	private final AssetRendererFactoryClassProvider
+		_assetRendererFactoryClassProvider;
 	private long[] _availableClassNameIds;
 	private List<SegmentsEntry> _availableSegmentsEntries;
 	private long[] _classNameIds;

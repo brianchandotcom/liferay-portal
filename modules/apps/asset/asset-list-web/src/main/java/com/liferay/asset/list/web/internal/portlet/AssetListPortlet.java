@@ -22,6 +22,7 @@ import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext;
 import com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext;
+import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -196,7 +197,9 @@ public class AssetListPortlet extends MVCPortlet {
 			_assetListAssetEntryProvider);
 
 		AssetListDisplayContext assetListDisplayContext =
-			new AssetListDisplayContext(renderRequest, renderResponse);
+			new AssetListDisplayContext(
+				_assetRendererFactoryClassProvider, renderRequest,
+				renderResponse);
 
 		renderRequest.setAttribute(
 			AssetListWebKeys.ASSET_LIST_DISPLAY_CONTEXT,
@@ -204,7 +207,8 @@ public class AssetListPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT,
 			new EditAssetListDisplayContext(
-				_itemSelector, renderRequest, renderResponse,
+				_assetRendererFactoryClassProvider, _itemSelector,
+				renderRequest, renderResponse,
 				_getUnicodeProperties(assetListDisplayContext)));
 
 		renderRequest.setAttribute(
@@ -246,6 +250,10 @@ public class AssetListPortlet extends MVCPortlet {
 
 	@Reference
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
+
+	@Reference
+	private AssetRendererFactoryClassProvider
+		_assetRendererFactoryClassProvider;
 
 	@Reference
 	private ItemSelector _itemSelector;

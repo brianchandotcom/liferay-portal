@@ -35,6 +35,7 @@ import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -498,25 +499,31 @@ public class AssetListAssetEntryProviderImpl
 			}
 		}
 
-		String classSimpleName = assetRendererFactory.getClassSimpleName();
+		Class<? extends AssetRendererFactory> clazz =
+			_assetRendererFactoryClassProvider.getClass(assetRendererFactory);
 
 		boolean anyAssetType = GetterUtil.getBoolean(
 			properties.getProperty(
-				"anyClassType" + classSimpleName, Boolean.TRUE.toString()));
+				"anyClassType" + clazz.getSimpleName(),
+				Boolean.TRUE.toString()));
 
 		if (anyAssetType) {
 			return availableClassTypeIds;
 		}
 
 		long anyClassTypeId = GetterUtil.getLong(
-			properties.getProperty("anyClassType" + classSimpleName, null), -1);
+			properties.getProperty(
+				"anyClassType" + clazz.getSimpleName(), null),
+			-1);
 
 		if (anyClassTypeId > -1) {
 			return new long[] {anyClassTypeId};
 		}
 
 		long[] classTypeIds = StringUtil.split(
-			properties.getProperty("classTypeIds" + classSimpleName, null), 0L);
+			properties.getProperty(
+				"classTypeIds" + clazz.getSimpleName(), null),
+			0L);
 
 		if (classTypeIds != null) {
 			return classTypeIds;
@@ -919,6 +926,10 @@ public class AssetListAssetEntryProviderImpl
 	@Reference
 	private AssetListEntrySegmentsEntryRelLocalService
 		_assetListEntrySegmentsEntryRelLocalService;
+
+	@Reference
+	private AssetRendererFactoryClassProvider
+		_assetRendererFactoryClassProvider;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

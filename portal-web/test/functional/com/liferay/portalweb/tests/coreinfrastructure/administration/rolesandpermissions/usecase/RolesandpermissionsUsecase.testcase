@@ -2166,7 +2166,7 @@ definition {
 			subItemList = "General Permissions,Users,Sites,Workflow");
 
 		Role.viewPermissionSubdirectory(
-			navItem = "Site Administration",
+			navItem = "Site and Asset Library Administration",
 			subItemList = "Site Builder,Content & Data,Recycle Bin,People,Publishing");
 
 		Role.viewPermissionSubdirectory(

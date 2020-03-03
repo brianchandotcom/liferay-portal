@@ -81,6 +81,10 @@ public class RoleModelListener extends BaseModelListener<Role> {
 
 	@Override
 	public void onAfterRemove(Role role) throws ModelListenerException {
+		if (role == null) {
+			return;
+		}
+
 		AccountRole accountRole =
 			_accountRoleLocalService.fetchAccountRoleByRoleId(role.getRoleId());
 

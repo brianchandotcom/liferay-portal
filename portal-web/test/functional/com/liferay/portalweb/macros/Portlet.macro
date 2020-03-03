@@ -242,10 +242,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE",
 			value1 = "${portletName}");
-
-		AssertTextEquals(
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE",
-			value1 = "${portletName}");
 	}
 
 	macro expandTree {

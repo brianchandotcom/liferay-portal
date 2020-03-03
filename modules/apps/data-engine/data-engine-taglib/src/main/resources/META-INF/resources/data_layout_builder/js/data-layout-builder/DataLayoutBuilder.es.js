@@ -134,49 +134,6 @@ class DataLayoutBuilder extends React.Component {
 		Liferay.destroyComponent(dataLayoutBuilderId);
 	}
 
-	getDefinitionField({nestedFields = [], settingsContext}) {
-		const fieldConfig = {
-			customProperties: {},
-			nestedDataDefinitionFields: nestedFields.map(nestedField =>
-				this.getDefinitionField(nestedField)
-			),
-		};
-		const settingsContextVisitor = new PagesVisitor(settingsContext.pages);
-
-		settingsContextVisitor.mapFields(
-			({fieldName, localizable, localizedValue, value}) => {
-				if (fieldName === 'predefinedValue') {
-					fieldName = 'defaultValue';
-				}
-				else if (fieldName === 'type') {
-					fieldName = 'fieldType';
-				}
-
-				if (localizable) {
-					if (this._isCustomProperty(fieldName)) {
-						fieldConfig.customProperties[
-							fieldName
-						] = localizedValue;
-					}
-					else {
-						fieldConfig[fieldName] = localizedValue;
-					}
-				}
-				else {
-					if (this._isCustomProperty(fieldName)) {
-						fieldConfig.customProperties[fieldName] = value;
-					}
-					else {
-						fieldConfig[fieldName] = value;
-					}
-				}
-			},
-			false
-		);
-
-		return fieldConfig;
-	}
-
 	getDefinitionAndLayout(pages) {
 		const {
 			defaultLanguageId = themeDisplay.getDefaultLanguageId(),
@@ -224,6 +181,67 @@ class DataLayoutBuilder extends React.Component {
 				paginationMode: 'wizard',
 			},
 		};
+	}
+
+	getDefinitionField({nestedFields = [], settingsContext}) {
+		const fieldConfig = {
+			customProperties: {},
+			nestedDataDefinitionFields: nestedFields.map(nestedField =>
+				this.getDefinitionField(nestedField)
+			),
+		};
+		const settingsContextVisitor = new PagesVisitor(settingsContext.pages);
+
+		settingsContextVisitor.mapFields(
+			({dataType, fieldName, localizable, localizedValue, value}) => {
+				if (fieldName === 'predefinedValue') {
+					fieldName = 'defaultValue';
+				}
+				else if (fieldName === 'type') {
+					fieldName = 'fieldType';
+				}
+
+				if (localizable) {
+					if (this._isCustomProperty(fieldName)) {
+						fieldConfig.customProperties[
+							fieldName
+						] = localizedValue;
+					}
+					else {
+						fieldConfig[fieldName] = localizedValue;
+					}
+				}
+				else {
+					if (this._isCustomProperty(fieldName)) {
+						fieldConfig.customProperties[
+							fieldName
+						] = this.getDefinitionFieldFormattedValue(
+							dataType,
+							value
+						);
+					}
+					else {
+						fieldConfig[
+							fieldName
+						] = this.getDefinitionFieldFormattedValue(
+							dataType,
+							value
+						);
+					}
+				}
+			},
+			false
+		);
+
+		return fieldConfig;
+	}
+
+	getDefinitionFieldFormattedValue(dataType, value) {
+		if (dataType === 'json' && typeof value !== 'string') {
+			return JSON.stringify(value);
+		}
+
+		return value;
 	}
 
 	getFieldSettingsContext(dataDefinitionField) {

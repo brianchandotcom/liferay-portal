@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.internal.importer.helper;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
@@ -51,13 +52,14 @@ public class FragmentLayoutStructureItemHelper
 	public LayoutStructureItem addLayoutStructureItem(
 			FragmentCollectionContributorTracker
 				fragmentCollectionContributorTracker,
+			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
 			Layout layout, LayoutStructure layoutStructure,
 			PageElement pageElement, String parentItemId, int position)
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			fragmentCollectionContributorTracker, layout, pageElement,
-			position);
+			fragmentCollectionContributorTracker,
+			fragmentEntryProcessorRegistry, layout, pageElement, position);
 
 		if (fragmentEntryLink == null) {
 			return null;
@@ -70,6 +72,7 @@ public class FragmentLayoutStructureItemHelper
 	private FragmentEntryLink _addFragmentEntryLink(
 			FragmentCollectionContributorTracker
 				fragmentCollectionContributorTracker,
+			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
 			Layout layout, PageElement pageElement, int position)
 		throws Exception {
 
@@ -107,21 +110,27 @@ public class FragmentLayoutStructureItemHelper
 			configuration = fragmentEntry.getConfiguration();
 		}
 
-		JSONObject jsonObject = JSONUtil.put(
-			"com.liferay.fragment.entry.processor.background.image." +
-				"BackgroundImageFragmentEntryProcessor",
-			JSONFactoryUtil.createJSONObject()
-		).put(
-			"com.liferay.fragment.entry.processor.editable." +
-				"EditableFragmentEntryProcessor",
-			_createEditablesValuesJSONObject(
-				(List<Object>)definitionMap.get("fragmentFields"))
-		).put(
-			"com.liferay.fragment.entry.processor.freemarker." +
-				"FreeMarkerFragmentEntryProcessor",
-			_createConfigurationValuesJSONObject(
-				(Map<String, Object>)definitionMap.get("fragmentConfig"))
-		);
+		JSONObject defaultValueJSONObject =
+			fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
+				html, configuration);
+
+		JSONObject jsonObject = JSONUtil.merge(
+			JSONUtil.put(
+				"com.liferay.fragment.entry.processor.background.image." +
+					"BackgroundImageFragmentEntryProcessor",
+				JSONFactoryUtil.createJSONObject()
+			).put(
+				"com.liferay.fragment.entry.processor.editable." +
+					"EditableFragmentEntryProcessor",
+				_createEditablesValuesJSONObject(
+					(List<Object>)definitionMap.get("fragmentFields"))
+			).put(
+				"com.liferay.fragment.entry.processor.freemarker." +
+					"FreeMarkerFragmentEntryProcessor",
+				_createConfigurationValuesJSONObject(
+					(Map<String, Object>)definitionMap.get("fragmentConfig"))
+			),
+			defaultValueJSONObject);
 
 		try {
 			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
@@ -206,10 +215,7 @@ public class FragmentLayoutStructureItemHelper
 			JSONObject localizationJSONObject = _createLocalizationJSONObject(
 				(Map<String, Object>)valueMap.get("text"));
 
-			JSONObject segmentExperienceJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			segmentExperienceJSONObject.put(
+			JSONObject segmentExperienceJSONObject = JSONUtil.put(
 				SegmentsExperienceConstants.ID_PREFIX +
 					SegmentsExperienceConstants.ID_DEFAULT,
 				localizationJSONObject);

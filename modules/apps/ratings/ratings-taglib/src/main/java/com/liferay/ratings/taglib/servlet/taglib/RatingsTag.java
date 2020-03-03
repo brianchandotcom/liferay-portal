@@ -109,6 +109,9 @@ public class RatingsTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:classPK", String.valueOf(_classPK));
 
+			httpServletRequest.setAttribute(
+				"liferay-ratings:ratings:data", _getData(httpServletRequest));
+
 			if (_inTrash != null) {
 				httpServletRequest.setAttribute(
 					"liferay-ratings:ratings:inTrash", _inTrash);
@@ -116,9 +119,6 @@ public class RatingsTag extends IncludeTag {
 
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:type", _type);
-
-			httpServletRequest.setAttribute(
-				"liferay-ratings:ratings:data", _getData(httpServletRequest));
 
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:url", _url);
@@ -131,11 +131,11 @@ public class RatingsTag extends IncludeTag {
 	private Map<String, Object> _getData(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		boolean inTrash = _isInTrash();
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		boolean inTrash = _isInTrash();
 
 		return HashMapBuilder.<String, Object>put(
 			"className", _className

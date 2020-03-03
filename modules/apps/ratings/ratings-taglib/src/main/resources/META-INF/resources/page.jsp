@@ -19,9 +19,9 @@
 <%
 String className = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:className"));
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ratings:ratings:classPK"));
+Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ratings:ratings:data");
 Boolean inTrash = (Boolean)request.getAttribute("liferay-ui:ratings:inTrash");
 String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:type"));
-Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ratings:ratings:data");
 %>
 
 <liferay-util:html-top

@@ -17,7 +17,6 @@ package com.liferay.asset.internal.change.tracking.listener;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTEventException;
 import com.liferay.change.tracking.listener.CTEventListener;
 import com.liferay.change.tracking.model.CTCollection;
@@ -53,13 +52,8 @@ public class AssetTagCTEventListener implements CTEventListener {
 	}
 
 	@Override
-	public void onAfterPublish(long ctCollectionId) throws CTEventException {
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
-
-			_recalculateAssetCount(ctCollectionId);
-		}
+	public void onBeforePublish(long ctCollectionId) throws CTEventException {
+		_recalculateAssetCount(ctCollectionId);
 	}
 
 	private void _recalculateAssetCount(long ctCollectionId)

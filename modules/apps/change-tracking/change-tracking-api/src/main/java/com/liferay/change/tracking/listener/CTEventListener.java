@@ -31,6 +31,10 @@ public interface CTEventListener {
 		throws CTEventException {
 	}
 
+	public default void onBeforePublish(long ctCollectionId)
+		throws CTEventException {
+	}
+
 	public default void onBeforeRemove(long ctCollectionId)
 		throws CTEventException {
 	}

@@ -134,6 +134,22 @@ public class CTServiceRegistry {
 		}
 	}
 
+	public void onBeforePublish(long ctCollectionId) {
+		for (CTEventListener ctEventListener : _serviceTrackerList) {
+			try {
+				ctEventListener.onBeforePublish(ctCollectionId);
+			}
+			catch (CTEventException ctEventException) {
+				_log.error(
+					StringBundler.concat(
+						"On before publish callback failure for change ",
+						"tracking collection ", ctCollectionId, " by ",
+						ctEventListener),
+					ctEventException);
+			}
+		}
+	}
+
 	public void onBeforeRemove(long ctCollectionId) {
 		for (CTEventListener ctEventListener : _serviceTrackerList) {
 			try {

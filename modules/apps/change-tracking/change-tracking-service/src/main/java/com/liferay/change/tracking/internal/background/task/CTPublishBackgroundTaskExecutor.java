@@ -168,8 +168,6 @@ public class CTPublishBackgroundTaskExecutor
 				ctCollectionId, _multiVMPool.getPortalCacheManager());
 		}
 
-		_ctServiceRegistry.onAfterPublish(ctCollectionId);
-
 		Date modifiedDate = new Date();
 
 		ctCollection.setModifiedDate(modifiedDate);
@@ -179,6 +177,8 @@ public class CTPublishBackgroundTaskExecutor
 		ctCollection.setStatusDate(modifiedDate);
 
 		_ctCollectionLocalService.updateCTCollection(ctCollection);
+
+		_ctServiceRegistry.onAfterPublish(ctCollectionId);
 
 		return BackgroundTaskResult.SUCCESS;
 	}

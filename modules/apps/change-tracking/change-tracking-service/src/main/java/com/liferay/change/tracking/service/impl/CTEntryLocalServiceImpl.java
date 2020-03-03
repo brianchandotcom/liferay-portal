@@ -53,7 +53,9 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
 			ctCollectionId);
 
-		if (ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+			(ctCollection.getStatus() != WorkflowConstants.STATUS_PENDING)) {
+
 			throw new PortalException(
 				"Change tracking collection " + ctCollection + " is read only");
 		}
@@ -78,7 +80,9 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
 			ctEntry.getCtCollectionId());
 
-		if (ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+			(ctCollection.getStatus() != WorkflowConstants.STATUS_PENDING)) {
+
 			throw new PortalException(
 				"Change tracking collection " + ctCollection + " is read only");
 		}

@@ -66,9 +66,9 @@ public class StagingProcessesPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		boolean localStagingEnabled = ParamUtil.getBoolean(
-			renderRequest, "localStagingEnabled", false);
+			renderRequest, "localStagingEnabled");
 		boolean remoteStagingEnabled = ParamUtil.getBoolean(
-			renderRequest, "remoteStagingEnabled", false);
+			renderRequest, "remoteStagingEnabled");
 
 		if (localStagingEnabled) {
 			SessionMessages.add(renderRequest, "localStagingEnabled");

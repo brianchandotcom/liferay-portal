@@ -188,7 +188,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long categoryId = ParamUtil.getLong(actionRequest, "categoryId", 0);
+		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
 
 		AssetCategory category = _assetCategoryService.fetchCategory(
 			categoryId);

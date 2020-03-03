@@ -345,7 +345,7 @@ public class DepotAdminSelectRoleDisplayContext {
 		private Group _getGroup(RenderRequest renderRequest)
 			throws PortalException {
 
-			long groupId = ParamUtil.getLong(renderRequest, "groupId", 0);
+			long groupId = ParamUtil.getLong(renderRequest, "groupId");
 
 			if (groupId > 0) {
 				return GroupServiceUtil.getGroup(groupId);

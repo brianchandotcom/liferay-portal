@@ -63,7 +63,7 @@ public class AssetCategoryPermissionsPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		long categoryId = ParamUtil.getLong(portletRequest, "categoryId", 0);
+		long categoryId = ParamUtil.getLong(portletRequest, "categoryId");
 
 		if (categoryId <= 0) {
 			return StringPool.BLANK;

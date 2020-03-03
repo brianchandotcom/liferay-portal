@@ -42,7 +42,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 	public long getCategoryId() {
 		if (_categoryId == null) {
-			_categoryId = ParamUtil.getLong(getRequest(), "categoryId", 0);
+			_categoryId = ParamUtil.getLong(getRequest(), "categoryId");
 		}
 
 		return _categoryId;

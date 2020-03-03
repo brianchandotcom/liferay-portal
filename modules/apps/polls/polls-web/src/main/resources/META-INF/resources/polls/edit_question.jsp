@@ -27,7 +27,7 @@ long questionId = BeanParamUtil.getLong(question, request, "questionId");
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
-String choicesAction = ParamUtil.getString(request, "choicesAction", StringPool.BLANK);
+String choicesAction = ParamUtil.getString(request, "choicesAction");
 
 int choiceName = ParamUtil.getInteger(request, "choiceName");
 

@@ -49,7 +49,7 @@ public abstract class BaseOAuth2PortletDisplayContext {
 		}
 
 		long oAuth2ApplicationId = ParamUtil.getLong(
-			portletRequest, "oAuth2ApplicationId", 0);
+			portletRequest, "oAuth2ApplicationId");
 
 		if (oAuth2ApplicationId > 0) {
 			oAuth2Application = oAuth2ApplicationService.getOAuth2Application(

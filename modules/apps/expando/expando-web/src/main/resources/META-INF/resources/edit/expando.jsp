@@ -31,7 +31,7 @@ if (columnId > 0) {
 	expandoColumn = ExpandoColumnServiceUtil.fetchExpandoColumn(columnId);
 }
 
-int type = ParamUtil.getInteger(request, "type", 0);
+int type = ParamUtil.getInteger(request, "type");
 
 if (expandoColumn != null) {
 	type = expandoColumn.getType();

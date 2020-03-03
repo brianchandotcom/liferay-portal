@@ -44,7 +44,7 @@ public class EditContactInformationDisplayContext {
 
 		_className = ParamUtil.getString(httpServletRequest, "className");
 		_classPK = ParamUtil.getLong(httpServletRequest, "classPK");
-		_primaryKey = ParamUtil.getLong(httpServletRequest, "primaryKey", 0L);
+		_primaryKey = ParamUtil.getLong(httpServletRequest, "primaryKey");
 		_redirect = PortalUtil.escapeRedirect(
 			ParamUtil.getString(httpServletRequest, "redirect"));
 

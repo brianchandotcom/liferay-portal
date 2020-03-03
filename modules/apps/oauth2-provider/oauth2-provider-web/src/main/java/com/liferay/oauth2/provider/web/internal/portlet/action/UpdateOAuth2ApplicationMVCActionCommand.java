@@ -101,7 +101,7 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 		List<String> featuresList = new ArrayList<>();
 
 		for (String feature : oAuth2Features) {
-			if (ParamUtil.getBoolean(request, "feature-" + feature, false)) {
+			if (ParamUtil.getBoolean(request, "feature-" + feature)) {
 				featuresList.add(feature);
 			}
 		}

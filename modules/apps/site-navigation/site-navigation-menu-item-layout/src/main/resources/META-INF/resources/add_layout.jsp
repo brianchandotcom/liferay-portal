@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout", false);
+boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 PortletURL portletURL = currentURLObj;
 %>

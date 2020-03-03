@@ -1295,8 +1295,7 @@ public class LayoutsAdminDisplayContext {
 			return _firstColumn;
 		}
 
-		_firstColumn = ParamUtil.getBoolean(
-			httpServletRequest, "firstColumn", false);
+		_firstColumn = ParamUtil.getBoolean(httpServletRequest, "firstColumn");
 
 		return _firstColumn;
 	}

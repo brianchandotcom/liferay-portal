@@ -450,9 +450,9 @@ public class SyncDownloadServlet extends HttpServlet {
 		throws Exception {
 
 		long sourceVersionId = ParamUtil.getLong(
-			httpServletRequest, "sourceVersionId", 0);
+			httpServletRequest, "sourceVersionId");
 		long targetVersionId = ParamUtil.getLong(
-			httpServletRequest, "targetVersionId", 0);
+			httpServletRequest, "targetVersionId");
 
 		DownloadServletInputStream downloadServletInputStream =
 			getPatchDownloadServletInputStream(

@@ -55,11 +55,11 @@ describe('The ProcessMetrics component should', () => {
 		).toHaveTextContent('set-up-slas');
 
 		expect(
-			processMetricsDashBoard.children[2].children[0]
+			processMetricsDashBoard.children[1].children[1]
 		).toHaveTextContent('no-slas-are-defined-for-this-process');
 
 		expect(
-			processMetricsDashBoard.children[2].children[0]
+			processMetricsDashBoard.children[1].children[1]
 		).toHaveTextContent('add-a-new-sla');
 	});
 });

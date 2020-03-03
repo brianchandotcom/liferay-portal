@@ -62,7 +62,7 @@ export default {
 	},
 
 	/**
-	 * Adds a new Fragment to the current layout
+	 * Adds a new Fragment Composition to the selected collection
 	 * @param {object} options
 	 * @param {string} options.description Fragment composition description
 	 * @param {string} options.fragmentCollectionId Fragment collection ID
@@ -114,6 +114,7 @@ export default {
 	 * @param {string} options.parentItemId
 	 * @param {number} options.position
 	 * @param {string} options.segmentsExperienceId Current segmentsExperienceId
+	 * @param {string} options.type Type of the Fragment to add
 	 * @return {Promise<FragmentEntryLink>} Created FragmentEntryLink
 	 */
 	addFragmentEntryLink({
@@ -126,6 +127,42 @@ export default {
 	}) {
 		return serviceFetch(
 			config.addFragmentEntryLinkURL,
+			{
+				body: {
+					fragmentEntryKey,
+					groupId,
+					parentItemId,
+					position,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus,
+			{requestGenerateDraft: true}
+		);
+	},
+
+	/**
+	 * Adds a new Fragment Composition to the current layout
+	 * @param {object} options
+	 * @param {string} options.fragmentEntryKey Key of the Fragment composition
+	 * @param {string} options.groupId GroupId that wraps the Fragment
+	 * @param {function} options.onNetworkStatus
+	 * @param {string} options.parentItemId
+	 * @param {number} options.position
+	 * @param {string} options.segmentsExperienceId Current segmentsExperienceId
+	 * @param {string} options.type Type of the Fragment to add
+	 * @return {Promise<Array<>FragmentEntryLink>>} Created FragmentEntryLinks
+	 */
+	addFragmentEntryLinks({
+		fragmentEntryKey,
+		groupId,
+		onNetworkStatus,
+		parentItemId,
+		position,
+		segmentsExperienceId,
+	}) {
+		return serviceFetch(
+			config.addFragmentEntryLinksURL,
 			{
 				body: {
 					fragmentEntryKey,

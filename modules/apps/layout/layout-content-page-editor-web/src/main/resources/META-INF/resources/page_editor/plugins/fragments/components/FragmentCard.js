@@ -20,9 +20,11 @@ import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {useSelectItem} from '../../../app/components/Controls';
+import {FRAGMENT_TYPES} from '../../../app/config/constants/fragmentTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addFragment from '../../../app/thunks/addFragment';
+import addFragments from '../../../app/thunks/addFragments';
 
 const ImagePreview = ({imagePreviewURL}) => {
 	if (imagePreviewURL) {
@@ -45,6 +47,7 @@ export default function FragmentCard({
 	groupId,
 	imagePreviewURL,
 	name,
+	type,
 }) {
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
@@ -61,16 +64,30 @@ export default function FragmentCard({
 			const {parentId, position} = result;
 
 			if (parentId) {
-				dispatch(
-					addFragment({
-						fragmentEntryKey,
-						groupId,
-						parentItemId: parentId,
-						position,
-						selectItem,
-						store,
-					})
-				);
+				if (type === FRAGMENT_TYPES.composition) {
+					dispatch(
+						addFragments({
+							fragmentEntryKey,
+							groupId,
+							parentItemId: parentId,
+							position,
+							selectItem,
+							store,
+						})
+					);
+				}
+				else {
+					dispatch(
+						addFragment({
+							fragmentEntryKey,
+							groupId,
+							parentItemId: parentId,
+							position,
+							selectItem,
+							store,
+						})
+					);
+				}
 			}
 		},
 		item: {
@@ -111,4 +128,5 @@ export default function FragmentCard({
 FragmentCard.propTypes = {
 	imagePreviewURL: PropTypes.string,
 	name: PropTypes.string.isRequired,
+	type: PropTypes.string,
 };

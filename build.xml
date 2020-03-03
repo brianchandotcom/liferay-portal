@@ -172,17 +172,6 @@ message.
 	</target>
 
 	<target name="clean">
-		<if>
-			<equals arg1="${org.gradle.daemon}" arg2="true" />
-			<then>
-				<setup-sdk setupbinariescache="false" />
-
-				<gradle-execute dir="." forcedcacheenabled="false" task="">
-					<arg value="--stop" />
-				</gradle-execute>
-			</then>
-		</if>
-
 		<execute>
 			${build.git.clean.command}
 		</execute>
@@ -193,8 +182,18 @@ message.
 	</target>
 
 	<target name="compile">
-		<setup-libs />
 		<setup-sdk />
+
+		<if>
+			<equals arg1="${org.gradle.daemon}" arg2="true" />
+			<then>
+				<gradle-execute dir="." forcedcacheenabled="false" task="">
+					<arg value="--stop" />
+				</gradle-execute>
+			</then>
+		</if>
+
+		<setup-libs />
 		<setup-yarn />
 
 		<gradle-execute dir="modules/core" task="deploy">

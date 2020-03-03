@@ -15,12 +15,12 @@
 import {ADD_FRAGMENT_COMPOSITION} from './types';
 
 export default function addFragmentComposition({
+	fragmentCollectionId,
 	fragmentComposition,
-	layoutData,
 }) {
 	return {
+		fragmentCollectionId,
 		fragmentComposition,
-		layoutData,
 		type: ADD_FRAGMENT_COMPOSITION,
 	};
 }

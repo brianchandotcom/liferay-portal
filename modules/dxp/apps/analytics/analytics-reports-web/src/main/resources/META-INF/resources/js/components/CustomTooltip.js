@@ -32,16 +32,20 @@ export default function CustomTooltip(props) {
 			</p>
 			<ul className="list-unstyled mb-0">
 				{payload.map(item => {
-					const [value, name] = formatter(item.value, item.name);
+					const [value, name, iconType] = formatter(
+						item.value,
+						item.name,
+						item.iconType
+					);
 
 					return (
 						<li key={item.name}>
-							<div
-								className="custom-dot"
+							<span
+								className={`custom-${iconType} mr-1`}
 								style={{
 									backgroundColor: item.color,
 								}}
-							></div>
+							></span>
 							{name}
 							{separator}
 							{value}

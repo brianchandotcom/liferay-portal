@@ -28,6 +28,7 @@ import {
 
 import {useChartState} from '../utils/chartState';
 import {numberFormat} from '../utils/numberFormat';
+import CustomDot from './CustomDot';
 import CustomTooltip from './CustomTooltip';
 
 const {useEffect, useMemo} = React;
@@ -45,11 +46,13 @@ const LAST_24_HOURS = 'last-24-hours';
 const METRICS_STATIC_VALUES = {
 	analyticsReportsHistoricalReads: {
 		color: '#50D2A0',
+		iconType: 'square',
 		langKey: Liferay.Language.get('reads-metric'),
 	},
 
 	analyticsReportsHistoricalViews: {
 		color: '#4B9BFF',
+		iconType: 'circle',
 		langKey: Liferay.Language.get('views-metric'),
 	},
 };
@@ -64,6 +67,12 @@ function keyToHexColor(key) {
 	const metricValues = METRICS_STATIC_VALUES[key];
 
 	return metricValues ? metricValues.color : '#666666';
+}
+
+function keyToIconType(key) {
+	const metricValues = METRICS_STATIC_VALUES[key];
+
+	return metricValues ? metricValues.iconType : 'line';
 }
 
 /*
@@ -169,7 +178,7 @@ function legendFormatterGenerator(totals, languageTag) {
 	return value => (
 		<span>
 			<span
-				className="custom-dot mr-1"
+				className={`custom-${keyToIconType(value)} mr-1`}
 				style={{
 					backgroundColor: keyToHexColor(value),
 				}}
@@ -290,14 +299,13 @@ export default function Chart({
 					<div className="d-flex ml-2">
 						<ClayButtonWithIcon
 							aria-label={Liferay.Language.get('previous-period')}
-							className="component-action mr-1"
+							className="mr-1"
 							displayType="secondary"
 							onClick={handlePreviousTimeSpanClick}
 							symbol="angle-left"
 						/>
 						<ClayButtonWithIcon
 							aria-label={Liferay.Language.get('next-period')}
-							className="component-action"
 							disabled={disabledNextTimeSpan}
 							displayType="secondary"
 							onClick={handleNextTimeSpanClick}
@@ -362,6 +370,7 @@ export default function Chart({
 									return [
 										numberFormat(languageTag, value),
 										keyToTranslatedLabelValue(name),
+										keyToIconType(name),
 									];
 								}}
 								labelFormatter={dateFormatters.formatLongDate}
@@ -373,12 +382,9 @@ export default function Chart({
 
 								return (
 									<Line
-										activeDot={{
-											r: CHART_SIZES.dotRadius,
-											strokeWidth: 0,
-										}}
+										activeDot={<CustomDot active={true} />}
 										dataKey={keyName}
-										dot={{r: 2}}
+										dot={<CustomDot active={false} />}
 										fill={color}
 										key={keyName}
 										stroke={color}

@@ -61,11 +61,16 @@
 		padding-bottom: 0.5rem;
 	}
 
-	.custom-dot {
+	.custom-circle {
 		border-radius: 50%;
 		display: inline-block;
 		height: 8px;
-		margin-right: 0.2rem;
+		width: 8px;
+	}
+
+	.custom-square {
+		display: inline-block;
+		height: 8px;
 		width: 8px;
 	}
 

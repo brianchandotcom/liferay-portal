@@ -26,12 +26,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import java.util.Collections;
 import java.util.List;
@@ -151,6 +155,22 @@ public class InfoListProviderItemSelectorView
 
 				@Override
 				public String getSubtitle(Locale locale) {
+					Class<?> clazz = infoListProvider.getClass();
+
+					Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
+
+					for (Type genericInterfaceType : genericInterfaceTypes) {
+						ParameterizedType parameterizedType =
+							(ParameterizedType)genericInterfaceType;
+
+						Class<?> typeClazz =
+							(Class<?>)
+								parameterizedType.getActualTypeArguments()[0];
+
+						return ResourceActionsUtil.getModelResource(
+							locale, typeClazz.getName());
+					}
+
 					return StringPool.BLANK;
 				}
 

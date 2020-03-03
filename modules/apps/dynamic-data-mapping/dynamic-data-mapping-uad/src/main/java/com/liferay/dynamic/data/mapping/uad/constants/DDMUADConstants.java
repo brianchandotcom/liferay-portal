@@ -20,6 +20,10 @@ package com.liferay.dynamic.data.mapping.uad.constants;
  */
 public class DDMUADConstants {
 
+	public static final String DEFAULT_DATE_FORMAT = "MMM dd yyyy 'at' HH:mm";
+	
+	public static final long DEFAULT_PARENT_ID = 0;
+	
 	public static final String[] USER_ID_FIELD_NAMES_DDM_FORM_INSTANCE = {
 		"userId", "versionUserId"
 	};

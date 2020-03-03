@@ -145,40 +145,13 @@ public class FragmentInstanceDefinitionConverterUtil {
 							{
 								backgroundImage = new FragmentImage() {
 									{
+										title = _toTitleInlineValue(
+											imageJSONObject, localeMap);
 										url = new InlineValue() {
 											{
 												value_i18n = localeMap;
 											}
 										};
-
-										setTitle(
-											() -> {
-												JSONObject configJSONObject =
-													imageJSONObject.
-														getJSONObject("config");
-
-												if (configJSONObject == null) {
-													return null;
-												}
-
-												String imageTitle =
-													configJSONObject.getString(
-														"imageTitle");
-
-												if (Validator.isNull(
-														imageTitle) ||
-													localeMap.containsValue(
-														imageTitle)) {
-
-													return null;
-												}
-
-												return new InlineValue() {
-													{
-														value = imageTitle;
-													}
-												};
-											});
 									}
 								};
 							}
@@ -467,37 +440,12 @@ public class FragmentInstanceDefinitionConverterUtil {
 			{
 				fragmentImage = new FragmentImage() {
 					{
+						title = _toTitleInlineValue(jsonObject, localeMap);
 						url = new InlineValue() {
 							{
 								value_i18n = localeMap;
 							}
 						};
-
-						setTitle(
-							() -> {
-								JSONObject configJSONObject =
-									jsonObject.getJSONObject("config");
-
-								if (configJSONObject == null) {
-									return null;
-								}
-
-								String imageTitle = configJSONObject.getString(
-									"imageTitle");
-
-								if (Validator.isNull(imageTitle) ||
-									localeMap.containsValue(imageTitle)) {
-
-									return null;
-								}
-
-								return new InlineValue() {
-									{
-										value = configJSONObject.getString(
-											"imageTitle");
-									}
-								};
-							});
 					}
 				};
 				fragmentLink = _toFragmentLink(jsonObject);
@@ -596,6 +544,28 @@ public class FragmentInstanceDefinitionConverterUtil {
 		}
 
 		return map;
+	}
+
+	private static InlineValue _toTitleInlineValue(
+		JSONObject jsonObject, Map<String, String> map) {
+
+		JSONObject configJSONObject = jsonObject.getJSONObject("config");
+
+		if (configJSONObject == null) {
+			return null;
+		}
+
+		String imageTitle = configJSONObject.getString("imageTitle");
+
+		if (Validator.isNull(imageTitle) || map.containsValue(imageTitle)) {
+			return null;
+		}
+
+		return new InlineValue() {
+			{
+				value = imageTitle;
+			}
+		};
 	}
 
 }

@@ -283,32 +283,14 @@ public class PageDefinitionConverterUtil {
 
 									return new FragmentImage() {
 										{
+											title = _toTitleInlineValue(
+												backgroundImageJSONObject,
+												urlValue);
 											url = new InlineValue() {
 												{
 													value = urlValue;
 												}
 											};
-
-											setTitle(
-												() -> {
-													String title =
-														backgroundImageJSONObject.
-															getString("title");
-
-													if (Validator.isNull(
-															title) ||
-														title.equals(
-															urlValue)) {
-
-														return null;
-													}
-
-													return new InlineValue() {
-														{
-															value = title;
-														}
-													};
-												});
 										}
 									};
 								});
@@ -473,6 +455,22 @@ public class PageDefinitionConverterUtil {
 
 						return themeSettingsUnicodeProperties;
 					});
+			}
+		};
+	}
+
+	private static InlineValue _toTitleInlineValue(
+		JSONObject jsonObject, String urlValue) {
+
+		String title = jsonObject.getString("title");
+
+		if (Validator.isNull(title) || title.equals(urlValue)) {
+			return null;
+		}
+
+		return new InlineValue() {
+			{
+				value = title;
 			}
 		};
 	}

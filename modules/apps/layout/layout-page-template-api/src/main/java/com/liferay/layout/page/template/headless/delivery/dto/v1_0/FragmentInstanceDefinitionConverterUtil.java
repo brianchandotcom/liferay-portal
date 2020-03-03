@@ -150,6 +150,35 @@ public class FragmentInstanceDefinitionConverterUtil {
 												value_i18n = localeMap;
 											}
 										};
+
+										setTitle(
+											() -> {
+												JSONObject configJSONObject =
+													imageJSONObject.
+														getJSONObject("config");
+
+												if (configJSONObject == null) {
+													return null;
+												}
+
+												String imageTitle =
+													configJSONObject.getString(
+														"imageTitle");
+
+												if (Validator.isNull(
+														imageTitle) ||
+													localeMap.containsValue(
+														imageTitle)) {
+
+													return null;
+												}
+
+												return new InlineValue() {
+													{
+														value = imageTitle;
+													}
+												};
+											});
 									}
 								};
 							}

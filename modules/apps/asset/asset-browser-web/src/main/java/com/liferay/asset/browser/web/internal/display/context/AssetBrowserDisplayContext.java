@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -199,6 +201,22 @@ public class AssetBrowserDisplayContext {
 		_groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
 
 		return _groupId;
+	}
+
+	public String getGroupLabel() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		String groupTypeLabel = "site";
+
+		if (group.getType() == GroupConstants.TYPE_DEPOT) {
+			groupTypeLabel = "asset-library";
+		}
+
+		return LanguageUtil.get(_httpServletRequest, groupTypeLabel);
 	}
 
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()

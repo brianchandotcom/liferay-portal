@@ -61,9 +61,7 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			if (!rs.next()) {
-				return urlSubject;
-			}
+			rs.first();
 
 			int mbMessageCount = rs.getInt(1);
 
@@ -71,7 +69,7 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 				return urlSubject;
 			}
 
-			return null;
+			return urlSubject + StringPool.DASH + mbMessageCount;
 		}
 		finally {
 			DataAccess.cleanUp(ps);
@@ -138,11 +136,6 @@ public class UpgradeUrlSubject extends UpgradeProcess {
 		for (Map.Entry<Long, String> entry : urlSubjects.entrySet()) {
 			String uniqueUrlSubject = _findUniqueUrlSubject(
 				connection, entry.getValue());
-
-			for (int i = 1; uniqueUrlSubject == null; i++) {
-				uniqueUrlSubject = _findUniqueUrlSubject(
-					connection, entry.getValue() + StringPool.DASH + i);
-			}
 
 			_updateMBMessage(connection, entry.getKey(), uniqueUrlSubject);
 		}

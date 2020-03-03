@@ -58,6 +58,7 @@ const Text = ({
 
 	return (
 		<ClayInput
+			aria-label="text"
 			className="ddm-field-text"
 			disabled={disabled}
 			id={id}

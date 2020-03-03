@@ -98,11 +98,11 @@ function FieldBase({
 					required ||
 					tooltip ||
 					repeatable) && (
-					<label
+					<p
 						className={classNames({
 							'ddm-empty': !showLabel && !required,
+							'ddm-label': showLabel
 						})}
-						htmlFor={id}
 					>
 						{label && showLabel && `${label} `}
 
@@ -125,7 +125,7 @@ function FieldBase({
 								/>
 							</div>
 						)}
-					</label>
+					</p>
 				)}
 
 				{children}

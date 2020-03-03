@@ -45,8 +45,8 @@ public class AccountEntryDisplaySearchContainerFactory {
 		LiferayPortletResponse liferayPortletResponse) {
 
 		return _create(
-			new LinkedHashMap<>(), liferayPortletRequest,
-			liferayPortletResponse);
+			liferayPortletRequest, liferayPortletResponse,
+			new LinkedHashMap<>());
 	}
 
 	public static SearchContainer create(
@@ -58,13 +58,13 @@ public class AccountEntryDisplaySearchContainerFactory {
 				"accountUserIds", new long[] {userId}
 			).build();
 
-		return _create(params, liferayPortletRequest, liferayPortletResponse);
+		return _create(liferayPortletRequest, liferayPortletResponse, params);
 	}
 
 	private static SearchContainer _create(
-		LinkedHashMap<String, Object> params,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		LinkedHashMap<String, Object> params) {
 
 		SearchContainer accountEntryDisplaySearchContainer =
 			new SearchContainer(

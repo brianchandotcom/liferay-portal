@@ -79,8 +79,6 @@ public class SidecarElasticsearchConnectionManager {
 
 			if (_clusterExecutor.isEnabled()) {
 				ClusterableSidecar clusterableSidecar = new ClusterableSidecar(
-					componentContext,
-					SidecarElasticsearchConnectionManager.class.getName(),
 					elasticsearchConfiguration, _clusterExecutor,
 					_clusterMasterExecutor, _jsonFactory, _processExecutor,
 					_props);
@@ -96,8 +94,6 @@ public class SidecarElasticsearchConnectionManager {
 			else {
 				elasticsearchConnection = new SidecarElasticsearchConnection(
 					new Sidecar(
-						componentContext,
-						SidecarElasticsearchConnectionManager.class.getName(),
 						elasticsearchConfiguration, _processExecutor, _props));
 			}
 		}

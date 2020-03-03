@@ -70,15 +70,12 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-import org.osgi.service.component.ComponentContext;
-
 /**
  * @author Tina Tian
  */
 public class Sidecar {
 
 	public Sidecar(
-		ComponentContext componentContext, String componentName,
 		ElasticsearchConfiguration elasticsearchConfiguration,
 		ProcessExecutor processExecutor, Props props) {
 
@@ -108,8 +105,6 @@ public class Sidecar {
 		_pathData = _dataHome.resolve("indices");
 		_pathRepo = _dataHome.resolve("repo");
 
-		_componentContext = componentContext;
-		_componentName = componentName;
 		_elasticsearchConfiguration = elasticsearchConfiguration;
 		_processExecutor = processExecutor;
 		_props = props;
@@ -622,8 +617,6 @@ public class Sidecar {
 
 	private String _address;
 	private NoticeableFuture<String> _addressNoticeableFuture;
-	private final ComponentContext _componentContext;
-	private final String _componentName;
 	private final Path _dataHome;
 	private final ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Path _pathData;
@@ -650,13 +643,13 @@ public class Sidecar {
 				}
 			}
 
-			_componentContext.disableComponent(_componentName);
+			SidecarComponentUtil.disableSidecarElasticsearchConnectionManager();
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Sidecar process exited, will restart");
 			}
 
-			_componentContext.enableComponent(_componentName);
+			SidecarComponentUtil.enableSidecarElasticsearchConnectionManager();
 		}
 
 	}

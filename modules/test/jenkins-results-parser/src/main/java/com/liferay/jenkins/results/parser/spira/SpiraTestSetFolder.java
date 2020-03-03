@@ -200,6 +200,7 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 		SpiraProject spiraProject) {
 
 		List<JSONObject> spiraTestSetFolders = new ArrayList<>();
+
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
 		urlPathReplacements.put(

@@ -170,10 +170,6 @@ public class SearchResult<T extends SpiraArtifact> {
 		return false;
 	}
 
-	protected boolean matches(SpiraArtifact spiraArtifact) {
-		return matches(spiraArtifact.getClass(), spiraArtifact.toJSONObject());
-	}
-
 	protected boolean matches(
 		Class<? extends SpiraArtifact> spiraArtifactClass,
 		JSONObject jsonObject) {
@@ -189,6 +185,10 @@ public class SearchResult<T extends SpiraArtifact> {
 		}
 
 		return true;
+	}
+
+	protected boolean matches(SpiraArtifact spiraArtifact) {
+		return matches(spiraArtifact.getClass(), spiraArtifact.toJSONObject());
 	}
 
 	protected JSONArray toFilterJSONArray() {

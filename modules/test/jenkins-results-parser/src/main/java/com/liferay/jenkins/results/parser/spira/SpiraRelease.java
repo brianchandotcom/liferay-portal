@@ -260,6 +260,10 @@ public class SpiraRelease extends PathSpiraArtifact {
 		}
 	}
 
+	private SpiraRelease(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
 	private SpiraRelease _getSpiraReleaseByIndentLevel(String indentLevel) {
 		List<SpiraRelease> spiraReleases = getSpiraReleases(
 			getSpiraProject(),
@@ -274,10 +278,6 @@ public class SpiraRelease extends PathSpiraArtifact {
 		}
 
 		return spiraReleases.get(0);
-	}
-
-	private SpiraRelease(JSONObject jsonObject) {
-		super(jsonObject);
 	}
 
 	private SpiraRelease _parentSpiraRelease;

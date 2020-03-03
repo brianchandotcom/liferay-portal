@@ -19,9 +19,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,24 +92,6 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	@Override
 	public String toString() {
 		return jsonObject.toString();
-	}
-
-	protected static void addPreviousSearchParameters(
-		Class<? extends BaseSpiraArtifact> baseSpiraArtifactClass,
-		SearchResult.SearchParameter[] searchParameters) {
-
-		List<List<SearchResult.SearchParameter>> previousSearchParameters =
-			previousSearchParametersMap.get(baseSpiraArtifactClass);
-
-		if (previousSearchParameters == null) {
-			previousSearchParameters = Collections.synchronizedList(
-				new ArrayList<>());
-
-			previousSearchParametersMap.put(
-				baseSpiraArtifactClass, previousSearchParameters);
-		}
-
-		previousSearchParameters.add(Arrays.asList(searchParameters));
 	}
 
 	protected static String getIDKey(
@@ -212,38 +192,6 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		return searchResult.getSpiraArtifacts();
 	}
 
-	protected static boolean isPreviousSearch(
-		Class<? extends BaseSpiraArtifact> baseSpiraArtifactClass,
-		SearchResult.SearchParameter... searchParameters) {
-
-		List<List<SearchResult.SearchParameter>> previousSearchParametersList =
-			previousSearchParametersMap.get(baseSpiraArtifactClass);
-
-		if (previousSearchParametersList == null) {
-			return false;
-		}
-
-		for (List<SearchResult.SearchParameter> previousSearchParameters :
-				previousSearchParametersList) {
-
-			if (previousSearchParameters.size() != searchParameters.length) {
-				continue;
-			}
-
-			for (SearchResult.SearchParameter searchParameter :
-					searchParameters) {
-
-				if (!previousSearchParameters.contains(searchParameter)) {
-					break;
-				}
-			}
-
-			return true;
-		}
-
-		return false;
-	}
-
 	protected static void removeCachedSpiraArtifacts(
 		List<? extends SpiraArtifact> spiraArtifacts) {
 
@@ -288,11 +236,6 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 		return true;
 	}
-
-	protected static final Map
-		<Class<? extends BaseSpiraArtifact>,
-		 List<List<SearchResult.SearchParameter>>> previousSearchParametersMap =
-			Collections.synchronizedMap(new HashMap<>());
 
 	protected final JSONObject jsonObject;
 

@@ -21,4 +21,15 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  */
 public class InfoListProviderItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
+
+	public String getItemType() {
+		return _itemType;
+	}
+
+	public void setItemType(String itemType) {
+		_itemType = itemType;
+	}
+
+	private String _itemType;
+
 }

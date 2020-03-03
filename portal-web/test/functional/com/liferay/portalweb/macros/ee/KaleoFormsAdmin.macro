@@ -581,7 +581,9 @@ definition {
 	}
 
 	macro updateWorkflow {
-		PortletEntry.update();
+		Click.mouseDownMouseUp(
+			key_text = "Update",
+			locator1 = "Button#ANY");
 
 		SelectFrame(value1 = "relative=top");
 

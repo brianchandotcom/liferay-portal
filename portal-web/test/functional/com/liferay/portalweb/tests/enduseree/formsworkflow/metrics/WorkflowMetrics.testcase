@@ -301,7 +301,7 @@ definition {
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "1Role,3Role,4Role,5Role,6Role");
 
-		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "5");
+		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "5 Entries");
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValueProcessStep(workflowStep = "Review");
 
@@ -613,7 +613,7 @@ definition {
 		property test.name.skip.portal.instance = "WorkflowMetrics#SeeListOfReports";
 
 		var key_testSLADefinitionDays = "0";
-		var key_testSLADefinitionHours = "0001";
+		var key_testSLADefinitionHours = "0002";
 		var key_testSLADefinitionDescription = "SLA Description";
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";

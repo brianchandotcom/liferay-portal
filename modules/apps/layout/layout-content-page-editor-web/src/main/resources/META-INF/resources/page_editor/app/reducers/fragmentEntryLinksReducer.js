@@ -14,6 +14,7 @@
 
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
+	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_FRAGMENT_ENTRY_LINK_COMMENT,
 	DELETE_FRAGMENT_ENTRY_LINK_COMMENT,
 	EDIT_FRAGMENT_ENTRY_LINK_COMMENT,
@@ -34,6 +35,12 @@ export default function fragmentEntryLinksReducer(
 				...fragmentEntryLinks,
 				[action.fragmentEntryLink.fragmentEntryLinkId]:
 					action.fragmentEntryLink,
+			};
+
+		case ADD_FRAGMENT_ENTRY_LINKS:
+			return {
+				...fragmentEntryLinks,
+				...action.fragmentEntryLinks,
 			};
 
 		case ADD_FRAGMENT_ENTRY_LINK_COMMENT: {

@@ -1203,7 +1203,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</beanshell>
 
 			<mirrors-get
-				dest="${liferay.home}/deploy/${patch.file.name}"
+				dest="${liferay.home}/osgi/marketplace/${patch.file.name}"
 				src="@{patch.file.zip.url}"
 			/>
 		</sequential>

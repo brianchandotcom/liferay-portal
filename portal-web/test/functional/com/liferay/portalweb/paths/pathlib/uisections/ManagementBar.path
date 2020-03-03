@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_BODY</td>
+	<td>//header[@id='banner']//section[contains(.,'${key_portletName}')]//div[@class='portlet-body']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_RESULT_SUMMARY</td>
 	<td>//div[contains(@id,'ManagementToolbar')]//span[@class='text-truncate']</td>
 	<td></td>

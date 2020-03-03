@@ -594,8 +594,8 @@ definition {
 			siteName = "Site Name");
 
 		LanguagePortlet.selectLanguagePG(
-			locale = "en_US",
-			textIcon = "english-United States");
+			locale = "de-DE",
+			textIcon = "deutsch-Deutschland");
 	}
 
 	@description = "This is a use case for LPS-59345"

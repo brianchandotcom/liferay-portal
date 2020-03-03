@@ -203,20 +203,20 @@ public class AssetBrowserDisplayContext {
 		return _groupId;
 	}
 
-	public String getGroupLabel() {
+	public String getGroupTypeTitle() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 
-		String groupTypeLabel = "site";
+		String groupTypeTitle = "site";
 
 		if (group.getType() == GroupConstants.TYPE_DEPOT) {
-			groupTypeLabel = "asset-library";
+			groupTypeTitle = "asset-library";
 		}
 
-		return LanguageUtil.get(_httpServletRequest, groupTypeLabel);
+		return LanguageUtil.get(_httpServletRequest, groupTypeTitle);
 	}
 
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()

@@ -169,7 +169,7 @@
 					/>
 
 					<liferay-ui:search-container-column-text
-						name="<%= assetBrowserDisplayContext.getGroupLabel() %>"
+						name="<%= assetBrowserDisplayContext.getGroupTypeTitle() %>"
 						value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 					/>
 				</c:when>

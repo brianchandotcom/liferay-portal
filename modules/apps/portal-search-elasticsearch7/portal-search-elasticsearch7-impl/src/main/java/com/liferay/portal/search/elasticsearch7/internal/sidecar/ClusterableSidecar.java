@@ -64,8 +64,6 @@ import org.elasticsearch.common.xcontent.NamedXContentRegistry;
 import org.elasticsearch.env.NodeEnvironment;
 import org.elasticsearch.gateway.MetaDataStateFormat;
 
-import org.osgi.service.component.ComponentContext;
-
 /**
  * @author Tina Tian
  */
@@ -73,15 +71,12 @@ public class ClusterableSidecar
 	extends Sidecar implements IdentifiableOSGiService {
 
 	public ClusterableSidecar(
-		ComponentContext componentContext, String componentName,
 		ElasticsearchConfiguration elasticsearchConfiguration,
 		ClusterExecutor clusterExecutor,
 		ClusterMasterExecutor clusterMasterExecutor, JSONFactory jsonFactory,
 		ProcessExecutor processExecutor, Props props) {
 
-		super(
-			componentContext, componentName, elasticsearchConfiguration,
-			processExecutor, props);
+		super(elasticsearchConfiguration, processExecutor, props);
 
 		_clusterExecutor = clusterExecutor;
 		_clusterMasterExecutor = clusterMasterExecutor;

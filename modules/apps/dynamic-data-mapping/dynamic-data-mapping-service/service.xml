@@ -122,9 +122,9 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="versionUserId" type="long" />
-		<column name="versionUserName" type="String" />
+		<column name="versionUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -132,8 +132,8 @@
 
 		<column name="structureId" type="long" />
 		<column name="version" type="String" />
-		<column localized="true" name="name" type="String" />
-		<column localized="true" name="description" type="String" />
+		<column localized="true" name="name" type="String" uad-nonanonymizable="true" />
+		<column localized="true" name="description" type="String" uad-nonanonymizable="true" />
 		<column name="settings" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
@@ -165,7 +165,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String"/>
 		<column name="versionUserId" type="long" />
 		<column name="versionUserName" type="String" />
 		<column name="createDate" type="Date" />
@@ -176,7 +176,7 @@
 		<column name="formInstanceId" type="long" />
 		<column name="formInstanceVersion" type="String" />
 		<column name="storageId" type="long" />
-		<column name="version" type="String" />
+		<column name="version" type="String" uad-nonanonymizable="true" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->

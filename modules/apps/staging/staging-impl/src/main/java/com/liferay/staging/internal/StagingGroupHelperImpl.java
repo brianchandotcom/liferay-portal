@@ -360,10 +360,10 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 	}
 
 	private String _getTypeSettingsProperty(Group group, String key) {
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
-		return typeSettingsProperties.getProperty(key);
+		return typeSettingsUnicodeProperties.getProperty(key);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

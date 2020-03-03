@@ -58,10 +58,10 @@ public class TeamLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			_group.getTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"defaultTeamIds", String.valueOf(team.getTeamId()));
 
 		_groupLocalService.updateGroup(_group);
@@ -70,11 +70,12 @@ public class TeamLocalServiceTest {
 
 		_group = _groupLocalService.getGroup(_group.getGroupId());
 
-		typeSettingsProperties = _group.getTypeSettingsProperties();
+		typeSettingsUnicodeProperties = _group.getTypeSettingsProperties();
 
 		List<Long> defaultTeamIds = ListUtil.fromArray(
 			StringUtil.split(
-				typeSettingsProperties.getProperty("defaultTeamIds"), 0L));
+				typeSettingsUnicodeProperties.getProperty("defaultTeamIds"),
+				0L));
 
 		Assert.assertFalse(defaultTeamIds.contains(team.getTeamId()));
 	}

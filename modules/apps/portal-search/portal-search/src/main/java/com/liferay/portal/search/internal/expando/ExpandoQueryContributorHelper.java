@@ -98,11 +98,11 @@ public class ExpandoQueryContributorHelper {
 	protected void contribute(
 		String attributeName, ExpandoBridge expandoBridge) {
 
-		UnicodeProperties properties = expandoBridge.getAttributeProperties(
-			attributeName);
+		UnicodeProperties unicodeProperties =
+			expandoBridge.getAttributeProperties(attributeName);
 
 		int indexType = GetterUtil.getInteger(
-			properties.getProperty(ExpandoColumnConstants.INDEX_TYPE));
+			unicodeProperties.getProperty(ExpandoColumnConstants.INDEX_TYPE));
 
 		if (indexType == ExpandoColumnConstants.INDEX_TYPE_NONE) {
 			return;

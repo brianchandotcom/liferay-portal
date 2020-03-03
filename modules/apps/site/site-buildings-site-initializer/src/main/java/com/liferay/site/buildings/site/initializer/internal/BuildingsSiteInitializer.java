@@ -638,19 +638,19 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			_serviceContext.getScopeGroupId(), false);
 
-		UnicodeProperties settingsProperties =
+		UnicodeProperties settingsUnicodeProperties =
 			layoutSet.getSettingsProperties();
 
-		settingsProperties.setProperty(
+		settingsUnicodeProperties.setProperty(
 			"lfr-theme:regular:show-footer", Boolean.FALSE.toString());
-		settingsProperties.setProperty(
+		settingsUnicodeProperties.setProperty(
 			"lfr-theme:regular:show-header", Boolean.FALSE.toString());
-		settingsProperties.setProperty(
+		settingsUnicodeProperties.setProperty(
 			"lfr-theme:regular:show-header-search", Boolean.FALSE.toString());
 
 		_layoutSetLocalService.updateSettings(
 			_serviceContext.getScopeGroupId(), false,
-			settingsProperties.toString());
+			settingsUnicodeProperties.toString());
 
 		_layoutSetLocalService.updateLookAndFeel(
 			_serviceContext.getScopeGroupId(), false, layoutSet.getThemeId(),

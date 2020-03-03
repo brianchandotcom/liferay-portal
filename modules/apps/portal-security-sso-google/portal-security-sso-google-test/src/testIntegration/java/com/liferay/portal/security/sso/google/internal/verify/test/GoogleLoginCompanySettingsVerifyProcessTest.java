@@ -83,10 +83,13 @@ public class GoogleLoginCompanySettingsVerifyProcessTest
 	}
 
 	@Override
-	protected void populateLegacyProperties(UnicodeProperties properties) {
-		properties.put(LegacyGoogleLoginPropsKeys.AUTH_ENABLED, "true");
-		properties.put(LegacyGoogleLoginPropsKeys.CLIENT_ID, "test_client_id");
-		properties.put(
+	protected void populateLegacyProperties(
+		UnicodeProperties unicodeProperties) {
+
+		unicodeProperties.put(LegacyGoogleLoginPropsKeys.AUTH_ENABLED, "true");
+		unicodeProperties.put(
+			LegacyGoogleLoginPropsKeys.CLIENT_ID, "test_client_id");
+		unicodeProperties.put(
 			LegacyGoogleLoginPropsKeys.CLIENT_SECRET, "test_client_secret");
 	}
 

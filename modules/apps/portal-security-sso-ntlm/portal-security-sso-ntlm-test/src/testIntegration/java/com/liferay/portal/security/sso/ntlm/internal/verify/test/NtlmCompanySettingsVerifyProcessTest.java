@@ -99,22 +99,26 @@ public class NtlmCompanySettingsVerifyProcessTest
 	}
 
 	@Override
-	protected void populateLegacyProperties(UnicodeProperties properties) {
-		properties.put(LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN, "testDomain");
-		properties.put(
+	protected void populateLegacyProperties(
+		UnicodeProperties unicodeProperties) {
+
+		unicodeProperties.put(
+			LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN, "testDomain");
+		unicodeProperties.put(
 			LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER,
 			"testDomainController");
-		properties.put(
+		unicodeProperties.put(
 			LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER_NAME,
 			"testDomainControllerName");
-		properties.put(LegacyNtlmPropsKeys.NTLM_AUTH_ENABLED, StringPool.TRUE);
-		properties.put(
+		unicodeProperties.put(
+			LegacyNtlmPropsKeys.NTLM_AUTH_ENABLED, StringPool.TRUE);
+		unicodeProperties.put(
 			LegacyNtlmPropsKeys.NTLM_AUTH_NEGOTIATE_FLAGS,
 			"testNegotiateFlags");
-		properties.put(
+		unicodeProperties.put(
 			LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_ACCOUNT,
 			"test@serviceAccount.com");
-		properties.put(
+		unicodeProperties.put(
 			LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_PASSWORD,
 			"testServicePassword");
 	}

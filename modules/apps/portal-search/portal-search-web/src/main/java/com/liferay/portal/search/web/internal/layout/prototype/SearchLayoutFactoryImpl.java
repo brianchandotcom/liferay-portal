@@ -256,15 +256,15 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 			return false;
 		}
 
-		UnicodeProperties properties = group.getTypeSettingsProperties();
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 
-		if (properties.get("searchLayoutCreated") != null) {
+		if (unicodeProperties.get("searchLayoutCreated") != null) {
 			return false;
 		}
 
-		properties.put("searchLayoutCreated", "true");
+		unicodeProperties.put("searchLayoutCreated", "true");
 
-		group.setTypeSettingsProperties(properties);
+		group.setTypeSettingsProperties(unicodeProperties);
 
 		groupLocalService.updateGroup(group);
 

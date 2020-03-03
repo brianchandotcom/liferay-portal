@@ -79,15 +79,18 @@ public class SiteNavigationMenuItemLayoutTest {
 			LocaleUtil.getSiteDefault(), "welcome"
 		).build();
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put("addToAutoMenus", Boolean.FALSE.toString());
+		typeSettingsUnicodeProperties.put(
+			"addToAutoMenus", Boolean.FALSE.toString());
 
 		LayoutServiceUtil.addLayout(
 			_group.getGroupId(), false, 0, nameMap, new HashMap<>(),
 			new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
-			false, new HashMap<>(), serviceContext);
+			LayoutConstants.TYPE_PORTLET,
+			typeSettingsUnicodeProperties.toString(), false, new HashMap<>(),
+			serviceContext);
 
 		Assert.assertEquals(
 			0,
@@ -109,15 +112,18 @@ public class SiteNavigationMenuItemLayoutTest {
 			LocaleUtil.getSiteDefault(), "welcome"
 		).build();
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put("addToAutoMenus", Boolean.FALSE.toString());
+		typeSettingsUnicodeProperties.put(
+			"addToAutoMenus", Boolean.FALSE.toString());
 
 		LayoutServiceUtil.addLayout(
 			_group.getGroupId(), false, 0, nameMap, new HashMap<>(),
 			new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
-			false, new HashMap<>(), serviceContext);
+			LayoutConstants.TYPE_PORTLET,
+			typeSettingsUnicodeProperties.toString(), false, new HashMap<>(),
+			serviceContext);
 
 		Assert.assertEquals(
 			0,
@@ -146,9 +152,10 @@ public class SiteNavigationMenuItemLayoutTest {
 			LocaleUtil.getSiteDefault(), "welcome"
 		).build();
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put(
+		typeSettingsUnicodeProperties.put(
 			"siteNavigationMenuId",
 			StringUtil.merge(
 				new long[] {
@@ -159,8 +166,9 @@ public class SiteNavigationMenuItemLayoutTest {
 		LayoutServiceUtil.addLayout(
 			_group.getGroupId(), false, 0, nameMap, new HashMap<>(),
 			new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
-			false, new HashMap<>(), serviceContext);
+			LayoutConstants.TYPE_PORTLET,
+			typeSettingsUnicodeProperties.toString(), false, new HashMap<>(),
+			serviceContext);
 
 		Assert.assertEquals(
 			2,
@@ -184,9 +192,10 @@ public class SiteNavigationMenuItemLayoutTest {
 			LocaleUtil.getSiteDefault(), "welcome"
 		).build();
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put(
+		typeSettingsUnicodeProperties.put(
 			"siteNavigationMenuId",
 			StringUtil.merge(
 				new long[] {siteNavigationMenu.getSiteNavigationMenuId()}));
@@ -194,8 +203,9 @@ public class SiteNavigationMenuItemLayoutTest {
 		LayoutServiceUtil.addLayout(
 			_group.getGroupId(), false, 0, nameMap, new HashMap<>(),
 			new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
-			false, new HashMap<>(), serviceContext);
+			LayoutConstants.TYPE_PORTLET,
+			typeSettingsUnicodeProperties.toString(), false, new HashMap<>(),
+			serviceContext);
 
 		Assert.assertEquals(
 			1,

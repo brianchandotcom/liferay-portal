@@ -85,13 +85,16 @@ public class AddGoogleExpandoColumnsPortalInstanceLifecycleListener
 					ExpandoTableConstants.DEFAULT_TABLE_NAME);
 			}
 
-			UnicodeProperties properties = new UnicodeProperties();
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-			properties.setProperty("hidden", "true");
-			properties.setProperty("visible-with-update-permission", "false");
+			unicodeProperties.setProperty("hidden", "true");
+			unicodeProperties.setProperty(
+				"visible-with-update-permission", "false");
 
-			addExpandoColumn(expandoTable, "googleAccessToken", properties);
-			addExpandoColumn(expandoTable, "googleRefreshToken", properties);
+			addExpandoColumn(
+				expandoTable, "googleAccessToken", unicodeProperties);
+			addExpandoColumn(
+				expandoTable, "googleRefreshToken", unicodeProperties);
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(companyId);
@@ -104,7 +107,7 @@ public class AddGoogleExpandoColumnsPortalInstanceLifecycleListener
 
 	protected void addExpandoColumn(
 			ExpandoTable expandoTable, String name,
-			UnicodeProperties properties)
+			UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
@@ -118,7 +121,7 @@ public class AddGoogleExpandoColumnsPortalInstanceLifecycleListener
 			expandoTable.getTableId(), name, ExpandoColumnConstants.STRING);
 
 		_expandoColumnLocalService.updateTypeSettings(
-			expandoColumn.getColumnId(), properties.toString());
+			expandoColumn.getColumnId(), unicodeProperties.toString());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

@@ -62,25 +62,29 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 
 	@Override
 	public double getConfidenceLevel() {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
 		return GetterUtil.getDouble(
-			typeSettingsProperties.getProperty("confidenceLevel"));
+			typeSettingsUnicodeProperties.getProperty("confidenceLevel"));
 	}
 
 	@Override
 	public String getGoal() {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
-		return GetterUtil.getString(typeSettingsProperties.getProperty("goal"));
+		return GetterUtil.getString(
+			typeSettingsUnicodeProperties.getProperty("goal"));
 	}
 
 	@Override
 	public String getGoalTarget() {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
 		return GetterUtil.getString(
-			typeSettingsProperties.getProperty("goalTarget"));
+			typeSettingsUnicodeProperties.getProperty("goalTarget"));
 	}
 
 	@Override
@@ -123,26 +127,28 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 
 	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
-		if (_typeSettingsProperties == null) {
-			_typeSettingsProperties = new UnicodeProperties(true);
+		if (_typeSettingsUnicodeProperties == null) {
+			_typeSettingsUnicodeProperties = new UnicodeProperties(true);
 
 			try {
-				_typeSettingsProperties.load(super.getTypeSettings());
+				_typeSettingsUnicodeProperties.load(super.getTypeSettings());
 			}
 			catch (IOException ioException) {
 				_log.error(ioException, ioException);
 			}
 		}
 
-		return _typeSettingsProperties;
+		return _typeSettingsUnicodeProperties;
 	}
 
 	@Override
 	public long getWinnerSegmentsExperienceId() {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			getTypeSettingsProperties();
 
 		return GetterUtil.getLong(
-			typeSettingsProperties.getProperty("winnerSegmentsExperienceId"),
+			typeSettingsUnicodeProperties.getProperty(
+				"winnerSegmentsExperienceId"),
 			-1);
 	}
 
@@ -168,6 +174,6 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsExperimentImpl.class);
 
-	private UnicodeProperties _typeSettingsProperties;
+	private UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

@@ -71,8 +71,11 @@ public class OpenIdCompanySettingsVerifyProcessTest
 	}
 
 	@Override
-	protected void populateLegacyProperties(UnicodeProperties properties) {
-		properties.put(LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED, "true");
+	protected void populateLegacyProperties(
+		UnicodeProperties unicodeProperties) {
+
+		unicodeProperties.put(
+			LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED, "true");
 	}
 
 }

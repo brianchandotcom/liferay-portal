@@ -65,20 +65,22 @@ public class NodeSiteNavigationMenuItemType
 	public String getTitle(
 		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.fastLoad(
+		typeSettingsUnicodeProperties.fastLoad(
 			siteNavigationMenuItem.getTypeSettings());
 
-		String defaultLanguageId = typeSettingsProperties.getProperty(
+		String defaultLanguageId = typeSettingsUnicodeProperties.getProperty(
 			Field.DEFAULT_LANGUAGE_ID,
 			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale()));
 
-		String defaultTitle = typeSettingsProperties.getProperty(
+		String defaultTitle = typeSettingsUnicodeProperties.getProperty(
 			"name_" + defaultLanguageId,
-			typeSettingsProperties.getProperty("name", getLabel(locale)));
+			typeSettingsUnicodeProperties.getProperty(
+				"name", getLabel(locale)));
 
-		return typeSettingsProperties.getProperty(
+		return typeSettingsUnicodeProperties.getProperty(
 			"name_" + LocaleUtil.toLanguageId(locale), defaultTitle);
 	}
 

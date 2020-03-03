@@ -107,28 +107,31 @@ public class CASCompanySettingsVerifyProcessTest
 	}
 
 	@Override
-	protected void populateLegacyProperties(UnicodeProperties properties) {
-		properties.put(LegacyCASPropsKeys.CAS_AUTH_ENABLED, StringPool.TRUE);
-		properties.put(
+	protected void populateLegacyProperties(
+		UnicodeProperties unicodeProperties) {
+
+		unicodeProperties.put(
+			LegacyCASPropsKeys.CAS_AUTH_ENABLED, StringPool.TRUE);
+		unicodeProperties.put(
 			LegacyCASPropsKeys.CAS_IMPORT_FROM_LDAP, StringPool.TRUE);
-		properties.put(
+		unicodeProperties.put(
 			LegacyCASPropsKeys.CAS_LOGIN_URL, "http://test.com/cas/login/url");
-		properties.put(
+		unicodeProperties.put(
 			LegacyCASPropsKeys.CAS_LOGOUT_ON_SESSION_EXPIRATION,
 			StringPool.TRUE);
-		properties.put(
+		unicodeProperties.put(
 			LegacyCASPropsKeys.CAS_LOGOUT_URL,
 			"http://test.com/cas/logout/url");
-		properties.put(
+		unicodeProperties.put(
 			LegacyCASPropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
 			"http://test.com/cas/no/such/user/redirect/url");
-		properties.put(
+		unicodeProperties.put(
 			LegacyCASPropsKeys.CAS_SERVER_NAME,
 			"http://test.com/cas/server/name");
-		properties.put(
+		unicodeProperties.put(
 			LegacyCASPropsKeys.CAS_SERVER_URL,
 			"http://test.com/cas/server/url");
-		properties.put(
+		unicodeProperties.put(
 			LegacyCASPropsKeys.CAS_SERVICE_URL,
 			"http://test.com/cas/service/url");
 	}

@@ -183,17 +183,18 @@ public class NestedPortletsPortlet extends MVCPortlet {
 	}
 
 	protected void checkLayout(Layout layout, Collection<String> columnIds) {
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
 		String[] layoutColumnIds = StringUtil.split(
-			typeSettingsProperties.get(
+			typeSettingsUnicodeProperties.get(
 				LayoutTypePortletConstants.NESTED_COLUMN_IDS));
 
 		boolean updateColumnIds = false;
 
 		for (String columnId : columnIds) {
-			String portletIds = typeSettingsProperties.getProperty(columnId);
+			String portletIds = typeSettingsUnicodeProperties.getProperty(
+				columnId);
 
 			if (Validator.isNotNull(portletIds) &&
 				!ArrayUtil.contains(layoutColumnIds, columnId)) {
@@ -205,11 +206,11 @@ public class NestedPortletsPortlet extends MVCPortlet {
 		}
 
 		if (updateColumnIds) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				LayoutTypePortletConstants.NESTED_COLUMN_IDS,
 				StringUtil.merge(layoutColumnIds));
 
-			layout.setTypeSettingsProperties(typeSettingsProperties);
+			layout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 			try {
 				_layoutLocalService.updateLayout(

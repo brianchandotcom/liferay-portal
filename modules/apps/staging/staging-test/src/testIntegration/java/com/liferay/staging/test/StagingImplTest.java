@@ -330,15 +330,15 @@ public class StagingImplTest {
 			return;
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			_group.getTypeSettingsProperties();
 
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("branchingPrivate")));
+				typeSettingsUnicodeProperties.getProperty("branchingPrivate")));
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("branchingPublic")));
+				typeSettingsUnicodeProperties.getProperty("branchingPublic")));
 
 		Group stagingGroup = _group.getStagingGroup();
 

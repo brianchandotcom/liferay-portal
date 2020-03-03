@@ -104,10 +104,10 @@ public class RoleLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			_group.getTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"defaultSiteRoleIds", String.valueOf(_role.getRoleId()));
 
 		_groupLocalService.updateGroup(_group);
@@ -116,11 +116,12 @@ public class RoleLocalServiceTest {
 
 		_group = _groupLocalService.getGroup(_group.getGroupId());
 
-		typeSettingsProperties = _group.getTypeSettingsProperties();
+		typeSettingsUnicodeProperties = _group.getTypeSettingsProperties();
 
 		List<Long> defaultSiteRoleIds = ListUtil.fromArray(
 			StringUtil.split(
-				typeSettingsProperties.getProperty("defaultSiteRoleIds"), 0L));
+				typeSettingsUnicodeProperties.getProperty("defaultSiteRoleIds"),
+				0L));
 
 		Assert.assertFalse(defaultSiteRoleIds.contains(_role.getRoleId()));
 	}

@@ -89,10 +89,10 @@ public class EditServerMVCActionCommandTest {
 		String portletId = PortletIdCodec.encode(
 			"com_liferay_test_portlet_TestPortlet");
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			layoutRevision.getTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty("column-1", portletId);
+		typeSettingsUnicodeProperties.setProperty("column-1", portletId);
 
 		layoutRevision = _layoutRevisionLocalService.updateLayoutRevision(
 			layoutRevision);

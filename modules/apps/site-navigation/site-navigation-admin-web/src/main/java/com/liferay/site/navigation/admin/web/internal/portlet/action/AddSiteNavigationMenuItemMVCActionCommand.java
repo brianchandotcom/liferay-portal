@@ -67,7 +67,7 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 
 		String type = ParamUtil.getString(actionRequest, "type");
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			SiteNavigationMenuItemUtil.getSiteNavigationMenuItemProperties(
 				actionRequest, "TypeSettingsProperties--");
 
@@ -80,7 +80,8 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 			SiteNavigationMenuItem siteNavigationMenuItem =
 				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
 					themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
-					type, typeSettingsProperties.toString(), serviceContext);
+					type, typeSettingsUnicodeProperties.toString(),
+					serviceContext);
 
 			jsonObject.put(
 				"siteNavigationMenuItemId",

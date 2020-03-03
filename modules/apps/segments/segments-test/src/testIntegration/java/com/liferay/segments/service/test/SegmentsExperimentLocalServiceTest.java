@@ -973,10 +973,10 @@ public class SegmentsExperimentLocalServiceTest {
 				SegmentsExperimentConstants.Goal.MAX_SCROLL_DEPTH.getLabel(),
 				StringPool.BLANK);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			updatedSegmentsExperiment.getTypeSettingsProperties();
 
-		String goal = typeSettingsProperties.getProperty("goal");
+		String goal = typeSettingsUnicodeProperties.getProperty("goal");
 
 		Assert.assertEquals(
 			SegmentsExperimentConstants.Goal.MAX_SCROLL_DEPTH.getLabel(), goal);

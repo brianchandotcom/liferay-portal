@@ -105,9 +105,10 @@ public class SiteNavigationMenuItemUtil {
 			return StringPool.BLANK;
 		}
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.fastLoad(
+		typeSettingsUnicodeProperties.fastLoad(
 			siteNavigationMenuItem.getTypeSettings());
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
@@ -117,10 +118,10 @@ public class SiteNavigationMenuItemUtil {
 				siteNavigationMenuItem.getType(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT)) {
 
-			String layoutUuid = typeSettingsProperties.get("layoutUuid");
+			String layoutUuid = typeSettingsUnicodeProperties.get("layoutUuid");
 
 			boolean privateLayout = GetterUtil.getBoolean(
-				typeSettingsProperties.get("privateLayout"));
+				typeSettingsUnicodeProperties.get("privateLayout"));
 
 			Layout layout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 				layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
@@ -132,10 +133,10 @@ public class SiteNavigationMenuItemUtil {
 				String value = nameEntry.getValue();
 
 				if (Validator.isNull(
-						typeSettingsProperties.getProperty(
+						typeSettingsUnicodeProperties.getProperty(
 							"name_" + languageId))) {
 
-					typeSettingsProperties.setProperty(
+					typeSettingsUnicodeProperties.setProperty(
 						"name_" + languageId, value);
 				}
 			}
@@ -147,24 +148,27 @@ public class SiteNavigationMenuItemUtil {
 			locale -> LocaleUtil.toLanguageId(locale)
 		).filter(
 			languageId -> Validator.isNotNull(
-				typeSettingsProperties.getProperty(name + "_" + languageId))
+				typeSettingsUnicodeProperties.getProperty(
+					name + "_" + languageId))
 		).collect(
 			Collectors.toMap(
 				languageId -> languageId,
-				languageId -> typeSettingsProperties.getProperty(
+				languageId -> typeSettingsUnicodeProperties.getProperty(
 					name + "_" + languageId))
 		);
 
 		if (MapUtil.isEmpty(map)) {
-			String defaultLanguageId = typeSettingsProperties.getProperty(
-				Field.DEFAULT_LANGUAGE_ID,
-				LocaleUtil.toLanguageId(
-					PortalUtil.getSiteDefaultLocale(
-						siteNavigationMenuItem.getGroupId())));
+			String defaultLanguageId =
+				typeSettingsUnicodeProperties.getProperty(
+					Field.DEFAULT_LANGUAGE_ID,
+					LocaleUtil.toLanguageId(
+						PortalUtil.getSiteDefaultLocale(
+							siteNavigationMenuItem.getGroupId())));
 
 			map.put(
 				defaultLanguageId,
-				GetterUtil.getString(typeSettingsProperties.getProperty(name)));
+				GetterUtil.getString(
+					typeSettingsUnicodeProperties.getProperty(name)));
 		}
 
 		return LocalizationUtil.getXml(

@@ -111,32 +111,34 @@ public class OpenSSOCompanySettingsVerifyProcessTest
 	}
 
 	@Override
-	protected void populateLegacyProperties(UnicodeProperties properties) {
-		properties.put(
+	protected void populateLegacyProperties(
+		UnicodeProperties unicodeProperties) {
+
+		unicodeProperties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_EMAIL_ADDRESS_ATTR,
 			"testEmailAddressAttr");
-		properties.put(
+		unicodeProperties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_AUTH_ENABLED, StringPool.TRUE);
-		properties.put(
+		unicodeProperties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_FIRST_NAME_ATTR,
 			"testFirstNameAttr");
-		properties.put(
+		unicodeProperties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_IMPORT_FROM_LDAP, StringPool.TRUE);
-		properties.put(
+		unicodeProperties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_LAST_NAME_ATTR, "testLastNameAttr");
-		properties.put(
+		unicodeProperties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_LOGIN_URL,
 			"http://test.com/login/url");
-		properties.put(
+		unicodeProperties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_ON_SESSION_EXPIRATION,
 			StringPool.TRUE);
-		properties.put(
+		unicodeProperties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_URL,
 			"http://test.com/logout/url");
-		properties.put(
+		unicodeProperties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_SCREEN_NAME_ATTR,
 			"testScreenNameAttr");
-		properties.put(
+		unicodeProperties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_SERVICE_URL,
 			"http://test.com/service/url");
 	}

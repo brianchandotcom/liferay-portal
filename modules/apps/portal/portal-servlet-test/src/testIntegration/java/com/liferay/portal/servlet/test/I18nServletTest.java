@@ -109,13 +109,13 @@ public class I18nServletTest extends I18nServlet {
 
 		_group = GroupTestUtil.addGroup();
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			_group.getTypeSettingsProperties();
 
-		typeSettingsProperties.put(
+		typeSettingsUnicodeProperties.put(
 			GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES, "false");
 
-		_group.setTypeSettingsProperties(typeSettingsProperties);
+		_group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		_groupLocalService.updateGroup(_group);
 	}

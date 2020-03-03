@@ -157,12 +157,12 @@ public class TestSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 		Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
 		List<AssetTag> oldAssetTags,
 		Map<String, Serializable> oldExpandoAttributes,
-		UnicodeProperties oldTypeSettingsProperties) {
+		UnicodeProperties oldTypeSettingsUnicodeProperties) {
 
 		Assert.assertNotNull(group);
 		Assert.assertNotNull(oldGroup);
 
-		if (oldTypeSettingsProperties == null) {
+		if (oldTypeSettingsUnicodeProperties == null) {
 			Assert.assertNotNull(oldAssetCategories);
 			Assert.assertNotNull(oldAssetTags);
 			Assert.assertNotNull(oldExpandoAttributes);

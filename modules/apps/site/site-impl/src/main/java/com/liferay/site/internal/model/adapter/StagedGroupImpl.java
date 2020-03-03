@@ -872,9 +872,9 @@ public class StagedGroupImpl extends GroupWrapper implements StagedGroup {
 
 	@Override
 	public void setTypeSettingsProperties(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		_group.setTypeSettingsProperties(typeSettingsProperties);
+		_group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 	}
 
 	@Override

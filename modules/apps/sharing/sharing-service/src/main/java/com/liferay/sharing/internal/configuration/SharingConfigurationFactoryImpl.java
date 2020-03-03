@@ -155,12 +155,12 @@ public class SharingConfigurationFactoryImpl
 				return false;
 			}
 
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				_group.getTypeSettingsProperties();
 
-			if (typeSettingsProperties.containsKey("sharingEnabled")) {
+			if (typeSettingsUnicodeProperties.containsKey("sharingEnabled")) {
 				return GetterUtil.getBoolean(
-					typeSettingsProperties.get("sharingEnabled"));
+					typeSettingsUnicodeProperties.get("sharingEnabled"));
 			}
 
 			if (_sharingGroupConfiguration == null) {

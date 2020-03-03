@@ -55,7 +55,7 @@ public class EditSiteNavigationMenuItemMVCActionCommand
 		long siteNavigationMenuItemId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuItemId");
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			SiteNavigationMenuItemUtil.getSiteNavigationMenuItemProperties(
 				actionRequest, "TypeSettingsProperties--");
 
@@ -64,8 +64,8 @@ public class EditSiteNavigationMenuItemMVCActionCommand
 
 		try {
 			_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
-				siteNavigationMenuItemId, typeSettingsProperties.toString(),
-				serviceContext);
+				siteNavigationMenuItemId,
+				typeSettingsUnicodeProperties.toString(), serviceContext);
 		}
 		catch (PortalException portalException) {
 			hideDefaultErrorMessage(actionRequest);

@@ -253,17 +253,17 @@ public class StagingBarPortlet extends MVCPortlet {
 						stagingGroup.getGroupId(), layout.isPrivateLayout());
 			}
 
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				group.getTypeSettingsProperties();
 
-			String remoteAddress = typeSettingsProperties.getProperty(
+			String remoteAddress = typeSettingsUnicodeProperties.getProperty(
 				"remoteAddress");
 			int remotePort = GetterUtil.getInteger(
-				typeSettingsProperties.getProperty("remotePort"));
-			String remotePathContext = typeSettingsProperties.getProperty(
-				"remotePathContext");
+				typeSettingsUnicodeProperties.getProperty("remotePort"));
+			String remotePathContext =
+				typeSettingsUnicodeProperties.getProperty("remotePathContext");
 			boolean secureConnection = GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("secureConnection"));
+				typeSettingsUnicodeProperties.getProperty("secureConnection"));
 
 			remoteURL = _stagingURLHelper.buildRemoteURL(
 				remoteAddress, remotePort, remotePathContext, secureConnection);

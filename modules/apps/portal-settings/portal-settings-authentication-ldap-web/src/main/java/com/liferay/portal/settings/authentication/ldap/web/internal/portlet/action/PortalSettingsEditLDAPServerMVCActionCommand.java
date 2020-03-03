@@ -199,11 +199,11 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		long ldapServerId = ParamUtil.getLong(
 			actionRequest, LDAPConstants.LDAP_SERVER_ID);
 
-		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, "ldap--");
 
 		validateLDAPServerName(
-			ldapServerId, themeDisplay.getCompanyId(), properties);
+			ldapServerId, themeDisplay.getCompanyId(), unicodeProperties);
 
 		validateSearchFilters(actionRequest);
 
@@ -220,7 +220,7 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 					themeDisplay.getCompanyId(), ldapServerId);
 		}
 
-		for (Map.Entry<String, String> entry : properties.entrySet()) {
+		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
 			if (Portal.TEMP_OBFUSCATION_VALUE.equals(entry.getValue())) {
 				continue;
 			}
@@ -243,10 +243,12 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 	}
 
 	protected void validateLDAPServerName(
-			long ldapServerId, long companyId, UnicodeProperties properties)
+			long ldapServerId, long companyId,
+			UnicodeProperties unicodeProperties)
 		throws Exception {
 
-		String serverName = properties.getProperty(LDAPConstants.SERVER_NAME);
+		String serverName = unicodeProperties.getProperty(
+			LDAPConstants.SERVER_NAME);
 
 		if (Validator.isNull(serverName)) {
 			throw new LDAPServerNameException();

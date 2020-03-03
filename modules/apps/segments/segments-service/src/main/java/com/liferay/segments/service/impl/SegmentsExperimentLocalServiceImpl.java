@@ -117,12 +117,14 @@ public class SegmentsExperimentLocalServiceImpl
 		segmentsExperiment.setName(name);
 		segmentsExperiment.setDescription(description);
 
-		UnicodeProperties typeSettings = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettings.setProperty("goal", goal);
-		typeSettings.setProperty("goalTarget", goalTarget);
+		typeSettingsUnicodeProperties.setProperty("goal", goal);
+		typeSettingsUnicodeProperties.setProperty("goalTarget", goalTarget);
 
-		segmentsExperiment.setTypeSettings(typeSettings.toString());
+		segmentsExperiment.setTypeSettings(
+			typeSettingsUnicodeProperties.toString());
 
 		segmentsExperiment.setStatus(status);
 
@@ -325,17 +327,18 @@ public class SegmentsExperimentLocalServiceImpl
 		_validateSegmentsExperimentRels(segmentsExperienceIdSplitMap);
 		_validateSplit(segmentsExperienceIdSplitMap);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			segmentsExperiment.getTypeSettingsProperties();
 
 		_validateGoalTarget(
-			typeSettingsProperties.get("goal"),
-			typeSettingsProperties.get("goalTarget"));
+			typeSettingsUnicodeProperties.get("goal"),
+			typeSettingsUnicodeProperties.get("goalTarget"));
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"confidenceLevel", String.valueOf(confidenceLevel));
 
-		segmentsExperiment.setTypeSettings(typeSettingsProperties.toString());
+		segmentsExperiment.setTypeSettings(
+			typeSettingsUnicodeProperties.toString());
 
 		for (Map.Entry<Long, Double> segmentsExperienceIdSplit :
 				segmentsExperienceIdSplitMap.entrySet()) {
@@ -371,13 +374,14 @@ public class SegmentsExperimentLocalServiceImpl
 		segmentsExperiment.setName(name);
 		segmentsExperiment.setDescription(description);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			segmentsExperiment.getTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty("goal", goal);
-		typeSettingsProperties.setProperty("goalTarget", goalTarget);
+		typeSettingsUnicodeProperties.setProperty("goal", goal);
+		typeSettingsUnicodeProperties.setProperty("goalTarget", goalTarget);
 
-		segmentsExperiment.setTypeSettings(typeSettingsProperties.toString());
+		segmentsExperiment.setTypeSettings(
+			typeSettingsUnicodeProperties.toString());
 
 		return segmentsExperimentPersistence.update(segmentsExperiment);
 	}
@@ -505,14 +509,15 @@ public class SegmentsExperimentLocalServiceImpl
 					" no found");
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			segmentsExperiment.getTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"winnerSegmentsExperienceId",
 			String.valueOf(winnerSegmentsExperienceId));
 
-		segmentsExperiment.setTypeSettings(typeSettingsProperties.toString());
+		segmentsExperiment.setTypeSettings(
+			typeSettingsUnicodeProperties.toString());
 
 		SegmentsExperimentConstants.Status statusObject =
 			SegmentsExperimentConstants.Status.valueOf(status);

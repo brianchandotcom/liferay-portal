@@ -93,19 +93,20 @@ public class SyncAdminPortlet extends BaseSyncPortlet {
 		for (long groupId : groupIds) {
 			Group group = _groupLocalService.fetchGroup(groupId);
 
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				group.getTypeSettingsProperties();
 
 			if (Validator.isNotNull(enabled)) {
-				typeSettingsProperties.setProperty("syncEnabled", enabled);
+				typeSettingsUnicodeProperties.setProperty(
+					"syncEnabled", enabled);
 			}
 
 			if (Validator.isNotNull(permissions)) {
-				typeSettingsProperties.setProperty(
+				typeSettingsUnicodeProperties.setProperty(
 					"syncSiteMemberFilePermissions", permissions);
 			}
 
-			group.setTypeSettingsProperties(typeSettingsProperties);
+			group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 			_groupLocalService.updateGroup(group);
 		}

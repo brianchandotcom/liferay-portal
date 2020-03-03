@@ -68,11 +68,12 @@ public interface SiteNavigationMenuItemType {
 	}
 
 	public default String getName(String typeSettings) {
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.fastLoad(typeSettings);
+		typeSettingsUnicodeProperties.fastLoad(typeSettings);
 
-		return typeSettingsProperties.get("name");
+		return typeSettingsUnicodeProperties.get("name");
 	}
 
 	public default String getRegularURL(

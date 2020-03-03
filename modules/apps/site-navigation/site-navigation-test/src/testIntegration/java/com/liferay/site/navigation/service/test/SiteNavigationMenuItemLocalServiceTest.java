@@ -362,15 +362,17 @@ public class SiteNavigationMenuItemLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put("name", StringUtil.randomString(1000));
+		typeSettingsUnicodeProperties.put(
+			"name", StringUtil.randomString(1000));
 
 		_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 			SiteNavigationMenuItemTypeConstants.LAYOUT,
-			typeSettingsProperties.toString(), serviceContext);
+			typeSettingsUnicodeProperties.toString(), serviceContext);
 	}
 
 	@Test(expected = InvalidSiteNavigationMenuItemTypeException.class)

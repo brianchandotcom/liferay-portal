@@ -84,10 +84,10 @@ public class ModifiedFacetPortletConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, _PARAMETER_NAME_PREFIX);
 
-		String ranges = properties.getProperty("ranges");
+		String ranges = unicodeProperties.getProperty("ranges");
 
 		try {
 			DateRangeFactory dateRangeFactory = new DateRangeFactory(

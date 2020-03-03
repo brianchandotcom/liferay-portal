@@ -74,13 +74,13 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 	protected void updateSubscriptions(ActionRequest actionRequest)
 		throws Exception {
 
-		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, _PARAMETER_NAME_PREFIX);
 
 		long entriesPerFeed = GetterUtil.getLong(
-			properties.getProperty("entriesPerFeed"));
+			unicodeProperties.getProperty("entriesPerFeed"));
 		long expandedEntriesPerFeed = GetterUtil.getLong(
-			properties.getProperty("expandedEntriesPerFeed"));
+			unicodeProperties.getProperty("expandedEntriesPerFeed"));
 
 		if ((entriesPerFeed < 1) || (expandedEntriesPerFeed < 1)) {
 			throw new ConfigurationException();

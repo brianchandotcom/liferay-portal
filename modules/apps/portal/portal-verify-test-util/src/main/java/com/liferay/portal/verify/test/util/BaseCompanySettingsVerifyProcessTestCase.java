@@ -62,15 +62,15 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 	public void setUp() throws Exception {
 		super.setUp();
 
-		UnicodeProperties properties = new UnicodeProperties();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-		populateLegacyProperties(properties);
+		populateLegacyProperties(unicodeProperties);
 
 		List<Company> companies = companyLocalService.getCompanies(false);
 
 		for (Company company : companies) {
 			companyLocalService.updatePreferences(
-				company.getCompanyId(), properties);
+				company.getCompanyId(), unicodeProperties);
 		}
 	}
 
@@ -152,7 +152,7 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 	protected abstract String getVerifyProcessName();
 
 	protected abstract void populateLegacyProperties(
-		UnicodeProperties properties);
+		UnicodeProperties unicodeProperties);
 
 	@Inject
 	protected CompanyLocalService companyLocalService;

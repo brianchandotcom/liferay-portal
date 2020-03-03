@@ -17,26 +17,18 @@ import React from 'react';
  * http://recharts.org/en-US/api/Tooltip#content
  */
 export default function CustomTooltip(props) {
-	const {
-		formatter = (value, label) => [value, label],
-		label,
-		labelFormatter = label => label,
-		payload,
-		separator = '',
-	} = props;
+	const {formatter, label, labelFormatter, payload, separator = ''} = props;
 
 	return label ? (
 		<div className="custom-tooltip">
 			<p className="mb-1 mt-0">
-				<b>{labelFormatter(label)}</b>
+				<b>{labelFormatter ? labelFormatter(label) : label}</b>
 			</p>
 			<ul className="list-unstyled mb-0">
 				{payload.map(item => {
-					const [value, name, iconType] = formatter(
-						item.value,
-						item.name,
-						item.iconType
-					);
+					const [value, name, iconType] = formatter
+						? formatter(item.value, item.name, item.iconType)
+						: [item.value, item.name, item.iconType];
 
 					return (
 						<li key={item.name}>

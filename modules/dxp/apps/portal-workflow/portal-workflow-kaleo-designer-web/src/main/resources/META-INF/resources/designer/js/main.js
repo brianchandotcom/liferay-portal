@@ -169,6 +169,8 @@ AUI.add(
 									toolbar.children = toolbar.children.map(
 										children => {
 											children = children.map(item => {
+												item.cssClass = 'btn-secondary';
+
 												delete item.icon;
 
 												return item;

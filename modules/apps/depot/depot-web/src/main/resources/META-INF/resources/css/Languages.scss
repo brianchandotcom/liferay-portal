@@ -14,12 +14,12 @@
 	}
 
 	.language-drag-handler {
-		color: #cdced9;
+		color: $secondary;
 		cursor: move;
 
 		svg {
-			height: 1.5rem;
-			width: 1.5rem;
+			height: 1rem;
+			width: 1rem;
 		}
 	}
 }

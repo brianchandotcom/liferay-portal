@@ -34,7 +34,7 @@ const ACCEPTING_TYPES = {
 
 // Defines the distance in px from the border to the center of an item where
 // dropZone changes from TOP/BOTTOM to ELEMENT
-const ITEM_HOVER_BORDER_LIMIT = 20;
+const ITEM_HOVER_BORDER_LIMIT = 28;
 
 const isValidTarget = (source, target, dropZone) => {
 	return !!(
@@ -150,7 +150,7 @@ const LanguageListItem = ({
 							<ClayIcon symbol="drag" />
 						</div>
 					</div>
-					<div className="align-items-center autofit-col autofit-col-expand flex-row justify-content-start">
+					<div className="align-items-center autofit-col autofit-col-expand autofit-padded-no-gutters flex-row justify-content-start">
 						{displayName}
 						{isDefault && (
 							<ClayLabel className="ml-3" displayType="info">
@@ -166,7 +166,12 @@ const LanguageListItem = ({
 						active={active}
 						onActiveChange={setActive}
 						trigger={
-							<ClayButton displayType="unstyled" monospaced small>
+							<ClayButton
+								borderless
+								displayType="secondary"
+								monospaced
+								small
+							>
 								<ClayIcon symbol="ellipsis-v" />
 							</ClayButton>
 						}

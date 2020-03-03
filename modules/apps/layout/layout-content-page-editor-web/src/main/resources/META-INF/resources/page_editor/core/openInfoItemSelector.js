@@ -31,7 +31,10 @@ export function openInfoItemSelector(
 		const selectedItem = event.selectedItem;
 
 		if (selectedItem && selectedItem.value) {
-			const infoItem = JSON.parse(selectedItem.value);
+			const infoItem = {
+				...JSON.parse(selectedItem.value),
+				type: selectedItem.returnType,
+			};
 
 			callback(infoItem);
 		}

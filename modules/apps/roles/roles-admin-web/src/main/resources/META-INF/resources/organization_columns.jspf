@@ -74,7 +74,7 @@
 		/>
 
 		<liferay-ui:search-container-column-text
-			name="role-type"
+			name="type"
 			orderable="<%= true %>"
 			value="<%= LanguageUtil.get(request, organization.getType()) %>"
 		/>

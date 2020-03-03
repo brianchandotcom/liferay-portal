@@ -57,7 +57,7 @@
 		/>
 
 		<liferay-ui:search-container-column-text
-			name="roleType"
+			name="type"
 			value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>"
 		/>
 	</c:otherwise>

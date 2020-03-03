@@ -22,9 +22,58 @@ definition {
 	@description = "Checks for each portlet having defined boundries."
 	@priority = "5"
 	test CheckPortletBoundries {
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
 
-	}
+		SitePages.addPublicPage(
+			pageName = "Test Page",
+			sitePageType = "Widget Page");
+
+		SitePages.configurePage(
+			columnName = "3 Columns",
+			pageName = "Test Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
 		
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Portlet.addPG(portletName = "Message Board");
+		Refresh();
+		Portlet.addPG(portletName = "Hello World");
+		Refresh();
+		Portlet.addPG(portletName = "Documents and Media");
+
+		Portlet.dragAndDropPortletToColumnPG(
+			columnNumberFrom = "1",
+			columnNumberTo = "2",
+			portletName = "Hello World");
+
+		Portlet.dragAndDropPortletToColumnPG(
+			columnNumberFrom = "1",
+			columnNumberTo = "3",
+			portletName = "Documents and Media");
+		
+		MouseOver(
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
+			key_portletTitleName = "Message Boards");
+		
+		takeScreenshot();
+
+		MouseOver(
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE",
+			key_portletTitleName = "Hello World");		
+
+		takeScreenshot();
+
+		MouseOver(
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_3_PORTLET_TITLE",
+			key_portletTitleName = "Documents and Media");
+
+		takeScreenshot();
+	}
+
 	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on guest page level after page refresh."
 	@priority = "5"
 	test RefreshHomePage {

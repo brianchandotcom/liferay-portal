@@ -37,10 +37,7 @@ public class GetterUtilCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws ReflectiveOperationException {
 
-		if (!fileName.endsWith("GetterUtilTest.java")) {
-			_checkDefaultValues(fileName, content, _getterUtilGetPattern, 2);
-		}
-
+		_checkDefaultValues(fileName, content, _getterUtilGetPattern, 2);
 		_checkDefaultValues(fileName, content, _paramUtilGetPattern, 3);
 
 		return content;

@@ -85,7 +85,10 @@ export default withRouter(
 		const filterOptions = getFilterOptions();
 
 		const getParentSubSections = () =>
-			context.section.parentSection.messageBoardSections.items;
+			(context.section &&
+				context.section.parentSection &&
+				context.section.parentSection.messageBoardSections.items) ||
+			[];
 
 		return (
 			<div className="autofit-padded-no-gutters autofit-row autofit-row-center">
@@ -101,7 +104,7 @@ export default withRouter(
 										{' : '}
 										{context.section.title ===
 										context.section.parentSection.title
-											? 'All'
+											? Liferay.Language.get('all')
 											: context.section.title}
 									</>
 								)}
@@ -113,23 +116,19 @@ export default withRouter(
 								context.section.parentSection.id) ||
 								sectionTitle}`}
 						>
-							<ClayDropDown.Help>{'All'}</ClayDropDown.Help>
+							<ClayDropDown.Help>
+								{Liferay.Language.get('all')}
+							</ClayDropDown.Help>
 						</Link>
 						<ClayDropDown.ItemList>
 							<ClayDropDown.Group>
-								{context.section &&
-									getParentSubSections().map((item, i) => (
-										<ClayDropDown.Item
-											href={item.href}
-											key={i}
-										>
-											<Link
-												to={'/questions/' + item.title}
-											>
-												{item.title}
-											</Link>
-										</ClayDropDown.Item>
-									))}
+								{getParentSubSections().map((item, i) => (
+									<ClayDropDown.Item href={item.href} key={i}>
+										<Link to={'/questions/' + item.title}>
+											{item.title}
+										</Link>
+									</ClayDropDown.Item>
+								))}
 							</ClayDropDown.Group>
 						</ClayDropDown.ItemList>
 					</ClayDropDown>

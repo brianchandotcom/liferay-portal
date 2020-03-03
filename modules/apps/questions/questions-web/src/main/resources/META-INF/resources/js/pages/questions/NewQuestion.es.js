@@ -13,10 +13,10 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
@@ -37,6 +37,8 @@ export default withRouter(
 	}) => {
 		const [articleBody, setArticleBody] = useState('');
 		const [headline, setHeadline] = useState('');
+		const [sectionId, setSectionId] = useState();
+		const [sections, setSections] = useState([]);
 		const [tags, setTags] = useState([]);
 
 		const context = useContext(AppContext);
@@ -50,9 +52,23 @@ export default withRouter(
 			createQuestion(
 				articleBody,
 				headline,
-				context.section.id,
+				sectionId || context.section.id,
 				tags.map(tag => tag.value)
 			).then(() => debounceCallback());
+
+		useEffect(
+			() =>
+				setSections(
+					(context.section &&
+						context.section.parentSection && [
+							{label: '', value: context.section.id},
+							...context.section.parentSection
+								.messageBoardSections.items,
+						]) ||
+						[]
+				),
+			[context.section, context.section.parentSection]
+		);
 
 		return (
 			<section className="c-mt-5 c-mx-auto col-xl-10">
@@ -119,6 +135,23 @@ export default withRouter(
 
 							<ClayForm.Text>{''}</ClayForm.Text>
 						</ClayForm.FeedbackGroup>
+					</ClayForm.Group>
+
+					<ClayForm.Group className="c-mt-4">
+						<label htmlFor="basicInput">
+							{Liferay.Language.get('topic')}
+						</label>
+						<ClaySelect
+							onChange={event => setSectionId(event.target.value)}
+						>
+							{sections.map(section => (
+								<ClaySelect.Option
+									key={section.id}
+									label={section.title}
+									value={section.id}
+								/>
+							))}
+						</ClaySelect>
 					</ClayForm.Group>
 
 					<ClayForm.Group className="c-mt-4">

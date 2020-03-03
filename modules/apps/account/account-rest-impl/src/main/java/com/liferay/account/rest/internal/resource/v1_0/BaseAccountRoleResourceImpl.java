@@ -81,7 +81,7 @@ public abstract class BaseAccountRoleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/roles'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-roles'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
@@ -95,7 +95,7 @@ public abstract class BaseAccountRoleResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
-	@Path("/accounts/{accountId}/roles")
+	@Path("/accounts/{accountId}/account-roles")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public Page<AccountRole> getAccountRolesPage(
@@ -111,14 +111,14 @@ public abstract class BaseAccountRoleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/roles' -d $'{"description": ___, "displayName": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-roles' -d $'{"description": ___, "displayName": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Adds a role for the account")
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
-	@Path("/accounts/{accountId}/roles")
+	@Path("/accounts/{accountId}/account-roles")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountRole")})
 	public AccountRole postAccountRole(
@@ -239,12 +239,12 @@ public abstract class BaseAccountRoleResourceImpl
 	}
 
 	protected Map<String, String> addAction(
-		String actionName, Long id, String methodName, String permissionName,
-		Long siteId) {
+		String actionName, Long id, String methodName, Long ownerId,
+		String permissionName, Long siteId) {
 
 		return ActionUtil.addAction(
-			actionName, getClass(), id, methodName, permissionName,
-			contextScopeChecker, siteId, contextUriInfo);
+			actionName, getClass(), id, methodName, contextScopeChecker,
+			ownerId, permissionName, siteId, contextUriInfo);
 	}
 
 	protected Map<String, String> addAction(
@@ -252,7 +252,7 @@ public abstract class BaseAccountRoleResourceImpl
 		Long siteId) {
 
 		return addAction(
-			actionName, siteId, methodName, permissionName, siteId);
+			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
 	protected void preparePatch(

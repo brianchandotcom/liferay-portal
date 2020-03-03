@@ -189,7 +189,7 @@ public interface AccountUserResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/account-rest/v1.0/accounts/{accountId}/users",
+						"/o/account-rest/v1.0/accounts/{accountId}/account-users",
 				accountId);
 
 			httpInvoker.userNameAndPassword(
@@ -255,7 +255,7 @@ public interface AccountUserResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/account-rest/v1.0/accounts/{accountId}/users",
+						"/o/account-rest/v1.0/accounts/{accountId}/account-users",
 				accountId);
 
 			httpInvoker.userNameAndPassword(

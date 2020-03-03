@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.HashMap;
 import java.util.List;
@@ -205,11 +206,19 @@ public class FragmentLayoutStructureItemHelper
 			JSONObject localizationJSONObject = _createLocalizationJSONObject(
 				(Map<String, Object>)valueMap.get("text"));
 
+			JSONObject segmentExperienceJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			segmentExperienceJSONObject.put(
+				SegmentsExperienceConstants.ID_PREFIX +
+					SegmentsExperienceConstants.ID_DEFAULT,
+				localizationJSONObject);
+
 			try {
 				jsonObject.put(
 					fragmentFieldId,
 					JSONUtil.merge(
-						fragmentFieldJSONObject, localizationJSONObject));
+						fragmentFieldJSONObject, segmentExperienceJSONObject));
 			}
 			catch (JSONException jsonException) {
 				if (_log.isWarnEnabled()) {

@@ -243,7 +243,10 @@ definition {
 	@description = "This is a test for LPS-78928. Static text in content pages is searchable."
 	@priority = "5"
 	test SearchStaticText {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until POSHI-48 resolved
+
+		property portal.acceptance = "false";
 
 		task ("Add a Static Text fragment to the content page") {
 			PageEditor.addFragment(

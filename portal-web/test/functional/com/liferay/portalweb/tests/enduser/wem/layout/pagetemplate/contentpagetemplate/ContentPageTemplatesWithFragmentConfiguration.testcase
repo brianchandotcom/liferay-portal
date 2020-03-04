@@ -31,7 +31,10 @@ definition {
 	@description = "This is a test for LPS-99377. User can add a checkbox configuration fragment to a content page template."
 	@priority = "5"
 	test AddCheckboxConfigurationFragmentToContentPageTemplate {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until POSHI-48 resolved
+
+		property portal.acceptance = "false";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");

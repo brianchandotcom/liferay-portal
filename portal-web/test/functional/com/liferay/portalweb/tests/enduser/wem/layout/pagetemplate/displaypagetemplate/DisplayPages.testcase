@@ -77,7 +77,10 @@ definition {
 	@description = "User can add a display page with fragments."
 	@priority = "5"
 	test AddDisplayPage {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until POSHI-48 resolved
+
+		property portal.acceptance = "false";
 
 		task ("Add a fragment") {
 			PageEditor.addFragment(

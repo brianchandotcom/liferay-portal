@@ -191,7 +191,10 @@ definition {
 	@description = "This tests one of the workarounds of LPS-86373."
 	@priority = "5"
 	test PublishDisplayPageMarkedAsDefault {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until POSHI-48 resolved
+
+		property portal.acceptance = "false";
 
 		task ("Mark the display page as default") {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");

@@ -737,7 +737,10 @@ definition {
 	@description = "Display pages can be viewed through the asset publisher widget."
 	@priority = "5"
 	test ViewDisplayPageViaAssetPublisher {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until POSHI-48 resolved
+
+		property portal.acceptance = "false";
 
 		task ("Add a web content article that uses the display page") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

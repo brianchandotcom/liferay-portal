@@ -31,7 +31,10 @@ definition {
 	@description = "This is a test for LPS-102526. User can activate fragment configuration by clicking on topper."
 	@priority = "5"
 	test ActivateFragmentConfigurationViaTopper {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until POSHI-48 resolved
+
+		property portal.acceptance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -54,7 +57,10 @@ definition {
 	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration."
 	@priority = "5"
 	test AddCheckboxConfigurationFragmentToContentPage {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until POSHI-48 resolved
+
+		property portal.acceptance = "false";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");
@@ -237,7 +243,10 @@ definition {
 	@description = "This is a test for LPS-99543. User can change text fragment configuration."
 	@priority = "5"
 	test AddTextConfigurationFragmentToContentPage {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until POSHI-48 resolved
+
+		property portal.acceptance = "false";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");

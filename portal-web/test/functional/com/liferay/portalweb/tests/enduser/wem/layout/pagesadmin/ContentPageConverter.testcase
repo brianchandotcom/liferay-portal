@@ -69,7 +69,10 @@ definition {
 	@description = "This is a test for LPS-98325. Assert that multiple pages with several widget pages(that can be converted) and an api to convert bulk widget pages to content pages is executed, all widget pages are converted."
 	@priority = "5"
 	test ConvertMultipleWidgetPagesToContentPagesViaAPI {
-		property portal.acceptance = "true";
+
+		// Ignore test from acceptance until POSHI-48 resolved
+
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertMultipleWidgetPagesToContentPagesViaAPI";
 
 		for (var i : list "1,2,3,4,5,6,7,8,9,10") {

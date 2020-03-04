@@ -258,7 +258,7 @@ public class FragmentInstanceDefinitionConverterUtil {
 						if (value instanceof JSONObject) {
 							JSONObject valueJSONObject = (JSONObject)value;
 
-							value = _toMap(valueJSONObject);
+							value = valueJSONObject.getString("color");
 						}
 
 						put(key, value);

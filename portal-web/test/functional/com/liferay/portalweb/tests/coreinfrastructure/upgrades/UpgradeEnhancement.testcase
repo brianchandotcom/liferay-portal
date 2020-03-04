@@ -7,6 +7,142 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Upgrades Core Infrastructure";
 
+	@priority = "5"
+	test DecrementCoreSchemaMajorVersion {
+		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMajorVersion";
+
+		var script = '''
+			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
+			import com.liferay.portal.kernel.model.*;
+			import com.liferay.portal.kernel.version.Version;
+
+			Release release = ReleaseLocalServiceUtil.fetchRelease(ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			String originalSchemaVersion = release.getSchemaVersion();
+
+			Version version = Version.parseVersion(originalSchemaVersion);
+
+			version = new Version(version.getMajor() - 1, version.getMinor(), version.getMicro());
+
+			out.println("Version decremented to: " + version.toString());
+
+			ReleaseLocalServiceUtil.updateRelease(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME, version.toString(), originalSchemaVersion);
+		''';
+
+		User.firstLoginPG();
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		AssertConsoleTextPresent(value1 = "You must first upgrade the portal to the required schema version");
+	}
+
+	@priority = "5"
+	test DecrementCoreSchemaMicroVersion {
+		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMicroVersion";
+
+		var script = '''
+			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
+			import com.liferay.portal.kernel.model.*;
+			import com.liferay.portal.kernel.version.Version;
+
+			Release release = ReleaseLocalServiceUtil.fetchRelease(ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			String originalSchemaVersion = release.getSchemaVersion();
+
+			Version version = Version.parseVersion(originalSchemaVersion);
+
+			if (version.getMicro() != 0) {
+				version = new Version(version.getMajor(), version.getMinor(), version.getMicro() - 1);
+
+				out.println("Version decremented to: " + version.toString());
+			} else {
+				out.println("Cannot decrement micro version, it is already at the minimum value");
+			}
+
+			ReleaseLocalServiceUtil.updateRelease(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME, version.toString(), originalSchemaVersion);
+		''';
+
+		User.firstLoginPG();
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		var output = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
+
+		if ("${output}" == "Cannot decrement micro version, it is already at the minimum value") {
+			echo("This testcase is currently not testable.");
+		}
+		else {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+
+			User.firstLoginPG();
+		}
+	}
+
+	@priority = "5"
+	test DecrementCoreSchemaMinorVersion {
+		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMinorVersion";
+
+		var script = '''
+			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
+			import com.liferay.portal.kernel.model.*;
+			import com.liferay.portal.kernel.version.Version;
+
+			Release release = ReleaseLocalServiceUtil.fetchRelease(ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			String originalSchemaVersion = release.getSchemaVersion();
+
+			Version version = Version.parseVersion(originalSchemaVersion);
+
+			if (version.getMinor() != 0) {
+				version = new Version(version.getMajor(), version.getMinor() - 1, version.getMicro());
+
+				out.println("Version decremented to: " + version.toString());
+			} else {
+				out.println("Cannot decrement minor version, it is already at the minimum value");
+			}
+
+			ReleaseLocalServiceUtil.updateRelease(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME, version.toString(), originalSchemaVersion);
+		''';
+
+		User.firstLoginPG();
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		var output = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
+
+		if ("${output}" != "Cannot decrement minor version, it is already at the minimum value") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+
+			AssertConsoleTextPresent(value1 = "You must first upgrade the portal to the required schema version");
+		}
+		else {
+			echo("This testcase is currently not testable.");
+		}
+	}
+
 	@priority = "4"
 	test DirectUpgradeFromArchive6012 {
 		property data.archive.type = "data-archive-portal";

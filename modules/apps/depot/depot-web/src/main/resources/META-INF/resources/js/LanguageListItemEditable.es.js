@@ -74,7 +74,7 @@ const LanguageListItem = ({
 }) => {
 	const [active, setActive] = useState(false);
 	const [dropZone, setDropZone] = useState();
-	const ref = useRef();
+	const tableRef = useRef();
 
 	const [{isDragging}, drag] = useDrag({
 		collect: monitor => ({
@@ -90,7 +90,7 @@ const LanguageListItem = ({
 	const [{isOver}, drop] = useDrop({
 		accept: ACCEPTING_TYPES.ITEM,
 		canDrop(source, monitor) {
-			const dropZone = getDropZone(ref, monitor);
+			const dropZone = getDropZone(tableRef, monitor);
 
 			return isValidTarget(source, {id: localeId, index}, dropZone);
 		},
@@ -112,7 +112,7 @@ const LanguageListItem = ({
 			let dropZone;
 
 			if (isOver && monitor.canDrop()) {
-				dropZone = getDropZone(ref, monitor);
+				dropZone = getDropZone(tableRef, monitor);
 			}
 
 			setDropZone(dropZone);
@@ -120,7 +120,7 @@ const LanguageListItem = ({
 	});
 
 	useEffect(() => {
-		drag(drop(ref));
+		drag(drop(tableRef));
 	}, [drag, drop]);
 
 	const makeDefault = event => {
@@ -138,7 +138,7 @@ const LanguageListItem = ({
 				'drop-bottom': isOver && dropZone === DROP_ZONES.BOTTOM,
 				'drop-top': isOver && dropZone === DROP_ZONES.TOP,
 			})}
-			ref={ref}
+			ref={tableRef}
 		>
 			<ClayTable.Cell expanded>
 				<div className="autofit-row autofit-row-center">

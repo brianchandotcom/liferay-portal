@@ -28,7 +28,7 @@ const LanguagesList = ({
 	locales,
 	isEditable = false,
 	onMakeDefault = noop,
-	onOpenManageModal = noop,
+	onEditBtnClick = noop,
 	onItemDrop = noop,
 }) => {
 	const manager = useRef(createDndContext(HTML5Backend));
@@ -45,7 +45,7 @@ const LanguagesList = ({
 						<ClayTable.Cell align="center">
 							<ClayButton
 								displayType="secondary"
-								onClick={onOpenManageModal}
+								onClick={onEditBtnClick}
 								small
 							>
 								{Liferay.Language.get('edit')}

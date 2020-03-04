@@ -147,9 +147,9 @@ const Languages = ({
 						defaultLocaleId={customDefaultLocaleId}
 						isEditable
 						locales={customLocales}
+						onEditBtnClick={handleOnModalOpen}
 						onItemDrop={handleOnItemDrop}
 						onMakeDefault={handleOnMakeDefault}
-						onOpenManageModal={handleOnModalOpen}
 					/>
 				</>
 			)}

@@ -2302,7 +2302,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			"--dependency-management-enabled", "--liferay-version", "7.3.0");
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateSimulationPanelEntry70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(

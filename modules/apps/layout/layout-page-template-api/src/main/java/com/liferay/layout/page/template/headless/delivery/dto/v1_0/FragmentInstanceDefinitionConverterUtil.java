@@ -88,6 +88,22 @@ public class FragmentInstanceDefinitionConverterUtil {
 		FragmentRendererTracker fragmentRendererTracker,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
+		return toFragmentInstanceDefinition(
+			fragmentCollectionContributorTracker,
+			fragmentEntryConfigurationParser, fragmentLayoutStructureItem,
+			fragmentRendererTracker, saveInlineContent,
+			saveMappingConfiguration, 0);
+	}
+
+	public static FragmentInstanceDefinition toFragmentInstanceDefinition(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentLayoutStructureItem fragmentLayoutStructureItem,
+		FragmentRendererTracker fragmentRendererTracker,
+		boolean saveInlineContent, boolean saveMappingConfiguration,
+		long segmentsExperienceId) {
+
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
 				fragmentLayoutStructureItem.getFragmentEntryLinkId());
@@ -119,13 +135,13 @@ public class FragmentInstanceDefinitionConverterUtil {
 				fragmentConfig = _getFragmentConfig(
 					fragmentEntryConfigurationParser, fragmentEntryLink);
 				fragmentFields = _getFragmentFields(
-					fragmentEntryLink, saveInlineContent);
+					fragmentEntryLink, saveInlineContent, segmentsExperienceId);
 			}
 		};
 	}
 
 	private static List<FragmentField> _getBackgroundImageFragmentFields(
-		JSONObject jsonObject) {
+		JSONObject jsonObject, long segmentsExperienceId) {
 
 		List<FragmentField> fragmentFields = new ArrayList<>();
 
@@ -135,7 +151,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 			JSONObject imageJSONObject = jsonObject.getJSONObject(
 				backgroundImageId);
 
-			Map<String, String> localeMap = _toLocaleMap(imageJSONObject);
+			Map<String, String> localeMap = _toLocaleMap(
+				imageJSONObject, segmentsExperienceId);
 
 			fragmentFields.add(
 				new FragmentField() {
@@ -290,7 +307,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static FragmentField[] _getFragmentFields(
-		FragmentEntryLink fragmentEntryLink, boolean saveInlineContent) {
+		FragmentEntryLink fragmentEntryLink, boolean saveInlineContent,
+		long segmentsExperienceId) {
 
 		if (!saveInlineContent) {
 			return new FragmentField[0];
@@ -312,7 +330,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 			_getBackgroundImageFragmentFields(
 				editableValuesJSONObject.getJSONObject(
 					"com.liferay.fragment.entry.processor.background.image." +
-						"BackgroundImageFragmentEntryProcessor")));
+						"BackgroundImageFragmentEntryProcessor"),
+				segmentsExperienceId));
 
 		Map<String, String> editableTypes = _getEditableTypes(
 			fragmentEntryLink.getHtml());
@@ -322,7 +341,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 				editableTypes,
 				editableValuesJSONObject.getJSONObject(
 					"com.liferay.fragment.entry.processor.editable." +
-						"EditableFragmentEntryProcessor")));
+						"EditableFragmentEntryProcessor"),
+				segmentsExperienceId));
 
 		return fragmentFields.toArray(new FragmentField[0]);
 	}
@@ -374,7 +394,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static List<FragmentField> _getTextFragmentFields(
-		Map<String, String> editableTypes, JSONObject jsonObject) {
+		Map<String, String> editableTypes, JSONObject jsonObject,
+		long segmentsExperienceId) {
 
 		List<FragmentField> fragmentFields = new ArrayList<>();
 
@@ -382,7 +403,8 @@ public class FragmentInstanceDefinitionConverterUtil {
 
 		for (String textId : textIds) {
 			fragmentFields.add(
-				_toFragmentField(editableTypes, jsonObject, textId));
+				_toFragmentField(
+					editableTypes, jsonObject, segmentsExperienceId, textId));
 		}
 
 		return fragmentFields;
@@ -412,7 +434,7 @@ public class FragmentInstanceDefinitionConverterUtil {
 
 	private static FragmentField _toFragmentField(
 		Map<String, String> editableTypes, JSONObject jsonObject,
-		String textId) {
+		long segmentsExperienceId, String textId) {
 
 		JSONObject textJSONObject = jsonObject.getJSONObject(textId);
 
@@ -426,27 +448,31 @@ public class FragmentInstanceDefinitionConverterUtil {
 							textId, "text");
 
 						if (Objects.equals(type, "html")) {
-							return _toFragmentFieldHTML(textJSONObject);
+							return _toFragmentFieldHTML(
+								textJSONObject, segmentsExperienceId);
 						}
 
 						if (Objects.equals(type, "image")) {
-							return _toFragmentFieldImage(textJSONObject);
+							return _toFragmentFieldImage(
+								textJSONObject, segmentsExperienceId);
 						}
 
-						return _toFragmentFieldText(textJSONObject);
+						return _toFragmentFieldText(
+							textJSONObject, segmentsExperienceId);
 					});
 			}
 		};
 	}
 
 	private static FragmentFieldHTML _toFragmentFieldHTML(
-		JSONObject jsonObject) {
+		JSONObject jsonObject, long segmentsExperienceId) {
 
 		return new FragmentFieldHTML() {
 			{
 				html = new InlineValue() {
 					{
-						value_i18n = _toLocaleMap(jsonObject);
+						value_i18n = _toLocaleMap(
+							jsonObject, segmentsExperienceId);
 					}
 				};
 			}
@@ -454,9 +480,10 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static FragmentFieldImage _toFragmentFieldImage(
-		JSONObject jsonObject) {
+		JSONObject jsonObject, long segmentsExperienceId) {
 
-		Map<String, String> localeMap = _toLocaleMap(jsonObject);
+		Map<String, String> localeMap = _toLocaleMap(
+			jsonObject, segmentsExperienceId);
 
 		return new FragmentFieldImage() {
 			{
@@ -477,14 +504,15 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static FragmentFieldText _toFragmentFieldText(
-		JSONObject jsonObject) {
+		JSONObject jsonObject, long segmentsExperienceId) {
 
 		return new FragmentFieldText() {
 			{
 				fragmentLink = _toFragmentLink(jsonObject);
 				text = new InlineValue() {
 					{
-						value_i18n = _toLocaleMap(jsonObject);
+						value_i18n = _toLocaleMap(
+							jsonObject, segmentsExperienceId);
 					}
 				};
 			}
@@ -523,6 +551,18 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static Map<String, String> _toLocaleMap(JSONObject jsonObject) {
+		return _toLocaleMap(jsonObject, 0);
+	}
+
+	private static Map<String, String> _toLocaleMap(
+		JSONObject jsonObject, long segmentsExperienceId) {
+
+		if (jsonObject.has("segments-experience-id-" + segmentsExperienceId)) {
+			return _toLocaleMap(
+				jsonObject.getJSONObject(
+					"segments-experience-id-" + segmentsExperienceId));
+		}
+
 		return new HashMap<String, String>() {
 			{
 				Set<String> keys = jsonObject.keySet();

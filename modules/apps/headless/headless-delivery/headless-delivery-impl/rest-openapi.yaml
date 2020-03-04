@@ -1970,7 +1970,7 @@ components:
             type: object
         SectionDefinition:
             properties:
-                backgroundColorCssClass:
+                backgroundColor:
                     type: string
                 backgroundImage:
                     $ref: "#/components/schemas/FragmentImage"

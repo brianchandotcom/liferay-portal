@@ -15,6 +15,8 @@
 package com.liferay.redirect.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.base.RedirectEntryLocalServiceBaseImpl;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,4 +30,25 @@ import org.osgi.service.component.annotations.Component;
 )
 public class RedirectEntryLocalServiceImpl
 	extends RedirectEntryLocalServiceBaseImpl {
+
+	public RedirectEntry addRedirectEntry(
+		long groupId, String destinationURL, String sourceURL,
+		ServiceContext serviceContext) {
+
+		RedirectEntry redirectEntry = redirectEntryPersistence.create(
+			counterLocalService.increment());
+
+		redirectEntry.setUuid(serviceContext.getUuid());
+
+		redirectEntry.setGroupId(groupId);
+
+		redirectEntry.setCompanyId(serviceContext.getCompanyId());
+		redirectEntry.setUserId(serviceContext.getUserId());
+
+		redirectEntry.setDestinationURL(destinationURL);
+		redirectEntry.setSourceURL(sourceURL);
+
+		return redirectEntryPersistence.update(redirectEntry);
+	}
+
 }

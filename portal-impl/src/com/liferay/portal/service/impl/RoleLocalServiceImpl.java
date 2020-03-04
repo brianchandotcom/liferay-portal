@@ -456,25 +456,26 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				role.getCompanyId(), true);
 
 			for (Group group : groups) {
-				UnicodeProperties typeSettingsProperties =
+				UnicodeProperties typeSettingsUnicodeProperties =
 					group.getTypeSettingsProperties();
 
 				List<Long> defaultSiteRoleIds = ListUtil.fromArray(
 					StringUtil.split(
-						typeSettingsProperties.getProperty(
+						typeSettingsUnicodeProperties.getProperty(
 							"defaultSiteRoleIds"),
 						0L));
 
 				if (defaultSiteRoleIds.contains(role.getRoleId())) {
 					defaultSiteRoleIds.remove(role.getRoleId());
 
-					typeSettingsProperties.setProperty(
+					typeSettingsUnicodeProperties.setProperty(
 						"defaultSiteRoleIds",
 						ListUtil.toString(
 							defaultSiteRoleIds, StringPool.BLANK));
 
 					groupLocalService.updateGroup(
-						group.getGroupId(), typeSettingsProperties.toString());
+						group.getGroupId(),
+						typeSettingsUnicodeProperties.toString());
 				}
 			}
 

@@ -62,13 +62,15 @@ public class VerifyGroup extends VerifyProcess {
 					continue;
 				}
 
-				UnicodeProperties typeSettingsProperties =
+				UnicodeProperties typeSettingsUnicodeProperties =
 					group.getTypeSettingsProperties();
 
-				verifyStagingTypeSettingsProperties(typeSettingsProperties);
+				verifyStagingTypeSettingsProperties(
+					typeSettingsUnicodeProperties);
 
 				GroupLocalServiceUtil.updateGroup(
-					group.getGroupId(), typeSettingsProperties.toString());
+					group.getGroupId(),
+					typeSettingsUnicodeProperties.toString());
 
 				Group stagingGroup = group.getStagingGroup();
 
@@ -177,9 +179,9 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	protected void verifyStagingTypeSettingsProperties(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		Set<String> keys = typeSettingsProperties.keySet();
+		Set<String> keys = typeSettingsUnicodeProperties.keySet();
 
 		Iterator<String> iterator = keys.iterator();
 

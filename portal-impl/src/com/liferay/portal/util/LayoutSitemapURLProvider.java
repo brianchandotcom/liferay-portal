@@ -95,11 +95,11 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 			Element element, Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
 		if (!GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty(
+				typeSettingsUnicodeProperties.getProperty(
 					LayoutTypePortletConstants.SITEMAP_INCLUDE),
 				true)) {
 
@@ -117,7 +117,7 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 
 		for (String alternateURL : alternateURLs.values()) {
 			SitemapUtil.addURLElement(
-				element, alternateURL, typeSettingsProperties,
+				element, alternateURL, typeSettingsUnicodeProperties,
 				layout.getModifiedDate(), layoutFullURL, alternateURLs);
 		}
 	}

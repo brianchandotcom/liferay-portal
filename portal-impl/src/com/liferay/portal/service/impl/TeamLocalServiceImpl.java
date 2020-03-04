@@ -109,22 +109,25 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 			team.getCompanyId(), true);
 
 		for (Group group : groups) {
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties typeSettingsUnicodeUnicodeProperties =
 				group.getTypeSettingsProperties();
 
 			List<Long> defaultTeamIds = ListUtil.fromArray(
 				StringUtil.split(
-					typeSettingsProperties.getProperty("defaultTeamIds"), 0L));
+					typeSettingsUnicodeUnicodeProperties.getProperty(
+						"defaultTeamIds"),
+					0L));
 
 			if (defaultTeamIds.contains(team.getTeamId())) {
 				defaultTeamIds.remove(team.getTeamId());
 
-				typeSettingsProperties.setProperty(
+				typeSettingsUnicodeUnicodeProperties.setProperty(
 					"defaultTeamIds",
 					ListUtil.toString(defaultTeamIds, StringPool.BLANK));
 
 				groupLocalService.updateGroup(
-					group.getGroupId(), typeSettingsProperties.toString());
+					group.getGroupId(),
+					typeSettingsUnicodeUnicodeProperties.toString());
 			}
 		}
 

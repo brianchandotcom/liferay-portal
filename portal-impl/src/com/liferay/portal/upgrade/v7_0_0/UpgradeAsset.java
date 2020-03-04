@@ -156,25 +156,26 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected String upgradeVocabularySettings(String settings) {
-		UnicodeProperties properties = new UnicodeProperties(true);
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
-		properties.fastLoad(settings);
+		unicodeProperties.fastLoad(settings);
 
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();
 
 		vocabularySettingsHelper.setMultiValued(
-			GetterUtil.getBoolean(properties.getProperty("multiValued"), true));
+			GetterUtil.getBoolean(
+				unicodeProperties.getProperty("multiValued"), true));
 
 		long[] classNameIds = StringUtil.split(
-			properties.getProperty("selectedClassNameIds"), 0L);
+			unicodeProperties.getProperty("selectedClassNameIds"), 0L);
 
 		long[] classTypePKs = new long[classNameIds.length];
 
 		Arrays.fill(classTypePKs, AssetCategoryConstants.ALL_CLASS_TYPE_PK);
 
 		long[] requiredClassNameIds = StringUtil.split(
-			properties.getProperty("requiredClassNameIds"), 0L);
+			unicodeProperties.getProperty("requiredClassNameIds"), 0L);
 
 		boolean[] requireds = new boolean[classNameIds.length];
 

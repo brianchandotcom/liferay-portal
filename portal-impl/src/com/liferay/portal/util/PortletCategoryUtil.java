@@ -98,12 +98,13 @@ public class PortletCategoryUtil {
 			LayoutTypePortlet layoutTypePortlet)
 		throws Exception {
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
 		Set<String> panelSelectedPortletIds = SetUtil.fromArray(
 			StringUtil.split(
-				typeSettingsProperties.getProperty("panelSelectedPortlets")));
+				typeSettingsUnicodeProperties.getProperty(
+					"panelSelectedPortlets")));
 
 		return getRelevantPortletCategory(
 			permissionChecker, companyId, layout, portletCategory,

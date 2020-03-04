@@ -1457,11 +1457,12 @@ public class WebServerServlet extends HttpServlet {
 	}
 
 	private static boolean _isDirectoryIndexingEnabled(Group group) {
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
 		return GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("directoryIndexingEnabled"),
+			typeSettingsUnicodeProperties.getProperty(
+				"directoryIndexingEnabled"),
 			PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED);
 	}
 

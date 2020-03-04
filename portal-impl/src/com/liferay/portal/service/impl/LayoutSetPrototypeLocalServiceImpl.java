@@ -70,13 +70,13 @@ public class LayoutSetPrototypeLocalServiceImpl
 		layoutSetPrototype.setDescriptionMap(descriptionMap);
 		layoutSetPrototype.setActive(active);
 
-		UnicodeProperties settingsProperties =
+		UnicodeProperties settingsUnicodeProperties =
 			layoutSetPrototype.getSettingsProperties();
 
-		settingsProperties.put(
+		settingsUnicodeProperties.put(
 			"layoutsUpdateable", String.valueOf(layoutsUpdateable));
 
-		layoutSetPrototype.setSettingsProperties(settingsProperties);
+		layoutSetPrototype.setSettingsProperties(settingsUnicodeProperties);
 
 		layoutSetPrototype = layoutSetPrototypePersistence.update(
 			layoutSetPrototype);
@@ -246,13 +246,13 @@ public class LayoutSetPrototypeLocalServiceImpl
 		layoutSetPrototype.setDescriptionMap(descriptionMap);
 		layoutSetPrototype.setActive(active);
 
-		UnicodeProperties settingsProperties =
+		UnicodeProperties settingsUnicodeProperties =
 			layoutSetPrototype.getSettingsProperties();
 
-		settingsProperties.put(
+		settingsUnicodeProperties.put(
 			"layoutsUpdateable", String.valueOf(layoutsUpdateable));
 
-		layoutSetPrototype.setSettingsProperties(settingsProperties);
+		layoutSetPrototype.setSettingsProperties(settingsUnicodeProperties);
 
 		return layoutSetPrototypePersistence.update(layoutSetPrototype);
 	}
@@ -276,24 +276,27 @@ public class LayoutSetPrototypeLocalServiceImpl
 
 		// Group
 
-		UnicodeProperties settingsProperties =
+		UnicodeProperties settingsUnicodeProperties =
 			layoutSetPrototype.getSettingsProperties();
 
-		if (!settingsProperties.containsKey("customJspServletContextName")) {
+		if (!settingsUnicodeProperties.containsKey(
+				"customJspServletContextName")) {
+
 			return layoutSetPrototype;
 		}
 
 		Group group = groupLocalService.getLayoutSetPrototypeGroup(
 			layoutSetPrototype.getCompanyId(), layoutSetPrototypeId);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"customJspServletContextName",
-			settingsProperties.getProperty("customJspServletContextName"));
+			settingsUnicodeProperties.getProperty(
+				"customJspServletContextName"));
 
-		group.setTypeSettings(typeSettingsProperties.toString());
+		group.setTypeSettings(typeSettingsUnicodeProperties.toString());
 
 		groupPersistence.update(group);
 

@@ -40,13 +40,13 @@ public class AssetVocabularySettingsHelper {
 	};
 
 	public AssetVocabularySettingsHelper() {
-		_properties = new UnicodeProperties(true);
+		_unicodeProperties = new UnicodeProperties(true);
 	}
 
 	public AssetVocabularySettingsHelper(String propertiesString) {
 		this();
 
-		_properties.fastLoad(propertiesString);
+		_unicodeProperties.fastLoad(propertiesString);
 	}
 
 	public long[] getClassNameIds() {
@@ -86,7 +86,7 @@ public class AssetVocabularySettingsHelper {
 	}
 
 	public boolean isMultiValued() {
-		String value = _properties.getProperty(_KEY_MULTI_VALUED);
+		String value = _unicodeProperties.getProperty(_KEY_MULTI_VALUED);
 
 		return GetterUtil.getBoolean(value, true);
 	}
@@ -129,21 +129,22 @@ public class AssetVocabularySettingsHelper {
 			selectedClassNameIds.add(classNameIdAndClassTypePK);
 		}
 
-		_properties.setProperty(
+		_unicodeProperties.setProperty(
 			_KEY_REQUIRED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS,
 			StringUtil.merge(requiredClassNameIds));
-		_properties.setProperty(
+		_unicodeProperties.setProperty(
 			_KEY_SELECTED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS,
 			StringUtil.merge(selectedClassNameIds));
 	}
 
 	public void setMultiValued(boolean multiValued) {
-		_properties.setProperty(_KEY_MULTI_VALUED, String.valueOf(multiValued));
+		_unicodeProperties.setProperty(
+			_KEY_MULTI_VALUED, String.valueOf(multiValued));
 	}
 
 	@Override
 	public String toString() {
-		return _properties.toString();
+		return _unicodeProperties.toString();
 	}
 
 	protected long getClassNameId(String classNameIdAndClassTypePK) {
@@ -178,7 +179,7 @@ public class AssetVocabularySettingsHelper {
 	}
 
 	protected String[] getClassNameIdsAndClassTypePKs() {
-		String value = _properties.getProperty(
+		String value = _unicodeProperties.getProperty(
 			_KEY_SELECTED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS);
 
 		if (Validator.isNull(value)) {
@@ -216,7 +217,7 @@ public class AssetVocabularySettingsHelper {
 	}
 
 	protected String[] getRequiredClassNameIdsAndClassTypePKs() {
-		String value = _properties.getProperty(
+		String value = _unicodeProperties.getProperty(
 			_KEY_REQUIRED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS);
 
 		if (Validator.isNull(value)) {
@@ -275,6 +276,6 @@ public class AssetVocabularySettingsHelper {
 		_KEY_SELECTED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS =
 			"selectedClassNameIds";
 
-	private final UnicodeProperties _properties;
+	private final UnicodeProperties _unicodeProperties;
 
 }

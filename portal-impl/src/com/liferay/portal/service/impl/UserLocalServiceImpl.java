@@ -5349,11 +5349,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Group group = groupLocalService.getGroup(groupId);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
 		long[] defaultSiteRoleIds = StringUtil.split(
-			typeSettingsProperties.getProperty("defaultSiteRoleIds"), 0L);
+			typeSettingsUnicodeProperties.getProperty("defaultSiteRoleIds"),
+			0L);
 
 		for (long defaultSiteRoleId : defaultSiteRoleIds) {
 			Role defaultSiteRole = rolePersistence.fetchByPrimaryKey(
@@ -5373,7 +5374,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		List<Team> defaultTeams = new ArrayList<>();
 
 		long[] defaultTeamIds = StringUtil.split(
-			typeSettingsProperties.getProperty("defaultTeamIds"), 0L);
+			typeSettingsUnicodeProperties.getProperty("defaultTeamIds"), 0L);
 
 		for (long defaultTeamId : defaultTeamIds) {
 			Team defaultTeam = teamPersistence.findByPrimaryKey(defaultTeamId);

@@ -2012,13 +2012,15 @@ public class DLFileEntryLocalServiceImpl
 			DLFileEntry dlFileEntry, DLFileVersion dlFileVersion, String[] keys)
 		throws PortalException {
 
-		UnicodeProperties extraSettingsProperties =
+		UnicodeProperties extraSettingsUnicodeProperties =
 			dlFileVersion.getExtraSettingsProperties();
 
 		convertExtraSettings(
-			extraSettingsProperties, dlFileVersion.getExpandoBridge(), keys);
+			extraSettingsUnicodeProperties, dlFileVersion.getExpandoBridge(),
+			keys);
 
-		dlFileVersion.setExtraSettingsProperties(extraSettingsProperties);
+		dlFileVersion.setExtraSettingsProperties(
+			extraSettingsUnicodeProperties);
 
 		dlFileVersion = dlFileVersionPersistence.update(dlFileVersion);
 
@@ -2037,13 +2039,14 @@ public class DLFileEntryLocalServiceImpl
 	protected void convertExtraSettings(DLFileEntry dlFileEntry, String[] keys)
 		throws PortalException {
 
-		UnicodeProperties extraSettingsProperties =
+		UnicodeProperties extraSettingsUnicodeProperties =
 			dlFileEntry.getExtraSettingsProperties();
 
 		convertExtraSettings(
-			extraSettingsProperties, dlFileEntry.getExpandoBridge(), keys);
+			extraSettingsUnicodeProperties, dlFileEntry.getExpandoBridge(),
+			keys);
 
-		dlFileEntry.setExtraSettingsProperties(extraSettingsProperties);
+		dlFileEntry.setExtraSettingsProperties(extraSettingsUnicodeProperties);
 
 		dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
 
@@ -2057,11 +2060,11 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected void convertExtraSettings(
-		UnicodeProperties extraSettingsProperties, ExpandoBridge expandoBridge,
-		String[] keys) {
+		UnicodeProperties extraSettingsUnicodeProperties,
+		ExpandoBridge expandoBridge, String[] keys) {
 
 		for (String key : keys) {
-			String value = extraSettingsProperties.remove(key);
+			String value = extraSettingsUnicodeProperties.remove(key);
 
 			if (Validator.isNull(value)) {
 				continue;

@@ -156,27 +156,27 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public String getExtraSettings() {
-		if (_extraSettingsProperties == null) {
+		if (_extraSettingsUnicodeProperties == null) {
 			return super.getExtraSettings();
 		}
 
-		return _extraSettingsProperties.toString();
+		return _extraSettingsUnicodeProperties.toString();
 	}
 
 	@Override
 	public UnicodeProperties getExtraSettingsProperties() {
-		if (_extraSettingsProperties == null) {
-			_extraSettingsProperties = new UnicodeProperties(true);
+		if (_extraSettingsUnicodeProperties == null) {
+			_extraSettingsUnicodeProperties = new UnicodeProperties(true);
 
 			try {
-				_extraSettingsProperties.load(super.getExtraSettings());
+				_extraSettingsUnicodeProperties.load(super.getExtraSettings());
 			}
 			catch (IOException ioException) {
 				_log.error(ioException, ioException);
 			}
 		}
 
-		return _extraSettingsProperties;
+		return _extraSettingsUnicodeProperties;
 	}
 
 	@Override
@@ -247,9 +247,11 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public String getLuceneProperties() {
-		UnicodeProperties extraSettingsProps = getExtraSettingsProperties();
+		UnicodeProperties extraSettingsUnicodeProperties =
+			getExtraSettingsProperties();
 
-		Set<Map.Entry<String, String>> entrySet = extraSettingsProps.entrySet();
+		Set<Map.Entry<String, String>> entrySet =
+			extraSettingsUnicodeProperties.entrySet();
 
 		StringBundler sb = new StringBundler(entrySet.size() + 4);
 
@@ -258,7 +260,9 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		sb.append(getDescription());
 		sb.append(StringPool.SPACE);
 
-		for (Map.Entry<String, String> entry : extraSettingsProps.entrySet()) {
+		for (Map.Entry<String, String> entry :
+				extraSettingsUnicodeProperties.entrySet()) {
+
 			String value = GetterUtil.getString(entry.getValue());
 
 			sb.append(value);
@@ -350,23 +354,23 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public void setExtraSettings(String extraSettings) {
-		_extraSettingsProperties = null;
+		_extraSettingsUnicodeProperties = null;
 
 		super.setExtraSettings(extraSettings);
 	}
 
 	@Override
 	public void setExtraSettingsProperties(
-		UnicodeProperties extraSettingsProperties) {
+		UnicodeProperties extraSettingsUnicodeProperties) {
 
-		_extraSettingsProperties = extraSettingsProperties;
+		_extraSettingsUnicodeProperties = extraSettingsUnicodeProperties;
 
-		super.setExtraSettings(_extraSettingsProperties.toString());
+		super.setExtraSettings(_extraSettingsUnicodeProperties.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryImpl.class);
 
-	private UnicodeProperties _extraSettingsProperties;
+	private UnicodeProperties _extraSettingsUnicodeProperties;
 
 }

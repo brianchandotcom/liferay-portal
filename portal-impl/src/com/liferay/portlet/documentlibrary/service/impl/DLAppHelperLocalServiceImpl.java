@@ -1347,17 +1347,19 @@ public class DLAppHelperLocalServiceImpl
 
 		int oldDLFileVersionStatus = oldDLFileVersion.getStatus();
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put("fileName", dlFileEntry.getFileName());
-		typeSettingsProperties.put("title", dlFileEntry.getTitle());
+		typeSettingsUnicodeProperties.put(
+			"fileName", dlFileEntry.getFileName());
+		typeSettingsUnicodeProperties.put("title", dlFileEntry.getTitle());
 
 		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
 			userId, dlFileEntry.getGroupId(),
 			DLFileEntryConstants.getClassName(), dlFileEntry.getFileEntryId(),
 			dlFileEntry.getUuid(), dlFileEntry.getClassName(),
 			oldDLFileVersionStatus, dlFileVersionStatusOVPs,
-			typeSettingsProperties);
+			typeSettingsUnicodeProperties);
 
 		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
 
@@ -1476,14 +1478,16 @@ public class DLAppHelperLocalServiceImpl
 
 		// Trash
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-		typeSettingsProperties.put("title", dlFolder.getName());
+		typeSettingsUnicodeProperties.put("title", dlFolder.getName());
 
 		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
 			userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
 			dlFolder.getFolderId(), dlFolder.getUuid(), null,
-			WorkflowConstants.STATUS_APPROVED, null, typeSettingsProperties);
+			WorkflowConstants.STATUS_APPROVED, null,
+			typeSettingsUnicodeProperties);
 
 		dlFolder.setName(TrashUtil.getTrashTitle(trashEntry.getEntryId()));
 

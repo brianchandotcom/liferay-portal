@@ -204,6 +204,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 	@Test
 	public void testDeleteMessageBoardSection() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardSection messageBoardSection =
 			testDeleteMessageBoardSection_addMessageBoardSection();
 

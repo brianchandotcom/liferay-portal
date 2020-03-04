@@ -211,6 +211,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 	@Test
 	public void testDeleteBlogPosting() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting = testDeleteBlogPosting_addBlogPosting();
 
 		assertHttpResponseStatusCode(
@@ -377,6 +378,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 	@Test
 	public void testDeleteBlogPostingMyRating() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting =
 			testDeleteBlogPostingMyRating_addBlogPosting();
 

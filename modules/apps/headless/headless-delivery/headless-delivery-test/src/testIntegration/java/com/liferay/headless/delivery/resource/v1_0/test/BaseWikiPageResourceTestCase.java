@@ -578,6 +578,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 	@Test
 	public void testDeleteWikiPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPage wikiPage = testDeleteWikiPage_addWikiPage();
 
 		assertHttpResponseStatusCode(

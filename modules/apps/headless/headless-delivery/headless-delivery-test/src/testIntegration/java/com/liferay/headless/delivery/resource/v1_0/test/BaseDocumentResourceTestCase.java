@@ -522,6 +522,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testDeleteDocument() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document = testDeleteDocument_addDocument();
 
 		assertHttpResponseStatusCode(
@@ -688,6 +689,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testDeleteDocumentMyRating() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document = testDeleteDocumentMyRating_addDocument();
 
 		assertHttpResponseStatusCode(

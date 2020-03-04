@@ -15,7 +15,7 @@
 /**
  * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
  */
-export default function selectShowLayoutItemTopper({permissions}) {
+export default function selectCanUpdateLayoutContent({permissions}) {
 	return (
 		!permissions.LOCKED_SEGMENTS_EXPERIMENT &&
 		permissions.UPDATE_LAYOUT_CONTENT

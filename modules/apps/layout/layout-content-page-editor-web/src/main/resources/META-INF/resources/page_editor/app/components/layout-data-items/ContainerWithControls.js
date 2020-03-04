@@ -23,7 +23,7 @@ import {
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {config} from '../../config/index';
-import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
+import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {useSelectItem} from '../Controls';
@@ -53,7 +53,9 @@ const ContainerWithControls = React.forwardRef(
 			state => state.segmentsExperienceId
 		);
 		const selectItem = useSelectItem();
-		const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
+		const canUpdateLayoutContent = useSelector(
+			selectCanUpdateLayoutContent
+		);
 
 		const handleButtonClick = id => {
 			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
@@ -118,7 +120,7 @@ const ContainerWithControls = React.forwardRef(
 			</Container>
 		);
 
-		return showLayoutItemTopper ? (
+		return canUpdateLayoutContent ? (
 			<Topper item={item} itemRef={ref} layoutData={layoutData}>
 				{() => content}
 			</Topper>

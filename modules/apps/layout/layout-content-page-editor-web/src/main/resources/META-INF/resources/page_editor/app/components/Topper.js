@@ -26,7 +26,7 @@ import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
-import selectShowLayoutItemRemoveButton from '../selectors/selectShowLayoutItemRemoveButton';
+import selectCanUpdateLayoutContent from '../selectors/selectCanUpdateLayoutContent';
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
@@ -100,7 +100,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 		layoutData,
 	]);
 	const showRemoveButton =
-		useSelector(selectShowLayoutItemRemoveButton) && itemIsRemovable;
+		useSelector(selectCanUpdateLayoutContent) && itemIsRemovable;
 
 	const childrenElement = children({canDrop, isOver});
 

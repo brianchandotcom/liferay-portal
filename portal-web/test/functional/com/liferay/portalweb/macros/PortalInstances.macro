@@ -84,6 +84,10 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro openVirtualInstancesAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
+	}
+
 	macro tearDownCP {
 		SignOut.signOutOfSpecificURL(url = "http://localhost:8080/");
 

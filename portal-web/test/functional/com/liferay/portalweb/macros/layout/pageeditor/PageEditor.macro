@@ -623,29 +623,27 @@ definition {
 				value1 = "${paddingBottom}");
 		}
 
-		PageEditor.waitForAutoSave();
-	}
+		if (isSet(backgroundImage)) {
+			Select(
+				key_fieldLabel = "Image Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${backgroundImage}");
 
-	macro editLayoutSectionImage {
-		Click(
-			key_position = "1",
-			locator1 = "PageEditor#SECTION");
+			if ("${backgroundImage}" == "Content Mapping") {
+				PageEditorMapping.mapEditableFieldToAsset(
+					entryTitle = "${entryTitle}",
+					navItem = "${navItem}");
 
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_LAYOUT_BACKGROUND_IMAGE_BUTTON");
+				Select(
+					locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
+					value1 = "Image");
 
-		Select(
-			locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_SOURCE_FIELD",
-			value1 = "Content Mapping");
+				SelectFrame(value1 = "relative=top");
 
-		PageEditorMapping.mapEditableFieldToAsset(
-			entryTitle = "${entryTitle}",
-			navItem = "${navItem}");
+				PageEditor.waitForAutoSave();
+			}
 
-		Select(
-			locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
-			value1 = "Image");
-
-		SelectFrame(value1 = "relative=top");
+		}
 
 		PageEditor.waitForAutoSave();
 	}

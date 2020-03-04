@@ -139,6 +139,8 @@ definition {
 
 			NavigationMenusWidget.selectNavigation(menuType = "Primary Navigation");
 
+			Pause(locator1 = "3000");
+
 			Portlet.saveAndCloseConfig();
 		}
 

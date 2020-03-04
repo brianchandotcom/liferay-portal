@@ -39,9 +39,10 @@ import org.osgi.service.component.annotations.Component;
 public class RedirectEntryLocalServiceImpl
 	extends RedirectEntryLocalServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.redirect.service.RedirectEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.redirect.service.RedirectEntryLocalServiceUtil</code>.
 	 */
+
 }

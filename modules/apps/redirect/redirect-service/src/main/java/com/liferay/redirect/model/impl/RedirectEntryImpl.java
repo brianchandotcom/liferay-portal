@@ -25,7 +25,7 @@ package com.liferay.redirect.model.impl;
  */
 public class RedirectEntryImpl extends RedirectEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a redirect entry model instance should use the {@link com.liferay.redirect.model.RedirectEntry} interface instead.

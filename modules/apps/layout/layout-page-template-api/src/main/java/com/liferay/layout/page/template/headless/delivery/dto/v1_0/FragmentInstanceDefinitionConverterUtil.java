@@ -388,6 +388,28 @@ public class FragmentInstanceDefinitionConverterUtil {
 		return fragmentFields;
 	}
 
+	private static InlineValue _toDescriptionInlineValue(
+		JSONObject jsonObject) {
+
+		JSONObject configJSONObject = jsonObject.getJSONObject("config");
+
+		if (configJSONObject == null) {
+			return null;
+		}
+
+		String alt = configJSONObject.getString("alt");
+
+		if (Validator.isNull(alt)) {
+			return null;
+		}
+
+		return new InlineValue() {
+			{
+				value = alt;
+			}
+		};
+	}
+
 	private static FragmentField _toFragmentField(
 		Map<String, String> editableTypes, JSONObject jsonObject,
 		String textId) {
@@ -440,6 +462,7 @@ public class FragmentInstanceDefinitionConverterUtil {
 			{
 				fragmentImage = new FragmentImage() {
 					{
+						description = _toDescriptionInlineValue(jsonObject);
 						title = _toTitleInlineValue(jsonObject, localeMap);
 						url = new InlineValue() {
 							{

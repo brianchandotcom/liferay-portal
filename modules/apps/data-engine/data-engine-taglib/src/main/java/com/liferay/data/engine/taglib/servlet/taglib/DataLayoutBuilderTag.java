@@ -78,7 +78,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 		if (ListUtil.isNotEmpty(additionalPanels)) {
 			for (Map<String, Object> additionalPanel : additionalPanels) {
-				//panels.add(ListUtil.toList({additionalPanel.sidebarPanelId}));
 				sidebarPanels.put(
 					(String)additionalPanel.get("sidebarPanelId"),
 					additionalPanel);

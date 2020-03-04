@@ -383,26 +383,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SECTION_BUILDER_LAYOUTS_1_COLUMN</td>
-	<td>//div[contains(@class,'sidebar-layouts-section')]//div[1]/div[contains(@class,'drag-handler')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SECTION_BUILDER_LAYOUTS_2_COLUMN</td>
-	<td>//div[contains(@class,'sidebar-layouts-section')]//div[2]/div[contains(@class,'drag-handler')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SECTION_BUILDER_LAYOUTS_3_COLUMN</td>
-	<td>//div[contains(@class,'sidebar-layouts-section')]//div[3]/div[contains(@class,'drag-handler')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SECTION_BUILDER_LAYOUTS_4_COLUMN</td>
-	<td>//div[contains(@class,'sidebar-layouts-section')]//div[4]/div[contains(@class,'drag-handler')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -25,7 +25,7 @@ import {
 	useSelectItem,
 } from '../../../app/components/Controls';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
-import selectShowLayoutItemRemoveButton from '../../../app/selectors/selectShowLayoutItemRemoveButton';
+import selectCanUpdateLayoutContent from '../../../app/selectors/selectCanUpdateLayoutContent';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 
@@ -74,9 +74,7 @@ export default function StructureTreeNode({node}) {
 	const isHovered = useIsHovered();
 	const isSelected = useIsSelected();
 	const selectItem = useSelectItem();
-	const showLayoutItemRemoveButton = useSelector(
-		selectShowLayoutItemRemoveButton
-	);
+	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
 
 	return (
 		<div
@@ -107,7 +105,7 @@ export default function StructureTreeNode({node}) {
 				id={node.id}
 				name={node.name}
 			/>
-			{showLayoutItemRemoveButton &&
+			{canUpdateLayoutContent &&
 				node.removable &&
 				(isHovered(node.id) || isSelected(node.id)) && (
 					<RemoveButton node={node} />

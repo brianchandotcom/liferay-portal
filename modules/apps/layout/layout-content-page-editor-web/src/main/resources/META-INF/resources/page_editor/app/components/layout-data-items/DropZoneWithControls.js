@@ -18,13 +18,13 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
-import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
+import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import {useSelector} from '../../store/index';
 import ManageAllowedFragmentButton from '../ManageAllowedFragmentButton';
 import Topper from '../Topper';
 
 const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
-	const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
+	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
 
 	const content = (
 		<div className="page-editor__drop-zone" ref={ref}>
@@ -40,7 +40,7 @@ const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
 		</div>
 	);
 
-	return showLayoutItemTopper ? (
+	return canUpdateLayoutContent ? (
 		<Topper active item={item} itemRef={ref} layoutData={layoutData}>
 			{() => content}
 		</Topper>

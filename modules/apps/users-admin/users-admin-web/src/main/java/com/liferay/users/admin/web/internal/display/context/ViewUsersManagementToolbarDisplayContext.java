@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.internal.display.context;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -270,6 +271,11 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 		if (_domain.equals("company-users")) {
 			params.put("accountEntryIds", new Long[0]);
+		}
+		else if (_domain.equals("account-users")) {
+			params.put(
+				"accountEntryIds",
+				new Long[] {AccountConstants.ACCOUNT_ENTRY_ID_ANY});
 		}
 
 		int total = UserLocalServiceUtil.searchCount(

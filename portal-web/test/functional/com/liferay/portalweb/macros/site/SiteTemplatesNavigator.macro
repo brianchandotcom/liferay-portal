@@ -13,7 +13,9 @@ definition {
 	}
 
 	macro openSiteTemplatesAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage/-/site_templates/templates");
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage/-/site_templates/templates");
 	}
 
 }

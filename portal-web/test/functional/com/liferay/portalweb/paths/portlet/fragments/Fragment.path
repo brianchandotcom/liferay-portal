@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_LAYOUT_BACKGROUND_IMAGE</td>
-	<td>//div[contains(@class,'layout-content')]//section[contains(@style,'${key_imageName}')]</td>
+	<td>//section[contains(@id,'content')]//div[contains(@style,'${key_imageName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -16,6 +16,18 @@
 		}
 	}
 
+	&__collection {
+		&__not-mapped-message {
+			background-color: $gray-300;
+			color: $gray-500;
+			font-size: 14px;
+			font-weight: 600;
+			margin-top: 0;
+			padding: 5em 0;
+			text-align: center;
+		}
+	}
+
 	&__col &__col__resizer.btn.btn-primary {
 		border-radius: 50%;
 		cursor: col-resize;

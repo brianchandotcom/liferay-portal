@@ -12,12 +12,20 @@
  * details.
  */
 
-export const LAYOUT_DATA_ITEM_TYPE_LABELS = {
-	collection: Liferay.Language.get('collection-display'),
-	column: Liferay.Language.get('column'),
-	container: Liferay.Language.get('section'),
-	dropZone: Liferay.Language.get('drop-zone'),
-	fragment: Liferay.Language.get('fragment'),
-	root: Liferay.Language.get('root'),
-	row: Liferay.Language.get('row'),
-};
+import React from 'react';
+
+const NotMappedMessage = () => (
+	<div className="page-editor__collection__not-mapped-message">
+		{Liferay.Language.get('not-mapped')}
+	</div>
+);
+
+const Collection = React.forwardRef(({_props}, ref) => {
+	return (
+		<div className="page-editor__collection" ref={ref}>
+			<NotMappedMessage></NotMappedMessage>
+		</div>
+	);
+});
+
+export default Collection;

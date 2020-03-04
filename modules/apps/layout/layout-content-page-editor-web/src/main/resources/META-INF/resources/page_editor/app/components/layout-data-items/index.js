@@ -12,6 +12,7 @@
  * details.
  */
 
+export {default as CollectionWithControls} from './CollectionWithControls';
 export {default as Column} from './Column';
 export {default as ColumnWithControls} from './ColumnWithControls';
 export {default as Container} from './Container';

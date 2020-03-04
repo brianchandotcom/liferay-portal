@@ -389,7 +389,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 										<aui:row>
 											<aui:col cssClass="contacts contacts-count" width="<%= 100 %>">
-												<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(myContactsCount) %>" key='<%= (myContactsCount == 1) ? "view-my-x-contact" : "view-my-x-contacts" %>' translateArguments="<%= false %>" /></a>
+												<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(myContactsCount) %>" key='<%= (myContactsCount == 1) ? "view-one-contact" : "view-my-x-contacts" %>' translateArguments="<%= false %>" /></a>
 											</aui:col>
 										</aui:row>
 									</c:if>

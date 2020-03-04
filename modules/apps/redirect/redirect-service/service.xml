@@ -20,5 +20,10 @@
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="destinationURL" type="String" />
+		<column name="sourceURL" type="String" />
 	</entity>
 </service-builder>

@@ -105,7 +105,7 @@ public class LayoutStructureUtil {
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			layoutStructure, layoutStructure.getLayoutStructureItem(itemId),
-			saveInlineContent, saveMappingConfiguration);
+			saveInlineContent, saveMappingConfiguration, segmentsExperienceId);
 
 		try {
 			SimpleFilterProvider simpleFilterProvider =

@@ -82,12 +82,28 @@ public class PageDefinitionConverterUtil {
 		com.liferay.portal.kernel.model.Layout layout,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
+		return toPageDefinition(
+			fragmentCollectionContributorTracker,
+			fragmentEntryConfigurationParser, fragmentRendererTracker, layout,
+			saveInlineContent, saveMappingConfiguration, 0);
+	}
+
+	public static PageDefinition toPageDefinition(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentRendererTracker fragmentRendererTracker,
+		com.liferay.portal.kernel.model.Layout layout,
+		boolean saveInlineContent, boolean saveMappingConfiguration,
+		long segmentsExperienceId) {
+
 		return new PageDefinition() {
 			{
 				pageElement = _toPageElement(
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
-					layout, saveInlineContent, saveMappingConfiguration);
+					layout, saveInlineContent, saveMappingConfiguration,
+					segmentsExperienceId);
 				settings = _toSettings(layout);
 			}
 		};
@@ -101,6 +117,22 @@ public class PageDefinitionConverterUtil {
 		LayoutStructure layoutStructure,
 		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
 		boolean saveMappingConfiguration) {
+
+		return toPageElement(
+			fragmentCollectionContributorTracker,
+			fragmentEntryConfigurationParser, fragmentRendererTracker,
+			layoutStructure, layoutStructureItem, saveInlineContent,
+			saveMappingConfiguration, 0);
+	}
+
+	public static PageElement toPageElement(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentRendererTracker fragmentRendererTracker,
+		LayoutStructure layoutStructure,
+		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
+		boolean saveMappingConfiguration, long segmentsExperienceId) {
 
 		List<PageElement> pageElements = new ArrayList<>();
 
@@ -119,7 +151,8 @@ public class PageDefinitionConverterUtil {
 						fragmentCollectionContributorTracker,
 						fragmentEntryConfigurationParser,
 						fragmentRendererTracker, childLayoutStructureItem,
-						saveInlineContent, saveMappingConfiguration));
+						saveInlineContent, saveMappingConfiguration,
+						segmentsExperienceId));
 			}
 			else {
 				pageElements.add(
@@ -135,7 +168,8 @@ public class PageDefinitionConverterUtil {
 		PageElement pageElement = _toPageElement(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			layoutStructureItem, saveInlineContent, saveMappingConfiguration);
+			layoutStructureItem, saveInlineContent, saveMappingConfiguration,
+			segmentsExperienceId);
 
 		if (!pageElements.isEmpty()) {
 			pageElement.setPageElements(
@@ -151,7 +185,8 @@ public class PageDefinitionConverterUtil {
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererTracker fragmentRendererTracker,
 		com.liferay.portal.kernel.model.Layout layout,
-		boolean saveInlineContent, boolean saveMappingConfiguration) {
+		boolean saveInlineContent, boolean saveMappingConfiguration,
+		long segmentsExperienceId) {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
@@ -185,7 +220,7 @@ public class PageDefinitionConverterUtil {
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			mainLayoutStructureItem, saveInlineContent,
-			saveMappingConfiguration);
+			saveMappingConfiguration, segmentsExperienceId);
 
 		if (!mainPageElements.isEmpty()) {
 			pageElement.setPageElements(
@@ -201,7 +236,7 @@ public class PageDefinitionConverterUtil {
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererTracker fragmentRendererTracker,
 		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
-		boolean saveMappingConfiguration) {
+		boolean saveMappingConfiguration, long segmentsExperienceId) {
 
 		if (layoutStructureItem instanceof ColumnLayoutStructureItem) {
 			ColumnLayoutStructureItem columnLayoutStructureItem =
@@ -322,7 +357,7 @@ public class PageDefinitionConverterUtil {
 								fragmentEntryConfigurationParser,
 								fragmentLayoutStructureItem,
 								fragmentRendererTracker, saveInlineContent,
-								saveMappingConfiguration);
+								saveMappingConfiguration, segmentsExperienceId);
 					type = PageElement.Type.FRAGMENT;
 				}
 			};

@@ -427,10 +427,12 @@ export const getSection = (title, siteKey) => {
 						items {
 							id
 							parentMessageBoardSectionId
+							subscribed
 							title
 						}
 					}
 					parentMessageBoardSectionId
+					subscribed
 					title
 				}
 			}
@@ -516,6 +518,7 @@ export const getSections = siteKey =>
 					id
 					numberOfMessageBoardThreads
 					parentMessageBoardSectionId
+					subscribed
 					title
 				}
 			}
@@ -570,5 +573,19 @@ export const unsubscribe = messageBoardThreadId =>
 	request(gql`
         mutation {
             updateMessageBoardThreadUnsubscribe(messageBoardThreadId: ${messageBoardThreadId})
+        }
+    `);
+
+export const subscribeSection = messageBoardSectionId =>
+	request(gql`
+        mutation {
+            updateMessageBoardSectionSubscribe(messageBoardSectionId: ${messageBoardSectionId})
+        }
+    `);
+
+export const unsubscribeSection = messageBoardSectionId =>
+	request(gql`
+        mutation {
+            updateMessageBoardSectionUnsubscribe(messageBoardSectionId: ${messageBoardSectionId})
         }
     `);

@@ -20,6 +20,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
+import SectionSubscription from '../components/SectionSubscription.es';
 import useSection from '../hooks/useSection.es';
 import {useDebounceCallback} from '../utils/utils.es';
 
@@ -120,6 +121,7 @@ export default withRouter(
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
 				</div>
+				<SectionSubscription section={section} />
 
 				<div className="d-flex">
 					{Liferay.Language.get('filter-by')}

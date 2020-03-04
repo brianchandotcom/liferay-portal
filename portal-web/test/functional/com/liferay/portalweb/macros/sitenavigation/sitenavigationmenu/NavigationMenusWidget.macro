@@ -22,6 +22,14 @@ definition {
 			value1 = "${menuName}");
 	}
 
+	macro gotoEditNavigationMenuEntry {
+		MouseOver.mouseOverNotVisible(locator1 = "Icon#EDIT_PENCIL");
+
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#EDIT_PENCIL");
+
+		MenuItem.click(menuItem = "Edit");
+	}
+
 	macro gotoNavigationMenuWidgetConfig {
 		Portlet.gotoPortletOptions(
 			portletName = "Navigation Menu",

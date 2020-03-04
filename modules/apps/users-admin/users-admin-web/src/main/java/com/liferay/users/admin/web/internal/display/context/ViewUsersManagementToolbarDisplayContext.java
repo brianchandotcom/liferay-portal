@@ -266,17 +266,22 @@ public class ViewUsersManagementToolbarDisplayContext {
 			searchTerms.setStatus(WorkflowConstants.STATUS_INACTIVE);
 		}
 
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		if (_domain.equals("company-users")) {
+			params.put("accountEntryIds", new Long[0]);
+		}
+
 		int total = UserLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), new LinkedHashMap<String, Object>());
+			searchTerms.getStatus(), params);
 
 		userSearch.setTotal(total);
 
 		List<User> results = UserLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), new LinkedHashMap<String, Object>(),
-			userSearch.getStart(), userSearch.getEnd(),
-			userSearch.getOrderByComparator());
+			searchTerms.getStatus(), params, userSearch.getStart(),
+			userSearch.getEnd(), userSearch.getOrderByComparator());
 
 		userSearch.setResults(results);
 

@@ -45,7 +45,7 @@ public class UserModelPreFilterContributor
 		long[] accountEntryIds = (long[])searchContext.getAttribute(
 			"accountEntryIds");
 
-		if (ArrayUtil.isNotEmpty(accountEntryIds)) {
+		if (accountEntryIds != null) {
 			if ((accountEntryIds.length == 1) &&
 				(accountEntryIds[0] == AccountConstants.ACCOUNT_ENTRY_ID_ANY)) {
 
@@ -54,6 +54,13 @@ public class UserModelPreFilterContributor
 
 				booleanFilter.add(
 					accountEntryIdsExistsFilter, BooleanClauseOccur.MUST);
+			}
+			else if (accountEntryIds.length == 0) {
+				ExistsFilter accountEntryIdsExistsFilter = new ExistsFilter(
+					"accountEntryIds");
+
+				booleanFilter.add(
+					accountEntryIdsExistsFilter, BooleanClauseOccur.MUST_NOT);
 			}
 			else {
 				TermsFilter accountEntryTermsFilter = new TermsFilter(

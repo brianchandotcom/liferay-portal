@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String backURL = ParamUtil.getString(request, "backURL");
 
 long userGroupId = ParamUtil.getLong(request, "userGroupId");
 
@@ -34,14 +34,18 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(userGroup.getName());
-
 PortletURL homeURL = renderResponse.createRenderURL();
 
 homeURL.setParameter("mvcPath", "/view.jsp");
+
+if (Validator.isNull(backURL)) {
+	backURL = homeURL.toString();
+}
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(userGroup.getName());
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "user-groups"), homeURL.toString());
 PortalUtil.addPortletBreadcrumbEntry(request, userGroup.getName(), null);

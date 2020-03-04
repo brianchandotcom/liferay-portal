@@ -139,7 +139,7 @@ const GridProxy = connectStore(
 		const [state, setState] = useState(value);
 
 		return (
-			<FieldBaseProxy {...otherProps}>
+			<FieldBaseProxy name={name} readOnly={readOnly} {...otherProps}>
 				<Grid
 					columns={columns}
 					disabled={readOnly}

@@ -91,7 +91,9 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 			formInstanceVersion.getStructureVersion();
 
 		DDMFormRenderingContext formRenderingContext =
-			createDDMFormRenderingContext(structureVersion.getDDMForm());
+			createDDMFormRenderingContext(
+				structureVersion.getDDMForm(),
+				ParamUtil.get(renderRequest, "readOnly", true));
 
 		DDMFormValues formValues = getDDMFormValues(
 			renderRequest, formInstanceRecord, structureVersion);
@@ -118,7 +120,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
-		DDMForm ddmForm) {
+		DDMForm ddmForm, boolean readOnly) {
 
 		DDMFormRenderingContext formRenderingContext =
 			new DDMFormRenderingContext();
@@ -140,7 +142,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		formRenderingContext.setPortletNamespace(
 			PortalUtil.getPortletNamespace(
 				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN));
-		formRenderingContext.setReadOnly(true);
+		formRenderingContext.setReadOnly(readOnly);
 		formRenderingContext.setViewMode(true);
 
 		return formRenderingContext;

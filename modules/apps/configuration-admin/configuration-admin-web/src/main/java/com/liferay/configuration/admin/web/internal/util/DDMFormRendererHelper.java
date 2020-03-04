@@ -83,6 +83,7 @@ public class DDMFormRendererHelper {
 		ddmFormRenderingContext.setLocale(getLocale());
 		ddmFormRenderingContext.setPortletNamespace(
 			_portletResponse.getNamespace());
+		ddmFormRenderingContext.setShowSubmitButton(false);
 
 		return ddmFormRenderingContext;
 	}

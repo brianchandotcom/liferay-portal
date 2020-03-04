@@ -3,7 +3,7 @@
 		"pageElements" : [
 			{
 				"definition" : {
-					"backgroundColorCssClass" : "danger",
+					"backgroundColor" : "danger",
 					"layout" : {
 						"containerType": "Fluid",
 						"paddingBottom" : 8,

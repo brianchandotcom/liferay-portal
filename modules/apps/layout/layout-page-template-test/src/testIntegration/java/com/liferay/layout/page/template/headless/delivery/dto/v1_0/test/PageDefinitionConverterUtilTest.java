@@ -173,7 +173,7 @@ public class PageDefinitionConverterUtilTest {
 
 		_validateFragmentImageWithTitle(
 			fragmentFieldBackgroundImage.getBackgroundImage(),
-			"My background image title");
+			"My Background Image Title");
 	}
 
 	@Test
@@ -213,7 +213,7 @@ public class PageDefinitionConverterUtilTest {
 			(FragmentFieldImage)fragmentField.getValue();
 
 		_validateFragmentImageWithTitle(
-			fragmentFieldImage.getFragmentImage(), "My image title");
+			fragmentFieldImage.getFragmentImage(), "My Image Title");
 	}
 
 	@Test
@@ -372,7 +372,7 @@ public class PageDefinitionConverterUtilTest {
 		InlineValue titleInlineValue = (InlineValue)fragmentImage1.getTitle();
 
 		Assert.assertEquals(
-			"My example1 background image title", titleInlineValue.getValue());
+			"My Example1 Background Image Title", titleInlineValue.getValue());
 
 		InlineValue urlInlineValue1 = (InlineValue)fragmentImage1.getUrl();
 

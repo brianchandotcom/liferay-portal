@@ -54,9 +54,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -138,6 +141,18 @@ public class FragmentInstanceDefinitionConverterUtil {
 					fragmentEntryLink, saveInlineContent, segmentsExperienceId);
 			}
 		};
+	}
+
+	private static List<String> _getAvailableLanguageIds() {
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+
+		Stream<Locale> stream = availableLocales.stream();
+
+		return stream.map(
+			availableLocale -> LanguageUtil.getLanguageId(availableLocale)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private static List<FragmentField> _getBackgroundImageFragmentFields(
@@ -566,13 +581,12 @@ public class FragmentInstanceDefinitionConverterUtil {
 
 				Iterator<String> iterator = keys.iterator();
 
+				List<String> availableLanguageIds = _getAvailableLanguageIds();
+
 				while (iterator.hasNext()) {
 					String key = iterator.next();
 
-					if (!key.equals("classNameId") && !key.equals("classPK") &&
-						!key.equals("config") && !key.equals("defaultValue") &&
-						!key.equals("fieldId")) {
-
+					if (availableLanguageIds.contains(key)) {
 						put(key, jsonObject.getString(key));
 					}
 				}

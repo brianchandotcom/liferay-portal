@@ -353,7 +353,7 @@
 </tr>
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON</td>
-	<td>//div[contains(@class,'asset-select')]//button</td>
+	<td>//div/input[contains(@id,'itemSelectorInput')]/following-sibling::button</td>
 	<td></td>
 </tr>
 <tr>

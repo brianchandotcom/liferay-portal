@@ -16,12 +16,14 @@ import ClayAlert from '@clayui/alert';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import LanguagesList from './LanguagesList.es';
 import ManageLanguages from './ManageLanguages.es';
 
 import '../css/Languages.scss';
+
+const getLocalesInputValue = arr => arr.map(({localeId}) => localeId).join(',');
 
 const Languages = ({
 	availableLocales,
@@ -41,6 +43,10 @@ const Languages = ({
 	);
 
 	const [customLocales, setCustomLocales] = useState(siteAvailableLocales);
+
+	const [localesInputValue, setLocalesInputValue] = useState(
+		getLocalesInputValue(siteAvailableLocales)
+	);
 
 	const [languageWarning, setLanguageWarning] = useState(false);
 	const [
@@ -74,7 +80,6 @@ const Languages = ({
 			translatedLanguages && !translatedLanguages[localeId]
 		);
 	};
-	const customLocalesInputRef = useRef();
 
 	const handleOnItemDrop = (id, newIndex) => {
 		setCustomLocales(languages => {
@@ -92,9 +97,7 @@ const Languages = ({
 
 	useEffect(() => {
 		if (!currentInheritLocales) {
-			const localesIds = customLocales.map(({localeId}) => localeId);
-
-			customLocalesInputRef.current.value = localesIds.join(',');
+			setLocalesInputValue(getLocalesInputValue(customLocales));
 		}
 	}, [customLocales, currentInheritLocales]);
 
@@ -135,8 +138,8 @@ const Languages = ({
 
 					<input
 						name={`_${portletNamespace}_TypeSettingsProperties--locales--`}
-						ref={customLocalesInputRef}
 						type="hidden"
+						value={localesInputValue}
 					/>
 
 					<LanguagesList

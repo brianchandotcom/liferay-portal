@@ -491,6 +491,7 @@ public abstract class BaseCommentResourceTestCase {
 
 	@Test
 	public void testDeleteComment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Comment comment = testDeleteComment_addComment();
 
 		assertHttpResponseStatusCode(

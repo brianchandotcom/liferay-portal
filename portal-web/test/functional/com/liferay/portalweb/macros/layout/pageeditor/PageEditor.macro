@@ -643,9 +643,31 @@ definition {
 				PageEditor.waitForAutoSave();
 			}
 
-		}
+			if ("${backgroundImage}" == "Manual Selection") {
+				AssertClick(
+					locator1 = "Button#SELECT",
+					value1 = "Select");
 
-		PageEditor.waitForAutoSave();
+				if (isSet(depotName)) {
+					ItemSelector.selectRepositoryImage(
+						depotName = "${depotName}",
+						imageFileName = "${imageFileName}",
+						navTab = "Documents and Media");
+				}
+
+				else {
+					SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+					Click(
+						key_card = "${entryTitle}",
+						locator1 = "LexiconCard#CARD_TITLE");
+				}
+
+				SelectFrame(value1 = "relative=top");
+
+				PageEditor.waitForAutoSave();
+			}
+		}
 	}
 
 	macro expandFragmentCollection {
@@ -828,37 +850,6 @@ definition {
 		Type(
 			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
 			value1 = "${fragmentName}");
-	}
-
-	macro selectLayoutSectionImage {
-		Click(
-			key_position = "1",
-			locator1 = "PageEditor#SECTION");
-
-		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_LAYOUT_BACKGROUND_IMAGE_BUTTON");
-
-		AssertClick(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-
-		if (isSet(depotName)) {
-			ItemSelector.selectRepositoryImage(
-				depotName = "${depotName}",
-				imageFileName = "${imageFileName}",
-				navTab = "Documents and Media");
-		}
-
-		else {
-			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-			Click(
-				key_card = "${entryTitle}",
-				locator1 = "LexiconCard#CARD_TITLE");
-		}
-
-		SelectFrame(value1 = "relative=top");
-
-		PageEditor.waitForAutoSave();
 	}
 
 	macro viewAutoSaveMessage {

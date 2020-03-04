@@ -12,182 +12,166 @@
  * details.
  */
 
-import '../FieldBase/FieldBase.es';
+import {ClayInput, ClayRadio} from '@clayui/form';
+import ClayTable from '@clayui/table';
+import React, {useState} from 'react';
 
-import './GridRegister.soy';
+import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
+import {connectStore} from '../util/connectStore.es';
+import templates from './GridAdapter.soy';
 
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+const TableHead = ({columns}) => (
+	<ClayTable.Head>
+		<ClayTable.Row>
+			<ClayTable.Cell headingCell />
+			{columns.map((column, colIndex) => {
+				if (column.value) {
+					return (
+						<ClayTable.Cell
+							headingCell
+							key={`column-${column.value}-${colIndex}`}
+						>
+							{column.label}
+						</ClayTable.Cell>
+					);
+				}
+			})}
+		</ClayTable.Row>
+	</ClayTable.Head>
+);
 
-import templates from './Grid.soy';
+const TableBodyColumns = ({
+	columns,
+	onBlur,
+	onChange,
+	onFocus,
+	row,
+	rowIndex,
+	value,
+}) =>
+	columns.map((column, colIndex) => {
+		if (column.value) {
+			return (
+				<ClayTable.Cell key={`cell-${column.value}-${colIndex}`}>
+					<ClayRadio
+						aria-label={`grid_${rowIndex}_${colIndex}`}
+						checked={column.value === value[row.value]}
+						className="form-builder-grid-field"
+						name={row.value}
+						onBlur={onBlur}
+						onChange={onChange}
+						onFocus={onFocus}
+						value={column.value}
+					/>
+				</ClayTable.Cell>
+			);
+		}
+	});
 
-class Grid extends Component {
-	_handleFieldBlurred(event) {
-		this.emit('fieldBlurred', {
-			fieldInstance: this,
-			originalEvent: event,
-		});
-	}
+const Grid = ({
+	columns = [{label: 'col1', value: 'fieldId'}],
+	name,
+	onBlur = () => {},
+	onChange = () => {},
+	onFocus = () => {},
+	readOnly = false,
+	rows = [{label: 'row', value: 'jehf'}],
+	value,
+	...otherProps
+}) => (
+	<div className="table-responsive" {...otherProps}>
+		{!readOnly &&
+			rows.map((row, rowIndex) => {
+				const inputValue = value[row.value]
+					? `${row.value};${value[row.value]}`
+					: '';
 
-	_handleFieldChanged(event) {
-		const {target} = event;
-		const value = {
-			...this.value,
-			[target.name]: target.value,
-		};
+				return (
+					<ClayInput
+						aria-label="grid_hidden"
+						key={`row-${row.value}-${rowIndex}`}
+						name={name}
+						type="hidden"
+						value={inputValue}
+					/>
+				);
+			})}
 
-		this.setState(
-			{
-				value,
-			},
-			() => {
-				this.emit('fieldEdited', {
-					fieldInstance: this,
-					originalEvent: event,
-					value,
-				});
-			}
+		<ClayTable striped>
+			<TableHead columns={columns} />
+
+			<ClayTable.Body>
+				{rows.map((row, rowIndex) => {
+					if (row.value) {
+						return (
+							<ClayTable.Row
+								key={`row-${row.value}-${rowIndex}`}
+								name={row.value}
+							>
+								<ClayTable.Cell>{row.label}</ClayTable.Cell>
+
+								<TableBodyColumns
+									columns={columns}
+									onBlur={onBlur}
+									onChange={onChange}
+									onFocus={onFocus}
+									row={row}
+									rowIndex={rowIndex}
+									value={value}
+								/>
+							</ClayTable.Row>
+						);
+					}
+
+					return null;
+				})}
+			</ClayTable.Body>
+		</ClayTable>
+	</div>
+);
+
+const GridProxy = connectStore(
+	({columns, emit, name, readOnly, rows, value = {}, ...otherProps}) => {
+		const [state, setState] = useState(value);
+
+		return (
+			<FieldBaseProxy {...otherProps}>
+				<Grid
+					columns={columns}
+					name={name}
+					onBlur={event =>
+						emit('fieldBlurred', event, event.target.value)
+					}
+					onChange={event => {
+						const {target} = event;
+						const value = {
+							[target.name]: target.value,
+						};
+
+						const newState = {...state, ...value};
+
+						setState(newState);
+
+						emit('fieldEdited', event, newState);
+					}}
+					onFocus={event =>
+						emit('fieldFocused', event, event.target.value)
+					}
+					readOnly={readOnly}
+					rows={rows}
+					value={state}
+				/>
+			</FieldBaseProxy>
 		);
 	}
+);
 
-	_handleFieldFocused(event) {
-		this.emit('fieldFocused', {
-			fieldInstance: this,
-			originalEvent: event,
-		});
-	}
-}
+const ReactGridAdapter = getConnectedReactComponentAdapter(
+	GridProxy,
+	templates
+);
 
-Grid.STATE = {
-	/**
-	 * @default undefined
-	 * @memberof Grid
-	 * @type {?array<object>}
-	 */
+export {ReactGridAdapter};
 
-	columns: Config.arrayOf(
-		Config.shapeOf({
-			label: Config.string(),
-			value: Config.string(),
-		})
-	).value([
-		{
-			label: 'col1',
-			value: 'fieldId',
-		},
-	]),
-
-	/**
-	 * @default false
-	 * @memberof Grid
-	 * @type {?bool}
-	 */
-
-	evaluable: Config.bool().value(false),
-
-	fieldName: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @memberof Grid
-	 * @type {?(string|undefined)}
-	 */
-
-	label: Config.string(),
-
-	/**
-	 * @default {}
-	 * @instance
-	 * @memberof Grid
-	 * @type {?(object|undefined)}
-	 */
-
-	localizedValue: Config.object().value({}),
-
-	/**
-	 * @default false
-	 * @memberof Grid
-	 * @type {?bool}
-	 */
-
-	readOnly: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @memberof Grid
-	 * @type {?(bool|undefined)}
-	 */
-
-	repeatable: Config.bool(),
-
-	/**
-	 * @default false
-	 * @memberof Grid
-	 * @type {?(bool|undefined)}
-	 */
-
-	required: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @memberof Grid
-	 * @type {?array<object>}
-	 */
-
-	rows: Config.arrayOf(
-		Config.shapeOf({
-			label: Config.string(),
-			value: Config.string(),
-		})
-	).value([
-		{
-			label: 'row',
-			value: 'jehf',
-		},
-	]),
-
-	/**
-	 * @default true
-	 * @memberof Grid
-	 * @type {?(bool|undefined)}
-	 */
-
-	showLabel: Config.bool().value(true),
-
-	/**
-	 * @default undefined
-	 * @memberof Grid
-	 * @type {?(string|undefined)}
-	 */
-
-	spritemap: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @memberof Grid
-	 * @type {?(string|undefined)}
-	 */
-
-	tip: Config.string(),
-
-	/**
-	 * @default grid
-	 * @memberof Grid
-	 * @type {?(string|undefined)}
-	 */
-
-	type: Config.string().value('grid'),
-
-	/**
-	 * @default {}
-	 * @memberof Grid
-	 * @type {?(string|undefined)}
-	 */
-
-	value: Config.object().value({}),
-};
-
-Soy.register(Grid, templates);
-
-export default Grid;
+export default ReactGridAdapter;

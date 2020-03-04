@@ -3,6 +3,7 @@
 		"@clayui/button": "3.3.0",
 		"@clayui/form": "3.7.0",
 		"@clayui/modal": "3.4.0",
+		"@clayui/table": "4.0.0",
 		"classnames": "2.2.6",
 		"clay-button": "2.21.0",
 		"clay-checkbox": "2.21.0",

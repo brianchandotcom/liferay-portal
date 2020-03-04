@@ -33,7 +33,7 @@ public interface UserGeneratorConfiguration {
 	@Meta.AD
 	public String pathToUserCsv();
 
-	@Meta.AD(required = false, deflt = "false")
+	@Meta.AD(deflt = "false", required = false)
 	public String verbose();
 
 	@Meta.AD

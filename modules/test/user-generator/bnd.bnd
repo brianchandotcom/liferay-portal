@@ -1,7 +1,10 @@
 Bundle-Name: Liferay User Generator
 Bundle-SymbolicName: com.liferay.user.generator
 Bundle-Version: 1.0.0
-Include-Resource: @commons-csv-1.8.jar
-Import-Package: org.apache.commons.csv.*,\
-    com.liferay.portal.kernel.exception,\
-    *
+Import-Package:\
+	com.liferay.portal.kernel.exception,\
+	\
+	org.apache.commons.csv.*,\
+	\
+	*
+-includeresource: @commons-csv-[0-9.]*.jar

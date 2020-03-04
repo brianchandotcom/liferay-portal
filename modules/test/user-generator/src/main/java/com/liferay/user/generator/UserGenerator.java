@@ -31,12 +31,15 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.user.generator.configuration.UserGeneratorConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.nio.charset.Charset;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,16 +77,23 @@ public class UserGenerator {
 				userGeneratorConfiguration.virtualHostName());
 
 			_companyId = company.getPrimaryKey();
+
 			_defaultUserId = _userLocalService.getDefaultUserId(_companyId);
 		}
-		catch (PortalException e) {
-			_log.error(e, e);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		try {
 			File csvFile = new File(userGeneratorConfiguration.pathToUserCsv());
 
-			CSVParser csvParser = CSVParser.parse(csvFile, Charset.defaultCharset(), CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreSurroundingSpaces().withNullString(""));
+			CSVParser csvParser = CSVParser.parse(
+				csvFile, Charset.defaultCharset(),
+				CSVFormat.DEFAULT.withFirstRecordAsHeader(
+				).withIgnoreSurroundingSpaces(
+				).withNullString(
+					""
+				));
 
 			for (CSVRecord csvRecord : csvParser) {
 				String emailAddress = csvRecord.get("emailAddress");
@@ -99,25 +109,30 @@ public class UserGenerator {
 				String lastName = csvRecord.get("lastName");
 
 				int javaMonthOffset = 1; //java.util.Date months start at 0 (meaning 0 for January)
+
 				int birthdayMonth =
-					Integer.parseInt(csvRecord.get("birthdayMonth")) - javaMonthOffset;
-				int birthdayDay =
-					Integer.parseInt(csvRecord.get("birthdayDay"));
-				int birthdayYear =
-					Integer.parseInt(csvRecord.get("birthdayYear"));
+					GetterUtil.getInteger(csvRecord.get("birthdayMonth")) -
+						javaMonthOffset;
+
+				int birthdayDay = GetterUtil.getInteger(
+					csvRecord.get("birthdayDay"));
+				int birthdayYear = GetterUtil.getInteger(
+					csvRecord.get("birthdayYear"));
 				String jobTitle = csvRecord.get("jobTitle");
 
 				String gender = csvRecord.get("gender");
 
 				boolean male = true;
 
-				if(gender.equalsIgnoreCase("female")) {
+				if (gender.equalsIgnoreCase("female")) {
 					male = false;
 				}
 
-				long[] organizationIds = _getIdArrayFromCell(csvRecord, "organizations");
+				long[] organizationIds = _getIdArrayFromCell(
+					csvRecord, "organizations");
 
-				long[] userGroupIds = _getIdArrayFromCell(csvRecord, "userGroups");
+				long[] userGroupIds = _getIdArrayFromCell(
+					csvRecord, "userGroups");
 
 				long[] roleIds = _getIdArrayFromCell(csvRecord, "roles");
 
@@ -125,74 +140,89 @@ public class UserGenerator {
 					User user = _userLocalService.addUser(
 						_defaultUserId, _companyId, false, password, password,
 						false, screenName, emailAddress, 0, StringPool.BLANK,
-						LocaleUtil.getDefault(), firstName, middleName, lastName, 0, 0,
-						male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-						null, organizationIds, roleIds, userGroupIds, false,
-						new ServiceContext());
+						LocaleUtil.getDefault(), firstName, middleName,
+						lastName, 0, 0, male, birthdayMonth, birthdayDay,
+						birthdayYear, jobTitle, null, organizationIds, roleIds,
+						userGroupIds, false, new ServiceContext());
 
 					_addedUserMap.put(emailAddress, user.getPrimaryKey());
 
-					if(!_verbose.equalsIgnoreCase("false")) {
+					if (!_verbose.equalsIgnoreCase("false")) {
 						System.out.println("Created user: " + emailAddress);
 					}
 				}
-				catch (PortalException e) {
-					_log.error(e, e);
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 				}
 			}
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					userGeneratorConfiguration.customActivationMessage());
+				_log.info(userGeneratorConfiguration.customActivationMessage());
 			}
 		}
-		catch (IOException e) {
-			_log.error(e, e);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
-
-			_addedUserMap.entrySet().parallelStream().forEach(e -> {
+		_addedUserMap.entrySet(
+		).parallelStream(
+		).forEach(
+			e -> {
 				try {
 					_userLocalService.deleteUser(e.getValue());
 				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 				}
-			});
+			}
+		);
 
-			_addedOrganizationMap.entrySet().parallelStream().forEach(e -> {
+		_addedOrganizationMap.entrySet(
+		).parallelStream(
+		).forEach(
+			e -> {
 				try {
 					_organizationLocalService.deleteOrganization(e.getValue());
 				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 				}
-			});
+			}
+		);
 
-			_addedRoleMap.entrySet().parallelStream().forEach(e -> {
+		_addedRoleMap.entrySet(
+		).parallelStream(
+		).forEach(
+			e -> {
 				try {
 					_roleLocalService.deleteRole(e.getValue());
 				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 				}
-			});
+			}
+		);
 
 		try {
 			_userGroupLocalService.deleteUserGroups(_companyId);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
+	}
+
+	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	private long[] _getIdArrayFromCell(CSVRecord csvRecord, String headerName) {
 		String recordCell = csvRecord.get(headerName);
 
-		if(recordCell == null) {
+		if (recordCell == null) {
 			return null;
 		}
 
@@ -204,93 +234,89 @@ public class UserGenerator {
 			String name = stringArray[i].trim();
 
 			try {
-				if(headerName.equalsIgnoreCase("organizations")) {
+				if (headerName.equalsIgnoreCase("organizations")) {
 					if (_addedOrganizationMap.containsKey(name)) {
 						idArray[i] = _addedOrganizationMap.get(name);
 					}
 					else {
-						Organization newOrganization = _organizationLocalService.addOrganization(
-							_defaultUserId, 0, name, false);
+						Organization newOrganization =
+							_organizationLocalService.addOrganization(
+								_defaultUserId, 0, name, false);
 
 						idArray[i] = newOrganization.getPrimaryKey();
 
 						_addedOrganizationMap.put(name, idArray[i]);
 					}
 				}
-				else if(headerName.equalsIgnoreCase("userGroups")) {
+				else if (headerName.equalsIgnoreCase("userGroups")) {
 					if (_addedUserGroupMap.containsKey(name)) {
 						idArray[i] = _addedUserGroupMap.get(name);
 					}
 					else {
-						UserGroup newUserGroup = _userGroupLocalService.addUserGroup(
-							_defaultUserId, _companyId, name, null, null);
+						UserGroup newUserGroup =
+							_userGroupLocalService.addUserGroup(
+								_defaultUserId, _companyId, name, null, null);
 
 						idArray[i] = newUserGroup.getPrimaryKey();
 
 						_addedUserGroupMap.put(name, idArray[i]);
 					}
 				}
-				else if(headerName.equalsIgnoreCase("roles")) {
+				else if (headerName.equalsIgnoreCase("roles")) {
 					if (_addedRoleMap.containsKey(name)) {
 						idArray[i] = _addedRoleMap.get(name);
 					}
 					else {
-						Role newRole = _roleLocalService.addRole(_defaultUserId, null, 0, name, null, null, 0, null, null);
+						Role newRole = _roleLocalService.addRole(
+							_defaultUserId, null, 0, name, null, null, 0, null,
+							null);
 
 						idArray[i] = newRole.getPrimaryKey();
 
 						_addedRoleMap.put(name, idArray[i]);
 					}
 				}
-
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 
-		if(!_verbose.equalsIgnoreCase("false")) {
-			System.out.printf("Added %s to %s with ID's: %s%n",
-				csvRecord.get("emailAddress"), headerName, Arrays.toString(idArray));
+		if (!_verbose.equalsIgnoreCase("false")) {
+			System.out.printf(
+				"Added %s to %s with ID's: %s%n", csvRecord.get("emailAddress"),
+				headerName, Arrays.toString(idArray));
 		}
 
 		return idArray;
 	}
 
-	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	private String _verbose;
-
-	private long _companyId;
-
-	private long _defaultUserId;
-
 	private static final Log _log = LogFactoryUtil.getLog(UserGenerator.class);
 
-	private volatile HashMap<String, Long> _addedUserMap = new HashMap<>();
-
-	private volatile HashMap<String, Long> _addedOrganizationMap = new HashMap<>();
-
-	private volatile HashMap<String, Long> _addedUserGroupMap = new HashMap<>();
-
+	private volatile HashMap<String, Long> _addedOrganizationMap =
+		new HashMap<>();
 	private volatile HashMap<String, Long> _addedRoleMap = new HashMap<>();
-	
+	private volatile HashMap<String, Long> _addedUserGroupMap = new HashMap<>();
+	private volatile HashMap<String, Long> _addedUserMap = new HashMap<>();
+	private long _companyId;
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private long _defaultUserId;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
-	private UserGroupLocalService _userGroupLocalService;
-	
-	@Reference
 	private RoleLocalService _roleLocalService;
 
 	@Reference
+	private UserGroupLocalService _userGroupLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
+
+	private String _verbose;
 
 }

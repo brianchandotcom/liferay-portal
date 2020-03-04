@@ -80,7 +80,8 @@ export default withRouter(
 					section.parentSection = parentSection;
 					context.setSection(section);
 				});
-		}, [context, context.siteKey, sectionTitle]);
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [context.siteKey, sectionTitle]);
 
 		const filterOptions = getFilterOptions();
 

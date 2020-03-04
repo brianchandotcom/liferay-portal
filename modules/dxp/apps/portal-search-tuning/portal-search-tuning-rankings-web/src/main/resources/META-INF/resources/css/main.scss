@@ -17,3 +17,7 @@ body.open .result-rankings-root .page-toolbar-root.navbar {
 	left: 320px;
 	width: calc(100% - 320px);
 }
+
+.modal-open .result-ranking-modal-root.modal {
+	overflow-y: auto;
+}

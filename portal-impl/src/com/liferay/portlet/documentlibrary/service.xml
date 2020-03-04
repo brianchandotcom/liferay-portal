@@ -64,7 +64,7 @@
 		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column name="extraSettings" type="String" />
 		<column name="fileEntryTypeId" type="long" />
-		<column name="version" type="String" />
+		<column change-tracking-resolution-type="merge" name="version" type="String" />
 		<column name="size" type="long" />
 		<column name="smallImageId" type="long" />
 		<column name="largeImageId" type="long" />

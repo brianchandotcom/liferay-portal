@@ -33,20 +33,19 @@ const NameButton = ({disabled, id, name}) => {
 	const isSelected = useIsSelected();
 
 	return (
-		<ClayButton
+		<div
 			className={classNames(
-				'page-editor__page-structure__tree-node__name-button',
+				'page-editor__page-structure__tree-node__name',
 				{
-					'page-editor__page-structure__tree-node__name-button--active': isSelected(
+					'page-editor__page-structure__tree-node__name--active': isSelected(
 						id
 					),
+					'page-editor__page-structure__tree-node__name--disabled': disabled,
 				}
 			)}
-			disabled={disabled}
-			displayType="unstyled"
 		>
 			{name || Liferay.Language.get('element')}
-		</ClayButton>
+		</div>
 	);
 };
 
@@ -80,16 +79,11 @@ export default function StructureTreeNode({node}) {
 
 	return (
 		<div
-			className="page-editor__page-structure__tree-node"
-			onClick={event => {
-				event.stopPropagation();
-
-				selectItem(node.id, {
-					itemType: node.type,
-					multiSelect: event.shiftKey,
-					origin: ITEM_ACTIVATION_ORIGINS.structureTree,
-				});
-			}}
+			className={classNames('page-editor__page-structure__tree-node', {
+				'page-editor__page-structure__tree-node--active': isSelected(
+					node.id
+				),
+			})}
 			onMouseLeave={event => {
 				event.stopPropagation();
 
@@ -102,6 +96,21 @@ export default function StructureTreeNode({node}) {
 				hoverItem(node.id);
 			}}
 		>
+			<ClayButton
+				className="page-editor__page-structure__tree-node__mask"
+				disabled={node.disabled}
+				displayType="unstyled"
+				onClick={event => {
+					event.stopPropagation();
+					event.target.focus();
+
+					selectItem(node.id, {
+						itemType: node.type,
+						multiSelect: event.shiftKey,
+						origin: ITEM_ACTIVATION_ORIGINS.structureTree,
+					});
+				}}
+			/>
 			<NameButton
 				disabled={node.disabled}
 				id={node.id}

@@ -178,9 +178,15 @@ export default withRouter(
 						<div className="col-md-10">
 							<div className="align-items-end flex-column-reverse flex-md-row row">
 								<div className="c-mt-4 c-mt-md-0 col-md-9">
-									<SectionLabel
-										section={question.messageBoardSection}
-									/>
+									<Link
+										to={`/questions/${question.messageBoardSection.title}`}
+									>
+										<SectionLabel
+											section={
+												question.messageBoardSection
+											}
+										/>
+									</Link>
 
 									<h1 className="c-mt-2 question-headline">
 										{question.headline}

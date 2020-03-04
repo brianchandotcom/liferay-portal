@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -261,7 +263,18 @@ public class AccountEntryLocalServiceImpl
 
 				long accountEntryId = document.getLong(Field.ENTRY_CLASS_PK);
 
-				return getAccountEntry(accountEntryId);
+				AccountEntry accountEntry = fetchAccountEntry(accountEntryId);
+
+				if (accountEntry == null) {
+					Indexer<AccountEntry> indexer =
+						IndexerRegistryUtil.getIndexer(AccountEntry.class);
+
+					indexer.delete(
+						document.getLong(Field.COMPANY_ID),
+						document.getString(Field.UID));
+				}
+
+				return accountEntry;
 			});
 
 		return new BaseModelSearchResult<>(

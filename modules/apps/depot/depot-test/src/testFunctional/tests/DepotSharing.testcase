@@ -132,6 +132,12 @@ definition {
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Test Depot Name");
 
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
@@ -162,6 +168,12 @@ definition {
 			dmDocumentTitle = "Document_1.txt",
 			groupName = "Test Depot Name");
 
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
@@ -178,6 +190,12 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1.doc");
 
@@ -304,6 +322,12 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
 
 		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1.doc");
 

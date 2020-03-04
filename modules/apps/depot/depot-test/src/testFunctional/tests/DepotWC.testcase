@@ -268,6 +268,12 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
 		WebContent.expireCP(webContentTitleList = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();

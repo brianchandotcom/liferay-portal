@@ -149,6 +149,26 @@
 			</sequential>
 		</for>
 
+		<if>
+			<equals arg1="${lpkg.container}" arg2="true" />
+			<then>
+				<zip
+					destfile="${output.dir}/${Liferay-Releng-App-Title}.lpkg"
+				>
+					<fileset dir="${output.dir}">
+					    <include name="*${Liferay-Releng-App-Title}*.lpkg" />
+					</fileset>
+				</zip>
+
+				<delete>
+					<fileset dir="${output.dir}">
+						<exclude name="*${Liferay-Releng-App-Title}.lpkg" />
+					    <include name="*${Liferay-Releng-App-Title}*.lpkg" />
+					</fileset>
+				</delete>
+			</then>
+		</if>
+
 		<delete includeemptydirs="true">
 			<fileset
 				dir="${output.dir}"
@@ -996,7 +1016,15 @@
 
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="restart-required=${Liferay-Releng-Restart-Required}" />
+		<if>
+			<equals arg1="${hot.deploy.test}" arg2="true" />
+			<then>
+				<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="restart-required=false" />
+			</then>
+			<else>
+				<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="restart-required=${Liferay-Releng-Restart-Required}" />
+			</else>
+		</if>
 
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
 

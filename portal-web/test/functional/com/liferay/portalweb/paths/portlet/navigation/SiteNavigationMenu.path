@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_ADD_NEW_PAGES</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]/td[contains(@class,'lfr-add-new-pages') and contains(.,'${key_addNewPages}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MENU_MARKED_AS</td>
 	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]/td[contains(@class,'lfr-marked-as') and contains(.,'${key_markedAs}')]</td>
 	<td></td>

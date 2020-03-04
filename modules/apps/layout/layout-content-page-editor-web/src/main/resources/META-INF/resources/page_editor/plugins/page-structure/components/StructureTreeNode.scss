@@ -1,29 +1,62 @@
+@import 'atlas-variables';
+
 @import './variables';
 
 .page-editor__page-structure__tree-node {
+	align-items: center;
 	display: flex;
 	font-size: 14px;
 	height: 28px;
 	justify-content: space-between;
 	line-height: 28px;
+	margin-left: 4px;
+	padding-left: 8px;
+	padding-right: 8px;
 
-	&__name-button,
-	&__remove-button {
-		color: $pageStructureGrayColor;
+	&__mask {
+		height: 100%;
+		left: 0;
+		margin-left: 12px;
+		position: absolute;
+		top: 0;
+		width: calc(100% - 12px);
 	}
 
-	&__name-button {
+	&--active,
+	&:hover {
+		background-color: $light-l1;
+		border-radius: 4px;
+	}
+
+	&__remove-button {
+		color: $pageStructureGrayColor;
+		font-size: 12px;
+
+		.lexicon-icon {
+			transform: translateY(1px);
+		}
+	}
+
+	&__name {
+		color: $dark;
+		font-size: 13px;
+		line-height: 20px;
 		max-width: 80%;
 		overflow: hidden;
 		text-overflow: ellipsis;
 
 		&--active {
-			color: $pageStructureBlackColor;
 			font-weight: 600;
 		}
 
-		&:disabled {
+		&--disabled {
 			color: $pageStructureBlackColor;
+			cursor: not-allowed;
+			opacity: 0.4;
+		}
+
+		.lexicon-icon {
+			transform: translateY(-5px);
 		}
 	}
 }

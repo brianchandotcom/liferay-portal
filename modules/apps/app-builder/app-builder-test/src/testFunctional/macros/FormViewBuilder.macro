@@ -26,11 +26,7 @@ definition {
 	macro addFieldToObject {
 		Click(locator1 = "FormViewBuilder#OBJECT_FIELD_PLUS");
 
-		Click(
-			key_fieldName = "Add Field to Object",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
-
-		Click(
+		DoubleClick(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
 

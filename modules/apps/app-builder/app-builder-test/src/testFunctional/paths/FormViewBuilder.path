@@ -144,7 +144,7 @@
 
 <tr>
 	<td>FIELD_LABEL_REQUIRED</td>
-	<td>//label[contains(text(),'${fieldLabel}')]/span[@class='reference-mark']/*[@class='lexicon-icon lexicon-icon-asterisk']</td>
+	<td>//p[contains(text(),'${fieldLabel}')]/span[@class='reference-mark']/*[@class='lexicon-icon lexicon-icon-asterisk']</td>
 	<td></td>
 </tr>
 
@@ -205,7 +205,7 @@
 <!--OBJECT_FIELD-->
 <tr>
 	<td>OBJECT_FIELD_NAME</td>
-	<td>//div[@class='custom-object-field autofit-row autofit-row-center field-type']//span[contains(text(), '${key_fieldName}')]</td>
+	<td>//div[@class='custom-object-field autofit-row autofit-row-center field-type']//*[contains(text(), '${key_fieldName}')]</td>
 	<td></td>
 </tr>
 

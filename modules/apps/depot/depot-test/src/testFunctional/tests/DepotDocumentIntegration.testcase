@@ -111,9 +111,10 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.addLayoutSection(columnCount = "2");
+		PageEditor.addLayoutSection();
 
-		PageEditor.selectLayoutSectionImage(
+		PageEditor.editLayoutSection(
+			backgroundImage = "Manual Selection",
 			depotName = "Test Depot Name",
 			imageFileName = "Document_1.jpeg");
 

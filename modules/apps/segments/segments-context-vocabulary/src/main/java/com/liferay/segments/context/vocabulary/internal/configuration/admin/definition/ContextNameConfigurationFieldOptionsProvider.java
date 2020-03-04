@@ -15,20 +15,29 @@
 package com.liferay.segments.context.vocabulary.internal.configuration.admin.definition;
 
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.segments.context.Context;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -46,53 +55,74 @@ public class ContextNameConfigurationFieldOptionsProvider
 
 	@Override
 	public List<Option> getOptions() {
-		List<Option> options = new ArrayList<>();
+		return Optional.of(
+			_options
+		).orElse(
+			Collections.emptyList()
+		);
+	}
 
-		for (String defaultField : _defaultFields) {
-			options.add(new ContextOption(defaultField));
-		}
+	@Activate
+	@Modified
+	protected void activate() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
 
-		Stream<Option> stream = options.stream();
+		Set<Map.Entry<String, EntityField>> entries =
+			entityFieldsMap.entrySet();
 
-		return stream.sorted(
-			(a, b) -> {
-				String valueA = a.getValue();
-				String valueB = b.getValue();
+		Stream<Map.Entry<String, EntityField>> stream = entries.stream();
 
-				return valueA.compareTo(valueB);
+		_options = stream.filter(
+			entry -> {
+				EntityField entityField = entry.getValue();
+
+				return Objects.equals(
+					entityField.getType(), EntityField.Type.STRING);
 			}
+		).map(
+			Map.Entry::getKey
+		).map(
+			this::_toOption
+		).sorted(
+			Comparator.comparing(Option::getValue)
 		).collect(
 			Collectors.toList()
 		);
 	}
 
-	private static final List<String> _defaultFields = ListUtil.fromArray(
-		Context.BROWSER, Context.DEVICE_BRAND, Context.DEVICE_MODEL,
-		Context.HOSTNAME, Context.LANGUAGE_ID, Context.URL, Context.USER_AGENT);
-
-	private class ContextOption implements Option {
-
-		public ContextOption(String value) {
-			_value = value;
-		}
-
-		@Override
-		public String getLabel(Locale locale) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", locale, getClass());
-
-			return LanguageUtil.get(
-				resourceBundle,
-				"context." + CamelCaseUtil.fromCamelCase(_value));
-		}
-
-		@Override
-		public String getValue() {
-			return _value;
-		}
-
-		private final String _value;
-
+	@Deactivate
+	protected void deactivate() {
+		_options = null;
 	}
+
+	private Option _toOption(String value) {
+		return new Option() {
+
+			@Override
+			public String getLabel(Locale locale) {
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					"content.Language", locale, getClass());
+
+				return _language.get(
+					resourceBundle,
+					"field." + CamelCaseUtil.fromCamelCase(value));
+			}
+
+			@Override
+			public String getValue() {
+				return value;
+			}
+
+		};
+	}
+
+	@Reference(target = "(entity.model.name=Context)")
+	private EntityModel _entityModel;
+
+	@Reference
+	private Language _language;
+
+	private List<Option> _options;
 
 }

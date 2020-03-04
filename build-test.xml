@@ -1046,6 +1046,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				</then>
 			</if>
 
+			<get-testcase-property property.name="analytics.cloud.enabled" />
 			<get-testcase-property property.name="testcase.url" />
 
 			<if>
@@ -1053,6 +1054,20 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				<then>
 					<var name="test.url" value="${test.url}" />
 				</then>
+				<elseif>
+					<equals arg1="${analytics.cloud.enabled}" arg2="true" />
+					<then>
+						<propertyregex
+							input="${env.HOSTNAME}"
+							override="true"
+							property="short.hostname"
+							regexp="([^\.]+)(\..*)?"
+							select="\1"
+						/>
+
+						<var name="test.url" value="http://${short.hostname}:8080" />
+					</then>
+				</elseif>
 				<elseif>
 					<or>
 						<equals arg1="${browser.type}" arg2="android" />
@@ -8573,6 +8588,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 
+		<antcall target="prepare-selenium-analytics-cloud-properties" />
 		<antcall target="prepare-selenium-app-server-properties" />
 		<antcall target="prepare-selenium-browser" />
 		<antcall target="prepare-selenium-database-properties" />
@@ -8736,6 +8752,19 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					selenium.implementation=com.thoughtworks.selenium.Selenium
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-analytics-cloud-properties">
+		<get-testcase-property property.name="analytics.cloud.enabled" />
+
+		<if>
+			<equals arg1="${analytics.cloud.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					analytics.cloud.url=${analytics.cloud.faro.frontend.url}
 				</echo>
 			</then>
 		</if>
@@ -12311,13 +12340,23 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-testcase-property property.name="analytics.cloud.enabled" />
+
+		<if>
+			<or>
+				<equals arg1="${analytics.cloud.enabled}" arg2="true" />
+				<equals arg1="${functional.test.type}" arg2="analytics-cloud" />
+			</or>
+			<then>
+				<ant antfile="build-test-analytics-cloud.xml" target="start-analytics-cloud" />
+			</then>
+		</if>
+
 		<if>
 			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />
 			<then>
 				<trycatch property="analytics.cloud.error">
 					<try>
-						<ant antfile="build-test-analytics-cloud.xml" target="start-analytics-cloud" />
-
 						<property location="${analytics.cloud.faro.dir}/osb-faro-functional-test/test_analytics_cloud.sh" name="analytics.cloud.test.sh" />
 
 						<property location="${basedir.unix}/portal-web/${selenium.executable.dir.name}" name="selenium.executable.dir.path" />
@@ -12366,11 +12405,11 @@ url=${short.hostname}:8080</echo>
 						<delete file="${analytics.cloud.test.sh}" />
 					</try>
 					<catch>
+						<ant antfile="build-test-analytics-cloud.xml" target="stop-analytics-cloud" />
+
 						<fail message="${analytics.cloud.error}" />
 					</catch>
 					<finally>
-						<ant antfile="build-test-analytics-cloud.xml" target="stop-analytics-cloud" />
-
 						<stop-chrome-driver />
 					</finally>
 				</trycatch>
@@ -12378,6 +12417,16 @@ url=${short.hostname}:8080</echo>
 			<else>
 				<antcall target="run-selenium-test" />
 			</else>
+		</if>
+
+		<if>
+			<or>
+				<equals arg1="${analytics.cloud.enabled}" arg2="true" />
+				<equals arg1="${functional.test.type}" arg2="analytics-cloud" />
+			</or>
+			<then>
+				<ant antfile="build-test-analytics-cloud.xml" target="stop-analytics-cloud" />
+			</then>
 		</if>
 
 		<get-testcase-property property.name="cmis.repository.type" />

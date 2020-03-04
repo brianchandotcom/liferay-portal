@@ -21,8 +21,8 @@ import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import Processors from '../../processors/index';
+import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
-import selectShowEditableFloatingToolbar from '../../selectors/selectShowEditableFloatingToolbar';
 import {useSelector} from '../../store/index';
 import UnsafeHTML from '../UnsafeHTML';
 import {
@@ -44,8 +44,8 @@ const FragmentContent = React.forwardRef(
 		const isMounted = useIsMounted();
 		const editableProcessorUniqueId = useEditableProcessorUniqueId();
 		const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
-		const showEditableFloatingToolbar = useSelector(
-			selectShowEditableFloatingToolbar
+		const canUpdateLayoutContent = useSelector(
+			selectCanUpdateLayoutContent
 		);
 
 		const [editableElements, setEditableElements] = useState([]);
@@ -160,7 +160,7 @@ const FragmentContent = React.forwardRef(
 					/>
 				</FragmentContentInteractionsFilter>
 
-				{showEditableFloatingToolbar && (
+				{canUpdateLayoutContent && (
 					<FragmentContentFloatingToolbar
 						editableElements={editableElements}
 						fragmentEntryLinkId={fragmentEntryLinkId}

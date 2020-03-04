@@ -33,7 +33,7 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
-import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
+import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {useSelectItem} from '../Controls';
@@ -45,7 +45,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const dispatch = useDispatch();
 	const selectItem = useSelectItem();
 	const state = useSelector(state => state);
-	const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
+	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
 
 	const {fragmentEntryLinks} = state;
 
@@ -111,7 +111,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 		</>
 	);
 
-	return showLayoutItemTopper ? (
+	return canUpdateLayoutContent ? (
 		<Topper item={item} itemRef={ref} layoutData={layoutData}>
 			{() => content}
 		</Topper>

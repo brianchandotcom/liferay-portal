@@ -18,21 +18,16 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 import com.liferay.segments.vocabulary.field.customizer.internal.configuration.SegmentsVocabularyFieldCustomizerConfiguration;
-import com.liferay.segments.vocabulary.field.customizer.internal.context.contributor.SegmentsVocabularyRequestContextContributor;
-import com.liferay.segments.vocabulary.field.customizer.internal.tracker.SegmentsVocabularyRequestContextContributorTracker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,44 +75,7 @@ public class SegmentsVocabularyFieldCustomizer
 		return KEY;
 	}
 
-	public String getLabel(String fieldName, Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		String label = LanguageUtil.get(
-			resourceBundle, "field." + CamelCaseUtil.fromCamelCase(fieldName));
-
-		if (label.startsWith(_DYNAMIC_FIELD_PREFIX)) {
-			label = label.substring(_DYNAMIC_FIELD_PREFIX.length());
-
-			SegmentsVocabularyRequestContextContributor
-				segmentsVocabularyRequestContextContributor =
-					_segmentsVocabularyRequestContextContributorTracker.
-						getService(label);
-
-			if (segmentsVocabularyRequestContextContributor != null) {
-				label = segmentsVocabularyRequestContextContributor.getLabel();
-				String type =
-					segmentsVocabularyRequestContextContributor.getType();
-
-				if (type.equals("cookie")) {
-					label = LanguageUtil.format(
-						resourceBundle, "request-cookie-x", label);
-				}
-				else if (type.equals("header")) {
-					label = LanguageUtil.format(
-						resourceBundle, "request-header-x", label);
-				}
-				else {
-					label = LanguageUtil.format(
-						resourceBundle, "request-parameter-x", label);
-				}
-			}
-		}
-
-		return label;
-	}
-
+	@Override
 	public List<Field.Option> getOptions(Locale locale) {
 		Long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -175,8 +133,6 @@ public class SegmentsVocabularyFieldCustomizer
 			segmentsVocabularyFieldCustomizerConfiguration.vocabularyName();
 	}
 
-	private static final String _DYNAMIC_FIELD_PREFIX = "field.custom-context/";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsVocabularyFieldCustomizer.class);
 
@@ -187,10 +143,6 @@ public class SegmentsVocabularyFieldCustomizer
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private SegmentsVocabularyRequestContextContributorTracker
-		_segmentsVocabularyRequestContextContributorTracker;
 
 	private volatile String _vocabularyName;
 

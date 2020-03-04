@@ -17,6 +17,7 @@ package com.liferay.saml.runtime.configuration;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.saml.constants.SamlRoleKeys;
 
 /**
  * @author Mika Koivisto
@@ -96,9 +97,10 @@ public interface SamlProviderConfiguration {
 	public boolean ldapImportEnabled();
 
 	@Meta.AD(
-		deflt = "sp", id = "saml.role", name = "saml-role",
+		deflt = SamlRoleKeys.SAML_ROLE_SP, id = "saml.role", name = "saml-role",
 		optionLabels = {"saml-role-idp", "saml-role-sp"},
-		optionValues = {"idp", "sp"}, required = false
+		optionValues = {SamlRoleKeys.SAML_ROLE_IDP, SamlRoleKeys.SAML_ROLE_SP},
+		required = false
 	)
 	public String role();
 

@@ -7,7 +7,7 @@
 		"babel-cli": "^6.26.0",
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-react": "6.24.1",
-		"liferay-npm-bundler": "2.7.0"
+		"liferay-npm-bundler": "2.18.2"
 	},
 	"main": "lib/index.es.js",
 	"name": "${artifactId}",

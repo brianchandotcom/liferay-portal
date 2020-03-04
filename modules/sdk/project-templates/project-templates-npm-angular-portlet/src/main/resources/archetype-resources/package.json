@@ -44,7 +44,7 @@
 		"karma-junit-reporter": "1.2.0",
 		"karma-remap-istanbul": "^0.2.1",
 		"karma-spec-reporter": "0.0.31",
-		"liferay-npm-bundler": "2.7.0",
+		"liferay-npm-bundler": "2.18.2",
 		"protractor": "~5.1.0",
 		"rollup": "0.41.6",
 		"rollup-plugin-commonjs": "^8.0.2",

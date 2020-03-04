@@ -12,23 +12,23 @@
 	</#if>
 
 	<#if entityColumn.hasArrayableOperator()>
-		if (${entityColumn.names}.length > 0) {
+		if (${entityColumn.pluralName}.length > 0) {
 			sb.append("(");
 
 			<#if stringUtil.equals(entityColumn.type, "String")>
-				for (int i = 0; i < ${entityColumn.names}.length; i++) {
-					${entityColumn.type} ${entityColumn.name} = ${entityColumn.names}[i];
+				for (int i = 0; i < ${entityColumn.pluralName}.length; i++) {
+					${entityColumn.type} ${entityColumn.name} = ${entityColumn.pluralName}[i];
 
 					<#include "persistence_impl_finder_arrayable_col.ftl">
 
-					if ((i + 1) < ${entityColumn.names}.length) {
+					if ((i + 1) < ${entityColumn.pluralName}.length) {
 						sb.append(<#if entityColumn.isArrayableAndOperator()>WHERE_AND<#else>WHERE_OR</#if>);
 					}
 				}
 			<#else>
 				sb.append(_FINDER_COLUMN_${entityFinder.name?upper_case}_${entityColumn.name?upper_case}_7${finderFieldSuffix});
 
-				sb.append(StringUtil.merge(${entityColumn.names}));
+				sb.append(StringUtil.merge(${entityColumn.pluralName}));
 
 				sb.append(")");
 			</#if>

@@ -16,6 +16,7 @@ package com.liferay.portal.tools.service.builder;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.util.ArrayList;
@@ -28,10 +29,13 @@ import java.util.List;
 public class EntityFinder {
 
 	public EntityFinder(
-		String name, String returnType, boolean unique, String where,
-		String dbWhere, boolean dbIndex, List<EntityColumn> entityColumns) {
+		String name, String pluralName, String returnType, boolean unique,
+		String where, String dbWhere, boolean dbIndex,
+		List<EntityColumn> entityColumns) {
 
 		_name = name;
+		_pluralName = GetterUtil.getString(
+			pluralName, TextFormatter.formatPlural(name));
 		_returnType = returnType;
 		_unique = unique;
 		_where = where;
@@ -107,8 +111,8 @@ public class EntityFinder {
 		return _name;
 	}
 
-	public String getNames() {
-		return TextFormatter.formatPlural(_name);
+	public String getPluralName() {
+		return _pluralName;
 	}
 
 	public String getReturnType() {
@@ -176,6 +180,7 @@ public class EntityFinder {
 	private final String _dbWhere;
 	private final List<EntityColumn> _entityColumns;
 	private final String _name;
+	private final String _pluralName;
 	private final String _returnType;
 	private final boolean _unique;
 	private final String _where;

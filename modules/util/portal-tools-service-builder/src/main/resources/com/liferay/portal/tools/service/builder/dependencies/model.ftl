@@ -192,9 +192,9 @@ public interface ${entity.name}Model extends ${entity.getModelBaseInterfaceNames
 			public String get${entityColumn.methodName}CurrentValue();
 
 			/**
-			 * Returns a map of the locales and localized ${entityColumn.humanNames} of this ${entity.humanName}.
+			 * Returns a map of the locales and localized ${entityColumn.pluralHumanName} of this ${entity.humanName}.
 			 *
-			 * @return the locales and localized ${entityColumn.humanNames} of this ${entity.humanName}
+			 * @return the locales and localized ${entityColumn.pluralHumanName} of this ${entity.humanName}
 			 */
 			public Map<Locale, String> get${entityColumn.methodName}Map();
 		</#if>
@@ -243,16 +243,16 @@ public interface ${entity.name}Model extends ${entity.getModelBaseInterfaceNames
 			public void set${entityColumn.methodName}CurrentLanguageId(String languageId);
 
 			/**
-			 * Sets the localized ${entityColumn.humanNames} of this ${entity.humanName} from the map of locales and localized ${entityColumn.humanNames}.
+			 * Sets the localized ${entityColumn.pluralHumanName} of this ${entity.humanName} from the map of locales and localized ${entityColumn.pluralHumanName}.
 			 *
-			 * @param ${entityColumn.name}Map the locales and localized ${entityColumn.humanNames} of this ${entity.humanName}
+			 * @param ${entityColumn.name}Map the locales and localized ${entityColumn.pluralHumanName} of this ${entity.humanName}
 			 */
 			public void set${entityColumn.methodName}Map(Map<Locale, String> ${entityColumn.name}Map);
 
 			/**
-			 * Sets the localized ${entityColumn.humanNames} of this ${entity.humanName} from the map of locales and localized ${entityColumn.humanNames}, and sets the default locale.
+			 * Sets the localized ${entityColumn.pluralHumanName} of this ${entity.humanName} from the map of locales and localized ${entityColumn.pluralHumanName}, and sets the default locale.
 			 *
-			 * @param ${entityColumn.name}Map the locales and localized ${entityColumn.humanNames} of this ${entity.humanName}
+			 * @param ${entityColumn.name}Map the locales and localized ${entityColumn.pluralHumanName} of this ${entity.humanName}
 			 * @param defaultLocale the default locale
 			 */
 			public void set${entityColumn.methodName}Map(Map<Locale, String> ${entityColumn.name}Map, Locale defaultLocale);

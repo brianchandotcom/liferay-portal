@@ -114,6 +114,19 @@ public class TextFormatterTest {
 	}
 
 	@Test
+	public void testFormatPlural() {
+		Assert.assertEquals("Boxes", TextFormatter.formatPlural("Box"));
+		Assert.assertEquals("Buses", TextFormatter.formatPlural("Bus"));
+		Assert.assertEquals("Bushes", TextFormatter.formatPlural("Bush"));
+		Assert.assertEquals("Companies", TextFormatter.formatPlural("Company"));
+		Assert.assertEquals("Lunches", TextFormatter.formatPlural("Lunch"));
+		Assert.assertEquals("Monkeys", TextFormatter.formatPlural("Monkey"));
+		Assert.assertEquals("Pianos", TextFormatter.formatPlural("Piano"));
+		Assert.assertEquals("Toys", TextFormatter.formatPlural("Toy"));
+		Assert.assertEquals("Users", TextFormatter.formatPlural("User"));
+	}
+
+	@Test
 	public void testFormatQ() {
 		_testFormat("FORMATId", "format-id", TextFormatter.Q);
 	}

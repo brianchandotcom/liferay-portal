@@ -90,6 +90,14 @@ The name value specifies the name of the entity.
 >
 
 <!--
+The plural-name value specifies the plural form of the name. If none is
+specified, one will be generated from the name.
+-->
+<!ATTLIST entity
+	plural-name CDATA #IMPLIED
+>
+
+<!--
 The human-name value specifies the readable name to use when generating
 documentation for this entity. If none is specified, one will be generated from
 the name.
@@ -307,6 +315,14 @@ The name value specifies the getter and setter name in the entity.
 -->
 <!ATTLIST column
 	name CDATA #REQUIRED
+>
+
+<!--
+The plural-name value specifies the plural form of the column name. If none is
+specified, one will be generated from the column name.
+-->
+<!ATTLIST column
+	plural-name CDATA #IMPLIED
 >
 
 <!--
@@ -690,6 +706,14 @@ The name value specifies the name of the finder method.
 -->
 <!ATTLIST finder
 	name CDATA #REQUIRED
+>
+
+<!--
+The plural-name value specifies the plural form of the finder name. If none is
+specified, one will be generated from the finder name.
+-->
+<!ATTLIST finder
+	plural-name CDATA #IMPLIED
 >
 
 <!--

@@ -176,17 +176,19 @@ public class TextFormatter {
 			return s;
 		}
 
-		if (s.endsWith("s")) {
-			s = s.substring(0, s.length() - 1) + "ses";
-		}
-		else if (s.endsWith("y")) {
-			s = s.substring(0, s.length() - 1) + "ies";
-		}
-		else {
-			s = s + "s";
+		if (s.endsWith("ch") || s.endsWith("s") || s.endsWith("sh") ||
+			s.endsWith("x") || s.endsWith("z")) {
+
+			return s + "es";
 		}
 
-		return s;
+		if (s.endsWith("y") && !s.endsWith("ay") && !s.endsWith("ey") &&
+			!s.endsWith("oy") && !s.endsWith("uy")) {
+
+			return s.substring(0, s.length() - 1) + "ies";
+		}
+
+		return s + "s";
 	}
 
 	/**

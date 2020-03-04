@@ -93,17 +93,18 @@ public class Entity implements Comparable<Entity> {
 
 	public Entity(ServiceBuilder serviceBuilder, String name) {
 		this(
-			serviceBuilder, null, null, null, name, null, null, null, false,
-			false, false, false, true, true, null, null, null, null, null, true,
-			false, false, false, false, false, null, false, null, null, false,
-			null, null, null, null, null, null, null, null, null, null, false);
+			serviceBuilder, null, null, null, name, null, null, null, null,
+			false, false, false, false, true, true, null, null, null, null,
+			null, true, false, false, false, false, false, null, false, null,
+			null, false, null, null, null, null, null, null, null, null, null,
+			null, false);
 	}
 
 	public Entity(
 		ServiceBuilder serviceBuilder, String packagePath,
 		String apiPackagePath, String portletShortName, String name,
-		String humanName, String table, String alias, boolean uuid,
-		boolean uuidAccessor, boolean externalReferenceCode,
+		String pluralName, String humanName, String table, String alias,
+		boolean uuid, boolean uuidAccessor, boolean externalReferenceCode,
 		boolean localService, boolean remoteService, boolean persistence,
 		String persistenceClassName, String finderClassName, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
@@ -125,6 +126,10 @@ public class Entity implements Comparable<Entity> {
 		_apiPackagePath = apiPackagePath;
 		_portletShortName = portletShortName;
 		_name = name;
+		_pluralName = GetterUtil.getString(
+			pluralName, TextFormatter.formatPlural(name));
+		_humanName = GetterUtil.getString(
+			humanName, ServiceBuilder.toHumanName(name));
 		_table = table;
 		_alias = alias;
 		_uuid = uuid;
@@ -157,8 +162,6 @@ public class Entity implements Comparable<Entity> {
 		_txRequiredMethodNames = txRequiredMethodNames;
 		_resourceActionModel = resourceActionModel;
 
-		_humanName = GetterUtil.getString(
-			humanName, ServiceBuilder.toHumanName(name));
 		_dataSource = GetterUtil.getString(dataSource, _DATA_SOURCE_DEFAULT);
 		_sessionFactory = GetterUtil.getString(
 			sessionFactory, _SESSION_FACTORY_DEFAULT);
@@ -344,10 +347,6 @@ public class Entity implements Comparable<Entity> {
 		return _humanName;
 	}
 
-	public String getHumanNames() {
-		return TextFormatter.formatPlural(_humanName);
-	}
-
 	public Entity getLocalizedEntity() {
 		return _localizedEntity;
 	}
@@ -445,10 +444,6 @@ public class Entity implements Comparable<Entity> {
 
 	public String getName() {
 		return _name;
-	}
-
-	public String getNames() {
-		return TextFormatter.formatPlural(_name);
 	}
 
 	public Set getOverrideColumnNames() {
@@ -592,14 +587,26 @@ public class Entity implements Comparable<Entity> {
 		return entityColumn.getName();
 	}
 
-	public String getPKVarNames() {
+	public String getPluralHumanName() {
+		return TextFormatter.formatPlural(_humanName);
+	}
+
+	public String getPluralName() {
+		return _pluralName;
+	}
+
+	public String getPluralPKVarName() {
 		if (hasCompoundPK()) {
 			return getVarName() + "PKs";
 		}
 
 		EntityColumn entityColumn = _getPKEntityColumn();
 
-		return entityColumn.getNames();
+		return entityColumn.getPluralName();
+	}
+
+	public String getPluralVarName() {
+		return TextFormatter.format(_pluralName, TextFormatter.I);
 	}
 
 	public String getPortletShortName() {
@@ -765,10 +772,6 @@ public class Entity implements Comparable<Entity> {
 
 	public String getVarName() {
 		return TextFormatter.format(_name, TextFormatter.I);
-	}
-
-	public String getVarNames() {
-		return TextFormatter.formatPlural(getVarName());
 	}
 
 	public Entity getVersionedEntity() {
@@ -1301,6 +1304,7 @@ public class Entity implements Comparable<Entity> {
 	private final boolean _persistence;
 	private final String _persistenceClassName;
 	private final List<EntityColumn> _pkEntityColumns;
+	private final String _pluralName;
 	private boolean _portalReference;
 	private final String _portletShortName;
 	private final List<Entity> _referenceEntities;

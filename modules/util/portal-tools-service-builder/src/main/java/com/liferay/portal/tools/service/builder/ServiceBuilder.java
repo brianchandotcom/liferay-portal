@@ -5626,6 +5626,7 @@ public class ServiceBuilder {
 	private Entity _parseEntity(Element entityElement) throws Exception {
 		String entityName = entityElement.attributeValue("name");
 		String humanName = entityElement.attributeValue("human-name");
+		String pluralName = entityElement.attributeValue("plural-name");
 
 		String tableName = entityElement.attributeValue("table");
 
@@ -5855,6 +5856,9 @@ public class ServiceBuilder {
 		for (Element columnElement : columnElements) {
 			String columnName = columnElement.attributeValue("name");
 
+			String columnPluralName = columnElement.attributeValue(
+				"plural-name");
+
 			String columnDBName = columnElement.attributeValue("db-name");
 
 			if (Validator.isNull(columnDBName)) {
@@ -5946,9 +5950,9 @@ public class ServiceBuilder {
 			}
 
 			EntityColumn entityColumn = new EntityColumn(
-				columnName, columnDBName, columnType, primary, accessor,
-				filterPrimary, columnEntityName, mappingTableName, idType,
-				idParam, convertNull, lazy, localized, colJsonEnabled,
+				columnName, columnPluralName, columnDBName, columnType, primary,
+				accessor, filterPrimary, columnEntityName, mappingTableName,
+				idType, idParam, convertNull, lazy, localized, colJsonEnabled,
 				ctColumnResolutionType, containerModel, parentContainerModel,
 				uadAnonymizeFieldName, uadNonanonymizable);
 
@@ -6193,6 +6197,8 @@ public class ServiceBuilder {
 
 		for (Element finderElement : finderElements) {
 			String finderName = finderElement.attributeValue("name");
+			String finderPluralName = finderElement.attributeValue(
+				"plural-name");
 			String finderReturn = finderElement.attributeValue("return-type");
 			boolean finderUnique = GetterUtil.getBoolean(
 				finderElement.attributeValue("unique"));
@@ -6254,8 +6260,9 @@ public class ServiceBuilder {
 
 			entityFinders.add(
 				new EntityFinder(
-					finderName, finderReturn, finderUnique, finderWhere,
-					finderDBWhere, finderDBIndex, finderEntityColumns));
+					finderName, finderPluralName, finderReturn, finderUnique,
+					finderWhere, finderDBWhere, finderDBIndex,
+					finderEntityColumns));
 		}
 
 		List<Entity> referenceEntities = new ArrayList<>();
@@ -6337,7 +6344,7 @@ public class ServiceBuilder {
 
 		Entity entity = new Entity(
 			this, _packagePath, _apiPackagePath, _portletShortName, entityName,
-			humanName, tableName, alias, uuid, uuidAccessor,
+			pluralName, humanName, tableName, alias, uuid, uuidAccessor,
 			externalReferenceCode, localService, remoteService, persistence,
 			persistenceClassName, finderClassName, dataSource, sessionFactory,
 			txManager, cacheEnabled, changeTrackingEnabled,
@@ -6434,8 +6441,8 @@ public class ServiceBuilder {
 
 		if (versioned) {
 			EntityColumn headEntityColumn = new EntityColumn(
-				"head", "head", "boolean", false, false, false, null, null,
-				null, null, true, false, false, false,
+				"head", null, "head", "boolean", false, false, false, null,
+				null, null, null, true, false, false, false,
 				CTColumnResolutionType.STRICT, false, false, null, false);
 
 			headEntityColumn.setComparator("=");
@@ -6479,9 +6486,9 @@ public class ServiceBuilder {
 
 				listIterator.set(
 					new EntityFinder(
-						entityFinder.getName(), "Collection", false,
-						entityFinder.getWhere(), entityFinder.getDBWhere(),
-						entityFinder.isDBIndex(),
+						entityFinder.getName(), entityFinder.getPluralName(),
+						"Collection", false, entityFinder.getWhere(),
+						entityFinder.getDBWhere(), entityFinder.isDBIndex(),
 						new ArrayList<>(entityFinder.getEntityColumns())));
 
 				List<EntityColumn> finderEntityColumns =
@@ -6493,7 +6500,7 @@ public class ServiceBuilder {
 
 				listIterator.add(
 					new EntityFinder(
-						entityFinder.getName() + "_Head",
+						entityFinder.getName() + "_Head", null,
 						entityFinder.getReturnType(), entityFinder.isUnique(),
 						entityFinder.getWhere(), entityFinder.getDBWhere(),
 						entityFinder.isDBIndex(), finderEntityColumns));

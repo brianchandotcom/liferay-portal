@@ -4,7 +4,7 @@
 
 <#if entityFinder.isCollection() && !entityFinder.isUnique()>
 	/**
-	 * Removes all the ${entity.humanNames} where ${entityFinder.getHumanConditions(false)} from the database.
+	 * Removes all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(false)} from the database.
 	 *
 	<#list entityColumns as entityColumn>
 	 * @param ${entityColumn.name} the ${entityColumn.humanName}

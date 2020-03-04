@@ -86,9 +86,10 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.addLayoutSection(columnCount = "2");
+		PageEditor.addLayoutSection();
 
-		PageEditor.selectLayoutSectionImage(
+		PageEditor.editLayoutSection(
+			backgroundImage = "Manual Selection",
 			entryTitle = "Document_1.svg",
 			navItem = "Documents and Media");
 
@@ -146,9 +147,10 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.addLayoutSection(columnCount = "2");
+		PageEditor.addLayoutSection();
 
-		PageEditor.selectLayoutSectionImage(
+		PageEditor.editLayoutSection(
+			backgroundImage = "Manual Selection",
 			entryTitle = "Document_1.jpeg",
 			navItem = "Documents and Media");
 

@@ -18,10 +18,13 @@ import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 
 import java.util.List;
 
+import org.gradle.api.tasks.CacheableTask;
+
 /**
  * @author David Truong
  * @author Peter Shin
  */
+@CacheableTask
 public class PackageRunTask extends ExecutePackageManagerTask {
 
 	public String getScriptName() {

@@ -22,11 +22,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Exec;
 
 /**
  * @author Peter Shin
  */
+@CacheableTask
 public class DockerDeployTask extends Exec {
 
 	public DockerDeployTask() {

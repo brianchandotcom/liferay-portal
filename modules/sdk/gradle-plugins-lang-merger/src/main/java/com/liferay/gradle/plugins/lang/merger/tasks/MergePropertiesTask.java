@@ -33,11 +33,13 @@ import java.util.Set;
 
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class MergePropertiesTask extends BaseMergeTask {
 
 	public MergePropertiesTask() {

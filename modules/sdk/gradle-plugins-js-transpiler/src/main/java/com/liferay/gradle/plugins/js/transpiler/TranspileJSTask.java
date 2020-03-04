@@ -31,15 +31,19 @@ import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.util.GUtil;
 
 /**
  * @author     Andrea Di Giorgi
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@CacheableTask
 @Deprecated
 public class TranspileJSTask extends ExecuteNodeScriptTask {
 
@@ -97,11 +101,13 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}
 
 	@InputFiles
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getSourceFiles() {
 		Project project = getProject();
 

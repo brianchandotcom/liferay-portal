@@ -42,8 +42,11 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.GUtil;
@@ -51,6 +54,7 @@ import org.gradle.util.GUtil;
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class BuildChangeLogTask extends DefaultTask {
 
 	public BuildChangeLogTask() {
@@ -152,6 +156,7 @@ public class BuildChangeLogTask extends DefaultTask {
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getChangeLogFile() {
 		return GradleUtil.toFile(getProject(), _changeLogFile);
 	}
@@ -169,6 +174,7 @@ public class BuildChangeLogTask extends DefaultTask {
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getGitDir() {
 		return GradleUtil.toFile(getProject(), _gitDir);
 	}

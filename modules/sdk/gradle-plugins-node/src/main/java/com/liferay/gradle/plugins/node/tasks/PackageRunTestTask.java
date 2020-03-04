@@ -15,11 +15,13 @@
 package com.liferay.gradle.plugins.node.tasks;
 
 import org.gradle.api.logging.Logger;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.VerificationTask;
 
 /**
  * @author Peter Shin
  */
+@CacheableTask
 public class PackageRunTestTask
 	extends PackageRunTask implements VerificationTask {
 

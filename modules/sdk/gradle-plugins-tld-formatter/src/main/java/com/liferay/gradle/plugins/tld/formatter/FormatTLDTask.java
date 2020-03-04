@@ -17,12 +17,14 @@ package com.liferay.gradle.plugins.tld.formatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.JavaExec;
 
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class FormatTLDTask extends JavaExec {
 
 	public FormatTLDTask() {

@@ -45,8 +45,11 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.util.GUtil;
@@ -55,6 +58,7 @@ import org.gradle.util.VersionNumber;
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class WriteArtifactPublishCommandsTask extends DefaultTask {
 
 	public static final String IGNORED_MESSAGE_PATTERN = "artifact:ignore";
@@ -83,6 +87,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 
 	@Input
 	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getArtifactPropertiesFile() {
 		return GradleUtil.toFile(getProject(), _artifactPropertiesFile);
 	}
@@ -94,6 +99,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getGradleDir() {
 		return GradleUtil.toFile(getProject(), _gradleDir);
 	}
@@ -104,6 +110,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getOutputDir() {
 		return GradleUtil.toFile(getProject(), _outputDir);
 	}
@@ -126,6 +133,7 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getPrepNextFiles() {
 		Project project = getProject();
 

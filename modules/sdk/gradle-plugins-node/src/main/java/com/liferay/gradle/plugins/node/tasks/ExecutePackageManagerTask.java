@@ -25,10 +25,12 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.tasks.CacheableTask;
 
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 
 	public ExecutePackageManagerTask() {

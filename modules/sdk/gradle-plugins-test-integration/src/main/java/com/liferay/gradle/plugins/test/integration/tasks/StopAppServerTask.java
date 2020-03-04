@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.test.integration.tasks;
 
 import java.util.concurrent.Callable;
 
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 
@@ -24,6 +25,7 @@ import org.zeroturnaround.exec.ProcessExecutor;
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class StopAppServerTask extends BaseAppServerTask {
 
 	@Input

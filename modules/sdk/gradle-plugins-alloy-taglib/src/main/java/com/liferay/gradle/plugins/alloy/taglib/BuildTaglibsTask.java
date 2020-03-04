@@ -28,16 +28,20 @@ import java.util.Map;
 
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class BuildTaglibsTask extends JavaExec {
 
 	public BuildTaglibsTask() {
@@ -62,6 +66,7 @@ public class BuildTaglibsTask extends JavaExec {
 	}
 
 	@InputFiles
+	@PathSensitive(PathSensitivity.RELATIVE)
 	@SkipWhenEmpty
 	public FileCollection getComponentsXmlFiles() {
 		Project project = getProject();
@@ -75,6 +80,7 @@ public class BuildTaglibsTask extends JavaExec {
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getJavaDir() {
 		return GradleUtil.toFile(getProject(), _javaDir);
 	}
@@ -95,6 +101,7 @@ public class BuildTaglibsTask extends JavaExec {
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getJspParentDir() {
 		return GradleUtil.toFile(getProject(), _jspParentDir);
 	}
@@ -111,6 +118,7 @@ public class BuildTaglibsTask extends JavaExec {
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getTldDir() {
 		return GradleUtil.toFile(getProject(), _tldDir);
 	}

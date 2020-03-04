@@ -23,13 +23,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class BuildWSDDTask extends JavaExec {
 
 	public BuildWSDDTask() {
@@ -49,16 +53,19 @@ public class BuildWSDDTask extends JavaExec {
 	}
 
 	@InputFile
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getInputFile() {
 		return GradleUtil.toFile(getProject(), _inputFile);
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getOutputDir() {
 		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getServerConfigFile() {
 		return GradleUtil.toFile(getProject(), _serverConfigFile);
 	}

@@ -19,12 +19,14 @@ import com.liferay.gradle.util.GradleUtil;
 
 import java.util.List;
 
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 
 /**
  * @author David Truong
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class ExecuteGulpTask extends ExecuteNodeScriptTask {
 
 	public ExecuteGulpTask() {

@@ -26,12 +26,14 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.process.JavaExecSpec;
 
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public abstract class BasePortalToolsTask extends JavaExec {
 
 	public BasePortalToolsTask() {

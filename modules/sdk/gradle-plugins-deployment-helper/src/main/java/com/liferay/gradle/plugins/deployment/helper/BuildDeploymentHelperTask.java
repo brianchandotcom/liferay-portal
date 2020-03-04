@@ -28,17 +28,21 @@ import java.util.Map;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class BuildDeploymentHelperTask extends JavaExec {
 
 	public BuildDeploymentHelperTask() {
@@ -73,6 +77,7 @@ public class BuildDeploymentHelperTask extends JavaExec {
 	}
 
 	@InputFiles
+	@PathSensitive(PathSensitivity.RELATIVE)
 	@SkipWhenEmpty
 	public FileCollection getDeploymentInputFiles() {
 		Project project = getProject();
@@ -95,6 +100,7 @@ public class BuildDeploymentHelperTask extends JavaExec {
 
 	@Input
 	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getDeploymentPath() {
 		return GradleUtil.toFile(getProject(), _deploymentPath);
 	}

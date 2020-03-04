@@ -22,15 +22,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.OutputFile;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 
 /**
  * @author David Truong
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class BuildExtInfoTask extends JavaExec {
 
 	public BuildExtInfoTask() {
@@ -46,6 +50,7 @@ public class BuildExtInfoTask extends JavaExec {
 	}
 
 	@InputDirectory
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getBaseDir() {
 		return GradleUtil.toFile(getProject(), _baseDir);
 	}

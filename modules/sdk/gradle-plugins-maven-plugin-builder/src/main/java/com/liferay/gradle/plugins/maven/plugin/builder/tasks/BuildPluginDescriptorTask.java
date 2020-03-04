@@ -69,12 +69,15 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.JavaExecSpec;
 import org.gradle.util.GUtil;
@@ -85,6 +88,7 @@ import org.w3c.dom.Element;
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public BuildPluginDescriptorTask() {
@@ -154,6 +158,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	@InputDirectory
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getClassesDir() {
 		return GradleUtil.toFile(getProject(), _classesDir);
 	}
@@ -173,6 +178,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	@InputFiles
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getMavenEmbedderClasspath() {
 		return _mavenEmbedderClasspath;
 	}
@@ -189,6 +195,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	@InputFile
 	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getMavenSettingsFile() {
 		return GradleUtil.toFile(getProject(), _mavenSettingsFile);
 	}
@@ -219,6 +226,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	@InputDirectory
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}

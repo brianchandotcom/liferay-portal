@@ -55,11 +55,14 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
 import org.gradle.api.tasks.incremental.InputFileDetails;
@@ -72,6 +75,7 @@ import org.osgi.framework.dto.BundleDTO;
  * @author Gregory Amerson
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class WatchTask extends DefaultTask {
 
 	public WatchTask() {
@@ -97,6 +101,7 @@ public class WatchTask extends DefaultTask {
 	}
 
 	@InputDirectory
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getBundleDir() {
 		return GradleUtil.toFile(getProject(), _bundleDir);
 	}
@@ -113,6 +118,7 @@ public class WatchTask extends DefaultTask {
 
 	@InputFiles
 	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getFragments() {
 		return _fragmentsFileCollection;
 	}

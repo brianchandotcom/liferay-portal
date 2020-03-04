@@ -23,9 +23,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.tasks.CacheableTask;
+
 /**
  * @author Peter Shin
  */
+@CacheableTask
 public class YarnInstallTask extends ExecutePackageManagerTask {
 
 	@Override

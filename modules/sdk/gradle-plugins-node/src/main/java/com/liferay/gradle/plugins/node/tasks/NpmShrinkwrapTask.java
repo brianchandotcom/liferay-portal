@@ -32,12 +32,14 @@ import java.util.Set;
 
 import org.gradle.api.Task;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class NpmShrinkwrapTask extends ExecutePackageManagerTask {
 
 	public NpmShrinkwrapTask() {

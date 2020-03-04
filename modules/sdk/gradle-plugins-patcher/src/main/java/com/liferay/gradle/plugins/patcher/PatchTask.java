@@ -55,10 +55,13 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFiles;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecResult;
@@ -68,6 +71,7 @@ import org.gradle.util.GUtil;
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class PatchTask extends DefaultTask {
 
 	public static final String PATCHED_SRC_DIR_MAPPING_DEFAULT_EXTENSION = "*";
@@ -149,6 +153,7 @@ public class PatchTask extends DefaultTask {
 	}
 
 	@InputFile
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getOriginalLibFile() {
 		return GradleUtil.toFile(getProject(), _originalLibFile);
 	}
@@ -179,6 +184,7 @@ public class PatchTask extends DefaultTask {
 	}
 
 	@InputFile
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getOriginalLibSrcFile() {
 		return GradleUtil.toFile(getProject(), _originalLibSrcFile);
 	}
@@ -230,6 +236,7 @@ public class PatchTask extends DefaultTask {
 	}
 
 	@InputFiles
+	@PathSensitive(PathSensitivity.RELATIVE)
 	@SkipWhenEmpty
 	public FileCollection getPatchFiles() {
 		Project project = getProject();

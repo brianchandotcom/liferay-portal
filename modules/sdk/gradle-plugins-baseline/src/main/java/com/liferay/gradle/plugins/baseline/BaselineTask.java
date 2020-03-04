@@ -29,15 +29,19 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.reporting.ReportingExtension;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.VerificationTask;
 
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class BaselineTask extends DefaultTask implements VerificationTask {
 
 	public BaselineTask() {
@@ -125,6 +129,7 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 
 	@Input
 	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getBndFile() {
 		return GradleUtil.toFile(getProject(), _bndFile);
 	}
@@ -140,6 +145,7 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 
 	@Input
 	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getLogFile() {
 		if (Validator.isNull(_logFileName)) {
 			return null;
@@ -160,12 +166,14 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 	}
 
 	@InputFile
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getNewJarFile() {
 		return GradleUtil.toFile(getProject(), _newJarFile);
 	}
 
 	@Input
 	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}

@@ -42,8 +42,11 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -52,6 +55,7 @@ import org.w3c.dom.NodeList;
 /**
  * @author Andrea Di Giorgi
  */
+@CacheableTask
 public class CopyIvyDependenciesTask extends Copy {
 
 	@SuppressWarnings("serial")
@@ -94,6 +98,7 @@ public class CopyIvyDependenciesTask extends Copy {
 	}
 
 	@InputFile
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getInputFile() {
 		return GradleUtil.toFile(getProject(), _inputFile);
 	}

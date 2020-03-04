@@ -33,10 +33,13 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
@@ -45,6 +48,7 @@ import org.gradle.api.tasks.util.PatternSet;
  * @author     Andrea Di Giorgi
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@CacheableTask
 @Deprecated
 public class ConfigJSModulesTask
 	extends ExecuteNodeScriptTask implements PatternFilterable {
@@ -140,6 +144,7 @@ public class ConfigJSModulesTask
 
 	@InputFile
 	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getModuleConfigFile() {
 		return GradleUtil.toFile(getProject(), _moduleConfigFile);
 	}
@@ -165,11 +170,13 @@ public class ConfigJSModulesTask
 	}
 
 	@Input
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}
 
 	@InputFiles
+	@PathSensitive(PathSensitivity.RELATIVE)
 	@SkipWhenEmpty
 	public FileCollection getSourceFiles() {
 		Project project = getProject();

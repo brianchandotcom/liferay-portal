@@ -79,6 +79,8 @@ definition {
 	}
 
 	macro addTagsFilter {
+		Panel.expandPanel(panel = "Filter");
+
 		if (isSet(queryAndOperator)) {
 			Select(
 				locator1 = "APConfiguration#FILTER_QUERY_AND_OPERATOR",

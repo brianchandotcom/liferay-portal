@@ -208,9 +208,9 @@ describe('Field Numeric', () => {
 		const handleFieldEdited = event => {
 			expect(event.value).toBe('4');
 			done();
-		}
+		};
 
-		const events = {fieldEdited: handleFieldEdited}
+		const events = {fieldEdited: handleFieldEdited};
 
 		component = new NumericWithContextMock({
 			...defaultNumericConfig,

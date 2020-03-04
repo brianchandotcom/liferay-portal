@@ -15,8 +15,8 @@
 import './NumericRegister.soy';
 
 import {ClayInput} from '@clayui/form';
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import React, {useEffect, useRef} from 'react';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import vanillaTextMask from 'vanilla-text-mask';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
@@ -65,9 +65,9 @@ const Numeric = ({
 			let {value} = inputRef.current;
 
 			if (dataType === 'integer' && value) {
-				value = String(Math.round(
-					value.replace(symbols.decimalSymbol, '.')
-				));
+				value = String(
+					Math.round(value.replace(symbols.decimalSymbol, '.'))
+				);
 			}
 
 			const mask = createNumberMask(getMaskConfig(dataType, symbols));

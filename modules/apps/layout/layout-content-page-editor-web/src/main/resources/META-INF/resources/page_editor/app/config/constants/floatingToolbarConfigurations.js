@@ -12,6 +12,7 @@
  * details.
  */
 
+import {CollectionConfigurationPanel} from '../../../app/components/floating-toolbar/CollectionConfigurationPanel';
 import {ContainerConfigurationPanel} from '../../../app/components/floating-toolbar/ContainerConfigurationPanel';
 import {FragmentConfigurationPanel} from '../../../app/components/floating-toolbar/FragmentConfigurationPanel';
 import {ImagePropertiesPanel} from '../../../app/components/floating-toolbar/ImagePropertiesPanel';
@@ -22,6 +23,7 @@ import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from './editableFloatingToolbarButton
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from './layoutDataFloatingToolbarButtons';
 
 const {
+	collectionConfiguration,
 	containerConfiguration,
 	fragmentConfiguration,
 	rowConfiguration,
@@ -30,6 +32,7 @@ const {
 const {imageProperties, link, map} = EDITABLE_FLOATING_TOOLBAR_BUTTONS;
 
 export const FLOATING_TOOLBAR_CONFIGURATIONS = {
+	[collectionConfiguration.panelId]: CollectionConfigurationPanel,
 	[containerConfiguration.panelId]: ContainerConfigurationPanel,
 	[fragmentConfiguration.panelId]: FragmentConfigurationPanel,
 	[imageProperties.panelId]: ImagePropertiesPanel,

@@ -18,15 +18,25 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
+import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useSelector} from '../../store/index';
 import Topper from '../Topper';
+import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Collection from './Collection';
 
 const CollectionWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
 
-	const content = <Collection item={item} ref={ref}></Collection>;
+	const buttons = [];
+
+	buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.collectionConfiguration);
+
+	const content = (
+		<Collection item={item} ref={ref}>
+			<FloatingToolbar buttons={buttons} item={item} itemRef={ref} />
+		</Collection>
+	);
 
 	return showLayoutItemTopper ? (
 		<Topper item={item} itemRef={ref} layoutData={layoutData}>

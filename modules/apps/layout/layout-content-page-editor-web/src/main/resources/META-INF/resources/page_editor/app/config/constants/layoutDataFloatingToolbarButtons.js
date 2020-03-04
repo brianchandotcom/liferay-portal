@@ -16,6 +16,14 @@
  * FloatingToolbar panels
  */
 export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
+	collectionConfiguration: {
+		icon: 'cog',
+		id: 'collection_configuration',
+		panelId: 'collection_configuration',
+		title: Liferay.Language.get('collection-display-configuration'),
+		type: 'panel',
+	},
+
 	containerConfiguration: {
 		icon: 'cog',
 		id: 'container_configuration',

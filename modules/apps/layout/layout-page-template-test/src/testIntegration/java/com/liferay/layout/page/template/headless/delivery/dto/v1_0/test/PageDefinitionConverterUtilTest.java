@@ -365,8 +365,7 @@ public class PageDefinitionConverterUtilTest {
 		SectionDefinition sectionDefinition1 =
 			(SectionDefinition)sectionPageElement1.getDefinition();
 
-		Assert.assertEquals(
-			"primary", sectionDefinition1.getBackgroundColorCssClass());
+		Assert.assertEquals("primary", sectionDefinition1.getBackgroundColor());
 
 		FragmentImage fragmentImage1 = sectionDefinition1.getBackgroundImage();
 

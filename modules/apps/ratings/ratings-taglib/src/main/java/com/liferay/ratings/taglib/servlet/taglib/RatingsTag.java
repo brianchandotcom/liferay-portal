@@ -135,28 +135,28 @@ public class RatingsTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:classPK", String.valueOf(_classPK));
 
+			boolean inTrash = _isInTrash();
+
+			RatingsStats ratingsStats = _getRatingsStats();
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			RatingsStats ratingsStats = _getRatingsStats();
-
 			RatingsEntry ratingsEntry = _getRatingsEntry(
 				ratingsStats, themeDisplay);
 
+			String url = _getURL(themeDisplay);
+
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:data",
-				_getData(httpServletRequest, ratingsEntry));
+				_getData(inTrash, ratingsEntry, themeDisplay, url));
 
-			if (_inTrash != null) {
-				httpServletRequest.setAttribute(
-					"liferay-ratings:ratings:inTrash", _isInTrash());
-			}
-
+			httpServletRequest.setAttribute(
+				"liferay-ratings:ratings:inTrash", inTrash);
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:type", _type);
-			httpServletRequest.setAttribute(
-				"liferay-ratings:ratings:url", _getURL(themeDisplay));
+			httpServletRequest.setAttribute("liferay-ratings:ratings:url", url);
 			httpServletRequest.setAttribute(
 				"liferay:ratings:ratings:ratingsEntry", ratingsEntry);
 			httpServletRequest.setAttribute(
@@ -168,14 +168,8 @@ public class RatingsTag extends IncludeTag {
 	}
 
 	private Map<String, Object> _getData(
-			HttpServletRequest httpServletRequest, RatingsEntry ratingsEntry)
-		throws PortalException {
-
-		boolean inTrash = _isInTrash();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		boolean inTrash, RatingsEntry ratingsEntry, ThemeDisplay themeDisplay,
+		String url) {
 
 		return HashMapBuilder.<String, Object>put(
 			"className", _className
@@ -192,7 +186,7 @@ public class RatingsTag extends IncludeTag {
 		).put(
 			"signedIn", themeDisplay.isSignedIn()
 		).put(
-			"url", _getURL(themeDisplay)
+			"url", url
 		).build();
 	}
 

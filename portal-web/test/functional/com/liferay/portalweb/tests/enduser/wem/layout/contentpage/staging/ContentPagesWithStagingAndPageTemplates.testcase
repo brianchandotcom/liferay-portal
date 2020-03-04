@@ -67,12 +67,13 @@ definition {
 	}
 
 	@description = "Content pages created from page templates can be published to live and will not appear in live until published."
+	@ignore = "true"
 	@priority = "5"
 	test PublishContentPage {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a content page that uses the page template") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");

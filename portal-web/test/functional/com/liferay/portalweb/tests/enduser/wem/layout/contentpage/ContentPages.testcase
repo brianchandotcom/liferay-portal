@@ -37,12 +37,13 @@ definition {
 	}
 
 	@description = "Add a content page with fragments."
+	@ignore = "true"
 	@priority = "5"
 	test AddContentPage {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		task ("Add a content page") {
@@ -115,12 +116,13 @@ definition {
 	}
 
 	@description = "Create a content page from a page template with fragments."
+	@ignore = "true"
 	@priority = "5"
 	test AddContentPageFromPageTemplate {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a page template collection") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
@@ -167,12 +169,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-95042. Liferay should come out of the box with fragments."
+	@ignore = "true"
 	@priority = "5"
 	test AddContentPageWithOOTBFragment {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a content page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -316,12 +319,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-78726. Discarding a draft will revert a content page back to its most recent published version."
+	@ignore = "true"
 	@priority = "5"
 	test DiscardContentPageDraft {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a content page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -484,12 +488,13 @@ definition {
 	}
 
 	@description = "Edit an existing content page that has fragments. This testcase covers the bug found in LPS-85872. This test has been extended to cover LPS-78726. Changes to content pages only appear after they are published."
+	@ignore = "true"
 	@priority = "5"
 	test EditContentPage {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		task ("Add a content page") {

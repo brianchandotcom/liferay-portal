@@ -30,14 +30,15 @@ definition {
 	}
 
 	@description = "This is a test for LPS-96797."
+	@ignore = "true"
 	@priority = "5"
 	test CreateContentWithExistingStructureViaInlineFieldWithoutMappingRequiredField {
+
+		// Ignore test until POSHI-48 is resolved
+
 		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentCreationContentPageEditorConfiguration.config";
 		property osgi.module.configurations = "contentCreationEnabled=&quot;true&quot;";
-
-		// Ignore test from acceptance until POSHI-48 resolved
-
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Create a web content structure with a required text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

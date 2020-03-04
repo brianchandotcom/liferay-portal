@@ -97,12 +97,13 @@ definition {
 	}
 
 	@description = "Content pages only appear in live view after being published and should appear properly."
+	@ignore = "true"
 	@priority = "5"
 	test PublishContentPage {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Navigate to the content page in the staging site") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/test-content-page-name");

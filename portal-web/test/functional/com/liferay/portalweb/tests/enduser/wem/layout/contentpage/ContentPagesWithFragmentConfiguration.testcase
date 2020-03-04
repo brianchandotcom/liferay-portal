@@ -29,12 +29,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102526. User can activate fragment configuration by clicking on topper."
+	@ignore = "true"
 	@priority = "5"
 	test ActivateFragmentConfigurationViaTopper {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -55,12 +56,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration."
+	@ignore = "true"
 	@priority = "5"
 	test AddCheckboxConfigurationFragmentToContentPage {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");
@@ -199,11 +201,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-96685. User can change select fragment configuration."
+	@ignore = "true"
+	@priority = "5"
 	test AddSelectConfigurationFragmentToContentPage {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.html");
@@ -241,12 +245,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99543. User can change text fragment configuration."
+	@ignore = "true"
 	@priority = "5"
 	test AddTextConfigurationFragmentToContentPage {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
@@ -344,12 +349,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-96685. User can restore and change fragment configuration value."
+	@ignore = "true"
 	@priority = "5"
 	test RestoreAndChangeConfigurationFragmentToContentPage {
 
-		// Ignore test from acceptance until POSHI-48 resolved
+		// Ignore test until POSHI-48 is resolved
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.html");

@@ -27,11 +27,12 @@ const RatingsLike = ({
 	classPK,
 	enabled = false,
 	inTrash = false,
+	isLiked = false,
 	positiveVotes = 0,
 	signedIn,
 	url,
 }) => {
-	const [liked, setLiked] = useState(false);
+	const [liked, setLiked] = useState(isLiked);
 	const [totalLikes, setTotalLikes] = useState(positiveVotes);
 
 	const toggleLiked = () => {
@@ -106,6 +107,7 @@ RatingsLike.propTypes = {
 	classPK: PropTypes.string.isRequired,
 	enabled: PropTypes.bool,
 	inTrash: PropTypes.bool,
+	isLiked: PropTypes.bool,
 	positiveVotes: PropTypes.number,
 	signedIn: PropTypes.bool.isRequired,
 	url: PropTypes.string.isRequired,

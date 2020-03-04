@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
 import com.liferay.ratings.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
@@ -77,6 +79,18 @@ public class RatingsTag extends IncludeTag {
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
+	public void setRatingsEntry(RatingsEntry ratingsEntry) {
+		_ratingsEntry = ratingsEntry;
+
+		_setRatingsEntry = true;
+	}
+
+	public void setRatingsStats(RatingsStats ratingsStats) {
+		_ratingsStats = ratingsStats;
+
+		_setRatingsStats = true;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
@@ -92,6 +106,10 @@ public class RatingsTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_inTrash = null;
+		_ratingsEntry = null;
+		_ratingsStats = null;
+		_setRatingsEntry = false;
+		_setRatingsStats = false;
 		_type = null;
 		_url = null;
 	}
@@ -115,6 +133,17 @@ public class RatingsTag extends IncludeTag {
 				httpServletRequest.setAttribute(
 					"liferay-ratings:ratings:inTrash", _inTrash);
 			}
+
+			httpServletRequest.setAttribute(
+				"liferay-ui:ratings:ratingsEntry", _ratingsEntry);
+			httpServletRequest.setAttribute(
+				"liferay-ui:ratings:ratingsStats", _ratingsStats);
+			httpServletRequest.setAttribute(
+				"liferay-ui:ratings:setRatingsEntry",
+				String.valueOf(_setRatingsEntry));
+			httpServletRequest.setAttribute(
+				"liferay-ui:ratings:setRatingsStats",
+				String.valueOf(_setRatingsStats));
 
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:type", _type);
@@ -143,6 +172,8 @@ public class RatingsTag extends IncludeTag {
 			"enabled", _isEnabled(themeDisplay, inTrash)
 		).put(
 			"inTrash", inTrash
+		).put(
+			"isLiked", _isLiked(themeDisplay)
 		).put(
 			"positiveVotes", (int)Math.round(_getTotalScore())
 		).put(
@@ -191,6 +222,26 @@ public class RatingsTag extends IncludeTag {
 		return _inTrash;
 	}
 
+	private Object _isLiked(ThemeDisplay themeDisplay) {
+		if (!_setRatingsStats) {
+			_ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(
+				_className, _classPK);
+		}
+
+		if (!_setRatingsEntry && (_ratingsStats != null)) {
+			_ratingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(
+				themeDisplay.getUserId(), _className, _classPK);
+		}
+
+		double yourScore = -1.0;
+
+		if (_ratingsEntry != null) {
+			yourScore = _ratingsEntry.getScore();
+		}
+
+		return (yourScore != -1.0) && (yourScore >= 0.5);
+	}
+
 	private static final String _PAGE = "/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(RatingsTag.class);
@@ -198,6 +249,10 @@ public class RatingsTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private Boolean _inTrash;
+	private RatingsEntry _ratingsEntry;
+	private RatingsStats _ratingsStats;
+	private boolean _setRatingsEntry;
+	private boolean _setRatingsStats;
 	private String _type;
 	private String _url;
 

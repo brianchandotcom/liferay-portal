@@ -145,6 +145,22 @@ public class PageDefinitionConverterUtil {
 		return pageElement;
 	}
 
+	private static InlineValue _toDescriptionInlineValue(
+		JSONObject jsonObject) {
+
+		String alt = jsonObject.getString("alt");
+
+		if (Validator.isNull(alt)) {
+			return null;
+		}
+
+		return new InlineValue() {
+			{
+				value = alt;
+			}
+		};
+	}
+
 	private static PageElement _toPageElement(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
@@ -283,6 +299,9 @@ public class PageDefinitionConverterUtil {
 
 									return new FragmentImage() {
 										{
+											description =
+												_toDescriptionInlineValue(
+													backgroundImageJSONObject);
 											title = _toTitleInlineValue(
 												backgroundImageJSONObject,
 												urlValue);

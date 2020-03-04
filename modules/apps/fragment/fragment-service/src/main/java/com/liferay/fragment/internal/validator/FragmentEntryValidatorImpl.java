@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -83,6 +85,20 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 							"Field names must be unique");
 					}
 
+					JSONObject typeOptionsJSONObject =
+						fieldJSONObject.getJSONObject("typeOptions");
+
+					if ((typeOptionsJSONObject != null) &&
+						typeOptionsJSONObject.has("validation")) {
+
+						String defaultValue = fieldJSONObject.getString(
+							"defaultValue");
+
+						_checkValidationRules(
+							defaultValue,
+							typeOptionsJSONObject.getJSONObject("validation"));
+					}
+
 					fieldNames.add(fieldJSONObject.getString("name"));
 				}
 			}
@@ -95,6 +111,56 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 			throw new FragmentEntryConfigurationException(
 				jsonValidatorException.getMessage(), jsonValidatorException);
 		}
+	}
+
+	private boolean _checkValidationRules(
+		String defaultValue, JSONObject validationJSONObject) {
+
+		if (Validator.isNull(defaultValue) || (validationJSONObject == null)) {
+			return true;
+		}
+
+		String type = validationJSONObject.getString("type");
+
+		if (Objects.equals(type, "email")) {
+			return Validator.isEmailAddress(defaultValue);
+		}
+		else if (Objects.equals(type, "number")) {
+			long max = validationJSONObject.getLong("max", Long.MAX_VALUE);
+			long min = validationJSONObject.getLong("min", Long.MIN_VALUE);
+
+			boolean valid = false;
+
+			if (Validator.isNumber(defaultValue) &&
+				(GetterUtil.getLong(defaultValue) <= max) &&
+				(GetterUtil.getLong(defaultValue) >= min)) {
+
+				valid = true;
+			}
+
+			return valid;
+		}
+		else if (Objects.equals(type, "pattern")) {
+			String regexp = validationJSONObject.getString("regexp");
+
+			return defaultValue.matches(regexp);
+		}
+		else if (Objects.equals(type, "url")) {
+			return Validator.isUrl(defaultValue);
+		}
+
+		long maxLength = validationJSONObject.getLong(
+			"maxLength", Long.MAX_VALUE);
+		long minLength = validationJSONObject.getLong(
+			"minLength", Long.MIN_VALUE);
+
+		if ((defaultValue.length() <= maxLength) &&
+			(defaultValue.length() >= minLength)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -1,3 +1,5 @@
+import com.bmuschko.gradle.docker.tasks.container.DockerCopyFileFromContainer
+
 buildscript {
 	dependencies {
 		classpath fileTree(dir: pluginClasspathDir, excludes: ["biz.aQute.bnd-3.5.0.jar", "com.liferay.gradle.util-1.0.33.jar"], include: "*.jar")
@@ -5,3 +7,16 @@ buildscript {
 }
 
 apply plugin: "com.liferay.workspace"
+
+gradle.projectsEvaluated {
+	Project rootProject = gradle.rootProject
+
+	rootProject.tasks.register("copyStartupScript", DockerCopyFileFromContainer) {
+		dependsOn "createDockerContainer"
+
+		compressed true	
+		containerId gradle.liferayWorkspace.dockerContainerId
+		hostPath rootProject.getBuildDir().path
+		remotePath "/home/liferay/configs/local/scripts/startup_script.sh"	
+	}
+}

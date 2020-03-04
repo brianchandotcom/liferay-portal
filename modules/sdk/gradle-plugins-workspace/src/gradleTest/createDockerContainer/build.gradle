@@ -1,9 +1,22 @@
 task runGradleTest
 
+task untarStartupScript(type: Copy) {
+	dependsOn "copyStartupScript"
+
+	from tarTree(rootProject.getBuildDir().path + "/startup_script.sh.tar")
+	into "${buildDir}"
+}
+
 runGradleTest {
-	dependsOn createDockerContainer
+	dependsOn createDockerContainer, "copyStartupScript", "untarStartupScript"
 
 	doLast {
+		File startupScript = new File(buildDir, "startup_script.sh");
+
+		String startupScriptContent = startupScript.text;
+
+		assert startupScriptContent.contains("local");		
+
 		File inputDir = new File(buildDir, "docker")
 
 		String[] inputDirFileNames = inputDir.list()
@@ -29,10 +42,11 @@ runGradleTest {
 
 		String[] localDirFileNames = localDir.list()
 
-		assert localDirFileNames.length == 2
+		assert localDirFileNames.length == 3
 
 		assert localDirFileNames.contains("local_file")
 		assert localDirFileNames.contains("portal-ext.properties")
+		assert localDirFileNames.contains("scripts")
 
 		File deployDir = new File(inputDir, "deploy")
 

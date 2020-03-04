@@ -3651,6 +3651,15 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		sb.append(lineSeparator);
 
 		sb.append('}');
+		sb.append(lineSeparator);
+
+		sb.append("node {");
+		sb.append(lineSeparator);
+
+		sb.append("\tuseNpm = true");
+		sb.append(lineSeparator);
+
+		sb.append("}");
 
 		String executePackageManagerTaskScript = sb.toString();
 

@@ -16,4 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-Redirect
+<clay:management-toolbar
+	displayContext="<%= new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse) %>"
+/>

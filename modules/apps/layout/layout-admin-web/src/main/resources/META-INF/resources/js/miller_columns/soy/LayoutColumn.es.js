@@ -16,6 +16,7 @@ import 'clay-badge';
 
 import 'clay-dropdown';
 import Component from 'metal-component';
+import {closest} from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
@@ -84,6 +85,23 @@ class LayoutColumn extends Component {
 	_handleLayoutColumnItemDropdownItemClick(event) {
 		if (event.data && event.data.item && event.data.item.handleClick) {
 			event.data.item.handleClick(event, this);
+		}
+	}
+
+	/**
+	 * Handle column item title click event and propagate it to
+	 * the corresponding item mask.
+	 * @param {MouseEvent} event
+	 */
+	_handleLayoutColumnItemTitleClick(event) {
+		const layoutItemElement = closest(event.delegateTarget, '.layout-item');
+
+		const maskElement =
+			layoutItemElement &&
+			layoutItemElement.querySelector('.layout-column-item-click-mask');
+
+		if (maskElement) {
+			maskElement.click();
 		}
 	}
 }

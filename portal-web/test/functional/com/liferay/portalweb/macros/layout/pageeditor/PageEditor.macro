@@ -145,6 +145,8 @@ definition {
 		AssertVisible(
 			key_position = "1",
 			locator1 = "PageEditor#ROW");
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro addLayoutSection {
@@ -161,6 +163,8 @@ definition {
 		AssertVisible(
 			key_position = "1",
 			locator1 = "PageEditor#SECTION");
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro addVideoFragmentURL {
@@ -578,7 +582,8 @@ definition {
 			Select(
 				key_fieldLabel = "Number of Columns",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${columnCount}");	}
+				value1 = "${columnCount}");
+		}
 
 		if ("${spaceBetweenColumns}" == "true") {
 			Check.checkToggleSwitch(
@@ -639,8 +644,6 @@ definition {
 					value1 = "Image");
 
 				SelectFrame(value1 = "relative=top");
-
-				PageEditor.waitForAutoSave();
 			}
 
 			if ("${backgroundImage}" == "Manual Selection") {
@@ -664,10 +667,9 @@ definition {
 				}
 
 				SelectFrame(value1 = "relative=top");
-
-				PageEditor.waitForAutoSave();
 			}
 		}
+		PageEditor.waitForAutoSave();
 	}
 
 	macro expandFragmentCollection {

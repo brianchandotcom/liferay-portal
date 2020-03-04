@@ -2623,25 +2623,29 @@ public class DataFactory {
 		long parentMessageId = 0;
 		String subject = null;
 		String body = null;
+		String urlSubject = null;
 
 		if (index == 0) {
 			messageId = mbThreadModel.getRootMessageId();
 			parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
 			subject = String.valueOf(classPK);
 			body = String.valueOf(classPK);
+			urlSubject = String.valueOf(mbThreadModel.getRootMessageId());
 		}
 		else {
 			messageId = _counter.get();
 			parentMessageId = mbThreadModel.getRootMessageId();
 			subject = "N/A";
 			body = "This is test comment " + index + ".";
+			urlSubject = "This-is-test-comment-" + index;
 		}
 
 		return newMBMessageModel(
 			mbThreadModel.getGroupId(), classNameId, classPK,
 			MBCategoryConstants.DISCUSSION_CATEGORY_ID,
 			mbThreadModel.getThreadId(), messageId,
-			mbThreadModel.getRootMessageId(), parentMessageId, subject, body);
+			mbThreadModel.getRootMessageId(), parentMessageId, subject, body,
+			urlSubject);
 	}
 
 	public List<MBMessageModel> newMBMessageModels(
@@ -2656,7 +2660,7 @@ public class DataFactory {
 				mbThreadModel.getThreadId(), mbThreadModel.getRootMessageId(),
 				mbThreadModel.getRootMessageId(),
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, "Test Message 1",
-				"This is test message 1."));
+				"This is test message 1.", "Test-Message-1"));
 
 		for (int i = 2; i <= _maxMBMessageCount; i++) {
 			mbMessageModels.add(
@@ -2665,7 +2669,7 @@ public class DataFactory {
 					mbThreadModel.getCategoryId(), mbThreadModel.getThreadId(),
 					_counter.get(), mbThreadModel.getRootMessageId(),
 					mbThreadModel.getRootMessageId(), "Test Message " + i,
-					"This is test message " + i + "."));
+					"This is test message " + i + ".", "Test-Message-" + i));
 		}
 
 		return mbMessageModels;
@@ -4036,7 +4040,7 @@ public class DataFactory {
 	protected MBMessageModel newMBMessageModel(
 		long groupId, long classNameId, long classPK, long categoryId,
 		long threadId, long messageId, long rootMessageId, long parentMessageId,
-		String subject, String body) {
+		String subject, String body, String urlSubject) {
 
 		MBMessageModel mBMessageModel = new MBMessageModelImpl();
 
@@ -4055,6 +4059,7 @@ public class DataFactory {
 		mBMessageModel.setRootMessageId(rootMessageId);
 		mBMessageModel.setParentMessageId(parentMessageId);
 		mBMessageModel.setSubject(subject);
+		mBMessageModel.setUrlSubject(urlSubject + "-" + messageId);
 		mBMessageModel.setBody(body);
 		mBMessageModel.setFormat(MBMessageConstants.DEFAULT_FORMAT);
 		mBMessageModel.setLastPublishDate(new Date());

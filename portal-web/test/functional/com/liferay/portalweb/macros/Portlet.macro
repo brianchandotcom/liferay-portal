@@ -293,6 +293,8 @@ definition {
 	macro saveAndCloseConfig {
 		Button.clickSave();
 
+		Alert.viewSuccessMessage();
+
 		SelectFrameTop();
 
 		Click(locator1 = "Icon#CLOSE");

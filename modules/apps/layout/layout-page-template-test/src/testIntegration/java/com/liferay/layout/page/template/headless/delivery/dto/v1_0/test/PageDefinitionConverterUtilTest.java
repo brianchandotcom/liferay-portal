@@ -155,7 +155,7 @@ public class PageDefinitionConverterUtilTest {
 		FragmentFieldBackgroundImage fragmentFieldBackgroundImage =
 			(FragmentFieldBackgroundImage)fragmentField.getValue();
 
-		_validateFragmentImage(
+		_validateFragmentBackgroundImage(
 			fragmentFieldBackgroundImage.getBackgroundImage());
 	}
 
@@ -171,7 +171,7 @@ public class PageDefinitionConverterUtilTest {
 		FragmentFieldBackgroundImage fragmentFieldBackgroundImage =
 			(FragmentFieldBackgroundImage)fragmentField.getValue();
 
-		_validateFragmentImageWithTitle(
+		_validateFragmentBackgroundImageWithTitle(
 			fragmentFieldBackgroundImage.getBackgroundImage(),
 			"My Background Image Title");
 	}
@@ -514,6 +514,43 @@ public class PageDefinitionConverterUtilTest {
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
+	private void _validateFragmentBackgroundImage(FragmentImage fragmentImage) {
+		Assert.assertNull(fragmentImage.getDescription());
+		Assert.assertNull(fragmentImage.getTitle());
+
+		InlineValue urlInlineValue = (InlineValue)fragmentImage.getUrl();
+
+		Assert.assertNull(urlInlineValue.getValue());
+
+		Map<String, String> urlI18nMap = urlInlineValue.getValue_i18n();
+
+		Assert.assertEquals(
+			"http://myexample.com/myexample.png", urlI18nMap.get("en_US"));
+		Assert.assertEquals(
+			"http://miejemplo.es/miejemplo.png", urlI18nMap.get("es_ES"));
+	}
+
+	private void _validateFragmentBackgroundImageWithTitle(
+		FragmentImage fragmentImage, String title) {
+
+		Assert.assertNull(fragmentImage.getDescription());
+
+		InlineValue titleInlineValue = (InlineValue)fragmentImage.getTitle();
+
+		Assert.assertEquals(title, titleInlineValue.getValue());
+
+		InlineValue urlInlineValue = (InlineValue)fragmentImage.getUrl();
+
+		Assert.assertNull(urlInlineValue.getValue());
+
+		Map<String, String> urlI18nMap = urlInlineValue.getValue_i18n();
+
+		Assert.assertEquals(
+			"http://myexample.com/myexample.png", urlI18nMap.get("en_US"));
+		Assert.assertEquals(
+			"http://miejemplo.es/miejemplo.png", urlI18nMap.get("es_ES"));
+	}
+
 	private void _validateFragmentFieldHTML(
 		FragmentFieldHTML fragmentFieldHTML) {
 
@@ -551,6 +588,12 @@ public class PageDefinitionConverterUtilTest {
 
 	private void _validateFragmentImage(FragmentImage fragmentImage) {
 		Assert.assertNull(fragmentImage.getTitle());
+
+		InlineValue descriptionInlineValue =
+			(InlineValue)fragmentImage.getDescription();
+
+		Assert.assertEquals(
+			"My example description", descriptionInlineValue.getValue());
 
 		InlineValue urlInlineValue = (InlineValue)fragmentImage.getUrl();
 

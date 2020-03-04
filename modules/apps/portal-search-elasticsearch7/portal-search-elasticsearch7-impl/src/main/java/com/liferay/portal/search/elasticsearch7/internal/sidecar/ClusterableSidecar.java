@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.process.ProcessExecutor;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
@@ -522,7 +523,7 @@ public class ClusterableSidecar
 		}
 
 		private boolean _isAddressReachable(String address) {
-			int index = address.indexOf(StringPool.COLON);
+			int index = address.indexOf(CharPool.COLON);
 
 			if (index == -1) {
 				throw new IllegalStateException(
@@ -533,7 +534,8 @@ public class ClusterableSidecar
 				socket.connect(
 					new InetSocketAddress(
 						InetAddress.getByName(address.substring(0, index)),
-						GetterUtil.getInteger(address.substring(index + 1))));
+						GetterUtil.getIntegerStrict(
+							address.substring(index + 1))));
 
 				return true;
 			}

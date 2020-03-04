@@ -71,21 +71,21 @@ definition {
 			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
 	}
 
-	macro validadeProductMenuPlaceItDropdownList {
+	macro validateDeployedAs {
+		AssertTextEquals(
+			locator1 = "AppBuilder#DEPLOYED_AS",
+			value1 = "${title}");
+	}
+
+	macro validateProductMenuPlaceItDropdownList {
 		AssertTextEquals(
 			key_dropdownOption = "${itemName}",
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION",
 			value1 = "${itemName}");
 	}
 
-	macro validadeProductMenuSiteDropdownPresent {
+	macro validateProductMenuSiteDropdownPresent {
 		AssertElementPresent(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
-	}
-
-	macro validateDeployedAs {
-		AssertTextEquals(
-			locator1 = "AppBuilder#DEPLOYED_AS",
-			value1 = "${title}");
 	}
 
 }

@@ -1703,14 +1703,14 @@ definition {
 		App.selectTableView(tableViewName = "${myTableViewName_1}");
 		App.toggleDeploy(deployOption = "Product Menu");
 		App.openProductMenuPlaceItDropdown();
-		App.validadeProductMenuPlaceItDropdownList(itemName = "Control Panel");
-		App.validadeProductMenuPlaceItDropdownList(itemName = "Site Menu");
-		App.validadeProductMenuPlaceItDropdownList(itemName = "Control Panel and Site Menu");
+		App.validateProductMenuPlaceItDropdownList(itemName = "Control Panel");
+		App.validateProductMenuPlaceItDropdownList(itemName = "Site Menu");
+		App.validateProductMenuPlaceItDropdownList(itemName = "Control Panel and Site Menu");
 
 		App.selectProductMenuPlaceItDropdownOption(itemName = "Site Menu");
-		App.validadeProductMenuSiteDropdownPresent();
+		App.validateProductMenuSiteDropdownPresent();
 		App.selectProductMenuPlaceItDropdownOption(itemName = "Control Panel and Site Menu");
-		App.validadeProductMenuSiteDropdownPresent();
+		App.validateProductMenuSiteDropdownPresent();
 
 		App.selectProductMenuPlaceItDropdownOption(itemName = "Control Panel");
 		Button.click(button = "Deploy");

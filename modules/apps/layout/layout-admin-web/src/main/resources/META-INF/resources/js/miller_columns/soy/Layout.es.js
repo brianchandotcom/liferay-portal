@@ -465,21 +465,16 @@ class Layout extends Component {
 	 * @review
 	 */
 	_handleTooltipHovered(event) {
-		const layoutColumnTitle = document.querySelector(
-			'span[title="' +
-				event.srcElement.getAttribute('data-tooltip') +
-				'"]'
-		);
+		const element = event.delegateTarget;
+		const tooltip = element.dataset.tooltip;
 
-		if (
-			layoutColumnTitle &&
-			layoutColumnTitle.offsetWidth < layoutColumnTitle.scrollWidth
-		) {
-			event.srcElement.setAttribute(
-				'title',
-				event.srcElement.getAttribute('data-tooltip')
-			);
-			event.srcElement.classList.add('lfr-portal-tooltip');
+		if (tooltip && element.offsetWidth < element.scrollWidth) {
+			element.setAttribute('title', tooltip);
+			element.classList.add('lfr-portal-tooltip');
+		}
+		else {
+			element.removeAttribute('title');
+			element.classList.remove('lfr-portal-tooltip');
 		}
 	}
 

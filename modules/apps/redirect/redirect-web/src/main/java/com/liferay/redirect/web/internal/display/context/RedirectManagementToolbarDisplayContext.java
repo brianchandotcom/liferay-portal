@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
+import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -43,9 +46,18 @@ public class RedirectManagementToolbarDisplayContext
 		try {
 			return CreationMenuBuilder.addPrimaryDropdownItem(
 				dropdownItem -> {
-					dropdownItem.putData("action", "addRedirectEntry");
+					RenderURL editRedirectEntryURL =
+						liferayPortletResponse.createRenderURL();
 
-					dropdownItem.setHref(getPortletURL());
+					editRedirectEntryURL.setParameter(
+						"mvcRenderCommandName", "/redirect_entry/edit");
+
+					PortletURL portletURL = getPortletURL();
+
+					editRedirectEntryURL.setParameter(
+						"redirect", portletURL.toString());
+
+					dropdownItem.setHref(editRedirectEntryURL);
 
 					dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 				}

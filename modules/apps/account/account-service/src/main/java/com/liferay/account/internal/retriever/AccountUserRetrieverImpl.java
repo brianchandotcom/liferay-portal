@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -198,7 +201,18 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 
 				long userId = document.getLong("userId");
 
-				return _userLocalService.getUser(userId);
+				User user = _userLocalService.fetchUser(userId);
+
+				if (user == null) {
+					Indexer<User> indexer = IndexerRegistryUtil.getIndexer(
+						User.class);
+
+					indexer.delete(
+						document.getLong(Field.COMPANY_ID),
+						document.getString(Field.UID));
+				}
+
+				return user;
 			});
 
 		return new BaseModelSearchResult<>(

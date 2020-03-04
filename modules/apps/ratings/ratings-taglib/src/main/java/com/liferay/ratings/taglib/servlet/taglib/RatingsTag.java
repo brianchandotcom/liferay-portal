@@ -48,6 +48,14 @@ public class RatingsTag extends IncludeTag {
 		return _classPK;
 	}
 
+	public RatingsEntry getRatingsEntry() {
+		return _ratingsEntry;
+	}
+
+	public RatingsStats getRatingsStats() {
+		return _ratingsStats;
+	}
+
 	public String getType() {
 		return _type;
 	}

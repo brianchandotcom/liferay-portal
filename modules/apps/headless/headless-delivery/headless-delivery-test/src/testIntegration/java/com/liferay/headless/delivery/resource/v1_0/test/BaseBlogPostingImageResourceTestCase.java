@@ -209,6 +209,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 	@Test
 	public void testDeleteBlogPostingImage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPostingImage blogPostingImage =
 			testDeleteBlogPostingImage_addBlogPostingImage();
 

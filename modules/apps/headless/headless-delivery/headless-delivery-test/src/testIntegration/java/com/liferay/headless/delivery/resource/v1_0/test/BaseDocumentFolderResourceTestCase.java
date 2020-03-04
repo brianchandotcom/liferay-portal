@@ -203,6 +203,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 	@Test
 	public void testDeleteDocumentFolder() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder documentFolder =
 			testDeleteDocumentFolder_addDocumentFolder();
 

@@ -1017,6 +1017,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 	@Test
 	public void testDeleteStructuredContentFolder() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContentFolder structuredContentFolder =
 			testDeleteStructuredContentFolder_addStructuredContentFolder();
 

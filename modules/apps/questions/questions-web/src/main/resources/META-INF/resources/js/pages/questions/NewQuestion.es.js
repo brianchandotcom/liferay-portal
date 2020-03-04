@@ -21,6 +21,7 @@ import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import TagSelector from '../../components/TagSelector.es';
+import useSection from '../../hooks/useSection.es';
 import {createQuestion} from '../../utils/client.es';
 import {
 	getCKEditorConfig,
@@ -43,6 +44,8 @@ export default withRouter(
 
 		const context = useContext(AppContext);
 
+		const section = useSection(sectionTitle, context.siteKey);
+
 		const [debounceCallback] = useDebounceCallback(
 			() => history.push(`/questions/${sectionTitle}/`),
 			500
@@ -52,23 +55,21 @@ export default withRouter(
 			createQuestion(
 				articleBody,
 				headline,
-				sectionId || context.section.id,
+				section.id || sectionId,
 				tags.map(tag => tag.value)
 			).then(() => debounceCallback());
 
-		useEffect(
-			() =>
-				setSections(
-					(context.section &&
-						context.section.parentSection && [
-							{label: '', value: context.section.id},
-							...context.section.parentSection
-								.messageBoardSections.items,
-						]) ||
-						[]
-				),
-			[context.section, context.section.parentSection]
-		);
+		useEffect(() => {
+			if (section && section.parentSection) {
+				setSections([
+					{
+						id: section.parentSection.id,
+						title: section.parentSection.title,
+					},
+					...section.parentSection.messageBoardSections.items,
+				]);
+			}
+		}, [section, section.parentSection]);
 
 		return (
 			<section className="c-mt-5 c-mx-auto col-xl-10">
@@ -144,11 +145,12 @@ export default withRouter(
 						<ClaySelect
 							onChange={event => setSectionId(event.target.value)}
 						>
-							{sections.map(section => (
+							{sections.map(({id, title}) => (
 								<ClaySelect.Option
-									key={section.id}
-									label={section.title}
-									value={section.id}
+									key={id}
+									label={title}
+									selected={section && section.id === id}
+									value={id}
 								/>
 							))}
 						</ClaySelect>

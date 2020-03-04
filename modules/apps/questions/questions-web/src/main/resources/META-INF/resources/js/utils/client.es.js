@@ -420,10 +420,10 @@ export const getSection = (title, siteKey) => {
 
 	return request(gql`
 		query {
-			messageBoardSections(filter: ${filter}, flatten:true, pageSize: 1, siteKey: ${siteKey}) {
+			messageBoardSections(filter: ${filter}, flatten:true, pageSize: 1, siteKey: ${siteKey}, sort: "title:desc") {
 				items {
 					id
-					messageBoardSections {
+					messageBoardSections(sort: "title:asc") {
 						items {
 							id
 							parentMessageBoardSectionId
@@ -510,7 +510,7 @@ export const getRelatedThreads = (search = '', siteKey) =>
 export const getSections = siteKey =>
 	request(gql`
 		query {
-			messageBoardSections(siteKey: ${siteKey}) {
+			messageBoardSections(siteKey: ${siteKey}, sort: "title:desc") {
 				items {
 					description
 					id
@@ -536,7 +536,7 @@ export const markAsAnswerMessageBoardMessage = (
 export const updateMessage = (articleBody, messageBoardMessageId) =>
 	request(gql`
         mutation {
-            patchMessageBoardMessage(messageBoardMessage: {articleBody: ${articleBody}}, messageBoardMessageId: ${messageBoardMessageId}){
+            patchMessageBoardMessage(messageBoardMessage: {articleBody: ${articleBody},  encodingFormat: "html"}, messageBoardMessageId: ${messageBoardMessageId}){
                 articleBody
             }
         }`);
@@ -549,7 +549,7 @@ export const updateThread = (
 ) =>
 	request(gql`
         mutation {
-            patchMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, headline: ${headline}, taxonomyCategoryIds: ${taxonomyCategoryIds}}, messageBoardThreadId: ${messageBoardThreadId}){
+            patchMessageBoardThread(messageBoardThread: {articleBody: ${articleBody}, encodingFormat: "html", headline: ${headline}, taxonomyCategoryIds: ${taxonomyCategoryIds}}, messageBoardThreadId: ${messageBoardThreadId}){
                 articleBody
                 headline
 				taxonomyCategoryBriefs {

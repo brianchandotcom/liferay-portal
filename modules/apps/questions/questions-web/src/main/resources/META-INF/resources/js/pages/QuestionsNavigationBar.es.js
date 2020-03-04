@@ -20,7 +20,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
-import {getSection} from '../utils/client.es';
+import useSection from '../hooks/useSection.es';
 import {useDebounceCallback} from '../utils/utils.es';
 
 function getFilterOptions() {
@@ -52,6 +52,7 @@ export default withRouter(
 			params: {sectionTitle},
 		},
 		searchChange,
+		sectionChange,
 	}) => {
 		const context = useContext(AppContext);
 
@@ -61,34 +62,18 @@ export default withRouter(
 			searchChange(value);
 		}, 500);
 
-		useEffect(() => {
-			getSection(sectionTitle, context.siteKey)
-				.then(section => {
-					if (section.parentMessageBoardSectionId) {
-						return Promise.all([
-							section,
-							getSection(
-								section.parentMessageBoardSectionId,
-								context.siteKey
-							),
-						]);
-					}
+		const section = useSection(sectionTitle, context.siteKey);
 
-					return [section, section];
-				})
-				.then(([section, parentSection]) => {
-					section.parentSection = parentSection;
-					context.setSection(section);
-				});
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [context.siteKey, sectionTitle]);
+		useEffect(() => {
+			sectionChange(section);
+		}, [section, sectionChange]);
 
 		const filterOptions = getFilterOptions();
 
 		const getParentSubSections = () =>
-			(context.section &&
-				context.section.parentSection &&
-				context.section.parentSection.messageBoardSections.items) ||
+			(section &&
+				section.parentSection &&
+				section.parentSection.messageBoardSections.items) ||
 			[];
 
 		return (
@@ -99,22 +84,23 @@ export default withRouter(
 						onActiveChange={setActive}
 						trigger={
 							<div>
-								{context.section.parentSection && (
+								{section.parentSection && (
 									<>
-										{context.section.parentSection.title}
+										{section.parentSection.title}
 										{' : '}
-										{context.section.title ===
-										context.section.parentSection.title
+										{section.title ===
+										section.parentSection.title
 											? Liferay.Language.get('all')
-											: context.section.title}
+											: section.title}
 									</>
 								)}
 							</div>
 						}
 					>
 						<Link
-							to={`/questions/${(context.section.parentSection &&
-								context.section.parentSection.id) ||
+							to={`/questions/${(section &&
+								section.parentSection &&
+								section.parentSection.id) ||
 								sectionTitle}`}
 						>
 							<ClayDropDown.Help>

@@ -14,10 +14,9 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
-import {AppContext} from '../../AppContext.es';
 import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import Error from '../../components/Error.es';
 import QuestionBadge from '../../components/QuestionsBadge.es';
@@ -39,10 +38,7 @@ export default ({
 	const [pageSize] = useState(20);
 	const [questions, setQuestions] = useState([]);
 	const [search, setSearch] = useState('');
-
-	const context = useContext(AppContext);
-
-	const sectionId = context.section.id;
+	const [sectionId, setSectionId] = useState();
 
 	useEffect(() => {
 		if (sectionId) {
@@ -115,9 +111,8 @@ export default ({
 		<section className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
 			<QuestionsNavigationBar
 				filterChange={filterChange}
-				searchChange={search => {
-					setSearch(search);
-				}}
+				searchChange={search => setSearch(search)}
+				sectionChange={section => setSectionId(section.id)}
 			/>
 
 			{loading ? (

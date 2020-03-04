@@ -1186,7 +1186,7 @@ definition {
 
 		Role.definePermissionCmdCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION",
-			permissionDefinitionValue = "Access in Site Administration",
+			permissionDefinitionValue = "Access in Site and Asset Library Administration",
 			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
 			permissionNavigationValue = "Kaleo Forms Admin",
 			roleTitle = "KaleoRegRole Name");

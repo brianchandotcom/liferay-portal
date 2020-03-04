@@ -1930,7 +1930,7 @@ definition {
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			permissionDefinitionValue = "Access in Site Administration",
+			permissionDefinitionValue = "Access in Site and Asset Library Administration",
 			roleTitle = "Roles Regrole Name");
 
 		Role.viewPermissionCP(

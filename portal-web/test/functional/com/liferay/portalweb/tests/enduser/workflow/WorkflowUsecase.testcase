@@ -1151,7 +1151,7 @@ definition {
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			permissionDefinitionValue = "Access in Site Administration",
+			permissionDefinitionValue = "Access in Site and Asset Library Administration",
 			roleTitle = "Site Member",
 			roleType = "Site");
 

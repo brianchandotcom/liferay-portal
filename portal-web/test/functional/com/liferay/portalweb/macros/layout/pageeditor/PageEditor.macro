@@ -72,12 +72,6 @@ definition {
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
 
-		// Refresh and pause step is a workaround for LPS-108417
-
-		Refresh();
-
-		Pause(locator1 = "3000");
-
 		AssertTextEquals(
 			locator1 = "Fragment#CONFIGURABLE_FIELD",
 			value1 = "The selected content will be shown here.");
@@ -128,12 +122,6 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		// Refresh and pause step is a workaround for LPS-108417
-
-		Refresh();
-
-		Pause(locator1 = "3000");
-
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",
 			locator1 = "Fragment#FRAGMENT_HEADER");
@@ -169,12 +157,6 @@ definition {
 			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
-
-		// Refresh and pause step is a workaround for LPS-108417
-
-		Refresh();
-
-		Pause(locator1 = "3000");
 
 		AssertVisible(
 			key_position = "1",

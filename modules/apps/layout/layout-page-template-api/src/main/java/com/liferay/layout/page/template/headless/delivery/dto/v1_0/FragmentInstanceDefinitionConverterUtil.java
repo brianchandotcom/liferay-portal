@@ -550,17 +550,14 @@ public class FragmentInstanceDefinitionConverterUtil {
 		};
 	}
 
-	private static Map<String, String> _toLocaleMap(JSONObject jsonObject) {
-		return _toLocaleMap(jsonObject, 0);
-	}
-
 	private static Map<String, String> _toLocaleMap(
 		JSONObject jsonObject, long segmentsExperienceId) {
 
 		if (jsonObject.has("segments-experience-id-" + segmentsExperienceId)) {
 			return _toLocaleMap(
 				jsonObject.getJSONObject(
-					"segments-experience-id-" + segmentsExperienceId));
+					"segments-experience-id-" + segmentsExperienceId),
+				segmentsExperienceId);
 		}
 
 		return new HashMap<String, String>() {

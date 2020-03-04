@@ -92,7 +92,7 @@
 	transition: box-shadow 0s ease-out 32ms;
 
 	.layout-column-item-title {
-		pointer-events: none;
+		cursor: pointer;
 
 		.badge {
 			vertical-align: bottom;

@@ -28,6 +28,7 @@
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 	{@param? _handleLayoutColumnItemDropdownItemClick: any}
+	{@param? _handleLayoutColumnItemTitleClick: any}
 
 	{let $layoutColumnClasses kind="text"}
 		col-11
@@ -54,6 +55,7 @@
 		{foreach $layoutColumnItem in $layoutColumn}
 			{call .layoutColumnItem}
 				{param _handleLayoutColumnItemDropdownItemClick: $_handleLayoutColumnItemDropdownItemClick /}
+				{param _handleLayoutColumnItemTitleClick: $_handleLayoutColumnItemTitleClick /}
 				{param key: $layoutColumnItem.plid /}
 				{param layoutColumnIndex: $layoutColumnIndex /}
 				{param layoutColumnItem: $layoutColumnItem /}
@@ -108,6 +110,7 @@
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 	{@param? _handleLayoutColumnItemDropdownItemClick: any}
+	{@param? _handleLayoutColumnItemTitleClick: any}
 
 	{let $listGroupItemClasses kind="text"}
 		layout-item
@@ -188,7 +191,7 @@
 				</div>
 			{/if}
 
-			<div class="autofit-col autofit-col-expand layout-column-item-title">
+			<div class="autofit-col autofit-col-expand layout-column-item-title" data-onclick="{$_handleLayoutColumnItemTitleClick}">
 				<h4 class="list-group-title">
 					<span
 						class="text-truncate"

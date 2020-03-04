@@ -419,7 +419,7 @@ definition {
 			value1 = "Web Content Title");
 	}
 
-	@description = "This ensures that multiple web content can be selected through Content Sets in a depot."
+	@description = "This ensures that images are excluded with the dynamic selection that does not contain the keyword "Image" in a depot."
 	@priority = "5"
 	test ExcludeImagesDynamically {
 		DepotNavigator.openDepotAdmin();
@@ -428,94 +428,39 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Documents and Media");
 
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.doc",
-			dmDocumentTitle = "Document Title");
+		for (var i : list "1,2") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_${i}.doc",
+				dmDocumentTitle = "Document Text Title ${i}");
+		}
 
-		DepotNavigator.openDepotAdmin();
+		for (var i : list "1,2") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_${i}.png",
+				dmDocumentTitle = "Document Image Title ${i}");
+		}
 
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithTagCP(
-			tagNameList = "tag1",
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
 
 		AssetListsAdmin.addDynamicSelection(
 			assetListTitle = "Depot Dynamic Asset List",
 			depotName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
+		AssetListsAdmin.addKeywordsFilter(
+			keyWords = "Image",
+			queryAndOperator = "Any",
+			queryContains = "Does Not Contain");
 
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Content Sets");
+		for (var i : list "1,2") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
 
-		AssetListsAdmin.viewAssetList(
-			assetListTitle = "Depot Dynamic Asset List",
-			type = "Dynamic");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Content Sets");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Depot Dynamic Asset List");
-
-		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
-
-		AssetListsAdmin.addTagsFilter(tagNameList = "tag1");
-
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Asset Publisher Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Site Name",
-			layoutName = "Asset Publisher Page",
-			widgetName = "Asset Publisher");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.selectAssetList(
-			assetListName = "Depot Dynamic Asset List",
-			depotName = "Test Depot Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Site Name");
-
-		AssertTextEquals(
-			key_assetTitle = "Document Title",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH",
-			value1 = "Document Title");
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Depot Dynamic Asset List",
+				assetTitle = "Document Text Title ${i}",
+				assetType = "Document");
+		}
 	}
 
 	@description = "This ensures that the asset can be removed in Content Sets."

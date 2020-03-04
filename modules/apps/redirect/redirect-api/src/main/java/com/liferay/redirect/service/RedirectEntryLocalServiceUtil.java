@@ -37,6 +37,13 @@ public class RedirectEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.redirect.model.RedirectEntry addRedirectEntry(
+		long groupId, String destinationURL, String sourceURL,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return getService().addRedirectEntry(
+			groupId, destinationURL, sourceURL, serviceContext);
+	}
 
 	/**
 	 * Adds the redirect entry to the database. Also notifies the appropriate model listeners.

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -62,6 +63,9 @@ public interface RedirectEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RedirectEntryLocalServiceUtil} to access the redirect entry local service. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public RedirectEntry addRedirectEntry(
+		long groupId, String destinationURL, String sourceURL,
+		ServiceContext serviceContext);
 
 	/**
 	 * Adds the redirect entry to the database. Also notifies the appropriate model listeners.

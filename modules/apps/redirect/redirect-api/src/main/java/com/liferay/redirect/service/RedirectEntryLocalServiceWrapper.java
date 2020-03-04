@@ -33,6 +33,15 @@ public class RedirectEntryLocalServiceWrapper
 		_redirectEntryLocalService = redirectEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.redirect.model.RedirectEntry addRedirectEntry(
+		long groupId, String destinationURL, String sourceURL,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _redirectEntryLocalService.addRedirectEntry(
+			groupId, destinationURL, sourceURL, serviceContext);
+	}
+
 	/**
 	 * Adds the redirect entry to the database. Also notifies the appropriate model listeners.
 	 *

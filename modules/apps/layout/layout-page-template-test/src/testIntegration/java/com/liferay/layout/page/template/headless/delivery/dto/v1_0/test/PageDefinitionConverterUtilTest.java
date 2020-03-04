@@ -138,14 +138,9 @@ public class PageDefinitionConverterUtilTest {
 		Map<String, Object> fragmentConfigMap =
 			fragmentInstanceDefinition.getFragmentConfig();
 
-		Assert.assertEquals("center", fragmentConfigMap.get("textAlign"));
 		Assert.assertEquals(4, fragmentConfigMap.get("level"));
-
-		Map<String, String> textColorMap =
-			(Map<String, String>)fragmentConfigMap.get("textColor");
-
-		Assert.assertEquals("danger", textColorMap.get("cssClass"));
-		Assert.assertEquals("rgb(171, 16, 16)", textColorMap.get("rgbValue"));
+		Assert.assertEquals("center", fragmentConfigMap.get("textAlign"));
+		Assert.assertEquals("danger", fragmentConfigMap.get("textColor"));
 	}
 
 	@Test

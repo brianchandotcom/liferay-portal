@@ -20,7 +20,7 @@ ConcatCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks
 ConstantNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 ConstructorMissingEmptyLineCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 ContractionsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-CopyrightCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[CopyrightCheck](checks/copyright_check.markdown#copyrightcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [CreationMenuBuilderCheck](checks/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [DefaultComesLastCheck](https://checkstyle.sourceforge.io/config_coding.html#DefaultComesLast) | [Styling](styling_checks.markdown#styling-checks) | Check that the default is after all the cases in a switch statement. |
 DeprecatedUsageCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
@@ -33,7 +33,7 @@ FactoryCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-check
 FilterStringWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [FrameworkBundleCheck](checks/framework_bundle_check.markdown#frameworkbundlecheck) | [Performance](performance_checks.markdown#performance-checks) | Checks that `org.osgi.framework.Bundle.getHeaders()` is not used |
 FullyQualifiedNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-GetterUtilCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[GetterUtilCheck](checks/getter_util_check.markdown#getterutilcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 InstanceofOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [ItemListBuilderCheck](checks/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSONNamingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |

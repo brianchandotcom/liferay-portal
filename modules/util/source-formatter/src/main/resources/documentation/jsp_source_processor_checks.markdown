@@ -11,12 +11,12 @@ CompatClassImportsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscella
 ConcatCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 ConstantNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 ContractionsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-CopyrightCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[CopyrightCheck](checks/copyright_check.markdown#copyrightcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [DefaultComesLastCheck](https://checkstyle.sourceforge.io/config_coding.html#DefaultComesLast) | [Styling](styling_checks.markdown#styling-checks) | Check that the default is after all the cases in a switch statement. |
 EmptyCollectionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [ExceptionMessageCheck](checks/message_check.markdown#messagecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 FactoryCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
-GetterUtilCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
+[GetterUtilCheck](checks/getter_util_check.markdown#getterutilcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 InstanceofOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 JSONNamingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | |
 [JSONUtilCheck](checks/json_util_check.markdown#jsonutilcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks for utilization of class `JSONUtil` |

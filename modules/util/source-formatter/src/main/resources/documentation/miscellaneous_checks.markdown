@@ -8,8 +8,8 @@ AppendCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 ArquillianCheck | .java | |
 AssertEqualsCheck | .java | |
 AttributeOrderCheck | .java | |
-BNDDeprecatedAppBNDsCheck | .bnd | Checks for redundant `app.bnd` in deprecated or archived modules |
-BNDSuiteCheck | .bnd | Checks that deprecated apps are moved to the `archived` folder |
+[BNDDeprecatedAppBNDsCheck](checks/bnd_deprecated_app_bnds_check.markdown#bnddeprecatedappbndscheck) | .bnd | Checks for redundant `app.bnd` in deprecated or archived modules |
+[BNDSuiteCheck](checks/bnd_suite_check.markdown#bndsuitecheck) | .bnd | Checks that deprecated apps are moved to the `archived` folder |
 CDNCheck | | |
 CQLKeywordCheck | .cql | |
 CSSCommentsCheck | .css or .scss | |
@@ -18,7 +18,7 @@ CSSHexColorsCheck | .css or .scss | |
 CSSImportsCheck | .css or .scss | |
 CSSPropertiesOrderCheck | .css or .scss | |
 CamelCaseNameCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-CodeownersFileLocationCheck | CODEOWNERS | |
+[CodeownersFileLocationCheck](checks/codeowners_file_location_check.markdown#codeownersfilelocationcheck) | CODEOWNERS | |
 CodeownersWhitespaceCheck | CODEOWNERS | |
 CompatClassImportsCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 ConcatCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
@@ -26,7 +26,7 @@ ConfigDefinitionKeysCheck | .cfg or .config | |
 ConstantNameCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 ConstructorMissingEmptyLineCheck | .java | |
 ContractionsCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-CopyrightCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[CopyrightCheck](checks/copyright_check.markdown#copyrightcheck) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [CreationMenuBuilderCheck](checks/builder_check.markdown#buildercheck) | .java | |
 DeprecatedUsageCheck | .java | |
 DockerfileEmptyLinesCheck | Dockerfile | |
@@ -48,10 +48,10 @@ FTLWhitespaceCheck | .ftl | |
 FactoryCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 FilterStringWhitespaceCheck | .java | |
 FullyQualifiedNameCheck | .java | |
-GetterUtilCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[GetterUtilCheck](checks/getter_util_check.markdown#getterutilcheck) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 GradleBlockOrderCheck | .gradle | |
 GradleBodyCheck | .gradle | |
-GradleDependenciesCheck | .gradle | |
+[GradleDependenciesCheck](checks/gradle_dependencies_check.markdown#gradledependenciescheck) | .gradle | |
 GradleDependencyConfigurationCheck | .gradle | |
 GradleDependencyVersionCheck | .gradle | |
 GradleExportedPackageDependenciesCheck | .gradle | |
@@ -60,12 +60,12 @@ GradleIndentationCheck | .gradle | |
 GradleJavaVersionCheck | .gradle | |
 GradlePropertiesCheck | .gradle | |
 GradleProvidedDependenciesCheck | .gradle | |
-GradleRequiredDependenciesCheck | .gradle | |
+[GradleRequiredDependenciesCheck](checks/gradle_required_dependencies_check.markdown#gradlerequireddependenciescheck) | .gradle | |
 GradleStylingCheck | .gradle | |
 GradleTestDependencyVersionCheck | .gradle | |
 HTMLEmptyLinesCheck | .html | |
 HTMLWhitespaceCheck | .html | |
-IncorrectFileLocationCheck | | |
+[IncorrectFileLocationCheck](checks/incorrect_file_location_check.markdown#incorrectfilelocationcheck) | | |
 InstanceofOrderCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [ItemListBuilderCheck](checks/builder_check.markdown#buildercheck) | .java | |
 JSLodashDependencyCheck | .js or .jsx | |

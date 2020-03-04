@@ -18,18 +18,18 @@ BNDBundleCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-
 [BNDBundleInformationCheck](checks/bnd_bundle_information_check.markdown#bndbundleinformationcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Validates property values for `Bundle-Version`, `Bundle-Name` and `Bundle-SymbolicName` |
 BNDCapabilityCheck | [Styling](styling_checks.markdown#styling-checks) | .bnd | Sorts and applies logic to fix line breaks to property values for `Provide-Capability` and `Require-Capability` |
 [BNDDefinitionKeysCheck](checks/bnd_definition_keys_check.markdown#bnddefinitionkeyscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Validates definition keys in `.bnd` files |
-BNDDeprecatedAppBNDsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .bnd | Checks for redundant `app.bnd` in deprecated or archived modules |
+[BNDDeprecatedAppBNDsCheck](checks/bnd_deprecated_app_bnds_check.markdown#bnddeprecatedappbndscheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .bnd | Checks for redundant `app.bnd` in deprecated or archived modules |
 [BNDDirectoryNameCheck](checks/bnd_directory_name_check.markdown#bnddirectorynamecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Checks if the directory names of the submodules match the parent module name |
 [BNDExportsCheck](checks/bnd_exports_check.markdown#bndexportscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Checks that modules not ending with `-api`, `-client`, `-spi`, `-tablig`, `-test-util` do not export packages |
-BNDImportsCheck | [Styling](styling_checks.markdown#styling-checks) | .bnd | Sorts class names and checks for use of wildcards in property values for `-conditionalpackage`, `-exportcontents` and `Export-Package` |
+[BNDImportsCheck](checks/bnd_imports_check.markdown#bndimportscheck) | [Styling](styling_checks.markdown#styling-checks) | .bnd | Sorts class names and checks for use of wildcards in property values for `-conditionalpackage`, `-exportcontents` and `Export-Package` |
 [BNDIncludeResourceCheck](checks/bnd_include_resource_check.markdown#bndincluderesourcecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Checks for unnesecarry including of `test-classes/integration` |
 BNDLineBreaksCheck | [Styling](styling_checks.markdown#styling-checks) | .bnd | Checks for incorrect/missing line breaks |
-BNDMultipleAppBNDsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Checks for duplicate `app.bnd` (when both `/apps/` and `/apps/dxp/` contain the same module) |
-BNDRangeCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Checks for use or range expressions |
+[BNDMultipleAppBNDsCheck](checks/bnd_multiple_app_bnds_check.markdown#bndmultipleappbndscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Checks for duplicate `app.bnd` (when both `/apps/` and `/apps/dxp/` contain the same module) |
+[BNDRangeCheck](checks/bnd_range_check.markdown#bndrangecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Checks for use or range expressions |
 BNDRunInstructionsOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .bndrun | Sorts definition keys alphabetically |
 [BNDSchemaVersionCheck](checks/bnd_schema_version_check.markdown#bndschemaversioncheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Checks for incorrect use of property `Liferay-Require-SchemaVersion` |
 BNDStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .bnd | Applies rules to enforce consisteny in code style |
-BNDSuiteCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .bnd | Checks that deprecated apps are moved to the `archived` folder |
+[BNDSuiteCheck](checks/bnd_suite_check.markdown#bndsuitecheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .bnd | Checks that deprecated apps are moved to the `archived` folder |
 [BNDWebContextPathCheck](checks/bnd_web_context_path_check.markdown#bndwebcontextpathcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .bnd | Checks if the property value for `Web-ContextPath` matches the module directory |
 BNDWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | .bnd | Checks for incorrect/missing line whitespace |
 CDNCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | | |
@@ -41,7 +41,7 @@ CSSImportsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-ch
 CSSPropertiesOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .css or .scss | |
 CamelCaseNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [ChainingCheck](checks/chaining_check.markdown#chainingcheck) | [Styling](styling_checks.markdown#styling-checks) | .java | Checks that chaining is only applied on certain types and methods |
-CodeownersFileLocationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | CODEOWNERS | |
+[CodeownersFileLocationCheck](checks/codeowners_file_location_check.markdown#codeownersfilelocationcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | CODEOWNERS | |
 CodeownersWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | CODEOWNERS | |
 CompatClassImportsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 ConcatCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
@@ -49,7 +49,7 @@ ConfigDefinitionKeysCheck | [Miscellaneous](miscellaneous_checks.markdown#miscel
 ConstantNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 ConstructorMissingEmptyLineCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 ContractionsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-CopyrightCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[CopyrightCheck](checks/copyright_check.markdown#copyrightcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [CreationMenuBuilderCheck](checks/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 [DefaultComesLastCheck](https://checkstyle.sourceforge.io/config_coding.html#DefaultComesLast) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Check that the default is after all the cases in a switch statement. |
 DeprecatedUsageCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
@@ -73,10 +73,10 @@ FactoryCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-check
 FilterStringWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 [FrameworkBundleCheck](checks/framework_bundle_check.markdown#frameworkbundlecheck) | [Performance](performance_checks.markdown#performance-checks) | .java | Checks that `org.osgi.framework.Bundle.getHeaders()` is not used |
 FullyQualifiedNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
-GetterUtilCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[GetterUtilCheck](checks/getter_util_check.markdown#getterutilcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 GradleBlockOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
 GradleBodyCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
-GradleDependenciesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
+[GradleDependenciesCheck](checks/gradle_dependencies_check.markdown#gradledependenciescheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
 [GradleDependencyArtifactsCheck](checks/gradle_dependency_artifacts_check.markdown#gradledependencyartifactscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .gradle | Checks that value `default` is not used for attribute `version` |
 GradleDependencyConfigurationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
 GradleDependencyVersionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
@@ -86,13 +86,13 @@ GradleIndentationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellan
 GradleJavaVersionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
 GradlePropertiesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
 GradleProvidedDependenciesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
-GradleRequiredDependenciesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
+[GradleRequiredDependenciesCheck](checks/gradle_required_dependencies_check.markdown#gradlerequireddependenciescheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
 GradleStylingCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
 [GradleTaskCreationCheck](checks/gradle_task_creation_check.markdown#gradletaskcreationcheck) | [Styling](styling_checks.markdown#styling-checks) | .gradle | Checks that a task is declared on a separate line before the closure |
 GradleTestDependencyVersionCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .gradle | |
 HTMLEmptyLinesCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .html | |
 HTMLWhitespaceCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .html | |
-IncorrectFileLocationCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | | |
+[IncorrectFileLocationCheck](checks/incorrect_file_location_check.markdown#incorrectfilelocationcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | | |
 InstanceofOrderCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [ItemListBuilderCheck](checks/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | |
 JSLodashDependencyCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .js or .jsx | |

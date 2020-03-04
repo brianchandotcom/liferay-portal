@@ -65,6 +65,18 @@ const initialDragDrop = {
 	targetPosition: null,
 };
 
+const isAncestor = (item, layoutData, childId) => {
+	const child = layoutData.items[childId];
+
+	if (child) {
+		return child.itemId !== item.itemId
+			? isAncestor(item, layoutData, child.parentId)
+			: true;
+	}
+
+	return false;
+};
+
 export const DragDropManagerImpl = React.createContext(initialDragDrop);
 
 export const DragDropManager = ({children}) => {
@@ -164,6 +176,15 @@ export default function useDragAndDrop({
 					targetPosition: TARGET_POSITION.MIDDLE,
 				});
 
+				return;
+			}
+
+			const isDroppableAncestor = isAncestor(
+				_item,
+				layoutData,
+				item.itemId
+			);
+			if (isDroppableAncestor) {
 				return;
 			}
 

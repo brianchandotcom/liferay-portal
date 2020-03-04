@@ -3,6 +3,19 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.data.engine">
 	<namespace>DE</namespace>
+	<entity local-service="true" name="DataDefinitionApp" remote-service="true">
+		<reference entity="DataLayoutApp" package-path="com.liferay.data.engine" />
+		<reference entity="DataRecordCollectionApp" package-path="com.liferay.data.engine" />
+	</entity>
+	<entity local-service="true" name="DataLayoutApp" remote-service="true">
+
+	</entity>
+	<entity local-service="true" name="DataRecordApp" remote-service="true">
+
+	</entity>
+	<entity local-service="true" name="DataRecordCollectionApp" remote-service="true">
+
+	</entity>
 	<entity local-service="true" name="DEDataDefinitionFieldLink" remote-service="false" uuid="true">
 
 		<!-- PK fields -->

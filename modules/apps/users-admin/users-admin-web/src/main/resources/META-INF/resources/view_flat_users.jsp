@@ -32,6 +32,7 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
+String domain = ParamUtil.getString(request, "domain", "company-users");
 String navigation = ParamUtil.getString(request, "navigation", "active");
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-users");
 
@@ -48,7 +49,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 
 request.setAttribute(UsersAdminWebKeys.STATUS, status);
 
-ViewUsersManagementToolbarDisplayContext viewUsersManagementToolbarDisplayContext = new ViewUsersManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle, navigation, status);
+ViewUsersManagementToolbarDisplayContext viewUsersManagementToolbarDisplayContext = new ViewUsersManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle, domain, navigation, status);
 
 SearchContainer searchContainer = viewUsersManagementToolbarDisplayContext.getSearchContainer();
 

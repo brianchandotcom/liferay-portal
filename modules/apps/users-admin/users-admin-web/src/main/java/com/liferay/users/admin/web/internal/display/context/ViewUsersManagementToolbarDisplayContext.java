@@ -62,13 +62,14 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 	public ViewUsersManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse, String displayStyle, String navigation,
-		int status) {
+		RenderResponse renderResponse, String displayStyle, String domain,
+		String navigation, int status) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
+		_domain = domain;
 		_navigation = navigation;
 		_status = status;
 
@@ -386,6 +387,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 	private final PortletURL _currentURL;
 	private final String _displayStyle;
+	private final String _domain;
 	private final HttpServletRequest _httpServletRequest;
 	private final String _navigation;
 	private final RenderRequest _renderRequest;

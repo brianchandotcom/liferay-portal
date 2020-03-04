@@ -302,7 +302,12 @@
 <!--SECTION-->
 <tr>
 	<td>SECTION</td>
-	<td>//section[contains(@class,'fragment-entry-link')][${key_position}]</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROW</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Row')][${key_position}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -374,7 +379,7 @@
 <!--SECTION_BUILDER-->
 <tr>
 	<td>SECTION_BUILDER_FRAGMENTS</td>
-	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'fragment-card') and contains(.,'${key_fragmentName}')]</td>
+	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'card') and contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

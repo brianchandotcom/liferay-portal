@@ -8,8 +8,8 @@ Import-Package:\
 	*
 Main-Class: com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilder
 -includeresource:\
-	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/ArgumentsMap.class,\
-	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/io/unsync/*,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/log/*,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/util/*
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/*,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/*,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/*

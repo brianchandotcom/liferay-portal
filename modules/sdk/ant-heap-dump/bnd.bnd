@@ -3,5 +3,5 @@ Bundle-SymbolicName: com.liferay.ant.heap.dump
 Bundle-Version: 1.0.3
 Export-Package: com.liferay.ant.heap.dump
 -includeresource:\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/log/*,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/util/*
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/*,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/*

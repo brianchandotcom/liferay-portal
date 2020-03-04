@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Portal Cache Multiple
 Bundle-SymbolicName: com.liferay.portal.cache.multiple
 Bundle-Version: 4.0.4
--includeresource: @com.liferay.util.java-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/util/SerializableUtil.class
+-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/SerializableUtil.class

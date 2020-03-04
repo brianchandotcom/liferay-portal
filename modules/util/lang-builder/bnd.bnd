@@ -11,20 +11,20 @@ Main-Class: com.liferay.lang.builder.LangBuilder
 	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
 	@com.liferay.petra.nio-*.jar!/com/liferay/petra/nio/CharsetEncoderUtil.class,\
 	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/*.class,\
-	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/ArgumentsMap.class,\
-	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
-	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/GitException.class,\
-	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/GitUtil.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/exception/NestableException.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/exception/PortalException.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/io/OutputStreamWriter.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedWriter.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringWriter.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/language/LanguageConstants.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/language/LanguageValidator.class,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/log/*,\
-	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/util/*
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/GitException.class,\
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/GitUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/exception/NestableException.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/exception/PortalException.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/OutputStreamWriter.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedWriter.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringWriter.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/language/LanguageConstants.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/language/LanguageValidator.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/*,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/*

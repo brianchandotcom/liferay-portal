@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Portal Upgrade Test
 Bundle-SymbolicName: com.liferay.portal.upgrade.test
 Bundle-Version: 1.0.0
--includeresource: @com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/META-INF/portal-hbm.xml
+-includeresource: @com.liferay.portal.impl-*.jar!/META-INF/portal-hbm.xml

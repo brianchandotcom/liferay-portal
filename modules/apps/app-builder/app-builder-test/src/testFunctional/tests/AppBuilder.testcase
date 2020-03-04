@@ -2081,7 +2081,6 @@ definition {
 		FormViewBuilder.validateFieldInObject(fieldLabel = "Text");
 
 		FormViewBuilder.validateFieldInObject(fieldLabel = "Select from List");
-
 	}
 
 	@description = "Search for a deployment in the deployment lists"

@@ -139,13 +139,34 @@ definition {
 			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
+	macro addLayoutRow {
+		PageEditor.gotoTab(tabName = "Fragments");
+
+		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fragmentName = "Row",
+			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+			value1 = "");
+
+		PageEditorConfiguration.changeConfigSelection(
+			fragmentName = "Row",
+			optionValue = "${columnCount}");
+
+		AssertVisible(
+			key_position = "1",
+			locator1 = "PageEditor#ROW");
+	}
+
 	macro addLayoutSection {
 		PageEditor.gotoTab(tabName = "Fragments");
 
-		PageEditor.expandFragmentCollection(collectionName = "Layouts");
+		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
-			locator1 = "PageEditor#SECTION_BUILDER_LAYOUTS_${columnCount}_COLUMN",
+			key_fragmentName = "Section",
+			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
 
@@ -564,6 +585,65 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
+	macro editLayoutRow {
+		Click(
+			key_position = "1",
+			locator1 = "PageEditor#ROW");
+
+		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+
+		if (isSet(columnCount)) {
+			Select(
+				key_fieldLabel = "Number of Columns",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${columnCount}");	}
+
+		if ("${spaceBetweenColumns}" == "true") {
+			Check.checkToggleSwitch(
+				checkboxName = "Columns Gutter",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if ("${spaceBetweenColumns}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Columns Gutter",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		PageEditor.waitForAutoSave();
+	}
+
+	macro editLayoutSection {
+		Click(
+			key_position = "1",
+			locator1 = "PageEditor#SECTION");
+
+		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+
+		if (isSet(container)) {
+			Select(
+				key_fieldLabel = "Container",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${container}");
+		}
+
+		if (isSet(paddingTop)) {
+			Select(
+				key_fieldLabel = "Padding Top",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${paddingTop}");
+		}
+
+		if (isSet(paddingBottom)) {
+			Select(
+				key_fieldLabel = "Padding Bottom",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${paddingBottom}");
+		}
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro editLayoutSectionImage {
 		Click(
 			key_position = "1",
@@ -584,58 +664,6 @@ definition {
 			value1 = "Image");
 
 		SelectFrame(value1 = "relative=top");
-
-		PageEditor.waitForAutoSave();
-	}
-
-	macro editLayoutSectionSpacing {
-		Click(
-			key_position = "1",
-			locator1 = "PageEditor#SECTION");
-
-		Click(
-			key_button = "Spacing",
-			locator1 = "PageEditor#SECTION_PROPERTIES_BUTTON");
-
-		if (isSet(numberOfColumns)) {
-			Select(
-				key_fieldLabel = "Number of Columns",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${numberOfColumns}");
-		}
-
-		if (isSet(container)) {
-			Select(
-				key_fieldLabel = "Container",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${container}");
-		}
-
-		if (isSet(paddingV)) {
-			Select(
-				key_fieldLabel = "Padding V",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${paddingV}");
-		}
-
-		if (isSet(paddingH)) {
-			Select(
-				key_fieldLabel = "Padding H",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${paddingH}");
-		}
-
-		if ("${spaceBetweenColumns}" == "true") {
-			Check.checkToggleSwitch(
-				checkboxName = "Space Between Columns",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		if ("${spaceBetweenColumns}" == "false") {
-			Uncheck.uncheckToggleSwitch(
-				checkboxName = "Space Between Columns",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
 
 		PageEditor.waitForAutoSave();
 	}

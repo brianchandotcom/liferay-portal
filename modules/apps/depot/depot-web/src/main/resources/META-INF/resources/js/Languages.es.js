@@ -23,7 +23,8 @@ import ManageLanguages from './ManageLanguages.es';
 
 import '../css/Languages.scss';
 
-const getLocalesInputValue = arr => arr.map(({localeId}) => localeId).join(',');
+export const getLocalesInputValue = arr =>
+	arr.map(({localeId}) => localeId).join(',');
 
 const Languages = ({
 	availableLocales,

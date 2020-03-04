@@ -20,7 +20,9 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
-import Languages from '../src/main/resources/META-INF/resources/js/Languages.es';
+import Languages, {
+	getLocalesInputValue,
+} from '../src/main/resources/META-INF/resources/js/Languages.es';
 
 const availableLocales = [
 	{displayName: 'a', localeId: 'a'},
@@ -100,15 +102,17 @@ describe('Languages', () => {
 		).not.toBeNull();
 		expect(
 			getByDisplayValue(
-				defaultProps.siteAvailableLocales
-					.map(({localeId}) => localeId)
-					.join()
+				getLocalesInputValue(defaultProps.siteAvailableLocales)
 			)
 		).not.toBeNull();
 	});
 
 	it('changes the default language', () => {
-		const {container, getAllByText} = renderLanguagesComponent({
+		const {
+			container,
+			getAllByText,
+			getByDisplayValue,
+		} = renderLanguagesComponent({
 			...defaultProps,
 			inheritLocales: false,
 		});
@@ -122,6 +126,7 @@ describe('Languages', () => {
 		const firstElement = container.querySelectorAll('tbody > tr')[0];
 
 		expect(firstElement.querySelector('.label-info')).not.toBeNull();
+		expect(getByDisplayValue(availableLocales[0].localeId)).not.toBeNull();
 	});
 
 	it('fires default locale changed event', () => {
@@ -210,6 +215,11 @@ describe('Languages', () => {
 			);
 
 			expect(languagesList).toHaveLength(1);
+			expect(
+				result.getAllByDisplayValue(
+					getLocalesInputValue([defaultProps.siteAvailableLocales[1]])
+				)
+			).not.toBeNull();
 		});
 
 		it('add custom locale and save', async () => {
@@ -226,6 +236,14 @@ describe('Languages', () => {
 			);
 
 			expect(languagesList).toHaveLength(3);
+			expect(
+				result.getByDisplayValue(
+					getLocalesInputValue([
+						...defaultProps.siteAvailableLocales,
+						defaultProps.availableLocales[2],
+					])
+				)
+			).not.toBeNull();
 		});
 	});
 });

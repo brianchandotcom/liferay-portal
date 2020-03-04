@@ -1337,6 +1337,13 @@ public class LayoutTypePortletImpl
 					PermissionThreadLocal.getPermissionChecker(), layout,
 					portlet, ActionKeys.ADD_TO_PAGE)) {
 
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"User has no permissions to add portlet ",
+							portletId, " to layout ", layout.getPlid()));
+				}
+
 				return null;
 			}
 		}
@@ -1345,6 +1352,12 @@ public class LayoutTypePortletImpl
 		}
 
 		if (portlet.isSystem()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Portlet " + portletId +
+						" cannot be added because it is a system portlet");
+			}
+
 			return null;
 		}
 
@@ -1357,6 +1370,14 @@ public class LayoutTypePortletImpl
 		}
 
 		if (hasPortletId(portletId, strictHasPortlet)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Portlet ", portletId, " cannot be added to layout ",
+						layout.getPlid(), " because it already has other ",
+						"portlet with same id"));
+			}
+
 			return null;
 		}
 
@@ -1371,12 +1392,27 @@ public class LayoutTypePortletImpl
 		}
 
 		if (columnId == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Portlet ", portletId, " cannot be added to layout ",
+						layout.getPlid(), " because columnId is null"));
+			}
+
 			return null;
 		}
 
 		if (isColumnCustomizable(columnId)) {
 			if (isColumnDisabled(columnId) &&
 				!columnId.startsWith(_NESTED_PORTLETS_NAMESPACE)) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Portlet ", portletId,
+							" cannot be added to layout ", layout.getPlid(),
+							" because column ", columnId, " is disabled "));
+				}
 
 				return null;
 			}

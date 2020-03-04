@@ -89,6 +89,24 @@ describe('Languages', () => {
 		expect(getByText('edit'));
 	});
 
+	it('renders inputs with the default values', () => {
+		const {getByDisplayValue} = renderLanguagesComponent({
+			...defaultProps,
+			inheritLocales: false,
+		});
+
+		expect(
+			getByDisplayValue(defaultProps.siteDefaultLocaleId)
+		).not.toBeNull();
+		expect(
+			getByDisplayValue(
+				defaultProps.siteAvailableLocales
+					.map(({localeId}) => localeId)
+					.join()
+			)
+		).not.toBeNull();
+	});
+
 	it('changes the default language', () => {
 		const {container, getAllByText} = renderLanguagesComponent({
 			...defaultProps,

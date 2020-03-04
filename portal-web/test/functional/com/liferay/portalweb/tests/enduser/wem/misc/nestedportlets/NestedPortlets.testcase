@@ -48,7 +48,9 @@ definition {
 			defaultColumnName = "2 Columns (50/50)",
 			portletName = "Nested Applications");
 
-		Navigator.gotoPage(pageName = "Nested Portlets Page");
+		Click(locator1 = "Icon#CLOSE");
+
+		WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
 
 		NestedPortlets.dragAndDropPortletToPortletColumnPG(
 			columnNumberFrom = "2",

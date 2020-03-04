@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Redirect API
+Bundle-SymbolicName: com.liferay.redirect.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.redirect.exception,\
+	com.liferay.redirect.model,\
+	com.liferay.redirect.service,\
+	com.liferay.redirect.service.persistence

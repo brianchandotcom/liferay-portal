@@ -1002,6 +1002,9 @@ components:
             type: object
         FragmentImage:
             properties:
+                description:
+                    oneOf:
+                        - $ref: "#/components/schemas/InlineValue"
                 title:
                     oneOf:
                         - $ref: "#/components/schemas/InlineValue"

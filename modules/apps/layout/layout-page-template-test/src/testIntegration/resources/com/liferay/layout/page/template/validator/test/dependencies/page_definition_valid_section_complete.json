@@ -17,6 +17,13 @@
 			{
 				"definition" : {
 					"backgroundImage" : {
+						"description" : {
+							"value": "This is Liferay",
+							"value_i18n": {
+								"en_US" : "This is Liferay",
+								"es_ES" : "This is Liferay Spain User Group"
+							}
+						},
 						"title" : {
 							"value": "Liferay",
 							"value_i18n": {

@@ -11,6 +11,12 @@
 							"id" : "image-square",
 							"value": {
 								"fragmentImage": {
+									"description" : {
+										"value_i18n": {
+											"en_US" : "A greeting to Liferay",
+											"es_ES" : "Un saludo para Liferay España"
+										}
+									},
 									"title" : {
 										"value_i18n": {
 											"en_US" : "Hello Liferay!",

@@ -135,20 +135,13 @@ public class RatingsTag extends IncludeTag {
 			}
 
 			httpServletRequest.setAttribute(
-				"liferay-ui:ratings:ratingsEntry", _ratingsEntry);
-			httpServletRequest.setAttribute(
-				"liferay-ui:ratings:ratingsStats", _ratingsStats);
-			httpServletRequest.setAttribute(
-				"liferay-ui:ratings:setRatingsEntry",
-				String.valueOf(_setRatingsEntry));
-			httpServletRequest.setAttribute(
-				"liferay-ui:ratings:setRatingsStats",
-				String.valueOf(_setRatingsStats));
-
-			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:type", _type);
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:url", _url);
+			httpServletRequest.setAttribute(
+				"liferay:ratings:ratings:ratingsEntry", _ratingsEntry);
+			httpServletRequest.setAttribute(
+				"liferay:ratings:ratings:ratingsStats", _ratingsStats);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

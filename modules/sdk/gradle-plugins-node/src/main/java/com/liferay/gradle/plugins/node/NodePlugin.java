@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.node;
 
-import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.internal.util.StringUtil;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
@@ -59,7 +58,6 @@ import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
-import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.jvm.tasks.Jar;
@@ -135,7 +133,6 @@ public class NodePlugin implements Plugin<Project> {
 					_configureTasksExecutePackageManagerArgs(
 						project, nodeExtension);
 					_configureTasksNpmInstall(project, nodeExtension);
-					_configureTasksPackageRun(project);
 				}
 
 			});
@@ -606,33 +603,6 @@ public class NodePlugin implements Plugin<Project> {
 		npmInstallTask.setNpmVersion(nodeExtension.getNpmVersion());
 	}
 
-	private void _configureTaskPackageRun(PackageRunTask packageRunTask) {
-		Project project = packageRunTask.getProject();
-
-		PluginContainer pluginContainer = project.getPlugins();
-
-		if (pluginContainer.hasPlugin(JavaPlugin.class)) {
-			SourceSet sourceSet = GradleUtil.getSourceSet(
-				packageRunTask.getProject(), SourceSet.MAIN_SOURCE_SET_NAME);
-
-			File javaClassesDir = FileUtil.getJavaClassesDir(sourceSet);
-
-			if (!javaClassesDir.exists()) {
-				TaskOutputs taskOutputs = packageRunTask.getOutputs();
-
-				taskOutputs.upToDateWhen(
-					new Spec<Task>() {
-
-						@Override
-						public boolean isSatisfiedBy(Task task) {
-							return false;
-						}
-
-					});
-			}
-		}
-	}
-
 	@SuppressWarnings("serial")
 	private void _configureTaskPackageRunBuildForJavaPlugin(
 		final PackageRunBuildTask packageRunBuildTask) {
@@ -900,21 +870,6 @@ public class NodePlugin implements Plugin<Project> {
 				@Override
 				public void execute(NpmInstallTask npmInstallTask) {
 					_configureTaskNpmInstall(npmInstallTask, nodeExtension);
-				}
-
-			});
-	}
-
-	private void _configureTasksPackageRun(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			PackageRunTask.class,
-			new Action<PackageRunTask>() {
-
-				@Override
-				public void execute(PackageRunTask packageRunTask) {
-					_configureTaskPackageRun(packageRunTask);
 				}
 
 			});

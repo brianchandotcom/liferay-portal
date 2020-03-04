@@ -221,4 +221,34 @@ public interface RedirectEntryModel
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the destination url of this redirect entry.
+	 *
+	 * @return the destination url of this redirect entry
+	 */
+	@AutoEscape
+	public String getDestinationURL();
+
+	/**
+	 * Sets the destination url of this redirect entry.
+	 *
+	 * @param destinationURL the destination url of this redirect entry
+	 */
+	public void setDestinationURL(String destinationURL);
+
+	/**
+	 * Returns the source url of this redirect entry.
+	 *
+	 * @return the source url of this redirect entry
+	 */
+	@AutoEscape
+	public String getSourceURL();
+
+	/**
+	 * Sets the source url of this redirect entry.
+	 *
+	 * @param sourceURL the source url of this redirect entry
+	 */
+	public void setSourceURL(String sourceURL);
+
 }

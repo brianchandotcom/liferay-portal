@@ -11,5 +11,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="destinationURL" type="String" />
+		<field name="sourceURL" type="String" />
 	</model>
 </model-hints>

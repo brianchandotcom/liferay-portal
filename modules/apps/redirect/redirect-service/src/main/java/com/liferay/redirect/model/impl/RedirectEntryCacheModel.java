@@ -77,7 +77,7 @@ public class RedirectEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -97,6 +97,10 @@ public class RedirectEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", destinationURL=");
+		sb.append(destinationURL);
+		sb.append(", sourceURL=");
+		sb.append(sourceURL);
 		sb.append("}");
 
 		return sb.toString();
@@ -141,6 +145,20 @@ public class RedirectEntryCacheModel
 			redirectEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (destinationURL == null) {
+			redirectEntryImpl.setDestinationURL("");
+		}
+		else {
+			redirectEntryImpl.setDestinationURL(destinationURL);
+		}
+
+		if (sourceURL == null) {
+			redirectEntryImpl.setSourceURL("");
+		}
+		else {
+			redirectEntryImpl.setSourceURL(sourceURL);
+		}
+
 		redirectEntryImpl.resetOriginalValues();
 
 		return redirectEntryImpl;
@@ -161,6 +179,8 @@ public class RedirectEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		destinationURL = objectInput.readUTF();
+		sourceURL = objectInput.readUTF();
 	}
 
 	@Override
@@ -191,6 +211,20 @@ public class RedirectEntryCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (destinationURL == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(destinationURL);
+		}
+
+		if (sourceURL == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(sourceURL);
+		}
 	}
 
 	public long mvccVersion;
@@ -202,5 +236,7 @@ public class RedirectEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String destinationURL;
+	public String sourceURL;
 
 }

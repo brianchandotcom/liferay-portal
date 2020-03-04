@@ -73,7 +73,8 @@ public class RedirectEntryModelImpl
 		{"redirectEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}
+		{"modifiedDate", Types.TIMESTAMP}, {"destinationURL", Types.VARCHAR},
+		{"sourceURL", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -89,10 +90,12 @@ public class RedirectEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("destinationURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("sourceURL", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RedirectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,redirectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+		"create table RedirectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,redirectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,destinationURL VARCHAR(75) null,sourceURL VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RedirectEntry";
 
@@ -290,6 +293,16 @@ public class RedirectEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<RedirectEntry, Date>)RedirectEntry::setModifiedDate);
+		attributeGetterFunctions.put(
+			"destinationURL", RedirectEntry::getDestinationURL);
+		attributeSetterBiConsumers.put(
+			"destinationURL",
+			(BiConsumer<RedirectEntry, String>)
+				RedirectEntry::setDestinationURL);
+		attributeGetterFunctions.put("sourceURL", RedirectEntry::getSourceURL);
+		attributeSetterBiConsumers.put(
+			"sourceURL",
+			(BiConsumer<RedirectEntry, String>)RedirectEntry::setSourceURL);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -454,6 +467,36 @@ public class RedirectEntryModelImpl
 	}
 
 	@Override
+	public String getDestinationURL() {
+		if (_destinationURL == null) {
+			return "";
+		}
+		else {
+			return _destinationURL;
+		}
+	}
+
+	@Override
+	public void setDestinationURL(String destinationURL) {
+		_destinationURL = destinationURL;
+	}
+
+	@Override
+	public String getSourceURL() {
+		if (_sourceURL == null) {
+			return "";
+		}
+		else {
+			return _sourceURL;
+		}
+	}
+
+	@Override
+	public void setSourceURL(String sourceURL) {
+		_sourceURL = sourceURL;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(RedirectEntry.class.getName()));
@@ -504,6 +547,8 @@ public class RedirectEntryModelImpl
 		redirectEntryImpl.setUserName(getUserName());
 		redirectEntryImpl.setCreateDate(getCreateDate());
 		redirectEntryImpl.setModifiedDate(getModifiedDate());
+		redirectEntryImpl.setDestinationURL(getDestinationURL());
+		redirectEntryImpl.setSourceURL(getSourceURL());
 
 		redirectEntryImpl.resetOriginalValues();
 
@@ -632,6 +677,22 @@ public class RedirectEntryModelImpl
 			redirectEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		redirectEntryCacheModel.destinationURL = getDestinationURL();
+
+		String destinationURL = redirectEntryCacheModel.destinationURL;
+
+		if ((destinationURL != null) && (destinationURL.length() == 0)) {
+			redirectEntryCacheModel.destinationURL = null;
+		}
+
+		redirectEntryCacheModel.sourceURL = getSourceURL();
+
+		String sourceURL = redirectEntryCacheModel.sourceURL;
+
+		if ((sourceURL != null) && (sourceURL.length() == 0)) {
+			redirectEntryCacheModel.sourceURL = null;
+		}
+
 		return redirectEntryCacheModel;
 	}
 
@@ -723,6 +784,8 @@ public class RedirectEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _destinationURL;
+	private String _sourceURL;
 	private long _columnBitmask;
 	private RedirectEntry _escapedModel;
 

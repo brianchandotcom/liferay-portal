@@ -52,6 +52,8 @@ public class RedirectEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("destinationURL", getDestinationURL());
+		attributes.put("sourceURL", getSourceURL());
 
 		return attributes;
 	}
@@ -111,6 +113,18 @@ public class RedirectEntryWrapper
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
+
+		String destinationURL = (String)attributes.get("destinationURL");
+
+		if (destinationURL != null) {
+			setDestinationURL(destinationURL);
+		}
+
+		String sourceURL = (String)attributes.get("sourceURL");
+
+		if (sourceURL != null) {
+			setSourceURL(sourceURL);
+		}
 	}
 
 	/**
@@ -131,6 +145,16 @@ public class RedirectEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the destination url of this redirect entry.
+	 *
+	 * @return the destination url of this redirect entry
+	 */
+	@Override
+	public String getDestinationURL() {
+		return model.getDestinationURL();
 	}
 
 	/**
@@ -181,6 +205,16 @@ public class RedirectEntryWrapper
 	@Override
 	public long getRedirectEntryId() {
 		return model.getRedirectEntryId();
+	}
+
+	/**
+	 * Returns the source url of this redirect entry.
+	 *
+	 * @return the source url of this redirect entry
+	 */
+	@Override
+	public String getSourceURL() {
+		return model.getSourceURL();
 	}
 
 	/**
@@ -249,6 +283,16 @@ public class RedirectEntryWrapper
 	}
 
 	/**
+	 * Sets the destination url of this redirect entry.
+	 *
+	 * @param destinationURL the destination url of this redirect entry
+	 */
+	@Override
+	public void setDestinationURL(String destinationURL) {
+		model.setDestinationURL(destinationURL);
+	}
+
+	/**
 	 * Sets the group ID of this redirect entry.
 	 *
 	 * @param groupId the group ID of this redirect entry
@@ -296,6 +340,16 @@ public class RedirectEntryWrapper
 	@Override
 	public void setRedirectEntryId(long redirectEntryId) {
 		model.setRedirectEntryId(redirectEntryId);
+	}
+
+	/**
+	 * Sets the source url of this redirect entry.
+	 *
+	 * @param sourceURL the source url of this redirect entry
+	 */
+	@Override
+	public void setSourceURL(String sourceURL) {
+		model.setSourceURL(sourceURL);
 	}
 
 	/**

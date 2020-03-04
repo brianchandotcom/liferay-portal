@@ -40,6 +40,8 @@ public class RedirectEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setDestinationURL(model.getDestinationURL());
+		soapModel.setSourceURL(model.getSourceURL());
 
 		return soapModel;
 	}
@@ -165,6 +167,22 @@ public class RedirectEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getDestinationURL() {
+		return _destinationURL;
+	}
+
+	public void setDestinationURL(String destinationURL) {
+		_destinationURL = destinationURL;
+	}
+
+	public String getSourceURL() {
+		return _sourceURL;
+	}
+
+	public void setSourceURL(String sourceURL) {
+		_sourceURL = sourceURL;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _redirectEntryId;
@@ -174,5 +192,7 @@ public class RedirectEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _destinationURL;
+	private String _sourceURL;
 
 }

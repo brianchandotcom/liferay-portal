@@ -140,6 +140,10 @@ public class RedirectEntryPersistenceTest {
 
 		newRedirectEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		newRedirectEntry.setDestinationURL(RandomTestUtil.randomString());
+
+		newRedirectEntry.setSourceURL(RandomTestUtil.randomString());
+
 		_redirectEntries.add(_persistence.update(newRedirectEntry));
 
 		RedirectEntry existingRedirectEntry = _persistence.findByPrimaryKey(
@@ -169,6 +173,12 @@ public class RedirectEntryPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingRedirectEntry.getModifiedDate()),
 			Time.getShortTimestamp(newRedirectEntry.getModifiedDate()));
+		Assert.assertEquals(
+			existingRedirectEntry.getDestinationURL(),
+			newRedirectEntry.getDestinationURL());
+		Assert.assertEquals(
+			existingRedirectEntry.getSourceURL(),
+			newRedirectEntry.getSourceURL());
 	}
 
 	@Test
@@ -226,7 +236,7 @@ public class RedirectEntryPersistenceTest {
 			"RedirectEntry", "mvccVersion", true, "uuid", true,
 			"redirectEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true);
+			"modifiedDate", true, "destinationURL", true, "sourceURL", true);
 	}
 
 	@Test
@@ -483,6 +493,10 @@ public class RedirectEntryPersistenceTest {
 		redirectEntry.setCreateDate(RandomTestUtil.nextDate());
 
 		redirectEntry.setModifiedDate(RandomTestUtil.nextDate());
+
+		redirectEntry.setDestinationURL(RandomTestUtil.randomString());
+
+		redirectEntry.setSourceURL(RandomTestUtil.randomString());
 
 		_redirectEntries.add(_persistence.update(redirectEntry));
 

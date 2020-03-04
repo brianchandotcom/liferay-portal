@@ -53,7 +53,13 @@ definition {
 
 			Pause(locator1 = "3000");
 
-			Click.pauseClickAt(locator1 = "Button#ADD");
+			AssertElementPresent.assertVisible(
+				locator1 = "ItemSelector#ADD_BUTTON",
+				value1 = "Add");
+
+			AssertClick(
+				locator1 = "ItemSelector#ADD_BUTTON",
+				value1 = "Add");
 
 			SelectFrameTop(value1 = "relative=top");
 

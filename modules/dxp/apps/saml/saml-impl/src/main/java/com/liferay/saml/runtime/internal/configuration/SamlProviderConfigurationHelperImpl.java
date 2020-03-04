@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.constants.SamlRoleKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
@@ -122,7 +123,9 @@ public class SamlProviderConfigurationHelperImpl
 
 		String role = samlProviderConfiguration.role();
 
-		if (Validator.isNotNull(role) && role.equals("idp")) {
+		if (Validator.isNotNull(role) &&
+			role.equals(SamlRoleKeys.SAML_ROLE_IDP)) {
+
 			return true;
 		}
 
@@ -136,7 +139,9 @@ public class SamlProviderConfigurationHelperImpl
 
 		String role = samlProviderConfiguration.role();
 
-		if (Validator.isNotNull(role) && role.equals("sp")) {
+		if (Validator.isNotNull(role) &&
+			role.equals(SamlRoleKeys.SAML_ROLE_SP)) {
+
 			return true;
 		}
 

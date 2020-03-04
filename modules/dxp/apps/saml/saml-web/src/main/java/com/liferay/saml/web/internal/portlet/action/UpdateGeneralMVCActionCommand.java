@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.constants.SamlRoleKeys;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
@@ -131,13 +132,13 @@ public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (!_samlProviderConfigurationHelper.isRoleIdp() &&
-			samlRole.equals("idp")) {
+			samlRole.equals(SamlRoleKeys.SAML_ROLE_IDP)) {
 
 			return false;
 		}
 
 		if (!_samlProviderConfigurationHelper.isEnabled() && enabled &&
-			samlRole.equals("idp")) {
+			samlRole.equals(SamlRoleKeys.SAML_ROLE_IDP)) {
 
 			return false;
 		}

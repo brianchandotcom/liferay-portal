@@ -22,7 +22,6 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layout.admin.kernel.util.Sitemap;
 import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -187,7 +187,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 			Layout layout = null;
 
-			if (!journalArticleLayoutUuid.equals(StringPool.BLANK)) {
+			if (Validator.isNotNull(journalArticleLayoutUuid)) {
 				layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 					journalArticleLayoutUuid, layoutSet.getGroupId(),
 					layoutSet.isPrivateLayout());

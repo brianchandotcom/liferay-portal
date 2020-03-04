@@ -281,37 +281,31 @@ public class SourceFormatterUtil {
 
 	public static List<File> getSuppressionsFiles(
 		String baseDirName, List<String> allFileNames,
-		SourceFormatterExcludes sourceFormatterExcludes, String... fileNames) {
+		SourceFormatterExcludes sourceFormatterExcludes) {
 
 		List<File> suppressionsFiles = new ArrayList<>();
 
-		String[] includes = new String[fileNames.length];
+		// Find suppressions files in any parent directory
 
-		for (int i = 0; i < fileNames.length; i++) {
-			String fileName = fileNames[i];
+		String parentDirName = baseDirName;
 
-			includes[i] = "**/" + fileName;
+		for (int j = 0; j < ToolsUtil.PORTAL_MAX_DIR_LEVEL; j++) {
+			File suppressionsFile = new File(
+				parentDirName + _SUPPRESSIONS_FILE_NAME);
 
-			// Find suppressions files in any parent directory
-
-			String parentDirName = baseDirName;
-
-			for (int j = 0; j < ToolsUtil.PORTAL_MAX_DIR_LEVEL; j++) {
-				File suppressionsFile = new File(parentDirName + fileName);
-
-				if (suppressionsFile.exists()) {
-					suppressionsFiles.add(suppressionsFile);
-				}
-
-				parentDirName += "../";
+			if (suppressionsFile.exists()) {
+				suppressionsFiles.add(suppressionsFile);
 			}
+
+			parentDirName += "../";
 		}
 
 		// Find suppressions files in any child directory
 
 		List<String> moduleSuppressionsFileNames = filterFileNames(
-			allFileNames, new String[0], includes, sourceFormatterExcludes,
-			true);
+			allFileNames, new String[0],
+			new String[] {"**/" + _SUPPRESSIONS_FILE_NAME},
+			sourceFormatterExcludes, true);
 
 		for (String moduleSuppressionsFileName : moduleSuppressionsFileNames) {
 			moduleSuppressionsFileName = StringUtil.replace(
@@ -686,6 +680,9 @@ public class SourceFormatterUtil {
 	private static final String _DOCUMENTATION_URL =
 		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
 			"/source-formatter/src/main/resources/documentation/checks/";
+
+	private static final String _SUPPRESSIONS_FILE_NAME =
+		"source-formatter-suppressions.xml";
 
 	private static class PathMatchers {
 

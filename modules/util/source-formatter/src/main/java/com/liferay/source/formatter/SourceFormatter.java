@@ -794,9 +794,7 @@ public class SourceFormatter {
 
 		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
 			_sourceFormatterArgs.getBaseDirName(), _allFileNames,
-			_sourceFormatterExcludes, "checkstyle-suppressions.xml",
-			"source-formatter-suppressions.xml",
-			"sourcechecks-suppressions.xml");
+			_sourceFormatterExcludes);
 
 		_sourceFormatterSuppressions = SuppressionsLoader.loadSuppressions(
 			_sourceFormatterArgs.getBaseDirName(), suppressionsFiles);

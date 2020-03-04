@@ -42,8 +42,6 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayConte
 
 <b><liferay-ui:message key="content" /></b>:
 
-<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry_simple_view.jsp#pre" />
-
 <liferay-util:html-top
 	outputKey="document_library_preview_css"
 >
@@ -60,5 +58,3 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayConte
 
 	</div>
 </div>
-
-<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry_simple_view.jsp#post" />

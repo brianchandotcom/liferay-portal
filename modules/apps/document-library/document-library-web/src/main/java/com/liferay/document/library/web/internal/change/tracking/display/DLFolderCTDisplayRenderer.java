@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -105,23 +103,7 @@ public class DLFolderCTDisplayRenderer implements CTDisplayRenderer<DLFolder> {
 			_servletContext.getRequestDispatcher(
 				"/document_library/ct_display/render_folder.jsp");
 
-		ResourceBundleLoader resourceBundleLoader =
-			(ResourceBundleLoader)httpServletRequest.getAttribute(
-				WebKeys.RESOURCE_BUNDLE_LOADER);
-
-		try {
-			httpServletRequest.setAttribute(
-				WebKeys.RESOURCE_BUNDLE_LOADER,
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByBundleSymbolicName(
-						"com.liferay.document.library.web"));
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		finally {
-			httpServletRequest.setAttribute(
-				WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
-		}
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Reference

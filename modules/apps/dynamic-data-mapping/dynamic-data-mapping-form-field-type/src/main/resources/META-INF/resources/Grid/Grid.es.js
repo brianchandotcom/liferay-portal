@@ -43,6 +43,7 @@ const TableHead = ({columns}) => (
 
 const TableBodyColumns = ({
 	columns,
+	disabled,
 	onBlur,
 	onChange,
 	onFocus,
@@ -58,6 +59,7 @@ const TableBodyColumns = ({
 						aria-label={`grid_${rowIndex}_${colIndex}`}
 						checked={column.value === value[row.value]}
 						className="form-builder-grid-field"
+						disabled={disabled}
 						name={row.value}
 						onBlur={onBlur}
 						onChange={onChange}
@@ -71,17 +73,17 @@ const TableBodyColumns = ({
 
 const Grid = ({
 	columns = [{label: 'col1', value: 'fieldId'}],
+	disabled,
 	name,
 	onBlur = () => {},
 	onChange = () => {},
 	onFocus = () => {},
-	readOnly = false,
 	rows = [{label: 'row', value: 'jehf'}],
 	value,
 	...otherProps
 }) => (
 	<div className="table-responsive" {...otherProps}>
-		{!readOnly &&
+		{!disabled &&
 			rows.map((row, rowIndex) => {
 				const inputValue = value[row.value]
 					? `${row.value};${value[row.value]}`
@@ -113,6 +115,7 @@ const Grid = ({
 
 								<TableBodyColumns
 									columns={columns}
+									disabled={disabled}
 									onBlur={onBlur}
 									onChange={onChange}
 									onFocus={onFocus}
@@ -139,6 +142,7 @@ const GridProxy = connectStore(
 			<FieldBaseProxy {...otherProps}>
 				<Grid
 					columns={columns}
+					disabled={readOnly}
 					name={name}
 					onBlur={event =>
 						emit('fieldBlurred', event, event.target.value)
@@ -158,7 +162,6 @@ const GridProxy = connectStore(
 					onFocus={event =>
 						emit('fieldFocused', event, event.target.value)
 					}
-					readOnly={readOnly}
 					rows={rows}
 					value={state}
 				/>

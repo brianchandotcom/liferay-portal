@@ -179,12 +179,7 @@ export default function useDragAndDrop({
 				return;
 			}
 
-			const isDroppableAncestor = isAncestor(
-				_item,
-				layoutData,
-				item.itemId
-			);
-			if (isDroppableAncestor) {
+			if (isAncestor(_item, layoutData, item.itemId)) {
 				return;
 			}
 

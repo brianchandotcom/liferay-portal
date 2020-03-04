@@ -93,6 +93,13 @@
 		"FragmentImage": {
 			"additionalProperties": false,
 			"properties": {
+				"description": {
+					"oneOf": [
+						{
+							"$ref": "#/definitions/InlineValue"
+						}
+					]
+				},
 				"title": {
 					"oneOf": [
 						{

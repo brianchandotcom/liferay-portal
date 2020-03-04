@@ -1330,11 +1330,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			"npm-angular-portlet", "foo", "foo", "Foo");
 	}
 
-	@Test
-	public void testBuildTemplateNpmAngularPortlet72() throws Exception {
-		_testBuildTemplateNpmProject72("npm-angular-portlet");
-	}
-
 	@Ignore
 	@Test
 	public void testBuildTemplateNpmAngularPortletWithDashes70()
@@ -1355,24 +1350,33 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 	@Test
 	public void testBuildTemplateNpmReactPortlet70() throws Exception {
-		_testBuildTemplateNpm70("npm-react-portlet", "foo", "foo", "Foo");
+		_testBuildTemplateNpm(
+			"npm-react-portlet", "foo", "foo", "Foo", "7.0.6");
 	}
 
 	@Test
 	public void testBuildTemplateNpmReactPortlet71() throws Exception {
-		_testBuildTemplateNpm71("npm-react-portlet", "foo", "foo", "Foo");
+		_testBuildTemplateNpm(
+			"npm-react-portlet", "foo", "foo", "Foo", "7.1.3");
 	}
 
 	@Test
 	public void testBuildTemplateNpmReactPortlet72() throws Exception {
-		_testBuildTemplateNpmProject72("npm-react-portlet");
+		_testBuildTemplateNpm(
+			"npm-react-portlet", "foo", "foo", "Foo", "7.2.1");
+	}
+
+	@Test
+	public void testBuildTemplateNpmReactPortlet73() throws Exception {
+		_testBuildTemplateNpm(
+			"npm-react-portlet", "foo", "foo", "Foo", "7.3.0");
 	}
 
 	@Test
 	public void testBuildTemplateNpmReactPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"npm-react-portlet", "react-portlet-dependency-management",
-			"--dependency-management-enabled", "--liferay-version", "7.1.3");
+			"--dependency-management-enabled", "--liferay-version", "7.3.0");
 
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 
@@ -1384,38 +1388,63 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplateNpmReactPortletWithDashes70()
 		throws Exception {
 
-		_testBuildTemplateNpm70(
-			"npm-react-portlet", "foo-bar", "foo.bar", "FooBar");
+		_testBuildTemplateNpm(
+			"npm-react-portlet", "foo-bar", "foo.bar", "FooBar", "7.0.6");
 	}
 
 	@Test
 	public void testBuildTemplateNpmReactPortletWithDashes71()
 		throws Exception {
 
-		_testBuildTemplateNpm71(
-			"npm-react-portlet", "foo-bar", "foo.bar", "FooBar");
+		_testBuildTemplateNpm(
+			"npm-react-portlet", "foo-bar", "foo.bar", "FooBar", "7.1.3");
+	}
+
+	@Test
+	public void testBuildTemplateNpmReactPortletWithDashes72()
+		throws Exception {
+
+		_testBuildTemplateNpm(
+			"npm-react-portlet", "foo-bar", "foo.bar", "FooBar", "7.2.1");
+	}
+
+	@Test
+	public void testBuildTemplateNpmReactPortletWithDashes73()
+		throws Exception {
+
+		_testBuildTemplateNpm(
+			"npm-react-portlet", "foo-bar", "foo.bar", "FooBar", "7.3.0");
 	}
 
 	@Test
 	public void testBuildTemplateNpmVuejsPortlet70() throws Exception {
-		_testBuildTemplateNpm70("npm-vuejs-portlet", "foo", "foo", "Foo");
+		_testBuildTemplateNpm(
+			"npm-vuejs-portlet", "foo", "foo", "Foo", "7.0.6");
 	}
 
 	@Test
 	public void testBuildTemplateNpmVuejsPortlet71() throws Exception {
-		_testBuildTemplateNpm71("npm-vuejs-portlet", "foo", "foo", "Foo");
+		_testBuildTemplateNpm(
+			"npm-vuejs-portlet", "foo", "foo", "Foo", "7.1.3");
 	}
 
 	@Test
 	public void testBuildTemplateNpmVuejsPortlet72() throws Exception {
-		_testBuildTemplateNpmProject72("npm-vuejs-portlet");
+		_testBuildTemplateNpm(
+			"npm-vuejs-portlet", "foo", "foo", "Foo", "7.2.1");
+	}
+
+	@Test
+	public void testBuildTemplateNpmVuejsPortlet73() throws Exception {
+		_testBuildTemplateNpm(
+			"npm-vuejs-portlet", "foo", "foo", "Foo", "7.3.0");
 	}
 
 	@Test
 	public void testBuildTemplateNpmVuejsPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"npm-vuejs-portlet", "vuejs-portlet-dependency-management",
-			"--dependency-management-enabled", "--liferay-version", "7.1.3");
+			"--dependency-management-enabled", "--liferay-version", "7.3.0");
 
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 
@@ -1427,16 +1456,32 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplateNpmVuejsPortletWithDashes70()
 		throws Exception {
 
-		_testBuildTemplateNpm70(
-			"npm-vuejs-portlet", "foo-bar", "foo.bar", "FooBar");
+		_testBuildTemplateNpm(
+			"npm-vuejs-portlet", "foo-bar", "foo.bar", "FooBar", "7.0.6");
 	}
 
 	@Test
 	public void testBuildTemplateNpmVuejsPortletWithDashes71()
 		throws Exception {
 
-		_testBuildTemplateNpm71(
-			"npm-vuejs-portlet", "foo-bar", "foo.bar", "FooBar");
+		_testBuildTemplateNpm(
+			"npm-vuejs-portlet", "foo-bar", "foo.bar", "FooBar", "7.1.3");
+	}
+
+	@Test
+	public void testBuildTemplateNpmVuejsPortletWithDashes72()
+		throws Exception {
+
+		_testBuildTemplateNpm(
+			"npm-vuejs-portlet", "foo-bar", "foo.bar", "FooBar", "7.2.1");
+	}
+
+	@Test
+	public void testBuildTemplateNpmVuejsPortletWithDashes73()
+		throws Exception {
+
+		_testBuildTemplateNpm(
+			"npm-vuejs-portlet", "foo-bar", "foo.bar", "FooBar", "7.3.0");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -3650,65 +3695,43 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			});
 	}
 
-	private void _testBuildTemplateNpm70(
-			String template, String name, String packageName, String className)
+	private void _testBuildTemplateNpm(
+			String template, String name, String packageName, String className,
+			String liferayVersion)
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferay-version", "7.0.6");
+			template, name, "--liferay-version", liferayVersion);
 
-		testContains(
-			gradleProjectDir, "build.gradle",
-			DEPENDENCY_MODULES_EXTENDER_API + ", version: \"1.0.2",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
-
-		testContains(
-			gradleProjectDir, "package.json",
-			"build/resources/main/META-INF/resources",
-			"liferay-npm-bundler\": \"2.7.0", "\"main\": \"lib/index.es.js\"");
-
-		testNotContains(
-			gradleProjectDir, "package.json",
-			"target/classes/META-INF/resources");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			template, name, "com.test", "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.0.6");
-
-		testContains(
-			mavenProjectDir, "package.json",
-			"target/classes/META-INF/resources");
-
-		testNotContains(
-			mavenProjectDir, "package.json",
-			"build/resources/main/META-INF/resources");
-
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			_addNpmrc(gradleProjectDir);
-			_addNpmrc(mavenProjectDir);
-			_configureExecutePackageManagerTask(gradleProjectDir);
-			_configurePomNpmConfiguration(mavenProjectDir);
+		if (liferayVersion.equals("7.0.6")) {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_MODULES_EXTENDER_API + ", version: \"2.0.2",
+				DEPENDENCY_PORTAL_KERNEL + ", version: \"2.64.1");
+		}
+		else if (liferayVersion.equals("7.1.3")) {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_MODULES_EXTENDER_API + ", version: \"2.0.6",
+				DEPENDENCY_PORTAL_KERNEL + ", version: \"3.63.1");
+		}
+		else if (liferayVersion.equals("7.2.1")) {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_MODULES_EXTENDER_API + ", version: \"3.2.4",
+				DEPENDENCY_PORTAL_KERNEL + ", version: \"4.35.2");
+		}
+		else if (liferayVersion.equals("7.3.0")) {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_MODULES_EXTENDER_API + ", version: \"4.0.1",
+				DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 		}
 
-		_buildProjects(gradleProjectDir, mavenProjectDir);
-	}
-
-	private void _testBuildTemplateNpm71(
-			String template, String name, String packageName, String className)
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferay-version", "7.1.3");
-
-		testContains(
-			gradleProjectDir, "build.gradle",
-			DEPENDENCY_MODULES_EXTENDER_API + ", version: \"2.0.2",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
-
 		testContains(
 			gradleProjectDir, "package.json",
 			"build/resources/main/META-INF/resources",
-			"liferay-npm-bundler\": \"2.7.0", "\"main\": \"lib/index.es.js\"");
+			"liferay-npm-bundler\": \"2.18.2", "\"main\": \"lib/index.es.js\"");
 
 		testNotContains(
 			gradleProjectDir, "package.json",
@@ -3716,10 +3739,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, name, "com.test", "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.1.3");
-
-		testContains(
-			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
+			"-Dpackage=" + packageName, "-DliferayVersion=" + liferayVersion);
 
 		testContains(
 			mavenProjectDir, "package.json",
@@ -3805,25 +3825,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		}
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
-	}
-
-	private void _testBuildTemplateNpmProject72(String template)
-		throws Exception {
-
-		try {
-			_buildTemplateWithGradle(
-				template, "Foo", "--liferay-version", "7.2.1");
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			String exception = illegalArgumentException.getMessage();
-
-			Assert.assertTrue(
-				exception.contains("See LPS-97950 for full details"));
-		}
-
-		_buildTemplateWithMaven(
-			template, "foo", "foo", "-DclassName=foo", "-Dpackage=foo",
-			"-DliferayVersion=7.2.1");
 	}
 
 	private File _testBuildTemplatePortlet70(

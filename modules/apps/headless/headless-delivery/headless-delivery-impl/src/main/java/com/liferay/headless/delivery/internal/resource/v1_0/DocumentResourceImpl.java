@@ -57,7 +57,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
@@ -105,9 +104,25 @@ public class DocumentResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		Folder folder = _dlAppService.getFolder(documentFolderId);
+
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_DOCUMENT", folder.getFolderId(),
+					"postDocumentFolderDocument", folder.getUserId(),
+					"com.liferay.document.library", folder.getGroupId())
+			).put(
+				"get",
+				addAction(
+					"VIEW", folder.getFolderId(),
+					"getDocumentFolderDocumentsPage", folder.getUserId(),
+					"com.liferay.document.library", folder.getGroupId())
+			).build();
+
 		return _getDocumentsPage(
-			_getDocumentFolderDocumentListActions(
-				_dlAppService.getFolder(documentFolderId)),
+			actions,
 			booleanQuery -> {
 				if (documentFolderId != null) {
 					BooleanFilter booleanFilter =
@@ -148,8 +163,21 @@ public class DocumentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_DOCUMENT", "postSiteDocument",
+					"com.liferay.document.library", siteId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteDocumentsPage",
+					"com.liferay.document.library", siteId)
+			).build();
+
 		return _getDocumentsPage(
-			_getSiteDocumentListActions(siteId),
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -385,96 +413,6 @@ public class DocumentResourceImpl
 					))));
 	}
 
-	private Map<String, Map<String, String>>
-		_getDocumentFolderDocumentListActions(Folder folder) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_DOCUMENT", folder.getFolderId(),
-				"postDocumentFolderDocument", folder.getUserId(),
-				"com.liferay.document.library", folder.getGroupId())
-		).put(
-			"get",
-			addAction(
-				"VIEW", folder.getFolderId(), "getDocumentFolderDocumentsPage",
-				folder.getUserId(), "com.liferay.document.library",
-				folder.getGroupId())
-		).build();
-	}
-
-	private Map<String, Map<String, String>> _getDocumentItemActions(
-		FileEntry fileEntry) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			addAction(
-				"DELETE", fileEntry.getPrimaryKey(), "deleteDocument",
-				fileEntry.getUserId(),
-				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
-		).put(
-			"get",
-			addAction(
-				"VIEW", fileEntry.getPrimaryKey(), "getDocument",
-				fileEntry.getUserId(),
-				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
-		).put(
-			"replace",
-			addAction(
-				"UPDATE", fileEntry.getPrimaryKey(), "putDocument",
-				fileEntry.getUserId(),
-				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
-		).put(
-			"update",
-			addAction(
-				"UPDATE", fileEntry.getPrimaryKey(), "patchDocument",
-				fileEntry.getUserId(),
-				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
-		).build();
-	}
-
-	private Map<String, Map<String, String>> _getDocumentRatingItemActions(
-			RatingsEntry ratingsEntry)
-		throws Exception {
-
-		FileEntry fileEntry = _dlAppService.getFileEntry(
-			ratingsEntry.getClassPK());
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"UPDATE", fileEntry.getPrimaryKey(), "postDocumentMyRating",
-				fileEntry.getUserId(),
-				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
-		).put(
-			"delete",
-			addAction(
-				"UPDATE", fileEntry.getPrimaryKey(), "deleteDocumentMyRating",
-				fileEntry.getUserId(),
-				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
-		).put(
-			"get",
-			addAction(
-				"VIEW", fileEntry.getPrimaryKey(), "getDocumentMyRating",
-				fileEntry.getUserId(),
-				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
-		).put(
-			"replace",
-			addAction(
-				"UPDATE", fileEntry.getPrimaryKey(), "putDocumentMyRating",
-				fileEntry.getUserId(),
-				"com.liferay.document.library.kernel.model.DLFileEntry",
-				fileEntry.getGroupId())
-		).build();
-	}
-
 	private Page<Document> _getDocumentsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
@@ -513,37 +451,83 @@ public class DocumentResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private Map<String, Map<String, String>> _getSiteDocumentListActions(
-		Long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_DOCUMENT", "postSiteDocument",
-				"com.liferay.document.library", siteId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getSiteDocumentsPage", "com.liferay.document.library",
-				siteId)
-		).build();
-	}
-
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
 		return new SPIRatingResource<>(
 			DLFileEntry.class.getName(), _ratingsEntryLocalService,
-			ratingsEntry -> RatingUtil.toRating(
-				_getDocumentRatingItemActions(ratingsEntry), _portal,
-				ratingsEntry, _userLocalService),
+			ratingsEntry -> {
+				FileEntry fileEntry = _dlAppService.getFileEntry(
+					ratingsEntry.getClassPK());
+
+				Map<String, Map<String, String>> actions =
+					HashMapBuilder.<String, Map<String, String>>put(
+						"create",
+						addAction(
+							"UPDATE", fileEntry.getPrimaryKey(),
+							"postDocumentMyRating", fileEntry.getUserId(),
+							DLFileEntry.class.getName(), fileEntry.getGroupId())
+					).put(
+						"delete",
+						addAction(
+							"UPDATE", fileEntry.getPrimaryKey(),
+							"deleteDocumentMyRating", fileEntry.getUserId(),
+							DLFileEntry.class.getName(), fileEntry.getGroupId())
+					).put(
+						"get",
+						addAction(
+							"VIEW", fileEntry.getPrimaryKey(),
+							"getDocumentMyRating", fileEntry.getUserId(),
+							DLFileEntry.class.getName(), fileEntry.getGroupId())
+					).put(
+						"replace",
+						addAction(
+							"UPDATE", fileEntry.getPrimaryKey(),
+							"putDocumentMyRating", fileEntry.getUserId(),
+							DLFileEntry.class.getName(), fileEntry.getGroupId())
+					).build();
+
+				return RatingUtil.toRating(
+					actions, _portal, ratingsEntry, _userLocalService);
+			},
 			contextUser);
 	}
 
 	private Document _toDocument(FileEntry fileEntry) throws Exception {
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				addAction(
+					"DELETE", fileEntry.getPrimaryKey(), "deleteDocument",
+					fileEntry.getUserId(),
+					"com.liferay.document.library.kernel.model.DLFileEntry",
+					fileEntry.getGroupId())
+			).put(
+				"get",
+				addAction(
+					"VIEW", fileEntry.getPrimaryKey(), "getDocument",
+					fileEntry.getUserId(),
+					"com.liferay.document.library.kernel.model.DLFileEntry",
+					fileEntry.getGroupId())
+			).put(
+				"replace",
+				addAction(
+					"UPDATE", fileEntry.getPrimaryKey(), "putDocument",
+					fileEntry.getUserId(),
+					"com.liferay.document.library.kernel.model.DLFileEntry",
+					fileEntry.getGroupId())
+			).put(
+				"update",
+				addAction(
+					"UPDATE", fileEntry.getPrimaryKey(), "patchDocument",
+					fileEntry.getUserId(),
+					"com.liferay.document.library.kernel.model.DLFileEntry",
+					fileEntry.getGroupId())
+			).build();
+
 		return _documentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				_getDocumentItemActions(fileEntry), _dtoConverterRegistry,
-				fileEntry.getFileEntryId(), null, contextUriInfo, contextUser));
+				contextAcceptLanguage.isAcceptAllLanguages(), actions,
+				_dtoConverterRegistry, fileEntry.getFileEntryId(), null,
+				contextUriInfo, contextUser));
 	}
 
 	@Reference

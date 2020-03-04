@@ -69,7 +69,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -112,7 +111,7 @@ public class UserAccountResourceImpl
 			organizationId);
 
 		return _getUserAccountsPage(
-			new HashMap<>(),
+			Collections.emptyMap(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -133,7 +132,7 @@ public class UserAccountResourceImpl
 		throws Exception {
 
 		return _getUserAccountsPage(
-			new HashMap<>(),
+			Collections.emptyMap(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();

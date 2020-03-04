@@ -94,10 +94,22 @@ public class StructuredContentFolderResourceImpl
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"UPDATE", "postSiteStructuredContentFolder",
+					"com.liferay.journal", siteId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteStructuredContentFoldersPage",
+					"com.liferay.journal", siteId)
+			).build();
+
 		return _getFoldersPage(
-			_getSiteStructuredContentFolderListActions(siteId),
-			parentStructuredContentFolderId, siteId, search, filter, pagination,
-			sorts);
+			actions, parentStructuredContentFolderId, siteId, search, filter,
+			pagination, sorts);
 	}
 
 	@Override
@@ -119,11 +131,32 @@ public class StructuredContentFolderResourceImpl
 		JournalFolder journalFolder = _journalFolderService.getFolder(
 			parentStructuredContentFolderId);
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"add-subfolder",
+				addAction(
+					"UPDATE", journalFolder,
+					"postStructuredContentFolderStructuredContentFolder")
+			).put(
+				"get",
+				addAction(
+					"VIEW", journalFolder,
+					"getStructuredContentFolderStructuredContentFoldersPage")
+			).put(
+				"subscribe",
+				addAction(
+					"SUBSCRIBE", journalFolder,
+					"putStructuredContentFolderSubscribe")
+			).put(
+				"unsubscribe",
+				addAction(
+					"SUBSCRIBE", journalFolder,
+					"putStructuredContentFolderUnsubscribe")
+			).build();
+
 		return _getFoldersPage(
-			_getStructuredContentFolderStructuredContentFolderListActions(
-				journalFolder),
-			parentStructuredContentFolderId, journalFolder.getGroupId(), search,
-			filter, pagination, sorts);
+			actions, parentStructuredContentFolderId,
+			journalFolder.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -252,87 +285,41 @@ public class StructuredContentFolderResourceImpl
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
-	private Map<String, Map<String, String>>
-		_getSiteStructuredContentFolderListActions(Long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"UPDATE", "postSiteStructuredContentFolder",
-				"com.liferay.journal", siteId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getSiteStructuredContentFoldersPage",
-				"com.liferay.journal", siteId)
-		).build();
-	}
-
-	private Map<String, Map<String, String>>
-		_getStructuredContentFolderItemActions(JournalFolder journalFolder) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"add-subfolder",
-			addAction(
-				"UPDATE", journalFolder,
-				"postStructuredContentFolderStructuredContentFolder")
-		).put(
-			"delete",
-			addAction("DELETE", journalFolder, "deleteStructuredContentFolder")
-		).put(
-			"get",
-			addAction("VIEW", journalFolder, "getStructuredContentFolder")
-		).put(
-			"replace",
-			addAction("UPDATE", journalFolder, "putStructuredContentFolder")
-		).put(
-			"subscribe",
-			addAction(
-				"SUBSCRIBE", journalFolder,
-				"putStructuredContentFolderSubscribe")
-		).put(
-			"unsubscribe",
-			addAction(
-				"SUBSCRIBE", journalFolder,
-				"putStructuredContentFolderUnsubscribe")
-		).build();
-	}
-
-	private Map<String, Map<String, String>>
-		_getStructuredContentFolderStructuredContentFolderListActions(
-			JournalFolder journalFolder) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"add-subfolder",
-			addAction(
-				"UPDATE", journalFolder,
-				"postStructuredContentFolderStructuredContentFolder")
-		).put(
-			"get",
-			addAction(
-				"VIEW", journalFolder,
-				"getStructuredContentFolderStructuredContentFoldersPage")
-		).put(
-			"subscribe",
-			addAction(
-				"SUBSCRIBE", journalFolder,
-				"putStructuredContentFolderSubscribe")
-		).put(
-			"unsubscribe",
-			addAction(
-				"SUBSCRIBE", journalFolder,
-				"putStructuredContentFolderUnsubscribe")
-		).build();
-	}
-
 	private StructuredContentFolder _toStructuredContentFolder(
 			JournalFolder journalFolder)
 		throws Exception {
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"add-subfolder",
+				addAction(
+					"UPDATE", journalFolder,
+					"postStructuredContentFolderStructuredContentFolder")
+			).put(
+				"delete",
+				addAction(
+					"DELETE", journalFolder, "deleteStructuredContentFolder")
+			).put(
+				"get",
+				addAction("VIEW", journalFolder, "getStructuredContentFolder")
+			).put(
+				"replace",
+				addAction("UPDATE", journalFolder, "putStructuredContentFolder")
+			).put(
+				"subscribe",
+				addAction(
+					"SUBSCRIBE", journalFolder,
+					"putStructuredContentFolderSubscribe")
+			).put(
+				"unsubscribe",
+				addAction(
+					"SUBSCRIBE", journalFolder,
+					"putStructuredContentFolderUnsubscribe")
+			).build();
+
 		return _structuredContentFolderDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				_getStructuredContentFolderItemActions(journalFolder),
+				contextAcceptLanguage.isAcceptAllLanguages(), actions,
 				_dtoConverterRegistry, journalFolder.getFolderId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

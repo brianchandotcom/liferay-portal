@@ -102,8 +102,21 @@ public class TaxonomyVocabularyResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_VOCABULARY", "postSiteTaxonomyVocabulary",
+					"com.liferay.asset.categories", siteId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteTaxonomyVocabulariesPage",
+					"com.liferay.asset.categories", siteId)
+			).build();
+
 		return SearchUtil.search(
-			_getSiteTaxonomyVocabularyListActions(siteId),
+			actions,
 			booleanQuery -> {
 			},
 			filter, AssetVocabulary.class, search, pagination,
@@ -330,23 +343,6 @@ public class TaxonomyVocabularyResourceImpl
 		return assetTypes;
 	}
 
-	private Map<String, Map<String, String>> _getAssetVocabularyItemActions(
-		AssetVocabulary assetVocabulary) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			addAction("DELETE", assetVocabulary, "deleteTaxonomyVocabulary")
-		).put(
-			"get", addAction("VIEW", assetVocabulary, "getTaxonomyVocabulary")
-		).put(
-			"replace",
-			addAction("UPDATE", assetVocabulary, "putTaxonomyVocabulary")
-		).put(
-			"update",
-			addAction("UPDATE", assetVocabulary, "patchTaxonomyVocabulary")
-		).build();
-	}
-
 	private String _getAvailableAssetTypes(
 		List<AssetRendererFactory<?>> categorizableAssetRenderFactories) {
 
@@ -483,29 +479,27 @@ public class TaxonomyVocabularyResourceImpl
 		return assetVocabularySettingsHelper.toString();
 	}
 
-	private Map<String, Map<String, String>>
-		_getSiteTaxonomyVocabularyListActions(Long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_VOCABULARY", "postSiteTaxonomyVocabulary",
-				"com.liferay.asset.categories", siteId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getSiteTaxonomyVocabulariesPage",
-				"com.liferay.asset.categories", siteId)
-		).build();
-	}
-
 	private TaxonomyVocabulary _toTaxonomyVocabulary(
 			AssetVocabulary assetVocabulary)
 		throws Exception {
 
-		return new TaxonomyVocabulary() {
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				addAction("DELETE", assetVocabulary, "deleteTaxonomyVocabulary")
+			).put(
+				"get",
+				addAction("VIEW", assetVocabulary, "getTaxonomyVocabulary")
+			).put(
+				"replace",
+				addAction("UPDATE", assetVocabulary, "putTaxonomyVocabulary")
+			).put(
+				"update",
+				addAction("UPDATE", assetVocabulary, "patchTaxonomyVocabulary")
+			).build();
+
+		TaxonomyVocabulary taxonomyVocabulary = new TaxonomyVocabulary() {
 			{
-				actions = _getAssetVocabularyItemActions(assetVocabulary);
 				assetTypes = _getAssetTypes(
 					new AssetVocabularySettingsHelper(
 						assetVocabulary.getSettings()),
@@ -539,6 +533,10 @@ public class TaxonomyVocabularyResourceImpl
 				siteId = assetVocabulary.getGroupId();
 			}
 		};
+
+		taxonomyVocabulary.setActions(actions);
+
+		return taxonomyVocabulary;
 	}
 
 	private void _validateI18n(

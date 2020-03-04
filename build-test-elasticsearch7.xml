@@ -509,11 +509,11 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	<macrodef name="start-ccr-trial">
 		<sequential>
 			<exec executable="curl" outputproperty="curl.output.trial.remote.cluster">
+				<arg value="-H" />
+				<arg value="Content-Type:application/json" />
 				<arg value="-X" />
 				<arg value="POST" />
 				<arg value="http://localhost:9200/_license/start_trial?acknowledge=true" />
-				<arg value="-H" />
-				<arg value="Content-Type:application/json" />
 			</exec>
 
 			<echo>${curl.output.trial.remote.cluster}</echo>
@@ -529,11 +529,11 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</if>
 
 			<exec executable="curl" outputproperty="curl.output.trial.local.cluster">
+				<arg value="-H" />
+				<arg value="Content-Type:application/json" />
 				<arg value="-X" />
 				<arg value="POST" />
 				<arg value="http://localhost:9202/_license/start_trial?acknowledge=true" />
-				<arg value="-H" />
-				<arg value="Content-Type:application/json" />
 			</exec>
 
 			<echo>${curl.output.trial.local.cluster}</echo>
@@ -869,11 +869,11 @@ xpack.monitoring.collection.enabled: true</echo>
 		</property>
 
 		<exec executable="curl" outputproperty="curl.output.connect.to.remote.cluster">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="PUT" />
 			<arg value="localhost:9202/_cluster/settings" />
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
 			<arg value="-d" />
 			<arg value="${configure.cluster}" />
 		</exec>
@@ -883,18 +883,18 @@ xpack.monitoring.collection.enabled: true</echo>
 		<property name="follower.liferay.index">
 			<![CDATA[
 				{
-					"remote_cluster": "leader",
-					"leader_index": "liferay-${companyId}"
+					"leader_index": "liferay-${companyId}",
+					"remote_cluster": "leader"
 				}
 			]]>
 		</property>
 
 		<exec executable="curl" outputproperty="curl.output.follower.liferay.index">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="PUT" />
 			<arg value="localhost:9202/liferay-${companyId}/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
 			<arg value="-d" />
 			<arg value="${follower.liferay.index}" />
 		</exec>
@@ -904,18 +904,18 @@ xpack.monitoring.collection.enabled: true</echo>
 		<property name="follower.synonyms.index">
 			<![CDATA[
 				{
-					"remote_cluster": "leader",
-					"leader_index": "liferay-search-tuning-synonyms-liferay-${companyId}"
+					"leader_index": "liferay-search-tuning-synonyms-liferay-${companyId}",
+					"remote_cluster": "leader"
 				}
 			]]>
 		</property>
 
 		<exec executable="curl" outputproperty="curl.output.follower.synonyms.index">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="PUT" />
 			<arg value="localhost:9202/liferay-search-tuning-synonyms-liferay-${companyId}/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
 			<arg value="-d" />
 			<arg value="${follower.synonyms.index}" />
 		</exec>
@@ -994,9 +994,9 @@ xpack.monitoring.collection.enabled: true</echo>
 								{ "match": { "userName": "test test" } }
 							],
 							"must_not": [
-								{ "match": { "hidden": "true" } },
+								{ "match": { "entryClassName": "com.liferay.calendar.model.Calendar" } },
 								{ "match": { "entryClassName": "com.liferay.portal.kernel.model.Layout" } },
-								{ "match": { "entryClassName": "com.liferay.calendar.model.Calendar" } }
+								{ "match": { "hidden": "true" } }
 							]
 						}
 					}
@@ -1005,9 +1005,9 @@ xpack.monitoring.collection.enabled: true</echo>
 		</property>
 
 		<exec executable="curl" outputproperty="curl.output.elasticsearch.indices">
-			<arg value="localhost:${elasticsearch.port}/liferay-${companyId}/_search?pretty" />
 			<arg value="-H" />
 			<arg value="Content-Type: application/json" />
+			<arg value="localhost:${elasticsearch.port}/liferay-${companyId}/_search?pretty" />
 			<arg value="-d" />
 			<arg value="${elasticsearch.print.query}" />
 		</exec>
@@ -1034,11 +1034,11 @@ xpack.monitoring.collection.enabled: true</echo>
 		</property>
 
 		<exec executable="curl" outputproperty="curl.output">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="PUT" />
 			<arg value="localhost:${elasticsearch.port}/_snapshot/my_backup" />
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
 			<arg value="-d" />
 			<arg value="${register.repository}" />
 		</exec>
@@ -1048,9 +1048,9 @@ xpack.monitoring.collection.enabled: true</echo>
 		<property name="restore.repository">
 			<![CDATA[
 				{
-					"indices": "${backup.index}",
 					"ignore_unavailable": true,
 					"include_global_state": true,
+					"indices": "${backup.index}",
 					"rename_pattern": "index_(.+)",
 					"rename_replacement": "restored_index_$1"
 				}
@@ -1058,11 +1058,11 @@ xpack.monitoring.collection.enabled: true</echo>
 		</property>
 
 		<exec executable="curl" outputproperty="curl.output">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
 			<arg value="-X" />
 			<arg value="POST" />
 			<arg value="localhost:${elasticsearch.port}/_snapshot/my_backup/snapshot_2/_restore" />
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
 			<arg value="-d" />
 			<arg value="${restore.repository}" />
 		</exec>

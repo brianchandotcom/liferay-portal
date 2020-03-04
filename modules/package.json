@@ -30,6 +30,7 @@
 			"apps/dynamic-data-mapping/dynamic-data-mapping-form-builder",
 			"apps/dynamic-data-mapping/dynamic-data-mapping-form-field-type",
 			"apps/dynamic-data-mapping/dynamic-data-mapping-form-renderer",
+			"apps/frontend-compatibility/frontend-compatibility-ie",
 			"apps/frontend-image-editor/frontend-image-editor-capability-brightness",
 			"apps/frontend-image-editor/frontend-image-editor-capability-contrast",
 			"apps/frontend-image-editor/frontend-image-editor-capability-crop",

@@ -54,11 +54,3 @@
 		@include word-wrap(break-all);
 	}
 }
-
-.ie6 {
-	.portlet-quick-note {
-		textarea {
-			height: expression(this.height < 100 ? '100px': this.height);
-		}
-	}
-}

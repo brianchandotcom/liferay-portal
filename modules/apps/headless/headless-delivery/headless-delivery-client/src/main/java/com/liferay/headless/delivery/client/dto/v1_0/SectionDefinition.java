@@ -28,28 +28,26 @@ import javax.annotation.Generated;
 @Generated("")
 public class SectionDefinition implements Cloneable {
 
-	public String getBackgroundColorCssClass() {
-		return backgroundColorCssClass;
+	public String getBackgroundColor() {
+		return backgroundColor;
 	}
 
-	public void setBackgroundColorCssClass(String backgroundColorCssClass) {
-		this.backgroundColorCssClass = backgroundColorCssClass;
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
 	}
 
-	public void setBackgroundColorCssClass(
-		UnsafeSupplier<String, Exception>
-			backgroundColorCssClassUnsafeSupplier) {
+	public void setBackgroundColor(
+		UnsafeSupplier<String, Exception> backgroundColorUnsafeSupplier) {
 
 		try {
-			backgroundColorCssClass =
-				backgroundColorCssClassUnsafeSupplier.get();
+			backgroundColor = backgroundColorUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String backgroundColorCssClass;
+	protected String backgroundColor;
 
 	public FragmentImage getBackgroundImage() {
 		return backgroundImage;

@@ -41,6 +41,7 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -143,6 +144,7 @@ public class FragmentLayoutStructureItemHelper
 				"com.liferay.fragment.entry.processor.editable." +
 					"EditableFragmentEntryProcessor",
 				_createEditablesValuesJSONObject(
+					editableTypes,
 					(List<Object>)definitionMap.get("fragmentFields"))
 			).put(
 				"com.liferay.fragment.entry.processor.freemarker." +
@@ -197,7 +199,7 @@ public class FragmentLayoutStructureItemHelper
 	}
 
 	private JSONObject _createEditablesValuesJSONObject(
-		List<Object> fragmentFields) {
+		Map<String, String> editableTypes, List<Object> fragmentFields) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -232,9 +234,16 @@ public class FragmentLayoutStructureItemHelper
 				fragmentFieldJSONObject.put("config", fragmentLinkJSONObject);
 			}
 
-			JSONObject localizationJSONObject =
-				_createTextLocalizationJSONObject(
+			JSONObject localizationJSONObject = null;
+
+			if (Objects.equals(editableTypes.get(fragmentFieldId), "image")) {
+				localizationJSONObject = _createImageLocalizationJSONObject(
+					(Map<String, Object>)valueMap.get("fragmentImage"));
+			}
+			else {
+				localizationJSONObject = _createTextLocalizationJSONObject(
 					(Map<String, Object>)valueMap.get("text"));
+			}
 
 			JSONObject segmentExperienceJSONObject = JSONUtil.put(
 				SegmentsExperienceConstants.ID_PREFIX +
@@ -276,6 +285,34 @@ public class FragmentLayoutStructureItemHelper
 		}
 
 		return fragmentLinkJSONObject;
+	}
+
+	private JSONObject _createImageLocalizationJSONObject(
+		Map<String, Object> fragmentImageMap) {
+
+		JSONObject localizationJSONObject = JSONFactoryUtil.createJSONObject();
+
+		if (fragmentImageMap == null) {
+			return localizationJSONObject;
+		}
+
+		Map<String, Object> urlMap = (Map<String, Object>)fragmentImageMap.get(
+			"url");
+
+		if (urlMap == null) {
+			return localizationJSONObject;
+		}
+
+		Map<String, Object> valueI18nMap = (Map<String, Object>)urlMap.get(
+			"value_i18n");
+
+		if (valueI18nMap != null) {
+			for (Map.Entry<String, Object> entry : valueI18nMap.entrySet()) {
+				localizationJSONObject.put(entry.getKey(), entry.getValue());
+			}
+		}
+
+		return localizationJSONObject;
 	}
 
 	private JSONObject _createTextLocalizationJSONObject(

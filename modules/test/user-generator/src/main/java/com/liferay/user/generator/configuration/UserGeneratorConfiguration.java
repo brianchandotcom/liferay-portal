@@ -33,6 +33,9 @@ public interface UserGeneratorConfiguration {
 	@Meta.AD
 	public String pathToUserCsv();
 
+	@Meta.AD(required = false, deflt = "false")
+	public String verbose();
+
 	@Meta.AD
 	public String virtualHostName();
 

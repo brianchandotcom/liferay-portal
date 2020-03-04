@@ -37,6 +37,7 @@ import com.liferay.user.generator.configuration.UserGeneratorConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +66,8 @@ public class UserGenerator {
 		UserGeneratorConfiguration userGeneratorConfiguration =
 			ConfigurableUtil.createConfigurable(
 				UserGeneratorConfiguration.class, properties);
+
+		_verbose = userGeneratorConfiguration.verbose();
 
 		try {
 			Company company = _companyLocalService.getCompanyByVirtualHost(
@@ -128,6 +131,10 @@ public class UserGenerator {
 						new ServiceContext());
 
 					_addedUserMap.put(emailAddress, user.getPrimaryKey());
+
+					if(!_verbose.equalsIgnoreCase("false")) {
+						System.out.println("Created user: " + emailAddress);
+					}
 				}
 				catch (PortalException e) {
 					_log.error(e, e);
@@ -183,8 +190,6 @@ public class UserGenerator {
 	}
 
 	private long[] _getIdArrayFromCell(CSVRecord csvRecord, String headerName) {
-		System.out.println(csvRecord.get("emailAddress") + ": " + headerName + " being added"); //TODO REMOVE
-
 		String recordCell = csvRecord.get(headerName);
 
 		if(recordCell == null) {
@@ -244,6 +249,11 @@ public class UserGenerator {
 			}
 		}
 
+		if(!_verbose.equalsIgnoreCase("false")) {
+			System.out.printf("Added %s to %s with ID's: %s%n",
+				csvRecord.get("emailAddress"), headerName, Arrays.toString(idArray));
+		}
+
 		return idArray;
 	}
 
@@ -251,6 +261,8 @@ public class UserGenerator {
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private String _verbose;
 
 	private long _companyId;
 

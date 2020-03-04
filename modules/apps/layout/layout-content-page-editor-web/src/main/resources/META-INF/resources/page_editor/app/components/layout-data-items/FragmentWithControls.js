@@ -96,12 +96,14 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 
 	const content = (
 		<>
-			<FloatingToolbar
-				buttons={floatingToolbarButtons}
-				item={item}
-				itemRef={ref}
-				onButtonClick={handleButtonClick}
-			/>
+			{canUpdateLayoutContent && (
+				<FloatingToolbar
+					buttons={floatingToolbarButtons}
+					item={item}
+					itemRef={ref}
+					onButtonClick={handleButtonClick}
+				/>
+			)}
 
 			<FragmentContent
 				fragmentEntryLinkId={fragmentEntryLink.fragmentEntryLinkId}

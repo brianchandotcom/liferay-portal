@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -153,7 +154,9 @@ const FragmentContent = React.forwardRef(
 					itemId={itemId}
 				>
 					<UnsafeHTML
-						className="page-editor__fragment-content"
+						className={classNames('page-editor__fragment-content', {
+							'page-editor__fragment-content--portlet-topper-hidden': !canUpdateLayoutContent,
+						})}
 						contentRef={ref}
 						markup={content}
 						onRender={updateEditableElements}

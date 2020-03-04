@@ -45,6 +45,8 @@ import java.util.TreeMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Samuel Trong Tran
@@ -172,35 +174,35 @@ public class DLFileVersionConstraintResolver
 			previousFileVersion = fileVersion;
 		}
 
-		if (newFileVersion != null) {
-			DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();
-
-			dlFileEntry.setVersion(newFileVersion);
-
-			_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+		if (newFileVersion == null) {
+			return;
 		}
+
+		DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();
+
+		dlFileEntry.setVersion(newFileVersion);
+
+		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
 		for (Map.Entry<String, String> entry : versionMap.entrySet()) {
 			String oldVersion = entry.getKey();
 			String newVersion = entry.getValue();
 
 			try (InputStream inputStream = _store.getFileAsStream(
-					dlFileVersion.getCompanyId(),
-					dlFileVersion.getRepositoryId(),
-					dlFileVersion.getFileName(), oldVersion)) {
+					dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
+					dlFileEntry.getName(), oldVersion)) {
 
 				_store.addFile(
-					dlFileVersion.getCompanyId(),
-					dlFileVersion.getRepositoryId(),
-					dlFileVersion.getFileName(), newVersion, inputStream);
+					dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
+					dlFileEntry.getName(), newVersion, inputStream);
 			}
 			catch (IOException ioException) {
 				throw new UncheckedIOException(ioException);
 			}
 
 			_store.deleteFile(
-				dlFileVersion.getCompanyId(), dlFileVersion.getRepositoryId(),
-				dlFileVersion.getFileName(), oldVersion);
+				dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
+				dlFileEntry.getName(), oldVersion);
 		}
 	}
 
@@ -210,7 +212,10 @@ public class DLFileVersionConstraintResolver
 	@Reference
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 
-	@Reference
-	private Store _store;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile Store _store;
 
 }

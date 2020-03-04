@@ -61,7 +61,7 @@ public interface BaseRepository extends Repository {
 	public void setRepositoryId(long repositoryId);
 
 	public void setTypeSettingsProperties(
-		UnicodeProperties typeSettingsProperties);
+		UnicodeProperties typeSettingsUnicodeProperties);
 
 	public void setUserLocalService(UserLocalService userLocalService);
 

@@ -262,11 +262,11 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		List<ExpandoColumn> indexedColumns = new ArrayList<>();
 
 		for (ExpandoColumn expandoColumn : expandoColumns) {
-			UnicodeProperties properties =
+			UnicodeProperties unicodeProperties =
 				expandoColumn.getTypeSettingsProperties();
 
 			int indexType = GetterUtil.getInteger(
-				properties.get(ExpandoColumnConstants.INDEX_TYPE));
+				unicodeProperties.get(ExpandoColumnConstants.INDEX_TYPE));
 
 			if (indexType != ExpandoColumnConstants.INDEX_TYPE_NONE) {
 				indexedColumns.add(expandoColumn);

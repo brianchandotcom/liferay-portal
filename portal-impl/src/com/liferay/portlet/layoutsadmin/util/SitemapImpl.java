@@ -58,9 +58,9 @@ public class SitemapImpl implements Sitemap {
 
 	@Override
 	public void addURLElement(
-		Element element, String url, UnicodeProperties typeSettingsProperties,
-		Date modifiedDate, String canonicalURL,
-		Map<Locale, String> alternateURLs) {
+		Element element, String url,
+		UnicodeProperties typeSettingsUnicodeProperties, Date modifiedDate,
+		String canonicalURL, Map<Locale, String> alternateURLs) {
 
 		Element urlElement = element.addElement("url");
 
@@ -76,7 +76,7 @@ public class SitemapImpl implements Sitemap {
 			modifiedDateElement.addText(iso8601DateFormat.format(modifiedDate));
 		}
 
-		if (typeSettingsProperties == null) {
+		if (typeSettingsUnicodeProperties == null) {
 			if (Validator.isNotNull(
 					PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY)) {
 
@@ -96,7 +96,7 @@ public class SitemapImpl implements Sitemap {
 			}
 		}
 		else {
-			String changefreq = typeSettingsProperties.getProperty(
+			String changefreq = typeSettingsUnicodeProperties.getProperty(
 				"sitemap-changefreq");
 
 			if (Validator.isNotNull(changefreq)) {
@@ -113,7 +113,7 @@ public class SitemapImpl implements Sitemap {
 					PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY);
 			}
 
-			String priority = typeSettingsProperties.getProperty(
+			String priority = typeSettingsUnicodeProperties.getProperty(
 				"sitemap-priority");
 
 			if (Validator.isNotNull(priority)) {
@@ -268,11 +268,11 @@ public class SitemapImpl implements Sitemap {
 				entry.getKey());
 
 			for (Layout layout : layouts) {
-				UnicodeProperties typeSettingsProperties =
+				UnicodeProperties typeSettingsUnicodeProperties =
 					layout.getTypeSettingsProperties();
 
 				boolean sitemapInclude = GetterUtil.getBoolean(
-					typeSettingsProperties.getProperty(
+					typeSettingsUnicodeProperties.getProperty(
 						LayoutTypePortletConstants.SITEMAP_INCLUDE),
 					true);
 

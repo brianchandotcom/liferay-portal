@@ -69,7 +69,7 @@ public class DummySiteMembershipPolicy extends BaseSiteMembershipPolicy {
 		Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
 		List<AssetTag> oldAssetTags,
 		Map<String, Serializable> oldExpandoAttributes,
-		UnicodeProperties oldTypeSettingsProperties) {
+		UnicodeProperties oldTypeSettingsUnicodeProperties) {
 	}
 
 }

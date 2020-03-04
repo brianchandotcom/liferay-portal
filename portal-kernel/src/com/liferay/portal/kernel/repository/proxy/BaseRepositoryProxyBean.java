@@ -759,9 +759,10 @@ public class BaseRepositoryProxyBean
 
 	@Override
 	public void setTypeSettingsProperties(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		_baseRepository.setTypeSettingsProperties(typeSettingsProperties);
+		_baseRepository.setTypeSettingsProperties(
+			typeSettingsUnicodeProperties);
 	}
 
 	@Override

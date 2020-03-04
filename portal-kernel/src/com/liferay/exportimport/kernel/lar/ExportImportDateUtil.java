@@ -75,13 +75,13 @@ public class ExportImportDateUtil {
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			groupId, privateLayout);
 
-		UnicodeProperties settingsProperties =
+		UnicodeProperties settingsUnicodeProperties =
 			layoutSet.getSettingsProperties();
 
-		settingsProperties.remove(_LAST_PUBLISH_DATE);
+		settingsUnicodeProperties.remove(_LAST_PUBLISH_DATE);
 
 		LayoutSetLocalServiceUtil.updateSettings(
-			groupId, privateLayout, settingsProperties.toString());
+			groupId, privateLayout, settingsUnicodeProperties.toString());
 	}
 
 	public static Calendar getCalendar(
@@ -344,15 +344,15 @@ public class ExportImportDateUtil {
 			lastPublishDate = new Date();
 		}
 
-		UnicodeProperties settingsProperties =
+		UnicodeProperties settingsUnicodeProperties =
 			layoutSet.getSettingsProperties();
 
-		settingsProperties.setProperty(
+		settingsUnicodeProperties.setProperty(
 			_LAST_PUBLISH_DATE, String.valueOf(lastPublishDate.getTime()));
 
 		LayoutSetLocalServiceUtil.updateSettings(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			settingsProperties.toString());
+			settingsUnicodeProperties.toString());
 	}
 
 	public static void updateLastPublishDate(

@@ -462,7 +462,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public void setAttributeProperties(
-		String name, UnicodeProperties properties) {
+		String name, UnicodeProperties unicodeProperties) {
 
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
@@ -471,12 +471,12 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			secure = false;
 		}
 
-		setAttributeProperties(name, properties, secure);
+		setAttributeProperties(name, unicodeProperties, secure);
 	}
 
 	@Override
 	public void setAttributeProperties(
-		String name, UnicodeProperties properties, boolean secure) {
+		String name, UnicodeProperties unicodeProperties, boolean secure) {
 
 		try {
 			ExpandoColumn column =
@@ -485,11 +485,11 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 			if (secure) {
 				ExpandoColumnServiceUtil.updateTypeSettings(
-					column.getColumnId(), properties.toString());
+					column.getColumnId(), unicodeProperties.toString());
 			}
 			else {
 				ExpandoColumnLocalServiceUtil.updateTypeSettings(
-					column.getColumnId(), properties.toString());
+					column.getColumnId(), unicodeProperties.toString());
 			}
 		}
 		catch (Exception exception) {

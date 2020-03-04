@@ -76,20 +76,21 @@ public class GroupDisplayContextHelper {
 	}
 
 	public UnicodeProperties getGroupTypeSettings() {
-		if (_groupTypeSettings != null) {
-			return _groupTypeSettings;
+		if (_groupTypeSettingsUnicodeProperties != null) {
+			return _groupTypeSettingsUnicodeProperties;
 		}
 
 		Group group = getGroup();
 
 		if (group != null) {
-			_groupTypeSettings = group.getTypeSettingsProperties();
+			_groupTypeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
 		}
 		else {
-			_groupTypeSettings = new UnicodeProperties();
+			_groupTypeSettingsUnicodeProperties = new UnicodeProperties();
 		}
 
-		return _groupTypeSettings;
+		return _groupTypeSettingsUnicodeProperties;
 	}
 
 	public Group getLiveGroup() {
@@ -182,7 +183,7 @@ public class GroupDisplayContextHelper {
 
 	private Group _group;
 	private Long _groupId;
-	private UnicodeProperties _groupTypeSettings;
+	private UnicodeProperties _groupTypeSettingsUnicodeProperties;
 	private final HttpServletRequest _httpServletRequest;
 	private Group _liveGroup;
 	private Long _liveGroupId;

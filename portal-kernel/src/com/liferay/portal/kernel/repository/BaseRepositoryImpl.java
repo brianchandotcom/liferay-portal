@@ -295,7 +295,7 @@ public abstract class BaseRepositoryImpl
 	}
 
 	public UnicodeProperties getTypeSettingsProperties() {
-		return _typeSettingsProperties;
+		return _typeSettingsUnicodeProperties;
 	}
 
 	@Override
@@ -369,9 +369,9 @@ public abstract class BaseRepositoryImpl
 
 	@Override
 	public void setTypeSettingsProperties(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		_typeSettingsProperties = typeSettingsProperties;
+		_typeSettingsUnicodeProperties = typeSettingsUnicodeProperties;
 	}
 
 	@Override
@@ -494,6 +494,6 @@ public abstract class BaseRepositoryImpl
 	private final LocalRepository _localRepository =
 		new DefaultLocalRepositoryImpl(this);
 	private long _repositoryId;
-	private UnicodeProperties _typeSettingsProperties;
+	private UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

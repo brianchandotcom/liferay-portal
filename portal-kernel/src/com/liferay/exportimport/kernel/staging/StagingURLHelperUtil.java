@@ -38,9 +38,9 @@ public class StagingURLHelperUtil {
 	}
 
 	public static String buildRemoteURL(
-		UnicodeProperties typeSettingsProperties) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		return _stagingURLHelper.buildRemoteURL(typeSettingsProperties);
+		return _stagingURLHelper.buildRemoteURL(typeSettingsUnicodeProperties);
 	}
 
 	private static volatile StagingURLHelper _stagingURLHelper =

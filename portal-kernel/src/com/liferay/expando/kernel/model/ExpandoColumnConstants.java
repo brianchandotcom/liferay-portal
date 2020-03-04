@@ -212,7 +212,7 @@ public class ExpandoColumnConstants {
 	}
 
 	public static final String getDefaultDisplayTypeProperty(
-		int type, UnicodeProperties properties) {
+		int type, UnicodeProperties unicodeProperties) {
 
 		if (type == BOOLEAN) {
 			return PROPERTY_DISPLAY_TYPE_BOOLEAN;
@@ -233,7 +233,7 @@ public class ExpandoColumnConstants {
 		}
 		else if ((type == STRING) || (type == STRING_LOCALIZED)) {
 			int propertyHeight = GetterUtil.getInteger(
-				properties.get(PROPERTY_HEIGHT));
+				unicodeProperties.get(PROPERTY_HEIGHT));
 
 			if (propertyHeight > 0) {
 				return PROPERTY_DISPLAY_TYPE_TEXT_BOX;

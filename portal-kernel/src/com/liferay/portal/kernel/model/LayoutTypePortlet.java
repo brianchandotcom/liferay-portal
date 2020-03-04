@@ -180,7 +180,8 @@ public interface LayoutTypePortlet extends LayoutType {
 	public void movePortletId(
 		long userId, String portletId, String columnId, int columnPos);
 
-	public void removeCustomization(UnicodeProperties typeSettingsProperties);
+	public void removeCustomization(
+		UnicodeProperties typeSettingsUnicodeProperties);
 
 	public void removeModeAboutPortletId(String portletId);
 

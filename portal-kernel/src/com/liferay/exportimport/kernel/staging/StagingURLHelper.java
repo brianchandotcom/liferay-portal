@@ -32,6 +32,7 @@ public interface StagingURLHelper {
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection);
 
-	public String buildRemoteURL(UnicodeProperties typeSettingsProperties);
+	public String buildRemoteURL(
+		UnicodeProperties typeSettingsUnicodeProperties);
 
 }

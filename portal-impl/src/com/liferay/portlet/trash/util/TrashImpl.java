@@ -192,12 +192,13 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public Group disableTrash(Group group) {
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getParentLiveGroupTypeSettingsProperties();
 
-		typeSettingsProperties.setProperty("trashEnabled", StringPool.FALSE);
+		typeSettingsUnicodeProperties.setProperty(
+			"trashEnabled", StringPool.FALSE);
 
-		group.setTypeSettingsProperties(typeSettingsProperties);
+		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		return GroupLocalServiceUtil.updateGroup(group);
 	}
@@ -297,11 +298,11 @@ public class TrashImpl implements Trash {
 			group.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE,
 			PropsValues.TRASH_ENTRIES_MAX_AGE);
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getParentLiveGroupTypeSettingsProperties();
 
 		return GetterUtil.getInteger(
-			typeSettingsProperties.getProperty("trashEntriesMaxAge"),
+			typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge"),
 			trashEntriesMaxAge);
 	}
 
@@ -480,11 +481,11 @@ public class TrashImpl implements Trash {
 			return false;
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getParentLiveGroupTypeSettingsProperties();
 
 		return GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("trashEnabled"), true);
+			typeSettingsUnicodeProperties.getProperty("trashEnabled"), true);
 	}
 
 	@Override

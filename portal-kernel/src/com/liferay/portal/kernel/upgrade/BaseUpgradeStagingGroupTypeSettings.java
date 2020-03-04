@@ -73,19 +73,19 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 			});
 		groupActionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod<Group>)group -> {
-				UnicodeProperties typeSettingsProperties =
+				UnicodeProperties typeSettingsUnicodeProperties =
 					group.getTypeSettingsProperties();
 
-				if (typeSettingsProperties.isEmpty()) {
+				if (typeSettingsUnicodeProperties.isEmpty()) {
 					return;
 				}
 
 				String oldPropertyKey = _getStagedPortletId(_oldPortletId);
 
-				String oldPropertyValue = typeSettingsProperties.getProperty(
-					oldPropertyKey);
+				String oldPropertyValue =
+					typeSettingsUnicodeProperties.getProperty(oldPropertyKey);
 
-				typeSettingsProperties.remove(oldPropertyKey);
+				typeSettingsUnicodeProperties.remove(oldPropertyKey);
 
 				if (Validator.isNull(oldPropertyValue)) {
 					return;
@@ -93,15 +93,15 @@ public class BaseUpgradeStagingGroupTypeSettings extends UpgradeProcess {
 
 				String newPropertyKey = _getStagedPortletId(_newPortletId);
 
-				String newPropertyValue = typeSettingsProperties.getProperty(
-					newPropertyKey);
+				String newPropertyValue =
+					typeSettingsUnicodeProperties.getProperty(newPropertyKey);
 
 				if (Validator.isNull(newPropertyValue)) {
-					typeSettingsProperties.put(
+					typeSettingsUnicodeProperties.put(
 						newPropertyKey, oldPropertyValue);
 				}
 
-				group.setTypeSettingsProperties(typeSettingsProperties);
+				group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 				_groupLocalService.updateGroup(group);
 			});

@@ -33,9 +33,9 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface Sitemap {
 
 	public void addURLElement(
-		Element element, String url, UnicodeProperties typeSettingsProperties,
-		Date modifiedDate, String canonicalURL,
-		Map<Locale, String> alternateURLs);
+		Element element, String url,
+		UnicodeProperties typeSettingsUnicodeProperties, Date modifiedDate,
+		String canonicalURL, Map<Locale, String> alternateURLs);
 
 	public String encodeXML(String input);
 

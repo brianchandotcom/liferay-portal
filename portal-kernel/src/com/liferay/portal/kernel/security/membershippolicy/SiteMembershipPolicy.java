@@ -350,13 +350,13 @@ public interface SiteMembershipPolicy {
 	 * @param oldAssetCategories the old categories
 	 * @param oldAssetTags the old tags
 	 * @param oldExpandoAttributes the old expando attributes
-	 * @param oldTypeSettingsProperties the old type settings properties
+	 * @param oldTypeSettingsUnicodeProperties the old type settings properties
 	 */
 	public void verifyPolicy(
 			Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
 			List<AssetTag> oldAssetTags,
 			Map<String, Serializable> oldExpandoAttributes,
-			UnicodeProperties oldTypeSettingsProperties)
+			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException;
 
 	/**

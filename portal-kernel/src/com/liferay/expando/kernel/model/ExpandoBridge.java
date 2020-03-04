@@ -84,10 +84,10 @@ public interface ExpandoBridge {
 	public void setAttributeDefault(String name, Serializable defaultValue);
 
 	public void setAttributeProperties(
-		String name, UnicodeProperties properties);
+		String name, UnicodeProperties unicodeProperties);
 
 	public void setAttributeProperties(
-		String name, UnicodeProperties properties, boolean secure);
+		String name, UnicodeProperties unicodeProperties, boolean secure);
 
 	public void setAttributes(Map<String, Serializable> attributes);
 

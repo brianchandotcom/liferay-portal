@@ -32,73 +32,73 @@ public class ExpandoPresetUtil {
 
 		int type = 0;
 
-		UnicodeProperties properties = null;
+		UnicodeProperties unicodeProperties = null;
 
 		try {
-			properties = expandoBridge.getAttributeProperties(name);
+			unicodeProperties = expandoBridge.getAttributeProperties(name);
 		}
 		catch (Exception exception) {
-			properties = new UnicodeProperties();
+			unicodeProperties = new UnicodeProperties();
 		}
 
 		if (preset.equals("PresetSelectionIntegerArray()")) {
 			type = ExpandoColumnConstants.INTEGER_ARRAY;
 
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE,
 				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST);
 		}
 		else if (preset.equals("PresetSelectionDoubleArray()")) {
 			type = ExpandoColumnConstants.DOUBLE_ARRAY;
 
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE,
 				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST);
 		}
 		else if (preset.equals("PresetSelectionStringArray()")) {
 			type = ExpandoColumnConstants.STRING_ARRAY;
 
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE,
 				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST);
 		}
 		else if (preset.equals("PresetTextBox()")) {
 			type = ExpandoColumnConstants.STRING;
 
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				ExpandoColumnConstants.PROPERTY_HEIGHT, "105");
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				ExpandoColumnConstants.PROPERTY_WIDTH, "450");
 		}
 		else if (preset.equals("PresetTextBoxIndexed()")) {
 			type = ExpandoColumnConstants.STRING;
 
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				ExpandoColumnConstants.PROPERTY_HEIGHT, "105");
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				ExpandoColumnConstants.PROPERTY_WIDTH, "450");
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				ExpandoColumnConstants.INDEX_TYPE,
 				String.valueOf(ExpandoColumnConstants.INDEX_TYPE_TEXT));
 		}
 		else if (preset.equals("PresetTextFieldSecret()")) {
 			type = ExpandoColumnConstants.STRING;
 
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				ExpandoColumnConstants.PROPERTY_SECRET,
 				Boolean.TRUE.toString());
 		}
 		else {
 			type = ExpandoColumnConstants.STRING;
 
-			properties.setProperty(
+			unicodeProperties.setProperty(
 				ExpandoColumnConstants.INDEX_TYPE,
 				String.valueOf(ExpandoColumnConstants.INDEX_TYPE_TEXT));
 		}
 
 		expandoBridge.addAttribute(name, type);
 
-		expandoBridge.setAttributeProperties(name, properties);
+		expandoBridge.setAttributeProperties(name, unicodeProperties);
 
 		return type;
 	}

@@ -220,13 +220,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			return;
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			liveGroup.getTypeSettingsProperties();
 
 		boolean stagedLocally = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("staged"));
+			typeSettingsUnicodeProperties.getProperty("staged"));
 		boolean stagedRemotely = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("stagedRemotely"));
+			typeSettingsUnicodeProperties.getProperty("stagedRemotely"));
 
 		if (!stagedLocally && !stagedRemotely) {
 			return;
@@ -234,38 +234,38 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		if (stagedRemotely) {
 			String remoteURL = StagingURLHelperUtil.buildRemoteURL(
-				typeSettingsProperties);
+				typeSettingsUnicodeProperties);
 
 			long remoteGroupId = GetterUtil.getLong(
-				typeSettingsProperties.getProperty("remoteGroupId"));
+				typeSettingsUnicodeProperties.getProperty("remoteGroupId"));
 			boolean forceDisable = GetterUtil.getBoolean(
 				serviceContext.getAttribute("forceDisable"));
 
 			disableRemoteStaging(remoteURL, remoteGroupId, forceDisable);
 		}
 
-		typeSettingsProperties.remove("branchingPrivate");
-		typeSettingsProperties.remove("branchingPublic");
-		typeSettingsProperties.remove("remoteAddress");
-		typeSettingsProperties.remove("remoteGroupId");
-		typeSettingsProperties.remove("remotePathContext");
-		typeSettingsProperties.remove("remotePort");
-		typeSettingsProperties.remove("remoteSiteURL");
-		typeSettingsProperties.remove("secureConnection");
-		typeSettingsProperties.remove("overrideRemoteSiteURL");
-		typeSettingsProperties.remove("staged");
-		typeSettingsProperties.remove("stagedRemotely");
+		typeSettingsUnicodeProperties.remove("branchingPrivate");
+		typeSettingsUnicodeProperties.remove("branchingPublic");
+		typeSettingsUnicodeProperties.remove("remoteAddress");
+		typeSettingsUnicodeProperties.remove("remoteGroupId");
+		typeSettingsUnicodeProperties.remove("remotePathContext");
+		typeSettingsUnicodeProperties.remove("remotePort");
+		typeSettingsUnicodeProperties.remove("remoteSiteURL");
+		typeSettingsUnicodeProperties.remove("secureConnection");
+		typeSettingsUnicodeProperties.remove("overrideRemoteSiteURL");
+		typeSettingsUnicodeProperties.remove("staged");
+		typeSettingsUnicodeProperties.remove("stagedRemotely");
 
 		Set<String> keys = new HashSet<>();
 
-		for (String key : typeSettingsProperties.keySet()) {
+		for (String key : typeSettingsUnicodeProperties.keySet()) {
 			if (key.startsWith(StagingConstants.STAGED_PORTLET)) {
 				keys.add(key);
 			}
 		}
 
 		for (String key : keys) {
-			typeSettingsProperties.remove(key);
+			typeSettingsUnicodeProperties.remove(key);
 		}
 
 		StagingUtil.deleteLastImportSettings(liveGroup, true);
@@ -284,7 +284,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 
 		groupLocalService.updateGroup(
-			liveGroup.getGroupId(), typeSettingsProperties.toString());
+			liveGroup.getGroupId(), typeSettingsUnicodeProperties.toString());
 	}
 
 	@Override
@@ -305,7 +305,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			disableStaging(liveGroup, serviceContext);
 		}
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			liveGroup.getTypeSettingsProperties();
 
 		boolean hasStagingGroup = liveGroup.hasStagingGroup();
@@ -313,7 +313,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		if (!hasStagingGroup) {
 			serviceContext.setAttribute("staging", Boolean.TRUE.toString());
 
-			String languageId = typeSettingsProperties.getProperty(
+			String languageId = typeSettingsUnicodeProperties.getProperty(
 				"languageId");
 
 			if (Validator.isNotNull(languageId)) {
@@ -327,22 +327,23 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			userId, liveGroup, branchingPublic, branchingPrivate, false,
 			serviceContext);
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"branchingPrivate", String.valueOf(branchingPrivate));
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"branchingPublic", String.valueOf(branchingPublic));
 
 		if (!hasStagingGroup) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"staged", Boolean.TRUE.toString());
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"stagedRemotely", Boolean.FALSE.toString());
 
-			setCommonStagingOptions(typeSettingsProperties, serviceContext);
+			setCommonStagingOptions(
+				typeSettingsUnicodeProperties, serviceContext);
 		}
 
 		groupLocalService.updateGroup(
-			liveGroup.getGroupId(), typeSettingsProperties.toString());
+			liveGroup.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		if (hasStagingGroup) {
 			return;
@@ -391,7 +392,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		boolean oldStagedRemotely = stagedRemotely;
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties typeSettingsUnicodeProperties =
 			stagingGroup.getTypeSettingsProperties();
 
 		String remoteURL = StagingURLHelperUtil.buildRemoteURL(
@@ -399,10 +400,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		if (stagedRemotely) {
 			long oldRemoteGroupId = GetterUtil.getLong(
-				typeSettingsProperties.getProperty("remoteGroupId"));
+				typeSettingsUnicodeProperties.getProperty("remoteGroupId"));
 
 			String oldRemoteURL = StagingURLHelperUtil.buildRemoteURL(
-				typeSettingsProperties);
+				typeSettingsUnicodeProperties);
 
 			if (!remoteURL.equals(oldRemoteURL) ||
 				(remoteGroupId != oldRemoteGroupId)) {
@@ -432,35 +433,39 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			userId, stagingGroup, branchingPublic, branchingPrivate, true,
 			serviceContext);
 
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"branchingPrivate", String.valueOf(branchingPrivate));
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"branchingPublic", String.valueOf(branchingPublic));
-		typeSettingsProperties.setProperty("remoteAddress", remoteAddress);
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
+			"remoteAddress", remoteAddress);
+		typeSettingsUnicodeProperties.setProperty(
 			"remoteGroupId", String.valueOf(remoteGroupId));
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"remoteGroupUUID", remoteGroup.getUuid());
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"remotePathContext", remotePathContext);
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"remotePort", String.valueOf(remotePort));
-		typeSettingsProperties.setProperty(
+		typeSettingsUnicodeProperties.setProperty(
 			"secureConnection", String.valueOf(secureConnection));
 
 		if (!oldStagedRemotely) {
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"staged", Boolean.TRUE.toString());
-			typeSettingsProperties.setProperty(
+			typeSettingsUnicodeProperties.setProperty(
 				"stagedRemotely", Boolean.TRUE.toString());
 
-			setCommonStagingOptions(typeSettingsProperties, serviceContext);
+			setCommonStagingOptions(
+				typeSettingsUnicodeProperties, serviceContext);
 		}
 
 		groupLocalService.updateGroup(
-			stagingGroup.getGroupId(), typeSettingsProperties.toString());
+			stagingGroup.getGroupId(),
+			typeSettingsUnicodeProperties.toString());
 
-		updateStagedPortlets(remoteURL, remoteGroupId, typeSettingsProperties);
+		updateStagedPortlets(
+			remoteURL, remoteGroupId, typeSettingsUnicodeProperties);
 	}
 
 	@Override
@@ -653,27 +658,27 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			return stagingGroup;
 		}
 
-		UnicodeProperties liveTypeSettingsProperties =
+		UnicodeProperties liveTypeSettingsUnicodeProperties =
 			liveGroup.getTypeSettingsProperties();
 
-		UnicodeProperties stagingTypeSettingsProperties =
+		UnicodeProperties stagingTypeSettingsUnicodeProperties =
 			stagingGroup.getTypeSettingsProperties();
 
-		stagingTypeSettingsProperties.setProperty(
+		stagingTypeSettingsUnicodeProperties.setProperty(
 			GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES,
 			Boolean.FALSE.toString());
-		stagingTypeSettingsProperties.setProperty(
+		stagingTypeSettingsUnicodeProperties.setProperty(
 			PropsKeys.LOCALES,
-			liveTypeSettingsProperties.getProperty(PropsKeys.LOCALES));
-		stagingTypeSettingsProperties.setProperty(
+			liveTypeSettingsUnicodeProperties.getProperty(PropsKeys.LOCALES));
+		stagingTypeSettingsUnicodeProperties.setProperty(
 			"languageId",
-			liveTypeSettingsProperties.getProperty(
+			liveTypeSettingsUnicodeProperties.getProperty(
 				"languageId",
 				LocaleUtil.toLanguageId(LocaleUtil.getDefault())));
 
 		return groupLocalService.updateGroup(
 			stagingGroup.getGroupId(),
-			stagingTypeSettingsProperties.toString());
+			stagingTypeSettingsUnicodeProperties.toString());
 	}
 
 	protected void deleteLayoutSetBranches(long groupId, boolean privateLayout)
@@ -1022,10 +1027,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	}
 
 	protected void setCommonStagingOptions(
-		UnicodeProperties typeSettingsProperties,
+		UnicodeProperties typeSettingsUnicodeProperties,
 		ServiceContext serviceContext) {
 
-		typeSettingsProperties.putAll(
+		typeSettingsUnicodeProperties.putAll(
 			PropertiesParamUtil.getProperties(
 				serviceContext, StagingConstants.STAGED_PREFIX));
 	}
@@ -1094,7 +1099,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	protected void updateStagedPortlets(
 			String remoteURL, long remoteGroupId,
-			UnicodeProperties typeSettingsProperties)
+			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException {
 
 		PermissionChecker permissionChecker =
@@ -1108,10 +1113,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		Map<String, String> stagedPortletIds = new HashMap<>();
 
-		for (String key : typeSettingsProperties.keySet()) {
+		for (String key : typeSettingsUnicodeProperties.keySet()) {
 			if (key.startsWith(StagingConstants.STAGED_PORTLET)) {
 				stagedPortletIds.put(
-					key, typeSettingsProperties.getProperty(key));
+					key, typeSettingsUnicodeProperties.getProperty(key));
 			}
 		}
 

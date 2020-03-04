@@ -34,7 +34,7 @@ public interface PortletLayoutListener {
 		throws PortletLayoutListenerException;
 
 	public void updatePropertiesOnRemoveFromLayout(
-			String portletId, UnicodeProperties typeSettingsProperties)
+			String portletId, UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortletLayoutListenerException;
 
 }

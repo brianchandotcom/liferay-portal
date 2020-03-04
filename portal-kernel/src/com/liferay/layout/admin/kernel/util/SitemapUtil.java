@@ -31,13 +31,13 @@ import java.util.Map;
 public class SitemapUtil {
 
 	public static void addURLElement(
-		Element element, String url, UnicodeProperties typeSettingsProperties,
-		Date modifiedDate, String canonicalURL,
-		Map<Locale, String> alternateURLs) {
+		Element element, String url,
+		UnicodeProperties typeSettingsUnicodeProperties, Date modifiedDate,
+		String canonicalURL, Map<Locale, String> alternateURLs) {
 
 		getSitemap().addURLElement(
-			element, url, typeSettingsProperties, modifiedDate, canonicalURL,
-			alternateURLs);
+			element, url, typeSettingsUnicodeProperties, modifiedDate,
+			canonicalURL, alternateURLs);
 	}
 
 	public static String encodeXML(String input) {

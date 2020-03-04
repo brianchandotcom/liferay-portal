@@ -61,13 +61,14 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
-					UnicodeProperties settingsProperties =
+					UnicodeProperties settingsUnicodeProperties =
 						new UnicodeProperties(true);
 
-					settingsProperties.load(rs.getString("settings_"));
+					settingsUnicodeProperties.load(rs.getString("settings_"));
 
 					String lastPublishDateString =
-						settingsProperties.getProperty("last-publish-date");
+						settingsUnicodeProperties.getProperty(
+							"last-publish-date");
 
 					if (Validator.isNotNull(lastPublishDateString)) {
 						return new Date(

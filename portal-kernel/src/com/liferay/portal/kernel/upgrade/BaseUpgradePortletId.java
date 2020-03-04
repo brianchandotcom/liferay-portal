@@ -48,29 +48,31 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	protected String getNewTypeSettings(
 		String typeSettings, String oldPropertyId, String newPropertyId) {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettingsProperties.fastLoad(typeSettings);
+		typeSettingsUnicodeProperties.fastLoad(typeSettings);
 
-		String value = typeSettingsProperties.remove(oldPropertyId);
+		String value = typeSettingsUnicodeProperties.remove(oldPropertyId);
 
 		if (value != null) {
-			typeSettingsProperties.setProperty(newPropertyId, value);
+			typeSettingsUnicodeProperties.setProperty(newPropertyId, value);
 		}
 
-		return typeSettingsProperties.toString();
+		return typeSettingsUnicodeProperties.toString();
 	}
 
 	protected String getNewTypeSettings(
 		String typeSettings, String oldRootPortletId, String newRootPortletId,
 		boolean exactMatch) {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
+			true);
 
-		typeSettingsProperties.fastLoad(typeSettings);
+		typeSettingsUnicodeProperties.fastLoad(typeSettings);
 
 		for (Map.Entry<String, String> entry :
-				typeSettingsProperties.entrySet()) {
+				typeSettingsUnicodeProperties.entrySet()) {
 
 			String typeSettingId = entry.getKey();
 
@@ -107,10 +109,11 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 			String portletIdsString = StringUtil.merge(portletIds);
 
-			typeSettingsProperties.setProperty(typeSettingId, portletIdsString);
+			typeSettingsUnicodeProperties.setProperty(
+				typeSettingId, portletIdsString);
 		}
 
-		return typeSettingsProperties.toString();
+		return typeSettingsUnicodeProperties.toString();
 	}
 
 	protected String[][] getRenamePortletIdsArray() {

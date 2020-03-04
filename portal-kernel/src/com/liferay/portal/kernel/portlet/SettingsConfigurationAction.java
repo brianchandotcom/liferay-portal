@@ -118,7 +118,7 @@ public abstract class SettingsConfigurationAction
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			layout, portletResource, ActionKeys.CONFIGURATION);
 
-		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
 			actionRequest, _parameterNamePrefix);
 
 		Settings settings = getSettings(actionRequest);
@@ -126,7 +126,7 @@ public abstract class SettingsConfigurationAction
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
-		for (Map.Entry<String, String> entry : properties.entrySet()) {
+		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
 			String name = entry.getKey();
 			String value = entry.getValue();
 

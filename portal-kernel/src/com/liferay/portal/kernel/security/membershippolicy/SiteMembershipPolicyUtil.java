@@ -157,7 +157,7 @@ public class SiteMembershipPolicyUtil {
 			Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
 			List<AssetTag> oldAssetTags,
 			Map<String, Serializable> oldExpandoAttributes,
-			UnicodeProperties oldTypeSettingsProperties)
+			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException {
 
 		SiteMembershipPolicy siteMembershipPolicy =
@@ -165,7 +165,7 @@ public class SiteMembershipPolicyUtil {
 
 		siteMembershipPolicy.verifyPolicy(
 			group, oldGroup, oldAssetCategories, oldAssetTags,
-			oldExpandoAttributes, oldTypeSettingsProperties);
+			oldExpandoAttributes, oldTypeSettingsUnicodeProperties);
 	}
 
 	public static void verifyPolicy(Role role) throws PortalException {

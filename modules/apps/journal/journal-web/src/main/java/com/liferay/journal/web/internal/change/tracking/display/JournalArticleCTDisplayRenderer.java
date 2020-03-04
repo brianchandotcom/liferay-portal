@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -111,23 +109,7 @@ public class JournalArticleCTDisplayRenderer
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher("/ct_display/render.jsp");
 
-		ResourceBundleLoader resourceBundleLoader =
-			(ResourceBundleLoader)httpServletRequest.getAttribute(
-				WebKeys.RESOURCE_BUNDLE_LOADER);
-
-		try {
-			httpServletRequest.setAttribute(
-				WebKeys.RESOURCE_BUNDLE_LOADER,
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByBundleSymbolicName(
-						"com.liferay.journal.web"));
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		finally {
-			httpServletRequest.setAttribute(
-				WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
-		}
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	@Reference

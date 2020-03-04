@@ -42,6 +42,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 /**
  * @author Jürgen Kappler
  */
@@ -67,6 +71,20 @@ public class FragmentLayoutStructureItemHelper
 
 		return layoutStructure.addFragmentLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(), parentItemId, position);
+	}
+
+	private static Map<String, String> _getEditableTypes(String html) {
+		Map<String, String> editableTypes = new HashMap<>();
+
+		Document document = Jsoup.parse(html);
+
+		Elements elements = document.getElementsByTag("lfr-editable");
+
+		elements.forEach(
+			element -> editableTypes.put(
+				element.attr("id"), element.attr("type")));
+
+		return editableTypes;
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -113,6 +131,8 @@ public class FragmentLayoutStructureItemHelper
 		JSONObject defaultValueJSONObject =
 			fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
 				html, configuration);
+
+		Map<String, String> editableTypes = _getEditableTypes(html);
 
 		JSONObject jsonObject = JSONUtil.merge(
 			JSONUtil.put(

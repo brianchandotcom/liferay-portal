@@ -36,9 +36,11 @@ const RatingsLike = ({
 	const [totalLikes, setTotalLikes] = useState(positiveVotes);
 
 	const toggleLiked = () => {
-		sendVoteRequest(liked ? SCORE_UNLIKE : SCORE_LIKE);
+		const score = liked ? SCORE_UNLIKE : SCORE_LIKE;
 
 		setLiked(!liked);
+		setTotalLikes(totalLikes + score);
+		sendVoteRequest(score);
 	};
 
 	const getTitle = () => {

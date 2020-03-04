@@ -47,22 +47,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class SectionDefinition {
 
 	@Schema
-	public String getBackgroundColorCssClass() {
-		return backgroundColorCssClass;
+	public String getBackgroundColor() {
+		return backgroundColor;
 	}
 
-	public void setBackgroundColorCssClass(String backgroundColorCssClass) {
-		this.backgroundColorCssClass = backgroundColorCssClass;
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
 	}
 
 	@JsonIgnore
-	public void setBackgroundColorCssClass(
-		UnsafeSupplier<String, Exception>
-			backgroundColorCssClassUnsafeSupplier) {
+	public void setBackgroundColor(
+		UnsafeSupplier<String, Exception> backgroundColorUnsafeSupplier) {
 
 		try {
-			backgroundColorCssClass =
-				backgroundColorCssClassUnsafeSupplier.get();
+			backgroundColor = backgroundColorUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -74,7 +72,7 @@ public class SectionDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String backgroundColorCssClass;
+	protected String backgroundColor;
 
 	@Schema
 	@Valid
@@ -162,16 +160,16 @@ public class SectionDefinition {
 
 		sb.append("{");
 
-		if (backgroundColorCssClass != null) {
+		if (backgroundColor != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundColorCssClass\": ");
+			sb.append("\"backgroundColor\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(backgroundColorCssClass));
+			sb.append(_escape(backgroundColor));
 
 			sb.append("\"");
 		}

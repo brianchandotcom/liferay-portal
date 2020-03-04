@@ -55,16 +55,16 @@ public class SectionDefinitionSerDes {
 
 		sb.append("{");
 
-		if (sectionDefinition.getBackgroundColorCssClass() != null) {
+		if (sectionDefinition.getBackgroundColor() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundColorCssClass\": ");
+			sb.append("\"backgroundColor\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(sectionDefinition.getBackgroundColorCssClass()));
+			sb.append(_escape(sectionDefinition.getBackgroundColor()));
 
 			sb.append("\"");
 		}
@@ -110,13 +110,13 @@ public class SectionDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sectionDefinition.getBackgroundColorCssClass() == null) {
-			map.put("backgroundColorCssClass", null);
+		if (sectionDefinition.getBackgroundColor() == null) {
+			map.put("backgroundColor", null);
 		}
 		else {
 			map.put(
-				"backgroundColorCssClass",
-				String.valueOf(sectionDefinition.getBackgroundColorCssClass()));
+				"backgroundColor",
+				String.valueOf(sectionDefinition.getBackgroundColor()));
 		}
 
 		if (sectionDefinition.getBackgroundImage() == null) {
@@ -156,11 +156,9 @@ public class SectionDefinitionSerDes {
 			SectionDefinition sectionDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundColorCssClass")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundColor")) {
 				if (jsonParserFieldValue != null) {
-					sectionDefinition.setBackgroundColorCssClass(
+					sectionDefinition.setBackgroundColor(
 						(String)jsonParserFieldValue);
 				}
 			}

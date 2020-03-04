@@ -157,6 +157,13 @@ public class ViewUsersManagementToolbarDisplayContext {
 			}
 		).addGroup(
 			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					_getFilterDomainDropdownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "filter-by-domain"));
+			}
+		).addGroup(
+			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "order-by"));
@@ -332,6 +339,24 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_USER);
+	}
+
+	private List<DropdownItem> _getFilterDomainDropdownItems() {
+		DropdownItemList domainDropdownitems = new DropdownItemList();
+
+		for (String domain :
+				new String[] {"all", "company-users", "account-users"}) {
+
+			domainDropdownitems.add(
+				dropdownItem -> {
+					dropdownItem.setActive(domain.equals(_domain));
+					dropdownItem.setHref(getPortletURL(), "domain", domain);
+					dropdownItem.setLabel(
+						LanguageUtil.get(_httpServletRequest, domain));
+				});
+		}
+
+		return domainDropdownitems;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

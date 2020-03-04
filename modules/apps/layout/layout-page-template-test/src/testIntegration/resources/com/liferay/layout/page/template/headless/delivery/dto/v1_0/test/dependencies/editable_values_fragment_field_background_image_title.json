@@ -2,7 +2,7 @@
 	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
 		"my-background-image": {
 			"config": {
-				"imageTitle": "My background image title"
+				"imageTitle": "My Background Image Title"
 			},
 			"en_US": "http://myexample.com/myexample.png",
 			"es_ES": "http://miejemplo.es/miejemplo.png"

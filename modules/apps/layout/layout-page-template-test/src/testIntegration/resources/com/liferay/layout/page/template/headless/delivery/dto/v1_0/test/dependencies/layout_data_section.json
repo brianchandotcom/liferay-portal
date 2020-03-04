@@ -5,7 +5,7 @@
 			"config": {
 				"backgroundColorCssClass": "primary",
 				"backgroundImage": {
-					"title": "My example1 background image title",
+					"title": "My Example1 Background Image Title",
 					"url": "http://myexample1.com/myexample1.png"
 				},
 				"paddingBottom": 7,

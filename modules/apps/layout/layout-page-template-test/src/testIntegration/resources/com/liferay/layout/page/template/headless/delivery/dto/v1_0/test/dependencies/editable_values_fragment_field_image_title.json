@@ -3,7 +3,7 @@
 	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
 		"my-image": {
 			"config": {
-				"imageTitle": "My image title"
+				"imageTitle": "My Image Title"
 			},
 			"defaultValue": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=",
 			"en_US": "http://myexample.com/myexample.png",

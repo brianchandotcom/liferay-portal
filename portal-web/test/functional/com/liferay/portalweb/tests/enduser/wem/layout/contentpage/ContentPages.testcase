@@ -269,49 +269,57 @@ definition {
 			ContentPages.addPage(pageName = "Test Content Page Name");
 		}
 
-		task ("Add a 2 column layout") {
-			PageEditor.addLayoutSection(columnCount = "2");
-		}
-
-		task ("Assert the layout has exactly 2 columns") {
-			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link-list')]//div[contains(@class,'col-md-6')][1]");
-			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link-list')]//div[contains(@class,'col-md-6')][2]");
-			AssertElementNotPresent(locator1 = "//section[contains(@class,'fragment-entry-link-list')]//div[contains(@class,'col-md-6')][3]");
+		task ("Add a section layout") {
+			PageEditor.addLayoutSection();
 		}
 
 		task ("Assert the layout by default has padding x1") {
-			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'container py-3')]");
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'pb-3')]");
+		}
+
+		task ("Add a 2 column row layout") {
+			PageEditor.addLayoutRow(columnCount = "2");
 		}
 
 		task ("Assert the layout by default has space between columns") {
-			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'row')][not(contains(@class,'no-gutters'))]");
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'row')][not(contains(@class,'no-gutters'))]");
 		}
 
-		task ("Edit the layout's spacing properties") {
-			PageEditor.editLayoutSectionSpacing(
-				numberOfColumns = "3",
-				paddingH = "10",
-				paddingV = "4",
+		task ("Assert the layout has exactly 2 columns") {
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][1]");
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][2]");
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][3]");
+		}
+
+		task ("Edit the row's properties") {
+			PageEditor.editLayoutRow(
+				columnCount = "3",
 				spaceBetweenColumns = "false");
 		}
 
-		task ("Assert the layout now has exactly 2 columns") {
-			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link-list')]//div[contains(@class,'col-md-4')][1]");
-			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link-list')]//div[contains(@class,'col-md-4')][2]");
-			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link-list')]//div[contains(@class,'col-md-4')][3]");
-			AssertElementNotPresent(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'col-md-4')][4]");
+		task ("Edit the section's properties") {
+			PageEditor.editLayoutSection(
+				paddingBottom = "4",
+				paddingTop = "10");
+		}
+
+		task ("Assert the layout now has exactly 3 columns") {
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][1]");
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][2]");
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][3]");
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'col')][4]");
 		}
 
 		task ("Assert the layout now has vertical padding x4") {
-			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'py-5')]");
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'pb-5')]");
 		}
 
 		task ("Assert the layout now has horizontal padding x10") {
-			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'px-8')]");
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'pt-8')]");
 		}
 
 		task ("Assert the layout now has no space between columns") {
-			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'row')][contains(@class,'no-gutters')]");
+			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@class,'row')][contains(@class,'no-gutters')]");
 		}
 	}
 

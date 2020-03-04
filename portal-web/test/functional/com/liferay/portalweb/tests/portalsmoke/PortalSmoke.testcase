@@ -44,6 +44,10 @@ definition {
 		// Assert mismatching checksum for release bundles
 
 		AssertConsoleTextNotPresent(value1 = "Running validation because of mismatched checksum");
+
+		// Assert all bundles installed
+
+		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted to complete the installation");
 	}
 
 	@priority = "5"

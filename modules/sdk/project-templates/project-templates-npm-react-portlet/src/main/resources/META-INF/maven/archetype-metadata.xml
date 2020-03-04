@@ -17,7 +17,7 @@
 		<fileSet filtered="true">
 			<directory></directory>
 			<includes>
-				<include>.babelrc</include>
+				<include>.babelrc.js</include>
 				<include>.gitignore</include>
 				<include>.npmbundlerrc</include>
 				<include>bnd.bnd</include>

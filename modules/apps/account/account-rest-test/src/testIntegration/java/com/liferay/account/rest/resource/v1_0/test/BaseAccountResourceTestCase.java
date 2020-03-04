@@ -478,6 +478,7 @@ public abstract class BaseAccountResourceTestCase {
 
 	@Test
 	public void testDeleteAccount() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Account account = testDeleteAccount_addAccount();
 
 		assertHttpResponseStatusCode(

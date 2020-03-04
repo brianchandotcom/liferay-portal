@@ -198,6 +198,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 	@Test
 	public void testDeleteFormDocument() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		FormDocument formDocument = testDeleteFormDocument_addFormDocument();
 
 		assertHttpResponseStatusCode(

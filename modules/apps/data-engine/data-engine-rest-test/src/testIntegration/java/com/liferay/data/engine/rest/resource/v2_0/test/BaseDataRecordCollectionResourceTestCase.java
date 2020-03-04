@@ -424,6 +424,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 	@Test
 	public void testDeleteDataRecordCollection() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecordCollection dataRecordCollection =
 			testDeleteDataRecordCollection_addDataRecordCollection();
 

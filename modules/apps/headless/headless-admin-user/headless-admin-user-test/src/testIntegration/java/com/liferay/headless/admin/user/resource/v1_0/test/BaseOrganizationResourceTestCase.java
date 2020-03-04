@@ -506,6 +506,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testDeleteOrganization() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization = testDeleteOrganization_addOrganization();
 
 		assertHttpResponseStatusCode(

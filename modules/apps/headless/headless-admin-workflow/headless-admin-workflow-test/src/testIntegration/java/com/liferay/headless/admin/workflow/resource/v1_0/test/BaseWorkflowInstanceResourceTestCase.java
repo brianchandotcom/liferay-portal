@@ -361,6 +361,7 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 	@Test
 	public void testDeleteWorkflowInstance() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WorkflowInstance workflowInstance =
 			testDeleteWorkflowInstance_addWorkflowInstance();
 

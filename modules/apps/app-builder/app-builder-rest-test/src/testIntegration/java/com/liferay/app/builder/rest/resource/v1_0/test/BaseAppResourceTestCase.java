@@ -199,6 +199,7 @@ public abstract class BaseAppResourceTestCase {
 
 	@Test
 	public void testDeleteApp() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		App app = testDeleteApp_addApp();
 
 		assertHttpResponseStatusCode(

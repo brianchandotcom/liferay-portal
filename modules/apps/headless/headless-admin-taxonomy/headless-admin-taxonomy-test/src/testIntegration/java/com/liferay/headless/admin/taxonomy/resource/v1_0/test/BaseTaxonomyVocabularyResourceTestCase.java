@@ -607,6 +607,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 	@Test
 	public void testDeleteTaxonomyVocabulary() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyVocabulary taxonomyVocabulary =
 			testDeleteTaxonomyVocabulary_addTaxonomyVocabulary();
 

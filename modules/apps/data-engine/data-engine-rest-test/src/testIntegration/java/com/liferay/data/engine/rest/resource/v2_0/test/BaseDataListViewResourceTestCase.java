@@ -455,6 +455,7 @@ public abstract class BaseDataListViewResourceTestCase {
 
 	@Test
 	public void testDeleteDataListView() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataListView dataListView = testDeleteDataListView_addDataListView();
 
 		assertHttpResponseStatusCode(

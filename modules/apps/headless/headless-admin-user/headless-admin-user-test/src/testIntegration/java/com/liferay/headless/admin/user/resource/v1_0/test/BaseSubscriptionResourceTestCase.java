@@ -275,6 +275,7 @@ public abstract class BaseSubscriptionResourceTestCase {
 
 	@Test
 	public void testDeleteMyUserAccountSubscription() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Subscription subscription =
 			testDeleteMyUserAccountSubscription_addSubscription();
 

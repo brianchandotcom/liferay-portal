@@ -232,8 +232,9 @@ public class FragmentLayoutStructureItemHelper
 				fragmentFieldJSONObject.put("config", fragmentLinkJSONObject);
 			}
 
-			JSONObject localizationJSONObject = _createLocalizationJSONObject(
-				(Map<String, Object>)valueMap.get("text"));
+			JSONObject localizationJSONObject =
+				_createTextLocalizationJSONObject(
+					(Map<String, Object>)valueMap.get("text"));
 
 			JSONObject segmentExperienceJSONObject = JSONUtil.put(
 				SegmentsExperienceConstants.ID_PREFIX +
@@ -277,7 +278,7 @@ public class FragmentLayoutStructureItemHelper
 		return fragmentLinkJSONObject;
 	}
 
-	private JSONObject _createLocalizationJSONObject(
+	private JSONObject _createTextLocalizationJSONObject(
 		Map<String, Object> textMap) {
 
 		JSONObject localizationJSONObject = JSONFactoryUtil.createJSONObject();

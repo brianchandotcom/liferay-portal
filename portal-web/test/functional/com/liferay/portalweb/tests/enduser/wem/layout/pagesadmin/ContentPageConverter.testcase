@@ -43,7 +43,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page ...",
+			menuItem = "Convert to content page ...",
 			pageName = "Test Page Name");
 
 		Button.clickPublish();
@@ -250,7 +250,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page ...",
+			menuItem = "Convert to content page ...",
 			pageName = "Test Page Name");
 
 		Button.clickPublish();
@@ -374,7 +374,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page ...",
+			menuItem = "Convert to content page ...",
 			pageName = "Test Page Name");
 
 		AssertVisible(
@@ -441,7 +441,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page ...",
+			menuItem = "Convert to content page ...",
 			pageName = "Test Page Name");
 
 		AssertVisible(
@@ -530,7 +530,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Westeros Site");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page ...",
+			menuItem = "Convert to content page ...",
 			pageName = "Test Page Name");
 
 		AssertVisible(
@@ -633,7 +633,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Westeros Site");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page ...",
+			menuItem = "Convert to content page ...",
 			pageName = "Test Page Name");
 
 		AssertTextEquals(
@@ -741,7 +741,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page ...",
+			menuItem = "Convert to content page ...",
 			pageName = "Test Page Name");
 
 		AssertTextEquals(
@@ -835,7 +835,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page ...",
+			menuItem = "Convert to content page ...",
 			pageName = "Test Page Name");
 
 		Button.clickPublish();
@@ -963,7 +963,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page ...",
+			menuItem = "Convert to content page ...",
 			pageName = "Test Page Name");
 
 		var key_text = "Discard Conversion Draft";

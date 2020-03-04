@@ -227,7 +227,7 @@ public class PageDefinitionConverterUtil {
 				{
 					definition = new SectionDefinition() {
 						{
-							backgroundColorCssClass = GetterUtil.getString(
+							backgroundColor = GetterUtil.getString(
 								containerLayoutStructureItem.
 									getBackgroundColorCssClass(),
 								null);

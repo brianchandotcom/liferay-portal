@@ -19,7 +19,7 @@ import com.liferay.depot.model.DepotEntryGroupRelModel;
 import com.liferay.depot.model.DepotEntryModel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.depot.web.internal.util.DepotSupportChecker;
+import com.liferay.depot.util.DepotSupportChecker;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;

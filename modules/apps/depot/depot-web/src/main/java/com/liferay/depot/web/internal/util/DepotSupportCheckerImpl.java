@@ -14,6 +14,7 @@
 
 package com.liferay.depot.web.internal.util;
 
+import com.liferay.depot.util.DepotSupportChecker;
 import com.liferay.depot.web.internal.configuration.FFDepotConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
@@ -30,7 +31,7 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.depot.web.internal.configuration.FFDepotConfiguration",
 	service = DepotSupportChecker.class
 )
-public class DepotSupportChecker {
+public class DepotSupportCheckerImpl implements DepotSupportChecker {
 
 	public boolean isEnabled() {
 		return _ffDepotConfiguration.enabled();

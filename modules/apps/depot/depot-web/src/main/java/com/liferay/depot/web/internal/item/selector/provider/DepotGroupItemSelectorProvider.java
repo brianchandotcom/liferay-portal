@@ -16,7 +16,7 @@ package com.liferay.depot.web.internal.item.selector.provider;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
-import com.liferay.depot.web.internal.util.DepotSupportChecker;
+import com.liferay.depot.util.DepotSupportChecker;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;

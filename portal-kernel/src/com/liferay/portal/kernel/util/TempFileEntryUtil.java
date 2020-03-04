@@ -208,7 +208,8 @@ public class TempFileEntryUtil {
 			"com.liferay.portal.repository.temporaryrepository." +
 				"TemporaryFileEntryRepository");
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 
@@ -219,7 +220,8 @@ public class TempFileEntryUtil {
 				user.getUserId(), groupId, classNameId,
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				TempFileEntryUtil.class.getName(), StringPool.BLANK,
-				StringPool.BLANK, typeSettingsProperties, true, serviceContext);
+				StringPool.BLANK, typeSettingsUnicodeProperties, true,
+				serviceContext);
 
 			return RepositoryProviderUtil.getLocalRepository(
 				repository.getRepositoryId());

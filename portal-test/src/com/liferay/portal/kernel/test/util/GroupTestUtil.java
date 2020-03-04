@@ -207,7 +207,8 @@ public class GroupTestUtil {
 			Locale defaultLocale)
 		throws Exception {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
 		boolean inheritLocales = false;
 
@@ -215,23 +216,23 @@ public class GroupTestUtil {
 			inheritLocales = true;
 		}
 
-		typeSettingsProperties.put(
+		typeSettingsUnicodeProperties.put(
 			GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES,
 			String.valueOf(inheritLocales));
 
 		if (availableLocales != null) {
-			typeSettingsProperties.put(
+			typeSettingsUnicodeProperties.put(
 				PropsKeys.LOCALES,
 				StringUtil.merge(LocaleUtil.toLanguageIds(availableLocales)));
 		}
 
 		if (defaultLocale != null) {
-			typeSettingsProperties.put(
+			typeSettingsUnicodeProperties.put(
 				"languageId", LocaleUtil.toLanguageId(defaultLocale));
 		}
 
 		Group group = GroupLocalServiceUtil.updateGroup(
-			groupId, typeSettingsProperties.toString());
+			groupId, typeSettingsUnicodeProperties.toString());
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 

@@ -87,10 +87,11 @@ public class PortletRatingsDefinitionUtil {
 
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			UnicodeProperties groupTypeSettings =
+			UnicodeProperties groupTypeSettingsUnicodeProperties =
 				group.getTypeSettingsProperties();
 
-			value = groupTypeSettings.getProperty(propertyKey, value);
+			value = groupTypeSettingsUnicodeProperties.getProperty(
+				propertyKey, value);
 
 			return RatingsType.parse(value);
 		}

@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
+import com.liferay.portal.kernel.util.comparator.RoleRoleIdComparator;
 import com.liferay.portal.security.permission.test.util.BasePermissionTestCase;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -162,10 +162,10 @@ public class RoleServiceTest extends BasePermissionTestCase {
 		List<Role> roles = _roleService.search(
 			group.getCompanyId(), StringPool.BLANK,
 			new Integer[] {RoleConstants.TYPE_PROVIDER}, params,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, new RoleNameComparator());
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, new RoleRoleIdComparator());
 
 		Assert.assertEquals(
-			ListUtil.sort(expectedRoles, new RoleNameComparator()), roles);
+			ListUtil.sort(expectedRoles, new RoleRoleIdComparator()), roles);
 	}
 
 	@Override

@@ -51,7 +51,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
@@ -122,9 +121,22 @@ public class KnowledgeBaseArticleResourceImpl
 		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 			parentKnowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_KB_ARTICLE",
+					"postKnowledgeBaseArticleKnowledgeBaseArticle",
+					"com.liferay.knowledge.base.admin", kbArticle.getGroupId())
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getKnowledgeBaseArticleKnowledgeBaseArticlesPage",
+					"com.liferay.knowledge.base.admin", kbArticle.getGroupId())
+			).build();
+
 		return _getKnowledgeBaseArticlesPage(
-			_getKnowledgeBaseArticleKnowledgeBaseArticleListActions(
-				kbArticle.getGroupId()),
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -156,9 +168,22 @@ public class KnowledgeBaseArticleResourceImpl
 
 		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_KB_ARTICLE",
+					"postKnowledgeBaseFolderKnowledgeBaseArticle",
+					"com.liferay.knowledge.base.admin", kbFolder.getGroupId())
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getKnowledgeBaseFolderKnowledgeBaseArticlesPage",
+					"com.liferay.knowledge.base.admin", kbFolder.getGroupId())
+			).build();
+
 		return _getKnowledgeBaseArticlesPage(
-			_getKnowledgeBaseFolderKnowledgeBaseArticleListActions(
-				kbFolder.getGroupId()),
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -186,8 +211,31 @@ public class KnowledgeBaseArticleResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_KB_ARTICLE", "postSiteKnowledgeBaseArticle",
+					"com.liferay.knowledge.base.admin", siteId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteKnowledgeBaseArticlesPage",
+					"com.liferay.knowledge.base.admin", siteId)
+			).put(
+				"subscribe",
+				addAction(
+					"SUBSCRIBE", "putSiteKnowledgeBaseArticleSubscribe",
+					"com.liferay.knowledge.base.admin", siteId)
+			).put(
+				"unsubscribe",
+				addAction(
+					"SUBSCRIBE", "putSiteKnowledgeBaseArticleUnsubscribe",
+					"com.liferay.knowledge.base.admin", siteId)
+			).build();
+
 		return _getKnowledgeBaseArticlesPage(
-			_getSiteKnowledgeBaseArticleListActions(siteId),
+			actions,
 			booleanQuery -> {
 				if (!GetterUtil.getBoolean(flatten)) {
 					BooleanFilter booleanFilter =
@@ -355,102 +403,6 @@ public class KnowledgeBaseArticleResourceImpl
 					knowledgeBaseArticle.getViewableByAsString())));
 	}
 
-	private Map<String, Map<String, String>>
-		_getKnowledgeBaseArticleItemActions(KBArticle kbArticle) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			addAction(
-				"DELETE", kbArticle.getResourcePrimKey(),
-				"deleteKnowledgeBaseArticle", kbArticle.getUserId(),
-				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
-		).put(
-			"get",
-			addAction(
-				"VIEW", kbArticle.getResourcePrimKey(),
-				"getKnowledgeBaseArticle", kbArticle.getUserId(),
-				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
-		).put(
-			"replace",
-			addAction(
-				"UPDATE", kbArticle.getResourcePrimKey(),
-				"putKnowledgeBaseArticle", kbArticle.getUserId(),
-				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
-		).put(
-			"subscribe",
-			addAction(
-				"SUBSCRIBE", kbArticle.getResourcePrimKey(),
-				"putKnowledgeBaseArticleSubscribe", kbArticle.getUserId(),
-				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
-		).put(
-			"unsubscribe",
-			addAction(
-				"SUBSCRIBE", kbArticle.getResourcePrimKey(),
-				"putKnowledgeBaseArticleUnsubscribe", kbArticle.getUserId(),
-				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
-		).build();
-	}
-
-	private Map<String, Map<String, String>>
-		_getKnowledgeBaseArticleKnowledgeBaseArticleListActions(Long groupId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_KB_ARTICLE",
-				"postKnowledgeBaseArticleKnowledgeBaseArticle",
-				"com.liferay.knowledge.base.admin", groupId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getKnowledgeBaseArticleKnowledgeBaseArticlesPage",
-				"com.liferay.knowledge.base.admin", groupId)
-		).build();
-	}
-
-	private Map<String, Map<String, String>>
-			_getKnowledgeBaseArticleRatingItemActions(RatingsEntry ratingsEntry)
-		throws Exception {
-
-		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
-			ratingsEntry.getClassPK(), WorkflowConstants.STATUS_APPROVED);
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"UPDATE", kbArticle.getResourcePrimKey(),
-				"postKnowledgeBaseArticleMyRating", kbArticle.getUserId(),
-				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
-		).put(
-			"delete",
-			addAction(
-				"UPDATE", kbArticle.getResourcePrimKey(),
-				"deleteKnowledgeBaseArticleMyRating", kbArticle.getUserId(),
-				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
-		).put(
-			"get",
-			addAction(
-				"VIEW", kbArticle.getResourcePrimKey(),
-				"getKnowledgeBaseArticleMyRating", kbArticle.getUserId(),
-				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
-		).put(
-			"replace",
-			addAction(
-				"UPDATE", kbArticle.getResourcePrimKey(),
-				"putKnowledgeBaseArticleMyRating", kbArticle.getUserId(),
-				"com.liferay.knowledge.base.model.KBArticle",
-				kbArticle.getGroupId())
-		).build();
-	}
-
 	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlesPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
@@ -480,54 +432,52 @@ public class KnowledgeBaseArticleResourceImpl
 					WorkflowConstants.STATUS_APPROVED)));
 	}
 
-	private Map<String, Map<String, String>>
-		_getKnowledgeBaseFolderKnowledgeBaseArticleListActions(long groupId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_KB_ARTICLE", "postKnowledgeBaseFolderKnowledgeBaseArticle",
-				"com.liferay.knowledge.base.admin", groupId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getKnowledgeBaseFolderKnowledgeBaseArticlesPage",
-				"com.liferay.knowledge.base.admin", groupId)
-		).build();
-	}
-
-	private Map<String, Map<String, String>>
-		_getSiteKnowledgeBaseArticleListActions(Long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_KB_ARTICLE", "postSiteKnowledgeBaseArticle",
-				"com.liferay.knowledge.base.admin", siteId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getSiteKnowledgeBaseArticlesPage",
-				"com.liferay.knowledge.base.admin", siteId)
-		).put(
-			"subscribe",
-			addAction(
-				"SUBSCRIBE", "putSiteKnowledgeBaseArticleSubscribe",
-				"com.liferay.knowledge.base.admin", siteId)
-		).put(
-			"unsubscribe",
-			addAction(
-				"SUBSCRIBE", "putSiteKnowledgeBaseArticleUnsubscribe",
-				"com.liferay.knowledge.base.admin", siteId)
-		).build();
-	}
-
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
 		return new SPIRatingResource<>(
 			KBArticle.class.getName(), _ratingsEntryLocalService,
-			ratingsEntry -> RatingUtil.toRating(
-				_getKnowledgeBaseArticleRatingItemActions(ratingsEntry),
-				_portal, ratingsEntry, _userLocalService),
+			ratingsEntry -> {
+				KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
+					ratingsEntry.getClassPK(),
+					WorkflowConstants.STATUS_APPROVED);
+
+				Map<String, Map<String, String>> actions =
+					HashMapBuilder.<String, Map<String, String>>put(
+						"create",
+						addAction(
+							"UPDATE", kbArticle.getResourcePrimKey(),
+							"postKnowledgeBaseArticleMyRating",
+							kbArticle.getUserId(),
+							"com.liferay.knowledge.base.model.KBArticle",
+							kbArticle.getGroupId())
+					).put(
+						"delete",
+						addAction(
+							"UPDATE", kbArticle.getResourcePrimKey(),
+							"deleteKnowledgeBaseArticleMyRating",
+							kbArticle.getUserId(),
+							"com.liferay.knowledge.base.model.KBArticle",
+							kbArticle.getGroupId())
+					).put(
+						"get",
+						addAction(
+							"VIEW", kbArticle.getResourcePrimKey(),
+							"getKnowledgeBaseArticleMyRating",
+							kbArticle.getUserId(),
+							"com.liferay.knowledge.base.model.KBArticle",
+							kbArticle.getGroupId())
+					).put(
+						"replace",
+						addAction(
+							"UPDATE", kbArticle.getResourcePrimKey(),
+							"putKnowledgeBaseArticleMyRating",
+							kbArticle.getUserId(),
+							"com.liferay.knowledge.base.model.KBArticle",
+							kbArticle.getGroupId())
+					).build();
+
+				return RatingUtil.toRating(
+					actions, _portal, ratingsEntry, _userLocalService);
+			},
 			contextUser);
 	}
 
@@ -538,10 +488,47 @@ public class KnowledgeBaseArticleResourceImpl
 			return null;
 		}
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				addAction(
+					"DELETE", kbArticle.getResourcePrimKey(),
+					"deleteKnowledgeBaseArticle", kbArticle.getUserId(),
+					"com.liferay.knowledge.base.model.KBArticle",
+					kbArticle.getGroupId())
+			).put(
+				"get",
+				addAction(
+					"VIEW", kbArticle.getResourcePrimKey(),
+					"getKnowledgeBaseArticle", kbArticle.getUserId(),
+					"com.liferay.knowledge.base.model.KBArticle",
+					kbArticle.getGroupId())
+			).put(
+				"replace",
+				addAction(
+					"UPDATE", kbArticle.getResourcePrimKey(),
+					"putKnowledgeBaseArticle", kbArticle.getUserId(),
+					"com.liferay.knowledge.base.model.KBArticle",
+					kbArticle.getGroupId())
+			).put(
+				"subscribe",
+				addAction(
+					"SUBSCRIBE", kbArticle.getResourcePrimKey(),
+					"putKnowledgeBaseArticleSubscribe", kbArticle.getUserId(),
+					"com.liferay.knowledge.base.model.KBArticle",
+					kbArticle.getGroupId())
+			).put(
+				"unsubscribe",
+				addAction(
+					"SUBSCRIBE", kbArticle.getResourcePrimKey(),
+					"putKnowledgeBaseArticleUnsubscribe", kbArticle.getUserId(),
+					"com.liferay.knowledge.base.model.KBArticle",
+					kbArticle.getGroupId())
+			).build();
+
 		return _knowledgeBaseArticleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				_getKnowledgeBaseArticleItemActions(kbArticle),
+				contextAcceptLanguage.isAcceptAllLanguages(), actions,
 				_dtoConverterRegistry, kbArticle.getResourcePrimKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

@@ -72,8 +72,15 @@ public class WikiNodeResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_NODE", "postSiteWikiNode", "com.liferay.wiki", siteId)
+			).build();
+
 		return SearchUtil.search(
-			_getSiteWikiNodeListActions(siteId),
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -133,40 +140,26 @@ public class WikiNodeResourceImpl
 		_wikiNodeService.unsubscribeNode(wikiNodeId);
 	}
 
-	private Map<String, Map<String, String>> _getSiteWikiNodeListActions(
-		Long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_NODE", "postSiteWikiNode", "com.liferay.wiki", siteId)
-		).build();
-	}
-
-	private Map<String, Map<String, String>> _getWikiNodeItemActions(
-		com.liferay.wiki.model.WikiNode wikiNode) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete", addAction("DELETE", wikiNode, "deleteWikiNode")
-		).put(
-			"get", addAction("VIEW", wikiNode, "getWikiNode")
-		).put(
-			"replace", addAction("UPDATE", wikiNode, "putWikiNode")
-		).put(
-			"subscribe",
-			addAction("SUBSCRIBE", wikiNode, "putWikiNodeSubscribe")
-		).put(
-			"unsubscribe",
-			addAction("SUBSCRIBE", wikiNode, "putWikiNodeUnsubscribe")
-		).build();
-	}
-
 	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
 		throws Exception {
 
-		return new WikiNode() {
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete", addAction("DELETE", wikiNode, "deleteWikiNode")
+			).put(
+				"get", addAction("VIEW", wikiNode, "getWikiNode")
+			).put(
+				"replace", addAction("UPDATE", wikiNode, "putWikiNode")
+			).put(
+				"subscribe",
+				addAction("SUBSCRIBE", wikiNode, "putWikiNodeSubscribe")
+			).put(
+				"unsubscribe",
+				addAction("SUBSCRIBE", wikiNode, "putWikiNodeUnsubscribe")
+			).build();
+
+		WikiNode node = new WikiNode() {
 			{
-				actions = _getWikiNodeItemActions(wikiNode);
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(wikiNode.getUserId()));
@@ -184,6 +177,10 @@ public class WikiNodeResourceImpl
 					wikiNode.getNodeId());
 			}
 		};
+
+		node.setActions(actions);
+
+		return node;
 	}
 
 	private static final EntityModel _entityModel = new WikiNodeEntityModel();

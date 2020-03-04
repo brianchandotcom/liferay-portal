@@ -72,12 +72,24 @@ public class CommentResourceImpl
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"add-discussion",
+				addAction(
+					"ADD_DISCUSSION", blogPostingId, "postBlogPostingComment",
+					blogsEntry.getUserId(), BlogsEntry.class.getName(),
+					blogsEntry.getGroupId())
+			).put(
+				"get",
+				addAction(
+					"VIEW", blogPostingId, "getBlogPostingCommentsPage",
+					blogsEntry.getUserId(), BlogsEntry.class.getName(),
+					blogsEntry.getGroupId())
+			).build();
+
 		return spiCommentResource.getEntityCommentsPage(
-			_getBlogPostingCommentListActions(
-				BlogsEntry.class.getName(), blogPostingId,
-				blogsEntry.getUserId(), blogsEntry.getGroupId()),
-			blogsEntry.getGroupId(), BlogsEntry.class.getName(), blogPostingId,
-			search, filter, pagination, sorts);
+			actions, blogsEntry.getGroupId(), BlogsEntry.class.getName(),
+			blogPostingId, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -112,12 +124,24 @@ public class CommentResourceImpl
 
 		DLFileEntry dlFileEntry = _dlFileEntryService.getFileEntry(documentId);
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"add-discussion",
+				addAction(
+					"ADD_DISCUSSION", documentId, "postDocumentComment",
+					dlFileEntry.getUserId(), DLFileEntry.class.getName(),
+					dlFileEntry.getGroupId())
+			).put(
+				"get",
+				addAction(
+					"VIEW", documentId, "getDocumentCommentsPage",
+					dlFileEntry.getUserId(), DLFileEntry.class.getName(),
+					dlFileEntry.getGroupId())
+			).build();
+
 		return spiCommentResource.getEntityCommentsPage(
-			_getDocumentCommentListActions(
-				DLFileEntry.class.getName(), documentId,
-				dlFileEntry.getUserId(), dlFileEntry.getGroupId()),
-			dlFileEntry.getGroupId(), DLFileEntry.class.getName(), documentId,
-			search, filter, pagination, sorts);
+			actions, dlFileEntry.getGroupId(), DLFileEntry.class.getName(),
+			documentId, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -140,12 +164,26 @@ public class CommentResourceImpl
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"add-discussion",
+				addAction(
+					"ADD_DISCUSSION", structuredContentId,
+					"postStructuredContentComment", journalArticle.getUserId(),
+					JournalArticle.class.getName(), journalArticle.getGroupId())
+			).put(
+				"get",
+				addAction(
+					"VIEW", structuredContentId,
+					"getStructuredContentCommentsPage",
+					journalArticle.getUserId(), JournalArticle.class.getName(),
+					journalArticle.getGroupId())
+			).build();
+
 		return spiCommentResource.getEntityCommentsPage(
-			_getStructuredContentCommentListActions(
-				JournalArticle.class.getName(), structuredContentId,
-				journalArticle.getUserId(), journalArticle.getGroupId()),
-			journalArticle.getGroupId(), JournalArticle.class.getName(),
-			structuredContentId, search, filter, pagination, sorts);
+			actions, journalArticle.getGroupId(),
+			JournalArticle.class.getName(), structuredContentId, search, filter,
+			pagination, sorts);
 	}
 
 	@Override
@@ -220,60 +258,11 @@ public class CommentResourceImpl
 		return spiCommentResource.putComment(commentId, comment.getText());
 	}
 
-	private Map<String, Map<String, String>> _getBlogPostingCommentListActions(
-		String className, Long entityId, long ownerId, long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"add-discussion",
-			addAction(
-				"ADD_DISCUSSION", entityId, "postBlogPostingComment", ownerId,
-				className, siteId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", entityId, "getBlogPostingCommentsPage", ownerId,
-				className, siteId)
-		).build();
-	}
-
-	private Map<String, Map<String, String>> _getDocumentCommentListActions(
-		String className, Long entityId, long ownerId, long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"add-discussion",
-			addAction(
-				"ADD_DISCUSSION", entityId, "postDocumentComment", ownerId,
-				className, siteId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", entityId, "getDocumentCommentsPage", ownerId, className,
-				siteId)
-		).build();
-	}
-
 	private SPICommentResource<Comment> _getSPICommentResource() {
 		return new SPICommentResource<>(
 			_commentManager, contextCompany,
 			comment -> CommentUtil.toComment(
 				comment, _commentManager, _portal));
-	}
-
-	private Map<String, Map<String, String>>
-		_getStructuredContentCommentListActions(
-			String className, Long entityId, long ownerId, long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"add-discussion",
-			addAction(
-				"ADD_DISCUSSION", entityId, "postStructuredContentComment",
-				ownerId, className, siteId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", entityId, "getStructuredContentCommentsPage", ownerId,
-				className, siteId)
-		).build();
 	}
 
 	@Reference

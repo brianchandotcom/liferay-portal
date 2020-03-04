@@ -50,7 +50,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
@@ -116,8 +115,26 @@ public class BlogPostingResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_ENTRY", "postSiteBlogPosting", "com.liferay.blogs",
+					siteId)
+			).put(
+				"subscribe",
+				addAction(
+					"SUBSCRIBE", "putSiteBlogPostingSubscribe",
+					"com.liferay.blogs", siteId)
+			).put(
+				"unsubscribe",
+				addAction(
+					"SUBSCRIBE", "putSiteBlogPostingUnsubscribe",
+					"com.liferay.blogs", siteId)
+			).build();
+
 		return SearchUtil.search(
-			_getSiteBlogPostingListActions(siteId),
+			actions,
 			booleanQuery -> {
 			},
 			filter, BlogsEntry.class, search, pagination,
@@ -245,39 +262,6 @@ public class BlogPostingResourceImpl
 		}
 	}
 
-	private Map<String, Map<String, String>> _getBlogPostingItemActions(
-		BlogsEntry blogsEntry) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete", addAction("DELETE", blogsEntry, "deleteBlogPosting")
-		).put(
-			"get", addAction("VIEW", blogsEntry, "getBlogPosting")
-		).put(
-			"replace", addAction("UPDATE", blogsEntry, "putBlogPosting")
-		).put(
-			"update", addAction("UPDATE", blogsEntry, "patchBlogPosting")
-		).build();
-	}
-
-	private Map<String, Map<String, String>> _getBlogPostingRatingItemActions(
-			RatingsEntry ratingsEntry)
-		throws Exception {
-
-		BlogsEntry blogsEntry = _blogsEntryService.getEntry(
-			ratingsEntry.getClassPK());
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create", addAction("UPDATE", blogsEntry, "postBlogPostingMyRating")
-		).put(
-			"delete",
-			addAction("UPDATE", blogsEntry, "deleteBlogPostingMyRating")
-		).put(
-			"get", addAction("VIEW", blogsEntry, "getBlogPostingMyRating")
-		).put(
-			"replace", addAction("UPDATE", blogsEntry, "putBlogPostingMyRating")
-		).build();
-	}
-
 	private String _getCaption(Image image) {
 		if (image == null) {
 			return null;
@@ -315,41 +299,53 @@ public class BlogPostingResourceImpl
 		}
 	}
 
-	private Map<String, Map<String, String>> _getSiteBlogPostingListActions(
-		Long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_ENTRY", "postSiteBlogPosting", "com.liferay.blogs", siteId)
-		).put(
-			"subscribe",
-			addAction(
-				"SUBSCRIBE", "putSiteBlogPostingSubscribe", "com.liferay.blogs",
-				siteId)
-		).put(
-			"unsubscribe",
-			addAction(
-				"SUBSCRIBE", "putSiteBlogPostingUnsubscribe",
-				"com.liferay.blogs", siteId)
-		).build();
-	}
-
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
 		return new SPIRatingResource<>(
 			BlogsEntry.class.getName(), _ratingsEntryLocalService,
-			ratingsEntry -> RatingUtil.toRating(
-				_getBlogPostingRatingItemActions(ratingsEntry), _portal,
-				ratingsEntry, _userLocalService),
+			ratingsEntry -> {
+				BlogsEntry blogsEntry = _blogsEntryService.getEntry(
+					ratingsEntry.getClassPK());
+
+				Map<String, Map<String, String>> actions =
+					HashMapBuilder.<String, Map<String, String>>put(
+						"create",
+						addAction(
+							"UPDATE", blogsEntry, "postBlogPostingMyRating")
+					).put(
+						"delete",
+						addAction(
+							"UPDATE", blogsEntry, "deleteBlogPostingMyRating")
+					).put(
+						"get",
+						addAction("VIEW", blogsEntry, "getBlogPostingMyRating")
+					).put(
+						"replace",
+						addAction(
+							"UPDATE", blogsEntry, "putBlogPostingMyRating")
+					).build();
+
+				return RatingUtil.toRating(
+					actions, _portal, ratingsEntry, _userLocalService);
+			},
 			contextUser);
 	}
 
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete", addAction("DELETE", blogsEntry, "deleteBlogPosting")
+			).put(
+				"get", addAction("VIEW", blogsEntry, "getBlogPosting")
+			).put(
+				"replace", addAction("UPDATE", blogsEntry, "putBlogPosting")
+			).put(
+				"update", addAction("UPDATE", blogsEntry, "patchBlogPosting")
+			).build();
+
 		return _blogPostingDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				_getBlogPostingItemActions(blogsEntry), _dtoConverterRegistry,
-				blogsEntry.getEntryId(),
+				contextAcceptLanguage.isAcceptAllLanguages(), actions,
+				_dtoConverterRegistry, blogsEntry.getEntryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}

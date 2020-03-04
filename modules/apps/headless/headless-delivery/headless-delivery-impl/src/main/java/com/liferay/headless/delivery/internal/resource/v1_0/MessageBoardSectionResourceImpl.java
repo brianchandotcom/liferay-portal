@@ -101,9 +101,22 @@ public class MessageBoardSectionResourceImpl
 		MBCategory mbCategory = _mbCategoryService.getCategory(
 			parentMessageBoardSectionId);
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_CATEGORY",
+					"postMessageBoardSectionMessageBoardSection",
+					"com.liferay.message.boards", mbCategory.getGroupId())
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getMessageBoardSectionMessageBoardSectionsPage",
+					"com.liferay.message.boards", mbCategory.getGroupId())
+			).build();
+
 		return _getMessageBoardSectionsPage(
-			_getMessageBoardSectionMessageBoardSectionListActions(
-				mbCategory.getGroupId()),
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -123,8 +136,21 @@ public class MessageBoardSectionResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_CATEGORY", "postSiteMessageBoardSection",
+					"com.liferay.message.boards", siteId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteMessageBoardSectionsPage",
+					"com.liferay.message.boards", siteId)
+			).build();
+
 		return _getMessageBoardSectionsPage(
-			_getSiteMessageBoardSectionListActions(siteId),
+			actions,
 			booleanQuery -> {
 				if (!GetterUtil.getBoolean(flatten)) {
 					BooleanFilter booleanFilter =
@@ -226,50 +252,6 @@ public class MessageBoardSectionResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private Map<String, Map<String, String>> _getMessageBoardSectionItemActions(
-		MBCategory mbCategory) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_CATEGORY", mbCategory.getCategoryId(),
-				"postMessageBoardSectionMessageBoardSection",
-				mbCategory.getUserId(), "com.liferay.message.boards",
-				mbCategory.getGroupId())
-		).put(
-			"delete",
-			addAction("DELETE", mbCategory, "deleteMessageBoardSection")
-		).put(
-			"get", addAction("VIEW", mbCategory, "getMessageBoardSection")
-		).put(
-			"replace", addAction("UPDATE", mbCategory, "putMessageBoardSection")
-		).put(
-			"subscribe",
-			addAction(
-				"SUBSCRIBE", mbCategory, "putMessageBoardSectionSubscribe")
-		).put(
-			"unsubscribe",
-			addAction(
-				"SUBSCRIBE", mbCategory, "putMessageBoardSectionUnsubscribe")
-		).build();
-	}
-
-	private Map<String, Map<String, String>>
-		_getMessageBoardSectionMessageBoardSectionListActions(long groupId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_CATEGORY", "postMessageBoardSectionMessageBoardSection",
-				"com.liferay.message.boards", groupId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getMessageBoardSectionMessageBoardSectionsPage",
-				"com.liferay.message.boards", groupId)
-		).build();
-	}
-
 	private Page<MessageBoardSection> _getMessageBoardSectionsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
@@ -292,28 +274,38 @@ public class MessageBoardSectionResourceImpl
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
-	private Map<String, Map<String, String>>
-		_getSiteMessageBoardSectionListActions(Long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_CATEGORY", "postSiteMessageBoardSection",
-				"com.liferay.message.boards", siteId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getSiteMessageBoardSectionsPage",
-				"com.liferay.message.boards", siteId)
-		).build();
-	}
-
 	private MessageBoardSection _toMessageBoardSection(MBCategory mbCategory)
 		throws Exception {
 
-		return new MessageBoardSection() {
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_CATEGORY", mbCategory.getCategoryId(),
+					"postMessageBoardSectionMessageBoardSection",
+					mbCategory.getUserId(), "com.liferay.message.boards",
+					mbCategory.getGroupId())
+			).put(
+				"delete",
+				addAction("DELETE", mbCategory, "deleteMessageBoardSection")
+			).put(
+				"get", addAction("VIEW", mbCategory, "getMessageBoardSection")
+			).put(
+				"replace",
+				addAction("UPDATE", mbCategory, "putMessageBoardSection")
+			).put(
+				"subscribe",
+				addAction(
+					"SUBSCRIBE", mbCategory, "putMessageBoardSectionSubscribe")
+			).put(
+				"unsubscribe",
+				addAction(
+					"SUBSCRIBE", mbCategory,
+					"putMessageBoardSectionUnsubscribe")
+			).build();
+
+		MessageBoardSection messageBoardSection = new MessageBoardSection() {
 			{
-				actions = _getMessageBoardSectionItemActions(mbCategory);
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(mbCategory.getUserId()));
@@ -346,6 +338,10 @@ public class MessageBoardSectionResourceImpl
 					});
 			}
 		};
+
+		messageBoardSection.setActions(actions);
+
+		return messageBoardSection;
 	}
 
 	@Reference

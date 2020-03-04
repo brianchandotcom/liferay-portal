@@ -110,8 +110,21 @@ public class KeywordResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"MANAGE_TAG", "postSiteKeyword", "com.liferay.asset.tags",
+					siteId)
+			).put(
+				"get",
+				addAction(
+					"MANAGE_TAG", "getSiteKeywordsPage",
+					"com.liferay.asset.tags", siteId)
+			).build();
+
 		return SearchUtil.search(
-			_getSiteKeywordListActions(siteId),
+			actions,
 			booleanQuery -> {
 			},
 			filter, AssetTag.class, search, pagination,
@@ -144,30 +157,6 @@ public class KeywordResourceImpl
 			_assetTagService.updateTag(keywordId, keyword.getName(), null));
 	}
 
-	private Map<String, Map<String, String>> _getKeywordItemActions(
-		AssetTag assetTag) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			addAction(
-				"MANAGE_TAG", assetTag.getTagId(), "deleteKeyword",
-				assetTag.getUserId(), "com.liferay.asset.tags",
-				assetTag.getGroupId())
-		).put(
-			"get",
-			addAction(
-				"MANAGE_TAG", assetTag.getTagId(), "getKeyword",
-				assetTag.getUserId(), "com.liferay.asset.tags",
-				assetTag.getGroupId())
-		).put(
-			"replace",
-			addAction(
-				"MANAGE_TAG", assetTag.getTagId(), "putKeyword",
-				assetTag.getUserId(), "com.liferay.asset.tags",
-				assetTag.getGroupId())
-		).build();
-	}
-
 	private ProjectionList _getProjectionList() {
 		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
 
@@ -190,22 +179,6 @@ public class KeywordResourceImpl
 		return projectionList;
 	}
 
-	private Map<String, Map<String, String>> _getSiteKeywordListActions(
-		Long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"MANAGE_TAG", "postSiteKeyword", "com.liferay.asset.tags",
-				siteId)
-		).put(
-			"get",
-			addAction(
-				"MANAGE_TAG", "getSiteKeywordsPage", "com.liferay.asset.tags",
-				siteId)
-		).build();
-	}
-
 	private AssetTag _toAssetTag(Object[] assetTags) {
 		return new AssetTagImpl() {
 			{
@@ -226,9 +199,29 @@ public class KeywordResourceImpl
 	}
 
 	private Keyword _toKeyword(AssetTag assetTag) {
-		return new Keyword() {
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				addAction(
+					"MANAGE_TAG", assetTag.getTagId(), "deleteKeyword",
+					assetTag.getUserId(), "com.liferay.asset.tags",
+					assetTag.getGroupId())
+			).put(
+				"get",
+				addAction(
+					"MANAGE_TAG", assetTag.getTagId(), "getKeyword",
+					assetTag.getUserId(), "com.liferay.asset.tags",
+					assetTag.getGroupId())
+			).put(
+				"replace",
+				addAction(
+					"MANAGE_TAG", assetTag.getTagId(), "putKeyword",
+					assetTag.getUserId(), "com.liferay.asset.tags",
+					assetTag.getGroupId())
+			).build();
+
+		Keyword keyword = new Keyword() {
 			{
-				actions = _getKeywordItemActions(assetTag);
 				dateCreated = assetTag.getCreateDate();
 				dateModified = assetTag.getModifiedDate();
 				id = assetTag.getTagId();
@@ -264,6 +257,10 @@ public class KeywordResourceImpl
 					});
 			}
 		};
+
+		keyword.setActions(actions);
+
+		return keyword;
 	}
 
 	private static final EntityModel _entityModel = new KeywordEntityModel();

@@ -123,9 +123,19 @@ public class OrganizationResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"get",
+				addAction(
+					"VIEW", "getOrganizationOrganizationsPage",
+					com.liferay.portal.kernel.model.Organization.class.
+						getName(),
+					_getOrganizationId(parentOrganizationId))
+			).build();
+
 		return _getOrganizationsPage(
-			_getOrganizationOrganizationListActions(parentOrganizationId),
-			parentOrganizationId, flatten, search, filter, pagination, sorts);
+			actions, parentOrganizationId, flatten, search, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -134,9 +144,25 @@ public class OrganizationResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_ORGANIZATION", "postOrganization",
+					com.liferay.portal.kernel.model.Organization.class.
+						getName(),
+					0L)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getOrganizationsPage",
+					com.liferay.portal.kernel.model.Organization.class.
+						getName(),
+					0L)
+			).build();
+
 		return _getOrganizationsPage(
-			_getOrganizationListActions(), null, flatten, search, filter,
-			pagination, sorts);
+			actions, null, flatten, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -267,10 +293,42 @@ public class OrganizationResourceImpl
 			String organizationId)
 		throws Exception {
 
+		Long id = _getOrganizationId(organizationId);
+
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				addAction(
+					"DELETE", "deleteOrganization",
+					com.liferay.portal.kernel.model.Organization.class.
+						getName(),
+					id)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getOrganization",
+					com.liferay.portal.kernel.model.Organization.class.
+						getName(),
+					id)
+			).put(
+				"replace",
+				addAction(
+					"UPDATE", "putOrganization",
+					com.liferay.portal.kernel.model.Organization.class.
+						getName(),
+					id)
+			).put(
+				"update",
+				addAction(
+					"UPDATE", "patchOrganization",
+					com.liferay.portal.kernel.model.Organization.class.
+						getName(),
+					id)
+			).build();
+
 		return new DefaultDTOConverterContext(
-			contextAcceptLanguage.isAcceptAllLanguages(),
-			_getOrganizationItemActions(_getOrganizationId(organizationId)),
-			null, organizationId, contextAcceptLanguage.getPreferredLocale(),
+			contextAcceptLanguage.isAcceptAllLanguages(), actions, null,
+			organizationId, contextAcceptLanguage.getPreferredLocale(),
 			contextUriInfo, contextUser);
 	}
 
@@ -305,65 +363,6 @@ public class OrganizationResourceImpl
 		}
 
 		return serviceBuilderOrganization.getOrganizationId();
-	}
-
-	private Map<String, Map<String, String>> _getOrganizationItemActions(
-		long organizationId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			addAction(
-				"DELETE", "deleteOrganization",
-				com.liferay.portal.kernel.model.Organization.class.getName(),
-				organizationId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getOrganization",
-				com.liferay.portal.kernel.model.Organization.class.getName(),
-				organizationId)
-		).put(
-			"replace",
-			addAction(
-				"UPDATE", "putOrganization",
-				com.liferay.portal.kernel.model.Organization.class.getName(),
-				organizationId)
-		).put(
-			"update",
-			addAction(
-				"UPDATE", "patchOrganization",
-				com.liferay.portal.kernel.model.Organization.class.getName(),
-				organizationId)
-		).build();
-	}
-
-	private Map<String, Map<String, String>> _getOrganizationListActions() {
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_ORGANIZATION", "postOrganization",
-				com.liferay.portal.kernel.model.Organization.class.getName(),
-				0L)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getOrganizationsPage",
-				com.liferay.portal.kernel.model.Organization.class.getName(),
-				0L)
-		).build();
-	}
-
-	private Map<String, Map<String, String>>
-			_getOrganizationOrganizationListActions(String organizationId)
-		throws Exception {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"get",
-			addAction(
-				"VIEW", "getOrganizationOrganizationsPage",
-				com.liferay.portal.kernel.model.Organization.class.getName(),
-				_getOrganizationId(organizationId))
-		).build();
 	}
 
 	private Page<Organization> _getOrganizationsPage(

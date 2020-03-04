@@ -72,9 +72,22 @@ public class KnowledgeBaseFolderResourceImpl
 		KBFolder kbFolder = _kbFolderService.getKBFolder(
 			parentKnowledgeBaseFolderId);
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_KB_FOLDER",
+					"postKnowledgeBaseFolderKnowledgeBaseFolder",
+					"com.liferay.knowledge.base.admin", kbFolder.getGroupId())
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getKnowledgeBaseFolderKnowledgeBaseFoldersPage",
+					"com.liferay.knowledge.base.admin", kbFolder.getGroupId())
+			).build();
+
 		return Page.of(
-			_getKnowledgeBaseFolderKnowledgeBaseFolderListActions(
-				kbFolder.getGroupId()),
+			actions,
 			transform(
 				_kbFolderService.getKBFolders(
 					kbFolder.getGroupId(), parentKnowledgeBaseFolderId,
@@ -90,8 +103,21 @@ public class KnowledgeBaseFolderResourceImpl
 			Long siteId, Pagination pagination)
 		throws Exception {
 
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					"ADD_KB_FOLDER", "postSiteKnowledgeBaseFolder",
+					"com.liferay.knowledge.base.admin", siteId)
+			).put(
+				"get",
+				addAction(
+					"VIEW", "getSiteKnowledgeBaseFoldersPage",
+					"com.liferay.knowledge.base.admin", siteId)
+			).build();
+
 		return Page.of(
-			_getSiteKnowledgeBaseFolderListActions(siteId),
+			actions,
 			transform(
 				_kbFolderService.getKBFolders(
 					siteId, 0, pagination.getStartPosition(),
@@ -169,50 +195,6 @@ public class KnowledgeBaseFolderResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private Map<String, Map<String, String>> _getKnowledgeBaseFolderItemActions(
-		KBFolder kbFolder) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete", addAction("DELETE", kbFolder, "deleteKnowledgeBaseFolder")
-		).put(
-			"get", addAction("VIEW", kbFolder, "getKnowledgeBaseFolder")
-		).put(
-			"replace", addAction("UPDATE", kbFolder, "putKnowledgeBaseFolder")
-		).build();
-	}
-
-	private Map<String, Map<String, String>>
-		_getKnowledgeBaseFolderKnowledgeBaseFolderListActions(Long groupId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_KB_FOLDER", "postKnowledgeBaseFolderKnowledgeBaseFolder",
-				"com.liferay.knowledge.base.admin", groupId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getKnowledgeBaseFolderKnowledgeBaseFoldersPage",
-				"com.liferay.knowledge.base.admin", groupId)
-		).build();
-	}
-
-	private Map<String, Map<String, String>>
-		_getSiteKnowledgeBaseFolderListActions(Long siteId) {
-
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create",
-			addAction(
-				"ADD_KB_FOLDER", "postSiteKnowledgeBaseFolder",
-				"com.liferay.knowledge.base.admin", siteId)
-		).put(
-			"get",
-			addAction(
-				"VIEW", "getSiteKnowledgeBaseFoldersPage",
-				"com.liferay.knowledge.base.admin", siteId)
-		).build();
-	}
-
 	private KnowledgeBaseFolder _toKnowledgeBaseFolder(KBFolder kbFolder)
 		throws Exception {
 
@@ -220,9 +202,19 @@ public class KnowledgeBaseFolderResourceImpl
 			return null;
 		}
 
-		return new KnowledgeBaseFolder() {
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				addAction("DELETE", kbFolder, "deleteKnowledgeBaseFolder")
+			).put(
+				"get", addAction("VIEW", kbFolder, "getKnowledgeBaseFolder")
+			).put(
+				"replace",
+				addAction("UPDATE", kbFolder, "putKnowledgeBaseFolder")
+			).build();
+
+		KnowledgeBaseFolder knowledgeBaseFolder = new KnowledgeBaseFolder() {
 			{
-				actions = _getKnowledgeBaseFolderItemActions(kbFolder);
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
@@ -247,6 +239,10 @@ public class KnowledgeBaseFolderResourceImpl
 				siteId = kbFolder.getGroupId();
 			}
 		};
+
+		knowledgeBaseFolder.setActions(actions);
+
+		return knowledgeBaseFolder;
 	}
 
 	@Reference

@@ -42,6 +42,7 @@ if (Boolean.getBoolean("gradle.build.scan.enabled")) {
 
 	buildScan {
 		allowUntrustedServer = true
+		captureTaskInputFiles = true
 		server = System.getProperty("gradle.build.scan.server.url") ?: null
 
 		publishAlwaysIf true

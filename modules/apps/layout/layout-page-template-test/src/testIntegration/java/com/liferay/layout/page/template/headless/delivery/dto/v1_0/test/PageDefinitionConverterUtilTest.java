@@ -552,6 +552,12 @@ public class PageDefinitionConverterUtilTest {
 	private void _validateFragmentImage(FragmentImage fragmentImage) {
 		Assert.assertNull(fragmentImage.getTitle());
 
+		InlineValue descriptionInlineValue =
+			(InlineValue)fragmentImage.getDescription();
+
+		Assert.assertEquals(
+			"My example description", descriptionInlineValue.getValue());
+
 		InlineValue urlInlineValue = (InlineValue)fragmentImage.getUrl();
 
 		Assert.assertNull(urlInlineValue.getValue());

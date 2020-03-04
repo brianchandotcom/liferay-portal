@@ -149,7 +149,8 @@ public interface BaseProjectTemplatesTestCase {
 		if (dir == null) {
 			return null;
 		}
-		else if (Objects.equals(".", dir.toString()) || !dir.isAbsolute()) {
+
+		if (Objects.equals(".", dir.toString()) || !dir.isAbsolute()) {
 			try {
 				dir = dir.getCanonicalFile();
 			}

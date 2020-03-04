@@ -29,7 +29,7 @@ import selectShowLayoutItemRemoveButton from '../../../app/selectors/selectShowL
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 
-const NameButton = ({disabled, id, name}) => {
+const NameLabel = ({disabled, id, name}) => {
 	const isSelected = useIsSelected();
 
 	return (
@@ -111,11 +111,9 @@ export default function StructureTreeNode({node}) {
 					});
 				}}
 			/>
-			<NameButton
-				disabled={node.disabled}
-				id={node.id}
-				name={node.name}
-			/>
+
+			<NameLabel disabled={node.disabled} id={node.id} name={node.name} />
+
 			{showLayoutItemRemoveButton &&
 				node.removable &&
 				(isHovered(node.id) || isSelected(node.id)) && (

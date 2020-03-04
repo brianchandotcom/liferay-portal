@@ -134,8 +134,19 @@ public class RatingsTag extends IncludeTag {
 				"liferay-ratings:ratings:className", _className);
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:classPK", String.valueOf(_classPK));
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			RatingsStats ratingsStats = _getRatingsStats();
+
+			RatingsEntry ratingsEntry = _getRatingsEntry(
+				ratingsStats, themeDisplay);
+
 			httpServletRequest.setAttribute(
-				"liferay-ratings:ratings:data", _getData(httpServletRequest));
+				"liferay-ratings:ratings:data",
+				_getData(httpServletRequest, ratingsEntry));
 
 			if (_inTrash != null) {
 				httpServletRequest.setAttribute(
@@ -147,16 +158,17 @@ public class RatingsTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:url", _url);
 			httpServletRequest.setAttribute(
-				"liferay:ratings:ratings:ratingsEntry", _ratingsEntry);
+				"liferay:ratings:ratings:ratingsEntry", ratingsEntry);
 			httpServletRequest.setAttribute(
-				"liferay:ratings:ratings:ratingsStats", _ratingsStats);
+				"liferay:ratings:ratings:ratingsStats", ratingsStats);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
 	}
 
-	private Map<String, Object> _getData(HttpServletRequest httpServletRequest)
+	private Map<String, Object> _getData(
+			HttpServletRequest httpServletRequest, RatingsEntry ratingsEntry)
 		throws PortalException {
 
 		boolean inTrash = _isInTrash();
@@ -174,7 +186,7 @@ public class RatingsTag extends IncludeTag {
 		).put(
 			"inTrash", inTrash
 		).put(
-			"isLiked", _isLiked(themeDisplay)
+			"isLiked", _isLiked(ratingsEntry)
 		).put(
 			"positiveVotes", (int)Math.round(_getTotalScore())
 		).put(
@@ -182,6 +194,26 @@ public class RatingsTag extends IncludeTag {
 		).put(
 			"url", _getURL(themeDisplay)
 		).build();
+	}
+
+	private RatingsEntry _getRatingsEntry(
+		RatingsStats ratingsStats, ThemeDisplay themeDisplay) {
+
+		if (!_setRatingsEntry && (ratingsStats != null)) {
+			return RatingsEntryLocalServiceUtil.fetchEntry(
+				themeDisplay.getUserId(), _className, _classPK);
+		}
+
+		return _ratingsEntry;
+	}
+
+	private RatingsStats _getRatingsStats() {
+		if (!_setRatingsStats) {
+			return RatingsStatsLocalServiceUtil.fetchStats(
+				_className, _classPK);
+		}
+
+		return _ratingsStats;
 	}
 
 	private double _getTotalScore() {
@@ -223,21 +255,11 @@ public class RatingsTag extends IncludeTag {
 		return _inTrash;
 	}
 
-	private Object _isLiked(ThemeDisplay themeDisplay) {
-		if (!_setRatingsStats) {
-			_ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(
-				_className, _classPK);
-		}
-
-		if (!_setRatingsEntry && (_ratingsStats != null)) {
-			_ratingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(
-				themeDisplay.getUserId(), _className, _classPK);
-		}
-
+	private Object _isLiked(RatingsEntry ratingsEntry) {
 		double yourScore = -1.0;
 
-		if (_ratingsEntry != null) {
-			yourScore = _ratingsEntry.getScore();
+		if (ratingsEntry != null) {
+			yourScore = ratingsEntry.getScore();
 		}
 
 		return (yourScore != -1.0) && (yourScore >= 0.5);

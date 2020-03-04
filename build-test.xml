@@ -10796,11 +10796,11 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 									while ! echo exit | nc ${database.host} 5001; do sleep 60; done
 
-									cat /tmp/sybase.sql
+									cat /tmp/import-database.sql
 
 									cat lportal__srv.log
 
-									${sybase.executable} -P ${database.password} -S ${database.schema} -U ${database.username} -i /tmp/sybase.sql --retserverror
+									${sybase.executable} -P ${database.password} -S ${database.schema} -U ${database.username} -i /tmp/import-database.sql --retserverror
 								]]>
 							</echo>
 

@@ -22,9 +22,12 @@ import java.io.File;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Jürgen Kappler
  */
+@ProviderType
 public interface LayoutPageTemplatesImporter {
 
 	public void importFile(

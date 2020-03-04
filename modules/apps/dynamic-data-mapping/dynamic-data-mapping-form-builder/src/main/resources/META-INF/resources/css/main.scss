@@ -61,6 +61,12 @@ input[class^='form-builder-page-header'] {
 	}
 }
 
+button[disabled],
+input[disabled],
+textarea[disabled] {
+	pointer-events: none;
+}
+
 .liferay-ddm-form-rule-builder-timeline .timeline-item .panel-body .dropdown {
 	&.dropdown-action,
 	&.calculator-add-field-button-container {

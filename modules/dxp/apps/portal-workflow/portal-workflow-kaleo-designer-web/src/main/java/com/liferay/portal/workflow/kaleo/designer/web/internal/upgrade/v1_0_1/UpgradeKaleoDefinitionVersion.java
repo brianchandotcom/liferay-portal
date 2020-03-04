@@ -68,20 +68,22 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 			int version)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
-		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
-
 		long kaleoDefinitionId = _counterLocalService.increment();
 
 		KaleoDefinition kaleoDefinition =
 			_kaleoDefinitionLocalService.createKaleoDefinition(
 				kaleoDefinitionId);
 
+		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
+
 		kaleoDefinition.setGroupId(liveGroupId);
+
+		User user = _userLocalService.getUser(userId);
+
 		kaleoDefinition.setCompanyId(user.getCompanyId());
 		kaleoDefinition.setUserId(user.getUserId());
 		kaleoDefinition.setUserName(user.getFullName());
+
 		kaleoDefinition.setCreateDate(createDate);
 		kaleoDefinition.setModifiedDate(modifiedDate);
 		kaleoDefinition.setName(name);

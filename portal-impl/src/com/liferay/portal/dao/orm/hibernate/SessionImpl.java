@@ -139,21 +139,21 @@ public class SessionImpl implements Session {
 		DefaultASTNodeListener defaultASTNodeListener =
 			new DefaultASTNodeListener();
 
-		SQLQuery q = _createSynchronizedSQLQuery(
+		SQLQuery sqlQuery = _createSynchronizedSQLQuery(
 			dslQuery.toSQL(defaultASTNodeListener), true,
 			defaultASTNodeListener.getTableNames());
 
 		List<Object> scalarValues = defaultASTNodeListener.getScalarValues();
 
 		if (!scalarValues.isEmpty()) {
-			QueryPos queryPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			for (Object value : scalarValues) {
 				queryPos.add(value);
 			}
 		}
 
-		return q;
+		return sqlQuery;
 	}
 
 	@Override

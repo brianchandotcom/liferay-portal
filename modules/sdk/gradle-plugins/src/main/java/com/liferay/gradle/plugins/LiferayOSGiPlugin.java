@@ -87,7 +87,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -1047,8 +1046,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureBundleExtension(Project project) {
-		Logger logger = project.getLogger();
-
 		BundleExtension bundleExtension = new BundleExtension();
 
 		ExtensionContainer extensionContainer = project.getExtensions();
@@ -1073,17 +1070,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				String key = (String)keys.nextElement();
 
 				String value = utf8Properties.getProperty(key);
-
-				if (Objects.equals(key, Constants.INCLUDERESOURCE) &&
-					value.contains("[0-9]*")) {
-
-					value = value.replace("[0-9]*", "[0-9.]*");
-
-					logger.lifecycle(
-						"DEPRECATED: Update \"{}\" to \"{}\" to remove this " +
-							"message",
-						Constants.INCLUDERESOURCE, value);
-				}
 
 				bundleExtension.put(key, value);
 			}

@@ -110,7 +110,7 @@ public class KeywordResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
+		return SearchUtil.search(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -121,10 +121,7 @@ public class KeywordResourceImpl
 				addAction(
 					"MANAGE_TAG", "getSiteKeywordsPage",
 					"com.liferay.asset.tags", siteId)
-			).build();
-
-		return SearchUtil.search(
-			actions,
+			).build(),
 			booleanQuery -> {
 			},
 			filter, AssetTag.class, search, pagination,
@@ -199,29 +196,27 @@ public class KeywordResourceImpl
 	}
 
 	private Keyword _toKeyword(AssetTag assetTag) {
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"delete",
-				addAction(
-					"MANAGE_TAG", assetTag.getTagId(), "deleteKeyword",
-					assetTag.getUserId(), "com.liferay.asset.tags",
-					assetTag.getGroupId())
-			).put(
-				"get",
-				addAction(
-					"MANAGE_TAG", assetTag.getTagId(), "getKeyword",
-					assetTag.getUserId(), "com.liferay.asset.tags",
-					assetTag.getGroupId())
-			).put(
-				"replace",
-				addAction(
-					"MANAGE_TAG", assetTag.getTagId(), "putKeyword",
-					assetTag.getUserId(), "com.liferay.asset.tags",
-					assetTag.getGroupId())
-			).build();
-
-		Keyword keyword = new Keyword() {
+		return new Keyword() {
 			{
+				actions = HashMapBuilder.<String, Map<String, String>>put(
+					"delete",
+					addAction(
+						"MANAGE_TAG", assetTag.getTagId(), "deleteKeyword",
+						assetTag.getUserId(), "com.liferay.asset.tags",
+						assetTag.getGroupId())
+				).put(
+					"get",
+					addAction(
+						"MANAGE_TAG", assetTag.getTagId(), "getKeyword",
+						assetTag.getUserId(), "com.liferay.asset.tags",
+						assetTag.getGroupId())
+				).put(
+					"replace",
+					addAction(
+						"MANAGE_TAG", assetTag.getTagId(), "putKeyword",
+						assetTag.getUserId(), "com.liferay.asset.tags",
+						assetTag.getGroupId())
+				).build();
 				dateCreated = assetTag.getCreateDate();
 				dateModified = assetTag.getModifiedDate();
 				id = assetTag.getTagId();
@@ -257,10 +252,6 @@ public class KeywordResourceImpl
 					});
 			}
 		};
-
-		keyword.setActions(actions);
-
-		return keyword;
 	}
 
 	private static final EntityModel _entityModel = new KeywordEntityModel();

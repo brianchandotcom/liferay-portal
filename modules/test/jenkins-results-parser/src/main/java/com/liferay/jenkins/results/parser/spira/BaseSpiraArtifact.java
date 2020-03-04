@@ -167,7 +167,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 			searchQuery.addSpiraArtifact(distinctSpiraArtifact);
 
-			SearchQuery.cachedSearchQuery(searchQuery);
+			SearchQuery.cacheSearchQuery(searchQuery);
 
 			return searchQuery.getSpiraArtifacts();
 		}
@@ -187,7 +187,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			}
 		}
 
-		SearchQuery.cachedSearchQuery(searchQuery);
+		SearchQuery.cacheSearchQuery(searchQuery);
 
 		return searchQuery.getSpiraArtifacts();
 	}

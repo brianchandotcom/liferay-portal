@@ -104,7 +104,7 @@ public class SearchQuery<T extends SpiraArtifact> {
 
 	}
 
-	protected static void cachedSearchQuery(SearchQuery searchQuery) {
+	protected static void cacheSearchQuery(SearchQuery searchQuery) {
 		List<SearchQuery> cachedSearchQueries = _searchQueriesMap.get(
 			searchQuery._spiraArtifactClass);
 

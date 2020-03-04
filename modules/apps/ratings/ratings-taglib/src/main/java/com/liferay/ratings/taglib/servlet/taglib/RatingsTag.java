@@ -30,8 +30,6 @@ import com.liferay.ratings.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 import com.liferay.trash.kernel.util.TrashUtil;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -150,7 +148,23 @@ public class RatingsTag extends IncludeTag {
 
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:data",
-				_getData(inTrash, ratingsEntry, themeDisplay, url));
+				HashMapBuilder.<String, Object>put(
+					"className", _className
+				).put(
+					"classPK", _classPK
+				).put(
+					"enabled", _isEnabled(themeDisplay, inTrash)
+				).put(
+					"inTrash", inTrash
+				).put(
+					"isLiked", _isLiked(ratingsEntry)
+				).put(
+					"positiveVotes", (int)Math.round(_getTotalScore())
+				).put(
+					"signedIn", themeDisplay.isSignedIn()
+				).put(
+					"url", url
+				).build());
 
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:inTrash", inTrash);
@@ -165,29 +179,6 @@ public class RatingsTag extends IncludeTag {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
-	}
-
-	private Map<String, Object> _getData(
-		boolean inTrash, RatingsEntry ratingsEntry, ThemeDisplay themeDisplay,
-		String url) {
-
-		return HashMapBuilder.<String, Object>put(
-			"className", _className
-		).put(
-			"classPK", _classPK
-		).put(
-			"enabled", _isEnabled(themeDisplay, inTrash)
-		).put(
-			"inTrash", inTrash
-		).put(
-			"isLiked", _isLiked(ratingsEntry)
-		).put(
-			"positiveVotes", (int)Math.round(_getTotalScore())
-		).put(
-			"signedIn", themeDisplay.isSignedIn()
-		).put(
-			"url", url
-		).build();
 	}
 
 	private RatingsEntry _getRatingsEntry(

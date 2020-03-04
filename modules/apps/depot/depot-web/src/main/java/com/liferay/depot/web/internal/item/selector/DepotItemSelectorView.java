@@ -14,10 +14,10 @@
 
 package com.liferay.depot.web.internal.item.selector;
 
+import com.liferay.depot.util.DepotSupportChecker;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.application.list.DepotPanelAppController;
 import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
-import com.liferay.depot.web.internal.util.DepotSupportChecker;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;

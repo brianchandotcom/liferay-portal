@@ -16,9 +16,9 @@ package com.liferay.depot.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
+import com.liferay.depot.util.DepotSupportChecker;
 import com.liferay.depot.web.internal.constants.DepotAdminPanelCategoryKeys;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
-import com.liferay.depot.web.internal.util.DepotSupportChecker;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;

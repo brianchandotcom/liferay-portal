@@ -14,8 +14,8 @@
 
 package com.liferay.depot.web.internal.servlet.taglib;
 
+import com.liferay.depot.util.DepotSupportChecker;
 import com.liferay.depot.web.internal.display.context.DepotAdminRolesDisplayContext;
-import com.liferay.depot.web.internal.util.DepotSupportChecker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

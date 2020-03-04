@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.depot.exception,\
 	com.liferay.depot.model,\
 	com.liferay.depot.service,\
-	com.liferay.depot.service.persistence
+	com.liferay.depot.service.persistence,\
+	com.liferay.depot.util

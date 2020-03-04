@@ -18,6 +18,7 @@ import React, {useEffect, useMemo} from 'react';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
+import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import {useSelector} from '../../store/index';
 import {
 	useActivationOrigin,
@@ -45,6 +46,7 @@ export default function FragmentContentInteractionsFilter({
 	const activeItemType = useActiveItemType();
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
+	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
 
 	const editableValues = useSelector(state =>
 		state.fragmentEntryLinks[fragmentEntryLinkId]
@@ -102,12 +104,14 @@ export default function FragmentContentInteractionsFilter({
 			);
 
 			if (activeEditableElement) {
-				requestAnimationFrame(() => {
-					activeEditableElement.addEventListener(
-						'dblclick',
-						enableProcessor
-					);
-				});
+				if (canUpdateLayoutContent) {
+					requestAnimationFrame(() => {
+						activeEditableElement.addEventListener(
+							'dblclick',
+							enableProcessor
+						);
+					});
+				}
 
 				if (
 					activationOrigin === ITEM_ACTIVATION_ORIGINS.structureTree
@@ -133,6 +137,7 @@ export default function FragmentContentInteractionsFilter({
 		activationOrigin,
 		activeItemId,
 		activeItemType,
+		canUpdateLayoutContent,
 		editableElements,
 		editableValues,
 		fragmentEntryLinkId,

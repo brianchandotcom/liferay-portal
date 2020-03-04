@@ -358,8 +358,8 @@
 		"SectionDefinition": {
 			"additionalProperties": false,
 			"properties": {
-				"backgroundColorCssClass": {
-					"title": "The backgroundColorCssClass Schema",
+				"backgroundColor": {
+					"title": "The backgroundColor Schema",
 					"type": "string"
 				},
 				"backgroundImage": {

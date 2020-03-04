@@ -150,13 +150,13 @@ public class RatingsTag extends IncludeTag {
 
 			if (_inTrash != null) {
 				httpServletRequest.setAttribute(
-					"liferay-ratings:ratings:inTrash", _inTrash);
+					"liferay-ratings:ratings:inTrash", _isInTrash());
 			}
 
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:type", _type);
 			httpServletRequest.setAttribute(
-				"liferay-ratings:ratings:url", _url);
+				"liferay-ratings:ratings:url", _getURL(themeDisplay));
 			httpServletRequest.setAttribute(
 				"liferay:ratings:ratings:ratingsEntry", ratingsEntry);
 			httpServletRequest.setAttribute(

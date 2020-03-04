@@ -28,6 +28,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class FragmentImage implements Cloneable {
 
+	public Object getDescription() {
+		return description;
+	}
+
+	public void setDescription(Object description) {
+		this.description = description;
+	}
+
+	public void setDescription(
+		UnsafeSupplier<Object, Exception> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object description;
+
 	public Object getTitle() {
 		return title;
 	}

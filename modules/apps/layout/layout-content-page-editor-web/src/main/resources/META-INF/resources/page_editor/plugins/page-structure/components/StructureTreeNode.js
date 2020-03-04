@@ -29,45 +29,6 @@ import selectShowLayoutItemRemoveButton from '../../../app/selectors/selectShowL
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 
-const NameLabel = ({disabled, id, name}) => {
-	const isSelected = useIsSelected();
-
-	return (
-		<div
-			className={classNames(
-				'page-editor__page-structure__tree-node__name',
-				{
-					'page-editor__page-structure__tree-node__name--active': isSelected(
-						id
-					),
-					'page-editor__page-structure__tree-node__name--disabled': disabled,
-				}
-			)}
-		>
-			{name || Liferay.Language.get('element')}
-		</div>
-	);
-};
-
-const RemoveButton = ({node}) => {
-	const dispatch = useDispatch();
-	const store = useSelector(state => state);
-
-	return (
-		<ClayButton
-			className="page-editor__page-structure__tree-node__remove-button"
-			displayType="unstyled"
-			onClick={event => {
-				event.stopPropagation();
-
-				dispatch(deleteItem({itemId: node.id, store}));
-			}}
-		>
-			<ClayIcon symbol="times-circle" />
-		</ClayButton>
-	);
-};
-
 export default function StructureTreeNode({node}) {
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
@@ -129,4 +90,43 @@ StructureTreeNode.propTypes = {
 		name: PropTypes.string.isRequired,
 		removable: PropTypes.bool,
 	}).isRequired,
+};
+
+const NameLabel = ({disabled, id, name}) => {
+	const isSelected = useIsSelected();
+
+	return (
+		<div
+			className={classNames(
+				'page-editor__page-structure__tree-node__name',
+				{
+					'page-editor__page-structure__tree-node__name--active': isSelected(
+						id
+					),
+					'page-editor__page-structure__tree-node__name--disabled': disabled,
+				}
+			)}
+		>
+			{name || Liferay.Language.get('element')}
+		</div>
+	);
+};
+
+const RemoveButton = ({node}) => {
+	const dispatch = useDispatch();
+	const store = useSelector(state => state);
+
+	return (
+		<ClayButton
+			className="page-editor__page-structure__tree-node__remove-button"
+			displayType="unstyled"
+			onClick={event => {
+				event.stopPropagation();
+
+				dispatch(deleteItem({itemId: node.id, store}));
+			}}
+		>
+			<ClayIcon symbol="times-circle" />
+		</ClayButton>
+	);
 };

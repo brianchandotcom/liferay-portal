@@ -21,6 +21,8 @@ String className = GetterUtil.getString((String)request.getAttribute("liferay-ra
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ratings:ratings:classPK"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ratings:ratings:data");
 Boolean inTrash = (Boolean)request.getAttribute("liferay-ui:ratings:inTrash");
+RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("liferay-ratings:ratings:ratingsEntry");
+RatingsStats ratingsStats = (RatingsStats)request.getAttribute("liferay-ratings:ratings:ratingsStats");
 String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:type"));
 %>
 
@@ -47,6 +49,8 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 			className="<%= className %>"
 			classPK="<%= classPK %>"
 			inTrash="<%= inTrash %>"
+			ratingsEntry="<%= ratingsEntry %>"
+			ratingsStats="<%= ratingsStats %>"
 			type="<%= type %>"
 		/>
 	</c:otherwise>

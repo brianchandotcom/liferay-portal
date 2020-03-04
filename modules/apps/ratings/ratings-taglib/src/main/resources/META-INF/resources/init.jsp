@@ -25,7 +25,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.ratings.kernel.RatingsType" %>
+page import="com.liferay.ratings.kernel.RatingsType" %><%@
+page import="com.liferay.ratings.kernel.model.RatingsEntry" %><%@
+page import="com.liferay.ratings.kernel.model.RatingsStats" %>
 
 <%@ page import="java.util.Map" %>
 

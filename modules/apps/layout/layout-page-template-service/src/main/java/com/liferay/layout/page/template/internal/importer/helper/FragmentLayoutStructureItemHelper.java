@@ -136,6 +136,7 @@ public class FragmentLayoutStructureItemHelper
 		Map<String, String> editableTypes = _getEditableTypes(html);
 
 		JSONObject jsonObject = JSONUtil.merge(
+			defaultValueJSONObject,
 			JSONUtil.put(
 				"com.liferay.fragment.entry.processor.background.image." +
 					"BackgroundImageFragmentEntryProcessor",
@@ -151,8 +152,7 @@ public class FragmentLayoutStructureItemHelper
 					"FreeMarkerFragmentEntryProcessor",
 				_createConfigurationValuesJSONObject(
 					(Map<String, Object>)definitionMap.get("fragmentConfig"))
-			),
-			defaultValueJSONObject);
+			));
 
 		try {
 			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(

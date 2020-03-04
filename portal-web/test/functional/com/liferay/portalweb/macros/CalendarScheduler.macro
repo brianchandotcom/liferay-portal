@@ -187,8 +187,10 @@ definition {
 		else if (IsElementNotPresent(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW")) {
 			CalendarNavigator.gotoView(viewType = "Week");
 
+			Refresh();
+
 			if (!(IsElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY"))) {
-				Click(locator1 = "Calendar#VIEW_NEXT_BUTTON");
+				Click(locator1 = "Calendar#VIEW_PREVIOUS_BUTTON");
 			}
 
 			ScrollWebElementIntoView(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY");
@@ -243,6 +245,10 @@ definition {
 
 		var key_eventTitle = "${eventTitle}";
 
+		if (IsElementNotPresent(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_FIRST_EVENT_AGENDA_VIEW")) {
+			Click(locator1 = "Calendar#VIEW_PREVIOUS_BUTTON");
+		}
+
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_FIRST_EVENT_AGENDA_VIEW");
 
 		if ("${numberOfOccurrences}" == "2") {
@@ -262,8 +268,6 @@ definition {
 		Refresh();
 
 		if (IsElementNotPresent(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW")) {
-			CalendarNavigator.gotoNextDay();
-
 			AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC");
 		}
 		else {

@@ -775,7 +775,7 @@ definition {
 
 		CalendarEvent.view(eventTitle = "Calendar Event Today Day");
 
-		CalendarEvent.tearDown();
+		CalendarEvent.delete();
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 

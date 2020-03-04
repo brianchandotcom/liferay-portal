@@ -786,7 +786,9 @@ definition {
 		var currentYear = DateUtil.getCurrentYear();
 		var futureYear = ${currentYear} + 1;
 
-		SelectFrame(locator1 = "Modal#BODY");
+		SelectFrame(locator1 = "WorkflowDefinition#DIALOG_BOX_BODY");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
 
 		Type(
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",

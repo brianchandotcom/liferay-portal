@@ -930,6 +930,10 @@ definition {
 	}
 
 	macro resizeViaEventBlock {
+		if (!(IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC"))) {
+			Click(locator1 = "Calendar#VIEW_PREVIOUS_BUTTON");
+		}
+
 		MouseOver.mouseOverNotVisible(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC");
 
 		SikuliDragAndDrop(

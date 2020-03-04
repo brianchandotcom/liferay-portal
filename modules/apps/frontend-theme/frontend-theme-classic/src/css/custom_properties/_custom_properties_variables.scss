@@ -278,4 +278,19 @@ $theme-colors-cp: map-deep-merge(
 	--portlet-topper-color: var(--white);
 	--portlet-topper-link-color: var(--portlet-topper-color);
 	--portlet-topper-link-hover-color: var(--portlet-topper-link-color);
+
+	// Table list
+
+	--table-cell-padding: #{$table-cell-padding};
+
+	--table-list-bg: var(--table-bg);
+	--table-list-header-bg: var(--table-list-bg);
+
+	--table-list-border-radius: #{$table-list-border-radius};
+	--table-list-color: inherit;
+	--table-list-font-size: 0.875rem;
+
+	--table-list-border-color: #{$table-list-border-color};
+	--table-list-border-x-width: #{$table-list-border-x-width};
+	--table-list-border-y-width: #{$table-list-border-y-width};
 }

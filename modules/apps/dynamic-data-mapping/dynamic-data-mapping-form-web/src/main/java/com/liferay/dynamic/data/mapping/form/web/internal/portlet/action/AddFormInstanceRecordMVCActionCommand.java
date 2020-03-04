@@ -60,6 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM,
+		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 		"mvc.command.name=addFormInstanceRecord"
 	},
 	service = MVCActionCommand.class
@@ -114,22 +115,9 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		serviceContext.setRequest(_portal.getHttpServletRequest(actionRequest));
 
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-			_ddmFormInstanceRecordVersionLocalService.
-				fetchLatestFormInstanceRecordVersion(
-					themeDisplay.getUserId(), formInstanceId,
-					ddmFormInstance.getVersion(),
-					WorkflowConstants.STATUS_DRAFT);
-
-		if (ddmFormInstanceRecordVersion == null) {
-			_ddmFormInstanceRecordService.addFormInstanceRecord(
-				groupId, formInstanceId, ddmFormValues, serviceContext);
-		}
-		else {
-			_ddmFormInstanceRecordService.updateFormInstanceRecord(
-				ddmFormInstanceRecordVersion.getFormInstanceRecordId(), false,
-				ddmFormValues, serviceContext);
-		}
+		_saveFormInstanceRecord(
+			actionRequest, ddmFormInstance, ddmFormValues, groupId,
+			serviceContext, themeDisplay.getUserId());
 
 		if (!SessionErrors.isEmpty(actionRequest)) {
 			return;
@@ -138,7 +126,8 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMFormInstanceSettings formInstanceSettings =
 			ddmFormInstance.getSettingsModel();
 
-		String redirectURL = formInstanceSettings.redirectURL();
+		String redirectURL = ParamUtil.getString(
+			actionRequest, "redirect", formInstanceSettings.redirectURL());
 
 		if (Validator.isNotNull(redirectURL)) {
 			portletSession.setAttribute(
@@ -173,10 +162,28 @@ public class AddFormInstanceRecordMVCActionCommand
 	}
 
 	@Reference(unbind = "-")
+	protected void setAddFormInstanceRecordMVCCommandHelper(
+		AddFormInstanceRecordMVCCommandHelper
+			addFormInstanceRecordMVCCommandHelper) {
+
+		_addFormInstanceMVCCommandHelper =
+			addFormInstanceRecordMVCCommandHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMFormInstanceRecordService(
 		DDMFormInstanceRecordService ddmFormInstanceRecordService) {
 
 		_ddmFormInstanceRecordService = ddmFormInstanceRecordService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormInstanceRecordVersionLocalService(
+		DDMFormInstanceRecordVersionLocalService
+			ddmFormInstanceRecordVersionLocalService) {
+
+		_ddmFormInstanceRecordVersionLocalService =
+			ddmFormInstanceRecordVersionLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -193,6 +200,11 @@ public class AddFormInstanceRecordMVCActionCommand
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
 	protected void validateCaptcha(
 			ActionRequest actionRequest, DDMFormInstance ddmFormInstance)
 		throws Exception {
@@ -205,20 +217,47 @@ public class AddFormInstanceRecordMVCActionCommand
 		}
 	}
 
-	@Reference
+	private void _saveFormInstanceRecord(
+			ActionRequest actionRequest, DDMFormInstance ddmFormInstance,
+			DDMFormValues ddmFormValues, long groupId,
+			ServiceContext serviceContext, long userId)
+		throws PortalException {
+
+		long ddmFormInstanceRecordId = ParamUtil.getLong(
+			actionRequest, "formInstanceRecordId");
+
+		if (ddmFormInstanceRecordId != 0) {
+			_ddmFormInstanceRecordService.updateFormInstanceRecord(
+				ddmFormInstanceRecordId, false, ddmFormValues, serviceContext);
+		}
+		else {
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
+				_ddmFormInstanceRecordVersionLocalService.
+					fetchLatestFormInstanceRecordVersion(
+						userId, ddmFormInstance.getFormInstanceId(),
+						ddmFormInstance.getVersion(),
+						WorkflowConstants.STATUS_DRAFT);
+
+			if (ddmFormInstanceRecordVersion == null) {
+				_ddmFormInstanceRecordService.addFormInstanceRecord(
+					groupId, ddmFormInstance.getFormInstanceId(), ddmFormValues,
+					serviceContext);
+			}
+			else {
+				_ddmFormInstanceRecordService.updateFormInstanceRecord(
+					ddmFormInstanceRecordVersion.getFormInstanceRecordId(),
+					false, ddmFormValues, serviceContext);
+			}
+		}
+	}
+
 	private AddFormInstanceRecordMVCCommandHelper
 		_addFormInstanceMVCCommandHelper;
-
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
-
-	@Reference
 	private DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
-
 	private DDMFormInstanceService _ddmFormInstanceService;
 	private DDMFormValuesFactory _ddmFormValuesFactory;
-
-	@Reference
 	private Portal _portal;
 
 }

@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION</td>
-	<td>//button[@data-title='Fragment Configuration']</td>
+	<td>//button[contains(@title,'Configuration')]</td>
 	<td></td>
 </tr>
 <tr>

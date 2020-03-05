@@ -811,6 +811,66 @@ definition {
 			pageName4 = "Hello");
 	}
 
+	@description = "This is a use case for LPS-107677."
+	@priority = "3"
+	test ViewImportedSitePageWithoutInfoMessage {
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name");
+
+		Site.openSitesAdmin();
+
+		Site.addSiteTemplateCP(
+			siteName = "Site A",
+			siteTemplateName = "Site Template Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Home",
+			siteName = "Site A");
+
+		SiteTemplates.viewNoInfoMessage();
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		LAR.exportPortlet(
+			larFileName = "site-template-name.lar",
+			portletName = "Site Templates");
+
+		LAR.exportSiteCP(siteScopeName = "Site A");
+
+		var key_larFileName = "${larFileName}";
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.deleteGroupByName(groupName = "Site A");
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		LAR.importPortlet(larFileName = "site-template-name.lar");
+
+		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+
+		JSONGroup.addGroup(groupName = "Site B");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Site B");
+
+		Navigator.gotoSitePage(
+			pageName = "Home",
+			siteName = "Site B");
+
+		SiteTemplates.viewNoInfoMessage();
+	}
+
 	@priority = "3"
 	test ViewInlineGuestPermissionsInSiteTemplatesViaWCD {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

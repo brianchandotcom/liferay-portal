@@ -72,7 +72,7 @@ public class KnowledgeBaseFolderResourceImpl
 		KBFolder kbFolder = _kbFolderService.getKBFolder(
 			parentKnowledgeBaseFolderId);
 
-		Map<String, Map<String, String>> actions =
+		return Page.of(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -84,10 +84,7 @@ public class KnowledgeBaseFolderResourceImpl
 				addAction(
 					"VIEW", "getKnowledgeBaseFolderKnowledgeBaseFoldersPage",
 					"com.liferay.knowledge.base.admin", kbFolder.getGroupId())
-			).build();
-
-		return Page.of(
-			actions,
+			).build(),
 			transform(
 				_kbFolderService.getKBFolders(
 					kbFolder.getGroupId(), parentKnowledgeBaseFolderId,
@@ -103,7 +100,7 @@ public class KnowledgeBaseFolderResourceImpl
 			Long siteId, Pagination pagination)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
+		return Page.of(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -114,10 +111,7 @@ public class KnowledgeBaseFolderResourceImpl
 				addAction(
 					"VIEW", "getSiteKnowledgeBaseFoldersPage",
 					"com.liferay.knowledge.base.admin", siteId)
-			).build();
-
-		return Page.of(
-			actions,
+			).build(),
 			transform(
 				_kbFolderService.getKBFolders(
 					siteId, 0, pagination.getStartPosition(),
@@ -202,19 +196,17 @@ public class KnowledgeBaseFolderResourceImpl
 			return null;
 		}
 
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"delete",
-				addAction("DELETE", kbFolder, "deleteKnowledgeBaseFolder")
-			).put(
-				"get", addAction("VIEW", kbFolder, "getKnowledgeBaseFolder")
-			).put(
-				"replace",
-				addAction("UPDATE", kbFolder, "putKnowledgeBaseFolder")
-			).build();
-
-		KnowledgeBaseFolder knowledgeBaseFolder = new KnowledgeBaseFolder() {
+		return new KnowledgeBaseFolder() {
 			{
+				actions = HashMapBuilder.<String, Map<String, String>>put(
+					"delete",
+					addAction("DELETE", kbFolder, "deleteKnowledgeBaseFolder")
+				).put(
+					"get", addAction("VIEW", kbFolder, "getKnowledgeBaseFolder")
+				).put(
+					"replace",
+					addAction("UPDATE", kbFolder, "putKnowledgeBaseFolder")
+				).build();
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
@@ -239,10 +231,6 @@ public class KnowledgeBaseFolderResourceImpl
 				siteId = kbFolder.getGroupId();
 			}
 		};
-
-		knowledgeBaseFolder.setActions(actions);
-
-		return knowledgeBaseFolder;
 	}
 
 	@Reference

@@ -111,16 +111,13 @@ public class WikiPageResourceImpl
 
 		WikiNode wikiNode = _wikiNodeService.getNode(wikiNodeId);
 
-		Map<String, Map<String, String>> actions =
+		return SearchUtil.search(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"add-page",
 				addAction("ADD_PAGE", wikiNode, "postWikiNodeWikiPage")
 			).put(
 				"get", addAction("VIEW", wikiNode, "getWikiNodeWikiPagesPage")
-			).build();
-
-		return SearchUtil.search(
-			actions,
+			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -163,7 +160,7 @@ public class WikiPageResourceImpl
 			PermissionThreadLocal.getPermissionChecker(), wikiPage,
 			ActionKeys.VIEW);
 
-		Map<String, Map<String, String>> actions =
+		return Page.of(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"add-page",
 				addAction(
@@ -176,10 +173,7 @@ public class WikiPageResourceImpl
 					"VIEW", wikiPage.getResourcePrimKey(),
 					"getWikiPageWikiPagesPage", wikiPage.getUserId(),
 					"com.liferay.wiki.model.WikiPage", wikiPage.getGroupId())
-			).build();
-
-		return Page.of(
-			actions,
+			).build(),
 			transform(
 				_wikiPageService.getChildren(
 					wikiPage.getGroupId(), wikiPage.getNodeId(), true,
@@ -311,47 +305,49 @@ public class WikiPageResourceImpl
 	private WikiPage _toWikiPage(com.liferay.wiki.model.WikiPage wikiPage)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"add-page",
-				addAction(
-					"UPDATE", wikiPage.getResourcePrimKey(),
-					"postWikiPageWikiPage", wikiPage.getUserId(),
-					"com.liferay.wiki.model.WikiPage", wikiPage.getGroupId())
-			).put(
-				"delete",
-				addAction(
-					"DELETE", wikiPage.getResourcePrimKey(), "deleteWikiPage",
-					wikiPage.getUserId(), "com.liferay.wiki.model.WikiPage",
-					wikiPage.getGroupId())
-			).put(
-				"get",
-				addAction(
-					"VIEW", wikiPage.getResourcePrimKey(), "getWikiPage",
-					wikiPage.getUserId(), "com.liferay.wiki.model.WikiPage",
-					wikiPage.getGroupId())
-			).put(
-				"replace",
-				addAction(
-					"UPDATE", wikiPage.getResourcePrimKey(), "putWikiPage",
-					wikiPage.getUserId(), "com.liferay.wiki.model.WikiPage",
-					wikiPage.getGroupId())
-			).put(
-				"subscribe",
-				addAction(
-					"SUBSCRIBE", wikiPage.getResourcePrimKey(),
-					"putWikiPageSubscribe", wikiPage.getUserId(),
-					"com.liferay.wiki.model.WikiPage", wikiPage.getGroupId())
-			).put(
-				"unsubscribe",
-				addAction(
-					"SUBSCRIBE", wikiPage.getResourcePrimKey(),
-					"putWikiPageUnsubscribe", wikiPage.getUserId(),
-					"com.liferay.wiki.model.WikiPage", wikiPage.getGroupId())
-			).build();
-
-		WikiPage page = new WikiPage() {
+		return new WikiPage() {
 			{
+				actions = HashMapBuilder.<String, Map<String, String>>put(
+					"add-page",
+					addAction(
+						"UPDATE", wikiPage.getResourcePrimKey(),
+						"postWikiPageWikiPage", wikiPage.getUserId(),
+						"com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).put(
+					"delete",
+					addAction(
+						"DELETE", wikiPage.getResourcePrimKey(),
+						"deleteWikiPage", wikiPage.getUserId(),
+						"com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).put(
+					"get",
+					addAction(
+						"VIEW", wikiPage.getResourcePrimKey(), "getWikiPage",
+						wikiPage.getUserId(), "com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).put(
+					"replace",
+					addAction(
+						"UPDATE", wikiPage.getResourcePrimKey(), "putWikiPage",
+						wikiPage.getUserId(), "com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).put(
+					"subscribe",
+					addAction(
+						"SUBSCRIBE", wikiPage.getResourcePrimKey(),
+						"putWikiPageSubscribe", wikiPage.getUserId(),
+						"com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).put(
+					"unsubscribe",
+					addAction(
+						"SUBSCRIBE", wikiPage.getResourcePrimKey(),
+						"putWikiPageUnsubscribe", wikiPage.getUserId(),
+						"com.liferay.wiki.model.WikiPage",
+						wikiPage.getGroupId())
+				).build();
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						com.liferay.wiki.model.WikiPage.class.getName(),
@@ -418,10 +414,6 @@ public class WikiPageResourceImpl
 					});
 			}
 		};
-
-		page.setActions(actions);
-
-		return page;
 	}
 
 	@Reference

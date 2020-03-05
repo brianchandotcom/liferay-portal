@@ -86,7 +86,7 @@ public class DocumentFolderResourceImpl
 
 		DocumentFolder parentDocumentFolder = _toDocumentFolder(folder);
 
-		Map<String, Map<String, String>> actions =
+		return _getDocumentFoldersPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -99,12 +99,9 @@ public class DocumentFolderResourceImpl
 					"VIEW", folder.getFolderId(),
 					"getDocumentFolderDocumentFoldersPage", folder.getUserId(),
 					"com.liferay.document.library", folder.getGroupId())
-			).build();
-
-		return _getDocumentFoldersPage(
-			actions, parentDocumentFolder.getId(),
-			parentDocumentFolder.getSiteId(), flatten, search, filter,
-			pagination, sorts);
+			).build(),
+			parentDocumentFolder.getId(), parentDocumentFolder.getSiteId(),
+			flatten, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -128,7 +125,7 @@ public class DocumentFolderResourceImpl
 			documentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 
-		Map<String, Map<String, String>> actions =
+		return _getDocumentFoldersPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -139,11 +136,9 @@ public class DocumentFolderResourceImpl
 				addAction(
 					"VIEW", "getSiteDocumentFoldersPage",
 					"com.liferay.document.library", siteId)
-			).build();
-
-		return _getDocumentFoldersPage(
-			actions, documentFolderId, siteId, flatten, search, filter,
-			pagination, sorts);
+			).build(),
+			documentFolderId, siteId, flatten, search, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -278,54 +273,52 @@ public class DocumentFolderResourceImpl
 	}
 
 	private DocumentFolder _toDocumentFolder(Folder folder) throws Exception {
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"delete",
-				addAction(
-					"DELETE", folder.getFolderId(), "deleteDocumentFolder",
-					folder.getUserId(),
-					"com.liferay.document.library.kernel.model.DLFolder",
-					folder.getGroupId())
-			).put(
-				"get",
-				addAction(
-					"ACCESS", folder.getFolderId(), "getDocumentFolder",
-					folder.getUserId(),
-					"com.liferay.document.library.kernel.model.DLFolder",
-					folder.getGroupId())
-			).put(
-				"replace",
-				addAction(
-					"UPDATE", folder.getFolderId(), "putDocumentFolder",
-					folder.getUserId(),
-					"com.liferay.document.library.kernel.model.DLFolder",
-					folder.getGroupId())
-			).put(
-				"subscribe",
-				addAction(
-					"SUBSCRIBE", folder.getFolderId(),
-					"putDocumentFolderSubscribe", folder.getUserId(),
-					"com.liferay.document.library.kernel.model.DLFolder",
-					folder.getGroupId())
-			).put(
-				"unsubscribe",
-				addAction(
-					"SUBSCRIBE", folder.getFolderId(),
-					"putDocumentFolderUnsubscribe", folder.getUserId(),
-					"com.liferay.document.library.kernel.model.DLFolder",
-					folder.getGroupId())
-			).put(
-				"update",
-				addAction(
-					"UPDATE", folder.getFolderId(), "patchDocumentFolder",
-					folder.getUserId(),
-					"com.liferay.document.library.kernel.model.DLFolder",
-					folder.getGroupId())
-			).build();
-
 		return _documentFolderDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), actions,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.<String, Map<String, String>>put(
+					"delete",
+					addAction(
+						"DELETE", folder.getFolderId(), "deleteDocumentFolder",
+						folder.getUserId(),
+						"com.liferay.document.library.kernel.model.DLFolder",
+						folder.getGroupId())
+				).put(
+					"get",
+					addAction(
+						"ACCESS", folder.getFolderId(), "getDocumentFolder",
+						folder.getUserId(),
+						"com.liferay.document.library.kernel.model.DLFolder",
+						folder.getGroupId())
+				).put(
+					"replace",
+					addAction(
+						"UPDATE", folder.getFolderId(), "putDocumentFolder",
+						folder.getUserId(),
+						"com.liferay.document.library.kernel.model.DLFolder",
+						folder.getGroupId())
+				).put(
+					"subscribe",
+					addAction(
+						"SUBSCRIBE", folder.getFolderId(),
+						"putDocumentFolderSubscribe", folder.getUserId(),
+						"com.liferay.document.library.kernel.model.DLFolder",
+						folder.getGroupId())
+				).put(
+					"unsubscribe",
+					addAction(
+						"SUBSCRIBE", folder.getFolderId(),
+						"putDocumentFolderUnsubscribe", folder.getUserId(),
+						"com.liferay.document.library.kernel.model.DLFolder",
+						folder.getGroupId())
+				).put(
+					"update",
+					addAction(
+						"UPDATE", folder.getFolderId(), "patchDocumentFolder",
+						folder.getUserId(),
+						"com.liferay.document.library.kernel.model.DLFolder",
+						folder.getGroupId())
+				).build(),
 				_dtoConverterRegistry, folder.getFolderId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

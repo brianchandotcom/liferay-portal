@@ -115,7 +115,7 @@ public class BlogPostingResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
+		return SearchUtil.search(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -131,10 +131,7 @@ public class BlogPostingResourceImpl
 				addAction(
 					"SUBSCRIBE", "putSiteBlogPostingUnsubscribe",
 					"com.liferay.blogs", siteId)
-			).build();
-
-		return SearchUtil.search(
-			actions,
+			).build(),
 			booleanQuery -> {
 			},
 			filter, BlogsEntry.class, search, pagination,
@@ -306,7 +303,7 @@ public class BlogPostingResourceImpl
 				BlogsEntry blogsEntry = _blogsEntryService.getEntry(
 					ratingsEntry.getClassPK());
 
-				Map<String, Map<String, String>> actions =
+				return RatingUtil.toRating(
 					HashMapBuilder.<String, Map<String, String>>put(
 						"create",
 						addAction(
@@ -322,29 +319,27 @@ public class BlogPostingResourceImpl
 						"replace",
 						addAction(
 							"UPDATE", blogsEntry, "putBlogPostingMyRating")
-					).build();
-
-				return RatingUtil.toRating(
-					actions, _portal, ratingsEntry, _userLocalService);
+					).build(),
+					_portal, ratingsEntry, _userLocalService);
 			},
 			contextUser);
 	}
 
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"delete", addAction("DELETE", blogsEntry, "deleteBlogPosting")
-			).put(
-				"get", addAction("VIEW", blogsEntry, "getBlogPosting")
-			).put(
-				"replace", addAction("UPDATE", blogsEntry, "putBlogPosting")
-			).put(
-				"update", addAction("UPDATE", blogsEntry, "patchBlogPosting")
-			).build();
-
 		return _blogPostingDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), actions,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.<String, Map<String, String>>put(
+					"delete",
+					addAction("DELETE", blogsEntry, "deleteBlogPosting")
+				).put(
+					"get", addAction("VIEW", blogsEntry, "getBlogPosting")
+				).put(
+					"replace", addAction("UPDATE", blogsEntry, "putBlogPosting")
+				).put(
+					"update",
+					addAction("UPDATE", blogsEntry, "patchBlogPosting")
+				).build(),
 				_dtoConverterRegistry, blogsEntry.getEntryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

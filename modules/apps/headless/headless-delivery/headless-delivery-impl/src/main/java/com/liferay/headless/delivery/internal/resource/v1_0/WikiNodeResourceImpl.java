@@ -72,15 +72,12 @@ public class WikiNodeResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
+		return SearchUtil.search(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
 					"ADD_NODE", "postSiteWikiNode", "com.liferay.wiki", siteId)
-			).build();
-
-		return SearchUtil.search(
-			actions,
+			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -143,23 +140,21 @@ public class WikiNodeResourceImpl
 	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"delete", addAction("DELETE", wikiNode, "deleteWikiNode")
-			).put(
-				"get", addAction("VIEW", wikiNode, "getWikiNode")
-			).put(
-				"replace", addAction("UPDATE", wikiNode, "putWikiNode")
-			).put(
-				"subscribe",
-				addAction("SUBSCRIBE", wikiNode, "putWikiNodeSubscribe")
-			).put(
-				"unsubscribe",
-				addAction("SUBSCRIBE", wikiNode, "putWikiNodeUnsubscribe")
-			).build();
-
-		WikiNode node = new WikiNode() {
+		return new WikiNode() {
 			{
+				actions = HashMapBuilder.<String, Map<String, String>>put(
+					"delete", addAction("DELETE", wikiNode, "deleteWikiNode")
+				).put(
+					"get", addAction("VIEW", wikiNode, "getWikiNode")
+				).put(
+					"replace", addAction("UPDATE", wikiNode, "putWikiNode")
+				).put(
+					"subscribe",
+					addAction("SUBSCRIBE", wikiNode, "putWikiNodeSubscribe")
+				).put(
+					"unsubscribe",
+					addAction("SUBSCRIBE", wikiNode, "putWikiNodeUnsubscribe")
+				).build();
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(wikiNode.getUserId()));
@@ -177,10 +172,6 @@ public class WikiNodeResourceImpl
 					wikiNode.getNodeId());
 			}
 		};
-
-		node.setActions(actions);
-
-		return node;
 	}
 
 	private static final EntityModel _entityModel = new WikiNodeEntityModel();

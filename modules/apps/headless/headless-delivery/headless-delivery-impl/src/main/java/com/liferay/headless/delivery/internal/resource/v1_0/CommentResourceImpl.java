@@ -72,7 +72,7 @@ public class CommentResourceImpl
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
-		Map<String, Map<String, String>> actions =
+		return spiCommentResource.getEntityCommentsPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"add-discussion",
 				addAction(
@@ -85,11 +85,9 @@ public class CommentResourceImpl
 					"VIEW", blogPostingId, "getBlogPostingCommentsPage",
 					blogsEntry.getUserId(), BlogsEntry.class.getName(),
 					blogsEntry.getGroupId())
-			).build();
-
-		return spiCommentResource.getEntityCommentsPage(
-			actions, blogsEntry.getGroupId(), BlogsEntry.class.getName(),
-			blogPostingId, search, filter, pagination, sorts);
+			).build(),
+			blogsEntry.getGroupId(), BlogsEntry.class.getName(), blogPostingId,
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -124,7 +122,7 @@ public class CommentResourceImpl
 
 		DLFileEntry dlFileEntry = _dlFileEntryService.getFileEntry(documentId);
 
-		Map<String, Map<String, String>> actions =
+		return spiCommentResource.getEntityCommentsPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"add-discussion",
 				addAction(
@@ -137,11 +135,9 @@ public class CommentResourceImpl
 					"VIEW", documentId, "getDocumentCommentsPage",
 					dlFileEntry.getUserId(), DLFileEntry.class.getName(),
 					dlFileEntry.getGroupId())
-			).build();
-
-		return spiCommentResource.getEntityCommentsPage(
-			actions, dlFileEntry.getGroupId(), DLFileEntry.class.getName(),
-			documentId, search, filter, pagination, sorts);
+			).build(),
+			dlFileEntry.getGroupId(), DLFileEntry.class.getName(), documentId,
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -164,7 +160,7 @@ public class CommentResourceImpl
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
-		Map<String, Map<String, String>> actions =
+		return spiCommentResource.getEntityCommentsPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"add-discussion",
 				addAction(
@@ -178,12 +174,9 @@ public class CommentResourceImpl
 					"getStructuredContentCommentsPage",
 					journalArticle.getUserId(), JournalArticle.class.getName(),
 					journalArticle.getGroupId())
-			).build();
-
-		return spiCommentResource.getEntityCommentsPage(
-			actions, journalArticle.getGroupId(),
-			JournalArticle.class.getName(), structuredContentId, search, filter,
-			pagination, sorts);
+			).build(),
+			journalArticle.getGroupId(), JournalArticle.class.getName(),
+			structuredContentId, search, filter, pagination, sorts);
 	}
 
 	@Override

@@ -94,7 +94,7 @@ public class StructuredContentFolderResourceImpl
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 
-		Map<String, Map<String, String>> actions =
+		return _getFoldersPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -105,11 +105,9 @@ public class StructuredContentFolderResourceImpl
 				addAction(
 					"VIEW", "getSiteStructuredContentFoldersPage",
 					"com.liferay.journal", siteId)
-			).build();
-
-		return _getFoldersPage(
-			actions, parentStructuredContentFolderId, siteId, search, filter,
-			pagination, sorts);
+			).build(),
+			parentStructuredContentFolderId, siteId, search, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -131,7 +129,7 @@ public class StructuredContentFolderResourceImpl
 		JournalFolder journalFolder = _journalFolderService.getFolder(
 			parentStructuredContentFolderId);
 
-		Map<String, Map<String, String>> actions =
+		return _getFoldersPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"add-subfolder",
 				addAction(
@@ -152,11 +150,9 @@ public class StructuredContentFolderResourceImpl
 				addAction(
 					"SUBSCRIBE", journalFolder,
 					"putStructuredContentFolderUnsubscribe")
-			).build();
-
-		return _getFoldersPage(
-			actions, parentStructuredContentFolderId,
-			journalFolder.getGroupId(), search, filter, pagination, sorts);
+			).build(),
+			parentStructuredContentFolderId, journalFolder.getGroupId(), search,
+			filter, pagination, sorts);
 	}
 
 	@Override
@@ -289,37 +285,38 @@ public class StructuredContentFolderResourceImpl
 			JournalFolder journalFolder)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"add-subfolder",
-				addAction(
-					"UPDATE", journalFolder,
-					"postStructuredContentFolderStructuredContentFolder")
-			).put(
-				"delete",
-				addAction(
-					"DELETE", journalFolder, "deleteStructuredContentFolder")
-			).put(
-				"get",
-				addAction("VIEW", journalFolder, "getStructuredContentFolder")
-			).put(
-				"replace",
-				addAction("UPDATE", journalFolder, "putStructuredContentFolder")
-			).put(
-				"subscribe",
-				addAction(
-					"SUBSCRIBE", journalFolder,
-					"putStructuredContentFolderSubscribe")
-			).put(
-				"unsubscribe",
-				addAction(
-					"SUBSCRIBE", journalFolder,
-					"putStructuredContentFolderUnsubscribe")
-			).build();
-
 		return _structuredContentFolderDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), actions,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.<String, Map<String, String>>put(
+					"add-subfolder",
+					addAction(
+						"UPDATE", journalFolder,
+						"postStructuredContentFolderStructuredContentFolder")
+				).put(
+					"delete",
+					addAction(
+						"DELETE", journalFolder,
+						"deleteStructuredContentFolder")
+				).put(
+					"get",
+					addAction(
+						"VIEW", journalFolder, "getStructuredContentFolder")
+				).put(
+					"replace",
+					addAction(
+						"UPDATE", journalFolder, "putStructuredContentFolder")
+				).put(
+					"subscribe",
+					addAction(
+						"SUBSCRIBE", journalFolder,
+						"putStructuredContentFolderSubscribe")
+				).put(
+					"unsubscribe",
+					addAction(
+						"SUBSCRIBE", journalFolder,
+						"putStructuredContentFolderUnsubscribe")
+				).build(),
 				_dtoConverterRegistry, journalFolder.getFolderId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

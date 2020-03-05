@@ -123,7 +123,7 @@ public class OrganizationResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
+		return _getOrganizationsPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"get",
 				addAction(
@@ -131,11 +131,8 @@ public class OrganizationResourceImpl
 					com.liferay.portal.kernel.model.Organization.class.
 						getName(),
 					_getOrganizationId(parentOrganizationId))
-			).build();
-
-		return _getOrganizationsPage(
-			actions, parentOrganizationId, flatten, search, filter, pagination,
-			sorts);
+			).build(),
+			parentOrganizationId, flatten, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -144,7 +141,7 @@ public class OrganizationResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
+		return _getOrganizationsPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -159,10 +156,8 @@ public class OrganizationResourceImpl
 					com.liferay.portal.kernel.model.Organization.class.
 						getName(),
 					0L)
-			).build();
-
-		return _getOrganizationsPage(
-			actions, null, flatten, search, filter, pagination, sorts);
+			).build(),
+			null, flatten, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -295,7 +290,8 @@ public class OrganizationResourceImpl
 
 		Long id = _getOrganizationId(organizationId);
 
-		Map<String, Map<String, String>> actions =
+		return new DefaultDTOConverterContext(
+			contextAcceptLanguage.isAcceptAllLanguages(),
 			HashMapBuilder.<String, Map<String, String>>put(
 				"delete",
 				addAction(
@@ -324,11 +320,8 @@ public class OrganizationResourceImpl
 					com.liferay.portal.kernel.model.Organization.class.
 						getName(),
 					id)
-			).build();
-
-		return new DefaultDTOConverterContext(
-			contextAcceptLanguage.isAcceptAllLanguages(), actions, null,
-			organizationId, contextAcceptLanguage.getPreferredLocale(),
+			).build(),
+			null, organizationId, contextAcceptLanguage.getPreferredLocale(),
 			contextUriInfo, contextUser);
 	}
 

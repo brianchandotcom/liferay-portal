@@ -158,7 +158,7 @@ public class StructuredContentResourceImpl
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
 			contentStructureId);
 
-		Map<String, Map<String, String>> actions =
+		return _getStructuredContentsPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"get",
 				addAction(
@@ -166,10 +166,7 @@ public class StructuredContentResourceImpl
 					"getContentStructureStructuredContentsPage",
 					ddmStructure.getUserId(), "com.liferay.journal",
 					ddmStructure.getGroupId())
-			).build();
-
-		return _getStructuredContentsPage(
-			actions,
+			).build(),
 			booleanQuery -> {
 				if (contentStructureId != null) {
 					BooleanFilter booleanFilter =
@@ -243,7 +240,7 @@ public class StructuredContentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
+		return _getStructuredContentsPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -254,10 +251,7 @@ public class StructuredContentResourceImpl
 				addAction(
 					"VIEW", "getSiteStructuredContentsPage",
 					"com.liferay.journal", siteId)
-			).build();
-
-		return _getStructuredContentsPage(
-			actions,
+			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -295,7 +289,7 @@ public class StructuredContentResourceImpl
 		JournalFolder journalFolder = _journalFolderService.getFolder(
 			structuredContentFolderId);
 
-		Map<String, Map<String, String>> actions =
+		return _getStructuredContentsPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -310,10 +304,7 @@ public class StructuredContentResourceImpl
 					"getStructuredContentFolderStructuredContentsPage",
 					journalFolder.getUserId(), "com.liferay.journal",
 					journalFolder.getGroupId())
-			).build();
-
-		return _getStructuredContentsPage(
-			actions,
+			).build(),
 			booleanQuery -> {
 				if (structuredContentFolderId != null) {
 					BooleanFilter booleanFilter =
@@ -749,7 +740,7 @@ public class StructuredContentResourceImpl
 					_journalArticleService.getLatestArticle(
 						ratingsEntry.getClassPK());
 
-				Map<String, Map<String, String>> actions =
+				return RatingUtil.toRating(
 					HashMapBuilder.<String, Map<String, String>>put(
 						"create",
 						addAction(
@@ -782,10 +773,8 @@ public class StructuredContentResourceImpl
 							journalArticle.getUserId(),
 							JournalArticle.class.getName(),
 							journalArticle.getGroupId())
-					).build();
-
-				return RatingUtil.toRating(
-					actions, _portal, ratingsEntry, _userLocalService);
+					).build(),
+					_portal, ratingsEntry, _userLocalService);
 			},
 			contextUser);
 	}
@@ -973,56 +962,62 @@ public class StructuredContentResourceImpl
 			JournalArticle journalArticle)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"delete",
-				addAction(
-					"DELETE", journalArticle.getResourcePrimKey(),
-					"deleteStructuredContent", journalArticle.getUserId(),
-					JournalArticle.class.getName(), journalArticle.getGroupId())
-			).put(
-				"get",
-				addAction(
-					"VIEW", journalArticle.getResourcePrimKey(),
-					"getStructuredContent", journalArticle.getUserId(),
-					JournalArticle.class.getName(), journalArticle.getGroupId())
-			).put(
-				"get-template",
-				addAction(
-					"VIEW", journalArticle.getResourcePrimKey(),
-					"getStructuredContentRenderedContentTemplate",
-					journalArticle.getUserId(), JournalArticle.class.getName(),
-					journalArticle.getGroupId())
-			).put(
-				"replace",
-				addAction(
-					"UPDATE", journalArticle.getResourcePrimKey(),
-					"putStructuredContent", journalArticle.getUserId(),
-					JournalArticle.class.getName(), journalArticle.getGroupId())
-			).put(
-				"subscribe",
-				addAction(
-					"SUBSCRIBE", journalArticle.getResourcePrimKey(),
-					"putStructuredContentSubscribe", journalArticle.getUserId(),
-					JournalArticle.class.getName(), journalArticle.getGroupId())
-			).put(
-				"unsubscribe",
-				addAction(
-					"SUBSCRIBE", journalArticle.getResourcePrimKey(),
-					"putStructuredContentUnsubscribe",
-					journalArticle.getUserId(), JournalArticle.class.getName(),
-					journalArticle.getGroupId())
-			).put(
-				"update",
-				addAction(
-					"UPDATE", journalArticle.getResourcePrimKey(),
-					"patchStructuredContent", journalArticle.getUserId(),
-					JournalArticle.class.getName(), journalArticle.getGroupId())
-			).build();
-
 		return _structuredContentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), actions,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.<String, Map<String, String>>put(
+					"delete",
+					addAction(
+						"DELETE", journalArticle.getResourcePrimKey(),
+						"deleteStructuredContent", journalArticle.getUserId(),
+						JournalArticle.class.getName(),
+						journalArticle.getGroupId())
+				).put(
+					"get",
+					addAction(
+						"VIEW", journalArticle.getResourcePrimKey(),
+						"getStructuredContent", journalArticle.getUserId(),
+						JournalArticle.class.getName(),
+						journalArticle.getGroupId())
+				).put(
+					"get-template",
+					addAction(
+						"VIEW", journalArticle.getResourcePrimKey(),
+						"getStructuredContentRenderedContentTemplate",
+						journalArticle.getUserId(),
+						JournalArticle.class.getName(),
+						journalArticle.getGroupId())
+				).put(
+					"replace",
+					addAction(
+						"UPDATE", journalArticle.getResourcePrimKey(),
+						"putStructuredContent", journalArticle.getUserId(),
+						JournalArticle.class.getName(),
+						journalArticle.getGroupId())
+				).put(
+					"subscribe",
+					addAction(
+						"SUBSCRIBE", journalArticle.getResourcePrimKey(),
+						"putStructuredContentSubscribe",
+						journalArticle.getUserId(),
+						JournalArticle.class.getName(),
+						journalArticle.getGroupId())
+				).put(
+					"unsubscribe",
+					addAction(
+						"SUBSCRIBE", journalArticle.getResourcePrimKey(),
+						"putStructuredContentUnsubscribe",
+						journalArticle.getUserId(),
+						JournalArticle.class.getName(),
+						journalArticle.getGroupId())
+				).put(
+					"update",
+					addAction(
+						"UPDATE", journalArticle.getResourcePrimKey(),
+						"patchStructuredContent", journalArticle.getUserId(),
+						JournalArticle.class.getName(),
+						journalArticle.getGroupId())
+				).build(),
 				_dtoConverterRegistry, journalArticle.getResourcePrimKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

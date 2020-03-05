@@ -102,7 +102,7 @@ public class TaxonomyVocabularyResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
+		return SearchUtil.search(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -113,10 +113,7 @@ public class TaxonomyVocabularyResourceImpl
 				addAction(
 					"VIEW", "getSiteTaxonomyVocabulariesPage",
 					"com.liferay.asset.categories", siteId)
-			).build();
-
-		return SearchUtil.search(
-			actions,
+			).build(),
 			booleanQuery -> {
 			},
 			filter, AssetVocabulary.class, search, pagination,
@@ -483,23 +480,24 @@ public class TaxonomyVocabularyResourceImpl
 			AssetVocabulary assetVocabulary)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"delete",
-				addAction("DELETE", assetVocabulary, "deleteTaxonomyVocabulary")
-			).put(
-				"get",
-				addAction("VIEW", assetVocabulary, "getTaxonomyVocabulary")
-			).put(
-				"replace",
-				addAction("UPDATE", assetVocabulary, "putTaxonomyVocabulary")
-			).put(
-				"update",
-				addAction("UPDATE", assetVocabulary, "patchTaxonomyVocabulary")
-			).build();
-
-		TaxonomyVocabulary taxonomyVocabulary = new TaxonomyVocabulary() {
+		return new TaxonomyVocabulary() {
 			{
+				actions = HashMapBuilder.<String, Map<String, String>>put(
+					"delete",
+					addAction(
+						"DELETE", assetVocabulary, "deleteTaxonomyVocabulary")
+				).put(
+					"get",
+					addAction("VIEW", assetVocabulary, "getTaxonomyVocabulary")
+				).put(
+					"replace",
+					addAction(
+						"UPDATE", assetVocabulary, "putTaxonomyVocabulary")
+				).put(
+					"update",
+					addAction(
+						"UPDATE", assetVocabulary, "patchTaxonomyVocabulary")
+				).build();
 				assetTypes = _getAssetTypes(
 					new AssetVocabularySettingsHelper(
 						assetVocabulary.getSettings()),
@@ -533,10 +531,6 @@ public class TaxonomyVocabularyResourceImpl
 				siteId = assetVocabulary.getGroupId();
 			}
 		};
-
-		taxonomyVocabulary.setActions(actions);
-
-		return taxonomyVocabulary;
 	}
 
 	private void _validateI18n(

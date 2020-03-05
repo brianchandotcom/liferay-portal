@@ -141,7 +141,7 @@ public class TaxonomyCategoryResourceImpl
 		AssetCategory assetCategory = _getAssetCategory(
 			parentTaxonomyCategoryId);
 
-		Map<String, Map<String, String>> actions =
+		return _getCategoriesPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"add-category",
 				addAction(
@@ -156,10 +156,7 @@ public class TaxonomyCategoryResourceImpl
 					AssetCategory.class.getName(), assetCategory.getUserId(),
 					"getTaxonomyCategoryTaxonomyCategoriesPage",
 					assetCategory.getGroupId())
-			).build();
-
-		return _getCategoriesPage(
-			actions,
+			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -182,7 +179,7 @@ public class TaxonomyCategoryResourceImpl
 		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
 			taxonomyVocabularyId);
 
-		Map<String, Map<String, String>> actions =
+		return _getCategoriesPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"add-category",
 				addAction(
@@ -193,10 +190,7 @@ public class TaxonomyCategoryResourceImpl
 				addAction(
 					"VIEW", assetVocabulary,
 					"getTaxonomyVocabularyTaxonomyCategoriesPage")
-			).build();
-
-		return _getCategoriesPage(
-			actions,
+			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -440,28 +434,27 @@ public class TaxonomyCategoryResourceImpl
 	private TaxonomyCategory _toTaxonomyCategory(AssetCategory assetCategory)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"add-category",
-				addAction(
-					"ADD_CATEGORY", assetCategory,
-					"postTaxonomyCategoryTaxonomyCategory")
-			).put(
-				"delete",
-				addAction("DELETE", assetCategory, "deleteTaxonomyCategory")
-			).put(
-				"get", addAction("VIEW", assetCategory, "getTaxonomyCategory")
-			).put(
-				"replace",
-				addAction("UPDATE", assetCategory, "putTaxonomyCategory")
-			).put(
-				"update",
-				addAction("UPDATE", assetCategory, "patchTaxonomyCategory")
-			).build();
-
 		return _taxonomyCategoryDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), actions,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.<String, Map<String, String>>put(
+					"add-category",
+					addAction(
+						"ADD_CATEGORY", assetCategory,
+						"postTaxonomyCategoryTaxonomyCategory")
+				).put(
+					"delete",
+					addAction("DELETE", assetCategory, "deleteTaxonomyCategory")
+				).put(
+					"get",
+					addAction("VIEW", assetCategory, "getTaxonomyCategory")
+				).put(
+					"replace",
+					addAction("UPDATE", assetCategory, "putTaxonomyCategory")
+				).put(
+					"update",
+					addAction("UPDATE", assetCategory, "patchTaxonomyCategory")
+				).build(),
 				_dtoConverterRegistry, assetCategory.getCategoryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),

@@ -106,7 +106,7 @@ public class DocumentResourceImpl
 
 		Folder folder = _dlAppService.getFolder(documentFolderId);
 
-		Map<String, Map<String, String>> actions =
+		return _getDocumentsPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -119,10 +119,7 @@ public class DocumentResourceImpl
 					"VIEW", folder.getFolderId(),
 					"getDocumentFolderDocumentsPage", folder.getUserId(),
 					"com.liferay.document.library", folder.getGroupId())
-			).build();
-
-		return _getDocumentsPage(
-			actions,
+			).build(),
 			booleanQuery -> {
 				if (documentFolderId != null) {
 					BooleanFilter booleanFilter =
@@ -163,7 +160,7 @@ public class DocumentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		Map<String, Map<String, String>> actions =
+		return _getDocumentsPage(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
@@ -174,10 +171,7 @@ public class DocumentResourceImpl
 				addAction(
 					"VIEW", "getSiteDocumentsPage",
 					"com.liferay.document.library", siteId)
-			).build();
-
-		return _getDocumentsPage(
-			actions,
+			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -458,7 +452,7 @@ public class DocumentResourceImpl
 				FileEntry fileEntry = _dlAppService.getFileEntry(
 					ratingsEntry.getClassPK());
 
-				Map<String, Map<String, String>> actions =
+				return RatingUtil.toRating(
 					HashMapBuilder.<String, Map<String, String>>put(
 						"create",
 						addAction(
@@ -483,49 +477,45 @@ public class DocumentResourceImpl
 							"UPDATE", fileEntry.getPrimaryKey(),
 							"putDocumentMyRating", fileEntry.getUserId(),
 							DLFileEntry.class.getName(), fileEntry.getGroupId())
-					).build();
-
-				return RatingUtil.toRating(
-					actions, _portal, ratingsEntry, _userLocalService);
+					).build(),
+					_portal, ratingsEntry, _userLocalService);
 			},
 			contextUser);
 	}
 
 	private Document _toDocument(FileEntry fileEntry) throws Exception {
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"delete",
-				addAction(
-					"DELETE", fileEntry.getPrimaryKey(), "deleteDocument",
-					fileEntry.getUserId(),
-					"com.liferay.document.library.kernel.model.DLFileEntry",
-					fileEntry.getGroupId())
-			).put(
-				"get",
-				addAction(
-					"VIEW", fileEntry.getPrimaryKey(), "getDocument",
-					fileEntry.getUserId(),
-					"com.liferay.document.library.kernel.model.DLFileEntry",
-					fileEntry.getGroupId())
-			).put(
-				"replace",
-				addAction(
-					"UPDATE", fileEntry.getPrimaryKey(), "putDocument",
-					fileEntry.getUserId(),
-					"com.liferay.document.library.kernel.model.DLFileEntry",
-					fileEntry.getGroupId())
-			).put(
-				"update",
-				addAction(
-					"UPDATE", fileEntry.getPrimaryKey(), "patchDocument",
-					fileEntry.getUserId(),
-					"com.liferay.document.library.kernel.model.DLFileEntry",
-					fileEntry.getGroupId())
-			).build();
-
 		return _documentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), actions,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.<String, Map<String, String>>put(
+					"delete",
+					addAction(
+						"DELETE", fileEntry.getPrimaryKey(), "deleteDocument",
+						fileEntry.getUserId(),
+						"com.liferay.document.library.kernel.model.DLFileEntry",
+						fileEntry.getGroupId())
+				).put(
+					"get",
+					addAction(
+						"VIEW", fileEntry.getPrimaryKey(), "getDocument",
+						fileEntry.getUserId(),
+						"com.liferay.document.library.kernel.model.DLFileEntry",
+						fileEntry.getGroupId())
+				).put(
+					"replace",
+					addAction(
+						"UPDATE", fileEntry.getPrimaryKey(), "putDocument",
+						fileEntry.getUserId(),
+						"com.liferay.document.library.kernel.model.DLFileEntry",
+						fileEntry.getGroupId())
+				).put(
+					"update",
+					addAction(
+						"UPDATE", fileEntry.getPrimaryKey(), "patchDocument",
+						fileEntry.getUserId(),
+						"com.liferay.document.library.kernel.model.DLFileEntry",
+						fileEntry.getGroupId())
+				).build(),
 				_dtoConverterRegistry, fileEntry.getFileEntryId(), null,
 				contextUriInfo, contextUser));
 	}

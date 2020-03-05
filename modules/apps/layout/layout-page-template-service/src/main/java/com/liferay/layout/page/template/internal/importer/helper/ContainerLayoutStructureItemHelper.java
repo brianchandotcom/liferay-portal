@@ -24,6 +24,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 
@@ -72,6 +73,9 @@ public class ContainerLayoutStructureItemHelper
 				(Map<String, Object>)definitionMap.get("layout");
 
 			if (layout != null) {
+				containerLayoutStructureItem.setContainerType(
+					StringUtil.toLowerCase(
+						(String)containerLayout.get("containerType")));
 				containerLayoutStructureItem.setPaddingBottom(
 					PaddingConverter.convertToInternalValue(
 						(Integer)containerLayout.get("paddingBottom")));

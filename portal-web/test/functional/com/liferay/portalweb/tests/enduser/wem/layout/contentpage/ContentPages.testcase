@@ -792,7 +792,7 @@ definition {
 		}
 
 		task ("Assert the popover goes away after clicking away from the header") {
-			Click(locator1 = "PageEditor#EMPTY_MESSAGE");
+			Click(locator1 = "PageEditor#FRAGMENT_DROP_TARGET");
 
 			AssertElementNotPresent(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_POPOVER");
 		}
@@ -808,7 +808,7 @@ definition {
 		}
 
 		task ("Assert the popover goes away after clicking away from the footer") {
-			Click(locator1 = "PageEditor#EMPTY_MESSAGE");
+			Click(locator1 = "PageEditor#FRAGMENT_DROP_TARGET");
 
 			AssertElementNotPresent(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_POPOVER");
 		}

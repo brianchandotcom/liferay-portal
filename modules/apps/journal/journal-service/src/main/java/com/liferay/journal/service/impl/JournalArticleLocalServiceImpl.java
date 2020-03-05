@@ -3545,10 +3545,8 @@ public class JournalArticleLocalServiceImpl
 				article.getGroupId(), article.getArticleId(),
 				WorkflowConstants.STATUS_APPROVED, 0, 2);
 
-		int approvedArticlesSize = approvedArticles.size();
-
 		if (approvedArticles.isEmpty() ||
-			((approvedArticlesSize == 1) &&
+			((approvedArticles.size() == 1) &&
 			 (article.getStatus() == WorkflowConstants.STATUS_APPROVED))) {
 
 			return article;
@@ -3556,10 +3554,10 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle previousApprovedArticle = approvedArticles.get(0);
 
-		if (approvedArticlesSize > 1) {
-			if (previousApprovedArticle.getVersion() == article.getVersion()) {
-				previousApprovedArticle = approvedArticles.get(1);
-			}
+		if ((approvedArticles.size() > 1) &&
+			(previousApprovedArticle.getVersion() == article.getVersion())) {
+
+			previousApprovedArticle = approvedArticles.get(1);
 		}
 
 		return previousApprovedArticle;

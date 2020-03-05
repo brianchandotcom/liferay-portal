@@ -25,5 +25,6 @@
 
 		<column name="destinationURL" type="String" />
 		<column name="sourceURL" type="String" />
+		<column name="temporary" type="boolean" />
 	</entity>
 </service-builder>

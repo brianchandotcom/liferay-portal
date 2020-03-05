@@ -16,6 +16,7 @@ import React, {useCallback, useContext, useReducer} from 'react';
 
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
+import {useFromControlsId, useToControlsId} from './ControlsIdConverterContext';
 
 const INITIAL_STATE = {
 	activationOrigin: null,
@@ -99,8 +100,9 @@ const useActivationOrigin = () => {
 
 const useActiveItemId = () => {
 	const [state] = useContext(ControlsContext);
+	const fromControlsId = useFromControlsId();
 
-	return state.activeItemId;
+	return fromControlsId(state.activeItemId);
 };
 
 const useActiveItemType = () => {
@@ -111,8 +113,9 @@ const useActiveItemType = () => {
 
 const useHoveredItemId = () => {
 	const [state] = useContext(ControlsContext);
+	const fromControlsId = useFromControlsId();
 
-	return state.hoveredItemId;
+	return fromControlsId(state.hoveredItemId);
 };
 
 const useHoveredItemType = () => {
@@ -123,6 +126,7 @@ const useHoveredItemType = () => {
 
 const useHoverItem = () => {
 	const [, dispatch] = useContext(ControlsContext);
+	const toControlsId = useToControlsId();
 
 	return useCallback(
 		(
@@ -132,40 +136,47 @@ const useHoverItem = () => {
 			}
 		) =>
 			dispatch({
-				itemId,
+				itemId: toControlsId(itemId),
 				itemType,
 				type: HOVER_ITEM,
 			}),
-		[dispatch]
+		[dispatch, toControlsId]
 	);
 };
 
 const useIsActive = () => {
 	const [state] = useContext(ControlsContext);
+	const toControlsId = useToControlsId();
 
-	return useCallback(itemId => state.activeItemId === itemId, [
+	return useCallback(itemId => state.activeItemId === toControlsId(itemId), [
 		state.activeItemId,
+		toControlsId,
 	]);
 };
 
 const useIsHovered = () => {
 	const [state] = useContext(ControlsContext);
+	const toControlsId = useToControlsId();
 
-	return useCallback(itemId => state.hoveredItemId === itemId, [
+	return useCallback(itemId => state.hoveredItemId === toControlsId(itemId), [
 		state.hoveredItemId,
+		toControlsId,
 	]);
 };
 
 const useIsSelected = () => {
 	const [state] = useContext(ControlsContext);
+	const toControlsId = useToControlsId();
 
-	return useCallback(itemId => state.selectedItemsIds.includes(itemId), [
-		state.selectedItemsIds,
-	]);
+	return useCallback(
+		itemId => state.selectedItemsIds.includes(toControlsId(itemId)),
+		[state.selectedItemsIds, toControlsId]
+	);
 };
 
 const useSelectItem = () => {
 	const [, dispatch] = useContext(ControlsContext);
+	const toControlsId = useToControlsId();
 
 	return useCallback(
 		(
@@ -180,13 +191,13 @@ const useSelectItem = () => {
 			}
 		) =>
 			dispatch({
-				itemId,
+				itemId: toControlsId(itemId),
 				itemType,
 				multiSelect,
 				origin,
 				type: SELECT_ITEM,
 			}),
-		[dispatch]
+		[dispatch, toControlsId]
 	);
 };
 

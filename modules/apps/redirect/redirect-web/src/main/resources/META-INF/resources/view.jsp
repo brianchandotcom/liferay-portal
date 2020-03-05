@@ -38,14 +38,23 @@ RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(reque
 				cssClass="table-cell-content"
 				name="source-url"
 			>
-				<%= redirectDisplayContext.getGroupBaseURL() %>/<%= HtmlUtil.escape(redirectEntry.getSourceURL()) %>
+
+				<%
+				String url = redirectDisplayContext.getGroupBaseURL() + StringPool.SLASH + redirectEntry.getSourceURL();
+				%>
+
+				<aui:a href="<%= HtmlUtil.escapeAttribute(url) %>" target="_blank">
+					<%= HtmlUtil.escape(url) %>
+				</aui:a>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="destination-url"
 			>
-				<%= HtmlUtil.escape(redirectEntry.getDestinationURL()) %>
+				<aui:a href="<%= HtmlUtil.escapeAttribute(redirectEntry.getDestinationURL()) %>" target="_blank">
+					<%= HtmlUtil.escape(redirectEntry.getDestinationURL()) %>
+				</aui:a>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text>

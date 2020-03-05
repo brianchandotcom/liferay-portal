@@ -119,22 +119,33 @@ definition {
 
 		Panel.expandPanel(panel = "Scope");
 
-		AssertClick(
-			locator1 = "Configuration#SCOPE_SELECT",
-			value1 = "Select");
+		if (isSet(otherSite)) {
+			AssertClick(
+				locator1 = "Configuration#SCOPE_SELECT",
+				value1 = "Select");
 
-		MenuItem.click(menuItem = "Other Site...");
+			MenuItem.click(menuItem = "Other Site...");
 
-		SelectFrame(value1 = "relative=top");
+			SelectFrame(value1 = "relative=top");
 
-		SelectFrame(locator1 = "IFrame#SELECT_SITES");
+			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
-		if (isSet(depotName)) {
-			Navigator.gotoNavTab(navTab = "Asset Libraries");
+			Navigator.gotoNavTab(navTab = "My Sites");
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-			LexiconEntry.gotoEntry(rowEntry = "${depotName}");
+			LexiconEntry.gotoEntry(rowEntry = "${otherSite}");
+		}
+
+		if (isSet(defaultSite)) {
+			AssertClick(
+				locator1 = "Configuration#SCOPE_SELECT",
+				value1 = "Select");
+
+			AssertClick(
+				key_menuItem = "${defaultSite}",
+				locator1 = "AssetLists#ASSET_LIST_SCOPE_ITEM",
+				value1 = "${defaultSite}");
 		}
 
 		SelectFrameTop();

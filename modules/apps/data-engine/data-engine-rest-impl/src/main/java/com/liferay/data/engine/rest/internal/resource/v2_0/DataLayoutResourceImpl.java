@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
+import com.liferay.data.engine.model.DEDataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeTracker;
@@ -22,21 +23,23 @@ import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataLayoutUtil;
 import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataLayoutEntityModel;
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataDefinitionModelResourcePermission;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
-import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
-import com.liferay.data.engine.spi.resource.SPIDataLayoutResource;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
+import com.liferay.data.engine.service.DEDataLayoutApp;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -65,10 +68,7 @@ public class DataLayoutResourceImpl
 			PermissionThreadLocal.getPermissionChecker(),
 			ddmStructure.getStructureId(), ActionKeys.DELETE);
 
-		SPIDataLayoutResource<DataLayout> spiDataLayoutResource =
-			_getSPIDataLayoutResource();
-
-		spiDataLayoutResource.deleteDataLayout(dataLayoutId, ddmStructure);
+		_deDataLayoutApp.deleteDataLayout(dataLayoutId);
 	}
 
 	@Override
@@ -77,12 +77,21 @@ public class DataLayoutResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		SPIDataLayoutResource<DataLayout> spiDataLayoutResource =
-			_getSPIDataLayoutResource();
-
-		return spiDataLayoutResource.getDataLayouts(
+		Page<DEDataLayout> page = _deDataLayoutApp.getDataLayouts(
 			dataDefinitionId, keywords,
 			contextAcceptLanguage.getPreferredLocale(), pagination, sorts);
+
+		Collection<DEDataLayout> items = page.getItems();
+
+		Stream<DEDataLayout> stream = items.stream();
+
+		return Page.of(
+			stream.map(
+				DataLayoutUtil::toDataLayout
+			).collect(
+				Collectors.toList()
+			),
+			pagination, page.getTotalCount());
 	}
 
 	@Override
@@ -94,10 +103,8 @@ public class DataLayoutResourceImpl
 			PermissionThreadLocal.getPermissionChecker(),
 			ddmStructureLayout.getDDMStructureId(), ActionKeys.VIEW);
 
-		SPIDataLayoutResource<DataLayout> spiDataLayoutResource =
-			_getSPIDataLayoutResource();
-
-		return spiDataLayoutResource.getDataLayout(dataLayoutId);
+		return DataLayoutUtil.toDataLayout(
+			_deDataLayoutApp.getDataLayout(dataLayoutId));
 	}
 
 	@Override
@@ -125,11 +132,10 @@ public class DataLayoutResourceImpl
 			PermissionThreadLocal.getPermissionChecker(),
 			ddmStructureLayout.getDDMStructureId(), ActionKeys.VIEW);
 
-		SPIDataLayoutResource<DataLayout> spiDataLayoutResource =
-			_getSPIDataLayoutResource();
-
-		return spiDataLayoutResource.getDataLayout(
-			dataDefinitionContentType.getClassNameId(), dataLayoutKey, siteId);
+		return DataLayoutUtil.toDataLayout(
+			_deDataLayoutApp.getDataLayout(
+				dataDefinitionContentType.getClassNameId(), dataLayoutKey,
+				siteId));
 	}
 
 	@Override
@@ -144,14 +150,12 @@ public class DataLayoutResourceImpl
 			PermissionThreadLocal.getPermissionChecker(), ddmStructure,
 			DataActionKeys.ADD_DATA_DEFINITION);
 
-		SPIDataLayoutResource<DataLayout> spiDataLayoutResource =
-			_getSPIDataLayoutResource();
+		DEDataLayout deDataLayout = DataLayoutUtil.toDEDataLayout(dataLayout);
 
-		return spiDataLayoutResource.addDataLayout(
-			dataDefinitionId,
-			DataLayoutUtil.serialize(dataLayout, _ddmFormLayoutSerializer),
-			dataLayout.getDataLayoutKey(), dataLayout.getDescription(),
-			dataLayout.getName());
+		deDataLayout.setDataDefinitionId(dataDefinitionId);
+
+		return DataLayoutUtil.toDataLayout(
+			_deDataLayoutApp.addDataLayout(deDataLayout, new ServiceContext()));
 	}
 
 	@Override
@@ -165,21 +169,14 @@ public class DataLayoutResourceImpl
 			PermissionThreadLocal.getPermissionChecker(),
 			ddmStructureLayout.getDDMStructureId(), ActionKeys.UPDATE);
 
-		SPIDataLayoutResource<DataLayout> spiDataLayoutResource =
-			_getSPIDataLayoutResource();
+		DEDataLayout deDataLayout = DataLayoutUtil.toDEDataLayout(dataLayout);
 
-		return spiDataLayoutResource.updateDataLayout(
-			dataLayoutId,
-			DataLayoutUtil.serialize(dataLayout, _ddmFormLayoutSerializer),
-			dataLayout.getDescription(), dataLayout.getName());
-	}
+		deDataLayout.setId(dataLayoutId);
 
-	private SPIDataLayoutResource _getSPIDataLayoutResource() {
-		return new SPIDataLayoutResource<>(
-			_ddmStructureLayoutLocalService, _ddmStructureLocalService,
-			_ddmStructureVersionLocalService,
-			_deDataDefinitionFieldLinkLocalService,
-			DataLayoutUtil::toDataLayout);
+		deDataLayout = _deDataLayoutApp.updateDataLayout(
+			deDataLayout, new ServiceContext());
+
+		return DataLayoutUtil.toDataLayout(deDataLayout);
 	}
 
 	private static final EntityModel _entityModel = new DataLayoutEntityModel();
@@ -191,9 +188,6 @@ public class DataLayoutResourceImpl
 	private DataDefinitionModelResourcePermission
 		_dataDefinitionModelResourcePermission;
 
-	@Reference(target = "(ddm.form.layout.serializer.type=json)")
-	private DDMFormLayoutSerializer _ddmFormLayoutSerializer;
-
 	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 
@@ -201,10 +195,6 @@ public class DataLayoutResourceImpl
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
-	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
-
-	@Reference
-	private DEDataDefinitionFieldLinkLocalService
-		_deDataDefinitionFieldLinkLocalService;
+	private DEDataLayoutApp _deDataLayoutApp;
 
 }

@@ -20,6 +20,9 @@ import com.liferay.account.rest.client.dto.v1_0.AccountUser;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -30,6 +33,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +43,14 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		_deleteAccountUsers(_accountUsers);
+	}
 
 	@Ignore
 	@Override
@@ -126,7 +138,25 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 	private AccountUser _addAccountUser(Long accountId, AccountUser accountUser)
 		throws Exception {
 
-		return accountUserResource.postAccountUser(accountId, accountUser);
+		accountUser = accountUserResource.postAccountUser(
+			accountId, accountUser);
+
+		_accountUsers.add(accountUser);
+
+		return accountUser;
+	}
+
+	private void _deleteAccountUsers(List<AccountUser> accountUsers) {
+		for (AccountUser accountUser : accountUsers) {
+			try {
+				_userLocalService.deleteUser(accountUser.getId());
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
+		}
 	}
 
 	private Long _getAccountEntryId() throws Exception {
@@ -135,10 +165,18 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 		return accountEntry.getAccountEntryId();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountUserResourceTest.class);
+
 	@DeleteAfterTestRun
 	private final List<AccountEntry> _accountEntries = new ArrayList<>();
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	private final List<AccountUser> _accountUsers = new ArrayList<>();
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

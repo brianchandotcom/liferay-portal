@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.portlet.container.upload.test;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.UniqueFileNameProvider;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -27,8 +28,12 @@ import org.junit.Assert;
  */
 public class TestUploadMVCActionCommand extends BaseMVCActionCommand {
 
-	public TestUploadMVCActionCommand(TestUploadPortlet testUploadPortlet) {
-		_testUploadHandler = new TestUploadHandler(testUploadPortlet);
+	public TestUploadMVCActionCommand(
+		TestUploadPortlet testUploadPortlet,
+		UniqueFileNameProvider uniqueFileNameProvider) {
+
+		_testUploadHandler = new TestUploadHandler(
+			testUploadPortlet, uniqueFileNameProvider);
 	}
 
 	@Override

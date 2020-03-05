@@ -14,6 +14,7 @@ dependencies {
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:petra:petra-encryptor")
 	testIntegrationCompile project(":apps:static:portal-osgi-web:portal-osgi-web-portlet-container-test-util")
+	testIntegrationCompile project(":apps:upload:upload-api")
 	testIntegrationCompile project(":core:petra:petra-lang")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

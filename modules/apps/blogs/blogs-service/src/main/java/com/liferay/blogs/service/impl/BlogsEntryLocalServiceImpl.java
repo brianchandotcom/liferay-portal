@@ -73,11 +73,9 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
@@ -161,7 +159,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		String uniqueFileName = _uniqueFileNameProvider.provide(
 			fileName,
-			curFileName -> _attachmentExists(
+			curFileName -> _fileEntryExists(
 				blogsEntry.getGroupId(), folder.getFolderId(), curFileName));
 
 		return _portletFileRepository.addPortletFileEntry(
@@ -1659,47 +1657,22 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return _addFolder(userId, groupId, _SMALL_IMAGE_FOLDER_NAME);
 	}
 
-	private boolean _attachmentExists(
-		long groupId, long folderId, String fileName) {
-
-		try {
-			FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
-				groupId, folderId, fileName);
-
-			if (fileEntry != null) {
-				return true;
-			}
-
-			return false;
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-
-			return false;
-		}
-	}
-
 	private void _deleteDiscussion(BlogsEntry entry) throws PortalException {
 		_commentManager.deleteDiscussion(
 			BlogsEntry.class.getName(), entry.getEntryId());
 	}
 
-	private FileEntry _fetchPortletFileEntry(
-		long groupId, String fileName, long folderId) {
+	private boolean _fileEntryExists(
+		long groupId, long folderId, String fileName) {
 
-		try {
-			return _portletFileRepository.getPortletFileEntry(
-				groupId, folderId, fileName);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
+		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
+			groupId, folderId, fileName);
 
-			return null;
+		if (fileEntry == null) {
+			return false;
 		}
+
+		return true;
 	}
 
 	private String _getEntryURL(BlogsEntry entry, ServiceContext serviceContext)
@@ -1786,36 +1759,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			long groupId, String fileName, long folderId)
 		throws PortalException {
 
-		fileName = FileUtil.stripParentheticalSuffix(fileName);
-
-		FileEntry fileEntry = _fetchPortletFileEntry(
-			groupId, fileName, folderId);
-
-		if (fileEntry == null) {
-			return fileName;
-		}
-
-		int suffix = 1;
-
-		for (int i = 0;
-			 i < _uploadServletRequestConfigurationHelper.getMaxTries(); i++) {
-
-			String curFileName = FileUtil.appendParentheticalSuffix(
-				fileName, String.valueOf(suffix));
-
-			fileEntry = _fetchPortletFileEntry(groupId, curFileName, folderId);
-
-			if (fileEntry == null) {
-				return curFileName;
-			}
-
-			suffix++;
-		}
-
-		throw new PortalException(
-			StringBundler.concat(
-				"Unable to get a unique file name for ", fileName,
-				" in folder ", folderId));
+		return _uniqueFileNameProvider.provide(
+			fileName,
+			curFileName -> _fileEntryExists(groupId, folderId, fileName));
 	}
 
 	private String _getUniqueUrlTitle(BlogsEntry entry) {
@@ -2377,9 +2323,5 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Reference
 	private UnsubscribeHelper _unsubscribeHelper;
-
-	@Reference
-	private UploadServletRequestConfigurationHelper
-		_uploadServletRequestConfigurationHelper;
 
 }

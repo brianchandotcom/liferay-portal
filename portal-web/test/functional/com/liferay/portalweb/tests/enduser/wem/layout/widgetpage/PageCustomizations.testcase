@@ -420,7 +420,9 @@ definition {
 
 		Portlet.viewSpecificPG(portletName = "Message Boards");
 
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "View My Customized Page");
+		Click(locator1 = "Icon#PAGE_CUSTOMIZATION_ELLIPSIS");
+
+		MenuItem.click(menuItem = "View My Customized Page");
 
 		PageCustomizations.gotoCustomizedPageInfo();
 

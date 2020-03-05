@@ -2637,7 +2637,7 @@ public class DataFactory {
 			parentMessageId = mbThreadModel.getRootMessageId();
 			subject = "N/A";
 			body = "This is test comment " + index + ".";
-			urlSubject = "This-is-test-comment-" + index;
+			urlSubject = "test-comment-" + index;
 		}
 
 		return newMBMessageModel(
@@ -2660,7 +2660,7 @@ public class DataFactory {
 				mbThreadModel.getThreadId(), mbThreadModel.getRootMessageId(),
 				mbThreadModel.getRootMessageId(),
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, "Test Message 1",
-				"This is test message 1.", "Test-Message-1"));
+				"This is test message 1.", "test-message-1"));
 
 		for (int i = 2; i <= _maxMBMessageCount; i++) {
 			mbMessageModels.add(
@@ -2669,7 +2669,7 @@ public class DataFactory {
 					mbThreadModel.getCategoryId(), mbThreadModel.getThreadId(),
 					_counter.get(), mbThreadModel.getRootMessageId(),
 					mbThreadModel.getRootMessageId(), "Test Message " + i,
-					"This is test message " + i + ".", "Test-Message-" + i));
+					"This is test message " + i + ".", "test-message-" + i));
 		}
 
 		return mbMessageModels;

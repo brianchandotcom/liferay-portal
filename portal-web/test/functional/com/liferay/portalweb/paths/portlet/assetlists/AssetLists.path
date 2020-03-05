@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_LIST_SCOPE_ITEM</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'${key_menuItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_LIST_SCOPE_NAME</td>
 	<td>//tr[contains(@data-qa-id,'row')][contains(.,'${key_scopeName}')]//td[contains(@class,'lfr-name-column')]</td>
 	<td></td>

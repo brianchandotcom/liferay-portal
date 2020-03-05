@@ -15,10 +15,13 @@
 import IncrementalDomRenderer from 'metal-incremental-dom';
 import JSXComponent from 'metal-jsx';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import Observer from './Observer.es';
+
+const CONFIG_BLACKLIST = ['children', 'events', 'key', 'ref', 'visible'];
 
 /**
  * The Adapter needs the React component instance to render and the soy template
@@ -60,6 +63,25 @@ import Observer from './Observer.es';
 
 function getConnectedReactComponentAdapter(ReactComponent, templates) {
 	class ReactComponentAdapter extends JSXComponent {
+		/**
+		 * For Metal to track config changes, we need to declare the
+		 * configs in the static property so that willReceiveProps is
+		 * called as expected. We added the configs before Metal started
+		 * configuring so that they are recognized later.
+		 */
+		constructor(config, parentElement) {
+			const props = {};
+			Object.keys(config).forEach(key => {
+				if (!CONFIG_BLACKLIST.includes(key)) {
+					props[key] = Config.any();
+				}
+			});
+
+			ReactComponentAdapter.PROPS = props;
+
+			super(config, parentElement);
+		}
+
 		created() {
 			this.observer = new Observer();
 		}
@@ -67,26 +89,27 @@ function getConnectedReactComponentAdapter(ReactComponent, templates) {
 		disposed() {
 			if (this.instance_) {
 				ReactDOM.unmountComponentAtNode(this.instance_);
+				this.instance_ = null;
 			}
 		}
 
 		willReceiveProps(changes) {
-			if (changes) {
-				// eslint-disable-next-line no-unused-vars
-				const {events, ref, store, ...otherProps} = this.props;
+			if (
+				changes &&
+				changes.events &&
+				changes.children &&
+				Object.keys(changes).length > 2
+			) {
 				const newValues = {};
 				const keys = Object.keys(changes);
 
 				keys.forEach(key => {
-					newValues[key] = changes[key].newVal;
+					if (!CONFIG_BLACKLIST.includes(key)) {
+						newValues[key] = changes[key].newVal;
+					}
 				});
 
-				this.observer.dispatch({
-					...otherProps,
-					...events,
-					...store,
-					...newValues,
-				});
+				this.observer.dispatch(newValues);
 			}
 		}
 
@@ -96,6 +119,10 @@ function getConnectedReactComponentAdapter(ReactComponent, templates) {
 		 */
 		shouldUpdate() {
 			return false;
+		}
+
+		syncVisible(value) {
+			this.observer.dispatch({visible: value});
 		}
 
 		render() {

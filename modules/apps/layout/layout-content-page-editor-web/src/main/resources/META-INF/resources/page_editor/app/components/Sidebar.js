@@ -180,6 +180,7 @@ export default function Sidebar() {
 			<div
 				className="page-editor__sidebar"
 				dir={config.languageDirection[config.defaultLanguageId]}
+				lang={config.defaultLanguageId}
 			>
 				<div
 					className="page-editor__sidebar__buttons"

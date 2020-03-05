@@ -11,12 +11,11 @@ apply plugin: "com.liferay.workspace"
 gradle.projectsEvaluated {
 	Project rootProject = gradle.rootProject
 
-	rootProject.tasks.register("copyStartupScript", DockerCopyFileFromContainer) {
-		dependsOn "createDockerContainer"
-
+	rootProject.tasks.register("copyOverrideTestScript", DockerCopyFileFromContainer) {
 		compressed true
 		containerId gradle.liferayWorkspace.dockerContainerId
-		hostPath rootProject.getBuildDir().path
-		remotePath "/home/liferay/configs/local/scripts/startup_script.sh"
+		dependsOn "createDockerContainer"
+		hostPath rootProject.buildDir.path
+		remotePath "/home/liferay/configs/local/scripts/override_test.sh"
 	}
 }

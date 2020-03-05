@@ -1,15 +1,13 @@
 task runGradleTest
-task untarStartupScript(type: Copy)
+task untarOverrideTestScript(type: Copy)
 
 runGradleTest {
-	dependsOn createDockerContainer, "copyStartupScript", "untarStartupScript"
+	dependsOn createDockerContainer, untarOverrideTestScript
 
 	doLast {
-		File startupScript = new File(buildDir, "startup_script.sh");
+		File overrideTestScript = new File(buildDir, "overide_test.sh");
 
-		String startupScriptContent = startupScript.text;
-
-		assert startupScriptContent.contains("local");
+		assert overrideTestScript.text.contains("local");
 
 		File inputDir = new File(buildDir, "docker")
 
@@ -52,9 +50,8 @@ runGradleTest {
 	finalizedBy removeDockerContainer
 }
 
-untarStartupScript {
-	dependsOn "copyStartupScript"
-
-	from tarTree(rootProject.getBuildDir().path + "/startup_script.sh.tar")
+untarOverrideTestScript {
+	dependsOn "copyOverrideTestScript"
+	from tarTree(rootProject.buildDir.path + "/override_test.sh.tar")
 	into "${buildDir}"
 }

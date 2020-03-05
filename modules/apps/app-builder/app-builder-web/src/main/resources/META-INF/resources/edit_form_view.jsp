@@ -66,6 +66,7 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 			<div class="data-layout-builder-wrapper" id="<%= dataLayoutBuilderElementId %>">
 				<liferay-data-engine:data-layout-builder
 					componentId="<%= componentId %>"
+					contentType="app-builder"
 					dataDefinitionId="<%= dataDefinitionId %>"
 					dataLayoutId="<%= dataLayoutId %>"
 					namespace="<%= renderResponse.getNamespace() %>"

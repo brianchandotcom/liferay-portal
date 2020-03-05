@@ -39,6 +39,7 @@ const AppContext = createContext();
 
 const initialState = {
 	config: {
+		allowFieldSets: false,
 		disabledProperties: [],
 		disabledTabs: [],
 		multiPage: true,

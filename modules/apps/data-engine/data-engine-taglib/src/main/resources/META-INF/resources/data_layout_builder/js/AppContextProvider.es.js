@@ -83,7 +83,7 @@ export default ({
 	}, [dataDefinitionId, dispatch]);
 
 	useEffect(() => {
-		if (contentType) {
+		if (config.allowFieldSets && contentType) {
 			const globalFieldSetsPromise = getItem(
 				`/o/data-engine/v2.0/sites/${groupId}/data-definitions/by-content-type/${contentType}`
 			);
@@ -117,7 +117,7 @@ export default ({
 					}
 				});
 		}
-	}, [contentType, dispatch, groupId]);
+	}, [config.allowFieldSets, contentType, dispatch, groupId]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

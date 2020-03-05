@@ -27,21 +27,26 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.AccountNameException;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchAccountException;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
 import com.liferay.portal.kernel.model.Account;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -55,6 +60,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
@@ -67,8 +73,10 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.SybaseDump;
@@ -82,11 +90,13 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -95,6 +105,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockServletContext;
@@ -147,6 +162,14 @@ public class CompanyLocalServiceTest {
 		CompanyThreadLocal.setCompanyId(_companyId);
 
 		resetBackgroundTaskThreadLocal();
+
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
 	}
 
 	@Test
@@ -443,6 +466,54 @@ public class CompanyLocalServiceTest {
 		Assert.assertNull(user);
 	}
 
+	@Test
+	public void testAddAndDeleteCompanyWithUserGroupAndUserGroupRole()
+		throws Exception {
+
+		Company company = addCompany();
+
+		long userId = UserLocalServiceUtil.getDefaultUserId(
+			company.getCompanyId());
+
+		Group group = GroupTestUtil.addGroup(
+			company.getCompanyId(), userId,
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup(
+			group.getGroupId());
+
+		User user = addUser(
+			company.getCompanyId(), userId, group.getGroupId(),
+			getServiceContext(company.getCompanyId()));
+
+		UserGroupLocalServiceUtil.addUserUserGroup(user.getUserId(), userGroup);
+
+		Role role = RoleLocalServiceUtil.addRole(
+			userId, Group.class.getName(), group.getClassPK(),
+			StringUtil.randomString(),
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), StringUtil.randomString()),
+			Collections.emptyMap(), RoleConstants.TYPE_SITE, StringPool.BLANK,
+			getServiceContext(company.getCompanyId()));
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRole(
+			user.getUserId(), group.getGroupId(), role.getRoleId());
+
+		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+
+		Assert.assertNull(RoleLocalServiceUtil.fetchRole(role.getRoleId()));
+
+		Assert.assertNull(
+			UserGroupLocalServiceUtil.fetchUserGroup(
+				userGroup.getUserGroupId()));
+
+		Assert.assertNull(
+			UserGroupRoleLocalServiceUtil.fetchUserGroupRole(
+				user.getUserId(), group.getGroupId(), role.getRoleId()));
+
+		Assert.assertNull(UserLocalServiceUtil.fetchUser(user.getUserId()));
+	}
+
 	@Test(expected = NoSuchAccountException.class)
 	public void testDeleteCompanyDeletesAccount() throws Exception {
 		Company company = addCompany();
@@ -620,6 +691,47 @@ public class CompanyLocalServiceTest {
 			company.getCompanyId());
 
 		Assert.assertEquals(roles.toString(), 0, roles.size());
+	}
+
+	@Test
+	public void testDeleteCompanyDeletesUserGroupRoleBeforeRole()
+		throws Exception {
+
+		List<String> list = _registerModelListeners();
+
+		Company company = addCompany();
+
+		long userId = UserLocalServiceUtil.getDefaultUserId(
+			company.getCompanyId());
+
+		Group group = GroupTestUtil.addGroup(
+			company.getCompanyId(), userId,
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup(
+			group.getGroupId());
+
+		User user = addUser(
+			company.getCompanyId(), userId, group.getGroupId(),
+			getServiceContext(company.getCompanyId()));
+
+		UserGroupLocalServiceUtil.addUserUserGroup(user.getUserId(), userGroup);
+
+		Role role = RoleLocalServiceUtil.addRole(
+			userId, Group.class.getName(), group.getClassPK(),
+			StringUtil.randomString(),
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), StringUtil.randomString()),
+			Collections.emptyMap(), RoleConstants.TYPE_SITE, StringPool.BLANK,
+			getServiceContext(company.getCompanyId()));
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRole(
+			user.getUserId(), group.getGroupId(), role.getRoleId());
+
+		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+
+		Assert.assertEquals(UserGroupRole.class.getName(), list.get(0));
+		Assert.assertEquals(Role.class.getName(), list.get(1));
 	}
 
 	@Test
@@ -873,6 +985,45 @@ public class CompanyLocalServiceTest {
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 	}
 
+	private List<String> _registerModelListeners() {
+		List<String> list = new CopyOnWriteArrayList<>();
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				ModelListener.class,
+				new BaseModelListener<UserGroupRole>() {
+
+					@Override
+					public void onBeforeRemove(UserGroupRole userGroupRole)
+						throws ModelListenerException {
+
+						list.add(UserGroupRole.class.getName());
+					}
+
+				},
+				new HashMapDictionary<>()));
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				ModelListener.class,
+				new BaseModelListener<Role>() {
+
+					@Override
+					public void onBeforeRemove(Role role)
+						throws ModelListenerException {
+
+						list.add(Role.class.getName());
+					}
+
+				},
+				new HashMapDictionary<>()));
+
+		return list;
+	}
+
 	private static final TransactionConfig _transactionConfig;
 
 	static {
@@ -887,5 +1038,7 @@ public class CompanyLocalServiceTest {
 
 	private long _companyId;
 	private MockServletContext _mockServletContext;
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new CopyOnWriteArrayList<>();
 
 }

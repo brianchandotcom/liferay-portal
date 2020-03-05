@@ -335,7 +335,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	@DeleteAfterTestRun
 	private User _user;
 
-	private class BlogsEntryAttachmentFileEntryReference {
+	private static class BlogsEntryAttachmentFileEntryReference {
 
 		public FileEntry getBlogsEntryAttachmentFileEntry() {
 			return _blogsEntryAttachmentFileEntry;

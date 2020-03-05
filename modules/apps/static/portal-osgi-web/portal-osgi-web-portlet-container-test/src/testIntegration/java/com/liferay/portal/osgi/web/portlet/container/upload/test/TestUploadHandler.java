@@ -114,11 +114,10 @@ public class TestUploadHandler {
 		}
 	}
 
-	private boolean _fileEntryExists(
-		long groupId, long folderId, String fileName) {
-
+	private boolean _fileEntryExists(long groupId, String fileName) {
 		FileEntry fileEntry = new TestFileEntry(
-			fileName, folderId, groupId, null);
+			fileName, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, groupId,
+			null);
 
 		TestFileEntry testFileEntry = _testUploadPortlet.get(
 			fileEntry.toString());
@@ -155,9 +154,7 @@ public class TestUploadHandler {
 					_uniqueFileNameProvider.provide(
 						uploadPortletRequest.getFileName(parameterName),
 						curFileName -> _fileEntryExists(
-							themeDisplay.getScopeGroupId(),
-							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-							curFileName)),
+							themeDisplay.getScopeGroupId(), curFileName)),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					themeDisplay.getScopeGroupId(), inputStream);
 
@@ -220,7 +217,7 @@ public class TestUploadHandler {
 			else if (portalException instanceof FileSizeException) {
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 			}
-			else if (portalException instanceof UploadRequestSizeException) {
+			else {
 				errorType =
 					ServletResponseConstants.SC_UPLOAD_REQUEST_SIZE_EXCEPTION;
 			}

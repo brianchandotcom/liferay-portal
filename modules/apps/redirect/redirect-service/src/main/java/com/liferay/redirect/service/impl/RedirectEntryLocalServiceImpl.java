@@ -16,6 +16,8 @@ package com.liferay.redirect.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.base.RedirectEntryLocalServiceBaseImpl;
@@ -32,6 +34,7 @@ import org.osgi.service.component.annotations.Component;
 public class RedirectEntryLocalServiceImpl
 	extends RedirectEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RedirectEntry addRedirectEntry(
 		long groupId, String destinationURL, String sourceURL,
@@ -53,6 +56,7 @@ public class RedirectEntryLocalServiceImpl
 		return redirectEntryPersistence.update(redirectEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL, String sourceURL)

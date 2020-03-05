@@ -361,7 +361,8 @@ public class FriendlyURLEntryLocalServiceImpl
 			prefix = _getURLEncodedSubstring(
 				urlTitle, prefix, maxLength - suffix.length());
 
-			curUrlTitle = prefix + suffix;
+			curUrlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+				prefix + suffix);
 		}
 
 		return curUrlTitle;

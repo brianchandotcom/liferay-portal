@@ -128,10 +128,10 @@ public class DepotGroupItemSelectorProvider
 		DepotGroupItemSelectorProvider.class);
 
 	@Reference
-	private DepotEntryService _depotEntryService;
+	private DepotConfiguration _depotConfiguration;
 
 	@Reference
-	private DepotConfiguration _depotConfiguration;
+	private DepotEntryService _depotEntryService;
 
 	@Reference
 	private GroupService _groupService;

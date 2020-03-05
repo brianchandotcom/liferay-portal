@@ -139,10 +139,10 @@ public class DepotItemSelectorView
 	private DepotApplicationController _depotApplicationController;
 
 	@Reference
-	private DepotPanelAppController _depotPanelAppController;
+	private DepotConfiguration _depotConfiguration;
 
 	@Reference
-	private DepotConfiguration _depotConfiguration;
+	private DepotPanelAppController _depotPanelAppController;
 
 	@Reference
 	private Portal _portal;

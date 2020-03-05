@@ -101,12 +101,12 @@ public class DepotSearchBarPortletSharedSearchContributor
 		_defaultSearchBarPortletSharedSearchContributor;
 
 	@Reference
+	private DepotConfiguration _depotConfiguration;
+
+	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 }

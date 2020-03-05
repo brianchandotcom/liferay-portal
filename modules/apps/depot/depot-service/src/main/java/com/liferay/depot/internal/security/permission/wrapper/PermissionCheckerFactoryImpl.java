@@ -49,12 +49,12 @@ public class PermissionCheckerFactoryImpl
 			_groupLocalService, _roleLocalService, _userGroupRoleLocalService);
 	}
 
+	@Reference
+	private DepotConfiguration _depotConfiguration;
+
 	@Reference(target = "(model.class.name=com.liferay.depot.model.DepotEntry)")
 	private ModelResourcePermission<DepotEntry>
 		_depotEntryModelResourcePermission;
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -170,6 +170,40 @@ public class Mutation {
 				accountId, accountRole));
 	}
 
+	@GraphQLField(description = "Unassigns account users to the account role")
+	public boolean deleteAccountRoleUserAssociation(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountRoleId") Long accountRoleId,
+			@GraphQLName("accountUserId") Long accountUserId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountRoleResource ->
+				accountRoleResource.deleteAccountRoleUserAssociation(
+					accountId, accountRoleId, accountUserId));
+
+		return true;
+	}
+
+	@GraphQLField(description = "Assigns account users to the account role")
+	public boolean createAccountRoleUserAssociation(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("accountRoleId") Long accountRoleId,
+			@GraphQLName("accountUserId") Long accountUserId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountRoleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountRoleResource ->
+				accountRoleResource.postAccountRoleUserAssociation(
+					accountId, accountRoleId, accountUserId));
+
+		return true;
+	}
+
 	@GraphQLField(
 		description = "Creates a user and assigns them to the account"
 	)

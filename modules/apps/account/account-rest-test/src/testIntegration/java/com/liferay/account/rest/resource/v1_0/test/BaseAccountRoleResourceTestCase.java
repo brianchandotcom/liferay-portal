@@ -470,6 +470,49 @@ public abstract class BaseAccountRoleResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testDeleteAccountRoleUserAssociation() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountRole accountRole =
+			testDeleteAccountRoleUserAssociation_addAccountRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountRoleResource.deleteAccountRoleUserAssociationHttpResponse(
+				null, accountRole.getId(), null));
+	}
+
+	protected AccountRole testDeleteAccountRoleUserAssociation_addAccountRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountRoleUserAssociation() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountRole accountRole =
+			testPostAccountRoleUserAssociation_addAccountRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
+				null, accountRole.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
+				null, 0L, null));
+	}
+
+	protected AccountRole testPostAccountRoleUserAssociation_addAccountRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected AccountRole testGraphQLAccountRole_addAccountRole()
 		throws Exception {
 

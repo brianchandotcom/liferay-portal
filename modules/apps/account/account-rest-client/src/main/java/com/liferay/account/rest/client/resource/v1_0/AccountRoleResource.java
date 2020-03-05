@@ -57,6 +57,23 @@ public interface AccountRoleResource {
 			Long accountId, AccountRole accountRole)
 		throws Exception;
 
+	public void deleteAccountRoleUserAssociation(
+			Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteAccountRoleUserAssociationHttpResponse(
+				Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception;
+
+	public void postAccountRoleUserAssociation(
+			Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postAccountRoleUserAssociationHttpResponse(
+			Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception;
+
 	public static class Builder {
 
 		public Builder authentication(String login, String password) {
@@ -253,6 +270,140 @@ public interface AccountRoleResource {
 					_builder._port +
 						"/o/account-rest/v1.0/accounts/{accountId}/account-roles",
 				accountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteAccountRoleUserAssociation(
+				Long accountId, Long accountRoleId, Long accountUserId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteAccountRoleUserAssociationHttpResponse(
+					accountId, accountRoleId, accountUserId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteAccountRoleUserAssociationHttpResponse(
+					Long accountId, Long accountRoleId, Long accountUserId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/account-rest/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}",
+				accountId, accountRoleId, accountUserId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postAccountRoleUserAssociation(
+				Long accountId, Long accountRoleId, Long accountUserId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postAccountRoleUserAssociationHttpResponse(
+					accountId, accountRoleId, accountUserId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postAccountRoleUserAssociationHttpResponse(
+					Long accountId, Long accountRoleId, Long accountUserId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(accountUserId.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/account-rest/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}",
+				accountId, accountRoleId, accountUserId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

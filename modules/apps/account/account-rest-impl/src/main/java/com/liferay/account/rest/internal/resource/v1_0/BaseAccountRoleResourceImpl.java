@@ -57,6 +57,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -128,6 +129,66 @@ public abstract class BaseAccountRoleResourceImpl
 		throws Exception {
 
 		return new AccountRole();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Operation(description = "Unassigns account users to the account role")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "accountRoleId"),
+			@Parameter(in = ParameterIn.PATH, name = "accountUserId")
+		}
+	)
+	@Path(
+		"/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AccountRole")})
+	public void deleteAccountRoleUserAssociation(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
+				accountRoleId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountUserId") Long
+				accountUserId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Operation(description = "Assigns account users to the account role")
+	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "accountRoleId"),
+			@Parameter(in = ParameterIn.PATH, name = "accountUserId")
+		}
+	)
+	@Path(
+		"/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AccountRole")})
+	public void postAccountRoleUserAssociation(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountRoleId") Long
+				accountRoleId,
+			@NotNull @Parameter(hidden = true) @PathParam("accountUserId") Long
+				accountUserId)
+		throws Exception {
 	}
 
 	@Override

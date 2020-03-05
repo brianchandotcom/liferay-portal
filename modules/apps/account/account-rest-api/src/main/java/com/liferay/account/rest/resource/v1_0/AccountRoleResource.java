@@ -49,6 +49,14 @@ public interface AccountRoleResource {
 	public AccountRole postAccountRole(Long accountId, AccountRole accountRole)
 		throws Exception;
 
+	public void deleteAccountRoleUserAssociation(
+			Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception;
+
+	public void postAccountRoleUserAssociation(
+			Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

@@ -31,6 +31,8 @@ if (redirectEntry == null) {
 else {
 	renderResponse.setTitle(LanguageUtil.get(request, "edit-redirect"));
 }
+
+RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <portlet:actionURL name="/redirect_entry/edit" var="editRedirectEntryURL" />
@@ -49,7 +51,11 @@ else {
 	</c:if>
 
 	<liferay-frontend:edit-form-body>
-		<aui:input autoFocus="<%= true %>" name="sourceURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getSourceURL() : null %>" />
+		<aui:field-wrapper cssClass="form-group" label="source-url" name="sourceURL" required="<%= true %>">
+			<div class="form-text"><%= redirectDisplayContext.getGroupBaseURL() %></div>
+
+			<aui:input autoFocus="<%= true %>" label="" name="sourceURL" prefix="/" required="<%= true %>" type="text" value="<%= (redirectEntry != null) ? redirectEntry.getSourceURL() : null %>" />
+		</aui:field-wrapper>
 
 		<aui:input name="destinationURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getDestinationURL() : null %>" />
 	</liferay-frontend:edit-form-body>

@@ -38,7 +38,7 @@ RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(reque
 				cssClass="table-cell-content"
 				name="source-url"
 			>
-				<%= HtmlUtil.escape(redirectEntry.getSourceURL()) %>
+				<%= redirectDisplayContext.getGroupBaseURL() %>/<%= HtmlUtil.escape(redirectEntry.getSourceURL()) %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text

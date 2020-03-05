@@ -127,7 +127,7 @@ const Autocomplete = ({
 	const inputRef = useRef(null);
 	const itemListRef = useRef(null);
 
-	const filteredItems = options.filter(item => item.match(value));
+	const filteredItems = options.filter(item => item && item.match(value));
 
 	useEffect(() => {
 		if (filteredItems.length === 1 && filteredItems.includes(value)) {

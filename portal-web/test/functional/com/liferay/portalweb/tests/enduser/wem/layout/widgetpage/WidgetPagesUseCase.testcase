@@ -1098,6 +1098,7 @@ definition {
 
 	@priority = "5"
 	test WebContentAdministrationSitesPageTypes {
+		property osgi.app.includes = "directory-web";
 		property portal.release = "false";
 		property testray.component.names = "Site Pages Administration,Training";
 		var portalURL = PropsUtil.get("portal.url");

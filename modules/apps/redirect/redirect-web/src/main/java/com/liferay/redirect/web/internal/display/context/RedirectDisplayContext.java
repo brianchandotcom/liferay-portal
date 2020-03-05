@@ -19,6 +19,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
@@ -30,9 +32,12 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalServiceUtil;
@@ -40,6 +45,7 @@ import com.liferay.redirect.web.internal.search.RedirectEntrySearch;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -108,6 +114,32 @@ public class RedirectDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "delete"));
 			}
 		).build();
+	}
+
+	public String getGroupBaseURL() {
+		StringBuilder groupBaseURL = new StringBuilder();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		groupBaseURL.append(themeDisplay.getPortalURL());
+
+		Group group = themeDisplay.getScopeGroup();
+
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		TreeMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
+
+		if (virtualHostnames.isEmpty() ||
+			!_matchesHostname(groupBaseURL, virtualHostnames)) {
+
+			groupBaseURL.append(group.getPathFriendlyURL(false, themeDisplay));
+			groupBaseURL.append(HttpUtil.decodeURL(group.getFriendlyURL()));
+		}
+
+		return groupBaseURL.toString();
 	}
 
 	public String getSearchContainerId() {
@@ -188,6 +220,19 @@ public class RedirectDisplayContext {
 		}
 
 		return new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, !orderByAsc);
+	}
+
+	private boolean _matchesHostname(
+		StringBuilder friendlyURLBase,
+		TreeMap<String, String> virtualHostnames) {
+
+		for (String virtualHostname : virtualHostnames.keySet()) {
+			if (friendlyURLBase.indexOf(virtualHostname) != -1) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

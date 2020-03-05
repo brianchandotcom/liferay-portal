@@ -26,7 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.redirect.service.RedirectEntryLocalServiceUtil" %><%@
+page import="com.liferay.redirect.web.internal.display.context.RedirectDisplayContext" %><%@
 page import="com.liferay.redirect.web.internal.display.context.RedirectManagementToolbarDisplayContext" %>
 
 <liferay-frontend:defineObjects />

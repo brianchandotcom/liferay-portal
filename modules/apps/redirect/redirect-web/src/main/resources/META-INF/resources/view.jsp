@@ -16,19 +16,19 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(liferayPortletRequest, liferayPortletResponse);
+%>
+
 <clay:management-toolbar
-	displayContext="<%= new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse) %>"
+	displayContext="<%= new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectDisplayContext.searchContainer()) %>"
 />
 
 <div class="container-fluid container-fluid-max-xl main-content-body">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-redirects-were-found"
-		total="<%= RedirectEntryLocalServiceUtil.getRedirectEntriesCount() %>"
+		id="<%= redirectDisplayContext.getSearchContainerId() %>"
+		searchContainer="<%= redirectDisplayContext.searchContainer() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= RedirectEntryLocalServiceUtil.getRedirectEntries(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.redirect.model.RedirectEntry"
 			keyProperty="redirectEntryId"
@@ -51,6 +51,7 @@
 
 		<liferay-ui:search-iterator
 			markupView="lexicon"
+			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>
 </div>

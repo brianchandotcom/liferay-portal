@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.internal.importer.helper;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -72,11 +73,14 @@ public class ContainerLayoutStructureItemHelper
 
 			if (layout != null) {
 				containerLayoutStructureItem.setPaddingBottom(
-					(Integer)containerLayout.get("paddingBottom"));
+					PaddingConverter.convertToInternalValue(
+						(Integer)containerLayout.get("paddingBottom")));
 				containerLayoutStructureItem.setPaddingHorizontal(
-					(Integer)containerLayout.get("paddingHorizontal"));
+					PaddingConverter.convertToInternalValue(
+						(Integer)containerLayout.get("paddingHorizontal")));
 				containerLayoutStructureItem.setPaddingTop(
-					(Integer)containerLayout.get("paddingTop"));
+					PaddingConverter.convertToInternalValue(
+						(Integer)containerLayout.get("paddingTop")));
 			}
 		}
 

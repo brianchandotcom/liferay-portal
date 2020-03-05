@@ -2060,6 +2060,10 @@ com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000</echo>
 												<equals arg1="${app.suite}" arg2="forms-and-workflow" />
 												<equals arg1="${app.suite}" arg2="foundation" />
 												<equals arg1="${app.suite}" arg2="web-experience" />
+												<and>
+													<equals arg1="${build.profile}" arg2="dxp" />
+													<contains string="${app.name}" substring="portal-mobile-device-detection-fiftyonedegrees" />
+												</and>
 											</or>
 										</not>
 										<then>
@@ -2088,6 +2092,44 @@ com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000</echo>
 									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar"
 								/>
 							</delete>
+
+							<if>
+								<equals arg1="${build.profile}" arg2="dxp" />
+								<then>
+									<ant dir="modules" inheritAll="false" target="build-app-lpkg">
+										<property name="app.name" value="portal-mobile-device-detection-fiftyonedegrees" />
+										<property name="hot.deploy.test" value="true" />
+										<property name="lpkg.container" value="false" />
+										<property name="output.dir" value="${app.server.parent.dir}/osgi/temp" />
+									</ant>
+
+									<ant dir="modules" inheritAll="false" target="build-app-lpkg">
+										<property name="app.name" value="portal-mobile-device-detection-fiftyonedegrees-enterprise" />
+										<property name="hot.deploy.test" value="true" />
+										<property name="lpkg.container" value="false" />
+										<property name="output.dir" value="${app.server.parent.dir}/osgi/temp" />
+									</ant>
+
+									<zip
+										destfile="${app.server.parent.dir}/osgi/temp/Liferay Mobile Device Detection.lpkg"
+									>
+										<fileset
+											dir="${app.server.parent.dir}/osgi/temp"
+										>
+											<include name="Liferay Mobile Device Detection *.lpkg" />
+										</fileset>
+									</zip>
+
+									<delete>
+										<fileset
+											dir="${app.server.parent.dir}/osgi/temp"
+										>
+											<exclude name="Liferay Mobile Device Detection.lpkg" />
+											<include name="Liferay Mobile Device Detection *.lpkg" />
+										</fileset>
+									</delete>
+								</then>
+							</if>
 
 							<trycatch>
 								<try>

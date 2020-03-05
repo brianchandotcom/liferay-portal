@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.servlet.taglib.util;
+package com.liferay.journal.web.internal.data.engine.configuration;
 
 import com.liferay.data.engine.configuration.DataLayoutBuilderConfiguration;
 

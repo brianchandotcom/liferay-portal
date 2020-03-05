@@ -14,7 +14,7 @@
 
 package com.liferay.depot.web.internal.item.selector;
 
-import com.liferay.depot.util.DepotSupportChecker;
+import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.application.list.DepotPanelAppController;
 import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
@@ -91,7 +91,7 @@ public class DepotItemSelectorView
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
-		if (!_depotSupportChecker.isEnabled()) {
+		if (!_depotConfiguration.isEnabled()) {
 			return false;
 		}
 
@@ -142,7 +142,7 @@ public class DepotItemSelectorView
 	private DepotPanelAppController _depotPanelAppController;
 
 	@Reference
-	private DepotSupportChecker _depotSupportChecker;
+	private DepotConfiguration _depotConfiguration;
 
 	@Reference
 	private Portal _portal;

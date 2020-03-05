@@ -17,7 +17,7 @@ package com.liferay.depot.web.internal.application.list;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.depot.util.DepotSupportChecker;
+import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.depot.web.internal.constants.DepotAdminPanelCategoryKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -59,7 +59,7 @@ public class DepotAdminPanelCategory extends BasePanelCategory {
 
 	@Override
 	public boolean isShow(PermissionChecker permissionChecker, Group group) {
-		if (_depotSupportChecker.isEnabled() &&
+		if (_depotConfiguration.isEnabled() &&
 			PortalPermissionUtil.contains(
 				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 
@@ -70,6 +70,6 @@ public class DepotAdminPanelCategory extends BasePanelCategory {
 	}
 
 	@Reference
-	private DepotSupportChecker _depotSupportChecker;
+	private DepotConfiguration _depotConfiguration;
 
 }

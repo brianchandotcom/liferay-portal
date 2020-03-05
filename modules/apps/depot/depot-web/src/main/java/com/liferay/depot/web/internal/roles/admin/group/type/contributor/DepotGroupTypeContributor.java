@@ -15,7 +15,7 @@
 package com.liferay.depot.web.internal.roles.admin.group.type.contributor;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.util.DepotSupportChecker;
+import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.roles.admin.group.type.contributor.GroupTypeContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,7 +34,7 @@ public class DepotGroupTypeContributor implements GroupTypeContributor {
 
 	@Override
 	public boolean isEnabled() {
-		if (_depotSupportChecker.isEnabled()) {
+		if (_depotConfiguration.isEnabled()) {
 			return true;
 		}
 
@@ -42,6 +42,6 @@ public class DepotGroupTypeContributor implements GroupTypeContributor {
 	}
 
 	@Reference
-	private DepotSupportChecker _depotSupportChecker;
+	private DepotConfiguration _depotConfiguration;
 
 }

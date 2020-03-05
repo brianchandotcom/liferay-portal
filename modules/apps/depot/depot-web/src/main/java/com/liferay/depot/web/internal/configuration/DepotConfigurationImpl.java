@@ -12,26 +12,24 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.util;
+package com.liferay.depot.web.internal.configuration;
 
-import com.liferay.depot.util.DepotSupportChecker;
-import com.liferay.depot.web.internal.configuration.FFDepotConfiguration;
+import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+
+import java.util.Map;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(
 	configurationPid = "com.liferay.depot.web.internal.configuration.FFDepotConfiguration",
-	service = DepotSupportChecker.class
+	service = DepotConfiguration.class
 )
-public class DepotSupportCheckerImpl implements DepotSupportChecker {
+public class DepotConfigurationImpl implements DepotConfiguration {
 
 	public boolean isEnabled() {
 		return _ffDepotConfiguration.enabled();

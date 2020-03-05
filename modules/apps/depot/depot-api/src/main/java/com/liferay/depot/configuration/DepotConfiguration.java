@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.depot.util;
+package com.liferay.depot.configuration;
 
 /**
  * @author Alejandro Tardín
  */
-public interface DepotSupportChecker {
+public interface DepotConfiguration {
 
 	public boolean isEnabled();
 

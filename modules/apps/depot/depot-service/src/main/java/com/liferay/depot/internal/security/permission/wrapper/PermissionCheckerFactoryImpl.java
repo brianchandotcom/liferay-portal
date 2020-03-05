@@ -15,7 +15,7 @@
 package com.liferay.depot.internal.security.permission.wrapper;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.util.DepotSupportChecker;
+import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapperFactory;
@@ -40,7 +40,7 @@ public class PermissionCheckerFactoryImpl
 	public PermissionChecker wrapPermissionChecker(
 		PermissionChecker permissionChecker) {
 
-		if (!_depotSupportChecker.isEnabled()) {
+		if (!_depotConfiguration.isEnabled()) {
 			return permissionChecker;
 		}
 
@@ -54,7 +54,7 @@ public class PermissionCheckerFactoryImpl
 		_depotEntryModelResourcePermission;
 
 	@Reference
-	private DepotSupportChecker _depotSupportChecker;
+	private DepotConfiguration _depotConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -21,9 +21,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 import org.gradle.api.Project;
@@ -33,6 +31,7 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -42,12 +41,17 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	public static <T extends Task> T addTask(
 		Project project, String name, Class<T> clazz, boolean overwrite) {
 
-		Map<String, Object> args = new HashMap<>();
+		if (overwrite) {
+			try {
+				Task task = getTask(project, name);
 
-		args.put(Task.TASK_OVERWRITE, overwrite);
-		args.put(Task.TASK_TYPE, clazz);
+				removeTask(project, task);
+			}
+			catch (Exception exception) {
+			}
+		}
 
-		return (T)project.task(args, name);
+		return addTask(project, name, clazz);
 	}
 
 	public static File getSrcDir(SourceDirectorySet sourceDirectorySet) {
@@ -78,6 +82,12 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 
 		return false;
+	}
+
+	public static void removeTask(Project project, Task task) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.remove(task);
 	}
 
 	public static boolean toBoolean(Object object) {

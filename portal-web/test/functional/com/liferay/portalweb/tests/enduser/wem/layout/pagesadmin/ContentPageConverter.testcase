@@ -971,9 +971,10 @@ definition {
 
 		AssertElementPresent(locator1 = "Button#ANY");
 
-		AssertTextEquals(
-			locator1 = "Message#INFO",
-			value1 = "The page conversion is shown in the preview below. Make modifications needed before publishing the conversion, or discard the draft to leave the widget page in its original state.");
+		AssertVisible(
+			key_alertMessage = "The page conversion is shown in the preview below. Make modifications needed before publishing the conversion, or discard the draft to leave the widget page in its original state.",
+			key_type = "info",
+			locator1 = "Message#CONVERSION_ALERT_MESSAGE");
 
 		PageEditor.clickBack();
 

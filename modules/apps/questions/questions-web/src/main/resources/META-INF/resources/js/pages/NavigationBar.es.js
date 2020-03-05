@@ -15,7 +15,7 @@
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import React from 'react';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 
 export default withRouter(({history, location, match: {url}}) => {
 	const isActive = value => location.pathname.includes(value);
@@ -51,9 +51,9 @@ export default withRouter(({history, location, match: {url}}) => {
 					</ClayNavigationBar>
 
 					<div className="autofit-col">
-						<ClayLink className="nav-link" displayType="unstyled">
+						<Link className="nav-link" displayType="unstyled" to={`questions/activity/${Liferay.ThemeDisplay.getUserId()}`} >
 							{Liferay.Language.get('my-activity')}
-						</ClayLink>
+						</Link>
 					</div>
 				</div>
 			)}

@@ -532,6 +532,38 @@ export const getSections = siteKey =>
 		}
 `);
 
+export const getUserActivity = (siteKey, userId = '') => {
+	const filter = `creatorId eq ${userId}`;
+	return request(gql`
+		query {
+			messageBoardMessages(
+			flatten: true
+			siteKey: ${siteKey}
+			sort: "dateCreated:desc"
+			filter: ${filter}
+			) {
+				actions
+				items {
+					creator {
+						id
+						name
+						image
+					}
+					creatorStatistics {
+						postsNumber
+						rank
+					}
+					dateCreated
+					headline
+				}
+				lastPage
+				page
+				pageSize
+				totalCount
+			}
+		}
+	`);
+}
 export const markAsAnswerMessageBoardMessage = (
 	messageBoardMessageId,
 	showAsAnswer

@@ -308,6 +308,7 @@ export default function Chart({
 							className="mr-1"
 							displayType="secondary"
 							onClick={handlePreviousTimeSpanClick}
+							small
 							symbol="angle-left"
 						/>
 						<ClayButtonWithIcon
@@ -315,6 +316,7 @@ export default function Chart({
 							disabled={disabledNextTimeSpan}
 							displayType="secondary"
 							onClick={handleNextTimeSpanClick}
+							small
 							symbol="angle-right"
 						/>
 					</div>

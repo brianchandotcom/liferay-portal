@@ -963,6 +963,22 @@ components:
             required:
                 - name
             type: object
+        DropZoneDefinition:
+            properties:
+                fragmentSettings:
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentSettingsAllowed"
+                        - $ref: "#/components/schemas/FragmentSettingsUnallowed"
+            type: object
+        Fragment:
+            properties:
+                collectionName:
+                    type: string
+                key:
+                    type: string
+                name:
+                    type: string
+            type: object
         FragmentField:
             properties:
                 id:
@@ -1015,14 +1031,7 @@ components:
         FragmentInstanceDefinition:
             properties:
                 fragment:
-                    properties:
-                        fragmentCollectionName:
-                            type: string
-                        fragmentKey:
-                            type: string
-                        fragmentName:
-                            type: string
-                    type: object
+                    $ref: "#/components/schemas/Fragment"
                 fragmentConfig:
                     additionalProperties:
                         type: object
@@ -1040,6 +1049,20 @@ components:
                 value:
                     oneOf:
                         - $ref: "#/components/schemas/InlineLink"
+        FragmentSettingsAllowed:
+            properties:
+                allowedFragments:
+                    items:
+                        $ref: "#/components/schemas/Fragment"
+                    type: array
+            type: object
+        FragmentSettingsUnallowed:
+            properties:
+                unallowedFragments:
+                    items:
+                        $ref: "#/components/schemas/Fragment"
+                    type: array
+            type: object
         InlineLink:
             properties:
                 href:
@@ -1795,6 +1818,7 @@ components:
                 definition:
                     oneOf:
                         - $ref: "#/components/schemas/ColumnDefinition"
+                        - $ref: "#/components/schemas/DropZoneDefinition"
                         - $ref: "#/components/schemas/FragmentInstanceDefinition"
                         - $ref: "#/components/schemas/RootDefinition"
                         - $ref: "#/components/schemas/RowDefinition"

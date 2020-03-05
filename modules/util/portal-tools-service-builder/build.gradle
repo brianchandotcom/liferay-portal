@@ -29,6 +29,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.1.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.sql.dsl.api", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "4.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.25"

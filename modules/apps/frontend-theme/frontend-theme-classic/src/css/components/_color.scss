@@ -3,6 +3,10 @@
 		background-color: $value !important;
 	}
 
+	.border-#{$color} {
+		border-color: $value !important;
+	}
+
 	.text-#{$color} {
 		color: $value !important;
 	}

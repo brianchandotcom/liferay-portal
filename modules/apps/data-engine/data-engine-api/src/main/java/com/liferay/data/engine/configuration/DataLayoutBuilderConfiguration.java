@@ -23,6 +23,10 @@ import java.util.Map;
  */
 public interface DataLayoutBuilderConfiguration {
 
+	public default boolean allowFieldSets() {
+		return false;
+	}
+
 	public default String[] getDisabledProperties() {
 		return new String[0];
 	}

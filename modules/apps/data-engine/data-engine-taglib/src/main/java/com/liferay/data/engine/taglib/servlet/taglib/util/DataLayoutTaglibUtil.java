@@ -127,6 +127,8 @@ public class DataLayoutTaglibUtil {
 		}
 
 		return JSONUtil.put(
+			"allowFieldSets", dataLayoutBuilderConfiguration.allowFieldSets()
+		).put(
 			"disabledProperties",
 			dataLayoutBuilderConfiguration.getDisabledProperties()
 		).put(

@@ -15,7 +15,7 @@
 		</attribute>
 		<attribute>
 			<name>contentType</name>
-			<required>false</required>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

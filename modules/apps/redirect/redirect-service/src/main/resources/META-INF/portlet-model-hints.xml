@@ -13,5 +13,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="destinationURL" type="String" />
 		<field name="sourceURL" type="String" />
+		<field name="temporary" type="boolean" />
 	</model>
 </model-hints>

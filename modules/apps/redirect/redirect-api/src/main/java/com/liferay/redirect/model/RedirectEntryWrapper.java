@@ -54,6 +54,7 @@ public class RedirectEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("destinationURL", getDestinationURL());
 		attributes.put("sourceURL", getSourceURL());
+		attributes.put("temporary", isTemporary());
 
 		return attributes;
 	}
@@ -124,6 +125,12 @@ public class RedirectEntryWrapper
 
 		if (sourceURL != null) {
 			setSourceURL(sourceURL);
+		}
+
+		Boolean temporary = (Boolean)attributes.get("temporary");
+
+		if (temporary != null) {
+			setTemporary(temporary);
 		}
 	}
 
@@ -218,6 +225,16 @@ public class RedirectEntryWrapper
 	}
 
 	/**
+	 * Returns the temporary of this redirect entry.
+	 *
+	 * @return the temporary of this redirect entry
+	 */
+	@Override
+	public boolean getTemporary() {
+		return model.getTemporary();
+	}
+
+	/**
 	 * Returns the user ID of this redirect entry.
 	 *
 	 * @return the user ID of this redirect entry
@@ -255,6 +272,16 @@ public class RedirectEntryWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
+	}
+
+	/**
+	 * Returns <code>true</code> if this redirect entry is temporary.
+	 *
+	 * @return <code>true</code> if this redirect entry is temporary; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isTemporary() {
+		return model.isTemporary();
 	}
 
 	@Override
@@ -350,6 +377,16 @@ public class RedirectEntryWrapper
 	@Override
 	public void setSourceURL(String sourceURL) {
 		model.setSourceURL(sourceURL);
+	}
+
+	/**
+	 * Sets whether this redirect entry is temporary.
+	 *
+	 * @param temporary the temporary of this redirect entry
+	 */
+	@Override
+	public void setTemporary(boolean temporary) {
+		model.setTemporary(temporary);
 	}
 
 	/**

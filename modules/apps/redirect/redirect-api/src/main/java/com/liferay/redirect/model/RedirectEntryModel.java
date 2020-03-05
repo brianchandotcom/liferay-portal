@@ -251,4 +251,25 @@ public interface RedirectEntryModel
 	 */
 	public void setSourceURL(String sourceURL);
 
+	/**
+	 * Returns the temporary of this redirect entry.
+	 *
+	 * @return the temporary of this redirect entry
+	 */
+	public boolean getTemporary();
+
+	/**
+	 * Returns <code>true</code> if this redirect entry is temporary.
+	 *
+	 * @return <code>true</code> if this redirect entry is temporary; <code>false</code> otherwise
+	 */
+	public boolean isTemporary();
+
+	/**
+	 * Sets whether this redirect entry is temporary.
+	 *
+	 * @param temporary the temporary of this redirect entry
+	 */
+	public void setTemporary(boolean temporary);
+
 }

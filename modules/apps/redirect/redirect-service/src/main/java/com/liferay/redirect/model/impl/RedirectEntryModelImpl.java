@@ -74,7 +74,7 @@ public class RedirectEntryModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"destinationURL", Types.VARCHAR},
-		{"sourceURL", Types.VARCHAR}
+		{"sourceURL", Types.VARCHAR}, {"temporary", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,10 +92,11 @@ public class RedirectEntryModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("destinationURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sourceURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("temporary", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RedirectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,redirectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,destinationURL VARCHAR(75) null,sourceURL VARCHAR(75) null)";
+		"create table RedirectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,redirectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,destinationURL VARCHAR(75) null,sourceURL VARCHAR(75) null,temporary BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table RedirectEntry";
 
@@ -303,6 +304,10 @@ public class RedirectEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"sourceURL",
 			(BiConsumer<RedirectEntry, String>)RedirectEntry::setSourceURL);
+		attributeGetterFunctions.put("temporary", RedirectEntry::getTemporary);
+		attributeSetterBiConsumers.put(
+			"temporary",
+			(BiConsumer<RedirectEntry, Boolean>)RedirectEntry::setTemporary);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -497,6 +502,21 @@ public class RedirectEntryModelImpl
 	}
 
 	@Override
+	public boolean getTemporary() {
+		return _temporary;
+	}
+
+	@Override
+	public boolean isTemporary() {
+		return _temporary;
+	}
+
+	@Override
+	public void setTemporary(boolean temporary) {
+		_temporary = temporary;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(RedirectEntry.class.getName()));
@@ -549,6 +569,7 @@ public class RedirectEntryModelImpl
 		redirectEntryImpl.setModifiedDate(getModifiedDate());
 		redirectEntryImpl.setDestinationURL(getDestinationURL());
 		redirectEntryImpl.setSourceURL(getSourceURL());
+		redirectEntryImpl.setTemporary(isTemporary());
 
 		redirectEntryImpl.resetOriginalValues();
 
@@ -693,6 +714,8 @@ public class RedirectEntryModelImpl
 			redirectEntryCacheModel.sourceURL = null;
 		}
 
+		redirectEntryCacheModel.temporary = isTemporary();
+
 		return redirectEntryCacheModel;
 	}
 
@@ -786,6 +809,7 @@ public class RedirectEntryModelImpl
 	private boolean _setModifiedDate;
 	private String _destinationURL;
 	private String _sourceURL;
+	private boolean _temporary;
 	private long _columnBitmask;
 	private RedirectEntry _escapedModel;
 

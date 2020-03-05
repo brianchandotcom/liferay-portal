@@ -77,7 +77,7 @@ public class RedirectEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,6 +101,8 @@ public class RedirectEntryCacheModel
 		sb.append(destinationURL);
 		sb.append(", sourceURL=");
 		sb.append(sourceURL);
+		sb.append(", temporary=");
+		sb.append(temporary);
 		sb.append("}");
 
 		return sb.toString();
@@ -159,6 +161,8 @@ public class RedirectEntryCacheModel
 			redirectEntryImpl.setSourceURL(sourceURL);
 		}
 
+		redirectEntryImpl.setTemporary(temporary);
+
 		redirectEntryImpl.resetOriginalValues();
 
 		return redirectEntryImpl;
@@ -181,6 +185,8 @@ public class RedirectEntryCacheModel
 		modifiedDate = objectInput.readLong();
 		destinationURL = objectInput.readUTF();
 		sourceURL = objectInput.readUTF();
+
+		temporary = objectInput.readBoolean();
 	}
 
 	@Override
@@ -225,6 +231,8 @@ public class RedirectEntryCacheModel
 		else {
 			objectOutput.writeUTF(sourceURL);
 		}
+
+		objectOutput.writeBoolean(temporary);
 	}
 
 	public long mvccVersion;
@@ -238,5 +246,6 @@ public class RedirectEntryCacheModel
 	public long modifiedDate;
 	public String destinationURL;
 	public String sourceURL;
+	public boolean temporary;
 
 }

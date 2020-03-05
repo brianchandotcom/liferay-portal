@@ -63,6 +63,7 @@ public interface RedirectEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RedirectEntryLocalServiceUtil} to access the redirect entry local service. Add custom service methods to <code>com.liferay.redirect.service.impl.RedirectEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public RedirectEntry addRedirectEntry(
 		long groupId, String destinationURL, String sourceURL,
 		ServiceContext serviceContext);
@@ -295,6 +296,7 @@ public interface RedirectEntryLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL, String sourceURL)
 		throws PortalException;

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONVERSION_ALERT_MESSAGE</td>
+	<td>//div[contains(@class,'conversion-messages')]/div[contains(@class,'alert-${key_type}')][contains(.,'${key_alertMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CUSTOMIZED_PAGE_INFO</td>
 	<td>//div[contains(@class,'layout')]/span[contains(@class,'message-info')]</td>
 	<td></td>

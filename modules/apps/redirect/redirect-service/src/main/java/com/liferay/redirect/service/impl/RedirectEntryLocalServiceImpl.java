@@ -15,6 +15,7 @@
 package com.liferay.redirect.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.base.RedirectEntryLocalServiceBaseImpl;
@@ -45,6 +46,19 @@ public class RedirectEntryLocalServiceImpl
 
 		redirectEntry.setCompanyId(serviceContext.getCompanyId());
 		redirectEntry.setUserId(serviceContext.getUserId());
+
+		redirectEntry.setDestinationURL(destinationURL);
+		redirectEntry.setSourceURL(sourceURL);
+
+		return redirectEntryPersistence.update(redirectEntry);
+	}
+
+	@Override
+	public RedirectEntry updateRedirectEntry(
+			long redirectEntryId, String destinationURL, String sourceURL)
+		throws PortalException {
+
+		RedirectEntry redirectEntry = getRedirectEntry(redirectEntryId);
 
 		redirectEntry.setDestinationURL(destinationURL);
 		redirectEntry.setSourceURL(sourceURL);

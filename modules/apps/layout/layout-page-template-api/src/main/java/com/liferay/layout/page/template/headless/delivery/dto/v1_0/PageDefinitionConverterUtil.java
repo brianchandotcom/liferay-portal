@@ -18,6 +18,8 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
+import com.liferay.headless.delivery.dto.v1_0.DropZoneDefinition;
+import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.InlineValue;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
@@ -47,6 +49,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -177,6 +180,37 @@ public class PageDefinitionConverterUtil {
 		}
 
 		return pageElement;
+	}
+
+	private static Fragment[] _toFragments(List<String> fragmentEntryKeys) {
+		List<Fragment> fragments = new ArrayList<>();
+
+		for (String fragmentEntryKey : fragmentEntryKeys) {
+			fragments.add(
+				new Fragment() {
+					{
+						key = fragmentEntryKey;
+					}
+				});
+		}
+
+		return fragments.toArray(new Fragment[0]);
+	}
+
+	private static Map<String, Fragment[]> _toFragmentSettingsMap(
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem) {
+
+		if (dropZoneLayoutStructureItem.isAllowNewFragmentEntries()) {
+			return HashMapBuilder.put(
+				"unallowedFragments",
+				_toFragments(dropZoneLayoutStructureItem.getFragmentEntryKeys())
+			).build();
+		}
+
+		return HashMapBuilder.put(
+			"allowedFragments",
+			_toFragments(dropZoneLayoutStructureItem.getFragmentEntryKeys())
+		).build();
 	}
 
 	private static PageElement _toPageElement(
@@ -337,8 +371,17 @@ public class PageDefinitionConverterUtil {
 		}
 
 		if (layoutStructureItem instanceof DropZoneLayoutStructureItem) {
+			DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+				(DropZoneLayoutStructureItem)layoutStructureItem;
+
 			return new PageElement() {
 				{
+					definition = new DropZoneDefinition() {
+						{
+							fragmentSettings = _toFragmentSettingsMap(
+								dropZoneLayoutStructureItem);
+						}
+					};
 					type = PageElement.Type.DROP_ZONE;
 				}
 			};

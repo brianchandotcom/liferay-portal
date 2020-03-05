@@ -13,9 +13,8 @@
  */
 
 import {ADD_FRAGMENT_COMPOSITION} from '../actions/types';
-import {config} from '../config/index';
 
-export default function fragmentsReducer(fragments = config.fragments, action) {
+export default function fragmentsReducer(fragments = [], action) {
 	let fragmentCollection;
 
 	switch (action.type) {
@@ -43,6 +42,6 @@ export default function fragmentsReducer(fragments = config.fragments, action) {
 			return fragments;
 
 		default:
-			return config.fragments;
+			return fragments;
 	}
 }

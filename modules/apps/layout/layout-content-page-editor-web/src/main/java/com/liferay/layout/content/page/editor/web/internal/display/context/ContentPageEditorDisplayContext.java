@@ -260,8 +260,6 @@ public class ContentPageEditorDisplayContext {
 				_layoutContentPageEditorConfiguration.
 					fragmentCompositionsEnabled()
 			).put(
-				"fragments", _getFragmentCollections(false, true)
-			).put(
 				"getAssetFieldValueURL",
 				getResourceURL("/content_layout/get_asset_field_value")
 			).put(
@@ -369,6 +367,8 @@ public class ContentPageEditorDisplayContext {
 			"state",
 			HashMapBuilder.<String, Object>put(
 				"fragmentEntryLinks", _getFragmentEntryLinks()
+			).put(
+				"fragments", _getFragmentCollections(false, true)
 			).put(
 				"languageId", themeDisplay.getLanguageId()
 			).put(

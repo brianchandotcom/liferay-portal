@@ -14,7 +14,7 @@
 
 import React, {useState} from 'react';
 
-import {config} from '../../../app/config/index';
+import {useSelector} from '../../../app/store/index';
 import Collapse from '../../../common/components/Collapse';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
@@ -23,7 +23,7 @@ import FragmentCard from './FragmentCard';
 import LayoutElements from './LayoutElements';
 
 export default function FragmentsSidebar() {
-	const [fragments] = useState(config.fragments);
+	const fragments = useSelector(state => state.fragments);
 
 	const [searchValue, setSearchValue] = useState('');
 	const searchValueLowerCase = searchValue.toLowerCase();

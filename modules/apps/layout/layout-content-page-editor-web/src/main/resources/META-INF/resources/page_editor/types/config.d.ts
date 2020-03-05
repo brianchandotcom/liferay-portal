@@ -47,19 +47,6 @@ export interface Config {
 	editFragmentEntryLinkCommentURL: string;
 	editFragmentEntryLinkURL: string;
 	editSegmentsEntryURL: string;
-
-	fragments: Array<{
-		fragmentEntries: Array<{
-			groupId: string;
-			name: string;
-			type: 0 | 1;
-			fragmentEntryKey: string;
-			imagePreviewURL: string;
-		}>;
-		fragmentCollectionId: string;
-		name: string;
-	}>;
-
 	getAssetFieldValueURL: string;
 	getAssetMappingFieldsURL: string;
 	getAvailableTemplatesURL: string;

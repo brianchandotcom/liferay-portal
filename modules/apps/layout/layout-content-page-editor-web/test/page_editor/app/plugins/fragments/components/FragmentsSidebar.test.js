@@ -23,41 +23,36 @@ import FragmentsSidebar from '../../../../../../src/main/resources/META-INF/reso
 
 import '@testing-library/jest-dom/extend-expect';
 
-jest.mock(
-	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			fragments: [
-				{
-					fragmentCollectionId: 'basicComponents',
-					fragmentEntries: [
-						{
-							fragmentEntryKey: 'basicComponentButton',
-							imagePreviewURL: 'buttonImageURL',
-							name: 'Button',
-						},
-						{
-							fragmentEntryKey: 'basicComponentCard',
-							imagePreviewURL: 'cardImageURL',
-							name: 'Card',
-						},
-						{
-							fragmentEntryKey: 'basicComponentHeading',
-							imagePreviewURL: 'headingImageURL',
-							name: 'Heading',
-						},
-					],
-					name: 'Basic Components',
-				},
-			],
-		},
-	})
-);
-
 const renderFragmentsSidebar = () =>
 	render(
 		<DndProvider backend={HTML5Backend}>
-			<StoreAPIContextProvider>
+			<StoreAPIContextProvider
+				getState={() => ({
+					fragments: [
+						{
+							fragmentCollectionId: 'basicComponents',
+							fragmentEntries: [
+								{
+									fragmentEntryKey: 'basicComponentButton',
+									imagePreviewURL: 'buttonImageURL',
+									name: 'Button',
+								},
+								{
+									fragmentEntryKey: 'basicComponentCard',
+									imagePreviewURL: 'cardImageURL',
+									name: 'Card',
+								},
+								{
+									fragmentEntryKey: 'basicComponentHeading',
+									imagePreviewURL: 'headingImageURL',
+									name: 'Heading',
+								},
+							],
+							name: 'Basic Components',
+						},
+					],
+				})}
+			>
 				<FragmentsSidebar />
 			</StoreAPIContextProvider>
 		</DndProvider>

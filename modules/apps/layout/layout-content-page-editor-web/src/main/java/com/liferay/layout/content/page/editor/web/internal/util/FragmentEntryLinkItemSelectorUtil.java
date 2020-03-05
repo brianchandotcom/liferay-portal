@@ -86,7 +86,7 @@ public class FragmentEntryLinkItemSelectorUtil {
 					}
 				}
 
-				if (Objects.equals(type, "itemCollectionSelector")) {
+				if (Objects.equals(type, "collectionSelector")) {
 					JSONObject typeOptionsJSONObject =
 						fieldJSONObject.getJSONObject("typeOptions");
 

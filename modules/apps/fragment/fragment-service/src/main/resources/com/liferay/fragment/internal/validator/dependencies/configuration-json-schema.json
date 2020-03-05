@@ -46,12 +46,12 @@
 					"if": {
 						"properties": {
 							"type": {
-								"const": "itemCollectionSelector"
+								"const": "collectionSelector"
 							}
 						}
 					},
 					"then": {
-						"$ref": "#/definitions/fieldItemCollectionSelector"
+						"$ref": "#/definitions/fieldCollectionSelector"
 					}
 				},
 				{
@@ -118,7 +118,7 @@
 					"enum": [
 						"checkbox",
 						"colorPalette",
-						"itemCollectionSelector",
+						"collectionSelector",
 						"itemSelector",
 						"select",
 						"text"
@@ -155,6 +155,25 @@
 				}
 			}
 		},
+		"fieldCollectionSelector": {
+			"properties": {
+				"typeOptions": {
+					"additionalProperties": false,
+					"properties": {
+						"itemSubtype": {
+							"title": "The ItemSubtype Schema",
+							"type": "string"
+						},
+						"itemType": {
+							"title": "The ItemType Schema",
+							"type": "string"
+						}
+					},
+					"title": "The Typeoptions Schema",
+					"type": "object"
+				}
+			}
+		},
 		"fieldColorPalette": {
 			"properties": {
 				"defaultValue": {
@@ -174,25 +193,6 @@
 						"rgbValue"
 					],
 					"title": "The DefaultValue Schema"
-				}
-			}
-		},
-		"fieldItemCollectionSelector": {
-			"properties": {
-				"typeOptions": {
-					"additionalProperties": false,
-					"properties": {
-						"itemSubtype": {
-							"title": "The ItemSubtype Schema",
-							"type": "string"
-						},
-						"itemType": {
-							"title": "The ItemType Schema",
-							"type": "string"
-						}
-					},
-					"title": "The Typeoptions Schema",
-					"type": "object"
 				}
 			}
 		},

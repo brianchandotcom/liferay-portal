@@ -20,7 +20,7 @@ import ItemSelector from '../../../common/components/ItemSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {config} from '../../config/index';
 
-export const ItemCollectionSelectorField = ({field, onValueSelect, value}) => {
+export const CollectionSelectorField = ({field, onValueSelect, value}) => {
 	const {typeOptions = {}} = field;
 	const eventName = `${config.portletNamespace}selectInfoList`;
 
@@ -42,7 +42,7 @@ export const ItemCollectionSelectorField = ({field, onValueSelect, value}) => {
 	);
 };
 
-ItemCollectionSelectorField.propTypes = {
+CollectionSelectorField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onValueSelect: PropTypes.func.isRequired,
 	value: PropTypes.object,

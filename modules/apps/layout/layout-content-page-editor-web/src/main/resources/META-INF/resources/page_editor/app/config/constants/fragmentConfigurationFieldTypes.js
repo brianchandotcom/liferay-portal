@@ -13,16 +13,16 @@
  */
 
 import {CheckboxField} from '../../components/floating-toolbar/CheckboxField';
+import {CollectionSelectorField} from '../../components/floating-toolbar/CollectionSelectorField';
 import {ColorPaletteField} from '../../components/floating-toolbar/ColorPaletteField';
-import {ItemCollectionSelectorField} from '../../components/floating-toolbar/ItemCollectionSelectorField';
 import {ItemSelectorField} from '../../components/floating-toolbar/ItemSelectorField';
 import {SelectField} from '../../components/floating-toolbar/SelectField';
 import {TextField} from '../../components/floating-toolbar/TextField';
 
 export const FRAGMENT_CONFIGURATION_FIELD_TYPES = {
 	checkbox: CheckboxField,
+	collectionSelector: CollectionSelectorField,
 	colorPalette: ColorPaletteField,
-	itemCollectionSelector: ItemCollectionSelectorField,
 	itemSelector: ItemSelectorField,
 	select: SelectField,
 	text: TextField,

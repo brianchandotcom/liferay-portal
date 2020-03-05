@@ -14,6 +14,6 @@
 
 module.exports = {
 	rules: {
-		'prefer-arrow-callback': 'off'
-	}
+		'prefer-arrow-callback': 'off',
+	},
 };

@@ -16,7 +16,9 @@ package com.liferay.portal.action;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
@@ -88,13 +90,27 @@ public class UpdateLayoutAction extends JSONAction {
 		boolean updateLayout = true;
 
 		if (cmd.equals(Constants.ADD)) {
+			if (portletId == null) {
+				throw new IllegalArgumentException("portletId cannot be null");
+			}
+
 			String columnId = ParamUtil.getString(
 				httpServletRequest, "p_p_col_id", null);
 			int columnPos = ParamUtil.getInteger(
 				httpServletRequest, "p_p_col_pos", -1);
 
+			String originalPortletId = portletId;
+
 			portletId = layoutTypePortlet.addPortletId(
 				userId, portletId, columnId, columnPos);
+
+			if (portletId == null) {
+				throw new PortalException(
+					StringBundler.concat(
+						"Portlet ", originalPortletId,
+						" could not be added to layout ", layout.getPlid(),
+						" by user ", userId));
+			}
 
 			storeAddContentPortletPreferences(
 				httpServletRequest, layout, portletId, themeDisplay);

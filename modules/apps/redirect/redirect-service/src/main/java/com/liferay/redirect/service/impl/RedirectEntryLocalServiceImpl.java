@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 public class RedirectEntryLocalServiceImpl
 	extends RedirectEntryLocalServiceBaseImpl {
 
+	@Override
 	public RedirectEntry addRedirectEntry(
 		long groupId, String destinationURL, String sourceURL,
 		ServiceContext serviceContext) {

@@ -217,11 +217,11 @@ public class GitUtil {
 
 		if (remoteGitBranchName != null) {
 			command = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ", remoteURL, " ", remoteGitBranchName);
+				"git ls-remote ", remoteURL, " ", remoteGitBranchName);
 		}
 		else {
 			command = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ", remoteURL);
+				"git ls-remote ", remoteURL);
 		}
 
 		ExecutionResult executionResult = executeBashCommands(

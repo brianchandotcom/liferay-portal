@@ -379,8 +379,9 @@ definition {
 			pageName = "Test Page Name");
 
 		AssertVisible(
-			key_warningMessage = "This page has customizable columns. This capability is not supported for content pages and will be lost if the conversion draft is published.",
-			locator1 = "Message#WARNING_SPECIFIC");
+			key_alertMessage = "This page has customizable columns. This capability is not supported for content pages and will be lost if the conversion draft is published.",
+			key_type = "warning",
+			locator1 = "Message#CONVERSION_ALERT_MESSAGE");
 
 		AssertElementNotPresent(
 			key_portletName = "Asset Publisher",
@@ -446,8 +447,9 @@ definition {
 			pageName = "Test Page Name");
 
 		AssertVisible(
-			key_warningMessage = "This page uses nested applications widgets. All widgets that were inside a nested application widget have been placed in a single column and may require manual reorganization.",
-			locator1 = "Message#WARNING_SPECIFIC");
+			key_alertMessage = "This page uses nested applications widgets. All widgets that were inside a nested application widget have been placed in a single column and may require manual reorganization.",
+			key_type = "warning",
+			locator1 = "Message#CONVERSION_ALERT_MESSAGE");
 
 		Portlet.viewPG(portletName = "Asset Publisher");
 
@@ -535,8 +537,9 @@ definition {
 			pageName = "Test Page Name");
 
 		AssertVisible(
-			key_warningMessage = "This page uses a custom page layout. A best-effort conversion has been performed. Verify the conversion draft before publishing it.",
-			locator1 = "Message#WARNING_SPECIFIC");
+			key_alertMessage = "This page uses a custom page layout. A best-effort conversion has been performed. Verify the conversion draft before publishing it.",
+			key_type = "warning",
+			locator1 = "Message#CONVERSION_ALERT_MESSAGE");
 
 		AssertTextEquals(
 			key_portletName = "Asset Publisher",

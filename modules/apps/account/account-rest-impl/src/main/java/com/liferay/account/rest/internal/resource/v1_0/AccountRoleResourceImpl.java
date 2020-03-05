@@ -48,6 +48,15 @@ public class AccountRoleResourceImpl
 	extends BaseAccountRoleResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteAccountRoleUserAssociation(
+			Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception {
+
+		_accountRoleLocalService.unassociateUser(
+			accountId, accountRoleId, accountUserId);
+	}
+
+	@Override
 	public Page<AccountRole> getAccountRolesPage(
 			Long accountId, String keywords, Pagination pagination,
 			Sort[] sorts)
@@ -84,6 +93,15 @@ public class AccountRoleResourceImpl
 				Collections.singletonMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					accountRole.getDescription())));
+	}
+
+	@Override
+	public void postAccountRoleUserAssociation(
+			Long accountId, Long accountRoleId, Long accountUserId)
+		throws Exception {
+
+		_accountRoleLocalService.associateUser(
+			accountId, accountRoleId, accountUserId);
 	}
 
 	private OrderByComparator _getOrderByComparator(Sort[] sorts) {

@@ -1116,7 +1116,9 @@ AUI.add(
 
 					var dataType = instance.get('dataType');
 
-					if (dataType) {
+					var fields = instance.get('fields');
+
+					if (dataType || fields.length) {
 						instance.updateLocalizationMap(
 							instance.get('displayLocale')
 						);
@@ -1131,8 +1133,6 @@ AUI.add(
 							);
 						}
 					}
-
-					var fields = instance.get('fields');
 
 					if (fields.length) {
 						fieldJSON.nestedFieldValues = AArray.invoke(

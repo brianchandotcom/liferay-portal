@@ -14,9 +14,9 @@ gradle.projectsEvaluated {
 	rootProject.tasks.register("copyStartupScript", DockerCopyFileFromContainer) {
 		dependsOn "createDockerContainer"
 
-		compressed true	
+		compressed true
 		containerId gradle.liferayWorkspace.dockerContainerId
 		hostPath rootProject.getBuildDir().path
-		remotePath "/home/liferay/configs/local/scripts/startup_script.sh"	
+		remotePath "/home/liferay/configs/local/scripts/startup_script.sh"
 	}
 }

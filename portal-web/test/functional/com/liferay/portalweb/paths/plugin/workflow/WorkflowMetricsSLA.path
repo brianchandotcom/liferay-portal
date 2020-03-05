@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>METRICS_SLA_SETTINGS</td>
-	<td>//a[@class='dropdown-item'][contains(@href,'InstanceCount')]</td>
+	<td>//div[contains(@class,'show')]//a[@class='dropdown-item'][contains(@href,'InstanceCount')]</td>
 	<td></td>
 </tr>
 <tr>

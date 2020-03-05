@@ -23,7 +23,14 @@ String backURL = ParamUtil.getString(request, "backURL");
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(LanguageUtil.get(request, "new-redirect"));
+RedirectEntry redirectEntry = (RedirectEntry)request.getAttribute(RedirectEntry.class.getName());
+
+if (redirectEntry == null) {
+	renderResponse.setTitle(LanguageUtil.get(request, "new-redirect"));
+}
+else {
+	renderResponse.setTitle(LanguageUtil.get(request, "edit-redirect"));
+}
 %>
 
 <portlet:actionURL name="/redirect_entry/edit" var="editRedirectEntryURL" />
@@ -37,10 +44,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-redirect"));
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 
-	<liferay-frontend:edit-form-body>
-		<aui:input autoFocus="<%= true %>" name="sourceURL" required="<%= true %>" />
+	<c:if test="<%= redirectEntry != null %>">
+		<aui:input name="redirectEntryId" type="hidden" value="<%= redirectEntry.getRedirectEntryId() %>" />
+	</c:if>
 
-		<aui:input name="destinationURL" required="<%= true %>" />
+	<liferay-frontend:edit-form-body>
+		<aui:input autoFocus="<%= true %>" name="sourceURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getSourceURL() : null %>" />
+
+		<aui:input name="destinationURL" required="<%= true %>" value="<%= (redirectEntry != null) ? redirectEntry.getDestinationURL() : null %>" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

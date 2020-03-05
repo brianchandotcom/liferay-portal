@@ -14,8 +14,11 @@
 
 package com.liferay.redirect.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
@@ -41,6 +44,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alejandro Tardín
@@ -48,11 +54,41 @@ import javax.portlet.PortletURL;
 public class RedirectDisplayContext {
 
 	public RedirectDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+	}
+
+	public DropdownItemList getActionDropdownItems(
+		RedirectEntry redirectEntry) {
+
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				RenderURL editRedirectEntryURL =
+					_liferayPortletResponse.createRenderURL();
+
+				editRedirectEntryURL.setParameter(
+					"mvcRenderCommandName", "/redirect_entry/edit");
+
+				PortletURL portletURL = _getPortletURL();
+
+				editRedirectEntryURL.setParameter(
+					"redirect", portletURL.toString());
+
+				editRedirectEntryURL.setParameter(
+					"redirectEntryId",
+					String.valueOf(redirectEntry.getRedirectEntryId()));
+
+				dropdownItem.setHref(editRedirectEntryURL);
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "edit"));
+			}
+		).build();
 	}
 
 	public String getSearchContainerId() {
@@ -135,6 +171,7 @@ public class RedirectDisplayContext {
 		return new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, !orderByAsc);
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private RedirectEntrySearch _redirectEntrySearch;

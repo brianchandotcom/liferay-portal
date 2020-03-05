@@ -14,6 +14,11 @@
 
 import React, {useCallback, useContext, useReducer} from 'react';
 
+import {
+	useFromControlsId,
+	useToControlsId,
+} from '../ControlsIdConverterContext';
+
 const EditableProcessorContext = React.createContext(null);
 const INITIAL_STATE = {editableClickPosition: null, editableUniqueId: null};
 const SET_EDITABLE_UNIQUE_ID = 'SET_EDITABLE_UNIQUE_ID';
@@ -47,21 +52,25 @@ export function useEditableProcessorClickPosition() {
 
 export function useEditableProcessorUniqueId() {
 	const [state] = useContext(EditableProcessorContext);
+	const fromControlsId = useFromControlsId();
 
-	return state.editableUniqueId;
+	return fromControlsId(state.editableUniqueId);
+}
+
 }
 
 export function useSetEditableProcessorUniqueId() {
 	const [, dispatch] = useContext(EditableProcessorContext);
+	const toControlsId = useToControlsId();
 
 	return useCallback(
 		(editableUniqueIdOrNull, editableClickPosition = null) => {
 			dispatch({
 				editableClickPosition,
-				editableUniqueId: editableUniqueIdOrNull,
+				editableUniqueId: toControlsId(editableUniqueIdOrNull),
 				type: SET_EDITABLE_UNIQUE_ID,
 			});
 		},
-		[dispatch]
+		[dispatch, toControlsId]
 	);
 }

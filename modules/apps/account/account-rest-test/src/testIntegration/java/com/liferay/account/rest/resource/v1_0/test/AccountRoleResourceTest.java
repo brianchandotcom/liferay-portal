@@ -25,6 +25,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -53,7 +54,8 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		User companyAdminUser = UserTestUtil.addCompanyAdminUser(testCompany);
+		User companyAdminUser = UserTestUtil.getAdminUser(
+			testCompany.getCompanyId());
 
 		_accountResource.setContextCompany(testCompany);
 		_accountResource.setContextUser(companyAdminUser);
@@ -89,6 +91,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		super.tearDown();
 
 		_deleteAccounts(_accounts);
+		_deleteAccountUsers(_accountUsers);
 	}
 
 	@Override
@@ -205,14 +208,31 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	}
 
 	private AccountUser _addAccountUser(Account account) throws Exception {
-		return _accountUserResource.postAccountUser(
+		AccountUser accountUser = _accountUserResource.postAccountUser(
 			account.getId(), randomAccountUser());
+
+		_accountUsers.add(accountUser);
+
+		return accountUser;
 	}
 
 	private void _deleteAccounts(List<Account> accounts) {
 		for (Account account : accounts) {
 			try {
 				_accountEntryLocalService.deleteAccountEntry(account.getId());
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
+		}
+	}
+
+	private void _deleteAccountUsers(List<AccountUser> accountUsers) {
+		for (AccountUser accountUser : accountUsers) {
+			try {
+				_userLocalService.deleteUser(accountUser.getId());
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -247,5 +267,10 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 
 	@Inject
 	private AccountUserResource _accountUserResource;
+
+	private final List<AccountUser> _accountUsers = new ArrayList<>();
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

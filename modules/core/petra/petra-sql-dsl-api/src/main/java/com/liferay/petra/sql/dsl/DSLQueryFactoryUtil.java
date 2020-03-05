@@ -58,7 +58,7 @@ public class DSLQueryFactoryUtil {
 
 	static {
 		ServiceLoader<DSLQueryFactory> serviceLoader = ServiceLoader.load(
-			DSLQueryFactory.class);
+			DSLQueryFactory.class, DSLQueryFactory.class.getClassLoader());
 
 		Iterator<DSLQueryFactory> iterator = serviceLoader.iterator();
 

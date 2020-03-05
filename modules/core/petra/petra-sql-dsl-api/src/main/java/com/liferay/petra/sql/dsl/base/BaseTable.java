@@ -165,7 +165,7 @@ public abstract class BaseTable<T extends BaseTable<T>> implements Table<T> {
 
 	static {
 		ServiceLoader<ColumnFactory> serviceLoader = ServiceLoader.load(
-			ColumnFactory.class);
+			ColumnFactory.class, ColumnFactory.class.getClassLoader());
 
 		Iterator<ColumnFactory> iterator = serviceLoader.iterator();
 

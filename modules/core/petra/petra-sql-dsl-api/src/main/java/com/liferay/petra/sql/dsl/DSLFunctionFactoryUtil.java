@@ -158,7 +158,8 @@ public class DSLFunctionFactoryUtil {
 
 	static {
 		ServiceLoader<DSLFunctionFactory> serviceLoader = ServiceLoader.load(
-			DSLFunctionFactory.class);
+			DSLFunctionFactory.class,
+			DSLFunctionFactory.class.getClassLoader());
 
 		Iterator<DSLFunctionFactory> iterator = serviceLoader.iterator();
 

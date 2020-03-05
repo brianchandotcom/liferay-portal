@@ -226,8 +226,8 @@ definition {
 		var key_webContentTitle = "${webContentTitle}";
 
 		AssertTextEquals(
-			key_webContentTitle = "${webContentTitle}",
-			locator1 = "Link#WEB_CONTENT_ARTICLE",
+			key_listEntry = "${webContentTitle}",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE",
 			value1 = "${webContentTitle}");
 
 		if ("${addSearchedContent}" == "true") {
@@ -269,8 +269,8 @@ definition {
 		var key_webContentTitle = "${webContentTitle}";
 
 		AssertElementNotPresent(
-			key_webContentTitle = "${webContentTitle}",
-			locator1 = "Link#WEB_CONTENT_ARTICLE");
+			key_listEntry = "${webContentTitle}",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE");
 
 		SelectFrame(value1 = "relative=top");
 	}

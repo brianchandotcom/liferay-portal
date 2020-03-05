@@ -91,7 +91,7 @@ public class UpdateLayoutAction extends JSONAction {
 
 		if (cmd.equals(Constants.ADD)) {
 			if (portletId == null) {
-				throw new IllegalArgumentException("portletId cannot be null");
+				throw new IllegalArgumentException("Portlet id cannot be null");
 			}
 
 			String columnId = ParamUtil.getString(
@@ -108,7 +108,7 @@ public class UpdateLayoutAction extends JSONAction {
 				throw new PortalException(
 					StringBundler.concat(
 						"Portlet ", originalPortletId,
-						" could not be added to layout ", layout.getPlid(),
+						" cannot be added to layout ", layout.getPlid(),
 						" by user ", userId));
 			}
 

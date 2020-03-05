@@ -88,6 +88,10 @@ public abstract class BaseAnalyticsMVCActionCommand
 		String message = responseJSONObject.getString("message");
 
 		if (message.equals("INVALID_TOKEN")) {
+			removeChannelId(
+				PrefsPropsUtil.getStringArray(
+					companyId, "liferayAnalyticsGroupIds", StringPool.COMMA));
+
 			removeCompanyPreferences(companyId);
 
 			configurationProvider.deleteCompanyConfiguration(

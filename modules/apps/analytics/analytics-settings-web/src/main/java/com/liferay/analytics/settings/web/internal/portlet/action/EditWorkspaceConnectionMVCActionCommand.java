@@ -16,6 +16,7 @@ package com.liferay.analytics.settings.web.internal.portlet.action;
 
 import com.liferay.analytics.settings.web.internal.util.AnalyticsSettingsUtil;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -169,6 +171,11 @@ public class EditWorkspaceConnectionMVCActionCommand
 
 		if (!_disconnectDataSource(
 				themeDisplay.getCompanyId(), configurationProperties)) {
+
+			removeChannelId(
+				PrefsPropsUtil.getStringArray(
+					themeDisplay.getCompanyId(), "liferayAnalyticsGroupIds",
+					StringPool.COMMA));
 
 			removeCompanyPreferences(themeDisplay.getCompanyId());
 			removeConfigurationProperties(

@@ -242,25 +242,10 @@ public class EditChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 
 		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(json);
 
-		List<String> removedGroupIds = JSONUtil.toStringList(
+		String[] removedGroupIds = JSONUtil.toStringArray(
 			responseJSONObject.getJSONArray("removedGroupIds"));
 
-		for (String removedGroupId : removedGroupIds) {
-			Group group = groupLocalService.fetchGroup(
-				GetterUtil.getLong(removedGroupId));
-
-			if (group == null) {
-				continue;
-			}
-
-			UnicodeProperties properties = group.getTypeSettingsProperties();
-
-			properties.remove("analyticsChannelId");
-
-			group.setTypeSettingsProperties(properties);
-
-			groupLocalService.updateGroup(group);
-		}
+		removeChannelId(removedGroupIds);
 
 		for (String selectedGroupId : selectedGroupIds) {
 			Group group = groupLocalService.fetchGroup(
@@ -275,7 +260,7 @@ public class EditChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 			groupLocalService.updateGroup(group);
 		}
 
-		return removedGroupIds;
+		return Arrays.asList(removedGroupIds);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

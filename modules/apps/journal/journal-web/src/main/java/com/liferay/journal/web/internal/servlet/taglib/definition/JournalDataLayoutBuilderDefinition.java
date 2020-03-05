@@ -29,6 +29,11 @@ public class JournalDataLayoutBuilderDefinition
 	implements DataLayoutBuilderDefinition {
 
 	@Override
+	public boolean allowFieldSets() {
+		return true;
+	}
+
+	@Override
 	public String[] getDisabledProperties() {
 		return new String[] {"predefinedValue"};
 	}

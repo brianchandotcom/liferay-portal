@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.internal.batch.engine;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import org.osgi.framework.BundleContext;
@@ -73,6 +74,9 @@ public class VulcanBatchEngineTaskItemDelegateAdaptorFactory {
 			VulcanBatchEngineTaskItemDelegateAdaptor<?>
 				vulcanBatchEngineTaskItemDelegateAdaptor =
 					new VulcanBatchEngineTaskItemDelegateAdaptor<>(
+						_bundleContext.getService(
+							_bundleContext.getServiceReference(
+								GroupLocalService.class)),
 						vulcanBatchEngineTaskItemDelegate);
 
 			return _bundleContext.registerService(

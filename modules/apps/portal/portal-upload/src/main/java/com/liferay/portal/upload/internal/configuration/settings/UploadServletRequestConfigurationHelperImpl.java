@@ -50,11 +50,11 @@ public class UploadServletRequestConfigurationHelperImpl
 	public String getTempDir() {
 		String tempDir = _uploadServletRequestConfiguration.tempDir();
 
-		if (Validator.isNull(tempDir)) {
-			tempDir = SystemProperties.get(SystemProperties.TMP_DIR);
+		if (Validator.isNotNull(tempDir)) {
+			return tempDir;
 		}
 
-		return tempDir;
+		return SystemProperties.get(SystemProperties.TMP_DIR);
 	}
 
 	@Activate

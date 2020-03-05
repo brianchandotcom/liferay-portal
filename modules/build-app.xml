@@ -155,15 +155,19 @@
 				<zip
 					destfile="${output.dir}/${Liferay-Releng-App-Title}.lpkg"
 				>
-					<fileset dir="${output.dir}">
-					    <include name="*${Liferay-Releng-App-Title}*.lpkg" />
+					<fileset
+						dir="${output.dir}"
+					>
+						<include name="*${Liferay-Releng-App-Title}*.lpkg" />
 					</fileset>
 				</zip>
 
 				<delete>
-					<fileset dir="${output.dir}">
+					<fileset
+						dir="${output.dir}"
+					>
 						<exclude name="*${Liferay-Releng-App-Title}.lpkg" />
-					    <include name="*${Liferay-Releng-App-Title}*.lpkg" />
+						<include name="*${Liferay-Releng-App-Title}*.lpkg" />
 					</fileset>
 				</delete>
 			</then>

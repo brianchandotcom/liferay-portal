@@ -115,6 +115,16 @@ export default function FloatingToolbar({
 	}, []);
 
 	useEffect(() => {
+		const {marginRight: itemRefMarginRight} = getComputedStyle(
+			itemRef.current
+		);
+
+		if (show && parseInt(itemRefMarginRight, 10) < 0) {
+			toolbarRef.current.style.transform = `translate(${itemRefMarginRight})`;
+		}
+	}, [itemRef, show]);
+
+	useEffect(() => {
 		alignElement(toolbarRef, itemRef, () => {
 			alignElement(panelRef, toolbarRef);
 		});

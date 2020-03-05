@@ -14,9 +14,11 @@
 
 package com.liferay.redirect.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.BaseManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -30,15 +32,28 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alejandro Tardín
  */
 public class RedirectManagementToolbarDisplayContext
-	extends BaseManagementToolbarDisplayContext {
+	extends SearchContainerManagementToolbarDisplayContext {
 
 	public RedirectManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		SearchContainer searchContainer) {
 
 		super(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
+	}
+
+	@Override
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("orderByCol", getOrderByCol());
+		clearResultsURL.setParameter("orderByType", getOrderByType());
+
+		return clearResultsURL.toString();
 	}
 
 	@Override
@@ -70,8 +85,25 @@ public class RedirectManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		searchActionURL.setParameter("orderByCol", getOrderByCol());
+		searchActionURL.setParameter("orderByType", getOrderByType());
+
+		return searchActionURL.toString();
+	}
+
+	@Override
 	public Boolean isSelectable() {
 		return false;
+	}
+
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {
+			"create-date", "modified-date", "source-url", "destination-url"
+		};
 	}
 
 }

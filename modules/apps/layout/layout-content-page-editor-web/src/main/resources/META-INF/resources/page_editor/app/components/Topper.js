@@ -133,7 +133,7 @@ export default function Topper({children, item, itemRef, layoutData}) {
 
 		return (
 			item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
-			(hoveredItemId === item.itemId || (childIsActive && childIsHovered))
+			(isHovered(item.itemId) || (childIsActive && childIsHovered))
 		);
 	};
 

@@ -22,7 +22,7 @@ import selectEditableValue from '../../selectors/selectEditableValue';
 import {useSelector} from '../../store/index';
 import {useIsActive} from '../Controls';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
-import {useEditableProcessorUniqueId} from './EditableProcessorContext';
+import {useIsProcessorEnabled} from './EditableProcessorContext';
 import getEditableUniqueId from './getEditableUniqueId';
 
 export default function FragmentContentFloatingToolbar({
@@ -31,7 +31,7 @@ export default function FragmentContentFloatingToolbar({
 	onButtonClick,
 }) {
 	const isActive = useIsActive();
-	const editableProcessorUniqueId = useEditableProcessorUniqueId();
+	const isProccessorEnabled = useIsProcessorEnabled();
 
 	const editable = useMemo(() => {
 		let activeEditable = {
@@ -65,9 +65,9 @@ export default function FragmentContentFloatingToolbar({
 		editable.editableValueNamespace
 	);
 
-	const editableHasActiveProcessor =
-		editableProcessorUniqueId !==
-		getEditableUniqueId(fragmentEntryLinkId, editable.editableId);
+	const editableHasActiveProcessor = !isProccessorEnabled(
+		getEditableUniqueId(fragmentEntryLinkId, editable.editableId)
+	);
 
 	const floatingToolbarButtons = useMemo(() => {
 		if (!editable.editableId) {

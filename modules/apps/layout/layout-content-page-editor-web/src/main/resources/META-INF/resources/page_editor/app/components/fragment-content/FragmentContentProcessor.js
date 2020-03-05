@@ -23,6 +23,7 @@ import updateEditableValues from '../../thunks/updateEditableValues';
 import {
 	useEditableProcessorClickPosition,
 	useEditableProcessorUniqueId,
+	useIsProcessorEnabled,
 	useSetEditableProcessorUniqueId,
 } from './EditableProcessorContext';
 import getEditableUniqueId from './getEditableUniqueId';
@@ -35,6 +36,7 @@ export default function FragmentContentProcessor({
 	const editableProcessorClickPosition = useEditableProcessorClickPosition();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
+	const isProcessorEnabled = useIsProcessorEnabled();
 	const languageId = useSelector(
 		state => state.languageId || config.defaultLanguageId
 	);
@@ -53,17 +55,18 @@ export default function FragmentContentProcessor({
 
 		if (editables) {
 			enabledEditable =
-				editables.find(
-					editable =>
+				editables.find(editable =>
+					isProcessorEnabled(
 						getEditableUniqueId(
 							fragmentEntryLinkId,
 							editable.editableId
-						) === editableProcessorUniqueId
+						)
+					)
 				) || enabledEditable;
 		}
 
 		return enabledEditable;
-	}, [editables, fragmentEntryLinkId, editableProcessorUniqueId]);
+	}, [editables, isProcessorEnabled, fragmentEntryLinkId]);
 
 	const editableValues = useSelector(
 		state =>

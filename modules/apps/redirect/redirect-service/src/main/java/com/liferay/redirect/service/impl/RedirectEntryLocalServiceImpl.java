@@ -38,7 +38,7 @@ public class RedirectEntryLocalServiceImpl
 	@Override
 	public RedirectEntry addRedirectEntry(
 		long groupId, String destinationURL, String sourceURL,
-		ServiceContext serviceContext) {
+		boolean temporary, ServiceContext serviceContext) {
 
 		RedirectEntry redirectEntry = redirectEntryPersistence.create(
 			counterLocalService.increment());
@@ -51,6 +51,7 @@ public class RedirectEntryLocalServiceImpl
 		redirectEntry.setUserId(serviceContext.getUserId());
 		redirectEntry.setDestinationURL(destinationURL);
 		redirectEntry.setSourceURL(sourceURL);
+		redirectEntry.setTemporary(temporary);
 
 		return redirectEntryPersistence.update(redirectEntry);
 	}
@@ -58,13 +59,15 @@ public class RedirectEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RedirectEntry updateRedirectEntry(
-			long redirectEntryId, String destinationURL, String sourceURL)
+			long redirectEntryId, String destinationURL, String sourceURL,
+			boolean temporary)
 		throws PortalException {
 
 		RedirectEntry redirectEntry = getRedirectEntry(redirectEntryId);
 
 		redirectEntry.setDestinationURL(destinationURL);
 		redirectEntry.setSourceURL(sourceURL);
+		redirectEntry.setTemporary(temporary);
 
 		return redirectEntryPersistence.update(redirectEntry);
 	}

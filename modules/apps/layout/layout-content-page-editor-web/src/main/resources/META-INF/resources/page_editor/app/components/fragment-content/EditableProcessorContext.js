@@ -57,6 +57,15 @@ export function useEditableProcessorUniqueId() {
 	return fromControlsId(state.editableUniqueId);
 }
 
+export function useIsProcessorEnabled() {
+	const [state] = useContext(EditableProcessorContext);
+	const toControlsId = useToControlsId();
+
+	return useCallback(
+		editableUniqueId =>
+			state.editableUniqueId === toControlsId(editableUniqueId),
+		[state.editableUniqueId, toControlsId]
+	);
 }
 
 export function useSetEditableProcessorUniqueId() {

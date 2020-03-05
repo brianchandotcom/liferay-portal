@@ -17,18 +17,25 @@ package com.liferay.account.rest.resource.v1_0.test;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.rest.client.dto.v1_0.AccountRole;
 import com.liferay.account.rest.dto.v1_0.Account;
+import com.liferay.account.rest.dto.v1_0.AccountUser;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
+import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -46,9 +53,35 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		User companyAdminUser = UserTestUtil.addCompanyAdminUser(testCompany);
+
 		_accountResource.setContextCompany(testCompany);
-		_accountResource.setContextUser(
-			UserTestUtil.addCompanyAdminUser(testCompany));
+		_accountResource.setContextUser(companyAdminUser);
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		_accountUserResource.setContextAcceptLanguage(
+			new AcceptLanguage() {
+
+				@Override
+				public List<Locale> getLocales() {
+					return null;
+				}
+
+				@Override
+				public String getPreferredLanguageId() {
+					return defaultLocale.getLanguage();
+				}
+
+				@Override
+				public Locale getPreferredLocale() {
+					return defaultLocale;
+				}
+
+			});
+
+		_accountUserResource.setContextCompany(testCompany);
+		_accountUserResource.setContextUser(companyAdminUser);
 	}
 
 	@Override
@@ -58,10 +91,59 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		_deleteAccounts(_accounts);
 	}
 
+	@Override
+	public void testDeleteAccountRoleUserAssociation() throws Exception {
+		Account account = _addAccount();
+
+		AccountRole accountRole = _addAccountRole(account);
+		AccountUser accountUser = _addAccountUser(account);
+
+		assertHttpResponseStatusCode(
+			204,
+			accountRoleResource.deleteAccountRoleUserAssociationHttpResponse(
+				account.getId(), accountRole.getId(), accountUser.getId()));
+	}
+
 	@Ignore
 	@Override
 	@Test
 	public void testGraphQLGetAccountRolesPage() throws Exception {
+	}
+
+	@Override
+	public void testPostAccountRoleUserAssociation() throws Exception {
+		Account account = _addAccount();
+
+		AccountRole accountRole = _addAccountRole(account);
+		AccountUser accountUser = _addAccountUser(account);
+
+		assertHttpResponseStatusCode(
+			204,
+			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
+				account.getId(), accountRole.getId(), accountUser.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
+				account.getId(), 0L, accountUser.getId()));
+	}
+
+	protected AccountUser randomAccountUser() {
+		return new AccountUser() {
+			{
+				emailAddress =
+					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+						"@liferay.com";
+				firstName = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				lastName = RandomTestUtil.randomString();
+				middleName = RandomTestUtil.randomString();
+				prefix = RandomTestUtil.randomString();
+				screenName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				suffix = RandomTestUtil.randomString();
+			}
+		};
 	}
 
 	@Override
@@ -117,6 +199,16 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		return account;
 	}
 
+	private AccountRole _addAccountRole(Account account) throws Exception {
+		return accountRoleResource.postAccountRole(
+			account.getId(), randomAccountRole());
+	}
+
+	private AccountUser _addAccountUser(Account account) throws Exception {
+		return _accountUserResource.postAccountUser(
+			account.getId(), randomAccountUser());
+	}
+
 	private void _deleteAccounts(List<Account> accounts) {
 		for (Account account : accounts) {
 			try {
@@ -152,5 +244,8 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	private AccountResource _accountResource;
 
 	private final List<Account> _accounts = new ArrayList<>();
+
+	@Inject
+	private AccountUserResource _accountUserResource;
 
 }

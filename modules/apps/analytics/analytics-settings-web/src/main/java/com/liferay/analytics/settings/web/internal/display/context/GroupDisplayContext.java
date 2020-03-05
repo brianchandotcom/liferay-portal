@@ -174,10 +174,7 @@ public class GroupDisplayContext {
 					"groupIds", groupIds
 				),
 				themeDisplay.getCompanyId(),
-				String.format(
-					"api/1.0/channels/query_channel_names",
-					AnalyticsSettingsUtil.getAsahFaroBackendDataSourceId(
-						themeDisplay.getCompanyId())));
+				"api/1.0/channels/query_channel_names");
 
 			StatusLine statusLine = httpResponse.getStatusLine();
 

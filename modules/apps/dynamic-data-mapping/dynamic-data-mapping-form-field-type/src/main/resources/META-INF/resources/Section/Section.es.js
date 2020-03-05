@@ -29,7 +29,7 @@ class Section extends Component {
 
 		const newState = {
 			...state,
-			rows: state.rows.map(row => ({
+			nestedRows: state.rows.map(row => ({
 				...row,
 				columns: row.columns.map(column => ({
 					...column,

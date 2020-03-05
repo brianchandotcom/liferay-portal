@@ -12,11 +12,11 @@
 	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? label: string}
+	{@param? nestedRows: list<?>}
 	{@param? pageIndex: number}
 	{@param? readOnly: bool}
 	{@param? repeatable: bool}
 	{@param? required: bool}
-	{@param? rows: list<?>}
 	{@param? showLabel: bool}
 	{@param? tip: string}
 	{@param? tooltip: string}
@@ -25,6 +25,11 @@
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
+			{if $showLabel}
+				<label class="text-uppercase">{$label}</label>
+				<div class="mt-1 separator"></div>
+			{/if}
+
 			{call PageRenderer.rows}
 				{param _handleFieldBlurred: $_handleFieldBlurred /}
 				{param _handleFieldEdited: $_handleFieldEdited /}
@@ -32,7 +37,7 @@
 				{param activePage: $activePage /}
 				{param editable: $editable /}
 				{param pageIndex: $pageIndex /}
-				{param rows: $rows /}
+				{param rows: $nestedRows ?: []  /}
 				{param spritemap: $spritemap /}
 			{/call}
 		{/param}
@@ -44,7 +49,7 @@
 		{param readOnly: $readOnly /}
 		{param repeatable: $repeatable /}
 		{param required: $required /}
-		{param showLabel: $showLabel /}
+		{param showLabel: false /}
 		{param spritemap: $spritemap /}
 		{param tip: $tip /}
 		{param tooltip: $tooltip /}

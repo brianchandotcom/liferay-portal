@@ -74,9 +74,7 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 			_kaleoDefinitionLocalService.createKaleoDefinition(
 				kaleoDefinitionId);
 
-		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
-
-		kaleoDefinition.setGroupId(liveGroupId);
+		kaleoDefinition.setGroupId(StagingUtil.getLiveGroupId(groupId));
 
 		User user = _userLocalService.getUser(userId);
 

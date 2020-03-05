@@ -16,6 +16,7 @@ package com.liferay.ac.csv.data.generator;
 
 import com.liferay.ac.csv.data.generator.configuration.AcCsvDataGeneratorConfiguration;
 import com.liferay.ac.csv.data.generator.csv.CsvUser;
+import com.liferay.ac.csv.data.generator.util.GeneratedDataUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
@@ -55,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cheryl Tang
  */
 @Component(
-	configurationPid = "com.liferay.csv.user.generator.configuration.AcCsvDataGeneratorConfiguration",
+	configurationPid = "com.liferay.ac.csv.data.generator.configuration.AcCsvDataGeneratorConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = {}
 )
@@ -63,26 +62,27 @@ public class AcCsvDataGenerator {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		AcCsvDataGeneratorConfiguration AcCsvDataGeneratorConfiguration =
+		AcCsvDataGeneratorConfiguration acCsvDataGeneratorConfiguration =
 			ConfigurableUtil.createConfigurable(
 				AcCsvDataGeneratorConfiguration.class, properties);
 
-		_verbose = AcCsvDataGeneratorConfiguration.verbose();
+		_verbose = acCsvDataGeneratorConfiguration.verbose();
 
 		try {
 			Company company = _companyLocalService.getCompanyByVirtualHost(
-				AcCsvDataGeneratorConfiguration.virtualHostName());
+				acCsvDataGeneratorConfiguration.virtualHostName());
 
 			_companyId = company.getPrimaryKey();
 
-			_defaultUserId = _userLocalService.getDefaultUserId(_companyId);
+			_generatedDataUtil.setCompanyId(_companyId);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
 		}
 
 		try {
-			File csvFile = new File(AcCsvDataGeneratorConfiguration.pathToUserCsv());
+			File csvFile = new File(
+				acCsvDataGeneratorConfiguration.pathToUserCsv());
 
 			CSVParser csvParser = CSVParser.parse(
 				csvFile, Charset.defaultCharset(),
@@ -92,11 +92,10 @@ public class AcCsvDataGenerator {
 					""
 				));
 
-
-			_csvUser.setCompanyId(_companyId);
-
 			for (CSVRecord csvRecord : csvParser) {
-				if (_addedUserMap.containsKey(csvRecord.get("emailAddress"))) {
+				if (_generatedDataUtil.containsUserKey(
+						csvRecord.get("emailAddress"))) {
+
 					continue;
 				}
 
@@ -108,11 +107,11 @@ public class AcCsvDataGenerator {
 
 				_csvUser.assignRoles(_getIdArrayFromCell(csvRecord, "roles"));
 
-
 				try {
 					User user = _csvUser.addUser(csvRecord);
 
-					_addedUserMap.put(user.getEmailAddress(), user.getPrimaryKey());
+					_generatedDataUtil.putUser(
+						user.getEmailAddress(), user.getPrimaryKey());
 
 					if (!_verbose.equalsIgnoreCase("false")) {
 						System.out.println(
@@ -125,7 +124,8 @@ public class AcCsvDataGenerator {
 			}
 
 			if (_log.isInfoEnabled()) {
-				_log.info(AcCsvDataGeneratorConfiguration.customActivationMessage());
+				_log.info(
+					acCsvDataGeneratorConfiguration.customActivationMessage());
 			}
 		}
 		catch (IOException ioException) {
@@ -135,51 +135,7 @@ public class AcCsvDataGenerator {
 
 	@Deactivate
 	protected void deactivate() {
-		_addedUserMap.entrySet(
-		).parallelStream(
-		).forEach(
-			e -> {
-				try {
-					_userLocalService.deleteUser(e.getValue());
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-				}
-			}
-		);
-
-		_addedOrganizationMap.entrySet(
-		).parallelStream(
-		).forEach(
-			e -> {
-				try {
-					_organizationLocalService.deleteOrganization(e.getValue());
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-				}
-			}
-		);
-
-		_addedRoleMap.entrySet(
-		).parallelStream(
-		).forEach(
-			e -> {
-				try {
-					_roleLocalService.deleteRole(e.getValue());
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-				}
-			}
-		);
-
-		try {
-			_userGroupLocalService.deleteUserGroups(_companyId);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-		}
+		_generatedDataUtil.deleteAll();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
@@ -203,45 +159,47 @@ public class AcCsvDataGenerator {
 
 			try {
 				if (headerName.equalsIgnoreCase("organizations")) {
-					if (_addedOrganizationMap.containsKey(name)) {
-						idArray[i] = _addedOrganizationMap.get(name);
+					if (_generatedDataUtil.containsOrganizationKey(name)) {
+						idArray[i] = _generatedDataUtil.getOrganization(name);
 					}
 					else {
 						Organization newOrganization =
 							_organizationLocalService.addOrganization(
-								_defaultUserId, 0, name, false);
+								_generatedDataUtil.getDefaultUserId(), 0, name,
+								false);
 
 						idArray[i] = newOrganization.getPrimaryKey();
 
-						_addedOrganizationMap.put(name, idArray[i]);
+						_generatedDataUtil.putOrganization(name, idArray[i]);
 					}
 				}
 				else if (headerName.equalsIgnoreCase("userGroups")) {
-					if (_addedUserGroupMap.containsKey(name)) {
-						idArray[i] = _addedUserGroupMap.get(name);
+					if (_generatedDataUtil.containsUserGroupKey(name)) {
+						idArray[i] = _generatedDataUtil.getUserGroup(name);
 					}
 					else {
 						UserGroup newUserGroup =
 							_userGroupLocalService.addUserGroup(
-								_defaultUserId, _companyId, name, null, null);
+								_generatedDataUtil.getDefaultUserId(),
+								_companyId, name, null, null);
 
 						idArray[i] = newUserGroup.getPrimaryKey();
 
-						_addedUserGroupMap.put(name, idArray[i]);
+						_generatedDataUtil.putUserGroup(name, idArray[i]);
 					}
 				}
 				else if (headerName.equalsIgnoreCase("roles")) {
-					if (_addedRoleMap.containsKey(name)) {
-						idArray[i] = _addedRoleMap.get(name);
+					if (_generatedDataUtil.containsRoleKey(name)) {
+						idArray[i] = _generatedDataUtil.getRole(name);
 					}
 					else {
 						Role newRole = _roleLocalService.addRole(
-							_defaultUserId, null, 0, name, null, null, 0, null,
-							null);
+							_generatedDataUtil.getDefaultUserId(), null, 0,
+							name, null, null, 0, null, null);
 
 						idArray[i] = newRole.getPrimaryKey();
 
-						_addedRoleMap.put(name, idArray[i]);
+						_generatedDataUtil.putRole(name, idArray[i]);
 					}
 				}
 			}
@@ -259,19 +217,19 @@ public class AcCsvDataGenerator {
 		return idArray;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(AcCsvDataGenerator.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AcCsvDataGenerator.class);
 
-	private volatile HashMap<String, Long> _addedOrganizationMap =
-		new HashMap<>();
-	private volatile HashMap<String, Long> _addedRoleMap = new HashMap<>();
-	private volatile HashMap<String, Long> _addedUserGroupMap = new HashMap<>();
-	private volatile HashMap<String, Long> _addedUserMap = new HashMap<>();
 	private long _companyId;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private long _defaultUserId;
+	@Reference
+	private CsvUser _csvUser;
+
+	@Reference
+	private GeneratedDataUtil _generatedDataUtil;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
@@ -281,12 +239,6 @@ public class AcCsvDataGenerator {
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
-
-	@Reference
-	private CsvUser _csvUser;
 
 	private String _verbose;
 

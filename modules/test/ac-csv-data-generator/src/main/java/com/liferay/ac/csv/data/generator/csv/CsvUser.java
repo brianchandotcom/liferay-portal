@@ -14,6 +14,7 @@
 
 package com.liferay.ac.csv.data.generator.csv;
 
+import com.liferay.ac.csv.data.generator.util.GeneratedDataUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -32,20 +33,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = CsvUser.class)
 public class CsvUser {
-	
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 
-		try {
-			_defaultUserId = _userLocalService.getDefaultUserId(_companyId);
-		}
-		catch (PortalException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public User addUser(CSVRecord csvRecord)
-		throws PortalException {
+	public User addUser(CSVRecord csvRecord) throws PortalException {
 		String emailAddress = csvRecord.get("emailAddress");
 		String password = csvRecord.get("password");
 		String screenName = csvRecord.get("screenName");
@@ -62,18 +51,19 @@ public class CsvUser {
 
 		int birthdayMonth =
 			GetterUtil.getInteger(csvRecord.get("birthdayMonth")) -
-			javaMonthOffset;
+				javaMonthOffset;
 
 		int birthdayDay = GetterUtil.getInteger(csvRecord.get("birthdayDay"));
 
 		int birthdayYear = GetterUtil.getInteger(csvRecord.get("birthdayYear"));
 
 		return _userLocalService.addUser(
-			_defaultUserId, _companyId, false, password, password, false,
+			_generatedDataUtil.getDefaultUserId(),
+			_generatedDataUtil.getCompanyId(), false, password, password, false,
 			screenName, emailAddress, 0, StringPool.BLANK,
 			LocaleUtil.getDefault(), firstName, middleName, lastName, 0, 0,
-			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			_groupIds, _organizationIds, _roleIds, _userGroupIds, false,
+			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, _groupIds,
+			_organizationIds, _roleIds, _userGroupIds, false,
 			new ServiceContext());
 	}
 
@@ -89,8 +79,9 @@ public class CsvUser {
 		_userGroupIds = userGroupIds;
 	}
 
-	private long _companyId;
-	private long _defaultUserId;
+	@Reference
+	private GeneratedDataUtil _generatedDataUtil;
+
 	private long[] _groupIds;
 	private long[] _organizationIds;
 	private long[] _roleIds;

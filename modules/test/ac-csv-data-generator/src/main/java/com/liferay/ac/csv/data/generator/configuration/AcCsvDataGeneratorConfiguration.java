@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.csv.user.generator.configuration.AcCsvDataGeneratorConfiguration"
+	id = "com.liferay.ac.csv.data.generator.configuration.AcCsvDataGeneratorConfiguration"
 )
 public interface AcCsvDataGeneratorConfiguration {
 

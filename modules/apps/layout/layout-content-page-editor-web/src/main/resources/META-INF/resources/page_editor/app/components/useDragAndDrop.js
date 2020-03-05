@@ -12,8 +12,8 @@
  * details.
  */
 
-import {cancelDebounce, debounce} from 'frontend-js-web';
-import React, {useContext, useEffect, useState} from 'react';
+import {throttle} from 'frontend-js-web';
+import React, {useContext, useEffect, useMemo, useReducer} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
@@ -61,8 +61,11 @@ const RULES = {
 };
 
 const initialDragDrop = {
-	dropTargetItemId: null,
-	targetPosition: null,
+	dispatch: null,
+	store: {
+		dropTargetItemId: null,
+		targetPosition: null,
+	},
 };
 
 const isAncestor = (item, layoutData, childId) => {
@@ -80,23 +83,20 @@ const isAncestor = (item, layoutData, childId) => {
 export const DragDropManagerImpl = React.createContext(initialDragDrop);
 
 export const DragDropManager = ({children}) => {
-	const [store, setStore] = useState(initialDragDrop);
-
-	const dispatch = debounce(newStore => {
+	const [store, reducerDispatch] = useReducer((oldStore, newStore) => {
 		if (
-			store.dropTargetItemId !== newStore.dropTargetItemId ||
-			store.targetPosition !== newStore.targetPosition
+			oldStore.dropTargetItemId !== newStore.dropTargetItemId ||
+			oldStore.targetPosition !== newStore.targetPosition
 		) {
-			setStore(newStore);
+			return newStore;
 		}
-	});
 
-	useEffect(() => {
-		return () => {
-			cancelDebounce(dispatch);
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		return oldStore;
+	}, initialDragDrop.store);
+
+	const dispatch = useMemo(() => throttle(reducerDispatch, 100), [
+		reducerDispatch,
+	]);
 
 	return (
 		<DragDropManagerImpl.Provider value={{dispatch, store}}>
@@ -165,7 +165,7 @@ export default function useDragAndDrop({
 		},
 		hover(_item, _monitor) {
 			if (_item.itemId === item.itemId) {
-				dispatch(initialDragDrop);
+				dispatch(initialDragDrop.store);
 
 				return;
 			}
@@ -239,21 +239,19 @@ export default function useDragAndDrop({
 					});
 					break;
 				default:
-					dispatch(initialDragDrop);
 					break;
 			}
 		},
 	});
 
 	useEffect(() => {
-		if (!dropOptions.isOver || !dragOptions.isDragging) {
+		if (!dropOptions.isOver) {
 			dispatch({
 				dropTargetItemId: null,
 				targetPosition: null,
 			});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dropOptions.isOver, dragOptions.isDragging]);
+	}, [dispatch, dropOptions.isOver]);
 
 	useEffect(() => {
 		preview(getEmptyImage(), {captureDraggingState: true});

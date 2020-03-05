@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(liferayPortletRequest, liferayPortletResponse);
+RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <clay:management-toolbar
@@ -46,6 +46,12 @@ RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(lifer
 				name="destination-url"
 			>
 				<%= HtmlUtil.escape(redirectEntry.getDestinationURL()) %>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text>
+				<clay:dropdown-actions
+					dropdownItems="<%= redirectDisplayContext.getActionDropdownItems(redirectEntry) %>"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

@@ -47,15 +47,25 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		String destinationURL = ParamUtil.getString(
+			actionRequest, "destinationURL");
+		long redirectEntryId = ParamUtil.getLong(
+			actionRequest, "redirectEntryId");
+		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
 
-		_redirectEntryLocalService.addRedirectEntry(
-			themeDisplay.getScopeGroupId(),
-			ParamUtil.getString(actionRequest, "destinationURL"),
-			ParamUtil.getString(actionRequest, "sourceURL"),
-			ServiceContextFactory.getInstance(
-				RedirectEntry.class.getName(), actionRequest));
+		if (redirectEntryId == 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_redirectEntryLocalService.addRedirectEntry(
+				themeDisplay.getScopeGroupId(), destinationURL, sourceURL,
+				ServiceContextFactory.getInstance(
+					RedirectEntry.class.getName(), actionRequest));
+		}
+		else {
+			_redirectEntryLocalService.updateRedirectEntry(
+				redirectEntryId, destinationURL, sourceURL);
+		}
 	}
 
 	@Reference

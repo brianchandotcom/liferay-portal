@@ -15,6 +15,8 @@
 package com.liferay.redirect.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
@@ -39,6 +41,11 @@ public class EditRedirectEntryMVCRenderCommand implements MVCRenderCommand {
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		renderRequest.setAttribute(
+			RedirectEntry.class.getName(),
+			_redirectEntryLocalService.fetchRedirectEntry(
+				ParamUtil.getLong(renderRequest, "redirectEntryId")));
 
 		return "/edit_redirect_entry.jsp";
 	}

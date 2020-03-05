@@ -116,6 +116,12 @@ public class CustomFilterDisplayBuilder {
 		return this;
 	}
 
+	public CustomFilterDisplayBuilder renderNothing(boolean renderNothing) {
+		_renderNothing = renderNothing;
+
+		return this;
+	}
+
 	public CustomFilterDisplayBuilder themeDisplay(ThemeDisplay themeDisplay) {
 		_themeDisplay = themeDisplay;
 
@@ -175,7 +181,7 @@ public class CustomFilterDisplayBuilder {
 	}
 
 	protected boolean isRenderNothing() {
-		if (_disabled) {
+		if (_disabled || _renderNothing) {
 			return true;
 		}
 
@@ -191,6 +197,7 @@ public class CustomFilterDisplayBuilder {
 	private String _parameterName;
 	private Optional<String> _parameterValueOptional = Optional.empty();
 	private Optional<String> _queryNameOptional = Optional.empty();
+	private boolean _renderNothing;
 	private ThemeDisplay _themeDisplay;
 
 }

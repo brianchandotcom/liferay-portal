@@ -91,6 +91,12 @@ public class SortDisplayBuilder {
 		return this;
 	}
 
+	public SortDisplayBuilder renderNothing(boolean renderNothing) {
+		_renderNothing = renderNothing;
+
+		return this;
+	}
+
 	protected SortTermDisplayContext buildTermDisplayContext(
 		String label, String field) {
 
@@ -156,12 +162,17 @@ public class SortDisplayBuilder {
 			return true;
 		}
 
+		if (_renderNothing) {
+			return true;
+		}
+
 		return false;
 	}
 
 	private final Language _language;
 	private String _parameterName;
 	private final Portal _portal;
+	private boolean _renderNothing;
 	private final RenderRequest _renderRequest;
 	private List<String> _selectedFields = Collections.emptyList();
 	private final SortPortletInstanceConfiguration

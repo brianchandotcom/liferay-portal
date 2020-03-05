@@ -91,6 +91,13 @@ public class SuggestionsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, suggestionsPortletDisplayContext);
 
+		if (!suggestionsPortletDisplayContext.hasSpellCheckSuggestion() &&
+			!suggestionsPortletDisplayContext.hasRelatedQueriesSuggestions()) {
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+		}
+
 		super.render(renderRequest, renderResponse);
 	}
 

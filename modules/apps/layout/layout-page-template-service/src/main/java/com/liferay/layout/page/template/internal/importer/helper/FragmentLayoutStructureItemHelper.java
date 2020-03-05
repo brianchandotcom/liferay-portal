@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -162,7 +163,7 @@ public class FragmentLayoutStructureItemHelper
 				freeMarkerFragmentEntryProcessorJSONObject);
 		}
 
-		JSONObject jsonObject = JSONUtil.merge(
+		JSONObject jsonObject = _deepMerge(
 			defaultEditableValuesJSONObject,
 			fragmentEntryProcessorValuesJSONObject);
 
@@ -251,6 +252,48 @@ public class FragmentLayoutStructureItemHelper
 		}
 
 		return localizationJSONObject;
+	}
+
+	private JSONObject _deepMerge(
+			JSONObject jsonObject1, JSONObject jsonObject2)
+		throws JSONException {
+
+		if (jsonObject1 == null) {
+			return JSONFactoryUtil.createJSONObject(jsonObject2.toString());
+		}
+
+		if (jsonObject2 == null) {
+			return JSONFactoryUtil.createJSONObject(jsonObject1.toString());
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			jsonObject1.toString());
+
+		Iterator<String> iterator = jsonObject2.keys();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			if (!jsonObject.has(key)) {
+				jsonObject.put(key, jsonObject2.get(key));
+			}
+			else {
+				Object value1 = jsonObject1.get(key);
+				Object value2 = jsonObject2.get(key);
+
+				if ((value1 instanceof JSONObject) &&
+					(value2 instanceof JSONObject)) {
+
+					_deepMerge(
+						(JSONObject)value1, jsonObject2.getJSONObject(key));
+				}
+				else {
+					jsonObject.put(key, value2);
+				}
+			}
+		}
+
+		return jsonObject;
 	}
 
 	private FragmentEntry _getFragmentEntry(

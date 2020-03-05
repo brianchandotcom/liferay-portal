@@ -43,6 +43,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderURL;
 
@@ -87,6 +89,23 @@ public class RedirectDisplayContext {
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "edit"));
+			}
+		).add(
+			dropdownItem -> {
+				ActionURL deleteRedirectEntryURL =
+					_liferayPortletResponse.createActionURL();
+
+				deleteRedirectEntryURL.setParameter(
+					ActionRequest.ACTION_NAME, "/redirect_entry/delete");
+
+				deleteRedirectEntryURL.setParameter(
+					"redirectEntryId",
+					String.valueOf(redirectEntry.getRedirectEntryId()));
+
+				dropdownItem.setHref(deleteRedirectEntryURL);
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
 			}
 		).build();
 	}

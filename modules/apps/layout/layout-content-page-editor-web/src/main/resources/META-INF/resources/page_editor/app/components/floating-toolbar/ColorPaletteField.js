@@ -25,6 +25,7 @@ export const ColorPaletteField = ({field, onValueSelect, value}) => (
 			label={field.label}
 			onColorSelect={(color, event) => {
 				onValueSelect(field.name, {
+					color,
 					cssClass: color,
 					rgbValue: getComputedStyle(event.target).backgroundColor,
 				});
@@ -38,6 +39,7 @@ ColorPaletteField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onValueSelect: PropTypes.func.isRequired,
 	value: PropTypes.shape({
+		color: PropTypes.string,
 		cssClass: PropTypes.string,
 		rgbValue: PropTypes.string,
 	}),

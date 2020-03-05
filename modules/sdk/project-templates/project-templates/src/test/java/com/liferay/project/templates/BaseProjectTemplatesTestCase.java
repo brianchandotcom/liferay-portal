@@ -481,22 +481,12 @@ public interface BaseProjectTemplatesTestCase {
 		}
 
 		if (!liferayVersionSet) {
-			completeArgs.add("-DliferayVersion=7.2");
-			liferayVersion = "7.2";
+			completeArgs.add("-DliferayVersion=7.3.0");
+			liferayVersion = "7.3.0";
 		}
 
 		if (!projectTypeSet) {
 			completeArgs.add("-DprojectType=standalone");
-		}
-
-		if (template.startsWith("npm-") && !liferayVersion.startsWith("7.0") &&
-			!liferayVersion.startsWith("7.1")) {
-
-			executeMaven(
-				destinationDir, true, mavenExecutor,
-				completeArgs.toArray(new String[0]));
-
-			return destinationDir;
 		}
 
 		executeMaven(

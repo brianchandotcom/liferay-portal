@@ -104,8 +104,8 @@ public class SearchQuery<T extends SpiraArtifact> {
 
 	}
 
-	protected static void cacheSearchQuery(SearchQuery searchQuery) {
-		List<SearchQuery> cachedSearchQueries = _searchQueriesMap.get(
+	protected static void cacheSearchQuery(SearchQuery<?> searchQuery) {
+		List<SearchQuery<?>> cachedSearchQueries = _searchQueriesMap.get(
 			searchQuery._spiraArtifactClass);
 
 		if (cachedSearchQueries == null) {
@@ -118,11 +118,10 @@ public class SearchQuery<T extends SpiraArtifact> {
 		cachedSearchQueries.add(searchQuery);
 	}
 
-	protected static <T extends SpiraArtifact> SearchQuery<T>
-		getCachedSearchQuery(
-			Class<T> spiraArtifactClass, SearchParameter... searchParameters) {
+	protected static SearchQuery<?> getCachedSearchQuery(
+		Class<?> spiraArtifactClass, SearchParameter... searchParameters) {
 
-		List<SearchQuery> cachedSearchQueries = _searchQueriesMap.get(
+		List<SearchQuery<?>> cachedSearchQueries = _searchQueriesMap.get(
 			spiraArtifactClass);
 
 		if (cachedSearchQueries == null) {
@@ -131,7 +130,7 @@ public class SearchQuery<T extends SpiraArtifact> {
 			_searchQueriesMap.put(spiraArtifactClass, cachedSearchQueries);
 		}
 
-		for (SearchQuery cachedSearchQuery : cachedSearchQueries) {
+		for (SearchQuery<?> cachedSearchQuery : cachedSearchQueries) {
 			JSONArray filterJSONArray = new JSONArray();
 
 			for (SearchParameter searchParameter : searchParameters) {
@@ -212,7 +211,7 @@ public class SearchQuery<T extends SpiraArtifact> {
 		return filterJSONArray;
 	}
 
-	private static final Map<Class, List<SearchQuery>> _searchQueriesMap =
+	private static final Map<Class<?>, List<SearchQuery<?>>> _searchQueriesMap =
 		new HashMap<>();
 
 	private final SearchParameter[] _searchParameters;

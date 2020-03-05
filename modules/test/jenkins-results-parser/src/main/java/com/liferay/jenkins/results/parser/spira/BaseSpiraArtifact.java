@@ -117,8 +117,9 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		Function<JSONObject, S> spiraArtifactCreator,
 		SearchQuery.SearchParameter... searchParameters) {
 
-		SearchQuery<S> searchQuery = SearchQuery.getCachedSearchQuery(
-			spiraArtifactClass, searchParameters);
+		SearchQuery<S> searchQuery =
+			(SearchQuery<S>)SearchQuery.getCachedSearchQuery(
+				spiraArtifactClass, searchParameters);
 
 		if (searchQuery != null) {
 			return searchQuery.getSpiraArtifacts();
@@ -272,20 +273,10 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			_spiraArtifactMap.put(spiraArtifactClass, spiraArtifacts);
 		}
 
-		List<S> cachedSpiraArtifacts = new ArrayList<>();
-
-		for (SpiraArtifact spiraArtifact : spiraArtifacts) {
-			if (!(spiraArtifact.getClass() == spiraArtifactClass)) {
-				continue;
-			}
-
-			cachedSpiraArtifacts.add((S)spiraArtifact);
-		}
-
-		return cachedSpiraArtifacts;
+		return (List<S>)spiraArtifacts;
 	}
 
-	private static final Map<Class, List<SpiraArtifact>> _spiraArtifactMap =
+	private static final Map<Class<?>, List<SpiraArtifact>> _spiraArtifactMap =
 		new HashMap<>();
 
 }

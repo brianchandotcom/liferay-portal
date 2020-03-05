@@ -2063,6 +2063,8 @@ com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000</echo>
 											</or>
 										</not>
 										<then>
+											<echo> Building non-core app: ${app.name} </echo>
+
 											<ant dir="modules" inheritAll="false" target="build-app-lpkg">
 												<property name="hot.deploy.test" value="true" />
 												<property name="lpkg.container" value="true" />

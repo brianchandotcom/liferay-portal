@@ -963,6 +963,18 @@ components:
             required:
                 - name
             type: object
+        DropZoneDefinition:
+            properties:
+                allowNewFragments:
+                    type: boolean
+                fragments:
+                    items:
+                        properties:
+                            fragmentKey:
+                                type: string
+                        type: object
+                    type: array
+            type: object
         FragmentField:
             properties:
                 id:
@@ -1795,6 +1807,7 @@ components:
                 definition:
                     oneOf:
                         - $ref: "#/components/schemas/ColumnDefinition"
+                        - $ref: "#/components/schemas/DropZoneDefinition"
                         - $ref: "#/components/schemas/FragmentInstanceDefinition"
                         - $ref: "#/components/schemas/RootDefinition"
                         - $ref: "#/components/schemas/RowDefinition"

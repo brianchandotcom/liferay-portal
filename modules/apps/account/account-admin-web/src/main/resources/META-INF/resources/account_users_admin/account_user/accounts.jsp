@@ -78,6 +78,8 @@ portletDisplay.setURLBack(backURL);
 
 		<div class="sheet-section">
 			<liferay-ui:search-container
+				compactEmptyResultsMessage="<%= true %>"
+				emptyResultsMessage="this-user-does-not-belong-to-any-accounts"
 				headerNames="name,roles,null"
 				searchContainer="<%= accountEntryDisplaySearchContainer %>"
 			>

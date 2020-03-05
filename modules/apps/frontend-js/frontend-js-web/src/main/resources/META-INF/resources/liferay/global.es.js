@@ -92,10 +92,9 @@ Liferay.Portal = {
 	},
 };
 
-Liferay.Portlet = {
-	...Liferay.Portlet,
-	minimize: minimizePortlet,
-};
+Liferay.Portlet = Liferay.Portlet || {};
+
+Liferay.Portlet.minimize = minimizePortlet;
 
 Liferay.SideNavigation = SideNavigation;
 

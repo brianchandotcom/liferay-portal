@@ -22,6 +22,8 @@
 	var TPL_NOT_AJAXABLE = '<div class="alert alert-info">{0}</div>';
 
 	var Portlet = {
+		...Liferay.Portlet,
+
 		_defCloseFn(event) {
 			event.portlet.remove(true);
 
@@ -743,8 +745,5 @@
 		});
 	};
 
-	Liferay.Portlet = {
-		...Liferay.Portlet,
-		...Portlet,
-	};
+	Liferay.Portlet = Portlet;
 })(AUI(), Liferay);

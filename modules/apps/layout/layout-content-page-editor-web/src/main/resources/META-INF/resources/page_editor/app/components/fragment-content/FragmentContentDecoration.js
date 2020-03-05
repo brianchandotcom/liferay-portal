@@ -21,7 +21,12 @@ import {config} from '../../config/index';
 import createSelectEditableValue from '../../selectors/selectEditableValue';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useSelector} from '../../store/index';
-import {useHoveredItemId, useHoveredItemType, useIsActive} from '../Controls';
+import {
+	useHoveredItemId,
+	useHoveredItemType,
+	useIsActive,
+	useIsHovered,
+} from '../Controls';
 import {useEditableDecoration} from './EditableDecorationContext';
 import {EDITABLE_DECORATION_CLASS_NAMES} from './EditableDecorationMask';
 import getAllEditables from './getAllEditables';
@@ -35,6 +40,7 @@ export default function FragmentContentDecoration({
 	itemId,
 }) {
 	const hoveredItemId = useHoveredItemId();
+	const isHovered = useIsHovered();
 	const hoveredItemType = useHoveredItemType();
 	const isActive = useIsActive();
 	const languageId = useSelector(state => state.languageId);
@@ -66,7 +72,7 @@ export default function FragmentContentDecoration({
 
 		[EDITABLE_DECORATION_CLASS_NAMES.hovered]: useMemo(() => {
 			if (hoveredItemType === ITEM_TYPES.editable) {
-				return editableUniqueId === hoveredItemId;
+				return isHovered(editableUniqueId);
 			}
 			else if (hoveredItemType === ITEM_TYPES.mappedContent) {
 				return (
@@ -76,7 +82,14 @@ export default function FragmentContentDecoration({
 			}
 
 			return false;
-		}, [editableUniqueId, editableValue, hoveredItemId, hoveredItemType]),
+		}, [
+			editableUniqueId,
+			editableValue.classNameId,
+			editableValue.classPK,
+			hoveredItemId,
+			hoveredItemType,
+			isHovered,
+		]),
 
 		[EDITABLE_DECORATION_CLASS_NAMES.mapped]: useMemo(
 			() =>

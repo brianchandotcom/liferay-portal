@@ -105,9 +105,15 @@ public class SearchQuery<T extends SpiraArtifact> {
 	}
 
 	protected static void cachedSearchQuery(SearchQuery searchQuery) {
-		List<SearchQuery> cachedSearchQueries =
-			_searchQueriesMap.computeIfAbsent(
-				searchQuery._spiraArtifactClass, T -> new ArrayList<>());
+		List<SearchQuery> cachedSearchQueries = _searchQueriesMap.get(
+			searchQuery._spiraArtifactClass);
+
+		if (cachedSearchQueries == null) {
+			cachedSearchQueries = new ArrayList<>();
+
+			_searchQueriesMap.put(
+				searchQuery._spiraArtifactClass, cachedSearchQueries);
+		}
 
 		cachedSearchQueries.add(searchQuery);
 	}
@@ -116,9 +122,14 @@ public class SearchQuery<T extends SpiraArtifact> {
 		getCachedSearchQuery(
 			Class<T> spiraArtifactClass, SearchParameter... searchParameters) {
 
-		List<SearchQuery> cachedSearchQueries =
-			_searchQueriesMap.computeIfAbsent(
-				spiraArtifactClass, T -> new ArrayList<>());
+		List<SearchQuery> cachedSearchQueries = _searchQueriesMap.get(
+			spiraArtifactClass);
+
+		if (cachedSearchQueries == null) {
+			cachedSearchQueries = new ArrayList<>();
+
+			_searchQueriesMap.put(spiraArtifactClass, cachedSearchQueries);
+		}
 
 		for (SearchQuery cachedSearchQuery : cachedSearchQueries) {
 			JSONArray filterJSONArray = new JSONArray();

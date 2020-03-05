@@ -23,6 +23,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -189,13 +191,27 @@ public class SpiraRelease extends PathSpiraArtifact {
 	}
 
 	protected static List<SpiraRelease> getSpiraReleases(
-		SpiraProject spiraProject,
-		SearchQuery.SearchParameter... searchParameters) {
+		final SpiraProject spiraProject,
+		final SearchQuery.SearchParameter... searchParameters) {
 
 		return getSpiraArtifacts(
 			SpiraRelease.class,
-			() -> _requestSpiraReleases(spiraProject.getID(), searchParameters),
-			T -> new SpiraRelease(T), searchParameters);
+			new Supplier<List<JSONObject>>() {
+
+				public List<JSONObject> get() {
+					return _requestSpiraReleases(
+						spiraProject.getID(), searchParameters);
+				}
+
+			},
+			new Function<JSONObject, SpiraRelease>() {
+
+				public SpiraRelease apply(JSONObject jsonObject) {
+					return new SpiraRelease(jsonObject);
+				}
+
+			},
+			searchParameters);
 	}
 
 	@Override

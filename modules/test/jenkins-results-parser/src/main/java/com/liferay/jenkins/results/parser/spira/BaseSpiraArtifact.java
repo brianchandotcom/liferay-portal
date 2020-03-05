@@ -196,9 +196,15 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		List<? extends SpiraArtifact> spiraArtifacts) {
 
 		for (SpiraArtifact spiraArtifact : spiraArtifacts) {
-			List<SpiraArtifact> cachedSpiraArtifacts =
-				_spiraArtifactMap.computeIfAbsent(
-					spiraArtifact.getClass(), T -> new ArrayList<>());
+			List<SpiraArtifact> cachedSpiraArtifacts = _spiraArtifactMap.get(
+				spiraArtifact.getClass());
+
+			if (cachedSpiraArtifacts == null) {
+				cachedSpiraArtifacts = new ArrayList<>();
+
+				_spiraArtifactMap.put(
+					spiraArtifact.getClass(), cachedSpiraArtifacts);
+			}
 
 			List<SpiraArtifact> foundSpiraArtifacts = new ArrayList<>();
 
@@ -257,8 +263,14 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	private static <S extends SpiraArtifact> List<S> _getCachedSpiraArtifacts(
 		Class<S> spiraArtifactClass) {
 
-		List<SpiraArtifact> spiraArtifacts = _spiraArtifactMap.computeIfAbsent(
-			spiraArtifactClass, T -> new ArrayList<>());
+		List<SpiraArtifact> spiraArtifacts = _spiraArtifactMap.get(
+			spiraArtifactClass);
+
+		if (spiraArtifacts == null) {
+			spiraArtifacts = new ArrayList<>();
+
+			_spiraArtifactMap.put(spiraArtifactClass, spiraArtifacts);
+		}
 
 		List<S> cachedSpiraArtifacts = new ArrayList<>();
 

@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -183,13 +185,26 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 	}
 
 	protected static List<SpiraTestCaseFolder> getSpiraTestCaseFolders(
-		SpiraProject spiraProject,
+		final SpiraProject spiraProject,
 		SearchQuery.SearchParameter... searchParameters) {
 
 		return getSpiraArtifacts(
 			SpiraTestCaseFolder.class,
-			() -> _requestSpiraTestCaseFolders(spiraProject),
-			T -> new SpiraTestCaseFolder(T), searchParameters);
+			new Supplier<List<JSONObject>>() {
+
+				public List<JSONObject> get() {
+					return _requestSpiraTestCaseFolders(spiraProject);
+				}
+
+			},
+			new Function<JSONObject, SpiraTestCaseFolder>() {
+
+				public SpiraTestCaseFolder apply(JSONObject jsonObject) {
+					return new SpiraTestCaseFolder(jsonObject);
+				}
+
+			},
+			searchParameters);
 	}
 
 	@Override

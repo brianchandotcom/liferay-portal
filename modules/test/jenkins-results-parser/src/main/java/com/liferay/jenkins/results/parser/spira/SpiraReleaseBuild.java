@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -64,14 +66,27 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 	}
 
 	protected static List<SpiraReleaseBuild> getSpiraReleaseBuilds(
-		SpiraProject spiraProject, SpiraRelease spiraRelease,
-		SearchQuery.SearchParameter... searchParameters) {
+		final SpiraProject spiraProject, final SpiraRelease spiraRelease,
+		final SearchQuery.SearchParameter... searchParameters) {
 
 		return getSpiraArtifacts(
 			SpiraReleaseBuild.class,
-			() -> _requestSpiraReleaseBuilds(
-				spiraProject, spiraRelease, searchParameters),
-			T -> new SpiraReleaseBuild(T), searchParameters);
+			new Supplier<List<JSONObject>>() {
+
+				public List<JSONObject> get() {
+					return _requestSpiraReleaseBuilds(
+						spiraProject, spiraRelease, searchParameters);
+				}
+
+			},
+			new Function<JSONObject, SpiraReleaseBuild>() {
+
+				public SpiraReleaseBuild apply(JSONObject jsonObject) {
+					return new SpiraReleaseBuild(jsonObject);
+				}
+
+			},
+			searchParameters);
 	}
 
 	protected static final String ID_KEY = "BuildId";

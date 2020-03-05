@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.json.JSONObject;
 
@@ -30,10 +32,23 @@ import org.json.JSONObject;
  */
 public class SpiraProject extends BaseSpiraArtifact {
 
-	public static SpiraProject getSpiraProjectByID(int projectID) {
+	public static SpiraProject getSpiraProjectByID(final int projectID) {
 		List<SpiraProject> spiraProjects = getSpiraArtifacts(
-			SpiraProject.class, () -> _requestSpiraProjectByID(projectID),
-			T -> new SpiraProject(T),
+			SpiraProject.class,
+			new Supplier<List<JSONObject>>() {
+
+				public List<JSONObject> get() {
+					return _requestSpiraProjectByID(projectID);
+				}
+
+			},
+			new Function<JSONObject, SpiraProject>() {
+
+				public SpiraProject apply(JSONObject jsonObject) {
+					return new SpiraProject(jsonObject);
+				}
+
+			},
 			new SearchQuery.SearchParameter(ID_KEY, projectID));
 
 		return spiraProjects.get(0);

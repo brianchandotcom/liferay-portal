@@ -23,6 +23,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -80,14 +82,28 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 	}
 
 	protected static List<SpiraTestCaseRun> getSpiraTestCaseRuns(
-		SpiraProject spiraProject, SpiraTestCaseObject spiraTestCase,
-		SearchQuery.SearchParameter... searchParameters) {
+		final SpiraProject spiraProject,
+		final SpiraTestCaseObject spiraTestCase,
+		final SearchQuery.SearchParameter... searchParameters) {
 
 		return getSpiraArtifacts(
 			SpiraTestCaseRun.class,
-			() -> _requestSpiraTestCaseRuns(
-				spiraProject, spiraTestCase, searchParameters),
-			T -> new SpiraTestCaseRun(T), searchParameters);
+			new Supplier<List<JSONObject>>() {
+
+				public List<JSONObject> get() {
+					return _requestSpiraTestCaseRuns(
+						spiraProject, spiraTestCase, searchParameters);
+				}
+
+			},
+			new Function<JSONObject, SpiraTestCaseRun>() {
+
+				public SpiraTestCaseRun apply(JSONObject jsonObject) {
+					return new SpiraTestCaseRun(jsonObject);
+				}
+
+			},
+			searchParameters);
 	}
 
 	protected static List<SpiraTestCaseRun> recordSpiraTestCaseRuns(

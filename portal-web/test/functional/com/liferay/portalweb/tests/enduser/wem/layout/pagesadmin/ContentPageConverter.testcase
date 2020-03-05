@@ -46,6 +46,10 @@ definition {
 			menuItem = "Convert to content page...",
 			pageName = "Test Page Name");
 
+		WaitForElementNotPresent(
+			key_text = "Publish",
+			locator1 = "Button#ANY_DISABLED");
+
 		Button.clickPublish();
 
 		AssertElementPresent(

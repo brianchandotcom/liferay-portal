@@ -797,7 +797,8 @@ public class SourceFormatter {
 			_sourceFormatterExcludes);
 
 		_sourceFormatterSuppressions = SuppressionsLoader.loadSuppressions(
-			_sourceFormatterArgs.getBaseDirName(), suppressionsFiles);
+			_sourceFormatterArgs.getBaseDirName(), suppressionsFiles,
+			_propertiesMap);
 
 		_sourceFormatterConfiguration = ConfigurationLoader.loadConfiguration(
 			"sourcechecks.xml");

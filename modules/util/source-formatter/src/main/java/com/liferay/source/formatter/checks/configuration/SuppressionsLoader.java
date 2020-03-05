@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks.configuration;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
@@ -23,6 +24,8 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -34,7 +37,8 @@ import org.dom4j.Element;
 public class SuppressionsLoader {
 
 	public static SourceFormatterSuppressions loadSuppressions(
-			String baseDirName, List<File> files)
+			String baseDirName, List<File> files,
+			Map<String, Properties> propertiesMap)
 		throws DocumentException, IOException {
 
 		SourceFormatterSuppressions sourceFormatterSuppressions =
@@ -56,6 +60,26 @@ public class SuppressionsLoader {
 				sourceFormatterSuppressions,
 				rootElement.element(_SOURCE_CHECK_ATTRIBUTE_NAME),
 				absolutePath);
+		}
+
+		for (Map.Entry<String, Properties> mapEntry :
+				propertiesMap.entrySet()) {
+
+			Properties properties = mapEntry.getValue();
+
+			for (Map.Entry<Object, Object> propertiesEntry :
+					properties.entrySet()) {
+
+				String key = (String)propertiesEntry.getKey();
+
+				if (key.startsWith("checkstyle.") && key.endsWith(".enabled") &&
+					!GetterUtil.getBoolean(propertiesEntry.getValue())) {
+
+					sourceFormatterSuppressions.addSuppression(
+						CheckType.CHECKSTYLE, mapEntry.getKey() + "/",
+						key.substring(11, key.length() - 8), null);
+				}
+			}
 		}
 
 		return sourceFormatterSuppressions;

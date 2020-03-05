@@ -88,8 +88,18 @@
 		position: relative;
 
 		&.line-chart-wrapper--loading {
-			opacity: 0.8;
-			pointer-events: none;
+			.line-chart {
+				opacity: 0.6;
+				pointer-events: none;
+				.recharts-cartesian-axis .recharts-cartesian-axis-ticks {
+					opacity: 0;
+				}
+			}
+		}
+		.recharts-cartesian-axis .recharts-cartesian-axis-ticks {
+			opacity: 1;
+			transition: opacity 0.15s ease-in-out;
+			will-change: opacity;
 		}
 	}
 
@@ -97,7 +107,7 @@
 		left: 0;
 		position: absolute;
 		right: 0;
-		top: calc(50% - 1rem);
+		top: 50%;
 	}
 
 	.interval-selector-wrapper {

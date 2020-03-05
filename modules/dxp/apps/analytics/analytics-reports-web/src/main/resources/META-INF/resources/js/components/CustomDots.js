@@ -23,7 +23,10 @@ export default function CustomDot(props) {
 export function ActiveDot(props) {
 	const {cx, cy, fill, r, shape, strokeWidth = 0} = props;
 
-	if (shape === 'square') {
+	if (cy === null) {
+		return null;
+	}
+	else if (shape === 'square') {
 		const squareSize = r * 2;
 
 		return (
@@ -65,8 +68,10 @@ ActiveDot.proptypes = {
  */
 export function Dot(props) {
 	const {cx, cy, fill, r, shape} = props;
-
-	if (shape === 'square') {
+	if (cy === null) {
+		return null;
+	}
+	else if (shape === 'square') {
 		const squareSize = r * 2;
 
 		return (

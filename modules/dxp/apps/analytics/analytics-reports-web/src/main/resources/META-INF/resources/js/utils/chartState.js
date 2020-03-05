@@ -89,15 +89,65 @@ function reducer(state, action) {
 			};
 			break;
 		case SET_LOADING:
-			nextState = {
-				...state,
-				loading: true,
-			};
+			nextState = setLoadingState(state);
 			break;
 		default:
 			state = nextState;
 			break;
 	}
+
+	return nextState;
+}
+
+/**
+ * Declares the state as loading and resets the dataSet histogram values
+ */
+function setLoadingState(state) {
+	/**
+	 * The dataSet does not need to be reset
+	 */
+	if (!state.dataSet) {
+		return {...state, loading: true};
+	}
+
+	const histogram = state.dataSet.histogram.map(set => {
+		const newSet = {};
+
+		const setArray = Object.entries(set);
+
+		for (const index in setArray) {
+			const [key, value] = setArray[index];
+
+			if (key === 'label') {
+				newSet[key] = value;
+			}
+			else {
+				newSet[key] = null;
+			}
+		}
+
+		return newSet;
+	});
+
+	const arrayTotals = Object.entries(state.dataSet.totals);
+
+	const totals = {};
+
+	for (const index in arrayTotals) {
+		const [key] = arrayTotals[index];
+
+		totals[key] = null;
+	}
+
+	const nextState = {
+		...state,
+		dataSet: {
+			...state.dataSet,
+			histogram,
+			totals,
+		},
+		loading: true,
+	};
 
 	return nextState;
 }
@@ -162,7 +212,7 @@ function mergeDataSets(newData, previousDataSet, key) {
  * 		histogram: Array<{
  *			key: string, // '2020-01-24T00:00'
  *			value: number
- * 		}>,
+ * 		}>
  * 		values: number
  * 	},
  * 	key: string

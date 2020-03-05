@@ -175,20 +175,26 @@ const generateDateFormatters = key => {
 };
 
 function legendFormatterGenerator(totals, languageTag) {
-	return value => (
-		<span>
-			<span
-				className={`custom-${keyToIconType(value)} mr-1`}
-				style={{
-					backgroundColor: keyToHexColor(value),
-				}}
-			></span>
-			<span className="mr-2 text-secondary">
-				{keyToTranslatedLabelValue(value)}
+	return value => {
+		const preformattedNumber = totals[value];
+
+		return (
+			<span>
+				<span
+					className={`custom-${keyToIconType(value)} mr-1`}
+					style={{
+						backgroundColor: keyToHexColor(value),
+					}}
+				></span>
+				<span className="mr-2 text-secondary">
+					{keyToTranslatedLabelValue(value)}
+				</span>
+				{preformattedNumber !== null && (
+					<b>{numberFormat(languageTag, preformattedNumber)}</b>
+				)}
 			</span>
-			<b>{numberFormat(languageTag, totals[value])}</b>
-		</span>
-	);
+		);
+	};
 }
 
 export default function Chart({
@@ -317,11 +323,17 @@ export default function Chart({
 
 			{dataSet ? (
 				<div className={lineChartWrapperClasses}>
-					{chartState.loading && <ClayLoadingIndicator small />}
+					{chartState.loading && (
+						<ClayLoadingIndicator
+							style={{
+								left: `${CHART_SIZES.yAxisWidth}px`,
+							}}
+						/>
+					)}
 
 					{title && <h5>{title}</h5>}
 
-					<div className="mt-3">
+					<div className="line-chart mt-3">
 						<LineChart
 							data={dataSet.histogram}
 							height={CHART_SIZES.height}

@@ -68,9 +68,7 @@ public class ContextNameConfigurationFieldOptionsProvider
 
 	private static final List<String> _defaultFields = ListUtil.fromArray(
 		Context.BROWSER, Context.DEVICE_BRAND, Context.DEVICE_MODEL,
-		Context.DEVICE_SCREEN_RESOLUTION_HEIGHT,
-		Context.DEVICE_SCREEN_RESOLUTION_WIDTH, Context.HOSTNAME,
-		Context.LANGUAGE_ID, Context.URL, Context.USER_AGENT);
+		Context.HOSTNAME, Context.LANGUAGE_ID, Context.URL, Context.USER_AGENT);
 
 	private class ContextOption implements Option {
 

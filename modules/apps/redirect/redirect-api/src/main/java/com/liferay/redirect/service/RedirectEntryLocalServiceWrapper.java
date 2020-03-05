@@ -372,6 +372,15 @@ public class RedirectEntryLocalServiceWrapper
 			uuid, groupId);
 	}
 
+	@Override
+	public com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
+			long redirectEntryId, String destinationURL, String sourceURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _redirectEntryLocalService.updateRedirectEntry(
+			redirectEntryId, destinationURL, sourceURL);
+	}
+
 	/**
 	 * Updates the redirect entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

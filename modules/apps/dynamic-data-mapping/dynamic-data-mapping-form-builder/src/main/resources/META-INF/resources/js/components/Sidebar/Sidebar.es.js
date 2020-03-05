@@ -81,7 +81,7 @@ class Sidebar extends Component {
 			}
 		}
 
-		dispatch('focusedFieldUpdated', {
+		dispatch('focusedFieldEvaluationEnded', {
 			...focusedField,
 			...newFieldType,
 			...getFieldProperties(
@@ -338,7 +338,7 @@ class Sidebar extends Component {
 			evaluableForm
 				.evaluate()
 				.then(pages => {
-					dispatch('focusedFieldUpdated', {
+					dispatch('focusedFieldEvaluationEnded', {
 						...focusedField,
 						settingsContext: {
 							...focusedField.settingsContext,
@@ -653,7 +653,7 @@ class Sidebar extends Component {
 		const {dispatch} = this.context;
 		const {focusedField} = this.props;
 
-		dispatch('focusedFieldUpdated', {
+		dispatch('focusedFieldEvaluationEnded', {
 			...focusedField,
 			settingsContext: {
 				...focusedField.settingsContext,

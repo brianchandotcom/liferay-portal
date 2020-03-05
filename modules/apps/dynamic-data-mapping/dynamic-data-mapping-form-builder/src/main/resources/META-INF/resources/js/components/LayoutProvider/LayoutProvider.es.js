@@ -16,7 +16,6 @@ import {
 	FormSupport,
 	PagesVisitor,
 	RulesVisitor,
-	normalizeFieldName,
 } from 'dynamic-data-mapping-form-renderer';
 import handlePaginationItemClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationItemClicked.es';
 import Component from 'metal-jsx';
@@ -34,8 +33,10 @@ import handleFieldDuplicated from './handlers/fieldDuplicatedHandler.es';
 import handleFieldEdited from './handlers/fieldEditedHandler.es';
 import handleFieldMoved from './handlers/fieldMovedHandler.es';
 import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
+import handleFocusedFieldEvaluationEnded from './handlers/focusedFieldEvaluationEndedHandler.es';
 import handleLanguageIdDeleted from './handlers/languageIdDeletedHandler.es';
 import handleSectionAdded from './handlers/sectionAddedHandler.es';
+import {shouldAutoGenerateName} from './util/defaults.es';
 import {generateFieldName} from './util/fields.es';
 
 /**
@@ -85,7 +86,9 @@ class LayoutProvider extends Component {
 			fieldEdited: this._handleFieldEdited.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
 			fieldSetAdded: this._handleFieldSetAdded.bind(this),
-			focusedFieldUpdated: this._handleFocusedFieldUpdated.bind(this),
+			focusedFieldEvaluationEnded: this._handleFocusedFieldEvaluationEnded.bind(
+				this
+			),
 			languageIdDeleted: this._handleLanguageIdDeleted.bind(this),
 			pageAdded: this._handlePageAdded.bind(this),
 			pageDeleted: this._handlePageDeleted.bind(this),
@@ -375,19 +378,14 @@ class LayoutProvider extends Component {
 		this.setState(handleFieldSetAdded(this.props, this.state, event));
 	}
 
-	_handleFocusedFieldUpdated(focusedField) {
-		const {settingsContext} = focusedField;
-		let {state} = this;
-		const visitor = new PagesVisitor(settingsContext.pages);
-
-		visitor.mapFields(({fieldName, value}) => {
-			state = handleFieldEdited(this.props, state, {
-				propertyName: fieldName,
-				propertyValue: value,
-			});
-		});
-
-		this.setState(state);
+	_handleFocusedFieldEvaluationEnded({settingsContext}) {
+		this.setState(
+			handleFocusedFieldEvaluationEnded(
+				this.props,
+				this.state,
+				settingsContext
+			)
+		);
 	}
 
 	_handleLanguageIdDeleted({locale}) {
@@ -590,14 +588,7 @@ class LayoutProvider extends Component {
 	}
 
 	_shouldAutoGenerateNameValueFn() {
-		return (defaultLanguageId, editingLanguageId, focusedField) => {
-			const {fieldName, label} = focusedField;
-
-			return (
-				defaultLanguageId === editingLanguageId &&
-				fieldName.indexOf(normalizeFieldName(label)) === 0
-			);
-		};
+		return shouldAutoGenerateName;
 	}
 
 	_successPageSettingsValueFn() {

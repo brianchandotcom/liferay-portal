@@ -128,30 +128,43 @@ public class FragmentLayoutStructureItemHelper
 			configuration = fragmentEntry.getConfiguration();
 		}
 
-		JSONObject defaultValueJSONObject =
+		JSONObject defaultEditableValuesJSONObject =
 			fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
 				html, configuration);
 
 		Map<String, String> editableTypes = _getEditableTypes(html);
 
-		JSONObject jsonObject = JSONUtil.merge(
-			defaultValueJSONObject,
-			JSONUtil.put(
-				"com.liferay.fragment.entry.processor.background.image." +
-					"BackgroundImageFragmentEntryProcessor",
-				JSONFactoryUtil.createJSONObject()
-			).put(
+		JSONObject fragmentEntryProcessorValuesJSONObject = JSONUtil.put(
+			"com.liferay.fragment.entry.processor.background.image." +
+				"BackgroundImageFragmentEntryProcessor",
+			JSONFactoryUtil.createJSONObject());
+
+		JSONObject editableFragmentEntryProcessorJSONObject =
+			_toEditableFragmentEntryProcessorJSONObject(
+				editableTypes,
+				(List<Object>)definitionMap.get("fragmentFields"));
+
+		if (editableFragmentEntryProcessorJSONObject.length() > 0) {
+			fragmentEntryProcessorValuesJSONObject.put(
 				"com.liferay.fragment.entry.processor.editable." +
 					"EditableFragmentEntryProcessor",
-				_createEditablesValuesJSONObject(
-					editableTypes,
-					(List<Object>)definitionMap.get("fragmentFields"))
-			).put(
+				editableFragmentEntryProcessorJSONObject);
+		}
+
+		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
+			_toFreeMarkerFragmentEntryProcessorJSONObject(
+				(Map<String, Object>)definitionMap.get("fragmentConfig"));
+
+		if (freeMarkerFragmentEntryProcessorJSONObject.length() > 0) {
+			fragmentEntryProcessorValuesJSONObject.put(
 				"com.liferay.fragment.entry.processor.freemarker." +
 					"FreeMarkerFragmentEntryProcessor",
-				_createConfigurationValuesJSONObject(
-					(Map<String, Object>)definitionMap.get("fragmentConfig"))
-			));
+				freeMarkerFragmentEntryProcessorJSONObject);
+		}
+
+		JSONObject jsonObject = JSONUtil.merge(
+			defaultEditableValuesJSONObject,
+			fragmentEntryProcessorValuesJSONObject);
 
 		try {
 			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
@@ -168,96 +181,6 @@ public class FragmentLayoutStructureItemHelper
 		}
 
 		return null;
-	}
-
-	private JSONObject _createConfigurationValuesJSONObject(
-		Map<String, Object> fragmentConfigMap) {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (fragmentConfigMap == null) {
-			return jsonObject;
-		}
-
-		for (Map.Entry<String, Object> entry : fragmentConfigMap.entrySet()) {
-			if (entry.getValue() instanceof String) {
-				jsonObject.put(entry.getKey(), entry.getValue());
-			}
-			else if (entry.getValue() instanceof HashMap) {
-				Map<String, Object> childFragmentConfigMap =
-					(Map<String, Object>)entry.getValue();
-
-				jsonObject.put(
-					entry.getKey(),
-					_createConfigurationValuesJSONObject(
-						childFragmentConfigMap));
-			}
-		}
-
-		return jsonObject;
-	}
-
-	private JSONObject _createEditablesValuesJSONObject(
-		Map<String, String> editableTypes, List<Object> fragmentFields) {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (fragmentFields == null) {
-			return jsonObject;
-		}
-
-		for (Object fragmentField : fragmentFields) {
-			JSONObject fragmentFieldJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			Map<String, Object> fragmentFieldMap =
-				(Map<String, Object>)fragmentField;
-
-			String fragmentFieldId = (String)fragmentFieldMap.get("id");
-
-			if (Validator.isNull(fragmentFieldId)) {
-				continue;
-			}
-
-			Map<String, Object> valueMap =
-				(Map<String, Object>)fragmentFieldMap.get("value");
-
-			if (valueMap == null) {
-				continue;
-			}
-
-			JSONObject fragmentLinkJSONObject = _createFragmentLinkJSONObject(
-				(Map<String, Object>)valueMap.get("fragmentLink"));
-
-			if (fragmentLinkJSONObject != null) {
-				fragmentFieldJSONObject.put("config", fragmentLinkJSONObject);
-			}
-
-			JSONObject localizationJSONObject = null;
-
-			if (Objects.equals(editableTypes.get(fragmentFieldId), "image")) {
-				localizationJSONObject = _createImageLocalizationJSONObject(
-					(Map<String, Object>)valueMap.get("fragmentImage"));
-			}
-			else {
-				localizationJSONObject = _createTextLocalizationJSONObject(
-					(Map<String, Object>)valueMap.get("text"));
-			}
-
-			try {
-				jsonObject.put(
-					fragmentFieldId,
-					JSONUtil.merge(
-						fragmentFieldJSONObject, localizationJSONObject));
-			}
-			catch (JSONException jsonException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(jsonException, jsonException);
-				}
-			}
-		}
-
-		return jsonObject;
 	}
 
 	private JSONObject _createFragmentLinkJSONObject(
@@ -346,6 +269,96 @@ public class FragmentLayoutStructureItemHelper
 		}
 
 		return fragmentEntry;
+	}
+
+	private JSONObject _toEditableFragmentEntryProcessorJSONObject(
+		Map<String, String> editableTypes, List<Object> fragmentFields) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (fragmentFields == null) {
+			return jsonObject;
+		}
+
+		for (Object fragmentField : fragmentFields) {
+			JSONObject fragmentFieldJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			Map<String, Object> fragmentFieldMap =
+				(Map<String, Object>)fragmentField;
+
+			String fragmentFieldId = (String)fragmentFieldMap.get("id");
+
+			if (Validator.isNull(fragmentFieldId)) {
+				continue;
+			}
+
+			Map<String, Object> valueMap =
+				(Map<String, Object>)fragmentFieldMap.get("value");
+
+			if (valueMap == null) {
+				continue;
+			}
+
+			JSONObject fragmentLinkJSONObject = _createFragmentLinkJSONObject(
+				(Map<String, Object>)valueMap.get("fragmentLink"));
+
+			if (fragmentLinkJSONObject.length() > 0) {
+				fragmentFieldJSONObject.put("config", fragmentLinkJSONObject);
+			}
+
+			JSONObject localizationJSONObject = null;
+
+			if (Objects.equals(editableTypes.get(fragmentFieldId), "image")) {
+				localizationJSONObject = _createImageLocalizationJSONObject(
+					(Map<String, Object>)valueMap.get("fragmentImage"));
+			}
+			else {
+				localizationJSONObject = _createTextLocalizationJSONObject(
+					(Map<String, Object>)valueMap.get("text"));
+			}
+
+			try {
+				jsonObject.put(
+					fragmentFieldId,
+					JSONUtil.merge(
+						fragmentFieldJSONObject, localizationJSONObject));
+			}
+			catch (JSONException jsonException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(jsonException, jsonException);
+				}
+			}
+		}
+
+		return jsonObject;
+	}
+
+	private JSONObject _toFreeMarkerFragmentEntryProcessorJSONObject(
+		Map<String, Object> fragmentConfigMap) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (fragmentConfigMap == null) {
+			return jsonObject;
+		}
+
+		for (Map.Entry<String, Object> entry : fragmentConfigMap.entrySet()) {
+			if (entry.getValue() instanceof String) {
+				jsonObject.put(entry.getKey(), entry.getValue());
+			}
+			else if (entry.getValue() instanceof HashMap) {
+				Map<String, Object> childFragmentConfigMap =
+					(Map<String, Object>)entry.getValue();
+
+				jsonObject.put(
+					entry.getKey(),
+					_toFreeMarkerFragmentEntryProcessorJSONObject(
+						childFragmentConfigMap));
+			}
+		}
+
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

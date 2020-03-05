@@ -1,6 +1,14 @@
 Bundle-Name: Liferay Data Engine Service
 Bundle-SymbolicName: com.liferay.data.engine.service
 Bundle-Version: 2.0.5
+Import-Package:\
+	!com.fasterxml.jackson.*,\
+	\
+	!com.google.gson.*,\
+	\
+	!org.apache.tapestry5.json.*,\
+	\
+	*
 Liferay-Require-SchemaVersion: 2.1.0
 Liferay-Service: true
 Web-ContextPath: /data-engine-service

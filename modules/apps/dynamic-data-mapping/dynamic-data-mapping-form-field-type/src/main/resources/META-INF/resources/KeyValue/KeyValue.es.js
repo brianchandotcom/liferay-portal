@@ -43,86 +43,108 @@ const KeyValue = ({disabled, onChange, value, ...otherProps}) => (
 	</div>
 );
 
-const KeyValueProxy = connectStore(
-	({
-		dispatch,
-		emit,
-		generateKeyword: initialGenerateKeyword = true,
-		keyword: initialKeyword,
-		keywordReadOnly,
-		name,
-		placeholder,
-		readOnly,
-		required,
-		showLabel,
-		spritemap,
-		store,
-		value,
-		visible,
-		...otherProps
-	}) => {
-		const [keyword, setKeyword] = useSyncValue(
-			initialKeyword,
-			keywordReadOnly
-		);
-		const generateKeywordRef = useRef(initialGenerateKeyword);
+const KeyValueWithFieldBase = ({
+	dispatch,
+	generateKeyword: initialGenerateKeyword = true,
+	keyword,
+	keywordReadOnly,
+	name,
+	onKeywordBlur,
+	onKeywordChange,
+	onTextBlur,
+	onTextChange,
+	onTextFocus,
+	placeholder,
+	readOnly,
+	required,
+	showLabel,
+	spritemap,
+	store,
+	value,
+	visible,
+	...otherProps
+}) => {
+	const generateKeywordRef = useRef(initialGenerateKeyword);
 
-		return (
-			<FieldBaseProxy
-				{...otherProps}
+	return (
+		<FieldBaseProxy
+			{...otherProps}
+			dispatch={dispatch}
+			name={name}
+			readOnly={readOnly}
+			required={required}
+			showLabel={showLabel}
+			spritemap={spritemap}
+			store={store}
+			visible={visible}
+		>
+			<TextWithFieldBase
 				dispatch={dispatch}
-				name={name}
+				name={`keyValueLabel${name}`}
+				onBlur={onTextBlur}
+				onChange={event => {
+					const {value} = event.target;
+
+					if (generateKeywordRef.current) {
+						const newKeyword = normalizeFieldName(value);
+						onKeywordChange(event, newKeyword);
+					}
+
+					onTextChange(event);
+				}}
+				onFocus={onTextFocus}
+				placeholder={placeholder}
 				readOnly={readOnly}
 				required={required}
 				showLabel={showLabel}
 				spritemap={spritemap}
 				store={store}
+				value={value}
 				visible={visible}
-			>
-				<TextWithFieldBase
-					dispatch={dispatch}
-					name={`keyValueLabel${name}`}
-					onBlur={event =>
-						emit('fieldBlurred', event, event.target.value)
-					}
-					onFocus={event =>
-						emit('fieldFocused', event, event.target.value)
-					}
-					onInput={event => {
-						const {value} = event.target;
+			/>
+			<KeyValue
+				disabled={keywordReadOnly}
+				onBlur={onKeywordBlur}
+				onChange={event => {
+					const {value} = event.target;
 
-						if (generateKeywordRef.current) {
-							const newKeyword = normalizeFieldName(value);
-							setKeyword(newKeyword);
-							emit('fieldKeywordEdited', event, newKeyword);
-						}
+					generateKeywordRef.current = false;
+					onKeywordChange(event, value);
+				}}
+				value={keyword}
+			/>
+		</FieldBaseProxy>
+	);
+};
 
-						emit('fieldEdited', event, event.target.value);
-					}}
-					placeholder={placeholder}
-					readOnly={readOnly}
-					required={required}
-					showLabel={showLabel}
-					spritemap={spritemap}
-					store={store}
-					value={value}
-					visible={visible}
-				/>
-				<KeyValue
-					disabled={keywordReadOnly}
-					onBlur={event =>
-						emit('fieldKeywordBlurred', event, event.target.value)
-					}
-					onChange={event => {
-						const {value} = event.target;
+const KeyValueProxy = connectStore(
+	({emit, keyword: initialKeyword, keywordReadOnly, ...otherProps}) => {
+		const [keyword, setKeyword] = useSyncValue(
+			initialKeyword,
+			keywordReadOnly
+		);
 
-						generateKeywordRef.current = false;
-						setKeyword(value);
-						emit('fieldKeywordEdited', event, value);
-					}}
-					value={keyword}
-				/>
-			</FieldBaseProxy>
+		return (
+			<KeyValueWithFieldBase
+				{...otherProps}
+				keyword={keyword}
+				onKeywordBlur={event =>
+					emit('fieldKeywordBlurred', event, event.target.value)
+				}
+				onKeywordChange={(event, value) => {
+					setKeyword(value);
+					emit('fieldKeywordEdited', event, value);
+				}}
+				onTextBlur={event =>
+					emit('fieldBlurred', event, event.target.value)
+				}
+				onTextChange={event =>
+					emit('fieldEdited', event, event.target.value)
+				}
+				onTextFocus={event =>
+					emit('fieldFocused', event, event.target.value)
+				}
+			/>
 		);
 	}
 );
@@ -132,5 +154,5 @@ const ReactKeyValueAdapter = getConnectedReactComponentAdapter(
 	templates
 );
 
-export {ReactKeyValueAdapter};
+export {ReactKeyValueAdapter, KeyValueWithFieldBase};
 export default ReactKeyValueAdapter;

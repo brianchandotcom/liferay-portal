@@ -158,6 +158,10 @@ renderResponse.setTitle(categoryDisplayName);
 								columnLabel = attributeDefinition.getName();
 							}
 						}
+
+						if (componentResourceBundle != null) {
+							columnLabel = LanguageUtil.get(componentResourceBundle, columnLabel);
+						}
 						%>
 
 						<liferay-ui:search-container-column-text

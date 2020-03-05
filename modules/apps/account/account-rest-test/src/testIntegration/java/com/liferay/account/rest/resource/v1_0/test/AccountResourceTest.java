@@ -45,6 +45,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	@After
 	@Override
 	public void tearDown() throws Exception {
+		super.tearDown();
+
 		_deleteAccountEntries(_accountEntries);
 	}
 

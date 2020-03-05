@@ -18,6 +18,8 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
+import com.liferay.headless.delivery.dto.v1_0.DropZoneDefinition;
+import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.InlineValue;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
@@ -143,6 +145,26 @@ public class PageDefinitionConverterUtil {
 		}
 
 		return pageElement;
+	}
+
+	private static Fragment[] _toFragments(
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem) {
+
+		List<String> fragmentEntryKeys =
+			dropZoneLayoutStructureItem.getFragmentEntryKeys();
+
+		List<Fragment> fragments = new ArrayList<>();
+
+		for (String fragmentEntryKey : fragmentEntryKeys) {
+			fragments.add(
+				new Fragment() {
+					{
+						fragmentKey = fragmentEntryKey;
+					}
+				});
+		}
+
+		return fragments.toArray(new Fragment[0]);
 	}
 
 	private static PageElement _toPageElement(
@@ -302,8 +324,20 @@ public class PageDefinitionConverterUtil {
 		}
 
 		if (layoutStructureItem instanceof DropZoneLayoutStructureItem) {
+			DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+				(DropZoneLayoutStructureItem)layoutStructureItem;
+
 			return new PageElement() {
 				{
+					definition = new DropZoneDefinition() {
+						{
+							allowNewFragments =
+								dropZoneLayoutStructureItem.
+									isAllowNewFragmentEntries();
+							fragments = _toFragments(
+								dropZoneLayoutStructureItem);
+						}
+					};
 					type = PageElement.Type.DROP_ZONE;
 				}
 			};

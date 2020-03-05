@@ -77,7 +77,7 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_FRIENDLY_BASE_URL</td>
-	<td>//div[contains(@class,'form-text') and contains(@id,'friendlyURL')]</td>
+	<td>//div[contains(@class,'friendly-url')]/div[contains(@class,'form-text')]</td>
 	<td></td>
 </tr>
 <tr>

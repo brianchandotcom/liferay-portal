@@ -1,7 +1,7 @@
 @component-name = "portal-social-networking"
-@ignore = "true"
 definition {
 
+	property osgi.app.includes = "directory-web";
 	property portal.upstream = "true";
 	property custom.properties = "default.layout.template.id=1_column";
 	property testray.main.component.name = "Social Networking";

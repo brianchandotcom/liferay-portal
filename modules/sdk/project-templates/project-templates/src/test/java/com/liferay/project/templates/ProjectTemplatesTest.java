@@ -1316,36 +1316,60 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			gradleProjectDir, "build.gradle", DEPENDENCY_PORTAL_KERNEL + "\n");
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateNpmAngularPortlet70() throws Exception {
-		_testBuildTemplateNpmAngular70(
-			"npm-angular-portlet", "foo", "foo", "Foo");
+		_testBuildTemplateNpm(
+			"npm-angular-portlet", "foo", "foo", "Foo", "7.0.6");
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateNpmAngularPortlet71() throws Exception {
-		_testBuildTemplateNpmAngular71(
-			"npm-angular-portlet", "foo", "foo", "Foo");
+		_testBuildTemplateNpm(
+			"npm-angular-portlet", "foo", "foo", "Foo", "7.1.3");
 	}
 
-	@Ignore
+	@Test
+	public void testBuildTemplateNpmAngularPortlet72() throws Exception {
+		_testBuildTemplateNpm(
+			"npm-angular-portlet", "foo", "foo", "Foo", "7.2.1");
+	}
+
+	@Test
+	public void testBuildTemplateNpmAngularPortlet73() throws Exception {
+		_testBuildTemplateNpm(
+			"npm-angular-portlet", "foo", "foo", "Foo", "7.3.0");
+	}
+
 	@Test
 	public void testBuildTemplateNpmAngularPortletWithDashes70()
 		throws Exception {
 
-		_testBuildTemplateNpmAngular70(
-			"npm-angular-portlet", "foo-bar", "foo.bar", "FooBar");
+		_testBuildTemplateNpm(
+			"npm-angular-portlet", "foo-bar", "foo.bar", "FooBar", "7.0.6");
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateNpmAngularPortletWithDashes71()
 		throws Exception {
 
-		_testBuildTemplateNpmAngular71(
-			"npm-angular-portlet", "foo-bar", "foo.bar", "FooBar");
+		_testBuildTemplateNpm(
+			"npm-angular-portlet", "foo-bar", "foo.bar", "FooBar", "7.1.3");
+	}
+
+	@Test
+	public void testBuildTemplateNpmAngularPortletWithDashes72()
+		throws Exception {
+
+		_testBuildTemplateNpm(
+			"npm-angular-portlet", "foo-bar", "foo.bar", "FooBar", "7.2.1");
+	}
+
+	@Test
+	public void testBuildTemplateNpmAngularPortletWithDashes73()
+		throws Exception {
+
+		_testBuildTemplateNpm(
+			"npm-angular-portlet", "foo-bar", "foo.bar", "FooBar", "7.3.0");
 	}
 
 	@Test
@@ -3737,10 +3761,23 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 				DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 		}
 
-		testContains(
-			gradleProjectDir, "package.json",
-			"build/resources/main/META-INF/resources",
-			"liferay-npm-bundler\": \"2.18.2", "\"main\": \"lib/index.es.js\"");
+		if (template.equals("npm-angular-portlet")) {
+			testContains(
+				gradleProjectDir, "package.json", "@angular/animations",
+				"liferay-npm-bundler\": \"2.18.2",
+				"build\": \"tsc && liferay-npm-bundler");
+
+			testExists(
+				gradleProjectDir,
+				"src/main/resources/META-INF/resources/lib/angular-loader.ts");
+		}
+		else {
+			testContains(
+				gradleProjectDir, "package.json",
+				"build/resources/main/META-INF/resources",
+				"liferay-npm-bundler\": \"2.18.2",
+				"\"main\": \"lib/index.es.js\"");
+		}
 
 		testNotContains(
 			gradleProjectDir, "package.json",
@@ -3750,81 +3787,15 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			template, name, "com.test", "-DclassName=" + className,
 			"-Dpackage=" + packageName, "-DliferayVersion=" + liferayVersion);
 
-		testContains(
-			mavenProjectDir, "package.json",
-			"target/classes/META-INF/resources");
+		if (!template.equals("npm-angular-portlet")) {
+			testContains(
+				mavenProjectDir, "package.json",
+				"target/classes/META-INF/resources");
+		}
 
 		testNotContains(
 			mavenProjectDir, "package.json",
 			"build/resources/main/META-INF/resources");
-
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			_addNpmrc(gradleProjectDir);
-			_addNpmrc(mavenProjectDir);
-			_configureExecutePackageManagerTask(gradleProjectDir);
-			_configurePomNpmConfiguration(mavenProjectDir);
-		}
-
-		_buildProjects(gradleProjectDir, mavenProjectDir);
-	}
-
-	private void _testBuildTemplateNpmAngular70(
-			String template, String name, String packageName, String className)
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferay-version", "7.0.6");
-
-		testContains(
-			gradleProjectDir, "build.gradle",
-			DEPENDENCY_MODULES_EXTENDER_API + ", version: \"1.0.2",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0");
-
-		testContains(
-			gradleProjectDir, "package.json", "@angular/animations",
-			"build\": \"tsc && liferay-npm-bundler");
-
-		testExists(
-			gradleProjectDir,
-			"src/main/resources/META-INF/resources/lib/angular-loader.ts");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			template, name, "com.test", "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.0.6");
-
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			_addNpmrc(gradleProjectDir);
-			_addNpmrc(mavenProjectDir);
-			_configureExecutePackageManagerTask(gradleProjectDir);
-			_configurePomNpmConfiguration(mavenProjectDir);
-		}
-
-		_buildProjects(gradleProjectDir, mavenProjectDir);
-	}
-
-	private void _testBuildTemplateNpmAngular71(
-			String template, String name, String packageName, String className)
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferay-version", "7.1.3");
-
-		testContains(
-			gradleProjectDir, "build.gradle",
-			DEPENDENCY_MODULES_EXTENDER_API + ", version: \"2.0.2",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
-
-		testContains(
-			gradleProjectDir, "package.json", "@angular/animations",
-			"build\": \"tsc && liferay-npm-bundler");
-
-		testExists(
-			gradleProjectDir,
-			"src/main/resources/META-INF/resources/lib/angular-loader.ts");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			template, name, "com.test", "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.1.3");
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
 			_addNpmrc(gradleProjectDir);

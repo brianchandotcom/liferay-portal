@@ -115,7 +115,7 @@ export default {
 	 * @param {number} options.position
 	 * @param {string} options.segmentsExperienceId Current segmentsExperienceId
 	 * @param {string} options.type Type of the Fragment to add
-	 * @return {Promise<FragmentEntryLink>} Created FragmentEntryLink
+	 * @return {Promise<{ addedItemId: string, fragmentEntryLink: FragmentEntryLink, layoutData: object }>} Created FragmentEntryLink
 	 */
 	addFragmentEntryLink({
 		fragmentEntryKey,
@@ -151,7 +151,7 @@ export default {
 	 * @param {number} options.position
 	 * @param {string} options.segmentsExperienceId Current segmentsExperienceId
 	 * @param {string} options.type Type of the Fragment to add
-	 * @return {Promise<Array<>FragmentEntryLink>>} Created FragmentEntryLinks
+	 * @return {Promise<{ fragmentEntryLinks: FragmentEntryLink[], layoutData: object }>} Created FragmentEntryLinks
 	 */
 	addFragmentEntryLinks({
 		fragmentEntryKey,

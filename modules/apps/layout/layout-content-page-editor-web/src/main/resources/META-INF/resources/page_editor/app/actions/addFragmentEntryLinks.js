@@ -14,6 +14,11 @@
 
 import {ADD_FRAGMENT_ENTRY_LINKS} from './types';
 
+/**
+ * @param {object} data
+ * @param {object[]} data.fragmentEntryLinks
+ * @param {object} data.layoutData
+ */
 export default function addFragmentEntryLinks({
 	fragmentEntryLinks,
 	layoutData,

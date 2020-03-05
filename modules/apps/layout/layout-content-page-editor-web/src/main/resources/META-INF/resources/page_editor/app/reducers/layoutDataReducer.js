@@ -13,7 +13,6 @@
  */
 
 import {
-	ADD_FRAGMENT_ENTRY_LINK,
 	ADD_FRAGMENT_ENTRY_LINKS,
 	UPDATE_COL_SIZE,
 	UPDATE_LAYOUT_DATA,
@@ -61,7 +60,6 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 		}
 
 		case UPDATE_LAYOUT_DATA:
-		case ADD_FRAGMENT_ENTRY_LINK:
 		case ADD_FRAGMENT_ENTRY_LINKS:
 			return action.layoutData;
 

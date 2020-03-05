@@ -13,7 +13,6 @@
  */
 
 import {
-	ADD_FRAGMENT_ENTRY_LINK,
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_FRAGMENT_ENTRY_LINK_COMMENT,
 	DELETE_FRAGMENT_ENTRY_LINK_COMMENT,
@@ -30,18 +29,20 @@ export default function fragmentEntryLinksReducer(
 	action
 ) {
 	switch (action.type) {
-		case ADD_FRAGMENT_ENTRY_LINK:
-			return {
-				...fragmentEntryLinks,
-				[action.fragmentEntryLink.fragmentEntryLinkId]:
-					action.fragmentEntryLink,
-			};
+		case ADD_FRAGMENT_ENTRY_LINKS: {
+			const newFragmentEntryLinks = {};
 
-		case ADD_FRAGMENT_ENTRY_LINKS:
+			action.fragmentEntryLinks.forEach(fragmentEntryLink => {
+				newFragmentEntryLinks[
+					fragmentEntryLink.fragmentEntryLinkId
+				] = fragmentEntryLink;
+			});
+
 			return {
 				...fragmentEntryLinks,
-				...action.fragmentEntryLinks,
+				...newFragmentEntryLinks,
 			};
+		}
 
 		case ADD_FRAGMENT_ENTRY_LINK_COMMENT: {
 			const fragmentEntryLink =

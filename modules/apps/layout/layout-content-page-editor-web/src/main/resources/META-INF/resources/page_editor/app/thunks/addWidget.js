@@ -12,7 +12,7 @@
  * details.
  */
 
-import addFragmentEntryLink from '../actions/addFragmentEntryLink';
+import addFragmentEntryLinks from '../actions/addFragmentEntryLinks';
 import WidgetService from '../services/WidgetService';
 
 export default function addWidget({parentItemId, portletId, position, store}) {
@@ -27,8 +27,8 @@ export default function addWidget({parentItemId, portletId, position, store}) {
 			segmentsExperienceId,
 		}).then(({fragmentEntryLink, layoutData}) => {
 			dispatch(
-				addFragmentEntryLink({
-					fragmentEntryLink,
+				addFragmentEntryLinks({
+					fragmentEntryLinks: [fragmentEntryLink],
 					layoutData,
 				})
 			);

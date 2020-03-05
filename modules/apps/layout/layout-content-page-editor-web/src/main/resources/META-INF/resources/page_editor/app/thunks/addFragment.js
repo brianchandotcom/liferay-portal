@@ -12,7 +12,8 @@
  * details.
  */
 
-import addFragmentEntryLink from '../actions/addFragmentEntryLink';
+import addFragmentEntryLinks from '../actions/addFragmentEntryLinks';
+import {FRAGMENT_TYPES} from '../config/constants/fragmentTypes';
 import FragmentService from '../services/FragmentService';
 
 export default function addFragment({
@@ -22,28 +23,49 @@ export default function addFragment({
 	position,
 	selectItem = () => {},
 	store,
+	type,
 }) {
 	return dispatch => {
 		const {segmentsExperienceId} = store;
 
-		FragmentService.addFragmentEntryLink({
+		const params = {
 			fragmentEntryKey,
 			groupId,
 			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
 			segmentsExperienceId,
-		}).then(({addedItemId, fragmentEntryLink, layoutData}) => {
+			type,
+		};
+
+		const updateState = (fragmentEntryLinks, layoutData, itemId) => {
 			dispatch(
-				addFragmentEntryLink({
-					fragmentEntryLink,
+				addFragmentEntryLinks({
+					fragmentEntryLinks,
 					layoutData,
 				})
 			);
 
-			if (addedItemId) {
-				selectItem(addedItemId);
-			}
-		});
+			selectItem(itemId);
+		};
+
+		if (type === FRAGMENT_TYPES.composition) {
+			FragmentService.addFragmentEntryLinks(params).then(
+				({fragmentEntryLinks, layoutData}) => {
+					updateState(
+						Object.values(fragmentEntryLinks),
+						layoutData,
+						parentItemId
+					);
+				}
+			);
+		}
+		else {
+			FragmentService.addFragmentEntryLink(params).then(
+				({addedItemId, fragmentEntryLink, layoutData}) => {
+					updateState([fragmentEntryLink], layoutData, addedItemId);
+				}
+			);
+		}
 	};
 }

@@ -13,7 +13,7 @@
  */
 
 export {default as addFragmentComposition} from './addFragmentComposition';
-export {default as addFragmentEntryLink} from './addFragmentEntryLink';
+export {default as addFragmentEntryLinks} from './addFragmentEntryLinks';
 export {default as addFragmentEntryLinkComment} from './addFragmentEntryLinkComment';
 export {default as addMappedInfoItem} from './addMappedInfoItem';
 export {default as deleteFragmentEntryLinkComment} from './deleteFragmentEntryLinkComment';

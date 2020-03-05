@@ -20,11 +20,9 @@ import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {useSelectItem} from '../../../app/components/Controls';
-import {FRAGMENT_TYPES} from '../../../app/config/constants/fragmentTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addFragment from '../../../app/thunks/addFragment';
-import addFragments from '../../../app/thunks/addFragments';
 
 const ImagePreview = ({imagePreviewURL}) => {
 	if (imagePreviewURL) {
@@ -64,30 +62,17 @@ export default function FragmentCard({
 			const {parentId, position} = result;
 
 			if (parentId) {
-				if (type === FRAGMENT_TYPES.composition) {
-					dispatch(
-						addFragments({
-							fragmentEntryKey,
-							groupId,
-							parentItemId: parentId,
-							position,
-							selectItem,
-							store,
-						})
-					);
-				}
-				else {
-					dispatch(
-						addFragment({
-							fragmentEntryKey,
-							groupId,
-							parentItemId: parentId,
-							position,
-							selectItem,
-							store,
-						})
-					);
-				}
+				dispatch(
+					addFragment({
+						fragmentEntryKey,
+						groupId,
+						parentItemId: parentId,
+						position,
+						selectItem,
+						store,
+						type,
+					})
+				);
 			}
 		},
 		item: {

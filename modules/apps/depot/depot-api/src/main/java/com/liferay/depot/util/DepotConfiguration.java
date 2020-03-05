@@ -17,7 +17,7 @@ package com.liferay.depot.util;
 /**
  * @author Alejandro Tardín
  */
-public interface DepotSupportChecker {
+public interface DepotConfiguration {
 
 	public boolean isEnabled();
 

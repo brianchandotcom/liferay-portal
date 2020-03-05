@@ -135,82 +135,47 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<c:choose>
-							<c:when test="<%= Validator.isNotNull(siteVerticalCard.getImageSrc()) %>">
-								<div class="card card-type-asset">
-									<div class="aspect-ratio bg-checkered card-item-first selector-button" <%= AUIUtil.buildData(data) %>>
-										<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= siteVerticalCard.getImageSrc() %>" />
+						<div class="card card-horizontal">
+							<div class="card-body">
+								<div class="card-row">
+									<div class="autofit-col">
+										<span class="sticker sticker-secondary">
+											<c:choose>
+												<c:when test="<%= Validator.isNotNull(siteVerticalCard.getImageSrc()) %>">
+													<span class="sticker-overlay">
+														<img alt="" class="sticker-img" src="<%= siteVerticalCard.getImageSrc() %>" />
+													</span>
+												</c:when>
+												<c:otherwise>
+													<liferay-ui:icon
+														icon="<%= group.getIconCssClass() %>"
+														markupView="lexicon"
+													/>
+												</c:otherwise>
+											</c:choose>
+										</span>
 									</div>
 
-									<div class="card-body">
-										<div class="card-row">
-											<div class="autofit-col autofit-col-expand">
-												<div class="card-title text-truncate">
-													<div class="row">
-														<p class="col font-weight-bold h5 text-truncate">
-															<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-																<%= siteVerticalCard.getTitle() %>
-															</aui:a>
-														</p>
+									<div class="autofit-col autofit-col-expand autofit-col-gutters">
+										<aui:a cssClass="card-title selector-button text-truncate" data="<%= data %>" href="javascript:;" title="<%= siteVerticalCard.getSubtitle() %>">
+											<%= siteVerticalCard.getTitle() %>
+										</aui:a>
 
-														<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() %>">
-															<aui:a cssClass="col-auto" href="<%= siteVerticalCard.getHref() %>" target="_blank" />
-														</c:if>
-													</div>
-												</div>
+										<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
+											<aui:a cssClass='<%= "card-subtitle text-truncate selector-button " + (!childGroups.isEmpty() ? "text-default" : "text-muted") %>' data="<%= linkData %>" href="<%= childGroupsHREF %>" title="<%= siteVerticalCard.getSubtitle() %>">
+												<%= siteVerticalCard.getSubtitle() %>
+											</aui:a>
+										</c:if>
+									</div>
 
-												<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
-													<div class="card-subtitle text-truncate">
-														<aui:a cssClass='<%= childGroups.isEmpty() ? "disabled" : StringPool.BLANK %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
-															<%= siteVerticalCard.getSubtitle() %>
-														</aui:a>
-													</div>
-												</c:if>
-											</div>
+									<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() %>">
+										<div class="autofit-col">
+											<aui:a cssClass="btn btn-outline-borderless btn-outline-secondary" href="<%= siteVerticalCard.getHref() %>" target="_blank" />
 										</div>
-									</div>
+									</c:if>
 								</div>
-							</c:when>
-							<c:otherwise>
-								<div class="card card-type-asset file-card">
-									<div class="aspect-ratio card-item-first selector-button" <%= AUIUtil.buildData(data) %>>
-										<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
-											<svg class="lexicon-icon" focusable="false" role="presentation">
-												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#<%= group.getIconCssClass() %>" />
-											</svg>
-										</div>
-									</div>
-
-									<div class="card-body">
-										<div class="card-row">
-											<div class="autofit-col autofit-col-expand">
-												<div class="card-title text-truncate">
-													<div class="row">
-														<p class="col font-weight-bold h5 text-truncate">
-															<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-																<%= siteVerticalCard.getTitle() %>
-															</aui:a>
-														</p>
-
-														<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() %>">
-															<aui:a cssClass="col-auto" href="<%= siteVerticalCard.getHref() %>" target="_blank" />
-														</c:if>
-													</div>
-												</div>
-
-												<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
-													<div class="card-subtitle text-truncate">
-														<aui:a cssClass='<%= !childGroups.isEmpty() ? "text-default" : "disabled text-muted" %>' data="<%= linkData %>" href="<%= childGroupsHREF %>">
-															<%= siteVerticalCard.getSubtitle() %>
-														</aui:a>
-													</div>
-												</c:if>
-											</div>
-										</div>
-									</div>
-								</div>
-							</c:otherwise>
-						</c:choose>
+							</div>
+						</div>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>

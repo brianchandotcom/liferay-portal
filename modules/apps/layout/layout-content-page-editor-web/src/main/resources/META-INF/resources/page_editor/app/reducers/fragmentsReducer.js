@@ -15,31 +15,39 @@
 import {ADD_FRAGMENT_COMPOSITION} from '../actions/types';
 
 export default function fragmentsReducer(fragments = [], action) {
-	let fragmentCollection;
-
 	switch (action.type) {
-		case ADD_FRAGMENT_COMPOSITION:
-			fragmentCollection = fragments.find(
-				fragmentCollection =>
-					fragmentCollection.fragmentCollectionId ===
-					action.fragmentComposition.fragmentCollectionId
+		case ADD_FRAGMENT_COMPOSITION: {
+			const composition = action.fragmentComposition;
+			const existingCollection = fragments.find(
+				collection =>
+					collection.fragmentCollectionId ===
+					composition.fragmentCollectionId
 			);
 
-			if (fragmentCollection) {
-				fragmentCollection.fragmentEntries.push(
-					action.fragmentComposition
-				);
-			}
-			else {
-				fragments.push({
-					fragmentCollectionId:
-						action.fragmentComposition.fragmentCollectionId,
-					fragmentEntries: [action.fragmentComposition],
-					name: action.fragmentComposition.fragmentCollectionName,
-				});
-			}
+			const newCollection = existingCollection
+				? {
+						...existingCollection,
+						fragmentEntries: [
+							...existingCollection.fragmentEntries,
+							composition,
+						],
+				  }
+				: {
+						fragmentCollectionId: composition.fragmentCollectionId,
+						fragmentEntries: [composition],
+						name: composition.fragmentCollectionName,
+				  };
 
-			return fragments;
+			return [
+				...fragments.filter(
+					collection =>
+						collection.fragmentCollectionId !==
+						newCollection.fragmentCollectionId
+				),
+
+				newCollection,
+			];
+		}
 
 		default:
 			return fragments;

@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {useSelector} from '../../../app/store/index';
 import Collapse from '../../../common/components/Collapse';
@@ -26,25 +26,28 @@ export default function FragmentsSidebar() {
 	const fragments = useSelector(state => state.fragments);
 
 	const [searchValue, setSearchValue] = useState('');
-	const searchValueLowerCase = searchValue.toLowerCase();
 
-	const filteredFragments = searchValue
-		? fragments
-				.map(fragmentCollection => {
-					return {
-						...fragmentCollection,
-						fragmentEntries: fragmentCollection.fragmentEntries.filter(
-							fragmentEntry =>
-								fragmentEntry.name
-									.toLowerCase()
-									.indexOf(searchValueLowerCase) !== -1
-						),
-					};
-				})
-				.filter(fragmentCollection => {
-					return fragmentCollection.fragmentEntries.length > 0;
-				})
-		: fragments;
+	const filteredFragments = useMemo(() => {
+		const searchValueLowerCase = searchValue.toLowerCase();
+
+		return searchValue
+			? fragments
+					.map(fragmentCollection => {
+						return {
+							...fragmentCollection,
+							fragmentEntries: fragmentCollection.fragmentEntries.filter(
+								fragmentEntry =>
+									fragmentEntry.name
+										.toLowerCase()
+										.indexOf(searchValueLowerCase) !== -1
+							),
+						};
+					})
+					.filter(fragmentCollection => {
+						return fragmentCollection.fragmentEntries.length > 0;
+					})
+			: fragments;
+	}, [fragments, searchValue]);
 
 	return (
 		<>

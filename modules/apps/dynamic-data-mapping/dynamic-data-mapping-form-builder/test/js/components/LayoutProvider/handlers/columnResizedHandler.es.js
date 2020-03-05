@@ -12,9 +12,9 @@
  * details.
  */
 
-import * as columnResizedHandler from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/columnResizedHandler.es';
+import * as columnResizedHandler from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/columnResizedHandler.es';
 
-describe('LayoutProvider/handlers/columnResized', () => {
+describe('LayoutProvider/handlers/columnResizedHandler', () => {
 	describe('handleColumnResized(state, source, column, direction)', () => {
 		it('resizes columns when pulling with the left handle', () => {
 			const source = {

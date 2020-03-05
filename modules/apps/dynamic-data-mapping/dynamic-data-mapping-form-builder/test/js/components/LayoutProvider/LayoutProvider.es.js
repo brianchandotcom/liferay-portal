@@ -12,11 +12,11 @@
  * details.
  */
 
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {JSXComponent} from 'metal-jsx';
 
 import LayoutProvider from '../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/LayoutProvider.es';
-import {PagesVisitor} from '../../../../src/main/resources/META-INF/resources/js/util/visitors.es';
-import mockPages from '../../___mock__/mockPages';
+import mockPages from '../../__mock__/mockPages.es';
 
 let component;
 let pages = null;

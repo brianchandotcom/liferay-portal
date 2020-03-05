@@ -15,7 +15,7 @@
 import {
 	renameFieldInsideExpression,
 	updateRulesFieldName,
-} from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/rules.es';
+} from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/rules.es';
 
 describe('LayoutProvider/util/rules', () => {
 	describe('renameFieldInsideExpression(expression, fieldName, newFieldName)', () => {

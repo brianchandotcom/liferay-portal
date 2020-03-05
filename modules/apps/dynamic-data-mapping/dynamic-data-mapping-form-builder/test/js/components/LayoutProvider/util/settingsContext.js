@@ -12,18 +12,18 @@
  * details.
  */
 
-import mockPages from '../../../__mock__/mockPages.es';
 import {
 	getFieldProperty,
 	getFieldValue,
-} from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/fields.es';
+} from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/fields.es';
 import {
 	updateFocusedFieldDataType,
 	updateFocusedFieldLabel,
 	updateFocusedFieldName,
 	updateFocusedFieldOptions,
 	updateFocusedFieldProperty,
-} from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/focusedField.es';
+} from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/settingsContext.es';
+import mockPages from '../../../__mock__/mockPages.es';
 
 const focusedField = {
 	fieldName: 'oldFieldName',

@@ -177,7 +177,10 @@ export default function Sidebar() {
 
 	return (
 		<ClayTooltipProvider>
-			<div className="page-editor__sidebar">
+			<div
+				className="page-editor__sidebar"
+				dir={config.languageDirection[config.defaultLanguageId]}
+			>
 				<div
 					className="page-editor__sidebar__buttons"
 					onClick={deselectItem}

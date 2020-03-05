@@ -23,18 +23,23 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -177,6 +182,25 @@ public abstract class BaseAnalyticsMVCActionCommand
 		return configurationProperties;
 	}
 
+	protected void removeChannelId(String[] groupIds) {
+		for (String groupId : groupIds) {
+			Group group = groupLocalService.fetchGroup(
+				GetterUtil.getLong(groupId));
+
+			if (group == null) {
+				continue;
+			}
+
+			UnicodeProperties properties = group.getTypeSettingsProperties();
+
+			properties.remove("analyticsChannelId");
+
+			group.setTypeSettingsProperties(properties);
+
+			groupLocalService.updateGroup(group);
+		}
+	}
+
 	protected void removeCompanyPreferences(long companyId) throws Exception {
 		companyService.removePreferences(
 			companyId,
@@ -250,6 +274,9 @@ public abstract class BaseAnalyticsMVCActionCommand
 
 	@Reference
 	protected ConfigurationProvider configurationProvider;
+
+	@Reference
+	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected SettingsFactory settingsFactory;

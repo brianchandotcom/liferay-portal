@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -188,7 +187,7 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 		List<Group> groups = stream.map(
 			Long::valueOf
 		).map(
-			_groupLocalService::fetchGroup
+			groupLocalService::fetchGroup
 		).filter(
 			Objects::nonNull
 		).collect(
@@ -274,7 +273,7 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 				String::valueOf
 			).forEach(
 				groupId -> {
-					Group group = _groupLocalService.fetchGroup(
+					Group group = groupLocalService.fetchGroup(
 						GetterUtil.getLong(groupId));
 
 					UnicodeProperties typeSettingsProperties =
@@ -284,7 +283,7 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 
 					group.setTypeSettingsProperties(typeSettingsProperties);
 
-					_groupLocalService.updateGroup(group);
+					groupLocalService.updateGroup(group);
 				}
 			);
 		}
@@ -295,9 +294,6 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 
 	@Reference
 	private CompanyService _companyService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -180,7 +179,7 @@ public class EditChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 		List<Group> groups = stream.map(
 			Long::valueOf
 		).map(
-			_groupLocalService::fetchGroup
+			groupLocalService::fetchGroup
 		).filter(
 			Objects::nonNull
 		).collect(
@@ -247,7 +246,7 @@ public class EditChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 			responseJSONObject.getJSONArray("removedGroupIds"));
 
 		for (String removedGroupId : removedGroupIds) {
-			Group group = _groupLocalService.fetchGroup(
+			Group group = groupLocalService.fetchGroup(
 				GetterUtil.getLong(removedGroupId));
 
 			if (group == null) {
@@ -260,11 +259,11 @@ public class EditChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 
 			group.setTypeSettingsProperties(properties);
 
-			_groupLocalService.updateGroup(group);
+			groupLocalService.updateGroup(group);
 		}
 
 		for (String selectedGroupId : selectedGroupIds) {
-			Group group = _groupLocalService.fetchGroup(
+			Group group = groupLocalService.fetchGroup(
 				GetterUtil.getLong(selectedGroupId));
 
 			UnicodeProperties properties = group.getTypeSettingsProperties();
@@ -273,7 +272,7 @@ public class EditChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 
 			group.setTypeSettingsProperties(properties);
 
-			_groupLocalService.updateGroup(group);
+			groupLocalService.updateGroup(group);
 		}
 
 		return removedGroupIds;
@@ -284,8 +283,5 @@ public class EditChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 
 	@Reference
 	private CompanyService _companyService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 }

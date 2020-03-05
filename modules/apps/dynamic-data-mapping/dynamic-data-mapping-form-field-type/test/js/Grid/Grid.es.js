@@ -12,10 +12,15 @@
  * details.
  */
 
+import {fireEvent} from '@testing-library/react';
+
 import Grid from '../../../src/main/resources/META-INF/resources/Grid/Grid.es';
+import withContextMock from '../__mocks__/withContextMock.es';
 
 let component;
 const spritemap = 'icons.svg';
+
+const GridWithContextMock = withContextMock(Grid);
 
 describe('Grid', () => {
 	afterEach(() => {
@@ -133,11 +138,144 @@ describe('Grid', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('has a spritemap', () => {
-		component = new Grid({
+	it('emits a fieldBlurred event when blurring the radio input', done => {
+		const handleFieldBlurred = data => {
+			expect(data).toEqual(
+				expect.objectContaining({
+					value: 'colFieldId1'
+				})
+			);
+			done();
+		};
+		
+		const events = {fieldBlurred: handleFieldBlurred};
+
+		component = new GridWithContextMock({
+			columns: [
+				{
+					label: 'col1',
+					value: 'colFieldId1',
+				},
+				{
+					label: 'col2',
+					value: 'colFieldId2',
+				},
+			],
+			events,
+			readOnly: false,
+			rows: [
+				{
+					label: 'row1',
+					value: 'rowFieldId1',
+				},
+				{
+					label: 'row2',
+					value: 'rowFieldId2',
+				},
+			],
 			spritemap,
 		});
 
-		expect(component).toMatchSnapshot();
+		const radioInputElement = component.element.querySelector(
+			'input[value][type="radio"][name="rowFieldId1"]:not([value="colFieldId2"])'
+		);
+
+		fireEvent.blur(radioInputElement);
+	});
+
+	it('emits a fieldEdited event when changing the state of radio input', done => {
+		const handleFieldEdited = data => {
+			expect(data).toEqual(
+				expect.objectContaining({
+					fieldInstance: expect.any(Object),
+					originalEvent: expect.any(Object),
+					value: {
+						rowFieldId1: 'colFieldId1'
+					}
+				})
+			);
+			done();
+		};
+		
+		const events = {fieldEdited: handleFieldEdited};
+
+		component = new GridWithContextMock({
+			columns: [
+				{
+					label: 'col1',
+					value: 'colFieldId1',
+				},
+				{
+					label: 'col2',
+					value: 'colFieldId2',
+				},
+			],
+			events,
+			readOnly: false,
+			rows: [
+				{
+					label: 'row1',
+					value: 'rowFieldId1',
+				},
+				{
+					label: 'row2',
+					value: 'rowFieldId2',
+				},
+			],
+			spritemap,
+		});
+
+		const radioInputElement = component.element.querySelector(
+			'input[value][type="radio"][name="rowFieldId1"]:not([value="colFieldId2"])'
+		);
+
+		fireEvent.click(radioInputElement);
+	});
+
+	it('emits a fieldFocused event when focusing a radio input', done => {
+		const handleFieldFocused = data => {
+			expect(data).toEqual(
+				expect.objectContaining({
+					fieldInstance: expect.any(Object),
+					originalEvent: expect.any(Object),
+					value: 'colFieldId1'
+				})
+			);
+			done();
+		};
+		
+		const events = {fieldFocused: handleFieldFocused};
+
+		component = new GridWithContextMock({
+			columns: [
+				{
+					label: 'col1',
+					value: 'colFieldId1',
+				},
+				{
+					label: 'col2',
+					value: 'colFieldId2',
+				},
+			],
+			events,
+			readOnly: false,
+			rows: [
+				{
+					label: 'row1',
+					value: 'rowFieldId1',
+				},
+				{
+					label: 'row2',
+					value: 'rowFieldId2',
+				},
+			],
+			spritemap,
+		});
+
+		const radioInputElement = component.element.querySelector(
+			'input[value][type="radio"][name="rowFieldId1"]:not([value="colFieldId2"])'
+		);
+
+		fireEvent.focus(radioInputElement);
 	});
 });

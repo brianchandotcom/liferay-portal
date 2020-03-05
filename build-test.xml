@@ -8761,12 +8761,20 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<get-testcase-property property.name="analytics.cloud.enabled" />
 
 		<if>
-			<equals arg1="${analytics.cloud.enabled}" arg2="true" />
+			<isset property="test.analytics.cloud.url" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					analytics.cloud.url=${analytics.cloud.faro.frontend.url}
+					analytics.cloud.url=${test.analytics.cloud.url}
 				</echo>
 			</then>
+			<elseif>
+				<equals arg1="${analytics.cloud.enabled}" arg2="true" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.url=${analytics.cloud.faro.frontend.url}
+					</echo>
+				</then>
+			</elseif>
 		</if>
 	</target>
 

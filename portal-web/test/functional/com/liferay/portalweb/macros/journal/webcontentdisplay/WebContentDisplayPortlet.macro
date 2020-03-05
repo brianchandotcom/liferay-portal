@@ -223,6 +223,8 @@ definition {
 
 		Search.searchCP(searchTerm = "${searchTerm}");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		var key_webContentTitle = "${webContentTitle}";
 
 		AssertTextEquals(
@@ -265,6 +267,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		Search.searchCP(searchTerm = "${webContentTitle}");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_webContentTitle = "${webContentTitle}";
 

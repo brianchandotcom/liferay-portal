@@ -83,9 +83,18 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="<%= group.getIconCssClass() %>"
-					/>
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(group.getLogoURL(themeDisplay, false)) %>">
+							<liferay-ui:search-container-column-image
+								src="<%= group.getLogoURL(themeDisplay, false) %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:search-container-column-icon
+								icon="<%= group.getIconCssClass() %>"
+							/>
+						</c:otherwise>
+					</c:choose>
 
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"

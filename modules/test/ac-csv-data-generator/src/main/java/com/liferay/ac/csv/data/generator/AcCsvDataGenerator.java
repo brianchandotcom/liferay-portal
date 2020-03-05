@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.user.generator;
+package com.liferay.ac.csv.data.generator;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.ac.csv.data.generator.configuration.AcCsvDataGeneratorConfiguration;
+import com.liferay.ac.csv.data.generator.csv.CsvUser;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -28,12 +29,8 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.user.generator.configuration.UserGeneratorConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,23 +55,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cheryl Tang
  */
 @Component(
-	configurationPid = "com.liferay.user.generator.configuration.UserGeneratorConfiguration",
+	configurationPid = "com.liferay.csv.user.generator.configuration.AcCsvDataGeneratorConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = {}
 )
-public class UserGenerator {
+public class AcCsvDataGenerator {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		UserGeneratorConfiguration userGeneratorConfiguration =
+		AcCsvDataGeneratorConfiguration AcCsvDataGeneratorConfiguration =
 			ConfigurableUtil.createConfigurable(
-				UserGeneratorConfiguration.class, properties);
+				AcCsvDataGeneratorConfiguration.class, properties);
 
-		_verbose = userGeneratorConfiguration.verbose();
+		_verbose = AcCsvDataGeneratorConfiguration.verbose();
 
 		try {
 			Company company = _companyLocalService.getCompanyByVirtualHost(
-				userGeneratorConfiguration.virtualHostName());
+				AcCsvDataGeneratorConfiguration.virtualHostName());
 
 			_companyId = company.getPrimaryKey();
 
@@ -85,7 +82,7 @@ public class UserGenerator {
 		}
 
 		try {
-			File csvFile = new File(userGeneratorConfiguration.pathToUserCsv());
+			File csvFile = new File(AcCsvDataGeneratorConfiguration.pathToUserCsv());
 
 			CSVParser csvParser = CSVParser.parse(
 				csvFile, Charset.defaultCharset(),
@@ -95,60 +92,31 @@ public class UserGenerator {
 					""
 				));
 
-			for (CSVRecord csvRecord : csvParser) {
-				String emailAddress = csvRecord.get("emailAddress");
 
-				if (_addedUserMap.containsKey(emailAddress)) {
+			_csvUser.setCompanyId(_companyId);
+
+			for (CSVRecord csvRecord : csvParser) {
+				if (_addedUserMap.containsKey(csvRecord.get("emailAddress"))) {
 					continue;
 				}
 
-				String password = csvRecord.get("password");
-				String screenName = csvRecord.get("screenName");
-				String firstName = csvRecord.get("firstName");
-				String middleName = csvRecord.get("middleName");
-				String lastName = csvRecord.get("lastName");
+				_csvUser.assignOrganizations(
+					_getIdArrayFromCell(csvRecord, "organizations"));
 
-				int javaMonthOffset = 1; //java.util.Date months start at 0 (meaning 0 for January)
+				_csvUser.assignUserGroups(
+					_getIdArrayFromCell(csvRecord, "userGroups"));
 
-				int birthdayMonth =
-					GetterUtil.getInteger(csvRecord.get("birthdayMonth")) -
-						javaMonthOffset;
+				_csvUser.assignRoles(_getIdArrayFromCell(csvRecord, "roles"));
 
-				int birthdayDay = GetterUtil.getInteger(
-					csvRecord.get("birthdayDay"));
-				int birthdayYear = GetterUtil.getInteger(
-					csvRecord.get("birthdayYear"));
-				String jobTitle = csvRecord.get("jobTitle");
-
-				String gender = csvRecord.get("gender");
-
-				boolean male = true;
-
-				if (gender.equalsIgnoreCase("female")) {
-					male = false;
-				}
-
-				long[] organizationIds = _getIdArrayFromCell(
-					csvRecord, "organizations");
-
-				long[] userGroupIds = _getIdArrayFromCell(
-					csvRecord, "userGroups");
-
-				long[] roleIds = _getIdArrayFromCell(csvRecord, "roles");
 
 				try {
-					User user = _userLocalService.addUser(
-						_defaultUserId, _companyId, false, password, password,
-						false, screenName, emailAddress, 0, StringPool.BLANK,
-						LocaleUtil.getDefault(), firstName, middleName,
-						lastName, 0, 0, male, birthdayMonth, birthdayDay,
-						birthdayYear, jobTitle, null, organizationIds, roleIds,
-						userGroupIds, false, new ServiceContext());
+					User user = _csvUser.addUser(csvRecord);
 
-					_addedUserMap.put(emailAddress, user.getPrimaryKey());
+					_addedUserMap.put(user.getEmailAddress(), user.getPrimaryKey());
 
 					if (!_verbose.equalsIgnoreCase("false")) {
-						System.out.println("Created user: " + emailAddress);
+						System.out.println(
+							"Created user: " + user.getEmailAddress());
 					}
 				}
 				catch (PortalException portalException) {
@@ -157,7 +125,7 @@ public class UserGenerator {
 			}
 
 			if (_log.isInfoEnabled()) {
-				_log.info(userGeneratorConfiguration.customActivationMessage());
+				_log.info(AcCsvDataGeneratorConfiguration.customActivationMessage());
 			}
 		}
 		catch (IOException ioException) {
@@ -291,7 +259,7 @@ public class UserGenerator {
 		return idArray;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(UserGenerator.class);
+	private static final Log _log = LogFactoryUtil.getLog(AcCsvDataGenerator.class);
 
 	private volatile HashMap<String, Long> _addedOrganizationMap =
 		new HashMap<>();
@@ -316,6 +284,9 @@ public class UserGenerator {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private CsvUser _csvUser;
 
 	private String _verbose;
 

@@ -1,5 +1,5 @@
-Bundle-Name: Liferay User Generator
-Bundle-SymbolicName: com.liferay.user.generator
+Bundle-Name: Liferay AC CSV Data Generator
+Bundle-SymbolicName: com.liferay.ac.csv.data.generator
 Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.kernel.exception,\

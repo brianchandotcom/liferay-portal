@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.generator.configuration;
+package com.liferay.ac.csv.data.generator.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,9 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.user.generator.configuration.UserGeneratorConfiguration"
+	id = "com.liferay.csv.user.generator.configuration.AcCsvDataGeneratorConfiguration"
 )
-public interface UserGeneratorConfiguration {
+public interface AcCsvDataGeneratorConfiguration {
 
 	@Meta.AD
 	public String customActivationMessage();

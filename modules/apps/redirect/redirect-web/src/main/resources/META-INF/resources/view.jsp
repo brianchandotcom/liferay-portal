@@ -19,3 +19,38 @@
 <clay:management-toolbar
 	displayContext="<%= new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse) %>"
 />
+
+<div class="container-fluid container-fluid-max-xl main-content-body">
+	<liferay-ui:search-container
+		emptyResultsMessage="no-redirects-were-found"
+		total="<%= RedirectEntryLocalServiceUtil.getRedirectEntriesCount() %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= RedirectEntryLocalServiceUtil.getRedirectEntries(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.redirect.model.RedirectEntry"
+			keyProperty="redirectEntryId"
+			modelVar="redirectEntry"
+		>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="source-url"
+			>
+				<%= HtmlUtil.escape(redirectEntry.getSourceURL()) %>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="destination-url"
+			>
+				<%= HtmlUtil.escape(redirectEntry.getDestinationURL()) %>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+</div>

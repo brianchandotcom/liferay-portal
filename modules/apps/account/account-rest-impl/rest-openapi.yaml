@@ -351,6 +351,71 @@ paths:
                     description:
                         ""
             tags: ["AccountRole"]
+    "/accounts/{accountId}/account-roles/{accountRoleId}/account-users/{accountUserId}":
+        delete:
+            # @review
+            description:
+                Unassigns account users to the account role
+            operationId: deleteAccountRoleUserAssociation
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: accountRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: accountUserId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["AccountRole"]
+        post:
+            # @review
+            description:
+                Assigns account users to the account role
+            operationId: postAccountRoleUserAssociation
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: accountRoleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: accountUserId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["AccountRole"]
     "/accounts/{accountId}/account-users":
         get:
             # @review

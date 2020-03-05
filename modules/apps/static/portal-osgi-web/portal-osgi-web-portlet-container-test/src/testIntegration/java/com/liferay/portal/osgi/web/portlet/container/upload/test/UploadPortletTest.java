@@ -34,9 +34,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.osgi.web.portlet.container.test.BasePortletContainerTestCase;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.upload.LiferayServletRequest;
+import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -111,7 +113,9 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		};
 
 		registerMVCActionCommand(
-			new TestUploadMVCActionCommand(_testUploadPortlet));
+			new TestUploadMVCActionCommand(
+				_testUploadPortlet, _uniqueFileNameProvider));
+
 		registerMVCPortlet(_testUploadPortlet);
 	}
 
@@ -290,5 +294,8 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 	}
 
 	private TestUploadPortlet _testUploadPortlet;
+
+	@Inject
+	private UniqueFileNameProvider _uniqueFileNameProvider;
 
 }

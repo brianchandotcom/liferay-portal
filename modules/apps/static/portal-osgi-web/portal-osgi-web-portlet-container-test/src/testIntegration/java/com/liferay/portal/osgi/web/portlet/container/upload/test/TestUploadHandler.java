@@ -17,6 +17,7 @@ package com.liferay.portal.osgi.web.portlet.container.upload.test;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,11 +34,10 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,8 +50,12 @@ import javax.portlet.PortletResponse;
  */
 public class TestUploadHandler {
 
-	public TestUploadHandler(TestUploadPortlet testUploadPortlet) {
+	public TestUploadHandler(
+		TestUploadPortlet testUploadPortlet,
+		UniqueFileNameProvider uniqueFileNameProvider) {
+
 		_testUploadPortlet = testUploadPortlet;
+		_uniqueFileNameProvider = uniqueFileNameProvider;
 	}
 
 	public void upload(
@@ -110,13 +114,20 @@ public class TestUploadHandler {
 		}
 	}
 
-	private FileEntry _fetchFileEntry(
+	private boolean _fileEntryExists(
 		long groupId, long folderId, String fileName) {
 
 		FileEntry fileEntry = new TestFileEntry(
 			fileName, folderId, groupId, null);
 
-		return _testUploadPortlet.get(fileEntry.toString());
+		TestFileEntry testFileEntry = _testUploadPortlet.get(
+			fileEntry.toString());
+
+		if (testFileEntry == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private JSONObject _getImageJSONObject(PortletRequest portletRequest)
@@ -141,10 +152,14 @@ public class TestUploadHandler {
 					parameterName)) {
 
 				TestFileEntry testFileEntry = new TestFileEntry(
-					_getUniqueFileName(
-						themeDisplay,
-						uploadPortletRequest.getFileName(parameterName), 0),
-					0, themeDisplay.getScopeGroupId(), inputStream);
+					_uniqueFileNameProvider.provide(
+						uploadPortletRequest.getFileName(parameterName),
+						curFileName -> _fileEntryExists(
+							themeDisplay.getScopeGroupId(),
+							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+							curFileName)),
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					themeDisplay.getScopeGroupId(), inputStream);
 
 				_testUploadPortlet.put(testFileEntry);
 
@@ -170,40 +185,6 @@ public class TestUploadHandler {
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
 		}
-	}
-
-	private String _getUniqueFileName(
-			ThemeDisplay themeDisplay, String fileName, long folderId)
-		throws PortalException {
-
-		FileEntry fileEntry = _fetchFileEntry(
-			themeDisplay.getScopeGroupId(), folderId, fileName);
-
-		if (fileEntry == null) {
-			return fileName;
-		}
-
-		int suffix = 1;
-
-		for (int i = 0;
-			 i < UploadServletRequestConfigurationHelperUtil.getMaxTries();
-			 i++) {
-
-			String curFileName = FileUtil.appendParentheticalSuffix(
-				fileName, String.valueOf(suffix));
-
-			fileEntry = _fetchFileEntry(
-				themeDisplay.getScopeGroupId(), folderId, curFileName);
-
-			if (fileEntry == null) {
-				return curFileName;
-			}
-
-			suffix++;
-		}
-
-		throw new PortalException(
-			"Unable to get a unique file name for " + fileName);
 	}
 
 	private void _handleUploadException(
@@ -263,5 +244,6 @@ public class TestUploadHandler {
 	}
 
 	private final TestUploadPortlet _testUploadPortlet;
+	private final UniqueFileNameProvider _uniqueFileNameProvider;
 
 }

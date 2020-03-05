@@ -28,28 +28,34 @@ describe('Popover', () => {
 		jest.restoreAllMocks();
 	});
 
-	it('run popover on left visible with ref', () => {
-		const popoverRef = React.createRef();
-
-		const spy = jest.spyOn(Align, 'align').mockImplementation(() => 0);
+	it('renders popover on top', () => {
+		jest.spyOn(Align, 'align').mockImplementation(() => 0);
 
 		const {container, queryByText} = render(
-			<Popover ref={popoverRef} suggestedPosition="left" visible />
+			<Popover
+				ref={React.createRef()}
+				showArrow
+				title={getTitle}
+				visible
+			/>
 		);
 
-		expect(spy).toBeCalled();
-		expect(container.querySelector('div.arrow')).not.toBeNull();
+		expect(queryByText('Title')).not.toBeNull();
 
-		expect(queryByText('Title')).toBeNull();
-		expect(queryByText('Content')).toBeNull();
-		expect(queryByText('Footer')).toBeNull();
+		expect(container.querySelector('div.arrow')).not.toBeNull();
+		expect(container.querySelector('.clay-popover-top')).not.toBeNull();
+		expect(container.querySelector('.no-content')).not.toBeNull();
+		expect(container.querySelector('.popover-body')).not.toBeNull();
 	});
 
-	it('run popover on the right with childrens', () => {
+	it('renders popover on the right with children', () => {
+		jest.spyOn(Align, 'align').mockImplementation(() => 2);
+
 		const {container, queryByText} = render(
 			<Popover
 				content={getContent}
 				footer={getFooter}
+				ref={React.createRef()}
 				showArrow
 				suggestedPosition="right"
 				title={getTitle}
@@ -57,29 +63,29 @@ describe('Popover', () => {
 			/>
 		);
 
-		expect(container.querySelector('div.arrow')).not.toBeNull();
-
 		expect(queryByText('Title')).not.toBeNull();
 		expect(queryByText('Content')).not.toBeNull();
 		expect(queryByText('Footer')).not.toBeNull();
+
+		expect(container.querySelector('div.arrow')).not.toBeNull();
+		expect(container.querySelector('.clay-popover-right')).not.toBeNull();
+		expect(container.querySelector('.no-content')).toBeNull();
+		expect(container.querySelector('.popover-header')).not.toBeNull();
+		expect(container.querySelector('.popover-body')).not.toBeNull();
+		expect(container.querySelector('.popover-footer')).not.toBeNull();
 	});
 
-	it('run popover with placement none and no content', () => {
-		const popoverRef = React.createRef();
-
-		const spy = jest.spyOn(Align, 'align').mockImplementation(() => null);
+	it('renders popover with no ref', () => {
+		jest.spyOn(Align, 'align').mockImplementation(() => 0);
 
 		const {container, queryByText} = render(
-			<Popover ref={popoverRef} showArrow title={getTitle} visible />
+			<Popover title={getTitle} visible />
 		);
 
-		expect(spy).toBeCalled();
-		expect(container.querySelector('div.arrow')).toBeNull();
+		expect(queryByText('Title')).not.toBeNull();
+
+		expect(container.querySelector('div.arrow')).not.toBeNull();
 		expect(container.querySelector('.no-content')).not.toBeNull();
 		expect(container.querySelector('.hide')).toBeNull();
-
-		expect(queryByText('Title')).not.toBeNull();
-		expect(queryByText('Content')).toBeNull();
-		expect(queryByText('Footer')).toBeNull();
 	});
 });

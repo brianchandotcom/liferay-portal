@@ -167,6 +167,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 		<#list entity.databaseRegularEntityColumns as entityColumn>
 			<#if entityColumn.primitiveType>
 			<#elseif stringUtil.equals(entityColumn.type, "Date")>
+			<#elseif stringUtil.equals(entityColumn.type, "String") && !(serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) == "CLOB")>
 			<#elseif !stringUtil.equals(entityColumn.type, "Blob")>
 				<#assign throwsClassNotFoundException = true />
 			</#if>
@@ -190,7 +191,11 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 			<#elseif stringUtil.equals(entityColumn.type, "Date")>
 				${entityColumn.name} = objectInput.readLong();
 			<#elseif stringUtil.equals(entityColumn.type, "String")>
-				${entityColumn.name} = (String)objectInput.readObject();
+				<#if (serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) == "CLOB")>
+					${entityColumn.name} = (String)objectInput.readObject();
+				<#else>
+					${entityColumn.name} = objectInput.readUTF();
+				</#if>
 			<#elseif !stringUtil.equals(entityColumn.type, "Blob")>
 				${entityColumn.name} = (${entityColumn.genericizedType})objectInput.readObject();
 			</#if>
@@ -225,12 +230,22 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 			<#elseif stringUtil.equals(entityColumn.type, "Date")>
 				objectOutput.writeLong(${entityColumn.name});
 			<#elseif stringUtil.equals(entityColumn.type, "String")>
-				if (${entityColumn.name} == null) {
-					objectOutput.writeObject("");
-				}
-				else {
-					objectOutput.writeObject(${entityColumn.name});
-				}
+				<#if (serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) == "CLOB")>
+					if (${entityColumn.name} == null) {
+						objectOutput.writeObject("");
+					}
+					else {
+						objectOutput.writeObject(${entityColumn.name});
+					}
+				<#else>
+					if (${entityColumn.name} == null) {
+						objectOutput.writeUTF("");
+					}
+					else {
+						objectOutput.writeUTF(${entityColumn.name});
+					}
+				</#if>
+
 			<#elseif !stringUtil.equals(entityColumn.type, "Blob")>
 				objectOutput.writeObject(${entityColumn.name});
 			</#if>

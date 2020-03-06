@@ -41,18 +41,17 @@ buildChangelogs {
 				return
 			}
 
-			String text = "# " + GUtil.loadProperties(new File(sdkDir, sdkProjectDir.name + "/bnd.bnd"))["Bundle-Name"] + " Change Log"
-
-			String commitRange = ""
-			String version = ""
-
-			List<String> ticketNumbers = []
-
 			File changelogCommitsFile = file("sdk/" + sdkProjectDir.name + "/CHANGELOG.commits")
 
 			if (!changelogCommitsFile.exists()) {
 				return
 			}
+
+			String text = "# " + GUtil.loadProperties(new File(sdkDir, sdkProjectDir.name + "/bnd.bnd"))["Bundle-Name"] + " Change Log"
+
+			String commitRange = ""
+			List<String> ticketNumbers = []
+			String version = ""
 
 			File changelogDescriptionsFile = file("sdk/" + sdkProjectDir.name + "/CHANGELOG.descriptions")
 

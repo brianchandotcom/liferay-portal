@@ -454,13 +454,11 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	private Account _account;
 
-	@CacheField(propagateToInterface = true)
 	private CompanyInfo _companyInfo;
 
 	@CacheField
 	private CompanySecurityBag _companySecurityBag;
 
-	@CacheField(propagateToInterface = true)
 	private Key _keyObj;
 
 	@CacheField(propagateToInterface = true)

@@ -120,7 +120,7 @@ buildChangelogs {
 
 							commits = commits + "\n" + _format("- [" + gitLogAttributes["TICKET-NUMBER"] + "]: " + commitMessage + " (" + sha.substring(0, 10) + ")")
 
-							ticketNumbers.add(_splitTickets(gitLogAttributes["TICKET-NUMBER"]))
+							ticketNumbers.add(gitLogAttributes["TICKET-NUMBER"])
 						}
 					}
 				}
@@ -167,7 +167,7 @@ buildChangelogs {
 
 						dependencies = dependencies + "\n" + _format("- [" + gitLogAttributes["TICKET-NUMBER"] + "]: Update the " + dependencyName + " dependency to version " + dependencyVersion + ".")
 
-						ticketNumbers.add(_splitTickets(gitLogAttributes["TICKET-NUMBER"]))
+						ticketNumbers.add(gitLogAttributes["TICKET-NUMBER"])
 					}
 				}
 
@@ -238,7 +238,15 @@ buildChangelogs {
 					|
 					|## Links""".stripMargin()
 
-				ticketNumbers = ticketNumbers.flatten().unique().sort{
+				Matcher matcher = ticketNumbers =~ /([A-Z]+-\d+)/
+
+				List<String> tickets = []
+
+				while (matcher.find()) {
+					tickets.add(matcher.group(1))
+				}
+
+				tickets = tickets.flatten().unique().sort{
 					ticket1, ticket2 ->
 
 					String ticketType1 = ticket1.substring(0, ticket1.indexOf("-"))
@@ -255,7 +263,7 @@ buildChangelogs {
 					return ticketType1.compareTo(ticketType2)
 				}
 
-				text += _generateTicketLinks(ticketNumbers)
+				text += _generateTicketLinks(tickets)
 			}
 
 			File changelogMarkdownFile = file("sdk/" + sdkProjectDir.name + "/CHANGELOG.markdown")
@@ -418,16 +426,4 @@ private String _generateTicketLinks(List<String> ticketNumbers) {
 	}
 
 	return links
-}
-
-private List<String> _splitTickets(String tickets) {
-	Matcher matcher = tickets =~ /([A-Z]+-\d+)/
-
-	List<String> ticketNumbers = []
-
-	while (matcher.find()) {
-		ticketNumbers.add(matcher.group(1))
-	}
-
-	return ticketNumbers
 }

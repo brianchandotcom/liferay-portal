@@ -179,6 +179,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		Company company = companyPersistence.create(
 			counterLocalService.increment());
 
+		if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+			DBPartitionUtil.setDefaultCompanyId(company.getCompanyId());
+		}
+
 		company.setWebId(webId);
 		company.setMx(mx);
 		company.setSystem(system);

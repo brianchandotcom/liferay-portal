@@ -110,7 +110,7 @@ public class AccountResourceImpl
 			account.getName(), account.getDescription(), _getDomains(account),
 			null, _getStatus(account));
 
-		_updateAccountOrganizations(
+		_setAccountEntryOrganizationRels(
 			accountEntry.getAccountEntryId(), account.getOrganizationIds());
 
 		return _toAccount(accountEntry);
@@ -120,7 +120,8 @@ public class AccountResourceImpl
 	public Account putAccount(Long accountId, Account account)
 		throws Exception {
 
-		_updateAccountOrganizations(accountId, account.getOrganizationIds());
+		_setAccountEntryOrganizationRels(
+			accountId, account.getOrganizationIds());
 
 		return _toAccount(
 			_accountEntryLocalService.updateAccountEntry(
@@ -153,25 +154,7 @@ public class AccountResourceImpl
 		);
 	}
 
-	private Account _toAccount(AccountEntry accountEntry) throws Exception {
-		return new Account() {
-			{
-				description = accountEntry.getDescription();
-				domains = StringUtil.split(accountEntry.getDomains());
-				id = accountEntry.getAccountEntryId();
-				name = accountEntry.getName();
-				organizationIds = transformToArray(
-					_accountEntryOrganizationRelLocalService.
-						getAccountEntryOrganizationRels(
-							accountEntry.getAccountEntryId()),
-					AccountEntryOrganizationRel::getOrganizationId, Long.class);
-				parentAccountId = accountEntry.getParentAccountEntryId();
-				status = accountEntry.getStatus();
-			}
-		};
-	}
-
-	private void _updateAccountOrganizations(
+	private void _setAccountEntryOrganizationRels(
 			long accountId, Long[] organizationIds)
 		throws Exception {
 
@@ -203,6 +186,24 @@ public class AccountResourceImpl
 		_accountEntryOrganizationRelLocalService.
 			addAccountEntryOrganizationRels(
 				accountId, ArrayUtil.toLongArray(addOrganizationIdsSet));
+	}
+
+	private Account _toAccount(AccountEntry accountEntry) throws Exception {
+		return new Account() {
+			{
+				description = accountEntry.getDescription();
+				domains = StringUtil.split(accountEntry.getDomains());
+				id = accountEntry.getAccountEntryId();
+				name = accountEntry.getName();
+				organizationIds = transformToArray(
+					_accountEntryOrganizationRelLocalService.
+						getAccountEntryOrganizationRels(
+							accountEntry.getAccountEntryId()),
+					AccountEntryOrganizationRel::getOrganizationId, Long.class);
+				parentAccountId = accountEntry.getParentAccountEntryId();
+				status = accountEntry.getStatus();
+			}
+		};
 	}
 
 	@Reference

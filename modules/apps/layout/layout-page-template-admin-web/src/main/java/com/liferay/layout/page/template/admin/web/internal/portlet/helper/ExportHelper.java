@@ -82,7 +82,7 @@ public class ExportHelper {
 					layoutPageTemplateCollectionKeyMap,
 					layoutPageTemplateEntry);
 
-				_populateZipWriter(
+				_populatePageTemplatesZipWriter(
 					layoutPageTemplateEntry, layoutPageTemplateCollectionKeyMap,
 					zipWriter);
 			}
@@ -136,7 +136,7 @@ public class ExportHelper {
 					layoutPageTemplateCollectionId));
 	}
 
-	private void _populateZipWriter(
+	private void _populatePageTemplatesZipWriter(
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
 			Map<Long, LayoutPageTemplateCollection>
 				layoutPageTemplateCollectionKeyMap,

@@ -59,7 +59,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			).put(
 				"isLink", false
 			).put(
-				"label", "fields"
+				"label", LanguageUtil.get(request, "fields")
 			).put(
 				"pluginEntryPoint",
 				DataLayoutTaglibUtil.resolveModule(

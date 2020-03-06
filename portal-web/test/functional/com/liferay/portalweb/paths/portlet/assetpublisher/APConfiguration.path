@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SOURCE_SCOPE_ASSET_TYPE_OPTION</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'Asset Entry Type')]/select//option[normalize-space(text())='${key_assetType}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_SCOPE_ASSET_TYPE_SELECT</td>
 	<td>//select[contains(@id,'anyAssetType')]</td>
 	<td></td>

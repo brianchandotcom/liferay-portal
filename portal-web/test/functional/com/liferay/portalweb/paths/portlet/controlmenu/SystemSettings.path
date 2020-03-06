@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>DROPDOWN_MENU</td>
-	<td>//label[contains(.,'${key_fieldLabel}')]/parent::div//div[contains(@class,'option-selected')] | //p[contains(.,'${key_fieldLabel}')]/following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//*[contains(.,'${key_fieldLabel}')]/parent::div//div[contains(@class,'option-selected')] | //p[contains(.,'${key_fieldLabel}')]/following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -118,6 +118,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_CONNECTION_TOOLTIP</td>
+	<td>//span[contains(@class,'lfr-portal-tooltip') and contains(@title,'${key_connectionInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_LINK_LIVE</td>
+	<td>//a[contains(@data-qa-id,'live')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_VARIATION</td>
 	<td>//a[contains(.,'${key_pageVariationName}')]</td>
 	<td></td>

@@ -43,24 +43,22 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			int lineNumber = getLineNumber(content, matcher.start());
 
-			String nextLine = StringUtil.trim(
+			String nextSQLClause = _getSQLClause(
 				SourceUtil.getLine(content, lineNumber + 1));
 
-			String nextSQLValue = _getSQLValue(nextLine, matcher.group(1));
-
-			if (nextSQLValue == null) {
+			if (nextSQLClause == null) {
 				continue;
 			}
 
-			String sqlValue = matcher.group(2);
+			String sqlClause = matcher.group(1);
 
-			if (sqlValue.compareTo(nextSQLValue) > 0) {
+			if (sqlClause.compareTo(nextSQLClause) > 0) {
 				content = StringUtil.replaceFirst(
-					content, nextSQLValue, sqlValue,
+					content, nextSQLClause, sqlClause,
 					getLineStartPos(content, lineNumber + 1));
 
 				return StringUtil.replaceFirst(
-					content, sqlValue, nextSQLValue,
+					content, sqlClause, nextSQLClause,
 					getLineStartPos(content, lineNumber));
 			}
 		}
@@ -68,10 +66,8 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _getSQLValue(String line, String columnName) {
-		Pattern pattern = Pattern.compile("^\\(" + columnName + " ~ (\".*\")");
-
-		Matcher matcher = pattern.matcher(line);
+	private String _getSQLClause(String line) {
+		Matcher matcher = _sqlPattern.matcher(line);
 
 		if (matcher.find()) {
 			return matcher.group(1);
@@ -81,6 +77,6 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _sqlPattern = Pattern.compile(
-		"\\s\\((.*) ~ (\".*\")\\) OR ");
+		"\\s(\\(.* ~ \".*\"\\))( (AND|OR) )?\\\\");
 
 }

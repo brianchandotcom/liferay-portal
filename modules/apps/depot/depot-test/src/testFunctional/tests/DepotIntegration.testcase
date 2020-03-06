@@ -653,8 +653,6 @@ definition {
 
 		Depot.connectSite(siteList = "Site Name");
 
-		ProductMenu.gotoSite(site = "Site Name");
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(
@@ -689,8 +687,6 @@ definition {
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
 		Depot.connectSite(siteList = "Child Site Name");
-
-		ProductMenu.gotoSite(site = "Child Site Name");
 
 		DepotNavigator.openDepotAdmin();
 

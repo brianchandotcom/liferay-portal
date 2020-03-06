@@ -14,10 +14,8 @@
 
 package com.liferay.data.engine.taglib.servlet.taglib;
 
-import com.liferay.data.engine.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutBuilderTag;
 import com.liferay.data.engine.taglib.servlet.taglib.util.DataLayoutTaglibUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -54,9 +52,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			request, "fieldTypesModules",
 			DataLayoutTaglibUtil.resolveFieldTypesModules());
 
-		String npmResolvedPackageName = NPMResolvedPackageNameUtil.get(
-			ServletContextUtil.getServletContext());
-
 		Map<String, Object> sidebarPanels = HashMapBuilder.<String, Object>put(
 			"fields",
 			HashMapBuilder.<String, Object>put(
@@ -67,8 +62,8 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				"label", "fields"
 			).put(
 				"pluginEntryPoint",
-				npmResolvedPackageName + "/data_layout_builder/js/plugins" +
-					"/fields-sidebar/index.es"
+				DataLayoutTaglibUtil.resolveModule(
+					"data-engine-taglib/data_layout_builder/js/plugins/fields-sidebar/index.es")
 			).put(
 				"sidebarPanelId", "fields"
 			).build()

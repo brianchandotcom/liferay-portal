@@ -20,6 +20,7 @@ import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.internal.db.partition.DBPartitionHelperUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -231,20 +232,26 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	public Company checkCompany(String webId, String mx)
 		throws PortalException {
 
-		// Company
+		boolean newCompany = false;
 
 		Company company = companyPersistence.fetchByWebId(webId);
 
 		if (company == null) {
-			long companyId = counterLocalService.increment();
+			newCompany = true;
 
-			company = companyPersistence.create(companyId);
+			// Control tables
+
+			company = companyPersistence.create(
+				counterLocalService.increment());
 
 			try {
-				company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
+
+				// Schema when db partition enabled
+
+				DBPartitionHelperUtil.addPartition(company.getCompanyId());
 			}
-			catch (EncryptorException encryptorException) {
-				throw new SystemException(encryptorException);
+			catch (Exception exception) {
+				throw new PortalException(exception);
 			}
 
 			company.setWebId(webId);
@@ -253,36 +260,15 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			company = companyPersistence.update(company);
 
-			// Account
-
-			String name = webId;
-
-			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-				name = PropsValues.COMPANY_DEFAULT_NAME;
-			}
-
-			updateAccount(
-				company, name, null, null, null, null, null, null, null, null);
-
-			// Company info
-
-			companyInfoPersistence.update(company.getCompanyInfo());
-
-			// Virtual host
-
 			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
 				company = updateVirtualHostname(
-					companyId, _DEFAULT_VIRTUAL_HOST);
-			}
-
-			// Demo settings
-
-			if (webId.equals("liferay.net")) {
-				_addDemoSettings(company);
+					company.getCompanyId(), _DEFAULT_VIRTUAL_HOST);
 			}
 		}
 
-		preregisterCompany(company.getCompanyId());
+		final long companyId = company.getCompanyId();
+
+		Long currentThreadCompanyId = CompanyThreadLocal.getCompanyId();
 
 		Locale localeThreadLocalDefaultLocale =
 			LocaleThreadLocal.getDefaultLocale();
@@ -290,14 +276,47 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			LocaleThreadLocal.getSiteDefaultLocale();
 
 		try {
+			if (newCompany) {
+
+				// Account
+
+				String name = webId;
+
+				if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+					name = PropsValues.COMPANY_DEFAULT_NAME;
+				}
+
+				updateAccount(
+					company, name, null, null, null, null, null, null, null,
+					null);
+
+				// Company info
+
+				try {
+					company.setKey(
+						Encryptor.serializeKey(Encryptor.generateKey()));
+				}
+				catch (EncryptorException encryptorException) {
+					throw new SystemException(encryptorException);
+				}
+
+				companyInfoPersistence.update(company.getCompanyInfo());
+
+				// Demo settings
+
+				if (webId.equals("liferay.net")) {
+					_addDemoSettings(company);
+				}
+			}
+
+			preregisterCompany(company.getCompanyId());
+
 			Locale companyDefaultLocale = LocaleUtil.fromLanguageId(
 				PropsValues.COMPANY_DEFAULT_LOCALE);
 
 			LocaleThreadLocal.setDefaultLocale(companyDefaultLocale);
 
 			LocaleThreadLocal.setSiteDefaultLocale(null);
-
-			final long companyId = company.getCompanyId();
 
 			// Key
 
@@ -378,6 +397,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			LocaleThreadLocal.setDefaultLocale(localeThreadLocalDefaultLocale);
 			LocaleThreadLocal.setSiteDefaultLocale(
 				localeThreadSiteDefaultLocale);
+
+			CompanyThreadLocal.setCompanyId(currentThreadCompanyId);
 		}
 
 		return company;

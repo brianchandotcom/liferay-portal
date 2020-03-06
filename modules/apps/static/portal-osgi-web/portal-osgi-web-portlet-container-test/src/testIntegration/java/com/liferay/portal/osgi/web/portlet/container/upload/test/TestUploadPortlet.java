@@ -30,7 +30,7 @@ public class TestUploadPortlet extends MVCPortlet {
 	public static final String MVC_PATH = "upload_test";
 
 	public static final String PARAMETER_NAME =
-		TestUploadPortlet.class.getCanonicalName();
+		TestUploadPortlet.class.getSimpleName();
 
 	public static final String PORTLET_NAME =
 		"com_liferay_portal_portlet_container_upload_test_TestUploadPortlet";

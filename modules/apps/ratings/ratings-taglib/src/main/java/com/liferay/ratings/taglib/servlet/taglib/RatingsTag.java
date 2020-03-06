@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.ratings.kernel.RatingsType;
+import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
@@ -169,7 +171,7 @@ public class RatingsTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:inTrash", inTrash);
 			httpServletRequest.setAttribute(
-				"liferay-ratings:ratings:type", _type);
+				"liferay-ratings:ratings:type", _getType(httpServletRequest));
 			httpServletRequest.setAttribute("liferay-ratings:ratings:url", url);
 			httpServletRequest.setAttribute(
 				"liferay:ratings:ratings:ratingsEntry", ratingsEntry);
@@ -210,6 +212,44 @@ public class RatingsTag extends IncludeTag {
 		}
 
 		return 0.0;
+	}
+
+	private String _getType(HttpServletRequest httpServletRequest) {
+		if (Validator.isNotNull(_type)) {
+			return _type;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getSiteGroup();
+
+		if (group.isStagingGroup()) {
+			group = group.getLiveGroup();
+		}
+
+		RatingsType ratingsType = null;
+
+		if (group != null) {
+			try {
+				ratingsType = PortletRatingsDefinitionUtil.getRatingsType(
+					themeDisplay.getCompanyId(), group.getGroupId(),
+					_className);
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to get ratings type for group " +
+						group.getGroupId(),
+					portalException);
+			}
+		}
+
+		if (ratingsType == null) {
+			ratingsType = RatingsType.STARS;
+		}
+
+		return ratingsType.getValue();
 	}
 
 	private String _getURL(ThemeDisplay themeDisplay) {

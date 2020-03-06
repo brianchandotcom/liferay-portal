@@ -65,7 +65,7 @@ definition {
 		if (isSet(otherSite)) {
 			Click(locator1 = "Configuration#SCOPE_SELECT");
 
-			MenuItem.click(menuItem = "Other Site...");
+			MenuItem.click(menuItem = "Other Site or Asset Library...");
 
 			SelectFrame(value1 = "relative=top");
 
@@ -1138,7 +1138,7 @@ definition {
 				locator1 = "MenuItem#ANY_MENU_ITEM",
 				value1 = "Global");
 
-			MenuItem.click(menuItem = "Other Site...");
+			MenuItem.click(menuItem = "Other Site or Asset Library...");
 
 			SelectFrame(value1 = "relative=top");
 

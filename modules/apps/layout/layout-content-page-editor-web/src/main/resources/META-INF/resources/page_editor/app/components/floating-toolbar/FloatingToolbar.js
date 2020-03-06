@@ -115,6 +115,10 @@ export default function FloatingToolbar({
 	}, []);
 
 	useEffect(() => {
+		if (!itemRef.current) {
+			return;
+		}
+
 		const {marginRight: itemRefMarginRight} = getComputedStyle(
 			itemRef.current
 		);

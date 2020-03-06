@@ -1253,9 +1253,10 @@ public class AssetPublisherDisplayContext {
 
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		_defaultAssetPublisher = _assetPublisherWebHelper.isDefaultAssetPublisher(
-			_themeDisplay.getLayout(), portletDisplay.getId(),
-			getPortletResource());
+		_defaultAssetPublisher =
+			_assetPublisherWebHelper.isDefaultAssetPublisher(
+				_themeDisplay.getLayout(), portletDisplay.getId(),
+				getPortletResource());
 
 		return _defaultAssetPublisher;
 	}

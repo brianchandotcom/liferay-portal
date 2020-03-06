@@ -151,7 +151,8 @@ public class ExportHelper {
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey();
 
 		String layoutPageTemplateCollectionPath =
-			_ROOT_FOLDER + StringPool.SLASH + layoutPageTemplateCollectionKey;
+			_ROOT_FOLDER_PAGE_TEMPLATES + StringPool.SLASH +
+				layoutPageTemplateCollectionKey;
 
 		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
 
@@ -205,7 +206,7 @@ public class ExportHelper {
 		}
 	}
 
-	private static final String _ROOT_FOLDER = "page-templates";
+	private static final String _ROOT_FOLDER_PAGE_TEMPLATES = "page-templates";
 
 	private static final Log _log = LogFactoryUtil.getLog(ExportHelper.class);
 

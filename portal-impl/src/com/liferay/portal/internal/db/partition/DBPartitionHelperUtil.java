@@ -15,7 +15,6 @@
 package com.liferay.portal.internal.db.partition;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -64,10 +63,7 @@ public class DBPartitionHelperUtil {
 			}
 
 			try (Connection connection = dataSource.getConnection()) {
-				DBInspector dbInspector = new DBInspector(connection);
-
-				_dbPartitionHelper = new DBPartitionHelperImpl(
-					dbInspector.getSchema());
+				_dbPartitionHelper = new DBPartitionHelperImpl(connection);
 			}
 
 			dataSource = new DBPartitionDataSource(dataSource);

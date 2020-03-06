@@ -42,6 +42,20 @@
 	<td></td>
 </tr>
 
+<!--HOMEPAGE_TABLE_VIEW-->
+
+<tr>
+	<td>VALIDATE_PORTLET_FIELD_TYPE_IN_TV</td>
+	<td>//*[contains(.,'(Table View)')]//thead//tr//th[contains(text(),'${key_fieldType}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>VALIDATE_PORTLET_TEXT_INPUT_IN_TV</td>
+	<td>//div[@class='portlet-content portlet-content-editable' and contains(.,'Table View')]//table[contains(.,'${key_textInput}') and contains(.,'Text')]</td>
+	<td></td>
+</tr>
+
 
 </tbody>
 </table>

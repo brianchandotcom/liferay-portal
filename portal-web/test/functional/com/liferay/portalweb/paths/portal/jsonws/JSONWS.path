@@ -19,7 +19,33 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--COMPANY-->
+<tr>
+	<td>COMPANY_COMPANYID_FIELD</td>
+	<td>//textarea[@name='companyId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER-->
+<tr>
+	<td>USER_ANYSPAN_FALSE</td>
+	<td>//span[contains(.,'${key_span}')]/following-sibling::label//input[contains(@id,'False') and @type='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_PASSWORD1</td>
+	<td>//label[contains(.,'password1')]/following-sibling::div//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_PASSWORD2</td>
+	<td>//label[contains(.,'password2')]/following-sibling::div//textarea</td>
+	<td></td>
+</tr>
 <tr>
 	<td>USER_UPDATE_USER</td>
 	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[contains(.,'update-user')]</td>
@@ -34,6 +60,11 @@
 <tr>
 	<td>SECURITY_EMPTY_PAGE</td>
 	<td>//body[not(*)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SECURITY_RESULT</td>
+	<td>//pre[@id='serviceOutput']</td>
 	<td></td>
 </tr>
 </tbody>

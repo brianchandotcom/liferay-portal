@@ -235,7 +235,7 @@ buildChangelogs {
 				text += """\
 					|
 					|
-					|## Links""".stripMargin()
+					|## Markdown Links""".stripMargin()
 
 				Matcher matcher = ticketNumbers =~ /([A-Z]+-\d+)/
 

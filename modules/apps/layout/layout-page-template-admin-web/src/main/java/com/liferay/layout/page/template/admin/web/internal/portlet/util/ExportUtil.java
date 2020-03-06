@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ExportUtil.class)
 public class ExportUtil {
 
-	public File exportPageTemplateDefinitions(
+	public File exportPageTemplates(
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
 		throws PortletException {
 

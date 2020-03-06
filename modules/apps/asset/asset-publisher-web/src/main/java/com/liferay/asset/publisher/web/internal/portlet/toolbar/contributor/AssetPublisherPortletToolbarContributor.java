@@ -223,7 +223,7 @@ public class AssetPublisherPortletToolbarContributor
 			"portletResource", AssetPublisherPortletKeys.ASSET_PUBLISHER);
 
 		boolean addDisplayPageParameter =
-			_assetPublisherWebUtil.isDefaultAssetPublisher(
+			_assetPublisherWebHelper.isDefaultAssetPublisher(
 				themeDisplay.getLayout(), portletDisplay.getId(),
 				assetPublisherDisplayContext.getPortletResource());
 
@@ -292,7 +292,7 @@ public class AssetPublisherPortletToolbarContributor
 	private AssetHelper _assetHelper;
 
 	@Reference
-	private AssetPublisherWebHelper _assetPublisherWebUtil;
+	private AssetPublisherWebHelper _assetPublisherWebHelper;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

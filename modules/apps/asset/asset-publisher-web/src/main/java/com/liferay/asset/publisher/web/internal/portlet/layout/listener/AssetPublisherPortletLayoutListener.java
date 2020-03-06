@@ -83,7 +83,7 @@ public class AssetPublisherPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			if (_assetPublisherWebUtil.isDefaultAssetPublisher(
+			if (_assetPublisherWebHelper.isDefaultAssetPublisher(
 					layout, portletId, StringPool.BLANK)) {
 
 				_journalArticleLocalService.deleteLayoutArticleReferences(
@@ -100,7 +100,7 @@ public class AssetPublisherPortletLayoutListener
 
 			_subscriptionLocalService.deleteSubscriptions(
 				layout.getCompanyId(), PortletPreferences.class.getName(),
-				_assetPublisherWebUtil.getSubscriptionClassPK(
+				_assetPublisherWebHelper.getSubscriptionClassPK(
 					ownerId, ownerType, plid, portletId));
 
 			_deleteLayoutClassedModelUsages(layout, portletId);
@@ -259,7 +259,7 @@ public class AssetPublisherPortletLayoutListener
 	private AssetPublisherHelper _assetPublisherHelper;
 
 	@Reference
-	private AssetPublisherWebHelper _assetPublisherWebUtil;
+	private AssetPublisherWebHelper _assetPublisherWebHelper;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

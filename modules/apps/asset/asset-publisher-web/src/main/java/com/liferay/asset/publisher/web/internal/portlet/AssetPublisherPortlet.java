@@ -238,7 +238,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 					assetPublisherCustomizerRegistry.
 						getAssetPublisherCustomizer(rootPortletId),
 					assetPublisherHelper, assetPublisherWebConfiguration,
-					assetPublisherWebUtil, infoListProviderTracker,
+					assetPublisherWebHelper, infoListProviderTracker,
 					itemSelector, resourceRequest, resourceResponse,
 					resourceRequest.getPreferences());
 
@@ -263,7 +263,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL,
-			assetPublisherWebUtil);
+			assetPublisherWebHelper);
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -294,7 +294,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		assetPublisherWebUtil.subscribe(
+		assetPublisherWebHelper.subscribe(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			themeDisplay.getPlid(), themeDisplay.getPpid());
 	}
@@ -306,7 +306,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		assetPublisherWebUtil.unsubscribe(
+		assetPublisherWebHelper.unsubscribe(
 			themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
 			themeDisplay.getPpid());
 	}
@@ -336,7 +336,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 					assetPublisherCustomizerRegistry.
 						getAssetPublisherCustomizer(rootPortletId),
 					assetPublisherHelper, assetPublisherWebConfiguration,
-					assetPublisherWebUtil, infoListProviderTracker,
+					assetPublisherWebHelper, infoListProviderTracker,
 					itemSelector, renderRequest, renderResponse,
 					renderRequest.getPreferences());
 
@@ -396,7 +396,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
 
 	@Reference
-	protected AssetPublisherWebHelper assetPublisherWebUtil;
+	protected AssetPublisherWebHelper assetPublisherWebHelper;
 
 	@Reference
 	protected AssetRSSHelper assetRSSUtil;

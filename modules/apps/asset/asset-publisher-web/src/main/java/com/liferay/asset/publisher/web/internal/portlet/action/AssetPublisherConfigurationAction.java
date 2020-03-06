@@ -148,7 +148,7 @@ public class AssetPublisherConfigurationAction
 				assetEntryActionRegistry, assetHelper,
 				assetListAssetEntryProvider, assetPublisherCustomizer,
 				assetPublisherHelper, assetPublisherWebConfiguration,
-				assetPublisherWebUtil, infoListProviderTracker, itemSelector,
+				assetPublisherWebHelper, infoListProviderTracker, itemSelector,
 				renderRequest, renderResponse, renderRequest.getPreferences());
 
 		httpServletRequest.setAttribute(
@@ -160,7 +160,7 @@ public class AssetPublisherConfigurationAction
 
 		httpServletRequest.setAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL,
-			assetPublisherWebUtil);
+			assetPublisherWebHelper);
 
 		httpServletRequest.setAttribute(
 			AssetPublisherWebKeys.ITEM_SELECTOR, itemSelector);
@@ -373,7 +373,7 @@ public class AssetPublisherConfigurationAction
 			actionRequest, "assetEntryType");
 
 		for (long assetEntryId : assetEntryIds) {
-			assetPublisherWebUtil.addSelection(
+			assetPublisherWebHelper.addSelection(
 				preferences, assetEntryId, assetEntryOrder, assetEntryType);
 		}
 	}
@@ -384,7 +384,7 @@ public class AssetPublisherConfigurationAction
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!assetPublisherWebUtil.isScopeIdSelectable(
+		if (!assetPublisherWebHelper.isScopeIdSelectable(
 				themeDisplay.getPermissionChecker(), scopeId,
 				themeDisplay.getCompanyGroupId(), themeDisplay.getLayout(),
 				true)) {
@@ -418,7 +418,7 @@ public class AssetPublisherConfigurationAction
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				portal.getClassName(defaultAssetTypeId));
 
-		return assetPublisherWebUtil.getClassName(assetRendererFactory);
+		return assetPublisherWebHelper.getClassName(assetRendererFactory);
 	}
 
 	protected String[] getClassTypeIds(
@@ -834,7 +834,7 @@ public class AssetPublisherConfigurationAction
 	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
 
 	@Reference
-	protected AssetPublisherWebHelper assetPublisherWebUtil;
+	protected AssetPublisherWebHelper assetPublisherWebHelper;
 
 	@Reference
 	protected AssetTagLocalService assetTagLocalService;

@@ -137,7 +137,7 @@ public class AssetPublisherDisplayContext {
 			AssetPublisherCustomizer assetPublisherCustomizer,
 			AssetPublisherHelper assetPublisherHelper,
 			AssetPublisherWebConfiguration assetPublisherWebConfiguration,
-			AssetPublisherWebHelper assetPublisherWebUtil,
+			AssetPublisherWebHelper assetPublisherWebHelper,
 			InfoListProviderTracker infoListProviderTracker,
 			ItemSelector itemSelector, PortletRequest portletRequest,
 			PortletResponse portletResponse,
@@ -150,7 +150,7 @@ public class AssetPublisherDisplayContext {
 		_assetPublisherCustomizer = assetPublisherCustomizer;
 		_assetPublisherHelper = assetPublisherHelper;
 		_assetPublisherWebConfiguration = assetPublisherWebConfiguration;
-		_assetPublisherWebUtil = assetPublisherWebUtil;
+		_assetPublisherWebHelper = assetPublisherWebHelper;
 		_infoListProviderTracker = infoListProviderTracker;
 		_itemSelector = itemSelector;
 		_portletRequest = portletRequest;
@@ -382,7 +382,7 @@ public class AssetPublisherDisplayContext {
 
 		_assetEntryQuery.setPaginationType(getPaginationType());
 
-		_assetPublisherWebUtil.processAssetEntryQuery(
+		_assetPublisherWebHelper.processAssetEntryQuery(
 			_themeDisplay.getUser(), _portletPreferences, _assetEntryQuery);
 
 		_assetPublisherCustomizer.setAssetEntryQueryOptions(
@@ -558,7 +558,7 @@ public class AssetPublisherDisplayContext {
 					_httpServletRequest, "queryTagNames" + queryLogicIndex,
 					tagNames);
 
-				tagNames = _assetPublisherWebUtil.filterAssetTagNames(
+				tagNames = _assetPublisherWebHelper.filterAssetTagNames(
 					_themeDisplay.getScopeGroupId(), tagNames);
 
 				queryValues = StringUtil.merge(tagNames);
@@ -1253,7 +1253,7 @@ public class AssetPublisherDisplayContext {
 
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		_defaultAssetPublisher = _assetPublisherWebUtil.isDefaultAssetPublisher(
+		_defaultAssetPublisher = _assetPublisherWebHelper.isDefaultAssetPublisher(
 			_themeDisplay.getLayout(), portletDisplay.getId(),
 			getPortletResource());
 
@@ -1778,7 +1778,7 @@ public class AssetPublisherDisplayContext {
 			return false;
 		}
 
-		if (!_assetPublisherWebUtil.getEmailAssetEntryAddedEnabled(
+		if (!_assetPublisherWebHelper.getEmailAssetEntryAddedEnabled(
 				_portletPreferences)) {
 
 			return false;
@@ -1823,7 +1823,7 @@ public class AssetPublisherDisplayContext {
 		}
 
 		String defaultAssetPublisherPortletId =
-			_assetPublisherWebUtil.getDefaultAssetPublisherId(
+			_assetPublisherWebHelper.getDefaultAssetPublisherId(
 				_themeDisplay.getLayout());
 
 		if (isDefaultAssetPublisher() ||
@@ -1890,7 +1890,7 @@ public class AssetPublisherDisplayContext {
 
 		assetEntryQuery.setAttribute(
 			"ddmStructureFieldName",
-			_assetPublisherWebUtil.encodeName(
+			_assetPublisherWebHelper.encodeName(
 				classTypeField.getClassTypeId(), getDDMStructureFieldName(),
 				locale));
 
@@ -1994,7 +1994,7 @@ public class AssetPublisherDisplayContext {
 		_assetPublisherPortletInstanceConfiguration;
 	private final AssetPublisherWebConfiguration
 		_assetPublisherWebConfiguration;
-	private final AssetPublisherWebHelper _assetPublisherWebUtil;
+	private final AssetPublisherWebHelper _assetPublisherWebHelper;
 	private String _assetTagName;
 	private Map<String, Serializable> _attributes;
 	private long[] _availableClassNameIds;

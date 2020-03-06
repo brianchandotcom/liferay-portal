@@ -100,9 +100,9 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 
 		classTypesAssetRendererFactories.add(assetRendererFactory);
 
-		String className = assetPublisherWebUtil.getClassName(assetRendererFactory);
+		String className = assetPublisherWebHelper.getClassName(assetRendererFactory);
 
-		Long[] assetSelectedClassTypeIds = assetPublisherWebUtil.getClassTypeIds(portletPreferences, className, classTypes);
+		Long[] assetSelectedClassTypeIds = assetPublisherWebHelper.getClassTypeIds(portletPreferences, className, classTypes);
 
 		// Left list
 
@@ -250,7 +250,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 
 	<%
 	for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-		String className = assetPublisherWebUtil.getClassName(curRendererFactory);
+		String className = assetPublisherWebHelper.getClassName(curRendererFactory);
 	%>
 
 		Util.toggleSelectBox(
@@ -323,7 +323,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 			String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
 
 			for (ClassTypeField classTypeField : classTypeFields) {
-				String value = assetPublisherWebUtil.encodeName(classTypeField.getClassTypeId(), classTypeField.getName(), null);
+				String value = assetPublisherWebHelper.encodeName(classTypeField.getClassTypeId(), classTypeField.getName(), null);
 				String selectedOrderByColumn1 = StringPool.BLANK;
 				String selectedOrderByColumn2 = StringPool.BLANK;
 
@@ -464,7 +464,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 
 		<%
 		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-			String className = assetPublisherWebUtil.getClassName(curRendererFactory);
+			String className = assetPublisherWebHelper.getClassName(curRendererFactory);
 		%>
 
 			<portlet:namespace />toggle<%= className %>(removeOrderBySubtype);

@@ -119,7 +119,7 @@ public class AssetEntriesCheckerHelper {
 				portletPreferencesModel.getPortletId(),
 				portletPreferencesModel.getPreferences());
 
-		if (!_assetPublisherWebUtil.getEmailAssetEntryAddedEnabled(
+		if (!_assetPublisherWebHelper.getEmailAssetEntryAddedEnabled(
 				portletPreferences)) {
 
 			return;
@@ -150,7 +150,7 @@ public class AssetEntriesCheckerHelper {
 				portletPreferencesModel.getCompanyId(),
 				com.liferay.portal.kernel.model.PortletPreferences.class.
 					getName(),
-				_assetPublisherWebUtil.getSubscriptionClassPK(
+				_assetPublisherWebHelper.getSubscriptionClassPK(
 					portletPreferencesModel.getPlid(),
 					portletPreferencesModel.getPortletId()));
 
@@ -249,16 +249,16 @@ public class AssetEntriesCheckerHelper {
 
 		AssetEntry assetEntry = assetEntries.get(0);
 
-		String fromName = _assetPublisherWebUtil.getEmailFromName(
+		String fromName = _assetPublisherWebHelper.getEmailFromName(
 			portletPreferences, assetEntry.getCompanyId());
-		String fromAddress = _assetPublisherWebUtil.getEmailFromAddress(
+		String fromAddress = _assetPublisherWebHelper.getEmailFromAddress(
 			portletPreferences, assetEntry.getCompanyId());
 
 		Map<Locale, String> localizedSubjectMap =
-			_assetPublisherWebUtil.getEmailAssetEntryAddedSubjectMap(
+			_assetPublisherWebHelper.getEmailAssetEntryAddedSubjectMap(
 				portletPreferences);
 		Map<Locale, String> localizedBodyMap =
-			_assetPublisherWebUtil.getEmailAssetEntryAddedBodyMap(
+			_assetPublisherWebHelper.getEmailAssetEntryAddedBodyMap(
 				portletPreferences);
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -289,7 +289,7 @@ public class AssetEntriesCheckerHelper {
 		List<Subscription> subscriptions, PortletPreferences portletPreferences,
 		List<AssetEntry> assetEntries) {
 
-		if (!_assetPublisherWebUtil.getEmailAssetEntryAddedEnabled(
+		if (!_assetPublisherWebHelper.getEmailAssetEntryAddedEnabled(
 				portletPreferences)) {
 
 			return;
@@ -351,7 +351,7 @@ public class AssetEntriesCheckerHelper {
 	private AssetPublisherHelper _assetPublisherHelper;
 
 	@Reference
-	private AssetPublisherWebHelper _assetPublisherWebUtil;
+	private AssetPublisherWebHelper _assetPublisherWebHelper;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

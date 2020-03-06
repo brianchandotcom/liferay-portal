@@ -167,7 +167,7 @@ portletURL.setParameter("eventName", eventName);
 
 				if (response.success) {
 					result.className =
-						'<%= assetPublisherWebUtil.getClassName(assetRendererFactory) %>';
+						'<%= assetPublisherWebHelper.getClassName(assetRendererFactory) %>';
 					result.displayValue = response.displayValue;
 					result.value = response.value;
 

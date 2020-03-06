@@ -70,7 +70,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 
 		<%
 		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-			String className = assetPublisherWebUtil.getClassName(curRendererFactory);
+			String className = assetPublisherWebHelper.getClassName(curRendererFactory);
 		%>
 
 			Liferay.Util.setFormValues(form, {

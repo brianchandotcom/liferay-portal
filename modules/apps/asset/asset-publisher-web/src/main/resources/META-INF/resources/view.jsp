@@ -30,7 +30,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 	<div class="subscribe-action">
 		<c:if test="<%= assetPublisherDisplayContext.isSubscriptionEnabled() %>">
 			<c:choose>
-				<c:when test="<%= assetPublisherWebUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), portletDisplay.getId()) %>">
+				<c:when test="<%= assetPublisherWebHelper.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), portletDisplay.getId()) %>">
 					<portlet:actionURL name="unsubscribe" var="unsubscribeURL">
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>

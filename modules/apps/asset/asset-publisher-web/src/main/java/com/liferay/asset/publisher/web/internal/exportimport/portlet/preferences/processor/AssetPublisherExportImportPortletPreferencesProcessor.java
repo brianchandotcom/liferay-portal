@@ -1200,7 +1200,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			}
 
 			try {
-				if (!assetPublisherWebUtil.isScopeIdSelectable(
+				if (!assetPublisherWebHelper.isScopeIdSelectable(
 						PermissionThreadLocal.getPermissionChecker(), newValue,
 						companyGroupId, layout, false)) {
 
@@ -1258,7 +1258,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	protected AssetPublisherHelper assetPublisherHelper;
 
 	@Reference
-	protected AssetPublisherWebHelper assetPublisherWebUtil;
+	protected AssetPublisherWebHelper assetPublisherWebHelper;
 
 	@Reference
 	protected AssetVocabularyLocalService assetVocabularyLocalService;

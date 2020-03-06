@@ -159,7 +159,7 @@ public class AssetPublisherConfigurationAction
 			AssetPublisherWebKeys.ASSET_PUBLISHER_HELPER, assetPublisherHelper);
 
 		httpServletRequest.setAttribute(
-			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL,
+			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_HELPER,
 			assetPublisherWebHelper);
 
 		httpServletRequest.setAttribute(

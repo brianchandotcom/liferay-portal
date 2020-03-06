@@ -37,8 +37,8 @@ public class AssetPublisherWebKeys {
 	public static final String ASSET_PUBLISHER_WEB_CONFIGURATION =
 		"ASSET_PUBLISHER_WEB_CONFIGURATION";
 
-	public static final String ASSET_PUBLISHER_WEB_UTIL =
-		"ASSET_PUBLISHER_WEB_UTIL";
+	public static final String ASSET_PUBLISHER_WEB_HELPER =
+		"ASSET_PUBLISHER_WEB_HELPER";
 
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 

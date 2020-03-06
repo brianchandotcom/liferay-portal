@@ -262,7 +262,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL,
+			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_HELPER,
 			assetPublisherWebHelper);
 
 		super.render(renderRequest, renderResponse);

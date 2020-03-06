@@ -64,13 +64,13 @@ export default withRouter(({
     return(
         <>
             <PageHeader />
-            LATEST QUESTION ASKED
             <Questions />
         </>
     );
 
     function PageHeader() {
         return(
+            <>
             <div className="d-flex flex-row justify-content-between">
                 <div className="d-flex">
                     <UserIcon
@@ -96,6 +96,12 @@ export default withRouter(({
                     </ClayButton>
                 </div>
             </div>
+            <div>
+                <h1>
+                    Latest Questions Asked
+                </h1>
+            </div>
+            </>
         );
     }
 

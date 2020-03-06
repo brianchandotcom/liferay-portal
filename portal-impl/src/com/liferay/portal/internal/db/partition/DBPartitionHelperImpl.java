@@ -14,6 +14,7 @@
 
 package com.liferay.portal.internal.db.partition;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -44,13 +46,12 @@ public class DBPartitionHelperImpl implements DBPartitionHelper {
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
-		String schemaName = "company" + companyId;
-
 		try {
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						"create schema if not exists " + schemaName +
-							" character set utf8")) {
+						"create schema if not exists " +
+							_getSchemaName(companyId) +
+								" character set utf8")) {
 
 				preparedStatement.executeUpdate();
 			}
@@ -70,15 +71,16 @@ public class DBPartitionHelperImpl implements DBPartitionHelper {
 					if (_isControlTable(dbInspector, tableName)) {
 						statement.executeUpdate(
 							StringBundler.concat(
-								"create view ", schemaName, StringPool.PERIOD,
-								tableName, " as select * from companyDefault.",
-								tableName));
+								"create view ", _getSchemaName(companyId),
+								StringPool.PERIOD, tableName, " as select * ",
+								"from companyDefault.", tableName));
 					}
 					else {
 						statement.executeUpdate(
 							StringBundler.concat(
-								"create table ", schemaName, StringPool.PERIOD,
-								tableName, " like companyDefault.", tableName));
+								"create table ", _getSchemaName(companyId),
+								StringPool.PERIOD, tableName, " like ",
+								"companyDefault.", tableName));
 					}
 				}
 			}
@@ -116,13 +118,17 @@ public class DBPartitionHelperImpl implements DBPartitionHelper {
 					statement.execute("USE companyDefault");
 				}
 				else {
-					statement.execute("USE company" + companyId);
+					statement.execute("USE " + _getSchemaName(companyId));
 				}
 			}
 		}
 		catch (SQLException sqlException) {
 			throw new ORMException(sqlException);
 		}
+	}
+
+	private String _getSchemaName(long companyId) {
+		return _DATABASE_PARTITION_INSTANCE_ID + CharPool.UNDERLINE + companyId;
 	}
 
 	private boolean _isControlTable(DBInspector dbInspector, String tableName)
@@ -137,6 +143,9 @@ public class DBPartitionHelperImpl implements DBPartitionHelper {
 
 		return false;
 	}
+
+	private static final String _DATABASE_PARTITION_INSTANCE_ID = PropsUtil.get(
+		"database.partition.instance.id");
 
 	private volatile long _defaultCompanyId;
 

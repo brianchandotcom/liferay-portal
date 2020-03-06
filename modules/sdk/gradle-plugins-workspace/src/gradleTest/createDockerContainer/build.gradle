@@ -53,5 +53,5 @@ runGradleTest {
 untarOverrideTestScript {
 	dependsOn "copyOverrideTestScript"
 	from tarTree(rootProject.buildDir.path + "/override_test.sh.tar")
-	into "${buildDir}"
+	into buildDir
 }

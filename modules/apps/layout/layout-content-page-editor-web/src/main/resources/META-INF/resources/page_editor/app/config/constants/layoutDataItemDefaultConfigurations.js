@@ -12,6 +12,7 @@
  * details.
  */
 
+import {CONTAINER_TYPES} from './containerTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from './layoutDataItemTypes';
 
 export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
@@ -25,7 +26,7 @@ export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 		paddingBottom: 3,
 		paddingHorizontal: 3,
 		paddingTop: 3,
-		type: 'fixed',
+		type: CONTAINER_TYPES.fixed,
 	},
 
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: {

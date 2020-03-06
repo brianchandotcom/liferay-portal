@@ -244,7 +244,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 								<liferay-ui:search-container-column-text
 									cssClass="table-cell-expand table-cell-minw-200 table-title"
-									name="title"
+									name="name"
 								>
 									<liferay-document-library:mime-type-sticker
 										cssClass="sticker-secondary"
@@ -435,7 +435,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 								<liferay-ui:search-container-column-text
 									cssClass="table-cell-expand table-cell-minw-200 table-title"
-									name="title"
+									name="name"
 								>
 									<div class="sticker sticker-document sticker-secondary">
 										<clay:icon

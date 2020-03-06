@@ -84,7 +84,7 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 						%>
 
 						<liferay-ui:search-container-column-text
-							name="title"
+							name="name"
 						>
 							<aui:a href="<%= rowURL.toString() %>">
 								<%= curFolder.getName() %>
@@ -99,7 +99,7 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 
 						<c:if test="<%= fileVersion.isApproved() %>">
 							<liferay-ui:search-container-column-text
-								name="title"
+								name="name"
 							>
 
 								<%

@@ -320,7 +320,7 @@ renderResponse.setTitle(headerTitle);
 
 					<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
 
-					<aui:input name="title" />
+					<aui:input label="name" name="title" />
 
 					<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 						<aui:input name="description" />

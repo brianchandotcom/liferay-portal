@@ -52,7 +52,7 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 				modelVar="curFileVersion"
 			>
 				<liferay-ui:search-container-column-text
-					name="title"
+					name="name"
 					truncate="<%= true %>"
 				>
 					<c:choose>

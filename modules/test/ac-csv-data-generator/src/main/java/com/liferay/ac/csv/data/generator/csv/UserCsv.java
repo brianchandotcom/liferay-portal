@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -197,7 +198,8 @@ public class UserCsv {
 					else {
 						Role newRole = _roleLocalService.addRole(
 							_generatedDataUtil.getDefaultUserId(), null, 0,
-							name, null, null, 0, null, null);
+							name, null, null, RoleConstants.TYPE_REGULAR, null,
+							null);
 
 						_generatedDataUtil.putRole(name, newRole);
 

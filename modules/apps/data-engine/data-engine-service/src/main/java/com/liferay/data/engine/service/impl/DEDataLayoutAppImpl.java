@@ -17,7 +17,6 @@ package com.liferay.data.engine.service.impl;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
-import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataLayout;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.data.engine.service.DEDataLayoutApp;
@@ -52,6 +51,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -81,10 +81,8 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
 				ddmStructure.getClassNameId(), deDataLayout.getDataLayoutKey(),
 				_getDDMStructureVersionId(deDataLayout.getDataDefinitionId()),
-				LocalizedValueUtil.toLocaleStringMap(deDataLayout.getName()),
-				LocalizedValueUtil.toLocaleStringMap(
-					deDataLayout.getDescription()),
-				content, serviceContext);
+				deDataLayout.getName(), deDataLayout.getDescription(), content,
+				serviceContext);
 
 		_addDataDefinitionFieldLinks(
 			ddmStructureLayout.getGroupId(), ddmStructure.getClassNameId(),
@@ -228,10 +226,8 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 			_ddmStructureLayoutLocalService.updateStructureLayout(
 				deDataLayout.getId(),
 				_getDDMStructureVersionId(ddmStructure.getStructureId()),
-				LocalizedValueUtil.toLocaleStringMap(deDataLayout.getName()),
-				LocalizedValueUtil.toLocaleStringMap(
-					deDataLayout.getDescription()),
-				content, serviceContext);
+				deDataLayout.getName(), deDataLayout.getDescription(), content,
+				serviceContext);
 
 		_deDataDefinitionFieldLinkLocalService.deleteDEDataDefinitionFieldLinks(
 			ddmStructure.getClassNameId(), deDataLayout.getId());
@@ -397,14 +393,14 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 		return deDataLayouts;
 	}
 
-	private void _validate(String content, Map<String, Object> name)
+	private void _validate(String content, Map<Locale, String> name)
 		throws PortalException {
 
 		if (MapUtil.isEmpty(name)) {
 			throw new PortalException("Name is required");
 		}
 
-		for (Map.Entry<String, Object> entry : name.entrySet()) {
+		for (Map.Entry<Locale, String> entry : name.entrySet()) {
 			if (Validator.isNull(entry.getValue())) {
 				throw new PortalException("Name is required");
 			}

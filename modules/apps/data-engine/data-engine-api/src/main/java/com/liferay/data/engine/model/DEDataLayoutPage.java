@@ -17,6 +17,7 @@ package com.liferay.data.engine.model;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -28,11 +29,11 @@ public class DEDataLayoutPage implements Serializable {
 		return _deDataLayoutRows;
 	}
 
-	public Map<String, Object> getDescription() {
+	public Map<Locale, String> getDescription() {
 		return _description;
 	}
 
-	public Map<String, Object> getTitle() {
+	public Map<Locale, String> getTitle() {
 		return _title;
 	}
 
@@ -40,16 +41,16 @@ public class DEDataLayoutPage implements Serializable {
 		_deDataLayoutRows = deDataLayoutRows;
 	}
 
-	public void setDescription(Map<String, Object> description) {
+	public void setDescription(Map<Locale, String> description) {
 		_description = description;
 	}
 
-	public void setTitle(Map<String, Object> title) {
+	public void setTitle(Map<Locale, String> title) {
 		_title = title;
 	}
 
 	private List<DEDataLayoutRow> _deDataLayoutRows;
-	private Map<String, Object> _description;
-	private Map<String, Object> _title;
+	private Map<Locale, String> _description;
+	private Map<Locale, String> _title;
 
 }

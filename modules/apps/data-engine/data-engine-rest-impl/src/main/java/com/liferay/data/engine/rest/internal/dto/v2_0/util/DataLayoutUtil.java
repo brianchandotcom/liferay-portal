@@ -96,9 +96,11 @@ public class DataLayoutUtil {
 					deDataLayout.getDEDataLayoutPages());
 				dateCreated = deDataLayout.getCreateDate();
 				dateModified = deDataLayout.getModifiedDate();
-				description = deDataLayout.getDescription();
+				description = LocalizedValueUtil.toStringObjectMap(
+					deDataLayout.getDescription());
 				id = deDataLayout.getId();
-				name = deDataLayout.getName();
+				name = LocalizedValueUtil.toStringObjectMap(
+					deDataLayout.getName());
 				paginationMode = deDataLayout.getPaginationMode();
 				siteId = deDataLayout.getGroupId();
 				userId = deDataLayout.getUserId();
@@ -124,11 +126,14 @@ public class DataLayoutUtil {
 				setCreateDate(dataLayout.getDateCreated());
 				setDEDataLayoutPages(
 					_toDEDataLayoutPages(dataLayout.getDataLayoutPages()));
-				setDescription(dataLayout.getDescription());
+				setDescription(
+					LocalizedValueUtil.toLocaleStringMap(
+						dataLayout.getDescription()));
 				setGroupId(dataLayout.getSiteId());
 				setId(dataLayout.getId());
 				setModifiedDate(dataLayout.getDateModified());
-				setName(dataLayout.getName());
+				setName(
+					LocalizedValueUtil.toLocaleStringMap(dataLayout.getName()));
 				setPaginationMode(dataLayout.getPaginationMode());
 				setUserId(dataLayout.getUserId());
 			}
@@ -225,8 +230,10 @@ public class DataLayoutUtil {
 			{
 				dataLayoutRows = _toDataLayoutRows(
 					deDataLayoutPage.getDEDataLayoutRows());
-				description = deDataLayoutPage.getDescription();
-				title = deDataLayoutPage.getTitle();
+				description = LocalizedValueUtil.toStringObjectMap(
+					deDataLayoutPage.getDescription());
+				title = LocalizedValueUtil.toStringObjectMap(
+					deDataLayoutPage.getTitle());
 			}
 		};
 	}
@@ -450,8 +457,12 @@ public class DataLayoutUtil {
 			{
 				setDEDataLayoutRows(
 					_toDEDataLayoutRows(dataLayoutPage.getDataLayoutRows()));
-				setDescription(dataLayoutPage.getDescription());
-				setTitle(dataLayoutPage.getTitle());
+				setDescription(
+					LocalizedValueUtil.toLocaleStringMap(
+						dataLayoutPage.getDescription()));
+				setTitle(
+					LocalizedValueUtil.toLocaleStringMap(
+						dataLayoutPage.getTitle()));
 			}
 		};
 	}

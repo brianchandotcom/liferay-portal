@@ -58,15 +58,15 @@ window.themeDisplay = {
 	getDefaultLanguageId: () => 'en_US',
 	getLanguageId: () => 'en_US',
 	getPathContext: () => '/',
-	getPathThemeImages: () => 'http://localhost:8080/o/admin-theme/images'
+	getPathThemeImages: () => 'http://localhost:8080/o/admin-theme/images',
 };
 
 window.util = {
-	isEqual: (a, b) => a === b
+	isEqual: (a, b) => a === b,
 };
 
 window.Liferay = {
 	...(window.Liferay || {}),
 	ThemeDisplay: window.themeDisplay,
-	Util: window.util
+	Util: window.util,
 };

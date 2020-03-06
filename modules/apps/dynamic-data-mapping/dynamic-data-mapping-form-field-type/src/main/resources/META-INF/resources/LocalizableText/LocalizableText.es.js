@@ -27,7 +27,7 @@ class LocalizableText extends Component {
 		this.emit(name, {
 			fieldInstance: this,
 			originalEvent: event,
-			value
+			value,
 		});
 	}
 
@@ -43,10 +43,10 @@ class LocalizableText extends Component {
 						.replace('_', '-')
 						.toLowerCase(),
 					isDefault: this._isDefaultLocale(availableLocale.localeId),
-					isTranslated: this._isTranslated(availableLocale.localeId)
+					isTranslated: this._isTranslated(availableLocale.localeId),
 				};
 			}),
-			value: this._convertValueToString(value)
+			value: this._convertValueToString(value),
 		};
 	}
 
@@ -93,13 +93,13 @@ class LocalizableText extends Component {
 
 		const newValue = JSON.stringify({
 			...valueJSON,
-			[editingLocale.localeId]: target.value
+			[editingLocale.localeId]: target.value,
 		});
 
 		this.setState(
 			{
 				_value: target.value,
-				value: newValue
+				value: newValue,
 			},
 			() => this.dispatchEvent(event, 'fieldEdited', newValue)
 		);
@@ -119,12 +119,12 @@ class LocalizableText extends Component {
 		this.setState({
 			editingLocale: {
 				...editingLocale,
-				icon: editingLocale.localeId.replace('_', '-').toLowerCase()
-			}
+				icon: editingLocale.localeId.replace('_', '-').toLowerCase(),
+			},
 		});
 
 		this.setState({
-			_value: this.getEditingValue()
+			_value: this.getEditingValue(),
 		});
 	}
 
@@ -188,7 +188,7 @@ LocalizableText.STATE = {
 
 	defaultLocale: Config.object().value({
 		icon: themeDisplay.getDefaultLanguageId(),
-		localeId: themeDisplay.getDefaultLanguageId()
+		localeId: themeDisplay.getDefaultLanguageId(),
 	}),
 
 	/**
@@ -223,7 +223,7 @@ LocalizableText.STATE = {
 				.getDefaultLanguageId()
 				.replace('_', '-')
 				.toLowerCase(),
-			localeId: themeDisplay.getDefaultLanguageId()
+			localeId: themeDisplay.getDefaultLanguageId(),
 		}),
 
 	/**
@@ -368,7 +368,7 @@ LocalizableText.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.oneOfType([Config.object(), Config.string()]).value({})
+	value: Config.oneOfType([Config.object(), Config.string()]).value({}),
 };
 
 Soy.register(LocalizableText, templates);

@@ -88,9 +88,9 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 				content, serviceContext);
 
 		_addDataDefinitionFieldLinks(
-			ddmStructure.getClassNameId(), deDataLayout.getDataDefinitionId(),
-			ddmStructureLayout.getStructureLayoutId(), _getFieldNames(content),
-			ddmStructureLayout.getGroupId());
+			ddmStructureLayout.getGroupId(), ddmStructure.getClassNameId(),
+			ddmStructureLayout.getStructureLayoutId(),
+			deDataLayout.getDataDefinitionId(), _getFieldNames(content));
 
 		return DataLayoutUtil.toDEDataLayout(ddmStructureLayout);
 	}
@@ -138,10 +138,10 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 
 	@Override
 	public DEDataLayout fetchDataLayout(
-		long classNameId, String dataLayoutKey, long groupId) {
+		long groupId, long classNameId, String dataLayoutKey) {
 
 		try {
-			return getDataLayout(classNameId, dataLayoutKey, groupId);
+			return getDataLayout(groupId, classNameId, dataLayoutKey);
 		}
 		catch (Exception exception) {
 			return null;
@@ -157,7 +157,7 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 
 	@Override
 	public DEDataLayout getDataLayout(
-			long classNameId, String dataLayoutKey, long groupId)
+			long groupId, long classNameId, String dataLayoutKey)
 		throws Exception {
 
 		return DataLayoutUtil.toDEDataLayout(
@@ -259,16 +259,16 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 			ddmStructure.getClassNameId(), deDataLayout.getId());
 
 		_addDataDefinitionFieldLinks(
-			ddmStructure.getClassNameId(), ddmStructure.getStructureId(),
-			deDataLayout.getId(), _getFieldNames(content),
-			ddmStructure.getGroupId());
+			ddmStructure.getGroupId(), ddmStructure.getClassNameId(),
+			deDataLayout.getId(), ddmStructure.getStructureId(),
+			_getFieldNames(content));
 
 		return DataLayoutUtil.toDEDataLayout(ddmStructureLayout);
 	}
 
 	private void _addDataDefinitionFieldLinks(
-			long classNameId, long dataDefinitionId, long dataLayoutId,
-			List<String> fieldNames, long groupId)
+			long groupId, long classNameId, long dataLayoutId,
+			long dataDefinitionId, List<String> fieldNames)
 		throws Exception {
 
 		for (String fieldName : fieldNames) {

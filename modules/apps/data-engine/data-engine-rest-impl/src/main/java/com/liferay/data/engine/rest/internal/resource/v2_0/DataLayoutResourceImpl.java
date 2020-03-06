@@ -134,8 +134,8 @@ public class DataLayoutResourceImpl
 
 		return DataLayoutUtil.toDataLayout(
 			_deDataLayoutApp.getDataLayout(
-				dataDefinitionContentType.getClassNameId(), dataLayoutKey,
-				siteId));
+				siteId, dataDefinitionContentType.getClassNameId(),
+				dataLayoutKey));
 	}
 
 	@Override

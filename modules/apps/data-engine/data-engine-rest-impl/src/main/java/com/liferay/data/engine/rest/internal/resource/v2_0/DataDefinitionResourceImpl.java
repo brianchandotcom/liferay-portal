@@ -606,8 +606,8 @@ public class DataDefinitionResourceImpl
 			dataDefinitionId);
 
 		DEDataLayout deDataLayout = _deDataLayoutApp.getDataLayout(
-			ddmStructure.getClassNameId(), ddmStructure.getStructureKey(),
-			ddmStructure.getGroupId());
+			ddmStructure.getGroupId(), ddmStructure.getClassNameId(),
+			ddmStructure.getStructureKey());
 
 		return deDataLayout.getId();
 	}

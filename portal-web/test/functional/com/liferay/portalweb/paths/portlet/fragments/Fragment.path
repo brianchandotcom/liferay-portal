@@ -193,7 +193,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_HEADER_DELETE_BUTTON</td>
-	<td>//div[contains(@data-drag-source-label,'${key_fragmentName}')]//button[*[name()='svg'][*[contains(@class,'times-circle-x')]]]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//button[*[name()='svg'][*[contains(@class,'times-circle')]]]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -26,14 +26,6 @@ export const TextField = ({field, onValueSelect, value}) => {
 
 	const isMounted = useIsMounted();
 
-	const additionalAttributes = {
-		...(field.typeOptions && field.typeOptions.validation
-			? field.typeOptions.validation
-			: {}),
-		errorMessage: undefined,
-		regexp: undefined,
-	};
-
 	const selectValue = useCallback(
 		value => {
 			if (isMounted()) {
@@ -45,18 +37,11 @@ export const TextField = ({field, onValueSelect, value}) => {
 
 	const [debouncedOnValueSelect] = useDebounceCallback(selectValue, 500);
 
-	const fieldType =
-		field.typeOptions && field.typeOptions.validation
-			? field.typeOptions.validation.type
-			: 'text';
-
-	if (fieldType === 'pattern') {
-		additionalAttributes.type = 'text';
-		additionalAttributes.pattern =
-			field.typeOptions && field.typeOptions.validation
-				? field.typeOptions.validation.regexp
-				: '.*?';
-	}
+	const {
+		additionalProps = {},
+		type = 'text',
+		validationErrorMessage,
+	} = parseTypeOptions(field.typeOptions);
 
 	return (
 		<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
@@ -76,14 +61,7 @@ export const TextField = ({field, onValueSelect, value}) => {
 						debouncedOnValueSelect(event.target.value);
 					}
 					else {
-						setErrorMessage(
-							field.typeOptions && field.typeOptions.validation
-								? field.typeOptions.validation.errorMessage ||
-										Liferay.Language.get(
-											'you-have-entered-invalid-data'
-										)
-								: ''
-						);
+						setErrorMessage(validationErrorMessage);
 					}
 
 					setCurrentValue(event.target.value);
@@ -92,9 +70,9 @@ export const TextField = ({field, onValueSelect, value}) => {
 					field.typeOptions ? field.typeOptions.placeholder : ''
 				}
 				sizing="sm"
-				type={fieldType}
-				value={currentValue || value || field.defaultValue}
-				{...additionalAttributes}
+				type={type}
+				value={currentValue || value || field.defaultValue || ''}
+				{...additionalProps}
 			/>
 
 			{errorMessage && (
@@ -108,6 +86,68 @@ export const TextField = ({field, onValueSelect, value}) => {
 		</ClayForm.Group>
 	);
 };
+
+function parseTypeOptions(typeOptions) {
+	if (!typeOptions.validation) {
+		return {type: 'text'};
+	}
+
+	const {
+		errorMessage,
+		type: validationType,
+		...properties
+	} = typeOptions.validation;
+
+	const result = {
+		additionalProps: {},
+		type: 'text',
+		validationErrorMessage:
+			errorMessage ||
+			Liferay.Language.get('you-have-entered-invalid-data'),
+	};
+
+	if (!validationType) {
+		result.type = 'text';
+
+		if (Number.isInteger(properties.minLength)) {
+			result.additionalProps.minLength = properties.minLength;
+		}
+
+		if (Number.isInteger(properties.maxLength)) {
+			result.additionalProps.maxLength = properties.maxLength;
+		}
+	}
+
+	if (validationType === 'pattern') {
+		result.additionalProps = {pattern: typeOptions.validation.regexp};
+	}
+
+	if (validationType === 'url' || validationType === 'email') {
+		result.type = validationType;
+
+		if (Number.isInteger(properties.minLength)) {
+			result.additionalProps.minLength = properties.minLength;
+		}
+
+		if (Number.isInteger(properties.maxLength)) {
+			result.additionalProps.maxLength = properties.maxLength;
+		}
+	}
+
+	if (validationType === 'number') {
+		result.type = validationType;
+
+		if (Number.isInteger(properties.min)) {
+			result.additionalProps.min = properties.min;
+		}
+
+		if (Number.isInteger(properties.max)) {
+			result.additionalProps.max = properties.max;
+		}
+	}
+
+	return result;
+}
 
 TextField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,

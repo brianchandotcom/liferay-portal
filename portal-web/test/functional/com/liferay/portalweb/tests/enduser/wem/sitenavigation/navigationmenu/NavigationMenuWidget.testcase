@@ -14,6 +14,10 @@ definition {
 
 		task ("Add a site via JSON") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
+
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Global",
+				siteNavigationMenuName = "Global Navigation Menu Name");
 		}
 	}
 
@@ -25,6 +29,10 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			JSONSitenavigation.deleteSiteNavigationMenu(
+				groupName = "Global",
+				siteNavigationMenuName = "Global Navigation Menu Name");
 		}
 	}
 
@@ -75,6 +83,123 @@ definition {
 				value1 = "Liferay");
 
 			AssertLocation(value1 = "https://www.liferay.com/");
+		}
+	}
+
+	@description = "This is a test for LPS-107833. Can not view Global Navigation Menus via Navigation Menu widget in normal site if the user without View permission."
+	@priority = "4"
+	test CannotViewGlobalNavigationMenuWithoutPermission {
+		task ("Add a navigation menu in Global site") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "global");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Global Navigation Menu Name");
+		}
+
+		task ("Add a URL item") {
+			NavigationMenusAdmin.addItem(
+				item = "URL",
+				url = "https://www.liferay.com/",
+				urlName = "Liferay");
+		}
+
+		task ("Assert the URL item was added") {
+			NavigationMenusAdmin.viewItem(itemName = "Liferay");
+		}
+
+		task ("Uncheck the View permission of Guests") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "global");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Permissions",
+				rowEntry = "Global Navigation Menu Name");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Uncheck(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			AssertNotChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			PortletEntry.save();
+		}
+
+		task ("Select Global Navigation Menu in normal site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.chooseMenu(menuName = "Global Navigation Menu Name (Global)");
+
+			Portlet.saveAndCloseConfig();
+
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
+		}
+
+		task ("Assert Guests can not View the content of Navigation Menu portlet") {
+			User.logoutPG();
+
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			AssertElementNotPresent(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
+		}
+
+		task ("Log in as Test Test") {
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
+	}
+
+	@description = "This is a test for LPS-107833. Can edit Global Navigation Menu via Navigation Menu widget in normal site."
+	@priority = "4"
+	test EditGlobalNavigationMenuViaWidgetInNormalSite {
+		task ("Select Global Navigation Menu in normal site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.chooseMenu(menuName = "Global Navigation Menu Name (Global)");
+
+			Portlet.saveAndCloseConfig();
+		}
+
+		task ("Edit Global Navigation Menu via Navigation Menu widget") {
+			NavigationMenusWidget.gotoEditNavigationMenuEntry();
+
+			Pause(locator1 = "5000");
+
+			var portalURL = PropsUtil.get("portal.url");
+
+			AssertLocation.assertPartialLocation(value1 = "${portalURL}/group/global/~/control_panel/manage?p_p_id=com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet");
+		}
+
+		task ("Navigate to Navigation Menus admin in Global site") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "global");
 		}
 	}
 
@@ -152,6 +277,26 @@ definition {
 			var portalURL = PropsUtil.get("portal.url");
 
 			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page-name-2");
+		}
+	}
+
+	@description = "This is a test for LPS-107833. Can select Global Navigation Menu via Navigation Menu widget in normal site."
+	@priority = "5"
+	test SelectGlobalNavigationMenuInNormalSite {
+		task ("Select Global Navigation Menu in normal site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.chooseMenu(menuName = "Global Navigation Menu Name (Global)");
+
+			Portlet.saveAndCloseConfig();
 		}
 	}
 

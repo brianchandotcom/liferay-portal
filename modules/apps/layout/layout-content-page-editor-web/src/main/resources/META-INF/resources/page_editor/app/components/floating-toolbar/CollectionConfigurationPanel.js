@@ -12,14 +12,52 @@
  * details.
  */
 
+import ClayForm from '@clayui/form';
 import React from 'react';
 
-export const CollectionConfigurationPanel = () => {
+import CollectionSelector from '../../../common/components/CollectionSelector';
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
+import {useDispatch, useSelector} from '../../store/index';
+import updateItemConfig from '../../thunks/updateItemConfig';
+
+export const CollectionConfigurationPanel = ({item}) => {
+	const dispatch = useDispatch();
+	const segmentsExperienceId = useSelector(
+		selectPrefixedSegmentsExperienceId
+	);
+
+	const collectionConfig = {
+		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
+			LAYOUT_DATA_ITEM_TYPES.collection
+		],
+		...item.config,
+	};
+
+	const handleConfigurationChanged = itemConfig => {
+		dispatch(
+			updateItemConfig({
+				itemConfig,
+				itemId: item.itemId,
+				segmentsExperienceId,
+			})
+		);
+	};
+
 	return (
 		<>
-			<p className="mb-3 sheet-subtitle">
-				{Liferay.Language.get('collection')}
-			</p>
+			<ClayForm.Group small>
+				<CollectionSelector
+					collectionTitle={collectionConfig.collection.title}
+					label={Liferay.Language.get('collection')}
+					onCollectionSelect={collection =>
+						handleConfigurationChanged({
+							collection,
+						})
+					}
+				/>
+			</ClayForm.Group>
 		</>
 	);
 };

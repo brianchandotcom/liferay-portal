@@ -482,7 +482,6 @@ public interface BaseProjectTemplatesTestCase {
 
 		if (!liferayVersionSet) {
 			completeArgs.add("-DliferayVersion=7.3.0");
-			liferayVersion = "7.3.0";
 		}
 
 		if (!projectTypeSet) {

@@ -83,22 +83,25 @@ public class AUITopHeadResources implements TopHeadResources {
 	}
 
 	private static final String[] _FILE_NAMES_AUI_CORE = {
-		"/aui/aui/aui.js", "/liferay/modules.js"
-	};
-
-	private static final String[] _FILE_NAMES_AUI_PRELOAD = {
-		"/aui/aui-base-html5-shiv/aui-base-html5-shiv.js",
+		"/aui/aui/aui.js", "/liferay/modules.js",
 		"/liferay/browser_selectors.js", "/liferay/aui_sandbox.js",
-		"/aui/arraylist-add/arraylist-add.js",
-		"/aui/arraylist-filter/arraylist-filter.js",
-		"/aui/arraylist/arraylist.js", "/aui/array-extras/array-extras.js",
-		"/aui/array-invoke/array-invoke.js",
 		"/aui/attribute-base/attribute-base.js",
 		"/aui/attribute-complex/attribute-complex.js",
 		"/aui/attribute-core/attribute-core.js",
 		"/aui/attribute-observable/attribute-observable.js",
 		"/aui/attribute-extras/attribute-extras.js",
-		"/aui/base-base/base-base.js",
+		"/aui/event-custom-base/event-custom-base.js",
+		"/aui/event-custom-complex/event-custom-complex.js", "/aui/oop/oop.js",
+		"/aui/aui-base-lang/aui-base-lang.js", "/liferay/dependency.js",
+		"/liferay/util.js"
+	};
+
+	private static final String[] _FILE_NAMES_AUI_PRELOAD = {
+		"/aui/aui-base-html5-shiv/aui-base-html5-shiv.js",
+		"/aui/arraylist-add/arraylist-add.js",
+		"/aui/arraylist-filter/arraylist-filter.js",
+		"/aui/arraylist/arraylist.js", "/aui/array-extras/array-extras.js",
+		"/aui/array-invoke/array-invoke.js", "/aui/base-base/base-base.js",
 		"/aui/base-pluginhost/base-pluginhost.js",
 		"/aui/classnamemanager/classnamemanager.js",
 		"/aui/datatype-xml-format/datatype-xml-format.js",
@@ -106,8 +109,6 @@ public class AUITopHeadResources implements TopHeadResources {
 		"/aui/dom-base/dom-base.js", "/aui/dom-core/dom-core.js",
 		"/aui/dom-screen/dom-screen.js", "/aui/dom-style/dom-style.js",
 		"/aui/event-base/event-base.js",
-		"/aui/event-custom-base/event-custom-base.js",
-		"/aui/event-custom-complex/event-custom-complex.js",
 		"/aui/event-delegate/event-delegate.js",
 		"/aui/event-focus/event-focus.js", "/aui/event-hover/event-hover.js",
 		"/aui/event-key/event-key.js",
@@ -128,8 +129,7 @@ public class AUITopHeadResources implements TopHeadResources {
 		"/aui/node-focusmanager/node-focusmanager.js",
 		"/aui/node-pluginhost/node-pluginhost.js",
 		"/aui/node-screen/node-screen.js", "/aui/node-style/node-style.js",
-		"/aui/oop/oop.js", "/aui/plugin/plugin.js",
-		"/aui/pluginhost-base/pluginhost-base.js",
+		"/aui/plugin/plugin.js", "/aui/pluginhost-base/pluginhost-base.js",
 		"/aui/pluginhost-config/pluginhost-config.js",
 		"/aui/querystring-stringify-simple/querystring-stringify-simple.js",
 		"/aui/queue-promote/queue-promote.js",
@@ -142,7 +142,6 @@ public class AUITopHeadResources implements TopHeadResources {
 		"/aui/widget-uievents/widget-uievents.js",
 		"/aui/yui-throttle/yui-throttle.js",
 		"/aui/aui-base-core/aui-base-core.js",
-		"/aui/aui-base-lang/aui-base-lang.js",
 		"/aui/aui-classnamemanager/aui-classnamemanager.js",
 		"/aui/aui-component/aui-component.js",
 		"/aui/aui-debounce/aui-debounce.js",
@@ -153,9 +152,9 @@ public class AUITopHeadResources implements TopHeadResources {
 		"/aui/aui-node-base/aui-node-base.js",
 		"/aui/aui-node-html5/aui-node-html5.js",
 		"/aui/aui-selector/aui-selector.js", "/aui/aui-timer/aui-timer.js",
-		"/liferay/dependency.js", "/liferay/language.js", "/liferay/util.js",
-		"/liferay/form.js", "/liferay/form_placeholders.js", "/liferay/icon.js",
-		"/liferay/menu.js", "/liferay/notice.js", "/liferay/poller.js"
+		"/liferay/language.js", "/liferay/form.js",
+		"/liferay/form_placeholders.js", "/liferay/icon.js", "/liferay/menu.js",
+		"/liferay/notice.js", "/liferay/poller.js"
 	};
 
 	private static final String[] _FILE_NAMES_AUI_PRELOAD_AUTHENTICATED = {

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ANY_LABELED</td>
-	<td>//label[contains(.,'${key_label}')]/following-sibling::div//textarea | //p[contains(.,'${key_label}')]/following-sibling::div//textarea</td>
+	<td>//*[contains(.,'${key_label}')]/following-sibling::div//textarea</td>
 	<td></td>
 </tr>
 <tr>

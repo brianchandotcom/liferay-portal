@@ -333,22 +333,22 @@
 <!--EDITABLE_FIELD_TOOLBAR-->
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_DUPLICATE_BUTTON</td>
-	<td>//button[@data-title='Duplicate Fragment']</td>
+	<td>//button[@*='Duplicate']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON</td>
-	<td>//button[@data-title='Edit']</td>
+	<td>//button[@*='Edit']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_CONFIGURATION_BUTTON</td>
-	<td>//button[@data-title='Fragment Configuration']</td>
+	<td>//button[@*='Fragment Configuration']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_LINK_BUTTON</td>
-	<td>//button[@data-title='Link']</td>
+	<td>//button[@*='Link']</td>
 	<td></td>
 </tr>
 <tr>
@@ -358,7 +358,7 @@
 </tr>
 <tr>
 	<td>EDITABLE_FIELD_TOOLBAR_MAP_BUTTON</td>
-	<td>//button[@data-title='Map']</td>
+	<td>//button[@*='Map']</td>
 	<td></td>
 </tr>
 <tr>

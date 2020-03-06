@@ -766,8 +766,25 @@ information.
 		<element implicit="true" name="args" optional="true" />
 
 		<sequential>
+			<property name="datetime.pattern" value="MM/dd/yyyy hh:mm:ss aa" />
+
+			<tstamp>
+				<format offset="-30" pattern="${datetime.pattern}" property="thirty.minutes.ago" unit="minute" />
+			</tstamp>
+
+			<condition property="binaries.cache.uptodate">
+				<islastmodified dateTime="${thirty.minutes.ago}" mode="after" pattern="${datetime.pattern}">
+					<file file="${project.dir}/${build.binaries.cache.dir}" />
+				</islastmodified>
+			</condition>
+
 			<if>
-				<equals arg1="@{setupbinariescache}" arg2="true" />
+				<and>
+					<equals arg1="@{setupbinariescache}" arg2="true" />
+					<not>
+						<istrue value="${binaries.cache.uptodate}" />
+					</not>
+				</and>
 				<then>
 					<setup-binaries-cache unless:true="${setup.binaries.cache.executed}" />
 				</then>

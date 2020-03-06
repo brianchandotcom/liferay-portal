@@ -24,7 +24,7 @@ const defaultLocalizableTextConfig = {
 		{
 			displayName: 'English (United States)',
 			icon: 'en-us',
-			localeId: 'en_US'
+			localeId: 'en_US',
 		},
 		{displayName: 'العربية (السعودية)', icon: 'ar-sa', localeId: 'ar_SA'},
 		{displayName: 'català (Espanya)', icon: 'ca-es', localeId: 'ca_ES'},
@@ -32,27 +32,27 @@ const defaultLocalizableTextConfig = {
 		{
 			displayName: 'Nederlands (Nederland)',
 			icon: 'nl-nl',
-			localeId: 'nl_NL'
+			localeId: 'nl_NL',
 		},
 		{displayName: 'suomi (Suomi)', icon: 'fi-fi', localeId: 'fi_FI'},
 		{displayName: 'français (France)', icon: 'fr-fr', localeId: 'fr_FR'},
 		{
 			displayName: 'Deutsch (Deutschland)',
 			icon: 'de-de',
-			localeId: 'de_DE'
+			localeId: 'de_DE',
 		},
 		{
 			displayName: 'magyar (Magyarország)',
 			icon: 'hu-hu',
-			localeId: 'hu_HU'
+			localeId: 'hu_HU',
 		},
 		{displayName: '日本語 (日本)', icon: 'ja-jp', localeId: 'ja_JP'},
 		{displayName: 'português (Brasil)', icon: 'pt-br', localeId: 'pt_BR'},
 		{displayName: 'español (España)', icon: 'es-es', localeId: 'es_ES'},
-		{displayName: 'svenska (Sverige)', icon: 'sv-se', localeId: 'sv_SE'}
+		{displayName: 'svenska (Sverige)', icon: 'sv-se', localeId: 'sv_SE'},
 	],
 	name: 'localizableTextField',
-	spritemap
+	spritemap,
 };
 
 describe('Field LocalizableText', () => {
@@ -69,7 +69,7 @@ describe('Field LocalizableText', () => {
 	it('is not readOnly', () => {
 		component = new LocalizableText({
 			...defaultLocalizableTextConfig,
-			readOnly: false
+			readOnly: false,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -78,7 +78,7 @@ describe('Field LocalizableText', () => {
 	it('has a label', () => {
 		component = new LocalizableText({
 			...defaultLocalizableTextConfig,
-			label: 'label'
+			label: 'label',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -87,7 +87,7 @@ describe('Field LocalizableText', () => {
 	it('has a placeholder', () => {
 		component = new LocalizableText({
 			...defaultLocalizableTextConfig,
-			placeholder: 'Placeholder'
+			placeholder: 'Placeholder',
 		});
 
 		expect(component).toMatchSnapshot();
@@ -96,7 +96,7 @@ describe('Field LocalizableText', () => {
 	it('is not required', () => {
 		component = new LocalizableText({
 			...defaultLocalizableTextConfig,
-			required: false
+			required: false,
 		});
 
 		expect(component).toMatchSnapshot();
@@ -108,8 +108,8 @@ describe('Field LocalizableText', () => {
 			value: {
 				ca_ES: 'Teste ES',
 				en_US: 'Test EUA',
-				pt_BR: 'Teste BR'
-			}
+				pt_BR: 'Teste BR',
+			},
 		});
 
 		expect(component).toMatchSnapshot();
@@ -118,7 +118,7 @@ describe('Field LocalizableText', () => {
 	it('renders no values when values come empty', () => {
 		component = new LocalizableText({
 			...defaultLocalizableTextConfig,
-			value: {}
+			value: {},
 		});
 
 		expect(component).toMatchSnapshot();
@@ -130,8 +130,8 @@ describe('Field LocalizableText', () => {
 			value: {
 				ca_ES: 'Teste ES',
 				en_US: 'Test EUA',
-				pt_BR: 'Teste BR'
-			}
+				pt_BR: 'Teste BR',
+			},
 		});
 
 		expect(component.editingLocale.localeId).toEqual('en_US');
@@ -151,8 +151,8 @@ describe('Field LocalizableText', () => {
 			value: {
 				ca_ES: 'Teste ES',
 				en_US: 'Test EUA',
-				pt_BR: 'Teste BR'
-			}
+				pt_BR: 'Teste BR',
+			},
 		});
 
 		component.on('fieldEdited', () => {
@@ -163,8 +163,8 @@ describe('Field LocalizableText', () => {
 
 		component._handleFieldChanged({
 			target: {
-				value: 'Test 2 EUA'
-			}
+				value: 'Test 2 EUA',
+			},
 		});
 
 		jest.runAllTimers();
@@ -178,8 +178,8 @@ describe('Field LocalizableText', () => {
 			value: {
 				ca_ES: 'Teste ES',
 				en_US: 'Test EUA',
-				pt_BR: 'Teste BR'
-			}
+				pt_BR: 'Teste BR',
+			},
 		});
 
 		expect(component.editingLocale.localeId).toEqual('en_US');
@@ -213,8 +213,8 @@ describe('Field LocalizableText', () => {
 			value: {
 				ca_ES: 'Teste ES',
 				en_US: 'Test EUA',
-				pt_BR: 'Teste BR'
-			}
+				pt_BR: 'Teste BR',
+			},
 		});
 
 		expect(component.editingLocale.localeId).toEqual('en_US');
@@ -250,8 +250,8 @@ describe('Field LocalizableText', () => {
 			value: {
 				ca_ES: 'Teste ES',
 				en_US: 'Test EUA',
-				pt_BR: 'Teste BR'
-			}
+				pt_BR: 'Teste BR',
+			},
 		});
 
 		dom.triggerEvent(
@@ -272,8 +272,8 @@ describe('Field LocalizableText', () => {
 
 		component._handleFieldChanged({
 			target: {
-				value: 'Test JP'
-			}
+				value: 'Test JP',
+			},
 		});
 
 		jest.runAllTimers();
@@ -290,8 +290,8 @@ describe('Field LocalizableText', () => {
 			value: {
 				ca_ES: 'Teste ES',
 				en_US: 'Test EUA',
-				pt_BR: 'Teste BR'
-			}
+				pt_BR: 'Teste BR',
+			},
 		});
 
 		dom.triggerEvent(
@@ -312,8 +312,8 @@ describe('Field LocalizableText', () => {
 
 		component._handleFieldChanged({
 			target: {
-				value: ''
-			}
+				value: '',
+			},
 		});
 
 		jest.runAllTimers();

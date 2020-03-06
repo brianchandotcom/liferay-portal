@@ -64,7 +64,7 @@
 				([$STATUS$])
 		]]>
 	</sql>
-	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.findFC_ByG_FCI_LikeN">
+	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.findFC_ByG_FCI_N">
 		<![CDATA[
 			SELECT
 				DISTINCT FragmentComposition.fragmentCompositionId AS fragmentCompositionId, 0 AS fragmentEntryId,
@@ -91,7 +91,7 @@
 				([$STATUS$])
 		]]>
 	</sql>
-	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.findFE_ByG_FCI_LikeN">
+	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.findFE_ByG_FCI_N">
 		<![CDATA[
 			SELECT
 				DISTINCT 0 AS fragmentCompositionId, FragmentEntry.fragmentEntryId AS fragmentEntryId,

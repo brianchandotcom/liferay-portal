@@ -263,7 +263,11 @@ buildChangelogs {
 					return ticketType1.compareTo(ticketType2)
 				}
 
-				text += _generateTicketLinks(tickets)
+				tickets.each {
+					String ticket ->
+
+					text += "\n[" + ticket + "](https://issues.liferay.com/browse/" + ticket + ")"
+				}
 			}
 
 			File changelogMarkdownFile = file("sdk/" + sdkProjectDir.name + "/CHANGELOG.markdown")
@@ -413,17 +417,4 @@ private String _format(String line) {
 	x = formattedLine.lastIndexOf(" ", 80)
 
 	return formattedLine.substring(0, x) + "\n" + _format(formattedLine.substring(x + 1))
-}
-
-private String _generateTicketLinks(List<String> ticketNumbers) {
-
-	String links = ""
-
-	ticketNumbers.each {
-		String ticketNumber ->
-
-		links += "\n[" + ticketNumber + "](https://issues.liferay.com/browse/" + ticketNumber + ")"
-	}
-
-	return links
 }

@@ -18,6 +18,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -41,7 +42,7 @@ public class DEDataLayout implements Serializable {
 		return _deDataLayoutPages;
 	}
 
-	public Map<String, Object> getDescription() {
+	public Map<Locale, String> getDescription() {
 		return _description;
 	}
 
@@ -57,7 +58,7 @@ public class DEDataLayout implements Serializable {
 		return _modifiedDate;
 	}
 
-	public Map<String, Object> getName() {
+	public Map<Locale, String> getName() {
 		return _name;
 	}
 
@@ -85,7 +86,7 @@ public class DEDataLayout implements Serializable {
 		_deDataLayoutPages = deDataLayoutPages;
 	}
 
-	public void setDescription(Map<String, Object> description) {
+	public void setDescription(Map<Locale, String> description) {
 		_description = description;
 	}
 
@@ -101,7 +102,7 @@ public class DEDataLayout implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public void setName(Map<String, Object> name) {
+	public void setName(Map<Locale, String> name) {
 		_name = name;
 	}
 
@@ -117,11 +118,11 @@ public class DEDataLayout implements Serializable {
 	private long _dataDefinitionId;
 	private String _dataLayoutKey;
 	private List<DEDataLayoutPage> _deDataLayoutPages;
-	private Map<String, Object> _description;
+	private Map<Locale, String> _description;
 	private long _groupId;
 	private long _id;
 	private Date _modifiedDate;
-	private Map<String, Object> _name;
+	private Map<Locale, String> _name;
 	private String _paginationMode;
 	private long _userId;
 

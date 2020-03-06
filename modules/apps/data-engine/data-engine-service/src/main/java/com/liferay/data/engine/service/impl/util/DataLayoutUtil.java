@@ -70,15 +70,11 @@ public class DataLayoutUtil {
 			ddmStructureLayout.getDDMStructureId());
 		deDataLayout.setDataLayoutKey(
 			ddmStructureLayout.getStructureLayoutKey());
-		deDataLayout.setDescription(
-			LocalizedValueUtil.toStringObjectMap(
-				ddmStructureLayout.getDescriptionMap()));
+		deDataLayout.setDescription(ddmStructureLayout.getDescriptionMap());
 		deDataLayout.setGroupId(ddmStructureLayout.getGroupId());
 		deDataLayout.setId(ddmStructureLayout.getStructureLayoutId());
 		deDataLayout.setModifiedDate(ddmStructureLayout.getModifiedDate());
-		deDataLayout.setName(
-			LocalizedValueUtil.toStringObjectMap(
-				ddmStructureLayout.getNameMap()));
+		deDataLayout.setName(ddmStructureLayout.getNameMap());
 		deDataLayout.setUserId(ddmStructureLayout.getUserId());
 
 		return deDataLayout;
@@ -131,9 +127,12 @@ public class DataLayoutUtil {
 			_toDDMFormLayoutRows(deDataLayoutPage.getDEDataLayoutRows()));
 		ddmFormLayoutPage.setDescription(
 			LocalizedValueUtil.toLocalizedValue(
-				deDataLayoutPage.getDescription()));
+				LocalizedValueUtil.toStringObjectMap(
+					deDataLayoutPage.getDescription())));
 		ddmFormLayoutPage.setTitle(
-			LocalizedValueUtil.toLocalizedValue(deDataLayoutPage.getTitle()));
+			LocalizedValueUtil.toLocalizedValue(
+				LocalizedValueUtil.toStringObjectMap(
+					deDataLayoutPage.getTitle())));
 
 		return ddmFormLayoutPage;
 	}
@@ -225,14 +224,16 @@ public class DataLayoutUtil {
 		return new DEDataLayoutPage() {
 			{
 				setDescription(
-					LocalizedValueUtil.toLocalizedValuesMap(
-						ddmFormLayoutPage.getDescription()));
+					LocalizedValueUtil.toLocaleStringMap(
+						LocalizedValueUtil.toLocalizedValuesMap(
+							ddmFormLayoutPage.getDescription())));
 				setDEDataLayoutRows(
 					_toDEDataLayoutRows(
 						ddmFormLayoutPage.getDDMFormLayoutRows()));
 				setTitle(
-					LocalizedValueUtil.toLocalizedValuesMap(
-						ddmFormLayoutPage.getTitle()));
+					LocalizedValueUtil.toLocaleStringMap(
+						LocalizedValueUtil.toLocalizedValuesMap(
+							ddmFormLayoutPage.getTitle())));
 			}
 		};
 	}

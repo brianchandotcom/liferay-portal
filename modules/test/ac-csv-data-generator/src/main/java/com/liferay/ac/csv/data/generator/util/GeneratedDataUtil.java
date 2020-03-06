@@ -14,15 +14,21 @@
 
 package com.liferay.ac.csv.data.generator.util;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,51 +55,39 @@ public class GeneratedDataUtil {
 		return _addedUserMap.containsKey(emailAddress);
 	}
 
-	public void deleteAll() {
-		_addedUserMap.entrySet(
-		).parallelStream(
-		).forEach(
-			e -> {
-				try {
-					_userLocalService.deleteUser(e.getValue());
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-				}
+	public void deleteAll() throws PortalException {
+		for (Map.Entry<String, User> e : _addedUserMap.entrySet()) {
+			if (_preExistingData.contains(e.getValue())) {
+				continue;
 			}
-		);
 
-		_addedOrganizationMap.entrySet(
-		).parallelStream(
-		).forEach(
-			e -> {
-				try {
-					_organizationLocalService.deleteOrganization(e.getValue());
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-				}
-			}
-		);
-
-		_addedRoleMap.entrySet(
-		).parallelStream(
-		).forEach(
-			e -> {
-				try {
-					_roleLocalService.deleteRole(e.getValue());
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-				}
-			}
-		);
-
-		try {
-			_userGroupLocalService.deleteUserGroups(_companyId);
+			_userLocalService.deleteUser(e.getValue());
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+
+		for (Map.Entry<String, Organization> e :
+				_addedOrganizationMap.entrySet()) {
+
+			if (_preExistingData.contains(e.getValue())) {
+				continue;
+			}
+
+			_organizationLocalService.deleteOrganization(e.getValue());
+		}
+
+		for (Map.Entry<String, Role> e : _addedRoleMap.entrySet()) {
+			if (_preExistingData.contains(e.getValue())) {
+				continue;
+			}
+
+			_roleLocalService.deleteRole(e.getValue());
+		}
+
+		for (Map.Entry<String, UserGroup> e : _addedUserGroupMap.entrySet()) {
+			if (_preExistingData.contains(e.getValue())) {
+				continue;
+			}
+
+			_userGroupLocalService.deleteUserGroup(e.getValue());
 		}
 	}
 
@@ -105,32 +99,32 @@ public class GeneratedDataUtil {
 		return _defaultUserId;
 	}
 
-	public long getOrganization(String name) {
+	public Organization getOrganization(String name) {
 		return _addedOrganizationMap.get(name);
 	}
 
-	public long getRole(String name) {
+	public Role getRole(String name) {
 		return _addedRoleMap.get(name);
 	}
 
-	public long getUserGroup(String name) {
+	public UserGroup getUserGroup(String name) {
 		return _addedUserGroupMap.get(name);
 	}
 
-	public void putOrganization(String name, long primaryKey) {
-		_addedOrganizationMap.put(name, primaryKey);
+	public void putOrganization(String name, Organization organization) {
+		_addedOrganizationMap.put(name, organization);
 	}
 
-	public void putRole(String name, long primaryKey) {
-		_addedRoleMap.put(name, primaryKey);
+	public void putRole(String name, Role role) {
+		_addedRoleMap.put(name, role);
 	}
 
-	public void putUser(String emailAddress, long primaryKey) {
-		_addedUserMap.put(emailAddress, primaryKey);
+	public void putUser(String emailAddress, User user) {
+		_addedUserMap.put(emailAddress, user);
 	}
 
-	public void putUserGroup(String name, long primaryKey) {
-		_addedUserGroupMap.put(name, primaryKey);
+	public void putUserGroup(String name, UserGroup userGroup) {
+		_addedUserGroupMap.put(name, userGroup);
 	}
 
 	public void setCompanyId(long companyId) throws PortalException {
@@ -139,19 +133,77 @@ public class GeneratedDataUtil {
 		_defaultUserId = _userLocalService.getDefaultUserId(_companyId);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		GeneratedDataUtil.class);
+	public void setExistingPortalData() {
+		List<User> existingUserList = _userLocalService.getUsers(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-	private volatile HashMap<String, Long> _addedOrganizationMap =
+		existingUserList.parallelStream(
+		).forEach(
+			user -> {
+				if (!containsUserKey(user.getEmailAddress())) {
+					_preExistingData.add(user);
+
+					_addedUserMap.put(user.getEmailAddress(), user);
+				}
+			}
+		);
+
+		List<Organization> existingOrgList =
+			_organizationLocalService.getOrganizations(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		existingOrgList.parallelStream(
+		).forEach(
+			org -> {
+				if (!containsOrganizationKey(org.getName())) {
+					_preExistingData.add(org);
+
+					_addedOrganizationMap.put(org.getName(), org);
+				}
+			}
+		);
+
+		List<UserGroup> existingUserGroupList =
+			_userGroupLocalService.getUserGroups(_companyId);
+
+		existingUserGroupList.parallelStream(
+		).forEach(
+			userGroup -> {
+				if (!containsUserGroupKey(userGroup.getName())) {
+					_preExistingData.add(userGroup);
+
+					_addedUserGroupMap.put(userGroup.getName(), userGroup);
+				}
+			}
+		);
+
+		List<Role> existingRoleList = _roleLocalService.getRoles(_companyId);
+
+		existingRoleList.parallelStream(
+		).forEach(
+			role -> {
+				if (!containsRoleKey(role.getName())) {
+					_preExistingData.add(role);
+
+					_addedRoleMap.put(role.getName(), role);
+				}
+			}
+		);
+	}
+
+	private volatile HashMap<String, Organization> _addedOrganizationMap =
 		new HashMap<>();
-	private volatile HashMap<String, Long> _addedRoleMap = new HashMap<>();
-	private volatile HashMap<String, Long> _addedUserGroupMap = new HashMap<>();
-	private volatile HashMap<String, Long> _addedUserMap = new HashMap<>();
+	private volatile HashMap<String, Role> _addedRoleMap = new HashMap<>();
+	private volatile HashMap<String, UserGroup> _addedUserGroupMap =
+		new HashMap<>();
+	private volatile HashMap<String, User> _addedUserMap = new HashMap<>();
 	private long _companyId;
 	private long _defaultUserId;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	private volatile List<Object> _preExistingData = new ArrayList<>();
 
 	@Reference
 	private RoleLocalService _roleLocalService;

@@ -66,7 +66,7 @@ public class UserCsv {
 			try {
 				User user = _addCsvUser(csvRecord);
 
-				_generatedDataUtil.putUser(emailAddress, user.getPrimaryKey());
+				_generatedDataUtil.putUser(emailAddress, user);
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Created user: " + emailAddress);
@@ -153,22 +153,28 @@ public class UserCsv {
 			try {
 				if (header.equalsIgnoreCase("organizations")) {
 					if (_generatedDataUtil.containsOrganizationKey(name)) {
-						idArray[i] = _generatedDataUtil.getOrganization(name);
+						Organization org = _generatedDataUtil.getOrganization(
+							name);
+
+						idArray[i] = org.getPrimaryKey();
 					}
 					else {
-						Organization newOrganization =
+						Organization newOrg =
 							_organizationLocalService.addOrganization(
 								_generatedDataUtil.getDefaultUserId(), 0, name,
 								false);
 
-						idArray[i] = newOrganization.getPrimaryKey();
+						_generatedDataUtil.putOrganization(name, newOrg);
 
-						_generatedDataUtil.putOrganization(name, idArray[i]);
+						idArray[i] = newOrg.getPrimaryKey();
 					}
 				}
 				else if (header.equalsIgnoreCase("userGroups")) {
 					if (_generatedDataUtil.containsUserGroupKey(name)) {
-						idArray[i] = _generatedDataUtil.getUserGroup(name);
+						UserGroup userGroup = _generatedDataUtil.getUserGroup(
+							name);
+
+						idArray[i] = userGroup.getPrimaryKey();
 					}
 					else {
 						UserGroup newUserGroup =
@@ -177,23 +183,25 @@ public class UserCsv {
 								_generatedDataUtil.getCompanyId(), name, null,
 								null);
 
-						idArray[i] = newUserGroup.getPrimaryKey();
+						_generatedDataUtil.putUserGroup(name, newUserGroup);
 
-						_generatedDataUtil.putUserGroup(name, idArray[i]);
+						idArray[i] = newUserGroup.getPrimaryKey();
 					}
 				}
 				else if (header.equalsIgnoreCase("roles")) {
 					if (_generatedDataUtil.containsRoleKey(name)) {
-						idArray[i] = _generatedDataUtil.getRole(name);
+						Role role = _generatedDataUtil.getRole(name);
+
+						idArray[i] = role.getPrimaryKey();
 					}
 					else {
 						Role newRole = _roleLocalService.addRole(
 							_generatedDataUtil.getDefaultUserId(), null, 0,
 							name, null, null, 0, null, null);
 
-						idArray[i] = newRole.getPrimaryKey();
+						_generatedDataUtil.putRole(name, newRole);
 
-						_generatedDataUtil.putRole(name, idArray[i]);
+						idArray[i] = newRole.getPrimaryKey();
 					}
 				}
 			}

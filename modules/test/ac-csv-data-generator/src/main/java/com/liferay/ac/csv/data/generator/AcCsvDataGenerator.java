@@ -47,6 +47,8 @@ public class AcCsvDataGenerator {
 	protected void activate(Map<String, Object> properties) {
 		_loadConfig(properties);
 
+		_generatedDataUtil.setExistingPortalData();
+
 		_userCsv.addCsvUsers(_acCsvDataGeneratorConfiguration.pathToUserCsv());
 
 		if (_log.isInfoEnabled()) {
@@ -57,7 +59,12 @@ public class AcCsvDataGenerator {
 
 	@Deactivate
 	protected void deactivate() {
-		_generatedDataUtil.deleteAll();
+		try {
+			_generatedDataUtil.deleteAll();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
 	}
 
 	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")

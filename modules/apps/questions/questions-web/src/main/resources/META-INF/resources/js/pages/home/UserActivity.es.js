@@ -21,6 +21,8 @@ import {AppContext} from '../../AppContext.es';
 import { getUserActivity } from '../../utils/client.es';
 import UserIcon from '../../components/UserIcon.es';
 
+import Question from '../../components/Question.es';
+
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 
 import {Link} from 'react-router-dom';
@@ -40,7 +42,6 @@ export default withRouter( () => {
 	const [pageSize] = useState(20);
     const [questions, setQuestions] = useState([]);
     const sectionId = 36526;
-    const sectionTitle= "test";
 
 	useEffect(() => {
         renderQuestions(loadThreads());
@@ -76,32 +77,6 @@ export default withRouter( () => {
 			}),
 		[creatorId, page, pageSize, sectionId]
 	);
-
-	const hasValidAnswer = question =>
-		question.messageBoardMessages.items.filter(
-			message => message.showAsAnswer
-		).length > 0;
-
-	const filterChange = type => {
-		if (type === 'latest-edited') {
-			renderQuestions(loadThreads('dateModified:desc'));
-		}
-		else if (type === 'week') {
-			const date = new Date();
-			date.setDate(date.getDate() - 7);
-
-			renderQuestions(getRankedThreads(date, page, pageSize, sectionId));
-		}
-		else if (type === 'month') {
-			const date = new Date();
-			date.setDate(date.getDate() - 31);
-
-			renderQuestions(getRankedThreads(date, page, pageSize, sectionId));
-		}
-		else {
-			renderQuestions(loadThreads('dateCreated:desc'));
-		}
-	};
 
     // MARK: Mine -- Page Header
     const context = useContext(AppContext);
@@ -171,100 +146,7 @@ export default withRouter( () => {
                 ) : (
                     questions.items &&
                     questions.items.map(question => (
-                        <div
-                            className="c-mt-4 c-p-3 position-relative question-row text-secondary"
-                            key={question.id}
-                        >
-                            <div className="align-items-center d-flex flex-wrap justify-content-between">
-                                <SectionLabel
-                                    section={question.messageBoardSection}
-                                />
-
-                                <ul className="c-mb-0 d-flex flex-wrap list-unstyled stretched-link-layer">
-                                    <li>
-                                        <QuestionBadge
-                                            symbol={
-                                                normalizeRating(
-                                                    question.aggregateRating
-                                                ) < 0
-                                                    ? 'caret-bottom'
-                                                    : 'caret-top'
-                                            }
-                                            value={normalizeRating(
-                                                question.aggregateRating
-                                            )}
-                                        />
-                                    </li>
-
-                                    <li>
-                                        <QuestionBadge
-                                            symbol="view"
-                                            value={question.viewCount}
-                                        />
-                                    </li>
-
-                                    <li>
-                                        <QuestionBadge
-                                            className={
-                                                hasValidAnswer(question)
-                                                    ? 'alert-success border-0'
-                                                    : ''
-                                            }
-                                            symbol={
-                                                hasValidAnswer(question)
-                                                    ? 'check-circle-full'
-                                                    : 'message'
-                                            }
-                                            value={
-                                                question.messageBoardMessages.items
-                                                    .length
-                                            }
-                                        />
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <Link
-                                className="question-title stretched-link"
-                                to={`/questions/${sectionTitle}/${question.friendlyUrlPath}`}
-                            >
-                                <h2 className="c-mb-0 stretched-link-layer text-dark">
-                                    {question.headline}
-                                </h2>
-                            </Link>
-
-                            <div className="c-mb-0 c-mt-3 stretched-link-layer text-truncate">
-                                <ArticleBodyRenderer {...question} />
-                            </div>
-
-                            <div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">
-                                <div className="c-mt-3 c-mt-sm-0 stretched-link-layer">
-                                    <Link
-                                        to={`/questions/${sectionTitle}/creator/${question.creator.id}`}
-                                    >
-                                        <UserIcon
-                                            fullName={question.creator.name}
-                                            portraitURL={question.creator.image}
-                                            size="sm"
-                                            userId={String(question.creator.id)}
-                                        />
-
-                                        <strong className="c-ml-2 text-dark">
-                                            {question.creator.name}
-                                        </strong>
-                                    </Link>
-
-                                    <span className="c-ml-2 small">
-                                        {'- ' +
-                                            dateToInternationalHuman(
-                                                question.dateModified
-                                            )}
-                                    </span>
-                                </div>
-
-                                <TagList tags={question.taxonomyCategoryBriefs} />
-                            </div>
-                        </div>
+                        <Question question={question}/>
                     ))
                 )}
 

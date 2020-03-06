@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>CONFIGURABLE_FIELD</td>
-	<td>//div[contains(@class,'fragment-entry-link-content')]</td>
+	<td>//div[contains(@class,'page-editor__topper__content')]</td>
 	<td></td>
 </tr>
 <tr>

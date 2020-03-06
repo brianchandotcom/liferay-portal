@@ -17,7 +17,7 @@ package com.liferay.asset.publisher.web.internal.portlet.toolbar.contributor;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
-import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -292,7 +292,7 @@ public class AssetPublisherPortletToolbarContributor
 	private AssetHelper _assetHelper;
 
 	@Reference
-	private AssetPublisherWebUtil _assetPublisherWebUtil;
+	private AssetPublisherWebHelper _assetPublisherWebUtil;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

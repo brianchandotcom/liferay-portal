@@ -42,7 +42,7 @@ import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
-import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
@@ -137,7 +137,7 @@ public class AssetPublisherDisplayContext {
 			AssetPublisherCustomizer assetPublisherCustomizer,
 			AssetPublisherHelper assetPublisherHelper,
 			AssetPublisherWebConfiguration assetPublisherWebConfiguration,
-			AssetPublisherWebUtil assetPublisherWebUtil,
+			AssetPublisherWebHelper assetPublisherWebUtil,
 			InfoListProviderTracker infoListProviderTracker,
 			ItemSelector itemSelector, PortletRequest portletRequest,
 			PortletResponse portletResponse,
@@ -1994,7 +1994,7 @@ public class AssetPublisherDisplayContext {
 		_assetPublisherPortletInstanceConfiguration;
 	private final AssetPublisherWebConfiguration
 		_assetPublisherWebConfiguration;
-	private final AssetPublisherWebUtil _assetPublisherWebUtil;
+	private final AssetPublisherWebHelper _assetPublisherWebUtil;
 	private String _assetTagName;
 	private Map<String, Serializable> _attributes;
 	private long[] _availableClassNameIds;

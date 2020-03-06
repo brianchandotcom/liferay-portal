@@ -97,9 +97,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration",
-	immediate = true, service = AssetPublisherWebUtil.class
+	immediate = true, service = AssetPublisherWebHelper.class
 )
-public class AssetPublisherWebUtil {
+public class AssetPublisherWebHelper {
 
 	public void addAndStoreSelection(
 			PortletRequest portletRequest, String className, long classPK,
@@ -256,7 +256,7 @@ public class AssetPublisherWebUtil {
 			LocalizationUtil.getLocalizationMap(
 				portletPreferences, "emailAssetEntryAddedBody",
 				StringPool.BLANK, StringPool.BLANK,
-				AssetPublisherWebUtil.class.getClassLoader());
+				AssetPublisherWebHelper.class.getClassLoader());
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
@@ -294,7 +294,7 @@ public class AssetPublisherWebUtil {
 			LocalizationUtil.getLocalizationMap(
 				portletPreferences, "emailAssetEntryAddedSubject",
 				StringPool.BLANK, StringPool.BLANK,
-				AssetPublisherWebUtil.class.getClassLoader());
+				AssetPublisherWebHelper.class.getClassLoader());
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
@@ -642,7 +642,7 @@ public class AssetPublisherWebUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AssetPublisherWebUtil.class);
+		AssetPublisherWebHelper.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

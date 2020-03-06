@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
-import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -74,9 +74,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
-	immediate = true, service = AssetEntriesCheckerUtil.class
+	immediate = true, service = AssetEntriesCheckerHelper.class
 )
-public class AssetEntriesCheckerUtil {
+public class AssetEntriesCheckerHelper {
 
 	public void checkAssetEntries() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -351,7 +351,7 @@ public class AssetEntriesCheckerUtil {
 	private AssetPublisherHelper _assetPublisherHelper;
 
 	@Reference
-	private AssetPublisherWebUtil _assetPublisherWebUtil;
+	private AssetPublisherWebHelper _assetPublisherWebUtil;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

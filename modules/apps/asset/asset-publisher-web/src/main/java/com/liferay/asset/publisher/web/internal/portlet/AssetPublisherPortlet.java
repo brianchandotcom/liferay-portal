@@ -23,8 +23,8 @@ import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
-import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
-import com.liferay.asset.publisher.web.internal.util.AssetRSSUtil;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebHelper;
+import com.liferay.asset.publisher.web.internal.util.AssetRSSHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
@@ -396,10 +396,10 @@ public class AssetPublisherPortlet extends MVCPortlet {
 	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
 
 	@Reference
-	protected AssetPublisherWebUtil assetPublisherWebUtil;
+	protected AssetPublisherWebHelper assetPublisherWebUtil;
 
 	@Reference
-	protected AssetRSSUtil assetRSSUtil;
+	protected AssetRSSHelper assetRSSUtil;
 
 	@Reference
 	protected InfoListProviderTracker infoListProviderTracker;

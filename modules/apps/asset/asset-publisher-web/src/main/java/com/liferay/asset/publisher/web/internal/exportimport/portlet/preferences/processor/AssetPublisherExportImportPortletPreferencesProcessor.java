@@ -28,7 +28,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
-import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -1258,7 +1258,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	protected AssetPublisherHelper assetPublisherHelper;
 
 	@Reference
-	protected AssetPublisherWebUtil assetPublisherWebUtil;
+	protected AssetPublisherWebHelper assetPublisherWebUtil;
 
 	@Reference
 	protected AssetVocabularyLocalService assetVocabularyLocalService;

@@ -54,7 +54,7 @@ page import="com.liferay.asset.publisher.web.internal.display.context.AssetPubli
 page import="com.liferay.asset.publisher.web.internal.display.context.AssetPublisherViewContentDisplayContext" %><%@
 page import="com.liferay.asset.publisher.web.internal.display.context.ItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.asset.publisher.web.internal.servlet.taglib.util.AssetEntryActionDropdownItemsProvider" %><%@
-page import="com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil" %><%@
+page import="com.liferay.asset.publisher.web.internal.util.AssetPublisherWebHelper" %><%@
 page import="com.liferay.asset.publisher.web.internal.util.AssetRendererUtil" %><%@
 page import="com.liferay.asset.util.AssetHelper" %><%@
 page import="com.liferay.asset.util.AssetPublisherAddItemHolder" %><%@
@@ -144,7 +144,7 @@ page import="javax.portlet.PortletURL" %>
 AssetHelper assetHelper = (AssetHelper)request.getAttribute(AssetWebKeys.ASSET_HELPER);
 AssetPublisherDisplayContext assetPublisherDisplayContext = (AssetPublisherDisplayContext)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT);
 AssetPublisherHelper assetPublisherHelper = (AssetPublisherHelper)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_HELPER);
-AssetPublisherWebUtil assetPublisherWebUtil = (AssetPublisherWebUtil)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL);
+AssetPublisherWebHelper assetPublisherWebUtil = (AssetPublisherWebHelper)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.LONG, FastDateFormatConstants.SHORT, locale, timeZone);

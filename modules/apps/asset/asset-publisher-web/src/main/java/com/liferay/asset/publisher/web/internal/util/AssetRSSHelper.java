@@ -62,8 +62,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
-@Component(immediate = true, service = AssetRSSUtil.class)
-public class AssetRSSUtil {
+@Component(immediate = true, service = AssetRSSHelper.class)
+public class AssetRSSHelper {
 
 	public byte[] getRSS(
 			ResourceRequest portletRequest, ResourceResponse portletResponse)

@@ -30,7 +30,7 @@ import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebC
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
-import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
@@ -834,7 +834,7 @@ public class AssetPublisherConfigurationAction
 	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
 
 	@Reference
-	protected AssetPublisherWebUtil assetPublisherWebUtil;
+	protected AssetPublisherWebHelper assetPublisherWebUtil;
 
 	@Reference
 	protected AssetTagLocalService assetTagLocalService;

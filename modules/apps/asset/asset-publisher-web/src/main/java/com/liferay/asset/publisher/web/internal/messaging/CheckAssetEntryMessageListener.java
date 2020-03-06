@@ -81,7 +81,7 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 	}
 
 	@Reference
-	private AssetEntriesCheckerUtil _assetEntriesCheckerUtil;
+	private AssetEntriesCheckerHelper _assetEntriesCheckerUtil;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

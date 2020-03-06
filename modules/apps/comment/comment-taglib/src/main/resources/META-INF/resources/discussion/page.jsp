@@ -692,7 +692,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					'<%= portletDisplay.getId() %>:portletRefreshed',
 					function(event) {
 						var randomNamespaceNodes = document.querySelectorAll(
-							'input[id^="<%= namespace + randomNamespace %>randomNamespace"]'
+							'input[id^="<%= namespace %>"][id$="randomNamespace"]'
 						);
 
 						Array.prototype.forEach.call(randomNamespaceNodes, function(

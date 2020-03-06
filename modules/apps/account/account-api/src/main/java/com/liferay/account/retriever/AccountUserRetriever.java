@@ -17,6 +17,7 @@ package com.liferay.account.retriever;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -28,6 +29,11 @@ public interface AccountUserRetriever {
 	public List<User> getAccountUsers(long accountEntryId);
 
 	public long getAccountUsersCount(long accountEntryId);
+
+	public BaseModelSearchResult<User> searchAccountRoleUsers(
+			long accountEntryId, long accountRoleId, String keywords, int start,
+			int end, OrderByComparator obc)
+		throws PortalException;
 
 	public BaseModelSearchResult<User> searchAccountUsers(
 			long accountEntryId, String keywords, int status, int cur,

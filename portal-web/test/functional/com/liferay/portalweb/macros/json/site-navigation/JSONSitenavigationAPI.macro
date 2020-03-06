@@ -1,0 +1,53 @@
+definition {
+
+	@summary = "Helper function to add a site navigation menu via JSON"
+	macro _addSiteNavigationMenu {
+		Variables.assertDefined(parameterList = "${groupId},${siteNavigationMenuName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/add-site-navigation-menu \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d name=${siteNavigationMenuName}
+			''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Helper function to delete a site navigation menu via JSON"
+	macro _deleteSiteNavigationMenu {
+		Variables.assertDefined(parameterList = "${siteNavigationMenuId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/delete-site-navigation-menu \
+			  -u test@liferay.com:test \
+			  -d siteNavigationMenuId=${siteNavigationMenuId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Helper function to get a siteNavigationMenuId via JSON"
+	macro _getSiteNavigationMenuIdByName {
+		Variables.assertDefined(parameterList = "${groupId},${siteNavigationMenuName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/get-site-navigation-menus \
+				-u test@liferay.com:test \
+				-d groupId=${groupId}
+		''';
+
+		var siteNavigationMenuId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${siteNavigationMenuName}')]['siteNavigationMenuId']");
+		var siteNavigationMenuId = StringUtil.replace("${siteNavigationMenuId}", "[&quot;", "");
+		var siteNavigationMenuId = StringUtil.replace("${siteNavigationMenuId}", "&quot;]", "");
+
+		return "${siteNavigationMenuId}";
+	}
+
+}

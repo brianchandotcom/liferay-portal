@@ -44,6 +44,7 @@ page import="com.liferay.account.admin.web.internal.display.context.SelectAccoun
 page import="com.liferay.account.admin.web.internal.display.context.SelectAccountUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountOrganizationsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.account.admin.web.internal.display.context.ViewAccountRoleAssigneesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountRolesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission" %><%@

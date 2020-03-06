@@ -111,6 +111,7 @@ definition {
 	@priority = "5"
 	test HSQLtoSQLServer {
 		property database.types = "sqlserver";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSQLServer;"
 
 		SetupWizard.configurePG(

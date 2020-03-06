@@ -59,7 +59,7 @@ definition {
 	}
 
 	macro gotoCP {
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Click.pauseClickAt(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 		if ("${isOrphanPage}" == "true") {
 			MenuItem.click(menuItem = "Orphan Pages");

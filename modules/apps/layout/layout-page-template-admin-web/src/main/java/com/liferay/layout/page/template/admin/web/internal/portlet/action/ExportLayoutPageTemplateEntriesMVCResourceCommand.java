@@ -84,8 +84,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 				layoutPageTemplateEntries.add(layoutPageTemplateEntry);
 			}
 
-			return _exportHelper.exportPageTemplateDefinitions(
-				layoutPageTemplateEntries);
+			return _exportHelper.exportPageTemplates(layoutPageTemplateEntries);
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);

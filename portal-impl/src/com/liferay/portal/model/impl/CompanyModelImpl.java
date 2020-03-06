@@ -526,27 +526,12 @@ public class CompanyModelImpl
 		_active = active;
 	}
 
-	public com.liferay.portal.kernel.model.CompanyInfo getCompanyInfo() {
-		return null;
-	}
-
-	public void setCompanyInfo(
-		com.liferay.portal.kernel.model.CompanyInfo companyInfo) {
-	}
-
 	public CompanyImpl.CompanySecurityBag getCompanySecurityBag() {
 		return null;
 	}
 
 	public void setCompanySecurityBag(
 		CompanyImpl.CompanySecurityBag companySecurityBag) {
-	}
-
-	public java.security.Key getKeyObj() {
-		return null;
-	}
-
-	public void setKeyObj(java.security.Key keyObj) {
 	}
 
 	public String getVirtualHostname() {
@@ -676,11 +661,7 @@ public class CompanyModelImpl
 
 		companyModelImpl._setOriginalSystem = false;
 
-		setCompanyInfo(null);
-
 		setCompanySecurityBag(null);
-
-		setKeyObj(null);
 
 		setVirtualHostname(null);
 
@@ -729,11 +710,7 @@ public class CompanyModelImpl
 
 		companyCacheModel.active = isActive();
 
-		companyCacheModel._companyInfo = getCompanyInfo();
-
 		companyCacheModel._companySecurityBag = getCompanySecurityBag();
-
-		companyCacheModel._keyObj = getKeyObj();
 
 		companyCacheModel._virtualHostname = getVirtualHostname();
 

@@ -5,7 +5,7 @@ runGradleTest {
 	dependsOn createDockerContainer, untarOverrideTestScript
 
 	doLast {
-		File overrideTestScript = new File(buildDir, "overide_test.sh");
+		File overrideTestScript = new File(buildDir, "override_test.sh");
 
 		assert overrideTestScript.text.contains("local");
 

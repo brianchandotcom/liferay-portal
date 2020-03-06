@@ -30,11 +30,10 @@ runGradleTest {
 
 		String[] localDirFileNames = localDir.list()
 
-		assert localDirFileNames.length == 3
+		assert localDirFileNames.length == 2
 
 		assert localDirFileNames.contains("local_file")
 		assert localDirFileNames.contains("portal-ext.properties")
-		assert localDirFileNames.contains("scripts")
 
 		File deployDir = new File(inputDir, "deploy")
 

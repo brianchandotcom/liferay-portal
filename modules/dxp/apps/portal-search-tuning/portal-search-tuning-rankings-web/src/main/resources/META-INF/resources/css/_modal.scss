@@ -6,7 +6,8 @@
 
 	.add-result-scroller {
 		background-color: $lightBackground;
-		max-height: 70vh;
+		max-height: calc(100vh - 280px);
+		min-height: 400px;
 		overflow: auto;
 
 		.add-result-sheet {

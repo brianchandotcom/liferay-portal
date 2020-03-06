@@ -56,4 +56,16 @@ definition {
 			value1 = "${columnLabel}");
 	}
 
+	macro validatePortletFieldTypeInTV {
+		AssertElementPresent(
+			key_fieldType = "${fieldType}",
+			locator1 = "TableViewBuilder#VALIDATE_PORTLET_FIELD_TYPE_IN_TV");
+	}
+
+	macro validatePortletTextInputInTV {
+		AssertElementPresent(
+			key_textInput = "${textInput}",
+			locator1 = "TableViewBuilder#VALIDATE_PORTLET_TEXT_INPUT_IN_TV");
+	}
+
 }

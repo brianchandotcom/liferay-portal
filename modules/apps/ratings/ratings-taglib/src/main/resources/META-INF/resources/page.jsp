@@ -20,7 +20,7 @@
 String className = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:className"));
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ratings:ratings:classPK"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ratings:ratings:data");
-Boolean inTrash = (Boolean)request.getAttribute("liferay-ui:ratings:inTrash");
+boolean inTrash = GetterUtil.getBoolean(request.getAttribute("liferay-ratings:ratings:inTrash"));
 RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("liferay-ratings:ratings:ratingsEntry");
 RatingsStats ratingsStats = (RatingsStats)request.getAttribute("liferay-ratings:ratings:ratingsStats");
 String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings:ratings:type"));

@@ -31,6 +31,7 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
+import com.liferay.layout.page.template.headless.delivery.dto.v1_0.MasterPageConverterUtil;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageTemplateCollectionConverterUtil;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageTemplateConverterUtil;
@@ -64,6 +65,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ExportHelper.class)
 public class ExportHelper {
+
+	public File exportMasterPages(
+			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
+		throws PortletException {
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		try {
+			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+					layoutPageTemplateEntries) {
+
+				_populateMasterPagesZipWriter(
+					layoutPageTemplateEntry, zipWriter);
+			}
+
+			zipWriter.finish();
+
+			return zipWriter.getFile();
+		}
+		catch (Exception exception) {
+			throw new PortletException(exception);
+		}
+	}
 
 	public File exportPageTemplates(
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
@@ -136,6 +160,54 @@ public class ExportHelper {
 					layoutPageTemplateCollectionId));
 	}
 
+	private void _populateMasterPagesZipWriter(
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			ZipWriter zipWriter)
+		throws Exception {
+
+		String masterPagePath =
+			_ROOT_FOLDER_MASTER_PAGES + StringPool.SLASH +
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
+
+		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
+
+		FilterProvider filterProvider = simpleFilterProvider.addFilter(
+			"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
+
+		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
+
+		zipWriter.addEntry(
+			masterPagePath + StringPool.SLASH +
+				LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE,
+			objectWriter.writeValueAsString(
+				MasterPageConverterUtil.toMasterPage(layoutPageTemplateEntry)));
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		if (layout != null) {
+			PageDefinition pageDefinition =
+				PageDefinitionConverterUtil.toPageDefinition(
+					_fragmentCollectionContributorTracker,
+					_fragmentEntryConfigurationParser, _fragmentRendererTracker,
+					layout);
+
+			zipWriter.addEntry(
+				masterPagePath + "/page-definition.json",
+				objectWriter.writeValueAsString(pageDefinition));
+		}
+
+		FileEntry previewFileEntry = _getPreviewFileEntry(
+			layoutPageTemplateEntry.getPreviewFileEntryId());
+
+		if (previewFileEntry != null) {
+			zipWriter.addEntry(
+				masterPagePath + "/thumbnail." +
+					previewFileEntry.getExtension(),
+				previewFileEntry.getContentStream());
+		}
+	}
+
 	private void _populatePageTemplatesZipWriter(
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
 			Map<Long, LayoutPageTemplateCollection>
@@ -205,6 +277,8 @@ public class ExportHelper {
 				previewFileEntry.getContentStream());
 		}
 	}
+
+	private static final String _ROOT_FOLDER_MASTER_PAGES = "master-pages";
 
 	private static final String _ROOT_FOLDER_PAGE_TEMPLATES = "page-templates";
 

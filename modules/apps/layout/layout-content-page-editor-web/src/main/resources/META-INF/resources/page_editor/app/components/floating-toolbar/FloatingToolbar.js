@@ -323,7 +323,7 @@ FloatingToolbar.propTypes = {
 		getLayoutDataItemPropTypes(),
 	]),
 	itemRef: PropTypes.shape({current: PropTypes.instanceOf(Element)}),
-	onButtonClick: PropTypes.func.isRequired,
+	onButtonClick: PropTypes.func,
 };
 
 /**

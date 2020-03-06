@@ -23,7 +23,6 @@ import java.net.URI;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -64,7 +63,7 @@ public class HeadlessDiscoveryApplication extends Application {
 		Map<String, List<ResourceMethodInfoDTO>> resourceMethodInfoDTOsMap =
 			_getResourceMethodInfoDTOsMap();
 
-		Map<String, Resource> resourcesMap = new HashMap<>();
+		Map<String, Resource> resourcesMap = new TreeMap<>();
 
 		for (Map.Entry<String, List<ResourceMethodInfoDTO>> entry :
 				resourceMethodInfoDTOsMap.entrySet()) {

@@ -14,8 +14,8 @@
 
 package com.liferay.depot.internal.security.permission.wrapper;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.configuration.DepotConfiguration;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapperFactory;
@@ -49,12 +49,12 @@ public class PermissionCheckerFactoryImpl
 			_groupLocalService, _roleLocalService, _userGroupRoleLocalService);
 	}
 
+	@Reference
+	private DepotConfiguration _depotConfiguration;
+
 	@Reference(target = "(model.class.name=com.liferay.depot.model.DepotEntry)")
 	private ModelResourcePermission<DepotEntry>
 		_depotEntryModelResourcePermission;
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

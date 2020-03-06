@@ -14,12 +14,12 @@
 
 package com.liferay.depot.web.internal.search.bar.portlet.shared.search;
 
+import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.model.DepotEntryGroupRelModel;
 import com.liferay.depot.model.DepotEntryModel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.depot.configuration.DepotConfiguration;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
@@ -101,12 +101,12 @@ public class DepotSearchBarPortletSharedSearchContributor
 		_defaultSearchBarPortletSharedSearchContributor;
 
 	@Reference
+	private DepotConfiguration _depotConfiguration;
+
+	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
-	private DepotConfiguration _depotConfiguration;
 
 }

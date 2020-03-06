@@ -15,11 +15,10 @@
 package com.liferay.fragment.web.internal.util;
 
 import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
-import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
-import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
+import com.liferay.fragment.util.comparator.FragmentCompositionAndEntryCreateDateComparator;
+import com.liferay.fragment.util.comparator.FragmentCompositionAndEntryNameComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
@@ -51,8 +50,8 @@ public class FragmentPortletUtil {
 		return orderByComparator;
 	}
 
-	public static OrderByComparator<FragmentEntry>
-		getFragmentEntryOrderByComparator(
+	public static OrderByComparator<Object>
+		getFragmentCompositionAndEntryOrderByComparator(
 			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -61,14 +60,15 @@ public class FragmentPortletUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<FragmentEntry> orderByComparator = null;
+		OrderByComparator<Object> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new FragmentEntryCreateDateComparator(
-				orderByAsc);
+			orderByComparator =
+				new FragmentCompositionAndEntryCreateDateComparator(orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new FragmentEntryNameComparator(orderByAsc);
+			orderByComparator = new FragmentCompositionAndEntryNameComparator(
+				orderByAsc);
 		}
 
 		return orderByComparator;

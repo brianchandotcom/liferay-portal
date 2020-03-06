@@ -274,6 +274,21 @@ public interface AccountEntryOrganizationRelLocalService
 		long accountEntryId, long organizationId);
 
 	/**
+	 * Creates an AccountEntryOrganizationRel for each given organizationId,
+	 * unless it already exists, and removes existing
+	 * AccountEntryOrganizationRels if their organizationId is not present in
+	 * the given organizationIds.
+	 *
+	 * @param accountEntryId
+	 * @param organizationIds
+	 * @throws PortalException
+	 * @review
+	 */
+	public void setAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws PortalException;
+
+	/**
 	 * Updates the account entry organization rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param accountEntryOrganizationRel the account entry organization rel

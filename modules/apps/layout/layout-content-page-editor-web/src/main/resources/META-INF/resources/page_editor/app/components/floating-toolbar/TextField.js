@@ -13,14 +13,18 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
+import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export const TextField = ({field, onValueSelect, value}) => {
 	const [currentValue, setCurrentValue] = useState(value);
 	const [errorMessage, setErrorMessage] = useState('');
+
+	const isMounted = useIsMounted();
 
 	const additionalAttributes = {
 		...(field.typeOptions && field.typeOptions.validation
@@ -29,6 +33,17 @@ export const TextField = ({field, onValueSelect, value}) => {
 		errorMessage: undefined,
 		regexp: undefined,
 	};
+
+	const selectValue = useCallback(
+		value => {
+			if (isMounted()) {
+				onValueSelect(field.name, value);
+			}
+		},
+		[field.name, isMounted, onValueSelect]
+	);
+
+	const [debouncedOnValueSelect] = useDebounceCallback(selectValue, 500);
 
 	const fieldType =
 		field.typeOptions && field.typeOptions.validation
@@ -58,7 +73,7 @@ export const TextField = ({field, onValueSelect, value}) => {
 					if (event.target.validity.valid) {
 						setErrorMessage('');
 
-						onValueSelect(field.name, event.target.value);
+						debouncedOnValueSelect(event.target.value);
 					}
 					else {
 						setErrorMessage(

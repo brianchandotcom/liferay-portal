@@ -294,6 +294,12 @@ definition {
 	}
 
 	macro viewApplication {
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		Click(
+			key_card = "${depotName}",
+			locator1 = "LexiconCard#CARD_TITLE");
+
 		if (isSet(noApplication)) {
 			for (var applicationList : list "${applicationList}") {
 				AssertElementNotPresent(

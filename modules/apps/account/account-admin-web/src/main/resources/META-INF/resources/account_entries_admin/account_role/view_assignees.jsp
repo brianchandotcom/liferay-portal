@@ -29,9 +29,9 @@ if (accountRole != null) {
 	role = accountRole.getRole();
 }
 
-SearchContainer accountUserDisplaySearchContainer = AccountUserDisplaySearchContainerFactory.create(accountEntryId, liferayPortletRequest, liferayPortletResponse);
+SearchContainer accountRoleUserDisplaySearchContainer = AccountUserDisplaySearchContainerFactory.create(accountEntryId, role.getRoleId(), liferayPortletRequest, liferayPortletResponse);
 
-ViewAccountRoleAssigneesManagementToolbarDisplayContext viewAccountRoleAssigneesManagementToolbarDisplayContext = new ViewAccountRoleAssigneesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountUserDisplaySearchContainer);
+ViewAccountRoleAssigneesManagementToolbarDisplayContext viewAccountRoleAssigneesManagementToolbarDisplayContext = new ViewAccountRoleAssigneesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountRoleUserDisplaySearchContainer);
 %>
 
 <clay:management-toolbar
@@ -45,7 +45,7 @@ ViewAccountRoleAssigneesManagementToolbarDisplayContext viewAccountRoleAssignees
 		<aui:input name="accountUserIds" type="hidden" />
 
 		<liferay-ui:search-container
-			searchContainer="<%= accountUserDisplaySearchContainer %>"
+			searchContainer="<%= accountRoleUserDisplaySearchContainer %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.account.admin.web.internal.display.AccountUserDisplay"

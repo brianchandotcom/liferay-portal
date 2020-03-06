@@ -16,20 +16,26 @@ package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -88,6 +94,31 @@ public class AccountUserDisplaySearchContainerFactory {
 			liferayPortletRequest, liferayPortletResponse);
 	}
 
+	public static SearchContainer create(
+			long accountEntryId, long roleId,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
+
+		String emptyResultsMessage =
+			"there-are-no-users-associated-with-this-role";
+
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
+		List<UserGroupRole> userGroupRoles =
+			_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
+				accountEntry.getAccountEntryGroupId(), roleId);
+
+		if (!ListUtil.isEmpty(userGroupRoles)) {
+			emptyResultsMessage = "no-users-were-found";
+		}
+
+		return _create(
+			new long[] {accountEntryId}, emptyResultsMessage,
+			liferayPortletRequest, liferayPortletResponse);
+	}
+
 	@Reference(unbind = "-")
 	protected void setAccountEntryLocalService(
 		AccountEntryLocalService accountEntryLocalService) {
@@ -100,6 +131,18 @@ public class AccountUserDisplaySearchContainerFactory {
 		AccountUserRetriever accountUserRetriever) {
 
 		_accountUserRetriever = accountUserRetriever;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupRoleLocalService(
+		UserGroupRoleLocalService userGroupRoleLocalService) {
+
+		_userGroupRoleLocalService = userGroupRoleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUsersAdmin(UsersAdmin usersAdmin) {
+		_usersAdmin = usersAdmin;
 	}
 
 	private static SearchContainer _create(
@@ -134,14 +177,25 @@ public class AccountUserDisplaySearchContainerFactory {
 		String navigation = ParamUtil.getString(
 			liferayPortletRequest, "navigation", "active");
 
-		BaseModelSearchResult<User> baseModelSearchResult =
-			_accountUserRetriever.searchAccountUsers(
+		BaseModelSearchResult<User> baseModelSearchResult;
+
+		long accountRoleId = ParamUtil.getLong(
+			liferayPortletRequest, "accountRoleId");
+
+		if (accountRoleId > 0) {
+			baseModelSearchResult = _getBaseModelSearchResult(
+				accountEntryIds[0], accountRoleId, keywords,
+				accountUserDisplaySearchContainer.getStart(),
+				accountUserDisplaySearchContainer.getEnd(), orderByCol,
+				orderByType);
+		}
+		else {
+			baseModelSearchResult = _getBaseModelSearchResult(
 				accountEntryIds, keywords, _getStatus(navigation),
 				accountUserDisplaySearchContainer.getStart(),
-				accountUserDisplaySearchContainer.getDelta(),
-				accountUserDisplaySearchContainer.getOrderByCol(),
-				_isReverseOrder(
-					accountUserDisplaySearchContainer.getOrderByType()));
+				accountUserDisplaySearchContainer.getDelta(), orderByCol,
+				orderByType);
+		}
 
 		accountUserDisplaySearchContainer.setResults(
 			TransformUtil.transform(
@@ -150,6 +204,26 @@ public class AccountUserDisplaySearchContainerFactory {
 			baseModelSearchResult.getLength());
 
 		return accountUserDisplaySearchContainer;
+	}
+
+	private static BaseModelSearchResult<User> _getBaseModelSearchResult(
+			long accountEntryId, long accountRoleId, String keywords, int start,
+			int end, String orderByCol, String orderByType)
+		throws PortalException {
+
+		return _accountUserRetriever.searchAccountRoleUsers(
+			accountEntryId, accountRoleId, keywords, start, end,
+			_usersAdmin.getUserOrderByComparator(orderByCol, orderByType));
+	}
+
+	private static BaseModelSearchResult<User> _getBaseModelSearchResult(
+			long[] accountEntryIds, String keywords, int status, int start,
+			int delta, String orderByCol, String orderByType)
+		throws PortalException {
+
+		return _accountUserRetriever.searchAccountUsers(
+			accountEntryIds, keywords, status, start, delta, orderByCol,
+			_isReverseOrder(orderByType));
 	}
 
 	private static int _getStatus(String navigation) {
@@ -170,5 +244,7 @@ public class AccountUserDisplaySearchContainerFactory {
 
 	private static AccountEntryLocalService _accountEntryLocalService;
 	private static AccountUserRetriever _accountUserRetriever;
+	private static UserGroupRoleLocalService _userGroupRoleLocalService;
+	private static UsersAdmin _usersAdmin;
 
 }

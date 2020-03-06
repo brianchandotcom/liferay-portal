@@ -198,6 +198,12 @@ public class FileImplTest {
 	}
 
 	@Test
+	public void testStripSuffixWhenFileNameHasNoExtension() {
+		Assert.assertEquals(
+			"test", _fileImpl.stripParentheticalSuffix("test (1)"));
+	}
+
+	@Test
 	public void testStripSuffixWhenFileNameHasNoParentheticalSuffix() {
 		Assert.assertEquals(
 			"test.jsp", _fileImpl.stripParentheticalSuffix("test.jsp"));

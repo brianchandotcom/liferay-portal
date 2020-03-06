@@ -16,8 +16,10 @@ package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+
+import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -38,12 +40,37 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 			return false;
 		}
 
+		CollectionLayoutStructureItem collectionLayoutStructureItem =
+			(CollectionLayoutStructureItem)obj;
+
+		if (!Objects.equals(
+				_listFormat, collectionLayoutStructureItem._listFormat) ||
+			!Objects.equals(
+				_collectionJSONObject.toJSONString(),
+				collectionLayoutStructureItem._collectionJSONObject.
+					toJSONString()) ||
+			!Objects.equals(
+				_numberOfItems, collectionLayoutStructureItem._numberOfItems)) {
+
+			return false;
+		}
+
 		return super.equals(obj);
+	}
+
+	public JSONObject getCollectionJSONObject() {
+		return _collectionJSONObject;
 	}
 
 	@Override
 	public JSONObject getItemConfigJSONObject() {
-		return JSONFactoryUtil.createJSONObject();
+		return JSONUtil.put(
+			"collection", _collectionJSONObject
+		).put(
+			"listFormat", _listFormat
+		).put(
+			"numberOfItems", _numberOfItems
+		);
 	}
 
 	@Override
@@ -51,13 +78,49 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 		return LayoutDataItemTypeConstants.TYPE_COLLECTION;
 	}
 
+	public String getListFormat() {
+		return _listFormat;
+	}
+
+	public int getNumberOfItems() {
+		return _numberOfItems;
+	}
+
 	@Override
 	public int hashCode() {
 		return HashUtil.hash(0, getItemId());
 	}
 
+	public void setCollectionJSONObject(JSONObject collectionJSONObject) {
+		_collectionJSONObject = collectionJSONObject;
+	}
+
+	public void setListFormat(String listFormat) {
+		_listFormat = listFormat;
+	}
+
+	public void setNumberOfItems(int numberOfItems) {
+		_numberOfItems = numberOfItems;
+	}
+
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
+		if (itemConfigJSONObject.has("numberOfItems")) {
+			setNumberOfItems(itemConfigJSONObject.getInt("numberOfItems"));
+		}
+
+		if (itemConfigJSONObject.has("listFormat")) {
+			setListFormat(itemConfigJSONObject.getString("listFormat"));
+		}
+
+		if (itemConfigJSONObject.has("collection")) {
+			setCollectionJSONObject(
+				itemConfigJSONObject.getJSONObject("collection"));
+		}
 	}
+
+	private JSONObject _collectionJSONObject;
+	private String _listFormat;
+	private int _numberOfItems = 3;
 
 }

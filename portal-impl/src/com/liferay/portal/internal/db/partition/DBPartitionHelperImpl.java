@@ -37,6 +37,10 @@ import java.sql.Statement;
  */
 public class DBPartitionHelperImpl implements DBPartitionHelper {
 
+	public DBPartitionHelperImpl(String defaultSchemaName) {
+		_defaultSchemaName = defaultSchemaName;
+	}
+
 	@Override
 	public boolean addPartition(long companyId) {
 		if (companyId == _defaultCompanyId) {
@@ -115,7 +119,7 @@ public class DBPartitionHelperImpl implements DBPartitionHelper {
 				if ((companyId == CompanyConstants.SYSTEM) ||
 					(companyId == _defaultCompanyId)) {
 
-					statement.execute("USE companyDefault");
+					statement.execute("USE " + _defaultSchemaName);
 				}
 				else {
 					statement.execute("USE " + _getSchemaName(companyId));
@@ -148,5 +152,6 @@ public class DBPartitionHelperImpl implements DBPartitionHelper {
 		"database.partition.instance.id");
 
 	private volatile long _defaultCompanyId;
+	private final String _defaultSchemaName;
 
 }

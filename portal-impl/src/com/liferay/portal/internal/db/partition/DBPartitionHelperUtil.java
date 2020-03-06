@@ -15,6 +15,7 @@
 package com.liferay.portal.internal.db.partition;
 
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.spring.hibernate.DialectDetector;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
@@ -46,7 +48,9 @@ public class DBPartitionHelperUtil {
 		_dbPartitionHelper.usePartition(connection);
 	}
 
-	public static DataSource wrapDataSource(DataSource dataSource) {
+	public static DataSource wrapDataSource(DataSource dataSource)
+		throws SQLException {
+
 		boolean databasePartitionEnabled = GetterUtil.getBoolean(
 			PropsUtil.get("database.partition.enabled"));
 
@@ -59,9 +63,14 @@ public class DBPartitionHelperUtil {
 				throw new Error("Database Partition requires MySQL");
 			}
 
-			dataSource = new DBPartitionDataSource(dataSource);
+			try (Connection connection = dataSource.getConnection()) {
+				DBInspector dbInspector = new DBInspector(connection);
 
-			_dbPartitionHelper = new DBPartitionHelperImpl();
+				_dbPartitionHelper = new DBPartitionHelperImpl(
+					dbInspector.getSchema());
+			}
+
+			dataSource = new DBPartitionDataSource(dataSource);
 		}
 		else {
 			_dbPartitionHelper = new DBPartitionHelper() {

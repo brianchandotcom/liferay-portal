@@ -34,4 +34,9 @@
 			<finder-column name="sourceURL" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>DuplicateRedirectEntrySourceURL</exception>
+		<exception>RequiredRedirectEntryDestinationURL</exception>
+		<exception>RequiredRedirectEntrySourceURL</exception>
+	</exceptions>
 </service-builder>

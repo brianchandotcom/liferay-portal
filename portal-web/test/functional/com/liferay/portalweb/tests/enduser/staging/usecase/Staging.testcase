@@ -3096,6 +3096,32 @@ definition {
 		Staging.viewHistoryVersionPG(historyVersion = "${historyVersion}");
 	}
 
+	@description = "This is a use case for LPS-74038."
+	@priority = "5"
+	test ViewInfoMessageAfterShutDownRemoteSite {
+		property app.server.bundles.size = "1";
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "1";
+		property test.name.skip.portal.instance = "Staging#ViewInfoMessageAfterShutDownRemoteSite";
+
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Site Name");
+
+		Clustering.shutdownSpecificServer(nodePort = "9080");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssertVisible(
+			key_connectionInfo = "The connection to the remote live site cannot be established due to a network problem.",
+			locator1 = "Staging#STAGING_CONNECTION_TOOLTIP");
+
+		AssertElementNotPresent(locator1 = "Staging#STAGING_LINK_LIVE");
+
+		AssertConsoleTextNotPresent(value1 = "SocketTimeoutException");
+	}
+
 	@description = "This is a use case for LPS-79092."
 	@priority = "4"
 	test ViewLastPublishDateBehaviourAfterInitialPublication {

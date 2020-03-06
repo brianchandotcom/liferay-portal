@@ -713,8 +713,8 @@ definition {
 		PageEditor.gotoTab(tabName = "Page Structure");
 
 		Click(
-			key_text = "${fragmentName}",
-			locator1 = "Button#ANY");
+			key_nodeName = "${fragmentName}",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_CONFIGURATION_BUTTON");
 	}
@@ -725,8 +725,8 @@ definition {
 		PageEditor.gotoTab(tabName = "Page Structure");
 
 		Click(
-			key_text = "${fragmentName}",
-			locator1 = "Button#ANY");
+			key_nodeName = "${fragmentName}",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_DUPLICATE_BUTTON");
 	}

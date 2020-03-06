@@ -41,9 +41,9 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") : role.getTitle(locale));
 %>
 
-<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>" />
-
 <c:if test="<%= role != null %>">
+	<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>" />
+
 	<c:choose>
 		<c:when test="<%= currentRoleTypeContributor.getType() == RoleConstants.TYPE_REGULAR %>">
 			<liferay-ui:success key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions-and-assign-users", HtmlUtil.escape(roleName)) %>' />

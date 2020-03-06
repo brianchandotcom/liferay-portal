@@ -901,6 +901,27 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<echo>${curl.output.follower.liferay.index}</echo>
 
+		<property name="follower.liferay.settings.index">
+			<![CDATA[
+				{
+					"leader_index": "liferay-0",
+					"remote_cluster": "leader"
+				}
+			]]>
+		</property>
+
+		<exec executable="curl" outputproperty="curl.output.follower.liferay.settings.index">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
+			<arg value="-X" />
+			<arg value="PUT" />
+			<arg value="localhost:9202/liferay-0/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="-d" />
+			<arg value="${follower.liferay.settings.index}" />
+		</exec>
+
+		<echo>${curl.output.follower.liferay.settings.index}</echo>
+
 		<property name="follower.synonyms.index">
 			<![CDATA[
 				{
@@ -921,6 +942,132 @@ xpack.monitoring.collection.enabled: true</echo>
 		</exec>
 
 		<echo>${curl.output.follower.synonyms.index}</echo>
+
+		<property name="follower.workflow.metrics.instances.index">
+			<![CDATA[
+				{
+					"leader_index": "workflow-metrics-instances",
+					"remote_cluster": "leader"
+				}
+			]]>
+		</property>
+
+		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.instances.index">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
+			<arg value="-X" />
+			<arg value="PUT" />
+			<arg value="localhost:9202/workflow-metrics-instances/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="-d" />
+			<arg value="${follower.workflow.metrics.instances.index}" />
+		</exec>
+
+		<echo>${curl.output.follower.workflow.metrics.instances.index}</echo>
+
+		<property name="follower.workflow.metrics.nodes.index">
+			<![CDATA[
+				{
+					"leader_index": "workflow-metrics-nodes",
+					"remote_cluster": "leader"
+				}
+			]]>
+		</property>
+
+		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.nodes.index">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
+			<arg value="-X" />
+			<arg value="PUT" />
+			<arg value="localhost:9202/workflow-metrics-nodes/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="-d" />
+			<arg value="${follower.workflow.metrics.nodes.index}" />
+		</exec>
+
+		<echo>${curl.output.follower.workflow.metrics.nodes.index}</echo>
+
+		<property name="follower.workflow.metrics.processes.index">
+			<![CDATA[
+				{
+					"leader_index": "workflow-metrics-processes",
+					"remote_cluster": "leader"
+				}
+			]]>
+		</property>
+
+		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.processes.index">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
+			<arg value="-X" />
+			<arg value="PUT" />
+			<arg value="localhost:9202/workflow-metrics-processes/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="-d" />
+			<arg value="${follower.workflow.metrics.processes.index}" />
+		</exec>
+
+		<echo>${curl.output.follower.workflow.metrics.processes.index}</echo>
+
+		<property name="follower.workflow.metrics.sla.instance.results.index">
+			<![CDATA[
+				{
+					"leader_index": "workflow-metrics-sla-instance-results",
+					"remote_cluster": "leader"
+				}
+			]]>
+		</property>
+
+		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.sla.instance.results.index">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
+			<arg value="-X" />
+			<arg value="PUT" />
+			<arg value="localhost:9202/workflow-metrics-sla-instance-results/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="-d" />
+			<arg value="${follower.workflow.metrics.sla.instance.results.index}" />
+		</exec>
+
+		<echo>${curl.output.follower.workflow.metrics.sla.instance.results.index}</echo>
+
+		<property name="follower.workflow.metrics.sla.task.results.index">
+			<![CDATA[
+				{
+					"leader_index": "workflow-metrics-sla-task-results",
+					"remote_cluster": "leader"
+				}
+			]]>
+		</property>
+
+		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.sla.task.results.index">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
+			<arg value="-X" />
+			<arg value="PUT" />
+			<arg value="localhost:9202/workflow-metrics-sla-task-results/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="-d" />
+			<arg value="${follower.workflow.metrics.sla.task.results.index}" />
+		</exec>
+
+		<echo>${curl.output.follower.workflow.metrics.sla.task.results.index}</echo>
+
+		<property name="follower.workflow.metrics.tokens.index">
+			<![CDATA[
+				{
+					"leader_index": "workflow-metrics-tokens",
+					"remote_cluster": "leader"
+				}
+			]]>
+		</property>
+
+		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.tokens.index">
+			<arg value="-H" />
+			<arg value="Content-Type: application/json" />
+			<arg value="-X" />
+			<arg value="PUT" />
+			<arg value="localhost:9202/workflow-metrics-tokens/_ccr/follow?wait_for_active_shards=1" />
+			<arg value="-d" />
+			<arg value="${follower.workflow.metrics.tokens.index}" />
+		</exec>
+
+		<echo>${curl.output.follower.workflow.metrics.tokens.index}</echo>
 
 		<exec executable="curl" outputproperty="curl.output.follower.indices">
 			<arg value="-X" />

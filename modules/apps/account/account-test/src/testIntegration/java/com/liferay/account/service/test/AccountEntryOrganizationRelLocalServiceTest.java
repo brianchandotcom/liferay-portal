@@ -24,6 +24,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -239,6 +240,43 @@ public class AccountEntryOrganizationRelLocalServiceTest {
 			ArrayUtil.containsAll(expectedAccountEntryIds, accountEntryIds));
 		Assert.assertTrue(
 			ArrayUtil.containsAll(accountEntryIds, expectedAccountEntryIds));
+	}
+
+	@Test
+	public void testSetAccountEntryOrganizationRels() throws Exception {
+		for (int i = 0; i < 10; i++) {
+			_organizations.add(OrganizationTestUtil.addOrganization());
+		}
+
+		_assertSet(_organizations.subList(0, 4));
+		_assertSet(_organizations.subList(5, 9));
+		_assertSet(_organizations.subList(3, 7));
+	}
+
+	private void _assertSet(List<Organization> organizations)
+		throws PortalException {
+
+		_accountEntryOrganizationRelLocalService.
+			setAccountEntryOrganizationRels(
+				_accountEntry.getAccountEntryId(),
+				ListUtil.toLongArray(
+					organizations, Organization.ORGANIZATION_ID_ACCESSOR));
+
+		List<Long> expectedOrganizationIdsList = ListUtil.toList(
+			organizations, Organization.ORGANIZATION_ID_ACCESSOR);
+		List<Long> actualOrganizationIdsList = ListUtil.toList(
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRels(
+					_accountEntry.getAccountEntryId()),
+			AccountEntryOrganizationRel::getOrganizationId);
+
+		Assert.assertEquals(
+			actualOrganizationIdsList.toString(),
+			expectedOrganizationIdsList.size(),
+			actualOrganizationIdsList.size());
+
+		Assert.assertTrue(
+			expectedOrganizationIdsList.containsAll(actualOrganizationIdsList));
 	}
 
 	@DeleteAfterTestRun

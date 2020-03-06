@@ -1934,7 +1934,7 @@ definition {
 			roleTitle = "Roles Regrole Name");
 
 		Role.viewPermissionCP(
-			permissionDefinitionValue = "View Site Administration Menu",
+			permissionDefinitionValue = "View Site and Asset Library Administration Menu",
 			permissionNavigationValue = "Settings &gt; Site");
 	}
 

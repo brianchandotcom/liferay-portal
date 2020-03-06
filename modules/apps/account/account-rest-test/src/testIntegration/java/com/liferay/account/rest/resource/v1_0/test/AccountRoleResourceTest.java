@@ -15,16 +15,20 @@
 package com.liferay.account.rest.resource.v1_0.test;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.rest.client.dto.v1_0.AccountRole;
 import com.liferay.account.rest.dto.v1_0.Account;
 import com.liferay.account.rest.dto.v1_0.AccountUser;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
 import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -38,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -101,10 +106,22 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		AccountRole accountRole = _addAccountRole(account);
 		AccountUser accountUser = _addAccountUser(account);
 
+		_assertAccountRoleUserAssociation(
+			account, accountRole, accountUser, false);
+
+		_accountRoleLocalService.associateUser(
+			account.getId(), accountRole.getId(), accountUser.getId());
+
+		_assertAccountRoleUserAssociation(
+			account, accountRole, accountUser, true);
+
 		assertHttpResponseStatusCode(
 			204,
 			accountRoleResource.deleteAccountRoleUserAssociationHttpResponse(
 				account.getId(), accountRole.getId(), accountUser.getId()));
+
+		_assertAccountRoleUserAssociation(
+			account, accountRole, accountUser, false);
 	}
 
 	@Ignore
@@ -120,10 +137,16 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		AccountRole accountRole = _addAccountRole(account);
 		AccountUser accountUser = _addAccountUser(account);
 
+		_assertAccountRoleUserAssociation(
+			account, accountRole, accountUser, false);
+
 		assertHttpResponseStatusCode(
 			204,
 			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
 				account.getId(), accountRole.getId(), accountUser.getId()));
+
+		_assertAccountRoleUserAssociation(
+			account, accountRole, accountUser, true);
 
 		assertHttpResponseStatusCode(
 			404,
@@ -216,6 +239,27 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		return accountUser;
 	}
 
+	private void _assertAccountRoleUserAssociation(
+			Account account, AccountRole accountRole, AccountUser accountUser,
+			boolean hasAssociation)
+		throws Exception {
+
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			account.getId());
+
+		UserGroupRole userGroupRole =
+			_userGroupRoleLocalService.fetchUserGroupRole(
+				accountUser.getId(), accountEntry.getAccountEntryGroupId(),
+				accountRole.getRoleId());
+
+		if (hasAssociation) {
+			Assert.assertNotNull(userGroupRole);
+		}
+		else {
+			Assert.assertNull(userGroupRole);
+		}
+	}
+
 	private void _deleteAccounts(List<Account> accounts) {
 		for (Account account : accounts) {
 			try {
@@ -263,12 +307,18 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	@Inject
 	private AccountResource _accountResource;
 
+	@Inject
+	private AccountRoleLocalService _accountRoleLocalService;
+
 	private final List<Account> _accounts = new ArrayList<>();
 
 	@Inject
 	private AccountUserResource _accountUserResource;
 
 	private final List<AccountUser> _accountUsers = new ArrayList<>();
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

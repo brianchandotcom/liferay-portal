@@ -30,12 +30,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-96797."
-	@ignore = "true"
 	@priority = "5"
 	test CreateContentWithExistingStructureViaInlineFieldWithoutMappingRequiredField {
-
-		// Ignore test until POSHI-48 is resolved
-
 		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentCreationContentPageEditorConfiguration.config";
 		property osgi.module.configurations = "contentCreationEnabled=&quot;true&quot;";
 		property portal.acceptance = "true";

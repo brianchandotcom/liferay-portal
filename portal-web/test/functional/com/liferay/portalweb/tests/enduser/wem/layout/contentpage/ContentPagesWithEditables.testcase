@@ -67,12 +67,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101333. Freemarker code should not be executed in an html fragment."
-	@ignore = "true"
 	@priority = "5"
 	test AddContentPageWithHTMLFragment {
-
-		// Ignore test until POSHI-48 is resolved
-
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(

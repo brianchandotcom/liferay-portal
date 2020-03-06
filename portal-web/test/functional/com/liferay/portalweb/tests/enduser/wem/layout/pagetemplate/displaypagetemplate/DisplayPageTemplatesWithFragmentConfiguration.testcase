@@ -29,12 +29,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99377. User can add a checkbox configuration fragment to a display page template."
-	@ignore = "true"
 	@priority = "5"
 	test AddCheckboxConfigurationFragmentToDisplayPageTemplate {
-
-		// Ignore test until POSHI-48 is resolved
-
 		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
@@ -133,11 +129,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-96685. User can change select fragment configuration in a display page template."
-	@ignore = "true"
 	test AddSelectConfigurationFragmentToDisplayPageTemplate {
-
-		// Ignore test until POSHI-48 is resolved
-
 		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
@@ -178,12 +170,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99543. User can change text fragment configuration in a display page template."
-	@ignore = "true"
 	@priority = "5"
 	test AddTextConfigurationFragmentToDisplayPageTemplate {
-
-		// Ignore test until POSHI-48 is resolved
-
 		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {

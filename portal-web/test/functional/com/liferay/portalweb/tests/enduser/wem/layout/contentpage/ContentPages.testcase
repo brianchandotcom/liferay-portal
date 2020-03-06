@@ -116,12 +116,8 @@ definition {
 	}
 
 	@description = "Create a content page from a page template with fragments."
-	@ignore = "true"
 	@priority = "5"
 	test AddContentPageFromPageTemplate {
-
-		// Ignore test until POSHI-48 is resolved
-
 		property portal.acceptance = "true";
 
 		task ("Add a page template collection") {
@@ -169,12 +165,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-95042. Liferay should come out of the box with fragments."
-	@ignore = "true"
 	@priority = "5"
 	test AddContentPageWithOOTBFragment {
-
-		// Ignore test until POSHI-48 is resolved
-
 		property portal.acceptance = "true";
 
 		task ("Add a content page") {

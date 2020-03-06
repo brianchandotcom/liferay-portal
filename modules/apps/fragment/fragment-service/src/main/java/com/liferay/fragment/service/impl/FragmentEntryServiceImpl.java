@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.base.FragmentEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -146,6 +147,50 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		throws PortalException {
 
 		return fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
+	}
+
+	@Override
+	public List<Object> getFragmentCompositionsAndFragmentEntries(
+		long groupId, long fragmentCollectionId, int status, int start, int end,
+		OrderByComparator<?> orderByComparator) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, start, end, (OrderByComparator<Object>)orderByComparator);
+
+		return fragmentEntryFinder.findFC_FE_ByG_FCI(
+			groupId, fragmentCollectionId, queryDefinition);
+	}
+
+	@Override
+	public List<Object> getFragmentCompositionsAndFragmentEntries(
+		long groupId, long fragmentCollectionId, String name, int status,
+		int start, int end, OrderByComparator<?> orderByComparator) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, start, end, (OrderByComparator<Object>)orderByComparator);
+
+		return fragmentEntryFinder.findFC_FE_ByG_FCI_N(
+			groupId, fragmentCollectionId, name, queryDefinition);
+	}
+
+	@Override
+	public int getFragmentCompositionsAndFragmentEntriesCount(
+		long groupId, long fragmentCollectionId, int status) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
+
+		return fragmentEntryFinder.countFC_FE_ByG_FCI(
+			groupId, fragmentCollectionId, queryDefinition);
+	}
+
+	@Override
+	public int getFragmentCompositionsAndFragmentEntriesCount(
+		long groupId, long fragmentCollectionId, String name, int status) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
+
+		return fragmentEntryFinder.countFC_FE_ByG_FCI_N(
+			groupId, fragmentCollectionId, name, queryDefinition);
 	}
 
 	@Override

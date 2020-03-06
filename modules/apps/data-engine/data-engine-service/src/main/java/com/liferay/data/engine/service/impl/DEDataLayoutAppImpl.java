@@ -71,7 +71,7 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 		String content = DataLayoutUtil.serialize(
 			_ddmFormLayoutSerializer, deDataLayout);
 
-		_validate(content, deDataLayout.getName());
+		_validate(deDataLayout.getName(), content);
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			deDataLayout.getDataDefinitionId());
@@ -214,7 +214,7 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 		String content = DataLayoutUtil.serialize(
 			_ddmFormLayoutSerializer, deDataLayout);
 
-		_validate(content, deDataLayout.getName());
+		_validate(deDataLayout.getName(), content);
 
 		DDMStructureLayout ddmStructureLayout =
 			_ddmStructureLayoutLocalService.getStructureLayout(
@@ -393,7 +393,7 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 		return deDataLayouts;
 	}
 
-	private void _validate(String content, Map<Locale, String> name)
+	private void _validate(Map<Locale, String> name, String content)
 		throws PortalException {
 
 		if (MapUtil.isEmpty(name)) {

@@ -75,7 +75,8 @@ definition {
 
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Manual Asset List",
-			assetType = "Web Content Folder,Basic Document,Basic Web Content,Google Drive Shortcut,Documents Folder,DM Document Type Name 1,DM Document Type Name 2");
+			assetType = "Web Content Folder,Basic Document,Basic Web Content,Google Drive Shortcut,Documents Folder,DM Document Type Name 1,DM Document Type Name 2",
+			manualSelection = "true");
 
 		for (var i : list "1,2") {
 			DepotNavigator.openDepotAdmin();
@@ -232,6 +233,173 @@ definition {
 			key_assetTitle = "WC WebContent Title",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH",
 			value1 = "WC WebContent Title");
+	}
+
+	@description = "This ensures that the asset types will not be displayed when disabling the applications."
+	@priority = "5"
+	test DisableAllAssetTypes {
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Documents and Media,Web Content",
+			status = "Disabled");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.viewAssetTypeList(
+			allAssetsDisabled = "ture",
+			assetListName = "Depot Manual Asset List",
+			manualSelection = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.viewAssetTypeList(
+			allAssetsDisabled = "true",
+			assetListName = "Depot Dynamic Asset List",
+			dynamicSelection = "true");
+	}
+
+	@description = "This ensures that only the asset types related to the web ontent will be displayed when disabling the DM."
+	@priority = "5"
+	test DisableDM {
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Documents and Media",
+			status = "Disabled");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.viewAssetTypeList(
+			assetListName = "Depot Manual Asset List",
+			assetType = "Web Content Folder,Basic Web Content,WC Structure Name",
+			manualSelection = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.viewAssetTypeList(
+			assetListName = "Depot Dynamic Asset List",
+			assetType = "Web Content Folder,Web Content Article",
+			dynamicSelection = "true");
+	}
+
+	@description = "This ensures that only the asset types related to the document will be displayed when disabling the WC."
+	@priority = "5"
+	test DisableWC {
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text Box",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Web Content",
+			status = "Disabled");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.viewAssetTypeList(
+			assetListName = "Depot Manual Asset List",
+			assetType = "Basic Document,Google Drive Shortcut,Documents Folder,DM Document Type Name",
+			manualSelection = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Content Sets");
+
+		AssetListsAdmin.viewAssetTypeList(
+			assetListName = "Depot Dynamic Asset List",
+			assetType = "Document,Documents Folder",
+			dynamicSelection = "true");
 	}
 
 	@description = "This ensures that the image is displayed by AP through Content Sets in a depot."
@@ -574,6 +742,13 @@ definition {
 		AssetListsAdmin.addDynamicSelection(
 			assetListTitle = "Depot Dynamic Asset List",
 			depotName = "Test Depot Name");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
+
+		AssetListsAdmin.viewAssetTypeList(
+			assetListName = "Depot Dynamic Asset List",
+			assetType = "Web Content Folder,Web Content Article,Document,Documents Folder",
+			dynamicSelection = "true");
 
 		for (var i : list "1,2,3") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");

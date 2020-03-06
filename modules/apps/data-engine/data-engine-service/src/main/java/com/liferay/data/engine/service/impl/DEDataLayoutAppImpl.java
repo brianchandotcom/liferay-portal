@@ -138,10 +138,10 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 
 	@Override
 	public DEDataLayout fetchDataLayout(
-		long classNameId, String dataLayoutKey, long siteId) {
+		long classNameId, String dataLayoutKey, long groupId) {
 
 		try {
-			return getDataLayout(classNameId, dataLayoutKey, siteId);
+			return getDataLayout(classNameId, dataLayoutKey, groupId);
 		}
 		catch (Exception exception) {
 			return null;
@@ -157,12 +157,12 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 
 	@Override
 	public DEDataLayout getDataLayout(
-			long classNameId, String dataLayoutKey, long siteId)
+			long classNameId, String dataLayoutKey, long groupId)
 		throws Exception {
 
 		return DataLayoutUtil.toDEDataLayout(
 			_ddmStructureLayoutLocalService.getStructureLayout(
-				siteId, classNameId, dataLayoutKey));
+				groupId, classNameId, dataLayoutKey));
 	}
 
 	@Override
@@ -268,12 +268,13 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 
 	private void _addDataDefinitionFieldLinks(
 			long classNameId, long dataDefinitionId, long dataLayoutId,
-			List<String> fieldNames, long siteId)
+			List<String> fieldNames, long groupId)
 		throws Exception {
 
 		for (String fieldName : fieldNames) {
 			_deDataDefinitionFieldLinkLocalService.addDEDataDefinitionFieldLink(
-				siteId, classNameId, dataLayoutId, dataDefinitionId, fieldName);
+				groupId, classNameId, dataLayoutId, dataDefinitionId,
+				fieldName);
 		}
 	}
 

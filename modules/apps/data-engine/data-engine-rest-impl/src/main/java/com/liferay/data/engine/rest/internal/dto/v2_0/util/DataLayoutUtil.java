@@ -94,13 +94,13 @@ public class DataLayoutUtil {
 				dataLayoutKey = deDataLayout.getDataLayoutKey();
 				dataLayoutPages = _toDataLayoutPages(
 					deDataLayout.getDEDataLayoutPages());
-				dateCreated = deDataLayout.getDateCreated();
-				dateModified = deDataLayout.getDateModified();
+				dateCreated = deDataLayout.getCreateDate();
+				dateModified = deDataLayout.getModifiedDate();
 				description = deDataLayout.getDescription();
 				id = deDataLayout.getId();
 				name = deDataLayout.getName();
 				paginationMode = deDataLayout.getPaginationMode();
-				siteId = deDataLayout.getSiteId();
+				siteId = deDataLayout.getGroupId();
 				userId = deDataLayout.getUserId();
 			}
 		};
@@ -121,15 +121,15 @@ public class DataLayoutUtil {
 			{
 				setDataDefinitionId(dataLayout.getDataDefinitionId());
 				setDataLayoutKey(dataLayout.getDataLayoutKey());
-				setDateCreated(dataLayout.getDateCreated());
-				setDateModified(dataLayout.getDateModified());
+				setCreateDate(dataLayout.getDateCreated());
 				setDEDataLayoutPages(
 					_toDEDataLayoutPages(dataLayout.getDataLayoutPages()));
 				setDescription(dataLayout.getDescription());
+				setGroupId(dataLayout.getSiteId());
 				setId(dataLayout.getId());
+				setModifiedDate(dataLayout.getDateModified());
 				setName(dataLayout.getName());
 				setPaginationMode(dataLayout.getPaginationMode());
-				setSiteId(dataLayout.getSiteId());
 				setUserId(dataLayout.getUserId());
 			}
 		};

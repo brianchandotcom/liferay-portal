@@ -42,12 +42,12 @@ public interface DEDataLayoutApp {
 	public DEDataLayout fetchDataLayout(long dataLayoutId);
 
 	public DEDataLayout fetchDataLayout(
-		long classNameId, String dataLayoutKey, long siteId);
+		long classNameId, String dataLayoutKey, long groupId);
 
 	public DEDataLayout getDataLayout(long dataLayoutId) throws Exception;
 
 	public DEDataLayout getDataLayout(
-			long classNameId, String dataLayoutKey, long siteId)
+			long classNameId, String dataLayoutKey, long groupId)
 		throws Exception;
 
 	public Page<DEDataLayout> getDataLayouts(

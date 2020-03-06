@@ -65,20 +65,20 @@ public class DataLayoutUtil {
 		DEDataLayout deDataLayout = _toDEDataLayout(
 			ddmStructureLayout.getDDMFormLayout());
 
+		deDataLayout.setCreateDate(ddmStructureLayout.getCreateDate());
 		deDataLayout.setDataDefinitionId(
 			ddmStructureLayout.getDDMStructureId());
 		deDataLayout.setDataLayoutKey(
 			ddmStructureLayout.getStructureLayoutKey());
-		deDataLayout.setDateCreated(ddmStructureLayout.getCreateDate());
-		deDataLayout.setDateModified(ddmStructureLayout.getModifiedDate());
 		deDataLayout.setDescription(
 			LocalizedValueUtil.toStringObjectMap(
 				ddmStructureLayout.getDescriptionMap()));
+		deDataLayout.setGroupId(ddmStructureLayout.getGroupId());
 		deDataLayout.setId(ddmStructureLayout.getStructureLayoutId());
+		deDataLayout.setModifiedDate(ddmStructureLayout.getModifiedDate());
 		deDataLayout.setName(
 			LocalizedValueUtil.toStringObjectMap(
 				ddmStructureLayout.getNameMap()));
-		deDataLayout.setSiteId(ddmStructureLayout.getGroupId());
 		deDataLayout.setUserId(ddmStructureLayout.getUserId());
 
 		return deDataLayout;

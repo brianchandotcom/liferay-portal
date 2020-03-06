@@ -31,6 +31,7 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -48,6 +49,12 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 				removeTask(project, task);
 			}
 			catch (Exception exception) {
+				Logger logger = project.getLogger();
+
+				if (logger.isDebugEnabled()) {
+					logger.debug(
+						"Unable to remove task {}:{}", project.getPath(), name);
+				}
 			}
 		}
 

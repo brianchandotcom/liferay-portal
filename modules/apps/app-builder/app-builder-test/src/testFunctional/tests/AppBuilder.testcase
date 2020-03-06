@@ -1364,6 +1364,130 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "123");
 	}
 
+	@description = "Create more than one Table View and choose between the two when deploying an App"
+	@priority = "5"
+	test DeployAppChoosingBetweenDifferentTableViews {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "Text Form View",
+			tableViewName = "My Table View 1");
+
+		AppBuilderAdmin.switchTab(tabName = "Form Views");
+
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.setName(formViewName = "Upload Form View");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Upload");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Text");
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Upload");
+
+		TableViewBuilder.setName(tableViewName = "My Table View 2");
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.add();
+
+		AppBuilderAdmin.setName(title = "My First App");
+
+		App.selectFormView(formViewName = "Text Form View");
+
+		App.selectTableView(tableViewName = "My Table View 2");
+
+		App.clickPrevious();
+
+		App.selectTableView(tableViewName = "My Table View 1");
+
+		App.toggleDeploy(deployOption = "Widget");
+
+		App.clickDeploy();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "App Builder Test Page");
+
+		Navigator.gotoPage(pageName = "App Builder Test Page");
+
+		Portlet.addPG(portletName = "My First App");
+
+		AppBuilderAdmin.add();
+
+		PortletEntry.inputText(
+			fieldLabel = "Text",
+			text = "Heilung");
+
+		App.saveApp();
+
+		Portlet.addPG(portletName = "My First App (Table View)");
+
+		TableViewBuilder.validatePortletFieldTypeInTV(fieldType = "Text");
+
+		TableViewBuilder.validatePortletTextInputInTV(textInput = "Heilung");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "Custom Object Title");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.openItem(itemName = "My First App");
+
+		App.clickNext();
+
+		App.selectTableView(tableViewName = "My Table View 2");
+
+		AppBuilderAdmin.save();
+
+		Navigator.gotoPage(pageName = "App Builder Test Page");
+
+		TableViewBuilder.validatePortletFieldTypeInTV(fieldType = "Upload");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "Custom Object Title");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.openItem(itemName = "My First App");
+
+		App.clickNext();
+
+		App.selectTableView(tableViewName = "My Table View 1");
+
+		AppBuilderAdmin.save();
+
+		Navigator.gotoPage(pageName = "App Builder Test Page");
+
+		TableViewBuilder.validatePortletTextInputInTV(textInput = "Heilung");
+	}
+
 	@description = "Clear search results when clicking the Clear button on the search results banner"
 	@priority = "5"
 	test FormViewClearSearchResults {

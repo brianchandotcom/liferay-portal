@@ -214,6 +214,15 @@ public class RedirectEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_S() throws Exception {
+		_persistence.countByG_S(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_S(0L, "null");
+
+		_persistence.countByG_S(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		RedirectEntry newRedirectEntry = addRedirectEntry();
 
@@ -477,6 +486,17 @@ public class RedirectEntryPersistenceTest {
 			Long.valueOf(existingRedirectEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingRedirectEntry, "getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(
+			Long.valueOf(existingRedirectEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRedirectEntry, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingRedirectEntry.getSourceURL(),
+				ReflectionTestUtil.invoke(
+					existingRedirectEntry, "getOriginalSourceURL",
+					new Class<?>[0])));
 	}
 
 	protected RedirectEntry addRedirectEntry() throws Exception {

@@ -116,9 +116,11 @@ public class RedirectEntryModelImpl
 
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
-	public static final long UUID_COLUMN_BITMASK = 4L;
+	public static final long SOURCEURL_COLUMN_BITMASK = 4L;
 
-	public static final long REDIRECTENTRYID_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+
+	public static final long REDIRECTENTRYID_COLUMN_BITMASK = 16L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -498,7 +500,17 @@ public class RedirectEntryModelImpl
 
 	@Override
 	public void setSourceURL(String sourceURL) {
+		_columnBitmask |= SOURCEURL_COLUMN_BITMASK;
+
+		if (_originalSourceURL == null) {
+			_originalSourceURL = _sourceURL;
+		}
+
 		_sourceURL = sourceURL;
+	}
+
+	public String getOriginalSourceURL() {
+		return GetterUtil.getString(_originalSourceURL);
 	}
 
 	@Override
@@ -645,6 +657,9 @@ public class RedirectEntryModelImpl
 		redirectEntryModelImpl._setOriginalCompanyId = false;
 
 		redirectEntryModelImpl._setModifiedDate = false;
+
+		redirectEntryModelImpl._originalSourceURL =
+			redirectEntryModelImpl._sourceURL;
 
 		redirectEntryModelImpl._columnBitmask = 0;
 	}
@@ -809,6 +824,7 @@ public class RedirectEntryModelImpl
 	private boolean _setModifiedDate;
 	private String _destinationURL;
 	private String _sourceURL;
+	private String _originalSourceURL;
 	private boolean _temporary;
 	private long _columnBitmask;
 	private RedirectEntry _escapedModel;

@@ -390,6 +390,56 @@ public interface RedirectEntryPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns the redirect entry where groupId = &#63; and sourceURL = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param sourceURL the source url
+	 * @return the matching redirect entry
+	 * @throws NoSuchEntryException if a matching redirect entry could not be found
+	 */
+	public RedirectEntry findByG_S(long groupId, String sourceURL)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the redirect entry where groupId = &#63; and sourceURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param sourceURL the source url
+	 * @return the matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
+	 */
+	public RedirectEntry fetchByG_S(long groupId, String sourceURL);
+
+	/**
+	 * Returns the redirect entry where groupId = &#63; and sourceURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param sourceURL the source url
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
+	 */
+	public RedirectEntry fetchByG_S(
+		long groupId, String sourceURL, boolean useFinderCache);
+
+	/**
+	 * Removes the redirect entry where groupId = &#63; and sourceURL = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param sourceURL the source url
+	 * @return the redirect entry that was removed
+	 */
+	public RedirectEntry removeByG_S(long groupId, String sourceURL)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the number of redirect entries where groupId = &#63; and sourceURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sourceURL the source url
+	 * @return the number of matching redirect entries
+	 */
+	public int countByG_S(long groupId, String sourceURL);
+
+	/**
 	 * Caches the redirect entry in the entity cache if it is enabled.
 	 *
 	 * @param redirectEntry the redirect entry

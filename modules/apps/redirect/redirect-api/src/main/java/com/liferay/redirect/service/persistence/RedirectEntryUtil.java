@@ -537,6 +537,69 @@ public class RedirectEntryUtil {
 	}
 
 	/**
+	 * Returns the redirect entry where groupId = &#63; and sourceURL = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param sourceURL the source url
+	 * @return the matching redirect entry
+	 * @throws NoSuchEntryException if a matching redirect entry could not be found
+	 */
+	public static RedirectEntry findByG_S(long groupId, String sourceURL)
+		throws com.liferay.redirect.exception.NoSuchEntryException {
+
+		return getPersistence().findByG_S(groupId, sourceURL);
+	}
+
+	/**
+	 * Returns the redirect entry where groupId = &#63; and sourceURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param sourceURL the source url
+	 * @return the matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
+	 */
+	public static RedirectEntry fetchByG_S(long groupId, String sourceURL) {
+		return getPersistence().fetchByG_S(groupId, sourceURL);
+	}
+
+	/**
+	 * Returns the redirect entry where groupId = &#63; and sourceURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param sourceURL the source url
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
+	 */
+	public static RedirectEntry fetchByG_S(
+		long groupId, String sourceURL, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_S(groupId, sourceURL, useFinderCache);
+	}
+
+	/**
+	 * Removes the redirect entry where groupId = &#63; and sourceURL = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param sourceURL the source url
+	 * @return the redirect entry that was removed
+	 */
+	public static RedirectEntry removeByG_S(long groupId, String sourceURL)
+		throws com.liferay.redirect.exception.NoSuchEntryException {
+
+		return getPersistence().removeByG_S(groupId, sourceURL);
+	}
+
+	/**
+	 * Returns the number of redirect entries where groupId = &#63; and sourceURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sourceURL the source url
+	 * @return the number of matching redirect entries
+	 */
+	public static int countByG_S(long groupId, String sourceURL) {
+		return getPersistence().countByG_S(groupId, sourceURL);
+	}
+
+	/**
 	 * Caches the redirect entry in the entity cache if it is enabled.
 	 *
 	 * @param redirectEntry the redirect entry

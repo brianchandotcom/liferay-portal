@@ -56,6 +56,11 @@ public class RedirectEntryLocalServiceImpl
 		return redirectEntryPersistence.update(redirectEntry);
 	}
 
+	@Override
+	public RedirectEntry fetchRedirectEntry(long groupId, String sourceURL) {
+		return redirectEntryPersistence.fetchByG_S(groupId, sourceURL);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RedirectEntry updateRedirectEntry(

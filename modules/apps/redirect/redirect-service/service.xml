@@ -26,5 +26,12 @@
 		<column name="destinationURL" type="String" />
 		<column name="sourceURL" type="String" />
 		<column name="temporary" type="boolean" />
+
+		<!-- Finder methods -->
+
+		<finder name="G_S" return-type="RedirectEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="sourceURL" />
+		</finder>
 	</entity>
 </service-builder>

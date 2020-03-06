@@ -393,14 +393,14 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 		return deDataLayouts;
 	}
 
-	private void _validate(Map<Locale, String> name, String content)
+	private void _validate(Map<Locale, String> nameMap, String content)
 		throws PortalException {
 
-		if (MapUtil.isEmpty(name)) {
+		if (MapUtil.isEmpty(nameMap)) {
 			throw new PortalException("Name is required");
 		}
 
-		for (Map.Entry<Locale, String> entry : name.entrySet()) {
+		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
 			if (Validator.isNull(entry.getValue())) {
 				throw new PortalException("Name is required");
 			}

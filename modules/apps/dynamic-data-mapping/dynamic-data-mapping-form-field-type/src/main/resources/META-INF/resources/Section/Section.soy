@@ -27,6 +27,7 @@
 		{param contentRenderer kind="html"}
 			{if $showLabel}
 				<label class="text-uppercase">{$label}</label>
+
 				<div class="mt-1 separator"></div>
 			{/if}
 
@@ -37,7 +38,7 @@
 				{param activePage: $activePage /}
 				{param editable: $editable /}
 				{param pageIndex: $pageIndex /}
-				{param rows: $nestedRows ?: []  /}
+				{param rows: $nestedRows ?: [] /}
 				{param spritemap: $spritemap /}
 			{/call}
 		{/param}

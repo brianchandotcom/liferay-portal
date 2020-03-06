@@ -54,8 +54,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.ValidationException;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -399,22 +397,23 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 		return deDataLayouts;
 	}
 
-	private void _validate(String content, Map<String, Object> name) {
+	private void _validate(String content, Map<String, Object> name)
+		throws PortalException {
+
 		if (MapUtil.isEmpty(name)) {
-			throw new ValidationException("Name is required");
+			throw new PortalException("Name is required");
 		}
 
-		name.forEach(
-			(locale, localizedName) -> {
-				if (Validator.isNull(localizedName)) {
-					throw new ValidationException("Name is required");
-				}
-			});
+		for (Map.Entry<String, Object> entry : name.entrySet()) {
+			if (Validator.isNull(entry.getValue())) {
+				throw new PortalException("Name is required");
+			}
+		}
 
 		List<String> fieldNames = _getFieldNames(content);
 
 		if (ListUtil.isEmpty(fieldNames)) {
-			throw new ValidationException("Layout is empty");
+			throw new PortalException("Layout is empty");
 		}
 	}
 

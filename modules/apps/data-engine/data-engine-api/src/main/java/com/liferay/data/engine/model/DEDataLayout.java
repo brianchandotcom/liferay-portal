@@ -25,20 +25,16 @@ import java.util.Map;
  */
 public class DEDataLayout implements Serializable {
 
-	public Long getDataDefinitionId() {
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public long getDataDefinitionId() {
 		return _dataDefinitionId;
 	}
 
 	public String getDataLayoutKey() {
 		return _dataLayoutKey;
-	}
-
-	public Date getDateCreated() {
-		return _dateCreated;
-	}
-
-	public Date getDateModified() {
-		return _dateModified;
 	}
 
 	public List<DEDataLayoutPage> getDEDataLayoutPages() {
@@ -49,8 +45,16 @@ public class DEDataLayout implements Serializable {
 		return _description;
 	}
 
-	public Long getId() {
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public long getId() {
 		return _id;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
 	}
 
 	public Map<String, Object> getName() {
@@ -61,28 +65,20 @@ public class DEDataLayout implements Serializable {
 		return _paginationMode;
 	}
 
-	public Long getSiteId() {
-		return _siteId;
-	}
-
-	public Long getUserId() {
+	public long getUserId() {
 		return _userId;
 	}
 
-	public void setDataDefinitionId(Long dataDefinitionId) {
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public void setDataDefinitionId(long dataDefinitionId) {
 		_dataDefinitionId = dataDefinitionId;
 	}
 
 	public void setDataLayoutKey(String dataLayoutKey) {
 		_dataLayoutKey = dataLayoutKey;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		_dateCreated = dateCreated;
-	}
-
-	public void setDateModified(Date dateModified) {
-		_dateModified = dateModified;
 	}
 
 	public void setDEDataLayoutPages(List<DEDataLayoutPage> deDataLayoutPages) {
@@ -93,8 +89,16 @@ public class DEDataLayout implements Serializable {
 		_description = description;
 	}
 
-	public void setId(Long id) {
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public void setId(long id) {
 		_id = id;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	public void setName(Map<String, Object> name) {
@@ -105,24 +109,20 @@ public class DEDataLayout implements Serializable {
 		_paginationMode = paginationMode;
 	}
 
-	public void setSiteId(Long siteId) {
-		_siteId = siteId;
-	}
-
-	public void setUserId(Long userId) {
+	public void setUserId(long userId) {
 		_userId = userId;
 	}
 
-	private Long _dataDefinitionId;
+	private Date _createDate;
+	private long _dataDefinitionId;
 	private String _dataLayoutKey;
-	private Date _dateCreated;
-	private Date _dateModified;
 	private List<DEDataLayoutPage> _deDataLayoutPages;
 	private Map<String, Object> _description;
-	private Long _id;
+	private long _groupId;
+	private long _id;
+	private Date _modifiedDate;
 	private Map<String, Object> _name;
 	private String _paginationMode;
-	private Long _siteId;
-	private Long _userId;
+	private long _userId;
 
 }

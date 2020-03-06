@@ -17,6 +17,8 @@ package com.liferay.fragment.service.base;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
+import com.liferay.fragment.service.persistence.FragmentCompositionPersistence;
+import com.liferay.fragment.service.persistence.FragmentEntryFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -132,6 +134,12 @@ public abstract class FragmentCollectionServiceBaseImpl
 	protected com.liferay.portal.kernel.service.UserService userService;
 
 	@Reference
+	protected FragmentCompositionPersistence fragmentCompositionPersistence;
+
+	@Reference
 	protected FragmentEntryPersistence fragmentEntryPersistence;
+
+	@Reference
+	protected FragmentEntryFinder fragmentEntryFinder;
 
 }

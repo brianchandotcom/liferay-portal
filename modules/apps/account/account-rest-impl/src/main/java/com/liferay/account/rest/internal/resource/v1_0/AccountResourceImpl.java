@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -38,9 +36,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -110,8 +106,10 @@ public class AccountResourceImpl
 			account.getName(), account.getDescription(), _getDomains(account),
 			null, _getStatus(account));
 
-		_setAccountEntryOrganizationRels(
-			accountEntry.getAccountEntryId(), account.getOrganizationIds());
+		_accountEntryOrganizationRelLocalService.
+			setAccountEntryOrganizationRels(
+				accountEntry.getAccountEntryId(),
+				ArrayUtil.toArray(account.getOrganizationIds()));
 
 		return _toAccount(accountEntry);
 	}
@@ -120,8 +118,9 @@ public class AccountResourceImpl
 	public Account putAccount(Long accountId, Account account)
 		throws Exception {
 
-		_setAccountEntryOrganizationRels(
-			accountId, account.getOrganizationIds());
+		_accountEntryOrganizationRelLocalService.
+			setAccountEntryOrganizationRels(
+				accountId, ArrayUtil.toArray(account.getOrganizationIds()));
 
 		return _toAccount(
 			_accountEntryLocalService.updateAccountEntry(
@@ -152,40 +151,6 @@ public class AccountResourceImpl
 		).orElse(
 			WorkflowConstants.STATUS_APPROVED
 		);
-	}
-
-	private void _setAccountEntryOrganizationRels(
-			long accountId, Long[] organizationIds)
-		throws Exception {
-
-		if (organizationIds == null) {
-			return;
-		}
-
-		Set<Long> organizationIdsSet = SetUtil.fromArray(organizationIds);
-
-		List<Long> currentOrganizationIds = ListUtil.toList(
-			_accountEntryOrganizationRelLocalService.
-				getAccountEntryOrganizationRels(accountId),
-			AccountEntryOrganizationRel::getOrganizationId);
-
-		Set<Long> deleteOrganizationIdsSet = SetUtil.fromCollection(
-			currentOrganizationIds);
-
-		deleteOrganizationIdsSet.removeAll(organizationIdsSet);
-
-		_accountEntryOrganizationRelLocalService.
-			deleteAccountEntryOrganizationRels(
-				accountId, ArrayUtil.toLongArray(deleteOrganizationIdsSet));
-
-		Set<Long> addOrganizationIdsSet = SetUtil.fromCollection(
-			organizationIdsSet);
-
-		addOrganizationIdsSet.removeAll(currentOrganizationIds);
-
-		_accountEntryOrganizationRelLocalService.
-			addAccountEntryOrganizationRels(
-				accountId, ArrayUtil.toLongArray(addOrganizationIdsSet));
 	}
 
 	private Account _toAccount(AccountEntry accountEntry) throws Exception {

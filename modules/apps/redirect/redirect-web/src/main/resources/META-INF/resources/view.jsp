@@ -57,6 +57,13 @@ RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(reque
 				</aui:a>
 			</liferay-ui:search-container-column-text>
 
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="type"
+			>
+				<liferay-ui:message key='<%= redirectEntry.isTemporary() ? "temporary" : "permanent" %>' />
+			</liferay-ui:search-container-column-text>
+
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
 					dropdownItems="<%= redirectDisplayContext.getActionDropdownItems(redirectEntry) %>"

@@ -505,7 +505,6 @@ h6,
 // Table list
 
 .table-list {
-	color: var(--table-list-color);
 	font-size: var(--table-list-font-size);
 
 	thead,
@@ -556,24 +555,35 @@ h6,
 				}
 			}
 		}
+
+		th,
+		td {
+			a {
+				&,
+				&:hover {
+					color: inherit;
+				}
+			}
+		}
 	}
 
 	th,
 	td {
-		box-shadow: inset 0 var(--table-list-border-y-width)
-				var(--table-list-border-color),
+		box-shadow: 0 var(--table-list-border-y-width)
+				var(--table-list-border-color) inset,
 			0 var(--table-list-border-y-width) var(--table-list-border-color);
-		padding-top: calc(
-			var(--table-list-border-y-width) + var(--table-cell-padding)
-		);
+		padding: calc(
+				var(--table-list-border-y-width) + var(--table-cell-padding)
+			)
+			var(--table-cell-padding) var(--table-cell-padding);
 
 		&:first-child {
-			box-shadow: inset 0 var(--table-list-border-y-width)
-					var(--table-list-border-color),
+			box-shadow: 0 var(--table-list-border-y-width)
+					var(--table-list-border-color) inset,
 				0 var(--table-list-border-y-width)
 					var(--table-list-border-color),
-				inset var(--table-list-border-x-width) 0
-					var(--table-list-border-color);
+				var(--table-list-border-x-width) 0
+					var(--table-list-border-color) inset;
 			padding-left: calc(
 				var(--table-list-border-x-width) + var(--table-cell-padding)
 			);
@@ -583,10 +593,10 @@ h6,
 		}
 
 		&:last-child {
-			box-shadow: inset 0 var(--table-list-border-y-width)
-					var(--table-list-border-color),
-				inset calc(var(--table-list-border-x-width) * -1) 0
-					var(--table-list-border-color),
+			box-shadow: 0 var(--table-list-border-y-width)
+					var(--table-list-border-color) inset,
+				calc(var(--table-list-border-x-width) * -1) 0
+					var(--table-list-border-color) inset,
 				0 var(--table-list-border-y-width)
 					var(--table-list-border-color);
 			padding-right: calc(
@@ -598,58 +608,54 @@ h6,
 		}
 
 		&:only-child {
-			box-shadow: inset 0 var(--table-list-border-y-width)
-					var(--table-list-border-color),
-				inset calc(#{var(--table-list-border-x-width)} * -1) 0
-					var(--table-list-border-color),
+			box-shadow: 0 var(--table-list-border-y-width)
+					var(--table-list-border-color) inset,
+				calc(#{var(--table-list-border-x-width)} * -1) 0
+					var(--table-list-border-color) inset,
 				0 var(--table-list-border-y-width)
 					var(--table-list-border-color),
-				inset var(--table-list-border-x-width) 0
-					var(--table-list-border-color);
-			padding-left: calc(
-				var(--table-list-border-x-width) + var(--table-cell-padding)
-			);
-			padding-right: calc(
-				var(--table-list-border-x-width) + var(--table-cell-padding)
-			);
-			padding-top: calc(
-				var(--table-list-border-y-width) + var(--table-cell-padding)
-			);
+				var(--table-list-border-x-width) 0
+					var(--table-list-border-color) inset;
+			padding: calc(
+					var(--table-list-border-y-width) + var(--table-cell-padding)
+				)
+				calc(
+					var(--table-list-border-x-width) + var(--table-cell-padding)
+				)
+				var(--table-cell-padding)
+				calc(
+					var(--table-list-border-x-width) + var(--table-cell-padding)
+				);
 		}
 	}
 
 	.table-cell-start {
-		box-shadow: inset 0 var(--table-list-border-y-width)
-				var(--table-list-border-color),
+		box-shadow: 0 var(--table-list-border-y-width)
+				var(--table-list-border-color) inset,
 			0 var(--table-list-border-y-width) var(--table-list-border-color),
-			inset var(--table-list-border-x-width) 0
-				var(--table-list-border-color);
+			var(--table-list-border-x-width) 0 var(--table-list-border-color)
+				inset;
 		padding-left: calc(
 			var(--table-list-border-x-width) + var(--table-cell-padding)
-		);
-		padding-top: calc(
-			var(--table-list-border-y-width) + var(--table-cell-padding)
 		);
 	}
 
 	.table-cell-end {
-		box-shadow: inset 0 var(--table-list-border-y-width)
-				var(--table-list-border-color),
-			inset var(--table-list-border-x-width) 0
-				var(--table-list-border-color),
+		box-shadow: 0 var(--table-list-border-y-width)
+				var(--table-list-border-color) inset,
+			var(--table-list-border-x-width) 0 var(--table-list-border-color)
+				inset,
 			0 var(--table-list-border-y-width) var(--table-list-border-color);
 		padding-right: calc(
 			var(--table-list-border-x-width) + var(--table-cell-padding)
-		);
-		padding-top: calc(
-			var(--table-list-border-y-width) + var(--table-cell-padding)
 		);
 	}
 
 	thead {
 		td,
 		th {
-			background-color: var(--table-list-header-bg);
+			background-color: var(--table-list-head-bg);
+			color: var(--table-list-head-color);
 		}
 	}
 
@@ -658,6 +664,49 @@ h6,
 		td,
 		th {
 			background-color: var(--table-list-bg);
+			color: var(--table-list-color);
 		}
 	}
+
+	.table-divider {
+		td,
+		th {
+			background-color: var(--table-list-divider-bg);
+			color: var(--table-list-divider-color);
+			padding: calc(
+					var(--table-list-border-y-width) +
+						var(--table-list-divider-padding-y)
+				)
+				calc(
+					var(--table-list-border-x-width) +
+						var(--table-list-divider-padding-x)
+				)
+				var(--table-list-divider-padding-y)
+				calc(
+					var(--table-list-border-x-width) +
+						var(--table-list-divider-padding-x)
+				);
+		}
+	}
+
+	.quick-action-menu {
+		background-color: var(--table-list-bg);
+		color: var(--table-list-color);
+		top: var(--table-list-border-y-width);
+	}
+
+	.table-active {
+		&,
+		> th,
+		> td {
+			background-color: var(--table-list-active-bg);
+			color: var(--table-list-active-color);
+		}
+	}
+}
+
+// Table List Title
+
+.table-list-title {
+	color: inherit;
 }

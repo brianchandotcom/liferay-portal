@@ -283,14 +283,24 @@ $theme-colors-cp: map-deep-merge(
 
 	--table-cell-padding: #{$table-cell-padding};
 
-	--table-list-bg: var(--table-bg);
-	--table-list-header-bg: var(--table-list-bg);
+	--table-list-active-bg: var(--table-list-bg);
+	--table-list-active-color: var(--table-list-color);
 
-	--table-list-border-radius: #{$table-list-border-radius};
-	--table-list-color: inherit;
-	--table-list-font-size: 0.875rem;
+	--table-list-font-size: var(--font-size-sm);
 
-	--table-list-border-color: #{$table-list-border-color};
+	--table-list-bg: var(--white);
+	--table-list-color: var(--gray-900);
+
+	--table-list-head-bg: var(--table-list-bg);
+	--table-list-head-color: var(--table-list-color);
+
+	--table-list-border-radius: var(--border-radius);
+	--table-list-border-color: var(--gray-300);
 	--table-list-border-x-width: #{$table-list-border-x-width};
 	--table-list-border-y-width: #{$table-list-border-y-width};
+
+	--table-list-divider-bg: var(--table-list-bg);
+	--table-list-divider-color: var(--table-list-color);
+	--table-list-divider-padding-x: #{$table-list-divider-padding-x};
+	--table-list-divider-padding-y: #{$table-list-divider-padding-y};
 }

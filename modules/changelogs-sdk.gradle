@@ -182,8 +182,6 @@ buildChangelogs {
 
 					if (matcher.find()) {
 						descriptions = "\n" + matcher.group(1).trim()
-
-						ticketNumbers.add(descriptions.substring(descriptions.indexOf("[") + 1, descriptions.indexOf("]")))
 					}
 				}
 

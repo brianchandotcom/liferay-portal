@@ -14,7 +14,11 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
+import com.liferay.account.model.AccountRole;
+import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -22,10 +26,14 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -92,6 +100,64 @@ public class ViewAccountRoleAssigneesManagementToolbarDisplayContext
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.putData("action", "selectAccountUsers");
+
+				long accountRoleId = ParamUtil.getLong(
+					request, "accountRoleId");
+
+				AccountRole accountRole =
+					AccountRoleLocalServiceUtil.fetchAccountRole(accountRoleId);
+
+				Role role = accountRole.getRole();
+
+				if (role != null) {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)request.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					dropdownItem.putData(
+						"accountEntryName",
+						role.getTitle(themeDisplay.getLocale()));
+				}
+
+				PortletURL assignAccountUsersURL =
+					liferayPortletResponse.createActionURL();
+
+				assignAccountUsersURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/account_admin/assign_account_role_users");
+				assignAccountUsersURL.setParameter(
+					"redirect", currentURLObj.toString());
+
+				dropdownItem.putData(
+					"assignAccountUsersURL", assignAccountUsersURL.toString());
+
+				PortletURL selectAccountUsersURL =
+					liferayPortletResponse.createRenderURL();
+
+				selectAccountUsersURL.setParameter(
+					"mvcPath",
+					"/account_entries_admin/select_account_users.jsp");
+				selectAccountUsersURL.setParameter(
+					"accountEntryId",
+					ParamUtil.getString(request, "accountEntryId"));
+				selectAccountUsersURL.setParameter(
+					"accountRoleId",
+					ParamUtil.getString(request, "accountRoleId"));
+				selectAccountUsersURL.setWindowState(LiferayWindowState.POP_UP);
+
+				dropdownItem.putData(
+					"selectAccountUsersURL", selectAccountUsersURL.toString());
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(request, "assign-users"));
+			}
+		).build();
 	}
 
 	@Override

@@ -15,149 +15,74 @@
 import {globalEval} from 'metal-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-/**
- * DOM node which will be manually updated and injects
- * React.portals into it.
- */
-export default class UnsafeHTML extends React.PureComponent {
+export default class UnsafeHTML extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {portals: [], ref: null};
+
+		this.state = {
+			contentRef: null,
+		};
 	}
 
-	componentDidUpdate(prevProps) {
-		if (this.state.ref) {
-			this._syncRefProps();
+	componentDidUpdate() {
+		if (this.state.contentRef) {
+			globalEval.runScriptsInElement(this.state.contentRef);
 
-			if (
-				!this.state.ref.innerHTML ||
-				prevProps.markup !== this.props.markup
-			) {
-				this._syncRefContent();
+			if (this.props.onRender) {
+				this.props.onRender(this.state.contentRef);
 			}
 		}
 	}
 
-	/**
-	 * Syncs ref innerHTML and recreates portals.
-	 *
-	 * Everytime that markup property is updated ref innerHTML
-	 * needs to be updated and portals need to be recreated because
-	 * DOM nodes references will change.
-	 */
-	_syncRefContent() {
-		const ref = this.state.ref;
-
-		ref.innerHTML = this.props.markup;
-
-		requestAnimationFrame(() => {
-			globalEval.runScriptsInElement(ref);
-			this.props.onRender(ref);
-		});
-
-		this.setState({
-			portals: this.props.getPortals(ref),
-		});
+	shouldComponentUpdate(nextProps, nextState) {
+		return (
+			this.props.TagName !== nextProps.TagName ||
+			this.props.markup !== nextProps.markup ||
+			this.state.contentRef !== nextState.contentRef
+		);
 	}
 
-	/**
-	 * Syncs non-critical properties to ref.
-	 *
-	 * If there is some property change we can safely update
-	 * ref DOM properties without making more changes.
-	 */
-	_syncRefProps() {
-		const ref = this.state.ref;
-		ref.className = this.props.className;
-	}
+	_handleRef = element => {
+		this.setState({contentRef: element});
 
-	/**
-	 * Updates internal state.ref and reset state.portals.
-	 *
-	 * If the ref changes for any reason we need to remove all our
-	 * portals to prevent them from failing because their DOM nodes
-	 * are not linked to the document anymore.
-	 */
-	_updateRef = nextRef => {
-		this.setState(({ref: prevRef}) => {
-			if (prevRef !== nextRef) {
-				if (typeof this.props.contentRef === 'function') {
-					this.props.contentRef(nextRef);
-				}
-				else if (this.props.contentRef) {
-					this.props.contentRef.current = nextRef;
-				}
-
-				return {
-					portals: [],
-					ref: nextRef,
-				};
-			}
-
-			return null;
-		});
+		if (typeof this.props.contentRef === 'function') {
+			this.props.contentRef(element);
+		}
+		else if (this.props.contentRef) {
+			this.props.contentRef.current = element;
+		}
 	};
 
 	render() {
-		return (
-			<>
-				<RawDOM
-					elementRef={this._updateRef}
-					tagName={this.props.tagName}
-				/>
+		const {
+			TagName = 'div',
+			// We just want to remove this item from the
+			// otherProps object.
+			// eslint-disable-next-line no-unused-vars
+			contentRef,
+			markup,
+			// eslint-disable-next-line no-unused-vars
+			onRender,
+			...otherProps
+		} = this.props;
 
-				{this.state.portals.map(({Component, element}) =>
-					ReactDOM.createPortal(<Component />, element)
-				)}
-			</>
+		return (
+			<TagName
+				{...otherProps}
+				dangerouslySetInnerHTML={{__html: markup}}
+				ref={this._handleRef}
+			/>
 		);
 	}
 }
 
-UnsafeHTML.defaultProps = {
-	className: '',
-	contentRef: null,
-	getPortals: () => [],
-	markup: '',
-	onRender: () => {},
-	tagName: 'div',
-};
-
 UnsafeHTML.propTypes = {
-	className: PropTypes.string,
+	TagName: PropTypes.string,
 	contentRef: PropTypes.oneOfType([
 		PropTypes.func,
 		PropTypes.shape({current: PropTypes.instanceOf(Element)}),
 	]),
-	getPortals: PropTypes.func,
 	markup: PropTypes.string,
 	onRender: PropTypes.func,
-	tagName: PropTypes.string,
-};
-
-/**
- * Creates a DOM node that will be kept forever
- * to allow manipulating the DOM manually.
- */
-class RawDOM extends React.Component {
-	shouldComponentUpdate() {
-		return false;
-	}
-
-	render() {
-		const TagName = this.props.tagName;
-
-		return <TagName ref={this.props.elementRef} />;
-	}
-}
-
-RawDOM.defaultProps = {
-	tagName: 'div',
-};
-
-RawDOM.propTypes = {
-	elementRef: PropTypes.func.isRequired,
-	tagName: PropTypes.string,
 };

@@ -33,21 +33,39 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.fragment.model.FragmentEntry"
-			keyProperty="fragmentEntryId"
-			modelVar="fragmentEntry"
+			className="Object"
+			modelVar="object"
 		>
 
 			<%
+			FragmentComposition fragmentComposition = null;
+			FragmentEntry fragmentEntry = null;
+
+			if (object instanceof FragmentComposition) {
+				fragmentComposition = (FragmentComposition)object;
+			}
+			else {
+				fragmentEntry = (FragmentEntry)object;
+			}
+
 			row.setCssClass("card-page-item-asset " + row.getCssClass());
 
 			FragmentEntryVerticalCardFactory fragmentEntryVerticalCardFactory = FragmentEntryVerticalCardFactory.getInstance();
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
-					verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard(fragmentEntry, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
-				/>
+				<c:choose>
+					<c:when test="<%= fragmentComposition != null %>">
+						<clay:vertical-card
+							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard(fragmentComposition, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
+						/>
+					</c:when>
+					<c:otherwise>
+						<clay:vertical-card
+							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard(fragmentEntry, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
+						/>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
@@ -76,6 +94,11 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 <liferay-frontend:component
 	componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 	module="js/FragmentEntryDropdownDefaultEventHandler.es"
+/>
+
+<liferay-frontend:component
+	componentId="<%= FragmentWebKeys.FRAGMENT_COMPOSITION_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/FragmentCompositionDropdownDefaultEventHandler.es"
 />
 
 <liferay-frontend:component

@@ -35,6 +35,7 @@ page import="com.liferay.fragment.exception.FragmentCollectionNameException" %><
 page import="com.liferay.fragment.exception.InvalidFileException" %><%@
 page import="com.liferay.fragment.exception.RequiredFragmentEntryException" %><%@
 page import="com.liferay.fragment.model.FragmentCollection" %><%@
+page import="com.liferay.fragment.model.FragmentComposition" %><%@
 page import="com.liferay.fragment.model.FragmentEntry" %><%@
 page import="com.liferay.fragment.renderer.FragmentRendererController" %><%@
 page import="com.liferay.fragment.service.FragmentCollectionLocalServiceUtil" %><%@

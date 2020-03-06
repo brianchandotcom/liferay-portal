@@ -23,8 +23,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -131,6 +135,46 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	/**
+	 * Creates an AccountEntryOrganizationRel for each given organizationId,
+	 * unless it already exists, and removes existing
+	 * AccountEntryOrganizationRels if their organizationId is not present in
+	 * the given organizationIds.
+	 *
+	 * @param accountEntryId
+	 * @param organizationIds
+	 * @throws PortalException
+	 * @review
+	 */
+	@Override
+	public void setAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws PortalException {
+
+		if (organizationIds == null) {
+			return;
+		}
+
+		List<Long> currentOrganizationIds = ListUtil.toList(
+			getAccountEntryOrganizationRels(accountEntryId),
+			AccountEntryOrganizationRel::getOrganizationId);
+
+		Set<Long> deleteOrganizationIdsSet = SetUtil.fromCollection(
+			currentOrganizationIds);
+
+		deleteOrganizationIdsSet.removeAll(ListUtil.fromArray(organizationIds));
+
+		deleteAccountEntryOrganizationRels(
+			accountEntryId, ArrayUtil.toLongArray(deleteOrganizationIdsSet));
+
+		Set<Long> addOrganizationIdsSet = SetUtil.fromArray(organizationIds);
+
+		addOrganizationIdsSet.removeAll(currentOrganizationIds);
+
+		addAccountEntryOrganizationRels(
+			accountEntryId, ArrayUtil.toLongArray(addOrganizationIdsSet));
 	}
 
 	@Reference

@@ -37,8 +37,10 @@ import java.sql.Statement;
  */
 public class DBPartitionHelperImpl implements DBPartitionHelper {
 
-	public DBPartitionHelperImpl(String defaultSchemaName) {
-		_defaultSchemaName = defaultSchemaName;
+	public DBPartitionHelperImpl(Connection connection) throws SQLException {
+		DBInspector dbInspector = new DBInspector(connection);
+
+		_defaultSchemaName = dbInspector.getCatalog();
 	}
 
 	@Override
@@ -77,14 +79,16 @@ public class DBPartitionHelperImpl implements DBPartitionHelper {
 							StringBundler.concat(
 								"create view ", _getSchemaName(companyId),
 								StringPool.PERIOD, tableName, " as select * ",
-								"from companyDefault.", tableName));
+								"from ", _defaultSchemaName, StringPool.PERIOD,
+								tableName));
 					}
 					else {
 						statement.executeUpdate(
 							StringBundler.concat(
 								"create table ", _getSchemaName(companyId),
 								StringPool.PERIOD, tableName, " like ",
-								"companyDefault.", tableName));
+								_defaultSchemaName, StringPool.PERIOD,
+								tableName));
 					}
 				}
 			}

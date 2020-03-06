@@ -380,7 +380,7 @@ export const getThreads = ({
 
 	return request(gql`
         query {
-			messageBoardSectionMessageBoardThreads(filter: ${filter}, messageBoardSectionId: ${sectionId}, page: ${page}, pageSize: ${pageSize}, search: ${search}, sort: ${sort}){
+			messageBoardSectionMessageBoardThreads(filter: ${filter}, flatten: true, messageBoardSectionId: ${sectionId}, page: ${page}, pageSize: ${pageSize}, search: ${search}, sort: ${sort}){
 				items {
 					aggregateRating {
 						ratingAverage

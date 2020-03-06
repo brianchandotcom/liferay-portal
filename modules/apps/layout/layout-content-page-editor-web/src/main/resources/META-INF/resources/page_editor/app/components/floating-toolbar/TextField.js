@@ -85,7 +85,7 @@ export const TextField = ({field, onValueSelect, value}) => {
 			{errorMessage && (
 				<ClayForm.FeedbackGroup>
 					<ClayForm.FeedbackItem>
-						<ClayForm.FeedbackIndicator symbol="check-circle-full" />
+						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 						{errorMessage}
 					</ClayForm.FeedbackItem>
 				</ClayForm.FeedbackGroup>

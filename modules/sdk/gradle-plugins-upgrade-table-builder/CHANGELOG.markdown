@@ -1,5 +1,20 @@
 # Liferay Gradle Plugins Upgrade Table Builder Change Log
 
+## 3.0.1 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Baseline (becb322fa3)
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+- [LPS-106167]: Partial revert (06136ec8) (c7fc18dd4a)
+- [LPS-108328]: Revert "LPS-108328 Allow hotfix patterns" (e75ccbcf8d)
+- [LPS-108328]: Allow hotfix patterns (9c332ad565)
+- [LPS-106167]: Update build.gradle (06136ec832)
+- [LPS-106167]: Use com.liferay.petra.string.StringPool instead (9aa4d72e67)
+- [LPS-100515]: Update plugins Gradle version (448efac158)
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
+
 ## 3.0.0 - 2019-10-22
 
 ### Dependencies
@@ -180,3 +195,53 @@ installation (48f775db44)
 version 2.4.
 - [LPS-51081]: Update the org.gradle.gradle-core dependency to version 2.4.
 - [LPS-51081]: Update the groovy-all dependency to version 2.3.10.
+
+## Markdown Links
+[LPS-51081](https://issues.liferay.com/browse/LPS-51081)
+[LPS-51801](https://issues.liferay.com/browse/LPS-51801)
+[LPS-53392](https://issues.liferay.com/browse/LPS-53392)
+[LPS-55187](https://issues.liferay.com/browse/LPS-55187)
+[LPS-58330](https://issues.liferay.com/browse/LPS-58330)
+[LPS-58467](https://issues.liferay.com/browse/LPS-58467)
+[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
+[LPS-60243](https://issues.liferay.com/browse/LPS-60243)
+[LPS-60306](https://issues.liferay.com/browse/LPS-60306)
+[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-61420](https://issues.liferay.com/browse/LPS-61420)
+[LPS-61848](https://issues.liferay.com/browse/LPS-61848)
+[LPS-62883](https://issues.liferay.com/browse/LPS-62883)
+[LPS-63943](https://issues.liferay.com/browse/LPS-63943)
+[LPS-64021](https://issues.liferay.com/browse/LPS-64021)
+[LPS-64816](https://issues.liferay.com/browse/LPS-64816)
+[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
+[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
+[LPS-65971](https://issues.liferay.com/browse/LPS-65971)
+[LPS-66064](https://issues.liferay.com/browse/LPS-66064)
+[LPS-66222](https://issues.liferay.com/browse/LPS-66222)
+[LPS-67573](https://issues.liferay.com/browse/LPS-67573)
+[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
+[LPS-68165](https://issues.liferay.com/browse/LPS-68165)
+[LPS-69259](https://issues.liferay.com/browse/LPS-69259)
+[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
+[LPS-70677](https://issues.liferay.com/browse/LPS-70677)
+[LPS-70890](https://issues.liferay.com/browse/LPS-70890)
+[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
+[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
+[LPS-73148](https://issues.liferay.com/browse/LPS-73148)
+[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-81944](https://issues.liferay.com/browse/LPS-81944)
+[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-101089](https://issues.liferay.com/browse/LPS-101089)
+[LPS-102700](https://issues.liferay.com/browse/LPS-102700)
+[LPS-103170](https://issues.liferay.com/browse/LPS-103170)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LPS-106167](https://issues.liferay.com/browse/LPS-106167)
+[LPS-108328](https://issues.liferay.com/browse/LPS-108328)

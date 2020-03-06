@@ -1,5 +1,20 @@
 # Liferay Gradle Plugins DB Support Change Log
 
+## 1.0.6 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+- [LPS-105380]: Fix incorrect double space (d735e6aff5)
+- [LPS-100515]: Update README.markdown (694b3791de)
+- [LPS-100515]: Update plugins Gradle version (448efac158)
+- [LPS-85609]: Update readme (c182ff396d)
+- [LPS-85609]: Simplify gradleTest (a8b0feff31)
+- [LPS-85609]: Use Gradle 4.10.2 (9aa90f8961)
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
+- [LPS-96247]: Update the com.liferay.gradle.util dependency to version 1.0.34.
+
 ## 1.0.5 - 2018-11-19
 
 ### Dependencies
@@ -50,3 +65,25 @@
 (452be84220)
 - [LPS-70060]: Test plugins with Gradle 3.3 (09bed59a42)
 - [LPS-67688]: minor README edits (448366ef14)
+
+## Markdown Links
+[LPS-62970](https://issues.liferay.com/browse/LPS-62970)
+[LPS-66709](https://issues.liferay.com/browse/LPS-66709)
+[LPS-67573](https://issues.liferay.com/browse/LPS-67573)
+[LPS-67688](https://issues.liferay.com/browse/LPS-67688)
+[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
+[LPS-70677](https://issues.liferay.com/browse/LPS-70677)
+[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
+[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
+[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
+[LPS-76644](https://issues.liferay.com/browse/LPS-76644)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-105380](https://issues.liferay.com/browse/LPS-105380)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)

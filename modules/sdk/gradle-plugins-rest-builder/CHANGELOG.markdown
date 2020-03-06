@@ -1,5 +1,32 @@
 # Liferay Gradle Plugins REST Builder Change Log
 
+## 1.0.74 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Baseline (becb322fa3)
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
+
+## 1.0.73 - 2020-03-04
+
+### Dependencies
+- [LPS-106886]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.73.
+
+## 1.0.72 - 2020-03-02
+
+### Dependencies
+- [LPS-109569]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.72.
+
+## 1.0.71 - 2020-02-28
+
+### Dependencies
+- [LPS-109307]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.71.
+
 ## 1.0.70 - 2020-02-21
 
 ### Dependencies
@@ -480,3 +507,58 @@ version 1.0.1.
 
 ### Description
 - [LPS-89415]: Added `model` FreeMarker Java template.
+
+## Markdown Links
+[COMMERCE-1067](https://issues.liferay.com/browse/COMMERCE-1067)
+[LPS-84119](https://issues.liferay.com/browse/LPS-84119)
+[LPS-85855](https://issues.liferay.com/browse/LPS-85855)
+[LPS-89415](https://issues.liferay.com/browse/LPS-89415)
+[LPS-91222](https://issues.liferay.com/browse/LPS-91222)
+[LPS-91378](https://issues.liferay.com/browse/LPS-91378)
+[LPS-91803](https://issues.liferay.com/browse/LPS-91803)
+[LPS-93124](https://issues.liferay.com/browse/LPS-93124)
+[LPS-95723](https://issues.liferay.com/browse/LPS-95723)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-98387](https://issues.liferay.com/browse/LPS-98387)
+[LPS-98640](https://issues.liferay.com/browse/LPS-98640)
+[LPS-100427](https://issues.liferay.com/browse/LPS-100427)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-101605](https://issues.liferay.com/browse/LPS-101605)
+[LPS-101995](https://issues.liferay.com/browse/LPS-101995)
+[LPS-102388](https://issues.liferay.com/browse/LPS-102388)
+[LPS-102452](https://issues.liferay.com/browse/LPS-102452)
+[LPS-102481](https://issues.liferay.com/browse/LPS-102481)
+[LPS-102573](https://issues.liferay.com/browse/LPS-102573)
+[LPS-102577](https://issues.liferay.com/browse/LPS-102577)
+[LPS-102721](https://issues.liferay.com/browse/LPS-102721)
+[LPS-103252](https://issues.liferay.com/browse/LPS-103252)
+[LPS-103547](https://issues.liferay.com/browse/LPS-103547)
+[LPS-103743](https://issues.liferay.com/browse/LPS-103743)
+[LPS-103809](https://issues.liferay.com/browse/LPS-103809)
+[LPS-104217](https://issues.liferay.com/browse/LPS-104217)
+[LPS-105193](https://issues.liferay.com/browse/LPS-105193)
+[LPS-105228](https://issues.liferay.com/browse/LPS-105228)
+[LPS-105231](https://issues.liferay.com/browse/LPS-105231)
+[LPS-105235](https://issues.liferay.com/browse/LPS-105235)
+[LPS-105237](https://issues.liferay.com/browse/LPS-105237)
+[LPS-105304](https://issues.liferay.com/browse/LPS-105304)
+[LPS-105380](https://issues.liferay.com/browse/LPS-105380)
+[LPS-105719](https://issues.liferay.com/browse/LPS-105719)
+[LPS-105982](https://issues.liferay.com/browse/LPS-105982)
+[LPS-106123](https://issues.liferay.com/browse/LPS-106123)
+[LPS-106128](https://issues.liferay.com/browse/LPS-106128)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LPS-106317](https://issues.liferay.com/browse/LPS-106317)
+[LPS-106646](https://issues.liferay.com/browse/LPS-106646)
+[LPS-106886](https://issues.liferay.com/browse/LPS-106886)
+[LPS-107224](https://issues.liferay.com/browse/LPS-107224)
+[LPS-107377](https://issues.liferay.com/browse/LPS-107377)
+[LPS-107646](https://issues.liferay.com/browse/LPS-107646)
+[LPS-107825](https://issues.liferay.com/browse/LPS-107825)
+[LPS-107971](https://issues.liferay.com/browse/LPS-107971)
+[LPS-107984](https://issues.liferay.com/browse/LPS-107984)
+[LPS-108380](https://issues.liferay.com/browse/LPS-108380)
+[LPS-108912](https://issues.liferay.com/browse/LPS-108912)
+[LPS-109307](https://issues.liferay.com/browse/LPS-109307)
+[LPS-109569](https://issues.liferay.com/browse/LPS-109569)
+[LRDOCS-6650](https://issues.liferay.com/browse/LRDOCS-6650)

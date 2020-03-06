@@ -1,5 +1,23 @@
 # Liferay Gradle Plugins TLDDoc Builder Change Log
 
+## 1.3.4 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Baseline (becb322fa3)
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+- [LPS-105380]: Rename exception variables (b3173da81b)
+- [LPS-100515]: Update README.markdown (694b3791de)
+- [LPS-100515]: Update plugins Gradle version (448efac158)
+- [LPS-90955]: Fix gradleTest (ad93254425)
+- [LPS-90955]: Format whitespace (8b83495d33)
+- [LPS-85609]: Update readme (c182ff396d)
+- [LPS-85609]: Simplify gradleTest (a8b0feff31)
+- [LPS-85609]: Use Gradle 4.10.2 (9aa90f8961)
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
+- [LPS-96247]: Update the com.liferay.gradle.util dependency to version 1.0.34.
+
 ## 1.3.3 - 2018-11-19
 
 ### Dependencies
@@ -186,3 +204,42 @@ component of the same application.
 - [LRDOCS-2147]: Better description, more similar to "javadoc" (fd8ffa9818)
 - [LRDOCS-2147]: Add task group (ec70931034)
 - [LPS-62942]: Explicitly list exported packages for correctness (f095a51e25)
+
+## Markdown Links
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-62883](https://issues.liferay.com/browse/LPS-62883)
+[LPS-62942](https://issues.liferay.com/browse/LPS-62942)
+[LPS-63943](https://issues.liferay.com/browse/LPS-63943)
+[LPS-64816](https://issues.liferay.com/browse/LPS-64816)
+[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
+[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
+[LPS-65810](https://issues.liferay.com/browse/LPS-65810)
+[LPS-66709](https://issues.liferay.com/browse/LPS-66709)
+[LPS-67573](https://issues.liferay.com/browse/LPS-67573)
+[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
+[LPS-68231](https://issues.liferay.com/browse/LPS-68231)
+[LPS-68666](https://issues.liferay.com/browse/LPS-68666)
+[LPS-69259](https://issues.liferay.com/browse/LPS-69259)
+[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
+[LPS-70677](https://issues.liferay.com/browse/LPS-70677)
+[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
+[LPS-71591](https://issues.liferay.com/browse/LPS-71591)
+[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
+[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
+[LPS-76644](https://issues.liferay.com/browse/LPS-76644)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-79679](https://issues.liferay.com/browse/LPS-79679)
+[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
+[LPS-84621](https://issues.liferay.com/browse/LPS-84621)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-90955](https://issues.liferay.com/browse/LPS-90955)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-105380](https://issues.liferay.com/browse/LPS-105380)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LRDOCS-2147](https://issues.liferay.com/browse/LRDOCS-2147)
+[LRDOCS-2547](https://issues.liferay.com/browse/LRDOCS-2547)
+[LRDOCS-3023](https://issues.liferay.com/browse/LRDOCS-3023)

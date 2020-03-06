@@ -104,3 +104,23 @@ verification (95fbf498b6)
 
 ### Commits
 - [LRQA-28693]: _dest may be a directory or a file. (3635bdaeb1)
+
+## Markdown Links
+[LPS-72572](https://issues.liferay.com/browse/LPS-72572)
+[LPS-74016](https://issues.liferay.com/browse/LPS-74016)
+[LPS-75049](https://issues.liferay.com/browse/LPS-75049)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-84119](https://issues.liferay.com/browse/LPS-84119)
+[LPS-96095](https://issues.liferay.com/browse/LPS-96095)
+[LPS-98801](https://issues.liferay.com/browse/LPS-98801)
+[LRCI-901](https://issues.liferay.com/browse/LRCI-901)
+[LRCI-941](https://issues.liferay.com/browse/LRCI-941)
+[LRQA-28693](https://issues.liferay.com/browse/LRQA-28693)
+[LRQA-29376](https://issues.liferay.com/browse/LRQA-29376)
+[LRQA-29640](https://issues.liferay.com/browse/LRQA-29640)
+[LRQA-37934](https://issues.liferay.com/browse/LRQA-37934)
+[LRQA-39761](https://issues.liferay.com/browse/LRQA-39761)
+[LRQA-40056](https://issues.liferay.com/browse/LRQA-40056)
+[LRQA-40414](https://issues.liferay.com/browse/LRQA-40414)
+[LRQA-42800](https://issues.liferay.com/browse/LRQA-42800)
+[LRQA-44525](https://issues.liferay.com/browse/LRQA-44525)

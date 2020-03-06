@@ -1,5 +1,15 @@
 # Liferay Gradle Plugins Poshi Runner Change Log
 
+## 2.2.21 - 2020-03-04
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
+
+## 2.2.20 - 2020-02-26
+
+### Commits
+- [POSHI-51]: Update poshi runner to 1.0.252 (be18a718f9)
+
 ## 2.2.19 - 2020-02-03
 
 ### Commits
@@ -348,3 +358,54 @@ up-to-date check (59fd9e696c)
 - [LPS-55220]: Simplify (93c943ba30)
 - [LPS-55220]: Misuse? See sdk (2a3e197eec)
 - [LPS-55220]: Use conf mapping instead of transitive attribute (42bfd15e29)
+
+## Markdown Links
+[LPS-51081](https://issues.liferay.com/browse/LPS-51081)
+[LPS-51801](https://issues.liferay.com/browse/LPS-51801)
+[LPS-55187](https://issues.liferay.com/browse/LPS-55187)
+[LPS-55220](https://issues.liferay.com/browse/LPS-55220)
+[LPS-58467](https://issues.liferay.com/browse/LPS-58467)
+[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
+[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-61420](https://issues.liferay.com/browse/LPS-61420)
+[LPS-62986](https://issues.liferay.com/browse/LPS-62986)
+[LPS-63986](https://issues.liferay.com/browse/LPS-63986)
+[LPS-64816](https://issues.liferay.com/browse/LPS-64816)
+[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
+[LPS-65178](https://issues.liferay.com/browse/LPS-65178)
+[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
+[LPS-67352](https://issues.liferay.com/browse/LPS-67352)
+[LPS-67573](https://issues.liferay.com/browse/LPS-67573)
+[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
+[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
+[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
+[LPS-75039](https://issues.liferay.com/browse/LPS-75039)
+[LPS-77359](https://issues.liferay.com/browse/LPS-77359)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-78096](https://issues.liferay.com/browse/LPS-78096)
+[LPS-78266](https://issues.liferay.com/browse/LPS-78266)
+[LPS-78537](https://issues.liferay.com/browse/LPS-78537)
+[LPS-80394](https://issues.liferay.com/browse/LPS-80394)
+[LPS-80950](https://issues.liferay.com/browse/LPS-80950)
+[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-87890](https://issues.liferay.com/browse/LPS-87890)
+[LPS-94947](https://issues.liferay.com/browse/LPS-94947)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LRCI-65](https://issues.liferay.com/browse/LRCI-65)
+[LRCI-264](https://issues.liferay.com/browse/LRCI-264)
+[LRCI-350](https://issues.liferay.com/browse/LRCI-350)
+[LRCI-473](https://issues.liferay.com/browse/LRCI-473)
+[LRCI-642](https://issues.liferay.com/browse/LRCI-642)
+[LRCI-715](https://issues.liferay.com/browse/LRCI-715)
+[LRCI-766](https://issues.liferay.com/browse/LRCI-766)
+[LRCI-902](https://issues.liferay.com/browse/LRCI-902)
+[LRCI-1003](https://issues.liferay.com/browse/LRCI-1003)
+[LRQA-16011](https://issues.liferay.com/browse/LRQA-16011)
+[LRQA-17405](https://issues.liferay.com/browse/LRQA-17405)
+[POSHI-51](https://issues.liferay.com/browse/POSHI-51)

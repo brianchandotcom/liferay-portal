@@ -110,3 +110,17 @@ things up. (36716e688a)
 ### Commits
 - [LPS-55937]: Eagerly free repository resources (7e221f5e8a)
 - [LPS-55937]: Allow Java7 (0df2f048e6)
+
+## Markdown Links
+[LPS-51081](https://issues.liferay.com/browse/LPS-51081)
+[LPS-55691](https://issues.liferay.com/browse/LPS-55691)
+[LPS-55937](https://issues.liferay.com/browse/LPS-55937)
+[LPS-56105](https://issues.liferay.com/browse/LPS-56105)
+[LPS-56954](https://issues.liferay.com/browse/LPS-56954)
+[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
+[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-61420](https://issues.liferay.com/browse/LPS-61420)
+[LPS-63943](https://issues.liferay.com/browse/LPS-63943)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LRQA-28693](https://issues.liferay.com/browse/LRQA-28693)

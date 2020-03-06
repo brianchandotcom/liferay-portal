@@ -1,5 +1,64 @@
 # Liferay Gradle Plugins Service Builder Change Log
 
+## 4.0.3 - 2020-03-05
+
+### Commits
+- [LPS-108328]: Remove version number check (69092ebf90)
+
+### Dependencies
+- [LPS-106397]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.333.
+
+## 4.0.2 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Baseline (becb322fa3)
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
+
+## 4.0.1 - 2020-03-04
+
+### Dependencies
+- [LPS-109743]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.332.
+
+## 4.0.0 - 2020-02-28
+
+### Dependencies
+- [LPS-106397]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.331.
+
+## 3.1.1 - 2020-02-28
+
+### Commits
+- [LPS-106397]: Rename to service.builder.incubation.features (e03fbe83f9)
+- [LPS-106397]: Fix typo (44297c4ab5)
+- [LPS-106397]: Rename, we need this to work differently when we need snapshot
+features backported. (a6b2f272fe)
+- [LPS-106397]: Internal only. (3cb1f2ca69)
+
+## 3.1.0 - 2020-02-26
+
+### Dependencies
+- [LPS-106397]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.330.
+
+## 3.0.18 - 2020-02-26
+
+### Commits
+- [LPS-106397]: Add service builder kernel version build.property. (c1d89c03f6)
+
+## 3.0.17 - 2020-02-24
+
+### Commits
+- [LPS-108328]: Revert "LPS-108328 Allow hotfix patterns" (e75ccbcf8d)
+
+### Dependencies
+- [LPS-105380]: Update the com.liferay.portal.tools.service.builder dependency
+to version 1.0.329.
+
 ## 3.0.16 - 2020-02-10
 
 ### Commits
@@ -1535,3 +1594,234 @@ version 2.4.
 ### Commits
 - [LPS-52594 LPS-55043]: increment (b7b7f70a44)
 - [LPS-52594]: consistency (194d69a3dd)
+
+## Markdown Links
+[LPS-41848](https://issues.liferay.com/browse/LPS-41848)
+[LPS-51081](https://issues.liferay.com/browse/LPS-51081)
+[LPS-51801](https://issues.liferay.com/browse/LPS-51801)
+[LPS-52594](https://issues.liferay.com/browse/LPS-52594)
+[LPS-53392](https://issues.liferay.com/browse/LPS-53392)
+[LPS-55043](https://issues.liferay.com/browse/LPS-55043)
+[LPS-55187](https://issues.liferay.com/browse/LPS-55187)
+[LPS-57037](https://issues.liferay.com/browse/LPS-57037)
+[LPS-58330](https://issues.liferay.com/browse/LPS-58330)
+[LPS-58467](https://issues.liferay.com/browse/LPS-58467)
+[LPS-58672](https://issues.liferay.com/browse/LPS-58672)
+[LPS-59255](https://issues.liferay.com/browse/LPS-59255)
+[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
+[LPS-60280](https://issues.liferay.com/browse/LPS-60280)
+[LPS-60904](https://issues.liferay.com/browse/LPS-60904)
+[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-61420](https://issues.liferay.com/browse/LPS-61420)
+[LPS-61848](https://issues.liferay.com/browse/LPS-61848)
+[LPS-62606](https://issues.liferay.com/browse/LPS-62606)
+[LPS-62883](https://issues.liferay.com/browse/LPS-62883)
+[LPS-63943](https://issues.liferay.com/browse/LPS-63943)
+[LPS-64021](https://issues.liferay.com/browse/LPS-64021)
+[LPS-64713](https://issues.liferay.com/browse/LPS-64713)
+[LPS-64816](https://issues.liferay.com/browse/LPS-64816)
+[LPS-64847](https://issues.liferay.com/browse/LPS-64847)
+[LPS-64897](https://issues.liferay.com/browse/LPS-64897)
+[LPS-64991](https://issues.liferay.com/browse/LPS-64991)
+[LPS-65072](https://issues.liferay.com/browse/LPS-65072)
+[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
+[LPS-65094](https://issues.liferay.com/browse/LPS-65094)
+[LPS-65119](https://issues.liferay.com/browse/LPS-65119)
+[LPS-65135](https://issues.liferay.com/browse/LPS-65135)
+[LPS-65316](https://issues.liferay.com/browse/LPS-65316)
+[LPS-65323](https://issues.liferay.com/browse/LPS-65323)
+[LPS-65338](https://issues.liferay.com/browse/LPS-65338)
+[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
+[LPS-65753](https://issues.liferay.com/browse/LPS-65753)
+[LPS-65920](https://issues.liferay.com/browse/LPS-65920)
+[LPS-66010](https://issues.liferay.com/browse/LPS-66010)
+[LPS-66050](https://issues.liferay.com/browse/LPS-66050)
+[LPS-66064](https://issues.liferay.com/browse/LPS-66064)
+[LPS-66099](https://issues.liferay.com/browse/LPS-66099)
+[LPS-66709](https://issues.liferay.com/browse/LPS-66709)
+[LPS-66731](https://issues.liferay.com/browse/LPS-66731)
+[LPS-66797](https://issues.liferay.com/browse/LPS-66797)
+[LPS-66891](https://issues.liferay.com/browse/LPS-66891)
+[LPS-67352](https://issues.liferay.com/browse/LPS-67352)
+[LPS-67483](https://issues.liferay.com/browse/LPS-67483)
+[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
+[LPS-67804](https://issues.liferay.com/browse/LPS-67804)
+[LPS-68101](https://issues.liferay.com/browse/LPS-68101)
+[LPS-68165](https://issues.liferay.com/browse/LPS-68165)
+[LPS-68231](https://issues.liferay.com/browse/LPS-68231)
+[LPS-68289](https://issues.liferay.com/browse/LPS-68289)
+[LPS-68334](https://issues.liferay.com/browse/LPS-68334)
+[LPS-68598](https://issues.liferay.com/browse/LPS-68598)
+[LPS-68779](https://issues.liferay.com/browse/LPS-68779)
+[LPS-68838](https://issues.liferay.com/browse/LPS-68838)
+[LPS-68839](https://issues.liferay.com/browse/LPS-68839)
+[LPS-68980](https://issues.liferay.com/browse/LPS-68980)
+[LPS-69035](https://issues.liferay.com/browse/LPS-69035)
+[LPS-69259](https://issues.liferay.com/browse/LPS-69259)
+[LPS-69730](https://issues.liferay.com/browse/LPS-69730)
+[LPS-69824](https://issues.liferay.com/browse/LPS-69824)
+[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
+[LPS-70494](https://issues.liferay.com/browse/LPS-70494)
+[LPS-70677](https://issues.liferay.com/browse/LPS-70677)
+[LPS-70890](https://issues.liferay.com/browse/LPS-70890)
+[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
+[LPS-71603](https://issues.liferay.com/browse/LPS-71603)
+[LPS-71686](https://issues.liferay.com/browse/LPS-71686)
+[LPS-71722](https://issues.liferay.com/browse/LPS-71722)
+[LPS-71925](https://issues.liferay.com/browse/LPS-71925)
+[LPS-72347](https://issues.liferay.com/browse/LPS-72347)
+[LPS-72445](https://issues.liferay.com/browse/LPS-72445)
+[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
+[LPS-73156](https://issues.liferay.com/browse/LPS-73156)
+[LPS-73408](https://issues.liferay.com/browse/LPS-73408)
+[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
+[LPS-73967](https://issues.liferay.com/browse/LPS-73967)
+[LPS-74143](https://issues.liferay.com/browse/LPS-74143)
+[LPS-74155](https://issues.liferay.com/browse/LPS-74155)
+[LPS-74207](https://issues.liferay.com/browse/LPS-74207)
+[LPS-74278](https://issues.liferay.com/browse/LPS-74278)
+[LPS-74348](https://issues.liferay.com/browse/LPS-74348)
+[LPS-74544](https://issues.liferay.com/browse/LPS-74544)
+[LPS-74608](https://issues.liferay.com/browse/LPS-74608)
+[LPS-74824](https://issues.liferay.com/browse/LPS-74824)
+[LPS-75009](https://issues.liferay.com/browse/LPS-75009)
+[LPS-75010](https://issues.liferay.com/browse/LPS-75010)
+[LPS-75096](https://issues.liferay.com/browse/LPS-75096)
+[LPS-75399](https://issues.liferay.com/browse/LPS-75399)
+[LPS-75859](https://issues.liferay.com/browse/LPS-75859)
+[LPS-76018](https://issues.liferay.com/browse/LPS-76018)
+[LPS-76509](https://issues.liferay.com/browse/LPS-76509)
+[LPS-76626](https://issues.liferay.com/browse/LPS-76626)
+[LPS-76644](https://issues.liferay.com/browse/LPS-76644)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-77639](https://issues.liferay.com/browse/LPS-77639)
+[LPS-77645](https://issues.liferay.com/browse/LPS-77645)
+[LPS-78023](https://issues.liferay.com/browse/LPS-78023)
+[LPS-78477](https://issues.liferay.com/browse/LPS-78477)
+[LPS-78772](https://issues.liferay.com/browse/LPS-78772)
+[LPS-78901](https://issues.liferay.com/browse/LPS-78901)
+[LPS-78938](https://issues.liferay.com/browse/LPS-78938)
+[LPS-78940](https://issues.liferay.com/browse/LPS-78940)
+[LPS-78971](https://issues.liferay.com/browse/LPS-78971)
+[LPS-79262](https://issues.liferay.com/browse/LPS-79262)
+[LPS-79336](https://issues.liferay.com/browse/LPS-79336)
+[LPS-79365](https://issues.liferay.com/browse/LPS-79365)
+[LPS-79385](https://issues.liferay.com/browse/LPS-79385)
+[LPS-79386](https://issues.liferay.com/browse/LPS-79386)
+[LPS-79388](https://issues.liferay.com/browse/LPS-79388)
+[LPS-79623](https://issues.liferay.com/browse/LPS-79623)
+[LPS-79799](https://issues.liferay.com/browse/LPS-79799)
+[LPS-79919](https://issues.liferay.com/browse/LPS-79919)
+[LPS-80054](https://issues.liferay.com/browse/LPS-80054)
+[LPS-80122](https://issues.liferay.com/browse/LPS-80122)
+[LPS-80123](https://issues.liferay.com/browse/LPS-80123)
+[LPS-80125](https://issues.liferay.com/browse/LPS-80125)
+[LPS-80184](https://issues.liferay.com/browse/LPS-80184)
+[LPS-80386](https://issues.liferay.com/browse/LPS-80386)
+[LPS-80466](https://issues.liferay.com/browse/LPS-80466)
+[LPS-80513](https://issues.liferay.com/browse/LPS-80513)
+[LPS-80544](https://issues.liferay.com/browse/LPS-80544)
+[LPS-80723](https://issues.liferay.com/browse/LPS-80723)
+[LPS-80840](https://issues.liferay.com/browse/LPS-80840)
+[LPS-80920](https://issues.liferay.com/browse/LPS-80920)
+[LPS-80927](https://issues.liferay.com/browse/LPS-80927)
+[LPS-81106](https://issues.liferay.com/browse/LPS-81106)
+[LPS-81336](https://issues.liferay.com/browse/LPS-81336)
+[LPS-81404](https://issues.liferay.com/browse/LPS-81404)
+[LPS-81704](https://issues.liferay.com/browse/LPS-81704)
+[LPS-81706](https://issues.liferay.com/browse/LPS-81706)
+[LPS-82261](https://issues.liferay.com/browse/LPS-82261)
+[LPS-82433](https://issues.liferay.com/browse/LPS-82433)
+[LPS-82815](https://issues.liferay.com/browse/LPS-82815)
+[LPS-82828](https://issues.liferay.com/browse/LPS-82828)
+[LPS-83483](https://issues.liferay.com/browse/LPS-83483)
+[LPS-83761](https://issues.liferay.com/browse/LPS-83761)
+[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
+[LPS-84119](https://issues.liferay.com/browse/LPS-84119)
+[LPS-84138](https://issues.liferay.com/browse/LPS-84138)
+[LPS-84615](https://issues.liferay.com/browse/LPS-84615)
+[LPS-84891](https://issues.liferay.com/browse/LPS-84891)
+[LPS-85556](https://issues.liferay.com/browse/LPS-85556)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-85849](https://issues.liferay.com/browse/LPS-85849)
+[LPS-86406](https://issues.liferay.com/browse/LPS-86406)
+[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
+[LPS-86806](https://issues.liferay.com/browse/LPS-86806)
+[LPS-86916](https://issues.liferay.com/browse/LPS-86916)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87371](https://issues.liferay.com/browse/LPS-87371)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-88170](https://issues.liferay.com/browse/LPS-88170)
+[LPS-88181](https://issues.liferay.com/browse/LPS-88181)
+[LPS-88183](https://issues.liferay.com/browse/LPS-88183)
+[LPS-88665](https://issues.liferay.com/browse/LPS-88665)
+[LPS-88823](https://issues.liferay.com/browse/LPS-88823)
+[LPS-89210](https://issues.liferay.com/browse/LPS-89210)
+[LPS-89228](https://issues.liferay.com/browse/LPS-89228)
+[LPS-89274](https://issues.liferay.com/browse/LPS-89274)
+[LPS-89445](https://issues.liferay.com/browse/LPS-89445)
+[LPS-89456](https://issues.liferay.com/browse/LPS-89456)
+[LPS-89457](https://issues.liferay.com/browse/LPS-89457)
+[LPS-89567](https://issues.liferay.com/browse/LPS-89567)
+[LPS-89568](https://issues.liferay.com/browse/LPS-89568)
+[LPS-89637](https://issues.liferay.com/browse/LPS-89637)
+[LPS-89874](https://issues.liferay.com/browse/LPS-89874)
+[LPS-90008](https://issues.liferay.com/browse/LPS-90008)
+[LPS-90402](https://issues.liferay.com/browse/LPS-90402)
+[LPS-90523](https://issues.liferay.com/browse/LPS-90523)
+[LPS-91231](https://issues.liferay.com/browse/LPS-91231)
+[LPS-91342](https://issues.liferay.com/browse/LPS-91342)
+[LPS-91343](https://issues.liferay.com/browse/LPS-91343)
+[LPS-91970](https://issues.liferay.com/browse/LPS-91970)
+[LPS-92677](https://issues.liferay.com/browse/LPS-92677)
+[LPS-92746](https://issues.liferay.com/browse/LPS-92746)
+[LPS-93045](https://issues.liferay.com/browse/LPS-93045)
+[LPS-95413](https://issues.liferay.com/browse/LPS-95413)
+[LPS-95635](https://issues.liferay.com/browse/LPS-95635)
+[LPS-96018](https://issues.liferay.com/browse/LPS-96018)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-96252](https://issues.liferay.com/browse/LPS-96252)
+[LPS-96830](https://issues.liferay.com/browse/LPS-96830)
+[LPS-97094](https://issues.liferay.com/browse/LPS-97094)
+[LPS-97169](https://issues.liferay.com/browse/LPS-97169)
+[LPS-99252](https://issues.liferay.com/browse/LPS-99252)
+[LPS-99807](https://issues.liferay.com/browse/LPS-99807)
+[LPS-100077](https://issues.liferay.com/browse/LPS-100077)
+[LPS-100352](https://issues.liferay.com/browse/LPS-100352)
+[LPS-100436](https://issues.liferay.com/browse/LPS-100436)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-100525](https://issues.liferay.com/browse/LPS-100525)
+[LPS-100596](https://issues.liferay.com/browse/LPS-100596)
+[LPS-101089](https://issues.liferay.com/browse/LPS-101089)
+[LPS-101208](https://issues.liferay.com/browse/LPS-101208)
+[LPS-101214](https://issues.liferay.com/browse/LPS-101214)
+[LPS-101574](https://issues.liferay.com/browse/LPS-101574)
+[LPS-101788](https://issues.liferay.com/browse/LPS-101788)
+[LPS-102481](https://issues.liferay.com/browse/LPS-102481)
+[LPS-102700](https://issues.liferay.com/browse/LPS-102700)
+[LPS-102817](https://issues.liferay.com/browse/LPS-102817)
+[LPS-103068](https://issues.liferay.com/browse/LPS-103068)
+[LPS-103464](https://issues.liferay.com/browse/LPS-103464)
+[LPS-103547](https://issues.liferay.com/browse/LPS-103547)
+[LPS-103995](https://issues.liferay.com/browse/LPS-103995)
+[LPS-104129](https://issues.liferay.com/browse/LPS-104129)
+[LPS-104539](https://issues.liferay.com/browse/LPS-104539)
+[LPS-104540](https://issues.liferay.com/browse/LPS-104540)
+[LPS-104861](https://issues.liferay.com/browse/LPS-104861)
+[LPS-105380](https://issues.liferay.com/browse/LPS-105380)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LPS-106333](https://issues.liferay.com/browse/LPS-106333)
+[LPS-106397](https://issues.liferay.com/browse/LPS-106397)
+[LPS-106522](https://issues.liferay.com/browse/LPS-106522)
+[LPS-106662](https://issues.liferay.com/browse/LPS-106662)
+[LPS-106666](https://issues.liferay.com/browse/LPS-106666)
+[LPS-108328](https://issues.liferay.com/browse/LPS-108328)
+[LPS-108386](https://issues.liferay.com/browse/LPS-108386)
+[LPS-109743](https://issues.liferay.com/browse/LPS-109743)
+[LRDOCS-2547](https://issues.liferay.com/browse/LRDOCS-2547)
+[LRDOCS-4319](https://issues.liferay.com/browse/LRDOCS-4319)
+[LRDOCS-5050](https://issues.liferay.com/browse/LRDOCS-5050)
+[LRDOCS-5776](https://issues.liferay.com/browse/LRDOCS-5776)
+[LRDOCS-6300](https://issues.liferay.com/browse/LRDOCS-6300)
+[LRQA-54214](https://issues.liferay.com/browse/LRQA-54214)

@@ -1,5 +1,14 @@
 # Liferay Gradle Plugins Patcher Change Log
 
+## 1.0.18 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Baseline (becb322fa3)
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
+
 ## 1.0.17 - 2020-01-17
 
 ### Commits
@@ -198,3 +207,45 @@ version 2.4.
 - [LPS-51081]: Fix patches in Windows (2e3949244b)
 - [LPS-51081]: Better sample (e3b96fab6c)
 - [LPS-51081]: Force Unix line endings to avoid patch errors (2456719303)
+
+## Markdown Links
+[LPS-51081](https://issues.liferay.com/browse/LPS-51081)
+[LPS-51801](https://issues.liferay.com/browse/LPS-51801)
+[LPS-58467](https://issues.liferay.com/browse/LPS-58467)
+[LPS-58542](https://issues.liferay.com/browse/LPS-58542)
+[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
+[LPS-59581](https://issues.liferay.com/browse/LPS-59581)
+[LPS-59851](https://issues.liferay.com/browse/LPS-59851)
+[LPS-60153](https://issues.liferay.com/browse/LPS-60153)
+[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-61445](https://issues.liferay.com/browse/LPS-61445)
+[LPS-61848](https://issues.liferay.com/browse/LPS-61848)
+[LPS-62883](https://issues.liferay.com/browse/LPS-62883)
+[LPS-63943](https://issues.liferay.com/browse/LPS-63943)
+[LPS-64816](https://issues.liferay.com/browse/LPS-64816)
+[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
+[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
+[LPS-67352](https://issues.liferay.com/browse/LPS-67352)
+[LPS-67495](https://issues.liferay.com/browse/LPS-67495)
+[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
+[LPS-68231](https://issues.liferay.com/browse/LPS-68231)
+[LPS-69259](https://issues.liferay.com/browse/LPS-69259)
+[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
+[LPS-70677](https://issues.liferay.com/browse/LPS-70677)
+[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
+[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
+[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-82178](https://issues.liferay.com/browse/LPS-82178)
+[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
+[LPS-84119](https://issues.liferay.com/browse/LPS-84119)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LPS-107313](https://issues.liferay.com/browse/LPS-107313)
+[LRQA-19302](https://issues.liferay.com/browse/LRQA-19302)

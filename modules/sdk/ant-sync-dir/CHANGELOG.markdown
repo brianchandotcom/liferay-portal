@@ -30,3 +30,11 @@
 - [LPS-73858]: This method does not throw any exception (785925c22b)
 - [LPS-73858]: Update to specify JDK6 (929ca92937)
 - [LPS-73858]: Switch to using JDK6 API (e92a2fb1e6)
+
+## Markdown Links
+[LPS-73858](https://issues.liferay.com/browse/LPS-73858)
+[LPS-75049](https://issues.liferay.com/browse/LPS-75049)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-96095](https://issues.liferay.com/browse/LPS-96095)
+[LPS-98801](https://issues.liferay.com/browse/LPS-98801)
+[LRCI-498](https://issues.liferay.com/browse/LRCI-498)

@@ -1,5 +1,14 @@
 # Liferay Gradle Plugins XSD Builder Change Log
 
+## 1.0.9 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Baseline (becb322fa3)
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
+
 ## 1.0.8 - 2019-11-27
 
 ### Commits
@@ -149,3 +158,40 @@ version 2.4.
 2.4.
 - [LPS-51081]: Update the org.gradle.gradle-plugins dependency to version 2.4.
 - [LPS-51081]: Update the groovy-all dependency to version 2.3.10.
+
+## Markdown Links
+[LPS-51081](https://issues.liferay.com/browse/LPS-51081)
+[LPS-51801](https://issues.liferay.com/browse/LPS-51801)
+[LPS-55187](https://issues.liferay.com/browse/LPS-55187)
+[LPS-58467](https://issues.liferay.com/browse/LPS-58467)
+[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
+[LPS-60463](https://issues.liferay.com/browse/LPS-60463)
+[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-61848](https://issues.liferay.com/browse/LPS-61848)
+[LPS-62883](https://issues.liferay.com/browse/LPS-62883)
+[LPS-63943](https://issues.liferay.com/browse/LPS-63943)
+[LPS-64816](https://issues.liferay.com/browse/LPS-64816)
+[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
+[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
+[LPS-66709](https://issues.liferay.com/browse/LPS-66709)
+[LPS-67352](https://issues.liferay.com/browse/LPS-67352)
+[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
+[LPS-68231](https://issues.liferay.com/browse/LPS-68231)
+[LPS-69259](https://issues.liferay.com/browse/LPS-69259)
+[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
+[LPS-70677](https://issues.liferay.com/browse/LPS-70677)
+[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
+[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
+[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
+[LPS-76644](https://issues.liferay.com/browse/LPS-76644)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LRDOCS-4319](https://issues.liferay.com/browse/LRDOCS-4319)

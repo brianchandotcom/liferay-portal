@@ -74,3 +74,24 @@ will be easier to add extra files ("osgi.runtime.dependencies") as "from"
 
 ### Dependencies
 - [LPS-51081]: Update the ant dependency to version 1.9.4.
+
+## Markdown Links
+[LPS-51081](https://issues.liferay.com/browse/LPS-51081)
+[LPS-55691](https://issues.liferay.com/browse/LPS-55691)
+[LPS-56101](https://issues.liferay.com/browse/LPS-56101)
+[LPS-58880](https://issues.liferay.com/browse/LPS-58880)
+[LPS-59279](https://issues.liferay.com/browse/LPS-59279)
+[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
+[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-63112](https://issues.liferay.com/browse/LPS-63112)
+[LPS-63499](https://issues.liferay.com/browse/LPS-63499)
+[LPS-63706](https://issues.liferay.com/browse/LPS-63706)
+[LPS-63797](https://issues.liferay.com/browse/LPS-63797)
+[LPS-64021](https://issues.liferay.com/browse/LPS-64021)
+[LPS-64182](https://issues.liferay.com/browse/LPS-64182)
+[LPS-66064](https://issues.liferay.com/browse/LPS-66064)
+[LPS-75121](https://issues.liferay.com/browse/LPS-75121)
+[LPS-75938](https://issues.liferay.com/browse/LPS-75938)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LRQA-28693](https://issues.liferay.com/browse/LRQA-28693)

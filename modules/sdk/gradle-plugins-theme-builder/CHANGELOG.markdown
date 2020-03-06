@@ -1,5 +1,27 @@
 # Liferay Gradle Plugins Theme Builder Change Log
 
+## 2.0.12 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Baseline (becb322fa3)
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+
+### Dependencies
+- [LPS-109374]: Update the com.liferay.gradle.plugins.css.builder dependency to
+version 3.1.2.
+- [LPS-106149]: Update the com.liferay.gradle.plugins.css.builder dependency to
+version 3.1.1.
+
+## 2.0.11 - 2020-02-24
+
+### Commits
+- [LPS-100515]: Update README.markdown (694b3791de)
+- [LPS-100515]: Update plugins Gradle version (448efac158)
+
+### Dependencies
+- [LPS-109055]: Update the com.liferay.gradle.plugins.css.builder dependency to
+version 3.1.0.
+
 ## 2.0.9 - 2019-11-04
 
 ### Dependencies
@@ -179,3 +201,46 @@ the WAR file.
 - [LPS-66396]: switch defaults for outputDir and diffsDir so that generated
 files aren't mixed in with source files (fb7f330f69)
 - [LPS-66396]: Edit gradle-plugins-theme-builder README (0ec11c2c12)
+
+## Markdown Links
+[LPS-66396](https://issues.liferay.com/browse/LPS-66396)
+[LPS-66709](https://issues.liferay.com/browse/LPS-66709)
+[LPS-67573](https://issues.liferay.com/browse/LPS-67573)
+[LPS-69223](https://issues.liferay.com/browse/LPS-69223)
+[LPS-69259](https://issues.liferay.com/browse/LPS-69259)
+[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
+[LPS-70677](https://issues.liferay.com/browse/LPS-70677)
+[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
+[LPS-72367](https://issues.liferay.com/browse/LPS-72367)
+[LPS-73495](https://issues.liferay.com/browse/LPS-73495)
+[LPS-74126](https://issues.liferay.com/browse/LPS-74126)
+[LPS-74315](https://issues.liferay.com/browse/LPS-74315)
+[LPS-74426](https://issues.liferay.com/browse/LPS-74426)
+[LPS-74449](https://issues.liferay.com/browse/LPS-74449)
+[LPS-74571](https://issues.liferay.com/browse/LPS-74571)
+[LPS-74789](https://issues.liferay.com/browse/LPS-74789)
+[LPS-75589](https://issues.liferay.com/browse/LPS-75589)
+[LPS-75633](https://issues.liferay.com/browse/LPS-75633)
+[LPS-76475](https://issues.liferay.com/browse/LPS-76475)
+[LPS-76644](https://issues.liferay.com/browse/LPS-76644)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-80332](https://issues.liferay.com/browse/LPS-80332)
+[LPS-83755](https://issues.liferay.com/browse/LPS-83755)
+[LPS-84218](https://issues.liferay.com/browse/LPS-84218)
+[LPS-84473](https://issues.liferay.com/browse/LPS-84473)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-86581](https://issues.liferay.com/browse/LPS-86581)
+[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-94999](https://issues.liferay.com/browse/LPS-94999)
+[LPS-95388](https://issues.liferay.com/browse/LPS-95388)
+[LPS-95682](https://issues.liferay.com/browse/LPS-95682)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-103051](https://issues.liferay.com/browse/LPS-103051)
+[LPS-103169](https://issues.liferay.com/browse/LPS-103169)
+[LPS-104028](https://issues.liferay.com/browse/LPS-104028)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LPS-109055](https://issues.liferay.com/browse/LPS-109055)
+[LPS-109374](https://issues.liferay.com/browse/LPS-109374)
+[LRDOCS-4129](https://issues.liferay.com/browse/LRDOCS-4129)

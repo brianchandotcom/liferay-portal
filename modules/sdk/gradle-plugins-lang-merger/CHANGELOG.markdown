@@ -1,5 +1,20 @@
 # Liferay Gradle Plugins Lang Merger Change Log
 
+## 1.1.3 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Baseline (becb322fa3)
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+- [LPS-100515]: Update plugins Gradle version (448efac158)
+- [LPS-77699]: Add "lost" translations from Crowdin manually (b59888c1f7)
+- [LPS-77699]: Update Translations (8c97fc8f0a)
+- [LPS-85609]: Simplify gradleTest (a8b0feff31)
+- [LPS-85609]: Use Gradle 4.10.2 (9aa90f8961)
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
+- [LPS-96247]: Update the com.liferay.gradle.util dependency to version 1.0.34.
+
 ## 1.1.2 - 2018-11-19
 
 ### Dependencies
@@ -109,3 +124,41 @@ Translation Sync Tool v.4.0.9] (ddb77ec725)
 Include-Resource" (94f30d28e7)
 - [LPS-61088]: Remove classes and resources dir from Include-Resource
 (900459894c)
+
+## Markdown Links
+[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-62765](https://issues.liferay.com/browse/LPS-62765)
+[LPS-62833](https://issues.liferay.com/browse/LPS-62833)
+[LPS-62942](https://issues.liferay.com/browse/LPS-62942)
+[LPS-63631](https://issues.liferay.com/browse/LPS-63631)
+[LPS-63943](https://issues.liferay.com/browse/LPS-63943)
+[LPS-64021](https://issues.liferay.com/browse/LPS-64021)
+[LPS-64816](https://issues.liferay.com/browse/LPS-64816)
+[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
+[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
+[LPS-65810](https://issues.liferay.com/browse/LPS-65810)
+[LPS-65909](https://issues.liferay.com/browse/LPS-65909)
+[LPS-66331](https://issues.liferay.com/browse/LPS-66331)
+[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
+[LPS-68231](https://issues.liferay.com/browse/LPS-68231)
+[LPS-69259](https://issues.liferay.com/browse/LPS-69259)
+[LPS-70060](https://issues.liferay.com/browse/LPS-70060)
+[LPS-70677](https://issues.liferay.com/browse/LPS-70677)
+[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
+[LPS-71375](https://issues.liferay.com/browse/LPS-71375)
+[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
+[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
+[LPS-76522](https://issues.liferay.com/browse/LPS-76522)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-77699](https://issues.liferay.com/browse/LPS-77699)
+[LPS-79679](https://issues.liferay.com/browse/LPS-79679)
+[LPS-81895](https://issues.liferay.com/browse/LPS-81895)
+[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)

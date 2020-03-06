@@ -39,3 +39,16 @@
 ### Commits
 - [LRQA-18330]: rename step 2 (aca205c3e6)
 - [LRQA-18330]: rename step 1 (6ee9fe157c)
+
+## Markdown Links
+[LPS-55691](https://issues.liferay.com/browse/LPS-55691)
+[LPS-59279](https://issues.liferay.com/browse/LPS-59279)
+[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
+[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-75049](https://issues.liferay.com/browse/LPS-75049)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LRQA-17949](https://issues.liferay.com/browse/LRQA-17949)
+[LRQA-18330](https://issues.liferay.com/browse/LRQA-18330)
+[LRQA-28693](https://issues.liferay.com/browse/LRQA-28693)
+[LRQA-41672](https://issues.liferay.com/browse/LRQA-41672)

@@ -1,5 +1,18 @@
 # Liferay Gradle Plugins JSDoc Change Log
 
+## 2.0.47 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Baseline (becb322fa3)
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+- [LPS-100515]: Update README.markdown (694b3791de)
+- [LPS-100515]: Update plugins Gradle version (448efac158)
+- [LPS-104132]: Apply it everywhere (02f1d1d169)
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.plugins.node dependency to version
+7.0.1.
+
 ## 2.0.46 - 2019-10-23
 
 ### Dependencies
@@ -363,3 +376,52 @@ the same application.
 ### Dependencies
 - [LPS-74904]: Update the com.liferay.gradle.plugins.node dependency to version
 4.0.1.
+
+## Markdown Links
+[LPS-0](https://issues.liferay.com/browse/LPS-0)
+[LPS-69802](https://issues.liferay.com/browse/LPS-69802)
+[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
+[LPS-74904](https://issues.liferay.com/browse/LPS-74904)
+[LPS-75530](https://issues.liferay.com/browse/LPS-75530)
+[LPS-76644](https://issues.liferay.com/browse/LPS-76644)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-77840](https://issues.liferay.com/browse/LPS-77840)
+[LPS-77996](https://issues.liferay.com/browse/LPS-77996)
+[LPS-78741](https://issues.liferay.com/browse/LPS-78741)
+[LPS-79679](https://issues.liferay.com/browse/LPS-79679)
+[LPS-82310](https://issues.liferay.com/browse/LPS-82310)
+[LPS-82568](https://issues.liferay.com/browse/LPS-82568)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-85959](https://issues.liferay.com/browse/LPS-85959)
+[LPS-86576](https://issues.liferay.com/browse/LPS-86576)
+[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87465](https://issues.liferay.com/browse/LPS-87465)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-87479](https://issues.liferay.com/browse/LPS-87479)
+[LPS-88909](https://issues.liferay.com/browse/LPS-88909)
+[LPS-89126](https://issues.liferay.com/browse/LPS-89126)
+[LPS-89436](https://issues.liferay.com/browse/LPS-89436)
+[LPS-89916](https://issues.liferay.com/browse/LPS-89916)
+[LPS-90945](https://issues.liferay.com/browse/LPS-90945)
+[LPS-91967](https://issues.liferay.com/browse/LPS-91967)
+[LPS-93220](https://issues.liferay.com/browse/LPS-93220)
+[LPS-93258](https://issues.liferay.com/browse/LPS-93258)
+[LPS-94947](https://issues.liferay.com/browse/LPS-94947)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-96376](https://issues.liferay.com/browse/LPS-96376)
+[LPS-98450](https://issues.liferay.com/browse/LPS-98450)
+[LPS-99740](https://issues.liferay.com/browse/LPS-99740)
+[LPS-99774](https://issues.liferay.com/browse/LPS-99774)
+[LPS-99977](https://issues.liferay.com/browse/LPS-99977)
+[LPS-100163](https://issues.liferay.com/browse/LPS-100163)
+[LPS-100168](https://issues.liferay.com/browse/LPS-100168)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-101470](https://issues.liferay.com/browse/LPS-101470)
+[LPS-102367](https://issues.liferay.com/browse/LPS-102367)
+[LPS-103580](https://issues.liferay.com/browse/LPS-103580)
+[LPS-104132](https://issues.liferay.com/browse/LPS-104132)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LRDOCS-4111](https://issues.liferay.com/browse/LRDOCS-4111)
+[LRDOCS-6412](https://issues.liferay.com/browse/LRDOCS-6412)
+[LRQA-52072](https://issues.liferay.com/browse/LRQA-52072)

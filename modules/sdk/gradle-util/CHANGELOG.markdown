@@ -1,5 +1,12 @@
 # Liferay Gradle Utilities Change Log
 
+## 1.0.35 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+- [LPS-105380]: Rename exception variables (b3173da81b)
+- [LPS-100515]: Update plugins Gradle version (448efac158)
+
 ## 1.0.34 - 2019-06-21
 
 ### Commits
@@ -232,3 +239,37 @@ up-to-date check (59fd9e696c)
 
 ### Commits
 - [LPS-51081]: Move configuration into task (e4d681d6eb)
+
+## Markdown Links
+[LPS-51081](https://issues.liferay.com/browse/LPS-51081)
+[LPS-51801](https://issues.liferay.com/browse/LPS-51801)
+[LPS-55187](https://issues.liferay.com/browse/LPS-55187)
+[LPS-56506](https://issues.liferay.com/browse/LPS-56506)
+[LPS-58256](https://issues.liferay.com/browse/LPS-58256)
+[LPS-58467](https://issues.liferay.com/browse/LPS-58467)
+[LPS-58516](https://issues.liferay.com/browse/LPS-58516)
+[LPS-58587](https://issues.liferay.com/browse/LPS-58587)
+[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
+[LPS-60153](https://issues.liferay.com/browse/LPS-60153)
+[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-62883](https://issues.liferay.com/browse/LPS-62883)
+[LPS-62942](https://issues.liferay.com/browse/LPS-62942)
+[LPS-63943](https://issues.liferay.com/browse/LPS-63943)
+[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
+[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
+[LPS-65810](https://issues.liferay.com/browse/LPS-65810)
+[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
+[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
+[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-81555](https://issues.liferay.com/browse/LPS-81555)
+[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-88524](https://issues.liferay.com/browse/LPS-88524)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-105380](https://issues.liferay.com/browse/LPS-105380)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)

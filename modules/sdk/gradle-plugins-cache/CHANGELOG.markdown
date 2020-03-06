@@ -1,5 +1,20 @@
 # Liferay Gradle Plugins Cache Change Log
 
+## 1.0.17 - 2020-03-04
+
+### Commits
+- [LPS-106149]: Cacheable tasks (5f1911b5ba)
+- [LPS-105380]: Rename exception variables (b3173da81b)
+- [LPS-100515]: Update plugins Gradle version (448efac158)
+- [LPS-84119]: Do not declare var (85dc5fdf91)
+- [LPS-84119]: SF, use Objects.equals instead of calling equals on literal
+string (4ef3dd1d93)
+- [LPS-91967]: Skip node_modules_cache directory (43a618c849)
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
+- [LPS-96247]: Update the com.liferay.gradle.util dependency to version 1.0.34.
+
 ## 1.0.16 - 2018-11-20
 
 ### Commits
@@ -153,3 +168,40 @@
 
 ### Dependencies
 - [LPS-58587]: Update the com.liferay.gradle.util dependency to version 1.0.21.
+
+## Markdown Links
+[LPS-58587](https://issues.liferay.com/browse/LPS-58587)
+[LPS-59564](https://issues.liferay.com/browse/LPS-59564)
+[LPS-59672](https://issues.liferay.com/browse/LPS-59672)
+[LPS-61070](https://issues.liferay.com/browse/LPS-61070)
+[LPS-61088](https://issues.liferay.com/browse/LPS-61088)
+[LPS-61099](https://issues.liferay.com/browse/LPS-61099)
+[LPS-61420](https://issues.liferay.com/browse/LPS-61420)
+[LPS-61848](https://issues.liferay.com/browse/LPS-61848)
+[LPS-62833](https://issues.liferay.com/browse/LPS-62833)
+[LPS-62942](https://issues.liferay.com/browse/LPS-62942)
+[LPS-63062](https://issues.liferay.com/browse/LPS-63062)
+[LPS-63440](https://issues.liferay.com/browse/LPS-63440)
+[LPS-63943](https://issues.liferay.com/browse/LPS-63943)
+[LPS-64816](https://issues.liferay.com/browse/LPS-64816)
+[LPS-65086](https://issues.liferay.com/browse/LPS-65086)
+[LPS-65749](https://issues.liferay.com/browse/LPS-65749)
+[LPS-65810](https://issues.liferay.com/browse/LPS-65810)
+[LPS-65845](https://issues.liferay.com/browse/LPS-65845)
+[LPS-66004](https://issues.liferay.com/browse/LPS-66004)
+[LPS-67352](https://issues.liferay.com/browse/LPS-67352)
+[LPS-67503](https://issues.liferay.com/browse/LPS-67503)
+[LPS-67658](https://issues.liferay.com/browse/LPS-67658)
+[LPS-72914](https://issues.liferay.com/browse/LPS-72914)
+[LPS-73584](https://issues.liferay.com/browse/LPS-73584)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
+[LPS-84119](https://issues.liferay.com/browse/LPS-84119)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-91967](https://issues.liferay.com/browse/LPS-91967)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-105380](https://issues.liferay.com/browse/LPS-105380)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)

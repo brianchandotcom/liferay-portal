@@ -17,3 +17,8 @@
 (0fb04b5015)
 - [LPS-67460]: Inject environment variable WAS_HOME (46162fd34c)
 - [LPS-68306]: Add new option to ant-gradle (ade7dc4ce0)
+
+## Markdown Links
+[LPS-67460](https://issues.liferay.com/browse/LPS-67460)
+[LPS-68306](https://issues.liferay.com/browse/LPS-68306)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)

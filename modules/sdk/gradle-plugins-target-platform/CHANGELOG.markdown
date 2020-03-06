@@ -1,5 +1,10 @@
 # Liferay Gradle Plugins Target Platform Change Log
 
+## 2.1.3 - 2020-03-04
+
+### Dependencies
+- [LPS-106149]: Update the com.liferay.gradle.util dependency to version 1.0.35.
+
 ## 2.1.1 - 2020-02-20
 
 ### Commits
@@ -370,3 +375,52 @@ and unit tests) (045479bf7c)
 	- configuration `default`
 	- configurations added by [Liferay Gradle Plugins Test Integration]
 	- configurations added by the `java` plugin
+
+## Markdown Links
+[IDE-4081](https://issues.liferay.com/browse/IDE-4081)
+[LPS-71117](https://issues.liferay.com/browse/LPS-71117)
+[LPS-74544](https://issues.liferay.com/browse/LPS-74544)
+[LPS-77343](https://issues.liferay.com/browse/LPS-77343)
+[LPS-77425](https://issues.liferay.com/browse/LPS-77425)
+[LPS-79653](https://issues.liferay.com/browse/LPS-79653)
+[LPS-80222](https://issues.liferay.com/browse/LPS-80222)
+[LPS-81042](https://issues.liferay.com/browse/LPS-81042)
+[LPS-81530](https://issues.liferay.com/browse/LPS-81530)
+[LPS-82491](https://issues.liferay.com/browse/LPS-82491)
+[LPS-83922](https://issues.liferay.com/browse/LPS-83922)
+[LPS-84094](https://issues.liferay.com/browse/LPS-84094)
+[LPS-84119](https://issues.liferay.com/browse/LPS-84119)
+[LPS-85264](https://issues.liferay.com/browse/LPS-85264)
+[LPS-85609](https://issues.liferay.com/browse/LPS-85609)
+[LPS-85946](https://issues.liferay.com/browse/LPS-85946)
+[LPS-86581](https://issues.liferay.com/browse/LPS-86581)
+[LPS-86589](https://issues.liferay.com/browse/LPS-86589)
+[LPS-86916](https://issues.liferay.com/browse/LPS-86916)
+[LPS-87192](https://issues.liferay.com/browse/LPS-87192)
+[LPS-87419](https://issues.liferay.com/browse/LPS-87419)
+[LPS-87466](https://issues.liferay.com/browse/LPS-87466)
+[LPS-88382](https://issues.liferay.com/browse/LPS-88382)
+[LPS-91342](https://issues.liferay.com/browse/LPS-91342)
+[LPS-91772](https://issues.liferay.com/browse/LPS-91772)
+[LPS-93483](https://issues.liferay.com/browse/LPS-93483)
+[LPS-93873](https://issues.liferay.com/browse/LPS-93873)
+[LPS-95279](https://issues.liferay.com/browse/LPS-95279)
+[LPS-95938](https://issues.liferay.com/browse/LPS-95938)
+[LPS-96095](https://issues.liferay.com/browse/LPS-96095)
+[LPS-96247](https://issues.liferay.com/browse/LPS-96247)
+[LPS-96290](https://issues.liferay.com/browse/LPS-96290)
+[LPS-97601](https://issues.liferay.com/browse/LPS-97601)
+[LPS-98190](https://issues.liferay.com/browse/LPS-98190)
+[LPS-98877](https://issues.liferay.com/browse/LPS-98877)
+[LPS-99577](https://issues.liferay.com/browse/LPS-99577)
+[LPS-100448](https://issues.liferay.com/browse/LPS-100448)
+[LPS-100515](https://issues.liferay.com/browse/LPS-100515)
+[LPS-102243](https://issues.liferay.com/browse/LPS-102243)
+[LPS-103051](https://issues.liferay.com/browse/LPS-103051)
+[LPS-103466](https://issues.liferay.com/browse/LPS-103466)
+[LPS-103809](https://issues.liferay.com/browse/LPS-103809)
+[LPS-105380](https://issues.liferay.com/browse/LPS-105380)
+[LPS-105502](https://issues.liferay.com/browse/LPS-105502)
+[LPS-105889](https://issues.liferay.com/browse/LPS-105889)
+[LPS-106149](https://issues.liferay.com/browse/LPS-106149)
+[LPS-107155](https://issues.liferay.com/browse/LPS-107155)

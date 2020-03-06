@@ -3863,6 +3863,10 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-tomcat90-mysql57-jdk8_stable">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-tomcat90-mysql57-jdk8_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
@@ -4096,6 +4100,10 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="functional-upgrade-tomcat90-mysql57-jdk11_open">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-mysql57-jdk8_stable">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
@@ -4810,6 +4818,10 @@ log.sanitizer.enabled=false</echo>
 		<run-modules-integration-test database.type="mysql" database.version="5.7" />
 	</target>
 
+	<target name="modules-integration-mysql57-jdk8_stable">
+		<run-modules-integration-test database.type="mysql" database.version="5.7" />
+	</target>
+
 	<target name="modules-integration-oracle122-jdk8">
 		<run-modules-integration-test database.type="oracle" />
 	</target>
@@ -5016,6 +5028,10 @@ log.sanitizer.enabled=false</echo>
 				<stop-suite-search-engine />
 			</test-tear-down>
 		</run-batch-test>
+	</target>
+
+	<target name="modules-unit-jdk8_stable">
+		<antcall target="modules-unit-jdk8" />
 	</target>
 
 	<target name="modules-unit-project-templates-jdk8">
@@ -6234,6 +6250,10 @@ ${output.content}</echo>
 				<delete file="${app.server.lib.portal.dir}/util-taglib.jar" />
 			</test-set-up>
 		</run-batch-test>
+	</target>
+
+	<target name="unit-jdk8_stable">
+		<antcall target="unit-jdk8" />
 	</target>
 
 	<target name="wsdd-builder-jdk8">

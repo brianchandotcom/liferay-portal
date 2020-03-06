@@ -103,6 +103,44 @@ public class FragmentEntryServiceUtil {
 		return getService().fetchFragmentEntry(fragmentEntryId);
 	}
 
+	public static java.util.List<Object>
+		getFragmentCompositionsAndFragmentEntries(
+			long groupId, long fragmentCollectionId, int status, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator<?>
+				orderByComparator) {
+
+		return getService().getFragmentCompositionsAndFragmentEntries(
+			groupId, fragmentCollectionId, status, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<Object>
+		getFragmentCompositionsAndFragmentEntries(
+			long groupId, long fragmentCollectionId, String name, int status,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<?>
+				orderByComparator) {
+
+		return getService().getFragmentCompositionsAndFragmentEntries(
+			groupId, fragmentCollectionId, name, status, start, end,
+			orderByComparator);
+	}
+
+	public static int getFragmentCompositionsAndFragmentEntriesCount(
+		long groupId, long fragmentCollectionId, int status) {
+
+		return getService().getFragmentCompositionsAndFragmentEntriesCount(
+			groupId, fragmentCollectionId, status);
+	}
+
+	public static int getFragmentCompositionsAndFragmentEntriesCount(
+		long groupId, long fragmentCollectionId, String name, int status) {
+
+		return getService().getFragmentCompositionsAndFragmentEntriesCount(
+			groupId, fragmentCollectionId, name, status);
+	}
+
 	public static java.util.List<com.liferay.fragment.model.FragmentEntry>
 		getFragmentEntries(long fragmentCollectionId) {
 

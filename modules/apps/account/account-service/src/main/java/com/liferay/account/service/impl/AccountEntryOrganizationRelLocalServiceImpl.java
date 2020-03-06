@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -157,24 +158,25 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 			return;
 		}
 
-		List<Long> currentOrganizationIds = ListUtil.toList(
-			getAccountEntryOrganizationRels(accountEntryId),
-			AccountEntryOrganizationRel::getOrganizationId);
+		Set<Long> newOrganizationIdsSet = SetUtil.fromArray(organizationIds);
 
-		Set<Long> deleteOrganizationIdsSet = SetUtil.fromCollection(
-			currentOrganizationIds);
+		Set<Long> oldOrganizationIdsSet = SetUtil.fromCollection(
+			ListUtil.toList(
+				getAccountEntryOrganizationRels(accountEntryId),
+				AccountEntryOrganizationRel::getOrganizationId));
 
-		deleteOrganizationIdsSet.removeAll(ListUtil.fromArray(organizationIds));
+		Set<Long> removeOrganizationIdsSet = new HashSet<>(
+			oldOrganizationIdsSet);
+
+		removeOrganizationIdsSet.removeAll(newOrganizationIdsSet);
 
 		deleteAccountEntryOrganizationRels(
-			accountEntryId, ArrayUtil.toLongArray(deleteOrganizationIdsSet));
+			accountEntryId, ArrayUtil.toLongArray(removeOrganizationIdsSet));
 
-		Set<Long> addOrganizationIdsSet = SetUtil.fromArray(organizationIds);
-
-		addOrganizationIdsSet.removeAll(currentOrganizationIds);
+		newOrganizationIdsSet.removeAll(oldOrganizationIdsSet);
 
 		addAccountEntryOrganizationRels(
-			accountEntryId, ArrayUtil.toLongArray(addOrganizationIdsSet));
+			accountEntryId, ArrayUtil.toLongArray(newOrganizationIdsSet));
 	}
 
 	@Reference

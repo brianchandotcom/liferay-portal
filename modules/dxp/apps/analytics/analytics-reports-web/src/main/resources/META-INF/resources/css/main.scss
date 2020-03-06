@@ -113,4 +113,23 @@
 	.interval-selector-wrapper {
 		display: flex;
 	}
+
+	.pie-chart-wrapper {
+		display: flex;
+		justify-content: space-between;
+		.pie-chart-wrapper--legend {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			.pie-chart-wrapper--legend--dot {
+				display: inline-block;
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				margin-right: 0.5rem;
+			}
+		}
+		.pie-chart-wrapper--chart {
+		}
+	}
 }

@@ -13,6 +13,7 @@ import React from 'react';
 
 import BasicInformation from './components/BasicInformation';
 import Chart from './components/Chart';
+import PieChart from './components/PieChart';
 import TotalCount from './components/TotalCount';
 import APIService from './utils/APIService';
 import {numberFormat} from './utils/numberFormat';
@@ -97,6 +98,10 @@ export default function({context, props}) {
 				publishDate={publishDate}
 				timeSpanOptions={timeSpans}
 			/>
+
+			<hr />
+
+			<PieChart />
 		</div>
 	);
 }

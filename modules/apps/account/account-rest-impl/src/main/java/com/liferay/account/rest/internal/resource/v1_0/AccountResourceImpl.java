@@ -108,8 +108,7 @@ public class AccountResourceImpl
 
 		_accountEntryOrganizationRelLocalService.
 			setAccountEntryOrganizationRels(
-				accountEntry.getAccountEntryId(),
-				ArrayUtil.toArray(account.getOrganizationIds()));
+				accountEntry.getAccountEntryId(), _getOrganizationIds(account));
 
 		return _toAccount(accountEntry);
 	}
@@ -120,7 +119,7 @@ public class AccountResourceImpl
 
 		_accountEntryOrganizationRelLocalService.
 			setAccountEntryOrganizationRels(
-				accountId, ArrayUtil.toArray(account.getOrganizationIds()));
+				accountId, _getOrganizationIds(account));
 
 		return _toAccount(
 			_accountEntryLocalService.updateAccountEntry(
@@ -134,6 +133,16 @@ public class AccountResourceImpl
 			account.getDomains()
 		).orElse(
 			new String[0]
+		);
+	}
+
+	private long[] _getOrganizationIds(Account account) {
+		return Optional.ofNullable(
+			account.getOrganizationIds()
+		).map(
+			ArrayUtil::toArray
+		).orElse(
+			new long[0]
 		);
 	}
 

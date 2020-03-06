@@ -12,91 +12,52 @@
  * details.
  */
 
-import React, { useContext, useState, useEffect, useCallback } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {withRouter} from 'react-router-dom';
 
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 
 import {AppContext} from '../../AppContext.es';
 import { getUserActivity } from '../../utils/client.es';
 import UserIcon from '../../components/UserIcon.es';
-
-import Question from '../../components/Question.es';
-
-import {ClayPaginationWithBasicItems} from '@clayui/pagination';
-
-import {Link} from 'react-router-dom';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
+import QuestionRow from '../../components/QuestionRow.es';
 import Error from '../../components/Error.es';
-import QuestionBadge from '../../components/QuestionsBadge.es';
-import SectionLabel from '../../components/SectionLabel.es';
-import TagList from '../../components/TagList.es';
-import {getRankedThreads, getThreads} from '../../utils/client.es';
-import {dateToInternationalHuman, normalizeRating} from '../../utils/utils.es';
 
-export default withRouter( () => {
+export default withRouter(({
+    match: {
+        params: {creatorId}
+    }
+}) => {
+    const context = useContext(AppContext);
+    const siteKey = context.siteKey;
     const [error, setError] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [page, setPage] = useState(1);
-	const [pageSize] = useState(20);
     const [questions, setQuestions] = useState([]);
-    const sectionId = 36526;
-
-	useEffect(() => {
-        renderQuestions(loadThreads());
-	}, [
-		creatorId,
-		page,
-        pageSize,
-        loadThreads,
-        sectionId
-	]);
-
-	const renderQuestions = questions => {
-		questions
-			.then(data => setQuestions(data || []))
-			.then(() => setLoading(false))
-			.catch(error => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-				setLoading(false);
-				setError({message: 'Loading Questions', title: 'Error'});
-			});
-	};
-
-	const loadThreads = useCallback(
-		sort =>
-			getThreads({
-				creatorId,
-				page,
-				pageSize,
-                sort,
-                sectionId
-			}),
-		[creatorId, page, pageSize, sectionId]
-	);
-
-    // MARK: Mine -- Page Header
-    const context = useContext(AppContext);
-    const userId = context.userId;
-    const creatorId = userId;
-    const [name, setName] = useState('');
-    const [image, setImage] = useState('');
-    const [postsNumber, setPostsNumber] = useState(0);
-    const [rank, setRank] = useState('Not specified');
-    // const [questions, setQuestions] = useState([]);
+    const [creatorInfo, setCreatorInfo] = useState({});
 
 
     useEffect(() => {
-        getUserActivity(context.siteKey,userId).then(data => {
-            const userInfo = data.items[0].creator;
-            const userStatistics = data.items[0].creatorStatistics;
-            setName(userInfo.name);
-            setImage(userInfo.image);
-            setPostsNumber(userStatistics.postsNumber);
-            setRank(userStatistics.rank);
+        getUserActivity(siteKey, creatorId).then(questions => {
+            const creatorBasicInfo = questions. items[0].creator;
+            const creatorStatistics = questions.items[0].creatorStatistics;
+            const creatorInfo = {
+                id: creatorId,
+                name: creatorBasicInfo.name,
+                image: creatorBasicInfo.image,
+                postsNumber: creatorStatistics.postsNumber,
+                rank: creatorStatistics.rank
+            }
+            setCreatorInfo(creatorInfo);
+            setQuestions(questions);
+            setLoading(false);
+        })
+        .catch(error => {
+            console.log(error);
+            setLoading(false);
+            setError({message: 'Loading Questions', title: 'Error'});
         });
     }, []);
 
@@ -113,19 +74,19 @@ export default withRouter( () => {
             <div className="d-flex flex-row justify-content-between">
                 <div className="d-flex">
                     <UserIcon
-                        fullName={name}
-                        portraitURL={image}
-                        userId={String(userId)}
+                        fullName={creatorInfo.name}
+                        portraitURL={creatorInfo.image}
+                        userId={String(creatorInfo.id)}
                     />
                     <div className="flex-column c-ml-3">
                         <div>
-                            <span class="h3">Rank: {rank}</span>
+                            <span class="h3">Rank: {creatorInfo.rank}</span>
                         </div>
                         <div>
-                            <span class="h3">{name}</span>
+                            <span class="h3">{creatorInfo.name}</span>
                         </div>
                         <div>
-                            <span class="h3">Posts: {postsNumber}</span>
+                            <span class="h3">Posts: {creatorInfo.postsNumber}</span>
                         </div>
                     </div>
                 </div>
@@ -146,7 +107,7 @@ export default withRouter( () => {
                 ) : (
                     questions.items &&
                     questions.items.map(question => (
-                        <Question question={question}/>
+                        <QuestionRow question={question}/>
                     ))
                 )}
 

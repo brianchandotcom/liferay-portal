@@ -85,7 +85,7 @@ export default props => (
 									<Route
 										component={UserActivity}
 										exact
-										path={`${path}/activity/:userId`}
+										path={`${path}/activity/:creatorId`}
 									/>
 								</Switch>
 							</>

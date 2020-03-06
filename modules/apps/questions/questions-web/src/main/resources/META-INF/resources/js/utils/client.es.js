@@ -532,38 +532,93 @@ export const getSections = siteKey =>
 		}
 `);
 
+// export const getUserActivity = (siteKey, userId = '') => {
+// 	const filter = `creatorId eq ${userId}`;
+// 	return request(gql`
+// 		query {
+// 			messageBoardMessages(
+// 			flatten: true
+// 			siteKey: ${siteKey}
+// 			sort: "dateCreated:desc"
+// 			filter: ${filter}
+// 			) {
+// 				actions
+// 				items {
+// 					creator {
+// 						id
+// 						name
+// 						image
+// 					}
+// 					creatorStatistics {
+// 						postsNumber
+// 						rank
+// 					}
+// 					dateCreated
+// 					headline
+// 				}
+// 				lastPage
+// 				page
+// 				pageSize
+// 				totalCount
+// 			}
+// 		}
+// 	`);
+// }
+
 export const getUserActivity = (siteKey, userId = '') => {
 	const filter = `creatorId eq ${userId}`;
 	return request(gql`
 		query {
-			messageBoardMessages(
+			messageBoardThreads(
 			flatten: true
 			siteKey: ${siteKey}
-			sort: "dateCreated:desc"
+ 			sort: "dateCreated:desc"
 			filter: ${filter}
 			) {
-				actions
-				items {
-					creator {
-						id
-						name
-						image
-					}
-					creatorStatistics {
-						postsNumber
-						rank
-					}
-					dateCreated
-					headline
+			items {
+				aggregateRating {
+					ratingAverage
+					ratingCount
+					ratingValue
 				}
-				lastPage
-				page
-				pageSize
-				totalCount
+				articleBody
+				creator {
+					id
+					name
+					image
+				}
+				creatorStatistics {
+					postsNumber
+					rank
+				}
+				dateModified
+				friendlyUrlPath
+				headline
+				id
+				messageBoardSection {
+					title
+				}
+				messageBoardMessages {
+					items {
+					showAsAnswer
+					}
+				}
+				messageBoardSection {
+					title
+				}
+				taxonomyCategoryBriefs{
+					taxonomyCategoryId
+					taxonomyCategoryName
+				}
 			}
-		}
-	`);
+			page
+			pageSize
+			totalCount
+			}
+		}`
+	);
 }
+
 export const markAsAnswerMessageBoardMessage = (
 	messageBoardMessageId,
 	showAsAnswer

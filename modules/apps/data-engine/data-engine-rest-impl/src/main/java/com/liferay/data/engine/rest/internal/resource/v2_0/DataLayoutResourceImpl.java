@@ -28,18 +28,28 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutCreateDateComparator;
+import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutModifiedDateComparator;
+import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutNameComparator;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.validation.ValidationException;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -77,21 +87,35 @@ public class DataLayoutResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		Page<DEDataLayout> page = _deDataLayoutApp.getDataLayouts(
-			dataDefinitionId, keywords,
-			contextAcceptLanguage.getPreferredLocale(), pagination, sorts);
+		if (pagination.getPageSize() > 250) {
+			throw new ValidationException(
+				LanguageUtil.format(
+					contextAcceptLanguage.getPreferredLocale(),
+					"page-size-is-greater-than-x", 250));
+		}
 
-		Collection<DEDataLayout> items = page.getItems();
+		if (ArrayUtil.isEmpty(sorts)) {
+			sorts = new Sort[] {
+				new Sort(
+					Field.getSortableFieldName(Field.MODIFIED_DATE),
+					Sort.STRING_TYPE, true)
+			};
+		}
 
-		Stream<DEDataLayout> stream = items.stream();
+		List<DEDataLayout> deDataLayout = _deDataLayoutApp.getDataLayouts(
+			dataDefinitionId, keywords, pagination.getStartPosition(),
+			pagination.getEndPosition(), _toOrderByComparator(sorts[0]));
+
+		Stream<DEDataLayout> deDataLayoutStream = deDataLayout.stream();
 
 		return Page.of(
-			stream.map(
+			deDataLayoutStream.map(
 				DataLayoutUtil::toDataLayout
 			).collect(
 				Collectors.toList()
 			),
-			pagination, page.getTotalCount());
+			pagination,
+			_deDataLayoutApp.getDataLayoutsCount(dataDefinitionId, keywords));
 	}
 
 	@Override
@@ -177,6 +201,23 @@ public class DataLayoutResourceImpl
 			deDataLayout, new ServiceContext());
 
 		return DataLayoutUtil.toDataLayout(deDataLayout);
+	}
+
+	private OrderByComparator<DDMStructureLayout> _toOrderByComparator(
+		Sort sort) {
+
+		boolean ascending = !sort.isReverse();
+
+		String sortFieldName = sort.getFieldName();
+
+		if (StringUtil.startsWith(sortFieldName, "createDate")) {
+			return new StructureLayoutCreateDateComparator(ascending);
+		}
+		else if (StringUtil.startsWith(sortFieldName, "localized_name")) {
+			return new StructureLayoutNameComparator(ascending);
+		}
+
+		return new StructureLayoutModifiedDateComparator(ascending);
 	}
 
 	private static final EntityModel _entityModel = new DataLayoutEntityModel();

@@ -15,14 +15,12 @@
 package com.liferay.data.engine.service;
 
 import com.liferay.data.engine.model.DEDataLayout;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.Locale;
+import java.util.List;
 
 /**
  * @author Leonardo Barros
@@ -50,9 +48,12 @@ public interface DEDataLayoutApp {
 			long groupId, long classNameId, String dataLayoutKey)
 		throws Exception;
 
-	public Page<DEDataLayout> getDataLayouts(
-			long dataDefinitionId, String keywords, Locale locale,
-			Pagination pagination, Sort[] sorts)
+	public List<DEDataLayout> getDataLayouts(
+			long dataDefinitionId, String keywords, int start, int end,
+			OrderByComparator orderByComparator)
+		throws Exception;
+
+	public int getDataLayoutsCount(long dataDefinitionId, String keywords)
 		throws Exception;
 
 	public DEDataLayout updateDataLayout(

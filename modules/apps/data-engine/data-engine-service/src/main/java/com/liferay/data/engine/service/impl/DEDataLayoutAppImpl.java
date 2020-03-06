@@ -30,27 +30,28 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutCreateDateComparator;
-import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutNameComparator;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.validation.ValidationException;
@@ -166,68 +167,47 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 	}
 
 	@Override
-	public Page<DEDataLayout> getDataLayouts(
-			long dataDefinitionId, String keywords, Locale locale,
-			Pagination pagination, Sort[] sorts)
+	public List<DEDataLayout> getDataLayouts(
+			long dataDefinitionId, String keywords, int start, int end,
+			OrderByComparator orderByComparator)
 		throws Exception {
-
-		if (pagination.getPageSize() > 250) {
-			throw new ValidationException(
-				LanguageUtil.format(
-					locale, "page-size-is-greater-than-x", 250));
-		}
-
-		if (ArrayUtil.isEmpty(sorts)) {
-			sorts = new Sort[] {
-				new Sort(
-					Field.getSortableFieldName(Field.MODIFIED_DATE),
-					Sort.STRING_TYPE, true)
-			};
-		}
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
 
 		if (Validator.isNull(keywords)) {
-			return Page.of(
-				TransformUtil.transform(
-					_ddmStructureLayoutLocalService.getStructureLayouts(
-						ddmStructure.getGroupId(),
-						ddmStructure.getClassNameId(),
-						_getDDMStructureVersionId(dataDefinitionId),
-						pagination.getStartPosition(),
-						pagination.getEndPosition(),
-						_toOrderByComparator(
-							(Sort)ArrayUtil.getValue(sorts, 0))),
-					DataLayoutUtil::toDEDataLayout),
-				pagination,
-				_ddmStructureLayoutLocalService.getStructureLayoutsCount(
+			return _transform(
+				_ddmStructureLayoutLocalService.getStructureLayouts(
 					ddmStructure.getGroupId(), ddmStructure.getClassNameId(),
-					_getDDMStructureVersionId(dataDefinitionId)));
+					_getDDMStructureVersionId(dataDefinitionId), start, end,
+					orderByComparator));
 		}
 
-		return SearchUtil.search(
-			booleanQuery -> {
-			},
-			null, DDMStructureLayout.class, keywords, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					Field.CLASS_NAME_ID, ddmStructure.getClassNameId());
-				searchContext.setAttribute(Field.DESCRIPTION, keywords);
-				searchContext.setAttribute(Field.NAME, keywords);
-				searchContext.setAttribute(
-					"structureVersionId",
-					_getDDMStructureVersionId(dataDefinitionId));
-				searchContext.setCompanyId(ddmStructure.getCompanyId());
-				searchContext.setGroupIds(
-					new long[] {ddmStructure.getGroupId()});
-			},
-			document -> DataLayoutUtil.toDEDataLayout(
-				_ddmStructureLayoutLocalService.getStructureLayout(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+		return _transform(
+			_search(
+				ddmStructure.getCompanyId(), ddmStructure.getGroupId(),
+				ddmStructure.getClassNameId(),
+				_getDDMStructureVersionId(dataDefinitionId), keywords, start,
+				end, orderByComparator));
+	}
+
+	@Override
+	public int getDataLayoutsCount(long dataDefinitionId, String keywords)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			dataDefinitionId);
+
+		if (Validator.isNull(keywords)) {
+			return _ddmStructureLayoutLocalService.getStructureLayoutsCount(
+				ddmStructure.getGroupId(), ddmStructure.getClassNameId(),
+				_getDDMStructureVersionId(dataDefinitionId));
+		}
+
+		return _searchCount(
+			ddmStructure.getCompanyId(), ddmStructure.getGroupId(),
+			ddmStructure.getClassNameId(),
+			_getDDMStructureVersionId(dataDefinitionId), keywords);
 	}
 
 	@Override
@@ -308,21 +288,115 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 			"$[\"pages\"][*][\"rows\"][*][\"columns\"][*][\"fieldNames\"][*]");
 	}
 
-	private OrderByComparator<DDMStructureLayout> _toOrderByComparator(
-		Sort sort) {
+	private Sort _getSorts(OrderByComparator orderByComparator) {
+		boolean reverse = !orderByComparator.isAscending();
 
-		boolean ascending = !sort.isReverse();
-
-		String sortFieldName = sort.getFieldName();
-
-		if (StringUtil.startsWith(sortFieldName, "createDate")) {
-			return new StructureLayoutCreateDateComparator(ascending);
+		if (orderByComparator instanceof StructureLayoutCreateDateComparator) {
+			return new Sort(
+				Field.getSortableFieldName(Field.CREATE_DATE), Sort.STRING_TYPE,
+				reverse);
 		}
-		else if (StringUtil.startsWith(sortFieldName, "localized_name")) {
-			return new StructureLayoutNameComparator(ascending);
+		else if (orderByComparator instanceof StructureLayoutNameComparator) {
+			return new Sort(
+				Field.getSortableFieldName(Field.NAME), Sort.STRING_TYPE,
+				reverse);
 		}
 
-		return new StructureLayoutModifiedDateComparator(ascending);
+		return new Sort(
+			Field.getSortableFieldName(Field.MODIFIED_DATE), Sort.STRING_TYPE,
+			reverse);
+	}
+
+	private List<DDMStructureLayout> _search(
+		long companyId, long groupId, long classNameId, long structureVersionId,
+		String keywords, int start, int end,
+		OrderByComparator orderByComparator) {
+
+		try {
+			List<DDMStructureLayout> ddmStructureLayouts = new ArrayList<>();
+
+			Indexer indexer = IndexerRegistryUtil.getIndexer(
+				DDMStructureLayout.class);
+
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setAttribute(Field.CLASS_NAME_ID, classNameId);
+			searchContext.setAttribute(Field.DESCRIPTION, keywords);
+			searchContext.setAttribute(Field.NAME, keywords);
+			searchContext.setAttribute(
+				"structureVersionId", structureVersionId);
+			searchContext.setCompanyId(companyId);
+			searchContext.setGroupIds(new long[] {groupId});
+			searchContext.setEnd(end);
+			searchContext.setSorts(_getSorts(orderByComparator));
+			searchContext.setStart(start);
+
+			Hits hits = indexer.search(searchContext);
+
+			for (Document document : hits.getDocs()) {
+				long entryClassPK = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				DDMStructureLayout ddmStructureLayout =
+					_ddmStructureLayoutLocalService.getStructureLayout(
+						entryClassPK);
+
+				ddmStructureLayouts.add(ddmStructureLayout);
+			}
+
+			return ddmStructureLayouts;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return Collections.emptyList();
+	}
+
+	private int _searchCount(
+		long companyId, long groupId, long classNameId, long structureVersionId,
+		String keywords) {
+
+		try {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(
+				DDMStructureLayout.class);
+
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setAttribute(Field.CLASS_NAME_ID, classNameId);
+			searchContext.setAttribute(Field.DESCRIPTION, keywords);
+			searchContext.setAttribute(Field.NAME, keywords);
+			searchContext.setAttribute(
+				"structureVersionId", structureVersionId);
+			searchContext.setCompanyId(companyId);
+			searchContext.setGroupIds(new long[] {groupId});
+
+			return (int)indexer.searchCount(searchContext);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return 0;
+	}
+
+	private List<DEDataLayout> _transform(
+			List<DDMStructureLayout> ddmStructureLayouts)
+		throws Exception {
+
+		List<DEDataLayout> deDataLayouts = new ArrayList<>(
+			ddmStructureLayouts.size());
+
+		for (DDMStructureLayout ddmStructureLayout : ddmStructureLayouts) {
+			deDataLayouts.add(
+				DataLayoutUtil.toDEDataLayout(ddmStructureLayout));
+		}
+
+		return deDataLayouts;
 	}
 
 	private void _validate(String content, Map<String, Object> name) {
@@ -343,6 +417,9 @@ public class DEDataLayoutAppImpl implements DEDataLayoutApp {
 			throw new ValidationException("Layout is empty");
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DEDataLayoutAppImpl.class);
 
 	@Reference
 	private DDMFormLayoutSerializer _ddmFormLayoutSerializer;

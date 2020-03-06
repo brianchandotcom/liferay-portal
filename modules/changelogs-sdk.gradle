@@ -229,7 +229,6 @@ buildChangelogs {
 
 					text += descriptions
 				}
-
 			}
 
 			if (ticketNumbers.size > 0) {
@@ -256,7 +255,6 @@ buildChangelogs {
 					String ticketNumber2 = ticket2.substring(ticket2.indexOf("-") + 1)
 
 					if (ticketType1 == ticketType2) {
-
 						return Integer.valueOf(ticketNumber1) - Integer.valueOf(ticketNumber2)
 					}
 

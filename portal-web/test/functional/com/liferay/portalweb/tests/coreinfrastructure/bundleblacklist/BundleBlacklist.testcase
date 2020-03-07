@@ -78,7 +78,7 @@ definition {
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reset Default Values");
 
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.gogo.shell.web");
+		AssertConsoleTextPresent(value1 = "Reinstalling bundle com.liferay.gogo.shell.web");
 
 		Navigator.openURL();
 
@@ -199,7 +199,7 @@ definition {
 			OSGiConfigFileBaseDir = "${tempFileDirectory}",
 			OSGiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config");
 
-		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.gogo.shell.web");
+		AssertConsoleTextNotPresent(value1 = "Reinstalling bundle com.liferay.gogo.shell.web");
 	}
 
 }

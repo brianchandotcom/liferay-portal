@@ -365,22 +365,29 @@ export const getThreads = ({
 	page = 1,
 	pageSize = 30,
 	search = '',
-	sectionId,
+	section,
+	siteKey,
 	sort = 'dateCreated:desc',
 	taxonomyCategoryId = '',
 }) => {
-	let filter = '';
+	let filter = `(messageBoardSectionId eq ${section.id} `;
+
+	for (let i = 0; i < section.messageBoardSections.items.length; i++) {
+		filter += `or messageBoardSectionId eq ${section.messageBoardSections.items[i].id} `;
+	}
+
+	filter += ')';
 
 	if (taxonomyCategoryId) {
-		filter = `taxonomyCategoryId/any(x:x eq ${taxonomyCategoryId})`;
+		filter = `and taxonomyCategoryId/any(x:x eq ${taxonomyCategoryId})`;
 	}
 	else if (creatorId) {
-		filter = `creator/id eq ${creatorId}`;
+		filter = `and creator/id eq ${creatorId}`;
 	}
 
 	return request(gql`
         query {
-			messageBoardSectionMessageBoardThreads(filter: ${filter}, flatten: true, messageBoardSectionId: ${sectionId}, page: ${page}, pageSize: ${pageSize}, search: ${search}, sort: ${sort}){
+			messageBoardThreads(filter: ${filter}, flatten:true, page: ${page}, pageSize: ${pageSize}, search: ${search}, siteKey: ${siteKey}, sort: ${sort}){
 				items {
 					aggregateRating {
 						ratingAverage

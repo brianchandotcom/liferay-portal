@@ -14,9 +14,10 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
+import {AppContext} from '../../AppContext.es';
 import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import Error from '../../components/Error.es';
 import QuestionBadge from '../../components/QuestionsBadge.es';
@@ -38,18 +39,23 @@ export default ({
 	const [pageSize] = useState(20);
 	const [questions, setQuestions] = useState([]);
 	const [search, setSearch] = useState('');
-	const [sectionId, setSectionId] = useState();
+	const [section, setSection] = useState({});
+
+	const context = useContext(AppContext);
+
+	const siteKey = context.siteKey;
 
 	useEffect(() => {
-		if (sectionId) {
+		if (section.id) {
 			renderQuestions(loadThreads());
 		}
 	}, [
 		creatorId,
 		page,
 		pageSize,
-		sectionId,
+		section,
 		search,
+		siteKey,
 		taxonomyCategoryId,
 		loadThreads,
 	]);
@@ -74,11 +80,20 @@ export default ({
 				page,
 				pageSize,
 				search,
-				sectionId,
+				section,
+				siteKey,
 				sort,
 				taxonomyCategoryId,
 			}),
-		[creatorId, page, pageSize, search, sectionId, taxonomyCategoryId]
+		[
+			creatorId,
+			page,
+			pageSize,
+			search,
+			section,
+			siteKey,
+			taxonomyCategoryId,
+		]
 	);
 
 	const hasValidAnswer = question =>
@@ -94,13 +109,13 @@ export default ({
 			const date = new Date();
 			date.setDate(date.getDate() - 7);
 
-			renderQuestions(getRankedThreads(date, page, pageSize, sectionId));
+			renderQuestions(getRankedThreads(date, page, pageSize, section));
 		}
 		else if (type === 'month') {
 			const date = new Date();
 			date.setDate(date.getDate() - 31);
 
-			renderQuestions(getRankedThreads(date, page, pageSize, sectionId));
+			renderQuestions(getRankedThreads(date, page, pageSize, section));
 		}
 		else {
 			renderQuestions(loadThreads('dateCreated:desc'));
@@ -112,7 +127,7 @@ export default ({
 			<QuestionsNavigationBar
 				filterChange={filterChange}
 				searchChange={search => setSearch(search)}
-				sectionChange={section => setSectionId(section.id)}
+				sectionChange={section => setSection(section)}
 			/>
 
 			{loading ? (

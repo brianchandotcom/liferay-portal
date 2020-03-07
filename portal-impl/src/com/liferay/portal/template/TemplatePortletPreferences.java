@@ -23,10 +23,8 @@ import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ReadOnlyException;
@@ -64,16 +62,12 @@ public class TemplatePortletPreferences {
 				}
 			}
 			else if (valueObject instanceof Collection) {
-				Collection collection = (Collection)valueObject;
-
-				List list = new ArrayList(collection);
-
-				for (int counter = 0; counter < list.size(); counter++) {
-					Object obj = list.get(counter);
-
-					sb.append("<value>");
-					sb.append(XMLUtil.toCompactSafe(obj.toString()));
-					sb.append("</value>");
+				for (Object value : (Collection)valueObject) {
+					if (value instanceof String) {
+						sb.append("<value>");
+						sb.append(XMLUtil.toCompactSafe((String)value));
+						sb.append("</value>");
+					}
 				}
 			}
 			else {

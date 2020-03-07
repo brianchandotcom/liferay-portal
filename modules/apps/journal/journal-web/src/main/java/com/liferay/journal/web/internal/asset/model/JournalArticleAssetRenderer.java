@@ -15,7 +15,7 @@
 package com.liferay.journal.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
+import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
@@ -652,7 +652,7 @@ public class JournalArticleAssetRenderer
 		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 			JournalArticle.class.getName(), getClassPK());
 
-		boolean hasDisplayPage = AssetDisplayPageHelper.hasAssetDisplayPage(
+		boolean hasDisplayPage = AssetDisplayPageUtil.hasAssetDisplayPage(
 			groupId, assetEntry);
 
 		if (Validator.isNull(article.getLayoutUuid()) && !hasDisplayPage) {

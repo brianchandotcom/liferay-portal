@@ -15,7 +15,7 @@
 package com.liferay.journal.web.internal.servlet.taglib.util;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
+import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
@@ -561,7 +561,7 @@ public class JournalArticleActionDropdownItemsProvider {
 		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 			JournalArticle.class.getName(), _article.getResourcePrimKey());
 
-		if (AssetDisplayPageHelper.hasAssetDisplayPage(
+		if (AssetDisplayPageUtil.hasAssetDisplayPage(
 				_themeDisplay.getScopeGroupId(), assetEntry)) {
 
 			StringBundler sb = new StringBundler(3);
@@ -843,7 +843,7 @@ public class JournalArticleActionDropdownItemsProvider {
 			JournalArticle.class.getName(),
 			JournalArticleAssetRenderer.getClassPK(curArticle));
 
-		if (AssetDisplayPageHelper.hasAssetDisplayPage(
+		if (AssetDisplayPageUtil.hasAssetDisplayPage(
 				_themeDisplay.getScopeGroupId(), assetEntry)) {
 
 			return true;

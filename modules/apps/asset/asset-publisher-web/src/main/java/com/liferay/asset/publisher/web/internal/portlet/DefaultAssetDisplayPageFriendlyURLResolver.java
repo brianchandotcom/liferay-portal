@@ -15,7 +15,7 @@
 package com.liferay.asset.publisher.web.internal.portlet;
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
-import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
+import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -94,7 +94,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 		if (Validator.isNull(journalArticle.getLayoutUuid()) &&
 			(infoDisplayObjectProvider != null) &&
-			AssetDisplayPageHelper.hasAssetDisplayPage(
+			AssetDisplayPageUtil.hasAssetDisplayPage(
 				groupId, infoDisplayObjectProvider.getClassNameId(),
 				infoDisplayObjectProvider.getClassPK(),
 				infoDisplayObjectProvider.getClassTypeId())) {
@@ -129,7 +129,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 		if (Validator.isNull(journalArticle.getLayoutUuid()) &&
 			(infoDisplayObjectProvider != null) &&
-			AssetDisplayPageHelper.hasAssetDisplayPage(
+			AssetDisplayPageUtil.hasAssetDisplayPage(
 				groupId, infoDisplayObjectProvider.getClassNameId(),
 				infoDisplayObjectProvider.getClassPK(),
 				infoDisplayObjectProvider.getClassTypeId())) {

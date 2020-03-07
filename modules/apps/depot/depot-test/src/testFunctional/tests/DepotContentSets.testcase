@@ -280,7 +280,7 @@ definition {
 			dynamicSelection = "true");
 	}
 
-	@description = "This ensures that only the asset types related to the web ontent will be displayed when disabling the DM."
+	@description = "This ensures that only the asset types related to web content will be displayed after disabling DM."
 	@priority = "5"
 	test DisableDM {
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
@@ -344,7 +344,7 @@ definition {
 			dynamicSelection = "true");
 	}
 
-	@description = "This ensures that only the asset types related to the document will be displayed when disabling the WC."
+	@description = "This ensures that only the asset types related to DM will be displayed after disabling WC."
 	@priority = "5"
 	test DisableWC {
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");

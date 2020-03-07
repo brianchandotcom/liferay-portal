@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the assets persist in view content iframe as previous after DM and WC applications are disabled."
+	@description = "This ensures that previous asset selections persist in content sets after DM and WC applications are disabled."
 	@priority = "5"
 	test SelectDisabledAssetsFromContentSets {
 		JSONWebcontent.addWebContent(

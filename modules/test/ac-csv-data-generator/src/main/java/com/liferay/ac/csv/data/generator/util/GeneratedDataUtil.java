@@ -18,10 +18,13 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -45,6 +48,10 @@ public class GeneratedDataUtil {
 
 	public boolean containsRoleKey(String name) {
 		return _addedRoleMap.containsKey(name);
+	}
+
+	public boolean containsTeamKey(String name) {
+		return _addedTeamMap.containsKey(name);
 	}
 
 	public boolean containsUserGroupKey(String name) {
@@ -89,10 +96,22 @@ public class GeneratedDataUtil {
 
 			_userGroupLocalService.deleteUserGroup(e.getValue());
 		}
+
+		for (Map.Entry<String, Team> e : _addedTeamMap.entrySet()) {
+			if (_preExistingData.contains(e.getValue())) {
+				continue;
+			}
+
+			_teamLocalService.deleteTeam(e.getValue());
+		}
 	}
 
 	public long getCompanyId() {
 		return _companyId;
+	}
+
+	public long getDefaultGroupId() {
+		return _defaultGroupId;
 	}
 
 	public long getDefaultUserId() {
@@ -107,6 +126,10 @@ public class GeneratedDataUtil {
 		return _addedRoleMap.get(name);
 	}
 
+	public Team getTeam(String name) {
+		return _addedTeamMap.get(name);
+	}
+
 	public UserGroup getUserGroup(String name) {
 		return _addedUserGroupMap.get(name);
 	}
@@ -117,6 +140,10 @@ public class GeneratedDataUtil {
 
 	public void putRole(String name, Role role) {
 		_addedRoleMap.put(name, role);
+	}
+
+	public void putTeam(String name, Team team) {
+		_addedTeamMap.put(name, team);
 	}
 
 	public void putUser(String emailAddress, User user) {
@@ -130,7 +157,13 @@ public class GeneratedDataUtil {
 	public void setCompanyId(long companyId) throws PortalException {
 		_companyId = companyId;
 
-		_defaultUserId = _userLocalService.getDefaultUserId(_companyId);
+		_defaultUserId = _userLocalService.getUserIdByEmailAddress(
+			_companyId, "test@liferay.com");
+
+		List<Long> userActiveGroupIds = _groupLocalService.getActiveGroupIds(
+			_defaultUserId);
+
+		_defaultGroupId = userActiveGroupIds.get(0);
 	}
 
 	public void setExistingPortalData() {
@@ -189,16 +222,35 @@ public class GeneratedDataUtil {
 				}
 			}
 		);
+
+		List<Team> existingTeamList = _teamLocalService.getTeams(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		existingTeamList.parallelStream(
+		).forEach(
+			team -> {
+				if (!containsTeamKey(team.getName())) {
+					_preExistingData.add(team);
+
+					_addedTeamMap.put(team.getName(), team);
+				}
+			}
+		);
 	}
 
 	private volatile HashMap<String, Organization> _addedOrganizationMap =
 		new HashMap<>();
 	private volatile HashMap<String, Role> _addedRoleMap = new HashMap<>();
+	private volatile HashMap<String, Team> _addedTeamMap = new HashMap<>();
 	private volatile HashMap<String, UserGroup> _addedUserGroupMap =
 		new HashMap<>();
 	private volatile HashMap<String, User> _addedUserMap = new HashMap<>();
 	private long _companyId;
+	private long _defaultGroupId;
 	private long _defaultUserId;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
@@ -207,6 +259,9 @@ public class GeneratedDataUtil {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private TeamLocalService _teamLocalService;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

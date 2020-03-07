@@ -21,12 +21,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -107,8 +109,9 @@ public class UserCsv {
 			csvRecord, "organizations");
 		long[] roleIds = _getIdArrayFromRowCell(csvRecord, "roles");
 		long[] userGroupIds = _getIdArrayFromRowCell(csvRecord, "userGroups");
+		long[] teamIds = _getIdArrayFromRowCell(csvRecord, "teams");
 
-		return _userLocalService.addUser(
+		User user = _userLocalService.addUser(
 			_generatedDataUtil.getDefaultUserId(),
 			_generatedDataUtil.getCompanyId(), false, password, password, false,
 			screenName, emailAddress, 0, StringPool.BLANK,
@@ -116,6 +119,12 @@ public class UserCsv {
 			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, false,
 			new ServiceContext());
+
+		if (teamIds != null) {
+			_teamLocalService.addUserTeams(user.getPrimaryKey(), teamIds);
+		}
+
+		return user;
 	}
 
 	private CSVParser _getCSVParser(File csvFile) {
@@ -206,6 +215,23 @@ public class UserCsv {
 						idArray[i] = newRole.getPrimaryKey();
 					}
 				}
+				else if (header.equalsIgnoreCase("teams")) {
+					if (_generatedDataUtil.containsTeamKey(name)) {
+						Team team = _generatedDataUtil.getTeam(name);
+
+						idArray[i] = team.getPrimaryKey();
+					}
+					else {
+						Team newTeam = _teamLocalService.addTeam(
+							_generatedDataUtil.getDefaultUserId(),
+							_generatedDataUtil.getDefaultGroupId(), name, null,
+							new ServiceContext());
+
+						_generatedDataUtil.putTeam(name, newTeam);
+
+						idArray[i] = newTeam.getPrimaryKey();
+					}
+				}
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException, portalException);
@@ -233,6 +259,9 @@ public class UserCsv {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private TeamLocalService _teamLocalService;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

@@ -15,10 +15,8 @@
 package com.liferay.users.admin.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -45,6 +43,11 @@ import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.users.admin.test.util.search.GroupBlueprint;
+import com.liferay.users.admin.test.util.search.GroupSearchFixture;
+import com.liferay.users.admin.test.util.search.OrganizationBlueprint.OrganizationBlueprintBuilder;
+import com.liferay.users.admin.test.util.search.OrganizationSearchFixture;
+import com.liferay.users.admin.test.util.search.UserGroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.ArrayList;
@@ -86,39 +89,57 @@ public class UserIndexerIndexedFieldsTest {
 	}
 
 	@Test
-	public void testIndexedFields() throws Exception {
-		User user = userSearchFixture.addUserWithJobTitle(
-			RandomTestUtil.randomString(), group);
+	public void testAddress() throws Exception {
+		User user1 = addUser();
 
-		String searchTerm = user.getFirstName();
+		userSearchFixture.addAddress(user1);
+
+		User user2 = userLocalService.updateUser(user1);
+
+		String searchTerm = user2.getFirstName();
 
 		Document document = indexerFixture.searchOnlyOne(searchTerm);
 
 		indexedFieldsFixture.postProcessDocument(document);
 
-		FieldValuesAssert.assertFieldValues(
-			_expectedValuesWithJobTitle(user), document, searchTerm);
+		Map<String, String> map = _getExpectedFieldValues(user2);
+
+		_populateAddressFieldValues(user2, map);
+
+		FieldValuesAssert.assertFieldValues(map, document, searchTerm);
 	}
 
 	@Test
-	public void testIndexedFieldsWithAddress() throws Exception {
-		User user = userSearchFixture.addUserWithAddress(
-			RandomTestUtil.randomString(), group);
+	public void testJobTitle() throws Exception {
+		User user1 = addUser();
 
-		String searchTerm = user.getFirstName();
+		user1.setJobTitle(RandomTestUtil.randomString());
+
+		User user2 = userLocalService.updateUser(user1);
+
+		String searchTerm = user2.getFirstName();
 
 		Document document = indexerFixture.searchOnlyOne(searchTerm);
 
 		indexedFieldsFixture.postProcessDocument(document);
 
-		FieldValuesAssert.assertFieldValues(
-			_expectedValuesWithAddress(user), document, searchTerm);
+		Map<String, String> map = _getExpectedFieldValues(user2);
+
+		map.put("jobTitle", user2.getJobTitle());
+		map.put(
+			"jobTitle_sortable", StringUtil.toLowerCase(user2.getJobTitle()));
+
+		FieldValuesAssert.assertFieldValues(map, document, searchTerm);
 	}
 
 	@Test
-	public void testIndexedFieldsWithOrganization() throws Exception {
-		User user = userSearchFixture.addUserWithOrganization(
-			RandomTestUtil.randomString(), group);
+	public void testOrganizationIds() throws Exception {
+		Organization organization = addOrganization();
+
+		User user = addUser();
+
+		userLocalService.addOrganizationUser(
+			organization.getOrganizationId(), user.getUserId());
 
 		String searchTerm = user.getFirstName();
 
@@ -126,14 +147,23 @@ public class UserIndexerIndexedFieldsTest {
 
 		indexedFieldsFixture.postProcessDocument(document);
 
-		FieldValuesAssert.assertFieldValues(
-			_expectedValuesWithOrganization(user), document, searchTerm);
+		Map<String, String> map = _getExpectedFieldValues(user);
+
+		map.put("organizationIds", _getValues(user.getOrganizationIds()));
+
+		FieldValuesAssert.assertFieldValues(map, document, searchTerm);
 	}
 
 	@Test
-	public void testIndexedFieldsWithUserGroup() throws Exception {
-		User user = userSearchFixture.addUserWithUserGroup(
-			RandomTestUtil.randomString(), group);
+	public void testUserGroupIds() throws Exception {
+		User user = addUser();
+
+		UserGroup userGroup = userGroupSearchFixture.addUserGroup(
+			UserGroupSearchFixture.getTestUserGroupBlueprintBuilder());
+
+		userGroupLocalService.addUserUserGroup(user.getUserId(), userGroup);
+
+		userGroupLocalService.addGroupUserGroup(group.getGroupId(), userGroup);
 
 		String searchTerm = user.getFirstName();
 
@@ -141,8 +171,26 @@ public class UserIndexerIndexedFieldsTest {
 
 		indexedFieldsFixture.postProcessDocument(document);
 
-		FieldValuesAssert.assertFieldValues(
-			_expectedValuesWithUserGroup(user), document, searchTerm);
+		Map<String, String> map = _getExpectedFieldValues(user);
+
+		map.put("userGroupIds", _getValues(user.getUserGroupIds()));
+
+		FieldValuesAssert.assertFieldValues(map, document, searchTerm);
+	}
+
+	protected Organization addOrganization() {
+		OrganizationBlueprintBuilder organizationBlueprintBuilder =
+			OrganizationSearchFixture.getTestOrganizationBlueprintBuilder();
+
+		return organizationSearchFixture.addOrganization(
+			organizationBlueprintBuilder.build());
+	}
+
+	protected User addUser() throws Exception {
+		String[] assetTagNames = {};
+
+		return userSearchFixture.addUser(
+			RandomTestUtil.randomString(), group, assetTagNames);
 	}
 
 	protected void setUpIndexedFieldsFixture() {
@@ -155,21 +203,31 @@ public class UserIndexerIndexedFieldsTest {
 	}
 
 	protected void setUpUserSearchFixture() throws Exception {
-		userSearchFixture = new UserSearchFixture();
+		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
+
+		organizationSearchFixture = new OrganizationSearchFixture(
+			organizationLocalService);
+
+		userGroupSearchFixture = new UserGroupSearchFixture(
+			userGroupLocalService);
+
+		userSearchFixture = new UserSearchFixture(
+			userLocalService, groupSearchFixture, organizationSearchFixture,
+			userGroupSearchFixture);
 
 		userSearchFixture.setUp();
 
 		_addresses = userSearchFixture.getAddresses();
 
-		_groups = userSearchFixture.getGroups();
+		_groups = groupSearchFixture.getGroups();
 
-		_organizations = userSearchFixture.getOrganizations();
+		_organizations = organizationSearchFixture.getOrganizations();
 
 		_users = userSearchFixture.getUsers();
 
-		_userGroups = userSearchFixture.getUserGroups();
+		_userGroups = userGroupSearchFixture.getUserGroups();
 
-		group = userSearchFixture.addGroup();
+		group = groupSearchFixture.addGroup(new GroupBlueprint());
 	}
 
 	protected Group group;
@@ -178,6 +236,8 @@ public class UserIndexerIndexedFieldsTest {
 
 	@Inject
 	protected OrganizationLocalService organizationLocalService;
+
+	protected OrganizationSearchFixture organizationSearchFixture;
 
 	@Inject
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
@@ -188,12 +248,16 @@ public class UserIndexerIndexedFieldsTest {
 	@Inject
 	protected UserGroupLocalService userGroupLocalService;
 
+	protected UserGroupSearchFixture userGroupSearchFixture;
+
 	@Inject
 	protected UserLocalService userLocalService;
 
 	protected UserSearchFixture userSearchFixture;
 
-	private Map<String, String> _expectedValues(User user) throws Exception {
+	private Map<String, String> _getExpectedFieldValues(User user)
+		throws Exception {
+
 		String groupId = String.valueOf(user.getGroupIds()[0]);
 
 		Map<String, String> map = HashMapBuilder.put(
@@ -258,10 +322,34 @@ public class UserIndexerIndexedFieldsTest {
 		return map;
 	}
 
-	private Map<String, String> _expectedValuesWithAddress(User user)
-		throws Exception {
+	private Set<String> _getLocalizedCountryNames(Country country) {
+		Set<String> countryNames = new HashSet<>();
 
-		Map<String, String> expected = _expectedValues(user);
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			String countryName = country.getName(locale);
+
+			countryName = StringUtil.toLowerCase(countryName);
+
+			countryNames.add(countryName);
+		}
+
+		return countryNames;
+	}
+
+	private String _getValues(List<String> stringValues) {
+		if (stringValues.size() == 1) {
+			return stringValues.get(0);
+		}
+
+		return String.valueOf(stringValues);
+	}
+
+	private String _getValues(long[] longValues) {
+		return _getValues(Arrays.asList(ArrayUtil.toStringArray(longValues)));
+	}
+
+	private void _populateAddressFieldValues(
+		User user, Map<String, String> map) {
 
 		List<String> cities = new ArrayList<>();
 		List<String> countries = new ArrayList<>();
@@ -285,90 +373,15 @@ public class UserIndexerIndexedFieldsTest {
 			zips.add(StringUtil.toLowerCase(address.getZip()));
 		}
 
-		expected.put("city", _getValues(cities));
-		expected.put("country", _getValues(countries));
-		expected.put("region", _getValues(regions));
-		expected.put("street", _getValues(streets));
-		expected.put("zip", _getValues(zips));
-
-		return expected;
-	}
-
-	private Map<String, String> _expectedValuesWithJobTitle(User user)
-		throws Exception {
-
-		Map<String, String> expected = _expectedValues(user);
-
-		expected.put("jobTitle", user.getJobTitle());
-		expected.put(
-			"jobTitle_sortable", StringUtil.toLowerCase(user.getJobTitle()));
-
-		return expected;
-	}
-
-	private Map<String, String> _expectedValuesWithOrganization(User user)
-		throws Exception, PortalException {
-
-		Map<String, String> expected = _expectedValues(user);
-
-		expected.put("organizationIds", _getValues(user.getOrganizationIds()));
-
-		return expected;
-	}
-
-	private Map<String, String> _expectedValuesWithUserGroup(User user)
-		throws Exception {
-
-		Map<String, String> expected = _expectedValues(user);
-
-		expected.put("userGroupIds", _getValues(user.getUserGroupIds()));
-
-		return expected;
-	}
-
-	private Set<String> _getLocalizedCountryNames(Country country) {
-		Set<String> countryNames = new HashSet<>();
-
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			String countryName = country.getName(locale);
-
-			countryName = StringUtil.toLowerCase(countryName);
-
-			countryNames.add(countryName);
-		}
-
-		return countryNames;
-	}
-
-	private String _getValues(List<String> stringValues) {
-		String[] stringArray = ArrayUtil.toStringArray(stringValues);
-
-		return _getValues(stringArray);
-	}
-
-	private String _getValues(long[] longValues) {
-		String[] stringArray = ArrayUtil.toStringArray(longValues);
-
-		return _getValues(stringArray);
-	}
-
-	private String _getValues(String[] stringArray) {
-		if (stringArray == null) {
-			return null;
-		}
-
-		if (stringArray.length == 1) {
-			return stringArray[0];
-		}
-
-		return String.valueOf(Arrays.asList(stringArray));
+		map.put("city", _getValues(cities));
+		map.put("country", _getValues(countries));
+		map.put("region", _getValues(regions));
+		map.put("street", _getValues(streets));
+		map.put("zip", _getValues(zips));
 	}
 
 	@DeleteAfterTestRun
 	private List<Address> _addresses = new ArrayList<>();
-
-	@DeleteAfterTestRun
-	private final List<Contact> _contacts = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;
